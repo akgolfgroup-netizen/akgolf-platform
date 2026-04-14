@@ -120,7 +120,7 @@ function SGBar({ label, value, delay }: { label: string; value: number | null; d
       </div>
       <span
         className={`w-14 shrink-0 text-right text-[13px] font-bold tabular-nums ${
-          isPositive ? "text-success-text" : "text-[#B84233]"
+          isPositive ? "text-success-text" : "text-error"
         }`}
       >
         {isPositive ? "+" : ""}

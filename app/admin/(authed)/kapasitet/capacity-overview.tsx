@@ -25,22 +25,22 @@ interface StatCardProps {
 
 function StatCard({ title, value, subtitle, icon, trend, trendValue }: StatCardProps) {
   return (
-    <div className="bg-white border border-[#D5DFDB] rounded-xl p-5">
+    <div className="bg-white border border-grey-200 rounded-xl p-5">
       <div className="flex items-start justify-between mb-3">
-        <span className="text-xs font-medium text-[#7A8C85] uppercase tracking-wide">
+        <span className="text-xs font-medium text-grey-400 uppercase tracking-wide">
           {title}
         </span>
-        <div className="text-[#0A1F18]">{icon}</div>
+        <div className="text-black">{icon}</div>
       </div>
-      <p className="text-2xl font-bold text-[#0A1F18] mb-1">{value}</p>
+      <p className="text-2xl font-bold text-black mb-1">{value}</p>
       {subtitle && (
-        <p className="text-xs text-[#7A8C85]">{subtitle}</p>
+        <p className="text-xs text-grey-400">{subtitle}</p>
       )}
       {trend && trendValue && (
         <div className={`flex items-center gap-1 mt-2 text-xs ${
-          trend === "up" ? "text-[#1A4D36]" :
-          trend === "down" ? "text-[#EF4444]" :
-          "text-[#7A8C85]"
+          trend === "up" ? "text-success" :
+          trend === "down" ? "text-error" :
+          "text-grey-400"
         }`}>
           {trend === "up" ? <TrendingUp className="w-3 h-3" /> :
            trend === "down" ? <TrendingDown className="w-3 h-3" /> : null}
@@ -59,9 +59,9 @@ function CoachCapacityCard({ coach }: { coach: CapacityData["coaches"][0] }) {
     : "#EF4444";
 
   return (
-    <div className="bg-white border border-[#D5DFDB] rounded-xl p-5">
+    <div className="bg-white border border-grey-200 rounded-xl p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[#0A1F18]">{coach.name}</h3>
+        <h3 className="font-semibold text-black">{coach.name}</h3>
         <span
           className="text-xs font-medium px-2 py-1 rounded-full"
           style={{
@@ -75,21 +75,21 @@ function CoachCapacityCard({ coach }: { coach: CapacityData["coaches"][0] }) {
 
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
-          <p className="text-xs text-[#7A8C85] mb-1">Timer booket</p>
-          <p className="text-lg font-semibold text-[#0A1F18]">
+          <p className="text-xs text-grey-400 mb-1">Timer booket</p>
+          <p className="text-lg font-semibold text-black">
             {coach.bookedSlots} / {coach.weeklySlots}
           </p>
         </div>
         <div>
-          <p className="text-xs text-[#7A8C85] mb-1">Inntekt uke</p>
-          <p className="text-lg font-semibold text-[#0A1F18]">
+          <p className="text-xs text-grey-400 mb-1">Inntekt uke</p>
+          <p className="text-lg font-semibold text-black">
             {formatKr(coach.weeklyRevenue)}
           </p>
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className="h-2 bg-[#ECF0EF] rounded-full overflow-hidden">
+      <div className="h-2 bg-grey-50 rounded-full overflow-hidden">
         <div
           className="h-full rounded-full transition-[width] duration-500"
           style={{
@@ -116,18 +116,18 @@ function OccupancyHeatmap({ dailyBreakdown, coaches }: {
   };
 
   return (
-    <div className="bg-white border border-[#D5DFDB] rounded-xl p-5">
-      <h3 className="font-semibold text-[#0A1F18] mb-4">Belegg per dag</h3>
+    <div className="bg-white border border-grey-200 rounded-xl p-5">
+      <h3 className="font-semibold text-black mb-4">Belegg per dag</h3>
 
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
             <tr>
-              <th className="text-left text-[#7A8C85] pb-2"></th>
+              <th className="text-left text-grey-400 pb-2"></th>
               {dailyBreakdown.map((day) => (
                 <th
                   key={day.day}
-                  className="text-center text-[#7A8C85] pb-2 px-2 capitalize"
+                  className="text-center text-grey-400 pb-2 px-2 capitalize"
                 >
                   {day.day.substring(0, 3)}
                 </th>
@@ -137,7 +137,7 @@ function OccupancyHeatmap({ dailyBreakdown, coaches }: {
           <tbody>
             {coaches.map((coachName) => (
               <tr key={coachName}>
-                <td className="text-[#0A1F18] py-1 pr-4 whitespace-nowrap">
+                <td className="text-black py-1 pr-4 whitespace-nowrap">
                   {coachName.split(" ")[0]}
                 </td>
                 {dailyBreakdown.map((day) => {
@@ -149,7 +149,7 @@ function OccupancyHeatmap({ dailyBreakdown, coaches }: {
                         style={{ background: getColor(data.booked, data.total) }}
                         title={`${data.booked}/${data.total} timer`}
                       >
-                        <span className="text-[#0A1F18] font-medium">
+                        <span className="text-black font-medium">
                           {data.total > 0 ? data.booked : "-"}
                         </span>
                       </div>
@@ -162,7 +162,7 @@ function OccupancyHeatmap({ dailyBreakdown, coaches }: {
         </table>
       </div>
 
-      <div className="flex items-center gap-4 mt-4 text-xs text-[#7A8C85]">
+      <div className="flex items-center gap-4 mt-4 text-xs text-grey-400">
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded" style={{ background: "#1A4D36" }} />
           <span>80%+</span>
@@ -216,8 +216,8 @@ export function CapacityOverview({ data }: { data: CapacityData }) {
 
       {/* Coach Cards */}
       <div>
-        <h2 className="text-lg font-semibold text-[#0A1F18] mb-4 flex items-center gap-2">
-          <Users className="w-5 h-5 text-[#0A1F18]" />
+        <h2 className="text-lg font-semibold text-black mb-4 flex items-center gap-2">
+          <Users className="w-5 h-5 text-black" />
           Per trener
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

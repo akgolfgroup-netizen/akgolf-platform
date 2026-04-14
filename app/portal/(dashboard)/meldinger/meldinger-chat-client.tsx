@@ -106,10 +106,10 @@ export function MeldingerChatClient({
 
   if (conversations.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full text-[#324D45]">
+      <div className="flex items-center justify-center h-full text-grey-400">
         <div className="text-center">
           <Inbox className="w-12 h-12 mx-auto mb-3 opacity-40" />
-          <p className="text-lg font-medium mb-1 text-[#0A1F18]">
+          <p className="text-lg font-medium mb-1 text-black">
             Ingen meldinger ennå
           </p>
           <p className="text-sm">
@@ -121,16 +121,16 @@ export function MeldingerChatClient({
   }
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] bg-white rounded-2xl border border-[#D5DFDB] overflow-hidden shadow-sm">
+    <div className="flex h-[calc(100vh-8rem)] bg-white rounded-2xl border border-grey-200 overflow-hidden shadow-sm">
       {/* Samtaleliste */}
       <div
         className={cn(
-          "w-full sm:w-80 border-r border-[#D5DFDB] bg-white flex flex-col",
+          "w-full sm:w-80 border-r border-grey-200 bg-white flex flex-col",
           selectedId && "hidden sm:flex"
         )}
       >
-        <div className="p-4 border-b border-[#D5DFDB]">
-          <h2 className="text-sm font-semibold text-[#0A1F18]">
+        <div className="p-4 border-b border-grey-200">
+          <h2 className="text-sm font-semibold text-black">
             Meldinger
           </h2>
         </div>
@@ -140,10 +140,10 @@ export function MeldingerChatClient({
               key={conv.id}
               onClick={() => setSelectedId(conv.id)}
               className={cn(
-                "w-full text-left px-4 py-3 border-b border-[#D5DFDB]/60 transition-colors cursor-pointer",
+                "w-full text-left px-4 py-3 border-b border-grey-200/60 transition-colors cursor-pointer",
                 selectedId === conv.id
-                  ? "bg-[#F5F8F7]"
-                  : "hover:bg-[#F5F8F7]/60"
+                  ? "bg-grey-50"
+                  : "hover:bg-grey-50/60"
               )}
             >
               <div className="flex items-center justify-between mb-1">
@@ -151,14 +151,14 @@ export function MeldingerChatClient({
                   className={cn(
                     "text-sm",
                     conv.unreadCount > 0
-                      ? "font-semibold text-[#0A1F18]"
-                      : "font-medium text-[#0A1F18]"
+                      ? "font-semibold text-black"
+                      : "font-medium text-black"
                   )}
                 >
                   {conv.participantName}
                 </span>
                 {conv.lastMessageAt && (
-                  <span className="text-[11px] text-[#7A8C85]">
+                  <span className="text-[11px] text-grey-400">
                     {formatDistanceToNow(new Date(conv.lastMessageAt), {
                       addSuffix: true,
                       locale: nb,
@@ -167,11 +167,11 @@ export function MeldingerChatClient({
                 )}
               </div>
               <div className="flex items-center gap-2">
-                <p className="text-xs text-[#324D45] truncate flex-1">
+                <p className="text-xs text-grey-400 truncate flex-1">
                   {conv.lastMessage ?? "Ingen meldinger ennå"}
                 </p>
                 {conv.unreadCount > 0 && (
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#D1F843] text-[#0A1F18] text-[10px] font-bold flex items-center justify-center tabular-nums">
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-accent-cta text-black text-[10px] font-bold flex items-center justify-center tabular-nums">
                     {conv.unreadCount}
                   </span>
                 )}
@@ -191,15 +191,15 @@ export function MeldingerChatClient({
         {selectedId && selectedConversation ? (
           <>
             {/* Header */}
-            <div className="flex items-center gap-3 px-4 py-3 border-b border-[#D5DFDB]">
+            <div className="flex items-center gap-3 px-4 py-3 border-b border-grey-200">
               <button
                 onClick={() => setSelectedId(null)}
-                className="sm:hidden p-1 rounded-lg hover:bg-[#F5F8F7] cursor-pointer"
+                className="sm:hidden p-1 rounded-lg hover:bg-grey-50 cursor-pointer"
               >
-                <ArrowLeft className="w-5 h-5 text-[#324D45]" />
+                <ArrowLeft className="w-5 h-5 text-grey-400" />
               </button>
-              <div className="w-8 h-8 rounded-full bg-[#F5F8F7] flex items-center justify-center">
-                <span className="text-xs font-semibold text-[#324D45]">
+              <div className="w-8 h-8 rounded-full bg-grey-50 flex items-center justify-center">
+                <span className="text-xs font-semibold text-grey-400">
                   {selectedConversation.participantName
                     .split(" ")
                     .map((n) => n[0])
@@ -208,7 +208,7 @@ export function MeldingerChatClient({
                     .slice(0, 2)}
                 </span>
               </div>
-              <span className="text-sm font-semibold text-[#0A1F18]">
+              <span className="text-sm font-semibold text-black">
                 {selectedConversation.participantName}
               </span>
             </div>
@@ -216,7 +216,7 @@ export function MeldingerChatClient({
             {/* Meldinger */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {isPending && messages.length === 0 ? (
-                <div className="flex items-center justify-center h-full text-[#7A8C85]">
+                <div className="flex items-center justify-center h-full text-grey-400">
                   <p className="text-sm">Laster meldinger...</p>
                 </div>
               ) : (
@@ -235,7 +235,7 @@ export function MeldingerChatClient({
                           "max-w-[75%] rounded-2xl px-4 py-2.5",
                           isMe
                             ? "bg-[#0A1F18] text-white"
-                            : "bg-[#F5F8F7] text-[#0A1F18]"
+                            : "bg-grey-50 text-black"
                         )}
                       >
                         <p className="text-sm whitespace-pre-wrap">
@@ -246,7 +246,7 @@ export function MeldingerChatClient({
                             "text-[10px] mt-1",
                             isMe
                               ? "text-white/60"
-                              : "text-[#7A8C85]"
+                              : "text-grey-400"
                           )}
                         >
                           {new Date(msg.createdAt).toLocaleTimeString("nb-NO", {
@@ -263,7 +263,7 @@ export function MeldingerChatClient({
             </div>
 
             {/* Skriv melding */}
-            <div className="p-3 border-t border-[#D5DFDB]">
+            <div className="p-3 border-t border-grey-200">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -276,13 +276,13 @@ export function MeldingerChatClient({
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Skriv en melding..."
-                  className="flex-1 px-4 py-2.5 text-sm rounded-full border border-[#D5DFDB] bg-[#F5F8F7] text-[#0A1F18] placeholder:text-[#7A8C85] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/10 focus:border-[#A5B2AD]"
+                  className="flex-1 px-4 py-2.5 text-sm rounded-full border border-grey-200 bg-grey-50 text-black placeholder:text-grey-400 focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/10 focus:border-[#A5B2AD]"
                   disabled={isSending}
                 />
                 <button
                   type="submit"
                   disabled={!newMessage.trim() || isSending}
-                  className="p-2.5 rounded-full bg-[#D1F843] text-[#0A1F18] disabled:opacity-40 hover:opacity-90 transition-opacity cursor-pointer"
+                  className="p-2.5 rounded-full bg-accent-cta text-black disabled:opacity-40 hover:opacity-90 transition-opacity cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                 </button>
@@ -290,7 +290,7 @@ export function MeldingerChatClient({
             </div>
           </>
         ) : (
-          <div className="flex items-center justify-center h-full text-[#324D45]">
+          <div className="flex items-center justify-center h-full text-grey-400">
             <div className="text-center">
               <MessageSquare className="w-10 h-10 mx-auto mb-2 opacity-30" />
               <p className="text-sm">Velg en samtale for å se meldinger</p>

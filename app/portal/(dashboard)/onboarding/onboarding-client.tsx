@@ -29,10 +29,10 @@ export function OnboardingPageClient() {
 
   if (isPending) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#F5F8F7]">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-grey-50">
         <PremiumCard padding="lg" className="flex flex-col items-center gap-3 min-w-[200px]">
-          <div className="w-8 h-8 border-2 border-[#0A1F18] border-t-transparent rounded-full animate-spin" />
-          <p className="text-[#7A8C85]">Lagrer...</p>
+          <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
+          <p className="text-grey-400">Lagrer...</p>
         </PremiumCard>
       </div>
     );

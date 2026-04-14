@@ -138,7 +138,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
           whileTap={{ scale: 0.97 }}
           onClick={handleQuickLog}
           disabled={isPending}
-          className="h-11 px-6 rounded-full bg-white border border-[#D5DFDB] text-[#0A1F18] text-[12px] font-semibold hover:border-[#A5B2AD] transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
+          className="h-11 px-6 rounded-full bg-white border border-grey-200 text-black text-[12px] font-semibold hover:border-grey-300 transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
         >
           {isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RotateCcw className="w-3.5 h-3.5" />}
           {isPending ? "Logger\u2026" : "Gjenta siste"}
@@ -148,7 +148,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.97 }}
         onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
-        className="relative h-11 px-6 rounded-full bg-[#D1F843] text-[#0A1F18] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
+        className="relative h-11 px-6 rounded-full bg-accent-cta text-black text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
       >
         <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
         <span className="relative z-10">Logg ny økt</span>
@@ -164,10 +164,10 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
         <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
           Din treningsdagbok
         </p>
-        <h1 className="text-2xl font-bold text-[#0A1F18]">
+        <h1 className="text-2xl font-bold text-black">
           Logg og{" "}
-          <span className="font-serif italic text-[#0A1F18] font-normal">spor</span>
-          <span className="text-[#D1F843]">.</span>
+          <span className="font-serif italic text-black font-normal">spor</span>
+          <span className="text-accent-cta">.</span>
         </h1>
         <p className="text-[13px] text-grey-400 max-w-xl">
           Hold oversikt over aktiviteten din. Hver økt teller, og hver streak er et skritt nærmere målet.
@@ -177,7 +177,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
 
       {quickLogSuccess && (
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-          className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-[#1A4D36] text-white text-sm font-medium shadow-lg">
+          className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-success text-white text-sm font-medium shadow-lg">
           Økt logget!
         </motion.div>
       )}
@@ -185,16 +185,16 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
       {isEmpty && (
         <PremiumCard variant="default" padding="lg" className="text-center py-16">
           <div className="flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-[#0A1F18]/10">
-              <NotebookPen className="w-8 h-8 text-[#0A1F18]" strokeWidth={1.75} />
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-black/10">
+              <NotebookPen className="w-8 h-8 text-black" strokeWidth={1.75} />
             </div>
-            <p className="text-[20px] font-semibold text-[#0A1F18] mb-2">Din treningsdagbok er tom</p>
-            <p className="text-[13px] text-[#7A8C85] mb-6 max-w-md leading-relaxed">
+            <p className="text-[20px] font-semibold text-black mb-2">Din treningsdagbok er tom</p>
+            <p className="text-[13px] text-grey-400 mb-6 max-w-md leading-relaxed">
               Logg din første treningsøkt for å komme i gang. Alt du logger blir automatisk en del av fremdriften din.
             </p>
             <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}
               onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
-              className="relative h-11 px-6 rounded-full bg-[#D1F843] text-[#0A1F18] text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group">
+              className="relative h-11 px-6 rounded-full bg-accent-cta text-black text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group">
               <Plus className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
               <span className="relative z-10">Logg ny økt</span>
             </motion.button>
@@ -210,25 +210,12 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
               <PremiumCard variant="accent" padding="md" className="h-full">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] mb-1">Streak</p>
-                    <p className="text-[28px] font-bold text-[#0A1F18] tabular-nums">{streak}</p>
-                    <p className="text-[11px] text-[#324D45]">{streak === 1 ? "dag" : "dager"}</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 mb-1">Streak</p>
+                    <p className="text-[28px] font-bold text-black tabular-nums">{streak}</p>
+                    <p className="text-[11px] text-grey-400">{streak === 1 ? "dag" : "dager"}</p>
                   </div>
-                  <div className="w-10 h-10 rounded-xl bg-[#D1F843]/20 flex items-center justify-center">
-                    <Flame className="w-5 h-5 text-[#0A1F18]" />
-                  </div>
-                </div>
-              </PremiumCard>
-            </div>
-            <div className="col-span-6 md:col-span-3">
-              <PremiumCard variant="default" padding="md" className="h-full">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] mb-1">Økter totalt</p>
-                    <p className="text-[28px] font-bold text-[#0A1F18] tabular-nums">{logs.length}</p>
-                  </div>
-                  <div className="w-10 h-10 rounded-xl bg-[#F5F8F7] flex items-center justify-center">
-                    <Activity className="w-5 h-5 text-[#324D45]" />
+                  <div className="w-10 h-10 rounded-xl bg-accent-cta/20 flex items-center justify-center">
+                    <Flame className="w-5 h-5 text-black" />
                   </div>
                 </div>
               </PremiumCard>
@@ -237,11 +224,11 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
               <PremiumCard variant="default" padding="md" className="h-full">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] mb-1">Timer totalt</p>
-                    <p className="text-[28px] font-bold text-[#0A1F18] tabular-nums">{totalHours}</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 mb-1">Økter totalt</p>
+                    <p className="text-[28px] font-bold text-black tabular-nums">{logs.length}</p>
                   </div>
-                  <div className="w-10 h-10 rounded-xl bg-[#F5F8F7] flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-[#324D45]" />
+                  <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
+                    <Activity className="w-5 h-5 text-grey-400" />
                   </div>
                 </div>
               </PremiumCard>
@@ -250,11 +237,24 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
               <PremiumCard variant="default" padding="md" className="h-full">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] mb-1">Snitt vurdering</p>
-                    <p className="text-[28px] font-bold text-[#0A1F18] tabular-nums">{avgRating}</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 mb-1">Timer totalt</p>
+                    <p className="text-[28px] font-bold text-black tabular-nums">{totalHours}</p>
                   </div>
-                  <div className="w-10 h-10 rounded-xl bg-[#F5F8F7] flex items-center justify-center">
-                    <Star className="w-5 h-5 text-[#324D45]" />
+                  <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
+                    <Clock className="w-5 h-5 text-grey-400" />
+                  </div>
+                </div>
+              </PremiumCard>
+            </div>
+            <div className="col-span-6 md:col-span-3">
+              <PremiumCard variant="default" padding="md" className="h-full">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 mb-1">Snitt vurdering</p>
+                    <p className="text-[28px] font-bold text-black tabular-nums">{avgRating}</p>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
+                    <Star className="w-5 h-5 text-grey-400" />
                   </div>
                 </div>
               </PremiumCard>
@@ -263,24 +263,24 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
 
           {/* Filters + View Toggle */}
           <motion.div className="flex flex-wrap items-center justify-between gap-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-            <div className="flex gap-1 p-1 rounded-full bg-white border border-[#D5DFDB] shadow-sm">
+            <div className="flex gap-1 p-1 rounded-full bg-white border border-grey-200 shadow-sm">
               {filters.map((filter) => (
                 <button key={filter} onClick={() => setActiveFilter(filter)}
                   className={cn("px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
-                    activeFilter === filter ? "bg-[#0A1F18] text-white shadow-sm" : "text-[#7A8C85] hover:text-[#0A1F18]")}>
+                    activeFilter === filter ? "bg-black text-white shadow-sm" : "text-grey-400 hover:text-black")}>
                   {filter}
                 </button>
               ))}
             </div>
-            <div className="flex gap-1 p-1 rounded-full bg-white border border-[#D5DFDB] shadow-sm">
+            <div className="flex gap-1 p-1 rounded-full bg-white border border-grey-200 shadow-sm">
               <button onClick={() => setViewMode("list")}
                 className={cn("inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
-                  viewMode === "list" ? "bg-[#0A1F18] text-white shadow-sm" : "text-[#7A8C85] hover:text-[#0A1F18]")}>
+                  viewMode === "list" ? "bg-black text-white shadow-sm" : "text-grey-400 hover:text-black")}>
                 <List className="w-3.5 h-3.5" /> Liste
               </button>
               <button onClick={() => setViewMode("calendar")}
                 className={cn("inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
-                  viewMode === "calendar" ? "bg-[#0A1F18] text-white shadow-sm" : "text-[#7A8C85] hover:text-[#0A1F18]")}>
+                  viewMode === "calendar" ? "bg-black text-white shadow-sm" : "text-grey-400 hover:text-black")}>
                 <Calendar className="w-3.5 h-3.5" /> Kalender
               </button>
             </div>
@@ -303,20 +303,20 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
                     <PremiumCard variant="default" padding="md" hover="lift" className="transition-all duration-300">
                       <div className="flex items-start justify-between mb-3">
                         <div className="min-w-0">
-                          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] mb-1">{formatLogDate(log.date)}</p>
-                          <p className="text-[16px] font-semibold text-[#0A1F18] truncate">{title}</p>
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 mb-1">{formatLogDate(log.date)}</p>
+                          <p className="text-[16px] font-semibold text-black truncate">{title}</p>
                         </div>
                         <span className={cn("px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.1em] shrink-0 border",
-                          isCoaching ? "bg-[#0A1F18]/10 text-[#0A1F18] border-[#0A1F18]/20" : "bg-[#324D45]/10 text-[#324D45] border-[#324D45]/20")}>
+                          isCoaching ? "bg-black/10 text-black border-black/20" : "bg-grey-400/10 text-grey-400 border-grey-400/20")}>
                           {isCoaching ? "Coaching" : "Fullført"}
                         </span>
                       </div>
-                      <div className="flex flex-wrap gap-5 mb-3 text-[11px] text-[#7A8C85]">
+                      <div className="flex flex-wrap gap-5 mb-3 text-[11px] text-grey-400">
                         {log.durationMinutes && (<span className="flex items-center gap-1.5 tabular-nums"><Clock className="w-3.5 h-3.5" />{log.durationMinutes} min</span>)}
                         <span className="flex items-center gap-1.5"><Target className="w-3.5 h-3.5" />{area}</span>
                         {log.rating != null && (<span className="flex items-center gap-1.5 tabular-nums"><Star className="w-3.5 h-3.5" />{log.rating}/10</span>)}
                       </div>
-                      {log.notes && <p className="text-[13px] text-[#324D45] leading-relaxed line-clamp-2">{log.notes}</p>}
+                      {log.notes && <p className="text-[13px] text-grey-400 leading-relaxed line-clamp-2">{log.notes}</p>}
                     </PremiumCard>
                   </motion.div>
                 );

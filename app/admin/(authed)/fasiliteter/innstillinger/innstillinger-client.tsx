@@ -53,36 +53,36 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
  <>
  <MCTopbar title="Fasilitetinnstillinger"subtitle="Administrer fasiliteter og standard innstillinger"onMenuClick={toggle} />
  <div className={cn("p-6 max-w-4xl mx-auto space-y-6", isPending && "opacity-60 pointer-events-none")}>
- <Link href="/admin/fasiliteter"className="inline-flex items-center gap-2 text-sm text-[#5A6E66] hover:text-[#324D45] transition-colors">
+ <Link href="/admin/fasiliteter"className="inline-flex items-center gap-2 text-sm text-grey-400 hover:text-grey-400 transition-colors">
  <ArrowLeft className="w-4 h-4"/>Tilbake til fasiliteter
  </Link>
 
  {/* Page Header */}
  <div>
- <nav className="flex items-center gap-2 text-sm text-[#5A6E66] mb-2">
- <Link href="/admin/fasiliteter"className="hover:text-[#324D45] transition-colors">Fasiliteter</Link>
+ <nav className="flex items-center gap-2 text-sm text-grey-400 mb-2">
+ <Link href="/admin/fasiliteter"className="hover:text-grey-400 transition-colors">Fasiliteter</Link>
  <span>/</span>
- <span className="text-[#324D45]">Innstillinger</span>
+ <span className="text-grey-400">Innstillinger</span>
  </nav>
- <h1 className="text-2xl font-semibold text-[#0A1F18]">Innstillinger</h1>
- <p className="text-[#5A6E66] mt-1">Administrer fasiliteter og instruktør-defaults</p>
+ <h1 className="text-2xl font-semibold text-black">Innstillinger</h1>
+ <p className="text-grey-400 mt-1">Administrer fasiliteter og instruktør-defaults</p>
  </div>
 
  {/* Facilities List */}
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl overflow-hidden">
- <div className="px-5 py-4 border-b border-[#D5DFDB]">
- <h3 className="font-semibold text-[#0A1F18]">Fasiliteter</h3>
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl overflow-hidden">
+ <div className="px-5 py-4 border-b border-grey-200">
+ <h3 className="font-semibold text-black">Fasiliteter</h3>
  </div>
- <div className="divide-y divide-[#D5DFDB]">
+ <div className="divide-y divide-grey-200">
  {facilities.map((f) => (
  <div key={f.id} className="px-5 py-4 flex items-center justify-between gap-4">
  <div className="flex items-center gap-3 min-w-0">
- <div className="w-10 h-10 rounded-lg bg-[#ECF0EF] flex items-center justify-center shrink-0">
- <MapPin className="w-5 h-5 text-[#5A6E66]"/>
+ <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center shrink-0">
+ <MapPin className="w-5 h-5 text-grey-400"/>
  </div>
  <div className="min-w-0">
- <p className="font-medium text-[#0A1F18] truncate">{f.name}</p>
- <p className="text-sm text-[#5A6E66]">{f.locationName} · Kapasitet: {f.capacity}</p>
+ <p className="font-medium text-black truncate">{f.name}</p>
+ <p className="text-sm text-grey-400">{f.locationName} · Kapasitet: {f.capacity}</p>
  </div>
  </div>
  <button
@@ -92,7 +92,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
  "inline-flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors",
  f.isActive
  ? "text-emerald-700 bg-emerald-50 hover:bg-emerald-100"
- : "text-[#5A6E66] bg-[#ECF0EF] hover:bg-[#ECF0EF]",
+ : "text-grey-400 bg-grey-50 hover:bg-grey-50",
  )}
  >
  {f.isActive ? <><Check className="w-3 h-3"/>Aktiv</> : <><X className="w-3 h-3"/>Inaktiv</>}
@@ -100,32 +100,32 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
  </div>
  ))}
  {facilities.length === 0 && (
- <div className="px-5 py-8 text-center text-sm text-[#5A6E66]">Ingen fasiliteter registrert</div>
+ <div className="px-5 py-8 text-center text-sm text-grey-400">Ingen fasiliteter registrert</div>
  )}
  </div>
  </div>
 
  {/* Instructor Defaults */}
- <div className="bg-white rounded-xl border border-[#D5DFDB] rounded-xl overflow-hidden">
- <div className="px-5 py-4 border-b border-[#D5DFDB]">
- <h3 className="font-semibold text-[#0A1F18]">Instruktør-fasilitet defaults</h3>
- <p className="text-sm text-[#5A6E66] mt-1">Standard fasilitet for hver instruktør ved booking-opprettelse</p>
+ <div className="bg-white rounded-xl border border-grey-200 rounded-xl overflow-hidden">
+ <div className="px-5 py-4 border-b border-grey-200">
+ <h3 className="font-semibold text-black">Instruktør-fasilitet defaults</h3>
+ <p className="text-sm text-grey-400 mt-1">Standard fasilitet for hver instruktør ved booking-opprettelse</p>
  </div>
  {defaults.length > 0 ? (
- <div className="divide-y divide-[#D5DFDB]">
+ <div className="divide-y divide-grey-200">
  {defaults.map((d) => (
  <div key={d.id} className="px-5 py-4 flex items-center justify-between gap-4">
  <div className="flex items-center gap-3 min-w-0">
- <div className="w-10 h-10 rounded-lg bg-[#ECF0EF] flex items-center justify-center shrink-0">
- <User className="w-5 h-5 text-[#5A6E66]"/>
+ <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center shrink-0">
+ <User className="w-5 h-5 text-grey-400"/>
  </div>
  <div className="min-w-0">
- <p className="font-medium text-[#0A1F18] truncate">{d.instructorName}</p>
- <p className="text-sm text-[#5A6E66] truncate">{d.facilityName}{d.serviceType ? ` (${d.serviceType})` :""}</p>
+ <p className="font-medium text-black truncate">{d.instructorName}</p>
+ <p className="text-sm text-grey-400 truncate">{d.facilityName}{d.serviceType ? ` (${d.serviceType})` :""}</p>
  </div>
  </div>
  <div className="flex items-center gap-3 shrink-0">
- <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#ECF0EF] text-[#324D45]">
+ <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-grey-50 text-grey-400">
  Prioritet: {d.priority}
  </span>
  <button type="button"onClick={() => handleDeleteDefault(d.id)}
@@ -137,14 +137,14 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
  ))}
  </div>
  ) : (
- <div className="px-5 py-8 text-center text-sm text-[#5A6E66]">Ingen defaults konfigurert</div>
+ <div className="px-5 py-8 text-center text-sm text-grey-400">Ingen defaults konfigurert</div>
  )}
  </div>
 
- <div className="p-4 rounded-xl bg-[#F5F8F7] border border-[#D5DFDB]">
+ <div className="p-4 rounded-xl bg-grey-50 border border-grey-200">
  <div className="flex items-start gap-3">
- <Settings className="w-5 h-5 text-[#5A6E66] mt-0.5 shrink-0"/>
- <p className="text-sm text-[#324D45]">
+ <Settings className="w-5 h-5 text-grey-400 mt-0.5 shrink-0"/>
+ <p className="text-sm text-grey-400">
  <strong>Tips:</strong> Fasilitet-defaults brukes til automatisk å tildele riktig fasilitet når en booking opprettes.
  </p>
  </div>

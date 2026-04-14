@@ -101,21 +101,21 @@ function WeekDaySelector({
               flex-1 flex flex-col items-center gap-1 py-3 px-1 rounded-xl
               transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
               ${isSelected
-                ? "bg-[#0A1F18] text-white shadow-[0_4px_12px_rgba(10,31,24,0.08)]"
-                : "bg-white text-[#0A1F18] hover:bg-[#F5F8F7]"
+                ? "bg-black text-white shadow-[0_4px_12px_rgba(10,31,24,0.08)]"
+                : "bg-white text-black hover:bg-grey-50"
               }
             `}
           >
             <span
               className={`text-[10px] font-semibold uppercase tracking-[0.08em] ${
-                isSelected ? "text-white/70" : "text-[#7A8C85]"
+                isSelected ? "text-white/70" : "text-grey-400"
               }`}
             >
               {day.dayName}
             </span>
             <span
               className={`text-base font-semibold tabular-nums ${
-                isSelected ? "text-white" : "text-[#0A1F18]"
+                isSelected ? "text-white" : "text-black"
               }`}
             >
               {format(new Date(day.dateISO), "d", { locale: nb })}
@@ -125,10 +125,10 @@ function WeekDaySelector({
                 <div
                   className={`w-1.5 h-1.5 rounded-full ${
                     isCompleted
-                      ? "bg-[#1A4D36]"
+                      ? "bg-success"
                       : isSelected
                         ? "bg-white/60"
-                        : "bg-[#0A1F18]"
+                        : "bg-black"
                   }`}
                 />
               )}
@@ -151,13 +151,13 @@ function TodaySessionCard({ day }: { day: DayData }) {
     return (
       <PremiumCard delay={0.1}>
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="w-12 h-12 rounded-xl bg-[#F5F8F7] flex items-center justify-center mb-4">
-            <Target className="w-6 h-6 text-[#7A8C85]" />
+          <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center mb-4">
+            <Target className="w-6 h-6 text-grey-400" />
           </div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1">
             {day.dayName} {format(new Date(day.dateISO), "d. MMMM", { locale: nb })}
           </p>
-          <p className="text-sm text-[#324D45]">
+          <p className="text-sm text-grey-400">
             Ingen okt planlagt. Nyt hviledagen.
           </p>
         </div>
@@ -179,17 +179,17 @@ function TodaySessionCard({ day }: { day: DayData }) {
       {/* Header */}
       <div className="flex items-start justify-between mb-5">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1">
             Dagens okt
           </p>
-          <h3 className="text-lg font-bold tracking-tight text-[#0A1F18]">
+          <h3 className="text-lg font-bold tracking-tight text-black">
             {session.title}
           </h3>
           <div className="flex items-center gap-3 mt-2">
             {session.pyramidLevel && (
               <PyramidTag level={session.pyramidLevel} />
             )}
-            <span className="flex items-center gap-1 text-xs text-[#324D45]">
+            <span className="flex items-center gap-1 text-xs text-grey-400">
               <Clock className="w-3.5 h-3.5" />
               {session.duration} min
             </span>
@@ -199,20 +199,20 @@ function TodaySessionCard({ day }: { day: DayData }) {
           <button
             onClick={handleToggleComplete}
             disabled={isToggling}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1A4D36]/10 hover:bg-[#1A4D36]/20 transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success/10 hover:bg-success/20 transition-colors"
           >
             {isToggling ? (
-              <Loader2 className="w-3.5 h-3.5 text-[#1A4D36] animate-spin" />
+              <Loader2 className="w-3.5 h-3.5 text-success animate-spin" />
             ) : (
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#1A4D36]" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-success" />
             )}
-            <span className="text-[11px] font-medium text-[#1A4D36]">Fullfort</span>
+            <span className="text-[11px] font-medium text-success">Fullfort</span>
           </button>
         ) : (
           <button
             onClick={handleToggleComplete}
             disabled={isToggling}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[#D5DFDB] text-[#7A8C85] hover:bg-[#1A4D36]/10 hover:text-[#1A4D36] hover:border-[#1A4D36]/30 transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[#D5DFDB] text-grey-400 hover:bg-success/10 hover:text-success hover:border-[#1A4D36]/30 transition-colors"
           >
             {isToggling ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -234,15 +234,15 @@ function TodaySessionCard({ day }: { day: DayData }) {
                 idx < session.exercises.length - 1 ? "border-b border-[#D5DFDB]" : ""
               }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-[#F5F8F7] flex items-center justify-center flex-shrink-0">
-                <Dumbbell className="w-5 h-5 text-[#324D45]" />
+              <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center flex-shrink-0">
+                <Dumbbell className="w-5 h-5 text-grey-400" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-[#0A1F18]">
+                <p className="text-sm font-semibold text-black">
                   {exercise.name}
                 </p>
                 {exercise.details && (
-                  <p className="text-xs text-[#7A8C85] mt-0.5 line-clamp-2">
+                  <p className="text-xs text-grey-400 mt-0.5 line-clamp-2">
                     {exercise.details}
                   </p>
                 )}
@@ -253,7 +253,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
       )}
 
       {session.exercises.length === 0 && (
-        <p className="text-xs text-[#7A8C85] py-4">
+        <p className="text-xs text-grey-400 py-4">
           Ingen ovelser lagt til enna.
         </p>
       )}
@@ -262,7 +262,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
       <div className="flex gap-3 mt-5 pt-5 border-t border-[#D5DFDB]">
         <Link
           href={`/portal/treningsplan/${session.id}`}
-          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full bg-[#D1F843] text-[#0A1F18] text-sm font-semibold
+          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full bg-[#D1F843] text-black text-sm font-semibold
             transition-all duration-300 hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] active:opacity-75"
         >
           <Play className="w-4 h-4" />
@@ -270,7 +270,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
         </Link>
         <Link
           href="/portal/bookinger"
-          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full border border-[#D5DFDB] bg-white text-[#0A1F18] text-sm font-semibold
+          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full border border-[#D5DFDB] bg-white text-black text-sm font-semibold
             transition-all duration-300 hover:border-[#A5B2AD]"
         >
           <Calendar className="w-4 h-4" />
@@ -294,10 +294,10 @@ function WeeklyFocusCard({ weekDays }: { weekDays: DayData[] }) {
 
   return (
     <PremiumCard delay={0.2}>
-      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1">
         Ukens fokusomrade
       </p>
-      <h3 className="text-lg font-bold tracking-tight text-[#0A1F18] mb-4">
+      <h3 className="text-lg font-bold tracking-tight text-black mb-4">
         {primaryFocus}
       </h3>
       {uniqueAreas.length > 1 && (
@@ -305,7 +305,7 @@ function WeeklyFocusCard({ weekDays }: { weekDays: DayData[] }) {
           {uniqueAreas.map((area) => (
             <span
               key={area}
-              className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#F5F8F7] text-[#324D45]"
+              className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-grey-50 text-grey-400"
             >
               {area}
             </span>
@@ -313,7 +313,7 @@ function WeeklyFocusCard({ weekDays }: { weekDays: DayData[] }) {
         </div>
       )}
       {uniqueAreas.length <= 1 && (
-        <p className="text-xs text-[#7A8C85] leading-relaxed">
+        <p className="text-xs text-grey-400 leading-relaxed">
           Coach-anbefaling for denne uken. Fokuser pa {primaryFocus.toLowerCase()} for best mulig fremgang.
         </p>
       )}
@@ -331,16 +331,16 @@ function ProgressCard({ weekDays }: { weekDays: DayData[] }) {
 
   return (
     <PremiumCard delay={0.3} >
-      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-3">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-3">
         Fremgang denne uken
       </p>
 
       {/* Big number */}
       <div className="flex items-baseline gap-1 mb-4">
-        <span className="text-4xl font-extrabold tracking-tight tabular-nums text-[#0A1F18]">
+        <span className="text-4xl font-extrabold tracking-tight tabular-nums text-black">
           {completed}
         </span>
-        <span className="text-lg font-semibold text-[#7A8C85] tabular-nums">
+        <span className="text-lg font-semibold text-grey-400 tabular-nums">
           / {planned}
         </span>
       </div>
@@ -348,13 +348,13 @@ function ProgressCard({ weekDays }: { weekDays: DayData[] }) {
       {/* Progress bar */}
       <div className="h-[5px] bg-[#D5DFDB]/50 rounded-full overflow-hidden mb-3">
         <div
-          className="h-full rounded-full bg-[#0A1F18] transition-all duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+          className="h-full rounded-full bg-black transition-all duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
           style={{ width: `${percentage}%` }}
         />
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="text-xs text-[#7A8C85]">
+        <span className="text-xs text-grey-400">
           {planned === 0
             ? "Ingen okter planlagt"
             : completed === planned
@@ -362,7 +362,7 @@ function ProgressCard({ weekDays }: { weekDays: DayData[] }) {
               : `${planned - completed} okter gjenstaar`}
         </span>
         {completed > 0 && (
-          <span className="flex items-center gap-1 text-xs font-medium text-[#1A4D36]">
+          <span className="flex items-center gap-1 text-xs font-medium text-success">
             <TrendingUp className="w-3.5 h-3.5" />
             {percentage}%
           </span>
@@ -389,23 +389,23 @@ function EmptyState({
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/treningsplan" />
 
       <div className="mb-2">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-2">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-2">
           Uke {weekNumber}
         </p>
-        <h1 className="text-3xl font-bold tracking-tight text-[#0A1F18]">
+        <h1 className="text-3xl font-bold tracking-tight text-black">
           Treningsplan
         </h1>
       </div>
 
       <PremiumCard className="text-center">
         <div className="py-8">
-          <div className="w-16 h-16 rounded-2xl bg-[#F5F8F7] flex items-center justify-center mx-auto mb-5">
-            <Calendar className="w-8 h-8 text-[#324D45]" strokeWidth={1.75} />
+          <div className="w-16 h-16 rounded-2xl bg-grey-50 flex items-center justify-center mx-auto mb-5">
+            <Calendar className="w-8 h-8 text-grey-400" strokeWidth={1.75} />
           </div>
-          <h2 className="text-xl font-semibold text-[#0A1F18] mb-2">
+          <h2 className="text-xl font-semibold text-black mb-2">
             Din treningsplan er tom
           </h2>
-          <p className="text-sm text-[#7A8C85] max-w-md mx-auto mb-6 leading-relaxed">
+          <p className="text-sm text-grey-400 max-w-md mx-auto mb-6 leading-relaxed">
             {canGenerate
               ? "Opprett en plan manuelt, eller la AI lage en personlig plan for deg."
               : "Kontakt din coach for a fa en personlig treningsplan."}
@@ -463,13 +463,13 @@ export function TreningsplanClient({
       {/* Page header */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-2">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-2">
             Uke {weekNumber}
           </p>
-          <h1 className="text-3xl font-bold tracking-tight text-[#0A1F18]">
+          <h1 className="text-3xl font-bold tracking-tight text-black">
             Treningsplan
           </h1>
-          <p className="text-sm text-[#324D45] mt-1">{weekRange}</p>
+          <p className="text-sm text-grey-400 mt-1">{weekRange}</p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -477,7 +477,7 @@ export function TreningsplanClient({
           <div className="flex items-center gap-1 p-1 rounded-full bg-white border border-[#D5DFDB]">
             <Link
               href={`/portal/treningsplan?week=${weekOffset - 1}`}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-[#7A8C85] hover:text-[#0A1F18] hover:bg-[#F5F8F7] transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
               aria-label="Forrige uke"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -485,14 +485,14 @@ export function TreningsplanClient({
             {weekOffset !== 0 && (
               <Link
                 href="/portal/treningsplan"
-                className="h-9 px-3 rounded-full text-xs font-semibold text-[#0A1F18] hover:bg-[#F5F8F7] transition-colors inline-flex items-center"
+                className="h-9 px-3 rounded-full text-xs font-semibold text-black hover:bg-grey-50 transition-colors inline-flex items-center"
               >
                 I dag
               </Link>
             )}
             <Link
               href={`/portal/treningsplan?week=${weekOffset + 1}`}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-[#7A8C85] hover:text-[#0A1F18] hover:bg-[#F5F8F7] transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
               aria-label="Neste uke"
             >
               <ChevronRight className="w-4 h-4" />

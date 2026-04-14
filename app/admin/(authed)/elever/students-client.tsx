@@ -173,7 +173,7 @@ export function StudentsClient({ initialData }: Props) {
             {getInitials(row.name)}
           </div>
           <div className="min-w-0">
-            <div className="font-medium text-black group-hover:text-[#1A3529] transition-colors">
+            <div className="font-medium text-black group-hover:text-grey-400 transition-colors">
               {row.name ?? "Uten navn"}
             </div>
             <div className="text-xs text-grey-400 truncate">

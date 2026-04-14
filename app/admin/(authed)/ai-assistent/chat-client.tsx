@@ -178,7 +178,7 @@ export function ChatClient() {
       />
 
       <div className="p-6 flex flex-col" style={{ height: "calc(100vh - 56px)" }}>
-        <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-white border border-[#D5DFDB] rounded-xl">
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-white border border-grey-200 rounded-xl">
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.map((msg) => (
@@ -193,8 +193,8 @@ export function ChatClient() {
                   className={cn(
                     "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
                     msg.role === "assistant"
-                      ? "bg-[#F5F8F7] text-[#0A1F18]"
-                      : "bg-[#F5F8F7] text-[#0A1F18]",
+                      ? "bg-grey-50 text-black"
+                      : "bg-grey-50 text-black",
                   )}
                 >
                   {msg.role === "assistant" ? (
@@ -207,36 +207,36 @@ export function ChatClient() {
                   className={cn(
                     "max-w-[80%] rounded-2xl p-4",
                     msg.role === "assistant"
-                      ? "bg-[#F5F8F7] text-[#0A1F18] rounded-tl-sm"
-                      : "bg-[#0A1F18] text-white rounded-tr-sm",
+                      ? "bg-grey-50 text-black rounded-tl-sm"
+                      : "bg-black text-white rounded-tr-sm",
                   )}
                 >
                   <div className="text-sm whitespace-pre-wrap leading-relaxed">
                     {msg.content}
                   </div>
                   {msg.role === "assistant" && msg.content && (
-                    <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-[#D5DFDB]">
+                    <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-grey-200">
                       <button
                         onClick={() => handleCopy(msg.content)}
-                        className="p-1.5 rounded hover:bg-[#D5DFDB] text-[#7A8C85] transition-colors"
+                        className="p-1.5 rounded hover:bg-grey-200 text-grey-400 transition-colors"
                         title="Kopier"
                         aria-label="Kopier svar"
                       >
                         <Copy className="w-3.5 h-3.5" />
                       </button>
                       <button
-                        className="p-1.5 rounded hover:bg-[#D5DFDB] text-[#7A8C85] transition-colors"
+                        className="p-1.5 rounded hover:bg-grey-200 text-grey-400 transition-colors"
                         aria-label="Nyttig svar"
                       >
                         <ThumbsUp className="w-3.5 h-3.5" />
                       </button>
                       <button
-                        className="p-1.5 rounded hover:bg-[#D5DFDB] text-[#7A8C85] transition-colors"
+                        className="p-1.5 rounded hover:bg-grey-200 text-grey-400 transition-colors"
                         aria-label="Ikke nyttig"
                       >
                         <ThumbsDown className="w-3.5 h-3.5" />
                       </button>
-                      <span className="text-[10px] text-[#7A8C85] ml-auto">
+                      <span className="text-[10px] text-grey-400 ml-auto">
                         {msg.timestamp.toLocaleTimeString("nb-NO", {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -249,12 +249,12 @@ export function ChatClient() {
             ))}
             {isStreaming && (
               <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-lg bg-[#F5F8F7] flex items-center justify-center shrink-0">
-                  <Sparkles className="w-4 h-4 text-[#0A1F18]" />
+                <div className="w-8 h-8 rounded-lg bg-grey-50 flex items-center justify-center shrink-0">
+                  <Sparkles className="w-4 h-4 text-black" />
                 </div>
-                <div className="bg-[#F5F8F7] rounded-2xl rounded-tl-sm p-4 flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 text-[#0A1F18] animate-spin" />
-                  <span className="text-sm text-[#7A8C85]">Tenker...</span>
+                <div className="bg-grey-50 rounded-2xl rounded-tl-sm p-4 flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 text-black animate-spin" />
+                  <span className="text-sm text-grey-400">Tenker...</span>
                 </div>
               </div>
             )}
@@ -263,8 +263,8 @@ export function ChatClient() {
 
           {/* Suggested Questions */}
           {messages.length < 3 && (
-            <div className="px-6 py-3 border-t border-[#D5DFDB]">
-              <p className="text-xs text-[#7A8C85] mb-2">Foreslåtte spørsmål:</p>
+            <div className="px-6 py-3 border-t border-grey-200">
+              <p className="text-xs text-grey-400 mb-2">Foreslåtte spørsmål:</p>
               <div className="flex flex-wrap gap-2">
                 {suggestedQuestions.map((q, i) => {
                   const Icon = q.icon;
@@ -273,7 +273,7 @@ export function ChatClient() {
                       key={i}
                       onClick={() => handleSend(q.text)}
                       disabled={isStreaming}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-white hover:bg-[#F5F8F7] text-[#0A1F18] rounded-full transition-colors border border-[#D5DFDB] disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-white hover:bg-grey-50 text-black rounded-full transition-colors border border-grey-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Icon className="w-3 h-3" />
                       {q.text}
@@ -285,17 +285,17 @@ export function ChatClient() {
           )}
 
           {/* Input */}
-          <div className="p-4 border-t border-[#D5DFDB] bg-[#F5F8F7]">
-            <div className="flex items-end gap-2 bg-white border border-[#D5DFDB] rounded-xl p-2 focus-within:border-[#A5B2AD] focus-within:ring-2 focus-within:ring-[#0A1F18]/10 transition-all">
-              <div className="p-2 rounded-lg bg-[#F5F8F7]">
-                <Sparkles className="w-4 h-4 text-[#0A1F18]" />
+          <div className="p-4 border-t border-grey-200 bg-grey-50">
+            <div className="flex items-end gap-2 bg-white border border-grey-200 rounded-xl p-2 focus-within:border-grey-300 focus-within:ring-2 focus-within:ring-black/10 transition-all">
+              <div className="p-2 rounded-lg bg-grey-50">
+                <Sparkles className="w-4 h-4 text-black" />
               </div>
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Still et spørsmål om akademiet, elevene eller data..."
                 rows={1}
-                className="flex-1 bg-transparent text-sm text-[#0A1F18] placeholder:text-[#7A8C85] outline-none resize-none py-3"
+                className="flex-1 bg-transparent text-sm text-black placeholder:text-grey-400 outline-none resize-none py-3"
                 style={{ minHeight: "20px", maxHeight: "120px" }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
@@ -307,13 +307,13 @@ export function ChatClient() {
               <button
                 onClick={() => handleSend()}
                 disabled={!input.trim() || isStreaming}
-                className="p-3 rounded-full bg-[#0A1F18] text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+                className="p-3 rounded-full bg-black text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
                 aria-label="Send melding"
               >
                 <Send className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-[10px] text-[#7A8C85] mt-2 text-center">
+            <p className="text-[10px] text-grey-400 mt-2 text-center">
               AI-assistenten kan gjøre feil. Viktig informasjon bør
               dobbeltsjekkes.
             </p>

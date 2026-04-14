@@ -178,7 +178,7 @@ export function StudentDetailClient({ profile }: Props) {
           actions={
             <>
               <Link href="/admin/kalender">
-                <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-black text-white hover:bg-[#1A3529] transition-colors">
+                <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-black text-white hover:bg-grey-800 transition-colors">
                   <Calendar className="w-4 h-4" />
                   Book ny time
                 </button>

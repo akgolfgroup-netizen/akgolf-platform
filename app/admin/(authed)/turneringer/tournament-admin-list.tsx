@@ -8,244 +8,245 @@ import { EditTournamentSheet } from "@/modules/tournament-planner/components/Edi
 import { TournamentPlayerList } from "@/modules/tournament-planner/components/TournamentPlayerList";
 import { PLAN_LEVEL_CONFIG } from "@/modules/tournament-planner";
 import type { GoalType, PlanLevel } from "@/modules/tournament-planner";
+import { Button, Card } from "@/components/ui";
 
 interface TournamentRow {
- id: string;
- name: string;
- startDate: Date;
- endDate: Date | null;
- level: string;
- course: string | null;
- location: string | null;
- registrationDeadline: Date | null;
- seriesUrl: string | null;
- externalUrl: string | null;
- golfboxId: number | null;
- source: string | null;
- sourceId: string | null;
- series: string | null;
- createdById: string | null;
- _count: { playerPlans: number };
- playerPlans: {
- id: string;
- planLevel: string;
- goalType: string;
- notes: string | null;
- isRegistered: boolean;
- student: { id: string; name: string | null; image: string | null };
- }[];
+  id: string;
+  name: string;
+  startDate: Date;
+  endDate: Date | null;
+  level: string;
+  course: string | null;
+  location: string | null;
+  registrationDeadline: Date | null;
+  seriesUrl: string | null;
+  externalUrl: string | null;
+  golfboxId: number | null;
+  source: string | null;
+  sourceId: string | null;
+  series: string | null;
+  createdById: string | null;
+  _count: { playerPlans: number };
+  playerPlans: {
+    id: string;
+    planLevel: string;
+    goalType: string;
+    notes: string | null;
+    isRegistered: boolean;
+    student: { id: string; name: string | null; image: string | null };
+  }[];
 }
 
 interface TournamentAdminListProps {
- tournaments: TournamentRow[];
+  tournaments: TournamentRow[];
 }
 
 const SOURCE_LABELS: Record<string, string> = {
- golfbox: "GolfBox",
- nordic_golf_tour: "NGT",
- jmi_sweden: "JMI",
- global_junior_tour: "GJT",
- manual: "Manuell",
+  golfbox: "GolfBox",
+  nordic_golf_tour: "NGT",
+  jmi_sweden: "JMI",
+  global_junior_tour: "GJT",
+  manual: "Manuell",
 };
 
 export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
- const [importOpen, setImportOpen] = useState(false);
- const [editTournament, setEditTournament] = useState<TournamentRow | null>(null);
- const [expandedId, setExpandedId] = useState<string | null>(null);
- const [deletingId, setDeletingId] = useState<string | null>(null);
- const [syncing, setSyncing] = useState(false);
- const [syncResult, setSyncResult] = useState<{ created: number; updated: number; sources: string[] } | null>(null);
- const [syncError, setSyncError] = useState<string | null>(null);
- const [filterSeries, setFilterSeries] = useState<string>("");
- const router = useRouter();
+  const [importOpen, setImportOpen] = useState(false);
+  const [editTournament, setEditTournament] = useState<TournamentRow | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [syncResult, setSyncResult] = useState<{ created: number; updated: number; sources: string[] } | null>(null);
+  const [syncError, setSyncError] = useState<string | null>(null);
+  const [filterSeries, setFilterSeries] = useState<string>("");
+  const router = useRouter();
 
- async function handleSync() {
- setSyncing(true);
- setSyncResult(null);
- setSyncError(null);
- try {
- const res = await fetch("/api/portal/tournament-planner/sync", {
- method: "POST",
- headers: { "Content-Type": "application/json"},
- body: JSON.stringify({ year: new Date().getFullYear() }),
- });
- if (!res.ok) {
- throw new Error(`Synkronisering feilet (${res.status})`);
- }
- const data = await res.json();
- setSyncResult(data);
- router.refresh();
- } catch (err) {
- setSyncError(err instanceof Error ? err.message : "Ukjent feil under synkronisering");
- } finally {
- setSyncing(false);
- }
- }
+  async function handleSync() {
+    setSyncing(true);
+    setSyncResult(null);
+    setSyncError(null);
+    try {
+      const res = await fetch("/api/portal/tournament-planner/sync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ year: new Date().getFullYear() }),
+      });
+      if (!res.ok) {
+        throw new Error(`Synkronisering feilet (${res.status})`);
+      }
+      const data = await res.json();
+      setSyncResult(data);
+      router.refresh();
+    } catch (err) {
+      setSyncError(err instanceof Error ? err.message : "Ukjent feil under synkronisering");
+    } finally {
+      setSyncing(false);
+    }
+  }
 
- const allSeries = Array.from(new Set(tournaments.map((t) => t.series).filter(Boolean))) as string[];
- const filtered = filterSeries
- ? tournaments.filter((t) => t.series === filterSeries)
- : tournaments;
+  const allSeries = Array.from(new Set(tournaments.map((t) => t.series).filter(Boolean))) as string[];
+  const filtered = filterSeries ? tournaments.filter((t) => t.series === filterSeries) : tournaments;
 
- async function handleDelete(t: TournamentRow) {
- const planCount = t._count.playerPlans;
- const msg = planCount > 0
- ? `Slette "${t.name}"? Dette sletter også ${planCount} spillerplan${planCount !== 1 ? "er":""}.`
- : `Slette "${t.name}"?`;
+  async function handleDelete(t: TournamentRow) {
+    const planCount = t._count.playerPlans;
+    const msg = planCount > 0
+      ? `Slette "${t.name}"? Dette sletter også ${planCount} spillerplan${planCount !== 1 ? "er" : ""}.`
+      : `Slette "${t.name}"?`;
 
- if (!confirm(msg)) return;
+    if (!confirm(msg)) return;
 
- setDeletingId(t.id);
- try {
- const res = await fetch(`/api/portal/tournament-planner/${t.id}`, { method: "DELETE"});
- if (!res.ok) {
- alert(`Kunne ikke slette turneringen (${res.status})`);
- return;
- }
- router.refresh();
- } catch {
- alert("Nettverksfeil — kunne ikke slette turneringen");
- } finally {
- setDeletingId(null);
- }
- }
+    setDeletingId(t.id);
+    try {
+      const res = await fetch(`/api/portal/tournament-planner/${t.id}`, { method: "DELETE" });
+      if (!res.ok) {
+        alert(`Kunne ikke slette turneringen (${res.status})`);
+        return;
+      }
+      router.refresh();
+    } catch {
+      alert("Nettverksfeil — kunne ikke slette turneringen");
+    } finally {
+      setDeletingId(null);
+    }
+  }
 
- return (
- <>
- <div className="flex items-center justify-between mb-4">
- <h3 className="text-base font-semibold text-[#0A1F18]">
- Alle turneringer ({filtered.length})
- </h3>
- <div className="flex items-center gap-2">
- <button
- onClick={handleSync}
- disabled={syncing}
- className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#0A1F18] text-[#0A1F18] text-xs font-semibold hover:bg-[#5A6E66] transition-colors disabled:opacity-50"
- >
- <RefreshCw className={`w-3.5 h-3.5 ${syncing ? "animate-spin":""}`} />
- Synkroniser
- </button>
- <button
- onClick={() => setImportOpen(true)}
- className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[#0A1F18]/30 text-[#0A1F18] text-xs font-medium hover:bg-[#0A1F18]/10 transition-colors"
- >
- <Download className="w-3.5 h-3.5"/>
- GolfBox
- </button>
- </div>
- </div>
+  return (
+    <>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-base font-semibold text-black">
+          Alle turneringer ({filtered.length})
+        </h3>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={handleSync}
+            disabled={syncing}
+            variant="dark"
+            size="sm"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${syncing ? "animate-spin" : ""}`} />
+            Synkroniser
+          </Button>
+          <Button
+            onClick={() => setImportOpen(true)}
+            variant="secondary"
+            size="sm"
+          >
+            <Download className="w-3.5 h-3.5" />
+            GolfBox
+          </Button>
+        </div>
+      </div>
 
- {syncError && (
- <div className="mb-4 p-3 rounded-xl bg-[#EF4444]/10 border border-[#EF4444]/20 text-[#EF4444] text-xs">
- {syncError}
- </div>
- )}
+      {syncError && (
+        <div className="mb-4 p-3 rounded-xl bg-error-light border border-error text-error text-xs">
+          {syncError}
+        </div>
+      )}
 
- {syncResult && (
- <div className="mb-4 p-3 rounded-xl bg-[#1A4D36]/10 border border-[#1A4D36]/20 text-[#1A4D36] text-xs">
- {syncResult.created} opprettet, {syncResult.updated} oppdatert fra {syncResult.sources.join(", ")}
- </div>
- )}
+      {syncResult && (
+        <div className="mb-4 p-3 rounded-xl bg-success-light border border-success text-success text-xs">
+          {syncResult.created} opprettet, {syncResult.updated} oppdatert fra {syncResult.sources.join(", ")}
+        </div>
+      )}
 
- {allSeries.length > 1 && (
- <div className="flex items-center gap-2 mb-4 overflow-x-auto">
- <button
- onClick={() => setFilterSeries("")}
- className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
- !filterSeries ? "bg-[#0A1F18]/15 text-[#0A1F18]": "text-[#5A6E66] hover:text-[#0A1F18]"
- }`}
- >
- Alle
- </button>
- {allSeries.map((s) => (
- <button
- key={s}
- onClick={() => setFilterSeries(s === filterSeries ?"": s)}
- className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
- filterSeries === s ? "bg-[#0A1F18]/15 text-[#0A1F18]": "text-[#5A6E66] hover:text-[#0A1F18]"
- }`}
- >
- {s}
- </button>
- ))}
- </div>
- )}
+      {allSeries.length > 1 && (
+        <div className="flex items-center gap-2 mb-4 overflow-x-auto">
+          <button
+            onClick={() => setFilterSeries("")}
+            className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
+              !filterSeries ? "bg-grey-200 text-black" : "text-grey-400 hover:text-black"
+            }`}
+          >
+            Alle
+          </button>
+          {allSeries.map((s) => (
+            <button
+              key={s}
+              onClick={() => setFilterSeries(s === filterSeries ? "" : s)}
+              className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
+                filterSeries === s ? "bg-grey-200 text-black" : "text-grey-400 hover:text-black"
+              }`}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      )}
 
- <div className="space-y-2">
- {filtered.map((t) => {
- const isExpanded = expandedId === t.id;
- return (
- <div key={t.id}>
- <div className="flex items-center justify-between p-3 bg-[#ECF0EF] border border-[#D5DFDB] rounded-xl">
- <button
- onClick={() => setExpandedId(isExpanded ? null : t.id)}
- className="flex items-center gap-2 flex-1 min-w-0 text-left"
- >
- {t._count.playerPlans > 0 ? (
- isExpanded ? (
- <ChevronDown className="w-3.5 h-3.5 text-[#5A6E66] flex-shrink-0"/>
- ) : (
- <ChevronRight className="w-3.5 h-3.5 text-[#5A6E66] flex-shrink-0"/>
- )
- ) : (
- <span className="w-3.5 flex-shrink-0"/>
- )}
- <div className="min-w-0">
- <p className="text-sm font-medium text-[#0A1F18] truncate">{t.name}</p>
- <p className="text-xs text-[#5A6E66]">
- {new Date(t.startDate).toLocaleDateString("nb-NO")} · {t.level}
- {t.source && ` · ${SOURCE_LABELS[t.source] ?? t.source}`}
- {t.series && ` · ${t.series}`}
- </p>
- </div>
- </button>
- <div className="flex items-center gap-2 flex-shrink-0">
- <span className="text-xs text-[#5A6E66]">
- {t._count.playerPlans} planer
- </span>
- <button
- onClick={() => setEditTournament(t)}
- className="p-1.5 rounded-lg hover:bg-[#D5DFDB] transition-colors text-[#5A6E66]"
- title="Rediger"
- >
- <Pencil className="w-3.5 h-3.5"/>
- </button>
- <button
- onClick={() => handleDelete(t)}
- disabled={deletingId === t.id}
- className="p-1.5 rounded-lg hover:bg-[#EF4444]/10 transition-colors text-[#5A6E66] hover:text-[#EF4444]"
- title="Slett"
- >
- {deletingId === t.id ? (
- <Loader2 className="w-3.5 h-3.5 animate-spin"/>
- ) : (
- <Trash2 className="w-3.5 h-3.5"/>
- )}
- </button>
- </div>
- </div>
+      <div className="space-y-2">
+        {filtered.map((t) => {
+          const isExpanded = expandedId === t.id;
+          return (
+            <div key={t.id}>
+              <Card className="flex items-center justify-between p-3">
+                <button
+                  onClick={() => setExpandedId(isExpanded ? null : t.id)}
+                  className="flex items-center gap-2 flex-1 min-w-0 text-left"
+                >
+                  {t._count.playerPlans > 0 ? (
+                    isExpanded ? (
+                      <ChevronDown className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
+                    ) : (
+                      <ChevronRight className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
+                    )
+                  ) : (
+                    <span className="w-3.5 flex-shrink-0" />
+                  )}
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-black truncate">{t.name}</p>
+                    <p className="text-xs text-grey-400">
+                      {new Date(t.startDate).toLocaleDateString("nb-NO")} · {t.level}
+                      {t.source && ` · ${SOURCE_LABELS[t.source] ?? t.source}`}
+                      {t.series && ` · ${t.series}`}
+                    </p>
+                  </div>
+                </button>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <span className="text-xs text-grey-400">
+                    {t._count.playerPlans} planer
+                  </span>
+                  <button
+                    onClick={() => setEditTournament(t)}
+                    className="p-1.5 rounded-lg hover:bg-grey-200 transition-colors text-grey-400"
+                    title="Rediger"
+                  >
+                    <Pencil className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(t)}
+                    disabled={deletingId === t.id}
+                    className="p-1.5 rounded-lg hover:bg-error-light transition-colors text-grey-400 hover:text-error"
+                    title="Slett"
+                  >
+                    {deletingId === t.id ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <Trash2 className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+                </div>
+              </Card>
 
- {isExpanded && t.playerPlans.length > 0 && (
- <TournamentPlayerList plans={t.playerPlans} />
- )}
- </div>
- );
- })}
- </div>
+              {isExpanded && t.playerPlans.length > 0 && (
+                <TournamentPlayerList plans={t.playerPlans} />
+              )}
+            </div>
+          );
+        })}
+      </div>
 
- <ImportTournamentsSheet open={importOpen} onClose={() => setImportOpen(false)} />
+      <ImportTournamentsSheet open={importOpen} onClose={() => setImportOpen(false)} />
 
- {editTournament && (
- <EditTournamentSheet
- open={true}
- onClose={() => setEditTournament(null)}
- tournament={editTournament}
- onSaved={() => {
- setEditTournament(null);
- router.refresh();
- }}
- />
- )}
- </>
- );
+      {editTournament && (
+        <EditTournamentSheet
+          open={true}
+          onClose={() => setEditTournament(null)}
+          tournament={editTournament}
+          onSaved={() => {
+            setEditTournament(null);
+            router.refresh();
+          }}
+        />
+      )}
+    </>
+  );
 }

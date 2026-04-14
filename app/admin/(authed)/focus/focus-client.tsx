@@ -101,15 +101,15 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
 
       <div className="p-6 space-y-6">
         {/* Division selector */}
-        <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-white border border-[#D5DFDB]">
+        <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-white border border-grey-200">
           {DIVISIONS.map((d) => {
             const Icon = d.icon;
             return (
               <button key={d.id} onClick={() => setDivision(d.id)} className={cn(
                 "inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
                 division === d.id 
-                  ? "bg-[#0A1F18] text-white" 
-                  : "text-[#5A6E66] hover:text-[#0A1F18] hover:bg-[#ECF0EF]",
+                  ? "bg-black text-white" 
+                  : "text-grey-400 hover:text-black hover:bg-grey-50",
               )}>
                 <Icon className="w-4 h-4" />{d.label}
               </button>
@@ -135,7 +135,7 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
             headerAction={
               <button 
                 onClick={() => setShowCreate(true)} 
-                className="p-1.5 rounded-lg hover:bg-[#ECF0EF] text-[#7A8C85] hover:text-[#0A1F18] transition-colors"
+                className="p-1.5 rounded-lg hover:bg-grey-50 text-grey-400 hover:text-black transition-colors"
               >
                 <Plus className="w-4 h-4" />
               </button>
@@ -152,28 +152,28 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
           />
 
           {/* Today's bookings */}
-          <div className="bg-white border border-[#D5DFDB] rounded-xl overflow-hidden flex flex-col">
-            <div className="px-5 py-4 border-b border-[#D5DFDB] flex items-center justify-between bg-[#F5F8F7]">
-              <h3 className="text-sm font-semibold text-[#0A1F18]">I dag</h3>
-              <Calendar className="w-4 h-4 text-[#7A8C85]" />
+          <div className="bg-white border border-grey-200 rounded-xl overflow-hidden flex flex-col">
+            <div className="px-5 py-4 border-b border-grey-200 flex items-center justify-between bg-grey-50">
+              <h3 className="text-sm font-semibold text-black">I dag</h3>
+              <Calendar className="w-4 h-4 text-grey-400" />
             </div>
             <div className="p-4 space-y-2 flex-1">
               {divBookings.length === 0 ? (
-                <div className="text-center py-8 text-[#7A8C85]">
+                <div className="text-center py-8 text-grey-400">
                   <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   <p className="text-sm">Ingen økter i dag</p>
                 </div>
               ) : divBookings.map((b) => (
                 <div 
                   key={b.id} 
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#F5F8F7] transition-colors border border-transparent hover:border-[#D5DFDB]"
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-grey-50 transition-colors border border-transparent hover:border-grey-200"
                 >
-                  <div className="flex items-center justify-center w-14 h-9 bg-[#0A1F18] text-white rounded-lg text-xs font-semibold tabular-nums">
+                  <div className="flex items-center justify-center w-14 h-9 bg-black text-white rounded-lg text-xs font-semibold tabular-nums">
                     {format(new Date(b.time), "HH:mm")}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-semibold text-[#0A1F18] truncate">{b.studentName}</div>
-                    <div className="text-xs text-[#7A8C85]">{b.serviceName}</div>
+                    <div className="text-sm font-semibold text-black truncate">{b.studentName}</div>
+                    <div className="text-xs text-grey-400">{b.serviceName}</div>
                   </div>
                 </div>
               ))}
@@ -183,19 +183,19 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
 
         {/* Done (collapsed) */}
         {doneTasks.length > 0 && (
-          <div className="bg-white border border-[#D5DFDB] rounded-xl overflow-hidden">
+          <div className="bg-white border border-grey-200 rounded-xl overflow-hidden">
             <details>
-              <summary className="px-5 py-4 text-sm font-semibold text-[#0A1F18] cursor-pointer select-none hover:bg-[#F5F8F7] transition-colors border-b border-[#D5DFDB] list-none flex items-center justify-between">
+              <summary className="px-5 py-4 text-sm font-semibold text-black cursor-pointer select-none hover:bg-grey-50 transition-colors border-b border-grey-200 list-none flex items-center justify-between">
                 <span>Ferdig ({doneTasks.length})</span>
-                <span className="text-[#7A8C85]">▼</span>
+                <span className="text-grey-400">▼</span>
               </summary>
               <div className="p-4 space-y-1">
                 {doneTasks.map((t) => (
                   <div 
                     key={t.id} 
-                    className="flex items-center gap-3 p-2 text-sm text-[#7A8C85] line-through"
+                    className="flex items-center gap-3 p-2 text-sm text-grey-400 line-through"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-[#7A8C85] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-grey-400 shrink-0" />
                     {t.title}
                   </div>
                 ))}
@@ -220,9 +220,9 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
 
 function StatCard({ label, value }: { label: string; value: number }) {
   return (
-    <div className="bg-white border border-[#D5DFDB] rounded-xl p-4">
-      <div className="text-2xl font-bold text-[#0A1F18]">{value}</div>
-      <div className="text-sm text-[#7A8C85]">{label}</div>
+    <div className="bg-white border border-grey-200 rounded-xl p-4">
+      <div className="text-2xl font-bold text-black">{value}</div>
+      <div className="text-sm text-grey-400">{label}</div>
     </div>
   );
 }
@@ -236,11 +236,11 @@ function TaskColumn({ title, tasks, isPending, onToggle, onDelete, headerAction 
   headerAction?: React.ReactNode;
 }) {
   return (
-    <div className="bg-white border border-[#D5DFDB] rounded-xl overflow-hidden flex flex-col">
-      <div className="px-5 py-4 border-b border-[#D5DFDB] flex items-center justify-between bg-[#F5F8F7]">
-        <h3 className="text-sm font-semibold text-[#0A1F18]">{title}</h3>
+    <div className="bg-white border border-grey-200 rounded-xl overflow-hidden flex flex-col">
+      <div className="px-5 py-4 border-b border-grey-200 flex items-center justify-between bg-grey-50">
+        <h3 className="text-sm font-semibold text-black">{title}</h3>
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-[#7A8C85] bg-[#ECF0EF] px-2 py-0.5 rounded-full">
+          <span className="text-xs font-medium text-grey-400 bg-grey-50 px-2 py-0.5 rounded-full">
             {tasks.length}
           </span>
           {headerAction}
@@ -248,19 +248,19 @@ function TaskColumn({ title, tasks, isPending, onToggle, onDelete, headerAction 
       </div>
       <div className="p-4 space-y-2 flex-1">
         {tasks.length === 0 && (
-          <p className="text-xs text-[#7A8C85] text-center py-4">Ingen oppgaver</p>
+          <p className="text-xs text-grey-400 text-center py-4">Ingen oppgaver</p>
         )}
         {tasks.map((task) => {
           const priCfg = PRIORITY_CONFIG[task.priority];
           return (
             <div 
               key={task.id} 
-              className="flex items-start gap-3 p-3 rounded-lg bg-[#F5F8F7] border border-[#D5DFDB] hover:border-[#A5B2AD] transition-colors group"
+              className="flex items-start gap-3 p-3 rounded-lg bg-grey-50 border border-grey-200 hover:border-grey-300 transition-colors group"
             >
               <button
                 onClick={() => onToggle(task.id, task.status)}
                 disabled={isPending}
-                className="mt-0.5 shrink-0 text-[#7A8C85] hover:text-[#324D45] transition-colors disabled:opacity-50"
+                className="mt-0.5 shrink-0 text-grey-400 hover:text-grey-400 transition-colors disabled:opacity-50"
                 title={STATUS_CONFIG[task.status].next ? `Flytt til ${STATUS_CONFIG[STATUS_CONFIG[task.status].next!].label}` : "Ferdig"}
               >
                 {task.status === "IN_PROGRESS" ? (
@@ -270,9 +270,9 @@ function TaskColumn({ title, tasks, isPending, onToggle, onDelete, headerAction 
                 )}
               </button>
               <div className="flex-1 min-w-0">
-                <div className="text-sm text-[#0A1F18]">{task.title}</div>
+                <div className="text-sm text-black">{task.title}</div>
                 {task.dueDate && (
-                  <div className="text-xs text-[#7A8C85] mt-0.5">
+                  <div className="text-xs text-grey-400 mt-0.5">
                     {format(new Date(task.dueDate), "d. MMM", { locale: nb })}
                   </div>
                 )}
@@ -283,7 +283,7 @@ function TaskColumn({ title, tasks, isPending, onToggle, onDelete, headerAction 
                 </span>
                 <button
                   onClick={() => onDelete(task.id)}
-                  className="p-1 rounded-md opacity-0 group-hover:opacity-100 text-[#7A8C85] hover:text-red-500 transition-all"
+                  className="p-1 rounded-md opacity-0 group-hover:opacity-100 text-grey-400 hover:text-red-500 transition-all"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>

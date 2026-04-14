@@ -247,10 +247,10 @@ function HelpBtn({ title, items, color }: { title: string; items: RefItem[]; col
       {open && (
         <>
           <div onClick={() => setOpen(false)} className="fixed inset-0 z-[998]" />
-          <div onClick={(e) => e.stopPropagation()} className="absolute top-6 -left-2.5 w-[280px] bg-white rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,.18)] z-[999] p-3.5 border border-[#D5DFDB]">
+          <div onClick={(e) => e.stopPropagation()} className="absolute top-6 -left-2.5 w-[280px] bg-white rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,.18)] z-[999] p-3.5 border border-grey-200">
             <div className="flex justify-between mb-2">
               <div className="text-[13px] font-bold">{title}</div>
-              <button onClick={() => setOpen(false)} className="bg-transparent border-none cursor-pointer text-base text-[#7A8C85]">x</button>
+              <button onClick={() => setOpen(false)} className="bg-transparent border-none cursor-pointer text-base text-grey-400">x</button>
             </div>
             <div className="max-h-[220px] overflow-y-auto">
               {items.map((it, i) => (
@@ -276,7 +276,7 @@ function ParamPick({ label, helpTitle, helpItems, options, value, onChange, colo
   return (
     <div className={compact ? "mb-2" : "mb-3"}>
       <div className="flex items-center gap-1.5 mb-1.5">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">{label}</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">{label}</div>
         <HelpBtn title={helpTitle} items={helpItems} color={color} />
       </div>
       <div className="flex flex-wrap gap-1">
@@ -312,7 +312,7 @@ function SlagFocusPick({ selected, onChange, color, compact }: {
   return (
     <div className={compact ? "mb-2" : "mb-3"}>
       <div className="flex items-center gap-1.5 mb-1.5">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">Slagfokus</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">Slagfokus</div>
         <HelpBtn title="Slagkvalitet" items={SLAG_FOCUS.map((sf) => ({ code: sf.code, name: sf.name, desc: sf.desc }))} color={color} />
       </div>
       <div className="grid grid-cols-2 gap-1.5">
@@ -350,7 +350,7 @@ function PPosPick({ from, to, onChange, color }: {
   return (
     <div className="mb-3">
       <div className="flex items-center gap-1.5 mb-1.5">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85]">P-Posisjon</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">P-Posisjon</div>
         <HelpBtn title="P-Posisjoner" items={P_POS.map((p) => ({ code: p.code, name: p.name, desc: `Svingposisjon: ${p.name}` }))} color={color} />
       </div>
       {([["Fra", from, (v: string) => onChange(v, to)] as const, ["Til", to, (v: string) => onChange(from, v)] as const]).map(([l, val, set]) => (
@@ -430,7 +430,7 @@ function ExerciseAddFlow({ onAdd, onClose }: { onAdd: (ex: V2Exercise) => void; 
     <div>
       {step === 0 && (
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">1. Pyramideniva</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">1. Pyramideniva</div>
           <div className="grid grid-cols-5 gap-1.5">
             {PYRAMID.map((p) => (
               <button key={p.key} onClick={() => { setPyr(p.key); setStep(1); }}
@@ -438,7 +438,7 @@ function ExerciseAddFlow({ onAdd, onClose }: { onAdd: (ex: V2Exercise) => void; 
                 style={{ border: `2px solid ${p.color}30`, background: `${p.color}08` }}
               >
                 <div className="text-xs font-extrabold" style={{ color: p.color }}>{p.label}</div>
-                <div className="text-[9px] text-[#7A8C85] mt-0.5">{p.full}</div>
+                <div className="text-[9px] text-grey-400 mt-0.5">{p.full}</div>
               </button>
             ))}
           </div>
@@ -450,11 +450,11 @@ function ExerciseAddFlow({ onAdd, onClose }: { onAdd: (ex: V2Exercise) => void; 
             <button onClick={() => setStep(0)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#324D45] border-none cursor-pointer">&#8592;</button>
             <span className="text-xs font-bold" style={{ color }}>{pyr}</span>
           </div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">2. Treningsomrade</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">2. Treningsomrade</div>
           <div className="grid grid-cols-3 gap-1.5 max-h-[200px] overflow-y-auto">
             {(AREAS[pyr] || []).map((a) => (
               <button key={a.code} onClick={() => pickArea(a.code)}
-                className="py-2 px-1.5 rounded-lg border border-[#D5DFDB] bg-white cursor-pointer text-center text-[11px] font-semibold hover:bg-[#F5F8F7] transition-colors"
+                className="py-2 px-1.5 rounded-lg border border-grey-200 bg-white cursor-pointer text-center text-[11px] font-semibold hover:bg-[#F5F8F7] transition-colors"
               >{a.name}</button>
             ))}
           </div>
@@ -466,9 +466,9 @@ function ExerciseAddFlow({ onAdd, onClose }: { onAdd: (ex: V2Exercise) => void; 
             <button onClick={() => setStep(1)} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#324D45] border-none cursor-pointer">&#8592;</button>
             <span className="text-xs font-bold" style={{ color }}>{pyr} · {area}</span>
           </div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">3. Konfigurer</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">3. Konfigurer</div>
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Ovelsesnavn"
-            className="w-full py-2.5 px-3.5 rounded-[10px] border border-[#D5DFDB] text-sm outline-none mb-3 box-border bg-white"
+            className="w-full py-2.5 px-3.5 rounded-[10px] border border-grey-200 text-sm outline-none mb-3 box-border bg-white"
           />
           <ExerciseParams
             ex={{ pyramid: pyr, area, lPhase: null, cs: null, m: null, pr: null, pFrom: null, pTo: null, slagFocus: [], ...params } as V2Exercise}
@@ -498,7 +498,7 @@ function ExerciseCard({ ex, onRemove, onUpdate, showReps, editId, setEditId }: {
     <div className="bg-white rounded-xl shadow-card p-3.5 mb-2 relative"
       style={{ borderLeft: `4px solid ${ec}` }}
     >
-      <button onClick={() => onRemove(ex.id)} className="absolute top-2 right-2.5 bg-transparent border-none cursor-pointer text-base text-[#7A8C85] hover:text-[#B84233] transition-colors">x</button>
+      <button onClick={() => onRemove(ex.id)} className="absolute top-2 right-2.5 bg-transparent border-none cursor-pointer text-base text-grey-400 hover:text-[#B84233] transition-colors">x</button>
       <div className="flex items-center gap-1.5 mb-0.5 pr-5">
         <div className="text-[13px] font-bold flex-1 text-[#0A1F18]">{ex.name}</div>
         <button onClick={() => setEditId(isEdit ? null : ex.id)}
@@ -526,7 +526,7 @@ function ExerciseCard({ ex, onRemove, onUpdate, showReps, editId, setEditId }: {
             <div className="text-[9px] font-bold text-[#1A4D36] uppercase tracking-[0.08em] mb-1">Baller</div>
             <div className="flex items-center justify-center gap-2.5">
               <button onClick={() => onUpdate(ex.id, { baller: Math.max(0, ex.baller - 1) })}
-                className="w-[30px] h-[30px] rounded-full border border-[#D5DFDB] bg-white cursor-pointer text-base font-bold text-[#324D45] flex items-center justify-center"
+                className="w-[30px] h-[30px] rounded-full border border-grey-200 bg-white cursor-pointer text-base font-bold text-[#324D45] flex items-center justify-center"
               >-</button>
               <div className="text-[26px] font-extrabold tabular-nums min-w-[36px]">{ex.baller}</div>
               <button onClick={() => onUpdate(ex.id, { baller: ex.baller + 1 })}
@@ -538,7 +538,7 @@ function ExerciseCard({ ex, onRemove, onUpdate, showReps, editId, setEditId }: {
             <div className="text-[9px] font-bold text-[#0A1F18] uppercase tracking-[0.08em] mb-1">Bevegelser</div>
             <div className="flex items-center justify-center gap-2.5">
               <button onClick={() => onUpdate(ex.id, { bevegelser: Math.max(0, ex.bevegelser - 1) })}
-                className="w-[30px] h-[30px] rounded-full border border-[#D5DFDB] bg-white cursor-pointer text-base font-bold text-[#324D45] flex items-center justify-center"
+                className="w-[30px] h-[30px] rounded-full border border-grey-200 bg-white cursor-pointer text-base font-bold text-[#324D45] flex items-center justify-center"
               >-</button>
               <div className="text-[26px] font-extrabold tabular-nums min-w-[36px]">{ex.bevegelser}</div>
               <button onClick={() => onUpdate(ex.id, { bevegelser: ex.bevegelser + 1 })}
@@ -601,8 +601,8 @@ function LiveTracker({ session, setSession, onEnd, onSaveLive }: {
           <div className="text-[44px] font-extrabold tabular-nums mt-2 text-[#0A1F18]">{fmtEl(elapsed)}</div>
         </div>
         <div className="flex justify-center gap-8 mb-6">
-          <div className="text-center"><div className="text-[32px] font-extrabold">{totalB}</div><div className="text-[11px] text-[#7A8C85]">Baller</div></div>
-          <div className="text-center"><div className="text-[32px] font-extrabold">{totalM}</div><div className="text-[11px] text-[#7A8C85]">Bevegelser</div></div>
+          <div className="text-center"><div className="text-[32px] font-extrabold">{totalB}</div><div className="text-[11px] text-grey-400">Baller</div></div>
+          <div className="text-center"><div className="text-[32px] font-extrabold">{totalM}</div><div className="text-[11px] text-grey-400">Bevegelser</div></div>
         </div>
         {session.exercises.map((ex) => (
           <div key={ex.id} className="py-2.5 border-t border-black/4">
@@ -629,11 +629,11 @@ function LiveTracker({ session, setSession, onEnd, onSaveLive }: {
         <div className="text-[52px] font-extrabold tabular-nums tracking-tight leading-none mt-2"
           style={{ color: session.paused ? "#7A8C85" : "#0A1F18" }}
         >{fmtEl(elapsed)}</div>
-        <div className="text-[11px] text-[#7A8C85] mt-1">{session.paused ? "PAUSET" : "AKTIV OKT"}</div>
+        <div className="text-[11px] text-grey-400 mt-1">{session.paused ? "PAUSET" : "AKTIV OKT"}</div>
         <div className="flex justify-center gap-7 mt-3">
-          <div><div className="text-[22px] font-extrabold tabular-nums text-[#1A4D36]">{totalB}</div><div className="text-[9px] text-[#7A8C85] uppercase">Baller</div></div>
-          <div><div className="text-[22px] font-extrabold tabular-nums">{totalM}</div><div className="text-[9px] text-[#7A8C85] uppercase">Beveg.</div></div>
-          <div><div className="text-[22px] font-extrabold tabular-nums">{session.exercises.length}</div><div className="text-[9px] text-[#7A8C85] uppercase">Ovelser</div></div>
+          <div><div className="text-[22px] font-extrabold tabular-nums text-[#1A4D36]">{totalB}</div><div className="text-[9px] text-grey-400 uppercase">Baller</div></div>
+          <div><div className="text-[22px] font-extrabold tabular-nums">{totalM}</div><div className="text-[9px] text-grey-400 uppercase">Beveg.</div></div>
+          <div><div className="text-[22px] font-extrabold tabular-nums">{session.exercises.length}</div><div className="text-[9px] text-grey-400 uppercase">Ovelser</div></div>
         </div>
         <div className="flex justify-center gap-2 mt-3 pb-1">
           <button onClick={togglePause}
@@ -650,13 +650,13 @@ function LiveTracker({ session, setSession, onEnd, onSaveLive }: {
       ))}
       {!showAdd ? (
         <button onClick={() => setShowAdd(true)}
-          className="w-full mt-2 py-3.5 rounded-[14px] border-2 border-dashed border-[#D5DFDB] bg-transparent cursor-pointer text-sm font-semibold text-[#324D45] hover:bg-[#F5F8F7] transition-colors"
+          className="w-full mt-2 py-3.5 rounded-[14px] border-2 border-dashed border-grey-200 bg-transparent cursor-pointer text-sm font-semibold text-[#324D45] hover:bg-[#F5F8F7] transition-colors"
         >+ Legg til ovelse</button>
       ) : (
         <div className="bg-white rounded-xl shadow-card mt-2 p-4">
           <div className="flex justify-between mb-3">
             <div className="text-sm font-bold">Ny ovelse</div>
-            <button onClick={() => setShowAdd(false)} className="bg-transparent border-none cursor-pointer text-lg text-[#7A8C85]">x</button>
+            <button onClick={() => setShowAdd(false)} className="bg-transparent border-none cursor-pointer text-lg text-grey-400">x</button>
           </div>
           <ExerciseAddFlow onAdd={addEx} onClose={() => setShowAdd(false)} />
         </div>
@@ -700,25 +700,25 @@ function PlanPanel({ initial, onSave, onCancel }: {
           <button onClick={onCancel} className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5F8F7] text-[#324D45] border-none cursor-pointer">Avbryt</button>
         </div>
         <div className="mb-3.5">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Oktnavn</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Oktnavn</div>
           <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="F.eks. TEK Innspill 150m"
-            className="w-full py-2.5 px-3.5 rounded-[10px] border border-[#D5DFDB] text-sm outline-none box-border bg-white"
+            className="w-full py-2.5 px-3.5 rounded-[10px] border border-grey-200 text-sm outline-none box-border bg-white"
           />
         </div>
         <div className="flex gap-3 mb-3.5">
           <div className="flex-1">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Starttid</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Starttid</div>
             <div className="flex gap-1">
-              <select value={startH} onChange={(e) => setStartH(+e.target.value)} className="flex-1 py-2 px-2.5 rounded-lg border border-[#D5DFDB] text-sm bg-white outline-none">
+              <select value={startH} onChange={(e) => setStartH(+e.target.value)} className="flex-1 py-2 px-2.5 rounded-lg border border-grey-200 text-sm bg-white outline-none">
                 {hours.map((h) => <option key={h} value={h}>{fmt(h, 0)}</option>)}
               </select>
-              <select value={startM} onChange={(e) => setStartM(+e.target.value)} className="w-[70px] py-2 px-2.5 rounded-lg border border-[#D5DFDB] text-sm bg-white outline-none">
+              <select value={startM} onChange={(e) => setStartM(+e.target.value)} className="w-[70px] py-2 px-2.5 rounded-lg border border-grey-200 text-sm bg-white outline-none">
                 {[0, 15, 30, 45].map((m) => <option key={m} value={m}>:{String(m).padStart(2, "0")}</option>)}
               </select>
             </div>
           </div>
           <div className="flex-1">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Varighet</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Varighet</div>
             <div className="flex flex-wrap gap-1">
               {durations.map((d) => (
                 <button key={d} onClick={() => setDur(d)}
@@ -746,12 +746,12 @@ function PlanPanel({ initial, onSave, onCancel }: {
       </div>
 
       {!showAdd ? (
-        <button onClick={() => setShowAdd(true)} className="w-full py-3.5 rounded-[14px] border-2 border-dashed border-[#D5DFDB] bg-transparent cursor-pointer text-sm font-semibold text-[#324D45] mb-4 hover:bg-[#F5F8F7] transition-colors">+ Legg til ovelse</button>
+        <button onClick={() => setShowAdd(true)} className="w-full py-3.5 rounded-[14px] border-2 border-dashed border-grey-200 bg-transparent cursor-pointer text-sm font-semibold text-[#324D45] mb-4 hover:bg-[#F5F8F7] transition-colors">+ Legg til ovelse</button>
       ) : (
         <div className="bg-white rounded-xl shadow-card p-4 mb-4">
           <div className="flex justify-between mb-3">
             <div className="text-sm font-bold">Ny ovelse</div>
-            <button onClick={() => setShowAdd(false)} className="bg-transparent border-none cursor-pointer text-lg text-[#7A8C85]">x</button>
+            <button onClick={() => setShowAdd(false)} className="bg-transparent border-none cursor-pointer text-lg text-grey-400">x</button>
           </div>
           <ExerciseAddFlow onAdd={(ex) => setExercises((e) => [...e, ex])} onClose={() => setShowAdd(false)} />
         </div>
@@ -893,7 +893,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
         ) : (
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* Day headers */}
-            <div className="flex bg-white border-b border-[#D5DFDB] flex-shrink-0">
+            <div className="flex bg-white border-b border-grey-200 flex-shrink-0">
               <div className="w-[50px] flex-shrink-0" />
               <div className="flex flex-1">
                 {dates.map((d, i) => {
@@ -914,7 +914,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
                 <div className="w-[50px] flex-shrink-0">
                   {Array.from({ length: TH }, (_, i) => (
                     <div key={i} className="flex items-start justify-end pr-1.5" style={{ height: HH }}>
-                      <span className="text-[10px] text-[#7A8C85] tabular-nums -translate-y-1.5">{fmt(SH + i, 0)}</span>
+                      <span className="text-[10px] text-grey-400 tabular-nums -translate-y-1.5">{fmt(SH + i, 0)}</span>
                     </div>
                   ))}
                 </div>
@@ -1017,7 +1017,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
       </div>
 
       {/* SIDEBAR */}
-      <div className="w-[260px] border-l border-[#D5DFDB] bg-white overflow-y-auto p-3.5 flex flex-col gap-3.5 flex-shrink-0">
+      <div className="w-[260px] border-l border-grey-200 bg-white overflow-y-auto p-3.5 flex flex-col gap-3.5 flex-shrink-0">
         {ev && (() => {
           const et = eTime(ev);
           const exCount = ev.exercises?.length || 0;
@@ -1027,7 +1027,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
               <div className="text-[11px] text-[#324D45] mt-0.5">{fmt(ev.startH, ev.startM)} - {fmt(et.h, et.m)} · {ev.dur} min</div>
               {exCount > 0 && (
                 <div className="mt-2">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">{exCount} ovelser planlagt</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">{exCount} ovelser planlagt</div>
                   {ev.exercises.map((ex) => (
                     <div key={ex.id} className="py-1 border-b border-black/4">
                       <div className="text-xs font-semibold">{ex.name}</div>
@@ -1050,7 +1050,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
         })()}
 
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Standard okter</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Standard okter</div>
           {(templates.length > 0 ? templates : DEFAULT_TEMPLATES).map((t) => (
             <div key={t.id} draggable onDragStart={(e) => e.dataTransfer.setData("template", JSON.stringify(t))}
               className="py-2 px-2.5 rounded-lg bg-[#F5F8F7] border border-black/4 cursor-grab mb-1 hover:bg-[#F5F8F7] transition-colors"
@@ -1062,7 +1062,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
         </div>
 
         <div>
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">Pyramiden</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">Pyramiden</div>
           <div className="flex flex-col items-center gap-1">
             {[...PYRAMID].reverse().map((p) => (
               <div key={p.key} className="py-1 rounded-md text-center text-[10px] font-extrabold tracking-[0.1em]"
@@ -1139,14 +1139,14 @@ function AnalyseView() {
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[{ l: "SNITT SCORE", v: "78.4" }, { l: "HANDICAP", v: "6.3" }, { l: "RUNDER", v: "14" }, { l: "SG TOTAL", v: "+1.8" }].map((k) => (
           <div key={k.l} className="bg-white rounded-xl shadow-card p-5">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-1.5">{k.l}</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1.5">{k.l}</div>
             <div className="text-4xl font-bold tabular-nums text-[#0A1F18] leading-none">{k.v}</div>
           </div>
         ))}
       </div>
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="bg-white rounded-xl shadow-card p-5">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-3">Strokes Gained</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-3">Strokes Gained</div>
           {([["Tee", 0.6], ["Approach", 0.8], ["Short Game", -0.2], ["Putting", 0.6]] as const).map(([l, v]) => {
             const p = Math.min(Math.abs(v) / 1.5 * 100, 100);
             return (
@@ -1168,12 +1168,12 @@ function AnalyseView() {
           })}
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-3">Score-trend</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-3">Score-trend</div>
           <Spark data={[82, 80, 79, 81, 78, 77, 80, 78, 76, 79, 78, 77]} w={440} h={80} color="#0A1F18" />
         </div>
       </div>
       <div className="bg-white rounded-xl shadow-card p-5">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7A8C85] mb-3">HCP 12 mnd</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-3">HCP 12 mnd</div>
         <Spark data={[8.1, 7.8, 7.5, 7.6, 7.2, 7.0, 6.9, 7.1, 6.8, 6.5, 6.4, 6.3]} w={1100} h={60} color="#1A4D36" />
       </div>
     </div>
@@ -1233,7 +1233,7 @@ export function TrainingPlannerV2({
   return (
     <div className="bg-[#F5F8F7] min-h-screen text-[#0A1F18] text-sm font-sans">
       {/* Tab bar (integrated with portal design) */}
-      <div className="flex items-center justify-between px-6 py-2.5 bg-white border-b border-[#D5DFDB]">
+      <div className="flex items-center justify-between px-6 py-2.5 bg-white border-b border-grey-200">
         <div className="flex gap-1 bg-[#F5F8F7] rounded-[10px] p-[3px]">
           {([["planner", "Planlegger"], ["analyse", "Analyse"]] as const).map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)}

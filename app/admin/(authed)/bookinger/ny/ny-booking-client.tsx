@@ -509,7 +509,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
               </h3>
 
               {error && (
-                <div className="mb-4 p-3 rounded-lg bg-[#FEF2F2] text-error text-sm">
+                <div className="mb-4 p-3 rounded-lg bg-error-light text-error text-sm">
                   {error}
                 </div>
               )}

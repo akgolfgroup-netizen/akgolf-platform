@@ -319,7 +319,7 @@ function DagbokTab({
             </div>
           )}
           {log.deviatedFromPlan && (
-            <div className="text-xs text-[#C48A32] mt-2">
+            <div className="text-xs text-warning mt-2">
               Avvik fra plan
             </div>
           )}
