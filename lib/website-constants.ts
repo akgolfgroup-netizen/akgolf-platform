@@ -1,7 +1,6 @@
 // ─── Navigation ───
 export const NAV_LINKS = [
   { label: "Coaching", href: "/academy" },
-  { label: "Utvikling", href: "/utvikling" },
 ] as const;
 
 // ─── Hero ───
