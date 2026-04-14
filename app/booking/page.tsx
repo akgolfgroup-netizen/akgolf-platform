@@ -308,13 +308,13 @@ export default function BookingPage() {
                         className="group rounded-2xl border border-grey-200 bg-white overflow-hidden transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover text-left"
                       >
                         {/* Trenerbilde */}
-                        <div className="relative h-48 md:h-56 overflow-hidden bg-grey-100">
+                        <div className="relative aspect-[4/3] overflow-hidden bg-grey-100">
                           {trainer.image ? (
                             <Image
                               src={trainer.image}
                               alt={trainer.name}
                               fill
-                              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                              className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-primary">
