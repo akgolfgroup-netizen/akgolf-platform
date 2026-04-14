@@ -7,7 +7,7 @@ import { HowItWorksSection } from "@/components/website/academy/HowItWorksSectio
 import { PortalPreviewSection } from "@/components/website/academy/PortalPreviewSection";
 import { AcademyPricesV2 } from "@/components/website/academy-prices-v2";
 import { ComparisonSection } from "@/components/website/academy/ComparisonSection";
-import { TestimonialSection } from "@/components/website/landing/TestimonialSection";
+
 import { AcademyCtaV2 } from "@/components/website/academy-cta-v2";
 import { FAQSection } from "@/components/website/landing/FAQSection";
 
@@ -65,10 +65,7 @@ export default function AcademyPage() {
         {/* 6. Abonnement vs Flex */}
         <ComparisonSection />
 
-        {/* 7. Kundehistorie */}
-        <TestimonialSection />
-
-        {/* 8. CTA */}
+        {/* 7. CTA */}
         <AcademyCtaV2 />
 
         {/* 9. FAQ */}

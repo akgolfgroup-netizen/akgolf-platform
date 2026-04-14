@@ -71,7 +71,7 @@ export function WebsiteNav() {
             ))}
             <a
               href={BOOKING_URL}
-              className="text-[13px] font-medium px-5 py-2 rounded-full bg-black text-white transition-opacity duration-300 hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              className="text-[13px] font-medium px-5 py-2 rounded-full bg-accent-cta text-accent-cta-text transition-opacity duration-300 hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-cta"
             >
               Book coaching
             </a>
