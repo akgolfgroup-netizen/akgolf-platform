@@ -13,6 +13,7 @@
 import type { ClubDispersion } from "./dispersion";
 import { recommendClub } from "./dispersion";
 import { getExpectedStrokes } from "./expected-strokes";
+import type { ReferenceCourse, ClubDispersionData } from "@prisma/client";
 
 // ════════════════════════════════════════════════════════════
 // TYPES
@@ -173,6 +174,70 @@ export function generateHoleStrategy(
     reasoning: reasoning.trim(),
     riskLevel,
     keyDecision,
+  };
+}
+
+/**
+ * Estimer forventet score for en bane basert pa spillerens spredning
+ */
+export function estimateScoreForCourse(
+  course: ReferenceCourse,
+  dispersions: ClubDispersionData[]
+): {
+  expectedScore: number;
+  scoreRangeLow: number;
+  scoreRangeHigh: number;
+  confidence: number;
+  breakdown: Record<string, number>;
+  reasoning: string[];
+} {
+  const holes = course.par === 72 ? 18 : 9;
+  const par3s = Math.floor(holes / 6);
+  const par5s = Math.floor(holes / 6);
+  const par4s = holes - par3s - par5s;
+
+  const avgLength = course.lengthMeter / holes;
+
+  const driverDisp = dispersions.find((d) =>
+    d.club.toLowerCase().includes("driver")
+  );
+
+  const hasReliableData = dispersions.length >= 3 && driverDisp && driverDisp.sampleSize >= 10;
+
+  // Base expected strokes per hole type
+  const par3Expected = getExpectedStrokes(avgLength * 0.6, "tee");
+  const par4Expected = getExpectedStrokes(avgLength, "tee");
+  const par5Expected = getExpectedStrokes(avgLength * 1.2, "tee");
+
+  let expectedScore = par3s * par3Expected + par4s * par4Expected + par5s * par5Expected;
+
+  // Adjust for course difficulty
+  const slopeFactor = (course.slopeRating - 113) / 113;
+  expectedScore += expectedScore * slopeFactor * 0.3;
+
+  // Adjust for dispersion reliability
+  const confidence = hasReliableData ? 85 : 60;
+  const variance = hasReliableData ? 3 : 6;
+
+  return {
+    expectedScore: Math.round(expectedScore),
+    scoreRangeLow: Math.round(expectedScore - variance),
+    scoreRangeHigh: Math.round(expectedScore + variance),
+    confidence,
+    breakdown: {
+      par3Contribution: Math.round(par3s * par3Expected * 10) / 10,
+      par4Contribution: Math.round(par4s * par4Expected * 10) / 10,
+      par5Contribution: Math.round(par5s * par5Expected * 10) / 10,
+      slopeAdjustment: Math.round(expectedScore * slopeFactor * 0.3 * 10) / 10,
+    },
+    reasoning: [
+      `Banelengde: ${course.lengthMeter}m over ${holes} hull`,
+      `Gjennomsnittlig hullengde: ${Math.round(avgLength)}m`,
+      `Slope-rating: ${course.slopeRating} gir ${slopeFactor > 0 ? "vanskeligere" : "lettere"} forhold`,
+      hasReliableData
+        ? `Pålitelig TrackMan-data (${dispersions.length} klubber)`
+        : `Begrenset TrackMan-data — estimatet er usikkert`,
+    ],
   };
 }
 

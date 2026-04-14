@@ -8,19 +8,21 @@ import {
   logLiveSession,
 } from "./actions";
 import { TrainingPlannerV2 } from "./treningsplan-v2-client";
+import { TrainingPlanViewer } from "./training-plan-viewer";
 
 // ---------------------------------------------------------------------
 // Server component
 // ---------------------------------------------------------------------
 
 interface TreningsplanPageProps {
-  searchParams: Promise<{ week?: string }>;
+  searchParams: Promise<{ week?: string; view?: string }>;
 }
 
 export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
   const user = await requirePortalUser();
-  const { week } = await searchParams;
+  const { week, view } = await searchParams;
   const weekOffset = parseInt(week ?? "0", 10) || 0;
+  const activeView = view ?? "calendar";
 
   const plan = await getActivePlan();
   const events = await getWeekEvents(weekOffset);
@@ -38,7 +40,6 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     done: boolean;
   }) {
     "use server";
-    // For new events or edits, we update the session time
     await updateSessionTime(event.id, event.startH, event.startM, event.dur);
   }
 
@@ -49,7 +50,6 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
 
   async function handleMoveEvent(eventId: string, date: string, startH: number, startM: number) {
     "use server";
-    // Parse date to get dayOfWeek (1=Mon, 7=Sun)
     const d = new Date(date);
     const day = d.getDay();
     const dayOfWeek = day === 0 ? 7 : day;
@@ -58,7 +58,6 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
 
   async function handleResizeEvent(eventId: string, durationMinutes: number) {
     "use server";
-    // Get current time from event
     const ev = events.find((e) => e.id === eventId);
     await updateSessionTime(eventId, ev?.startH ?? 9, ev?.startM ?? 0, durationMinutes);
   }
@@ -86,7 +85,6 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     await logLiveSession(data);
   }
 
-  // Default templates (can be extended with user favorites later)
   const templates = [
     { id: "t1", title: "Putting-drill", dur: 20, focus: "TEK", exercises: [] },
     { id: "t2", title: "Short game", dur: 30, focus: "SLAG", exercises: [] },
@@ -97,15 +95,25 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   ];
 
   return (
-    <TrainingPlannerV2
-      events={events}
-      templates={templates}
-      planId={plan?.id ?? null}
-      onSaveEvent={handleSaveEvent}
-      onDeleteEvent={handleDeleteEvent}
-      onMoveEvent={handleMoveEvent}
-      onResizeEvent={handleResizeEvent}
-      onSaveLiveSession={handleSaveLiveSession}
-    />
+    <div className="space-y-6">
+      {activeView === "calendar" ? (
+        <TrainingPlannerV2
+          events={events}
+          templates={templates}
+          planId={plan?.id ?? null}
+          onSaveEvent={handleSaveEvent}
+          onDeleteEvent={handleDeleteEvent}
+          onMoveEvent={handleMoveEvent}
+          onResizeEvent={handleResizeEvent}
+          onSaveLiveSession={handleSaveLiveSession}
+        />
+      ) : (
+        <TrainingPlanViewer
+          events={events}
+          weekOffset={weekOffset}
+          planId={plan?.id ?? null}
+        />
+      )}
+    </div>
   );
 }
