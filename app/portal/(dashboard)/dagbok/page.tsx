@@ -1,15 +1,41 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getTrainingLogs, getLoggedSessionIds, getLastSession } from "./actions";
+import { getActivePlan } from "@/app/portal/(dashboard)/treningsplan/actions";
 import { DagbokClient } from "./dagbok-client";
+import { isWithinInterval, endOfISOWeek, startOfISOWeek } from "date-fns";
 
 export default async function DagbokPage() {
   await requirePortalUser();
 
-  const [logs, loggedSessionIds, lastSession] = await Promise.all([
+  const [logs, loggedSessionIds, lastSession, activePlan] = await Promise.all([
     getTrainingLogs(),
     getLoggedSessionIds(),
     getLastSession(),
+    getActivePlan(),
   ]);
+
+  // Beregn plan-progress for inneværende uke
+  let planProgress: { weekTitle: string; loggedCount: number; plannedCount: number } | null = null;
+  if (activePlan) {
+    const weeks = (activePlan.TrainingPlanWeek as unknown as { weekStart: string; focus: string | null; TrainingPlanSession: { id: string }[] }[]) || [];
+    const now = new Date();
+    const currentWeek = weeks.find((w) =>
+      isWithinInterval(now, {
+        start: startOfISOWeek(new Date(w.weekStart)),
+        end: endOfISOWeek(new Date(w.weekStart)),
+      })
+    );
+    if (currentWeek) {
+      const sessions = currentWeek.TrainingPlanSession || [];
+      const plannedCount = sessions.length;
+      const loggedCount = sessions.filter((s) => loggedSessionIds.includes(s.id)).length;
+      planProgress = {
+        weekTitle: currentWeek.focus || activePlan.title || "Denne uken",
+        loggedCount,
+        plannedCount,
+      };
+    }
+  }
 
   return (
     <DagbokClient
@@ -39,6 +65,7 @@ export default async function DagbokPage() {
       })}
       loggedSessionIds={loggedSessionIds}
       lastSession={lastSession}
+      planProgress={planProgress}
     />
   );
 }

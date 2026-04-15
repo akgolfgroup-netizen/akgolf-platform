@@ -16,12 +16,14 @@ import {
 } from "lucide-react";
 import { repeatLastSession } from "./actions";
 import { LogSessionModal } from "@/components/portal/dagbok/log-session-modal";
+import { PlanProgressTracker } from "@/components/portal/dagbok/plan-progress-tracker";
 import {
   staggerContainer,
 } from "@/components/portal/premium";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { cn } from "@/lib/portal/utils/cn";
 import { format, isToday, isSameDay, subDays, startOfDay } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -50,6 +52,7 @@ interface DagbokClientProps {
   initialLogs: TrainingLogEntry[];
   loggedSessionIds: string[];
   lastSession?: { focusArea: string | null; durationMinutes: number | null } | null;
+  planProgress: { weekTitle: string; loggedCount: number; plannedCount: number } | null;
 }
 
 const SUB_NAV_TABS = [
@@ -74,11 +77,11 @@ function calculateStreak(logs: TrainingLogEntry[]): number {
   return streak;
 }
 
-export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: DagbokClientProps) {
+export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planProgress }: DagbokClientProps) {
   const [activeFilter, setActiveFilter] = useState("Alle");
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [isPending, startTransition] = useTransition();
-  const [quickLogSuccess, setQuickLogSuccess] = useState(false);
+  const [quickLogToast, setQuickLogToast] = useState<{ show: boolean; focusArea: string | null; durationMinutes: number | null }>({ show: false, focusArea: null, durationMinutes: null });
   const [logModalOpen, setLogModalOpen] = useState(false);
   const [editingLog, setEditingLog] = useState<TrainingLogEntry | null>(null);
 
@@ -88,9 +91,9 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
   const handleQuickLog = () => {
     startTransition(async () => {
       try {
-        await repeatLastSession();
-        setQuickLogSuccess(true);
-        setTimeout(() => setQuickLogSuccess(false), 3000);
+        const result = await repeatLastSession();
+        setQuickLogToast({ show: true, focusArea: result?.focusArea ?? null, durationMinutes: lastSession?.durationMinutes ?? null });
+        setTimeout(() => setQuickLogToast({ show: false, focusArea: null, durationMinutes: null }), 4000);
       } catch { /* silent */ }
     });
   };
@@ -175,11 +178,32 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession }: Dag
         {heroActions}
       </div>
 
-      {quickLogSuccess && (
-        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-          className="fixed top-4 right-4 z-50 px-4 py-3 rounded-xl bg-success text-white text-sm font-medium shadow-lg">
-          Økt logget!
+      {quickLogToast.show && (
+        <motion.div initial={{ opacity: 0, y: -10, x: 20 }} animate={{ opacity: 1, y: 0, x: 0 }} exit={{ opacity: 0, x: 20 }}
+          className="fixed top-4 right-4 z-50 max-w-xs rounded-xl bg-black text-white text-sm shadow-lg overflow-hidden">
+          <div className="px-4 py-3">
+            <p className="font-semibold">Økt logget!</p>
+            {quickLogToast.focusArea && (
+              <p className="text-grey-300 text-xs mt-0.5">
+                {quickLogToast.focusArea}
+                {quickLogToast.durationMinutes ? ` • ${quickLogToast.durationMinutes} min` : ""}
+              </p>
+            )}
+          </div>
+          <div className="px-4 py-2 bg-white/5 border-t border-white/10">
+            <Link href="/portal/treningsplan" className="text-xs font-medium text-accent-cta hover:underline">
+              Se treningsplan →
+            </Link>
+          </div>
         </motion.div>
+      )}
+
+      {planProgress && (
+        <PlanProgressTracker
+          weekTitle={planProgress.weekTitle}
+          loggedCount={planProgress.loggedCount}
+          plannedCount={planProgress.plannedCount}
+        />
       )}
 
       {isEmpty && (

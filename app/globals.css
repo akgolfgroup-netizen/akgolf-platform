@@ -1031,6 +1031,106 @@
     padding: 24px;
   }
 
+  /* ═══════════════════════════════════════════════════════════════════════════
+   * PERFORMANCE DESIGN SYSTEM — Utilities
+   * ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Performance data card — 32px radius + ambient shadow */
+  .performance-card {
+    background: var(--color-performance-card);
+    border: 0.5px solid var(--color-performance-border);
+    border-radius: var(--radius-data-card); /* 32px */
+    padding: 24px;
+    box-shadow: var(--shadow-ambient);
+    transition: transform 400ms var(--ease-entrance),
+                box-shadow 400ms var(--ease-entrance),
+                border-color var(--duration-hover);
+  }
+
+  .performance-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-performance-border-hover);
+    box-shadow: var(--shadow-ambient-hover);
+  }
+
+  /* Performance stat card — compact, tabular numerals */
+  .performance-stat {
+    background: var(--color-performance-card);
+    border: 0.5px solid var(--color-performance-border);
+    border-radius: 16px;
+    padding: 20px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    transition: transform 400ms var(--ease-entrance),
+                box-shadow 400ms var(--ease-entrance);
+  }
+
+  .performance-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-ambient-hover);
+  }
+
+  /* Performance stat typography scales */
+  .stat-xl {
+    font-family: var(--font-stats);
+    font-size: var(--text-stat-xl);
+    line-height: var(--leading-stat);
+    letter-spacing: var(--tracking-stat);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .stat-lg {
+    font-family: var(--font-stats);
+    font-size: var(--text-stat-lg);
+    line-height: var(--leading-stat);
+    letter-spacing: var(--tracking-stat);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .stat-md {
+    font-family: var(--font-stats);
+    font-size: var(--text-stat-md);
+    line-height: var(--leading-stat);
+    letter-spacing: var(--tracking-stat);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .stat-sm {
+    font-family: var(--font-stats);
+    font-size: var(--text-stat-sm);
+    line-height: var(--leading-stat);
+    letter-spacing: var(--tracking-stat);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Performance accent utilities */
+  .performance-accent {
+    color: var(--color-performance);
+  }
+
+  .performance-accent-bg {
+    background-color: var(--color-performance);
+    color: var(--color-performance-dark);
+  }
+
+  .performance-ring {
+    box-shadow: 0 0 0 2px var(--color-performance-glow);
+  }
+
+  /* Tabular nums utility */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
   /* Pyramide kort */
   .portal-pyramid-card {
     border-radius: 0 8px 8px 0;
@@ -1259,11 +1359,12 @@
   --border: oklch(0.91 0 0);
   --input: oklch(0.91 0 0);
   --ring: oklch(0.145 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
+  /* Performance Chart Palette — mapped to warm cream backgrounds */
+  --chart-1: #2A7D5A;   /* Sage — primary trend / positive */
+  --chart-2: #E85D4E;   /* Coral — comparison / alert */
+  --chart-3: #007AFF;   /* Blue — user / personal data */
+  --chart-4: #D1F843;   /* Lime — highlight / PR / milestone */
+  --chart-5: #A5B2AD;   /* Neutral — average / baseline / other */
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
