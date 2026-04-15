@@ -29,6 +29,27 @@
 
 ---
 
+## 2026-04-15 ~00:30 — Uke 1: TrackMan Analytics & Shot Dispersion
+
+**Jobbet med:**
+- Utvidet `getTrackManOverview()` til å hente `TrackManSessionAnalytics` for siste 12 sesjoner
+- Bygget `ShotDispersionChart` med Recharts ScatterChart (offline vs carry, fargekodet per klubb)
+- Bygget `TrackManAnalyticsCard` med KPI-er, klubb-statistikker, ballbane-fordeling, innsikter og anbefalt fokus
+- Koblet analytics til `trackman-client.tsx` — expanded session viser nå spredning + analyse
+- Fikset carry-by-club chart til å vise faktisk `avgCarry` fra serverdata
+- Fjernet hardkodede hex-farger i charts og upload-modal
+
+**Nøkkelfiler:**
+- `app/portal/(dashboard)/trackman/actions.ts`
+- `app/portal/(dashboard)/trackman/trackman-client.tsx`
+- `components/portal/trackman/shot-dispersion-chart.tsx` (ny)
+- `components/portal/trackman/trackman-analytics-card.tsx` (ny)
+
+**Neste steg:**
+- Uke 2: "Din Golfprofil" — kombinere RoundStats + TrackMan + TrainingLog til ett dashboard
+
+---
+
 ## 2026-04-13 ~05:40 — DataGolf, TrackMan, statistikk, treningsdagbok, strategi
 
 **Jobbet med:**

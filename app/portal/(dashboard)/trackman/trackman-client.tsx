@@ -99,8 +99,8 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
   }, []);
 
   useEffect(() => {
+    if (!expandedSessionId) return;
     const sessionId = expandedSessionId;
-    if (!sessionId) return;
 
     async function loadShots() {
       if (!sessionShots[sessionId]) {
