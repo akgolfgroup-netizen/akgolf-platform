@@ -28,7 +28,9 @@ import {
   BarChart,
   Bar,
 } from "recharts";
-import type { TrackManOverview } from "./actions";
+import type { TrackManOverview, TrackManAnalyticsSummary } from "./actions";
+import { ShotDispersionChart } from "@/components/portal/trackman/shot-dispersion-chart";
+import { TrackManAnalyticsCard } from "@/components/portal/trackman/trackman-analytics-card";
 
 // ── Typer ────────────────────────────────────────────────
 
@@ -59,6 +61,7 @@ interface ApiShot {
   totalDistance: number | null;
   spinRate: number | null;
   launchAngle: number | null;
+  offlineDistance: number | null;
 }
 
 // ── Komponent ────────────────────────────────────────────
@@ -74,6 +77,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
   const [expandedSessionId, setExpandedSessionId] = useState<string | null>(null);
   const [sessions, setSessions] = useState<ApiSession[]>([]);
   const [sessionShots, setSessionShots] = useState<Record<string, ApiShot[]>>({});
+  const [sessionAnalytics, setSessionAnalytics] = useState<Record<string, TrackManAnalyticsSummary>>({});
   const [loadingSessions, setLoadingSessions] = useState(true);
 
   const csvInputRef = useRef<HTMLInputElement>(null);
@@ -95,18 +99,34 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
   }, []);
 
   useEffect(() => {
-    if (!expandedSessionId) return;
-    if (sessionShots[expandedSessionId]) return;
+    const sessionId = expandedSessionId;
+    if (!sessionId) return;
 
     async function loadShots() {
-      const res = await fetch(`/api/portal/trackman/sessions/${expandedSessionId}/shots`);
-      if (res.ok) {
-        const json = await res.json();
-        setSessionShots((prev) => ({ ...prev, [expandedSessionId!]: json.shots ?? [] }));
+      if (!sessionShots[sessionId]) {
+        const res = await fetch(`/api/portal/trackman/sessions/${sessionId}/shots`);
+        if (res.ok) {
+          const json = await res.json();
+          setSessionShots((prev) => ({ ...prev, [sessionId]: json.shots ?? [] }));
+        }
       }
     }
+
+    async function loadAnalytics() {
+      if (!sessionAnalytics[sessionId]) {
+        const res = await fetch(`/api/portal/trackman/sessions/${sessionId}/analytics`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.analytics) {
+            setSessionAnalytics((prev) => ({ ...prev, [sessionId]: json.analytics }));
+          }
+        }
+      }
+    }
+
     loadShots();
-  }, [expandedSessionId, sessionShots]);
+    loadAnalytics();
+  }, [expandedSessionId, sessionShots, sessionAnalytics]);
 
   const resetUpload = useCallback(() => {
     setUpload({
@@ -257,20 +277,22 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
     return { date, speed: s.avgBallSpeed ?? 0 };
   });
 
-  const carryByClub = Array.from(
-    sessions.reduce((acc, s) => {
-      for (const c of s.clubs) {
-        const existing = acc.get(c.club);
-        if (existing) {
-          existing.carry += 0; // carry not in session list
-          existing.count += c.count;
-        } else {
-          acc.set(c.club, { club: c.club, carry: 0, count: c.count });
-        }
-      }
-      return acc;
-    }, new Map<string, { club: string; carry: number; count: number }>())
-  ).map(([, v]) => ({ club: v.club, carry: v.count }));
+  // Carry by club: use server data when available, otherwise compute from API sessions
+  const carryByClub = data.clubStats.length > 0
+    ? data.clubStats.map((c) => ({ club: c.club, carry: c.avgCarry }))
+    : Array.from(
+        sessions.reduce((acc, s) => {
+          for (const c of s.clubs) {
+            const existing = acc.get(c.club);
+            if (existing) {
+              existing.count += c.count;
+            } else {
+              acc.set(c.club, { club: c.club, carry: 0, count: c.count });
+            }
+          }
+          return acc;
+        }, new Map<string, { club: string; carry: number; count: number }>())
+      ).map(([, v]) => ({ club: v.club, carry: v.count }));
 
   const displaySessions = sessions.length > 0
     ? sessions.map((s) => ({
@@ -334,20 +356,20 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
           value={hasData
             ? (data.totalShots || sessions.reduce((a, s) => a + s.totalShots, 0)).toLocaleString("nb-NO")
             : "0"}
-          icon={<Target className="w-6 h-6 text-blue-500" />}
-          iconBg="bg-blue-500/10"
+          icon={<Target className="w-6 h-6 text-info" />}
+          iconBg="bg-info-light"
         />
         <StatCard
           label="Beste carry"
           value={hasData ? `${data.bestCarry}m` : "–"}
           icon={<TrendingUp className="w-6 h-6 text-warning" />}
-          iconBg="bg-warning/10"
+          iconBg="bg-warning-light"
         />
         <StatCard
           label="Snitt carry"
           value={hasData ? `${data.avgCarry}m` : "–"}
           icon={<Activity className="w-6 h-6 text-success" />}
-          iconBg="bg-success/10"
+          iconBg="bg-success-light"
         />
       </div>
 
@@ -361,19 +383,19 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
             {ballSpeedTrend.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={ballSpeedTrend}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" />
-                  <XAxis dataKey="date" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} domain={[0, 'auto']} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" />
+                  <XAxis dataKey="date" tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} domain={[0, 'auto']} />
                   <Tooltip
-                    contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
-                    labelStyle={{ color: "#0A1F18", fontWeight: 600 }}
+                    contentStyle={{ borderRadius: 12, border: "1px solid var(--color-grey-200)" }}
+                    labelStyle={{ color: "var(--color-black)", fontWeight: 600 }}
                   />
                   <Line
                     type="monotone"
                     dataKey="speed"
-                    stroke="#0A1F18"
+                    stroke="var(--color-black)"
                     strokeWidth={2}
-                    dot={{ r: 4, fill: "#0A1F18", strokeWidth: 0 }}
+                    dot={{ r: 4, fill: "var(--color-black)", strokeWidth: 0 }}
                     activeDot={{ r: 6 }}
                   />
                 </LineChart>
@@ -388,20 +410,21 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
         <div className="bg-white rounded-2xl p-6 border border-grey-200/50">
           <h3 className="text-sm font-semibold text-black mb-4">
-            Sesjoner per klubb
+            Carry per klubb
           </h3>
           <div className="h-[220px]">
             {carryByClub.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={carryByClub}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" vertical={false} />
-                  <XAxis dataKey="club" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" vertical={false} />
+                  <XAxis dataKey="club" tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
                   <Tooltip
-                    contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
-                    labelStyle={{ color: "#0A1F18", fontWeight: 600 }}
+                    contentStyle={{ borderRadius: 12, border: "1px solid var(--color-grey-200)" }}
+                    labelStyle={{ color: "var(--color-black)", fontWeight: 600 }}
+                    formatter={(value) => [`${value}m`, "Carry"]}
                   />
-                  <Bar dataKey="carry" fill="#0A1F18" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="carry" fill="var(--color-primary)" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
@@ -504,6 +527,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                   displaySessions.map((session) => {
                     const isOpen = expandedSessionId === session.id;
                     const shots = sessionShots[session.id] ?? [];
+                    const analytics = sessionAnalytics[session.id];
                     return (
                       <React.Fragment key={session.id}>
                         <tr
@@ -539,53 +563,76 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                               transition={{ duration: 0.25, ease: "easeInOut" }}
                             >
                               <td colSpan={5} className="p-0">
-                                <div className="bg-grey-50/60 px-4 py-4">
-                                  <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
-                                    Slagdetaljer
-                                  </p>
-                                  <div className="overflow-x-auto">
-                                    <table className="w-full text-sm">
-                                      <thead>
-                                        <tr className="text-left text-xs text-grey-400">
-                                          <th className="pb-2 font-medium">#</th>
-                                          <th className="pb-2 font-medium">Ballfart</th>
-                                          <th className="pb-2 font-medium">Carry</th>
-                                          <th className="pb-2 font-medium">Total</th>
-                                          <th className="pb-2 font-medium">Spin</th>
-                                          <th className="pb-2 font-medium">Launch</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {shots.length > 0 ? (
-                                          shots.map((shot, idx) => (
-                                            <tr key={shot.id}>
-                                              <td className="py-2 text-black">{idx + 1}</td>
-                                              <td className="py-2 text-black">
-                                                {shot.ballSpeed ? `${Math.round(shot.ballSpeed * 10) / 10} mph` : "–"}
-                                              </td>
-                                              <td className="py-2 text-black">
-                                                {shot.carryDistance ? `${Math.round(shot.carryDistance)}m` : "–"}
-                                              </td>
-                                              <td className="py-2 text-black">
-                                                {shot.totalDistance ? `${Math.round(shot.totalDistance)}m` : "–"}
-                                              </td>
-                                              <td className="py-2 text-black">
-                                                {shot.spinRate ? `${Math.round(shot.spinRate)} rpm` : "–"}
-                                              </td>
-                                              <td className="py-2 text-black">
-                                                {shot.launchAngle ? `${Math.round(shot.launchAngle * 10) / 10}°` : "–"}
+                                <div className="bg-grey-50/60 px-4 py-4 space-y-6">
+                                  {/* Shot Dispersion Chart */}
+                                  <div>
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
+                                      Shot-spredning
+                                    </p>
+                                    <div className="bg-white rounded-xl border border-grey-200/50 p-3">
+                                      <ShotDispersionChart shots={shots} />
+                                    </div>
+                                  </div>
+
+                                  {/* Session Analytics */}
+                                  {analytics && (
+                                    <div>
+                                      <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
+                                        Sesjonsanalyse
+                                      </p>
+                                      <TrackManAnalyticsCard analytics={analytics} />
+                                    </div>
+                                  )}
+
+                                  {/* Shot Details Table */}
+                                  <div>
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
+                                      Slagdetaljer
+                                    </p>
+                                    <div className="overflow-x-auto">
+                                      <table className="w-full text-sm">
+                                        <thead>
+                                          <tr className="text-left text-xs text-grey-400">
+                                            <th className="pb-2 font-medium">#</th>
+                                            <th className="pb-2 font-medium">Ballfart</th>
+                                            <th className="pb-2 font-medium">Carry</th>
+                                            <th className="pb-2 font-medium">Total</th>
+                                            <th className="pb-2 font-medium">Spin</th>
+                                            <th className="pb-2 font-medium">Launch</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {shots.length > 0 ? (
+                                            shots.map((shot, idx) => (
+                                              <tr key={shot.id}>
+                                                <td className="py-2 text-black">{idx + 1}</td>
+                                                <td className="py-2 text-black">
+                                                  {shot.ballSpeed ? `${Math.round(shot.ballSpeed * 10) / 10} mph` : "–"}
+                                                </td>
+                                                <td className="py-2 text-black">
+                                                  {shot.carryDistance ? `${Math.round(shot.carryDistance)}m` : "–"}
+                                                </td>
+                                                <td className="py-2 text-black">
+                                                  {shot.totalDistance ? `${Math.round(shot.totalDistance)}m` : "–"}
+                                                </td>
+                                                <td className="py-2 text-black">
+                                                  {shot.spinRate ? `${Math.round(shot.spinRate)} rpm` : "–"}
+                                                </td>
+                                                <td className="py-2 text-black">
+                                                  {shot.launchAngle ? `${Math.round(shot.launchAngle * 10) / 10}°` : "–"}
+                                                </td>
+                                              </tr>
+                                            ))
+                                          ) : (
+                                            <tr>
+                                              <td colSpan={6} className="py-3 text-grey-400">
+                                                Ingen detaljerte slagdata tilgjengelig.
                                               </td>
                                             </tr>
-                                          ))
-                                        ) : (
-                                          <tr>
-                                            <td colSpan={6} className="py-3 text-grey-400">
-                                              Ingen detaljerte slagdata tilgjengelig.
-                                            </td>
-                                          </tr>
-                                        )}
-                                      </tbody>
-                                    </table>
+                                          )}
+                                        </tbody>
+                                      </table>
+                                    </div>
                                   </div>
                                 </div>
                               </td>
@@ -748,10 +795,10 @@ function UploadModal({
                 setUpload((prev) => ({ ...prev, mode: "image" }));
                 imageInputRef.current?.click();
               }}
-              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-grey-200 hover:border-purple-500 hover:bg-purple-500/5 transition-all"
+              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-grey-200 hover:border-ai hover:bg-ai-light/30 transition-all"
             >
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-                <ImageIcon className="w-6 h-6 text-purple-500" />
+              <div className="w-12 h-12 rounded-xl bg-ai-light flex items-center justify-center flex-shrink-0">
+                <ImageIcon className="w-6 h-6 text-ai" />
               </div>
               <div className="text-left">
                 <p className="font-semibold text-sm text-black">Last opp skjermbilde</p>

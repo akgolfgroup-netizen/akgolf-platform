@@ -2541,3 +2541,464 @@ Fast venstre-sidebar for alle admin-sider.
 - Topbar viser tittel, undertittel, brukerprofil, og notifikasjoner.
 
 ---
+
+# DEL 5: INTEGRASJONER OG DATAFLYT
+
+## 5.1 Supabase
+
+### Hva er det?
+Supabase er plattformens primære backend-as-a-service. Den håndterer database, autentisering, realtidsoppdateringer og fil lagring.
+
+### Hvordan fungerer det?
+- **Database**: PostgreSQL-database med Prisma ORM.
+- **Auth**: Supabase Auth med e-post/passord, magic link, og OAuth (Google).
+- **Realtime**: Sanntidsoppdateringer av meldinger og notifikasjoner.
+- **Storage**: Lagring av profilbilder, TrackMan CSV-er, og vedlegg.
+
+### Data
+- 50+ tabeller inkludert: `User`, `Booking`, `ServiceType`, `Instructor`, `TrainingPlan`, `TrainingSession`, `Round`, `HoleResult`, `TrackManSession`, `TrackManShot`, `CoachingSession`, `Conversation`, `Message`, `Tournament`, `TournamentPlan`, `Notification`, `Subscription`, `SubscriptionQuota`, `HandicapEntry`, `Goal`, `PlayerBag`, `Club`, `Facility`, `BlockedTime`, `Waitlist`, `EmailTemplate`, `MissionBoardTask`, `FocusTask`, `Agent`, `AgentLog`.
+
+### Brukerflyt
+1. Brukeren registrerer seg → konto opprettes i Supabase Auth.
+2. En `User`-rad opprettes i databasen med `role: STUDENT`.
+3. Ved innlogging: Supabase Auth validerer credentials og returnerer JWT.
+4. All portal-data hentes fra Supabase via Prisma.
+
+---
+
+## 5.2 Stripe
+
+### Hva er det?
+Stripe håndterer alle betalinger, abonnementer, refusjoner og fakturering.
+
+### Hvordan fungerer det?
+- **Checkout Sessions**: Engangsbetalinger for Flex-pakker og drop-in.
+- **Customer Portal**: Spilleren kan administrere betalingsmetode og se fakturaer.
+- **Subscriptions**: Månedlige abonnementer (Performance, Performance Pro, Start).
+- **Webhooks**: Stripe sender webhooks til `/api/webhooks/stripe` for hendelser som:
+  - `checkout.session.completed`
+  - `invoice.paid`
+  - `customer.subscription.updated`
+  - `customer.subscription.deleted`
+
+### Dataflyt
+1. Brukeren klikker "Betal" i booking-wizard.
+2. Server oppretter Stripe Checkout Session.
+3. Brukeren fullfører betaling i Stripe.
+4. Stripe sender webhook.
+5. Server oppdaterer `Booking.status` til `CONFIRMED` og sender e-postbekreftelse.
+6. Ved abonnementsfornyelse: webhook trigger `resetQuotaForNewPeriod()`.
+
+### Brukerflyt (spiller)
+1. Spilleren går til `/portal/apper`.
+2. Velger Performance Pro.
+3. Redirect til Stripe Checkout.
+4. Betaler.
+5. Redirect tilbake til portalen.
+6. Abonnementet er nå aktivt.
+
+---
+
+## 5.3 Anthropic (Claude / Sonnet 4.5)
+
+### Hva er det?
+Anthropic Claude er plattformens AI-motor. Den driver AI Coach-chat, oppsummeringer, treningsplan-generering og innholdsgenerering.
+
+### Hvordan fungerer det?
+- **AI Coach Chat**: Streaming chat via Vercel AI SDK.
+- **System Prompt**: Dynamisk generert basert på spillerens komplette datahistorikk.
+- **Treningsplan-generering**: Claude genererer strukturerte JSON-planer med uker, økter og øvelser.
+- **Coaching-oppsummering**: Claude strukturerer instruktørens notater til lesbare oppsummeringer.
+
+### Dataflyt (AI Coach Chat)
+1. Spilleren åpner `/portal/ai-coach/chat`.
+2. Frontend kaller `getChatContext()`.
+3. Server samler spillerdata: runder, logger, plan, TrackMan, turneringer, coaching.
+4. Dataene formateres til en system prompt.
+5. Spillerens spørsmål sendes til Anthropic API.
+6. Claude genererer svar.
+7. Svar streams tilbake til frontend.
+
+### Rate Limiting
+- Maks antall meldinger per bruker per time for å kontrollere kostnader.
+- Implementert i `/api/portal/ai/chat`.
+
+---
+
+## 5.4 TrackMan
+
+### Hva er det?
+TrackMan er en launch monitor som måler ball- og klubbdata. Plattformen integrerer med TrackMan via CSV-import og bilde-OCR.
+
+### Hvordan fungerer det?
+**CSV-import**
+1. Spilleren laster opp en TrackMan CSV-eksport.
+2. Server parser filen med en dedikert CSV-parser.
+3. Dataene struktureres til `TrackManSession` og `TrackManShot` rader.
+4. Aggregater beregnes (snitt, beste, etc.).
+
+**Bilde-OCR**
+1. Spilleren tar et bilde av TrackMan-skjermen.
+2. Bildet sendes til en AI/OCR-tjeneste.
+3. AI-en gjenkjenner TrackMan-layouten og leser tallene.
+4. Dataene lagres i databasen.
+
+### Data
+- `TrackManSession`: `date`, `facilityId`, `totalShots`, `bestCarry`, `avgCarry`.
+- `TrackManShot`: `sessionId`, `club`, `ballSpeed`, `clubSpeed`, `spin`, `launchAngle`, `carry`, `total`.
+
+### Brukerflyt
+1. Spilleren går til `/portal/trackman`.
+2. Klikker "Last opp CSV".
+3. Velger fil.
+4. Systemet parser og viser nye data.
+5. Spilleren ser klubb-statistikk og trender.
+
+---
+
+## 5.5 Google Calendar
+
+### Hva er det?
+To-veis synkronisering mellom AK Golf-bookinger og spillerens Google Calendar.
+
+### Hvordan fungerer det?
+1. Spilleren klikker "Koble til Google Calendar" i `/portal/kalender`.
+2. OAuth-autentisering mot Google.
+3. Server får refresh token og access token.
+4. Ved ny booking: server oppretter Google Calendar-event.
+5. Ved endring/avbestilling: server oppdaterer/sletter event.
+6. Google Calendar webhook håndterer endringer fra Google-siden.
+7. iCal-feed (`/api/portal/calendar/feed/[token]`) for andre kalender-apper.
+
+### Data
+- `CalendarToken`-tabell: `userId`, `googleRefreshToken`, `googleAccessToken`, `expiresAt`.
+- `Booking.googleEventId`: Kobling til Google Calendar-event.
+
+### Brukerflyt
+1. Spilleren går til `/portal/kalender`.
+2. Klikker "Koble til Google Calendar".
+3. Godkjenner i Google-popup.
+4. Neste booking vises automatisk i Google Calendar.
+
+---
+
+## 5.6 DataGolf
+
+### Hva er det?
+DataGolf er en golfstatistikk-tjeneste som tilbyr data om PGA Tour, DP World Tour, og proffspillere.
+
+### Hvordan fungerer det?
+- **Pro Tour schedules**: Henter turneringskalender for PGA Tour og DP World Tour.
+- **Proffstatistikk**: Henter Strokes Gained-data for proffspillere.
+- **Benchmarking**: Sammenligner spilleren med proffsnittet.
+
+### Data
+- `GET https://api.datagolf.com/...` (spesifikke endepunkter ligger i `/lib/portal/datagolf`).
+- Cache-lagres i databasen eller via Next.js `unstable_cache`.
+
+### Brukerflyt
+1. Spilleren går til `/portal/benchmark`.
+2. Søker etter "Viktor Hovland".
+3. Systemet henter DataGolf-stats.
+4. Radar-chart viser sammenligning.
+
+---
+
+## 5.7 GolfBox
+
+### Hva er det?
+GolfBox er en norsk golfplattform som blant annet håndterer handicap.
+
+### Hvordan fungerer det?
+- **Handicap-integrasjon**: Henter spillerens offisielle handicap fra GolfBox.
+- `GET /api/portal/golfbox/handicap`: Henter og lagrer handicap.
+
+### Data
+- `HandicapEntry`-tabell: `userId`, `handicapIndex`, `date`, `source`.
+
+---
+
+## 5.8 Notion
+
+### Hva er det?
+Notion brukes som sekundær lagring for player profiles og dokumentasjon.
+
+### Hvordan fungerer det?
+- Ved **gjestebooking** (`auto-create-user.ts`): Systemet oppretter automatisk en Notion player profile for nye brukere.
+- Notion-sidene brukes til intern dokumentasjon og oppfølging.
+
+### Data
+- Notion API-kall via `@notionhq/client`.
+- Database ID og properties konfigurert i miljøvariabler.
+
+---
+
+# DEL 6: CRON-JOBS OG AUTOMATISERING
+
+## 6.1 Booking Reminders
+
+### Hva er det?
+Automatiske påminnelser sendt 24 timer før en coaching-sesjon.
+
+### Hvordan fungerer det?
+- En cron-job kjører hver time.
+- Finner alle `CONFIRMED` bookinger med starttid mellom 23 og 25 timer frem i tid.
+- Sender SMS og/eller e-post til spilleren.
+- Markerer bookingen som "reminder sent" for å unngå duplikater.
+
+### Data
+- `Booking`-tabell: `status`, `startTime`, `reminderSentAt`.
+- `User`-tabell: `phone`, `email`, `notificationPreferences`.
+
+---
+
+## 6.2 No-Show Handler
+
+### Hva er det?
+Automatisk markering av bookinger som `NO_SHOW` når spilleren ikke møter opp.
+
+### Hvordan fungerer det?
+- Cron-job kjører hver time.
+- Finner alle `CONFIRMED` bookinger hvor `endTime` har passert.
+- Hvis instruktøren ikke har manuelt markert som fullført: setter status til `NO_SHOW`.
+- Trigger eventuell refusjonsvurdering (0% refusjon for no-show).
+
+### Data
+- `Booking`-tabell: `status`, `endTime`.
+
+---
+
+## 6.3 Waitlist Cleanup
+
+### Hva er det?
+Rydder opp i utløpte ventelisteposisjoner.
+
+### Hvordan fungerer det?
+- Cron-job kjører daglig.
+- Finner alle ventelisteposisjoner hvor `expiresAt` har passert.
+- Sletter dem eller markerer som `EXPIRED`.
+- Hvis det finnes neste person på ventelisten: sender tilbud til dem.
+
+### Data
+- `BookingWaitlist`-tabell: `expiresAt`, `status`.
+
+---
+
+## 6.4 Google Calendar Sync
+
+### Hva er det?
+En bakgrunnsjobb som synkroniserer bookinger med Google Calendar.
+
+### Hvordan fungerer det?
+- Cron-job kjører hvert 15. minutt.
+- Sjekker nylig endrede bookinger.
+- For hver bruker med aktiv Google Calendar-integrasjon:
+  - Oppretter nye events.
+  - Oppdaterer endrede events.
+  - Sletter avbestilte events.
+
+### Data
+- `Booking`-tabell: `status`, `startTime`, `endTime`, `googleEventId`.
+- `CalendarToken`-tabell.
+
+---
+
+## 6.5 AI Insights
+
+### Hva er det?
+Genererer ukentlig AI-innsikt for hver spiller.
+
+### Hvordan fungerer det?
+- Cron-job kjører **mandager kl 06:00**.
+- For hver aktiv spiller:
+  - Samler siste ukens data: runder, treningslogger, TrackMan, coaching.
+  - Sender data til Claude.
+  - Claude genererer en strukturert innsikt med `summary`, `strengths[]`, `improvements[]`, `focusTip`.
+  - Lagrer resultatet i `AiInsight`-tabellen.
+- Innsikten vises på dashboardet og kan sendes som push-notifikasjon.
+
+### Data
+- `AiInsight`-tabell: `userId`, `summary`, `strengths`, `improvements`, `focusTip`, `generatedAt`.
+
+---
+
+## 6.6 Win-Back Sequences
+
+### Hva er det?
+Automatiske e-post- og SMS-sekvenser for å reaktivere inaktive elever.
+
+### Hvordan fungerer det?
+- Cron-job kjører daglig.
+- Identifiserer elever som ikke har logget inn, trent, eller booket på X dager (f.eks. 14, 30, 60 dager).
+- Sender personalisert melding basert på inaktivitetsperiode.
+- Sporer åpninger og klikk.
+
+### Data
+- `User`-tabell: `lastActiveAt`, `lastLoginAt`.
+- `TrainingLog`-tabell: siste logg.
+- `Booking`-tabell: siste booking.
+
+---
+
+## 6.7 Subscription Quota Reset
+
+### Hva er det?
+Nullstiller månedlig kvote for abonnementsbrukere.
+
+### Hvordan fungerer det?
+- Trigges av Stripe webhook (`invoice.paid`) ved abonnementsfornyelse.
+- Kaller `resetQuotaForNewPeriod()`.
+- Setter `sessionsUsedThisMonth = 0` og oppdaterer `periodStart` / `periodEnd`.
+
+### Data
+- `SubscriptionQuota`-tabell.
+
+---
+
+## 6.8 Health Checks
+
+### Hva er det?
+En diagnostisk jobb som sjekker booking-systemets helse.
+
+### Hvordan fungerer det?
+- Endepunkt: `/api/health/booking`.
+- Sjekker:
+  1. Database-tilkobling.
+  2. Eksisterende dobbeltbookings.
+  3. Utløpte pessimistiske låser.
+  4. Metrics (bookinger per dag, avbestillingsrate).
+- Admin kan trigge "Cleanup locks" og "Check conflicts" fra health check-siden.
+
+### Data
+- `Booking`-tabell: overlappende bookinger.
+- `BookingLock`-tabell: utløpte låser.
+
+---
+
+# DEL 7: DATAFLYT-DIAGRAMMER (Tekstbeskrivelser)
+
+## 7.1 Ny booking (v2) — komplett flyt
+
+```
+1. Bruker velger trener → UI oppdaterer state.trainerId
+2. Bruker velger tjeneste → UI oppdaterer state.serviceId
+3. DateTimeDrawer åpnes
+4. Bruker velger dato → API-kall: GET /api/booking/slots
+5. Server genererer slots basert på InstructorAvailability + eksisterende bookinger
+6. Bruker velger tid → state oppdateres
+7. ConfirmDrawer åpnes
+8. Bruker fyller ut/får forhåndsutfylt info
+9. Bruker klikker "Gå til betaling"
+10. API-kall: POST /api/booking/create
+11. Server: validateBooking() (9 sjekker)
+12. Server: createBookingWithConflictCheck() (atomisk transaksjon)
+13. Hvis abonnement: consumeSession() → status = CONFIRMED
+14. Hvis Stripe: opprett Payment Intent / Checkout Session → status = PENDING
+15. Returner bookingId (+ checkout URL hvis Stripe)
+16. UI: redirect til /booking/[id]/confirmation
+17. Hvis Stripe: PaymentPendingPoller sjekker /api/booking/confirm-payment
+18. Stripe webhook mottas → status oppdateres til CONFIRMED
+19. E-postbekreftelse sendes
+20. Google Calendar-event opprettes (hvis bruker har koblet til)
+```
+
+## 7.2 AI Coach Chat — komplett flyt
+
+```
+1. Bruker åpner /portal/ai-coach/chat
+2. Frontend initialiserer useChat-hook
+3. Bruker skriver spørsmål
+4. Frontend POST /api/portal/ai/chat
+5. Server: rate limiting-sjekk
+6. Server: getChatContext(userId)
+   - Henter runder, logger, plan, TrackMan, turneringer, coaching
+7. Server bygger system prompt
+8. Server sender prompt + brukerspørsmål til Anthropic API
+9. Anthropic Claude genererer svar
+10. Server streams svar tilbake til frontend
+11. Frontend viser svar ord for ord
+12. Bruker kan stille oppfølgingsspørsmål
+```
+
+## 7.3 TrackMan CSV-import — komplett flyt
+
+```
+1. Bruker klikker "Last opp CSV" i /portal/trackman
+2. Velger TrackMan CSV-fil
+3. Frontend POST /api/portal/trackman/upload-csv
+4. Server mottar fil
+5. Server parser CSV med dedikert parser
+6. Server validerer datastruktur
+7. Server oppretter TrackManSession-rad
+8. Server oppretter TrackManShot-rader (alle slag)
+9. Server beregner aggregater (snitt, beste)
+10. Returnerer suksess
+11. Frontend oppdaterer TrackMan-oversikten
+```
+
+## 7.4 Coaching-notater → AI-oppsummering — komplett flyt
+
+```
+1. Instruktør skriver notater i /admin/okter
+2. Klikker "Generer AI-oppsummering"
+3. Frontend POST /api/portal/ai/coaching-summary
+4. Server sender notater + elevdata til Anthropic Claude
+5. Claude genererer strukturert oppsummering
+6. Server lagrer oppsummering i CoachingSession.aiSummary
+7. Frontend viser oppsummeringen
+8. Elev ser oppsummering i /portal/coaching-historikk
+```
+
+---
+
+# DEL 8: TILGANGSNIVÅER OG ROLLER
+
+## 8.1 Roller i systemet
+
+| Rolle | Beskrivelse |
+|-------|-------------|
+| **STUDENT** | Standard spiller. Har tilgang til spillerportalen. Kan booke, avbestille, endre egne bookinger. |
+| **INSTRUCTOR** | Trener. Har tilgang til Mission Board (Hub, Kalender, Bookinger, Elever, Meldinger, Coaching-notater, Treningsplaner, Turneringer). Kan se alle elevers data. Kan ikke se Økonomi, Rapporter, Agenter. |
+| **ADMIN** | Administrator. Full tilgang til Mission Board. Kan se økonomi, rapporter, agenter, AI-assistent. Kan overstyre valideringsregler. |
+| **INVITED** | Invitert bruker. Begrenset tilgang til Mission Board (typisk kun lesing av Kalender og Fasiliteter). |
+
+## 8.2 Tier-system (abonnement)
+
+| Tier | Beskrivelse |
+|------|-------------|
+| **VISITOR** | Gratisbruker. Begrenset tilgang. Kan ikke booke abonnementstjenester. |
+| **ACADEMY** | Basis-abonnement. Tilgang til standard portal-funksjoner. |
+| **STARTER** | Entry-level abonnement. Færre økter per måned. |
+| **PRO** | Avansert abonnement. Tilgang til peer-analyse, TrackMan-data i analyse, benchmarking. |
+| **ELITE** | Toppnivå. Full tilgang til alle AI-funksjoner, inkludert weakness analysis. |
+
+---
+
+# DEL 9: ANTI-PATTERNER OG BEGRENSNINGER
+
+Basert på kodegjennomgang og dokumentasjon:
+
+1. **Kontaktskjemaet på `/landing/contact`** sender ikke faktisk data til backend. Det er kun en frontend-demo.
+2. **Vipps-betaling** er definert i skjemaet men ikke aktivt implementert i alle flyter.
+3. **Abonnementsknappene på `/academy`** er deaktivert med "Lanseres mai 2026"-badge. Kun Flex-booking er aktiv.
+4. **Meldinger i sosialt-modulen** (`/portal/sosialt`) har en "Send melding"-knapp for venner, men full funksjonalitet er ikke implementert.
+5. **Google Calendar i `/portal/kalender`** har visse deler merket som "kommer snart" i UI.
+
+---
+
+# DEL 10: OPPSUMMERING
+
+AK Golf Platform er en **svært omfattende, integrert golf-coaching-plattform** som dekker hele verdikjeden:
+
+- **Markedsføring** → Landingsider som konverterer besøkende til leads
+- **Booking** → Avansert timebestilling med Stripe-betaling, abonnementskvote, og konfliktsjekk
+- **Spilleropplevelse** → Portal med 28+ funksjonsområder: treningsplan, statistikk, TrackMan, AI Coach, mental scorecard, runde-registrering, turneringer, sosialt nettverk
+- **Administrasjon** → Mission Board med 20+ sider for instruktører og administratorer
+- **Automatisering** → Cron-jobs for påminnelser, no-shows, AI-innsikt, win-back, og Google Calendar-sync
+- **Integrasjoner** → Supabase, Stripe, Anthropic Claude, TrackMan, Google Calendar, DataGolf, GolfBox, Notion
+
+Plattformen er bygget med **Next.js 16, React 19, Tailwind CSS v4, TypeScript, Prisma, og Supabase**. Designet følger en streng designsystem dokumentert i `docs/DESIGN_SYSTEM.md`.
+
+---
+
+*Dette dokumentet er generert fra grundig kartlegging av hele `akgolf-platform`-kodebasen og representerer den mest komplette oversikten over alle brukervendte funksjoner, dataflyter, integrasjoner og automatiseringer per april 2026.*
