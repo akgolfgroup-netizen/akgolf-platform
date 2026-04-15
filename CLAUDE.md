@@ -1,5 +1,7 @@
 # AK Golf Platform
 
+> 🚀 **START HER:** Les alltid `WORKLOG.md` først for å se hva som ble jobbet med sist. Deretter les `.claude/rules/design-system.md` hvis oppgaven involverer UI.
+
 Premium golfcoaching-plattform med markedsside, spillerportal og admin (Mission Control).
 
 ## Tech Stack
@@ -43,10 +45,12 @@ All detaljert regelinformasjon ligger i `.claude/rules/`:
 | `prisma-auth.md` | Supabase ID vs Prisma ID, enum-verdier, create-regler |
 | `code-style.md` | TypeScript, komponent-organisering, styling, animasjoner |
 | `architecture.md` | Mappestruktur, auth-flyt, API-mønstre, roller, integrasjoner |
-| `design-system.md` | Fargetokens, typografi, spacing, knapper, shadows, z-index |
+| `design-system.md` | **ENESTE gjeldende design-system** — farger, typografi, spacing, knapper |
 | `ui-patterns.md` | Portal-kort, stat-kort, MC sidebar, markedsside-mønstre |
 
 **Ufravikelig:** Nye feil → legg til i `gotchas.md` umiddelbart.
+
+> ⚠️ **VIKTIG:** `docs/design-system.md`, `docs/project/04_DESIGN_SYSTEM.md`, `docs/DESIGN.md` og `docs/DESIGN-REFERENCE.md` er **arkivert/utdaterte**. Bruk KUN `.claude/rules/design-system.md`.
 
 ## Prosjektstatus
 
@@ -89,3 +93,25 @@ Se `docs/status/` for oppdatert status:
 | `docs` | Dokumentasjon |
 
 Format: `<prefix>: kort beskrivelse` — f.eks. `feat: booking reschedule i Mission Control`
+
+## Fortsett der du slapp
+
+Siste arbeidslogg finnes i **`WORKLOG.md`** i rot-mappen. Les alltid denne først ved oppstart.
+
+### Viktige filområder per modul
+
+| Modul | Mapper / filer |
+|-------|----------------|
+| **Landingsside** | `app/landing/`, `app/page.tsx`, `components/website/` |
+| **Booking** | `app/booking/`, `components/booking/`, `lib/booking-config.ts` |
+| **Spillerportal** | `app/portal/(dashboard)/`, `components/portal/` |
+| **Mission Control (admin)** | `app/admin/`, `components/portal/mission-control/`, `components/portal/admin/` |
+| **API** | `app/api/`, `lib/portal/` |
+| **Design-system** | `.claude/rules/design-system.md`, `app/globals.css`, `lib/design-tokens.ts` |
+| **Database** | `prisma/schema.prisma` |
+
+### Hurtigkommando for å finne siste arbeid
+```bash
+git log --oneline -10          # Siste commits
+cat WORKLOG.md                  # Siste arbeidslogg
+```

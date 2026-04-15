@@ -1,38 +1,153 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
+    "defaultMode": "acceptEdits",
     "allow": [
-      "Bash(git -C /Users/anderskristiansen/Developer/DEV.ACTIVE/akgolf-website log --diff-filter=D --name-only --oneline)",
-      "Bash(git -C /Users/anderskristiansen/Developer/DEV.ACTIVE/akgolf-website show HEAD:app/icon.tsx)",
-      "Bash(npm install resend)",
-      "mcp__plugin_playwright_playwright__browser_navigate",
-      "mcp__plugin_playwright_playwright__browser_take_screenshot",
-      "mcp__plugin_playwright_playwright__browser_resize",
-      "mcp__plugin_playwright_playwright__browser_evaluate",
-      "mcp__plugin_playwright_playwright__browser_run_code",
-      "Read(//Users/anderskristiansen/**)",
-      "Bash(grep -l \"useRouter\\\\|useEffect\\\\|useState\" /Users/anderskristiansen/akgolf-website/components/website/*.tsx)",
-      "Bash(xargs ls:*)",
-      "Bash(head -100 \"/Users/anderskristiansen/Developer/akgolf/akgolf-portal/akgolf-portal/src/app/\\(dashboard\\)/admin/bookinger/page.tsx\")",
-      "Bash(head -50 \"/Users/anderskristiansen/Developer/akgolf/akgolf-portal/akgolf-portal/src/app/\\(dashboard\\)/page.tsx\")",
-      "Bash(xargs -I {} bash -c \"echo {} && cat {}\")",
-      "Bash(git checkout:*)",
-      "Bash(npm install:*)",
-      "Bash(PORTAL=\"/Users/anderskristiansen/Developer/akgolf/akgolf-portal/akgolf-portal\")",
-      "Read(//Users/anderskristiansen/akgolf-website/$PORTAL/src/**)",
-      "Read(//Users/anderskristiansen/akgolf-website/$PORTAL/src/app/**)",
-      "Bash(grep -n \"requirePortalUser\\\\|getPortalUser\" /Users/anderskristiansen/akgolf-website/app/booking/new/page.tsx /Users/anderskristiansen/akgolf-website/app/booking/[id]/pay/page.tsx /Users/anderskristiansen/akgolf-website/app/booking/[id]/confirmation/page.tsx /Users/anderskristiansen/akgolf-website/app/api/booking/create/route.ts)",
-      "Read(//dev/**)",
-      "Bash(npx prisma:*)",
-      "Bash(npm run:*)",
-      "Bash(npm uninstall:*)",
       "Bash(git status:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(gh pr:*)"
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git stash:*)",
+      "Bash(git fetch:*)",
+      "Bash(git pull:*)",
+      "Bash(git checkout *)",
+      "Bash(git branch:*)",
+      "Bash(gh pr *)",
+      "Bash(gh issue *)",
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(npm uninstall *)",
+      "Bash(npx prisma *)",
+      "Bash(npx tsc *)",
+      "Bash(npx eslint *)",
+      "Bash(npx next *)",
+      "Bash(node *)",
+      "Bash(ls *)",
+      "Bash(ps *)",
+      "Bash(lsof *)",
+      "Bash(kill *)",
+      "Bash(pkill *)",
+      "Bash(curl -I *)",
+      "Bash(curl -s *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(sort *)",
+      "Bash(uniq *)",
+      "Bash(mkdir *)",
+      "Bash(rm -rf .next)",
+      "Bash(rm -rf node_modules)",
+      "Bash(mv *)",
+      "Bash(cp *)",
+      "Bash(touch *)",
+      "Bash(chmod *)",
+      "Bash(pwd)",
+      "Bash(echo *)",
+      "Bash(printf *)",
+      "Bash(sed *)",
+      "Bash(awk *)",
+      "Bash(tr *)",
+      "Bash(cut *)",
+      "Bash(jq *)",
+      "Bash(date)",
+      "Bash(whoami)",
+      "Bash(uname *)",
+      "Bash(which *)",
+      "Bash(open *)",
+      "Bash(claude *)",
+      "Bash(python3 *)",
+      "Read(./**)",
+      "Edit(./**)",
+      "Write(./**)",
+      "Glob(./**)",
+      "Grep(./**)",
+      "WebSearch",
+      "WebFetch",
+      "Agent",
+      "AskUserQuestion",
+      "ExitPlanMode"
     ],
-    "additionalDirectories": [
-      "/Users/anderskristiansen/Library/Mobile Documents/com~apple~CloudDocs/AK Golf Group/Strategi/annual-plans"
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./.ssh/**)",
+      "Read(./.aws/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.claude.json)",
+      "Bash(curl *|*sh*)",
+      "Bash(curl *|*bash*)",
+      "Bash(wget *|*sh*)",
+      "Bash(rm -rf /)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf /*)",
+      "Bash(sudo *)",
+      "Bash(su *)",
+      "Bash(chsh *)",
+      "Bash(passwd *)",
+      "Bash(dd *)",
+      "Bash(mkfs *)",
+      "Bash(fdisk *)"
+    ],
+    "ask": [
+      "Bash(git push --force *)",
+      "Bash(git reset --hard *)",
+      "Bash(git rebase *)",
+      "Bash(git cherry-pick *)",
+      "Bash(rm -rf *)",
+      "Bash(rm -f *)",
+      "Bash(mv * *)"
     ]
+  },
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": "1",
+    "NODE_ENV": "development"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(rm -rf *)",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block-destructive.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Edit(*.tsx)|Edit(*.ts)|Write(*.tsx)|Write(*.ts)",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/check-design-tokens.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/load-worklog.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "attribution": {
+    "commit": "Generated with Claude Code\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
+    "pr": "Generated with Claude Code"
   }
 }
