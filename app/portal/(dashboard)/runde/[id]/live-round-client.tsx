@@ -7,7 +7,6 @@ import {
   ChevronRight,
   Flag,
   Check,
-  BarChart3,
   Minus,
   Plus,
   Timer,

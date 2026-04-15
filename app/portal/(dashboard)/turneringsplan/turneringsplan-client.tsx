@@ -4,7 +4,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
-  Trophy, Calendar, CheckCircle2, MapPin, Clock,
+  Trophy, Calendar, CheckCircle2, MapPin,
   ExternalLink, Target, Flag, ChevronRight,
 } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
@@ -140,7 +140,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
             onClick={() => setActiveTab(tab.key)}
             className={`rounded-[7px] px-4 py-[7px] text-[13px] font-medium transition-all duration-200 ${
               activeTab === tab.key
-                ? "bg-[#0A1F18] text-white shadow-[0_2px_8px_rgba(10,31,24,0.3)]"
+                ? "bg-black text-white shadow-[0_2px_8px_rgba(10,31,24,0.3)]"
                 : "text-grey-400 hover:text-grey-400"
             }`}
           >
@@ -227,7 +227,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                         {t.name}
                       </h3>
                       {t.isRegistered && (
-                        <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full bg-[#E8F5EF] px-2 py-0.5 text-[10px] font-semibold text-[success]">
+                        <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full bg-success-light px-2 py-0.5 text-[10px] font-semibold text-success">
                           <CheckCircle2 className="h-3 w-3" />
                           Påmeldt
                         </span>

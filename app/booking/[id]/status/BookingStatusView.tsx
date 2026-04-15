@@ -51,7 +51,6 @@ interface BookingData {
 interface BookingStatusViewProps {
   booking: BookingData;
   isAuthenticated: boolean;
-  isOwner: boolean;
 }
 
 const statusConfig: Record<BookingStatus, {
@@ -143,7 +142,7 @@ const paymentMethodLabel: Record<PaymentMethod, string> = {
   INVOICE: "Faktura",
 };
 
-export function BookingStatusView({ booking, isAuthenticated, isOwner }: BookingStatusViewProps) {
+export function BookingStatusView({ booking, isAuthenticated }: BookingStatusViewProps) {
   const router = useRouter();
   const [isCancelling, setIsCancelling] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);

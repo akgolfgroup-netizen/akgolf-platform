@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 /**
  * Tester for Booking-Admin Sync System
@@ -153,7 +154,7 @@ describe("Booking-Admin Sync System", () => {
       // Send 5 concurrent booking requests for samme tidspunkt
       const requests = Array(5)
         .fill(null)
-        .map((_, i) =>
+        .map(() =>
           createBookingWithConflictCheck({
             instructorId: testInstructor.id,
             startTime: slotTime,
@@ -309,7 +310,7 @@ describe("Booking-Admin Sync System", () => {
   describe("Admin synkronisering", () => {
     it("skal synke admin endringer tilgjengelighet umiddelbart", async () => {
       const nextMonday = addDays(startOfDay(new Date()), 7 - new Date().getDay() + 1);
-      const dateStr = nextMonday.toISOString().split("T")[0];
+      void nextMonday.toISOString().split("T")[0];
 
       // Opprett dato-spesifikk tilgjengelighet (override)
       await prisma.instructorDateAvailability.create({
@@ -436,7 +437,7 @@ describe("Concurrent request håndtering", () => {
     // Dette er en stresstest
     const promises = Array(10)
       .fill(null)
-      .map((_, i) =>
+      .map(() =>
         prisma.instructorAvailability.findFirst({
           where: { instructorId: "non-existent" },
         })

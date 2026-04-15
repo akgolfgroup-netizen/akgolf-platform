@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { ArrowLeft, Check, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { BookingServiceType, BookingMode, BookingStep } from "./booking-types";
-import { getVisibleSteps, STEP_CONFIG } from "./booking-types";
+import { STEP_CONFIG } from "./booking-types";
 import { useBookingWizard } from "./use-booking-wizard";
 import { ServiceSelector } from "./service-selector";
 import { BookingDatePicker } from "./date-picker";
@@ -41,10 +42,12 @@ function InstructorPicker({ service, onSelect, selected }: InstructorPickerProps
               ].join(" ")}
             >
               {inst.user.image ? (
-                <img
+                <Image
                   src={inst.user.image}
                   alt=""
-                  className="w-6 h-6 rounded-full object-cover"
+                  width={24}
+                  height={24}
+                  className="rounded-full object-cover"
                 />
               ) : (
                 <div className="w-6 h-6 rounded-full bg-[#F5F8F7] flex items-center justify-center text-xs font-bold text-grey-400">

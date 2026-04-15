@@ -5,7 +5,6 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { GOAL_TYPE_CONFIG } from "@/modules/tournament-planner";
 import {
   startOfISOWeek,
-  isWithinInterval,
   addDays,
 } from "date-fns";
 

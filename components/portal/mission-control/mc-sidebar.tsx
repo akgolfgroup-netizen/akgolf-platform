@@ -114,7 +114,7 @@ function SidebarHeader() {
         <span className="block text-sm font-bold text-black truncate">
           AK Golf
         </span>
-        <p className="text-[10px] text-[#005840] uppercase tracking-wider font-semibold">
+        <p className="text-[10px] text-primary uppercase tracking-wider font-semibold">
           Mission Control
         </p>
       </div>
@@ -153,7 +153,7 @@ function SidebarUserFooter({
       </div>
       <button
         onClick={onSignOut}
-        className="mt-1 w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-grey-400 hover:text-error hover:bg-[#FCEAE8] transition-colors cursor-pointer"
+        className="mt-1 w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-grey-400 hover:text-error hover:bg-error-light transition-colors cursor-pointer"
       >
         <LogOut className="w-4 h-4" />
         <span>Logg ut</span>
@@ -239,7 +239,7 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
                     <span className="block text-sm font-bold text-black truncate">
                       AK Golf
                     </span>
-                    <p className="text-[10px] text-[#005840] uppercase tracking-wider font-semibold">
+                    <p className="text-[10px] text-primary uppercase tracking-wider font-semibold">
                       Mission Control
                     </p>
                   </div>

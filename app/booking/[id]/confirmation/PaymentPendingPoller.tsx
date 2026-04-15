@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 
@@ -16,7 +17,7 @@ const MAX_ATTEMPTS = 30;
 export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
   const router = useRouter();
   const [status, setStatus] = useState<PollStatus>("polling");
-  const [attempts, setAttempts] = useState(0);
+  const attemptsRef = useRef(0);
 
   const checkStatus = useCallback(async () => {
     try {
@@ -51,24 +52,36 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
     if (status !== "polling") return;
 
     const timer = setInterval(async () => {
-      setAttempts((prev) => {
-        const next = prev + 1;
-        if (next >= MAX_ATTEMPTS) {
-          setStatus("timeout");
-          clearInterval(timer);
-        }
-        return next;
-      });
+      attemptsRef.current += 1;
+      if (attemptsRef.current >= MAX_ATTEMPTS) {
+        setStatus("timeout");
+        clearInterval(timer);
+      }
 
       const done = await checkStatus();
       if (done) clearInterval(timer);
     }, POLL_INTERVAL_MS);
 
-    checkStatus().then((done) => {
-      if (done) clearInterval(timer);
-    });
-
     return () => clearInterval(timer);
+  }, [checkStatus, status]);
+
+  // Initial sjekk utenfor hoved-effect for å unngå sync setState-warning
+  useEffect(() => {
+    if (status !== "polling") return;
+
+    let cancelled = false;
+    const id = window.setTimeout(() => {
+      void checkStatus().then((done) => {
+        if (done && !cancelled) {
+          // timeren i hoved-effect håndterer opprydding ved neste render
+        }
+      });
+    }, 0);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(id);
+    };
   }, [checkStatus, status]);
 
   if (status === "confirmed") {
@@ -94,9 +107,9 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betalingen feilet</h2>
           <p className="text-muted mb-6">Vi kunne ikke bekrefte betalingen din. Vennligst prov igjen eller kontakt oss.</p>
-          <a href="/booking" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-white">
+          <Link href="/booking" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-white">
             Prov igjen
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -111,9 +124,9 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betalingen behandles</h2>
           <p className="text-muted mb-6">Betalingen din er registrert, men bekreftelsen tar litt lenger enn vanlig. Du vil motta en bekreftelse pa e-post.</p>
-          <a href="/portal/bookinger" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-white">
+          <Link href="/portal/bookinger" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-white">
             Se mine bookinger
-          </a>
+          </Link>
         </div>
       </div>
     );

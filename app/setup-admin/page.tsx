@@ -170,14 +170,14 @@ export default function SetupAdminPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdf9f0] flex items-center justify-center p-6">
-      <div className="max-w-md w-full bg-white rounded-[32px] p-8 shadow-lg border border-[#154212]/5">
-        <h1 className="text-3xl font-bold text-[#154212] mb-4">Setup Admin</h1>
+    <div className="min-h-screen bg-background-beige flex items-center justify-center p-6">
+      <div className="max-w-md w-full bg-white rounded-[32px] p-8 shadow-lg border border-primary/5">
+        <h1 className="text-3xl font-bold text-primary mb-4">Setup Admin</h1>
         
         {!success && !error && status === "Klar til å starte" && (
           <button
             onClick={createAdminUser}
-            className="w-full bg-[#d2f000] text-[#154212] py-4 rounded-xl font-bold uppercase tracking-wider text-sm hover:scale-[1.02] transition-transform"
+            className="w-full bg-accent-cta text-accent-cta-text py-4 rounded-xl font-bold uppercase tracking-wider text-sm hover:scale-[1.02] transition-transform"
           >
             Opprett admin-bruker
           </button>
@@ -196,8 +196,8 @@ export default function SetupAdminPage() {
               </div>
             ) : (
               <div className="flex flex-col items-center gap-4 py-4">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#154212]"></div>
-                <p className="text-[#42493e]">{status}</p>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                <p className="text-grey-600">{status}</p>
               </div>
             )}
 
@@ -212,13 +212,13 @@ export default function SetupAdminPage() {
 
         {success && (
           <div className="mt-6 space-y-3">
-            <div className="bg-white border border-[#154212]/10 p-4 rounded-xl text-sm">
+            <div className="bg-white border border-primary/10 p-4 rounded-xl text-sm">
               <p><strong>E-post:</strong> anders@akgolf.no</p>
               <p><strong>Passord:</strong> anders</p>
             </div>
             <a
               href="/portal/login"
-              className="block w-full bg-[#154212] text-white py-3 rounded-xl font-bold uppercase tracking-wider text-sm text-center hover:opacity-90"
+              className="block w-full bg-primary text-white py-3 rounded-xl font-bold uppercase tracking-wider text-sm text-center hover:opacity-90"
             >
               Gå til login
             </a>
@@ -228,7 +228,7 @@ export default function SetupAdminPage() {
         {error && (
           <button
             onClick={createAdminUser}
-            className="w-full mt-4 bg-[#d2f000] text-[#154212] py-3 rounded-xl font-bold uppercase tracking-wider text-sm hover:scale-[1.02] transition-transform"
+            className="w-full mt-4 bg-accent-cta text-accent-cta-text py-3 rounded-xl font-bold uppercase tracking-wider text-sm hover:scale-[1.02] transition-transform"
           >
             Prøv igjen
           </button>

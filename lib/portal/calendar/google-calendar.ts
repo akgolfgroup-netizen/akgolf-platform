@@ -1,7 +1,7 @@
 import { createServiceClient } from "@/lib/supabase/server";
 import { createHmac } from "crypto";
 import { logger } from "@/lib/logger";
-import { nanoid } from "nanoid";
+
 
 /**
  * Google Calendar integration for AK Golf Portal.

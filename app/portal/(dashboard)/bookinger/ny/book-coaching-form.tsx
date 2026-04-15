@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { format, addDays, startOfDay } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -293,9 +294,11 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                 >
                   <div className="rounded-[20px] p-5 flex items-center gap-5 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-portal-bg border-portal-border hover:border-portal-text/20 hover:shadow-lg">
                     {inst.user.image ? (
-                      <img
+                      <Image
                         src={inst.user.image}
                         alt=""
+                        width={64}
+                        height={64}
                         className="w-16 h-16 rounded-xl object-cover border-2 border-portal-border"
                       />
                     ) : (

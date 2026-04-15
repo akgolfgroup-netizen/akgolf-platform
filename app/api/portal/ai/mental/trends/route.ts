@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
 
 /**
  * GET /api/portal/ai/mental/trends — Get mental trends over time
  */
-export async function GET(req: NextRequest) {
+export async function GET() {
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Ikke autorisert" }, { status: 401 });

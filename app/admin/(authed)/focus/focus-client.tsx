@@ -59,7 +59,7 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
   const [isPending, startTransition] = useTransition();
   const [division, setDivision] = useState<Division>("COACHING");
   const [tasks, setTasks] = useState(initialTasks);
-  const [stats, setStats] = useState(initialStats);
+  const [stats] = useState(initialStats);
   const [showCreate, setShowCreate] = useState(false);
 
   const divTasks = tasks.filter((t) => t.division === division);

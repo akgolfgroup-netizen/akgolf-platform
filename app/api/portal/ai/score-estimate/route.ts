@@ -7,7 +7,7 @@ import { estimateScoreForCourse } from "@/lib/portal/golf/decade-caddy";
  * GET /api/portal/ai/score-estimate — List cached score estimates
  * POST /api/portal/ai/score-estimate — Generate new score estimate
  */
-export async function GET(req: NextRequest) {
+export async function GET() {
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Ikke autorisert" }, { status: 401 });

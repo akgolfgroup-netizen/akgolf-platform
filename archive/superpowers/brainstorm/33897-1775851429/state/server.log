@@ -1,0 +1,12 @@
+{"type":"server-started","port":64667,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:64667","screen_dir":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content","state_dir":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/state"}
+{"type":"screen-added","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-flow-overview.html"}
+{"type":"screen-added","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-step0-trainers.html"}
+{"type":"screen-updated","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-step0-trainers.html"}
+{"type":"screen-added","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-confirm-drawer.html"}
+{"type":"screen-updated","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-confirm-drawer.html"}
+{"type":"screen-updated","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-confirm-drawer.html"}
+{"type":"screen-updated","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-confirm-drawer.html"}
+{"type":"screen-updated","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-confirm-drawer.html"}
+{"type":"screen-updated","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-confirm-drawer.html"}
+{"type":"screen-updated","file":"/Users/anderskristiansen/Developer/akgolf/akgolf-platform/.superpowers/brainstorm/33897-1775851429/content/booking-confirm-drawer.html"}
+{"type":"server-stopped","reason":"idle timeout"}

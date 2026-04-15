@@ -32,7 +32,6 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import {
   calculateTourPercentile,
   getPercentileLabel,
-  CATEGORY_LABELS,
 } from "@/lib/portal/datagolf/tour-benchmarks";
 import { SG_BENCHMARKS } from "@/lib/portal/golf/sg-benchmarks";
 import type {

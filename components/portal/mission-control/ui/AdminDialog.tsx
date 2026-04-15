@@ -56,24 +56,24 @@ export function AdminDialog({
       />
       <div
         className={cn(
-          "relative w-full rounded-2xl overflow-hidden shadow-2xl bg-white border border-[#D5DFDB]",
+          "relative w-full rounded-2xl overflow-hidden shadow-2xl bg-white border border-grey-200",
           sizeClass[size],
           "animate-in fade-in zoom-in-95 duration-200",
         )}
       >
         {(title || showClose) && (
-          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-[#D5DFDB]">
+          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-grey-200">
             <div className="flex-1 min-w-0">
               {title && (
                 <h2
                   id="admin-dialog-title"
-                  className="text-lg font-semibold text-[#0A1F18]"
+                  className="text-lg font-semibold text-black"
                 >
                   {title}
                 </h2>
               )}
               {description && (
-                <p className="text-sm mt-0.5 text-[#7A8C85]">
+                <p className="text-sm mt-0.5 text-grey-400">
                   {description}
                 </p>
               )}
@@ -92,7 +92,7 @@ export function AdminDialog({
         )}
         {children && <div className="px-6 py-4">{children}</div>}
         {footer && (
-          <div className="flex items-center justify-end gap-2 px-6 py-4 border-t border-[#D5DFDB]">
+          <div className="flex items-center justify-end gap-2 px-6 py-4 border-t border-grey-200">
             {footer}
           </div>
         )}

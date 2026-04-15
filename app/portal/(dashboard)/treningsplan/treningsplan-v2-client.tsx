@@ -73,15 +73,6 @@ export interface TrainingPlannerV2Props {
   }) => Promise<void>;
 }
 
-// ─── PYRAMID COLORS (portal tokens via CSS vars) ──────────────��──
-const PYRAMID_COLORS: Record<string, string> = {
-  FYS: "#B84233",      // #B84233
-  TEK: "#C48A32",    // #C48A32
-  SLAG: "#0A1F18",   // #0A1F18
-  SPILL: "#007AFF",     // #007AFF
-  TURN: "#AF52DE",        // #AF52DE
-};
-
 // Inline hex for JS operations where CSS vars don't work
 const PYRAMID_HEX: Record<string, string> = {
   FYS: "#B84233",
@@ -807,7 +798,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
   const [nowY, setNowY] = useState(0);
   useEffect(() => { if (scrollRef.current) scrollRef.current.scrollTop = t2y(6, 30); }, [view]);
   useEffect(() => { const t = () => { const n = new Date(); setNowY(t2y(n.getHours(), n.getMinutes())); }; t(); const iv = setInterval(t, 30000); return () => clearInterval(iv); }, []);
-  const dates = view === "day" ? [baseDate] : weekDates;
+  const dates = useMemo(() => view === "day" ? [baseDate] : weekDates, [view, baseDate, weekDates]);
   const getDateIdx = useCallback((x: number) => { if (!colsRef.current) return 0; const r = colsRef.current.getBoundingClientRect(); return clamp(Math.floor((x - r.left) / (r.width / dates.length)), 0, dates.length - 1); }, [dates]);
 
   useEffect(() => {
@@ -823,7 +814,7 @@ function Planner({ events: initialEvents, templates, startLive, onSaveEvent, onD
         updateEvent(drag.id, { startH: Math.floor(tm / 60), startM: tm % 60, date: dk(dates[getDateIdx(e.clientX)]) });
       }
     };
-    const onU = (e: MouseEvent) => {
+    const onU = () => {
       // Persist drag result
       const ev = events.find((ev) => ev.id === drag.id);
       if (ev) {
@@ -1207,7 +1198,7 @@ function Spark({ data, w = 160, h = 40, color = "#0A1F18" }: { data: number[]; w
 export function TrainingPlannerV2({
   events: initialEvents,
   templates,
-  planId,
+
   onSaveEvent,
   onDeleteEvent,
   onMoveEvent,

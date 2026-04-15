@@ -214,19 +214,7 @@ export default function TilgjengelighetPage() {
     }));
   };
 
-  const handleUpdateSlot = (
-    dayIndex: number,
-    slotIndex: number,
-    field: "start" | "end",
-    value: string,
-  ) => {
-    setEditingSlots((prev) => ({
-      ...prev,
-      [dayIndex]: prev[dayIndex].map((slot, i) =>
-        i === slotIndex ? { ...slot, [field]: value } : slot,
-      ),
-    }));
-  };
+
 
   const handleAddException = async () => {
     if (!selectedInstructor || !exceptionForm.date) return;

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
@@ -162,10 +163,12 @@ function SidebarContent({
       <div className="mx-3 mb-3 rounded-xl border border-grey-200 bg-grey-50 p-3">
         <div className="flex items-center gap-3">
           {user.image ? (
-            <img
+            <Image
               src={user.image}
               alt=""
-              className="h-9 w-9 rounded-full object-cover"
+              width={36}
+              height={36}
+              className="rounded-full object-cover"
             />
           ) : (
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black">
@@ -248,9 +251,9 @@ export function Sidebar({ user }: SidebarProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 z-50 flex h-full w-72 flex-col border-r border-[#D5DFDB] bg-white lg:hidden"
+              className="fixed left-0 top-0 z-50 flex h-full w-72 flex-col border-r border-grey-200 bg-white lg:hidden"
             >
-              <div className="flex items-center justify-between border-b border-[#D5DFDB] px-5 py-4">
+              <div className="flex items-center justify-between border-b border-grey-200 px-5 py-4">
                 <div className="flex items-center gap-3">
                   <AKLogo variant="black" size={32} />
                   <span className="text-[14px] font-bold text-black">AK Golf</span>

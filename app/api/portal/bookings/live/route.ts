@@ -194,19 +194,11 @@ export async function broadcastUpdate(
     return 0; // Ingen aktive seere
   }
 
-  const message = {
-    type: updateType,
-    timestamp: new Date().toISOString(),
-    instructorId,
-    date,
-    ...data,
-  };
-
   // I en full implementasjon ville vi brukt en pub/sub-tjeneste som Redis
   // eller en message broker for å distribuere meldinger til alle server-noder.
   // For nå logger vi bare at en oppdatering skulle ha blitt sendt.
   
-  logger.info(`[SSE] Broadcasting ${updateType} to ${viewers.size} viewers for ${instructorId}:${date}`);
+  logger.info(`[SSE] Broadcasting ${updateType} to ${viewers.size} viewers for ${instructorId}:${date}`, data ? { extraData: data } : undefined);
   
   return viewers.size;
 }

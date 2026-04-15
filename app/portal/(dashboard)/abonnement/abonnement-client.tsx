@@ -204,7 +204,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                     disabled={isPending}
                     className={cn(
                       "inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all",
-                      "bg-[#D1F843] text-black",
+                      "bg-accent-cta text-accent-cta-text",
                       "hover:brightness-95 active:scale-[0.98]",
                       isPending && "opacity-60 cursor-not-allowed"
                     )}
@@ -222,7 +222,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                     className={cn(
                       "inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all",
                       "border border-grey-200 bg-white text-black",
-                      "hover:border-[#A5B2AD] active:scale-[0.98]",
+                      "hover:border-grey-300 active:scale-[0.98]",
                       isPending && "opacity-60 cursor-not-allowed"
                     )}
                   >
@@ -305,7 +305,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
               href="/booking"
               className={cn(
                 "inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all",
-                "bg-[#D1F843] text-black",
+                "bg-accent-cta text-accent-cta-text",
                 "hover:brightness-95 active:scale-[0.98]"
               )}
             >

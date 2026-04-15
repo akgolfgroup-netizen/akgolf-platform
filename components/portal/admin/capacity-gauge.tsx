@@ -81,12 +81,12 @@ export function CapacityGauge({
       </div>
 
       {/* Label */}
-      <p className="mt-2 text-xs font-medium text-[#7A8C85] uppercase tracking-wide">
+      <p className="mt-2 text-xs font-medium text-grey-400 uppercase tracking-wide">
         {label}
       </p>
 
       {/* Hours display */}
-      <p className="text-sm text-[#0A1F18] font-medium mt-1">
+      <p className="text-sm text-black font-medium mt-1">
         {bookedHours.toFixed(1)}t / {totalHours.toFixed(1)}t
       </p>
     </div>

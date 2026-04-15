@@ -57,7 +57,7 @@ export default function NyRundePage() {
       });
 
       router.push("/portal/statistikk");
-    } catch (_err) {
+    } catch {
       setError("Kunne ikke lagre runden. Prov igjen.");
       setSaving(false);
     }

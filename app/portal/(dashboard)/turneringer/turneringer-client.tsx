@@ -110,7 +110,6 @@ export function TurneringerClient({
     [filteredTournaments]
   );
 
-  const proSchedule = proTour === "pga" ? pgaSchedule : euroSchedule;
 
   const calendarTournaments = useMemo(() => {
     return filteredTournaments.filter((t) =>
@@ -301,13 +300,11 @@ function ListView({
   past,
   showMine,
   onSelect,
-  userId,
 }: {
   upcoming: TournamentWithPlan[];
   past: TournamentWithPlan[];
   showMine: boolean;
   onSelect: (t: TournamentWithPlan) => void;
-  userId: string;
 }) {
   if (upcoming.length === 0 && past.length === 0) {
     return (
@@ -484,21 +481,17 @@ function TournamentListCard({
 // ════════════════════════════════════════════════════════════════
 
 function CalendarView({
-  tournaments,
   calendarMonth,
   setCalendarMonth,
   calendarDays,
   calendarTournaments,
   onSelect,
-  userId,
 }: {
-  tournaments: TournamentWithPlan[];
   calendarMonth: Date;
   setCalendarMonth: (d: Date) => void;
   calendarDays: Date[];
   calendarTournaments: TournamentWithPlan[];
   onSelect: (t: TournamentWithPlan) => void;
-  userId: string;
 }) {
   const prevMonth = () => {
     const d = new Date(calendarMonth);
@@ -722,12 +715,10 @@ function ProTournamentCard({ event }: { event: TourScheduleEvent }) {
 
 function TournamentDetailModal({
   tournament,
-  userId,
   onClose,
   onUpdated,
 }: {
   tournament: TournamentWithPlan;
-  userId: string;
   onClose: () => void;
   onUpdated: () => void;
 }) {

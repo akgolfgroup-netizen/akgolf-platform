@@ -150,8 +150,6 @@ interface WeeklyInsight {
 }
 
 export async function getLatestAiInsight(userId: string): Promise<WeeklyInsight | null> {
-  const supabase = await createServerSupabase();
-
   // TODO: AI-insights felt (latestAiInsight, aiInsightGeneratedAt) mangler i Supabase.
   // Når disse feltene er migrert fra Prisma til Supabase, oppdater denne spørringen.
   // Midlertidig returneres null.

@@ -307,7 +307,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function OPTIONS(_req: NextRequest) {
+export async function OPTIONS() {
   const corsOrigin = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
   return new Response(null, {
     headers: {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
@@ -120,13 +121,12 @@ export default function LandingContactPage() {
                 className="bg-white rounded-[32px] overflow-hidden border border-black/5 shadow-lg"
               >
                 <div className="aspect-[16/9] bg-grey-50">
-                  <img
+                  <Image
                     src={`/images/academy/AK-Golf-Academy-${location.name.includes("Fredrikstad") ? "5" : "20"}.jpg`}
                     alt={location.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = "none";
-                    }}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
                 <div className="p-8">

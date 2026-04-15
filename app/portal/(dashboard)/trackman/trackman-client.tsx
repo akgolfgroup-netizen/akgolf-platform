@@ -7,9 +7,8 @@ import {
   Activity,
   Target,
   TrendingUp,
-  Calendar,
   FileSpreadsheet,
-  Image,
+  Image as ImageIcon,
   Loader2,
   CheckCircle2,
   AlertCircle,
@@ -752,7 +751,7 @@ function UploadModal({
               className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-grey-200 hover:border-purple-500 hover:bg-purple-500/5 transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-                <Image className="w-6 h-6 text-purple-500" />
+                <ImageIcon className="w-6 h-6 text-purple-500" />
               </div>
               <div className="text-left">
                 <p className="font-semibold text-sm text-black">Last opp skjermbilde</p>

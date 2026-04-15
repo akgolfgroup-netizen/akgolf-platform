@@ -281,7 +281,10 @@ export default function KalenderClient({
     : [];
 
   // — Heatmap data — antall bookinger per ukedag × time (8-20)
-  const heatmapRows = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
+  const heatmapRows = useMemo(
+    () => ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"],
+    [],
+  );
   const heatmapCols = useMemo(
     () => Array.from({ length: 13 }, (_, i) => `${i + 8}`),
     [],
@@ -309,7 +312,7 @@ export default function KalenderClient({
       }
     }
     return cells;
-  }, [bookings, heatmapCols]);
+  }, [bookings, heatmapCols, heatmapRows]);
 
   // — Render helpers —
 

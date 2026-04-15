@@ -5,21 +5,24 @@ import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Calendar, Target, Trophy } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import { fadeInUp, staggerContainer } from "@/components/portal/premium";
 import { Card } from "@/components/ui/card";
 import { BookingStatusBadge } from "./booking-status-badge";
 import type { BookingViewModel } from "./booking-types";
 import { getStatusConfig } from "./booking-types";
 
-function iconForType(type: BookingViewModel["type"]): LucideIcon {
+function renderIconForType(
+  type: BookingViewModel["type"],
+  className?: string,
+  strokeWidth?: number,
+) {
   switch (type) {
     case "coaching":
-      return Target;
+      return <Target className={className} strokeWidth={strokeWidth} />;
     case "tournament":
-      return Trophy;
+      return <Trophy className={className} strokeWidth={strokeWidth} />;
     default:
-      return Calendar;
+      return <Calendar className={className} strokeWidth={strokeWidth} />;
   }
 }
 
@@ -29,7 +32,6 @@ interface PastBookingRowProps {
 
 function PastBookingRow({ booking }: PastBookingRowProps) {
   const status = getStatusConfig(booking);
-  const Icon = iconForType(booking.type);
   const dateLabel = format(booking.startTime, "d. MMM yyyy", { locale: nb });
   const timeLabel = format(booking.startTime, "HH:mm");
 
@@ -38,7 +40,7 @@ function PastBookingRow({ booking }: PastBookingRowProps) {
       <Card variant="elevated" padding="sm" hover className="group">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-surface flex items-center justify-center shrink-0">
-            <Icon className="w-4 h-4 text-muted" strokeWidth={1.75} />
+            {renderIconForType(booking.type, "w-4 h-4 text-muted", 1.75)}
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-medium text-[13px] text-grey-900 truncate">

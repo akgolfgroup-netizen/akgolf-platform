@@ -35,12 +35,9 @@ type StatsAggregates = {
   sgTrend: "up" | "down" | "flat";
 };
 
-type TrainingAreaBreakdown = { area: string; minutes: number; sessions: number };
-
 interface StatistikkClientProps {
   rounds: RoundStats[];
   aggregates: StatsAggregates | null;
-  breakdown: TrainingAreaBreakdown[];
   weeklyTraining: WeeklyTrainingData[];
   handicap?: number | null;
   currentPeriod: PeriodKey;
@@ -364,7 +361,6 @@ function EmptyState() {
 export function StatistikkClient({
   rounds,
   aggregates,
-  breakdown,
   weeklyTraining,
   handicap,
   currentPeriod,

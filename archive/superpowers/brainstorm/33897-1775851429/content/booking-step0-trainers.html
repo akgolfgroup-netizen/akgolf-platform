@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking — Steg 0: Velg trener</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',system-ui,sans-serif; background:#ECF0EF; min-height:100vh; }
+
+  /* Nav */
+  .nav { background:white; border-bottom:1px solid #D5DFDB; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:10; }
+  .nav-logo { font-weight:800; font-size:18px; color:#005840; letter-spacing:-0.5px; }
+  .nav-logo span { color:#A5B2AD; font-weight:500; font-size:12px; margin-left:6px; }
+  .nav-back { color:#A5B2AD; font-size:13px; text-decoration:none; display:flex; align-items:center; gap:6px; }
+  .nav-back:hover { color:#005840; }
+
+  /* Page */
+  .page { max-width:720px; margin:0 auto; padding:32px 20px 80px; }
+  .page-title { font-size:28px; font-weight:700; color:#0A1F18; letter-spacing:-0.5px; margin-bottom:4px; }
+  .page-sub { font-size:14px; color:#A5B2AD; margin-bottom:32px; }
+
+  /* Trainer Cards */
+  .trainers { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:540px){ .trainers { grid-template-columns:1fr; } }
+
+  .trainer-card {
+    border-radius:20px;
+    overflow:hidden;
+    cursor:pointer;
+    position:relative;
+    transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+    background:white;
+    border:2px solid transparent;
+  }
+  .trainer-card:hover {
+    transform:translateY(-4px);
+    box-shadow:0 12px 40px rgba(0,88,64,0.12);
+    border-color:#D1F843;
+  }
+  .trainer-card.selected {
+    border-color:#D1F843;
+    box-shadow:0 12px 40px rgba(0,88,64,0.15);
+  }
+
+  .trainer-img {
+    width:100%;
+    aspect-ratio:3/4;
+    background-size:cover;
+    background-position:center;
+    position:relative;
+  }
+  .trainer-img::after {
+    content:'';
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:60%;
+    background:linear-gradient(to top, rgba(10,31,24,0.85), transparent);
+  }
+
+  .trainer-info {
+    position:absolute;
+    bottom:0; left:0; right:0;
+    padding:20px;
+    z-index:2;
+    color:white;
+  }
+  .trainer-name { font-size:20px; font-weight:700; letter-spacing:-0.3px; }
+  .trainer-role { font-size:12px; color:rgba(255,255,255,0.7); margin-top:2px; font-weight:500; }
+  .trainer-badge {
+    display:inline-block;
+    margin-top:8px;
+    background:rgba(209,248,67,0.15);
+    color:#D1F843;
+    font-size:10px;
+    font-weight:700;
+    padding:4px 10px;
+    border-radius:99px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+
+  /* Services revealed under card */
+  .services-panel {
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+    background:white;
+  }
+  .trainer-card.selected .services-panel {
+    max-height:600px;
+  }
+  .services-inner { padding:16px 20px 20px; }
+  .services-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#A5B2AD; margin-bottom:12px; }
+
+  .service-item {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 16px;
+    border-radius:12px;
+    background:#ECF0EF;
+    margin-bottom:8px;
+    cursor:pointer;
+    transition:all 0.2s;
+    border:2px solid transparent;
+  }
+  .service-item:hover { background:#e3e9e7; border-color:#005840; }
+  .service-item.active { background:#005840; color:white; border-color:#005840; }
+  .service-item.active .service-price { color:#D1F843; }
+  .service-item.active .service-name { color:white; }
+  .service-item.active .service-meta { color:rgba(255,255,255,0.6); }
+  .service-item.active .service-avail { background:rgba(209,248,67,0.2); color:#D1F843; }
+
+  .service-left { display:flex; flex-direction:column; gap:2px; }
+  .service-name { font-size:14px; font-weight:600; color:#0A1F18; }
+  .service-meta { font-size:11px; color:#A5B2AD; }
+  .service-right { text-align:right; }
+  .service-price { font-size:16px; font-weight:700; color:#005840; }
+  .service-period { font-size:10px; color:#A5B2AD; }
+  .service-avail { font-size:9px; font-weight:600; background:#ECF0EF; color:#005840; padding:2px 8px; border-radius:99px; margin-top:4px; display:inline-block; }
+
+  /* Drawer preview */
+  .drawer-preview {
+    position:fixed;
+    bottom:0; left:0; right:0;
+    background:white;
+    border-radius:20px 20px 0 0;
+    box-shadow:0 -8px 40px rgba(0,0,0,0.1);
+    padding:20px 24px 28px;
+    transform:translateY(100%);
+    transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index:100;
+    max-width:720px;
+    margin:0 auto;
+  }
+  .drawer-preview.visible { transform:translateY(0); }
+  .drawer-handle { width:40px; height:4px; border-radius:99px; background:#D5DFDB; margin:0 auto 16px; }
+  .drawer-title { font-size:16px; font-weight:700; color:#0A1F18; margin-bottom:4px; }
+  .drawer-sub { font-size:12px; color:#A5B2AD; margin-bottom:16px; }
+
+  /* Date chips */
+  .date-chips { display:flex; gap:8px; overflow-x:auto; padding-bottom:8px; -webkit-overflow-scrolling:touch; }
+  .date-chips::-webkit-scrollbar { display:none; }
+  .date-chip {
+    flex-shrink:0;
+    padding:10px 16px;
+    border-radius:12px;
+    background:#ECF0EF;
+    text-align:center;
+    cursor:pointer;
+    transition:all 0.2s;
+    border:2px solid transparent;
+    min-width:72px;
+  }
+  .date-chip:hover { border-color:#005840; }
+  .date-chip.selected { background:#005840; border-color:#005840; }
+  .date-chip .day { font-size:10px; font-weight:600; text-transform:uppercase; color:#A5B2AD; }
+  .date-chip.selected .day { color:rgba(255,255,255,0.6); }
+  .date-chip .num { font-size:18px; font-weight:700; color:#0A1F18; margin-top:2px; }
+  .date-chip.selected .num { color:white; }
+  .date-chip .month { font-size:10px; color:#A5B2AD; }
+  .date-chip.selected .month { color:#D1F843; }
+
+  /* Time chips */
+  .time-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  .time-chip {
+    padding:10px 20px;
+    border-radius:10px;
+    background:#ECF0EF;
+    font-size:14px;
+    font-weight:600;
+    color:#0A1F18;
+    cursor:pointer;
+    transition:all 0.2s;
+    border:2px solid transparent;
+    font-variant-numeric:tabular-nums;
+  }
+  .time-chip:hover { border-color:#005840; }
+  .time-chip.selected { background:#D1F843; color:#005840; border-color:#D1F843; }
+
+  /* CTA */
+  .drawer-cta {
+    width:100%;
+    margin-top:20px;
+    padding:16px;
+    border-radius:14px;
+    background:#005840;
+    color:white;
+    font-size:14px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    border:none;
+    cursor:pointer;
+    transition:all 0.2s;
+  }
+  .drawer-cta:hover { background:#004530; }
+
+  /* Backdrop */
+  .backdrop {
+    position:fixed;
+    inset:0;
+    background:rgba(10,31,24,0.4);
+    backdrop-filter:blur(4px);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.3s;
+    z-index:50;
+  }
+  .backdrop.visible { opacity:1; pointer-events:auto; }
+
+  /* Step indicator */
+  .step-indicator {
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:24px;
+  }
+  .step-dot {
+    width:8px; height:8px;
+    border-radius:50%;
+    background:#D5DFDB;
+    transition:all 0.3s;
+  }
+  .step-dot.active { background:#005840; width:24px; border-radius:4px; }
+  .step-dot.done { background:#D1F843; }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="#" class="nav-back">&#8592; Tilbake</a>
+  <div class="nav-logo">AK Golf <span>Book</span></div>
+</nav>
+
+<!-- Page -->
+<div class="page">
+  <!-- Step indicator -->
+  <div class="step-indicator">
+    <div class="step-dot active"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+  </div>
+
+  <h1 class="page-title">Hvem vil du trene med?</h1>
+  <p class="page-sub">Velg din coach for a se tilgjengelige tjenester</p>
+
+  <!-- Trainer Cards -->
+  <div class="trainers">
+
+    <!-- Anders -->
+    <div class="trainer-card" id="anders-card" onclick="selectTrainer('anders')">
+      <div class="trainer-img" style="background-image:url('/images/academy/AK-Golf-Academy-20.jpg'); background-color:#324D45;">
+        <div class="trainer-info">
+          <div class="trainer-name">Anders Kristiansen</div>
+          <div class="trainer-role">Head Coach</div>
+          <div class="trainer-badge">Performance &middot; Flex</div>
+        </div>
+      </div>
+      <div class="services-panel">
+        <div class="services-inner">
+          <div class="services-label">Tilgjengelige tjenester</div>
+          <div class="service-item" onclick="event.stopPropagation(); selectService(this)">
+            <div class="service-left">
+              <div class="service-name">Performance Pro</div>
+              <div class="service-meta">4 x 20 min/mnd &middot; TrackMan</div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">2 000</div>
+              <div class="service-period">kr/mnd</div>
+              <div class="service-avail">6 ledige denne uken</div>
+            </div>
+          </div>
+          <div class="service-item" onclick="event.stopPropagation(); selectService(this)">
+            <div class="service-left">
+              <div class="service-name">Performance</div>
+              <div class="service-meta">2 x 20 min/mnd &middot; TrackMan</div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">1 600</div>
+              <div class="service-period">kr/mnd</div>
+              <div class="service-avail">4 ledige denne uken</div>
+            </div>
+          </div>
+          <div class="service-item" onclick="event.stopPropagation(); selectService(this)">
+            <div class="service-left">
+              <div class="service-name">Flex 50</div>
+              <div class="service-meta">50 min &middot; Enkeltokt</div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">1 500</div>
+              <div class="service-period">kr</div>
+              <div class="service-avail">3 ledige denne uken</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Markus -->
+    <div class="trainer-card" id="markus-card" onclick="selectTrainer('markus')">
+      <div class="trainer-img" style="background-image:url('/images/academy/AK-Golf-Academy-25.jpg'); background-color:#324D45;">
+        <div class="trainer-info">
+          <div class="trainer-name">Markus R. Pedersen</div>
+          <div class="trainer-role">Assistant Coach</div>
+          <div class="trainer-badge">Express &middot; First Tee</div>
+        </div>
+      </div>
+      <div class="services-panel">
+        <div class="services-inner">
+          <div class="services-label">Tilgjengelige tjenester</div>
+          <div class="service-item" onclick="event.stopPropagation(); selectService(this)">
+            <div class="service-left">
+              <div class="service-name">Express Pro</div>
+              <div class="service-meta">4 x 20 min/mnd</div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">1 000</div>
+              <div class="service-period">kr/mnd</div>
+              <div class="service-avail">8 ledige denne uken</div>
+            </div>
+          </div>
+          <div class="service-item" onclick="event.stopPropagation(); selectService(this)">
+            <div class="service-left">
+              <div class="service-name">Express</div>
+              <div class="service-meta">2 x 20 min/mnd</div>
+            </div>
+            <div class="service-right">
+              <div class="service-price">550</div>
+              <div class="service-period">kr/mnd</div>
+              <div class="service-avail">8 ledige denne uken</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Backdrop -->
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+
+<!-- Drawer: Dato + Tid -->
+<div class="drawer-preview" id="drawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-title">Velg dato og tid</div>
+  <div class="drawer-sub" id="drawer-service-name">Performance Pro med Anders</div>
+
+  <div class="date-chips">
+    <div class="date-chip selected" onclick="selectDate(this)">
+      <div class="day">Man</div>
+      <div class="num">14</div>
+      <div class="month">apr</div>
+    </div>
+    <div class="date-chip" onclick="selectDate(this)">
+      <div class="day">Ons</div>
+      <div class="num">16</div>
+      <div class="month">apr</div>
+    </div>
+    <div class="date-chip" onclick="selectDate(this)">
+      <div class="day">Tor</div>
+      <div class="num">17</div>
+      <div class="month">apr</div>
+    </div>
+    <div class="date-chip" onclick="selectDate(this)">
+      <div class="day">Fre</div>
+      <div class="num">18</div>
+      <div class="month">apr</div>
+    </div>
+    <div class="date-chip" onclick="selectDate(this)">
+      <div class="day">Man</div>
+      <div class="num">21</div>
+      <div class="month">apr</div>
+    </div>
+    <div class="date-chip" onclick="selectDate(this)">
+      <div class="day">Tir</div>
+      <div class="num">22</div>
+      <div class="month">apr</div>
+    </div>
+    <div class="date-chip" onclick="selectDate(this)">
+      <div class="day">Ons</div>
+      <div class="num">23</div>
+      <div class="month">apr</div>
+    </div>
+  </div>
+
+  <div class="time-chips" id="time-chips">
+    <div class="time-chip" onclick="selectTime(this)">10:00</div>
+    <div class="time-chip" onclick="selectTime(this)">13:00</div>
+    <div class="time-chip selected" onclick="selectTime(this)">15:00</div>
+    <div class="time-chip" onclick="selectTime(this)">17:00</div>
+  </div>
+
+  <button class="drawer-cta" onclick="alert('Neste: Bekreft booking-drawer')">Bekreft tid &#8594;</button>
+</div>
+
+<script>
+function selectTrainer(name) {
+  document.querySelectorAll('.trainer-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById(name + '-card').classList.add('selected');
+}
+
+function selectService(el) {
+  document.querySelectorAll('.service-item').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  const serviceName = el.querySelector('.service-name').textContent;
+  document.getElementById('drawer-service-name').textContent = serviceName;
+  document.getElementById('drawer').classList.add('visible');
+  document.getElementById('backdrop').classList.add('visible');
+}
+
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('visible');
+  document.getElementById('backdrop').classList.remove('visible');
+}
+
+function selectDate(el) {
+  document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function selectTime(el) {
+  document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
+
+</body>
+</html>

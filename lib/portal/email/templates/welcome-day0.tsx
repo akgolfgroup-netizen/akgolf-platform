@@ -9,7 +9,6 @@ import {
   Hr,
   Preview,
   Button,
-  Img,
 } from "@react-email/components";
 
 interface WelcomeDay0Props {

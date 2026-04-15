@@ -85,7 +85,6 @@ export function generateHoleStrategy(
   playerHandicap: number
 ): DecadeHoleStrategy {
   const isShortPar4 = hole.par === 4 && hole.lengthMeter < 340;
-  const isLongPar4 = hole.par === 4 && hole.lengthMeter > 400;
   const fairwayWidth = hole.fairwayWidth ?? 30; // default 30m
 
   // Finn driver-spredning

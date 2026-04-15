@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function LandingHomepage() {
   return (
     <>
@@ -31,11 +33,11 @@ export default function LandingHomepage() {
             <div className="z-10 py-12">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-grey-50 rounded-full mb-8">
                 <span className="font-mono text-[10px] uppercase tracking-widest text-black font-bold">Systematisk golf coaching</span>
-                <div className="w-1 h-1 rounded-full bg-[#576500]"></div>
+                <div className="w-1 h-1 rounded-full bg-lime-dark"></div>
                 <span className="font-mono text-[10px] uppercase tracking-widest text-black/60">Est. 2024</span>
               </div>
               <h1 className="text-6xl md:text-7xl font-semibold text-black leading-[1.05] tracking-tight mb-8">
-                Bli en bedre golfspiller — <span className="text-[#b8d300] italic">med system</span>
+                Bli en bedre golfspiller — <span className="text-lime-bright italic">med system</span>
               </h1>
               <p className="text-xl md:text-2xl text-grey-500 max-w-lg mb-12 leading-relaxed">
                 AK Golf Academy kombinerer individuell coaching med en digital treningsplattform som følger deg mellom sesjonene. Strukturert utvikling for golfspillere på alle nivåer.
@@ -52,15 +54,17 @@ export default function LandingHomepage() {
             </div>
             <div className="relative h-[600px] lg:h-[800px] w-full flex items-center justify-center">
               <div className="absolute inset-0 bg-grey-50 rounded-[48px] overflow-hidden">
-                <img 
-                  src="/images/hero/hero-main.jpg" 
+                <Image
+                  src="/images/hero/hero-main.jpg"
                   alt="Golfspiller i sving"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#2d5a27]/10 to-transparent flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-br from-forest-alt/10 to-transparent flex items-center justify-center">
                   <span className="material-symbols-outlined text-[200px] text-black/10">sports_golf</span>
                 </div>
               </div>
@@ -83,7 +87,7 @@ export default function LandingHomepage() {
             <div className="max-w-2xl">
               <h2 className="text-4xl md:text-5xl font-semibold text-black tracking-tight mb-6">Treningsabonnement</h2>
               <p className="text-grey-500 text-lg">Systematisk coaching med alt inkludert. Ikke bare én time i blant — men kontinuerlig utvikling med oppfølging mellom hver sesjon.</p>
-              <p className="text-[#576500] text-sm mt-3 font-medium">Lanseres i starten av mai 2026</p>
+              <p className="text-lime-dark text-sm mt-3 font-medium">Lanseres i starten av mai 2026</p>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -154,10 +158,12 @@ export default function LandingHomepage() {
             </div>
             <div className="lg:col-span-5 relative">
               <div className="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl bg-black/10">
-                <img 
-                  src="/images/academy/AK-Golf-Academy-1.jpg" 
+                <Image
+                  src="/images/academy/AK-Golf-Academy-1.jpg"
                   alt="AK Golf Academy fasiliteter"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                   }}
@@ -199,7 +205,7 @@ export default function LandingHomepage() {
           <a className="text-sm tracking-normal text-black/60 hover:text-accent-cta transition-colors" href="/landing/contact">Kontakt</a>
         </div>
         <div className="flex gap-4">
-          <div className="w-10 h-10 rounded-full bg-[#e6e2d9] flex items-center justify-center hover:bg-accent-cta transition-colors cursor-pointer">
+          <div className="w-10 h-10 rounded-full bg-beige-warm flex items-center justify-center hover:bg-accent-cta transition-colors cursor-pointer">
             <span className="material-symbols-outlined text-black text-xl">public</span>
           </div>
         </div>

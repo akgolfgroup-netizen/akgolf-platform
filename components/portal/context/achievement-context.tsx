@@ -22,7 +22,6 @@ interface AchievementProviderProps {
 
 export function AchievementProvider({ children }: AchievementProviderProps) {
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
-  const [queue, setQueue] = useState<Achievement[]>([]);
 
   const showAchievement = useCallback((achievement: Achievement) => {
     if (currentAchievement) {

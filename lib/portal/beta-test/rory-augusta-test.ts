@@ -40,12 +40,6 @@ export interface DriverTestAugusta {
 // BENCHMARK LEVELS
 type BenchmarkLevel = 'ELITE' | 'TOUR_AVG' | 'GOOD_AMATEUR' | 'DEVELOPING' | 'BEGINNER';
 
-interface Benchmark {
-  label: string;
-  emoji: string;
-  description: string;
-}
-
 export interface TestResult100m {
   // Player stats
   averageProximity: number;
@@ -244,6 +238,8 @@ function generateApproachRecommendation(
   vsRory: BenchmarkLevel,
   vsTour: BenchmarkLevel
 ): { recommendation: string; nextMilestone: string } {
+  void vsRory;
+  void vsTour;
   // Beat both
   if (pctRory >= 100 && pctTour >= 100) {
     return {
@@ -289,6 +285,8 @@ function generateDriverRecommendation(
   vsRory: BenchmarkLevel,
   vsTour: BenchmarkLevel
 ): { recommendation: string; nextMilestone: string } {
+  void vsRory;
+  void vsTour;
   if (pctRory >= 100 && pctTour >= 100) {
     return {
       recommendation: 'Elite-nivå! Du driver bedre enn verdens beste.',

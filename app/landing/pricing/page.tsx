@@ -103,7 +103,7 @@ export default function LandingPricingPage() {
             </div>
 
             {/* Performance */}
-            <div className="bg-grey-50 rounded-[1.5rem] p-8 flex flex-col h-full border border-transparent transition-all hover:bg-[#ece8df]">
+            <div className="bg-grey-50 rounded-[1.5rem] p-8 flex flex-col h-full border border-transparent transition-all hover:bg-beige-hover">
               <div className="mb-8">
                 <h3 className="font-mono text-xs uppercase tracking-widest text-black/60 mb-2">Abonnement</h3>
                 <div className="text-4xl font-bold text-black mb-1">Performance</div>
@@ -185,7 +185,7 @@ export default function LandingPricingPage() {
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-[#ba1a1a] mb-4">Ingen spillerportal inkludert</p>
+              <p className="text-xs text-error-bright mb-4">Ingen spillerportal inkludert</p>
               <Link 
                 href="/booking"
                 className="w-full py-4 border-2 border-black text-black font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-black hover:text-white transition-all duration-300 text-center block"
@@ -212,7 +212,7 @@ export default function LandingPricingPage() {
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-[#ba1a1a] mb-4">Ingen spillerportal inkludert</p>
+              <p className="text-xs text-error-bright mb-4">Ingen spillerportal inkludert</p>
               <Link 
                 href="/booking"
                 className="w-full py-4 border-2 border-black text-black font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-black hover:text-white transition-all duration-300 text-center block"

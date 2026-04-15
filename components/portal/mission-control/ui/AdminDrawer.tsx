@@ -53,7 +53,7 @@ export function AdminDrawer({
       <div
         className={cn(
           "absolute top-0 bottom-0 w-full flex flex-col shadow-2xl bg-white",
-          side === "right" ? "right-0 border-l border-[#D5DFDB]" : "left-0 border-r border-[#D5DFDB]",
+          side === "right" ? "right-0 border-l border-grey-200" : "left-0 border-r border-grey-200",
           widthClass[width],
         )}
         style={{
@@ -61,15 +61,15 @@ export function AdminDrawer({
         }}
       >
         {(title || description) && (
-          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-[#D5DFDB]">
+          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-grey-200">
             <div className="flex-1 min-w-0">
               {title && (
-                <h2 className="text-lg font-semibold text-[#0A1F18]">
+                <h2 className="text-lg font-semibold text-black">
                   {title}
                 </h2>
               )}
               {description && (
-                <p className="text-sm mt-0.5 text-[#7A8C85]">
+                <p className="text-sm mt-0.5 text-grey-400">
                   {description}
                 </p>
               )}
@@ -86,7 +86,7 @@ export function AdminDrawer({
         )}
         <div className="flex-1 overflow-y-auto px-6 py-4">{children}</div>
         {footer && (
-          <div className="px-6 py-4 border-t border-[#D5DFDB]">
+          <div className="px-6 py-4 border-t border-grey-200">
             {footer}
           </div>
         )}

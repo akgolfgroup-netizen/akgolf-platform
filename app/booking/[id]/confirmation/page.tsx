@@ -82,14 +82,11 @@ export default async function BookingConfirmationPage({ params }: Props) {
   if (!user?.id) {
     return (
       <PublicConfirmationView
-        serviceName={booking.ServiceType?.name}
         instructorName={instructorName}
         formattedDate={formattedDate}
         duration={booking.ServiceType?.duration}
         priceNOK={priceNOK}
-        paymentMethod={booking.paymentMethod}
         studentEmail={booking.User?.email ?? ""}
-        bookingId={booking.id}
         bookingPrice={booking.ServiceType?.price}
       />
     );

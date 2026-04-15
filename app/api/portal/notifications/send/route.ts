@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ ok: true, notificationId: result.notificationId });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Serverfeil" }, { status: 500 });
   }
 }

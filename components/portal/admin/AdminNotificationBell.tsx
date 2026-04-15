@@ -59,14 +59,24 @@ export function AdminNotificationBell({ className }: AdminNotificationBellProps)
     }
   };
 
+  // Initial fetch — bruk timeout for å unngå sync setState-warning
   useEffect(() => {
     const controller = new AbortController();
+    const id = window.setTimeout(() => {
+      void fetchUnreadCount(controller.signal);
+    }, 0);
 
-    void fetchUnreadCount(controller.signal);
+    return () => {
+      window.clearTimeout(id);
+      controller.abort();
+    };
+  }, []);
 
+  useEffect(() => {
     // Stopp polling hvis ikke autorisert
     if (!isAuthorized) return;
 
+    const controller = new AbortController();
     const interval = window.setInterval(() => {
       void fetchUnreadCount(controller.signal);
     }, 30000);

@@ -6,7 +6,7 @@ export const metadata = {
   title: "Hub — Oversikt | AK Golf Mission Control",
 };
 
-async function getHubData(_userId: string) {
+async function getHubData() {
   const supabase = await createServerSupabase();
 
   const today = new Date();
@@ -188,7 +188,7 @@ async function getHubData(_userId: string) {
 
 export default async function HubOversiktPage() {
   const user = await requirePortalUser();
-  const data = await getHubData(user.id);
+  const data = await getHubData();
 
   return <HubOversiktClient data={data} user={user} />;
 }

@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     const supabase = createServiceClient();
 
     // Build the query
-    let query = supabase
+    const query = supabase
       .from("TrainingPlan")
       .select(
         `

@@ -142,7 +142,7 @@ export async function GET(req: NextRequest) {
       const { data: userBest } = await userBestQuery.limit(1).single();
 
       // Count total participants
-      const { data: totalResults, error: countError } = await supabase
+      const { data: totalResults } = await supabase
         .from("TestResult")
         .select("userId")
         .eq("testNumber", testDef.testNumber);

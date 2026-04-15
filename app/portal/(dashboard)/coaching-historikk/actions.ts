@@ -12,10 +12,6 @@ export async function getCoachingSessions() {
 
   const supabase = await createServerSupabase();
 
-  const where = isStaff(user.role)
-    ? {} // Staff sees all sessions
-    : { studentId: user.id };
-
   let query = supabase
     .from("CoachingSession")
     .select(`

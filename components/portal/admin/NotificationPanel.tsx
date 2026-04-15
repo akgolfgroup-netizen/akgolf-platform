@@ -8,7 +8,6 @@ import {
   Calendar,
   Video,
   FileText,
-  HelpCircle,
   AlertCircle,
   Settings,
   Volume2,

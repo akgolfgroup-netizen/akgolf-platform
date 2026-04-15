@@ -234,7 +234,7 @@ export function MeldingerChatClient({
                         className={cn(
                           "max-w-[75%] rounded-2xl px-4 py-2.5",
                           isMe
-                            ? "bg-[#0A1F18] text-white"
+                            ? "bg-black text-white"
                             : "bg-grey-50 text-black"
                         )}
                       >
@@ -276,7 +276,7 @@ export function MeldingerChatClient({
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Skriv en melding..."
-                  className="flex-1 px-4 py-2.5 text-sm rounded-full border border-grey-200 bg-grey-50 text-black placeholder:text-grey-400 focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/10 focus:border-[#A5B2AD]"
+                  className="flex-1 px-4 py-2.5 text-sm rounded-full border border-grey-200 bg-grey-50 text-black placeholder:text-grey-400 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-grey-300"
                   disabled={isSending}
                 />
                 <button

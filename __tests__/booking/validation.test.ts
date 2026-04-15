@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 /**
  * Booking Validation Unit Tests
@@ -15,7 +16,7 @@ import {
   sanitizeValidationInput,
   type ValidationInput,
 } from "@/lib/portal/booking/validation";
-import { addDays, addHours, subDays, subHours, format } from "date-fns";
+import { addDays, addHours, subHours } from "date-fns";
 import { nanoid } from "nanoid";
 
 // -----------------------------------------------------------------------------

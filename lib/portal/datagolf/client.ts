@@ -12,7 +12,7 @@ function getApiKey(): string {
   return key;
 }
 
-type FileFormat = "json" | "csv";
+
 type OddsFormat = "american" | "decimal" | "fraction";
 type Tour = "pga" | "euro" | "kft" | "liv" | "opp" | "alt";
 

@@ -53,14 +53,14 @@ export function PremiumCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay, ease: EASE_APPLE }}
       className={cn(
-        "relative overflow-hidden border border-[#D5DFDB] bg-white",
+        "relative overflow-hidden border border-grey-200 bg-white",
         RADIUS_MAP[radius],
         PADDING_MAP[padding],
-        isAccent && "bg-[#D1F843]/10 border-[#D1F843]/30",
+        isAccent && "bg-accent-cta/10 border-accent-cta/30",
         isFeatured && "shadow-[0_8px_32px_rgba(10,31,24,0.08)]",
         isElevated && "shadow-[0_4px_20px_rgba(10,31,24,0.06)]",
-        !noHover && hover === "lift" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(10,31,24,0.08)] hover:border-[#A5B2AD]",
-        !noHover && hover === "glow" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-[0_0_24px_rgba(209,248,67,0.25)] hover:border-[#D1F843]/40",
+        !noHover && hover === "lift" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(10,31,24,0.08)] hover:border-grey-300",
+        !noHover && hover === "glow" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-[0_0_24px_rgba(209,248,67,0.25)] hover:border-accent-cta/40",
         !noHover && hover === "scale" && "transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(10,31,24,0.08)]",
         className,
       )}
@@ -69,7 +69,7 @@ export function PremiumCard({
       }}
     >
       {isFeatured && (
-        <div className="pointer-events-none absolute -top-20 -right-20 w-40 h-40 bg-[#D1F843]/10 rounded-full blur-3xl" />
+        <div className="pointer-events-none absolute -top-20 -right-20 w-40 h-40 bg-accent-cta/10 rounded-full blur-3xl" />
       )}
       
       <div className="relative">{children}</div>

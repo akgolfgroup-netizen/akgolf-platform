@@ -85,12 +85,36 @@
   /* Green palette (brand-avledet) */
   --color-green: #005840;
   --color-green-dark: #0A1F18;
+  --color-green-darker: #003025;
   --color-green-bright: #2A7D5A;
   --color-green-light: #ECF0EF;
   --color-coaching: #005840;
   --color-coaching-light: #ECF0EF;
   --color-streak-bg: #FDF4E4;
   --color-streak-border: #E8D5B0;
+
+  /* Ron portal palette */
+  --color-ron-bg: #F0F3F2;
+  --color-ron-dark: #0F1F1A;
+  --color-ron-hover: #1A2D27;
+  --color-ron-gradient: #1A3B30;
+  --color-ron-gradient-mid: #DBE5DF;
+  --color-ron-gradient-light: #E8EEE9;
+
+  /* iPhone mockup */
+  --color-iphone-frame: #1A1A1A;
+  --color-iphone-button: #2A2A2A;
+
+  /* Landing page palette */
+  --color-forest-alt: #2D5A27;
+  --color-lime-dark: #576500;
+  --color-lime-bright: #B8D300;
+  --color-beige-warm: #E6E2D9;
+  --color-beige-hover: #ECE8DF;
+  --color-error-bright: #BA1A1A;
+
+  /* AI / Purple */
+  --color-ai-light-alt: #F5EEFF;
 
   /* External brand */
   --color-vipps: #FF5B24;

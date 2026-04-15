@@ -61,14 +61,6 @@ interface TreningsplanClientProps {
 // ---------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------
-const pyramidConfig: Record<PyramidLevel, { label: string }> = {
-  FYS: { label: "Fysisk" },
-  TEK: { label: "Teknikk" },
-  SLAG: { label: "Slag" },
-  SPILL: { label: "Spill" },
-  TURN: { label: "Turnering" },
-};
-
 const SUB_NAV_TABS = [
   { label: "Ukeplan", href: "/portal/treningsplan" },
   { label: "AI-plan", href: "/portal/treningsplan/ai" },

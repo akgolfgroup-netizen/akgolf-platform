@@ -5,7 +5,7 @@
  * og kan deretter teste seg selv i samme situasjon.
  */
 
-import { getApproachSkill, getSkillDecompositions, type SkillDecomposition } from "./client";
+import { getApproachSkill } from "./client";
 
 // ═══════════════════════════════════════════════════════════════
 // TYPES

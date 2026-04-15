@@ -17,13 +17,12 @@
 
 'use client';
 
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSyncStore } from './sync-store';
 import { queryKeys } from './query-keys';
 import type { 
   SyncEventPayload, 
-  SSEConnectionOptions,
   BookingCreatedPayload,
   BookingUpdatedPayload,
   BookingCancelledPayload,
@@ -226,7 +225,6 @@ export function useSync({
   enabled = true,
   onEvent,
   onConnect,
-  onDisconnect,
   onError,
   reconnectDelay = DEFAULT_RECONNECT_DELAY,
   maxReconnectAttempts = MAX_RECONNECT_ATTEMPTS,
@@ -394,7 +392,7 @@ export function useSync({
       setError('Failed to create EventSource');
       onError?.(error instanceof Error ? error : new Error(String(error)));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [
     enabled, 
     userId, 

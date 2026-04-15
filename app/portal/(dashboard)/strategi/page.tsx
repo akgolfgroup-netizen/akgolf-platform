@@ -13,7 +13,6 @@ import {
   Loader2,
 } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
-import { Button } from "@/components/ui/button";
 
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 

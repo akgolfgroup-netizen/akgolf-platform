@@ -254,7 +254,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
                 <button
                   onClick={handleCancel}
                   disabled={isPending}
-                  className="px-4 py-2 rounded-full bg-[#EF4444] text-white text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
+                  className="px-4 py-2 rounded-full bg-error text-white text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
                 >
                   {isPending ? "Avbestiller..." : "Ja, avbestill"}
                 </button>

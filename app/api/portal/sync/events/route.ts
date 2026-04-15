@@ -106,7 +106,7 @@ function createSSEStream(
           updateConnectionPing(sessionId).catch(() => {
             // Ignorer errors
           });
-        } catch (error) {
+        } catch {
           // Stream closed
           clearInterval(heartbeatInterval);
           clearInterval(eventCheckInterval);
@@ -151,8 +151,8 @@ function createSSEStream(
               userId
             );
           }
-        } catch (error) {
-          console.error('Error checking for new events:', error);
+        } catch {
+          // Ignorer errors
         }
       }, 2000);
     },
@@ -220,8 +220,8 @@ export async function GET(request: NextRequest) {
           .eq('id', oldestConnection.id);
       }
     }
-  } catch (error) {
-    console.error('Error checking connection limit:', error);
+  } catch {
+    // Ignorer errors
   }
   
   // Create SSE stream

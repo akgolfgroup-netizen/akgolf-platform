@@ -2,7 +2,6 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import {
   getFilteredRoundStats,
   getFilteredAggregates,
-  getFilteredBreakdown,
   getWeeklyTrainingVolume,
   getLatestHandicap,
 } from "./actions";
@@ -23,10 +22,9 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
     ? (params.period as PeriodKey)
     : "30d";
 
-  const [rounds, aggregates, breakdown, weeklyTraining, handicap] = await Promise.all([
+  const [rounds, aggregates, weeklyTraining, handicap] = await Promise.all([
     getFilteredRoundStats(period),
     getFilteredAggregates(period),
-    getFilteredBreakdown(period),
     getWeeklyTrainingVolume(period),
     getLatestHandicap(),
   ]);
@@ -35,7 +33,6 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
     <StatistikkClient
       rounds={rounds}
       aggregates={aggregates}
-      breakdown={breakdown}
       weeklyTraining={weeklyTraining}
       handicap={handicap?.handicapIndex ?? null}
       currentPeriod={period}

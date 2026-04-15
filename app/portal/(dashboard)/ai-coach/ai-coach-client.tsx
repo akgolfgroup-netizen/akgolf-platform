@@ -257,7 +257,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
               } ${
                 message.role === "user"
                   ? "bg-black text-white"
-                  : "bg-[#F5F8F7] text-black"
+                  : "bg-grey-50 text-black"
               }`}
             >
               {message.content ? (

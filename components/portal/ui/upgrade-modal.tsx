@@ -53,7 +53,6 @@ const PRO_PLUS_FEATURES = [
 export function UpgradeModal({
   isOpen,
   onClose,
-  currentTier,
   trigger,
   currentUsage,
 }: UpgradeModalProps) {

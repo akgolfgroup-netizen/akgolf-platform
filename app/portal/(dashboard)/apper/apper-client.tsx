@@ -382,7 +382,7 @@ export function ApperClient({
                       className={cn(
                         "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium",
                         isPremium
-                          ? "bg-grey-50 text-black border border-[#D5DFDB]"
+                          ? "bg-grey-50 text-black border border-grey-200"
                           : "bg-accent-cta/15 text-black"
                       )}
                     >
@@ -516,7 +516,7 @@ export function ApperClient({
                     <button
                       onClick={() => handleCheckout(mod.slug)}
                       disabled={loading !== null}
-                      className="inline-flex h-8 items-center justify-center rounded-full bg-[#D1F843] px-3 text-[11px] font-semibold text-black hover:brightness-95 transition-all"
+                      className="inline-flex h-8 items-center justify-center rounded-full bg-accent-cta px-3 text-[11px] font-semibold text-accent-cta-text hover:brightness-95 transition-all"
                     >
                       {loading === mod.slug ? (
                         <Loader2 className="h-3.5 w-3.5 animate-spin" />

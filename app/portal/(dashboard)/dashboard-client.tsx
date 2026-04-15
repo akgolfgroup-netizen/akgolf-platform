@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar, ClipboardList, TrendingUp, Target, Flag } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
@@ -100,7 +101,7 @@ export function DashboardClient({
             className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-black text-lg font-bold text-white shadow-[0_4px_16px_rgba(10,31,24,0.2)] transition-transform duration-300 hover:scale-105 overflow-hidden"
           >
             {userImage ? (
-              <img src={userImage} alt="" className="h-full w-full object-cover" />
+              <Image src={userImage} alt="" width={56} height={56} className="h-full w-full object-cover" />
             ) : (
               initials
             )}
@@ -167,7 +168,7 @@ export function DashboardClient({
             </div>
             <Link
               href="/portal/kalender"
-              className="flex items-center gap-1 text-xs font-medium text-black transition-colors hover:text-[#005840]"
+              className="flex items-center gap-1 text-xs font-medium text-black transition-colors hover:text-primary"
             >
               Se kalender
               <ArrowRight className="h-3 w-3" />
@@ -198,7 +199,7 @@ export function DashboardClient({
                   </span>
                   {day.trained && (
                     <span className={`mt-1.5 h-1.5 w-1.5 rounded-full ${
-                      isToday ? "bg-black" : "bg-[#1A4D36]"
+                      isToday ? "bg-black" : "bg-success"
                     }`} />
                   )}
                   {day.hasCoaching && !day.trained && (

@@ -26,7 +26,7 @@ import {
   type AdminDataTableColumn,
   type AdminDataTableBulkAction,
 } from "@/components/portal/mission-control/ui";
-import { Button, Badge, Card } from "@/components/ui";
+import { Button, Badge } from "@/components/ui";
 import { type StudentListData, type StudentRow } from "./actions";
 
 // ---------------------------------------------------------------------------

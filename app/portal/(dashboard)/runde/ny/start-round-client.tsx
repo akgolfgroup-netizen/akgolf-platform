@@ -135,7 +135,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                     onClick={() => setTeeColor(tee.value)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
                       teeColor === tee.value
-                        ? "border-[#0A1F18] bg-[#F5F8F7] ring-1 ring-[#0A1F18]"
+                        ? "border-black bg-grey-50 ring-1 ring-black"
                         : "border-grey-200 bg-white hover:border-grey-200"
                     }`}
                   >
@@ -168,7 +168,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                     onClick={() => setWeather(weather === w.value ? "" : w.value)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
                       weather === w.value
-                        ? "border-[#0A1F18] bg-[#F5F8F7]"
+                        ? "border-black bg-grey-50"
                         : "border-grey-200 bg-white hover:border-grey-200"
                     }`}
                   >

@@ -107,7 +107,7 @@ export async function GET(req: NextRequest) {
       
       const dateStr = date.toISOString().split("T")[0];
       const dayOfWeek = date.getDay(); // 0 = søndag, 1 = mandag, etc.
-      const adjustedDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek; // 1-7 (man-søn)
+      // dayOfWeek: 0 = søndag, 1 = mandag
       
       const nextDay = new Date(date);
       nextDay.setDate(date.getDate() + 1);
@@ -137,7 +137,7 @@ export async function GET(req: NextRequest) {
         .gt("endTime", date.toISOString());
 
       // Generer alle slots for dagen
-      let allSlots: string[] = [];
+      const allSlots: string[] = [];
       
       // Default tilgjengelighet: 10:00-18:00 på hverdager (man-fre), 10:00-14:00 på lør, ingen på søn
       let windowsToUse = availabilityWindows;
@@ -164,7 +164,7 @@ export async function GET(req: NextRequest) {
           const windowEnd = new Date(date);
           windowEnd.setHours(endH, endM, 0, 0);
           
-          let currentSlot = new Date(windowStart);
+          const currentSlot = new Date(windowStart);
           while (currentSlot < windowEnd) {
             const slotEnd = new Date(currentSlot);
             slotEnd.setMinutes(slotEnd.getMinutes() + serviceType.duration);
@@ -251,7 +251,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function OPTIONS(_req: NextRequest) {
+export async function OPTIONS() {
   const corsOrigin = process.env.NEXT_PUBLIC_APP_URL ?? "https://akgolf.no";
   return new NextResponse(null, {
     headers: {

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
-import { Card, Button } from "@/components/ui";
+import { Button } from "@/components/ui";
+import { Card } from "@/components/ui/card";
 
 const LEVELS = ["nasjonal", "regional", "lokal", "internasjonal"] as const;
 

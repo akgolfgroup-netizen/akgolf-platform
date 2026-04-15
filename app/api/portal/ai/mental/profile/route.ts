@@ -6,7 +6,7 @@ import { prisma } from "@/lib/portal/prisma";
  * GET /api/portal/ai/mental/profile — Get mental profile
  * PUT /api/portal/ai/mental/profile — Update mental profile
  */
-export async function GET(req: NextRequest) {
+export async function GET() {
   const user = await getPortalUser();
   if (!user?.id) {
     return NextResponse.json({ error: "Ikke autorisert" }, { status: 401 });

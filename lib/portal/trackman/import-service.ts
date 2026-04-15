@@ -9,7 +9,6 @@ import { prisma } from "@/lib/portal/prisma";
 import {
   parseTrackManCSV,
   convertToMetric,
-  aggregateByClub,
   type TrackManShotMetric,
 } from "@/lib/portal/golf/trackman-parser";
 
@@ -103,7 +102,8 @@ function coefficientOfVariation(arr: number[]): number {
 }
 
 export async function importTrackManSession(options: ImportTrackManOptions) {
-  const { userId, csvContent, fileName, sessionDate, context: explicitContext } = options;
+  const { userId, csvContent, fileName, sessionDate: _sessionDate, context: explicitContext } = options;
+  void _sessionDate;
 
   const context = classifyContext(fileName, explicitContext);
   const pressureLevel = contextToPressureLevel(context);
@@ -117,7 +117,6 @@ export async function importTrackManSession(options: ImportTrackManOptions) {
   }
 
   const importId = nanoid();
-  const date = sessionDate ? new Date(sessionDate) : new Date();
 
   // Create import record
   await prisma.trackManImport.create({
@@ -195,7 +194,6 @@ async function computeSessionAnalytics(
   userId: string,
   shots: TrackManShotMetric[]
 ) {
-  const categories = ["WOOD", "IRON", "WEDGE"] as const;
 
   const driverStats = buildCategoryStats(shots, "WOOD");
   const ironStats = buildCategoryStats(shots, "IRON");

@@ -20,31 +20,15 @@ import {
 
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
-interface RoundSummary {
-  id: string;
-  date: string;
-  course: string;
-  score: number | null;
-  mentalScore: number;
-  focus: number;
-  confidence: number;
-  commitment: number;
-  acceptance: number;
-}
-
 export default function MentalPage() {
   const [activeTab, setActiveTab] = useState<string>("runder");
-  const [rounds, setRounds] = useState<RoundSummary[]>([]);
   const [trendData, setTrendData] = useState<{ date: string; focus: number; confidence: number; commitment: number; acceptance: number }[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
-        const [roundsRes, trendsRes] = await Promise.all([
-          fetch("/api/portal/ai/mental/rounds"),
-          fetch("/api/portal/ai/mental/trends"),
-        ]);
+        const trendsRes = await fetch("/api/portal/ai/mental/trends");
 
         // We don't have a list-all-rounds endpoint, so we can't fetch rounds directly.
         // For now, show empty rounds tab and real trends.
@@ -122,7 +106,7 @@ export default function MentalPage() {
         transition={{ duration: 0.35, ease: EASE_APPLE }}
       >
         {activeTab === "runder" ? (
-          rounds.length > 0 ? <RoundsTab rounds={rounds} /> : <EmptyRoundsTab />
+          <EmptyRoundsTab />
         ) : (
           <TrendsTab data={trendData} loading={loading} />
         )}
@@ -140,49 +124,6 @@ function EmptyRoundsTab() {
         <p className="text-xs text-grey-300 mt-1">Start din første mental scorecard-runde.</p>
       </div>
     </PremiumCard>
-  );
-}
-
-function RoundsTab({ rounds }: { rounds: RoundSummary[] }) {
-  return (
-    <div className="space-y-4">
-      {rounds.map((round, idx) => (
-        <PremiumCard key={round.id} delay={idx * 0.05} padding="md" radius="large" hover="lift">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0">
-                <Brain className="w-5 h-5 text-purple-500" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-base font-semibold text-black">{round.course}</h3>
-                  <span className="text-xs text-grey-400">
-                    {new Date(round.date).toLocaleDateString("nb-NO", {
-                      day: "numeric",
-                      month: "short",
-                    })}
-                  </span>
-                </div>
-                <div className="flex items-center gap-4 mt-2">
-                  <span className="text-sm text-grey-400">
-                    Score: <span className="font-semibold text-black">{round.score ?? "–"}</span>
-                  </span>
-                  <span className="text-sm text-grey-400">
-                    Mental: {" "}
-                    <span className="font-semibold text-black">{round.mentalScore}</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="secondary" size="sm" asChild>
-                <Link href={`/portal/mental/${round.id}`}>Åpne</Link>
-              </Button>
-            </div>
-          </div>
-        </PremiumCard>
-      ))}
-    </div>
   );
 }
 

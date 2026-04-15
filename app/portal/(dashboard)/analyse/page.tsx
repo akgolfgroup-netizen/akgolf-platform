@@ -8,9 +8,7 @@ import {
 } from "./actions";
 
 import {
-  TrendingDown,
   Target,
-  Activity,
   BarChart3,
   Upload,
   Lightbulb,

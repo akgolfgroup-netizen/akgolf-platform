@@ -14,10 +14,7 @@ import { PeerBenchmarkCard } from "@/components/portal/sammenligning/peer-benchm
 import { OnboardingWizard } from "@/components/portal/onboarding/onboarding-wizard";
 import { addDays, subDays } from "date-fns";
 import {
-  BarChart3,
   Brain,
-  FileText,
-  Video,
   Trophy,
   Flame,
   Mail,
@@ -55,7 +52,6 @@ export default function DemoPage() {
   const [currentAchievement, setCurrentAchievement] = useState<typeof mockAchievements[0] | null>(null);
   const [demoTier, setDemoTier] = useState<SubscriptionTier>(SubscriptionTier.VISITOR);
   const [logCount, setLogCount] = useState(3);
-  const [aiCount, setAiCount] = useState(1);
   const [streak, setStreak] = useState(12);
   const [handicap, setHandicap] = useState(15);
 

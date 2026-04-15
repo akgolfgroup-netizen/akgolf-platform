@@ -1,4 +1,3 @@
-import { requirePortalUser } from "@/lib/portal/auth";
 import {
   getWeekEvents,
   getActivePlan,
@@ -19,7 +18,6 @@ interface TreningsplanPageProps {
 }
 
 export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
-  const user = await requirePortalUser();
   const { week, view } = await searchParams;
   const weekOffset = parseInt(week ?? "0", 10) || 0;
   const activeView = view ?? "calendar";

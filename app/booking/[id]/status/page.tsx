@@ -57,7 +57,7 @@ export default async function BookingStatusPage({ params }: Props) {
   const supabase = await createServerSupabase();
 
   // Fetch booking with all related data
-  let query = supabase
+  const query = supabase
     .from("Booking")
     .select(`
       id,
@@ -124,8 +124,6 @@ export default async function BookingStatusPage({ params }: Props) {
         })
       : null;
 
-  const isOwner = user?.id && typedBooking.User?.email === user.email;
-
   return (
     <BookingStatusView
       booking={{
@@ -151,7 +149,6 @@ export default async function BookingStatusPage({ params }: Props) {
         cancelledAt: formattedCancelledAt,
       }}
       isAuthenticated={!!user?.id}
-      isOwner={!!isOwner}
     />
   );
 }

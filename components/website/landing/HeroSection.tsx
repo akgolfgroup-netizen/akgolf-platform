@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { EASE_ENTRANCE } from "@/lib/design-tokens";
-import { HERO, BOOKING_URL } from "@/lib/website-constants";
+import { HERO } from "@/lib/website-constants";
 
 const stagger = {
   hidden: {},

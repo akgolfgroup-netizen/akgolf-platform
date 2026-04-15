@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { uploadAvatar } from "@/app/portal/(dashboard)/profil/actions";
+import Image from "next/image";
 import { Camera } from "lucide-react";
 
 interface AvatarUploadProps {
@@ -91,7 +92,7 @@ export function AvatarUpload({ currentImage, name }: AvatarUploadProps) {
       <input {...getInputProps()} />
       <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-[var(--color-grey-200)] group-hover:border-[var(--color-grey-900)] transition-colors">
         {preview ? (
-          <img src={preview} alt="" className="w-full h-full object-cover" />
+          <Image src={preview} alt="" width={96} height={96} className="object-cover" />
         ) : (
           <div className="w-full h-full bg-[var(--color-grey-100)] flex items-center justify-center text-2xl font-bold text-[var(--color-grey-900)]">
             {initials}

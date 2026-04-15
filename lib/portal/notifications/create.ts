@@ -5,7 +5,7 @@
 
 import { createServiceClient } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
-import type { NotificationType } from "@prisma/client";
+
 import { logger } from "@/lib/logger";
 import {
   CreateNotificationInput,

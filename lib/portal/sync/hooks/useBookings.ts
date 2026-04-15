@@ -257,9 +257,9 @@ export function useCancelBooking() {
 // ════════════════════════════════════════════════════════════
 
 export function useBookings(userId: string, role: 'STUDENT' | 'INSTRUCTOR') {
-  const bookingsQuery = role === 'STUDENT'
-    ? useStudentBookings(userId)
-    : useInstructorBookings(userId);
+  const studentBookings = useStudentBookings(userId);
+  const instructorBookings = useInstructorBookings(userId);
+  const bookingsQuery = role === 'STUDENT' ? studentBookings : instructorBookings;
   
   const createMutation = useCreateBooking();
   const updateMutation = useUpdateBooking();

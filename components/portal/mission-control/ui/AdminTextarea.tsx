@@ -16,7 +16,8 @@ export const AdminTextarea = React.forwardRef<
   { label, error, helper, id, className, containerClassName, rows = 4, ...props },
   ref,
 ) {
-  const textareaId = id ?? React.useId();
+  const generatedId = React.useId();
+  const textareaId = id ?? generatedId;
 
   return (
     <div className={cn("space-y-1.5", containerClassName)}>

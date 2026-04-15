@@ -6,8 +6,7 @@ import { Download, RefreshCw, Pencil, Trash2, ChevronDown, ChevronRight, Loader2
 import { ImportTournamentsSheet } from "@/modules/tournament-planner/components/ImportTournamentsSheet";
 import { EditTournamentSheet } from "@/modules/tournament-planner/components/EditTournamentSheet";
 import { TournamentPlayerList } from "@/modules/tournament-planner/components/TournamentPlayerList";
-import { PLAN_LEVEL_CONFIG } from "@/modules/tournament-planner";
-import type { GoalType, PlanLevel } from "@/modules/tournament-planner";
+
 import { Button, Card } from "@/components/ui";
 
 interface TournamentRow {

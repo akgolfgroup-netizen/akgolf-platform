@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Save, ChevronLeft, Flame, Target, Disc, Trophy } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
@@ -21,7 +21,6 @@ const GAME_META: Record<
 
 export default function GameSessionPage() {
   const { gameType } = useParams<{ gameType: string }>();
-  const router = useRouter();
   const meta = GAME_META[gameType] ?? GAME_META.naerspill;
 
   const [sessionId, setSessionId] = useState<string | null>(null);

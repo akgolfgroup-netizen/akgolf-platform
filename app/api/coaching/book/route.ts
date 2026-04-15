@@ -4,7 +4,7 @@ import { randomUUID } from "crypto";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { stripe } from "@/lib/portal/stripe";
-import { addMinutes, startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "date-fns";
+import { addMinutes, startOfWeek, endOfWeek } from "date-fns";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { invalidateSlotsCache, invalidateBookingsCache } from "@/lib/portal/booking/cache";
 import { broadcastUpdate } from "@/app/api/portal/bookings/live/route";

@@ -212,7 +212,7 @@ export default function RoundDetailPage() {
                 className={`flex-shrink-0 w-10 h-10 rounded-lg text-sm font-semibold transition-colors ${
                   isActive
                     ? "bg-black text-white"
-                    : "bg-[#F5F8F7] text-black hover:bg-[#ECF0EF]"
+                    : "bg-grey-50 text-black hover:bg-surface"
                 }`}
               >
                 {h.holeNumber}

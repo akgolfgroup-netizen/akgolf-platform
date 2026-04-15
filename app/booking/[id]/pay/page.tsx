@@ -135,7 +135,6 @@ export default async function BookingPayPage({ params }: Props) {
         bookingId={id}
         serviceName={booking.ServiceType?.name}
         customerEmail={booking.User?.email ?? ""}
-        customerName={booking.User?.name ?? ""}
         amount={booking.ServiceType?.price}
       />
     );

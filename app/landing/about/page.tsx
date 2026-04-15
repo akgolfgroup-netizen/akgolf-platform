@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/shared/navbar";
 import { Footer } from "@/components/shared/footer";
@@ -78,13 +79,12 @@ export default function LandingAboutPage() {
             </div>
             <div className="relative">
               <div className="aspect-[4/3] rounded-[40px] overflow-hidden shadow-2xl">
-                <img 
-                  src="/images/academy/AK-Golf-Academy-10.jpg" 
+                <Image
+                  src="/images/academy/AK-Golf-Academy-10.jpg"
                   alt="AK Golf Academy"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-accent-cta p-6 rounded-2xl shadow-xl">
@@ -111,13 +111,12 @@ export default function LandingAboutPage() {
               {/* Anders */}
               <div className="text-center">
                 <div className="aspect-[4/3] bg-grey-50 rounded-[32px] overflow-hidden mb-6">
-                  <img 
-                    src="/images/team/anders-kristiansen.jpg" 
+                  <Image
+                    src="/images/team/anders-kristiansen.jpg"
                     alt="Anders Kristiansen"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                    }}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
                 <h3 className="text-2xl font-bold text-black">Anders Kristiansen</h3>
@@ -156,7 +155,7 @@ export default function LandingAboutPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-lg font-bold text-black mb-1">Gamle Fredrikstad GK</h3>
-                  <p className="text-[#576500] text-sm font-medium mb-3">Hovedlokasjon</p>
+                  <p className="text-lime-dark text-sm font-medium mb-3">Hovedlokasjon</p>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm text-grey-500">
                       <span className="truncate">Kongleveien 142, 1615 Fredrikstad</span>
@@ -182,7 +181,7 @@ export default function LandingAboutPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-lg font-bold text-black mb-1">Miklagard Golfklubb</h3>
-                  <p className="text-[#576500] text-sm font-medium mb-3">Samarbeidslokasjon</p>
+                  <p className="text-lime-dark text-sm font-medium mb-3">Samarbeidslokasjon</p>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm text-grey-500">
                       <span className="truncate">Svingen 120, 2114 Disenå</span>
@@ -260,14 +259,13 @@ export default function LandingAboutPage() {
                 </div>
               </div>
               <div className="relative">
-                <div className="aspect-square rounded-[40px] overflow-hidden bg-[#2d5a27]">
-                  <img 
-                    src="/images/academy/AK-Golf-Academy-30.jpg" 
+                <div className="aspect-square rounded-[40px] overflow-hidden bg-forest-alt">
+                  <Image
+                    src="/images/academy/AK-Golf-Academy-30.jpg"
                     alt="TrackMan analyse"
-                    className="w-full h-full object-cover opacity-80"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                    }}
+                    fill
+                    className="object-cover opacity-80"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
               </div>

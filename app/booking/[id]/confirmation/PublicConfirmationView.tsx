@@ -5,26 +5,20 @@ import { Check, Mail, Calendar, Clock, CreditCard, User, LogIn } from "lucide-re
 import { BookingUpsellCard } from "@/components/portal/booking/upsell-card";
 
 interface Props {
-  serviceName: string;
   instructorName: string;
   formattedDate: string;
   duration: number;
   priceNOK: string;
-  paymentMethod: string;
   studentEmail: string;
-  bookingId: string;
   bookingPrice: number;
 }
 
 export function PublicConfirmationView({
-  serviceName: _serviceName,
   instructorName,
   formattedDate,
   duration,
   priceNOK,
-  paymentMethod,
   studentEmail,
-  bookingId,
   bookingPrice,
 }: Props) {
   return (

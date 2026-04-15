@@ -64,7 +64,7 @@ export function WebsiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-xs text-[#5A6E66] hover:text-white transition-colors"
+                    className="text-xs text-grey-500 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -83,7 +83,7 @@ export function WebsiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-xs text-[#5A6E66] hover:text-white transition-colors"
+                    className="text-xs text-grey-500 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -97,7 +97,7 @@ export function WebsiteFooter() {
             <h4 className="text-[10px] font-mono uppercase tracking-wider text-grey-400 mb-3">
               Kontakt
             </h4>
-            <ul className="space-y-2 text-xs text-[#5A6E66]">
+            <ul className="space-y-2 text-xs text-grey-500">
               <li>
                 <a
                   href={`mailto:${FOOTER_LINKS.contact.email}`}
@@ -120,7 +120,7 @@ export function WebsiteFooter() {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center">
-          <p className="text-[10px] text-[#5A6E66]">
+          <p className="text-[10px] text-grey-500">
             &copy; {new Date().getFullYear()} AK Golf Group AS
           </p>
         </div>

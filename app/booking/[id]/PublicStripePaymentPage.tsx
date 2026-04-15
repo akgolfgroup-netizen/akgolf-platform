@@ -8,7 +8,6 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CreditCard, AlertCircle, Loader2, ShieldCheck, Mail, Smartphone } from "lucide-react";
 
@@ -30,7 +29,6 @@ interface CheckoutFormProps {
 function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -148,7 +146,6 @@ interface PublicStripePaymentPageProps {
   bookingId: string;
   serviceName: string;
   customerEmail: string;
-  customerName: string;
   amount: number;
 }
 
@@ -157,7 +154,6 @@ export function PublicStripePaymentPage({
   bookingId,
   serviceName,
   customerEmail,
-  customerName,
   amount,
 }: PublicStripePaymentPageProps) {
   // Prisene er lagret i kroner

@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Users,
   UserPlus,
   Trophy,
-  Target,
   MessageCircle,
   Search,
 } from "lucide-react";
@@ -49,7 +47,6 @@ export interface SosialtClientProps {
   friends: SosialtFriend[];
   leaderboard: SosialtLeaderboardEntry[];
   pendingRequests: PendingRequest[];
-  currentUserName: string;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -98,7 +95,6 @@ export default function SosialtClient({
   friends,
   leaderboard,
   pendingRequests,
-  currentUserName,
 }: SosialtClientProps) {
   const [activeTab, setActiveTab] = useState<TabId>("friends");
   const [showAddFriend, setShowAddFriend] = useState(false);
@@ -145,7 +141,7 @@ export default function SosialtClient({
             className={cn(
               "flex items-center gap-2 px-4 py-[7px] rounded-[7px] text-[13px] font-medium transition-all",
               activeTab === tab.id
-                ? "bg-[#0A1F18] text-white shadow-sm"
+                ? "bg-black text-white shadow-sm"
                 : "text-grey-400 hover:text-grey-400 hover:bg-white"
             )}
           >
@@ -205,7 +201,7 @@ export default function SosialtClient({
                         <span
                           className={cn(
                             "absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white",
-                            status === "online" ? "bg-[#1A4D36]" : "bg-[#7A8C85]"
+                            status === "online" ? "bg-success" : "bg-grey-400"
                           )}
                         />
                       </div>
@@ -266,9 +262,9 @@ export default function SosialtClient({
                         rank === 1
                           ? "bg-accent-cta text-black"
                           : rank === 2
-                            ? "bg-[#324D45] text-white"
+                            ? "bg-grey-700 text-white"
                             : rank === 3
-                              ? "bg-[#0A1F18] text-white"
+                              ? "bg-black text-white"
                               : "bg-grey-50 text-grey-400"
                       )}
                     >

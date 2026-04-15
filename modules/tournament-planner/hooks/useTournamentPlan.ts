@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useOptimistic } from "react";
+import { useState } from "react";
 import type { PlayerTournamentPlan, PlanLevel, GoalType } from "../types";
 
 interface UseTournamentPlanOptions {

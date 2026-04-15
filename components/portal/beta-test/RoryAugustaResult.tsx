@@ -8,16 +8,10 @@ import {
 } from '@/lib/portal/beta-test/rory-augusta-test';
 import { 
   Target, 
-  Trophy, 
   Navigation,
-  TrendingUp,
-  TrendingDown,
-  Award,
   Users,
   Crown,
-  ArrowRight,
-  BarChart3,
-  Flag
+  BarChart3
 } from 'lucide-react';
 
 interface RoryAugustaResultProps {
@@ -78,7 +72,7 @@ export function RoryAugustaResult({
               <div className="text-3xl font-bold">
                 {summary.avgPctRory.toFixed(0)}%
               </div>
-              <p className="text-sm opacity-80 mt-1">av Rory's nivå</p>
+              <p className="text-sm opacity-80 mt-1">av Rory&apos;s nivå</p>
             </div>
           </div>
 
@@ -142,7 +136,7 @@ export function RoryAugustaResult({
                 100m Approach
               </h3>
               <p className="text-sm text-slate-500 dark:text-slate-400">
-                10 slag fra 100m på "Augusta-green"
+                10 slag fra 100m på &quot;Augusta-green&quot;
               </p>
             </div>
           </div>
@@ -224,7 +218,7 @@ export function RoryAugustaResult({
                 Driver Challenge
               </h3>
               <p className="text-sm text-slate-500 dark:text-slate-400">
-                10 drivere til 60m "Augusta fairway"
+                10 drivere til 60m &quot;Augusta fairway&quot;
               </p>
             </div>
           </div>

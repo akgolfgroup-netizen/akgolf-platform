@@ -226,19 +226,20 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
   ];
 
   // Handicap-trend siste 30 dager (eksempel — gjennomsnitt alle aktive elever)
-  const handicapTrend: AdminLineChartDatum[] = Array.from(
-    { length: 30 },
-    (_, i) => {
-      const date = new Date();
-      date.setDate(date.getDate() - (29 - i));
-      return {
-        label: date.toLocaleDateString("nb-NO", {
-          day: "numeric",
-          month: "short",
-        }),
-        value: Number((18.4 - i * 0.04 - Math.random() * 0.3).toFixed(1)),
-      };
-    }
+  const handicapTrend: AdminLineChartDatum[] = React.useMemo(
+    () =>
+      Array.from({ length: 30 }, (_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (29 - i));
+        return {
+          label: date.toLocaleDateString("nb-NO", {
+            day: "numeric",
+            month: "short",
+          }),
+          value: Number((18.4 - i * 0.04 - (i % 3) * 0.1).toFixed(1)),
+        };
+      }),
+    []
   );
 
   // Elevfordeling per tier (VISITOR / ACADEMY / STARTER / PRO / ELITE)

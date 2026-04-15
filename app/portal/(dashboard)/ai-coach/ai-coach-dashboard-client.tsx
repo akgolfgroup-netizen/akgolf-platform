@@ -34,7 +34,7 @@ interface MetricsData {
 
 export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientProps) {
   const [metrics, setMetrics] = useState<MetricsData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {

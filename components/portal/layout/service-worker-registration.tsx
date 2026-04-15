@@ -29,34 +29,33 @@ export function ServiceWorkerRegistration() {
     return window.btoa(binary);
   }
 
-  async function subscribeToPushNotifications() {
-    try {
-      const registration = await navigator.serviceWorker.ready;
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || ""
-        ) as BufferSource,
-      });
-
-      // Send subscription to server
-      await fetch("/api/portal/notifications/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          endpoint: subscription.endpoint,
-          p256dh: arrayBufferToBase64(subscription.getKey("p256dh")!),
-          auth: arrayBufferToBase64(subscription.getKey("auth")!),
-        }),
-      });
-
-      console.log("[Push] Subscribed successfully");
-    } catch (error) {
-      console.error("[Push] Subscription failed:", error);
-    }
-  }
-
   useEffect(() => {
+    async function subscribeToPushNotifications() {
+      try {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(
+            process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || ""
+          ) as BufferSource,
+        });
+
+        // Send subscription to server
+        await fetch("/api/portal/notifications/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            endpoint: subscription.endpoint,
+            p256dh: arrayBufferToBase64(subscription.getKey("p256dh")!),
+            auth: arrayBufferToBase64(subscription.getKey("auth")!),
+          }),
+        });
+
+        console.log("[Push] Subscribed successfully");
+      } catch (error) {
+        console.error("[Push] Subscription failed:", error);
+      }
+    }
     // Register service worker
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       navigator.serviceWorker

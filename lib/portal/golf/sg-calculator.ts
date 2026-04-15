@@ -22,6 +22,7 @@ export function categorizeSGShot(
   fromDistance: number,
   toLie: LieType
 ): SGCategory {
+  void toLie;
   if (fromLie === "green") return "PUTTING";
   if (fromLie === "tee") return "OFF_THE_TEE";
   if (

@@ -9,14 +9,12 @@ import {
 } from "@/components/portal/admin/meldinger/ChannelFilter";
 import {
  MessageList,
- type Message,
  type MessageStatus,
 } from "@/components/portal/admin/meldinger/MessageList";
 import { MessageDetail } from "@/components/portal/admin/meldinger/MessageDetail";
 import {
  approveMessage,
  rejectMessage,
- regenerateAIResponse,
 } from "./actions";
 import type { MessageWithAI, ChannelCounts } from "./actions";
 
@@ -76,31 +74,6 @@ export function MeldingerClient({
  } else {
  setError(result.error || "Kunne ikke forkaste meldingen");
  }
- };
-
- const handleRegenerate = async (messageId: string) => {
- setError(null);
- // Sett status til AI_PROCESSING optimistisk
- setMessages((prev) =>
- prev.map((m) =>
- m.id === messageId
- ? { ...m, status: "AI_PROCESSING"as MessageStatus }
- : m
- )
- );
- const result = await regenerateAIResponse(messageId);
- if (!result.success) {
- setError(result.error || "Kunne ikke regenerere AI-svar");
- // Sett tilbake til forrige status
- setMessages((prev) =>
- prev.map((m) =>
- m.id === messageId
- ? { ...m, status: "FAILED"as MessageStatus }
- : m
- )
- );
- }
- // Revalidering fra server action oppdaterer ved neste navigering
  };
 
  if (messages.length === 0) {

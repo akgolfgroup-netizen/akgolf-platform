@@ -41,7 +41,7 @@ export function WeekAdjustmentView() {
       }
     };
     loadInstructors();
-  }, []);
+  }, [selectedInstructor]);
 
   // Last uke-data når instruktør eller uke endres
   useEffect(() => {

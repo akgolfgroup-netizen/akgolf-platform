@@ -16,7 +16,6 @@ interface UpgradeContextValue {
 const UpgradeContext = createContext<UpgradeContextValue | null>(null);
 
 const STORAGE_KEY_FEATURE_CLICKS = "ak_feature_clicks";
-const STORAGE_KEY_LOG_COUNT = "ak_session_log_count";
 
 interface UpgradeProviderProps {
   children: ReactNode;

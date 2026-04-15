@@ -4,13 +4,11 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Calendar,
   ChevronLeft,
   ChevronRight,
   Clock,
   Dumbbell,
   Play,
-  Target,
   TrendingUp,
   Lightbulb,
 } from "lucide-react";
@@ -65,13 +63,13 @@ const pyramidConfig: Record<string, { label: string; color: string; bg: string }
   TURN: { label: "Turnering", color: "#324D45", bg: "#ECF0EF" },
 };
 
-export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanViewerProps) {
-  const now = new Date();
-  const targetWeek = addWeeks(now, weekOffset);
-  const weekStart = startOfISOWeek(targetWeek);
-  const weekEnd = endOfISOWeek(targetWeek);
-
+export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerProps) {
   const weekDays = useMemo(() => {
+    const now = new Date();
+    const targetWeek = addWeeks(now, weekOffset);
+    const weekStart = startOfISOWeek(targetWeek);
+    const nowStr = format(now, "yyyy-MM-dd");
+
     return Array.from({ length: 7 }, (_, i) => {
       const date = addDays(weekStart, i);
       const dateStr = format(date, "yyyy-MM-dd");
@@ -80,17 +78,23 @@ export function TrainingPlanViewer({ events, weekOffset, planId }: TrainingPlanV
         date,
         dateStr,
         dayName: DAY_NAMES[i],
-        isToday: format(date, "yyyy-MM-dd") === format(now, "yyyy-MM-dd"),
+        isToday: dateStr === nowStr,
         events: dayEvents,
       };
     });
-  }, [events, weekStart, now]);
+  }, [events, weekOffset]);
 
-  const weekRange = `${format(weekStart, "d. MMMM", { locale: nb })} – ${format(
-    weekEnd,
-    "d. MMMM",
-    { locale: nb }
-  )}`;
+  const weekRange = useMemo(() => {
+    const now = new Date();
+    const targetWeek = addWeeks(now, weekOffset);
+    const weekStart = startOfISOWeek(targetWeek);
+    const weekEnd = endOfISOWeek(targetWeek);
+    return `${format(weekStart, "d. MMMM", { locale: nb })} – ${format(
+      weekEnd,
+      "d. MMMM",
+      { locale: nb }
+    )}`;
+  }, [weekOffset]);
 
   const planned = events.length;
   const completed = events.filter((e) => e.done).length;

@@ -325,8 +325,9 @@ function validateTimeConstraints(
 async function checkInstructorAvailability(
   instructorId: string,
   startTime: Date,
-  endTime: Date
+  _endTime: Date
 ): Promise<{ errors: ValidationError[] }> {
+  void _endTime;
   const errors: ValidationError[] = [];
   const supabase = createServiceClient();
 
@@ -356,7 +357,7 @@ async function checkInstructorAvailability(
   const dayOfWeek = startTime.getUTCDay();
   const timeString = format(startTime, "HH:mm");
 
-  const { data: availability, error: availError } = await supabase
+  const { data: availability } = await supabase
     .from("InstructorAvailability")
     .select("id")
     .eq("instructorId", instructorId)
@@ -414,7 +415,7 @@ async function checkBookingConflict(
     query = query.neq("id", ignoreBookingId);
   }
 
-  const { data: conflictingBooking, error } = await query.limit(1).single();
+  const { data: conflictingBooking } = await query.limit(1).single();
 
   if (conflictingBooking) {
     errors.push({
@@ -440,7 +441,7 @@ async function checkBlockedTime(
   const errors: ValidationError[] = [];
   const supabase = createServiceClient();
 
-  const { data: blockedTime, error } = await supabase
+  const { data: blockedTime } = await supabase
     .from("BlockedTime")
     .select("reason")
     .or(`instructorId.eq.${instructorId},instructorId.is.null`)
@@ -540,7 +541,7 @@ async function checkDuplicateUserBooking(
     query = query.neq("id", ignoreBookingId);
   }
 
-  const { data: existingBooking, error } = await query.limit(1).single();
+  const { data: existingBooking } = await query.limit(1).single();
 
   if (existingBooking) {
     errors.push({

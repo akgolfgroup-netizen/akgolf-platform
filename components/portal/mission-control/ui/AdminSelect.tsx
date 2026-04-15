@@ -26,7 +26,8 @@ export const AdminSelect = React.forwardRef<
   },
   ref,
 ) {
-  const selectId = id ?? React.useId();
+  const generatedId = React.useId();
+  const selectId = id ?? generatedId;
 
   return (
     <div className={cn("space-y-1.5", containerClassName)}>
