@@ -11,6 +11,25 @@ Les `.claude/rules/design-system.md` for UI-oppgaver — dette er ENESTE gjelden
 6. Oppdater gotchas.md — nar du oppdager nye feller
 7. Aldri `git add -A` — bruk spesifikke filnavn
 
+## Arbeidslogg (OBLIGATORISK)
+
+Ved avslutning av HVER sesjon SKAL du skrive arbeidslogg til Obsidian:
+
+```bash
+~/Developer/scripts/obsidian-logg.sh "<prosjektnavn>" "<verktoy>" "<sammendrag>"
+```
+
+- `<prosjektnavn>`: Mappenavnet (f.eks. `akgolf-platform`, `wang-toppidrett`)
+- `<verktoy>`: `claude-code`, `kimi-code`, eller `manus`
+- `<sammendrag>`: Hva ble gjort, beslutninger tatt, neste steg
+
+Eksempel:
+```bash
+~/Developer/scripts/obsidian-logg.sh "akgolf-platform" "claude-code" "Fikset booking-datofeil. Neste: deploy til prod."
+```
+
+Hvis Obsidian ikke er tilgjengelig, skriv direkte til `~/ak-brain/Arbeidslogg/`.
+
 ## Design & Frontend
 - `.claude/rules/design-system.md` er ENESTE autoritative kilde for farger, typografi, spacing, komponenter
 - Ikke bruk `docs/DESIGN_SYSTEM.md`, `docs/DESIGN.md` eller andre arkiverte filer

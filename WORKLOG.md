@@ -8,6 +8,85 @@
 
 ---
 
+## 2026-04-15 ~20:00 — USI v0.2: CRON, Prescriptions & ML-pipeline fullført
+
+**Jobbet med:**
+- **Task 1 — CRON:** `app/api/portal/cron/compute-usi/route.ts` kjører daglig 03:00 UTC. Beregner USI for alle aktive studenter, upserter `UnifiedSkillIndex`, lagrer `UnifiedSkillSnapshot` for trend-historikk, og sporer kategoriendringer.
+- **Task 2 — TrainingPrescription:** `lib/portal/usi/gap-analysis.ts` sammenligner SG mot A–K-benchmarks. `lib/portal/usi/generate-prescription.ts` bruker Claude til å generere `TrainingPrescription` med fokusområder, timer/uke og predikert HCP-endring. Preskripsjon vises på `/portal/statistikk` og injectes i AI-treningsplan-generatoren (`lib/portal/ai/training-plan.ts` + API-route).
+- **Task 3 — ML-pipeline (Python/ONNX):**
+  - `ml/requirements.txt` + `ml/train_trackman_sg_model.py`: Python-pipeline som trener multi-output Random Forest (TrackMan → SG) og eksporterer til ONNX.
+  - `lib/portal/usi/ml-dataset.ts`: Dataset-eksporter for treningsdata.
+  - `lib/portal/usi/predict-sg-onnx.ts`: ONNX-inferens i Node.js med `onnxruntime-node`.
+  - `lib/portal/usi/kalman-filter.ts`: 1D Kalman-filter for glatting og HCP-prognose (30d/90d).
+  - `lib/portal/usi/compute-usi.ts` oppdatert til v0.2: fuser ONNX-prediksjoner med runde-basert SG, og returnerer `predictedHcp30d` / `predictedHcp90d`.
+
+**Nøkkelfiler:**
+- `app/api/portal/cron/compute-usi/route.ts`
+- `vercel.json`
+- `lib/portal/usi/gap-analysis.ts`
+- `lib/portal/usi/generate-prescription.ts`
+- `lib/portal/usi/actions.ts`
+- `app/portal/(dashboard)/statistikk/statistikk-client.tsx`
+- `app/api/portal/ai/training-plan/route.ts`
+- `lib/portal/ai/training-plan.ts`
+- `ml/train_trackman_sg_model.py`
+- `ml/models/trackman_sg_v1.onnx` (genereres ved kjøring)
+- `lib/portal/usi/predict-sg-onnx.ts`
+- `lib/portal/usi/kalman-filter.ts`
+- `lib/portal/usi/compute-usi.ts`
+
+**Neste steg:**
+- Kjør `ml/train_trackman_sg_model.py` mot produksjonsdata for å generere første ONNX-modell
+- Vurdere å vise Kalman-prognoser (`predictedHcp30d/90d`) på profil-/statistikk-siden
+- Fortsette med `SkillMapping`-tabell for OLS-fallback når ONNX er utilgjengelig
+
+---
+
+## 2026-04-15 ~16:00 — USI v0.1 implementert på Statistikk + Benchmark-integrasjon
+
+**Jobbet med:**
+- La til Prisma-modeller: `UnifiedSkillIndex`, `UnifiedSkillSnapshot`, `TrainingPrescription`
+- Bygget regelbasert `computeUSI()`-motor som fusjonerer RoundStats, TrackMan, TrainingLog og TestResult
+- Implementerte 9-dimensjonal latent skill-vektor (OTT, APP, ARG, PUTT, SPEED, CONS, PRESS, TRAIN, TREND) med A–K-mapping
+- Koblet Statistikk-siden (`/portal/statistikk`) til USI: server action, page, og `StatistikkClient` med nye USI-kort og kategorifremgangsindikatorer
+- Integrerte `sgToHandicap()` og `sgToHandicapCategory()` i Benchmark-siden for estimert HCP og kategori per dimensjon
+- Fikset TypeScript-feil i USI-kode (`MentalScorecardEntry.timestamp`, `_avg`-undefined, Prisma JSON-typer)
+
+**Nøkkelfiler:**
+- `prisma/schema.prisma`
+- `lib/portal/usi/compute-usi.ts`
+- `lib/portal/usi/actions.ts`
+- `app/portal/(dashboard)/statistikk/actions.ts`
+- `app/portal/(dashboard)/statistikk/page.tsx`
+- `app/portal/(dashboard)/statistikk/statistikk-client.tsx`
+- `app/portal/(dashboard)/benchmark/actions.ts`
+- `app/portal/(dashboard)/benchmark/benchmark-client.tsx`
+- `lib/portal/golf/sg-to-handicap.ts`
+
+---
+
+## 2026-04-15 ~12:00 — Data/Matematikk-Appendiks og Masterdokument-integrasjon
+
+**Jobbet med:**
+- Skrev `MASTERDOCUMENT_DATA_BRIDGE.md` — matematisk bro mellom AK Golf Masterdokument og plattformens data (DataGolf, TrackMan, USI)
+- Implementerte `sgToHandicap()` og `sgToHandicapCategory()` med kubisk Hermite-spline basert på A–K-benchmarks
+- Redigerte masterdokumentet (`ak-golf-masterdokument-v2_2026-04-15.docx`) med 5 målrettede oppdateringer: Formål, SLAG-fordeling, App-spesifikasjon (15.5–15.7), Testprotokoll 2.0, Dokumentstatus
+- Oppdaterte `CLAUDE.md` med referanse til `MASTERDOCUMENT_DATA_BRIDGE.md` i arbeidsflyten
+
+**Nøkkelfiler:**
+- `docs/strategy/MATHEMATICAL_FRAMEWORK.md`
+- `docs/strategy/MASTERDOCUMENT_DATA_BRIDGE.md` (ny)
+- `lib/portal/golf/sg-to-handicap.ts` (ny)
+- `/My Drive/AK Golf Group/.../ak-golf-masterdokument-v2_2026-04-15.docx`
+- `CLAUDE.md`
+
+**Neste steg:**
+- Implementere `UnifiedSkillIndex`-Prisma-modell og CRON-pipeline
+- Bygge USI v0.1 (regelbasert) og vise estimert kategori på Statistikk-siden
+- Integrere `sgToHandicap()` i benchmark- og statistikk-moduler
+
+---
+
 ## 2026-04-15 00:15 — Opprydding etter "sonetap"
 
 **Jobbet med:**

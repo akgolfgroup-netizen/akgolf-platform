@@ -34,6 +34,11 @@ import {
   getPercentileLabel,
 } from "@/lib/portal/datagolf/tour-benchmarks";
 import { SG_BENCHMARKS } from "@/lib/portal/golf/sg-benchmarks";
+import {
+  sgToCategory,
+  sgToHandicap,
+  sgToHandicapCategory,
+} from "@/lib/portal/golf/sg-to-handicap";
 import type {
   PlayerSGProfile,
   ProPlayerSearchResult,
@@ -76,22 +81,12 @@ const SG_CATEGORIES = [
   { key: "sgPutt" as const, field: "sgPutting" as const, label: "Putting" },
 ];
 
-// ── Helper: get A-K category for a given SG total ──
+// ── Helpers ──
 
 function getAKCategory(sgTotal: number | null) {
   if (sgTotal === null) return null;
-  // SG_BENCHMARKS are sorted K (worst) to A (best)
-  // Find the closest category based on total SG
-  let closest = SG_BENCHMARKS[0];
-  let minDiff = Math.abs(sgTotal - closest.sg.total);
-  for (const b of SG_BENCHMARKS) {
-    const diff = Math.abs(sgTotal - b.sg.total);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closest = b;
-    }
-  }
-  return closest;
+  const category = sgToCategory(sgTotal);
+  return SG_BENCHMARKS.find((b) => b.category === category) ?? null;
 }
 
 function getPercentileBarColor(pct: number): string {
@@ -228,17 +223,11 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
       },
     ] as const
   ).map((c) => {
-    if (c.userVal === null) return { ...c, category: null };
-    let closest = SG_BENCHMARKS[0];
-    let minDiff = Math.abs(c.userVal - closest.sg[c.field]);
-    for (const b of SG_BENCHMARKS) {
-      const diff = Math.abs(c.userVal - b.sg[c.field]);
-      if (diff < minDiff) {
-        minDiff = diff;
-        closest = b;
-      }
-    }
-    return { ...c, category: closest };
+    if (c.userVal === null) return { ...c, category: null, estimatedHcp: null };
+    const category = sgToCategory(c.userVal);
+    const benchmark = SG_BENCHMARKS.find((b) => b.category === category) ?? null;
+    const estimatedHcp = sgToHandicapCategory(c.userVal, c.field);
+    return { ...c, category: benchmark, estimatedHcp };
   });
 
   // ── Improvement potential ──
@@ -470,14 +459,19 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                   {akCategory.category}
                 </span>
               </div>
-              <div>
+              <div className="flex-1">
                 <p className="text-sm font-semibold text-black">
                   {akCategory.label}
                 </p>
                 <p className="text-xs text-grey-400">
-                  HCP {akCategory.handicapRange[0]}-
-                  {akCategory.handicapRange[1]} | Snitt{" "}
-                  {akCategory.averageScore} slag
+                  {profile?.usi
+                    ? `Estimert HCP ${profile.usi.estimatedHandicap.toFixed(1)}`
+                    : `HCP ${akCategory.handicapRange[0]}-${akCategory.handicapRange[1]}`}
+                  {profile?.usi && (
+                    <span className="ml-2">
+                      | {Math.round(profile.usi.vsTourAvgPct)}% vs tour
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
@@ -510,6 +504,11 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                 {c.userVal !== null && (
                   <p className="text-xs text-grey-400 mt-1">
                     SG: {c.userVal.toFixed(2)}
+                    {c.estimatedHcp !== null && (
+                      <span className="ml-1.5">
+                        · HCP {c.estimatedHcp.toFixed(1)}
+                      </span>
+                    )}
                   </p>
                 )}
               </div>

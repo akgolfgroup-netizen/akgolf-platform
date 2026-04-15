@@ -15,6 +15,7 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import type { RoundStats } from "@prisma/client";
 import type { PeriodKey, WeeklyTrainingData, GolfProfileSummary } from "./actions";
+import type { USIResult, TrainingPrescriptionResult } from "@/lib/portal/usi/actions";
 import { GolfProfileHero } from "@/components/portal/statistikk/golf-profile-hero";
 import { CombinedInsights } from "@/components/portal/statistikk/combined-insights";
 
@@ -44,6 +45,8 @@ interface StatistikkClientProps {
   handicap?: number | null;
   currentPeriod: PeriodKey;
   profile: GolfProfileSummary;
+  usi: USIResult | null;
+  prescription: TrainingPrescriptionResult | null;
 }
 
 /* ─── Constants ─── */
@@ -368,6 +371,8 @@ export function StatistikkClient({
   handicap,
   currentPeriod,
   profile,
+  usi,
+  prescription,
 }: StatistikkClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -445,9 +450,9 @@ export function StatistikkClient({
         </div>
       </div>
 
-      {/* KPI-rad: 4 noekkeltall */}
+      {/* KPI-rad: 4-5 noekkeltall */}
       <motion.div
-        className="grid grid-cols-2 gap-4 lg:grid-cols-4"
+        className="grid grid-cols-2 gap-4 lg:grid-cols-5"
         initial="hidden"
         animate="visible"
         variants={staggerContainer}
@@ -484,6 +489,46 @@ export function StatistikkClient({
             trendLabel="siste periode"
           />
         </motion.div>
+        {usi && (
+          <motion.div variants={fadeInUp}>
+            <PremiumStatCard
+              label="Estimert kategori"
+              value={usi.estimatedCategory}
+              unit={`(${Math.round(usi.vsTourAvgPct)}%)`}
+            />
+          </motion.div>
+        )}
+        {prescription && (
+          <motion.div variants={fadeInUp}>
+            <PremiumStatCard
+              label="Treningsfokus"
+              value={prescription.focusAreas[0] ?? "Generell"}
+              unit={`${prescription.weeklyHours.toFixed(1)}t/uke`}
+            />
+          </motion.div>
+        )}
+        {usi?.predictedHcp30d != null && (
+          <motion.div variants={fadeInUp}>
+            <PremiumStatCard
+              label="Prognose 30d"
+              value={usi.predictedHcp30d}
+              decimals={1}
+              lowerIsBetter
+              unit="HCP"
+            />
+          </motion.div>
+        )}
+        {usi?.predictedHcp90d != null && (
+          <motion.div variants={fadeInUp}>
+            <PremiumStatCard
+              label="Prognose 90d"
+              value={usi.predictedHcp90d}
+              decimals={1}
+              lowerIsBetter
+              unit="HCP"
+            />
+          </motion.div>
+        )}
       </motion.div>
 
       {/* 2-kolonne: Strokes Gained barer + Treningsvolum */}

@@ -8,6 +8,7 @@ import {
   type SkillDecomposition,
   type ApproachSkill,
 } from "@/lib/portal/datagolf/client";
+import { computeUSI, type USIResult } from "@/lib/portal/usi/compute-usi";
 
 // ── Types ──
 
@@ -24,6 +25,7 @@ export interface PlayerSGProfile {
     approach200: number | null;
     approach200Plus: number | null;
   };
+  usi: USIResult | null;
 }
 
 export interface ProPlayerSearchResult {
@@ -69,19 +71,30 @@ export async function getPlayerSGProfile(): Promise<PlayerSGProfile | null> {
       : null;
   }
 
+  const [sgTotal, sgOffTheTee, sgApproach, sgAroundTheGreen, sgPutting] = [
+    avg(rounds.map((r) => r.sgTotal)),
+    avg(rounds.map((r) => r.sgOffTheTee)),
+    avg(rounds.map((r) => r.sgApproach)),
+    avg(rounds.map((r) => r.sgAroundTheGreen)),
+    avg(rounds.map((r) => r.sgPutting)),
+  ];
+
+  const usi = await computeUSI(user.id);
+
   return {
     roundCount: rounds.length,
-    sgTotal: avg(rounds.map((r) => r.sgTotal)),
-    sgOffTheTee: avg(rounds.map((r) => r.sgOffTheTee)),
-    sgApproach: avg(rounds.map((r) => r.sgApproach)),
-    sgAroundTheGreen: avg(rounds.map((r) => r.sgAroundTheGreen)),
-    sgPutting: avg(rounds.map((r) => r.sgPutting)),
+    sgTotal,
+    sgOffTheTee,
+    sgApproach,
+    sgAroundTheGreen,
+    sgPutting,
     approachDistances: {
       approach100: avg(rounds.map((r) => r.approach100)),
       approach150: avg(rounds.map((r) => r.approach150)),
       approach200: avg(rounds.map((r) => r.approach200)),
       approach200Plus: avg(rounds.map((r) => r.approach200Plus)),
     },
+    usi,
   };
 }
 

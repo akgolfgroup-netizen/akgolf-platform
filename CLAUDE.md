@@ -71,7 +71,8 @@ Se `docs/status/` for oppdatert status:
 4. Markedsside-tekst i `lib/website-constants.ts`, aldri hardkodet
 5. Oppdater `docs/component-library.md` etter nye komponenter
 6. Oppdater `docs/status/` etter ferdig arbeid
-7. Maks 300 linjer per fil — splitt ved behov
+7. Ved arbeid med USI/DataGolf/TrackMan/treningsplanlegging: konsulter `docs/strategy/MASTERDOCUMENT_DATA_BRIDGE.md`
+8. Maks 300 linjer per fil — splitt ved behov
 
 ## Konvensjoner
 

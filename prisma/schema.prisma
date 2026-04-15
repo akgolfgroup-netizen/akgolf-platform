@@ -1351,6 +1351,115 @@ model ScoreEstimate {
   @@index([userId])
 }
 
+/// Unified Skill Index cache per player
+model UnifiedSkillIndex {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  // Core SG dimensions
+  sgOtt  Float
+  sgApp  Float
+  sgArg  Float
+  sgPutt Float
+
+  // Biomechanical
+  ballSpeedScore   Float
+  consistencyScore Float
+
+  // Mental / contextual
+  pressureScore      Float
+  trainingEfficiency Float
+  trendMomentum      Float
+
+  // Composite
+  totalUsi          Float
+  estimatedHandicap Float
+  estimatedCategory String
+
+  // Uncertainty (JSON object with std dev per dimension)
+  uncertaintyJson Json
+
+  // External comparison
+  vsTourAvgPct Float
+  dataGolfDgId Int?
+
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  snapshots UnifiedSkillSnapshot[]
+}
+
+/// Historical USI snapshots for trend analysis
+model UnifiedSkillSnapshot {
+  id        String   @id @default(cuid())
+  userId    String
+  createdAt DateTime @default(now())
+
+  // Core SG dimensions
+  sgOtt  Float
+  sgApp  Float
+  sgArg  Float
+  sgPutt Float
+
+  // Biomechanical
+  ballSpeedScore   Float
+  consistencyScore Float
+
+  // Mental / contextual
+  pressureScore      Float
+  trainingEfficiency Float
+  trendMomentum      Float
+
+  // Composite
+  totalUsi          Float
+  estimatedHandicap Float
+  estimatedCategory String
+
+  vsTourAvgPct Float
+
+  UnifiedSkillIndex UnifiedSkillIndex? @relation(fields: [unifiedSkillIndexId], references: [id], onDelete: Cascade)
+  unifiedSkillIndexId String?
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+/// Learned regression coefficients: TrackMan / tests → SG prediction
+model SkillMapping {
+  id                     String @id @default(cuid())
+  category               String // OTT, APP, ARG, PUTT
+  intercept              Float
+  ballSpeedCoeff         Float?
+  offlineStdDevCoeff     Float?
+  smashFactorCoeff       Float?
+  spinConsistencyCoeff   Float?
+  launchConsistencyCoeff Float?
+
+  rSquared   Float
+  sampleSize Int
+  updatedAt  DateTime @updatedAt
+}
+
+/// AI-generated training prescription
+model TrainingPrescription {
+  id          String   @id @default(cuid())
+  userId      String
+  generatedAt DateTime @default(now())
+
+  focusAreas          String[]
+  weeklyHours         Float
+  suggestedFormulaIds String[]
+
+  predictedHcpChange Float
+  confidence         Float
+
+  gradientJson    Json
+  gapAnalysisJson Json
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, generatedAt])
+}
+
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model TrainingLog {
   id                   String                @id
@@ -1543,6 +1652,9 @@ model User {
   MentalProfile                               MentalProfile?
   CourseNotes                                 CourseNotes[]
   ScoreEstimate                               ScoreEstimate[]
+  UnifiedSkillIndex                           UnifiedSkillIndex?
+  UnifiedSkillSnapshot                        UnifiedSkillSnapshot[]
+  TrainingPrescription                        TrainingPrescription[]
   TrainingLog                                 TrainingLog[]
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")

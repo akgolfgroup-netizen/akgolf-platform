@@ -6,6 +6,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { preprocessPlayerProfile, type PlayerInput } from "./category-engine";
 import { buildSystemPrompt } from "./system-prompt";
 import { type GeneratedPlan, extractPreview, type PlanPreview } from "./plan-schema";
+import type { TrainingPrescriptionResult } from "@/lib/portal/usi/generate-prescription";
 
 interface GenerationResult {
   plan: GeneratedPlan;
@@ -21,7 +22,8 @@ interface GenerationResult {
 const ANTHROPIC_MODEL = "claude-haiku-4-5-20251001";
 
 export async function generateTrainingPlan(
-  input: PlayerInput
+  input: PlayerInput,
+  prescription?: TrainingPrescriptionResult
 ): Promise<GenerationResult> {
   const startTime = Date.now();
 
@@ -55,6 +57,7 @@ Spillerprofil (forbehandlet):
 - Tilgjengelige tester: ${profile.applicableTests.join(", ")}
 - Drillkategorier: ${profile.applicableDrillCategories.join(", ")}
 ${input.goals ? `- Spillerens mål: ${input.goals}` : ""}
+${prescription ? `- AI-preskripsjon: Fokuser pa ${prescription.focusAreas.join(", ")} (${prescription.weeklyHours.toFixed(1)} timer/uke). Predikert HCP-endring pa 12 uker: ${prescription.predictedHcpChange.toFixed(1)} slag.` : ""}
 
 Krav:
 1. Generer alle 12 uker med daglig plan (${input.sessionsPerWeek} treningsdager + hviledager per uke)
