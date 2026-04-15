@@ -40,7 +40,6 @@ interface TurneringerClientProps {
   tournaments: TournamentWithPlan[];
   pgaSchedule: TourScheduleEvent[];
   euroSchedule: TourScheduleEvent[];
-  userId: string;
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -78,7 +77,6 @@ export function TurneringerClient({
   tournaments,
   pgaSchedule,
   euroSchedule,
-  userId,
 }: TurneringerClientProps) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>("mine");
@@ -257,13 +255,11 @@ export function TurneringerClient({
         />
       ) : viewMode === "calendar" ? (
         <CalendarView
-          tournaments={filteredTournaments}
           calendarMonth={calendarMonth}
           setCalendarMonth={setCalendarMonth}
           calendarDays={calendarDays}
           calendarTournaments={calendarTournaments}
           onSelect={setSelectedTournament}
-          userId={userId}
         />
       ) : (
         <ListView
@@ -271,7 +267,6 @@ export function TurneringerClient({
           past={pastTournaments}
           showMine={activeTab === "mine"}
           onSelect={setSelectedTournament}
-          userId={userId}
         />
       )}
 
@@ -279,7 +274,6 @@ export function TurneringerClient({
       {selectedTournament && (
         <TournamentDetailModal
           tournament={selectedTournament}
-          userId={userId}
           onClose={() => setSelectedTournament(null)}
           onUpdated={() => {
             setSelectedTournament(null);

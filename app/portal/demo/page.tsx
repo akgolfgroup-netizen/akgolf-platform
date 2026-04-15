@@ -52,6 +52,7 @@ export default function DemoPage() {
   const [currentAchievement, setCurrentAchievement] = useState<typeof mockAchievements[0] | null>(null);
   const [demoTier, setDemoTier] = useState<SubscriptionTier>(SubscriptionTier.VISITOR);
   const [logCount, setLogCount] = useState(3);
+  const [aiCount] = useState(0);
   const [streak, setStreak] = useState(12);
   const [handicap, setHandicap] = useState(15);
 
