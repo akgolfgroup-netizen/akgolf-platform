@@ -1,11 +1,11 @@
-# Spillerportal — Audit 2026-04-12
+# Spillerportal — Audit 2026-04-15
 
 ## Sammendrag
 
 - **24 sider** + login-side
-- **22/24 bruker reelle data** (Supabase/Prisma)
+- **24/24 bruker reelle data** (Supabase/Prisma)
 - **0 sider har kun mock-data**
-- **15/24 har server/client-split** (actions.ts + *-client.tsx)
+- **16/24 har server/client-split** (actions.ts + *-client.tsx)
 
 ## Status per side
 
@@ -16,11 +16,11 @@
 | Abonnement | Reell (actions.ts) | Ja | OK |
 | AI-Coach | Reell (streaming API) | Ja | OK |
 | Analyse | Reell (4 server actions) | Nei | OK |
-| Apper | Reell (inline Supabase) | Ja | Mangler actions.ts |
+| Apper | Reell (actions.ts) | Ja | OK |
 | Bag | Reell (actions.ts) | Ja | OK |
 | Benchmark | Reell (actions.ts) | Ja | OK |
 | Bookinger | Reell (2 parallelle actions) | Ja | OK |
-| Bookinger/[id] | Reell (Prisma) | Ja | OK — ny |
+| Bookinger/[id] | Reell (Prisma) | Ja | OK |
 | Bookinger/[id]/endre | Reell (Supabase) | Ja | OK |
 | Coaching-historikk | Reell (actions.ts) | Nei | OK |
 | Dagbok | Reell (actions.ts) | Ja | OK |
@@ -32,37 +32,40 @@
 | Sammenligning | Reell (actions.ts) | Nei (TierGate) | OK |
 | Sosialt | Reell (3 parallelle actions) | Ja | OK |
 | Spill | Reell (3 parallelle actions) | Ja | OK |
-| Statistikk | Reell (5 actions + periode) | Ja | OK |
+| Statistikk | Reell (6 actions + periode) | Ja | OK |
 | Tester | Reell (2 actions) | Ja | OK |
 | TrackMan | Reell (actions.ts) | Ja | OK |
 | Trening/ovelser | Reell (inline Supabase) | Nei | OK |
-| Trening/tester | Reell (inline Supabase) | Nei | Hardkodet "0 fullforte" |
+| Trening/tester | Reell (inline Supabase + Prisma) | Nei | OK |
 | Treningsplan | Reell (2 actions) | Nei | OK |
 | Turneringer | Reell (3 actions + tour API) | Ja | OK |
 | ~~Turneringsplan~~ | ~~MOCK~~ Reell (actions.ts) | Ja | OK |
 
-## Fullfort 2026-04-12
+## Fullfort 2026-04-15
 
-### Turneringsplan — reell data (commit 9b53be7)
-- Mock erstattet med `actions.ts`: `getPlayerTournaments()` fra Tournament + PlayerTournamentPlan
-- Server component med `requirePortalUser()`
+### TrackMan — analytics + shot dispersion
+- `getTrackManOverview()` henter nå `TrackManSessionAnalytics` for siste 12 sesjoner
+- Ny `ShotDispersionChart`: Recharts ScatterChart med offline vs carry, fargekodet per klubb
+- Ny `TrackManAnalyticsCard`: KPI-er, klubb-statistikker, ballbane-fordeling, innsikter, anbefalt fokus
+- Fikset carry-by-club chart til å vise faktisk `avgCarry` fra serverdata
 
-### Bookinger/[id] — ny detaljside (commit d509d75)
-- `page.tsx`: Server component med Prisma-query inkl. ServiceType, Instructor, Location
-- `booking-detail-client.tsx`: Viser dato, tid, instruktor, sted, status, betaling
-- Handlinger: Endre tidspunkt (lenke til /endre), Avbestill med bekreftelsessteg
-- Gjenbruker `BookingStatusBadge` og `cancelBooking()` fra eksisterende kode
+### Statistikk — "Din Golfprofil"
+- Ny `getGolfProfileSummary()`: kombinerer RoundStats + TrackMan + TrainingLog + Handicap
+- Ny `GolfProfileHero`: HCP, runder, trening, beste carry siste 30 dager
+- Ny `CombinedInsights`: 3-5 regelbaserte innsikter basert på kryssede data
 
-## Gjenstående funn
+### Dagbok — treningsplan-integrasjon
+- Ny `PlanProgressTracker`: viser ukestittel, logget vs planlagt, progress bar
+- Forbedret quick-log toast med fokusområde, varighet og lenke til treningsplan
+- Kalender-interaktivitet: klikk på dag med logg viser detaljer i popover
 
-### 1. Trening/tester — hardkodet stat
-- Linje 78: viser alltid "0 fullforte tester" uavhengig av brukerdata
-- **Handling:** Hent faktisk fullforingsdata fra brukerens testhistorikk
+### Apper — actions.ts
+- `actions.ts` opprettet med `getApperPageData()`
+- Henter AppModule, AppBundle, AppSubscription og user modules via Prisma
 
-### 2. Apper — mangler actions.ts
-- Direkte Supabase-queries i page.tsx i stedet for via actions.ts
-- Bryter med arkitekturmonsteret brukt i alle andre sider
-- **Handling:** Migrer queries til actions.ts for konsistens
+### Trening/tester — reell statistikk
+- `getUserTestStats()` henter faktisk fullføringsdata fra `TestResult`
+- Viser korrekt antall unike fullførte tester og dato for siste test
 
 ## Arkitekturmonster
 

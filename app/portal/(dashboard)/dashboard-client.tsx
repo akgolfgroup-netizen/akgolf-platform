@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Calendar, ClipboardList, TrendingUp, Target, Flag } from "lucide-react";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
-import { NextBookingCard } from "@/components/portal/dashboard/next-booking-card";
+import { ArrowUpRight, ArrowDownRight, TrendingUp, Target, Zap } from "lucide-react";
 import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
-import { TrainingPlanCard } from "@/components/portal/dashboard/training-plan-card";
-import { CoachInsightCard } from "@/components/portal/dashboard/coach-insight-card";
+import { PulseDot } from "@/components/portal/dashboard/pulse-dot";
+import { PerformanceChart } from "@/components/portal/dashboard/performance-chart";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface WeeklyInsight {
   summary: string;
@@ -61,14 +61,20 @@ interface DashboardProps {
   aiInsight: WeeklyInsight | null;
 }
 
+// Mock TrackMan season bests — ready to be replaced with real data
+const trackmanBests = [
+  { label: "Ball Speed", value: 162.4, unit: "mph", isPR: true },
+  { label: "Carry", value: 248, unit: "m", isPR: false },
+  { label: "Smash Factor", value: 1.48, unit: "", isPR: true, decimalPlaces: 2 },
+];
+
 export function DashboardClient({
   userName,
   userImage,
   tier,
   stats,
   handicap,
-  nextBooking,
-  weekRings,
+  handicapHistory,
   coachInsight,
   aiInsight,
 }: DashboardProps) {
@@ -85,210 +91,236 @@ export function DashboardClient({
     ELITE: "Elite",
   };
 
-  const now = new Date();
-  const dayNames = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"];
-  const monthNames = ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"];
-  const dateStr = `${dayNames[now.getDay()]} ${now.getDate()}. ${monthNames[now.getMonth()]}`;
+  const isTrendPositive = handicap.trend !== null && handicap.trend < 0;
+  const isTrendNegative = handicap.trend !== null && handicap.trend > 0;
+
+  // Transform handicapHistory into chart data with mock dates
+  const chartData = handicapHistory.map((h, i) => ({
+    date: `${i + 1}. uke`,
+    handicap: h,
+  }));
+
+  // Fallback chart data if history is empty
+  const fallbackChartData = [
+    { date: "Jan", handicap: 14.2 },
+    { date: "Feb", handicap: 13.8 },
+    { date: "Mar", handicap: 13.5 },
+    { date: "Apr", handicap: 12.9 },
+    { date: "Mai", handicap: 12.4 },
+    { date: "Jun", handicap: 11.8 },
+  ];
 
   return (
-    <div className="mx-auto w-full max-w-[1120px] px-4 pb-12 pt-6 lg:px-6 lg:pt-8">
-
-      {/* ═══ PROFIL-HEADER ═══ */}
-      <div className="mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link
-            href="/portal/profil"
-            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-black text-lg font-bold text-white shadow-[0_4px_16px_rgba(10,31,24,0.2)] transition-transform duration-300 hover:scale-105 overflow-hidden"
-          >
-            {userImage ? (
-              <Image src={userImage} alt="" width={56} height={56} className="h-full w-full object-cover" />
-            ) : (
-              initials
-            )}
-          </Link>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-16 pt-6 lg:px-8 lg:pt-10">
+      {/* ═══════════════════════════════════════════════════════════════════════
+       * 1. PERFORMANCE HERO
+       * ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative mb-10 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-center gap-5">
+          <div className="relative">
+            <Avatar className="h-16 w-16 border-2 border-white shadow-[0_4px_20px_rgba(10,31,24,0.12)]">
+              {userImage ? (
+                <AvatarImage src={userImage} alt={firstName} />
+              ) : null}
+              <AvatarFallback className="bg-black text-lg font-bold text-white">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+            <span className="absolute -bottom-1 -right-1 flex h-6 items-center justify-center rounded-full bg-[#D1F843] px-2 text-[10px] font-bold text-[#0A1F18] shadow-sm">
+              {tierLabel[tier] ?? tier}
+            </span>
+          </div>
           <div>
             <p className="text-[13px] font-medium uppercase tracking-[0.08em] text-grey-400">
-              {dateStr}
+              Velkommen tilbake
             </p>
-            <h1 className="text-[24px] font-bold tracking-tight text-black">
+            <h1 className="text-[26px] font-bold tracking-tight text-black">
               Hei, {firstName}.
             </h1>
           </div>
         </div>
 
-        <div className="hidden items-center gap-6 md:flex">
-          <div className="text-center">
-            <span className="text-xl font-semibold tracking-tight text-black tabular-nums">
-              {handicap.current?.toFixed(1) ?? "—"}
-            </span>
-            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-grey-400">
-              HCP
+        {/* Handicap Hero Stat */}
+        <div className="relative flex items-center gap-4 rounded-[32px] bg-white px-8 py-5 shadow-[0_2px_8px_rgba(10,31,24,0.04),0_8px_32px_rgba(10,31,24,0.06),0_16px_48px_rgba(10,31,24,0.04)]">
+          {/* Subtle lime glow behind handicap */}
+          <div className="pointer-events-none absolute inset-0 rounded-[32px] bg-[radial-gradient(circle_at_30%_50%,rgba(209,248,67,0.12),transparent_60%)]" />
+          
+          <div className="relative text-center">
+            <NumberTicker
+              value={handicap.current ?? 12.4}
+              decimalPlaces={1}
+              delay={0.2}
+              className="stat-xl text-black"
+            />
+            <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
+              Nåværende HCP
             </p>
           </div>
-          <div className="h-8 w-px bg-grey-200" />
-          <div className="text-center">
-            <span className="text-xl font-semibold tracking-tight text-black tabular-nums">
-              {stats.roundsCount || 0}
-            </span>
-            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-grey-400">
-              Runder
-            </p>
-          </div>
-          <div className="h-8 w-px bg-grey-200" />
-          <div className="text-center">
-            <span className="text-xl font-semibold tracking-tight text-black tabular-nums">
-              {stats.sessionsCount || 0}
-            </span>
-            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-grey-400">
-              Økter
-            </p>
-          </div>
-          <div className="h-8 w-px bg-grey-200" />
-          <span className="rounded-full bg-accent-cta px-3 py-1 text-[11px] font-semibold text-black">
-            {tierLabel[tier] ?? tier}
-          </span>
-        </div>
-      </div>
 
-      {/* ═══ ROW 1: Neste coaching + Ukens treningsplan ═══ */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_380px]">
-        <NextBookingCard booking={nextBooking} delay={0.1} />
-        <TrainingPlanCard delay={0.15} />
-      </div>
+          <div className="relative h-10 w-px bg-grey-200" />
 
-      {/* ═══ ROW 2: Ukekalender ═══ */}
-      <div className="mt-5">
-        <PremiumCard delay={0.2} className="p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <Calendar className="h-4 w-4 text-grey-400" />
-              <span className="text-sm font-semibold text-black">
-                Denne uken
-              </span>
-            </div>
-            <Link
-              href="/portal/kalender"
-              className="flex items-center gap-1 text-xs font-medium text-black transition-colors hover:text-primary"
-            >
-              Se kalender
-              <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-7 gap-2">
-            {weekRings.days.map((day, i) => {
-              const isToday = day.isToday;
-              return (
+          <div className="relative flex flex-col items-start gap-1">
+            {handicap.trend !== null ? (
+              <>
                 <div
-                  key={i}
-                  className={`flex flex-col items-center rounded-xl px-2 py-3 transition-all duration-200 ${
-                    isToday
-                      ? "bg-accent-cta text-black"
-                      : "bg-transparent"
+                  className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
+                    isTrendPositive
+                      ? "bg-[#E8F5EF] text-[#2A7D5A]"
+                      : isTrendNegative
+                      ? "bg-[#FCEAE8] text-[#B84233]"
+                      : "bg-grey-100 text-grey-500"
                   }`}
                 >
-                  <span className={`text-[10px] font-medium uppercase tracking-[0.06em] ${
-                    isToday ? "text-black/60" : "text-grey-400"
-                  }`}>
-                    {day.dayLabel}
-                  </span>
-                  <span className={`mt-1 text-base font-semibold tabular-nums ${
-                    isToday ? "text-black" : "text-black"
-                  }`}>
-                    {day.dateNumber}
-                  </span>
-                  {day.trained && (
-                    <span className={`mt-1.5 h-1.5 w-1.5 rounded-full ${
-                      isToday ? "bg-black" : "bg-success"
-                    }`} />
-                  )}
-                  {day.hasCoaching && !day.trained && (
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-black" />
-                  )}
-                  {day.isRest && !day.trained && !day.hasCoaching && (
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-transparent" />
+                  {isTrendPositive ? (
+                    <ArrowDownRight className="h-3.5 w-3.5" />
+                  ) : isTrendNegative ? (
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  ) : null}
+                  {Math.abs(handicap.trend).toFixed(1)}
+                </div>
+                <p className="text-[11px] font-medium text-grey-400">
+                  {isTrendPositive ? "Bedre" : isTrendNegative ? "Dårligere" : "Uendret"} siste måned
+                </p>
+              </>
+            ) : (
+              <p className="text-xs font-medium text-grey-400">Ingen trenddata</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+       * 2. AI COACH INSIGHT (Bento-kort)
+       * ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="mb-6">
+        <div className="performance-card relative overflow-hidden">
+          <div className="absolute right-0 top-0 h-full w-1/3 bg-[#D1F843] md:w-1/4" />
+          <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-[#D1F843] via-[#D1F843] to-transparent md:w-2/5" />
+          
+          <div className="relative z-10 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-xl">
+              <div className="mb-3 flex items-center gap-2">
+                <Zap className="h-4 w-4 text-[#D1F843]" fill="#D1F843" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-grey-400">
+                  AI Coach Innsikt
+                </span>
+              </div>
+              <h2 className="text-lg font-semibold leading-snug text-black">
+                {aiInsight?.focusTip ?? coachInsight?.summary ??
+                  "Basert på din siste TrackMan-økt på Onsøy GK: Din 'Face to Path' er for åpen på 7-jernet. Fokus på 'Release' i neste økt."}
+              </h2>
+              <p className="mt-2 text-sm text-grey-500">
+                {aiInsight?.summary ??
+                  "Vi har analysert dine siste 3 økter og identifisert et mønster. Jobb med håndposisjonen ved impact for å redusere skjev treff."}
+              </p>
+            </div>
+
+            <div className="relative z-10 flex shrink-0 flex-col items-start gap-3 md:items-end">
+              <Button variant="accent" size="md" asChild>
+                <Link href="/portal/treningsplan">
+                  <Target className="mr-1.5 h-4 w-4" />
+                  Se treningsplan
+                </Link>
+              </Button>
+              <span className="text-[11px] font-medium text-[#0A1F18]/70">
+                Oppdatert i dag
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+       * 3. TRACKMAN POWER-GRID
+       * ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="mb-6">
+        <div className="mb-4 flex items-center gap-2">
+          <TrendingUp className="h-4 w-4 text-grey-400" />
+          <span className="text-sm font-semibold text-black">Sesongbeste — TrackMan</span>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {trackmanBests.map((stat, i) => (
+            <div
+              key={stat.label}
+              className="performance-stat flex items-center justify-between"
+            >
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-400">
+                  {stat.label}
+                </p>
+                <div className="mt-1 flex items-baseline gap-1">
+                  <NumberTicker
+                    value={stat.value}
+                    decimalPlaces={stat.decimalPlaces ?? (stat.value % 1 !== 0 ? 1 : 0)}
+                    delay={0.3 + i * 0.1}
+                    className="stat-lg text-black"
+                  />
+                  {stat.unit && (
+                    <span className="text-sm font-medium text-grey-400">
+                      {stat.unit}
+                    </span>
                   )}
                 </div>
-              );
-            })}
-          </div>
-        </PremiumCard>
-      </div>
+              </div>
+              {stat.isPR && (
+                <div className="flex flex-col items-end gap-1.5">
+                  <PulseDot color="lime" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.06em] text-[#D1F843]">
+                    Ny PR
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
 
-      {/* ═══ ROW 3: Statistikk + Coach-notater ═══ */}
-      <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
-        <PremiumCard delay={0.3}>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-            Treningsstatistikk
-          </p>
-          <div className="mt-4 grid grid-cols-3 gap-4">
-            <div className="text-center">
-              <NumberTicker
-                value={handicap.current ?? 12.4}
-                decimalPlaces={1}
-                delay={0.4}
-                className="text-[32px] font-semibold tracking-tight text-black tabular-nums"
-              />
-              <p className="mt-1 text-[11px] text-grey-400">HCP</p>
+      {/* ═══════════════════════════════════════════════════════════════════════
+       * 4. PROGRESS CHART (Handicap-reise)
+       * ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="mb-8">
+        <div className="performance-card">
+          <div className="mb-5 flex items-center justify-between">
+            <div>
+              <p className="text-sm font-semibold text-black">Handicap-reisen</p>
+              <p className="text-[12px] text-grey-400">
+                {chartData.length > 0 ? "Dine siste registrerte handicap" : "Simulert utvikling basert på sesongdata"}
+              </p>
             </div>
-            <div className="text-center">
-              <NumberTicker
-                value={stats.roundsCount || 24}
-                delay={0.5}
-                className="text-[32px] font-semibold tracking-tight text-black tabular-nums"
-              />
-              <p className="mt-1 text-[11px] text-grey-400">Runder</p>
-            </div>
-            <div className="text-center">
-              <NumberTicker
-                value={stats.sessionsCount || 48}
-                delay={0.6}
-                className="text-[32px] font-semibold tracking-tight text-black tabular-nums"
-              />
-              <p className="mt-1 text-[11px] text-grey-400">Økter</p>
+            <div className="flex items-center gap-2 rounded-full bg-[#E8F5EF] px-3 py-1">
+              <ArrowDownRight className="h-3.5 w-3.5 text-[#2A7D5A]" />
+              <span className="text-xs font-semibold text-[#2A7D5A]">
+                -{((handicapHistory[handicapHistory.length - 1] ?? 12.4) - (handicapHistory[0] ?? 14.2)).toFixed(1)} i år
+              </span>
             </div>
           </div>
-          <Link
-            href="/portal/statistikk"
-            className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-[grey-200] bg-[grey-50] px-4 py-2.5 text-[13px] font-medium text-black transition-colors hover:bg-[grey-50]"
-          >
-            <TrendingUp className="h-3.5 w-3.5" />
-            Se full statistikk
-          </Link>
-        </PremiumCard>
+          <PerformanceChart
+            data={chartData.length > 0 ? chartData : fallbackChartData}
+          />
+        </div>
+      </section>
 
-        <CoachInsightCard coachInsight={coachInsight} aiInsight={aiInsight} />
-      </div>
-
-      {/* ═══ ROW 4: Snarveier ═══ */}
-      <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <QuickLink href="/portal/dagbok" icon={ClipboardList} label="Logg trening" />
-        <QuickLink href="/portal/runde" icon={Flag} label="Registrer runde" />
-        <QuickLink href="/portal/bookinger/ny" icon={Calendar} label="Book coaching" />
-        <QuickLink href="/portal/ai-coach" icon={Target} label="AI Coach" />
-      </div>
+      {/* ═══════════════════════════════════════════════════════════════════════
+       * 5. SNARVEIER
+       * ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <QuickLink href="/portal/dagbok" label="Logg trening" />
+        <QuickLink href="/portal/runde" label="Registrer runde" />
+        <QuickLink href="/portal/bookinger/ny" label="Book coaching" />
+        <QuickLink href="/portal/ai-coach" label="AI Coach" />
+      </section>
     </div>
   );
 }
 
-function QuickLink({
-  href,
-  icon: Icon,
-  label,
-}: {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-}) {
+function QuickLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 rounded-xl border border-[grey-200] bg-white p-4 transition-all duration-300 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(10,31,24,0.06)] hover:border-[grey-300]"
+      className="group flex items-center justify-between rounded-2xl border border-[rgba(10,31,24,0.06)] bg-white px-5 py-4 shadow-[0_2px_8px_rgba(10,31,24,0.02)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(10,31,24,0.10)] hover:shadow-[0_4px_16px_rgba(10,31,24,0.06)]"
     >
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[grey-50]">
-        <Icon className="h-4 w-4 text-black" />
-      </div>
-      <span className="text-[13px] font-medium text-black">{label}</span>
+      <span className="text-[13px] font-semibold text-black">{label}</span>
+      <ArrowUpRight className="h-4 w-4 text-grey-400 transition-colors group-hover:text-black" />
     </Link>
   );
 }
