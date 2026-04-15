@@ -14,7 +14,9 @@ import { Card } from "@/components/ui/card";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import type { RoundStats } from "@prisma/client";
-import type { PeriodKey, WeeklyTrainingData } from "./actions";
+import type { PeriodKey, WeeklyTrainingData, GolfProfileSummary } from "./actions";
+import { GolfProfileHero } from "@/components/portal/statistikk/golf-profile-hero";
+import { CombinedInsights } from "@/components/portal/statistikk/combined-insights";
 
 /* ─── Types ─── */
 
@@ -41,6 +43,7 @@ interface StatistikkClientProps {
   weeklyTraining: WeeklyTrainingData[];
   handicap?: number | null;
   currentPeriod: PeriodKey;
+  profile: GolfProfileSummary;
 }
 
 /* ─── Constants ─── */
@@ -364,6 +367,7 @@ export function StatistikkClient({
   weeklyTraining,
   handicap,
   currentPeriod,
+  profile,
 }: StatistikkClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -394,6 +398,12 @@ export function StatistikkClient({
     <div className="space-y-8">
       {/* Sub-nav */}
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/statistikk" />
+
+      {/* Golf Profile Hero */}
+      <GolfProfileHero profile={profile} />
+
+      {/* Combined Insights */}
+      <CombinedInsights profile={profile} />
 
       {/* Hero heading + period selector + CTA */}
       <div className="space-y-3">

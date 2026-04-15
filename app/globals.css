@@ -33,6 +33,41 @@
   --color-text: #1c1c16;
   --color-muted: #A5B2AD;
 
+  /* ═══════════════════════════════════════════════════════════════════════════
+   * PERFORMANCE DESIGN SYSTEM — Brand Guide V2.0 + Performance Accent
+   * Tonal Architecture + The No-Line Rule + High-Energy Lime (#D1F843)
+   * ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Performance Accent — High-Energy Lime for progression & achievement */
+  --color-performance: #D1F843;
+  --color-performance-dark: #0A1F18;
+  --color-performance-soft: rgba(209, 248, 67, 0.16);
+  --color-performance-glow: rgba(209, 248, 67, 0.35);
+
+  /* Data Visualization Palette — optimized for warm cream backgrounds */
+  --color-data-sage: #2A7D5A;
+  --color-data-sage-light: #E8F5EF;
+  --color-data-coral: #E85D4E;
+  --color-data-coral-light: #FCEAE8;
+  --color-data-blue: #007AFF;
+  --color-data-blue-light: #EFF6FF;
+  --color-data-lime: #D1F843;
+  --color-data-lime-soft: rgba(209, 248, 67, 0.20);
+
+  /* Data Card Tokens — rounded-32px + ambient shadow */
+  --radius-data-card: 2rem;           /* 32px */
+  --shadow-ambient: 0 2px 8px rgba(10, 31, 24, 0.04), 0 8px 32px rgba(10, 31, 24, 0.06), 0 16px 48px rgba(10, 31, 24, 0.04);
+  --shadow-ambient-hover: 0 4px 12px rgba(10, 31, 24, 0.06), 0 12px 40px rgba(10, 31, 24, 0.08), 0 24px 64px rgba(10, 31, 24, 0.06);
+
+  /* Stats Typography — authoritative numerals for TrackMan & handicap */
+  --font-stats: var(--font-inter), Inter, system-ui, -apple-system, sans-serif;
+  --text-stat-xl: 3.5rem;     /* 56px — hero stats */
+  --text-stat-lg: 2.75rem;    /* 44px — primary stats */
+  --text-stat-md: 2rem;       /* 32px — secondary stats */
+  --text-stat-sm: 1.5rem;     /* 24px — compact stats */
+  --leading-stat: 1;
+  --tracking-stat: -0.02em;
+
   /* Legacy aliases (gradvis utfasing — bruk --color-primary etc.) */
   --color-brand: #005840;
   --color-brand-dark: #0A1F18;
