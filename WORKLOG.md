@@ -8,6 +8,34 @@
 
 ---
 
+## 2026-04-15 ~23:15 — Portal Dashboard redesign + push til main
+
+**Jobbet med:**
+- **Dashboard redesign:** Full rebuild av `/portal` med 4-rad layout: Velkomst+Neste booking → Ukekalender med aktivitetsringer → KPI-kort + Coach Insight → Snarveier.
+- **8 nye komponenter:** `welcome-section.tsx`, `next-booking-card.tsx`, `week-rings.tsx`, `kpi-card.tsx`, `sparkline.tsx`, `coach-insight-card.tsx`, `shortcut-card.tsx`, `skeletons.tsx` — alle i `components/portal/dashboard/`.
+- **Designsystem:** Kun Tailwind-tokens (`bg-white`, `text-black`, `bg-accent-cta`, `border-grey-100`, `shadow-sm`), ingen hardkodede hex-verdier. Framer Motion staggered reveal (`staggerChildren: 0.06`).
+- **Kvalitetssikring:** TypeScript `--noEmit --skipLibCheck` grønt, ESLint grønt for alle dashboard-filer. Empty states og skeleton-loading for alle datablokker.
+- **Commit & push:** `git commit -m "feat: USI v0.2 + portal dashboard redesign"` (fe76b5f) pushet til `origin/main`.
+
+**Nøkkelfiler:**
+- `app/portal/(dashboard)/page.tsx`
+- `app/portal/(dashboard)/dashboard-client.tsx`
+- `components/portal/dashboard/welcome-section.tsx`
+- `components/portal/dashboard/next-booking-card.tsx`
+- `components/portal/dashboard/week-rings.tsx`
+- `components/portal/dashboard/kpi-card.tsx`
+- `components/portal/dashboard/sparkline.tsx`
+- `components/portal/dashboard/coach-insight-card.tsx`
+- `components/portal/dashboard/shortcut-card.tsx`
+- `components/portal/dashboard/skeletons.tsx`
+
+**Neste steg:**
+- Starte ny Kimi Code-sesjon med `@21st-dev/magic` MCP aktiv for å installere 21st.dev-infrastruktur (sidebar, tabs, card, data table, sheet/drawer)
+- Kjøre `ml/train_trackman_sg_model.py` mot produksjonsdata
+- Vurdere å vise Kalman-prognoser (`predictedHcp30d/90d`) på profil-/statistikk-siden
+
+---
+
 ## 2026-04-15 ~20:00 — USI v0.2: CRON, Prescriptions & ML-pipeline fullført
 
 **Jobbet med:**
