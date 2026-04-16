@@ -1,0 +1,220 @@
+/**
+ * AK Golf Design Tokens - CSS Variables
+ * Brand Guide V2.0 · 2026
+ * Klar for import til Stitch eller andre designverktøy
+ */
+
+:root {
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* PRIMARY COLORS */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --akgolf-primary: #005840;
+  --akgolf-primary-rgb: 0, 88, 64;
+  --akgolf-accent: #D1F843;
+  --akgolf-accent-rgb: 209, 248, 67;
+  --akgolf-surface: #ECF0EF;
+  --akgolf-surface-rgb: 236, 240, 239;
+  --akgolf-text: #324D45;
+  --akgolf-text-rgb: 50, 77, 69;
+  --akgolf-muted: #A5B2AD;
+  --akgolf-muted-rgb: 165, 178, 173;
+  --akgolf-white: #FFFFFF;
+  --akgolf-dark: #0A1F18;
+  --akgolf-dark-rgb: 10, 31, 24;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* INK SCALE (Grey-green) */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --akgolf-ink-5: #ECF0EF;
+  --akgolf-ink-10: #D5DFDB;
+  --akgolf-ink-20: #A5B2AD;
+  --akgolf-ink-30: #7A8C85;
+  --akgolf-ink-40: #5A6E66;
+  --akgolf-ink-50: #3D5249;
+  --akgolf-ink-60: #324D45;
+  --akgolf-ink-70: #1A3529;
+  --akgolf-ink-80: #0A1F18;
+  --akgolf-ink-90: #0A1F18;
+  --akgolf-ink-100: #000000;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* SEMANTIC COLORS */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --akgolf-success: #2A7D5A;
+  --akgolf-success-light: #E8F5EF;
+  --akgolf-success-text: #1A4D36;
+  --akgolf-error: #B84233;
+  --akgolf-error-light: #FCEAE8;
+  --akgolf-error-text: #7A2C22;
+  --akgolf-warning: #C48A32;
+  --akgolf-warning-light: #FDF4E4;
+  --akgolf-warning-text: #7A5520;
+  --akgolf-info: #007AFF;
+  --akgolf-info-light: #EFF6FF;
+  --akgolf-info-text: #1E40AF;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* DATA VISUALIZATION */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --akgolf-data-sage: #2A7D5A;
+  --akgolf-data-sage-light: #E8F5EF;
+  --akgolf-data-coral: #E85D4E;
+  --akgolf-data-coral-light: #FCEAE8;
+  --akgolf-data-blue: #007AFF;
+  --akgolf-data-blue-light: #EFF6FF;
+  --akgolf-data-lime: #D1F843;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* SUB-BRAND COLORS */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --akgolf-academy: #005840;
+  --akgolf-academy-light: #ECF0EF;
+  --akgolf-academy-dark: #0A1F18;
+  --akgolf-junior: #3B82F6;
+  --akgolf-junior-light: #60A5FA;
+  --akgolf-junior-dark: #2563EB;
+  --akgolf-software: #8B5CF6;
+  --akgolf-software-light: #A78BFA;
+  --akgolf-software-dark: #7C3AED;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* TYPOGRAPHY */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --font-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  --font-size-4xl: 36px;
+  --font-size-5xl: 48px;
+  --font-size-6xl: 60px;
+  
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.7;
+  
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.06em;
+  --letter-spacing-wider: 0.12em;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* SPACING (4px grid) */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* BORDER RADIUS */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --radius-none: 0;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-3xl: 40px;
+  --radius-full: 9999px;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* SHADOWS */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
+  --shadow-gold: 0 12px 40px rgba(29, 29, 31, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* BORDERS */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --border-width-none: 0;
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+  
+  --border-color-default: rgba(0, 88, 64, 0.08);
+  --border-color-light: rgba(0, 88, 64, 0.05);
+  --border-color-strong: rgba(0, 88, 64, 0.2);
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* MOTION */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --ease-premium: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0, 0.55, 0.45, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  
+  --duration-instant: 100ms;
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 700ms;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* BREAKPOINTS */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* Z-INDEX */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --z-base: 0;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-nav: 50;
+  --z-overlay: 60;
+  --z-modal: 70;
+  --z-popover: 80;
+  --z-tooltip: 90;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   DARK MODE VARIANT
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="dark"] {
+  --akgolf-surface: #0A1F18;
+  --akgolf-surface-rgb: 10, 31, 24;
+  --akgolf-text: #ECF0EF;
+  --akgolf-text-rgb: 236, 240, 239;
+  --akgolf-muted: #7A8C85;
+  --akgolf-muted-rgb: 122, 140, 133;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+  
+  --border-color-default: rgba(255, 255, 255, 0.08);
+  --border-color-light: rgba(255, 255, 255, 0.05);
+  --border-color-strong: rgba(255, 255, 255, 0.15);
+}
