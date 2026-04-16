@@ -101,14 +101,17 @@ export async function adminCancelBooking(
       : evaluateCancellationPolicy(new Date(booking.startTime));
 
     if (policy.refundPercent > 0) {
-      refundResult = await processRefund(
-        booking.paymentMethod,
-        booking.stripePaymentId,
-        booking.amount * 100,
-        policy.refundPercent,
-      );
+      refundResult = await processRefund({
+        bookingId,
+        paymentMethod: booking.paymentMethod,
+        providerPaymentId: booking.stripePaymentId,
+        totalAmount: booking.amount,
+        refundPercent: policy.refundPercent,
+      });
       if (!refundResult.success) {
         logger.error(`[adminCancelBooking] Refund failed for ${bookingId}:`, refundResult.error);
+      } else if (refundResult.alreadyProcessed) {
+        logger.info(`[adminCancelBooking] Refund already processed for booking ${bookingId}`);
       }
     }
   }

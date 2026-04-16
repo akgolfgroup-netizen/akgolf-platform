@@ -25,6 +25,10 @@ export { SessionView } from "./session-view";
 export { SessionCard, SessionCardStatic } from "./SessionCard";
 export { WeekCalendar, WeekCalendarCompact, DragOverlayWrapper } from "./WeekCalendar";
 
+// Modaler
+export { SessionDetailModal } from "./SessionDetailModal";
+export { NewSessionModal } from "./NewSessionModal";
+
 // Sidepanel
 export { SidePanel } from "./SidePanel";
 export { StandardSessions } from "./StandardSessions";

@@ -188,25 +188,56 @@ export async function POST(req: Request) {
     const paymentIntentId = charge.payment_intent as string;
 
     if (paymentIntentId) {
+      // Hent booking med refund-felter for idempotency-sjekk
       const { data: booking } = await supabase
         .from("Booking")
-        .select("id, amount")
+        .select("id, amount, stripeRefundId, paymentStatus")
         .eq("stripePaymentId", paymentIntentId)
         .single();
 
       if (booking) {
+        // Idempotency-sjekk: Hvis booking allerede er refundert, returner 200 umiddelbart
+        if (booking.paymentStatus === "REFUNDED" || booking.paymentStatus === "PARTIALLY_REFUNDED") {
+          logger.info(
+            `[Stripe Webhook] Refund already processed for booking ${booking.id} (status: ${booking.paymentStatus}). Skipping duplicate.`
+          );
+          return NextResponse.json({ received: true, skipped: true }, { status: 200 });
+        }
+
+        // Sjekk om vi allerede har lagret en refund ID for denne bookingen
+        // Dette kan skje hvis refund ble initiert fra vår side først
+        if (booking.stripeRefundId) {
+          logger.info(
+            `[Stripe Webhook] Refund ID already stored for booking ${booking.id}: ${booking.stripeRefundId}`
+          );
+        }
+
         // Bestem om full eller delvis refund basert på beløp
         const refundedTotal = charge.amount_refunded; // i øre
         const fullAmount = booking.amount * 100; // konverter kroner til øre
         const isFullRefund = refundedTotal >= fullAmount;
 
+        // Hent refund ID fra charge.refunds hvis tilgjengelig
+        const refundId = charge.refunds?.data[0]?.id;
+
         // Update booking payment status
+        const updateData: {
+          paymentStatus: string;
+          updatedAt: string;
+          stripeRefundId?: string;
+        } = {
+          paymentStatus: isFullRefund ? "REFUNDED" : "PARTIALLY_REFUNDED",
+          updatedAt: new Date().toISOString(),
+        };
+
+        // Lagre refund ID hvis vi har den og ikke allerede har lagret den
+        if (refundId && !booking.stripeRefundId) {
+          updateData.stripeRefundId = refundId;
+        }
+
         await supabase
           .from("Booking")
-          .update({
-            paymentStatus: isFullRefund ? "REFUNDED" : "PARTIALLY_REFUNDED",
-            updatedAt: new Date().toISOString(),
-          })
+          .update(updateData)
           .eq("id", booking.id);
 
         // Update payment transaction

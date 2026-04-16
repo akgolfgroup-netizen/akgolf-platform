@@ -104,22 +104,26 @@ export async function POST(req: NextRequest) {
       success: boolean;
       refundedAmount: number;
       error?: string;
+      alreadyProcessed?: boolean;
     } | null = null;
 
     if (
       booking.paymentStatus === "PAID" &&
       cancellation.refundPercent > 0
     ) {
-      refundResult = await processRefund(
-        booking.paymentMethod,
-        booking.stripePaymentId,
-        booking.amount,
-        cancellation.refundPercent
-      );
+      refundResult = await processRefund({
+        bookingId,
+        paymentMethod: booking.paymentMethod,
+        providerPaymentId: booking.stripePaymentId,
+        totalAmount: booking.amount,
+        refundPercent: cancellation.refundPercent,
+      });
 
       if (!refundResult.success) {
         // Log but continue - manual refund may be needed
         logger.error(`[Cancel] Refund failed for booking ${bookingId}`, refundResult.error);
+      } else if (refundResult.alreadyProcessed) {
+        logger.info(`[Cancel] Refund already processed for booking ${bookingId}`);
       }
     }
 

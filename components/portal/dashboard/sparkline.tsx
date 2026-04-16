@@ -1,53 +1,133 @@
+"use client";
+
+import {
+  LineChart,
+  Line,
+  ResponsiveContainer,
+  YAxis,
+} from "recharts";
+import { TrendingUp, TrendingDown } from "lucide-react";
+
 interface SparklineProps {
   data: number[];
   width?: number;
   height?: number;
   color?: string;
+  trend?: "up" | "down" | "neutral";
+  showIcon?: boolean;
+  strokeWidth?: number;
 }
 
 export function Sparkline({
   data,
   width = 120,
-  height = 28,
+  height = 32,
   color = "#005840",
+  trend,
+  showIcon = false,
+  strokeWidth = 2,
 }: SparklineProps) {
   if (!data.length) {
-    return <div className="h-7 w-full rounded bg-grey-50" />;
+    return <div className="h-8 w-full rounded bg-[var(--color-grey-100)]" />;
   }
 
-  const min = Math.min(...data);
-  const max = Math.max(...data);
-  const range = max - min || 1;
-  const padding = 2;
+  // Convert data to chart format
+  const chartData = data.map((value, index) => ({ index, value }));
 
-  const points = data
-    .map((d, i) => {
-      const x = padding + (i / (data.length - 1)) * (width - padding * 2);
-      const y = height - padding - ((d - min) / range) * (height - padding * 2);
-      return `${x},${y}`;
-    })
-    .join(" ");
+  // Determine trend if not provided
+  const determinedTrend = trend ?? (() => {
+    if (data.length < 2) return "neutral";
+    const first = data[0];
+    const last = data[data.length - 1];
+    if (last > first) return "up";
+    if (last < first) return "down";
+    return "neutral";
+  })();
 
-  const fillPoints = `${padding},${height} ${points} ${width - padding},${height}`;
-  const gradientId = `sparklineGradient-${color.replace("#", "")}`;
+  const trendColor = determinedTrend === "up" 
+    ? "#2A7D5A" 
+    : determinedTrend === "down" 
+      ? "#B84233" 
+      : color;
+
+  const TrendIcon = determinedTrend === "up" 
+    ? TrendingUp 
+    : determinedTrend === "down" 
+      ? TrendingDown 
+      : null;
 
   return (
-    <svg width={width} height={height} className="overflow-visible">
-      <defs>
-        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity="0.25" />
-          <stop offset="100%" stopColor={color} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <polygon points={fillPoints} fill={`url(#${gradientId})`} />
-      <polyline
-        points={points}
-        fill="none"
-        stroke={color}
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <div className="flex items-center gap-2">
+      <svg width={width} height={height} className="overflow-visible">
+        <defs>
+          <linearGradient id={`sparklineGradient-${color.replace("#", "")}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity="0.25" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <foreignObject width={width} height={height}>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
+              <YAxis domain={["dataMin", "dataMax"]} hide />
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke={color}
+                strokeWidth={strokeWidth}
+                dot={false}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </foreignObject>
+      </svg>
+      
+      {showIcon && TrendIcon && (
+        <TrendIcon 
+          className="w-4 h-4" 
+          style={{ color: trendColor }}
+          aria-hidden="true"
+        />
+      )}
+    </div>
+  );
+}
+
+// Compact version for stat cards (no labels, just the line)
+interface SparklineCompactProps {
+  data: number[];
+  color?: string;
+  height?: number;
+}
+
+export function SparklineCompact({
+  data,
+  color = "#D4AF37",
+  height = 24,
+}: SparklineCompactProps) {
+  if (!data.length) {
+    return <div className="h-6 w-full rounded bg-[var(--color-grey-100)]" />;
+  }
+
+  const chartData = data.map((value, index) => ({ index, value }));
+
+  return (
+    <div style={{ height }} className="w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+          <YAxis domain={["dataMin", "dataMax"]} hide />
+          <Line
+            type="monotone"
+            dataKey="value"
+            stroke={color}
+            strokeWidth={2}
+            dot={false}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

@@ -180,6 +180,8 @@ model Booking {
   amount                Int                  @default(0)
   vatAmount             Int                  @default(0)
   stripePaymentId       String?
+  stripeRefundId        String?
+  refundIdempotencyKey  String?
   vippsOrderId          String?
   invoiceId             String?
   isGroupBooking        Boolean              @default(false)

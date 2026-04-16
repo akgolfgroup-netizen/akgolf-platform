@@ -58,9 +58,10 @@ interface SessionCardProps {
   onEdit?: (session: TrainingSession) => void;
   onDelete?: (sessionId: string) => void;
   onDuplicate?: (session: TrainingSession) => void;
+  onClick?: (session: TrainingSession) => void;
 }
 
-export function SessionCard({ session, onEdit, onDelete, onDuplicate }: SessionCardProps) {
+export function SessionCard({ session, onEdit, onDelete, onDuplicate, onClick }: SessionCardProps) {
   const {
     attributes,
     listeners,
@@ -87,14 +88,21 @@ export function SessionCard({ session, onEdit, onDelete, onDuplicate }: SessionC
   const endM = (session.startH * 60 + session.startM + session.duration) % 60;
   const endTime = `${endH.toString().padStart(2, "0")}:${endM.toString().padStart(2, "0")}`;
 
+  const handleClick = () => {
+    if (onClick && !isDragging) {
+      onClick(session);
+    }
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
+      onClick={handleClick}
       className={`
         group relative rounded-lg border ${colors.border} ${colors.bg}
-        transition-shadow duration-300 ease
-        ${isDragging ? "shadow-lg scale-105 z-50 opacity-90" : "shadow-sm hover:shadow-md"}
+        transition-all duration-300 ease cursor-pointer
+        ${isDragging ? "shadow-lg scale-105 z-50 opacity-90" : "shadow-sm hover:shadow-md hover:scale-[1.02]"}
         ${session.completed ? "opacity-60" : ""}
       `}
     >
@@ -156,24 +164,29 @@ export function SessionCard({ session, onEdit, onDelete, onDuplicate }: SessionC
           {session.title}
         </h4>
 
-        {/* Footer: Focus badge and duration */}
+        {/* Footer: Focus badge, exercise count and duration */}
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center gap-1.5">
             <span className={`w-2 h-2 rounded-full ${colors.dot}`} />
             <span className={`text-xs font-medium ${colors.text}`}>
               {FOCUS_LABELS[session.focus]}
             </span>
+            {session.exercises.length > 0 && (
+              <span className="ml-1.5 px-1.5 py-0.5 text-[10px] rounded-full bg-white/60 text-gray-600 font-medium">
+                {session.exercises.length}
+              </span>
+            )}
           </div>
           <span className="text-xs text-gray-500">
             {session.duration} min
           </span>
         </div>
 
-        {/* Completed indicator */}
+        {/* Completed indicator - larger and more visible */}
         {session.completed && (
-          <div className="absolute top-1 right-1">
-            <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
-              <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="absolute top-2 right-2">
+            <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
+              <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
               </svg>
             </div>

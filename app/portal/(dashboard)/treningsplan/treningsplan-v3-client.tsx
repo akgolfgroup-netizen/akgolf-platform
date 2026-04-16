@@ -16,9 +16,18 @@ import {
   groupSessionsByDay,
   DAY_NAMES,
   SidePanel,
+  SessionDetailModal,
+  NewSessionModal,
   type TrainingSession,
   type StandardTemplate,
 } from "@/components/portal/treningsplan";
+
+// Server actions
+import {
+  updateSessionTime,
+  deleteSession,
+  moveSessionToDay,
+} from "./actions";
 
 // Konvertering fra V2Event til TrainingSession
 interface V2Event {
@@ -94,6 +103,10 @@ export function TrainingPlannerV3({
   const [view, setView] = useState<"calendar" | "compact" | "list">("calendar");
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [editingSession, setEditingSession] = useState<TrainingSession | null>(null);
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [newSessionModalOpen, setNewSessionModalOpen] = useState(false);
+  const [selectedDayForNewSession, setSelectedDayForNewSession] = useState<number | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Konverter V2Events til TrainingSessions
   const sessions: TrainingSession[] = useMemo(() => {
@@ -177,16 +190,85 @@ export function TrainingPlannerV3({
     console.log("Dupliser:", session);
   }, []);
 
-  // Håndter redigering
+  // Håndter klikk på session (åpner detail modal)
+  const handleSessionClick = useCallback((session: TrainingSession) => {
+    setEditingSession(session);
+    setDetailModalOpen(true);
+  }, []);
+
+  // Håndter redigering fra meny
   const handleEdit = useCallback((session: TrainingSession) => {
     setEditingSession(session);
+    setDetailModalOpen(true);
+  }, []);
+
+  // Håndter lagring av session fra modal
+  const handleSaveSession = useCallback(async (session: TrainingSession) => {
+    setIsSaving(true);
+    try {
+      await updateSessionTime(
+        session.id,
+        session.startH,
+        session.startM,
+        session.duration
+      );
+      // Refresh page to show updated data
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to save session:", error);
+      throw error;
+    } finally {
+      setIsSaving(false);
+    }
+  }, []);
+
+  // Håndter sletting fra modal
+  const handleDeleteFromModal = useCallback(async (sessionId: string) => {
+    try {
+      await deleteSession(sessionId);
+      // Refresh page to show updated data
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to delete session:", error);
+      throw error;
+    }
+  }, []);
+
+  // Håndter klikk på "+ Legg til økt"
+  const handleAddClick = useCallback((dayOfWeek: number) => {
+    setSelectedDayForNewSession(dayOfWeek);
+    setNewSessionModalOpen(true);
   }, []);
 
   // Håndter legg til fra template
-  const handleAddFromTemplate = useCallback((template: StandardTemplate) => {
-    // TODO: Implementer legg til template
-    console.log("Legg til template:", template);
+  const handleAddFromTemplate = useCallback(async (template: StandardTemplate, dayOfWeek: number) => {
+    // TODO: Implementere opprettelse av ny session fra template
+    // Dette krever en ny server action for å opprette session
+    console.log("Legg til template:", template, "på dag", dayOfWeek);
+    
+    // For nå, viser vi bare en melding - implementasjon krever ny server action
+    alert(`Økt "${template.title}" vil bli lagt til på ${DAY_NAMES[dayOfWeek].full}. Denne funksjonen krever backend-implementasjon.`);
   }, []);
+
+  // Konverter V2 templates til StandardTemplate format
+  const standardTemplates: StandardTemplate[] = useMemo(() => {
+    return templates.map((t) => ({
+      id: t.id,
+      title: t.title,
+      duration: t.dur,
+      focus: (t.focus as StandardTemplate["focus"]) || "TEK",
+      exercises: t.exercises.map((e) => ({
+        id: e.id,
+        name: e.name,
+        pyramid: (e.pyramid as StandardTemplate["focus"]) || "TEK",
+        area: e.area,
+        lPhase: e.lPhase,
+        cs: e.cs,
+        m: e.m,
+        pr: e.pr,
+      })),
+    }));
+  }, [templates]);
 
   // Beregn uke-info
   const weekInfo = useMemo(() => {
@@ -334,6 +416,9 @@ export function TrainingPlannerV3({
                 onEdit={handleEdit}
                 onDelete={handleDelete}
                 onDuplicate={handleDuplicate}
+                onAddClick={handleAddClick}
+                onSessionClick={handleSessionClick}
+                weekOffset={weekOffset}
               />
             )}
             {view === "compact" && (
@@ -342,6 +427,9 @@ export function TrainingPlannerV3({
                 onEdit={handleEdit}
                 onDelete={handleDelete}
                 onDuplicate={handleDuplicate}
+                onAddClick={handleAddClick}
+                onSessionClick={handleSessionClick}
+                weekOffset={weekOffset}
               />
             )}
             {view === "list" && (
@@ -374,9 +462,36 @@ export function TrainingPlannerV3({
 
       {/* Sidepanel med øvelsesbank */}
       <SidePanel
-        onAddSession={handleAddFromTemplate}
+        onAddSession={(template) => {
+          // Når vi drar fra sidepanel, bruker vi dag 1 som default
+          handleAddFromTemplate(template, 1);
+        }}
         onFilterChange={setSelectedFilter}
         selectedFilter={selectedFilter}
+      />
+
+      {/* Session Detail Modal */}
+      <SessionDetailModal
+        session={editingSession}
+        isOpen={detailModalOpen}
+        onClose={() => {
+          setDetailModalOpen(false);
+          setEditingSession(null);
+        }}
+        onSave={handleSaveSession}
+        onDelete={handleDeleteFromModal}
+      />
+
+      {/* New Session Modal */}
+      <NewSessionModal
+        isOpen={newSessionModalOpen}
+        onClose={() => {
+          setNewSessionModalOpen(false);
+          setSelectedDayForNewSession(null);
+        }}
+        onAdd={handleAddFromTemplate}
+        dayOfWeek={selectedDayForNewSession}
+        standardTemplates={standardTemplates}
       />
     </div>
   );

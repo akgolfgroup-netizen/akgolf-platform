@@ -163,17 +163,20 @@ export async function cancelBooking(
     const providerPaymentId =
       booking.stripePaymentId ?? booking.vippsOrderId ?? null;
 
-    const refundResult = await processRefund(
-      booking.paymentMethod,
+    const refundResult = await processRefund({
+      bookingId: id,
+      paymentMethod: booking.paymentMethod,
       providerPaymentId,
-      booking.amount,
-      policy.refundPercent
-    );
+      totalAmount: booking.amount,
+      refundPercent: policy.refundPercent,
+    });
 
     refundedAmount = refundResult.refundedAmount;
 
     if (!refundResult.success) {
       logger.error(`[cancelBooking] Refund failed for booking ${id}`, refundResult.error);
+    } else if (refundResult.alreadyProcessed) {
+      logger.info(`[cancelBooking] Refund already processed for booking ${id}`);
     }
   }
 
