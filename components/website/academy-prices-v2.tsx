@@ -105,17 +105,18 @@ export function AcademyPricesV2() {
                   ))}
                 </ul>
 
-                {/* Lanseres mai 2026 — erstatter kjop-knapp */}
-                <div
-                  className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-[20px] text-sm font-semibold ${
+                {/* Book nå-knapp */}
+                <Link
+                  href="/academy/booking"
+                  className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-[20px] text-sm font-semibold transition-all ${
                     pkg.highlighted
-                      ? "bg-white/15 text-white/80"
-                      : "bg-surface text-text"
+                      ? "bg-white text-black hover:bg-white/90"
+                      : "bg-black text-white hover:bg-black/90"
                   }`}
                 >
-                  <Bell size={14} />
-                  Lanseres mai 2026
-                </div>
+                  Book nå
+                  <ArrowRight size={14} />
+                </Link>
               </div>
             </StaggerItem>
           ))}

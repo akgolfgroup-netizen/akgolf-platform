@@ -63,20 +63,25 @@ export function PortalPreviewSection() {
           </div>
         </RevealOnScroll>
 
-        {/* Launch banner */}
+        {/* Live banner */}
         <RevealOnScroll>
-          <div className="mb-12 rounded-2xl bg-accent-cta p-6 text-center">
+          <div className="mb-12 rounded-2xl bg-black p-6 text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
-              <Smartphone className="w-5 h-5 text-accent-cta-text" />
-              <h3 className="font-semibold text-accent-cta-text">
-                Spillerportalen lanseres mai 2026
+              <Smartphone className="w-5 h-5 text-accent-cta" />
+              <h3 className="font-semibold text-white">
+                Spillerportalen er live
               </h3>
             </div>
-            <p className="text-sm text-accent-cta-text/70 max-w-md mx-auto">
-              Vi bygger portalen nå. Alle med treningsabonnement får automatisk
-              tilgang når den er klar. I mellomtiden får du treningsplan og
-              oppfølging direkte fra treneren.
+            <p className="text-sm text-white/70 max-w-md mx-auto">
+              Logg inn for å se din personlige treningsplan, booke timer og
+              følge utviklingen din — alt på ett sted.
             </p>
+            <a
+              href="/portal/login"
+              className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-full bg-accent-cta text-black text-sm font-bold hover:bg-accent-cta/90 transition-colors"
+            >
+              Logg inn på portalen
+            </a>
           </div>
         </RevealOnScroll>
 
