@@ -10,7 +10,8 @@ import {
   type TrainingPrescriptionResult,
 } from "./generate-prescription";
 
-export type { USIResult, TrainingPrescriptionResult };
+// Types are re-exported from source modules for server-side use only.
+// Client components should import them directly from compute-usi or generate-prescription.
 
 /**
  * Compute and return the current USI for the logged-in player.

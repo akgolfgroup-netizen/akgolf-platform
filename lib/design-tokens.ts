@@ -34,6 +34,20 @@ export const colors = {
     100: '#000000',
   },
 
+  // Alias for backwards compatibility
+  grey: {
+    50: '#F5F8F7',
+    100: '#ECF0EF',
+    200: '#D5DFDB',
+    300: '#A5B2AD',
+    400: '#7A8C85',
+    500: '#5A6E66',
+    600: '#3D5249',
+    700: '#324D45',
+    800: '#1A3529',
+    900: '#0A1F18',
+  },
+
   // Overflater
   surface: {
     warm: '#FFFFFF',
@@ -74,6 +88,18 @@ export const colors = {
     infoLight: '#EFF6FF',
     infoText: '#1E40AF',
     vipps: '#FF5B24',
+  },
+
+  // Data Visualization Palette
+  data: {
+    sage: '#2A7D5A',
+    sageLight: '#E8F5EF',
+    coral: '#E85D4E',
+    coralLight: '#FCEAE8',
+    blue: '#007AFF',
+    blueLight: '#EFF6FF',
+    lime: '#D1F843',
+    limeSoft: 'rgba(209, 248, 67, 0.20)',
   },
 
   // AI accent — purple (beholdt fra etablert portal-design)

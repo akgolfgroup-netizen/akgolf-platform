@@ -1,3 +1,5 @@
+import { colors } from "@/lib/design-tokens";
+
 interface WelcomeSectionProps {
   userName: string | null;
   tier: string;
@@ -28,8 +30,11 @@ export function WelcomeSection({
 
   return (
     <div className="flex flex-col gap-2">
-      <h1 className="text-[28px] font-bold tracking-tight text-black">
-        {getGreeting()}, {firstName}
+      <h1
+        className="text-[32px] font-bold tracking-tight"
+        style={{ color: colors.primary.dark }}
+      >
+        {getGreeting()}, <span className="font-extrabold">{firstName}</span>
       </h1>
       <div className="inline-flex flex-wrap items-center gap-3">
         <span className="rounded-full bg-accent-cta px-3 py-1 text-xs font-bold text-accent-cta-text">

@@ -1,13 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Dumbbell, Flag, CalendarPlus, Bot, Activity, ArrowRight } from "lucide-react";
 import { WelcomeSection } from "@/components/portal/dashboard/welcome-section";
 import { NextBookingCard } from "@/components/portal/dashboard/next-booking-card";
-import { WeekRings } from "@/components/portal/dashboard/week-rings";
+import { WeekCalendar } from "@/components/portal/dashboard/week-calendar";
 import { KpiCard } from "@/components/portal/dashboard/kpi-card";
 import { CoachInsightCard } from "@/components/portal/dashboard/coach-insight-card";
-import { ShortcutCard } from "@/components/portal/dashboard/shortcut-card";
+import { PlayerProfileCard } from "@/components/portal/dashboard/player-profile-card";
+import { TrainingActivityCard } from "@/components/portal/dashboard/training-activity-card";
+import { AiInsightCard } from "@/components/portal/dashboard/ai-insight-card";
+import { ShortcutPills } from "@/components/portal/dashboard/shortcut-pills";
+import { colors } from "@/lib/design-tokens";
 
 interface WeekDay {
   dayLabel: string;
@@ -105,107 +108,112 @@ export function DashboardClient({
 
   return (
     <motion.div
-      className="mx-auto w-full max-w-[1200px] space-y-6 pb-12 pt-4"
+      className="mx-auto w-full max-w-[1200px] space-y-5 pb-12 pt-2"
       variants={container}
       initial="hidden"
       animate="show"
     >
-      {/* RAD 1: Velkomst + Neste booking */}
+      {/* RAD 1: Velkomst + Neste booking + Profil */}
       <motion.div
         variants={item}
-        className="grid grid-cols-1 gap-4 lg:grid-cols-2"
+        className="grid grid-cols-1 gap-5 lg:grid-cols-12"
       >
-        <div className="flex flex-col justify-center">
+        <div className="space-y-5 lg:col-span-8">
           <WelcomeSection
             userName={userName}
             tier={tier}
             memberSince={memberSince}
           />
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <NextBookingCard booking={nextBooking} />
+            <AiInsightCard
+              summary={
+                aiInsight?.summary ?? "Kort spill er ditt største potensial"
+              }
+              metrics={[
+                { label: "Kort Spill", value: "-2.1", highlight: true },
+                { label: "Driving", value: "+1.4", highlight: false },
+                { label: "Putting", value: "+0.8", highlight: false },
+              ]}
+            />
+          </div>
         </div>
-        <NextBookingCard booking={nextBooking} />
+        <div className="lg:col-span-4">
+          <PlayerProfileCard
+            userName={userName}
+            tier={tier}
+            memberSince={memberSince}
+            handicap={handicap.current}
+            roundsCount={stats.roundsCount}
+          />
+        </div>
       </motion.div>
 
       {/* RAD 2: Ukekalender */}
       <motion.div variants={item}>
-        <WeekRings days={weekRings.days} />
+        <WeekCalendar days={weekRings.days} />
       </motion.div>
 
-      {/* RAD 3: KPI-kort + Coach Insight */}
+      {/* RAD 3: Treningsaktivitet + KPI-kort */}
       <motion.div
         variants={item}
-        className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
+        className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
       >
+        <TrainingActivityCard
+          sessionsCount={stats.sessionsCount}
+          streak={12}
+        />
+
         <KpiCard
           label="Handicap"
           value={handicap.current ?? 0}
           decimalPlaces={1}
           sparklineData={handicapSparkline}
           change={handicap.trend}
-          changeLabel="siste maned"
+          changeLabel="siste måned"
+          accentColor={colors.primary.main}
         />
 
-        {stats.roundsCount > 0 ? (
-          <KpiCard
-            label="Runder"
-            value={stats.roundsCount}
-            sparklineData={roundsSparkline}
-          />
-        ) : (
-          <EmptyKpiCard
-            label="Runder"
-            message="Registrer din forste runde for a se handicap-trend"
-            href="/portal/runde/ny"
-          />
-        )}
+        <div className="flex flex-col gap-5">
+          {stats.roundsCount > 0 ? (
+            <KpiCard
+              label="Runder"
+              value={stats.roundsCount}
+              sparklineData={roundsSparkline}
+              accentColor={colors.data.coral}
+            />
+          ) : (
+            <EmptyKpiCard
+              label="Runder"
+              message="Registrer din første runde for å se handicap-trend"
+              href="/portal/runde/ny"
+            />
+          )}
 
-        {stats.sessionsCount > 0 ? (
-          <KpiCard
-            label="Treningsokter"
-            value={stats.sessionsCount}
-            sparklineData={sessionsSparkline}
-          />
-        ) : (
-          <EmptyKpiCard
-            label="Treningsokter"
-            message="Logg din forste okt i dagboken"
-            href="/portal/dagbok"
-          />
-        )}
-
-        <div className="md:col-span-2 lg:col-span-1">
-          <CoachInsightCard coachInsight={coachInsight} aiInsight={aiInsight} />
+          {stats.sessionsCount > 0 ? (
+            <KpiCard
+              label="Treningsøkter"
+              value={stats.sessionsCount}
+              sparklineData={sessionsSparkline}
+              accentColor={colors.primary.main}
+            />
+          ) : (
+            <EmptyKpiCard
+              label="Treningsøkter"
+              message="Logg din første økt i dagboken"
+              href="/portal/dagbok"
+            />
+          )}
         </div>
       </motion.div>
 
-      {/* RAD 4: Snarveier */}
+      {/* RAD 4: Coach Insight + Snarveier */}
       <motion.div
         variants={item}
-        className="grid grid-cols-2 gap-3 lg:grid-cols-4"
+        className="grid grid-cols-1 gap-5 lg:grid-cols-2"
       >
-        <ShortcutCard
-          href="/portal/dagbok"
-          icon={Dumbbell}
-          title="Logg trening"
-          subtitle="Registrer dagens okt"
-        />
-        <ShortcutCard
-          href="/portal/runde/ny"
-          icon={Flag}
-          title="Registrer runde"
-          subtitle="Hull-for-hull"
-        />
-        <ShortcutCard
-          href="/portal/bookinger/ny"
-          icon={CalendarPlus}
-          title="Book coaching"
-          subtitle="Velg trener og tid"
-        />
-        <ShortcutCard
-          href="/portal/ai-coach"
-          icon={Bot}
-          title="AI Coach"
-          subtitle="Spor om hva som helst"
-        />
+        <CoachInsightCard coachInsight={coachInsight} />
+        <ShortcutPills />
       </motion.div>
     </motion.div>
   );
@@ -221,21 +229,19 @@ function EmptyKpiCard({
   href: string;
 }) {
   return (
-    <div className="flex flex-col justify-between rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-grey-50">
-        <Activity className="h-5 w-5 text-grey-300" />
-      </div>
-      <div className="mt-3">
-        <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-grey-400">
+    <div className="flex flex-col justify-between rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-grey-200 hover:shadow-md">
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-grey-400">
           {label}
         </p>
         <p className="mt-2 text-sm text-grey-400">{message}</p>
         <a
           href={href}
-          className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+          className="mt-3 inline-flex items-center gap-1 text-xs font-semibold hover:underline"
+          style={{ color: colors.primary.main }}
         >
           Kom i gang
-          <ArrowRight className="h-3 w-3" />
+          <span>→</span>
         </a>
       </div>
     </div>

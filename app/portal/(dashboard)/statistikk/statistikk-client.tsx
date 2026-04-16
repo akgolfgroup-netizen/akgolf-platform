@@ -15,7 +15,8 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import type { RoundStats } from "@prisma/client";
 import type { PeriodKey, WeeklyTrainingData, GolfProfileSummary } from "./actions";
-import type { USIResult, TrainingPrescriptionResult } from "@/lib/portal/usi/actions";
+import type { USIResult } from "@/lib/portal/usi/compute-usi";
+import type { TrainingPrescriptionResult } from "@/lib/portal/usi/generate-prescription";
 import { GolfProfileHero } from "@/components/portal/statistikk/golf-profile-hero";
 import { CombinedInsights } from "@/components/portal/statistikk/combined-insights";
 
