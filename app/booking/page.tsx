@@ -1,217 +1,412 @@
-import { createServerSupabase } from "@/lib/supabase/server";
-import { getPortalUser } from "@/lib/portal/auth";
-import { BookingClient } from "./booking-client";
-import type { TrainerWithServices } from "./components-v2/types";
+"use client";
 
-// Trener-metadata (bilder, rolle, badge) — bor ikke i databasen
-const TRAINER_META: Record<string, { imageUrl: string; role: string; badge: string }> = {
-  Anders: {
-    imageUrl: "/images/academy/AK-Golf-Academy-20.jpg",
-    role: "Head Coach",
-    badge: "Performance · Flex",
-  },
-  Markus: {
-    imageUrl: "",
-    role: "Assistant Coach",
-    badge: "Express · Flex",
-  },
-};
+import Image from "next/image";
+import Link from "next/link";
+import { MapPin, ArrowLeft, Clock } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 
-function getTrainerMeta(name: string) {
-  const firstName = name.split(" ")[0];
-  return (
-    TRAINER_META[firstName] ?? {
-      imageUrl: "/images/academy/AK-Golf-Academy-1.jpg",
-      role: "Coach",
-      badge: "Coaching",
-    }
-  );
-}
+// ─── Data ───
 
-type ServiceTypeRow = {
+interface ServiceType {
   id: string;
   name: string;
-  description: string | null;
+  description?: string | null;
   duration: number;
   price: number;
-  allowStripe: boolean;
-  category: string | null;
-  Instructor:
-    | Array<{
-        Instructor:
-          | {
-              id: string;
-              User: { name: string | null } | { name: string | null }[] | null;
-            }
-          | Array<{
-              id: string;
-              User: { name: string | null } | { name: string | null }[] | null;
-            }>
-          | null;
-      }>
-    | null;
+  category?: string | null;
+}
+
+interface Instructor {
+  id: string;
+  title?: string | null;
+  bio?: string | null;
+  specialization?: string | null;
+  User: { name: string; image?: string | null };
+}
+
+interface Trainer {
+  id: string;
+  name: string;
+  role: string;
+  image: string | null;
+  acuityEmbedUrl: string;
+  services: string[];
+  instructorId: string;
+}
+
+interface Location {
+  name: string;
+  shortName: string;
+  trainers: Trainer[];
+}
+
+// Hardcoded location mapping + Acuity URLs until backend has full facility data
+const LOCATION_CONFIG: Record<string, { name: string; shortName: string; acuityEmbedUrl: string }> = {
+  instr_anders: {
+    name: "Gamle Fredrikstad Golfklubb",
+    shortName: "GFGK",
+    acuityEmbedUrl: "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=11780416&ref=embedded_csp",
+  },
+  instr_markus: {
+    name: "Gamle Fredrikstad Golfklubb",
+    shortName: "GFGK",
+    acuityEmbedUrl: "https://app.acuityscheduling.com/schedule.php?owner=28391543&calendarID=13938964&ref=embedded_csp",
+  },
 };
 
-export default async function BookingPage() {
-  const supabase = await createServerSupabase();
-  const user = await getPortalUser();
+// Matcher på fornavn for å håndtere varianter i databasen
+function getTrainerImage(name: string): string | null {
+  const lower = name.toLowerCase();
+  if (lower.includes("anders")) return "/images/team/anders-kristiansen.jpg";
+  return null; // Markus bruker initialer
+}
 
-  // Hent alle aktive public service types med koblede instruktører
-  // Junction table er _InstructorToServiceType (Prisma implicit m2m: A=Instructor, B=ServiceType)
-  const { data: serviceTypes, error: stError } = await supabase
-    .from("ServiceType")
-    .select(
-      `
-      id,
-      name,
-      description,
-      duration,
-      price,
-      allowStripe,
-      category,
-      Instructor:_InstructorToServiceType(
-        Instructor:A(
-          id,
-          User:userId(name)
-        )
-      )
-    `
-    )
-    .eq("isPublic", true)
-    .eq("isActive", true)
-    .neq("name", "Foundation")
-    .neq("name", "Start")
-    .neq("name", "Banecoaching");
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 3);
+}
 
-  if (stError) {
-    console.error("Booking ServiceType query error:", stError.message);
-  }
+// Overstyr visningsnavn
+function getDisplayName(name: string): string {
+  if (name.toLowerCase().includes("markus")) return "Markus R. Pedersen";
+  return name;
+}
 
-  const rows = (serviceTypes ?? []) as ServiceTypeRow[];
+// ─── Page ───
 
-  // Hent tilgjengelige timer og bookinger for resten av uken
-  const now = new Date();
-  const endOfWeek = new Date(now);
-  endOfWeek.setDate(now.getDate() + (7 - (now.getDay() || 7)));
+export default function BookingPage() {
+  const [selectedTrainer, setSelectedTrainer] = useState<{
+    trainer: Trainer;
+    locationName: string;
+  } | null>(null);
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [loading, setLoading] = useState(true);
+  const embedRef = useRef<HTMLDivElement>(null);
 
-  const [{ data: availabilityData }, { data: weekBookings }] = await Promise.all([
-    supabase
-      .from("InstructorAvailability")
-      .select("instructorId, dayOfWeek, startTime, endTime"),
-    supabase
-      .from("Booking")
-      .select("instructorId")
-      .gte("startTime", now.toISOString())
-      .lt("startTime", endOfWeek.toISOString())
-      .in("status", ["CONFIRMED", "PENDING"]),
-  ]);
+  useEffect(() => {
+    async function load() {
+      try {
+        const [instructorsRes, servicesRes] = await Promise.all([
+          fetch("/api/portal/public/instructors"),
+          fetch("/api/portal/public/service-types"),
+        ]);
 
-  // Beregn gjenværende ukedager (dayOfWeek: 0=søndag, 1=mandag, ...)
-  const remainingDays: number[] = [];
-  for (let d = new Date(now); d < endOfWeek; d.setDate(d.getDate() + 1)) {
-    remainingDays.push(d.getDay());
-  }
+        const instructors: Instructor[] = instructorsRes.ok ? await instructorsRes.json() : [];
+        const serviceTypes: ServiceType[] = servicesRes.ok ? await servicesRes.json() : [];
 
-  // Tell bookede timer per instruktør
-  const bookedByInstructor = (weekBookings ?? []).reduce((acc, b) => {
-    acc[b.instructorId] = (acc[b.instructorId] ?? 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+        // Build trainer objects from backend data
+        const trainerMap = new Map<string, Trainer>();
 
-  // Beregn tilgjengelige slots per instruktør + varighet
-  function countSlots(instructorId: string, duration: number): number {
-    const windows = (availabilityData ?? []).filter(
-      (a) => a.instructorId === instructorId && remainingDays.includes(a.dayOfWeek),
-    );
-    let totalSlots = 0;
-    for (const w of windows) {
-      const [sh, sm] = (w.startTime as string).split(":").map(Number);
-      const [eh, em] = (w.endTime as string).split(":").map(Number);
-      const minutes = (eh * 60 + em) - (sh * 60 + sm);
-      totalSlots += Math.floor(minutes / duration);
-    }
-    return Math.max(0, totalSlots - (bookedByInstructor[instructorId] ?? 0));
-  }
+        for (const inst of instructors) {
+          const name = inst.User?.name ?? "Coach";
+          const config = LOCATION_CONFIG[inst.id];
+          if (!config) continue; // Skip instructors without location config
 
-  // Grupper etter trener
-  const trainersMap = new Map<string, TrainerWithServices>();
+          trainerMap.set(inst.id, {
+            id: inst.id,
+            name: getDisplayName(name),
+            role: inst.title ?? "Coach",
+            image: getTrainerImage(name),
+            acuityEmbedUrl: config.acuityEmbedUrl,
+            services: [],
+            instructorId: inst.id,
+          });
+        }
 
-  for (const st of rows) {
-    const isSubscription = st.name.includes("Performance") || st.name.includes("Express");
+        // Map services to trainers based on service-types API (which includes instructors)
+        for (const st of serviceTypes) {
+          const instructorLinks = (st as unknown as { Instructor?: { id: string }[] }).Instructor ?? [];
+          for (const link of instructorLinks) {
+            const trainer = trainerMap.get(link.id);
+            if (trainer) {
+              trainer.services.push(st.name);
+            }
+          }
+        }
 
-    const links = st.Instructor ?? [];
-    const instructors = links
-      .flatMap((link) => {
-        const inst = link.Instructor;
-        if (!inst) return [];
-        return Array.isArray(inst) ? inst : [inst];
-      })
-      .map((inst) => {
-        const userRel = inst.User;
-        const userObj = Array.isArray(userRel) ? userRel[0] ?? null : userRel;
-        return { id: inst.id, name: userObj?.name ?? "Coach" };
-      });
+        // Group by location
+        const locationMap = new Map<string, Location>();
+        for (const trainer of trainerMap.values()) {
+          const config = LOCATION_CONFIG[trainer.instructorId];
+          if (!locationMap.has(config.shortName)) {
+            locationMap.set(config.shortName, {
+              name: config.name,
+              shortName: config.shortName,
+              trainers: [],
+            });
+          }
+          locationMap.get(config.shortName)!.trainers.push(trainer);
+        }
 
-    for (const instructor of instructors) {
-      const trainerId = instructor.id;
-      const trainerName = instructor.name;
-      const meta = getTrainerMeta(trainerName);
-
-      if (!trainersMap.has(trainerId)) {
-        trainersMap.set(trainerId, {
-          id: trainerId,
-          name: trainerName,
-          role: meta.role,
-          imageUrl: meta.imageUrl,
-          badge: meta.badge,
-          services: [],
-        });
+        setLocations(Array.from(locationMap.values()));
+      } finally {
+        setLoading(false);
       }
-
-      trainersMap.get(trainerId)!.services.push({
-        id: st.id,
-        name: st.name,
-        description: st.description,
-        duration: st.duration,
-        price: st.price,
-        isSubscription,
-        availableSlotsThisWeek: countSlots(trainerId, st.duration),
-        allowStripe: st.allowStripe,
-      });
     }
-  }
+    load();
+  }, []);
 
-  const trainers = Array.from(trainersMap.values()).sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
-
-  for (const trainer of trainers) {
-    trainer.services.sort((a, b) => {
-      if (a.isSubscription && !b.isSubscription) return -1;
-      if (!a.isSubscription && b.isSubscription) return 1;
-      return b.price - a.price;
-    });
-  }
-
-  // Prefill bruker-info hvis innlogget
-  const prefilledUser = user?.id
-    ? {
-        name: user.name ?? "",
-        email: user.email ?? "",
-        phone: (user as { phone?: string }).phone ?? "",
-      }
-    : null;
-
-  const subscriptionTier = user?.subscriptionTier;
-  const hasSubscription =
-    !!subscriptionTier && subscriptionTier !== "VISITOR" && subscriptionTier !== "FREE";
+  useEffect(() => {
+    if (selectedTrainer && embedRef.current) {
+      embedRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [selectedTrainer]);
 
   return (
-    <BookingClient
-      trainers={trainers}
-      prefilledUser={prefilledUser}
-      isLoggedIn={!!user?.id}
-      hasSubscription={hasSubscription}
-    />
+    <div className="min-h-screen bg-white">
+      {/* Hero — matcher forsiden */}
+      <section className="relative flex items-center pt-[48px] min-h-[50svh] overflow-hidden bg-black">
+        <Image
+          src="/images/hero/academy.jpg"
+          alt="Coaching på banen"
+          fill
+          priority
+          quality={90}
+          className="object-cover object-[center_30%] opacity-25"
+          sizes="100vw"
+        />
+        <div className="w-container relative py-16 md:py-24">
+          <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/60 font-medium">
+            AK Golf Academy
+          </p>
+          <h1 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-[1.1] tracking-tight text-white mt-6 mb-4">
+            Book coaching
+          </h1>
+          <p className="text-base text-white/60 max-w-md leading-relaxed">
+            Velg trener for å booke din neste coaching-time.
+          </p>
+        </div>
+      </section>
+
+      <main className="w-container py-16 md:py-24">
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            <span className="ml-3 text-sm text-text">Laster trenere...</span>
+          </div>
+        ) : locations.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-text">Ingen trenere tilgjengelig for online booking akkurat nå.</p>
+            <p className="text-sm text-text mt-2">
+              Ta kontakt på{" "}
+              <a href="mailto:anders@akgolf.no" className="text-primary font-medium">
+                anders@akgolf.no
+              </a>
+            </p>
+          </div>
+        ) : selectedTrainer ? (
+          <div ref={embedRef}>
+            {/* Tilbake-knapp */}
+            <button
+              onClick={() => setSelectedTrainer(null)}
+              className="flex items-center gap-2 mb-8 text-sm font-medium text-text hover:text-black transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Tilbake til treneroversikt
+            </button>
+
+            {/* Valgt trener */}
+            <div className="flex items-center gap-4 mb-8">
+              <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-grey-100 shrink-0">
+                {selectedTrainer.trainer.image ? (
+                  <Image
+                    src={selectedTrainer.trainer.image}
+                    alt={selectedTrainer.trainer.name}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-primary">
+                    <span className="text-lg font-bold text-white">
+                      {getInitials(selectedTrainer.trainer.name)}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold text-black">
+                  {selectedTrainer.trainer.name}
+                </h2>
+                <p className="text-sm text-text">
+                  {selectedTrainer.trainer.role} — {selectedTrainer.locationName}
+                </p>
+              </div>
+            </div>
+
+            {/* Acuity Embed */}
+            {selectedTrainer.trainer.acuityEmbedUrl ? (
+              <div className="rounded-2xl border border-grey-200 bg-white overflow-hidden">
+                <iframe
+                  src={selectedTrainer.trainer.acuityEmbedUrl}
+                  title={`Book time med ${selectedTrainer.trainer.name}`}
+                  width="100%"
+                  height="800"
+                  frameBorder="0"
+                  allow="payment"
+                  className="w-full min-h-[800px]"
+                />
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-grey-200 bg-white p-12 text-center">
+                <Clock className="w-10 h-10 text-text mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-black mb-2">
+                  Kommer snart
+                </h3>
+                <p className="text-sm text-text max-w-sm mx-auto">
+                  Online booking for {selectedTrainer.trainer.name} på{" "}
+                  {selectedTrainer.locationName} er under oppsett.
+                  Ta kontakt på{" "}
+                  <a
+                    href="mailto:anders@akgolf.no"
+                    className="text-primary font-medium"
+                  >
+                    anders@akgolf.no
+                  </a>{" "}
+                  for å booke.
+                </p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            {/* Lokasjonskort */}
+            <div className="space-y-16">
+              {locations.map((location) => (
+                <section key={location.shortName}>
+                  {/* Lokasjon-header */}
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                      <MapPin className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-black">
+                        {location.name}
+                      </h2>
+                      <p className="text-sm text-text">
+                        {location.trainers.length === 1
+                          ? "1 trener tilgjengelig"
+                          : `${location.trainers.length} trenere tilgjengelige`}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Trenerkort */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {location.trainers.map((trainer) => (
+                      <button
+                        key={trainer.id}
+                        onClick={() =>
+                          setSelectedTrainer({
+                            trainer,
+                            locationName: location.name,
+                          })
+                        }
+                        className="group rounded-2xl border border-grey-200 bg-white overflow-hidden transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover text-left"
+                      >
+                        {/* Trenerbilde */}
+                        <div className="relative aspect-square overflow-hidden bg-grey-100">
+                          {trainer.image ? (
+                            <Image
+                              src={trainer.image}
+                              alt={trainer.name}
+                              fill
+                              className="object-cover object-[center_20%] transition-transform duration-500 group-hover:scale-[1.03]"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-primary">
+                              <span className="text-3xl font-bold text-white">
+                                {getInitials(trainer.name)}
+                              </span>
+                            </div>
+                          )}
+                          <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-black backdrop-blur-sm">
+                            {trainer.role}
+                          </div>
+                        </div>
+
+                        {/* Trenerinfo */}
+                        <div className="p-6">
+                          <h3 className="text-lg font-semibold text-black mb-1">
+                            {trainer.name}
+                          </h3>
+                          <p className="text-sm text-text mb-4">
+                            {location.name}
+                          </p>
+
+                          {/* Tjenester */}
+                          <div className="flex flex-wrap gap-2 mb-6">
+                            {trainer.services.map((service) => (
+                              <span
+                                key={service}
+                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-grey-100 text-text"
+                              >
+                                {service}
+                              </span>
+                            ))}
+                          </div>
+
+                          {/* CTA */}
+                          <div className="flex items-center justify-between pt-4 border-t border-grey-100">
+                            <span className="text-sm font-semibold text-black group-hover:text-black/70 transition-colors">
+                              Velg tid
+                            </span>
+                            <div className="w-8 h-8 rounded-full bg-accent-cta flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="text-accent-cta-text"
+                              >
+                                <path d="M5 12h14" />
+                                <path d="m12 5 7 7-7 7" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+
+            {/* Info */}
+            <div className="mt-16 rounded-2xl bg-grey-50 border border-grey-200 p-8 md:p-10">
+              <div className="flex items-start gap-4">
+                <Clock className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-black mb-2">
+                    Slik booker du
+                  </h3>
+                  <p className="text-sm text-text leading-relaxed">
+                    Velg trener og lokasjon over. Du får opp tilgjengelige tider
+                    og kan booke direkte. Bekreftelse sendes på e-post.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Tilbake */}
+        <div className="mt-10 text-center">
+          <Link
+            href="/academy"
+            className="text-sm text-text hover:text-black transition-colors"
+          >
+            &larr; Tilbake til Academy
+          </Link>
+        </div>
+      </main>
+    </div>
   );
 }

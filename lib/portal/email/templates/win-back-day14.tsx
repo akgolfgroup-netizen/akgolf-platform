@@ -72,12 +72,12 @@ export function WinBackDay14Email({
 }
 
 const body = {
-  backgroundColor: "#f6f6f6",
+  backgroundColor: "#f5f5f5",
   fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
 };
 
 const container = {
-  backgroundColor: "#ffffff",
+  backgroundColor: "white",
   margin: "0 auto",
   padding: "32px",
   maxWidth: "560px",
@@ -85,20 +85,20 @@ const container = {
 };
 
 const heading = {
-  color: "#0A1F18",
+  color: "black",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
 };
 
 const greeting = {
-  color: "#333",
+  color: "#333333",
   fontSize: "16px",
   margin: "0 0 8px",
 };
 
 const text = {
-  color: "#555",
+  color: "#555555",
   fontSize: "14px",
   lineHeight: "1.6",
   margin: "0 0 16px",
@@ -113,7 +113,7 @@ const offerBox = {
 };
 
 const offerTitle = {
-  color: "#ffffff",
+  color: "white",
   fontSize: "28px",
   fontWeight: "700" as const,
   margin: "0 0 12px",
@@ -122,7 +122,7 @@ const offerTitle = {
 const offerCode = {
   backgroundColor: "rgba(255,255,255,0.2)",
   borderRadius: "8px",
-  color: "#ffffff",
+  color: "white",
   fontSize: "18px",
   fontWeight: "600" as const,
   padding: "8px 16px",
@@ -137,21 +137,21 @@ const offerDetails = {
 };
 
 const benefitsBox = {
-  backgroundColor: "#f9fafb",
+  backgroundColor: "#f8f9fa",
   borderRadius: "8px",
   padding: "16px",
   margin: "16px 0",
 };
 
 const benefitsTitle = {
-  color: "#0A1F18",
+  color: "black",
   fontSize: "14px",
   fontWeight: "600" as const,
   margin: "0 0 12px",
 };
 
 const benefitLine = {
-  color: "#555",
+  color: "#555555",
   fontSize: "14px",
   margin: "0 0 4px",
   paddingLeft: "16px",
@@ -161,7 +161,7 @@ const benefitLine = {
 const button = {
   backgroundColor: "#16a34a",
   borderRadius: "980px",
-  color: "#ffffff",
+  color: "white",
   fontSize: "14px",
   fontWeight: "600" as const,
   padding: "14px 28px",
@@ -172,12 +172,12 @@ const button = {
 };
 
 const hr = {
-  borderColor: "#e5e7eb",
+  borderColor: "#e5e5e5",
   margin: "24px 0",
 };
 
 const footer = {
-  color: "#999",
+  color: "#999999",
   fontSize: "12px",
   margin: "24px 0 0",
 };

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { TournamentPlanWithStudent } from "../types";
 import type { GoalType, PlanLevel } from "../types";
 import { GoalTypeBadge } from "./GoalTypeBadge";
@@ -60,9 +61,11 @@ export function ThisWeekTournaments({ plans }: ThisWeekTournamentsProps) {
               >
                 {/* Avatar */}
                 {plan.student.image ? (
-                  <img
+                  <Image
                     src={plan.student.image}
                     alt=""
+                    width={32}
+                    height={32}
                     className="w-8 h-8 rounded-lg object-cover flex-shrink-0"
                   />
                 ) : (

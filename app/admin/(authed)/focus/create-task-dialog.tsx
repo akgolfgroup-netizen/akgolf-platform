@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import {
-  AdminDialog, AdminButton, AdminInput,
+  AdminDialog, AdminInput,
 } from "@/components/portal/mission-control/ui";
+import { Button } from "@/components/ui/button";
 import { createTask } from "./actions";
 import type { AdminDivision, AdminPriority } from "@prisma/client";
 
@@ -55,21 +56,22 @@ export function CreateTaskDialog({ open, division, onClose, onCreated }: Props) 
       description={DIVISION_LABELS[division]}
       footer={
         <>
-          <AdminButton variant="ghost" onClick={onClose}>Avbryt</AdminButton>
-          <AdminButton variant="primary" loading={loading} onClick={handleSubmit} icon={<Plus className="w-4 h-4" />}>
+          <Button variant="ghost" onClick={onClose}>Avbryt</Button>
+          <Button variant="accent" isLoading={loading} onClick={handleSubmit}>
+            <Plus className="w-4 h-4 mr-2" />
             Opprett
-          </AdminButton>
+          </Button>
         </>
       }
     >
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-medium text-[var(--color-text)] mb-1.5">Oppgave</label>
+          <label className="block text-xs font-medium text-black mb-1.5">Oppgave</label>
           <AdminInput value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Hva skal gjores?" autoFocus />
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium text-[var(--color-text)] mb-1.5">Prioritet</label>
+            <label className="block text-xs font-medium text-black mb-1.5">Prioritet</label>
             <select value={priority} onChange={(e) => setPriority(e.target.value as AdminPriority)} className="admin-input w-full">
               <option value="NORMAL">Normal</option>
               <option value="IMPORTANT">Viktig</option>
@@ -77,7 +79,7 @@ export function CreateTaskDialog({ open, division, onClose, onCreated }: Props) 
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[var(--color-text)] mb-1.5">Frist</label>
+            <label className="block text-xs font-medium text-black mb-1.5">Frist</label>
             <AdminInput type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
           </div>
         </div>

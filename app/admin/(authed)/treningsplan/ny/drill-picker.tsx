@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { Search, X, Check, Plus } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
-import { AdminBadge, AdminButton, AdminInput } from "@/components/portal/mission-control/ui";
+import { AdminInput } from "@/components/portal/mission-control/ui";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import type { DrillOption, ManualPlanExercise } from "../actions";
 
 type PyramidLevel = "" | "FYS" | "TEK" | "SLAG" | "SPILL" | "TURN";
@@ -86,29 +88,29 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
       <div className="admin-card w-full max-w-xl max-h-[80vh] flex flex-col shadow-xl p-0">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-grey-200)]">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-grey-200">
           <div>
-            <h3 className="text-base font-semibold text-[var(--color-text)]">
+            <h3 className="text-base font-semibold text-black">
               Velg øvelser
             </h3>
-            <p className="text-xs text-[var(--color-muted)]">
+            <p className="text-xs text-grey-400">
               {selected.size} valgt
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] transition-colors"
+            className="p-2 rounded-lg hover:bg-grey-100 transition-colors"
             aria-label="Lukk"
           >
-            <X className="w-5 h-5 text-[var(--color-muted)]" />
+            <X className="w-5 h-5 text-grey-400" />
           </button>
         </div>
 
         {/* Search & filters */}
-        <div className="px-5 py-3 border-b border-[var(--color-grey-200)] space-y-3">
+        <div className="px-5 py-3 border-b border-grey-200 space-y-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none" />
             <AdminInput
               type="text"
               placeholder="Søk etter øvelse..."
@@ -127,8 +129,8 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                 className={cn(
                   "px-2.5 py-1 rounded-md text-xs font-medium transition-colors border",
                   pyramidFilter === pl.value
-                    ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                    : "bg-white border-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
+                    ? "bg-black text-white border-black"
+                    : "bg-white border-grey-200 text-black hover:bg-grey-100",
                 )}
               >
                 {pl.label}
@@ -141,7 +143,7 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
         <div className="flex-1 overflow-y-auto p-3 space-y-1">
           {filteredDrills.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-sm text-[var(--color-muted)]">
+              <p className="text-sm text-grey-400">
                 Ingen øvelser funnet
               </p>
             </div>
@@ -158,24 +160,24 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                   className={cn(
                     "w-full text-left px-4 py-3 rounded-lg border transition-colors",
                     isSelected
-                      ? "border-[var(--color-primary)] bg-[var(--color-primary)]/5"
-                      : "border-transparent hover:bg-[var(--color-grey-100)]",
+                      ? "border-black bg-black/5"
+                      : "border-transparent hover:bg-grey-100",
                   )}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-[var(--color-text)] truncate">
+                        <p className="text-sm font-medium text-black truncate">
                           {drill.name}
                         </p>
-                        <AdminBadge variant={variant}>{drill.pyramid}</AdminBadge>
+                        <Badge variant={variant}>{drill.pyramid}</Badge>
                       </div>
                       {drill.description && (
-                        <p className="text-xs text-[var(--color-muted)] mt-0.5 line-clamp-1">
+                        <p className="text-xs text-grey-400 mt-0.5 line-clamp-1">
                           {drill.description}
                         </p>
                       )}
-                      <div className="flex items-center gap-3 mt-1 text-xs text-[var(--color-muted)]">
+                      <div className="flex items-center gap-3 mt-1 text-xs text-grey-400">
                         <span>{drill.area}</span>
                         <span>
                           {drill.minDurationMinutes}-{drill.maxDurationMinutes} min
@@ -190,8 +192,8 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                       className={cn(
                         "w-5 h-5 rounded border flex items-center justify-center flex-shrink-0 mt-0.5",
                         isSelected
-                          ? "bg-[var(--color-primary)] border-[var(--color-primary)]"
-                          : "border-[var(--color-grey-300)]",
+                          ? "bg-black border-black"
+                          : "border-grey-300",
                       )}
                     >
                       {isSelected && <Check className="w-3 h-3 text-white" />}
@@ -204,18 +206,18 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-5 py-4 border-t border-[var(--color-grey-200)]">
-          <AdminButton variant="secondary" onClick={onClose}>
+        <div className="flex items-center justify-between px-5 py-4 border-t border-grey-200">
+          <Button variant="secondary" onClick={onClose}>
             Avbryt
-          </AdminButton>
-          <AdminButton
-            variant="primary"
+          </Button>
+          <Button
+            variant="accent"
             onClick={handleConfirm}
             disabled={selected.size === 0}
-            icon={<Plus className="w-4 h-4" />}
           >
+            <Plus className="w-4 h-4 mr-2" />
             Legg til {selected.size > 0 ? `(${selected.size})` : ""}
-          </AdminButton>
+          </Button>
         </div>
       </div>
     </div>

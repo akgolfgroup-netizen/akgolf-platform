@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { EASE_ENTRANCE } from "@/lib/design-tokens";
-import { HERO, BOOKING_URL } from "@/lib/website-constants";
+import { HERO } from "@/lib/website-constants";
 
 const stagger = {
   hidden: {},
@@ -62,43 +62,21 @@ export function HeroSection() {
 
           <motion.p
             variants={fadeUp}
-            className="text-base md:text-lg text-white/50 max-w-[540px] leading-relaxed mb-10"
+            className="text-base md:text-lg text-white/80 max-w-[540px] leading-relaxed mb-10"
           >
             {HERO.subheading}
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex gap-3 flex-wrap">
+          <motion.div variants={fadeUp}>
             <Link
-              href={BOOKING_URL}
+              href="/booking"
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-cta text-accent-cta-text rounded-[20px] text-[15px] font-bold hover:brightness-95 transition-all duration-300"
             >
-              {HERO.ctaPrimary}
+              Book coaching
               <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="#priser"
-              className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/15 text-white rounded-[20px] text-[15px] font-medium hover:bg-white/5 transition-colors duration-300"
-            >
-              {HERO.ctaSecondary}
             </Link>
           </motion.div>
 
-          {/* Trust bar */}
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap gap-6 mt-12 pt-8 border-t border-white/10"
-          >
-            {HERO.stats.map((stat) => (
-              <div key={stat.label}>
-                <p className="text-xl font-bold text-white tracking-tight">
-                  {stat.value}
-                </p>
-                <p className="text-[11px] text-white/35 mt-0.5">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </motion.div>
     </section>

@@ -142,7 +142,7 @@ export async function validateInstructorAvailability(
   const dateOnly = new Date(Date.UTC(startTime.getUTCFullYear(), startTime.getUTCMonth(), startTime.getUTCDate(), 0, 0, 0, 0));
 
   // Check date-specific override first
-  const { data: dateOverride, error: dateError } = await supabase
+  const { data: dateOverride } = await supabase
     .from("InstructorDateAvailability")
     .select("startTime, endTime")
     .eq("instructorId", instructorId)

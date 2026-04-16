@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Bell, Check, Trash2, Loader2, Calendar, FileText, Trophy, Sparkles, Clock, AlertCircle } from "lucide-react";
+import { Bell, Check, Loader2, Calendar, FileText, Trophy, Sparkles, Clock, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import Link from "next/link";

@@ -63,6 +63,12 @@ export function PremiumStatCard({
       : Math.round(latest).toLocaleString("nb-NO")
   );
 
+  const spotlightBackground = useTransform(
+    [mouseX, mouseY],
+    ([x, y]) =>
+      `radial-gradient(400px circle at ${x}px ${y}px, rgba(0, 88, 64, 0.08), transparent 60%)`
+  );
+
   React.useEffect(() => {
     if (!isNumeric) return;
     const controls = animate(motionValue, value as number, {
@@ -110,11 +116,7 @@ export function PremiumStatCard({
           className="pointer-events-none absolute inset-0 transition-opacity duration-300"
           style={{
             opacity: hovered ? 1 : 0,
-            background: useTransform(
-              [mouseX, mouseY],
-              ([x, y]) =>
-                `radial-gradient(400px circle at ${x}px ${y}px, rgba(0, 88, 64, 0.08), transparent 60%)`
-            ),
+            background: spotlightBackground,
           }}
         />
       )}

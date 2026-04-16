@@ -4,7 +4,8 @@ import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { ConfirmationView } from "./ConfirmationView";
 import { PublicConfirmationView } from "./PublicConfirmationView";
-import { Loader2, AlertCircle } from "lucide-react";
+import { PaymentPendingPoller } from "./PaymentPendingPoller";
+import { AlertCircle } from "lucide-react";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -55,24 +56,9 @@ export default async function BookingConfirmationPage({ params }: Props) {
     );
   }
 
-  // Payment still processing
+  // Payment still processing — poll for webhook confirmation
   if (booking.status === "PENDING") {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
-        <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-surface">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          </div>
-          <h2 className="text-xl font-semibold mb-2 text-primary">
-            Betaling pågår
-          </h2>
-          <p className="text-muted">
-            Vi behandler betalingen din. Du vil motta en bekreftelse på e-post
-            når bookingen er bekreftet.
-          </p>
-        </div>
-      </div>
-    );
+    return <PaymentPendingPoller bookingId={id} />;
   }
 
   // Format date in Norwegian
@@ -96,14 +82,11 @@ export default async function BookingConfirmationPage({ params }: Props) {
   if (!user?.id) {
     return (
       <PublicConfirmationView
-        serviceName={booking.ServiceType?.name}
         instructorName={instructorName}
         formattedDate={formattedDate}
         duration={booking.ServiceType?.duration}
         priceNOK={priceNOK}
-        paymentMethod={booking.paymentMethod}
         studentEmail={booking.User?.email ?? ""}
-        bookingId={booking.id}
         bookingPrice={booking.ServiceType?.price}
       />
     );

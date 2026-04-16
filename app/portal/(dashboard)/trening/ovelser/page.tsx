@@ -1,4 +1,3 @@
-import { requirePortalUser } from "@/lib/portal/auth";
 import {
   Clock,
   Target,
@@ -53,7 +52,6 @@ const difficultyColors: Record<string, string> = {
 };
 
 export default async function OvelserPage() {
-  const _user = await requirePortalUser();
   const drills = await getDrills();
 
   interface Drill {

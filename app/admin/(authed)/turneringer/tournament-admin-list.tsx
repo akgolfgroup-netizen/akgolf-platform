@@ -6,8 +6,8 @@ import { Download, RefreshCw, Pencil, Trash2, ChevronDown, ChevronRight, Loader2
 import { ImportTournamentsSheet } from "@/modules/tournament-planner/components/ImportTournamentsSheet";
 import { EditTournamentSheet } from "@/modules/tournament-planner/components/EditTournamentSheet";
 import { TournamentPlayerList } from "@/modules/tournament-planner/components/TournamentPlayerList";
-import { PLAN_LEVEL_CONFIG } from "@/modules/tournament-planner";
-import type { GoalType, PlanLevel } from "@/modules/tournament-planner";
+
+import { Button, Card } from "@/components/ui";
 
 interface TournamentRow {
   id: string;
@@ -64,7 +64,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
     setSyncResult(null);
     setSyncError(null);
     try {
-      const res = await fetch("/api/tournament-planner/sync", {
+      const res = await fetch("/api/portal/tournament-planner/sync", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ year: new Date().getFullYear() }),
@@ -83,9 +83,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
   }
 
   const allSeries = Array.from(new Set(tournaments.map((t) => t.series).filter(Boolean))) as string[];
-  const filtered = filterSeries
-    ? tournaments.filter((t) => t.series === filterSeries)
-    : tournaments;
+  const filtered = filterSeries ? tournaments.filter((t) => t.series === filterSeries) : tournaments;
 
   async function handleDelete(t: TournamentRow) {
     const planCount = t._count.playerPlans;
@@ -97,7 +95,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
 
     setDeletingId(t.id);
     try {
-      const res = await fetch(`/api/tournament-planner/${t.id}`, { method: "DELETE" });
+      const res = await fetch(`/api/portal/tournament-planner/${t.id}`, { method: "DELETE" });
       if (!res.ok) {
         alert(`Kunne ikke slette turneringen (${res.status})`);
         return;
@@ -113,36 +111,38 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
   return (
     <>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-base font-semibold text-[var(--color-grey-900)]">
+        <h3 className="text-base font-semibold text-black">
           Alle turneringer ({filtered.length})
         </h3>
         <div className="flex items-center gap-2">
-          <button
+          <Button
             onClick={handleSync}
             disabled={syncing}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[var(--color-grey-900)] text-[var(--color-grey-900)] text-xs font-semibold hover:bg-[var(--color-grey-500)] transition-colors disabled:opacity-50"
+            variant="dark"
+            size="sm"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${syncing ? "animate-spin" : ""}`} />
             Synkroniser
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => setImportOpen(true)}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--color-grey-900)]/30 text-[var(--color-grey-900)] text-xs font-medium hover:bg-[var(--color-grey-900)]/10 transition-colors"
+            variant="secondary"
+            size="sm"
           >
             <Download className="w-3.5 h-3.5" />
             GolfBox
-          </button>
+          </Button>
         </div>
       </div>
 
       {syncError && (
-        <div className="mb-4 p-3 rounded-xl bg-[var(--color-error)]/10 border border-[var(--color-error)]/20 text-[var(--color-error)] text-xs">
+        <div className="mb-4 p-3 rounded-xl bg-error-light border border-error text-error text-xs">
           {syncError}
         </div>
       )}
 
       {syncResult && (
-        <div className="mb-4 p-3 rounded-xl bg-[var(--color-success)]/10 border border-[var(--color-success)]/20 text-[var(--color-success)] text-xs">
+        <div className="mb-4 p-3 rounded-xl bg-success-light border border-success text-success text-xs">
           {syncResult.created} opprettet, {syncResult.updated} oppdatert fra {syncResult.sources.join(", ")}
         </div>
       )}
@@ -152,7 +152,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
           <button
             onClick={() => setFilterSeries("")}
             className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
-              !filterSeries ? "bg-[var(--color-grey-900)]/15 text-[var(--color-grey-900)]" : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
+              !filterSeries ? "bg-grey-200 text-black" : "text-grey-400 hover:text-black"
             }`}
           >
             Alle
@@ -162,7 +162,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
               key={s}
               onClick={() => setFilterSeries(s === filterSeries ? "" : s)}
               className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
-                filterSeries === s ? "bg-[var(--color-grey-900)]/15 text-[var(--color-grey-900)]" : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
+                filterSeries === s ? "bg-grey-200 text-black" : "text-grey-400 hover:text-black"
               }`}
             >
               {s}
@@ -176,23 +176,23 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
           const isExpanded = expandedId === t.id;
           return (
             <div key={t.id}>
-              <div className="flex items-center justify-between p-3 bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl">
+              <Card className="flex items-center justify-between p-3">
                 <button
                   onClick={() => setExpandedId(isExpanded ? null : t.id)}
                   className="flex items-center gap-2 flex-1 min-w-0 text-left"
                 >
                   {t._count.playerPlans > 0 ? (
                     isExpanded ? (
-                      <ChevronDown className="w-3.5 h-3.5 text-[var(--color-grey-500)] flex-shrink-0" />
+                      <ChevronDown className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
                     ) : (
-                      <ChevronRight className="w-3.5 h-3.5 text-[var(--color-grey-500)] flex-shrink-0" />
+                      <ChevronRight className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
                     )
                   ) : (
                     <span className="w-3.5 flex-shrink-0" />
                   )}
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-[var(--color-grey-900)] truncate">{t.name}</p>
-                    <p className="text-xs text-[var(--color-grey-500)]">
+                    <p className="text-sm font-medium text-black truncate">{t.name}</p>
+                    <p className="text-xs text-grey-400">
                       {new Date(t.startDate).toLocaleDateString("nb-NO")} · {t.level}
                       {t.source && ` · ${SOURCE_LABELS[t.source] ?? t.source}`}
                       {t.series && ` · ${t.series}`}
@@ -200,12 +200,12 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                   </div>
                 </button>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-xs text-[var(--color-grey-500)]">
+                  <span className="text-xs text-grey-400">
                     {t._count.playerPlans} planer
                   </span>
                   <button
                     onClick={() => setEditTournament(t)}
-                    className="p-1.5 rounded-lg hover:bg-[var(--color-grey-200)] transition-colors text-[var(--color-grey-500)]"
+                    className="p-1.5 rounded-lg hover:bg-grey-200 transition-colors text-grey-400"
                     title="Rediger"
                   >
                     <Pencil className="w-3.5 h-3.5" />
@@ -213,7 +213,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                   <button
                     onClick={() => handleDelete(t)}
                     disabled={deletingId === t.id}
-                    className="p-1.5 rounded-lg hover:bg-[var(--color-error)]/10 transition-colors text-[var(--color-grey-500)] hover:text-[var(--color-error)]"
+                    className="p-1.5 rounded-lg hover:bg-error-light transition-colors text-grey-400 hover:text-error"
                     title="Slett"
                   >
                     {deletingId === t.id ? (
@@ -223,7 +223,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                     )}
                   </button>
                 </div>
-              </div>
+              </Card>
 
               {isExpanded && t.playerPlans.length > 0 && (
                 <TournamentPlayerList plans={t.playerPlans} />

@@ -1,4 +1,3 @@
-import { requirePortalUser } from "@/lib/portal/auth";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -56,7 +55,6 @@ const categoryLabels: Record<string, string> = {
 
 export default async function TestDetailPage({ params }: Props) {
   const { id } = await params;
-  const _user = await requirePortalUser();
   const protocol = await getTestProtocol(id);
 
   if (!protocol) {

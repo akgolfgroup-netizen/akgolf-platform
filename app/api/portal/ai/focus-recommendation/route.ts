@@ -30,7 +30,7 @@ export async function POST() {
   try {
     const recommendation = await generateFocusRecommendation(user.id);
     return NextResponse.json(recommendation);
-  } catch (_error) {
+  } catch {
     return NextResponse.json({ error: "Kunne ikke generere anbefaling" }, { status: 500 });
   }
 }

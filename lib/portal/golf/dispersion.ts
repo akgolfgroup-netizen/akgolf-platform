@@ -28,6 +28,7 @@ export function calculateDispersionEllipse(
   lateralStdDev: number,
   shotCount: number
 ): ClubDispersion["dispersion68"] & { dispersion95: { carry: number; lateral: number } } {
+  void shotCount;
   return {
     carry: Math.round(carryStdDev * 10) / 10,
     lateral: Math.round(lateralStdDev * 10) / 10,
@@ -58,8 +59,6 @@ export function dispersionHitsTarget(
   const halfDepth = targetDepth / 2;
 
   // Gaussisk tilnaerming av treff-sannsynlighet
-  const lateralZ = Math.abs(lateralOffset) / (dispersion95.lateral / 2 || 1);
-  const carryZ = Math.abs(carryOffset) / (dispersion95.carry / 2 || 1);
 
   // Phi(z) tilnaerming
   const phi = (z: number) => 1 / (1 + Math.exp(-1.7 * z));

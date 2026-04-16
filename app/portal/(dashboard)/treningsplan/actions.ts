@@ -626,8 +626,6 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
   const supabase = await createServerSupabase();
   const now = new Date();
   const targetDate = addWeeks(now, weekOffset);
-  const weekStart = startOfISOWeek(targetDate);
-  const weekEnd = endOfISOWeek(targetDate);
 
   const { data: plan } = await supabase
     .from("TrainingPlan")

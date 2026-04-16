@@ -7,7 +7,7 @@ import {
 import SosialtClient from "./sosialt-client";
 
 export default async function SosialtPage() {
-  const user = await requirePortalUser();
+  await requirePortalUser();
 
   const [friends, leaderboard, pendingRequests] = await Promise.all([
     getFriends(),
@@ -20,7 +20,6 @@ export default async function SosialtPage() {
       friends={friends}
       leaderboard={leaderboard}
       pendingRequests={pendingRequests}
-      currentUserName={user.name ?? "Ukjent"}
     />
   );
 }

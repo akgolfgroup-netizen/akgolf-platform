@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +33,7 @@ export function IPhoneMockup({
       style={{ width: `${width}px`, height: `${height}px` }}
     >
       <div
-        className="relative bg-[#1a1a1a] shadow-2xl"
+        className="relative bg-iphone-frame shadow-2xl"
         style={{
           width: "100%",
           height: "100%",
@@ -48,13 +49,13 @@ export function IPhoneMockup({
             height: `${dynamicIslandHeight}px`,
             marginTop: `${bezelWidth * 1.5}px`,
             borderRadius: `${dynamicIslandHeight / 2}px`,
-            background: "#000",
+            background: "var(--color-black)",
           }}
         />
 
         {/* Right side buttons */}
         <div
-          className="absolute top-0 right-0 w-[3px] bg-[#2a2a2a] rounded-r-sm"
+          className="absolute top-0 right-0 w-[3px] bg-iphone-button rounded-r-sm"
           style={{
             height: `${width * 0.16}px`,
             marginTop: `${width * 0.24}px`,
@@ -62,7 +63,7 @@ export function IPhoneMockup({
           }}
         />
         <div
-          className="absolute top-0 right-0 w-[3px] bg-[#2a2a2a] rounded-r-sm"
+          className="absolute top-0 right-0 w-[3px] bg-iphone-button rounded-r-sm"
           style={{
             height: `${width * 0.13}px`,
             marginTop: `${width * 0.44}px`,
@@ -70,7 +71,7 @@ export function IPhoneMockup({
           }}
         />
         <div
-          className="absolute top-0 right-0 w-[3px] bg-[#2a2a2a] rounded-r-sm"
+          className="absolute top-0 right-0 w-[3px] bg-iphone-button rounded-r-sm"
           style={{
             height: `${width * 0.13}px`,
             marginTop: `${width * 0.59}px`,
@@ -80,7 +81,7 @@ export function IPhoneMockup({
 
         {/* Left side buttons */}
         <div
-          className="absolute top-0 left-0 w-[3px] bg-[#2a2a2a] rounded-l-sm"
+          className="absolute top-0 left-0 w-[3px] bg-iphone-button rounded-l-sm"
           style={{
             height: `${width * 0.08}px`,
             marginTop: `${width * 0.18}px`,
@@ -88,7 +89,7 @@ export function IPhoneMockup({
           }}
         />
         <div
-          className="absolute top-0 left-0 w-[3px] bg-[#2a2a2a] rounded-l-sm"
+          className="absolute top-0 left-0 w-[3px] bg-iphone-button rounded-l-sm"
           style={{
             height: `${width * 0.16}px`,
             marginTop: `${width * 0.32}px`,
@@ -96,7 +97,7 @@ export function IPhoneMockup({
           }}
         />
         <div
-          className="absolute top-0 left-0 w-[3px] bg-[#2a2a2a] rounded-l-sm"
+          className="absolute top-0 left-0 w-[3px] bg-iphone-button rounded-l-sm"
           style={{
             height: `${width * 0.16}px`,
             marginTop: `${width * 0.5}px`,
@@ -112,10 +113,12 @@ export function IPhoneMockup({
           }}
         >
           {imageSrc && !children && (
-            <img
+            <Image
               src={imageSrc}
               alt="iPhone screen content"
-              className="w-full h-full object-cover object-top"
+              fill
+              sizes="300px"
+              className="object-cover object-top"
             />
           )}
           {children && (

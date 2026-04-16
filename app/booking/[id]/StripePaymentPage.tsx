@@ -8,7 +8,6 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CreditCard, AlertCircle, Loader2, ShieldCheck, Smartphone } from "lucide-react";
 
@@ -22,7 +21,6 @@ interface CheckoutFormProps {
 function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
-  const _router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

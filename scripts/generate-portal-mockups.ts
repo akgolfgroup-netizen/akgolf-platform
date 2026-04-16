@@ -4,7 +4,7 @@
  */
 
 import { chromium } from "playwright";
-import { writeFileSync, mkdirSync } from "fs";
+import { mkdirSync } from "fs";
 import { join } from "path";
 
 const VIEWPORT = { width: 390, height: 844 }; // iPhone 14 Pro

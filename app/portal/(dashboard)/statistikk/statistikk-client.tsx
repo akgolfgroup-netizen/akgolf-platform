@@ -4,19 +4,20 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Plus, Lightbulb, BarChart3 } from "lucide-react";
+import { Plus, Lightbulb, BarChart3, Zap, Sparkles } from "lucide-react";
 import {
-  HeroHeading,
-  GlassCard,
   PremiumStatCard,
-  Shimmer,
   fadeInUp,
   staggerContainer,
 } from "@/components/portal/premium";
+import { Card } from "@/components/ui/card";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import type { RoundStats } from "@prisma/client";
-import type { PeriodKey, WeeklyTrainingData } from "./actions";
+import type { PeriodKey, WeeklyTrainingData, GolfProfileSummary } from "./actions";
+import type { USIResult } from "@/lib/portal/usi/compute-usi";
+import type { TrainingPrescriptionResult } from "@/lib/portal/usi/generate-prescription";
+import { colors } from "@/lib/design-tokens";
 
 /* ─── Types ─── */
 
@@ -37,15 +38,15 @@ type StatsAggregates = {
   sgTrend: "up" | "down" | "flat";
 };
 
-type TrainingAreaBreakdown = { area: string; minutes: number; sessions: number };
-
 interface StatistikkClientProps {
   rounds: RoundStats[];
   aggregates: StatsAggregates | null;
-  breakdown: TrainingAreaBreakdown[];
   weeklyTraining: WeeklyTrainingData[];
   handicap?: number | null;
   currentPeriod: PeriodKey;
+  profile: GolfProfileSummary;
+  usi: USIResult | null;
+  prescription: TrainingPrescriptionResult | null;
 }
 
 /* ─── Constants ─── */
@@ -73,7 +74,7 @@ const SG_AREAS = [
 const HERO_TITLE = (
   <>
     Din{" "}
-    <span className="font-serif italic text-portal-text font-normal">
+    <span className="font-serif italic text-black font-normal">
       statistikk
     </span>
     <span className="text-accent-cta">.</span>
@@ -98,10 +99,10 @@ function SGBar({ label, value, delay }: { label: string; value: number | null; d
 
   return (
     <div className="flex items-center gap-3">
-      <span className="w-24 shrink-0 text-[11px] font-semibold uppercase tracking-[0.08em] text-portal-secondary">
+      <span className="w-24 shrink-0 text-[11px] font-semibold uppercase tracking-[0.08em] text-text">
         {label}
       </span>
-      <div className="relative flex h-[5px] flex-1 items-center rounded-full bg-portal-hover">
+      <div className="relative flex h-[5px] flex-1 items-center rounded-full bg-grey-50">
         <div className="absolute left-1/2 h-full w-px bg-portal-border" />
         <motion.div
           initial={{ width: 0 }}
@@ -114,15 +115,15 @@ function SGBar({ label, value, delay }: { label: string; value: number | null; d
           className="absolute h-full rounded-full"
           style={{
             backgroundColor: isPositive
-              ? "var(--color-success)"
-              : "var(--color-error)",
+              ? "success-text"
+              : "#B84233",
             ...(isPositive ? { left: "50%" } : { right: "50%" }),
           }}
         />
       </div>
       <span
         className={`w-14 shrink-0 text-right text-[13px] font-bold tabular-nums ${
-          isPositive ? "text-success" : "text-error"
+          isPositive ? "text-success-text" : "text-error"
         }`}
       >
         {isPositive ? "+" : ""}
@@ -147,7 +148,7 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
 
   if (data.length < 2) {
     return (
-      <div className="flex h-[160px] items-center justify-center rounded-xl bg-portal-hover text-sm text-portal-muted">
+      <div className="flex h-[160px] items-center justify-center rounded-xl bg-grey-50 text-sm text-grey-400">
         Registrer flere runder for a se trenden
       </div>
     );
@@ -197,19 +198,19 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
           y2={PAD_Y + pct * (H - 2 * PAD_Y)}
           stroke="currentColor"
           strokeOpacity="0.04"
-          className="text-portal-text"
+          className="text-black"
           strokeWidth="1"
         />
       ))}
 
       <defs>
         <linearGradient id="scoreFillGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0.15" className="text-primary" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0" className="text-primary" />
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.15" className="text-black" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" className="text-black" />
         </linearGradient>
         <linearGradient id="scoreLineGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0.5" className="text-primary" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="1" className="text-primary" />
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.5" className="text-black" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="1" className="text-black" />
         </linearGradient>
         <filter id="sparkGlow">
           <feGaussianBlur stdDeviation="3" result="blur" />
@@ -242,7 +243,7 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
         className="text-accent-cta"
         stroke="currentColor"
         strokeWidth="2"
-        style={{ stroke: "var(--color-portal-card)" }}
+        style={{ stroke: "#FFFFFF" }}
         filter="url(#sparkGlow)"
       />
 
@@ -275,7 +276,7 @@ function ScoreSparkline({ rounds }: { rounds: RoundStats[] }) {
 function TrainingBarChart({ data }: { data: WeeklyTrainingData[] }) {
   if (data.length === 0) {
     return (
-      <div className="flex h-[160px] items-center justify-center rounded-xl bg-portal-hover text-sm text-portal-muted">
+      <div className="flex h-[160px] items-center justify-center rounded-xl bg-grey-50 text-sm text-grey-400">
         Ingen treningsdata i valgt periode
       </div>
     );
@@ -307,13 +308,13 @@ function TrainingBarChart({ data }: { data: WeeklyTrainingData[] }) {
               }}
               className={
                 isEmpty
-                  ? "w-full rounded-full bg-portal-hover"
-                  : "w-full rounded-t-md bg-primary opacity-70 transition-opacity hover:opacity-100"
+                  ? "w-full rounded-full bg-grey-50"
+                  : "w-full rounded-t-md bg-black opacity-70 transition-opacity hover:opacity-100"
               }
             />
 
             {/* Label */}
-            <span className="mt-2 text-[9px] text-portal-muted tabular-nums leading-none">
+            <span className="mt-2 text-[9px] text-grey-400 tabular-nums leading-none">
               {week.week.split(".")[0]}
             </span>
           </div>
@@ -329,30 +330,34 @@ function EmptyState() {
   return (
     <div className="space-y-10">
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/statistikk" />
-      <HeroHeading
-        label="Statistikk"
-        title={HERO_TITLE}
-        description="Folg utviklingen din over tid. Registrer din forste runde for a se trender og analyser."
-      />
-      <GlassCard variant="light" padding="lg" className="text-center">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-portal-hover">
-          <BarChart3 className="h-8 w-8 text-portal-muted" />
+      <div className="space-y-3">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
+          Statistikk
+        </p>
+        <h1 className="text-2xl font-bold text-black">{HERO_TITLE}</h1>
+        <p className="text-[13px] text-grey-400 max-w-xl">
+          Folg utviklingen din over tid. Registrer din forste runde for a se trender og analyser.
+        </p>
+      </div>
+      <Card variant="elevated" padding="lg" className="text-center">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-grey-50">
+          <BarChart3 className="h-8 w-8 text-grey-400" />
         </div>
-        <h2 className="mb-2 text-xl font-semibold text-portal-text">
+        <h2 className="mb-2 text-xl font-semibold text-black">
           Ingen runder registrert
         </h2>
-        <p className="mx-auto mb-8 max-w-md text-portal-secondary">
+        <p className="mx-auto mb-8 max-w-md text-text">
           Registrer din forste runde for a se statistikk, Strokes Gained-analyse og
           utviklingstrender.
         </p>
         <Link
           href="/portal/statistikk/ny-runde"
-          className="inline-flex items-center gap-2 rounded-[20px] bg-accent-cta px-6 py-3 text-[12px] font-bold text-accent-cta-text shadow-lg transition-shadow hover:shadow-xl"
+          className="inline-flex items-center gap-2 rounded-full bg-accent-cta px-6 py-3 text-[12px] font-bold text-black shadow-lg transition-shadow hover:shadow-xl"
         >
           <Plus className="h-4 w-4" />
           Registrer din forste runde
         </Link>
-      </GlassCard>
+      </Card>
     </div>
   );
 }
@@ -362,10 +367,12 @@ function EmptyState() {
 export function StatistikkClient({
   rounds,
   aggregates,
-  breakdown,
   weeklyTraining,
   handicap,
   currentPeriod,
+  profile,
+  usi,
+  prescription,
 }: StatistikkClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -398,47 +405,48 @@ export function StatistikkClient({
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/statistikk" />
 
       {/* Hero heading + period selector + CTA */}
-      <HeroHeading
-        label="Statistikk"
-        title={HERO_TITLE}
-        description="Folg utviklingen din over tid. Analyser trender, Strokes Gained og fokusomrader."
-        actions={
-          <>
-            {/* Chip-tabs periode-velger */}
-            <div className="flex gap-1.5 rounded-[10px] bg-portal-hover p-[3px]">
-              {PERIOD_OPTIONS.map((o) => (
-                <button
-                  key={o.key}
-                  onClick={() => handlePeriodChange(o.key)}
-                  className={
-                    o.key === currentPeriod
-                      ? "rounded-[7px] bg-primary px-4 py-[7px] text-[13px] font-medium text-accent-cta-text shadow-md"
-                      : "rounded-[7px] px-4 py-[7px] text-[13px] font-medium text-portal-muted hover:text-portal-secondary"
-                  }
-                >
-                  {o.label}
-                </button>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
-              <Link
-                href="/portal/statistikk/ny-runde"
-                className="relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-[20px] bg-accent-cta px-6 text-[12px] font-bold text-accent-cta-text shadow-lg transition-shadow hover:shadow-xl"
+      <div className="space-y-3">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
+          Statistikk
+        </p>
+        <h1 className="text-2xl font-bold text-black">{HERO_TITLE}</h1>
+        <p className="text-[13px] text-grey-400 max-w-xl">
+          Folg utviklingen din over tid. Analyser trender, Strokes Gained og fokusomrader.
+        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Chip-tabs periode-velger */}
+          <div className="flex gap-1.5 rounded-[10px] bg-grey-50 p-[3px]">
+            {PERIOD_OPTIONS.map((o) => (
+              <button
+                key={o.key}
+                onClick={() => handlePeriodChange(o.key)}
+                className={
+                  o.key === currentPeriod
+                    ? "rounded-[7px] bg-black px-4 py-[7px] text-[13px] font-medium text-white shadow-md"
+                    : "rounded-[7px] px-4 py-[7px] text-[13px] font-medium text-grey-400 hover:text-text"
+                }
               >
-                <Shimmer />
-                <Plus className="relative z-10 h-3.5 w-3.5" strokeWidth={2.5} />
-                <span className="relative z-10">Logg runde</span>
-              </Link>
-            </motion.div>
-          </>
-        }
-      />
+                {o.label}
+              </button>
+            ))}
+          </div>
 
-      {/* KPI-rad: 4 noekkeltall */}
+          {/* CTA */}
+          <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+            <Link
+              href="/portal/statistikk/ny-runde"
+              className="relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-full bg-accent-cta px-6 text-[12px] font-bold text-black shadow-lg transition-shadow hover:shadow-xl"
+            >
+              <Plus className="relative z-10 h-3.5 w-3.5" strokeWidth={2.5} />
+              <span className="relative z-10">Logg runde</span>
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* KPI-rad: responsive noekkeltall */}
       <motion.div
-        className="grid grid-cols-2 gap-4 lg:grid-cols-4"
+        className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
         initial="hidden"
         animate="visible"
         variants={staggerContainer}
@@ -475,6 +483,46 @@ export function StatistikkClient({
             trendLabel="siste periode"
           />
         </motion.div>
+        {usi && (
+          <motion.div variants={fadeInUp}>
+            <PremiumStatCard
+              label="Estimert kategori"
+              value={usi.estimatedCategory}
+              unit={`(${Math.round(usi.vsTourAvgPct)}%)`}
+            />
+          </motion.div>
+        )}
+        {prescription && (
+          <motion.div variants={fadeInUp}>
+            <PremiumStatCard
+              label="Treningsfokus"
+              value={prescription.focusAreas[0] ?? "Generell"}
+              unit={`${prescription.weeklyHours.toFixed(1)}t/uke`}
+            />
+          </motion.div>
+        )}
+        {usi?.predictedHcp30d != null && (
+          <motion.div variants={fadeInUp}>
+            <PremiumStatCard
+              label="Prognose 30d"
+              value={usi.predictedHcp30d}
+              decimals={1}
+              lowerIsBetter
+              unit="HCP"
+            />
+          </motion.div>
+        )}
+        {usi?.predictedHcp90d != null && (
+          <motion.div variants={fadeInUp}>
+            <PremiumStatCard
+              label="Prognose 90d"
+              value={usi.predictedHcp90d}
+              decimals={1}
+              lowerIsBetter
+              unit="HCP"
+            />
+          </motion.div>
+        )}
       </motion.div>
 
       {/* 2-kolonne: Strokes Gained barer + Treningsvolum */}
@@ -483,15 +531,15 @@ export function StatistikkClient({
         <PremiumCard delay={0.15}>
           <div className="mb-5 flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
                 Strokes Gained
               </p>
-              <p className="mt-0.5 text-xs text-portal-secondary">
+              <p className="mt-0.5 text-xs text-text">
                 Per kategori
               </p>
             </div>
             {aggregates?.avgSgTotal != null && (
-              <span className="rounded-full border border-portal-border bg-portal-hover px-3 py-1 text-[11px] font-bold tabular-nums text-portal-text">
+              <span className="rounded-full border border-grey-200 bg-grey-50 px-3 py-1 text-[11px] font-bold tabular-nums text-black">
                 Totalt: {aggregates.avgSgTotal > 0 ? "+" : ""}
                 <span className="tabular-nums">{aggregates.avgSgTotal.toFixed(1)}</span>
               </span>
@@ -508,7 +556,7 @@ export function StatistikkClient({
             ))}
           </div>
           {SG_AREAS.every((a) => (aggregates?.[a.key] ?? null) === null) && (
-            <div className="flex h-[120px] items-center justify-center text-sm text-portal-muted">
+            <div className="flex h-[120px] items-center justify-center text-sm text-grey-400">
               Ingen SG-data i valgt periode
             </div>
           )}
@@ -517,10 +565,10 @@ export function StatistikkClient({
         {/* Treningsvolum stolpediagram */}
         <PremiumCard delay={0.2}>
           <div className="mb-5">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
               Treningsvolum
             </p>
-            <p className="mt-0.5 text-xs text-portal-secondary">
+            <p className="mt-0.5 text-xs text-text">
               Minutter per uke
             </p>
           </div>
@@ -532,15 +580,15 @@ export function StatistikkClient({
       <PremiumCard delay={0.25}>
         <div className="mb-5 flex items-start justify-between">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
               Score-trend
             </p>
-            <p className="mt-0.5 text-xs text-portal-secondary">
+            <p className="mt-0.5 text-xs text-text">
               Utvikling over tid
             </p>
           </div>
           {aggregates?.avgScore != null && (
-            <span className="rounded-full border border-portal-border bg-portal-hover px-3 py-1 text-xs font-bold tabular-nums text-portal-text">
+            <span className="rounded-full border border-grey-200 bg-grey-50 px-3 py-1 text-xs font-bold tabular-nums text-black">
               Snitt <span className="tabular-nums">{aggregates.avgScore.toFixed(1)}</span>
             </span>
           )}
@@ -557,19 +605,26 @@ export function StatistikkClient({
         >
           <PremiumCard delay={0.4}>
             <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10">
-                <Lightbulb className="h-6 w-6 text-primary" strokeWidth={1.75} />
+              <div
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
+                style={{ backgroundColor: `${colors.ai.primary}15` }}
+              >
+                <Zap className="h-5 w-5" style={{ color: colors.ai.primary }} />
               </div>
-              <div>
-                <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">
+              <div className="min-w-0 flex-1">
+                <div
+                  className="mb-1 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider"
+                  style={{ color: colors.ai.primary }}
+                >
+                  <Sparkles className="h-3 w-3" />
                   AI-anbefaling
-                </p>
-                <h3 className="mb-2 text-[14px] font-semibold text-portal-text">
-                  Fokuser pa {weakestArea.label}-trening
+                </div>
+                <h3 className="mb-2 text-sm font-semibold" style={{ color: colors.primary.dark }}>
+                  Fokuser på {weakestArea.label}-trening
                 </h3>
-                <p className="text-[13px] leading-relaxed text-portal-secondary">
-                  Basert pa dine SG-data bor du oke fokus pa{" "}
-                  <strong className="text-portal-text">
+                <p className="text-[13px] leading-relaxed" style={{ color: colors.primary.dark }}>
+                  Basert på dine SG-data bør du øke fokus på{" "}
+                  <strong style={{ color: colors.primary.dark }}>
                     {weakestArea.label}
                   </strong>
                   . Du taper mest slag (<span className="tabular-nums">{weakestArea.value.toFixed(1)}</span>) i denne kategorien.

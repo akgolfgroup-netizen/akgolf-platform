@@ -37,8 +37,8 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md transition-all duration-300 ${
         variant === "light" 
-          ? "bg-[#fdf9f0]/80 border-b border-[#154212]/5" 
-          : "bg-[#154212]/90 border-b border-white/10"
+          ? "bg-[grey-50]/80 border-b border-[black]/5" 
+          : "bg-[black]/90 border-b border-white/10"
       }`}
     >
       <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
@@ -58,10 +58,10 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                 className={`font-medium uppercase tracking-wider text-sm transition-colors pb-1 ${
                   isActive(item.href)
                     ? variant === "light"
-                      ? "text-[#154212] border-b-2 border-[#d2f000]"
-                      : "text-white border-b-2 border-[#d2f000]"
+                      ? "text-[black] border-b-2 border-[accent-cta]"
+                      : "text-white border-b-2 border-[accent-cta]"
                     : variant === "light"
-                      ? "text-[#154212]/70 hover:text-[#154212]"
+                      ? "text-[black]/70 hover:text-[black]"
                       : "text-white/70 hover:text-white"
                 }`}
               >
@@ -77,7 +77,7 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                 href="/portal/login"
                 className={`font-medium uppercase tracking-wider text-sm transition-colors ${
                   variant === "light" 
-                    ? "text-[#154212]/70 hover:text-[#154212]" 
+                    ? "text-[black]/70 hover:text-[black]" 
                     : "text-white/70 hover:text-white"
                 }`}
               >
@@ -85,7 +85,7 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
               </Link>
               <Link
                 href="/booking"
-                className="bg-[#d2f000] text-[#154212] px-6 py-2.5 rounded-lg font-medium uppercase tracking-wider text-sm hover:opacity-90 transition-all scale-95 active:scale-90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]"
+                className="bg-[accent-cta] text-[black] px-6 py-2.5 rounded-lg font-medium uppercase tracking-wider text-sm hover:opacity-90 transition-all scale-95 active:scale-90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]"
               >
                 Book nå
               </Link>
@@ -97,7 +97,7 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className={`md:hidden p-2 rounded-lg transition-colors ${
               variant === "light" 
-                ? "text-[#154212] hover:bg-[#154212]/5" 
+                ? "text-[black] hover:bg-[black]/5" 
                 : "text-white hover:bg-white/10"
             }`}
             aria-label="Toggle menu"
@@ -133,8 +133,8 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
         <div 
           className={`md:hidden border-t ${
             variant === "light" 
-              ? "bg-[#fdf9f0] border-[#154212]/5" 
-              : "bg-[#154212] border-white/10"
+              ? "bg-[grey-50] border-[black]/5" 
+              : "bg-[black] border-white/10"
           }`}
         >
           <div className="px-6 py-4 space-y-3">
@@ -146,10 +146,10 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                 className={`block py-2 font-medium uppercase tracking-wider text-sm ${
                   isActive(item.href)
                     ? variant === "light"
-                      ? "text-[#154212] border-l-2 border-[#d2f000] pl-3"
-                      : "text-white border-l-2 border-[#d2f000] pl-3"
+                      ? "text-[black] border-l-2 border-[accent-cta] pl-3"
+                      : "text-white border-l-2 border-[accent-cta] pl-3"
                     : variant === "light"
-                      ? "text-[#154212]/70 hover:text-[#154212]"
+                      ? "text-[black]/70 hover:text-[black]"
                       : "text-white/70 hover:text-white"
                 }`}
               >
@@ -157,13 +157,13 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
               </Link>
             ))}
             {showCTA && (
-              <div className="pt-3 border-t border-[#154212]/10 space-y-3">
+              <div className="pt-3 border-t border-[black]/10 space-y-3">
                 <Link
                   href="/portal/login"
                   onClick={() => setMobileMenuOpen(false)}
                   className={`block py-2 font-medium uppercase tracking-wider text-sm ${
                     variant === "light" 
-                      ? "text-[#154212]/70" 
+                      ? "text-[black]/70" 
                       : "text-white/70"
                   }`}
                 >
@@ -172,7 +172,7 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                 <Link
                   href="/booking"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-center bg-[#d2f000] text-[#154212] px-6 py-3 rounded-lg font-medium uppercase tracking-wider text-sm"
+                  className="block w-full text-center bg-[accent-cta] text-[black] px-6 py-3 rounded-lg font-medium uppercase tracking-wider text-sm"
                 >
                   Book nå
                 </Link>

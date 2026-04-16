@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { format, isToday, isTomorrow, differenceInHours } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
-  Calendar,
   Clock,
   MapPin,
   User as UserIcon,

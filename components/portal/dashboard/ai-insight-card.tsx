@@ -1,59 +1,71 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
-import { PremiumCard } from "./premium-card";
+import { colors } from "@/lib/design-tokens";
+import { Sparkles, Zap } from "lucide-react";
 
 interface AiInsightCardProps {
-  insight: {
-    summary: string;
-    focusTip: string;
-  } | null;
-  delay?: number;
+  summary?: string;
+  metrics?: { label: string; value: string; highlight?: boolean }[];
 }
 
-const FALLBACK_TEXT =
-  "Jern-spillet trenger fokus. Approach-skudd lander i snitt 12m fra hullet. Anbefaler 15 min dedikert trening med avstandskontroll 100-140m for neste okt.";
-
-export function AiInsightCard({ insight, delay = 0 }: AiInsightCardProps) {
-  const text = insight?.focusTip || insight?.summary || FALLBACK_TEXT;
-
+export function AiInsightCard({
+  summary = "Kort spill er ditt største potensial",
+  metrics = [
+    { label: "Kort Spill", value: "-2.1", highlight: true },
+    { label: "Driving", value: "+1.4", highlight: false },
+    { label: "Putting", value: "+0.8", highlight: false },
+  ],
+}: AiInsightCardProps) {
   return (
-    <PremiumCard delay={delay} glow="ai" className="relative">
-      {/* Purple glow line across top */}
-      <div className="absolute left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-ai to-transparent" />
-
-      {/* Header */}
-      <div className="mb-3 flex items-center gap-2.5">
-        <div className="flex h-[30px] w-[30px] items-center justify-center rounded-lg border border-ai/15 bg-ai/[0.08]">
-          <Sparkles className="h-[14px] w-[14px] text-ai" strokeWidth={2} />
+    <div
+      className="flex h-full flex-col justify-between rounded-2xl border p-5 shadow-sm"
+      style={{
+        backgroundColor: colors.ai.light,
+        borderColor: `${colors.ai.primary}20`,
+      }}
+    >
+      <div className="flex items-start gap-4">
+        <div
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+          style={{ backgroundColor: `${colors.ai.primary}15` }}
+        >
+          <Zap className="h-5 w-5" style={{ color: colors.ai.primary }} />
         </div>
-        <span className="text-sm font-semibold tracking-[-0.01em] text-[var(--color-portal-text)]">
-          AI-innsikt
-        </span>
-        <span className="ml-auto rounded-md border border-ai/15 bg-ai/[0.08] px-2.5 py-1 text-[11px] font-medium text-ai">
-          Ny
-        </span>
+        <div className="min-w-0 flex-1">
+          <div
+            className="mb-1 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider"
+            style={{ color: colors.ai.primary }}
+          >
+            <Sparkles className="h-3 w-3" />
+            AI-innsikt
+          </div>
+          <p className="line-clamp-3 text-sm font-semibold" style={{ color: colors.primary.dark }}>
+            {summary}
+          </p>
+        </div>
       </div>
 
-      {/* Content — first sentence bold, rest normal */}
-      <p className="text-[13px] leading-[1.65] text-[var(--color-portal-secondary)]">
-        <HighlightedText text={text} />
-      </p>
-    </PremiumCard>
-  );
-}
-
-function HighlightedText({ text }: { text: string }) {
-  const dotIndex = text.indexOf(".");
-  if (dotIndex === -1) return <>{text}</>;
-
-  const bold = text.slice(0, dotIndex + 1);
-  const rest = text.slice(dotIndex + 1);
-
-  return (
-    <>
-      <strong className="font-medium text-[var(--color-portal-text)]">{bold}</strong>
-      {rest}
-    </>
+      <div className="mt-4 flex gap-2">
+        {metrics.map((m, i) => (
+          <div
+            key={i}
+            className="flex-1 rounded-lg px-2 py-2 text-center"
+            style={{
+              backgroundColor: m.highlight ? colors.ai.primary : "white",
+              color: m.highlight ? "white" : colors.primary.dark,
+              border: m.highlight ? "none" : `1px solid ${colors.ai.primary}15`,
+            }}
+          >
+            <p
+              className="text-[8px] font-bold uppercase opacity-70"
+              style={{ color: m.highlight ? "white" : colors.ink[40] }}
+            >
+              {m.label}
+            </p>
+            <p className="text-sm font-bold">{m.value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

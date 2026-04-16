@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-type BadgeVariant = 'pro' | 'elite' | 'free' | 'gir' | 'bogey' | 'birdie' | 'success' | 'warning' | 'error';
+type BadgeVariant = 'default' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'muted' | 'pro' | 'lime' | 'purple';
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
@@ -10,12 +10,12 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 export const Badge: React.FC<BadgeProps> = ({
   children,
-  variant = 'free',
+  variant = 'default',
   size = 'sm',
   className,
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center font-medium rounded-full';
+  const baseStyles = 'inline-flex items-center font-semibold rounded-full';
   
   const sizes = {
     sm: 'px-2.5 py-0.5 text-xs',
@@ -23,15 +23,16 @@ export const Badge: React.FC<BadgeProps> = ({
   };
   
   const variants: Record<BadgeVariant, string> = {
-    pro: 'bg-[#D4AF37] text-[#0F172A]',           // Gull for Pro
-    elite: 'bg-[#CD7F32] text-white',              // Bronse for Elite
-    free: 'bg-[#334155] text-white',               // Grå for Free
-    gir: 'bg-[#16A34A] text-white',                // Grønn for GIR
-    bogey: 'bg-[#F97316] text-white',              // Oransje for Bogey
-    birdie: 'bg-[#3B82F6] text-white',             // Blå for Birdie
-    success: 'bg-[#16A34A] text-white',
-    warning: 'bg-[#F97316] text-white',
-    error: 'bg-[#EF4444] text-white',
+    default: 'bg-grey-100 text-text border border-grey-200',
+    secondary: 'bg-grey-100 text-grey-500 border border-grey-200',
+    success: 'bg-success-light text-success-text',
+    warning: 'bg-warning-light text-warning-text',
+    error: 'bg-error-light text-error-text',
+    info: 'bg-info-light text-info-text',
+    muted: 'bg-grey-50 text-grey-400 border border-grey-200',
+    pro: 'bg-accent-cta text-accent-cta-text',
+    lime: 'bg-accent-cta text-accent-cta-text',
+    purple: 'bg-ai-light text-ai-text',
   };
 
   return (

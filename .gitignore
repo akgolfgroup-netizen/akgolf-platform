@@ -54,7 +54,7 @@ __pycache__/
 # Local development config
 .kimi/
 .agents/
-.claude/
+# .claude/ — nå sporet i git
 
 # Design assets (removed from repo)
 stitch/
@@ -77,4 +77,4 @@ e2e/
 code.html
 check-data.js
 cleanup-data.js
-.mcp.json
+# .mcp.json — nå sporet i git

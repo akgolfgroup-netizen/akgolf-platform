@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 /**
  * Booking API Integration Tests
@@ -12,7 +13,7 @@
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
 import { prisma } from "@/lib/portal/prisma";
 import { nanoid } from "nanoid";
-import { addDays, addHours, formatISO } from "date-fns";
+import { addDays, addHours } from "date-fns";
 
 // -----------------------------------------------------------------------------
 // Test Helpers
@@ -208,7 +209,7 @@ async function mockCreateBookingAPI(body: {
         }
 
         // Opprett bruker hvis email+name er angitt
-        let studentId = email ? await getOrCreateUser(email, name || "Gjest") : nanoid();
+        const studentId = email ? await getOrCreateUser(email, name || "Gjest") : nanoid();
 
         // Opprett booking
         return tx.booking.create({

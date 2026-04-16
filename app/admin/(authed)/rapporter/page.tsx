@@ -18,7 +18,6 @@ import {
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminButton,
   AdminSelect,
   AdminInput,
   AdminPageHeader,
@@ -26,11 +25,12 @@ import {
   AdminDropdown,
   AdminDialog,
   AdminDateRangePicker,
-  AdminBadge,
   type AdminDataTableColumn,
   type AdminDateRange,
   type AdminDropdownItem,
 } from "@/components/portal/mission-control/ui";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   exportBookingsCSV,
   exportRevenueCSV,
@@ -233,7 +233,7 @@ export default function RapporterPage() {
       key: "type",
       label: "Type",
       sortable: true,
-      render: (row) => <AdminBadge variant="info">{row.type}</AdminBadge>,
+      render: (row) => <Badge variant="info">{row.type}</Badge>,
     },
     {
       key: "generatedAt",
@@ -300,13 +300,13 @@ export default function RapporterPage() {
           title="Rapporter"
           subtitle="Generer, planlegg og last ned rapporter fra akademiet"
           actions={
-            <AdminButton
-              variant="primary"
-              icon={<Plus className="w-4 h-4" />}
+            <Button
+              variant="accent"
               onClick={() => setDialogOpen(true)}
             >
+              <Plus className="w-4 h-4 mr-2" />
               Ny rapport
-            </AdminButton>
+            </Button>
           }
         />
 
@@ -429,15 +429,15 @@ export default function RapporterPage() {
                   })}
                 </div>
               </div>
-              <AdminButton
-                variant="primary"
-                icon={isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
+              <Button
+                variant="accent"
                 className="w-full justify-center"
                 onClick={() => generateType && handleExport(generateType as ReportTypeId)}
                 disabled={!generateType || isPending}
               >
+                {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
                 {isPending ? "Genererer..." : "Generer rapport"}
-              </AdminButton>
+              </Button>
             </div>
           </div>
 
@@ -525,20 +525,20 @@ export default function RapporterPage() {
         size="md"
         footer={
           <>
-            <AdminButton
+            <Button
               variant="secondary"
               onClick={() => setDialogOpen(false)}
             >
               Avbryt
-            </AdminButton>
-            <AdminButton
-              variant="primary"
-              icon={isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
+            </Button>
+            <Button
+              variant="accent"
               onClick={handleGenerate}
               disabled={!generateType || isPending}
             >
+              {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
               {isPending ? "Genererer..." : "Generer"}
-            </AdminButton>
+            </Button>
           </>
         }
       >

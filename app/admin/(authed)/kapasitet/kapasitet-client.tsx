@@ -8,15 +8,14 @@ import {
   DollarSign,
   ChevronRight,
   Sparkles,
+  Info,
 } from "lucide-react";
 import {
   MCTopbar,
   useMCSidebar,
-  HGAlert,
 } from "@/components/portal/mission-control";
 import {
   AdminStatCard,
-  AdminBadge,
   AdminGauge,
   AdminProgressRing,
   AdminBarChart,
@@ -24,6 +23,7 @@ import {
   AdminHeatmap,
   AdminDataTable,
 } from "@/components/portal/mission-control/ui";
+import { Badge } from "@/components/ui/badge";
 import type {
   AdminBarChartDatum,
   AdminAreaChartDatum,
@@ -212,11 +212,14 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
 
       <div className="p-6 space-y-6">
         {/* Alert */}
-        <HGAlert variant="info">
-          <strong>Kapasitetsoversikt:</strong> Basert på tilgjengelighet og
-          bookinger for denne uken ({data.weekRange.from} – {data.weekRange.to}
-          ).
-        </HGAlert>
+        <div className="flex items-start gap-3 rounded-xl bg-info-light border border-info/20 p-4 text-info-text">
+          <Info className="w-5 h-5 shrink-0 mt-0.5" />
+          <p className="text-sm">
+            <strong>Kapasitetsoversikt:</strong> Basert på tilgjengelighet og
+            bookinger for denne uken ({data.weekRange.from} – {data.weekRange.to}
+            ).
+          </p>
+        </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -244,8 +247,8 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
 
         {/* Hero — total utnyttelse + trend */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl shadow-card p-6">
-            <h3 className="text-lg font-semibold text-grey-900 mb-4">
+          <div className="bg-white border border-grey-200 rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-black mb-4">
               Total utnyttelse
             </h3>
             <div className="flex flex-col items-center gap-3">
@@ -256,19 +259,19 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                 label="denne uken"
               />
               <div className="text-center">
-                <p className="text-xs text-grey-500">
+                <p className="text-xs text-grey-400">
                   {weeklyTotal.booked} av {weeklyTotal.slots} sloter
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-card p-6 lg:col-span-2">
+          <div className="bg-white border border-grey-200 rounded-xl p-6 lg:col-span-2">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-grey-900">
+              <h3 className="text-lg font-semibold text-black">
                 Kapasitetstrend
               </h3>
-              <AdminBadge variant="info">Siste 6 uker</AdminBadge>
+              <Badge variant="info">Siste 6 uker</Badge>
             </div>
             <AdminAreaChart
               data={trendData}
@@ -279,12 +282,12 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
         </div>
 
         {/* Coach Gauges */}
-        <div className="bg-white rounded-xl shadow-card p-6">
-          <h3 className="text-lg font-semibold text-grey-900 mb-4">
+        <div className="bg-white border border-grey-200 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-black mb-4">
             Kapasitet per coach
           </h3>
           {coaches.length === 0 ? (
-            <p className="text-sm text-grey-500 py-4 text-center">
+            <p className="text-sm text-grey-400 py-4 text-center">
               Ingen coacher å vise.
             </p>
           ) : (
@@ -294,7 +297,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                 return (
                   <div
                     key={coach.id}
-                    className="flex flex-col items-center p-4 rounded-lg bg-grey-100"
+                    className="flex flex-col items-center p-4 rounded-lg bg-grey-50"
                   >
                     <AdminGauge
                       value={coachPct}
@@ -303,10 +306,10 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                       label={coach.name}
                     />
                     <div className="mt-2 text-center">
-                      <p className="text-xs text-grey-500">
+                      <p className="text-xs text-grey-400">
                         {coach.bookedSlots} av {coach.weeklySlots} sloter
                       </p>
-                      <p className="text-xs text-grey-500">
+                      <p className="text-xs text-grey-400">
                         {formatKr(coach.weeklyRevenue)} inntekt
                       </p>
                     </div>
@@ -319,8 +322,8 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
 
         {/* Ukesutnyttelse + belegg heatmap */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white rounded-xl shadow-card p-6">
-            <h3 className="text-lg font-semibold text-grey-900 mb-4">
+          <div className="bg-white border border-grey-200 rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-black mb-4">
               Ukesutnyttelse
             </h3>
             <AdminBarChart
@@ -330,12 +333,12 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
             />
           </div>
 
-          <div className="bg-white rounded-xl shadow-card p-6">
-            <h3 className="text-lg font-semibold text-grey-900 mb-4">
+          <div className="bg-white border border-grey-200 rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-black mb-4">
               Belegg per coach og dag
             </h3>
             {heatmapRows.length === 0 ? (
-              <p className="text-sm text-grey-500 py-4 text-center">
+              <p className="text-sm text-grey-400 py-4 text-center">
                 Ingen data å vise.
               </p>
             ) : (
@@ -345,7 +348,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                   rows={heatmapRows}
                   cols={heatmapCols}
                   cellSize={32}
-                  color="var(--color-grey-600)"
+                  color="grey-500"
                   formatTooltip={(cell) =>
                     `${cell.row} ${cell.col}: ${cell.value}% belegg`
                   }
@@ -357,7 +360,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
 
         {/* Detail table */}
         <div>
-          <h3 className="text-lg font-semibold text-grey-900 mb-3">
+          <h3 className="text-lg font-semibold text-black mb-3">
             Detaljer per coach
           </h3>
           <AdminDataTable
@@ -370,34 +373,34 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
         </div>
 
         {/* Empty slots */}
-        <div className="bg-white rounded-xl shadow-card p-6">
-          <h3 className="text-lg font-semibold text-grey-900 mb-4">
+        <div className="bg-white border border-grey-200 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-black mb-4">
             Ledige sloter
           </h3>
-          <p className="text-xs text-grey-500 mb-3">
+          <p className="text-xs text-grey-400 mb-3">
             Ledige tider denne uken som kan fylles
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {emptySlotsList.length === 0 ? (
-              <p className="text-sm text-grey-500 py-4 text-center col-span-full">
+              <p className="text-sm text-grey-400 py-4 text-center col-span-full">
                 Ingen ledige sloter denne uken
               </p>
             ) : (
               emptySlotsList.slice(0, 9).map((slot, i) => (
                 <div
                   key={i}
-                  className="p-3 bg-grey-100 rounded-lg flex items-center justify-between hover:bg-grey-200 transition-colors cursor-pointer"
+                  className="p-3 bg-grey-50 rounded-lg flex items-center justify-between hover:bg-grey-100 transition-colors cursor-pointer"
                 >
                   <div>
-                    <div className="text-sm font-medium text-grey-900 capitalize">
+                    <div className="text-sm font-medium text-black capitalize">
                       {slot.day}
                     </div>
-                    <div className="text-xs text-grey-500">
+                    <div className="text-xs text-grey-400">
                       {slot.coach} — {slot.free}{" "}
                       {slot.free === 1 ? "ledig slot" : "ledige sloter"}
                     </div>
                   </div>
-                  <span className="p-1.5 text-grey-500">
+                  <span className="p-1.5 text-grey-400">
                     <ChevronRight className="w-4 h-4" />
                   </span>
                 </div>
@@ -405,17 +408,17 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
             )}
           </div>
           {emptySlotsList.length > 9 && (
-            <p className="text-xs text-grey-500 mt-2 text-center">
+            <p className="text-xs text-grey-400 mt-2 text-center">
               + {emptySlotsList.length - 9} flere
             </p>
           )}
         </div>
 
         {/* AI Recommendations (statisk foreløpig) */}
-        <div className="bg-white rounded-xl shadow-card p-6">
+        <div className="bg-white border border-grey-200 rounded-xl p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-5 h-5 text-grey-600" />
-            <h3 className="text-lg font-semibold text-grey-900">
+            <Sparkles className="w-5 h-5 text-grey-500" />
+            <h3 className="text-lg font-semibold text-black">
               AI-anbefalinger
             </h3>
           </div>
@@ -423,25 +426,25 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
             {recommendations.map((rec) => (
               <div
                 key={rec.title}
-                className="p-4 bg-grey-100 rounded-lg border border-grey-200 hover:border-grey-400 transition-colors"
+                className="p-4 bg-grey-50 rounded-lg border border-grey-200 hover:border-grey-300 transition-colors"
               >
                 <div className="flex items-start justify-between mb-2 gap-2">
-                  <h4 className="text-sm font-semibold text-grey-900">
+                  <h4 className="text-sm font-semibold text-black">
                     {rec.title}
                   </h4>
-                  <AdminBadge variant="success">
+                  <Badge variant="success">
                     {rec.confidence}% sikkert
-                  </AdminBadge>
+                  </Badge>
                 </div>
-                <p className="text-xs text-grey-500 mb-3 leading-relaxed">
+                <p className="text-xs text-grey-400 mb-3 leading-relaxed">
                   {rec.description}
                 </p>
                 <div className="flex items-center justify-between pt-3 border-t border-grey-200">
-                  <span className="text-sm font-bold text-grey-900">
+                  <span className="text-sm font-bold text-black">
                     {rec.impact}
                   </span>
                   <span
-                    className="text-xs text-grey-500 cursor-not-allowed"
+                    className="text-xs text-grey-400 cursor-not-allowed"
                     title="Kommer snart"
                   >
                     Kommer snart
@@ -453,26 +456,26 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
         </div>
 
         {/* Monthly summary */}
-        <div className="bg-white rounded-xl shadow-card p-6">
-          <h3 className="text-lg font-semibold text-grey-900 mb-3">
+        <div className="bg-white border border-grey-200 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-black mb-3">
             Denne måneden ({data.monthRange.from} – {data.monthRange.to})
           </h3>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <p className="text-xs text-grey-500">Inntekt</p>
-              <p className="text-lg font-bold text-grey-900 tabular-nums">
+              <p className="text-xs text-grey-400">Inntekt</p>
+              <p className="text-lg font-bold text-black tabular-nums">
                 {formatKr(data.monthlyTotal.revenue)}
               </p>
             </div>
             <div>
-              <p className="text-xs text-grey-500">Maks potensiell</p>
-              <p className="text-lg font-bold text-grey-900 tabular-nums">
+              <p className="text-xs text-grey-400">Maks potensiell</p>
+              <p className="text-lg font-bold text-black tabular-nums">
                 {formatKr(data.monthlyTotal.maxRevenue)}
               </p>
             </div>
             <div>
-              <p className="text-xs text-grey-500">Bookinger</p>
-              <p className="text-lg font-bold text-grey-900 tabular-nums">
+              <p className="text-xs text-grey-400">Bookinger</p>
+              <p className="text-lg font-bold text-black tabular-nums">
                 {data.monthlyTotal.bookedCount}
               </p>
             </div>

@@ -195,13 +195,27 @@ export async function deleteBlockedTime(id: string) {
   revalidateTag("slots", {});
 }
 
+import { syncGoogleCalendar as syncGoogleCalendarEngine } from "@/lib/portal/google-calendar/sync";
+
 export async function syncGoogleCalendar(instructorId: string) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) {
     throw new Error("Ikke autorisert");
   }
 
-  // TODO: Implementer Google Calendar sync med Supabase
-  logger.info("[syncGoogleCalendar] Not implemented yet");
-  return { success: false, message: "Google Calendar sync ikke implementert ennå", count: 0, error: "Ikke implementert ennå" };
+  try {
+    const result = await syncGoogleCalendarEngine(instructorId);
+    return {
+      success: result.errors === 0,
+      count: result.synced,
+      error: result.errors > 0 ? result.message : undefined,
+    };
+  } catch (error) {
+    logger.error("[syncGoogleCalendar] Error:", error);
+    return {
+      success: false,
+      count: 0,
+      error: error instanceof Error ? error.message : "Ukjent feil",
+    };
+  }
 }

@@ -9,7 +9,7 @@ import { createServiceClient } from "@/lib/supabase/server";
  * 
  * Manuell synkronisering av Google Calendar
  */
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     const user = await requirePortalUser();
     
@@ -56,6 +56,10 @@ export async function POST(request: NextRequest) {
  * Hent synkroniseringsstatus og importerte events
  */
 export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const includeEvents = searchParams.get("includeEvents") === "true";
+  const from = searchParams.get("from");
+  const to = searchParams.get("to");
   try {
     const user = await requirePortalUser();
     
@@ -82,12 +86,6 @@ export async function GET(request: NextRequest) {
         { status: 404 }
       );
     }
-
-    // Hent query params
-    const { searchParams } = new URL(request.url);
-    const includeEvents = searchParams.get("includeEvents") === "true";
-    const from = searchParams.get("from");
-    const to = searchParams.get("to");
 
     // Hent status
     const status = await getSyncStatus(instructor.id);
@@ -119,7 +117,7 @@ export async function GET(request: NextRequest) {
  * 
  * Koble fra Google Calendar
  */
-export async function DELETE(request: NextRequest) {
+export async function DELETE() {
   try {
     const user = await requirePortalUser();
     

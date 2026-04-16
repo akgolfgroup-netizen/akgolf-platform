@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { Send, Users, Bell, Loader2, CheckCircle } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
-  AdminCard,
-  AdminButton,
   AdminInput,
   AdminTextarea,
   AdminStatCard,
@@ -82,7 +82,7 @@ export function NotificationManager() {
       </div>
 
       {/* Send form */}
-      <AdminCard>
+      <Card>
         <h2 className="admin-section-title mb-5">Send notifikasjon</h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -120,30 +120,29 @@ export function NotificationManager() {
               onChange={(e) =>
                 setForm({ ...form, broadcast: e.target.checked })
               }
-              className="w-4 h-4 rounded border-[var(--color-grey-300)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
+              className="w-4 h-4 rounded border-grey-200 text-black focus:ring-black"
             />
-            <span className="text-sm text-[var(--color-text)]">
+            <span className="text-sm text-black">
               Send til alle brukere (broadcast)
             </span>
           </label>
 
-          <AdminButton
+          <Button
             type="submit"
             disabled={isSending || !form.title || !form.body}
-            icon={
-              sent ? (
-                <CheckCircle className="w-4 h-4" />
-              ) : isSending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Send className="w-4 h-4" />
-              )
-            }
+            isLoading={isSending}
           >
+            {sent ? (
+              <CheckCircle className="w-4 h-4" />
+            ) : isSending ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Send className="w-4 h-4" />
+            )}
             {isSending ? "Sender..." : sent ? "Sendt!" : "Send notifikasjon"}
-          </AdminButton>
+          </Button>
         </form>
-      </AdminCard>
+      </Card>
     </div>
   );
 }

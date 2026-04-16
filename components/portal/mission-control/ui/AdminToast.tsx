@@ -37,10 +37,10 @@ const iconMap: Record<
 };
 
 const colorMap: Record<AdminToastVariant, string> = {
-  success: "var(--color-success)",
+  success: "var(--color-success-text)",
   error: "var(--color-error)",
   warning: "var(--color-warning)",
-  info: "var(--color-primary)",
+  info: "var(--color-info)",
 };
 
 export function AdminToastProvider({
@@ -89,29 +89,19 @@ export function AdminToastProvider({
             <div
               key={t.id}
               role="status"
-              className="pointer-events-auto min-w-[280px] max-w-sm flex items-start gap-3 px-4 py-3 rounded-xl shadow-xl"
+              className="pointer-events-auto min-w-[280px] max-w-sm flex items-start gap-3 px-4 py-3 rounded-xl shadow-xl bg-white border border-grey-200"
               style={{
-                background: "var(--color-surface)",
                 borderLeft: `3px solid ${color}`,
-                border: `1px solid var(--color-muted)`,
-                borderLeftWidth: 3,
-                borderLeftColor: color,
                 animation: "admin-toast-in 220ms ease",
               }}
             >
               <Icon className="w-5 h-5 shrink-0 mt-0.5" style={{ color }} />
               <div className="flex-1 min-w-0">
-                <div
-                  className="text-sm font-semibold"
-                  style={{ color: "var(--color-text)" }}
-                >
+                <div className="text-sm font-semibold text-black">
                   {t.title}
                 </div>
                 {t.description && (
-                  <div
-                    className="text-xs mt-0.5"
-                    style={{ color: "var(--color-muted)" }}
-                  >
+                  <div className="text-xs mt-0.5 text-grey-400">
                     {t.description}
                   </div>
                 )}
@@ -122,10 +112,7 @@ export function AdminToastProvider({
                 className="shrink-0 p-0.5 rounded hover:bg-black/5"
                 aria-label="Lukk varsel"
               >
-                <X
-                  className="w-4 h-4"
-                  style={{ color: "var(--color-muted)" }}
-                />
+                <X className="w-4 h-4 text-grey-400" />
               </button>
             </div>
           );

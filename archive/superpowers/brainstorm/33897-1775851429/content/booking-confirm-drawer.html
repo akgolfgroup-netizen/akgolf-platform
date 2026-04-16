@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking — Bekreft + Betal drawers</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',system-ui,sans-serif; background:#ECF0EF; min-height:100vh; }
+
+  .nav { background:white; border-bottom:1px solid #D5DFDB; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:10; }
+  .nav-logo { font-weight:800; font-size:18px; color:#005840; letter-spacing:-0.5px; }
+  .nav-logo span { color:#A5B2AD; font-weight:500; font-size:12px; margin-left:6px; }
+
+  .page { max-width:720px; margin:0 auto; padding:32px 20px 80px; }
+
+  /* Summary bar showing selections made */
+  .selection-summary {
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:20px;
+    border:1px solid #D5DFDB;
+  }
+  .selection-row {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:8px 0;
+  }
+  .selection-row + .selection-row { border-top:1px solid #ECF0EF; }
+  .selection-icon {
+    width:36px; height:36px;
+    border-radius:10px;
+    background:#ECF0EF;
+    display:flex; align-items:center; justify-content:center;
+    color:#005840; font-size:16px; flex-shrink:0;
+  }
+  .selection-icon.done { background:#D1F843; }
+  .selection-label { font-size:11px; color:#A5B2AD; }
+  .selection-value { font-size:14px; font-weight:600; color:#0A1F18; }
+  .selection-change { font-size:11px; color:#005840; cursor:pointer; margin-left:auto; text-decoration:underline; }
+
+  .prompt-text {
+    text-align:center;
+    padding:40px 20px;
+    color:#A5B2AD;
+    font-size:14px;
+  }
+
+  /* Backdrop */
+  .backdrop {
+    position:fixed; inset:0;
+    background:rgba(10,31,24,0.4);
+    backdrop-filter:blur(4px);
+    opacity:0; pointer-events:none;
+    transition:opacity 0.3s; z-index:50;
+  }
+  .backdrop.visible { opacity:1; pointer-events:auto; }
+
+  /* Drawer base */
+  .drawer {
+    position:fixed;
+    bottom:0; left:0; right:0;
+    background:white;
+    border-radius:20px 20px 0 0;
+    box-shadow:0 -8px 40px rgba(0,0,0,0.12);
+    transform:translateY(100%);
+    transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index:100;
+    max-width:720px;
+    margin:0 auto;
+    max-height:90vh;
+    overflow-y:auto;
+  }
+  .drawer.visible { transform:translateY(0); }
+  .drawer-handle { width:40px; height:4px; border-radius:99px; background:#D5DFDB; margin:12px auto 0; }
+  .drawer-inner { padding:20px 24px 32px; }
+  .drawer-title { font-size:18px; font-weight:700; color:#0A1F18; margin-bottom:4px; }
+  .drawer-sub { font-size:12px; color:#A5B2AD; margin-bottom:20px; }
+
+  /* Confirm drawer specifics */
+  .confirm-section { margin-bottom:20px; }
+  .confirm-section-label {
+    font-size:10px; font-weight:700; text-transform:uppercase;
+    letter-spacing:1.5px; color:#A5B2AD; margin-bottom:10px;
+  }
+
+  /* Booking summary in drawer */
+  .booking-summary {
+    background:#005840;
+    border-radius:16px;
+    padding:20px;
+    color:white;
+    margin-bottom:20px;
+  }
+  .bs-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; }
+  .bs-row + .bs-row { border-top:1px solid rgba(255,255,255,0.08); }
+  .bs-label { font-size:12px; color:rgba(255,255,255,0.5); }
+  .bs-value { font-size:13px; font-weight:600; }
+  .bs-total { display:flex; justify-content:space-between; align-items:end; margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.15); }
+  .bs-total-label { font-size:10px; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.4); }
+  .bs-total-price { font-size:28px; font-weight:800; color:#D1F843; letter-spacing:-1px; }
+  .bs-total-period { font-size:11px; color:rgba(255,255,255,0.4); margin-left:4px; }
+
+  /* Focus area chips */
+  .focus-chips { display:flex; gap:8px; flex-wrap:wrap; }
+  .focus-chip {
+    display:flex; align-items:center; gap:6px;
+    padding:10px 16px;
+    border-radius:12px;
+    background:#ECF0EF;
+    font-size:13px; font-weight:500; color:#324D45;
+    cursor:pointer; transition:all 0.2s;
+    border:2px solid transparent;
+  }
+  .focus-chip:hover { border-color:#005840; }
+  .focus-chip.selected { background:#005840; color:white; border-color:#005840; }
+  .focus-chip .fc-icon { font-size:16px; }
+
+  /* Form fields */
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media(max-width:480px){ .form-grid { grid-template-columns:1fr; } }
+  .form-field { display:flex; flex-direction:column; gap:4px; }
+  .form-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:#A5B2AD; }
+  .form-input {
+    padding:12px 14px;
+    border-radius:10px;
+    background:#ECF0EF;
+    border:2px solid transparent;
+    font-size:13px; color:#0A1F18;
+    outline:none; transition:border-color 0.2s;
+    font-family:inherit;
+  }
+  .form-input:focus { border-color:#005840; }
+  .form-input.prefilled { color:#324D45; background:#f0f4f3; }
+
+  /* Notes textarea */
+  .form-textarea {
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    background:#ECF0EF;
+    border:2px solid transparent;
+    font-size:13px; color:#0A1F18;
+    outline:none; resize:none;
+    font-family:inherit;
+    transition:border-color 0.2s;
+  }
+  .form-textarea:focus { border-color:#005840; }
+
+  /* Terms */
+  .terms-row {
+    display:flex; align-items:flex-start; gap:10px;
+    margin-top:16px; padding:14px; border-radius:12px; background:#ECF0EF;
+  }
+  .terms-check {
+    width:20px; height:20px; border-radius:6px;
+    border:2px solid #A5B2AD; background:white;
+    flex-shrink:0; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s; margin-top:1px;
+  }
+  .terms-check.checked { background:#005840; border-color:#005840; }
+  .terms-check.checked::after { content:'✓'; color:white; font-size:12px; font-weight:700; }
+  .terms-text { font-size:11px; color:#324D45; line-height:1.5; }
+  .terms-text a { color:#005840; font-weight:600; }
+
+  /* CTA */
+  .drawer-cta {
+    width:100%; margin-top:20px; padding:16px;
+    border-radius:14px; background:#D1F843; color:#005840;
+    font-size:14px; font-weight:700; text-transform:uppercase;
+    letter-spacing:1px; border:none; cursor:pointer;
+    transition:all 0.2s;
+  }
+  .drawer-cta:hover { background:#c8ef35; }
+  .drawer-cta:disabled { opacity:0.4; cursor:not-allowed; }
+  .drawer-cta-secondary {
+    width:100%; margin-top:20px; padding:16px;
+    border-radius:14px; background:#005840; color:white;
+    font-size:14px; font-weight:700; text-transform:uppercase;
+    letter-spacing:1px; border:none; cursor:pointer;
+    transition:all 0.2s;
+  }
+
+  /* Payment drawer */
+  .payment-option {
+    display:flex; align-items:center; gap:14px;
+    padding:16px; border-radius:14px; background:#ECF0EF;
+    cursor:pointer; border:2px solid transparent;
+    transition:all 0.2s; margin-bottom:8px;
+  }
+  .payment-option:hover { border-color:#005840; }
+  .payment-option.selected { border-color:#D1F843; background:white; }
+  .payment-icon {
+    width:44px; height:44px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; font-weight:700; flex-shrink:0;
+  }
+  .payment-name { font-size:14px; font-weight:600; color:#0A1F18; }
+  .payment-desc { font-size:11px; color:#A5B2AD; }
+  .payment-check {
+    margin-left:auto;
+    width:22px; height:22px; border-radius:50%;
+    border:2px solid #D5DFDB; display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s;
+  }
+  .payment-option.selected .payment-check { background:#005840; border-color:#005840; }
+  .payment-option.selected .payment-check::after { content:'✓'; color:white; font-size:11px; }
+
+  /* Success state */
+  .success-container {
+    text-align:center;
+    padding:40px 20px;
+  }
+  .success-icon {
+    width:64px; height:64px; border-radius:50%;
+    background:#D1F843; color:#005840;
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px; margin:0 auto 16px;
+  }
+  .success-title { font-size:20px; font-weight:700; color:#0A1F18; margin-bottom:4px; }
+  .success-sub { font-size:13px; color:#A5B2AD; margin-bottom:24px; }
+  .success-details {
+    background:#ECF0EF; border-radius:12px; padding:16px; text-align:left;
+    font-size:13px; color:#324D45;
+  }
+  .success-details div { padding:4px 0; display:flex; justify-content:space-between; }
+  .success-details strong { color:#0A1F18; }
+
+  /* Buttons row */
+  .btn-row { display:flex; gap:8px; margin-top:12px; }
+  .btn-row button { flex:1; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">AK Golf <span>Book</span></div>
+</nav>
+
+<div class="page">
+  <!-- Show what's been selected -->
+  <div class="selection-summary">
+    <div class="selection-row">
+      <div class="selection-icon done"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#005840" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div>
+        <div class="selection-label">Trener</div>
+        <div class="selection-value">Anders Kristiansen</div>
+      </div>
+      <div class="selection-change">Endre</div>
+    </div>
+    <div class="selection-row">
+      <div class="selection-icon done"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#005840" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <div>
+        <div class="selection-label">Tjeneste</div>
+        <div class="selection-value">Performance Pro &middot; 2 000 kr/mnd</div>
+      </div>
+      <div class="selection-change">Endre</div>
+    </div>
+    <div class="selection-row">
+      <div class="selection-icon done"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#005840" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div>
+        <div class="selection-label">Dato & tid</div>
+        <div class="selection-value">Man 14. apr kl 15:00</div>
+      </div>
+      <div class="selection-change">Endre</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;justify-content:center;">
+    <button onclick="showConfirm()" style="padding:12px 24px;border-radius:12px;background:#005840;color:white;border:none;cursor:pointer;font-weight:600;font-size:13px;">Vis bekreft-drawer</button>
+    <button onclick="showPayment()" style="padding:12px 24px;border-radius:12px;background:#324D45;color:white;border:none;cursor:pointer;font-weight:600;font-size:13px;">Vis betal-drawer</button>
+    <button onclick="showSuccess()" style="padding:12px 24px;border-radius:12px;background:#D1F843;color:#005840;border:none;cursor:pointer;font-weight:600;font-size:13px;">Vis bekreftelse</button>
+  </div>
+</div>
+
+<!-- Backdrop -->
+<div class="backdrop" id="backdrop" onclick="closeAll()"></div>
+
+<!-- DRAWER: Bekreft booking -->
+<div class="drawer" id="confirm-drawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-inner">
+    <div class="drawer-title">Bekreft din booking</div>
+    <div class="drawer-sub">Sjekk detaljene og bekreft</div>
+
+    <!-- Booking summary -->
+    <div class="booking-summary">
+      <div class="bs-row">
+        <span class="bs-label">Trener</span>
+        <span class="bs-value">Anders Kristiansen</span>
+      </div>
+      <div class="bs-row">
+        <span class="bs-label">Tjeneste</span>
+        <span class="bs-value">Performance Pro</span>
+      </div>
+      <div class="bs-row">
+        <span class="bs-label">Dato</span>
+        <span class="bs-value">Mandag 14. april 2026</span>
+      </div>
+      <div class="bs-row">
+        <span class="bs-label">Tid</span>
+        <span class="bs-value">15:00 — 15:20 (20 min)</span>
+      </div>
+      <div class="bs-row">
+        <span class="bs-label">Sted</span>
+        <span class="bs-value">Gamle Fredrikstad GK</span>
+      </div>
+      <div class="bs-total">
+        <div>
+          <div class="bs-total-label">Total</div>
+        </div>
+        <div>
+          <span class="bs-total-price">2 000</span>
+          <span class="bs-total-period">kr/mnd</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Focus area -->
+    <div class="confirm-section">
+      <div class="confirm-section-label">Hva vil du jobbe med? (valgfritt)</div>
+      <div class="focus-chips">
+        <div class="focus-chip" onclick="toggleFocus(this)"><span class="fc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span> Langt spill</div>
+        <div class="focus-chip" onclick="toggleFocus(this)"><span class="fc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span> Innspill</div>
+        <div class="focus-chip" onclick="toggleFocus(this)"><span class="fc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></span> Naerspill</div>
+        <div class="focus-chip" onclick="toggleFocus(this)"><span class="fc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/></svg></span> Putting</div>
+      </div>
+      <div style="margin-top:10px;">
+        <textarea class="form-textarea" rows="2" placeholder="Beskriv utfordringen din (valgfritt)..."></textarea>
+      </div>
+    </div>
+
+    <!-- User info -->
+    <div class="confirm-section">
+      <div class="confirm-section-label">Dine opplysninger</div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Navn *</label>
+          <input class="form-input prefilled" value="Anders Kristiansen" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">E-post *</label>
+          <input class="form-input prefilled" value="anders@akgolf.no" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Telefon</label>
+          <input class="form-input prefilled" value="+47 900 00 000" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Handicap</label>
+          <input class="form-input" placeholder="f.eks. 12.5" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div class="terms-row">
+      <div class="terms-check" id="terms-check" onclick="toggleTerms()"></div>
+      <div class="terms-text">
+        Jeg godkjenner at beloopet pa <strong>2 000 kr/mnd</strong> trekkes automatisk, og bekrefter at jeg har lest <a href="#">kanselleringspolicyen</a>. Avbestilling minst 24 timer for.
+      </div>
+    </div>
+
+    <button class="drawer-cta" onclick="closeAll(); showPayment();">Ga til betaling &#8594;</button>
+  </div>
+</div>
+
+<!-- DRAWER: Betaling -->
+<div class="drawer" id="payment-drawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-inner">
+    <div class="drawer-title">Velg betalingsmate</div>
+    <div class="drawer-sub">Performance Pro &middot; 2 000 kr/mnd</div>
+
+    <div class="payment-option selected" onclick="selectPayment(this)">
+      <div class="payment-icon" style="background:#ECF0EF;color:#005840;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      </div>
+      <div>
+        <div class="payment-name">Kortbetaling</div>
+        <div class="payment-desc">Visa / Mastercard</div>
+      </div>
+      <div class="payment-check"></div>
+    </div>
+
+    <div class="payment-option" onclick="selectPayment(this)">
+      <div class="payment-icon" style="background:#000;color:white;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+      </div>
+      <div>
+        <div class="payment-name">Apple Pay</div>
+        <div class="payment-desc">Betal med Apple Pay</div>
+      </div>
+      <div class="payment-check"></div>
+    </div>
+
+    <div class="payment-option" onclick="selectPayment(this)">
+      <div class="payment-icon" style="background:#fff;border:1px solid #D5DFDB;">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      </div>
+      <div>
+        <div class="payment-name">Google Pay</div>
+        <div class="payment-desc">Betal med Google Pay</div>
+      </div>
+      <div class="payment-check"></div>
+    </div>
+
+    <!-- Security badges -->
+    <div style="display:flex;gap:8px;margin-top:20px;">
+      <div style="flex:1;background:#ECF0EF;border-radius:10px;padding:12px;text-align:center;">
+        <div style="margin-bottom:4px;display:flex;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#005840" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div style="font-size:10px;font-weight:600;color:#005840;">SSL-kryptert</div>
+      </div>
+      <div style="flex:1;background:#ECF0EF;border-radius:10px;padding:12px;text-align:center;">
+        <div style="margin-bottom:4px;display:flex;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#005840" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div style="font-size:10px;font-weight:600;color:#005840;">Avbestill 24t for</div>
+      </div>
+      <div style="flex:1;background:#ECF0EF;border-radius:10px;padding:12px;text-align:center;">
+        <div style="margin-bottom:4px;display:flex;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#005840" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div style="font-size:10px;font-weight:600;color:#005840;">Bekreftelse pa e-post</div>
+      </div>
+    </div>
+
+    <button class="drawer-cta" onclick="closeAll(); showSuccess();">Betal 2 000 kr &#8594;</button>
+  </div>
+</div>
+
+<!-- DRAWER: Bekreftelse / Suksess -->
+<div class="drawer" id="success-drawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-inner">
+    <div class="success-container">
+      <div class="success-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#005840" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="success-title">Bookingen er bekreftet!</div>
+      <div class="success-sub">Du mottar en bekreftelse pa e-post</div>
+
+      <div class="success-details">
+        <div><span>Trener</span><strong>Anders Kristiansen</strong></div>
+        <div><span>Tjeneste</span><strong>Performance Pro</strong></div>
+        <div><span>Dato</span><strong>Man 14. apr 2026</strong></div>
+        <div><span>Tid</span><strong>15:00 — 15:20</strong></div>
+        <div><span>Sted</span><strong>Gamle Fredrikstad GK</strong></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="drawer-cta-secondary" onclick="closeAll()">Tilbake til forsiden</button>
+        <button class="drawer-cta" onclick="closeAll()">Mine bookinger</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showConfirm() {
+  closeAll();
+  setTimeout(() => {
+    document.getElementById('backdrop').classList.add('visible');
+    document.getElementById('confirm-drawer').classList.add('visible');
+  }, 50);
+}
+function showPayment() {
+  closeAll();
+  setTimeout(() => {
+    document.getElementById('backdrop').classList.add('visible');
+    document.getElementById('payment-drawer').classList.add('visible');
+  }, 50);
+}
+function showSuccess() {
+  closeAll();
+  setTimeout(() => {
+    document.getElementById('backdrop').classList.add('visible');
+    document.getElementById('success-drawer').classList.add('visible');
+  }, 50);
+}
+function closeAll() {
+  document.getElementById('backdrop').classList.remove('visible');
+  document.querySelectorAll('.drawer').forEach(d => d.classList.remove('visible'));
+}
+function toggleFocus(el) {
+  el.classList.toggle('selected');
+}
+function toggleTerms() {
+  document.getElementById('terms-check').classList.toggle('checked');
+}
+function selectPayment(el) {
+  document.querySelectorAll('.payment-option').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
+
+</body>
+</html>

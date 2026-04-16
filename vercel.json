@@ -45,6 +45,10 @@
       "schedule": "0 6 * * 1"
     },
     {
+      "path": "/api/portal/cron/compute-usi",
+      "schedule": "0 3 * * *"
+    },
+    {
       "path": "/api/cron/cleanup-pending-bookings",
       "schedule": "*/15 * * * *"
     },

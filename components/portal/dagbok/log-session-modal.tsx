@@ -52,25 +52,29 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
   const [deviationReason, setDeviationReason] = useState<string>("");
 
   useEffect(() => {
-    if (editLog) {
-      const d = new Date(editLog.date);
-      setDate(d.toISOString().slice(0, 10));
-      setDurationMinutes(editLog.durationMinutes?.toString() ?? "");
-      setFocusArea(editLog.focusArea ?? "");
-      setRating(editLog.rating ?? 5);
-      setNotes(editLog.notes ?? "");
-      setDeviatedFromPlan(editLog.deviatedFromPlan);
-      setDeviationReason(editLog.deviationReason ?? "");
-    } else {
-      setDate(today);
-      setDurationMinutes("");
-      setFocusArea("");
-      setRating(5);
-      setNotes("");
-      setDeviatedFromPlan(false);
-      setDeviationReason("");
-    }
-    setError(null);
+    const id = window.setTimeout(() => {
+      if (editLog) {
+        const d = new Date(editLog.date);
+        setDate(d.toISOString().slice(0, 10));
+        setDurationMinutes(editLog.durationMinutes?.toString() ?? "");
+        setFocusArea(editLog.focusArea ?? "");
+        setRating(editLog.rating ?? 5);
+        setNotes(editLog.notes ?? "");
+        setDeviatedFromPlan(editLog.deviatedFromPlan);
+        setDeviationReason(editLog.deviationReason ?? "");
+      } else {
+        setDate(today);
+        setDurationMinutes("");
+        setFocusArea("");
+        setRating(5);
+        setNotes("");
+        setDeviatedFromPlan(false);
+        setDeviationReason("");
+      }
+      setError(null);
+    }, 0);
+
+    return () => window.clearTimeout(id);
   }, [editLog, open, today]);
 
   function handleSubmit(e: React.FormEvent) {

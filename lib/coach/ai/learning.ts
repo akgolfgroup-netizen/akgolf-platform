@@ -3,7 +3,7 @@
 import { logger } from "@/lib/logger";
 import { createServiceClient } from "@/lib/supabase/server";
 import type { MessageCategory } from "./model-router";
-import type { AILearning } from "@prisma/client";
+
 
 interface LearnedResponse {
   pattern: string;

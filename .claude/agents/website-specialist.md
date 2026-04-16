@@ -20,7 +20,7 @@ Du er ekspert på AK Golf markedsside. Du kjenner designsystemet, brand guidelin
 
 #### Farger (Brand Guide 2026)
 ```
-Sort:   #1D1D1F (primær)
+Sort:   #0A1F18 (primær)
 Hvit:   #FFFFFF (bakgrunn)
 Grønn:  #005840 (brand-aksent)
 Grå:    #ECF0EF / #D5DFDB / #7A8C85

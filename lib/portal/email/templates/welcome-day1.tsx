@@ -91,12 +91,12 @@ export function WelcomeDay1Email({ name, hasLoggedSession, hasSetGoals }: Welcom
 }
 
 const body = {
-  backgroundColor: "#f6f6f6",
+  backgroundColor: "#f5f5f5",
   fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
 };
 
 const container = {
-  backgroundColor: "#ffffff",
+  backgroundColor: "white",
   margin: "0 auto",
   padding: "32px",
   maxWidth: "560px",
@@ -104,20 +104,20 @@ const container = {
 };
 
 const heading = {
-  color: "#0A1F18",
+  color: "black",
   fontSize: "24px",
   fontWeight: "700" as const,
   margin: "0 0 24px",
 };
 
 const greeting = {
-  color: "#333",
+  color: "#333333",
   fontSize: "16px",
   margin: "0 0 8px",
 };
 
 const text = {
-  color: "#555",
+  color: "#555555",
   fontSize: "14px",
   lineHeight: "1.6",
   margin: "0 0 16px",
@@ -138,7 +138,7 @@ const checkPending = {
   width: "24px",
   height: "24px",
   borderRadius: "50%",
-  backgroundColor: "#f3f4f6",
+  backgroundColor: "#f2f2f2",
   color: "#6b7280",
   fontSize: "12px",
   fontWeight: "600" as const,
@@ -155,7 +155,7 @@ const checkDone = {
 };
 
 const taskTitle = {
-  color: "#0A1F18",
+  color: "black",
   fontSize: "14px",
   fontWeight: "600" as const,
   margin: "0 0 2px",
@@ -168,9 +168,9 @@ const taskDesc = {
 };
 
 const button = {
-  backgroundColor: "#0A1F18",
+  backgroundColor: "black",
   borderRadius: "980px",
-  color: "#ffffff",
+  color: "white",
   fontSize: "14px",
   fontWeight: "600" as const,
   padding: "12px 24px",
@@ -181,32 +181,32 @@ const button = {
 };
 
 const tipBox = {
-  backgroundColor: "#FEF3C7",
+  backgroundColor: "#fef3c7",
   borderRadius: "8px",
   padding: "16px",
   margin: "16px 0",
 };
 
 const tipTitle = {
-  color: "#92400E",
+  color: "#92400e",
   fontSize: "14px",
   fontWeight: "600" as const,
   margin: "0 0 8px",
 };
 
 const tipText = {
-  color: "#92400E",
+  color: "#92400e",
   fontSize: "13px",
   margin: "0",
 };
 
 const hr = {
-  borderColor: "#e5e7eb",
+  borderColor: "#e5e5e5",
   margin: "24px 0",
 };
 
 const footer = {
-  color: "#999",
+  color: "#999999",
   fontSize: "12px",
   margin: "24px 0 0",
 };

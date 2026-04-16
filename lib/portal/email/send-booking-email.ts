@@ -264,23 +264,23 @@ export async function sendRescheduleNotification(
       subject: `Booking endret — ${serviceName}`,
       html: `
         <div style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; max-width: 560px; margin: 0 auto; background: #fff; padding: 32px; border-radius: 8px;">
-          <h2 style="color: #0A1F18; font-size: 24px; font-weight: 700; margin: 0 0 24px;">Booking endret</h2>
-          <p style="color: #333; font-size: 16px; margin: 0 0 8px;">Hei ${studentName},</p>
-          <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">
+          <h2 style="color: black; font-size: 24px; font-weight: 700; margin: 0 0 24px;">Booking endret</h2>
+          <p style="color: #333333; font-size: 16px; margin: 0 0 8px;">Hei ${studentName},</p>
+          <p style="color: #555555; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">
             Din booking for <strong>${serviceName}</strong> er endret:
           </p>
-          <div style="background: #f9fafb; border-radius: 6px; padding: 16px; margin: 0 0 16px;">
-            <p style="color: #333; font-size: 14px; margin: 0 0 6px;">
+          <div style="background: #f8f9fa; border-radius: 6px; padding: 16px; margin: 0 0 16px;">
+            <p style="color: #333333; font-size: 14px; margin: 0 0 6px;">
               <strong>Fra:</strong> ${oldDateStr}
             </p>
-            <p style="color: #333; font-size: 14px; margin: 0 0 6px;">
+            <p style="color: #333333; font-size: 14px; margin: 0 0 6px;">
               <strong>Til:</strong> ${newDateStr}
             </p>
           </div>
-          <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">
-            Har du sporsmal? Kontakt oss pa <a href="mailto:post@akgolf.no" style="color: #0A1F18; text-decoration: underline;">post@akgolf.no</a>.
+          <p style="color: #555555; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">
+            Har du sporsmal? Kontakt oss pa <a href="mailto:post@akgolf.no" style="color: black; text-decoration: underline;">post@akgolf.no</a>.
           </p>
-          <p style="color: #999; font-size: 12px; margin: 24px 0 0;">AK Golf Academy — Gamle Fredrikstad Golfklubb</p>
+          <p style="color: #999999; font-size: 12px; margin: 24px 0 0;">AK Golf Academy — Gamle Fredrikstad Golfklubb</p>
         </div>
       `,
     });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X, Loader2, Map, ListChecks, Brain } from "lucide-react";
 import { CourseStrategyGrid } from "./CourseStrategyGrid";
 import { PrepChecklistComponent } from "./PrepChecklist";

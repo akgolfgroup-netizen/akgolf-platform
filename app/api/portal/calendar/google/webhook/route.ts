@@ -45,7 +45,7 @@ export async function POST(request: Request) {
  * Brukes for webhook-verifisering ved oppsett.
  * Google kan sende en GET-request for å verifisere endpoint.
  */
-export async function GET(request: Request) {
+export async function GET() {
   // Returner 200 for å bekrefte at endpoint er aktivt
   return NextResponse.json({
     status: "active",

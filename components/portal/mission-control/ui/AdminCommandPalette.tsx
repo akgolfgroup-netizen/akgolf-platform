@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface AdminCommandItem {
   id: string;
@@ -130,18 +131,9 @@ export function AdminCommandPalette({
         onClick={() => setOpen(false)}
         aria-hidden="true"
       />
-      <div
-        className="relative w-full max-w-xl rounded-2xl overflow-hidden shadow-2xl"
-        style={{
-          background: "var(--color-surface)",
-          border: "1px solid var(--color-muted)",
-        }}
-      >
-        <div
-          className="flex items-center gap-3 px-4 py-3 border-b"
-          style={{ borderColor: "var(--color-muted)" }}
-        >
-          <Search className="w-4 h-4" style={{ color: "var(--color-muted)" }} />
+      <div className="relative w-full max-w-xl rounded-2xl overflow-hidden shadow-2xl bg-white border border-grey-200">
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-grey-200">
+          <Search className="w-4 h-4 text-grey-400" />
           <input
             ref={inputRef}
             type="text"
@@ -152,34 +144,21 @@ export function AdminCommandPalette({
             }}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            className="flex-1 bg-transparent outline-none text-sm"
-            style={{ color: "var(--color-text)" }}
+            className="flex-1 bg-transparent outline-none text-sm text-black"
           />
-          <kbd
-            className="text-[10px] px-1.5 py-0.5 rounded border"
-            style={{
-              borderColor: "var(--color-muted)",
-              color: "var(--color-muted)",
-            }}
-          >
+          <kbd className="text-[10px] px-1.5 py-0.5 rounded border border-grey-200 text-grey-400">
             ESC
           </kbd>
         </div>
         <div className="max-h-[50vh] overflow-y-auto py-2">
           {flat.length === 0 ? (
-            <div
-              className="px-4 py-6 text-center text-sm"
-              style={{ color: "var(--color-muted)" }}
-            >
+            <div className="px-4 py-6 text-center text-sm text-grey-400">
               Ingen treff.
             </div>
           ) : (
             grouped.map(([group, list]) => (
               <div key={group} className="mb-2 last:mb-0">
-                <div
-                  className="px-4 py-1 text-[10px] font-semibold uppercase tracking-wide"
-                  style={{ color: "var(--color-muted)" }}
-                >
+                <div className="px-4 py-1 text-[10px] font-semibold uppercase tracking-wide text-grey-400">
                   {group}
                 </div>
                 {list.map((item) => {
@@ -195,15 +174,12 @@ export function AdminCommandPalette({
                         item.action();
                         setOpen(false);
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors"
-                      style={{
-                        background: isActive
-                          ? "var(--color-primary)"
-                          : "transparent",
-                        color: isActive
-                          ? "var(--color-surface)"
-                          : "var(--color-text)",
-                      }}
+                      className={cn(
+                        "w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors",
+                        isActive
+                          ? "bg-black text-white"
+                          : "bg-transparent text-black"
+                      )}
                     >
                       {item.icon && (
                         <span className="flex items-center justify-center w-4 h-4">
@@ -214,13 +190,10 @@ export function AdminCommandPalette({
                         <div className="truncate">{item.label}</div>
                         {item.description && (
                           <div
-                            className="text-xs truncate"
-                            style={{
-                              color: isActive
-                                ? "var(--color-surface)"
-                                : "var(--color-muted)",
-                              opacity: isActive ? 0.8 : 1,
-                            }}
+                            className={cn(
+                              "text-xs truncate",
+                              isActive ? "text-white/80" : "text-grey-400"
+                            )}
                           >
                             {item.description}
                           </div>

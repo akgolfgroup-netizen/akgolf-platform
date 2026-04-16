@@ -18,19 +18,14 @@ import {
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard,
-  AdminButton,
-  AdminBadge,
   AdminInput,
-  AdminTabs,
   AdminDialog,
   AdminDataTable,
   useToast,
 } from "@/components/portal/mission-control/ui";
-import type {
-  AdminTabItem,
-  AdminDataTableColumn,
-} from "@/components/portal/mission-control/ui";
+import type { AdminDataTableColumn } from "@/components/portal/mission-control/ui";
+import { Card, Button, Tabs, Badge } from "@/components/ui";
+import type { TabItem } from "@/components/ui";
 import { format, startOfWeek, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
@@ -76,7 +71,7 @@ interface BlockedTimeRow {
 const days = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
 const dayIndices = [1, 2, 3, 4, 5, 6, 0]; // Monday = 1, Sunday = 0
 
-const tabItems: AdminTabItem[] = [
+const tabItems: TabItem[] = [
   {
     id: "hours",
     label: "Arbeidstider",
@@ -219,19 +214,7 @@ export default function TilgjengelighetPage() {
     }));
   };
 
-  const handleUpdateSlot = (
-    dayIndex: number,
-    slotIndex: number,
-    field: "start" | "end",
-    value: string,
-  ) => {
-    setEditingSlots((prev) => ({
-      ...prev,
-      [dayIndex]: prev[dayIndex].map((slot, i) =>
-        i === slotIndex ? { ...slot, [field]: value } : slot,
-      ),
-    }));
-  };
+
 
   const handleAddException = async () => {
     if (!selectedInstructor || !exceptionForm.date) return;
@@ -339,15 +322,15 @@ export default function TilgjengelighetPage() {
       sortable: true,
       render: (r) => (
         <div className="flex items-center gap-2">
-          <span className="text-grey-800">{r.reason}</span>
+          <span className="text-black">{r.reason}</span>
           {r.source === "GOOGLE_CALENDAR" && (
-            <AdminBadge variant="info">Google</AdminBadge>
+            <Badge variant="info">Google</Badge>
           )}
         </div>
       ),
     },
-    { key: "when", label: "Dag", sortable: true, render: (r) => <span className="text-grey-700">{r.when}</span> },
-    { key: "time", label: "Tid", align: "right", render: (r) => <span className="text-grey-700">{r.time}</span> },
+    { key: "when", label: "Dag", sortable: true, render: (r) => <span className="text-text">{r.when}</span> },
+    { key: "time", label: "Tid", align: "right", render: (r) => <span className="text-text">{r.time}</span> },
     {
       key: "id",
       label: "",
@@ -360,7 +343,7 @@ export default function TilgjengelighetPage() {
               e.stopPropagation();
               handleDeleteException(r.id);
             }}
-            className="p-1.5 rounded-md hover:bg-error-100 text-grey-400 hover:text-error-600 transition-colors"
+            className="p-1.5 rounded-md hover:bg-error-light text-grey-400 hover:text-error transition-colors"
             aria-label="Slett unntak"
           >
             <Trash2 className="w-4 h-4" />
@@ -379,7 +362,7 @@ export default function TilgjengelighetPage() {
 
       <div className="p-6 space-y-6">
         {/* Instructor Selector */}
-        <AdminCard compact>
+        <Card padding="sm">
           <div className="flex items-center gap-4 flex-wrap">
             <span className="text-sm text-grey-500">
               Velg instruktør:
@@ -392,51 +375,51 @@ export default function TilgjengelighetPage() {
                   className={cn(
                     "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
                     selectedInstructor === instructor.id
-                      ? "bg-primary-100 ring-2 ring-primary-500"
-                      : "hover:bg-grey-100",
+                      ? "bg-grey-100 ring-2 ring-black"
+                      : "hover:bg-grey-50",
                   )}
                 >
-                  <div className="w-2 h-2 rounded-full bg-primary-500" />
-                  <span className="text-sm text-grey-900">
+                  <div className="w-2 h-2 rounded-full bg-black" />
+                  <span className="text-sm text-black">
                     {instructor.name}
                   </span>
                 </button>
               ))}
             </div>
             <div className="ml-auto flex gap-2">
-              <AdminButton
-                variant="primary"
+              <Button
+                variant="accent"
                 onClick={() => setShowAddException(true)}
                 disabled={!selectedInstructor}
-                icon={<Plus className="w-4 h-4" />}
               >
+                <Plus className="w-4 h-4" />
                 Legg til unntak
-              </AdminButton>
+              </Button>
             </div>
           </div>
-        </AdminCard>
+        </Card>
 
         {/* Tabs */}
-        <AdminTabs
+        <Tabs
           items={tabItems}
           value={activeTab}
           onValueChange={setActiveTab}
         />
 
         {isLoading ? (
-          <AdminCard>
+          <Card>
             <div className="flex items-center justify-center py-8">
-              <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
+              <Loader2 className="w-8 h-8 animate-spin text-black" />
             </div>
-          </AdminCard>
+          </Card>
         ) : (
           <>
             {/* Tab: Arbeidstider */}
             {activeTab === "hours" && (
               <>
-                <div className="bg-white rounded-xl shadow-card overflow-hidden">
+                <Card padding="none" className="overflow-hidden">
                   <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-grey-900">Faste arbeidstider</h3>
+                    <h3 className="text-base font-semibold text-black">Faste arbeidstider</h3>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
                         <Repeat className="w-4 h-4 text-grey-400" />
@@ -444,108 +427,83 @@ export default function TilgjengelighetPage() {
                           Gjentas ukentlig
                         </span>
                       </div>
-                      <AdminButton
-                        variant="primary"
+                      <Button
+                        variant="accent"
                         onClick={handleSaveAvailability}
-                        loading={isSaving}
-                        icon={<CheckCircle className="w-4 h-4" />}
+                        isLoading={isSaving}
                       >
+                        <CheckCircle className="w-4 h-4" />
                         Lagre
-                      </AdminButton>
+                      </Button>
                     </div>
                   </div>
-                  <div className="grid grid-cols-7 divide-x divide-grey-200">
+                  <div className="divide-y divide-grey-200">
                     {days.map((day, i) => {
                       const dayIndex = dayIndices[i];
                       const slots = editingSlots[dayIndex] || [];
 
                       return (
-                        <div key={day} className="p-4">
-                          <div className="text-center mb-3">
-                            <span className="text-xs font-medium text-grey-500 uppercase">
+                        <div key={day} className="px-4 py-3 flex items-start gap-4">
+                          <div className="w-12 shrink-0 pt-1">
+                            <span className="text-sm font-semibold text-black">
                               {day}
                             </span>
                           </div>
-                          <div className="space-y-2">
-                            {slots.length > 0 ? (
-                              slots.map((slot, j) => (
-                                <div
-                                  key={j}
-                                  className="p-2 bg-success-100 rounded text-center space-y-1"
-                                >
-                                  <div className="flex items-center justify-center gap-1">
-                                    <input
-                                      type="time"
-                                      value={slot.start}
-                                      onChange={(e) =>
-                                        handleUpdateSlot(
-                                          dayIndex,
-                                          j,
-                                          "start",
-                                          e.target.value,
-                                        )
-                                      }
-                                      className="w-16 text-xs bg-transparent border-0 p-0 text-success-700 text-center"
-                                    />
-                                    <span className="text-xs text-success-700">
-                                      -
-                                    </span>
-                                    <input
-                                      type="time"
-                                      value={slot.end}
-                                      onChange={(e) =>
-                                        handleUpdateSlot(
-                                          dayIndex,
-                                          j,
-                                          "end",
-                                          e.target.value,
-                                        )
-                                      }
-                                      className="w-16 text-xs bg-transparent border-0 p-0 text-success-700 text-center"
-                                    />
-                                  </div>
-                                  <button
-                                    onClick={() =>
-                                      handleRemoveSlot(dayIndex, j)
-                                    }
-                                    className="text-[10px] text-error-600 hover:underline"
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-wrap items-center gap-2">
+                              {slots.length > 0 ? (
+                                slots.map((slot, j) => (
+                                  <div
+                                    key={j}
+                                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-grey-100 rounded-full text-sm text-success-text"
                                   >
-                                    Fjern
-                                  </button>
-                                </div>
-                              ))
-                            ) : (
-                              <div className="p-2 bg-grey-100 rounded text-center">
-                                <span className="text-xs text-grey-500">
+                                    <span className="tabular-nums">
+                                      {slot.start} – {slot.end}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleRemoveSlot(dayIndex, j)}
+                                      className="w-5 h-5 rounded-full hover:bg-grey-200 flex items-center justify-center text-grey-500 hover:text-error transition-colors"
+                                      aria-label="Fjern slot"
+                                      title="Fjern slot"
+                                    >
+                                      <span className="text-xs leading-none">×</span>
+                                    </button>
+                                  </div>
+                                ))
+                              ) : (
+                                <span className="text-sm text-grey-500 py-1.5">
                                   Fri
                                 </span>
-                              </div>
-                            )}
+                              )}
+                              <Button
+                                variant="secondary"
+                                onClick={() => handleAddSlot(dayIndex)}
+                                className="text-sm px-3 py-1.5 h-auto"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                                Legg til slot
+                              </Button>
+                            </div>
                           </div>
-                          <button
-                            onClick={() => handleAddSlot(dayIndex)}
-                            className="w-full mt-2 p-1.5 rounded border border-dashed border-grey-300 hover:border-primary-400 hover:text-primary-600 transition-colors"
-                          >
-                            <Plus className="w-3.5 h-3.5 mx-auto text-grey-400" />
-                          </button>
                         </div>
                       );
                     })}
                   </div>
-                </div>
+                </Card>
 
                 {/* Calendar Preview */}
-                <div className="bg-white rounded-xl shadow-card overflow-hidden">
+                <Card padding="none" className="overflow-hidden">
                   <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-grey-900">Kalendervisning</h3>
+                    <h3 className="text-base font-semibold text-black">Kalendervisning</h3>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setCurrentWeek(addDays(currentWeek, -7))}
-                        className="p-1.5 rounded-lg hover:bg-grey-100"
+                        className="p-1.5 rounded-lg hover:bg-grey-50"
                       >
                         <ChevronLeft className="w-4 h-4 text-grey-500" />
                       </button>
-                      <span className="text-sm text-grey-800">
+                      <span className="text-sm text-text">
                         {format(weekStart, "d. MMM", { locale: nb })} -{" "}
                         {format(addDays(weekStart, 6), "d. MMM", {
                           locale: nb,
@@ -553,7 +511,7 @@ export default function TilgjengelighetPage() {
                       </span>
                       <button
                         onClick={() => setCurrentWeek(addDays(currentWeek, 7))}
-                        className="p-1.5 rounded-lg hover:bg-grey-100"
+                        className="p-1.5 rounded-lg hover:bg-grey-50"
                       >
                         <ChevronRight className="w-4 h-4 text-grey-500" />
                       </button>
@@ -579,16 +537,16 @@ export default function TilgjengelighetPage() {
                               className={cn(
                                 "mt-1 p-3 rounded-lg border min-h-[80px]",
                                 isBlocked
-                                  ? "bg-error-100 border-error-300"
-                                  : "bg-grey-100 border-grey-200",
+                                  ? "bg-error-light border-error"
+                                  : "bg-grey-50 border-grey-200",
                               )}
                             >
-                              <span className="text-sm font-medium text-grey-900">
+                              <span className="text-sm font-medium text-black">
                                 {format(date, "d")}
                               </span>
                               {isBlocked && (
                                 <div className="mt-1">
-                                  <span className="text-[10px] text-error-600">
+                                  <span className="text-[10px] text-error">
                                     {dayBlockedTimes.length} blokkering
                                     {dayBlockedTimes.length > 1 ? "er" : ""}
                                   </span>
@@ -600,7 +558,7 @@ export default function TilgjengelighetPage() {
                       })}
                     </div>
                   </div>
-                </div>
+                </Card>
               </>
             )}
 
@@ -609,7 +567,7 @@ export default function TilgjengelighetPage() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <h3 className="text-base font-semibold text-grey-900">
+                    <h3 className="text-base font-semibold text-black">
                       Unntak (ferie, sykdom, blokkeringer)
                     </h3>
                     <p className="text-xs text-grey-500 mt-0.5">
@@ -617,14 +575,14 @@ export default function TilgjengelighetPage() {
                       {blockedRows.length} kommende
                     </p>
                   </div>
-                  <AdminButton
-                    variant="primary"
+                  <Button
+                    variant="accent"
                     onClick={() => setShowAddException(true)}
                     disabled={!selectedInstructor}
-                    icon={<Plus className="w-4 h-4" />}
                   >
+                    <Plus className="w-4 h-4" />
                     Ny blokkering
-                  </AdminButton>
+                  </Button>
                 </div>
                 <AdminDataTable
                   columns={blockedColumns}
@@ -639,29 +597,29 @@ export default function TilgjengelighetPage() {
 
             {/* Tab: Google Calendar */}
             {activeTab === "google" && (
-              <AdminCard>
+              <Card>
                 <div className="flex flex-col items-center text-center py-6">
-                  <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center mb-3">
-                    <Calendar className="w-6 h-6 text-primary-600" />
+                  <div className="w-12 h-12 rounded-full bg-grey-100 flex items-center justify-center mb-3">
+                    <Calendar className="w-6 h-6 text-black" />
                   </div>
-                  <h3 className="text-base font-semibold text-grey-900">
+                  <h3 className="text-base font-semibold text-black">
                     Google Calendar-synk
                   </h3>
-                  <p className="text-sm text-grey-600 mt-1 max-w-md">
+                  <p className="text-sm text-text mt-1 max-w-md">
                     Synkroniser hendelser fra Google Calendar til{" "}
                     {selectedInstructorData?.name ?? "instruktøren"} som
                     blokkerte tider.
                   </p>
                   <div className="mt-5">
-                    <AdminButton
-                      variant="primary"
+                    <Button
+                      variant="accent"
                       onClick={handleSyncGoogleCalendar}
                       disabled={!selectedInstructor}
-                      loading={isSyncing}
-                      icon={<RefreshCw className="w-4 h-4" />}
+                      isLoading={isSyncing}
                     >
+                      <RefreshCw className="w-4 h-4" />
                       Synkroniser nå
-                    </AdminButton>
+                    </Button>
                   </div>
                   {blockedTimes.filter(
                     (bt) => bt.source === "GOOGLE_CALENDAR",
@@ -676,7 +634,7 @@ export default function TilgjengelighetPage() {
                     </p>
                   )}
                 </div>
-              </AdminCard>
+              </Card>
             )}
           </>
         )}
@@ -690,19 +648,19 @@ export default function TilgjengelighetPage() {
         description="Blokker tid for ferie, sykdom eller andre hendelser"
         footer={
           <>
-            <AdminButton
+            <Button
               variant="secondary"
               onClick={() => setShowAddException(false)}
             >
               Avbryt
-            </AdminButton>
-            <AdminButton
-              variant="primary"
+            </Button>
+            <Button
+              variant="accent"
               onClick={handleAddException}
               disabled={!exceptionForm.date}
             >
               Lagre
-            </AdminButton>
+            </Button>
           </>
         }
       >

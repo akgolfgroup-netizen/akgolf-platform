@@ -6,7 +6,9 @@ import { Search, Eye, Edit2, MoreHorizontal, ChevronsUpDown, Check, Mail, Tag, D
 import { searchStudents } from "@/app/admin/(authed)/elever/actions";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
-import { AppleAvatar, AppleBadge, AppleCard } from "@/components/portal/apple";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/portal/utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -23,9 +25,9 @@ interface Student {
   _count: { bookings: number; coachingSessions: number };
 }
 
-const tierVariantMap: Record<string, "neutral" | "dark" | "success" | "info" | "warning"> = {
-  VISITOR: "neutral",
-  ACADEMY: "dark",
+const tierVariantMap: Record<string, "default" | "secondary" | "success" | "info" | "warning"> = {
+  VISITOR: "default",
+  ACADEMY: "secondary",
   STARTER: "success",
   PRO: "info",
   ELITE: "warning",
@@ -111,26 +113,26 @@ export function StudentList() {
   return (
     <div className="space-y-4">
       {/* Filter Bar - Glassmorphism */}
-      <div className="flex items-center gap-4 bg-white/70 backdrop-blur-xl p-4 px-5 rounded-2xl border border-white/50 shadow-[var(--shadow-card)] transition-shadow duration-300 hover:shadow-[var(--shadow-card-hover)]">
+      <div className="flex items-center gap-4 bg-white border border-grey-200 rounded-xl p-4 px-5 transition-shadow duration-300 hover:shadow-sm">
         {/* Search */}
-        <div className="flex items-center gap-3 flex-1 px-4 py-3 bg-[var(--color-grey-100)] rounded-xl border border-transparent focus-within:bg-white focus-within:border-[var(--color-grey-900)] focus-within:shadow-[0_0_0_3px_var(--color-grey-100)] transition-[background-color,border-color,box-shadow]">
-          <Search className="w-[18px] h-[18px] text-[var(--color-grey-400)]" />
+        <div className="flex items-center gap-3 flex-1 px-4 py-3 bg-grey-100 rounded-xl border border-transparent focus-within:bg-white focus-within:border-black focus-within:shadow-[0_0_0_3px_grey-100] transition-[background-color,border-color]">
+          <Search className="w-[18px] h-[18px] text-grey-400" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             placeholder="Sok etter navn, e-post eller telefon..."
-            className="flex-1 bg-transparent border-none text-sm text-[var(--color-grey-900)] placeholder:text-[var(--color-grey-400)] outline-none"
+            className="flex-1 bg-transparent border-none text-sm text-black placeholder:text-grey-400 outline-none"
           />
         </div>
 
-        <div className="w-px h-8 bg-[var(--color-grey-200)]" />
+        <div className="w-px h-8 bg-grey-200" />
 
         {/* Filters */}
         <div className="flex items-center gap-2">
-          <span className="text-[13px] font-medium text-[var(--color-grey-500)]">Medlemskap:</span>
-          <select className="px-4 py-2 pr-8 text-sm font-medium text-[var(--color-grey-700)] bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl cursor-pointer appearance-none focus:outline-none focus:border-[var(--color-grey-900)] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%238E8E93%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_12px_center]">
+          <span className="text-[13px] font-medium text-grey-400">Medlemskap:</span>
+          <select className="px-4 py-2 pr-8 text-sm font-medium text-text bg-grey-100 border border-grey-200 rounded-xl cursor-pointer appearance-none focus:outline-none focus:border-black bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%238E8E93%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_12px_center]">
             <option>Alle</option>
             <option>ELITE</option>
             <option>PRO</option>
@@ -141,8 +143,8 @@ export function StudentList() {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-[13px] font-medium text-[var(--color-grey-500)]">Status:</span>
-          <select className="px-4 py-2 pr-8 text-sm font-medium text-[var(--color-grey-700)] bg-[var(--color-grey-100)] border border-[var(--color-grey-200)] rounded-xl cursor-pointer appearance-none focus:outline-none focus:border-[var(--color-grey-900)] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%238E8E93%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_12px_center]">
+          <span className="text-[13px] font-medium text-grey-400">Status:</span>
+          <select className="px-4 py-2 pr-8 text-sm font-medium text-text bg-grey-100 border border-grey-200 rounded-xl cursor-pointer appearance-none focus:outline-none focus:border-black bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%238E8E93%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_12px_center]">
             <option>Aktive</option>
             <option>Inaktive</option>
             <option>Alle</option>
@@ -157,7 +159,7 @@ export function StudentList() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="flex items-center gap-4 px-5 py-4 bg-[var(--color-grey-900)] text-white rounded-2xl shadow-[var(--shadow-md)]"
+            className="flex items-center gap-4 px-5 py-4 bg-black text-white rounded-2xl"
           >
             <span className="text-sm font-medium">
               <strong>{selectedIds.size}</strong> elever valgt
@@ -185,20 +187,20 @@ export function StudentList() {
       </AnimatePresence>
 
       {/* Total count */}
-      <p className="text-xs text-[var(--color-grey-500)]">{total} elever totalt</p>
+      <p className="text-xs text-grey-400">{total} elever totalt</p>
 
       {/* Data Table - Glassmorphism */}
-      <AppleCard variant="glass" padding="none" hover={false} className="overflow-hidden">
+      <Card variant="elevated" padding="none" className="overflow-hidden">
         {/* Table Header */}
-        <div className="grid grid-cols-[48px_1fr_120px_100px_140px_140px_100px] gap-4 px-5 py-4 bg-[var(--color-grey-100)] border-b border-[var(--color-grey-200)]">
+        <div className="grid grid-cols-[48px_1fr_120px_100px_140px_140px_100px] gap-4 px-5 py-4 bg-grey-100 border-b border-grey-200">
           <div className="flex items-center justify-center">
             <button
               onClick={toggleSelectAll}
               className={cn(
                 "w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors",
                 selectedIds.size === students.length && students.length > 0
-                  ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
-                  : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"
+                  ? "bg-black border-black"
+                  : "border-grey-200 hover:border-black"
               )}
             >
               {selectedIds.size === students.length && students.length > 0 && (
@@ -206,31 +208,31 @@ export function StudentList() {
               )}
             </button>
           </div>
-          <span className="flex items-center gap-1 text-[11px] font-semibold text-[var(--color-grey-500)] uppercase tracking-[0.06em] cursor-pointer hover:text-[var(--color-grey-900)]">
+          <span className="flex items-center gap-1 text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em] cursor-pointer hover:text-black">
             Elev <ChevronsUpDown className="w-3.5 h-3.5" />
           </span>
-          <span className="flex items-center gap-1 text-[11px] font-semibold text-[var(--color-grey-500)] uppercase tracking-[0.06em] cursor-pointer hover:text-[var(--color-grey-900)]">
+          <span className="flex items-center gap-1 text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em] cursor-pointer hover:text-black">
             Medlemskap <ChevronsUpDown className="w-3.5 h-3.5" />
           </span>
-          <span className="flex items-center gap-1 text-[11px] font-semibold text-[var(--color-grey-500)] uppercase tracking-[0.06em] cursor-pointer hover:text-[var(--color-grey-900)]">
+          <span className="flex items-center gap-1 text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em] cursor-pointer hover:text-black">
             Handicap <ChevronsUpDown className="w-3.5 h-3.5" />
           </span>
-          <span className="text-[11px] font-semibold text-[var(--color-grey-500)] uppercase tracking-[0.06em]">
+          <span className="text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em]">
             Timer (mnd)
           </span>
-          <span className="flex items-center gap-1 text-[11px] font-semibold text-[var(--color-grey-500)] uppercase tracking-[0.06em] cursor-pointer hover:text-[var(--color-grey-900)]">
+          <span className="flex items-center gap-1 text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em] cursor-pointer hover:text-black">
             Sist aktiv <ChevronsUpDown className="w-3.5 h-3.5" />
           </span>
-          <span className="text-[11px] font-semibold text-[var(--color-grey-500)] uppercase tracking-[0.06em]">
+          <span className="text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em]">
             Handlinger
           </span>
         </div>
 
         {/* Table Body */}
         {loading ? (
-          <div className="py-12 text-center text-[var(--color-grey-500)]">Laster...</div>
+          <div className="py-12 text-center text-grey-400">Laster...</div>
         ) : students.length === 0 ? (
-          <div className="py-12 text-center text-[var(--color-grey-500)] text-sm">
+          <div className="py-12 text-center text-grey-400 text-sm">
             Ingen elever funnet
           </div>
         ) : (
@@ -243,8 +245,8 @@ export function StudentList() {
               <div
                 key={student.id}
                 className={cn(
-                  "grid grid-cols-[48px_1fr_120px_100px_140px_140px_100px] gap-4 px-5 py-4 items-center border-b border-[var(--color-grey-100)] last:border-b-0 transition-[background-color,transform] duration-200 hover:bg-[var(--color-grey-100)] hover:scale-[1.005]",
-                  isSelected && "bg-[var(--color-grey-100)]"
+                  "grid grid-cols-[48px_1fr_120px_100px_140px_140px_100px] gap-4 px-5 py-4 items-center border-b border-grey-100 last:border-b-0 transition-[background-color,transform] duration-200 hover:bg-grey-100 hover:scale-[1.005]",
+                  isSelected && "bg-grey-100"
                 )}
               >
                 {/* Checkbox */}
@@ -254,8 +256,8 @@ export function StudentList() {
                     className={cn(
                       "w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors",
                       isSelected
-                        ? "bg-[var(--color-grey-900)] border-[var(--color-grey-900)]"
-                        : "border-[var(--color-grey-300)] hover:border-[var(--color-grey-900)]"
+                        ? "bg-black border-black"
+                        : "border-grey-200 hover:border-black"
                     )}
                   >
                     {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
@@ -264,28 +266,27 @@ export function StudentList() {
 
                 {/* Student Info */}
                 <div className="flex items-center gap-3">
-                  <AppleAvatar
-                    src={student.image}
-                    name={student.name || "?"}
-                    size="md"
-                  />
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={student.image || undefined} />
+                    <AvatarFallback>{(student.name || "?").slice(0, 2)}</AvatarFallback>
+                  </Avatar>
                   <div className="flex flex-col min-w-0">
-                    <span className="text-sm font-medium text-[var(--color-grey-900)] truncate">
+                    <span className="text-sm font-medium text-black truncate">
                       {student.name ?? "Ukjent"}
                     </span>
-                    <span className="text-xs text-[var(--color-grey-500)] truncate">
+                    <span className="text-xs text-grey-400 truncate">
                       {student.email}
                     </span>
                   </div>
                 </div>
 
                 {/* Tier Badge */}
-                <AppleBadge variant={tierVariantMap[tier]} size="sm">
+                <Badge variant={tierVariantMap[tier]} size="sm">
                   {tierLabelMap[tier]}
-                </AppleBadge>
+                </Badge>
 
                 {/* Handicap */}
-                <span className="font-mono text-sm font-medium text-[var(--color-grey-700)]">
+                <span className="font-mono text-sm font-medium text-text">
                   {student.handicap !== null && student.handicap !== undefined
                     ? student.handicap.toFixed(1)
                     : "—"}
@@ -293,13 +294,13 @@ export function StudentList() {
 
                 {/* Sessions with progress bar */}
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 h-1.5 bg-[var(--color-grey-100)] rounded-full overflow-hidden">
+                  <div className="flex-1 h-1.5 bg-grey-100 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[var(--color-grey-900)] rounded-full transition-[width]"
+                      className="h-full bg-black rounded-full transition-[width]"
                       style={{ width: `${sessionPercent}%` }}
                     />
                   </div>
-                  <span className="text-[13px] font-medium text-[var(--color-grey-700)] min-w-[24px]">
+                  <span className="text-[13px] font-medium text-text min-w-[24px]">
                     {student._count.coachingSessions}
                   </span>
                 </div>
@@ -309,8 +310,8 @@ export function StudentList() {
                   className={cn(
                     "text-[13px]",
                     isRecentlyActive(student.lastActiveAt)
-                      ? "text-[var(--color-success)] font-medium"
-                      : "text-[var(--color-grey-500)]"
+                      ? "text-success-text font-medium"
+                      : "text-grey-400"
                   )}
                 >
                   {getLastActiveLabel(student.lastActiveAt)}
@@ -320,15 +321,15 @@ export function StudentList() {
                 <div className="flex gap-2">
                   <Link
                     href={`/admin/elever/${student.id}`}
-                    className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors group"
+                    className="w-8 h-8 rounded-lg border border-grey-200 bg-white flex items-center justify-center hover:border-black hover:bg-grey-100 transition-colors group"
                   >
-                    <Eye className="w-4 h-4 text-[var(--color-grey-500)] group-hover:text-[var(--color-grey-900)]" />
+                    <Eye className="w-4 h-4 text-grey-400 group-hover:text-black" />
                   </Link>
-                  <button className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors group">
-                    <Edit2 className="w-4 h-4 text-[var(--color-grey-500)] group-hover:text-[var(--color-grey-900)]" />
+                  <button className="w-8 h-8 rounded-lg border border-grey-200 bg-white flex items-center justify-center hover:border-black hover:bg-grey-100 transition-colors group">
+                    <Edit2 className="w-4 h-4 text-grey-400 group-hover:text-black" />
                   </button>
-                  <button className="w-8 h-8 rounded-lg border border-[var(--color-grey-200)] bg-white flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] transition-colors group">
-                    <MoreHorizontal className="w-4 h-4 text-[var(--color-grey-500)] group-hover:text-[var(--color-grey-900)]" />
+                  <button className="w-8 h-8 rounded-lg border border-grey-200 bg-white flex items-center justify-center hover:border-black hover:bg-grey-100 transition-colors group">
+                    <MoreHorizontal className="w-4 h-4 text-grey-400 group-hover:text-black" />
                   </button>
                 </div>
               </div>
@@ -338,30 +339,30 @@ export function StudentList() {
 
         {/* Pagination */}
         {students.length > 0 && (
-          <div className="flex items-center justify-between px-5 py-4 bg-[var(--color-grey-100)] border-t border-[var(--color-grey-200)]">
-            <span className="text-[13px] text-[var(--color-grey-500)]">
+          <div className="flex items-center justify-between px-5 py-4 bg-grey-100 border-t border-grey-200">
+            <span className="text-[13px] text-grey-400">
               Viser 1-{students.length} av {total} elever
             </span>
             <div className="flex items-center gap-2">
-              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+              <button className="w-9 h-9 rounded-xl border border-grey-200 bg-white text-sm font-medium text-text flex items-center justify-center hover:border-black hover:bg-grey-100 hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                 &lt;
               </button>
-              <button className="w-9 h-9 rounded-xl bg-[var(--color-grey-900)] text-white text-sm font-medium flex items-center justify-center">
+              <button className="w-9 h-9 rounded-xl bg-black text-white text-sm font-medium flex items-center justify-center">
                 1
               </button>
-              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors">
+              <button className="w-9 h-9 rounded-xl border border-grey-200 bg-white text-sm font-medium text-text flex items-center justify-center hover:border-black hover:bg-grey-100 hover:text-black transition-colors">
                 2
               </button>
-              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors">
+              <button className="w-9 h-9 rounded-xl border border-grey-200 bg-white text-sm font-medium text-text flex items-center justify-center hover:border-black hover:bg-grey-100 hover:text-black transition-colors">
                 3
               </button>
-              <button className="w-9 h-9 rounded-xl border border-[var(--color-grey-200)] bg-white text-sm font-medium text-[var(--color-grey-700)] flex items-center justify-center hover:border-[var(--color-grey-900)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)] transition-colors">
+              <button className="w-9 h-9 rounded-xl border border-grey-200 bg-white text-sm font-medium text-text flex items-center justify-center hover:border-black hover:bg-grey-100 hover:text-black transition-colors">
                 &gt;
               </button>
             </div>
           </div>
         )}
-      </AppleCard>
+      </Card>
     </div>
   );
 }

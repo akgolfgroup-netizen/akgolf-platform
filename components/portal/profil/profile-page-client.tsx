@@ -74,6 +74,7 @@ const tierLabelMap: Record<string, string> = {
 export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
   const router = useRouter();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const initials = profile.name
     ? profile.name
         .split(" ")

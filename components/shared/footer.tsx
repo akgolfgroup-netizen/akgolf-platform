@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Logo, LogoIcon } from "./logo";
+import { Logo } from "./logo";
 
 interface FooterProps {
   variant?: "light" | "dark";

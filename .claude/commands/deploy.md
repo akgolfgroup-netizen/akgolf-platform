@@ -34,7 +34,7 @@ Website deployes automatisk til Vercel ved push til `main`:
 - Team: akgolfgroup-netizens
 
 ```bash
-git add -A
+git add <spesifikke filer>
 git commit -m "<melding>"
 git push origin main
 ```

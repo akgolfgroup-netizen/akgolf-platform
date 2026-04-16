@@ -8,8 +8,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
-  AdminButton, AdminBadge, AdminStatCard, AdminEmptyState,
+  AdminStatCard, AdminEmptyState,
   AdminInput, AdminDropdown, AdminDataTable,
   type AdminDataTableColumn, type AdminDataTableBulkAction,
 } from "@/components/portal/mission-control/ui";
@@ -94,16 +96,16 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
 
   const listColumns: AdminDataTableColumn<AdminBooking>[] = [
     { key: "startTime", label: "Tidspunkt", sortable: true, render: (r) => (
-      <div><div className="text-sm font-medium text-[var(--color-grey-900)]">{format(new Date(r.startTime), "d. MMM", { locale: nb })}</div><div className="text-xs text-[var(--color-grey-500)] tabular-nums">{formatTime(r.startTime)}</div></div>
+      <div><div className="text-sm font-medium text-black">{format(new Date(r.startTime), "d. MMM", { locale: nb })}</div><div className="text-xs text-grey-400 tabular-nums">{formatTime(r.startTime)}</div></div>
     )},
-    { key: "User", label: "Elev", render: (r) => <span className="text-sm text-[var(--color-grey-900)]">{r.User?.name ?? r.User?.email ?? "Ukjent"}</span> },
-    { key: "ServiceType", label: "Tjeneste", render: (r) => <span className="text-sm text-[var(--color-grey-900)]">{r.ServiceType?.name ?? "—"}</span> },
-    { key: "Instructor", label: "Instruktør", render: (r) => <span className="text-sm text-[var(--color-grey-500)]">{r.Instructor?.User?.name ?? "—"}</span> },
+    { key: "User", label: "Elev", render: (r) => <span className="text-sm text-black">{r.User?.name ?? r.User?.email ?? "Ukjent"}</span> },
+    { key: "ServiceType", label: "Tjeneste", render: (r) => <span className="text-sm text-black">{r.ServiceType?.name ?? "—"}</span> },
+    { key: "Instructor", label: "Instruktør", render: (r) => <span className="text-sm text-grey-400">{r.Instructor?.User?.name ?? "—"}</span> },
     { key: "status", label: "Status", sortable: true, render: (r) => {
       const k = isStatusKey(r.status) ? r.status : "PENDING"; const c = STATUS_CONFIG[k]; const I = c.icon;
-      return <AdminBadge variant={c.variant} icon={<I className="w-3 h-3" />}>{c.label}</AdminBadge>;
+      return <Badge variant={c.variant}><I className="w-3 h-3" />{c.label}</Badge>;
     }},
-    { key: "amount", label: "Beløp", sortable: true, align: "right", render: (r) => <span className="text-sm font-semibold text-[var(--color-grey-900)] tabular-nums">{(r.amount ?? 0).toLocaleString("nb-NO")} kr</span> },
+    { key: "amount", label: "Beløp", sortable: true, align: "right", render: (r) => <span className="text-sm font-semibold text-black tabular-nums">{(r.amount ?? 0).toLocaleString("nb-NO")} kr</span> },
   ];
 
   const listBulkActions: AdminDataTableBulkAction<AdminBooking>[] = [
@@ -124,21 +126,21 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
         </div>
 
         {/* Controls Card */}
-        <div className="bg-white rounded-xl shadow-card p-6">
+        <div className="bg-white border border-grey-200 rounded-xl p-6">
           <div className="flex flex-col lg:flex-row gap-3">
             <div className="flex-1 relative">
-              <Search className="w-4 h-4 text-[var(--color-grey-400)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-grey-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <AdminInput 
                 value={searchQuery} 
                 onChange={(e) => handleSearchChange(e.target.value)} 
                 placeholder="Søk etter elev, tjeneste..." 
                 className="pl-9" 
               />
-              {isPending && <Loader2 className="w-4 h-4 text-[var(--color-grey-400)] animate-spin absolute right-3 top-1/2 -translate-y-1/2" />}
+              {isPending && <Loader2 className="w-4 h-4 text-grey-400 animate-spin absolute right-3 top-1/2 -translate-y-1/2" />}
             </div>
             
             {/* View Mode Toggle */}
-            <div className="inline-flex rounded-lg border border-[var(--color-grey-200)] bg-[var(--color-grey-50)] p-1">
+            <div className="inline-flex rounded-lg border border-grey-200 bg-grey-50 p-1">
               {VIEW_MODES.map((mode) => { 
                 const Icon = mode.icon; 
                 return (
@@ -148,8 +150,8 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
                     className={cn(
                       "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors",
                       viewMode === mode.value 
-                        ? "bg-[var(--color-primary)] text-white" 
-                        : "text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
+                        ? "bg-black text-white" 
+                        : "text-grey-400 hover:text-black"
                     )}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -175,9 +177,10 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
                 ]} 
               />
               <Link href="/admin/bookinger/ny">
-                <AdminButton variant="primary" icon={<Plus className="w-4 h-4" />}>
+                <Button variant="accent">
+                  <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Ny booking</span>
-                </AdminButton>
+                </Button>
               </Link>
             </div>
           </div>
@@ -205,16 +208,16 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
 
         {/* Day View */}
         {viewMode === "day" && (
-          <div className="bg-white rounded-xl shadow-card overflow-hidden">
-            <div className="px-6 py-4 border-b border-[var(--color-grey-200)]">
-              <h3 className="text-lg font-semibold text-[var(--color-grey-900)] capitalize">
+          <div className="bg-white border border-grey-200 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-grey-200">
+              <h3 className="text-lg font-semibold text-black capitalize">
                 {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
               </h3>
-              <span className="text-xs text-[var(--color-grey-500)]">
+              <span className="text-xs text-grey-400">
                 {dayBookings.length} booking{dayBookings.length !== 1 ? "er" : ""}
               </span>
             </div>
-            <div className="divide-y divide-[var(--color-grey-100)]">
+            <div className="divide-y divide-grey-200">
               {dayBookings.length === 0 ? (
                 <AdminEmptyState 
                   icon={<Calendar className="w-6 h-6" />} 
@@ -255,8 +258,8 @@ function FilterPill({ active, onClick, children }: { active: boolean; onClick: (
       className={cn(
         "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
         active 
-          ? "bg-[var(--color-primary)] text-white" 
-          : "bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] hover:bg-[var(--color-grey-200)]"
+          ? "bg-black text-white" 
+          : "bg-grey-50 text-grey-400 hover:text-black hover:bg-grey-200"
       )}
     >
       {children}
@@ -272,33 +275,35 @@ function DayBookingRow({ booking, onDetail }: { booking: AdminBooking; onDetail:
 
   return (
     <div 
-      className="p-4 hover:bg-[var(--color-grey-50)] transition-colors group cursor-pointer" 
+      className="p-4 hover:bg-grey-50 transition-colors group cursor-pointer" 
       onClick={() => onDetail(booking)}
     >
       <div className="flex items-start gap-4">
         <div className="flex flex-col items-center min-w-[4rem]">
-          <span className="text-lg font-bold text-[var(--color-grey-900)] tabular-nums">
+          <span className="text-lg font-bold text-black tabular-nums">
             {formatTime(booking.startTime)}
           </span>
-          <span className="text-xs text-[var(--color-grey-500)]">
+          <span className="text-xs text-grey-400">
             {booking.ServiceType?.duration ?? 0} min
           </span>
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
-            <h4 className="text-sm font-semibold text-[var(--color-grey-900)]">
+            <h4 className="text-sm font-semibold text-black">
               {booking.ServiceType?.name ?? "Ukjent"}
             </h4>
-            <AdminBadge variant={cfg.variant} icon={<StatusIcon className="w-3 h-3" />}>
+            <Badge variant={cfg.variant}>
+              <StatusIcon className="w-3 h-3" />
               {cfg.label}
-            </AdminBadge>
+            </Badge>
             {focusCfg && (
-              <AdminBadge variant={focusCfg.variant} icon={<Target className="w-3 h-3" />}>
+              <Badge variant={focusCfg.variant}>
+                <Target className="w-3 h-3" />
                 {focusCfg.label}
-              </AdminBadge>
+              </Badge>
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--color-grey-500)]">
+          <div className="flex flex-wrap items-center gap-4 text-xs text-grey-400">
             <span className="flex items-center gap-1">
               <User className="w-3.5 h-3.5" />
               {booking.User?.name ?? booking.User?.email ?? "Ukjent"}
@@ -310,7 +315,7 @@ function DayBookingRow({ booking, onDetail }: { booking: AdminBooking; onDetail:
           </div>
           {booking.focusArea && booking.status !== "CANCELLED" && <SessionPlanPanel bookingId={booking.id} />}
         </div>
-        <span className="text-sm font-semibold text-[var(--color-grey-900)] tabular-nums">
+        <span className="text-sm font-semibold text-black tabular-nums">
           {(booking.amount ?? 0).toLocaleString("nb-NO")} kr
         </span>
       </div>

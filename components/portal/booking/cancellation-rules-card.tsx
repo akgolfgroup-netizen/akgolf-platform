@@ -1,7 +1,7 @@
 "use client";
 
 import { Clock } from "lucide-react";
-import { GlassCard } from "@/components/portal/premium";
+import { Card } from "@/components/ui/card";
 import type { CancellationRule } from "./booking-types";
 
 interface CancellationRulesCardProps {
@@ -10,7 +10,7 @@ interface CancellationRulesCardProps {
 
 export function CancellationRulesCard({ rules }: CancellationRulesCardProps) {
   return (
-    <GlassCard variant="light" padding="md">
+    <Card variant="elevated" padding="md">
       <div className="mb-4 flex items-center gap-3">
         <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
           <Clock className="w-4 h-4 text-primary" />
@@ -40,6 +40,6 @@ export function CancellationRulesCard({ rules }: CancellationRulesCardProps) {
           </div>
         ))}
       </div>
-    </GlassCard>
+    </Card>
   );
 }

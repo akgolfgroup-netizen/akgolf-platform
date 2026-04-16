@@ -7,9 +7,7 @@ import type { ImportableTournament } from "../types";
 
 const BASE_URL = "https://globaljuniorgolflive.com/tour-calendar/";
 
-export async function fetchGlobalJuniorTourSchedule(
-  _year?: number
-): Promise<ImportableTournament[]> {
+export async function fetchGlobalJuniorTourSchedule(): Promise<ImportableTournament[]> {
   const res = await fetch(BASE_URL, {
     headers: { "User-Agent": "AKGolf-Portal/1.0" },
   });
@@ -19,7 +17,7 @@ export async function fetchGlobalJuniorTourSchedule(
   }
 
   const html = await res.text();
-  const $ = cheerio.load(html);
+  cheerio.load(html);
   const results: ImportableTournament[] = [];
 
   // Try multiple selectors — the page structure may vary

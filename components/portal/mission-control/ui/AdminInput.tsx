@@ -13,7 +13,8 @@ export const AdminInput = React.forwardRef<HTMLInputElement, AdminInputProps>(
     { label, error, helper, id, className, containerClassName, ...props },
     ref,
   ) {
-    const inputId = id ?? React.useId();
+    const generatedId = React.useId();
+    const inputId = id ?? generatedId;
 
     return (
       <div className={cn("space-y-1.5", containerClassName)}>

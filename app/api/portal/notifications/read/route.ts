@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getPortalUser } from "@/lib/portal/auth";
 import { z } from "zod";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
-import { markNotificationAsRead, markAllNotificationsAsRead } from "@/lib/portal/notifications/create";
+import { markNotificationAsRead } from "@/lib/portal/notifications/create";
 
 const markReadSchema = z.object({
   notificationId: z.string().min(1),
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Serverfeil" }, { status: 500 });
   }
 }

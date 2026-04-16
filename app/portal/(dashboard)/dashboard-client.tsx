@@ -1,22 +1,16 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowRight, Calendar, ClipboardList, TrendingUp, Target, Flag } from "lucide-react";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
+import { motion } from "framer-motion";
+import { WelcomeSection } from "@/components/portal/dashboard/welcome-section";
 import { NextBookingCard } from "@/components/portal/dashboard/next-booking-card";
-import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
-import { TrainingPlanCard } from "@/components/portal/dashboard/training-plan-card";
+import { WeekCalendar } from "@/components/portal/dashboard/week-calendar";
+import { KpiCard } from "@/components/portal/dashboard/kpi-card";
 import { CoachInsightCard } from "@/components/portal/dashboard/coach-insight-card";
-
-// ── Types ──────────────────────────────────────────────────────────────────────
-
-interface WeeklyInsight {
-  summary: string;
-  strengths: string[];
-  improvements: string[];
-  focusTip: string;
-  generatedAt: string | Date;
-}
+import { PlayerProfileCard } from "@/components/portal/dashboard/player-profile-card";
+import { TrainingActivityCard } from "@/components/portal/dashboard/training-activity-card";
+import { AiInsightCard } from "@/components/portal/dashboard/ai-insight-card";
+import { ShortcutPills } from "@/components/portal/dashboard/shortcut-pills";
+import { colors } from "@/lib/design-tokens";
 
 interface WeekDay {
   dayLabel: string;
@@ -28,278 +22,228 @@ interface WeekDay {
   completionPercent: number;
 }
 
+interface NextBooking {
+  id: string;
+  instructorName: string;
+  serviceName: string;
+  duration: number;
+  startTime: Date | string;
+}
+
+interface CoachInsight {
+  focusAreas: string[] | null;
+  primaryFocus: string | null;
+  summary: string | null;
+  date: Date | string;
+}
+
+interface AiInsight {
+  summary: string;
+  strengths: string[];
+  improvements: string[];
+  focusTip: string;
+  generatedAt: Date | string;
+}
+
 interface DashboardProps {
   userName: string | null;
-  userImage: string | null;
   tier: string;
   memberSince: string | null;
   stats: { sessionsCount: number; roundsCount: number };
   handicap: { current: number | null; trend: number | null };
   handicapHistory: number[];
-  nextBooking: {
-    id: string;
-    instructorName: string;
-    serviceName: string;
-    duration: number;
-    startTime: Date | string;
-  } | null;
+  nextBooking: NextBooking | null;
   weekRings: { days: WeekDay[]; weekStart: string };
-  checklist: { id: string; label: string; completed: boolean; href?: string }[];
-  achievements: {
-    achievements: {
-      id: string; name: string; description: string; icon: string;
-      rarity: "common" | "rare" | "epic" | "legendary";
-      unlockedAt?: string; progress?: number;
-    }[];
-    totalAchievements: number;
-  };
-  coachInsight: {
-    focusAreas: string[] | null;
-    primaryFocus: string | null;
-    summary: string | null;
-    date: Date | string;
-  } | null;
-  aiInsight: WeeklyInsight | null;
+  coachInsight: CoachInsight | null;
+  aiInsight: AiInsight | null;
 }
 
-// ── Component ──────────────────────────────────────────────────────────────────
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 12 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] as const },
+  },
+};
+
+function generateFallbackSparkline(baseValue: number, points: number): number[] {
+  return Array.from({ length: points }, (_, i) =>
+    Math.max(0, baseValue + Math.sin(i) * 2)
+  );
+}
 
 export function DashboardClient({
   userName,
-  userImage,
   tier,
+  memberSince,
   stats,
   handicap,
+  handicapHistory,
   nextBooking,
   weekRings,
   coachInsight,
   aiInsight,
 }: DashboardProps) {
-  const firstName = userName?.split(" ")[0] ?? "spiller";
-  const initials = userName
-    ? userName.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
-    : "SP";
+  const handicapSparkline =
+    handicapHistory.length > 0
+      ? handicapHistory
+      : generateFallbackSparkline(handicap.current ?? 14, 10);
 
-  const tierLabel: Record<string, string> = {
-    VISITOR: "Gratis",
-    ACADEMY: "Academy",
-    STARTER: "Starter",
-    PRO: "Pro",
-    ELITE: "Elite",
-  };
+  const roundsSparkline =
+    stats.roundsCount > 0 ? generateFallbackSparkline(stats.roundsCount, 6) : [];
 
-  // Dagens dato formatert
-  const now = new Date();
-  const dayNames = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"];
-  const monthNames = ["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"];
-  const dateStr = `${dayNames[now.getDay()]} ${now.getDate()}. ${monthNames[now.getMonth()]}`;
+  const sessionsSparkline =
+    stats.sessionsCount > 0
+      ? generateFallbackSparkline(stats.sessionsCount, 8)
+      : [];
 
   return (
-    <div className="mx-auto w-full max-w-[1120px] px-6 pb-12 pt-8">
-
-      {/* ═══ PROFIL-HEADER ═══ */}
-      <div className="mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          {/* Avatar */}
-          <Link
-            href="/portal/profil"
-            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#154212] text-lg font-bold text-white shadow-[0_4px_16px_rgba(21,66,18,0.3)] transition-transform duration-300 hover:scale-105 overflow-hidden"
-          >
-            {userImage ? (
-              <img src={userImage} alt="" className="h-full w-full object-cover" />
-            ) : (
-              initials
-            )}
-          </Link>
-          <div>
-            <p className="text-[13px] font-medium uppercase tracking-[0.08em] text-[#8a8a82]">
-              {dateStr}
-            </p>
-            <h1 className="text-[24px] font-bold tracking-tight text-[#1c1c16]">
-              Hei, {firstName}.
-            </h1>
+    <motion.div
+      className="mx-auto w-full max-w-[1200px] space-y-5 pb-12 pt-2"
+      variants={container}
+      initial="hidden"
+      animate="show"
+    >
+      {/* RAD 1: Velkomst + Neste booking + Profil */}
+      <motion.div
+        variants={item}
+        className="grid grid-cols-1 gap-5 lg:grid-cols-12"
+      >
+        <div className="space-y-5 lg:col-span-8">
+          <WelcomeSection
+            userName={userName}
+            tier={tier}
+            memberSince={memberSince}
+          />
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <NextBookingCard booking={nextBooking} />
+            <AiInsightCard
+              summary={
+                aiInsight?.summary ?? "Kort spill er ditt største potensial"
+              }
+              metrics={[
+                { label: "Kort Spill", value: "-2.1", highlight: true },
+                { label: "Driving", value: "+1.4", highlight: false },
+                { label: "Putting", value: "+0.8", highlight: false },
+              ]}
+            />
           </div>
         </div>
-
-        {/* Nøkkeltall */}
-        <div className="hidden items-center gap-6 md:flex">
-          <div className="text-center">
-            <span className="text-xl font-extrabold tracking-tight text-[#1c1c16] tabular-nums">
-              {handicap.current?.toFixed(1) ?? "—"}
-            </span>
-            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-[#8a8a82]">
-              HCP
-            </p>
-          </div>
-          <div className="h-8 w-px bg-[#154212]/10" />
-          <div className="text-center">
-            <span className="text-xl font-extrabold tracking-tight text-[#1c1c16] tabular-nums">
-              {stats.roundsCount || 0}
-            </span>
-            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-[#8a8a82]">
-              Runder
-            </p>
-          </div>
-          <div className="h-8 w-px bg-[#154212]/10" />
-          <div className="text-center">
-            <span className="text-xl font-extrabold tracking-tight text-[#1c1c16] tabular-nums">
-              {stats.sessionsCount || 0}
-            </span>
-            <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-[#8a8a82]">
-              Økter
-            </p>
-          </div>
-          <div className="h-8 w-px bg-[#154212]/10" />
-          <span className="rounded-full bg-[#d2f000] px-3 py-1 text-[11px] font-semibold text-[#0f2f0d]">
-            {tierLabel[tier] ?? tier}
-          </span>
+        <div className="lg:col-span-4">
+          <PlayerProfileCard
+            userName={userName}
+            tier={tier}
+            memberSince={memberSince}
+            handicap={handicap.current}
+            roundsCount={stats.roundsCount}
+          />
         </div>
-      </div>
+      </motion.div>
 
-      {/* ═══ ROW 1: Neste coaching + Ukens treningsplan ═══ */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_380px]">
-        <NextBookingCard booking={nextBooking} delay={0.1} />
-        <TrainingPlanCard delay={0.15} />
-      </div>
+      {/* RAD 2: Ukekalender */}
+      <motion.div variants={item}>
+        <WeekCalendar days={weekRings.days} />
+      </motion.div>
 
-      {/* ═══ ROW 2: Ukekalender — kommende treninger ═══ */}
-      <div className="mt-5">
-        <PremiumCard delay={0.2} className="p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <Calendar className="h-4 w-4 text-[#8a8a82]" />
-              <span className="text-sm font-semibold text-[#1c1c16]">
-                Denne uken
-              </span>
-            </div>
-            <Link
-              href="/portal/kalender"
-              className="flex items-center gap-1 text-xs font-medium text-[#154212] transition-colors hover:text-[#d2f000]"
-            >
-              Se kalender
-              <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
+      {/* RAD 3: Treningsaktivitet + KPI-kort */}
+      <motion.div
+        variants={item}
+        className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        <TrainingActivityCard
+          sessionsCount={stats.sessionsCount}
+          streak={12}
+        />
 
-          <div className="grid grid-cols-7 gap-2">
-            {weekRings.days.map((day, i) => {
-              const isToday = day.isToday;
-              return (
-                <div
-                  key={i}
-                  className={`flex flex-col items-center rounded-xl px-2 py-3 transition-all duration-200 ${
-                    isToday
-                      ? "bg-[#d2f000] text-[#0f2f0d]"
-                      : "bg-transparent"
-                  }`}
-                >
-                  <span className={`text-[10px] font-medium uppercase tracking-[0.06em] ${
-                    isToday ? "text-[#0f2f0d]/60" : "text-[#8a8a82]"
-                  }`}>
-                    {day.dayLabel}
-                  </span>
-                  <span className={`mt-1 text-base font-semibold tabular-nums ${
-                    isToday ? "text-[#0f2f0d]" : "text-[#1c1c16]"
-                  }`}>
-                    {day.dateNumber}
-                  </span>
-                  {day.trained && (
-                    <span className={`mt-1.5 h-1.5 w-1.5 rounded-full ${
-                      isToday ? "bg-[#154212]" : "bg-[#2A7D5A]"
-                    }`} />
-                  )}
-                  {day.hasCoaching && !day.trained && (
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#154212]" />
-                  )}
-                  {day.isRest && !day.trained && !day.hasCoaching && (
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-transparent" />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </PremiumCard>
-      </div>
+        <KpiCard
+          label="Handicap"
+          value={handicap.current ?? 0}
+          decimalPlaces={1}
+          sparklineData={handicapSparkline}
+          change={handicap.trend}
+          changeLabel="siste måned"
+          accentColor={colors.primary.main}
+        />
 
-      {/* ═══ ROW 3: Statistikk + Coach-notater ═══ */}
-      <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="flex flex-col gap-5">
+          {stats.roundsCount > 0 ? (
+            <KpiCard
+              label="Runder"
+              value={stats.roundsCount}
+              sparklineData={roundsSparkline}
+              accentColor={colors.data.coral}
+            />
+          ) : (
+            <EmptyKpiCard
+              label="Runder"
+              message="Registrer din første runde for å se handicap-trend"
+              href="/portal/runde/ny"
+            />
+          )}
 
-        {/* Treningsstatistikk — kompakt */}
-        <PremiumCard delay={0.3} glow="green">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#8a8a82]">
-            Treningsstatistikk
-          </p>
-          <div className="mt-4 grid grid-cols-3 gap-4">
-            <div className="text-center">
-              <NumberTicker
-                value={handicap.current ?? 12.4}
-                decimalPlaces={1}
-                delay={0.4}
-                className="text-[32px] font-extrabold tracking-tight text-[#1c1c16] tabular-nums"
-              />
-              <p className="mt-1 text-[11px] text-[#8a8a82]">HCP</p>
-            </div>
-            <div className="text-center">
-              <NumberTicker
-                value={stats.roundsCount || 24}
-                delay={0.5}
-                className="text-[32px] font-extrabold tracking-tight text-[#1c1c16] tabular-nums"
-              />
-              <p className="mt-1 text-[11px] text-[#8a8a82]">Runder</p>
-            </div>
-            <div className="text-center">
-              <NumberTicker
-                value={stats.sessionsCount || 48}
-                delay={0.6}
-                className="text-[32px] font-extrabold tracking-tight text-[#1c1c16] tabular-nums"
-              />
-              <p className="mt-1 text-[11px] text-[#8a8a82]">Økter</p>
-            </div>
-          </div>
-          <Link
-            href="/portal/statistikk"
-            className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-[#154212]/10 bg-[#f7f3ea] px-4 py-2.5 text-[13px] font-medium text-[#1c1c16] transition-colors hover:bg-[#f0ebe0]"
-          >
-            <TrendingUp className="h-3.5 w-3.5" />
-            Se full statistikk
-          </Link>
-        </PremiumCard>
+          {stats.sessionsCount > 0 ? (
+            <KpiCard
+              label="Treningsøkter"
+              value={stats.sessionsCount}
+              sparklineData={sessionsSparkline}
+              accentColor={colors.primary.main}
+            />
+          ) : (
+            <EmptyKpiCard
+              label="Treningsøkter"
+              message="Logg din første økt i dagboken"
+              href="/portal/dagbok"
+            />
+          )}
+        </div>
+      </motion.div>
 
-        {/* Coach-notater */}
-        <CoachInsightCard coachInsight={coachInsight} aiInsight={aiInsight} />
-      </div>
-
-      {/* ═══ ROW 4: Snarveier ═══ */}
-      <div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <QuickLink href="/portal/dagbok" icon={ClipboardList} label="Logg trening" />
-        <QuickLink href="/portal/runde" icon={Flag} label="Registrer runde" />
-        <QuickLink href="/portal/bookinger/ny" icon={Calendar} label="Book coaching" />
-        <QuickLink href="/portal/ai-coach" icon={Target} label="AI Coach" />
-      </div>
-    </div>
+      {/* RAD 4: Coach Insight + Snarveier */}
+      <motion.div
+        variants={item}
+        className="grid grid-cols-1 gap-5 lg:grid-cols-2"
+      >
+        <CoachInsightCard coachInsight={coachInsight} />
+        <ShortcutPills />
+      </motion.div>
+    </motion.div>
   );
 }
 
-// ── QuickLink ─────────────────────────────────────────────────────────────────
-
-function QuickLink({
-  href,
-  icon: Icon,
+function EmptyKpiCard({
   label,
+  message,
+  href,
 }: {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
   label: string;
+  message: string;
+  href: string;
 }) {
   return (
-    <Link
-      href={href}
-      className="flex items-center gap-3 rounded-[20px] border border-[#154212]/8 bg-white p-4 transition-all duration-300 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(21,66,18,0.08)] hover:border-[#d2f000]/30"
-    >
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f7f3ea]">
-        <Icon className="h-4 w-4 text-[#154212]" />
+    <div className="flex flex-col justify-between rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-grey-200 hover:shadow-md">
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-grey-400">
+          {label}
+        </p>
+        <p className="mt-2 text-sm text-grey-400">{message}</p>
+        <a
+          href={href}
+          className="mt-3 inline-flex items-center gap-1 text-xs font-semibold hover:underline"
+          style={{ color: colors.primary.main }}
+        >
+          Kom i gang
+          <span>→</span>
+        </a>
       </div>
-      <span className="text-[13px] font-medium text-[#1c1c16]">{label}</span>
-    </Link>
+    </div>
   );
 }

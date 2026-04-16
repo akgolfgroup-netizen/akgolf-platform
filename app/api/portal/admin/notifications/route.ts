@@ -8,7 +8,7 @@ import { getPortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { getNotifications, getUnreadCount } from "@/lib/portal/notifications/create";
-import type { NotificationType, NotificationMetadata, NotificationWithDetails, GroupedNotifications } from "@/lib/portal/notifications/types";
+import type { NotificationWithDetails, GroupedNotifications } from "@/lib/portal/notifications/types";
 
 export async function GET(req: NextRequest) {
   const rateLimit = checkRateLimit(`api:${getClientIp(req)}`, RATE_LIMITS.API_GENERAL);
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const unreadOnly = searchParams.get("unread") === "true";
-    const adminType = searchParams.get("type") as "booking" | "system" | "urgent" | "coaching" | "video" | "diary" | null;
+    searchParams.get("type") as "booking" | "system" | "urgent" | "coaching" | "video" | "diary" | null;
     const limit = parseInt(searchParams.get("limit") ?? "50", 10);
     const offset = parseInt(searchParams.get("offset") ?? "0", 10);
 
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
     });
 
     // Filtrer på adminType hvis spesifisert (TODO: legg til adminType i schema)
-    let notifications = result.notifications;
+    const notifications = result.notifications;
     // adminType filtering disabled pending schema update
     // if (adminType) {
     //   notifications = notifications.filter((n) => n.adminType === adminType);
@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
       totalCount: result.totalCount,
       hasMore: result.hasMore,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Serverfeil" }, { status: 500 });
   }
 }
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
 /**
  * Hent antall uleste admin-notifikasjoner (for badge)
  */
-export async function HEAD(req: NextRequest) {
+export async function HEAD() {
   const user = await getPortalUser();
   if (!user?.id || !isStaff(user.role)) {
     return NextResponse.json({ error: "Uautorisert" }, { status: 403 });
@@ -70,7 +70,7 @@ export async function HEAD(req: NextRequest) {
   try {
     const unreadCount = await getUnreadCount(user.id, true);
     return NextResponse.json({ unreadCount }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Serverfeil" }, { status: 500 });
   }
 }

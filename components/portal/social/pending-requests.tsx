@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, X, Loader2 } from "lucide-react";
-import { cn } from "@/lib/portal/utils/cn";
+
 
 export interface PendingRequest {
   friendshipId: string;

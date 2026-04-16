@@ -1,8 +1,6 @@
 // ─── Navigation ───
 export const NAV_LINKS = [
   { label: "Coaching", href: "/academy" },
-  { label: "Junior Academy", href: "/junior-academy" },
-  { label: "Utvikling", href: "/utvikling" },
 ] as const;
 
 // ─── Hero ───
@@ -1083,12 +1081,12 @@ export const ACADEMY_HERO = {
 
 // ─── Academy Concept Section ───
 export const ACADEMY_CONCEPT = {
-  eyebrow: "Hvorfor abonnement",
-  heading: "Trening som følger deg mellom sesjonene.",
+  eyebrow: "Treningsabonnement",
+  heading: "Coaching som faktisk følger deg mellom sesjonene.",
   paragraphs: [
     "De fleste tar en golftime i ny og ne. Etterpå trener de på egenhånd — uten plan, uten oppfølging, uten måling. Resultatet er at de gjør de samme feilene om igjen.",
-    "Et treningsabonnement endrer dynamikken. Du møter trener jevnlig, alltid med et tydelig mål. Mellom sesjonene har du en oppdatert treningsplan, øvelser med video, og logging som viser om du faktisk går fremover.",
-    "Det er forskjellen mellom å ta en time og å utvikle seg.",
+    "Med et treningsabonnement møter du trener 2 eller 4 ganger i måneden. Hver sesjon er 20 minutter — fokusert, målt med TrackMan og filmet for analyse. Treneren oppdaterer treningsplanen din etter hver sesjon, slik at du alltid vet nøyaktig hva du skal jobbe med på rangen.",
+    "I spillerportalen har du alt samlet: treningsplan med øvelser og video, statistikk over utviklingen din, Strokes Gained-analyse og coaching-historikk. Det er dette som gjør at trening mellom sesjonene faktisk fungerer — og at du utvikler deg raskere enn med enkelttimer alene.",
   ],
 } as const;
 

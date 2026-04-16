@@ -3,9 +3,11 @@ import { WebsiteFooter } from "@/components/website/WebsiteFooter";
 import { BackToTop } from "@/components/website/BackToTop";
 import { AcademyHeroV2 } from "@/components/website/academy-hero-v2";
 import { ConceptSection } from "@/components/website/academy/ConceptSection";
+import { HowItWorksSection } from "@/components/website/academy/HowItWorksSection";
+import { PortalPreviewSection } from "@/components/website/academy/PortalPreviewSection";
 import { AcademyPricesV2 } from "@/components/website/academy-prices-v2";
 import { ComparisonSection } from "@/components/website/academy/ComparisonSection";
-import { TestimonialSection } from "@/components/website/landing/TestimonialSection";
+
 import { AcademyCtaV2 } from "@/components/website/academy-cta-v2";
 import { FAQSection } from "@/components/website/landing/FAQSection";
 
@@ -51,19 +53,22 @@ export default function AcademyPage() {
         {/* 2. Konsept — Hvorfor abonnement */}
         <ConceptSection />
 
-        {/* 3. Priser og pakker */}
+        {/* 3. Slik fungerer det — 4 steg */}
+        <HowItWorksSection />
+
+        {/* 4. Spillerportalen — funksjoner + lanseres mai 2026 */}
+        <PortalPreviewSection />
+
+        {/* 5. Priser og pakker */}
         <AcademyPricesV2 />
 
-        {/* 4. Abonnement vs Flex */}
+        {/* 6. Abonnement vs Flex */}
         <ComparisonSection />
 
-        {/* 5. Kundehistorie */}
-        <TestimonialSection />
-
-        {/* 6. CTA */}
+        {/* 7. CTA */}
         <AcademyCtaV2 />
 
-        {/* 7. FAQ */}
+        {/* 9. FAQ */}
         <FAQSection />
       </main>
 

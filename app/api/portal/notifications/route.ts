@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Kunne ikke hente notifikasjoner" }, { status: 500 });
   }
 
-  const { count: unreadCount, error: countError } = await supabase
+  const { count: unreadCount } = await supabase
     .from("Notification")
     .select("*", { count: "exact", head: true })
     .eq("userId", user.id)

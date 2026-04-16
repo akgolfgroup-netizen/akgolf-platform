@@ -48,7 +48,7 @@ const ICON_MAP: Record<string, typeof Trophy> = {
 
 // Generate particles with seed for consistency
 function generateParticles(seed: number) {
-  const colors = ["#FFD700", "#FFA500", "#FF6347", "#32CD32", "#1E90FF", "#9370DB"];
+  const colors = ["rgb(255,215,0)", "#FFA500", "#FF6347", "#32CD32", "#1E90FF", "#9370DB"];
   // Simple seeded random for reproducibility
   const seededRandom = (i: number) => {
     const x = Math.sin(seed + i) * 10000;

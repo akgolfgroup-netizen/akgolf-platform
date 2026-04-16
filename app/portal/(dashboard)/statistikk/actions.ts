@@ -2,6 +2,7 @@
 
 import { requirePortalUser } from "@/lib/portal/auth";
 import { prisma } from "@/lib/portal/prisma";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { subDays, subWeeks, startOfWeek, format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { nanoid } from "nanoid";
@@ -337,4 +338,153 @@ export async function getLatestHandicap() {
   });
 
   return entry || null;
+}
+
+export type GolfProfileSummary = {
+  roundCount30d: number;
+  avgScore30d: number | null;
+  scoreTrend: "up" | "down" | "flat";
+  handicap: number | null;
+  trainingSessions30d: number;
+  trainingMinutes30d: number;
+  streak: number;
+  topFocusAreas: string[];
+  trackManBestCarry: number | null;
+  trackManBestBallSpeed: number | null;
+  combinedInsights: string[];
+};
+
+async function calculateStreak(userId: string): Promise<number> {
+  const supabase = await createServerSupabase();
+  const { data: logs } = await supabase
+    .from("TrainingLog")
+    .select("date")
+    .eq("userId", userId)
+    .order("date", { ascending: false });
+
+  if (!logs || logs.length === 0) return 0;
+
+  const uniqueDates = [
+    ...new Set(logs.map((l) => new Date(l.date).toISOString().split("T")[0])),
+  ].sort().reverse();
+
+  const todayStr = new Date().toISOString().split("T")[0];
+  const yesterdayStr = subDays(new Date(), 1).toISOString().split("T")[0];
+
+  if (uniqueDates[0] !== todayStr && uniqueDates[0] !== yesterdayStr) return 0;
+
+  let streak = 1;
+  for (let i = 1; i < uniqueDates.length; i++) {
+    const prev = new Date(uniqueDates[i - 1]);
+    const curr = new Date(uniqueDates[i]);
+    const diffDays = Math.round((prev.getTime() - curr.getTime()) / (1000 * 60 * 60 * 24));
+    if (diffDays === 1) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
+export async function getGolfProfileSummary(): Promise<GolfProfileSummary> {
+  const user = await requirePortalUser();
+  const since30d = subDays(new Date(), 30);
+
+  const [rounds, trainingLogs, handicapEntry, trackManBest] = await Promise.all([
+    prisma.roundStats.findMany({
+      where: { userId: user.id, date: { gte: since30d } },
+      orderBy: { date: "desc" },
+    }),
+    prisma.trainingLog.findMany({
+      where: { userId: user.id, date: { gte: since30d } },
+      select: { durationMinutes: true, focusArea: true },
+    }),
+    prisma.handicapEntry.findFirst({ where: { userId: user.id }, orderBy: { date: "desc" } }),
+    prisma.trackManShotData.findFirst({
+      where: { userId: user.id },
+      orderBy: { carryDistance: "desc" },
+      select: { carryDistance: true, ballSpeed: true },
+    }),
+  ]);
+
+  const roundCount30d = rounds.length;
+  const scoredRounds = rounds.filter((r) => r.totalScore !== null);
+  const avgScore30d =
+    scoredRounds.length > 0
+      ? scoredRounds.reduce((sum, r) => sum + (r.totalScore ?? 0), 0) / scoredRounds.length
+      : null;
+
+  let scoreTrend: "up" | "down" | "flat" = "flat";
+  if (scoredRounds.length >= 4) {
+    const mid = Math.floor(scoredRounds.length / 2);
+    const recentAvg = scoredRounds.slice(0, mid).reduce((s, r) => s + (r.totalScore ?? 0), 0) / mid;
+    const olderAvg = scoredRounds.slice(mid).reduce((s, r) => s + (r.totalScore ?? 0), 0) / (scoredRounds.length - mid);
+    if (recentAvg < olderAvg - 0.5) scoreTrend = "down";
+    else if (recentAvg > olderAvg + 0.5) scoreTrend = "up";
+  }
+
+  const trainingSessions30d = trainingLogs.length;
+  const trainingMinutes30d = trainingLogs.reduce((sum, t) => sum + (t.durationMinutes ?? 0), 0);
+  const streak = await calculateStreak(user.id);
+
+  const focusMap = new Map<string, number>();
+  for (const t of trainingLogs) {
+    if (t.focusArea) {
+      focusMap.set(t.focusArea, (focusMap.get(t.focusArea) ?? 0) + 1);
+    }
+  }
+  const topFocusAreas = Array.from(focusMap.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([area]) => area);
+
+  const trackManBestCarry = trackManBest?.carryDistance ?? null;
+  const trackManBestBallSpeed = trackManBest?.ballSpeed ?? null;
+
+  // Generer kombinerte innsikter
+  const insights: string[] = [];
+
+  if (roundCount30d > 0 && trainingSessions30d > 0) {
+    insights.push(`Du har spilt ${roundCount30d} runder og logget ${trainingSessions30d} treningsøkter siste 30 dager.`);
+  }
+
+  if (avgScore30d != null && scoreTrend === "down") {
+    insights.push(`Snittscoren din er på ${avgScore30d.toFixed(1)} — og den er i bedring!`);
+  } else if (avgScore30d != null) {
+    insights.push(`Snittscoren din siste 30 dager er ${avgScore30d.toFixed(1)}.`);
+  }
+
+  if (trackManBestCarry && trackManBestCarry > 200) {
+    insights.push(`TrackMan viser at du kan slå carry opp til ${Math.round(trackManBestCarry)}m — sterk ballfart!`);
+  } else if (trackManBestBallSpeed) {
+    insights.push(`Din beste målte ballfart er ${Math.round(trackManBestBallSpeed)} mph.`);
+  }
+
+  if (trainingMinutes30d > 0) {
+    const hours = Math.round(trainingMinutes30d / 60 * 10) / 10;
+    insights.push(`Du har trent omtrent ${hours} timer denne måneden${topFocusAreas.length > 0 ? ` med fokus på ${topFocusAreas[0].toLowerCase()}` : ""}.`);
+  }
+
+  if (streak >= 3) {
+    insights.push(`Du er inne i en fin treningsstreak på ${streak} dager. Fortsett momentum!`);
+  }
+
+  if (insights.length === 0) {
+    insights.push("Registrer runder og treningsøkter for å få personlige innsikter.");
+  }
+
+  return {
+    roundCount30d,
+    avgScore30d,
+    scoreTrend,
+    handicap: handicapEntry?.handicapIndex ?? null,
+    trainingSessions30d,
+    trainingMinutes30d,
+    streak,
+    topFocusAreas,
+    trackManBestCarry,
+    trackManBestBallSpeed,
+    combinedInsights: insights.slice(0, 5),
+  };
 }

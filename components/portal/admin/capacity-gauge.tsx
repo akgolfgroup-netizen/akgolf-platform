@@ -19,9 +19,9 @@ export function CapacityGauge({
 
   // Fargekode basert på belegg
   const getColor = () => {
-    if (percentage > 95) return "var(--color-error)";
-    if (percentage >= 80) return "var(--color-warning)";
-    return "var(--color-success)";
+    if (percentage > 95) return "#EF4444";
+    if (percentage >= 80) return "#C48A32";
+    return "#1A4D36";
   };
 
   const color = getColor();
@@ -47,7 +47,7 @@ export function CapacityGauge({
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="var(--color-grey-200)"
+            stroke="#D5DFDB"
             strokeWidth={strokeWidth}
           />
           {/* Progress circle */}
@@ -81,12 +81,12 @@ export function CapacityGauge({
       </div>
 
       {/* Label */}
-      <p className="mt-2 text-xs font-medium text-[var(--color-grey-500)] uppercase tracking-wide">
+      <p className="mt-2 text-xs font-medium text-grey-400 uppercase tracking-wide">
         {label}
       </p>
 
       {/* Hours display */}
-      <p className="text-sm text-[var(--color-grey-900)] font-medium mt-1">
+      <p className="text-sm text-black font-medium mt-1">
         {bookedHours.toFixed(1)}t / {totalHours.toFixed(1)}t
       </p>
     </div>

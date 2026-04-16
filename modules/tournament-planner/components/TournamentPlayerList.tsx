@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { GoalTypeBadge } from "./GoalTypeBadge";
 import { PLAN_LEVEL_CONFIG } from "../constants";
 import type { GoalType, PlanLevel } from "../types";
@@ -27,9 +28,11 @@ export function TournamentPlayerList({ plans }: TournamentPlayerListProps) {
           className="flex items-center gap-3 p-2.5 bg-[var(--color-bg)] border border-[var(--color-grey-200)] rounded-lg"
         >
           {plan.student.image ? (
-            <img
+            <Image
               src={plan.student.image}
               alt=""
+              width={28}
+              height={28}
               className="w-7 h-7 rounded-md object-cover flex-shrink-0"
             />
           ) : (

@@ -1,0 +1,76 @@
+<h2>Interaktive elementer for forsiden</h2>
+<p class="subtitle">Velg hvilke interaktive teknikker som skal brukes. Alle er mulige med Framer Motion + Next.js.</p>
+
+<div class="options" data-multiselect>
+  <div class="option" data-choice="scroll-reveal" onclick="toggleSelect(this)">
+    <div class="letter">1</div>
+    <div class="content">
+      <h3>Scroll-triggered reveals</h3>
+      <p>Elementer fader inn og glir opp nar du scroller til dem. Tekst, kort og bilder animerer sekvensielt. <strong>Apple.com-stil.</strong></p>
+      <p style="color: #005840; font-size: 12px; margin-top: 6px;">Allerede i stacken: Framer Motion + RevealOnScroll-komponent</p>
+    </div>
+  </div>
+  <div class="option" data-choice="parallax-hero" onclick="toggleSelect(this)">
+    <div class="letter">2</div>
+    <div class="content">
+      <h3>Parallax hero-bilde</h3>
+      <p>Hero-bildet beveger seg saktere enn teksten ved scroll, skaper dybde. Tekst kan fade ut mens du scroller ned.</p>
+      <p style="color: #005840; font-size: 12px; margin-top: 6px;">Framer Motion useScroll() + useTransform()</p>
+    </div>
+  </div>
+  <div class="option" data-choice="number-counter" onclick="toggleSelect(this)">
+    <div class="letter">3</div>
+    <div class="content">
+      <h3>Animerte talltellere</h3>
+      <p>Trust bar-tallene (142 spillere, 4.8 rating, -3.2 HCP) teller opp fra 0 nar de blir synlige. <strong>motion-number pakken.</strong></p>
+      <p style="color: #005840; font-size: 12px; margin-top: 6px;">Allerede installert: motion-number</p>
+    </div>
+  </div>
+  <div class="option" data-choice="bento-hover" onclick="toggleSelect(this)">
+    <div class="letter">4</div>
+    <div class="content">
+      <h3>Bento-kort med hover-effekter</h3>
+      <p>Kort lofter seg, far skygge-dybde og subtil scale ved hover. Innhold glir inn fra bunn. Cursor-folgende glow.</p>
+      <p style="color: #005840; font-size: 12px; margin-top: 6px;">Framer Motion whileHover + CSS transforms</p>
+    </div>
+  </div>
+  <div class="option" data-choice="sticky-sections" onclick="toggleSelect(this)">
+    <div class="letter">5</div>
+    <div class="content">
+      <h3>Sticky scroll-seksjoner</h3>
+      <p>Innhold "pinnes" mens bakgrunnen endres. F.eks. tekst til venstre star stille mens bilder til hoyre bytter ved scroll. <strong>iPhone 11 Pro-stil.</strong></p>
+      <p style="color: #005840; font-size: 12px; margin-top: 6px;">CSS position: sticky + Framer Motion scroll progress</p>
+    </div>
+  </div>
+  <div class="option" data-choice="image-reveal" onclick="toggleSelect(this)">
+    <div class="letter">6</div>
+    <div class="content">
+      <h3>Bilde-avsloringer</h3>
+      <p>Bilder i galleriet "avslores" med en clip-path eller wipe-effekt nar de scrolles til. Dramatisk og visuelt.</p>
+      <p style="color: #005840; font-size: 12px; margin-top: 6px;">CSS clip-path + Framer Motion</p>
+    </div>
+  </div>
+  <div class="option" data-choice="magnetic-buttons" onclick="toggleSelect(this)">
+    <div class="letter">7</div>
+    <div class="content">
+      <h3>Magnetiske CTA-knapper</h3>
+      <p>CTA-knapper "trekkes" lett mot musepekeren nar du naermer deg dem. Subtil men premium folelse.</p>
+      <p style="color: #005840; font-size: 12px; margin-top: 6px;">Framer Motion useMotionValue + mouse position</p>
+    </div>
+  </div>
+  <div class="option" data-choice="smooth-scroll" onclick="toggleSelect(this)">
+    <div class="letter">8</div>
+    <div class="content">
+      <h3>Smooth scroll (Lenis)</h3>
+      <p>Hele siden far en silkemyk, inertia-basert scroll i stedet for standard browser-scroll. Premium folelse.</p>
+      <p style="color: #C48A32; font-size: 12px; margin-top: 6px;">Krever ny pakke: @studio-freight/lenis</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px; padding: 20px; background: #f0f4f3; border-radius: 12px;">
+  <h3 style="margin-bottom: 8px;">Min anbefaling</h3>
+  <p style="font-size: 14px; color: #324D45;">
+    <strong style="color: #005840;">1 + 2 + 3 + 4 + 6</strong> — Scroll reveals, parallax hero, talltellere, bento hover og bilde-avsloringer. Disse gir mest effekt med minst kompleksitet. Sticky sections (5) og Lenis (8) er kule men overflodig for en landingsside.
+  </p>
+</div>

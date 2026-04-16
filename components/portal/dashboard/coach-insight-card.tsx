@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { ArrowRight, MessageSquare, Sparkles, Target } from "lucide-react";
-import { PremiumCard } from "./premium-card";
+import { MessageSquare, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { colors } from "@/lib/design-tokens";
 
 interface CoachInsight {
   focusAreas: string[] | null;
@@ -13,140 +13,59 @@ interface CoachInsight {
   date: Date | string;
 }
 
-interface AiInsight {
-  summary: string;
-  strengths: string[];
-  improvements: string[];
-  focusTip: string;
-  generatedAt: Date | string;
-}
-
 interface CoachInsightCardProps {
   coachInsight: CoachInsight | null;
-  aiInsight: AiInsight | null;
 }
 
-export function CoachInsightCard({
-  coachInsight,
-  aiInsight,
-}: CoachInsightCardProps) {
-  if (coachInsight && (coachInsight.primaryFocus || coachInsight.summary)) {
-    const focusAreas = (coachInsight.focusAreas ?? []).slice(0, 3);
-    return (
-      <PremiumCard className="flex h-full flex-col" glow="green" radius="large">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#d2f000]/20">
-            <MessageSquare className="h-4 w-4 text-[#154212]" strokeWidth={1.75} />
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold text-[#1c1c16]">Fra din coach</h3>
-            <p className="text-[10px] text-[#8a8a82]">
-              {format(new Date(coachInsight.date), "d. MMMM yyyy", { locale: nb })}
-            </p>
-          </div>
-        </div>
+export function CoachInsightCard({ coachInsight }: CoachInsightCardProps) {
+  const hasCoach = coachInsight && (coachInsight.summary || coachInsight.primaryFocus);
 
-        {coachInsight.primaryFocus && (
-          <div className="mt-4 rounded-xl border border-[#154212]/8 bg-[#f7f3ea] p-3">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#8a8a82]">
-              Primaert fokus
-            </p>
-            <p className="mt-1 flex items-center gap-2 text-sm font-semibold text-[#1c1c16]">
-              <Target className="h-3.5 w-3.5 text-[#154212]" />
-              {coachInsight.primaryFocus}
-            </p>
-          </div>
-        )}
-
-        {coachInsight.summary && (
-          <p className="mt-4 text-sm leading-relaxed text-text">
-            {coachInsight.summary}
-          </p>
-        )}
-
-        {focusAreas.length > 0 && (
-          <div className="mt-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)]">
-              Fokusomraader
-            </p>
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {focusAreas.map((area) => (
-                <span
-                  key={area}
-                  className="rounded-full border border-black/[0.06] bg-black/[0.02] px-3 py-1 text-[11px] font-medium text-text"
-                >
-                  {area}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <Link
-          href="/portal/coaching-historikk"
-          className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[12px] font-semibold text-[#154212] transition-all hover:gap-2"
-        >
-          Se full coaching-historikk
-          <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
-      </PremiumCard>
-    );
-  }
-
-  if (aiInsight?.focusTip || aiInsight?.summary) {
-    return (
-      <PremiumCard className="flex h-full flex-col" glow="ai" radius="large">
-        {/* AI glow line */}
-        <div className="absolute left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-[#AF52DE] to-transparent" />
-
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#AF52DE]/15 bg-[#AF52DE]/10">
-            <Sparkles className="h-4 w-4 text-[#AF52DE]" strokeWidth={1.75} />
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold text-[#1c1c16]">AI-innsikt</h3>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#8a8a82]">
-              Basert paa treningshistorikk
-            </p>
-          </div>
-        </div>
-
-        <p className="mt-4 text-sm italic leading-relaxed text-text">
-          {aiInsight.focusTip || aiInsight.summary}
-        </p>
-
-        <Link
-          href="/portal/ai-coach"
-          className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[12px] font-semibold text-[#AF52DE] transition-all hover:gap-2"
-        >
-          Snakk med AI Coach
-          <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
-      </PremiumCard>
-    );
-  }
+  const formatDate = (d: Date | string) => {
+    const date = typeof d === "string" ? new Date(d) : d;
+    return format(date, "d. MMMM yyyy", { locale: nb });
+  };
 
   return (
-    <PremiumCard className="flex h-full flex-col border-dashed border-[#154212]/15" radius="large">
-      <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#AF52DE]/15 bg-[#AF52DE]/10">
-          <Sparkles className="h-4 w-4 text-[#AF52DE]" strokeWidth={1.75} />
+    <div className="flex h-full flex-col rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-grey-200 hover:shadow-md">
+      <div className="mb-3 flex items-center gap-2">
+        <div
+          className="flex h-8 w-8 items-center justify-center rounded-full"
+          style={{ backgroundColor: `${colors.primary.accent}20` }}
+        >
+          <MessageSquare className="h-4 w-4" style={{ color: colors.primary.dark }} />
         </div>
-        <div>
-          <h3 className="text-sm font-semibold text-[#1c1c16]">Bli kjent med AI Coach</h3>
-          <p className="text-[10px] text-[#8a8a82]">Din personlige assistent</p>
-        </div>
+        <h3 className="text-sm font-semibold text-black">Fra treneren din</h3>
       </div>
-      <p className="mt-4 text-sm leading-relaxed text-[#5a5a52]">
-        Naar du har logget okter og runder, vil AI Coach gi deg personlige innsikter og anbefalinger.
-      </p>
-      <Link
-        href="/portal/ai-coach"
-        className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[12px] font-semibold text-[#AF52DE] transition-all hover:gap-2"
-      >
-        Start en samtale
-        <ArrowRight className="h-3.5 w-3.5" />
-      </Link>
-    </PremiumCard>
+
+      {hasCoach ? (
+        <div className="flex-1">
+          <p className="line-clamp-4 text-sm leading-relaxed text-grey-500">
+            {coachInsight.summary || coachInsight.primaryFocus}
+          </p>
+          {coachInsight.date && (
+            <p className="mt-3 text-xs text-grey-400">
+              {formatDate(coachInsight.date)}
+            </p>
+          )}
+        </div>
+      ) : (
+        <div className="flex-1">
+          <p className="text-sm text-grey-400">
+            Coaching-notater vises her etter din første økt med treneren.
+          </p>
+        </div>
+      )}
+
+      <div className="mt-4 pt-3 border-t border-grey-100">
+        <Link
+          href="/portal/coaching-historikk"
+          className="inline-flex items-center gap-1 text-xs font-semibold hover:underline"
+          style={{ color: colors.primary.main }}
+        >
+          Se historikk
+          <ArrowRight className="h-3 w-3" />
+        </Link>
+      </div>
+    </div>
   );
 }

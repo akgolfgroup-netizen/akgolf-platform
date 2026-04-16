@@ -16,6 +16,7 @@ import { syncGoogleCalendar } from "./sync";
 
 const GOOGLE_CALENDAR_API = "https://www.googleapis.com/calendar/v3";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface WebhookNotification {
   kind: "api#channel";
   id: string;

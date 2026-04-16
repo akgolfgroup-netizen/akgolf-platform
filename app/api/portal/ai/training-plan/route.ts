@@ -1,6 +1,7 @@
 import { getPortalUser } from "@/lib/portal/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase/server";
+import { prisma } from "@/lib/portal/prisma";
 import { generateTrainingPlan } from "@/lib/portal/ai/training-plan";
 import { isStaff } from "@/lib/portal/rbac";
 import { addDays } from "date-fns";
@@ -33,12 +34,33 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Mangler påkrevde felt" }, { status: 400 });
   }
 
-  const result = await generateTrainingPlan({
-    goals,
-    periodType,
-    durationWeeks,
-    startDate,
+  const latestPrescription = await prisma.trainingPrescription.findFirst({
+    where: { userId: studentId },
+    orderBy: { generatedAt: "desc" },
   });
+
+  const prescription = latestPrescription
+    ? {
+        focusAreas: latestPrescription.focusAreas,
+        weeklyHours: latestPrescription.weeklyHours,
+        suggestedFormulaIds: latestPrescription.suggestedFormulaIds,
+        predictedHcpChange: latestPrescription.predictedHcpChange,
+        confidence: latestPrescription.confidence,
+        gradientJson: (latestPrescription.gradientJson ?? {}) as Record<string, unknown>,
+        gapAnalysisJson: (latestPrescription.gapAnalysisJson ?? {}) as Record<string, unknown>,
+        reasoning: "",
+      }
+    : undefined;
+
+  const result = await generateTrainingPlan(
+    {
+      goals,
+      periodType,
+      durationWeeks,
+      startDate,
+    },
+    prescription
+  );
 
   // Deactivate existing plans
   const { error: deactivateError } = await supabase

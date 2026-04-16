@@ -28,7 +28,7 @@ export function TrainerCard({
       }`}
     >
       <div
-        className={`w-full aspect-[3/4] bg-cover bg-center relative ${trainer.imageUrl ? "bg-text" : "bg-primary"}`}
+        className={`w-full aspect-[4/3] bg-cover bg-center relative ${trainer.imageUrl ? "bg-text" : "bg-primary"}`}
         style={trainer.imageUrl ? { backgroundImage: `url(${trainer.imageUrl})` } : undefined}
       >
         {!trainer.imageUrl && (
@@ -50,7 +50,7 @@ export function TrainerCard({
 
       <div
         className={`overflow-hidden transition-[max-height] duration-450 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-          isSelected ? "max-h-[600px]" : "max-h-0"
+          isSelected ? "max-h-[600px] overflow-y-auto" : "max-h-0"
         }`}
       >
         <div className="px-5 pt-4 pb-5">

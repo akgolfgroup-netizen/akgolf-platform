@@ -51,7 +51,7 @@ async function getOrCreateUser(
   const serviceSupabase = createClient(supabaseUrl, supabaseKey);
 
   // Try to find existing user by email
-  const { data: existingUser, error: findError } = await serviceSupabase
+  const { data: existingUser } = await serviceSupabase
     .from("User")
     .select("id, email, name, stripeCustomerId")
     .eq("email", email.toLowerCase().trim())

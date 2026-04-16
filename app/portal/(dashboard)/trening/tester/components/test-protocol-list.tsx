@@ -77,7 +77,7 @@ const difficultyLabels: Record<string, string> = {
   elite: "Elite",
 };
 
-export function TestProtocolList({ categories, grouped, userCategory }: Props) {
+export function TestProtocolList({ categories, grouped }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");

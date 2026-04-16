@@ -40,14 +40,14 @@ function NavLink({
       className={cn(
         "relative flex items-center gap-2.5 px-3 py-2.5 mx-2 rounded-lg text-sm font-medium transition-colors",
         isActive
-          ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
-          : "text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
+          ? "bg-black text-white"
+          : "text-black hover:bg-grey-50",
       )}
       aria-current={isActive ? "page" : undefined}
     >
       {isActive && (
         <span
-          className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-r-full bg-[var(--color-primary)]"
+          className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-r-full bg-accent-cta"
           aria-hidden="true"
         />
       )}
@@ -55,9 +55,7 @@ function NavLink({
         <Icon
           className={cn(
             "w-[18px] h-[18px] shrink-0",
-            isActive
-              ? "text-[var(--color-primary)]"
-              : "text-[var(--color-muted)]",
+            isActive ? "text-white" : "text-grey-400",
           )}
         />
       )}
@@ -86,7 +84,9 @@ function NavGroupComponent({
 
   return (
     <div className="mb-5">
-      <div className="admin-label px-5 py-1.5">{group.label}</div>
+      <div className="px-5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-grey-400">
+        {group.label}
+      </div>
       <div className="space-y-0.5">
         {accessibleItems.map((item) => {
           const isActive =
@@ -108,13 +108,13 @@ function NavGroupComponent({
 
 function SidebarHeader() {
   return (
-    <div className="px-5 py-4 border-b border-[var(--color-grey-200)] flex items-center gap-3">
+    <div className="px-5 py-4 border-b border-grey-200 flex items-center gap-3">
       <AKLogo variant="neutral" size={32} />
       <div className="min-w-0">
-        <span className="block text-sm font-bold text-[var(--color-text)] truncate">
+        <span className="block text-sm font-bold text-black truncate">
           AK Golf
         </span>
-        <p className="text-[10px] text-[var(--color-primary)] uppercase tracking-wider font-semibold">
+        <p className="text-[10px] text-primary uppercase tracking-wider font-semibold">
           Mission Control
         </p>
       </div>
@@ -133,27 +133,27 @@ function SidebarUserFooter({
   const roleLabel = isAdmin(user.role)
     ? "Admin"
     : isStaff(user.role)
-      ? "Instruktor"
+      ? "Instruktør"
       : "Invitert";
 
   return (
-    <div className="p-3 border-t border-[var(--color-grey-200)]">
+    <div className="p-3 border-t border-grey-200">
       <div className="flex items-center gap-2.5 p-2 rounded-lg">
-        <div className="w-9 h-9 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center text-sm font-semibold shrink-0">
+        <div className="w-9 h-9 rounded-full bg-grey-50 text-black flex items-center justify-center text-sm font-semibold shrink-0">
           {initial}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-semibold text-[var(--color-text)] truncate">
+          <div className="text-sm font-semibold text-black truncate">
             {user.name ?? "Bruker"}
           </div>
-          <div className="text-xs text-[var(--color-muted)] truncate">
+          <div className="text-xs text-grey-400 truncate">
             {user.email ?? roleLabel}
           </div>
         </div>
       </div>
       <button
         onClick={onSignOut}
-        className="mt-1 w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[var(--color-muted)] hover:text-[var(--color-error)] hover:bg-[var(--color-error)]/10 transition-colors cursor-pointer"
+        className="mt-1 w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-grey-400 hover:text-error hover:bg-error-light transition-colors cursor-pointer"
       >
         <LogOut className="w-4 h-4" />
         <span>Logg ut</span>
@@ -206,8 +206,7 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
 
   return (
     <>
-      {/* Desktop Sidebar */}
-      <aside className="fixed left-0 top-0 h-full w-[240px] hidden lg:flex flex-col z-20 bg-white border-r border-[var(--color-grey-200)]">
+      <aside className="fixed left-0 top-0 h-full w-[240px] hidden lg:flex flex-col z-20 bg-white border-r border-grey-200">
         <SidebarHeader />
         <SidebarContent
           user={user}
@@ -216,7 +215,6 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
         />
       </aside>
 
-      {/* Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -225,30 +223,30 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={onClose}
-              className="fixed inset-0 bg-[var(--color-text)]/40 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
             />
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-[var(--color-grey-200)]"
+              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-grey-200"
             >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-grey-200)]">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-grey-200">
                 <div className="flex items-center gap-3">
                   <AKLogo variant="neutral" size={32} />
                   <div className="min-w-0">
-                    <span className="block text-sm font-bold text-[var(--color-text)] truncate">
+                    <span className="block text-sm font-bold text-black truncate">
                       AK Golf
                     </span>
-                    <p className="text-[10px] text-[var(--color-primary)] uppercase tracking-wider font-semibold">
+                    <p className="text-[10px] text-primary uppercase tracking-wider font-semibold">
                       Mission Control
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-lg text-[var(--color-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
+                  className="p-2 rounded-lg text-grey-400 hover:text-black hover:bg-grey-50 transition-colors cursor-pointer"
                   aria-label="Lukk meny"
                 >
                   <X className="w-5 h-5" />

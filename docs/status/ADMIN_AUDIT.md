@@ -1,10 +1,10 @@
-# Mission Control (Admin) — Audit 2026-04-12
+# Mission Control (Admin) — Audit 2026-04-15
 
 ## Sammendrag
 
 - **27 sider** (inkl. layout)
-- **22 bruker reelle data** (Supabase/Prisma via actions.ts)
-- **3 har mock/hardkodet data**
+- **25 bruker reelle data** (Supabase/Prisma via actions.ts)
+- **0 har mock/hardkodet data**
 - RBAC via `canAccessMissionControl()` i layout.tsx
 - Alle sider har server/client-split der nodvendig
 
@@ -24,14 +24,14 @@
 | Elever | Reell (fetchStudents + paginering) | OK |
 | Elever/[id] | Reell (getStudentProfile, HCP, A-K) | OK |
 | Fasiliteter | Reell (getFacilities, getTodaySchedule) | OK |
-| **Fasiliteter/ny-aktivitet** | **MOCK** | Mock facility list, simulert skjema |
-| **Fasiliteter/innstillinger** | **MOCK** | Mock facilities og instructor defaults |
+| Fasiliteter/ny-aktivitet | Reell (getFacilities + createActivity) | OK |
+| Fasiliteter/innstillinger | Reell (getAllFacilities + getInstructorFacilityDefaults) | OK |
 | ~~Focus~~ | ~~MOCK~~ Reell (AdminTask CRUD, kanban, divisjoner) | OK |
 | Godkjenninger | Reell (getPendingItems) | OK |
 | Kalender | Reell (getBookingsForPeriod, getInstructors) | OK |
 | Kapasitet | Reell (getCapacityData) | OK |
 | ~~Meldinger~~ | ~~MOCK~~ Reell (Conversation + Message via Prisma) | OK |
-| **Mission-board** | **Delvis** | API-kall reelle, mock visualisering |
+| Mission-board | Reell (getMissionBoardCharts + /api/portal/admin/dashboard) | OK |
 | Notifications | Reell (push til spillere) | OK |
 | Okonomi | Reell (getOkonomiData, ADMIN-only) | OK |
 | Okter | Reell (getSessionOverview) | OK |
@@ -39,6 +39,29 @@
 | Tilgjengelighet | Reell (getAvailability, getBlockedTimes) | OK |
 | Treningsplan | Reell (getStudentPlans/getExistingPlans) | OK |
 | Turneringer | Ikke auditert separat | - |
+
+## Fullfort 2026-04-15
+
+### Fasiliteter/ny-aktivitet — reell data
+- `page.tsx` henter facilities via `getFacilities()`
+- `ny-aktivitet-client.tsx` bruker `createActivity()` fra server actions
+
+### Fasiliteter/innstillinger — reell data
+- `page.tsx` henter `getAllFacilities()` og `getInstructorFacilityDefaults()`
+- `innstillinger-client.tsx` bruker `toggleFacilityActive()` og `deleteInstructorDefault()`
+
+### Mission-board — fullstendig reell data
+- `getMissionBoardCharts()` aggregerer bookinger, betalinger, brukere fra Prisma
+- Booking-trend, sparklines, service-fordeling, heatmap og månedsmål er live
+
+### Teknisk gjeld — TypeScript
+- Fikset `hub-oversikt-client.tsx` (React-import)
+- Fikset `turneringer-client.tsx` (prop-mismatch)
+- Fikset `demo/page.tsx` (`aiCount` state)
+- Fikset `achievement-context.tsx` (`setQueue` state)
+- Slettet døde index-filer: `components/golf/index.ts`, `components/motion/index.ts`, `components/portal/sync/index.ts`
+- Laget `manual-plan-modal.tsx` stubb for manglende import
+- Ekskludert `design-ref/` fra `tsconfig.json`
 
 ## Fullfort 2026-04-11 → 2026-04-12
 

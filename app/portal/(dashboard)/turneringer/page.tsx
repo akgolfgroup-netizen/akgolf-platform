@@ -23,7 +23,6 @@ export default async function TurneringerPage() {
       tournaments={JSON.parse(JSON.stringify(tournaments))}
       pgaSchedule={JSON.parse(JSON.stringify(pgaSchedule))}
       euroSchedule={JSON.parse(JSON.stringify(euroSchedule))}
-      userId={user.id}
     />
   );
 }

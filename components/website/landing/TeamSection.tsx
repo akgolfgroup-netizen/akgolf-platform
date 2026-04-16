@@ -27,15 +27,25 @@ export function TeamSection() {
             <RevealOnScroll key={member.name} delay={i * 0.1}>
               <div className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover hover:-translate-y-px transition-all duration-300">
                 {/* Image */}
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={member.image ?? "/images/team/markus.jpg"}
-                    alt={member.name}
-                    fill
-                    className="object-cover object-top group-hover:scale-[1.02] transition-transform duration-700"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  {member.image ? (
+                    <>
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-700"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                    </>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-primary">
+                      <span className="text-5xl font-bold text-white">
+                        {member.name.split(" ").map(n => n[0]).join("").slice(0, 3)}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Content */}

@@ -11,24 +11,27 @@ import {
   Trophy,
   User as UserIcon,
   ArrowRight,
-  type LucideIcon,
 } from "lucide-react";
-import { GlassCard } from "@/components/portal/premium";
+import { Card } from "@/components/ui/card";
 import { BookingStatusBadge } from "./booking-status-badge";
 import type { BookingViewModel } from "./booking-types";
 import { getStatusConfig } from "./booking-types";
 
-function iconForType(type: BookingViewModel["type"]): LucideIcon {
+function renderIconForType(
+  type: BookingViewModel["type"],
+  className?: string,
+  strokeWidth?: number,
+) {
   switch (type) {
     case "coaching":
-      return Target;
+      return <Target className={className} strokeWidth={strokeWidth} />;
     case "training":
-      return Calendar;
+      return <Calendar className={className} strokeWidth={strokeWidth} />;
     case "tournament":
-      return Trophy;
+      return <Trophy className={className} strokeWidth={strokeWidth} />;
     case "booking":
     default:
-      return Calendar;
+      return <Calendar className={className} strokeWidth={strokeWidth} />;
   }
 }
 
@@ -49,17 +52,16 @@ interface UpcomingBookingCardProps {
 
 export function UpcomingBookingCard({ booking }: UpcomingBookingCardProps) {
   const status = getStatusConfig(booking);
-  const Icon = iconForType(booking.type);
   const dateLabel = formatDateLabel(booking.startTime);
   const timeLabel = formatTimeRange(booking.startTime, booking.duration);
 
   return (
     <Link href={`/portal/bookinger/${booking.id}`} className="block">
-      <GlassCard variant="light" padding="md" interactive className="group">
+      <Card variant="elevated" padding="md" hover className="group">
         <div className="flex items-center gap-4">
           {/* Ikon */}
           <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105">
-            <Icon className="w-5 h-5 text-primary" strokeWidth={1.75} />
+            {renderIconForType(booking.type, "w-5 h-5 text-primary", 1.75)}
           </div>
 
           {/* Innhold */}
@@ -97,7 +99,7 @@ export function UpcomingBookingCard({ booking }: UpcomingBookingCardProps) {
           {/* Pil */}
           <ArrowRight className="w-4 h-4 text-muted opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all shrink-0" />
         </div>
-      </GlassCard>
+      </Card>
     </Link>
   );
 }

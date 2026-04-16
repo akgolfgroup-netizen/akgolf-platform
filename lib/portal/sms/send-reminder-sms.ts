@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import { nb } from "date-fns/locale";
 import { getTwilioClient } from "./twilio";
 import { logger } from "@/lib/logger";
 
@@ -27,7 +26,6 @@ export async function sendReminderSms(data: ReminderSmsData): Promise<boolean> {
   }
 
   const timeStr = format(data.startTime, "HH:mm");
-  const dateStr = format(data.startTime, "d. MMM", { locale: nb });
 
   const message =
     `Hei ${data.studentName}! Påminnelse: ${data.serviceName} med ${data.instructorName} i dag kl. ${timeStr}. ` +

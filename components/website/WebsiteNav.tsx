@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
-import { NAV_LINKS, BOOKING_URL, PORTAL_URL } from "@/lib/website-constants";
+import { NAV_LINKS, BOOKING_URL } from "@/lib/website-constants";
 import { AKLogo } from "./AKLogo";
 
 export function WebsiteNav() {
@@ -69,17 +69,9 @@ export function WebsiteNav() {
                 )}
               </Link>
             ))}
-            <Link
-              href={PORTAL_URL}
-              className={`text-[13px] font-medium tracking-wide transition-colors duration-300 ${
-                isDarkMode ? "text-white/70 hover:text-white" : "text-grey-500 hover:text-black"
-              }`}
-            >
-              Logg inn
-            </Link>
             <a
               href={BOOKING_URL}
-              className="text-[13px] font-medium px-5 py-2 rounded-full bg-[#0A1F18] text-white transition-opacity duration-300 hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              className="text-[13px] font-medium px-5 py-2 rounded-full bg-accent-cta text-accent-cta-text transition-opacity duration-300 hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-cta"
             >
               Book coaching
             </a>
@@ -150,23 +142,10 @@ export function WebsiteNav() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + NAV_LINKS.length * 0.05, duration: 0.4 }}
               >
-                <Link
-                  href={PORTAL_URL}
-                  onClick={() => setMobileOpen(false)}
-                  className="font-display text-lg font-normal tracking-tight text-grey-500 hover:text-black transition-colors"
-                >
-                  Logg inn
-                </Link>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + (NAV_LINKS.length + 1) * 0.05, duration: 0.4 }}
-              >
                 <a
                   href={BOOKING_URL}
                   onClick={() => setMobileOpen(false)}
-                  className="text-lg font-semibold px-8 py-4 mt-4 rounded-[980px] bg-[#0A1F18] text-white hover:opacity-85 transition-opacity"
+                  className="text-lg font-semibold px-8 py-4 mt-4 rounded-[980px] bg-black text-white hover:opacity-85 transition-opacity"
                 >
                   Book coaching
                 </a>

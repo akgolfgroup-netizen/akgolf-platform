@@ -1,32 +1,34 @@
 # Backlog — Prioritert gjenstående arbeid
 
-Sist oppdatert: 2026-04-12
+Sist oppdatert: 2026-04-15
 
 ## P1 — Kritisk (blokkerer produksjonskvalitet)
 
-### ~~1. Booking: Hardkodet slot-telling~~ FERDIG
-- **Losning:** Beregner reelle ledige slots fra InstructorAvailability (gjenvarende ukedager) minus eksisterende bookinger, per instruktor og tjeneste-varighet
+*Ingen åpne P1-punkter.*
 
 ## P2 — Viktig (funksjonalitet mangler)
 
-### ~~2. Portal: Trening/tester — hardkodet stat~~ FERDIG
-- **Losning:** Prisma-query mot TestResult for innlogget bruker: `count()` for fullforte tester, `findFirst()` for siste test-dato
+*Ingen åpne P2-punkter.*
 
 ## P3 — Forbedringer (kode-kvalitet)
 
-### ~~3. Portal: Apper — mangler actions.ts~~ FERDIG
-- **Losning:** Ny `actions.ts` med `getApperPageData()` — alle 5 Supabase-queries flyttet fra page.tsx
+*Ingen åpne P3-punkter.*
 
-### ~~4. Admin: Fasiliteter sub-sider — mock~~ FERDIG
-- **Losning:** ny-aktivitet: server+client split, kaller `createActivity()` med reelle fasiliteter. innstillinger: server+client split, reelle Facility + InstructorFacilityDefault fra Prisma, toggle aktiv/slett
+## Nye ideer / neste kvartal
 
-### ~~5. Booking: Idempotency key pa refunder~~ FERDIG
-- **Losning:** `idempotencyKey: refund_${paymentIntentId}_${amount}` pa `stripe.refunds.create()`
-
-### ~~6. Admin: Mission Board — delvis mock~~ FERDIG
-- **Losning:** Ny `actions.ts` med `getMissionBoardCharts()` — booking-trend (30d), tjeneste-fordeling, heatmap, sparklines og manedlig mal fra Prisma
+- TrackMan: AI-genererte innsikter fra `TrackManSessionAnalytics`
+- Statistikk: Prediktiv HCP-trend basert på treningsvolum + runder
+- Dagbok: Automatisk treningsplan-justering basert på logget progresjon
+- Admin: Real-time Mission Board med WebSocket/SSE
 
 ## Fullfort
+
+### 2026-04-15
+- **TrackMan analytics:** shot dispersion chart, session analytics card, real carry data
+- **Din Golfprofil:** kombinert hero med HCP, runder, trening, TrackMan highlights + innsikter
+- **Dagbok ↔ Treningsplan:** progress tracker, forbedret quick-log toast, kalender-interaktivitet
+- **Teknisk gjeld:** 15+ TS-feil fikset, døde index-filer slettet, admin mock-sider verifisert reelle
+- **Dokumentasjon:** PORTAL_AUDIT.md og ADMIN_AUDIT.md oppdatert — 100% reell data på begge sider
 
 ### 2026-04-12
 - Portal Apper: inline Supabase-queries flyttet til actions.ts

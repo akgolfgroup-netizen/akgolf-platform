@@ -85,6 +85,7 @@ export function TrainingVolumeChart({ data }: TrainingVolumeChartProps) {
                 ((value: any, name: any) => {
                   if (name === "sessions") return [`${value} økter`, "Økter"];
                   return [String(value), String(name)];
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 }) as any
               }
               labelFormatter={(label) => `Uke fra ${label}`}

@@ -70,63 +70,63 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
 
       <div className="p-6 space-y-6">
         <div className="space-y-1">
-          <h1 className="text-2xl font-semibold text-grey-900">AI-agenter</h1>
-          <p className="text-grey-500">Administrer autonome AI-agenter</p>
+          <h1 className="text-2xl font-semibold text-black">AI-agenter</h1>
+          <p className="text-grey-400">Administrer autonome AI-agenter</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-grey-100 flex items-center justify-center">
-                <Bot className="w-5 h-5 text-grey-600" />
+              <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
+                <Bot className="w-5 h-5 text-grey-400" />
               </div>
-              <span className="text-sm font-medium text-grey-500">Totalt</span>
+              <span className="text-sm font-medium text-grey-400">Totalt</span>
             </div>
-            <div className="text-2xl font-semibold text-grey-900">{stats.total}</div>
+            <div className="text-2xl font-semibold text-black tabular-nums">{stats.total}</div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-grey-100 flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-grey-600" />
+              <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-grey-400" />
               </div>
-              <span className="text-sm font-medium text-grey-500">Aktive</span>
+              <span className="text-sm font-medium text-grey-400">Aktive</span>
             </div>
             <div className="flex items-baseline gap-2">
-              <div className="text-2xl font-semibold text-grey-900">{stats.active}</div>
+              <div className="text-2xl font-semibold text-black tabular-nums">{stats.active}</div>
               {stats.total > 0 && (
-                <span className="text-xs font-medium text-emerald-600">
+                <span className="text-xs font-medium text-success tabular-nums">
                   {Math.round((stats.active / stats.total) * 100)}%
                 </span>
               )}
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-grey-100 flex items-center justify-center">
-                <Zap className="w-5 h-5 text-grey-600" />
+              <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
+                <Zap className="w-5 h-5 text-grey-400" />
               </div>
-              <span className="text-sm font-medium text-grey-500">Handlinger i dag</span>
+              <span className="text-sm font-medium text-grey-400">Handlinger i dag</span>
             </div>
-            <div className="text-2xl font-semibold text-grey-900">{stats.actionsToday}</div>
+            <div className="text-2xl font-semibold text-black tabular-nums">{stats.actionsToday}</div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-grey-100 flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-grey-600" />
+              <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
+                <TrendingUp className="w-5 h-5 text-grey-400" />
               </div>
-              <span className="text-sm font-medium text-grey-500">Kostnader MTD</span>
+              <span className="text-sm font-medium text-grey-400">Kostnader MTD</span>
             </div>
-            <div className="text-2xl font-semibold text-grey-900">${stats.costMtd.toFixed(2)}</div>
+            <div className="text-2xl font-semibold text-black tabular-nums">${stats.costMtd.toFixed(2)}</div>
           </div>
         </div>
 
         <div className="space-y-6">
           {TEAM_ORDER.filter((team) => agentsByTeam.has(team)).map((team) => (
             <section key={team}>
-              <h2 className="text-xs font-semibold uppercase tracking-wider text-grey-500 mb-3">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
                 {TEAM_LABELS[team]}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -134,14 +134,14 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                   <div
                     key={agent.id}
                     className={cn(
-                      "bg-white rounded-xl shadow-card p-5 transition-all",
+                      "bg-white border border-grey-200 rounded-xl p-5 transition-all hover:border-grey-300",
                       !agent.isActive && "opacity-60",
                       isPending && "pointer-events-none",
                     )}
                   >
                     <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-grey-100 flex items-center justify-center">
-                        <Bot className="w-6 h-6 text-grey-600" />
+                      <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center">
+                        <Bot className="w-6 h-6 text-grey-400" />
                       </div>
                       <button
                         onClick={() => handleToggle(agent.id, agent.isActive)}
@@ -154,7 +154,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                         className={cn(
                           "w-11 h-6 rounded-full transition-colors relative",
                           agent.isActive
-                            ? "bg-emerald-500"
+                            ? "bg-success"
                             : "bg-grey-200",
                         )}
                       >
@@ -167,13 +167,13 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                       </button>
                     </div>
 
-                    <h3 className="font-semibold text-grey-900 mb-1">
+                    <h3 className="font-semibold text-black mb-1">
                       {agent.displayName}
                     </h3>
-                    <p className="text-xs text-grey-500 mb-2">
+                    <p className="text-xs text-grey-400 mb-2">
                       {agent.model}
                     </p>
-                    <p className="text-sm text-grey-600 mb-4">
+                    <p className="text-sm text-grey-400 mb-4">
                       {agent.description}
                     </p>
 
@@ -181,7 +181,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                       {agent.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="text-[10px] px-2 py-0.5 rounded-full bg-grey-100 text-grey-600"
+                          className="text-[10px] px-2 py-0.5 rounded-full bg-grey-50 text-grey-400"
                         >
                           {skill}
                         </span>
@@ -193,8 +193,8 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                         className={cn(
                           "inline-flex items-center gap-1 font-medium",
                           agent.isActive
-                            ? "text-emerald-600"
-                            : "text-grey-500",
+                            ? "text-success"
+                            : "text-grey-400",
                         )}
                       >
                         {agent.isActive ? (
@@ -209,7 +209,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                           </>
                         )}
                       </span>
-                      <span className="text-grey-500">
+                      <span className="text-grey-400">
                         {agent.lastActionAt
                           ? `Sist: ${formatDistanceToNow(new Date(agent.lastActionAt), { locale: nb, addSuffix: true })}`
                           : "Ingen handlinger"}
@@ -223,14 +223,14 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
         </div>
 
         {agents.length === 0 && (
-          <div className="bg-white rounded-xl shadow-card p-12 text-center">
-            <div className="w-12 h-12 rounded-xl bg-grey-100 flex items-center justify-center mx-auto mb-4">
-              <Bot className="w-6 h-6 text-grey-600" />
+          <div className="bg-white border border-grey-200 rounded-xl p-12 text-center">
+            <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center mx-auto mb-4">
+              <Bot className="w-6 h-6 text-grey-400" />
             </div>
-            <h3 className="text-lg font-semibold text-grey-900 mb-1">
+            <h3 className="text-lg font-semibold text-black mb-1">
               Ingen agenter konfigurert
             </h3>
-            <p className="text-grey-500">
+            <p className="text-grey-400">
               Det er ikke lagt til noen AI-agenter ennå.
             </p>
           </div>

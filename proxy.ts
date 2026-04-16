@@ -16,6 +16,7 @@ const ALWAYS_ALLOWED_PATHS = [
   "/maintenance",
   "/api/maintenance",
   "/api/health",
+  "/booking",
   "/_next",
   "/static",
   "/favicon",
@@ -29,16 +30,18 @@ const ALWAYS_ALLOWED_PATHS = [
 // Beskyttede ruter som krever autentisering
 const PROTECTED_ROUTES = ["/portal", "/admin", "/mission-board"];
 
-export async function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // ============================================================
   // 1. VEDLIKEHOLDSMODUS SJEKK
   // ============================================================
   if (MAINTENANCE_MODE) {
-    const isAlwaysAllowed = ALWAYS_ALLOWED_PATHS.some(
-      (path) => pathname.startsWith(path) || pathname === path
-    );
+    const isAlwaysAllowed =
+      pathname === "/" ||
+      ALWAYS_ALLOWED_PATHS.some(
+        (path) => pathname.startsWith(path) || pathname === path
+      );
 
     if (!isAlwaysAllowed) {
       if (

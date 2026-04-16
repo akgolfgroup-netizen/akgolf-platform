@@ -9,8 +9,6 @@ import {
   getCoachInsight,
   getLatestAiInsight,
   getWeekRingsData,
-  getDailyChecklist,
-  getAchievements,
 } from "./dashboard-actions";
 import { DashboardClient } from "./dashboard-client";
 
@@ -37,8 +35,6 @@ export default async function DashboardPage() {
     handicapHistory,
     nextBooking,
     weekRings,
-    checklist,
-    achievements,
     coachInsight,
     aiInsight,
   ] = await Promise.all([
@@ -47,8 +43,6 @@ export default async function DashboardPage() {
     getHandicapHistory(user.id),
     getNextBooking(user.id),
     getWeekRingsData(user.id),
-    getDailyChecklist(user.id),
-    getAchievements(user.id),
     getCoachInsight(user.id),
     getLatestAiInsight(user.id),
   ]);
@@ -60,7 +54,6 @@ export default async function DashboardPage() {
   return (
     <DashboardClient
       userName={user.name}
-      userImage={user.image}
       tier={user.subscriptionTier}
       memberSince={memberSince}
       stats={stats}
@@ -68,8 +61,6 @@ export default async function DashboardPage() {
       handicapHistory={handicapHistory}
       nextBooking={nextBooking}
       weekRings={weekRings}
-      checklist={checklist}
-      achievements={achievements}
       coachInsight={coachInsight}
       aiInsight={aiInsight}
     />

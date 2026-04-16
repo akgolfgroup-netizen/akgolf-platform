@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { createServiceClient } from "@/lib/supabase/server";
 import { subDays } from "date-fns";
-import type { TrainingLog, RoundStats } from "@prisma/client";
+
 
 function getClient() {
   return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });

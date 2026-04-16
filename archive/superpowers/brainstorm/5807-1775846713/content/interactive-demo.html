@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK Golf — Interaktiv Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #FFFFFF; color: #324D45; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+  /* NAV */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(213,223,219,0); transition: all 0.4s; }
+  .nav.scrolled { border-bottom-color: rgba(213,223,219,0.6); }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: #0A1F18; }
+  .nav-logo-mark { width: 34px; height: 34px; background: #005840; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; color: #D1F843; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { color: #5A6E66; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #005840; }
+  .nav-cta { padding: 8px 20px; background: #D1F843; color: #0A1F18; border-radius: 980px; font-size: 14px; font-weight: 600; text-decoration: none; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .nav-cta:hover { transform: scale(1.06); }
+
+  /* ==================== */
+  /* 1. PARALLAX HERO     */
+  /* ==================== */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1.2fr; padding-top: 72px; position: relative; overflow: hidden; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 48px; position: relative; z-index: 2; }
+  .hero-label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: #005840; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.2s forwards; }
+  .hero-label::before { content: ''; width: 24px; height: 2px; background: #005840; }
+  .hero-title { font-size: 60px; font-weight: 900; color: #0A1F18; letter-spacing: -0.04em; line-height: 1.0; margin-bottom: 24px; opacity: 0; transform: translateY(30px); animation: fadeUp 0.8s 0.4s forwards; }
+  .hero-title em { font-style: normal; color: #005840; }
+  .hero-sub { font-size: 17px; color: #5A6E66; line-height: 1.7; margin-bottom: 40px; max-width: 440px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.6s forwards; }
+  .hero-actions { display: flex; gap: 12px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.8s forwards; }
+
+  /* Magnetic button */
+  .btn-lime { padding: 14px 32px; background: #D1F843; color: #0A1F18; border-radius: 980px; font-size: 16px; font-weight: 700; text-decoration: none; display: inline-block; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s; cursor: pointer; position: relative; }
+  .btn-lime:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 12px 32px rgba(209,248,67,0.3); }
+  .btn-outline { padding: 14px 32px; border: 1.5px solid #D5DFDB; color: #324D45; border-radius: 980px; font-size: 16px; font-weight: 500; text-decoration: none; transition: all 0.3s; }
+  .btn-outline:hover { border-color: #005840; color: #005840; transform: translateY(-1px); }
+
+  .hero-stats { display: flex; gap: 40px; margin-top: 60px; padding-top: 32px; border-top: 1px solid #D5DFDB; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 1.0s forwards; }
+  .hero-stat-val { font-size: 36px; font-weight: 800; color: #0A1F18; letter-spacing: -0.03em; }
+  .hero-stat-lbl { font-size: 12px; color: #A5B2AD; margin-top: 4px; }
+
+  /* Parallax image */
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-parallax { position: absolute; inset: -60px; background: linear-gradient(160deg, #ECF0EF 0%, #005840 50%, #0A1F18 100%); transition: transform 0.1s linear; will-change: transform; }
+  .hero-img-box { position: absolute; inset: 32px; border-radius: 24px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(20px); overflow: hidden; }
+  .hero-img-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  /* ========================== */
+  /* 2. TRUST BAR — Counters    */
+  /* ========================== */
+  .trust-bar { display: flex; align-items: center; justify-content: center; gap: 64px; padding: 56px 48px; border-bottom: 1px solid #ECF0EF; }
+  .trust-item { text-align: center; }
+  .trust-val { font-size: 32px; font-weight: 800; color: #0A1F18; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .trust-lbl { font-size: 12px; color: #A5B2AD; margin-top: 4px; }
+
+  /* ========================== */
+  /* 3. SCROLL REVEAL SECTIONS  */
+  /* ========================== */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: #005840; text-transform: uppercase; margin-bottom: 8px; }
+  .section-heading { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; color: #0A1F18; margin-bottom: 48px; }
+
+  /* ========================== */
+  /* 4. BENTO HOVER EFFECTS     */
+  /* ========================== */
+  .bento { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 260px 260px; gap: 16px; }
+  .bento-card { border-radius: 20px; padding: 28px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; text-decoration: none; color: inherit; position: relative; overflow: hidden; transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.5s; }
+  .bento-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%); opacity: 0; transition: opacity 0.4s; pointer-events: none; }
+  .bento-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 24px 64px rgba(0,0,0,0.1); }
+  .bento-card:hover::after { opacity: 1; }
+  .bento-card.tall { grid-row: span 2; }
+  .bento-card.wide { grid-column: span 2; }
+  .bc-dark { background: #0A1F18; color: #FFFFFF; }
+  .bc-surface { background: #ECF0EF; color: #324D45; }
+  .bc-green { background: #005840; color: #FFFFFF; }
+  .bc-accent { background: #D1F843; color: #0A1F18; }
+  .bento-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; margin-bottom: 8px; }
+  .bento-name { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; transition: transform 0.4s; }
+  .bento-card:hover .bento-name { transform: translateX(4px); }
+  .bento-desc { font-size: 13px; opacity: 0.6; margin-top: 4px; line-height: 1.5; }
+  .bento-arrow { position: absolute; top: 20px; right: 20px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), background 0.3s; }
+  .bento-card:hover .bento-arrow { transform: translate(2px, -2px) scale(1.1); background: rgba(255,255,255,0.2); }
+  .bc-surface .bento-arrow, .bc-accent .bento-arrow { background: rgba(0,0,0,0.05); }
+  .bento-card:hover.bc-surface .bento-arrow, .bento-card:hover.bc-accent .bento-arrow { background: rgba(0,0,0,0.1); }
+
+  /* ========================== */
+  /* 5. IMAGE REVEAL            */
+  /* ========================== */
+  .image-break { padding: 0 48px; }
+  .image-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .image-strip-item { height: 280px; border-radius: 16px; overflow: hidden; position: relative; }
+  .image-strip-item .img-inner { width: 100%; height: 100%; background: linear-gradient(135deg, #ECF0EF, #D5DFDB); display: flex; align-items: center; justify-content: center; color: #A5B2AD; font-size: 13px; clip-path: inset(100% 0 0 0); transition: clip-path 1s cubic-bezier(0.4,0,0.2,1); }
+  .image-strip-item.revealed .img-inner { clip-path: inset(0 0 0 0); }
+  .image-strip-item .img-inner img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ========================== */
+  /* PRICING                    */
+  /* ========================== */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .price-card { background: #FFFFFF; border: 1px solid #D5DFDB; border-radius: 20px; padding: 32px; display: flex; flex-direction: column; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s; }
+  .price-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.07); }
+  .price-card.featured { border: 2px solid #005840; }
+  .price-card.featured .price-badge { display: inline-block; }
+  .price-badge { display: none; background: #005840; color: white; font-size: 11px; font-weight: 600; padding: 4px 14px; border-radius: 20px; width: fit-content; margin-bottom: 16px; }
+  .price-name { font-size: 20px; font-weight: 700; color: #0A1F18; }
+  .price-desc { font-size: 13px; color: #A5B2AD; margin-bottom: 20px; }
+  .price-amount { font-size: 40px; font-weight: 900; color: #0A1F18; letter-spacing: -0.04em; line-height: 1; }
+  .price-amount span { font-size: 14px; font-weight: 400; color: #A5B2AD; }
+  .price-divider { height: 1px; background: #ECF0EF; margin: 24px 0; }
+  .price-features { list-style: none; flex: 1; }
+  .price-features li { font-size: 14px; color: #5A6E66; padding: 5px 0 5px 24px; position: relative; }
+  .price-features li::before { content: '✓'; position: absolute; left: 0; color: #2A7D5A; font-weight: 600; }
+  .price-btn { display: block; text-align: center; padding: 14px; border-radius: 980px; font-size: 14px; font-weight: 600; text-decoration: none; margin-top: 24px; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .price-btn:hover { transform: translateY(-2px); }
+  .price-btn.lime { background: #D1F843; color: #0A1F18; }
+  .price-btn.lime:hover { box-shadow: 0 8px 24px rgba(209,248,67,0.3); }
+  .price-btn.ghost { background: #ECF0EF; color: #324D45; }
+
+  /* PORTAL */
+  .portal-wrap { background: #ECF0EF; border-radius: 24px; padding: 64px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: center; }
+  .portal-wrap h3 { font-size: 32px; font-weight: 700; color: #0A1F18; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .portal-wrap p { font-size: 15px; color: #5A6E66; line-height: 1.6; margin-bottom: 24px; }
+  .portal-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .portal-chip { padding: 6px 14px; background: #FFFFFF; border: 1px solid #D5DFDB; border-radius: 980px; font-size: 12px; font-weight: 500; color: #324D45; transition: all 0.3s; }
+  .portal-chip:hover { border-color: #005840; color: #005840; transform: translateY(-1px); }
+  .portal-mock { background: #FFFFFF; border-radius: 16px; height: 380px; border: 1px solid #D5DFDB; box-shadow: 0 12px 40px rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; color: #A5B2AD; font-size: 14px; transition: transform 0.6s; }
+  .portal-mock:hover { transform: scale(1.02); }
+  .btn-dark { padding: 12px 28px; background: #0A1F18; color: #FFFFFF; border-radius: 980px; font-size: 14px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.3s; }
+  .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,31,24,0.2); }
+
+  /* CTA */
+  .final-cta { margin: 80px 48px 48px; background: #0A1F18; border-radius: 24px; padding: 80px; text-align: center; position: relative; overflow: hidden; }
+  .final-cta::before { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,88,64,0.3), transparent 70%); animation: pulse 4s ease-in-out infinite; }
+  .final-cta::after { content: ''; position: absolute; bottom: -80px; left: -80px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(209,248,67,0.08), transparent 70%); animation: pulse 4s ease-in-out 2s infinite; }
+  @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.7; } }
+  .final-cta h2 { font-size: 40px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.03em; margin-bottom: 12px; position: relative; z-index: 1; }
+  .final-cta p { font-size: 16px; color: rgba(255,255,255,0.5); margin-bottom: 32px; position: relative; z-index: 1; }
+
+  .footer { padding: 48px; text-align: center; color: #A5B2AD; font-size: 13px; border-top: 1px solid #ECF0EF; }
+
+  /* Indicator badge */
+  .demo-badge { position: fixed; bottom: 20px; right: 20px; z-index: 100; background: #005840; color: #D1F843; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 600; box-shadow: 0 4px 16px rgba(0,88,64,0.3); }
+  .demo-badge span { display: block; font-size: 10px; color: rgba(255,255,255,0.6); font-weight: 400; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<div class="demo-badge">
+  Interaktiv demo
+  <span>Scroll, hover og klikk for a se effektene</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-logo"><div class="nav-logo-mark">K</div>AK Golf</div>
+  <div class="nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Utvikling</a><a href="#">Portalen</a></div>
+  <a href="#" class="nav-cta">Book okt</a>
+</nav>
+
+<!-- 1+2: PARALLAX HERO + Entrance animations -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-label">AK Golf Academy</div>
+    <h1 class="hero-title">Bedre golf<br>starter <em>her</em></h1>
+    <p class="hero-sub">Personlig coaching med TrackMan-analyse, strukturerte treningsplaner og AI-drevet innsikt. For alle nivaer.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-lime" id="hero-cta">Book din forste okt</a>
+      <a href="#" class="btn-outline">Se priser</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="trust-val" data-target="142" data-suffix="">0</div><div class="hero-stat-lbl">Aktive spillere</div></div>
+      <div><div class="trust-val" data-target="4.8" data-suffix="" data-decimals="1">0</div><div class="hero-stat-lbl">Snitt vurdering</div></div>
+      <div><div class="trust-val" data-target="-3.2" data-suffix="" data-decimals="1">0</div><div class="hero-stat-lbl">Snitt HCP-forbedring</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-parallax" id="parallax-bg"></div>
+    <div class="hero-img-box">
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:14px;background:rgba(0,0,0,0.2);">[Hero-bilde: Coaching med TrackMan]</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3: TRUST BAR med talltellere -->
+<div class="trust-bar">
+  <div class="trust-item reveal"><div class="trust-val" data-target="142" data-suffix="">0</div><div class="trust-lbl">Aktive spillere</div></div>
+  <div class="trust-item reveal reveal-delay-1"><div class="trust-val" data-target="4.8" data-suffix="★" data-decimals="1">0</div><div class="trust-lbl">Snitt vurdering</div></div>
+  <div class="trust-item reveal reveal-delay-2"><div class="trust-val" data-target="-3.2" data-suffix="" data-decimals="1">0</div><div class="trust-lbl">Snitt HCP-forbedring</div></div>
+  <div class="trust-item reveal reveal-delay-3"><div class="trust-val" data-target="2000" data-suffix="+" data-comma="true">0</div><div class="trust-lbl">Coaching-okter</div></div>
+</div>
+
+<!-- BENTO med hover -->
+<section>
+  <div class="reveal"><div class="section-label">Vare tjenester</div></div>
+  <div class="reveal reveal-delay-1"><h2 class="section-heading">Alt du trenger for a utvikle spillet</h2></div>
+  <div class="bento">
+    <a class="bento-card tall bc-dark reveal reveal-delay-1" href="#">
+      <div class="bento-arrow">↗</div>
+      <div class="bento-tag">Coaching</div>
+      <div class="bento-name">Golf Academy</div>
+      <div class="bento-desc">Personlig coaching med TrackMan for voksne pa alle nivaer</div>
+    </a>
+    <a class="bento-card bc-surface reveal reveal-delay-2" href="#">
+      <div class="bento-arrow">↗</div>
+      <div class="bento-tag">Ungdom 6-18</div>
+      <div class="bento-name">Junior Academy</div>
+      <div class="bento-desc">Strukturert trening for barn og ungdom</div>
+    </a>
+    <a class="bento-card bc-green reveal reveal-delay-3" href="#">
+      <div class="bento-arrow">↗</div>
+      <div class="bento-tag">For klubber</div>
+      <div class="bento-name">Utvikling</div>
+      <div class="bento-desc">Sportsplaner og programvare</div>
+    </a>
+    <a class="bento-card wide bc-accent reveal reveal-delay-4" href="#">
+      <div class="bento-arrow" style="background:rgba(0,0,0,0.06);">↗</div>
+      <div class="bento-tag">Innendors</div>
+      <div class="bento-name">Mulligan Indoor Golf</div>
+      <div class="bento-desc">TrackMan-simulatorer i Sarpsborg. Book en bay.</div>
+    </a>
+  </div>
+</section>
+
+<!-- 5: IMAGE REVEAL -->
+<div class="image-break">
+  <div class="image-strip">
+    <div class="image-strip-item" id="img1"><div class="img-inner"><div style="width:100%;height:100%;background:linear-gradient(135deg,#005840,#0A1F18);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);font-size:13px;">[Coaching pa range]</div></div></div>
+    <div class="image-strip-item" id="img2"><div class="img-inner"><div style="width:100%;height:100%;background:linear-gradient(135deg,#ECF0EF,#A5B2AD);display:flex;align-items:center;justify-content:center;color:rgba(0,0,0,0.3);font-size:13px;">[TrackMan analyse]</div></div></div>
+    <div class="image-strip-item" id="img3"><div class="img-inner"><div style="width:100%;height:100%;background:linear-gradient(135deg,#2A7D5A,#005840);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);font-size:13px;">[Putting green]</div></div></div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section>
+  <div class="reveal"><div class="section-label">Priser</div></div>
+  <div class="reveal reveal-delay-1"><h2 class="section-heading">Velg pakken som passer deg</h2></div>
+  <div class="pricing-grid">
+    <div class="price-card reveal reveal-delay-1">
+      <div class="price-badge"></div>
+      <div class="price-name">Performance</div>
+      <div class="price-desc">2 okter per maned</div>
+      <div class="price-amount">1 600 <span>kr/mnd</span></div>
+      <div class="price-divider"></div>
+      <ul class="price-features"><li>2 x 20 min coaching</li><li>TrackMan-analyse</li><li>Personlig treningsplan</li><li>Spillerportalen</li></ul>
+      <a href="#" class="price-btn ghost">Velg Performance</a>
+    </div>
+    <div class="price-card featured reveal reveal-delay-2">
+      <div class="price-badge">Mest populaer</div>
+      <div class="price-name">Performance Pro</div>
+      <div class="price-desc">4 okter per maned</div>
+      <div class="price-amount">2 000 <span>kr/mnd</span></div>
+      <div class="price-divider"></div>
+      <ul class="price-features"><li>4 x 20 min coaching</li><li>TrackMan-analyse</li><li>Personlig treningsplan</li><li>Spillerportalen</li><li>Prioritert booking</li></ul>
+      <a href="#" class="price-btn lime">Velg Performance Pro</a>
+    </div>
+    <div class="price-card reveal reveal-delay-3">
+      <div class="price-badge"></div>
+      <div class="price-name">Flex</div>
+      <div class="price-desc">Enkeltokter</div>
+      <div class="price-amount">1 500+ <span>kr</span></div>
+      <div class="price-divider"></div>
+      <ul class="price-features"><li>50 eller 90 min</li><li>TrackMan-analyse</li><li>Ingen binding</li></ul>
+      <a href="#" class="price-btn ghost">Se Flex-pakker</a>
+    </div>
+  </div>
+</section>
+
+<!-- PORTAL -->
+<section>
+  <div class="portal-wrap reveal">
+    <div>
+      <div class="section-label">Spillerportalen</div>
+      <h3>Din treningspartner mellom oktene</h3>
+      <p>Treningsplaner, scoring, spredning, AI-coaching og mer — samlet pa ett sted.</p>
+      <div class="portal-chips">
+        <span class="portal-chip">Treningsplaner</span>
+        <span class="portal-chip">Scoring & spredning</span>
+        <span class="portal-chip">AI-innsikt</span>
+        <span class="portal-chip">Booking</span>
+        <span class="portal-chip">TrackMan-data</span>
+      </div>
+      <a href="#" class="btn-dark">Logg inn i portalen</a>
+    </div>
+    <div class="portal-mock">[Dashboard mockup]</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="final-cta reveal">
+  <h2>Klar for a ta spillet videre?</h2>
+  <p>Book din forste coaching-okt og fa en personlig treningsplan.</p>
+  <a href="#" class="btn-lime" style="position:relative;z-index:1;">Book din forste okt</a>
+</div>
+
+<footer class="footer">AK Golf Group AS · Fredrikstad · post@akgolfgroup.no</footer>
+
+<script>
+// === SCROLL REVEAL ===
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.15 });
+reveals.forEach(el => observer.observe(el));
+
+// === PARALLAX ===
+const parallax = document.getElementById('parallax-bg');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (parallax) parallax.style.transform = `translateY(${y * 0.3}px)`;
+  document.getElementById('nav').classList.toggle('scrolled', y > 50);
+});
+
+// === NUMBER COUNTERS ===
+const counters = document.querySelectorAll('[data-target]');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseFloat(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const decimals = parseInt(el.dataset.decimals || '0');
+    const useComma = el.dataset.comma === 'true';
+    const duration = 1500;
+    const start = performance.now();
+    const isNeg = target < 0;
+    const absTarget = Math.abs(target);
+
+    function animate(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      let val = eased * absTarget;
+      let display = decimals > 0 ? val.toFixed(decimals) : Math.round(val).toString();
+      if (useComma) display = Math.round(val).toLocaleString('nb-NO');
+      el.textContent = (isNeg ? '-' : '') + display + suffix;
+      if (progress < 1) requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+    counterObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+counters.forEach(el => counterObserver.observe(el));
+
+// === IMAGE REVEAL ===
+const imgs = document.querySelectorAll('.image-strip-item');
+const imgObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('revealed'), i * 200);
+      imgObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+imgs.forEach(el => imgObserver.observe(el));
+
+// === BENTO CARD GLOW ===
+document.querySelectorAll('.bento-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mouse-x', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--mouse-y', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+</script>
+</body>
+</html>

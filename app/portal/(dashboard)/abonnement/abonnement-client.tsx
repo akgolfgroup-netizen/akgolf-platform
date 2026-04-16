@@ -84,10 +84,10 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-portal-text">
+        <h1 className="text-2xl font-bold text-black">
           Abonnement
         </h1>
-        <p className="text-portal-muted mt-1">
+        <p className="text-grey-400 mt-1">
           Oversikt over ditt abonnement og kvoter
         </p>
       </div>
@@ -97,7 +97,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
           {/* Plan card */}
           <PremiumCard className="p-0" noHover>
             {/* Top bar */}
-            <div className="bg-primary px-6 py-4 flex items-center justify-between">
+            <div className="bg-black px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <CreditCard className="w-5 h-5 text-white/80" />
                 <span className="text-white font-semibold">{tierName}</span>
@@ -113,32 +113,32 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Zap className="w-4 h-4 text-primary" />
-                      <span className="text-sm font-semibold text-portal-text">
+                      <Zap className="w-4 h-4 text-success" />
+                      <span className="text-sm font-semibold text-black">
                         Økter denne perioden
                       </span>
                     </div>
-                    <span className="text-sm font-bold text-portal-text tabular-nums">
+                    <span className="text-sm font-bold text-black tabular-nums">
                       {quota.sessionsUsed} / {quota.sessionsAllowed}
                     </span>
                   </div>
 
                   {/* Progress bar */}
-                  <div className="w-full bg-portal-hover rounded-full h-2.5">
+                  <div className="w-full bg-grey-50 rounded-full h-2.5">
                     <div
                       className={cn(
                         "h-2.5 rounded-full transition-all duration-500",
                         sessionPercent >= 90
-                          ? "bg-red-500"
+                          ? "bg-error"
                           : sessionPercent >= 70
-                          ? "bg-amber-500"
-                          : "bg-emerald-500"
+                          ? "bg-warning"
+                          : "bg-success"
                       )}
                       style={{ width: `${sessionPercent}%` }}
                     />
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-portal-muted">
+                  <div className="flex items-center justify-between text-xs text-grey-400">
                     <span className="tabular-nums">{quota.sessionsRemaining} gjenværende</span>
                     {periodEndFormatted && (
                       <span>Perioden avsluttes {periodEndFormatted}</span>
@@ -146,20 +146,20 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                   </div>
                 </div>
               ) : (
-                <p className="text-sm text-portal-muted">
+                <p className="text-sm text-grey-400">
                   Kvoter er ikke satt opp for dette abonnementet ennå.
                 </p>
               )}
 
               {/* Info grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-portal-border">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-grey-200">
                 <div className="flex items-start gap-3">
-                  <Calendar className="w-4 h-4 text-portal-muted mt-0.5 shrink-0" />
+                  <Calendar className="w-4 h-4 text-grey-400 mt-0.5 shrink-0" />
                   <div>
-                    <p className="text-xs text-portal-muted font-medium uppercase tracking-wide">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
                       Kommende bookinger
                     </p>
-                    <p className="text-sm font-semibold text-portal-text mt-0.5 tabular-nums">
+                    <p className="text-sm font-semibold text-black mt-0.5 tabular-nums">
                       {upcomingBookings}{" "}
                       {upcomingBookings === 1 ? "økt" : "økter"}
                     </p>
@@ -168,12 +168,12 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
 
                 {expiresAtFormatted && (
                   <div className="flex items-start gap-3">
-                    <Calendar className="w-4 h-4 text-portal-muted mt-0.5 shrink-0" />
+                    <Calendar className="w-4 h-4 text-grey-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-xs text-portal-muted font-medium uppercase tracking-wide">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
                         Utløper
                       </p>
-                      <p className="text-sm font-semibold text-portal-text mt-0.5">
+                      <p className="text-sm font-semibold text-black mt-0.5">
                         {expiresAtFormatted}
                       </p>
                     </div>
@@ -182,12 +182,12 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
 
                 {quota?.bookingWindowDays ? (
                   <div className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-portal-muted mt-0.5 shrink-0" />
+                    <Zap className="w-4 h-4 text-grey-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-xs text-portal-muted font-medium uppercase tracking-wide">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
                         Bookingsvindu
                       </p>
-                      <p className="text-sm font-semibold text-portal-text mt-0.5 tabular-nums">
+                      <p className="text-sm font-semibold text-black mt-0.5 tabular-nums">
                         {quota.bookingWindowDays} dager fremover
                       </p>
                     </div>
@@ -203,7 +203,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                     onClick={handleStripePortal}
                     disabled={isPending}
                     className={cn(
-                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-[20px] text-sm font-semibold transition-all",
+                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all",
                       "bg-accent-cta text-accent-cta-text",
                       "hover:brightness-95 active:scale-[0.98]",
                       isPending && "opacity-60 cursor-not-allowed"
@@ -220,9 +220,9 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                     onClick={handleStripePortal}
                     disabled={isPending}
                     className={cn(
-                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-[20px] text-sm font-medium transition-all",
-                      "border border-portal-border text-portal-text",
-                      "hover:bg-portal-hover active:scale-[0.98]",
+                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all",
+                      "border border-grey-200 bg-white text-black",
+                      "hover:border-grey-300 active:scale-[0.98]",
                       isPending && "opacity-60 cursor-not-allowed"
                     )}
                   >
@@ -234,19 +234,19 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
 
               {/* Kansellerings-seksjon */}
               {user.hasStripeSubscription && (
-                <div className="pt-4 mt-2 border-t border-portal-border">
+                <div className="pt-4 mt-2 border-t border-grey-200">
                   {error && (
-                    <p className="text-sm text-red-500 mb-3">{error}</p>
+                    <p className="text-sm text-[error] mb-3">{error}</p>
                   )}
                   <button
                     onClick={handleStripePortal}
                     disabled={isPending}
-                    className="inline-flex items-center gap-1.5 text-xs text-portal-muted hover:text-portal-text transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs text-grey-400 hover:text-black transition-colors"
                   >
                     <XCircle className="w-3.5 h-3.5" />
                     Avbryt abonnement
                   </button>
-                  <p className="text-[10px] text-portal-muted mt-1">
+                  <p className="text-[10px] text-grey-400 mt-1">
                     Du sendes til Stripe der du kan endre, pause eller avbryte.
                   </p>
                 </div>
@@ -265,21 +265,21 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
           <PremiumCard>
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-portal-hover flex items-center justify-center shrink-0">
-                  <Calendar className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center shrink-0">
+                  <Calendar className="w-5 h-5 text-black" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-portal-text">
+                  <p className="text-sm font-semibold text-black">
                     Book en økt
                   </p>
-                  <p className="text-xs text-portal-muted">
+                  <p className="text-xs text-grey-400">
                     Planlegg din neste coaching-time
                   </p>
                 </div>
               </div>
               <Link
                 href="/portal/bookinger/ny"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline shrink-0"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-black hover:underline shrink-0"
               >
                 Book nå
                 <ArrowRight className="w-4 h-4" />
@@ -290,21 +290,21 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
       ) : (
         /* No subscription — upsell card */
         <PremiumCard className="p-0" noHover>
-          <div className="bg-portal-hover px-6 py-10 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-              <Zap className="w-7 h-7 text-primary" />
+          <div className="bg-grey-50 px-6 py-10 text-center">
+            <div className="w-14 h-14 rounded-2xl bg-[accent-cta]/20 flex items-center justify-center mx-auto mb-4">
+              <Zap className="w-7 h-7 text-black" />
             </div>
-            <h2 className="text-xl font-bold text-portal-text mb-2">
+            <h2 className="text-xl font-bold text-black mb-2">
               Du har ikke et aktivt abonnement
             </h2>
-            <p className="text-sm text-portal-muted max-w-sm mx-auto mb-6">
+            <p className="text-sm text-grey-400 max-w-sm mx-auto mb-6">
               Med Performance-abonnementet får du regelmessig coaching, personlig
               treningsplan og tilgang til alle verktøy i portalen.
             </p>
             <Link
               href="/booking"
               className={cn(
-                "inline-flex items-center gap-2 px-6 py-3 rounded-[20px] text-sm font-semibold transition-all",
+                "inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all",
                 "bg-accent-cta text-accent-cta-text",
                 "hover:brightness-95 active:scale-[0.98]"
               )}
@@ -314,7 +314,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
             </Link>
           </div>
 
-          <div className="px-6 py-5 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-portal-border">
+          <div className="px-6 py-5 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-grey-200">
             {[
               {
                 label: "Performance",
@@ -334,15 +334,15 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
             ].map((plan) => (
               <div
                 key={plan.label}
-                className="text-center p-4 rounded-xl bg-portal-hover"
+                className="text-center p-4 rounded-xl bg-grey-50"
               >
-                <p className="text-sm font-semibold text-portal-text">
+                <p className="text-sm font-semibold text-black">
                   {plan.label}
                 </p>
-                <p className="text-base font-bold text-primary mt-1 tabular-nums">
+                <p className="text-base font-bold text-black mt-1 tabular-nums">
                   {plan.price}
                 </p>
-                <p className="text-xs text-portal-muted mt-0.5">
+                <p className="text-xs text-grey-400 mt-0.5">
                   {plan.desc}
                 </p>
               </div>

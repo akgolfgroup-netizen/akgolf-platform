@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
  * POST endpoint for admin to toggle maintenance mode
  * Requires admin authentication
  */
-export async function POST(request: NextRequest) {
+export async function POST() {
   // Note: In production, this should be protected by admin authentication
   // For now, we just return a message that manual .env update is required
   

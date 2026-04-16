@@ -1,0 +1,49 @@
+name: Claude Code Assistant
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  claude-interactive:
+    if: github.event_name == 'issue_comment' || github.event_name == 'pull_request_review_comment'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  claude-auto-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Review this PR for the AK Golf Platform. Check:
+            1. Design system compliance (.claude/rules/design-system.md)
+            2. No hardcoded colors — use Tailwind tokens
+            3. TypeScript correctness
+            4. Security best practices
+            5. Consistency with existing code patterns
+
+            Give up to 5 specific, actionable comments.
+          claude_args: |
+            --max-turns 10
+          use_sticky_comment: true

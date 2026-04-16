@@ -58,13 +58,13 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
         {!selectedCourse ? (
           <div className="space-y-3">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-portal-muted" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-grey-400" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Sok etter bane..."
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-portal-border bg-white text-portal-text placeholder:text-portal-muted focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-grey-200 bg-white text-black placeholder:text-grey-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 autoFocus
               />
             </div>
@@ -74,15 +74,15 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                 <button
                   key={course.id}
                   onClick={() => setSelectedCourse(course)}
-                  className="w-full text-left p-4 rounded-xl border border-portal-border bg-white hover:border-primary hover:bg-portal-hover transition-all"
+                  className="w-full text-left p-4 rounded-xl border border-grey-200 bg-white hover:border-primary hover:bg-grey-50 transition-all"
                 >
                   <div className="flex items-start gap-3">
-                    <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                    <MapPin className="h-5 w-5 text-black mt-0.5 shrink-0" />
                     <div>
-                      <div className="font-semibold text-portal-text">
+                      <div className="font-semibold text-black">
                         {course.name}
                       </div>
-                      <div className="text-sm text-portal-secondary tabular-nums">
+                      <div className="text-sm text-grey-400 tabular-nums">
                         {course.location} — Par <span className="tabular-nums">{course.par}</span>
                         {course.courseRating && ` — CR ${course.courseRating}`}
                         {course.slopeRating && ` / Slope ${course.slopeRating}`}
@@ -92,7 +92,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                 </button>
               ))}
               {filtered.length === 0 && (
-                <p className="text-center text-portal-muted py-8">
+                <p className="text-center text-grey-400 py-8">
                   Ingen baner funnet
                 </p>
               )}
@@ -101,22 +101,22 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
         ) : (
           <>
             {/* Valgt bane */}
-            <div className="p-4 rounded-xl border border-primary bg-primary-alt">
+            <div className="p-4 rounded-xl border border-grey-200 bg-white">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <MapPin className="h-5 w-5 text-primary" />
+                  <MapPin className="h-5 w-5 text-black" />
                   <div>
-                    <div className="font-semibold text-portal-text">
+                    <div className="font-semibold text-black">
                       {selectedCourse.name}
                     </div>
-                    <div className="text-sm text-portal-secondary tabular-nums">
+                    <div className="text-sm text-grey-400 tabular-nums">
                       Par <span className="tabular-nums">{selectedCourse.par}</span> — {selectedCourse.location}
                     </div>
                   </div>
                 </div>
                 <button
                   onClick={() => setSelectedCourse(null)}
-                  className="text-sm text-primary hover:underline"
+                  className="text-sm text-black hover:underline"
                 >
                   Endre
                 </button>
@@ -125,7 +125,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
 
             {/* Tee-valg */}
             <div>
-              <label className="text-sm font-medium text-portal-text mb-2 block">
+              <label className="text-sm font-medium text-black mb-2 block">
                 Tee
               </label>
               <div className="flex gap-2">
@@ -135,15 +135,15 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                     onClick={() => setTeeColor(tee.value)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
                       teeColor === tee.value
-                        ? "border-primary bg-primary-alt ring-1 ring-primary"
-                        : "border-portal-border bg-white hover:border-portal-border"
+                        ? "border-black bg-grey-50 ring-1 ring-black"
+                        : "border-grey-200 bg-white hover:border-grey-200"
                     }`}
                   >
                     <div
-                      className="h-4 w-4 rounded-full border border-portal-border"
+                      className="h-4 w-4 rounded-full border border-grey-200"
                       style={{ backgroundColor: tee.color }}
                     />
-                    <span className="text-sm font-medium text-portal-text">
+                    <span className="text-sm font-medium text-black">
                       {tee.label}
                     </span>
                   </button>
@@ -153,7 +153,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
 
             {/* Vaer */}
             <div>
-              <label className="text-sm font-medium text-portal-text mb-2 block">
+              <label className="text-sm font-medium text-black mb-2 block">
                 Vaer (valgfritt)
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -168,19 +168,19 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                     onClick={() => setWeather(weather === w.value ? "" : w.value)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
                       weather === w.value
-                        ? "border-primary bg-primary-alt"
-                        : "border-portal-border bg-white hover:border-portal-border"
+                        ? "border-black bg-grey-50"
+                        : "border-grey-200 bg-white hover:border-grey-200"
                     }`}
                   >
-                    <w.icon className="h-4 w-4 text-portal-secondary" />
-                    <span className="text-sm text-portal-text">{w.label}</span>
+                    <w.icon className="h-4 w-4 text-grey-400" />
+                    <span className="text-sm text-black">{w.label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {error && (
-              <div className="text-sm text-portal-text bg-accent-cta/10 rounded-xl p-3">
+              <div className="text-sm text-black bg-[accent-cta]/10 rounded-xl p-3">
                 {error}
               </div>
             )}
@@ -189,7 +189,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
             <button
               onClick={handleStart}
               disabled={isPending}
-              className="w-full flex items-center justify-center gap-3 py-4 rounded-[20px] bg-primary text-white font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[accent-cta] text-black font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
             >
               <Play className="h-5 w-5" />
               {isPending ? "Starter..." : "Start runde"}

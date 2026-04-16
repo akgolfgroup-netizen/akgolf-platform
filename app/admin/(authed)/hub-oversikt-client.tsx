@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import {
   MCTopbar,
@@ -86,11 +87,11 @@ function Badge({
   variant?: "success" | "warning" | "error" | "info" | "muted";
 }) {
   const variantStyles = {
-    success: "bg-[var(--color-success)]/10 text-[var(--color-success)]",
-    warning: "bg-[var(--color-warning)]/10 text-[var(--color-warning)]",
-    error: "bg-[var(--color-error)]/10 text-[var(--color-error)]",
-    info: "bg-[var(--color-info)]/10 text-[var(--color-info)]",
-    muted: "bg-grey-100 text-grey-600",
+    success: "bg-success-light text-success",
+    warning: "bg-warning-light text-warning",
+    error: "bg-error-light text-error",
+    info: "bg-grey-200 text-black",
+    muted: "bg-grey-50 text-grey-400",
   };
 
   return (
@@ -111,7 +112,7 @@ function Card({
   className?: string;
 }) {
   return (
-    <div className={`bg-white rounded-xl shadow-card ${className}`}>
+    <div className={`bg-white rounded-xl border border-grey-200 ${className}`}>
       {children}
     </div>
   );
@@ -132,8 +133,8 @@ function Button({
   const baseStyles =
     "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors";
   const variantStyles = {
-    primary: "bg-grey-900 text-white hover:bg-grey-800",
-    secondary: "bg-grey-100 text-grey-700 hover:bg-grey-200",
+    primary: "bg-black text-white hover:bg-grey-800",
+    secondary: "bg-white border border-grey-200 text-black hover:bg-grey-50",
   };
 
   return (
@@ -226,19 +227,20 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
   ];
 
   // Handicap-trend siste 30 dager (eksempel — gjennomsnitt alle aktive elever)
-  const handicapTrend: AdminLineChartDatum[] = Array.from(
-    { length: 30 },
-    (_, i) => {
-      const date = new Date();
-      date.setDate(date.getDate() - (29 - i));
-      return {
-        label: date.toLocaleDateString("nb-NO", {
-          day: "numeric",
-          month: "short",
-        }),
-        value: Number((18.4 - i * 0.04 - Math.random() * 0.3).toFixed(1)),
-      };
-    }
+  const handicapTrend: AdminLineChartDatum[] = React.useMemo(
+    () =>
+      Array.from({ length: 30 }, (_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (29 - i));
+        return {
+          label: date.toLocaleDateString("nb-NO", {
+            day: "numeric",
+            month: "short",
+          }),
+          value: Number((18.4 - i * 0.04 - (i % 3) * 0.1).toFixed(1)),
+        };
+      }),
+    []
   );
 
   // Elevfordeling per tier (VISITOR / ACADEMY / STARTER / PRO / ELITE)
@@ -297,14 +299,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-grey-500 uppercase tracking-wide">
+                <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">
                   Økter i dag
                 </p>
-                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight tabular-nums">
+                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {data.kpis.sessionsToday}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-700">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
                 <Calendar className="w-5 h-5" />
               </div>
             </div>
@@ -314,14 +316,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-grey-500 uppercase tracking-wide">
+                <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">
                   Aktive elever
                 </p>
-                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight tabular-nums">
+                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {data.kpis.activeStudents}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-700">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
                 <Users className="w-5 h-5" />
               </div>
             </div>
@@ -336,14 +338,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-grey-500 uppercase tracking-wide">
+                <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">
                   Ventende bookinger
                 </p>
-                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight tabular-nums">
+                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {data.kpis.pendingBookings}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-700">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
                 <Clock className="w-5 h-5" />
               </div>
             </div>
@@ -358,14 +360,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-grey-500 uppercase tracking-wide">
+                <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">
                   Omsetning MTD
                 </p>
-                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight tabular-nums">
+                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {formatRevenue(data.kpis.mtdRevenue)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-700">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
                 <TrendingUp className="w-5 h-5" />
               </div>
             </div>
@@ -381,7 +383,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
         {/* Kapasitet + Tier fordeling + Handicap-trend */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="p-5">
-            <h3 className="text-sm font-semibold text-grey-900 mb-4">
+            <h3 className="text-sm font-semibold text-black mb-4">
               Kapasitetsutnyttelse
             </h3>
             <div className="flex flex-col items-center justify-center py-2">
@@ -394,7 +396,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           </Card>
 
           <Card className="p-5">
-            <h3 className="text-sm font-semibold text-grey-900 mb-4">
+            <h3 className="text-sm font-semibold text-black mb-4">
               Elevfordeling per tier
             </h3>
             <AdminDonutChart
@@ -407,7 +409,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
 
           <Card className="p-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-grey-900">
+              <h3 className="text-sm font-semibold text-black">
                 Handicap-trend (30 dager)
               </h3>
               <Badge variant="info">Snitt</Badge>
@@ -423,14 +425,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
             <Card className="overflow-hidden">
               <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
                 <div className="flex items-center gap-3">
-                  <Clock className="w-5 h-5 text-grey-700" />
-                  <h2 className="text-sm font-semibold text-grey-900">
+                  <Clock className="w-5 h-5 text-grey-400" />
+                  <h2 className="text-sm font-semibold text-black">
                     Dagens timeplan
                   </h2>
                 </div>
                 <Link
                   href="/admin/kalender"
-                  className="text-sm text-grey-700 hover:text-grey-900 font-medium inline-flex items-center gap-1.5 transition-colors"
+                  className="text-sm text-grey-400 hover:text-black font-medium inline-flex items-center gap-1.5 transition-colors"
                 >
                   Se kalender
                   <ArrowRight className="w-4 h-4" />
@@ -438,25 +440,25 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
               </div>
 
               {timelineItems.length > 0 ? (
-                <ul className="divide-y divide-grey-100">
+                <ul className="divide-y divide-grey-50">
                   {timelineItems.map((item) => (
                     <li
                       key={item.id}
                       className="flex items-center gap-5 px-6 py-4 hover:bg-grey-50 transition-colors"
                     >
                       <div className="min-w-[60px] text-center">
-                        <p className="text-lg font-bold text-grey-900 tabular-nums">
+                        <p className="text-lg font-bold text-black tabular-nums">
                           {item.time}
                         </p>
-                        <p className="text-[10px] uppercase tracking-wide text-grey-500">
+                        <p className="text-[10px] uppercase tracking-wide text-grey-400">
                           {item.duration}
                         </p>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-grey-900 truncate">
+                        <p className="font-semibold text-black truncate">
                           {item.name}
                         </p>
-                        <p className="text-xs text-grey-500 truncate mt-0.5">
+                        <p className="text-xs text-grey-400 truncate mt-0.5">
                           {item.subtitle ?? item.division}
                         </p>
                       </div>
@@ -470,8 +472,8 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 </ul>
               ) : (
                 <div className="px-6 py-16 text-center">
-                  <Calendar className="w-10 h-10 text-grey-400 mx-auto mb-3 opacity-50" />
-                  <p className="text-sm text-grey-500">Ingen økter i dag</p>
+                  <Calendar className="w-10 h-10 text-grey-300 mx-auto mb-3 opacity-50" />
+                  <p className="text-sm text-grey-400">Ingen økter i dag</p>
                 </div>
               )}
             </Card>
@@ -481,7 +483,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <div className="space-y-6">
             {/* Quick Actions */}
             <Card className="p-5">
-              <h3 className="text-sm font-semibold text-grey-900 mb-4">
+              <h3 className="text-sm font-semibold text-black mb-4">
                 Snarveier
               </h3>
               <div className="space-y-2">
@@ -508,34 +510,34 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
 
             {/* Division Stats */}
             <Card className="p-5">
-              <h3 className="text-sm font-semibold text-grey-900 mb-4">
+              <h3 className="text-sm font-semibold text-black mb-4">
                 Divisjoner
               </h3>
               <div className="space-y-2">
                 <div className="flex items-center justify-between p-3 rounded-lg bg-grey-50">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-[var(--color-primary)]" />
-                    <span className="text-sm text-grey-700">Coaching</span>
+                    <div className="w-2 h-2 rounded-full bg-black" />
+                    <span className="text-sm text-grey-400">Coaching</span>
                   </div>
-                  <span className="text-sm font-semibold text-grey-900 tabular-nums">
+                  <span className="text-sm font-semibold text-black tabular-nums">
                     {data.divisions.coaching.studentCount}
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-grey-50">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-[var(--color-warning)]" />
-                    <span className="text-sm text-grey-700">Junior</span>
+                    <div className="w-2 h-2 rounded-full bg-warning" />
+                    <span className="text-sm text-grey-400">Junior</span>
                   </div>
-                  <span className="text-sm font-semibold text-grey-900 tabular-nums">
+                  <span className="text-sm font-semibold text-black tabular-nums">
                     {data.divisions.junior.studentCount}
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-grey-50">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-[var(--color-success)]" />
-                    <span className="text-sm text-grey-700">GFGK</span>
+                    <div className="w-2 h-2 rounded-full bg-success" />
+                    <span className="text-sm text-grey-400">GFGK</span>
                   </div>
-                  <span className="text-sm font-semibold text-grey-900 tabular-nums">
+                  <span className="text-sm font-semibold text-black tabular-nums">
                     {data.divisions.gfgk.studentCount}
                   </span>
                 </div>
@@ -545,7 +547,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
             {/* Pending Actions */}
             {allActionItems.length > 0 && (
               <Card className="p-5">
-                <h3 className="text-sm font-semibold text-grey-900 mb-3">
+                <h3 className="text-sm font-semibold text-black mb-3">
                   Påminnelser
                 </h3>
                 <div className="space-y-2">
@@ -563,7 +565,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                               : "text-[var(--color-info)]"
                         }`}
                       />
-                      <span className="text-xs text-grey-700">{item.text}</span>
+                      <span className="text-xs text-grey-400">{item.text}</span>
                     </div>
                   ))}
                 </div>

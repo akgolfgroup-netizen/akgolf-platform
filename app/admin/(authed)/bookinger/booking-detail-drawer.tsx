@@ -4,8 +4,11 @@ import { useState } from "react";
 import { User, Clock, XCircle, CalendarClock, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
-  AdminCard, AdminButton, AdminBadge, AdminStatCard, AdminDialog, AdminDrawer,
+  AdminStatCard, AdminDialog, AdminDrawer,
 } from "@/components/portal/mission-control/ui";
 import { adminCancelBooking, adminRescheduleBooking, type AdminBooking } from "./actions";
 
@@ -117,31 +120,33 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
         footer={
           isActive ? (
             <div className="flex items-center justify-end gap-2">
-              <AdminButton variant="secondary" onClick={handleClose}>Lukk</AdminButton>
-              <AdminButton variant="secondary" icon={<CalendarClock className="w-4 h-4" />} onClick={() => setShowReschedule(!showReschedule)}>
+              <Button variant="secondary" onClick={handleClose}>Lukk</Button>
+              <Button variant="secondary" onClick={() => setShowReschedule(!showReschedule)}>
+                <CalendarClock className="w-4 h-4" />
                 Endre tid
-              </AdminButton>
-              <AdminButton variant="primary" icon={<XCircle className="w-4 h-4" />} onClick={() => setShowCancel(true)}>
+              </Button>
+              <Button variant="accent" onClick={() => setShowCancel(true)}>
+                <XCircle className="w-4 h-4" />
                 Avbestill
-              </AdminButton>
+              </Button>
             </div>
           ) : (
-            <AdminButton variant="secondary" onClick={handleClose}>Lukk</AdminButton>
+            <Button variant="secondary" onClick={handleClose}>Lukk</Button>
           )
         }
       >
         {booking && (
           <div className="space-y-4">
             {error && (
-              <div className="p-3 rounded-lg bg-[var(--color-error-light)] text-[var(--color-error-text)] text-sm">
+              <div className="p-3 rounded-lg bg-error/10 text-error text-sm">
                 {error}
               </div>
             )}
 
             <div className="flex items-center gap-2">
-              <AdminBadge variant={statusCfg.variant} icon={<StatusIcon className="w-3 h-3" />}>{statusCfg.label}</AdminBadge>
-              {booking.paymentStatus === "PAID" && <AdminBadge variant="success">Betalt</AdminBadge>}
-              {booking.paymentStatus === "REFUNDED" && <AdminBadge variant="muted">Refundert</AdminBadge>}
+              <Badge variant={statusCfg.variant}><StatusIcon className="w-3 h-3" />{statusCfg.label}</Badge>
+              {booking.paymentStatus === "PAID" && <Badge variant="success">Betalt</Badge>}
+              {booking.paymentStatus === "REFUNDED" && <Badge variant="muted">Refundert</Badge>}
             </div>
 
             <div className="grid grid-cols-2 gap-3">
@@ -149,47 +154,47 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
               <AdminStatCard label="Pris" value={`${(booking.amount ?? 0).toLocaleString("nb-NO")} kr`} />
             </div>
 
-            <AdminCard>
+            <Card>
               <h4 className="admin-section-title mb-2">Elev</h4>
-              <div className="space-y-1 text-sm text-[var(--color-text)]">
-                <div className="flex items-center gap-2"><User className="w-4 h-4 text-[var(--color-muted)]" />{booking.User?.name ?? "Ukjent"}</div>
-                {booking.User?.email && <div className="text-[var(--color-muted)] ml-6">{booking.User.email}</div>}
-                {booking.User?.phone && <div className="text-[var(--color-muted)] ml-6">{booking.User.phone}</div>}
+              <div className="space-y-1 text-sm text-black">
+                <div className="flex items-center gap-2"><User className="w-4 h-4 text-grey-400" />{booking.User?.name ?? "Ukjent"}</div>
+                {booking.User?.email && <div className="text-grey-400 ml-6">{booking.User.email}</div>}
+                {booking.User?.phone && <div className="text-grey-400 ml-6">{booking.User.phone}</div>}
               </div>
-            </AdminCard>
+            </Card>
 
-            <AdminCard>
+            <Card>
               <h4 className="admin-section-title mb-2">Instruktør</h4>
-              <div className="flex items-center gap-2 text-sm text-[var(--color-text)]">
-                <Clock className="w-4 h-4 text-[var(--color-muted)]" />
+              <div className="flex items-center gap-2 text-sm text-black">
+                <Clock className="w-4 h-4 text-grey-400" />
                 {booking.Instructor?.User?.name ?? "Ukjent"}
               </div>
-            </AdminCard>
+            </Card>
 
             {booking.playerNotes && (
-              <AdminCard>
+              <Card>
                 <h4 className="admin-section-title mb-2">Spillernotater</h4>
-                <p className="text-sm text-[var(--color-text)] italic">{booking.playerNotes}</p>
-              </AdminCard>
+                <p className="text-sm text-black italic">{booking.playerNotes}</p>
+              </Card>
             )}
 
             {booking.adminNotes && (
-              <AdminCard>
+              <Card>
                 <h4 className="admin-section-title mb-2">Admin-notater</h4>
-                <p className="text-sm text-[var(--color-text)]">{booking.adminNotes}</p>
-              </AdminCard>
+                <p className="text-sm text-black">{booking.adminNotes}</p>
+              </Card>
             )}
 
             {booking.cancelReason && (
-              <AdminCard>
+              <Card>
                 <h4 className="admin-section-title mb-2">Avbestillingsgrunn</h4>
-                <p className="text-sm text-[var(--color-error)]">{booking.cancelReason}</p>
-              </AdminCard>
+                <p className="text-sm text-error">{booking.cancelReason}</p>
+              </Card>
             )}
 
             {/* Reschedule panel */}
             {showReschedule && isActive && (
-              <AdminCard>
+              <Card>
                 <h4 className="admin-section-title mb-3">Endre tidspunkt</h4>
                 <div className="space-y-3">
                   <div>
@@ -204,13 +209,13 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
                   </div>
 
                   {loadingSlots && (
-                    <div className="flex items-center gap-2 text-xs text-[var(--color-muted)]">
+                    <div className="flex items-center gap-2 text-xs text-grey-400">
                       <Loader2 className="w-4 h-4 animate-spin" />Henter ledige tider...
                     </div>
                   )}
 
                   {rescheduleDate && !loadingSlots && rescheduleSlots.length === 0 && (
-                    <p className="text-xs text-[var(--color-muted)]">Ingen ledige tider denne dagen.</p>
+                    <p className="text-xs text-grey-400">Ingen ledige tider denne dagen.</p>
                   )}
 
                   {rescheduleSlots.length > 0 && (
@@ -226,8 +231,8 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
                               onClick={() => setRescheduleTime(slot)}
                               className={`py-2 text-sm font-medium rounded-lg border transition-colors ${
                                 isSelected
-                                  ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                                  : "bg-white text-[var(--color-text)] border-[var(--color-grey-200)] hover:border-[var(--color-grey-400)]"
+                                  ? "bg-black text-white border-black"
+                                  : "bg-white text-black border-grey-200 hover:border-grey-300"
                               }`}
                             >
                               {time}
@@ -239,12 +244,12 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
                   )}
 
                   {rescheduleTime && (
-                    <AdminButton variant="primary" loading={rescheduling} onClick={handleReschedule} className="w-full">
+                    <Button variant="accent" isLoading={rescheduling} onClick={handleReschedule} className="w-full">
                       Bekreft ny tid: {format(new Date(rescheduleTime), "d. MMM 'kl.' HH:mm", { locale: nb })}
-                    </AdminButton>
+                    </Button>
                   )}
                 </div>
-              </AdminCard>
+              </Card>
             )}
           </div>
         )}
@@ -258,8 +263,8 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
         description="Dette kan ikke angres. Refund prosesseres automatisk hvis betaling er gjort."
         footer={
           <>
-            <AdminButton variant="ghost" onClick={() => setShowCancel(false)}>Avbryt</AdminButton>
-            <AdminButton variant="primary" loading={cancelling} onClick={handleCancel}>Ja, avbestill</AdminButton>
+            <Button variant="ghost" onClick={() => setShowCancel(false)}>Avbryt</Button>
+            <Button variant="accent" isLoading={cancelling} onClick={handleCancel}>Ja, avbestill</Button>
           </>
         }
       />

@@ -155,7 +155,7 @@ export async function POST(req: NextRequest) {
  * GET /api/portal/admin/push/stats
  * Get push notification statistics
  */
-export async function GET(req: NextRequest) {
+export async function GET() {
   const user = await getPortalUser();
   if (!user?.id || !isStaff(user.role)) {
     return NextResponse.json({ error: "Uautorisert" }, { status: 403 });

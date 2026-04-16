@@ -12,13 +12,13 @@ import {
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminCard,
-  AdminButton,
   AdminInput,
   AdminSelect,
-  AdminBadge,
   AdminPageHeader,
 } from "@/components/portal/mission-control/ui";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
 import { createManualPlan } from "../actions";
 import type {
@@ -280,7 +280,7 @@ export function NyPlanWizard({
 
       <div className="flex-1 overflow-y-auto">
         {/* Step indicator */}
-        <div className="border-b border-[var(--color-grey-200)] bg-white px-6 py-4">
+        <div className="border-b border-grey-200 bg-white px-6 py-4">
           <div className="flex items-center gap-2 max-w-2xl mx-auto">
             {([1, 2, 3] as const).map((s) => (
               <div key={s} className="flex items-center gap-2 flex-1">
@@ -288,10 +288,10 @@ export function NyPlanWizard({
                   className={cn(
                     "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors",
                     step === s
-                      ? "bg-[var(--color-primary)] text-white"
+                      ? "bg-black text-white"
                       : step > s
-                        ? "bg-[var(--color-success)] text-white"
-                        : "bg-[var(--color-grey-100)] text-[var(--color-muted)]",
+                        ? "bg-success-text text-white"
+                        : "bg-grey-100 text-grey-400",
                   )}
                 >
                   {step > s ? <Check className="w-4 h-4" /> : s}
@@ -300,14 +300,14 @@ export function NyPlanWizard({
                   className={cn(
                     "text-sm hidden sm:block",
                     step === s
-                      ? "text-[var(--color-text)] font-medium"
-                      : "text-[var(--color-muted)]",
+                      ? "text-black font-medium"
+                      : "text-grey-400",
                   )}
                 >
                   {s === 1 ? "Grunninfo" : s === 2 ? "Uker og økter" : "Bekreft"}
                 </span>
                 {s < 3 && (
-                  <div className="flex-1 h-px bg-[var(--color-grey-200)] mx-2" />
+                  <div className="flex-1 h-px bg-grey-200 mx-2" />
                 )}
               </div>
             ))}
@@ -326,8 +326,8 @@ export function NyPlanWizard({
 
           {/* Step 1: Metadata */}
           {step === 1 && (
-            <AdminCard>
-              <h2 className="text-lg font-semibold text-[var(--color-text)] mb-5">
+            <Card>
+              <h2 className="text-lg font-semibold text-black mb-5">
                 Grunnleggende info
               </h2>
 
@@ -366,8 +366,8 @@ export function NyPlanWizard({
                         className={cn(
                           "px-3 py-2 rounded-lg text-sm font-medium transition-colors border",
                           periodType === pt.value
-                            ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                            : "bg-white border-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-100)]",
+                            ? "bg-black text-white border-black"
+                            : "bg-white border-grey-200 text-black hover:bg-grey-100",
                         )}
                       >
                         {pt.label}
@@ -396,17 +396,17 @@ export function NyPlanWizard({
                   </AdminSelect>
                 </div>
               </div>
-            </AdminCard>
+            </Card>
           )}
 
           {/* Step 2: Weeks & sessions */}
           {step === 2 && (
             <div className="space-y-6">
               {weeks.map((week, weekIndex) => (
-                <AdminCard key={weekIndex} className="p-0 overflow-hidden">
+                <Card key={weekIndex} className="p-0 overflow-hidden">
                   {/* Week header */}
-                  <div className="px-5 py-4 bg-[var(--color-grey-100)] border-b border-[var(--color-grey-200)]">
-                    <h3 className="text-sm font-semibold text-[var(--color-text)] mb-3">
+                  <div className="px-5 py-4 bg-grey-100 border-b border-grey-200">
+                    <h3 className="text-sm font-semibold text-black mb-3">
                       Uke {weekIndex + 1}
                     </h3>
                     <div className="grid grid-cols-2 gap-3">
@@ -438,15 +438,15 @@ export function NyPlanWizard({
                     {week.sessions.map((session, sessionIndex) => (
                       <div
                         key={sessionIndex}
-                        className="rounded-lg border border-[var(--color-grey-200)] p-4 space-y-3 bg-white"
+                        className="rounded-lg border border-grey-200 p-4 space-y-3 bg-white"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-medium text-[var(--color-muted)] uppercase tracking-wider">
+                          <span className="text-xs font-medium text-grey-400 uppercase tracking-wider">
                             Økt {sessionIndex + 1}
                           </span>
                           {week.sessions.length > 1 && (
-                            <AdminButton
-                              variant="danger"
+                            <Button
+                              variant="destructive"
                               onClick={() =>
                                 removeSession(weekIndex, sessionIndex)
                               }
@@ -454,7 +454,7 @@ export function NyPlanWizard({
                               className="!px-2 !py-1"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
-                            </AdminButton>
+                            </Button>
                           )}
                         </div>
 
@@ -493,7 +493,7 @@ export function NyPlanWizard({
                               Varighet (min)
                             </label>
                             <div className="relative">
-                              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--color-muted)] pointer-events-none" />
+                              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-grey-400 pointer-events-none" />
                               <AdminInput
                                 type="number"
                                 min={10}
@@ -526,8 +526,8 @@ export function NyPlanWizard({
                                   className={cn(
                                     "flex-1 py-2 rounded text-xs font-medium transition-colors border",
                                     session.focusArea === fa
-                                      ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                                      : "bg-white border-[var(--color-grey-200)] text-[var(--color-muted)] hover:bg-[var(--color-grey-100)]",
+                                      ? "bg-black text-white border-black"
+                                      : "bg-white border-grey-200 text-grey-400 hover:bg-grey-100",
                                   )}
                                 >
                                   {fa}
@@ -540,19 +540,19 @@ export function NyPlanWizard({
                         {/* Exercises */}
                         {session.exercises && session.exercises.length > 0 && (
                           <div className="space-y-1.5">
-                            <p className="text-xs font-medium text-[var(--color-muted)]">
+                            <p className="text-xs font-medium text-grey-400">
                               Øvelser ({session.exercises.length})
                             </p>
                             {session.exercises.map((ex, exIdx) => (
                               <div
                                 key={exIdx}
-                                className="flex items-center justify-between py-1.5 px-3 rounded bg-[var(--color-grey-100)] text-sm"
+                                className="flex items-center justify-between py-1.5 px-3 rounded bg-grey-100 text-sm"
                               >
-                                <span className="text-[var(--color-text)]">
+                                <span className="text-black">
                                   {ex.name}
                                 </span>
                                 <div className="flex items-center gap-2">
-                                  <span className="text-xs text-[var(--color-muted)]">
+                                  <span className="text-xs text-grey-400">
                                     {ex.durationMinutes} min
                                   </span>
                                   <button
@@ -564,7 +564,7 @@ export function NyPlanWizard({
                                         exIdx,
                                       )
                                     }
-                                    className="p-0.5 rounded text-[var(--color-error)] hover:bg-[var(--color-error)]/10"
+                                    className="p-0.5 rounded text-error hover:bg-error/10"
                                     aria-label="Fjern øvelse"
                                   >
                                     <Trash2 className="w-3 h-3" />
@@ -580,7 +580,7 @@ export function NyPlanWizard({
                           onClick={() =>
                             setDrillPickerOpen({ weekIndex, sessionIndex })
                           }
-                          className="flex items-center gap-1.5 text-xs text-[var(--color-primary)] font-medium hover:underline"
+                          className="flex items-center gap-1.5 text-xs text-black font-medium hover:underline"
                         >
                           <Plus className="w-3.5 h-3.5" />
                           Legg til øvelser
@@ -591,13 +591,13 @@ export function NyPlanWizard({
                     <button
                       type="button"
                       onClick={() => addSession(weekIndex)}
-                      className="flex items-center gap-2 w-full justify-center py-2.5 rounded-lg border border-dashed border-[var(--color-grey-300)] text-sm text-[var(--color-muted)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors"
+                      className="flex items-center gap-2 w-full justify-center py-2.5 rounded-lg border border-dashed border-grey-300 text-sm text-grey-400 hover:border-black hover:text-black transition-colors"
                     >
                       <Plus className="w-4 h-4" />
                       Legg til økt
                     </button>
                   </div>
-                </AdminCard>
+                </Card>
               ))}
             </div>
           )}
@@ -605,47 +605,47 @@ export function NyPlanWizard({
           {/* Step 3: Preview */}
           {step === 3 && (
             <div className="space-y-6">
-              <AdminCard>
-                <h2 className="text-lg font-semibold text-[var(--color-text)] mb-4">
+              <Card>
+                <h2 className="text-lg font-semibold text-black mb-4">
                   Bekreft treningsplan
                 </h2>
 
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="text-[var(--color-muted)]">Elev</p>
-                    <p className="font-medium text-[var(--color-text)]">
+                    <p className="text-grey-400">Elev</p>
+                    <p className="font-medium text-black">
                       {selectedStudent?.name ?? selectedStudent?.email ?? "-"}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[var(--color-muted)]">Tittel</p>
-                    <p className="font-medium text-[var(--color-text)]">
+                    <p className="text-grey-400">Tittel</p>
+                    <p className="font-medium text-black">
                       {title}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[var(--color-muted)]">Periodetype</p>
-                    <p className="font-medium text-[var(--color-text)]">
+                    <p className="text-grey-400">Periodetype</p>
+                    <p className="font-medium text-black">
                       {PERIOD_TYPES.find((pt) => pt.value === periodType)?.label}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[var(--color-muted)]">Varighet</p>
-                    <p className="font-medium text-[var(--color-text)]">
+                    <p className="text-grey-400">Varighet</p>
+                    <p className="font-medium text-black">
                       {durationWeeks} uker fra {startDate}
                     </p>
                   </div>
                 </div>
-              </AdminCard>
+              </Card>
 
               {weeks.map((week, weekIndex) => (
-                <AdminCard key={weekIndex} className="p-0 overflow-hidden">
-                  <div className="px-5 py-3 bg-[var(--color-grey-100)] border-b border-[var(--color-grey-200)]">
-                    <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                <Card key={weekIndex} className="p-0 overflow-hidden">
+                  <div className="px-5 py-3 bg-grey-100 border-b border-grey-200">
+                    <h3 className="text-sm font-semibold text-black">
                       Uke {weekIndex + 1}: {week.focus || "(ingen fokus)"}
                     </h3>
                     {week.volumeLabel && (
-                      <p className="text-xs text-[var(--color-muted)]">
+                      <p className="text-xs text-grey-400">
                         Volum: {week.volumeLabel}
                       </p>
                     )}
@@ -657,23 +657,23 @@ export function NyPlanWizard({
                       return (
                         <div
                           key={sIdx}
-                          className="flex items-center gap-4 py-2 px-3 rounded-lg bg-[var(--color-grey-100)] text-sm"
+                          className="flex items-center gap-4 py-2 px-3 rounded-lg bg-grey-100 text-sm"
                         >
-                          <span className="text-[var(--color-muted)] w-20">
+                          <span className="text-grey-400 w-20">
                             {DAY_LABELS[session.dayOfWeek]}
                           </span>
-                          <span className="font-medium text-[var(--color-text)] flex-1">
+                          <span className="font-medium text-black flex-1">
                             {session.title || "(uten tittel)"}
                           </span>
-                          <AdminBadge variant={variant}>
+                          <Badge variant={variant}>
                             {session.focusArea}
-                          </AdminBadge>
-                          <span className="text-[var(--color-muted)] flex items-center gap-1 text-xs">
+                          </Badge>
+                          <span className="text-grey-400 flex items-center gap-1 text-xs">
                             <Clock className="w-3 h-3" />
                             {session.durationMinutes} min
                           </span>
                           {session.exercises && session.exercises.length > 0 && (
-                            <span className="text-xs text-[var(--color-muted)]">
+                            <span className="text-xs text-grey-400">
                               {session.exercises.length} øvelser
                             </span>
                           )}
@@ -681,59 +681,58 @@ export function NyPlanWizard({
                       );
                     })}
                   </div>
-                </AdminCard>
+                </Card>
               ))}
 
               {/* Advarsel om eksisterende plan */}
-              <AdminCard className="border-[var(--color-warning)]/30 bg-[var(--color-warning)]/5">
-                <p className="font-medium mb-1 text-[var(--color-text)]">Merk</p>
-                <p className="text-sm text-[var(--color-muted)]">
+              <Card className="border-warning/30 bg-warning/5">
+                <p className="font-medium mb-1 text-black">Merk</p>
+                <p className="text-sm text-grey-400">
                   Eventuelle eksisterende aktive planer for denne eleven vil bli
                   deaktivert når du oppretter den nye planen.
                 </p>
-              </AdminCard>
+              </Card>
             </div>
           )}
 
           {/* Navigation buttons */}
           <div className="flex items-center justify-between pt-4 pb-8">
             {step > 1 ? (
-              <AdminButton
+              <Button
                 variant="secondary"
-                icon={<ArrowLeft className="w-4 h-4" />}
                 onClick={() => setStep((s) => (s - 1) as WizardStep)}
               >
+                <ArrowLeft className="w-4 h-4 mr-2" />
                 Tilbake
-              </AdminButton>
+              </Button>
             ) : (
-              <AdminButton
+              <Button
                 variant="secondary"
-                icon={<ArrowLeft className="w-4 h-4" />}
                 onClick={() => router.push("/admin/treningsplan")}
               >
+                <ArrowLeft className="w-4 h-4 mr-2" />
                 Avbryt
-              </AdminButton>
+              </Button>
             )}
 
             {step < 3 ? (
-              <AdminButton
-                variant="primary"
-                icon={<ArrowRight className="w-4 h-4" />}
-                iconPosition="right"
+              <Button
+                variant="accent"
                 disabled={step === 1 ? !step1Valid : !step2Valid}
                 onClick={() => setStep((s) => (s + 1) as WizardStep)}
               >
                 Neste
-              </AdminButton>
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
             ) : (
-              <AdminButton
-                variant="primary"
-                icon={<Check className="w-4 h-4" />}
-                loading={isPending}
+              <Button
+                variant="accent"
+                isLoading={isPending}
                 onClick={handleSubmit}
               >
+                <Check className="w-4 h-4 mr-2" />
                 {isPending ? "Oppretter..." : "Opprett plan"}
-              </AdminButton>
+              </Button>
             )}
           </div>
         </div>

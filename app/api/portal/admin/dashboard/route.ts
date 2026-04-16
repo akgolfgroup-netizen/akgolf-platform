@@ -1,11 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { prisma } from "@/lib/portal/prisma";
 import { startOfDay, endOfDay, startOfWeek, endOfWeek, format, subDays } from "date-fns";
-import { nb } from "date-fns/locale";
-
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await requirePortalUser();
     
@@ -104,7 +102,7 @@ export async function GET(request: NextRequest) {
 
     // Ukens inntekt
     const weekRevenue = weekBookings.reduce((sum, b) => sum + (b.amount || 0), 0);
-    const lastWeekRevenue = lastWeekBookings.reduce((sum, b) => sum + (b.amount || 0), 0);
+
 
     // Nye elever denne uken
     const newStudentsThisWeek = await prisma.user.count({

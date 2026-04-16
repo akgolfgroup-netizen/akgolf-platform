@@ -3,7 +3,7 @@ import { getMyProfile, getPlayerStats } from "./actions";
 import { ProfilePageClient } from "@/components/portal/profil/profile-page-client";
 
 export default async function ProfilPage() {
-  const user = await requirePortalUser();
+  await requirePortalUser();
 
   const [profile, stats] = await Promise.all([
     getMyProfile(),

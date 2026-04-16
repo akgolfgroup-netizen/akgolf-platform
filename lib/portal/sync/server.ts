@@ -103,7 +103,8 @@ export async function emitSyncEvent(options: EmitSyncEventOptions) {
  * Broadcaster et event til alle brukere
  */
 export async function broadcastSyncEvent({
-  excludeUserIds = [],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  excludeUserIds: _excludeUserIds = [],
   ...options
 }: BroadcastOptions) {
   return createSyncEvent({
@@ -310,7 +311,7 @@ export async function updateConnectionPing(sessionId: string) {
       .from("SyncConnection")
       .update({ lastPingAt: new Date().toISOString() })
       .eq("sessionId", sessionId);
-  } catch (error) {
+  } catch {
     // Ignorer - connection kan være slettet
   }
 }
@@ -326,7 +327,7 @@ export async function unregisterConnection(sessionId: string) {
       .from("SyncConnection")
       .update({ disconnectedAt: new Date().toISOString() })
       .eq("sessionId", sessionId);
-  } catch (error) {
+  } catch {
     // Ignorer
   }
 }

@@ -119,7 +119,7 @@ export function useBookingWizard({ mode, onBookingComplete }: UseBookingWizardOp
     if (!customerName.trim() || customerName.length < 2) return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(customerEmail);
-  }, [mode, state.customerName, state.customerEmail]);
+  }, [mode, state]);
 
   const goBack = useCallback(() => {
     const currentIndex = visibleSteps.indexOf(state.step);

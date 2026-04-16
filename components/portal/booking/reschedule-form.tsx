@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { format, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { ChevronLeft, ChevronRight, Clock, Check } from "lucide-react";
+import { Clock, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -23,9 +23,6 @@ export function RescheduleForm({
   bookingId,
   serviceTypeId,
   instructorId,
-  instructorName,
-  serviceName,
-  duration,
 }: Props) {
   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(

@@ -11,12 +11,12 @@ import {
 } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
-  AdminBadge,
   AdminEmptyState,
   AdminTimeline,
   AdminProgressRing,
   AdminBarChart,
 } from "@/components/portal/mission-control/ui";
+import { Badge } from "@/components/ui/badge";
 import type {
   AdminTimelineItem,
   AdminBarChartDatum,
@@ -90,10 +90,10 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
       date: format(new Date(b.startTime), "EEE d. MMM HH:mm", { locale: nb }),
       color:
         b.status === "CONFIRMED" || b.status === "COMPLETED"
-          ? "var(--color-success)"
+          ? "success-text"
           : b.status === "PENDING"
-            ? "var(--color-warning)"
-            : "var(--color-primary)",
+            ? "var(--color-accent-cta)"
+            : "black",
     }));
 
   // Ukemal (eksempel - 50 okter per uke)
@@ -111,75 +111,75 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Stat Card: Bookinger */}
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
                   Bookinger
                 </p>
-                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {stats.totalBookings}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-600">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
                 <Calendar className="w-5 h-5" />
               </div>
             </div>
           </div>
 
           {/* Stat Card: Unike elever */}
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
                   Unike elever
                 </p>
-                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {stats.uniqueStudents}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-600">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
                 <Users className="w-5 h-5" />
               </div>
             </div>
           </div>
 
           {/* Stat Card: Bekreftet */}
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
                   Bekreftet
                 </p>
-                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {stats.confirmedBookings}
                 </p>
                 {confirmRate >= 80 && (
                   <div className="mt-2 flex items-center gap-1 text-xs font-medium">
-                    <ArrowUpRight className="w-3.5 h-3.5 text-grey-600" />
-                    <span className="text-grey-600">+{confirmRate}%</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-text" />
+                    <span className="text-text tabular-nums">+{confirmRate}%</span>
                     <span className="text-grey-400">vs forrige</span>
                   </div>
                 )}
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-600">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
                 <CheckCircle2 className="w-5 h-5" />
               </div>
             </div>
           </div>
 
           {/* Stat Card: Inntekt */}
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
                   Inntekt
                 </p>
-                <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {stats.weeklyRevenue.toLocaleString("nb-NO")} kr
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-100 text-grey-600">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
                 <DollarSign className="w-5 h-5" />
               </div>
             </div>
@@ -189,8 +189,8 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
         {/* Visualiseringer - ukemal, daglig aktivitet, timeline */}
         {bookings.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-card p-6">
-              <h3 className="text-lg font-semibold text-grey-900 mb-4">Ukemal</h3>
+            <div className="bg-white border border-grey-200 rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-black mb-4">Ukemal</h3>
               <div className="flex flex-col items-center justify-center py-2">
                 <AdminProgressRing
                   value={stats.totalBookings}
@@ -202,10 +202,10 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-card p-6 lg:col-span-2">
+            <div className="bg-white border border-grey-200 rounded-xl p-6 lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-grey-900">Daglig aktivitet</h3>
-                <AdminBadge variant="info">Denne uken</AdminBadge>
+                <h3 className="text-lg font-semibold text-black">Daglig aktivitet</h3>
+                <Badge variant="info">Denne uken</Badge>
               </div>
               <AdminBarChart data={dailyData} height={220} />
             </div>
@@ -213,9 +213,9 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
         )}
 
         {timelineItems.length > 0 && (
-          <div className="bg-white rounded-xl shadow-card p-6">
+          <div className="bg-white border border-grey-200 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-grey-900">Ukens kommende hendelser</h3>
+              <h3 className="text-lg font-semibold text-black">Ukens kommende hendelser</h3>
               <span className="text-xs text-grey-400">
                 {timelineItems.length} hendelser
               </span>
@@ -232,9 +232,9 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
             description="Nar elever booker okter vil de dukke opp her."
           />
         ) : (
-          <div className="bg-white rounded-xl shadow-card p-0 overflow-hidden">
+          <div className="bg-white border border-grey-200 rounded-xl p-0 overflow-hidden">
             <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-grey-900">Ukens bookinger</h3>
+              <h3 className="text-lg font-semibold text-black">Ukens bookinger</h3>
               <span className="text-sm text-grey-400">
                 {bookings.length} booking{bookings.length !== 1 ? "er" : ""}
               </span>
@@ -250,21 +250,21 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
                     {/* Day Header */}
-                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-grey-100">
-                      <div className="w-10 h-10 rounded-xl bg-grey-100 flex items-center justify-center">
-                        <Calendar className="w-5 h-5 text-grey-600" />
+                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-grey-200">
+                      <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
+                        <Calendar className="w-5 h-5 text-text" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-grey-700 truncate capitalize">
+                        <h3 className="font-semibold text-text truncate capitalize">
                           {format(new Date(dateKey), "EEEE d. MMMM", {
                             locale: nb,
                           })}
                         </h3>
                       </div>
-                      <AdminBadge variant="muted">
+                      <Badge variant="muted">
                         {dayBookings.length} booking
                         {dayBookings.length !== 1 ? "er" : ""}
-                      </AdminBadge>
+                      </Badge>
                     </div>
 
                     {/* Booking List */}
@@ -278,7 +278,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                         return (
                           <div
                             key={booking.id}
-                            className="flex items-center gap-4 p-3 rounded-xl bg-grey-50 hover:bg-grey-100 transition-colors"
+                            className="flex items-center gap-4 p-3 rounded-xl bg-grey-50 hover:bg-grey-200 transition-colors"
                           >
                             {/* Avatar */}
                             {booking.student.image ? (
@@ -290,14 +290,14 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                                 className="w-11 h-11 rounded-xl object-cover ring-2 ring-white"
                               />
                             ) : (
-                              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-grey-600 bg-grey-100">
+                              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-text bg-grey-50">
                                 {booking.student.name?.charAt(0) ?? "?"}
                               </div>
                             )}
 
                             {/* Info */}
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-grey-700 truncate">
+                              <p className="text-sm font-semibold text-text truncate">
                                 {booking.student.name ?? "Ukjent elev"}
                               </p>
                               <p className="text-xs text-grey-400 truncate mt-0.5">
@@ -313,9 +313,9 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                                 <Clock className="w-3 h-3" />
                                 {format(new Date(booking.startTime), "HH:mm")}
                               </span>
-                              <AdminBadge variant={statusCfg.variant}>
+                              <Badge variant={statusCfg.variant}>
                                 {statusCfg.label}
-                              </AdminBadge>
+                              </Badge>
                             </div>
                           </div>
                         );

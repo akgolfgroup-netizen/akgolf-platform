@@ -3,13 +3,12 @@
  * Kalles fra ulike deler av applikasjonen for å sende notifikasjoner
  */
 
-import { format, addDays } from "date-fns";
+import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { logger } from "@/lib/logger";
 import { NotificationType } from "./types";
 import {
   createNotification,
-  createBulkNotifications,
 } from "./create";
 import type {
   BookingNotificationMetadata,
@@ -20,7 +19,7 @@ import type {
   DiaryEntryMetadata,
   QuestionMetadata,
 } from "./types";
-import type { Booking, CoachingSession, TrainingPlan, Goal, User, ServiceType, Instructor, Location } from "@prisma/client";
+import type { Booking, CoachingSession, TrainingPlan, Goal, User, ServiceType, Location } from "@prisma/client";
 
 // ============================================================================
 // SPILLERPORTAL → MISSION CONTROL (Admin ser)

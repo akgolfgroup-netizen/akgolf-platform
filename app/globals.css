@@ -33,6 +33,41 @@
   --color-text: #1c1c16;
   --color-muted: #A5B2AD;
 
+  /* ═══════════════════════════════════════════════════════════════════════════
+   * PERFORMANCE DESIGN SYSTEM — Brand Guide V2.0 + Performance Accent
+   * Tonal Architecture + The No-Line Rule + High-Energy Lime (#D1F843)
+   * ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Performance Accent — High-Energy Lime for progression & achievement */
+  --color-performance: #D1F843;
+  --color-performance-dark: #0A1F18;
+  --color-performance-soft: rgba(209, 248, 67, 0.16);
+  --color-performance-glow: rgba(209, 248, 67, 0.35);
+
+  /* Data Visualization Palette — optimized for warm cream backgrounds */
+  --color-data-sage: #2A7D5A;
+  --color-data-sage-light: #E8F5EF;
+  --color-data-coral: #E85D4E;
+  --color-data-coral-light: #FCEAE8;
+  --color-data-blue: #007AFF;
+  --color-data-blue-light: #EFF6FF;
+  --color-data-lime: #D1F843;
+  --color-data-lime-soft: rgba(209, 248, 67, 0.20);
+
+  /* Data Card Tokens — rounded-32px + ambient shadow */
+  --radius-data-card: 2rem;           /* 32px */
+  --shadow-ambient: 0 2px 8px rgba(10, 31, 24, 0.04), 0 8px 32px rgba(10, 31, 24, 0.06), 0 16px 48px rgba(10, 31, 24, 0.04);
+  --shadow-ambient-hover: 0 4px 12px rgba(10, 31, 24, 0.06), 0 12px 40px rgba(10, 31, 24, 0.08), 0 24px 64px rgba(10, 31, 24, 0.06);
+
+  /* Stats Typography — authoritative numerals for TrackMan & handicap */
+  --font-stats: var(--font-inter), Inter, system-ui, -apple-system, sans-serif;
+  --text-stat-xl: 3.5rem;     /* 56px — hero stats */
+  --text-stat-lg: 2.75rem;    /* 44px — primary stats */
+  --text-stat-md: 2rem;       /* 32px — secondary stats */
+  --text-stat-sm: 1.5rem;     /* 24px — compact stats */
+  --leading-stat: 1;
+  --tracking-stat: -0.02em;
+
   /* Legacy aliases (gradvis utfasing — bruk --color-primary etc.) */
   --color-brand: #005840;
   --color-brand-dark: #0A1F18;
@@ -85,6 +120,7 @@
   /* Green palette (brand-avledet) */
   --color-green: #005840;
   --color-green-dark: #0A1F18;
+  --color-green-darker: #003025;
   --color-green-bright: #2A7D5A;
   --color-green-light: #ECF0EF;
   --color-coaching: #005840;
@@ -92,8 +128,60 @@
   --color-streak-bg: #FDF4E4;
   --color-streak-border: #E8D5B0;
 
+  /* Ron portal palette */
+  --color-ron-bg: #F0F3F2;
+  --color-ron-dark: #0F1F1A;
+  --color-ron-hover: #1A2D27;
+  --color-ron-gradient: #1A3B30;
+  --color-ron-gradient-mid: #DBE5DF;
+  --color-ron-gradient-light: #E8EEE9;
+
+  /* iPhone mockup */
+  --color-iphone-frame: #1A1A1A;
+  --color-iphone-button: #2A2A2A;
+
+  /* Landing page palette */
+  --color-forest-alt: #2D5A27;
+  --color-lime-dark: #576500;
+  --color-lime-bright: #B8D300;
+  --color-beige-warm: #E6E2D9;
+  --color-beige-hover: #ECE8DF;
+  --color-error-bright: #BA1A1A;
+
+  /* AI / Purple */
+  --color-ai-light-alt: #F5EEFF;
+
   /* External brand */
   --color-vipps: #FF5B24;
+
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  /* ADMIN / MISSION CONTROL — hg-* tokens (Synex light theme)                  */
+  /* ═══════════════════════════════════════════════════════════════════════════ */
+  --hg-bg: #F5F8F7;
+  --hg-surface: #FFFFFF;
+  --hg-surface-raised: #F5F8F7;
+  --hg-surface-sunken: #ECF0EF;
+  --hg-text: #0A1F18;
+  --hg-text-secondary: #324D45;
+  --hg-text-muted: #7A8C85;
+  --hg-primary: #0A1F18;
+  --hg-primary-muted: #F5F8F7;
+  --hg-primary-glow: rgba(10, 31, 24, 0.08);
+  --hg-border: #D5DFDB;
+  --hg-border-subtle: #ECF0EF;
+  --hg-border-hover: #A5B2AD;
+  --hg-success: #1A4D36;
+  --hg-success-bg: #E8F5EF;
+  --hg-error: #EF4444;
+  --hg-error-bg: #FEF2F2;
+  --hg-warning: #C48A32;
+  --hg-warning-bg: #FDF4E4;
+  --hg-info: #007AFF;
+  --hg-info-bg: #EFF6FF;
+  --hg-status-confirmed: #1A4D36;
+  --hg-status-pending: #C48A32;
+  --hg-status-cancelled: #EF4444;
+  --hg-status-no-show: #7A8C85;
 
   /* ═══════════════════════════════════════════════════════════════════════════ */
   /* PORTAL — Nøytrale farger for dashboard (ikke grønntonet)                   */
@@ -943,6 +1031,106 @@
     padding: 24px;
   }
 
+  /* ═══════════════════════════════════════════════════════════════════════════
+   * PERFORMANCE DESIGN SYSTEM — Utilities
+   * ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Performance data card — 32px radius + ambient shadow */
+  .performance-card {
+    background: var(--color-performance-card);
+    border: 0.5px solid var(--color-performance-border);
+    border-radius: var(--radius-data-card); /* 32px */
+    padding: 24px;
+    box-shadow: var(--shadow-ambient);
+    transition: transform 400ms var(--ease-entrance),
+                box-shadow 400ms var(--ease-entrance),
+                border-color var(--duration-hover);
+  }
+
+  .performance-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-performance-border-hover);
+    box-shadow: var(--shadow-ambient-hover);
+  }
+
+  /* Performance stat card — compact, tabular numerals */
+  .performance-stat {
+    background: var(--color-performance-card);
+    border: 0.5px solid var(--color-performance-border);
+    border-radius: 16px;
+    padding: 20px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    transition: transform 400ms var(--ease-entrance),
+                box-shadow 400ms var(--ease-entrance);
+  }
+
+  .performance-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-ambient-hover);
+  }
+
+  /* Performance stat typography scales */
+  .stat-xl {
+    font-family: var(--font-stats);
+    font-size: var(--text-stat-xl);
+    line-height: var(--leading-stat);
+    letter-spacing: var(--tracking-stat);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .stat-lg {
+    font-family: var(--font-stats);
+    font-size: var(--text-stat-lg);
+    line-height: var(--leading-stat);
+    letter-spacing: var(--tracking-stat);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .stat-md {
+    font-family: var(--font-stats);
+    font-size: var(--text-stat-md);
+    line-height: var(--leading-stat);
+    letter-spacing: var(--tracking-stat);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .stat-sm {
+    font-family: var(--font-stats);
+    font-size: var(--text-stat-sm);
+    line-height: var(--leading-stat);
+    letter-spacing: var(--tracking-stat);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Performance accent utilities */
+  .performance-accent {
+    color: var(--color-performance);
+  }
+
+  .performance-accent-bg {
+    background-color: var(--color-performance);
+    color: var(--color-performance-dark);
+  }
+
+  .performance-ring {
+    box-shadow: 0 0 0 2px var(--color-performance-glow);
+  }
+
+  /* Tabular nums utility */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
   /* Pyramide kort */
   .portal-pyramid-card {
     border-radius: 0 8px 8px 0;
@@ -1171,11 +1359,12 @@
   --border: oklch(0.91 0 0);
   --input: oklch(0.91 0 0);
   --ring: oklch(0.145 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
+  /* Performance Chart Palette — mapped to warm cream backgrounds */
+  --chart-1: #2A7D5A;   /* Sage — primary trend / positive */
+  --chart-2: #E85D4E;   /* Coral — comparison / alert */
+  --chart-3: #007AFF;   /* Blue — user / personal data */
+  --chart-4: #D1F843;   /* Lime — highlight / PR / milestone */
+  --chart-5: #A5B2AD;   /* Neutral — average / baseline / other */
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
@@ -1834,71 +2023,71 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════════ */
-  /* ADMIN PORTAL — Lys Nexudus-stil — Brand Guide V2.0                      */
+  /* ADMIN PORTAL — Synex Edition — Brand Guide V2.0                         */
   /* ═══════════════════════════════════════════════════════════════════════ */
 
   /* Kort */
   .admin-card {
-    @apply bg-white border border-[var(--color-grey-200)] rounded-xl p-6;
+    @apply bg-white border border-[#D5DFDB] rounded-xl p-6;
   }
   .admin-card-sm {
-    @apply bg-white border border-[var(--color-grey-200)] rounded-xl p-4;
+    @apply bg-white border border-[#D5DFDB] rounded-xl p-4;
   }
   .admin-card-hover {
-    @apply transition-all hover:border-[var(--color-grey-300)] hover:shadow-sm;
+    @apply transition-all hover:border-[#A5B2AD] hover:shadow-[0_4px_12px_rgba(10,31,24,0.04)];
   }
 
   /* Knapper */
   .admin-btn {
-    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer;
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-colors cursor-pointer;
   }
   .admin-btn-primary {
-    @apply bg-[var(--color-primary)] text-white hover:bg-[#004a34];
+    @apply bg-[#0A1F18] text-white hover:bg-[#1A3529];
   }
   .admin-btn-secondary {
-    @apply bg-white border border-[var(--color-grey-200)] text-[var(--color-text)] hover:bg-[var(--color-grey-100)];
+    @apply bg-white border border-[#D5DFDB] text-[#0A1F18] hover:bg-[#F5F8F7] hover:border-[#A5B2AD];
   }
   .admin-btn-ghost {
-    @apply text-[var(--color-text)] hover:bg-[var(--color-grey-100)];
+    @apply text-[#0A1F18] hover:bg-[#F5F8F7];
   }
   .admin-btn-danger {
-    @apply bg-[var(--color-error)] text-white hover:opacity-90;
+    @apply bg-[#EF4444] text-white hover:bg-[#DC2626];
   }
 
   /* Skjemafelter */
   .admin-input {
-    @apply w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-[var(--color-grey-200)] text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)];
+    @apply w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-[#D5DFDB] text-[#0A1F18] placeholder:text-[#A5B2AD] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/10 focus:border-[#0A1F18];
   }
 
   /* Typografi */
   .admin-label {
-    @apply text-xs font-medium uppercase tracking-wide text-[var(--color-muted)];
+    @apply text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85];
   }
   .admin-section-title {
-    @apply text-lg font-semibold text-[var(--color-grey-900)];
+    @apply text-lg font-semibold text-[#0A1F18];
   }
   .admin-page-title {
-    @apply text-3xl font-bold text-[var(--color-grey-900)] tracking-tight;
+    @apply text-3xl font-bold text-[#0A1F18] tracking-tight;
   }
 
   /* Badges */
   .admin-badge {
-    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
   }
   .admin-badge-success {
-    @apply bg-[var(--color-success)]/10 text-[var(--color-success)];
+    @apply bg-[#E8F5EF] text-[#1A4D36];
   }
   .admin-badge-warning {
-    @apply bg-[var(--color-warning)]/10 text-[var(--color-warning)];
+    @apply bg-[#FDF4E4] text-[#7A5520];
   }
   .admin-badge-error {
-    @apply bg-[var(--color-error)]/10 text-[var(--color-error)];
+    @apply bg-[#FCEAE8] text-[#7A2C22];
   }
   .admin-badge-info {
-    @apply bg-[var(--color-primary)]/10 text-[var(--color-primary)];
+    @apply bg-[#FAF5FF] text-[#AF52DE];
   }
   .admin-badge-muted {
-    @apply bg-[var(--color-grey-100)] text-[var(--color-muted)];
+    @apply bg-[#F5F8F7] text-[#7A8C85] border border-[#D5DFDB];
   }
 
   /* Tabell */
@@ -1906,12 +2095,12 @@
     @apply w-full;
   }
   .admin-table thead th {
-    @apply text-left px-4 py-3 text-xs font-medium uppercase tracking-wide text-[var(--color-muted)] border-b border-[var(--color-grey-200)];
+    @apply text-left px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] border-b border-[#D5DFDB];
   }
   .admin-table tbody td {
-    @apply px-4 py-3.5 text-sm text-[var(--color-text)] border-b border-[var(--color-grey-100)];
+    @apply px-4 py-3.5 text-sm text-[#0A1F18] border-b border-[#ECF0EF];
   }
   .admin-table tbody tr {
-    @apply hover:bg-[var(--color-grey-50)] transition-colors;
+    @apply hover:bg-[#F5F8F7] transition-colors;
   }
 }

@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import type { TrainingPrescriptionResult } from "@/lib/portal/usi/generate-prescription";
 
 function getClient() {
   return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -85,13 +86,20 @@ Regler:
 - Tilpass til periodiseringsfasen
 - Skriv på norsk bokmål`;
 
-export async function generateTrainingPlan(input: {
-  goals: string;
-  periodType: string;
-  durationWeeks: number;
-  startDate: string;
-}): Promise<TrainingPlanResult> {
+export async function generateTrainingPlan(
+  input: {
+    goals: string;
+    periodType: string;
+    durationWeeks: number;
+    startDate: string;
+  },
+  prescription?: TrainingPrescriptionResult
+): Promise<TrainingPlanResult> {
   const periodGuidance = PERIOD_GUIDANCE[input.periodType] ?? PERIOD_GUIDANCE.grunnperiode;
+
+  const prescriptionText = prescription
+    ? `\nUSI-basert treningspreskripsjon: Fokuser pa ${prescription.focusAreas.join(", ")}. Anbefalt volum: ${prescription.weeklyHours.toFixed(1)} timer/uke. Forventet HCP-endring pa 12 uker: ${prescription.predictedHcpChange.toFixed(1)} slag.`
+    : "";
 
   const message = await getClient().messages.create({
     model: "claude-sonnet-4-5",
@@ -105,11 +113,11 @@ export async function generateTrainingPlan(input: {
 Periode: ${input.periodType}
 ${periodGuidance}
 
-Spillerens mål: ${input.goals}
+Spillerens mal: ${input.goals}${prescriptionText}
 
 Startdato: ${input.startDate}
 
-Lag en fullstendig ${input.durationWeeks}-ukers plan med 3-5 øvingsøkter per uke.`,
+Lag en fullstendig ${input.durationWeeks}-ukers plan med 3-5 ovingsokter per uke.`,
       },
     ],
   });

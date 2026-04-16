@@ -14,7 +14,6 @@ interface MCLayoutProps {
   };
 }
 
-// Context for mobile menu state
 interface MCSidebarContextType {
   isOpen: boolean;
   open: () => void;
@@ -44,7 +43,7 @@ export function MCLayout({ children, user }: MCLayoutProps) {
 
   return (
     <MCSidebarContext.Provider value={contextValue}>
-      <div className="min-h-screen flex bg-[var(--color-surface)]">
+      <div className="min-h-screen flex bg-grey-50">
         <MCSidebar user={user} isOpen={isOpen} onClose={() => setIsOpen(false)} />
         <main className="flex-1 lg:ml-[240px] min-h-screen flex flex-col">
           {children}

@@ -2,12 +2,13 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import {
   getFilteredRoundStats,
   getFilteredAggregates,
-  getFilteredBreakdown,
   getWeeklyTrainingVolume,
   getLatestHandicap,
+  getGolfProfileSummary,
 } from "./actions";
 import { StatistikkClient } from "./statistikk-client";
 import type { PeriodKey } from "./actions";
+import { getPlayerUSI, getLatestTrainingPrescription } from "@/lib/portal/usi/actions";
 
 const VALID_PERIODS: PeriodKey[] = ["30d", "90d", "season", "1y"];
 
@@ -23,22 +24,26 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
     ? (params.period as PeriodKey)
     : "30d";
 
-  const [rounds, aggregates, breakdown, weeklyTraining, handicap] = await Promise.all([
+  const [rounds, aggregates, weeklyTraining, handicap, profile, usiData, prescription] = await Promise.all([
     getFilteredRoundStats(period),
     getFilteredAggregates(period),
-    getFilteredBreakdown(period),
     getWeeklyTrainingVolume(period),
     getLatestHandicap(),
+    getGolfProfileSummary(),
+    getPlayerUSI(true, true),
+    getLatestTrainingPrescription(),
   ]);
 
   return (
     <StatistikkClient
       rounds={rounds}
       aggregates={aggregates}
-      breakdown={breakdown}
       weeklyTraining={weeklyTraining}
       handicap={handicap?.handicapIndex ?? null}
       currentPeriod={period}
+      profile={profile}
+      usi={usiData?.usi ?? null}
+      prescription={prescription}
     />
   );
 }

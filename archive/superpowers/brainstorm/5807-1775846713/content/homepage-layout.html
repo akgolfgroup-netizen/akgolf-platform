@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK Golf — Forside Layout</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #FFFFFF; color: #324D45; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 16px 48px; background: transparent; transition: background 0.3s; }
+  .nav.scrolled { background: rgba(255,255,255,0.9); backdrop-filter: blur(20px); border-bottom: 1px solid #D5DFDB; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: #FFFFFF; }
+  .nav.scrolled .nav-logo { color: #0A1F18; }
+  .nav-logo-mark { width: 34px; height: 34px; background: linear-gradient(135deg, #005840, #2A7D5A); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; color: white; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .nav.scrolled .nav-links a { color: #5A6E66; }
+  .nav-cta { padding: 8px 20px; background: #D1F843; color: #0A1F18; border-radius: 980px; font-size: 14px; font-weight: 600; text-decoration: none; }
+
+  /* HERO */
+  .hero { height: 100vh; position: relative; display: flex; align-items: flex-end; overflow: hidden; }
+  .hero-img { position: absolute; inset: 0; background: url('') center/cover; }
+  .hero-placeholder { position: absolute; inset: 0; background: linear-gradient(135deg, #0A1F18 0%, #005840 50%, #0A1F18 100%); }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,31,24,0.2) 0%, rgba(10,31,24,0.4) 40%, rgba(10,31,24,0.9) 80%); }
+  .hero-content { position: relative; z-index: 2; padding: 0 48px 80px; max-width: 700px; }
+  .hero-label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: #D1F843; text-transform: uppercase; margin-bottom: 16px; }
+  .hero-title { font-size: 56px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 16px; }
+  .hero-sub { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 32px; max-width: 500px; }
+  .hero-cta { display: inline-flex; padding: 14px 32px; background: #D1F843; color: #0A1F18; border-radius: 980px; font-size: 16px; font-weight: 700; text-decoration: none; }
+  .hero-cta-secondary { display: inline-flex; padding: 14px 32px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #FFFFFF; border-radius: 980px; font-size: 16px; font-weight: 500; text-decoration: none; margin-left: 12px; }
+
+  /* SECTION SPACING */
+  section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+
+  /* BENTO GRID */
+  .bento-title { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: #A5B2AD; text-transform: uppercase; margin-bottom: 12px; }
+  .bento-heading { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; color: #0A1F18; }
+  .bento { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 300px 300px; gap: 16px; }
+  .bento-card { border-radius: 20px; padding: 32px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; transition: transform 0.4s ease; cursor: pointer; text-decoration: none; }
+  .bento-card:hover { transform: translateY(-4px); }
+  .bento-card.large { grid-row: span 2; }
+  .bento-card.dark { background: #0A1F18; color: #FFFFFF; }
+  .bento-card.light { background: #ECF0EF; color: #324D45; }
+  .bento-card.green { background: #005840; color: #FFFFFF; }
+  .bento-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 8px; }
+  .bento-card-title { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .bento-card-desc { font-size: 14px; opacity: 0.7; line-height: 1.5; }
+  .bento-arrow { position: absolute; top: 24px; right: 24px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .bento-card.light .bento-arrow { background: rgba(0,0,0,0.05); }
+
+  /* PRICING */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .price-card { background: #FFFFFF; border: 1px solid #D5DFDB; border-radius: 20px; padding: 32px; display: flex; flex-direction: column; }
+  .price-card.featured { border-color: #005840; position: relative; }
+  .price-card.featured::before { content: 'Mest populaer'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #005840; color: white; font-size: 11px; font-weight: 600; padding: 4px 16px; border-radius: 20px; letter-spacing: 0.03em; }
+  .price-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; color: #0A1F18; }
+  .price-desc { font-size: 14px; color: #A5B2AD; margin-bottom: 20px; }
+  .price-amount { font-size: 36px; font-weight: 800; color: #0A1F18; letter-spacing: -0.03em; }
+  .price-period { font-size: 14px; color: #A5B2AD; font-weight: 400; }
+  .price-features { list-style: none; margin: 24px 0; flex: 1; }
+  .price-features li { font-size: 14px; color: #5A6E66; padding: 6px 0; padding-left: 20px; position: relative; }
+  .price-features li::before { content: ''; position: absolute; left: 0; top: 12px; width: 8px; height: 8px; border-radius: 50%; background: #2A7D5A; }
+  .price-btn { display: block; text-align: center; padding: 14px; border-radius: 980px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .price-btn.primary { background: #005840; color: #FFFFFF; }
+  .price-btn.accent { background: #D1F843; color: #0A1F18; }
+  .price-btn.secondary { background: #ECF0EF; color: #324D45; }
+
+  /* PORTAL PREVIEW */
+  .portal-section { background: #ECF0EF; border-radius: 24px; padding: 64px; display: flex; gap: 48px; align-items: center; }
+  .portal-text { flex: 1; }
+  .portal-text h3 { font-size: 32px; font-weight: 700; color: #0A1F18; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .portal-text p { font-size: 16px; color: #5A6E66; line-height: 1.6; margin-bottom: 24px; }
+  .portal-mockup { flex: 1; background: #FFFFFF; border-radius: 16px; height: 360px; border: 1px solid #D5DFDB; display: flex; align-items: center; justify-content: center; color: #A5B2AD; font-size: 14px; box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
+
+  /* CTA */
+  .cta-section { background: #0A1F18; border-radius: 24px; padding: 80px; text-align: center; }
+  .cta-section h2 { font-size: 40px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.03em; margin-bottom: 12px; }
+  .cta-section p { font-size: 16px; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+
+  /* FOOTER */
+  .footer { padding: 48px; text-align: center; color: #A5B2AD; font-size: 13px; border-top: 1px solid #D5DFDB; margin-top: 48px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <div class="nav-logo-mark">K</div>
+    AK Golf
+  </div>
+  <div class="nav-links">
+    <a href="#">Academy</a>
+    <a href="#">Junior</a>
+    <a href="#">Utvikling</a>
+    <a href="#">Portalen</a>
+  </div>
+  <a href="#" class="nav-cta">Book okt</a>
+</nav>
+
+<!-- 1. HERO -->
+<div class="hero">
+  <div class="hero-placeholder"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-label">AK Golf Academy</div>
+    <h1 class="hero-title">Bli en bedre golfer — med system</h1>
+    <p class="hero-sub">Personlig coaching med TrackMan-analyse, strukturerte treningsplaner og AI-drevet innsikt. For alle nivåer.</p>
+    <div>
+      <a href="#" class="hero-cta">Book din forste okt</a>
+      <a href="#" class="hero-cta-secondary">Se priser</a>
+    </div>
+  </div>
+</div>
+
+<!-- 2. TJENESTER (BENTO) -->
+<section>
+  <div class="bento-title">Vare tjenester</div>
+  <h2 class="bento-heading">Alt du trenger for a utvikle spillet ditt</h2>
+  <div class="bento">
+    <a class="bento-card large dark" href="#">
+      <div class="bento-arrow">&#8599;</div>
+      <div class="bento-tag">Coaching</div>
+      <div class="bento-card-title">Golf Academy</div>
+      <div class="bento-card-desc">Personlig coaching med TrackMan-analyse for voksne spillere pa alle nivaer.</div>
+    </a>
+    <a class="bento-card light" href="#">
+      <div class="bento-arrow">&#8599;</div>
+      <div class="bento-tag">Ungdom</div>
+      <div class="bento-card-title">Junior Academy</div>
+      <div class="bento-card-desc">Strukturert golftrening for barn og ungdom 6-18 ar.</div>
+    </a>
+    <a class="bento-card green" href="#">
+      <div class="bento-arrow">&#8599;</div>
+      <div class="bento-tag">Klubber</div>
+      <div class="bento-card-title">Utvikling</div>
+      <div class="bento-card-desc">Sportsplaner og programvare for norske golfklubber.</div>
+    </a>
+  </div>
+</section>
+
+<!-- 3. PRISER -->
+<section>
+  <div class="bento-title">Priser</div>
+  <h2 class="bento-heading">Velg pakken som passer deg</h2>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Performance</div>
+      <div class="price-desc">2 okter per maned</div>
+      <div class="price-amount">1 600 <span class="price-period">kr/mnd</span></div>
+      <ul class="price-features">
+        <li>2 x 20 min coaching</li>
+        <li>TrackMan-analyse</li>
+        <li>Personlig treningsplan</li>
+        <li>Spillerportalen</li>
+        <li>7 dagers booking-vindu</li>
+      </ul>
+      <a href="#" class="price-btn secondary">Velg Performance</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-name">Performance Pro</div>
+      <div class="price-desc">4 okter per maned</div>
+      <div class="price-amount">2 000 <span class="price-period">kr/mnd</span></div>
+      <ul class="price-features">
+        <li>4 x 20 min coaching</li>
+        <li>TrackMan-analyse</li>
+        <li>Personlig treningsplan</li>
+        <li>Spillerportalen</li>
+        <li>14 dagers booking-vindu</li>
+        <li>Prioritert booking</li>
+      </ul>
+      <a href="#" class="price-btn accent">Velg Performance Pro</a>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Flex</div>
+      <div class="price-desc">Enkeltokter uten binding</div>
+      <div class="price-amount">Fra 1 500 <span class="price-period">kr</span></div>
+      <ul class="price-features">
+        <li>50 eller 90 min okter</li>
+        <li>TrackMan-analyse</li>
+        <li>Ingen binding</li>
+        <li>48 timers booking-vindu</li>
+      </ul>
+      <a href="#" class="price-btn secondary">Se Flex-pakker</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PORTAL PREVIEW -->
+<section>
+  <div class="portal-section">
+    <div class="portal-text">
+      <div class="bento-title">Spillerportalen</div>
+      <h3>Din treningspartner mellom oktene</h3>
+      <p>Treningsplaner, statistikk, AI-coaching og scoring — alt samlet pa ett sted. Se fremgangen din over tid og fa personlige anbefalinger.</p>
+      <a href="#" class="price-btn primary" style="display: inline-block; padding: 12px 28px;">Logg inn i portalen</a>
+    </div>
+    <div class="portal-mockup">
+      [Dashboard mockup her]
+    </div>
+  </div>
+</section>
+
+<!-- 5. CTA -->
+<section>
+  <div class="cta-section">
+    <h2>Klar for a ta spillet til neste niva?</h2>
+    <p>Book din forste coaching-okt og fa en personlig treningsplan.</p>
+    <a href="#" class="hero-cta">Book din forste okt</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  AK Golf Group AS &middot; Fredrikstad &middot; post@akgolfgroup.no
+</footer>
+
+</body>
+</html>

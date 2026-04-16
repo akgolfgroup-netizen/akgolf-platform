@@ -1,5 +1,5 @@
 import { MeshGradient } from "@paper-design/shaders-react"
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 
 interface HeroSectionProps {
   title?: string
@@ -45,8 +45,10 @@ export function HeroSection({
   const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 })
   const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
+  const mountedRef = useRef(false)
+  useLayoutEffect(() => {
+    mountedRef.current = true
+    const id = window.setTimeout(() => setMounted(true), 0)
     const update = () =>
       setDimensions({
         width: window.innerWidth,
@@ -54,7 +56,10 @@ export function HeroSection({
       })
     update()
     window.addEventListener("resize", update)
-    return () => window.removeEventListener("resize", update)
+    return () => {
+      window.clearTimeout(id)
+      window.removeEventListener("resize", update)
+    }
   }, [])
 
   const handleButtonClick = () => {

@@ -22,14 +22,20 @@ export function useReducedMotion(): boolean {
     if (typeof window === "undefined") return;
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReduced(mediaQuery.matches);
+
+    const id = window.setTimeout(() => {
+      setPrefersReduced(mediaQuery.matches);
+    }, 0);
 
     const handler = (event: MediaQueryListEvent) => {
       setPrefersReduced(event.matches);
     };
 
     mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
+    return () => {
+      window.clearTimeout(id);
+      mediaQuery.removeEventListener("change", handler);
+    };
   }, []);
 
   return prefersReduced;
