@@ -3,10 +3,10 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { HubOversiktClient } from "./hub-oversikt-client";
 
 export const metadata = {
-  title: "Hub — Oversikt | AK Golf Mission Control",
+  title: "Dashboard — AK Golf Mission Control",
 };
 
-async function getHubData() {
+async function getDashboardData() {
   const supabase = await createServerSupabase();
 
   const today = new Date();
@@ -15,6 +15,8 @@ async function getHubData() {
   tomorrow.setDate(tomorrow.getDate() + 1);
 
   const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+  const weekStart = new Date(today);
+  weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1);
 
   // Get today's sessions
   const { data: todaysSessions } = await supabase
@@ -51,6 +53,13 @@ async function getHubData() {
     .gte("startTime", thirtyDaysAgo.toISOString())
     .in("status", ["CONFIRMED", "COMPLETED"]);
 
+  // Get new students this month
+  const { count: newStudentsThisMonth } = await supabase
+    .from("User")
+    .select("id", { count: "exact", head: true })
+    .eq("role", "STUDENT")
+    .gte("createdAt", monthStart.toISOString());
+
   // Get pending bookings
   const { count: pendingBookings } = await supabase
     .from("Booking")
@@ -65,6 +74,12 @@ async function getHubData() {
     .eq("status", "PAID");
 
   const mtdRevenueTotal = (mtdRevenue ?? []).reduce((sum, t) => sum + (t.grossAmount ?? 0), 0);
+
+  // Get weekly activity (sessions logged)
+  const { count: weeklySessions } = await supabase
+    .from("TrainingSession")
+    .select("id", { count: "exact", head: true })
+    .gte("date", weekStart.toISOString());
 
   // Get students needing follow-up (no booking in 14+ days)
   const fourteenDaysAgo = new Date();
@@ -89,12 +104,25 @@ async function getHubData() {
     .lte("subscriptionExpiresAt", sevenDaysFromNow.toISOString())
     .limit(5);
 
+  // Get average HCP
+  const { data: avgHcpData } = await supabase
+    .from("User")
+    .select("handicap")
+    .eq("role", "STUDENT")
+    .eq("isActive", true)
+    .not("handicap", "is", null);
+
+  const avgHcp = avgHcpData && avgHcpData.length > 0
+    ? avgHcpData.reduce((sum, s) => sum + (s.handicap ?? 0), 0) / avgHcpData.length
+    : 18.4;
+
   // Simplified division counts
   const coachingStudents =
     (tierCounts["PRO"] ?? 0) + (tierCounts["ELITE"] ?? 0);
   const juniorStudents =
     (tierCounts["ACADEMY"] ?? 0) + (tierCounts["STARTER"] ?? 0);
   const gfgkStudents = tierCounts["VISITOR"] ?? 0;
+  const totalStudents = coachingStudents + juniorStudents + gfgkStudents;
 
   return {
     kpis: {
@@ -102,6 +130,10 @@ async function getHubData() {
       activeStudents: activeStudents ?? 0,
       pendingBookings: pendingBookings ?? 0,
       mtdRevenue: mtdRevenueTotal,
+      newStudentsThisMonth: newStudentsThisMonth ?? 0,
+      weeklySessions: weeklySessions ?? 0,
+      totalStudents,
+      averageHcp: Number(avgHcp.toFixed(1)),
     },
     divisions: {
       coaching: {
@@ -149,7 +181,7 @@ async function getHubData() {
           (pendingBookings ?? 0) > 0
             ? [
                 {
-                  text: `${pendingBookings} nye pameldinger a godkjenne`,
+                  text: `${pendingBookings} nye påmeldinger å godkjenne`,
                   variant: "info" as const,
                 },
               ]
@@ -174,10 +206,10 @@ async function getHubData() {
     },
     alerts: [
       ...((needsFollowUp?.length ?? 0) > 0
-        ? [{ label: `${needsFollowUp?.length} oppfolging`, variant: "info" as const }]
+        ? [{ label: `${needsFollowUp?.length} oppfølging`, variant: "info" as const }]
         : []),
       ...((expiringSubscriptions?.length ?? 0) > 0
-        ? [{ label: `${expiringSubscriptions?.length} utloper`, variant: "warning" as const }]
+        ? [{ label: `${expiringSubscriptions?.length} utløper`, variant: "warning" as const }]
         : []),
       ...((pendingBookings ?? 0) > 0
         ? [{ label: `${pendingBookings} ventende`, variant: "error" as const }]
@@ -186,9 +218,9 @@ async function getHubData() {
   };
 }
 
-export default async function HubOversiktPage() {
+export default async function AdminDashboardPage() {
   const user = await requirePortalUser();
-  const data = await getHubData();
+  const data = await getDashboardData();
 
   return <HubOversiktClient data={data} user={user} />;
 }

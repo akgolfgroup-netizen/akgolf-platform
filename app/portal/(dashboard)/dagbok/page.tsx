@@ -1,8 +1,10 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getTrainingLogs, getLoggedSessionIds, getLastSession } from "./actions";
 import { getActivePlan } from "@/app/portal/(dashboard)/treningsplan/actions";
-import { DagbokClient } from "./dagbok-client";
+import { TrainingDiaryClient } from "./training-diary-client";
 import { isWithinInterval, endOfISOWeek, startOfISOWeek } from "date-fns";
+
+export const dynamic = "force-dynamic";
 
 export default async function DagbokPage() {
   await requirePortalUser();
@@ -37,8 +39,56 @@ export default async function DagbokPage() {
     }
   }
 
+  // Calculate streak data
+  const calculateStreak = () => {
+    if (logs.length === 0) return { current: 0, longest: 0, lastDate: new Date(), freezes: 1 };
+    
+    const logDates = new Set(logs.map(l => new Date(l.date).toISOString().split("T")[0]));
+    const sortedDates = Array.from(logDates).sort();
+    
+    // Calculate current streak
+    let currentStreak = 0;
+    const today = new Date().toISOString().split("T")[0];
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+    
+    let checkDate = logDates.has(today) ? today : yesterday;
+    if (logDates.has(checkDate)) {
+      while (logDates.has(checkDate)) {
+        currentStreak++;
+        const prevDate = new Date(checkDate);
+        prevDate.setDate(prevDate.getDate() - 1);
+        checkDate = prevDate.toISOString().split("T")[0];
+      }
+    }
+    
+    // Calculate longest streak
+    let longestStreak = 1;
+    let tempStreak = 1;
+    for (let i = 1; i < sortedDates.length; i++) {
+      const prev = new Date(sortedDates[i - 1]);
+      const curr = new Date(sortedDates[i]);
+      const diff = Math.round((curr.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (diff === 1) {
+        tempStreak++;
+        longestStreak = Math.max(longestStreak, tempStreak);
+      } else {
+        tempStreak = 1;
+      }
+    }
+    
+    return {
+      current: currentStreak,
+      longest: Math.max(longestStreak, currentStreak),
+      lastDate: new Date(sortedDates[sortedDates.length - 1]),
+      freezes: 1, // 1 freeze per week
+    };
+  };
+
+  const streakData = calculateStreak();
+
   return (
-    <DagbokClient
+    <TrainingDiaryClient
       initialLogs={logs.map((log) => {
         const tps = Array.isArray(log.TrainingPlanSession)
           ? log.TrainingPlanSession[0] ?? null
@@ -50,6 +100,8 @@ export default async function DagbokPage() {
           focusArea: log.focusArea,
           notes: log.notes,
           rating: log.rating,
+          intensity: log.rating, // Using rating as intensity for now
+          type: log.focusArea || "OTHER",
           deviatedFromPlan: false,
           deviationReason: null,
           planSessionId: null,
@@ -66,6 +118,12 @@ export default async function DagbokPage() {
       loggedSessionIds={loggedSessionIds}
       lastSession={lastSession}
       planProgress={planProgress}
+      streakData={{
+        currentStreak: streakData.current,
+        longestStreak: streakData.longest,
+        lastTrainingDate: streakData.lastDate,
+        streakFreezesRemaining: streakData.freezes,
+      }}
     />
   );
 }

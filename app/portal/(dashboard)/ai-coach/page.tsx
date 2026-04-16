@@ -1,6 +1,11 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getChatContext, getQuickInsight } from "./actions";
-import { AiCoachDashboardClient } from "./ai-coach-dashboard-client";
+import { AiCoachChatClient } from "./ai-coach-chat-client";
+
+export const metadata = {
+  title: "AI Coach | AK Golf",
+  description: "Din personlige AI-drevne golfcoach",
+};
 
 export default async function AiCoachPage() {
   await requirePortalUser();
@@ -10,5 +15,10 @@ export default async function AiCoachPage() {
     getQuickInsight(),
   ]);
 
-  return <AiCoachDashboardClient context={context} quickInsight={quickInsight} />;
+  return (
+    <AiCoachChatClient 
+      context={context} 
+      quickInsight={quickInsight} 
+    />
+  );
 }

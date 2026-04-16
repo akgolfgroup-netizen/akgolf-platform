@@ -13,6 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "verify:stripe": "tsx scripts/verify-stripe.ts",
+    "pre-deploy": "tsx scripts/pre-deploy-check.ts",
+    "smoke:test": "vitest run tests/smoke/",
     "kimi": "./.kimi/start-kimi.sh",
     "kimi:login": "./.kimi/start-kimi.sh --login"
   },

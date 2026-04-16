@@ -1,8 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
   "framework": "nextjs",
   "buildCommand": "prisma generate && next build",
+  "devCommand": "next dev",
   "installCommand": "npm install",
+  "regions": ["fra1"],
+  "env": {
+    "NEXT_PUBLIC_APP_URL": "https://akgolf.no"
+  },
   "crons": [
     {
       "path": "/api/portal/cron/send-reminders",
@@ -77,9 +83,6 @@
       "schedule": "0 */6 * * *"
     }
   ],
-  "env": {
-    "NEXTAUTH_URL": "${VERCEL_URL}"
-  },
   "headers": [
     {
       "source": "/api/portal/public/(.*)",
@@ -95,6 +98,15 @@
         {
           "key": "Access-Control-Allow-Headers",
           "value": "Content-Type"
+        }
+      ]
+    },
+    {
+      "source": "/api/health",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     }
