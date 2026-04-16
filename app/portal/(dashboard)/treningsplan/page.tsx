@@ -6,7 +6,7 @@ import {
   deleteSession,
   logLiveSession,
 } from "./actions";
-import { TrainingPlannerV2 } from "./treningsplan-v2-client";
+import { TrainingPlannerV3 } from "./treningsplan-v3-client";
 import { TrainingPlanViewer } from "./training-plan-viewer";
 
 // ---------------------------------------------------------------------
@@ -95,10 +95,11 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   return (
     <div className="space-y-6">
       {activeView === "calendar" ? (
-        <TrainingPlannerV2
+        <TrainingPlannerV3
           events={events}
           templates={templates}
           planId={plan?.id ?? null}
+          weekOffset={weekOffset}
           onSaveEvent={handleSaveEvent}
           onDeleteEvent={handleDeleteEvent}
           onMoveEvent={handleMoveEvent}
