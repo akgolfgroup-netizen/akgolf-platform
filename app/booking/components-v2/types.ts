@@ -7,7 +7,7 @@ export interface TrainerService {
   duration: number;
   price: number;
   isSubscription: boolean;
-  availableSlotsThisWeek: number;
+  availableSlotsThisWeek?: number;
   allowStripe: boolean;
 }
 

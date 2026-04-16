@@ -42,13 +42,15 @@ export function ServiceRow({ service, isActive, onSelect }: ServiceRowProps) {
         <div className={`text-[10px] ${isActive ? "text-white/60" : "text-muted"}`}>
           {periodLabel}
         </div>
-        <div
-          className={`text-[9px] font-semibold px-2 py-0.5 rounded-full mt-1 inline-block ${
-            isActive ? "bg-accent-cta/20 text-accent-cta" : "bg-white text-primary"
-          }`}
-        >
-          {service.availableSlotsThisWeek} ledige denne uken
-        </div>
+        {typeof service.availableSlotsThisWeek === "number" && (
+          <div
+            className={`text-[9px] font-semibold px-2 py-0.5 rounded-full mt-1 inline-block ${
+              isActive ? "bg-accent-cta/20 text-accent-cta" : "bg-white text-primary"
+            }`}
+          >
+            {service.availableSlotsThisWeek} ledige denne uken
+          </div>
+        )}
       </div>
     </button>
   );
