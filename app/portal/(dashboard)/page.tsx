@@ -9,8 +9,12 @@ import {
   getCoachInsight,
   getLatestAiInsight,
   getWeekRingsData,
+  getAchievements,
+  getTrackManData,
+  getSocialData,
+  getPlayerLevel,
 } from "./dashboard-actions";
-import { DashboardClient } from "./dashboard-client";
+import { DashboardClientV3 } from "./dashboard-client-v3";
 
 export default async function DashboardPage() {
   const user = await requirePortalUser();
@@ -29,6 +33,7 @@ export default async function DashboardPage() {
     redirect("/portal/onboarding");
   }
 
+  // Hent all dashboard-data parallelt
   const [
     stats,
     handicap,
@@ -37,6 +42,10 @@ export default async function DashboardPage() {
     weekRings,
     coachInsight,
     aiInsight,
+    achievementsData,
+    trackManData,
+    socialData,
+    playerLevel,
   ] = await Promise.all([
     getDashboardStats(user.id),
     getHandicapData(user.id),
@@ -45,6 +54,10 @@ export default async function DashboardPage() {
     getWeekRingsData(user.id),
     getCoachInsight(user.id),
     getLatestAiInsight(user.id),
+    getAchievements(user.id),
+    getTrackManData(user.id),
+    getSocialData(user.id),
+    getPlayerLevel(user.id),
   ]);
 
   const memberSince = userData?.createdAt
@@ -52,7 +65,7 @@ export default async function DashboardPage() {
     : null;
 
   return (
-    <DashboardClient
+    <DashboardClientV3
       userName={user.name}
       tier={user.subscriptionTier}
       memberSince={memberSince}
@@ -63,6 +76,11 @@ export default async function DashboardPage() {
       weekRings={weekRings}
       coachInsight={coachInsight}
       aiInsight={aiInsight}
+      trackManData={trackManData || undefined}
+      socialData={socialData || undefined}
+      achievements={achievementsData.achievements}
+      totalAchievements={achievementsData.totalAchievements}
+      playerLevel={playerLevel}
     />
   );
 }

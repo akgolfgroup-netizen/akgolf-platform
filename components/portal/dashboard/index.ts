@@ -3,6 +3,12 @@ export { HCPTrendChart } from "./hcp-trend-chart";
 export { Sparkline, SparklineCompact } from "./sparkline";
 export { TrainingDistribution } from "./training-distribution";
 
+// Dashboard v3 - Nye widgets
+export { TrackManWidget } from "./trackman-widget";
+export { SocialWidget } from "./social-widget";
+export { AiInsightsV2 } from "./ai-insights-v2";
+export { AchievementsWidget } from "./achievements-widget";
+
 // Re-export existing dashboard components
 export { KpiCard } from "./kpi-card";
 export { AiInsightCard } from "./ai-insight-card";
