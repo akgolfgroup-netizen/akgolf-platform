@@ -20,7 +20,7 @@ interface TreningsplanPageProps {
 export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
   const { week, view } = await searchParams;
   const weekOffset = parseInt(week ?? "0", 10) || 0;
-  const activeView = view ?? "calendar";
+  const activeView = view ?? "viewer";
 
   const plan = await getActivePlan();
   const events = await getWeekEvents(weekOffset);

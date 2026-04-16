@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Plus, Lightbulb, BarChart3 } from "lucide-react";
+import { Plus, Lightbulb, BarChart3, Zap, Sparkles } from "lucide-react";
 import {
   PremiumStatCard,
   fadeInUp,
@@ -17,8 +17,7 @@ import type { RoundStats } from "@prisma/client";
 import type { PeriodKey, WeeklyTrainingData, GolfProfileSummary } from "./actions";
 import type { USIResult } from "@/lib/portal/usi/compute-usi";
 import type { TrainingPrescriptionResult } from "@/lib/portal/usi/generate-prescription";
-import { GolfProfileHero } from "@/components/portal/statistikk/golf-profile-hero";
-import { CombinedInsights } from "@/components/portal/statistikk/combined-insights";
+import { colors } from "@/lib/design-tokens";
 
 /* ─── Types ─── */
 
@@ -405,12 +404,6 @@ export function StatistikkClient({
       {/* Sub-nav */}
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/statistikk" />
 
-      {/* Golf Profile Hero */}
-      <GolfProfileHero profile={profile} />
-
-      {/* Combined Insights */}
-      <CombinedInsights profile={profile} />
-
       {/* Hero heading + period selector + CTA */}
       <div className="space-y-3">
         <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
@@ -451,9 +444,9 @@ export function StatistikkClient({
         </div>
       </div>
 
-      {/* KPI-rad: 4-5 noekkeltall */}
+      {/* KPI-rad: responsive noekkeltall */}
       <motion.div
-        className="grid grid-cols-2 gap-4 lg:grid-cols-5"
+        className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
         initial="hidden"
         animate="visible"
         variants={staggerContainer}
@@ -612,19 +605,26 @@ export function StatistikkClient({
         >
           <PremiumCard delay={0.4}>
             <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-black/10">
-                <Lightbulb className="h-6 w-6 text-black" strokeWidth={1.75} />
+              <div
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
+                style={{ backgroundColor: `${colors.ai.primary}15` }}
+              >
+                <Zap className="h-5 w-5" style={{ color: colors.ai.primary }} />
               </div>
-              <div>
-                <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-grey-400">
+              <div className="min-w-0 flex-1">
+                <div
+                  className="mb-1 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider"
+                  style={{ color: colors.ai.primary }}
+                >
+                  <Sparkles className="h-3 w-3" />
                   AI-anbefaling
-                </p>
-                <h3 className="mb-2 text-[14px] font-semibold text-black">
-                  Fokuser pa {weakestArea.label}-trening
+                </div>
+                <h3 className="mb-2 text-sm font-semibold" style={{ color: colors.primary.dark }}>
+                  Fokuser på {weakestArea.label}-trening
                 </h3>
-                <p className="text-[13px] leading-relaxed text-text">
-                  Basert pa dine SG-data bor du oke fokus pa{" "}
-                  <strong className="text-black">
+                <p className="text-[13px] leading-relaxed" style={{ color: colors.primary.dark }}>
+                  Basert på dine SG-data bør du øke fokus på{" "}
+                  <strong style={{ color: colors.primary.dark }}>
                     {weakestArea.label}
                   </strong>
                   . Du taper mest slag (<span className="tabular-nums">{weakestArea.value.toFixed(1)}</span>) i denne kategorien.
