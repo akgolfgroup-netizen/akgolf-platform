@@ -1,0 +1,171 @@
+/* ========================================================================
+   OPTION 3 — GOAL FIRST · Clean + Polished visual variants
+   AK tokens: primary #005840 · accent #D1F843 · ai #AF52DE
+   ======================================================================== */
+
+#frame-opt3-tabs .sub-tab-badge { display: none; }
+
+.clean #frame-opt3,
+.polished #frame-opt3 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.clean #frame-opt3 .browser-content,
+.polished #frame-opt3 .browser-content { background: #F5F8F7; }
+.clean #frame-opt3 .wf-portal-shell,
+.polished #frame-opt3 .wf-portal-shell { background: #F5F8F7; }
+
+/* Sidebar */
+.clean #frame-opt3 .wf-sidebar,
+.polished #frame-opt3 .wf-sidebar { background: #005840; border-right: none; }
+.clean #frame-opt3 .wf-sidebar-logo,
+.polished #frame-opt3 .wf-sidebar-logo { background: #D1F843; color: #0A1F18; }
+.clean #frame-opt3 .wf-side-item,
+.polished #frame-opt3 .wf-side-item { color: rgba(255,255,255,0.62); }
+.clean #frame-opt3 .wf-side-item:hover,
+.polished #frame-opt3 .wf-side-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.clean #frame-opt3 .wf-side-item.wf-active,
+.polished #frame-opt3 .wf-side-item.wf-active { background: rgba(209,248,67,0.14); color: #D1F843; font-weight: 700; }
+.clean #frame-opt3 .wf-sidebar-user,
+.polished #frame-opt3 .wf-sidebar-user { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+
+/* Goal header */
+.clean #frame-opt3 .wf-step-label,
+.polished #frame-opt3 .wf-step-label { color: #005840; letter-spacing: 0.14em; }
+.clean #frame-opt3 .wf-goal-hero-title,
+.polished #frame-opt3 .wf-goal-hero-title {
+  color: #0A1F18;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+.clean #frame-opt3 .wf-pyramid-hero-sub,
+.polished #frame-opt3 .wf-pyramid-hero-sub { color: #5A6E66; }
+
+/* Goal cards */
+.clean #frame-opt3 .wf-goal-card,
+.polished #frame-opt3 .wf-goal-card {
+  background: #fff;
+  border-color: rgba(0,0,0,0.06);
+  border-radius: 16px;
+}
+.clean #frame-opt3 .wf-goal-card:hover,
+.polished #frame-opt3 .wf-goal-card:hover { border-color: rgba(0,88,64,0.25); }
+.clean #frame-opt3 .wf-goal-card.wf-goal-selected,
+.polished #frame-opt3 .wf-goal-card.wf-goal-selected {
+  border-color: #005840;
+  background: #fff;
+}
+.clean #frame-opt3 .wf-goal-icon,
+.polished #frame-opt3 .wf-goal-icon {
+  background: #E6F3F1;
+  border-color: rgba(0,88,64,0.12);
+  color: #005840;
+  font-weight: 800;
+}
+.clean #frame-opt3 .wf-goal-selected .wf-goal-icon,
+.polished #frame-opt3 .wf-goal-selected .wf-goal-icon {
+  background: #D1F843;
+  border-color: #D1F843;
+  color: #0A1F18;
+}
+.clean #frame-opt3 .wf-goal-title,
+.polished #frame-opt3 .wf-goal-title { color: #0A1F18; letter-spacing: -0.015em; }
+.clean #frame-opt3 .wf-goal-desc,
+.polished #frame-opt3 .wf-goal-desc { color: #5A6E66; }
+.clean #frame-opt3 .wf-goal-meta,
+.polished #frame-opt3 .wf-goal-meta {
+  color: #7A8C85;
+  padding: 6px 10px;
+  background: #F5F8F7;
+  border-radius: 6px;
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.clean #frame-opt3 .wf-goal-badge,
+.polished #frame-opt3 .wf-goal-badge {
+  background: #D1F843;
+  color: #0A1F18;
+  font-weight: 800;
+}
+
+/* AI box */
+.clean #frame-opt3 .wf-ai-box,
+.polished #frame-opt3 .wf-ai-box {
+  background: #FAF5FF;
+  border: 1px solid rgba(175,82,222,0.18);
+  border-left: 3px solid #AF52DE;
+  border-radius: 12px;
+}
+.clean #frame-opt3 .wf-ai-label,
+.polished #frame-opt3 .wf-ai-label { color: #AF52DE; font-weight: 700; }
+.clean #frame-opt3 .wf-ai-box p,
+.polished #frame-opt3 .wf-ai-box p { color: #6B21A8; }
+
+/* Buttons */
+.clean #frame-opt3 .wf-btn,
+.polished #frame-opt3 .wf-btn { border-radius: 20px; font-family: inherit; }
+.clean #frame-opt3 .wf-btn-cta,
+.polished #frame-opt3 .wf-btn-cta { background: #D1F843; color: #0A1F18; border-color: #D1F843; font-weight: 700; }
+.clean #frame-opt3 .wf-btn-ghost,
+.polished #frame-opt3 .wf-btn-ghost { color: #7A8C85; }
+.clean #frame-opt3 .wf-btn-ghost:hover,
+.polished #frame-opt3 .wf-btn-ghost:hover { background: #ECF0EF; color: #0A1F18; }
+
+/* ========== POLISHED ========== */
+.polished #frame-opt3 .wf-goal-card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 300ms;
+  position: relative;
+  overflow: hidden;
+}
+.polished #frame-opt3 .wf-goal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,88,64,0.015), transparent 50%);
+  pointer-events: none;
+}
+.polished #frame-opt3 .wf-goal-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,88,64,0.08), 0 2px 6px rgba(0,0,0,0.04);
+}
+.polished #frame-opt3 .wf-goal-card.wf-goal-selected {
+  box-shadow: 0 8px 28px rgba(0,88,64,0.14), 0 0 0 1px #005840, inset 0 0 0 1px rgba(209,248,67,0.15);
+}
+.polished #frame-opt3 .wf-goal-selected .wf-goal-icon {
+  box-shadow: 0 4px 14px rgba(209,248,67,0.5), inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.polished #frame-opt3 .wf-goal-badge {
+  box-shadow: 0 2px 8px rgba(209,248,67,0.55);
+}
+.polished #frame-opt3 .wf-btn-cta {
+  box-shadow: 0 4px 14px rgba(209,248,67,0.55), inset 0 1px 0 rgba(255,255,255,0.4);
+  transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 250ms;
+}
+.polished #frame-opt3 .wf-btn-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(209,248,67,0.7), inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.polished #frame-opt3 .wf-ai-box {
+  box-shadow: 0 2px 12px rgba(175,82,222,0.08);
+  position: relative;
+}
+.polished #frame-opt3 .wf-ai-box::before {
+  content: '';
+  position: absolute;
+  left: 12px; right: 12px; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, #AF52DE, transparent);
+  opacity: 0.55;
+}
+.polished #frame-opt3 .wf-sidebar-logo {
+  box-shadow: 0 2px 10px rgba(209,248,67,0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .polished #frame-opt3 .wf-goal-card,
+  .polished #frame-opt3 .wf-btn-cta { transition: none; }
+  .polished #frame-opt3 .wf-goal-card:hover,
+  .polished #frame-opt3 .wf-btn-cta:hover { transform: none; }
+}

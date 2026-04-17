@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Fasiliteter — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Fasiliteter</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Dag-schedule</button>
+    <button class="tab-btn" data-tab="option-2">2: Ukesoversikt</button>
+    <button class="tab-btn" data-tab="option-3">3: Kapasitet-heatmap</button>
+    <button class="tab-btn" data-tab="option-4">4: Equipment-status</button>
+    <button class="tab-btn" data-tab="option-5">5: Booking-pipeline</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1 — Dag-schedule ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Dag-schedule</span></h2>
+    <p class="option-description">Timetable per fasilitet — dag-view. Tydelig oversikt over en hel dag, én kolonne per fasilitet, klokkeslett i rader. Enkelt å se ledige slots.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/fasiliteter</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab mc-tab-active">Fasiliteter</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk fasilitet / utstyr</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">DATO</span>
+              <button class="mc-pill">◂</button>
+              <span class="mc-week-label">Fredag 17. april</span>
+              <button class="mc-pill">▸</button>
+              <button class="mc-pill mc-pill-ghost">I dag</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">TYPE</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill">Simulator</button>
+              <button class="mc-pill">Putting</button>
+              <button class="mc-pill">Range</button>
+            </div>
+            <div class="mc-legend">
+              <span class="mc-legend-item"><span class="mc-fdot mc-fdot-sim"></span>Coaching</span>
+              <span class="mc-legend-item"><span class="mc-fdot mc-fdot-putt"></span>Gruppe</span>
+              <span class="mc-legend-item"><span class="mc-fdot mc-fdot-range"></span>Åpen tid</span>
+              <span class="mc-legend-item"><span class="mc-fdot mc-fdot-maint"></span>Vedlikehold</span>
+            </div>
+            <button class="mc-cta">+ Ny booking</button>
+          </section>
+
+          <section class="mc-body">
+            <div class="mc-kpi-strip">
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">BELEGG I DAG</div><div class="mc-kpi-cell-val">74%</div><div class="mc-kpi-cell-sub">+6 pp vs snitt</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">ØKTER</div><div class="mc-kpi-cell-val">28</div><div class="mc-kpi-cell-sub">19 coaching · 9 gruppe</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">LEDIGE SLOTS</div><div class="mc-kpi-cell-val">11</div><div class="mc-kpi-cell-sub">spredt på 6 fasiliteter</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">VEDLIKEHOLD</div><div class="mc-kpi-cell-val">2</div><div class="mc-kpi-cell-sub">Sim 2 · Range-bay B</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">UTSTYR OK</div><div class="mc-kpi-cell-val">7/9</div><div class="mc-kpi-cell-sub">2 krever tilsyn</div></div>
+            </div>
+
+            <div class="mc-schedule">
+              <div class="mc-schedule-head">TID</div>
+              <div class="mc-schedule-head">Simulator 1<span class="mc-sh-sub">TrackMan · Indoor</span></div>
+              <div class="mc-schedule-head">Simulator 2<span class="mc-sh-sub">TrackMan · Indoor</span></div>
+              <div class="mc-schedule-head">Simulator 3<span class="mc-sh-sub">Indoor · premium</span></div>
+              <div class="mc-schedule-head">Putting-studio<span class="mc-sh-sub">SAM PuttLab</span></div>
+              <div class="mc-schedule-head">Range-bay A<span class="mc-sh-sub">Outdoor · TrackMan</span></div>
+              <div class="mc-schedule-head">Range-bay B<span class="mc-sh-sub">Outdoor</span></div>
+
+              <div class="mc-schedule-hour">08:00</div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Erik Hansen</div><div class="mc-sblock-sub">Anders · Performance 20</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Nora Torp</div><div class="mc-sblock-sub">Markus · Flex 20</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-maint">Kalibrering</div></div>
+
+              <div class="mc-schedule-hour">09:00</div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Sofie Lund</div><div class="mc-sblock-sub">Anders · Junior 14+</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-maint">Vedlikehold<div class="mc-sblock-sub">SAM-oppdatering</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Lars Berg</div><div class="mc-sblock-sub">Markus · Express Pro</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-gruppe"><div class="mc-sblock-title">Puttekurs (4)</div><div class="mc-sblock-sub">Anders · 60 min</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-maint">Kalibrering</div></div>
+
+              <div class="mc-schedule-hour">10:00</div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Ida Flem</div><div class="mc-sblock-sub">Anders · Performance</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-maint">Vedlikehold</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Thomas L.</div><div class="mc-sblock-sub">Markus · Flex 20</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-gruppe"><div class="mc-sblock-title">Puttekurs (4)</div><div class="mc-sblock-sub">fortsetter</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-gruppe"><div class="mc-sblock-title">First Tee (8)</div><div class="mc-sblock-sub">Markus · 90 min</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+
+              <div class="mc-schedule-hour">11:00</div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Marte Kirk</div><div class="mc-sblock-sub">Markus · Express</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-gruppe"><div class="mc-sblock-title">First Tee</div><div class="mc-sblock-sub">fortsetter</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+
+              <div class="mc-schedule-hour">14:00</div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Noah Berg</div><div class="mc-sblock-sub">Anders · Flex 20</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Bedrift WANG</div><div class="mc-sblock-sub">Anders · 60 min</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Anne S.</div><div class="mc-sblock-sub">Anders · K-Vest test</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-gruppe"><div class="mc-sblock-title">Junior 14+ (6)</div><div class="mc-sblock-sub">Anders · 90 min</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-gruppe"><div class="mc-sblock-title">Junior 14+</div><div class="mc-sblock-sub">parallell bay</div></div></div>
+
+              <div class="mc-schedule-hour">16:30</div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-gruppe"><div class="mc-sblock-title">First Tee (8)</div><div class="mc-sblock-sub">Markus</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-gruppe"><div class="mc-sblock-title">First Tee</div><div class="mc-sblock-sub">parallell</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-coaching"><div class="mc-sblock-title">Rune V.</div><div class="mc-sblock-sub">Anders · Performance</div></div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-open">Ledig</div></div>
+              <div class="mc-schedule-cell"><div class="mc-sblock mc-sblock-maint">Steng 17:00</div></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Hver fasilitet er en kolonne — lett å skanne en hel dag vertikalt.</li>
+        <li>KPI-strip øverst gir umiddelbar statusoversikt (belegg, ledige slots, vedlikehold).</li>
+        <li>Fargekodet per type: Coaching (solid mørk), Gruppe (grå), Ledig (dashed), Vedlikehold (diagonalt mønster).</li>
+        <li>Klikk på ledig slot = åpner ny booking med fasiliteten forhåndsvalgt.</li>
+        <li>Best for daglig drift — "hva skjer i dag, hvilke slots er igjen?"</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2 — Ukesoversikt ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Ukesoversikt</span></h2>
+    <p class="option-description">Alle fasiliteter som gantt-lignende uke. Ressursene som lanes, 7 dager horisontalt. Ideelt for å se belegg på tvers av en hel uke.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/fasiliteter</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab mc-tab-active">Fasiliteter</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk fasilitet / utstyr</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">UKE</span>
+              <button class="mc-pill">◂</button>
+              <span class="mc-week-label">Uke 16 · 13–19. april 2026</span>
+              <button class="mc-pill">▸</button>
+              <button class="mc-pill mc-pill-ghost">I dag</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">VISNING</span>
+              <button class="mc-pill">Dag</button>
+              <button class="mc-pill mc-pill-active">Uke</button>
+              <button class="mc-pill">Måned</button>
+            </div>
+            <div class="mc-legend">
+              <span class="mc-legend-item"><span class="mc-fdot mc-fdot-sim"></span>Coaching</span>
+              <span class="mc-legend-item"><span class="mc-fdot mc-fdot-putt"></span>Gruppe</span>
+              <span class="mc-legend-item"><span class="mc-fdot mc-fdot-maint"></span>Vedlikehold</span>
+            </div>
+            <button class="mc-cta">+ Ny booking</button>
+          </section>
+
+          <section class="mc-body">
+            <div class="mc-week">
+              <div class="mc-week-head">
+                <div class="mc-week-head-cell" style="text-align:left;">FASILITET</div>
+                <div class="mc-week-head-cell">MAN<span class="mc-wh-date">13</span></div>
+                <div class="mc-week-head-cell">TIR<span class="mc-wh-date">14</span></div>
+                <div class="mc-week-head-cell">ONS<span class="mc-wh-date">15</span></div>
+                <div class="mc-week-head-cell">TOR<span class="mc-wh-date">16</span></div>
+                <div class="mc-week-head-cell">FRE<span class="mc-wh-date">17</span></div>
+                <div class="mc-week-head-cell">LØR<span class="mc-wh-date">18</span></div>
+                <div class="mc-week-head-cell">SØN<span class="mc-wh-date">19</span></div>
+              </div>
+
+              <div class="mc-week-row">
+                <div class="mc-week-lane"><span class="mc-week-lane-name">Simulator 1</span><span class="mc-week-lane-meta">TrackMan · 92% fylt</span></div>
+                <div class="mc-week-track">
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:1%; width:12%;">3 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:15%; width:10%;">2 økter</div>
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:29%; width:12%;">Junior</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:43%; width:12%;">4 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:57%; width:14%;">5 økter</div>
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:72%; width:11%;">First Tee</div>
+                </div>
+              </div>
+
+              <div class="mc-week-row">
+                <div class="mc-week-lane"><span class="mc-week-lane-name">Simulator 2</span><span class="mc-week-lane-meta">TrackMan · 68% fylt</span></div>
+                <div class="mc-week-track">
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:1%; width:10%;">2 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:15%; width:8%;">2 økter</div>
+                  <div class="mc-week-bar mc-week-bar-maint" style="left:29%; width:6%;">Kal.</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:43%; width:10%;">3 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:57%; width:8%;">2 økter</div>
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:72%; width:11%;">First Tee</div>
+                </div>
+              </div>
+
+              <div class="mc-week-row">
+                <div class="mc-week-lane"><span class="mc-week-lane-name">Simulator 3</span><span class="mc-week-lane-meta">Premium · 85% fylt</span></div>
+                <div class="mc-week-track">
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:1%; width:13%;">4 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:15%; width:10%;">3 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:29%; width:12%;">3 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:43%; width:12%;">3 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:57%; width:13%;">4 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:72%; width:8%;">Bedrift</div>
+                </div>
+              </div>
+
+              <div class="mc-week-row">
+                <div class="mc-week-lane"><span class="mc-week-lane-name">Putting-studio</span><span class="mc-week-lane-meta">SAM PuttLab · 54% fylt</span></div>
+                <div class="mc-week-track">
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:1%; width:8%;">Kurs</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:15%; width:6%;">2 økter</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:29%; width:8%;">2 økter</div>
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:43%; width:10%;">Puttekurs</div>
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:57%; width:8%;">Puttekurs</div>
+                </div>
+              </div>
+
+              <div class="mc-week-row">
+                <div class="mc-week-lane"><span class="mc-week-lane-name">Range-bay A</span><span class="mc-week-lane-meta">Outdoor + TM · 47% fylt</span></div>
+                <div class="mc-week-track">
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:1%; width:10%;">Junior</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:29%; width:6%;">1 økt</div>
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:43%; width:12%;">First Tee</div>
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:57%; width:13%;">Junior</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:85%; width:10%;">Banecoach</div>
+                </div>
+              </div>
+
+              <div class="mc-week-row">
+                <div class="mc-week-lane"><span class="mc-week-lane-name">Range-bay B</span><span class="mc-week-lane-meta">Outdoor · 32% fylt</span></div>
+                <div class="mc-week-track">
+                  <div class="mc-week-bar mc-week-bar-maint" style="left:1%; width:28%;">Vedlikehold man–ons</div>
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:43%; width:12%;">First Tee</div>
+                  <div class="mc-week-bar mc-week-bar-gruppe" style="left:57%; width:10%;">Junior</div>
+                  <div class="mc-week-bar mc-week-bar-coaching" style="left:85%; width:10%;">Banecoach</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Ukesvisning gir strategisk oversikt — hvilke fasiliteter er under-/overbooket?</li>
+        <li>Hver fasilitet er en lane — belegg-prosent i meta-linjen gir ett tall å skanne.</li>
+        <li>Barer spenner over dager uten klokke-granularitet — fokus på kapasitet, ikke timeplan.</li>
+        <li>Vedlikeholds-blokker vises tydelig (diagonalt mønster) over flere dager.</li>
+        <li>Best for ukentlig planlegging — kombineres med Option 1 for daglig drift.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3 — Kapasitet-heatmap ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Kapasitet-heatmap</span></h2>
+    <p class="option-description">Utnyttelse per fasilitet per time. Varmekart som viser hvor og når belegget er høyt/lavt — perfekt for å identifisere huller i kalenderen.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/fasiliteter</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab mc-tab-active">Fasiliteter</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk fasilitet / utstyr</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">PERIODE</span>
+              <button class="mc-pill">Denne uken</button>
+              <button class="mc-pill mc-pill-active">Siste 30 dager</button>
+              <button class="mc-pill">Kvartal</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">METRIKK</span>
+              <button class="mc-pill mc-pill-active">Belegg %</button>
+              <button class="mc-pill">Inntekt</button>
+              <button class="mc-pill">Antall økter</button>
+            </div>
+            <div class="mc-legend">
+              <span class="mc-legend-item"><span style="display:inline-block;width:14px;height:10px;background:#fff;border:1px solid #ccc;"></span>0%</span>
+              <span class="mc-legend-item"><span style="display:inline-block;width:14px;height:10px;background:#f5f5f5;"></span>25%</span>
+              <span class="mc-legend-item"><span style="display:inline-block;width:14px;height:10px;background:#ddd;"></span>50%</span>
+              <span class="mc-legend-item"><span style="display:inline-block;width:14px;height:10px;background:#999;"></span>75%</span>
+              <span class="mc-legend-item"><span style="display:inline-block;width:14px;height:10px;background:#333;"></span>100%</span>
+            </div>
+          </section>
+
+          <section class="mc-body">
+            <div class="mc-heatmap">
+              <div class="mc-hm-head">
+                <div class="mc-hm-head-cell" style="text-align:left;">FASILITET</div>
+                <div class="mc-hm-head-cell">08</div>
+                <div class="mc-hm-head-cell">09</div>
+                <div class="mc-hm-head-cell">10</div>
+                <div class="mc-hm-head-cell">11</div>
+                <div class="mc-hm-head-cell">12</div>
+                <div class="mc-hm-head-cell">13</div>
+                <div class="mc-hm-head-cell">14</div>
+                <div class="mc-hm-head-cell">15</div>
+                <div class="mc-hm-head-cell">16</div>
+                <div class="mc-hm-head-cell">17</div>
+                <div class="mc-hm-head-cell">18</div>
+                <div class="mc-hm-head-cell">19</div>
+              </div>
+
+              <div class="mc-hm-row">
+                <div class="mc-hm-lane">Simulator 1<span class="mc-hm-lane-meta">92% snitt</span></div>
+                <div class="mc-hm-cell mc-hm-2">60</div>
+                <div class="mc-hm-cell mc-hm-4">100</div>
+                <div class="mc-hm-cell mc-hm-4">100</div>
+                <div class="mc-hm-cell mc-hm-3">85</div>
+                <div class="mc-hm-cell mc-hm-2">55</div>
+                <div class="mc-hm-cell mc-hm-3">80</div>
+                <div class="mc-hm-cell mc-hm-4">100</div>
+                <div class="mc-hm-cell mc-hm-4">100</div>
+                <div class="mc-hm-cell mc-hm-4">100</div>
+                <div class="mc-hm-cell mc-hm-3">90</div>
+                <div class="mc-hm-cell mc-hm-2">50</div>
+                <div class="mc-hm-cell mc-hm-1">25</div>
+              </div>
+
+              <div class="mc-hm-row">
+                <div class="mc-hm-lane">Simulator 2<span class="mc-hm-lane-meta">68% snitt</span></div>
+                <div class="mc-hm-cell mc-hm-1">30</div>
+                <div class="mc-hm-cell mc-hm-2">60</div>
+                <div class="mc-hm-cell mc-hm-3">75</div>
+                <div class="mc-hm-cell mc-hm-2">55</div>
+                <div class="mc-hm-cell mc-hm-1">35</div>
+                <div class="mc-hm-cell mc-hm-2">60</div>
+                <div class="mc-hm-cell mc-hm-3">80</div>
+                <div class="mc-hm-cell mc-hm-3">85</div>
+                <div class="mc-hm-cell mc-hm-3">85</div>
+                <div class="mc-hm-cell mc-hm-2">65</div>
+                <div class="mc-hm-cell mc-hm-1">30</div>
+                <div class="mc-hm-cell mc-hm-0">5</div>
+              </div>
+
+              <div class="mc-hm-row">
+                <div class="mc-hm-lane">Simulator 3<span class="mc-hm-lane-meta">85% snitt</span></div>
+                <div class="mc-hm-cell mc-hm-2">55</div>
+                <div class="mc-hm-cell mc-hm-3">90</div>
+                <div class="mc-hm-cell mc-hm-4">100</div>
+                <div class="mc-hm-cell mc-hm-3">80</div>
+                <div class="mc-hm-cell mc-hm-2">60</div>
+                <div class="mc-hm-cell mc-hm-3">85</div>
+                <div class="mc-hm-cell mc-hm-4">100</div>
+                <div class="mc-hm-cell mc-hm-4">100</div>
+                <div class="mc-hm-cell mc-hm-3">95</div>
+                <div class="mc-hm-cell mc-hm-3">90</div>
+                <div class="mc-hm-cell mc-hm-2">55</div>
+                <div class="mc-hm-cell mc-hm-1">20</div>
+              </div>
+
+              <div class="mc-hm-row">
+                <div class="mc-hm-lane">Putting-studio<span class="mc-hm-lane-meta">54% snitt</span></div>
+                <div class="mc-hm-cell mc-hm-0">10</div>
+                <div class="mc-hm-cell mc-hm-2">55</div>
+                <div class="mc-hm-cell mc-hm-3">80</div>
+                <div class="mc-hm-cell mc-hm-2">60</div>
+                <div class="mc-hm-cell mc-hm-1">25</div>
+                <div class="mc-hm-cell mc-hm-1">40</div>
+                <div class="mc-hm-cell mc-hm-2">60</div>
+                <div class="mc-hm-cell mc-hm-2">65</div>
+                <div class="mc-hm-cell mc-hm-3">75</div>
+                <div class="mc-hm-cell mc-hm-2">60</div>
+                <div class="mc-hm-cell mc-hm-1">30</div>
+                <div class="mc-hm-cell mc-hm-0">5</div>
+              </div>
+
+              <div class="mc-hm-row">
+                <div class="mc-hm-lane">Range-bay A<span class="mc-hm-lane-meta">47% snitt</span></div>
+                <div class="mc-hm-cell mc-hm-0">15</div>
+                <div class="mc-hm-cell mc-hm-1">35</div>
+                <div class="mc-hm-cell mc-hm-2">55</div>
+                <div class="mc-hm-cell mc-hm-2">50</div>
+                <div class="mc-hm-cell mc-hm-1">30</div>
+                <div class="mc-hm-cell mc-hm-2">50</div>
+                <div class="mc-hm-cell mc-hm-2">60</div>
+                <div class="mc-hm-cell mc-hm-3">80</div>
+                <div class="mc-hm-cell mc-hm-3">75</div>
+                <div class="mc-hm-cell mc-hm-2">55</div>
+                <div class="mc-hm-cell mc-hm-1">25</div>
+                <div class="mc-hm-cell mc-hm-0">10</div>
+              </div>
+
+              <div class="mc-hm-row">
+                <div class="mc-hm-lane">Range-bay B<span class="mc-hm-lane-meta">32% snitt</span></div>
+                <div class="mc-hm-cell mc-hm-0">5</div>
+                <div class="mc-hm-cell mc-hm-1">25</div>
+                <div class="mc-hm-cell mc-hm-1">40</div>
+                <div class="mc-hm-cell mc-hm-1">35</div>
+                <div class="mc-hm-cell mc-hm-0">15</div>
+                <div class="mc-hm-cell mc-hm-1">30</div>
+                <div class="mc-hm-cell mc-hm-2">50</div>
+                <div class="mc-hm-cell mc-hm-2">60</div>
+                <div class="mc-hm-cell mc-hm-2">55</div>
+                <div class="mc-hm-cell mc-hm-1">40</div>
+                <div class="mc-hm-cell mc-hm-1">20</div>
+                <div class="mc-hm-cell mc-hm-0">5</div>
+              </div>
+            </div>
+
+            <div class="mc-hm-summary">
+              <div class="mc-hm-stat"><div class="mc-hm-stat-label">SNITT BELEGG</div><div class="mc-hm-stat-val">63%</div><div class="mc-hm-stat-sub">+4 pp vs forrige mnd</div></div>
+              <div class="mc-hm-stat"><div class="mc-hm-stat-label">TOPP-TIME</div><div class="mc-hm-stat-val">14–16</div><div class="mc-hm-stat-sub">92% belegg</div></div>
+              <div class="mc-hm-stat"><div class="mc-hm-stat-label">DØD-TIME</div><div class="mc-hm-stat-val">08 & 19</div><div class="mc-hm-stat-sub">&lt;20% belegg</div></div>
+              <div class="mc-hm-stat"><div class="mc-hm-stat-label">MEST BOOKET</div><div class="mc-hm-stat-val">Sim 1</div><div class="mc-hm-stat-sub">92% snitt</div></div>
+              <div class="mc-hm-stat"><div class="mc-hm-stat-label">MINST BOOKET</div><div class="mc-hm-stat-val">Bay B</div><div class="mc-hm-stat-sub">32% snitt</div></div>
+              <div class="mc-hm-stat"><div class="mc-hm-stat-label">POTENSIAL</div><div class="mc-hm-stat-val">+37%</div><div class="mc-hm-stat-sub">om alle når 85%</div></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Heatmap gir umiddelbar visuell "hvor er det plass?" — mørk = fullt, lys = ledig.</li>
+        <li>X-akse = timer, Y-akse = fasiliteter. Hjelper identifisere strategiske huller.</li>
+        <li>Summary-row nederst oppsummerer nøkkeltall — topp-time, dødtid, potensial.</li>
+        <li>Bra for controller/strategisk bruk, ikke daglig drift.</li>
+        <li>Kombineres med Option 1 eller 2 for å ta action basert på innsikten.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4 — Equipment-status ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Equipment-status</span></h2>
+    <p class="option-description">Utstyr per fasilitet + vedlikeholds-varsler. Hvilke TrackMan, SAM PuttLab, K-Vest er operative, hvilke krever service?</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/fasiliteter</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab mc-tab-active">Fasiliteter</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk fasilitet / utstyr</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">VISNING</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill">Trenger tilsyn</button>
+              <button class="mc-pill">Offline</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">TYPE</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill">TrackMan</button>
+              <button class="mc-pill">SAM PuttLab</button>
+              <button class="mc-pill">K-Vest</button>
+            </div>
+            <button class="mc-cta-ghost mc-cta">+ Meld vedlikehold</button>
+          </section>
+
+          <section class="mc-body">
+            <div class="mc-kpi-strip">
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">UTSTYR TOTALT</div><div class="mc-kpi-cell-val">9</div><div class="mc-kpi-cell-sub">på tvers av 6 fasiliteter</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">OPERATIVT</div><div class="mc-kpi-cell-val">7</div><div class="mc-kpi-cell-sub">78% oppetid</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">TRENGER TILSYN</div><div class="mc-kpi-cell-val">1</div><div class="mc-kpi-cell-sub">Sim 2 · kalibrering</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">OFFLINE</div><div class="mc-kpi-cell-val">1</div><div class="mc-kpi-cell-sub">Range-bay B</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">NESTE SERVICE</div><div class="mc-kpi-cell-val">3 dg</div><div class="mc-kpi-cell-sub">TrackMan Sim 1</div></div>
+            </div>
+
+            <div class="mc-eq-grid">
+              <div class="mc-eq-card">
+                <div class="mc-eq-head">
+                  <div><div class="mc-eq-facility">SIMULATOR 1</div><div class="mc-eq-sub">TrackMan · Indoor</div></div>
+                  <span class="mc-eq-status mc-eq-status-ok">OK</span>
+                </div>
+                <div class="mc-eq-list">
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">TrackMan 4</span><span class="mc-eq-item-meta">SW 2024.3 · 342 t</span></div>
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Skjerm + projektor</span><span class="mc-eq-item-meta">Epson · 1890 t</span></div>
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Matte + balltee</span><span class="mc-eq-item-meta">Byttet 2026-02</span></div>
+                </div>
+              </div>
+
+              <div class="mc-eq-card">
+                <div class="mc-eq-head">
+                  <div><div class="mc-eq-facility">SIMULATOR 2</div><div class="mc-eq-sub">TrackMan · Indoor</div></div>
+                  <span class="mc-eq-status mc-eq-status-warn">TILSYN</span>
+                </div>
+                <div class="mc-eq-list">
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">TrackMan 4</span><span class="mc-eq-item-meta">Kal. avvik ±0.8°</span></div>
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Skjerm + projektor</span><span class="mc-eq-item-meta">Epson · 2140 t</span></div>
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Matte + balltee</span><span class="mc-eq-item-meta">Slitt · bytt innen mai</span></div>
+                </div>
+              </div>
+
+              <div class="mc-eq-card">
+                <div class="mc-eq-head">
+                  <div><div class="mc-eq-facility">SIMULATOR 3</div><div class="mc-eq-sub">Premium · Indoor</div></div>
+                  <span class="mc-eq-status mc-eq-status-ok">OK</span>
+                </div>
+                <div class="mc-eq-list">
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Launch monitor</span><span class="mc-eq-item-meta">Fungerer normalt</span></div>
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">K-Vest 3D</span><span class="mc-eq-item-meta">SW 5.2 · kalibrert</span></div>
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Video-kamera (2)</span><span class="mc-eq-item-meta">Casio + BRAVIA</span></div>
+                </div>
+              </div>
+
+              <div class="mc-eq-card">
+                <div class="mc-eq-head">
+                  <div><div class="mc-eq-facility">PUTTING-STUDIO</div><div class="mc-eq-sub">SAM PuttLab</div></div>
+                  <span class="mc-eq-status mc-eq-status-ok">OK</span>
+                </div>
+                <div class="mc-eq-list">
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">SAM PuttLab AimLab</span><span class="mc-eq-item-meta">SW 2024 · OK</span></div>
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Puttematte</span><span class="mc-eq-item-meta">9 ft · Stimp-kalibrert</span></div>
+                </div>
+              </div>
+
+              <div class="mc-eq-card">
+                <div class="mc-eq-head">
+                  <div><div class="mc-eq-facility">RANGE-BAY A</div><div class="mc-eq-sub">Outdoor + TrackMan</div></div>
+                  <span class="mc-eq-status mc-eq-status-ok">OK</span>
+                </div>
+                <div class="mc-eq-list">
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">TrackMan Range</span><span class="mc-eq-item-meta">Online · 210 t</span></div>
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Matte + utstyr</span><span class="mc-eq-item-meta">OK · sesongåpen</span></div>
+                </div>
+              </div>
+
+              <div class="mc-eq-card">
+                <div class="mc-eq-head">
+                  <div><div class="mc-eq-facility">RANGE-BAY B</div><div class="mc-eq-sub">Outdoor</div></div>
+                  <span class="mc-eq-status mc-eq-status-offline">OFFLINE</span>
+                </div>
+                <div class="mc-eq-list">
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Matte</span><span class="mc-eq-item-meta">Bestilt ny · uke 17</span></div>
+                  <div class="mc-eq-item"><span class="mc-eq-item-name">Beskyttelse + tak</span><span class="mc-eq-item-meta">Reparasjon pågår</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-eq-alerts">
+              <div class="mc-eq-alerts-title">VEDLIKEHOLDS-VARSLER · 4</div>
+              <div class="mc-eq-alert">
+                <span class="mc-eq-alert-dot mc-eq-alert-dot-warn"></span>
+                <span class="mc-eq-alert-text"><strong>Simulator 2</strong> — TrackMan rapporterer kalibrerings-avvik. Anbefalt service før torsdag.</span>
+                <span class="mc-eq-alert-meta">2 t siden</span>
+              </div>
+              <div class="mc-eq-alert">
+                <span class="mc-eq-alert-dot"></span>
+                <span class="mc-eq-alert-text"><strong>Range-bay B</strong> — offline inntil 22. april. Ny matte + reparasjon av tak.</span>
+                <span class="mc-eq-alert-meta">1 dag siden</span>
+              </div>
+              <div class="mc-eq-alert">
+                <span class="mc-eq-alert-dot mc-eq-alert-dot-warn"></span>
+                <span class="mc-eq-alert-text"><strong>TrackMan Sim 1</strong> — årlig service om 3 dager. Book inn leverandør.</span>
+                <span class="mc-eq-alert-meta">2 dg siden</span>
+              </div>
+              <div class="mc-eq-alert">
+                <span class="mc-eq-alert-dot"></span>
+                <span class="mc-eq-alert-text"><strong>SAM PuttLab</strong> — SW-oppdatering tilgjengelig (2025.1). 15 min nedetid.</span>
+                <span class="mc-eq-alert-meta">3 dg siden</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kort per fasilitet — én status-badge per kort (OK / Tilsyn / Offline).</li>
+        <li>Utstyrsliste inne i hvert kort med SW-versjon, driftstid og slitasje-info.</li>
+        <li>Alert-feed samler alle vedlikeholds-varsler på ett sted — tidslinje for intervensjon.</li>
+        <li>KPI-strip gir rask "hvor står vi i dag?"-svar på oppetid og kommende service.</li>
+        <li>Best for drifts-ansvarlig / utstyrsforvalter, ikke for booking-flyt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5 — Booking-pipeline ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Booking-pipeline</span></h2>
+    <p class="option-description">Kommende bookinger per fasilitet. Kanban-lignende kolonner: Neste time · I dag · Denne uken. Hjelper coach fokusere på rett ressurs.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/fasiliteter</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab mc-tab-active">Fasiliteter</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk fasilitet / utstyr</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">FASILITET</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill">Sim 1</button>
+              <button class="mc-pill">Sim 2</button>
+              <button class="mc-pill">Sim 3</button>
+              <button class="mc-pill">Putting</button>
+              <button class="mc-pill">Range A</button>
+              <button class="mc-pill">Range B</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">INSTRUKTØR</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill">Anders</button>
+              <button class="mc-pill">Markus</button>
+            </div>
+            <button class="mc-cta">+ Ny booking</button>
+          </section>
+
+          <section class="mc-body">
+            <div class="mc-kpi-strip">
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">NESTE ØKT</div><div class="mc-kpi-cell-val">09:00</div><div class="mc-kpi-cell-sub">Erik H. · Sim 1</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">I DAG</div><div class="mc-kpi-cell-val">28</div><div class="mc-kpi-cell-sub">på 6 fasiliteter</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">DENNE UKEN</div><div class="mc-kpi-cell-val">142</div><div class="mc-kpi-cell-sub">+12% vs forrige</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">VENTENDE</div><div class="mc-kpi-cell-val">3</div><div class="mc-kpi-cell-sub">krever tildeling</div></div>
+              <div class="mc-kpi-cell"><div class="mc-kpi-cell-label">LEDIGE SLOTS</div><div class="mc-kpi-cell-val">47</div><div class="mc-kpi-cell-sub">neste 7 dager</div></div>
+            </div>
+
+            <div class="mc-pipe-grid">
+              <div class="mc-pipe-col">
+                <div class="mc-pipe-head">
+                  <span class="mc-pipe-title">NESTE TIME</span>
+                  <span class="mc-pipe-count">5</span>
+                </div>
+                <div class="mc-pipe-cards">
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Erik Hansen · 09:00</div>
+                    <div class="mc-pipe-card-sub">Performance 20 · Anders · Sim 1</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Coaching</span><span>starter om 12 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Nora Torp · 09:00</div>
+                    <div class="mc-pipe-card-sub">Flex 20 · Markus · Sim 3</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Coaching</span><span>12 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-gruppe">
+                    <div class="mc-pipe-card-title">Puttekurs · 09:00</div>
+                    <div class="mc-pipe-card-sub">4 deltakere · Anders · Putting</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Gruppe</span><span>60 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Sofie Lund · 09:00</div>
+                    <div class="mc-pipe-card-sub">Junior 14+ · Anders · Sim 1</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Junior</span><span>etter Erik</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Lars Berg · 09:00</div>
+                    <div class="mc-pipe-card-sub">Express Pro · Markus · Sim 3</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Coaching</span><span>etter Nora</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-pipe-col">
+                <div class="mc-pipe-head">
+                  <span class="mc-pipe-title">I DAG</span>
+                  <span class="mc-pipe-count">28</span>
+                </div>
+                <div class="mc-pipe-cards">
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Ida Flem · 10:00</div>
+                    <div class="mc-pipe-card-sub">Performance · Anders · Sim 1</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Coaching</span><span>20 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Thomas L. · 10:00</div>
+                    <div class="mc-pipe-card-sub">Flex 20 · Markus · Sim 3</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Coaching</span><span>20 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-gruppe">
+                    <div class="mc-pipe-card-title">First Tee · 10:00</div>
+                    <div class="mc-pipe-card-sub">8 deltakere · Markus · Range A</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Kurs</span><span>90 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Bedrift WANG · 14:00</div>
+                    <div class="mc-pipe-card-sub">Anders · Sim 2</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Bedrift</span><span>60 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-gruppe">
+                    <div class="mc-pipe-card-title">Junior 14+ · 14:00</div>
+                    <div class="mc-pipe-card-sub">6 deltakere · Anders · Range A+B</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Junior</span><span>90 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Anne S. · 14:00</div>
+                    <div class="mc-pipe-card-sub">K-Vest test · Anders · Sim 3</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Coaching</span><span>45 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-open">
+                    <div class="mc-pipe-card-title">Ledig slot · 11:00</div>
+                    <div class="mc-pipe-card-sub">Sim 1 · 30 min</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Åpen</span><span>kan tildeles</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-pipe-col">
+                <div class="mc-pipe-head">
+                  <span class="mc-pipe-title">DENNE UKEN</span>
+                  <span class="mc-pipe-count">142</span>
+                </div>
+                <div class="mc-pipe-cards">
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Lørdag · Klubbmesterskap</div>
+                    <div class="mc-pipe-card-sub">08–18 · alle fasiliteter</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Event</span><span>18 økter</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Søndag · Banecoaching</div>
+                    <div class="mc-pipe-card-sub">Anders · 9 hull · 4 deltakere</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Bane</span><span>180 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-gruppe">
+                    <div class="mc-pipe-card-title">Onsdag · Junior-leir</div>
+                    <div class="mc-pipe-card-sub">12 deltakere · 6 timer</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Camp</span><span>3 fasiliteter</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">Torsdag · Puttekurs</div>
+                    <div class="mc-pipe-card-sub">Anders · Putting · 6 deltakere</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Kurs</span><span>60 min</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-open">
+                    <div class="mc-pipe-card-title">Ventende: Sim 2 · ons 14:00</div>
+                    <div class="mc-pipe-card-sub">Ny booking · mangler tildeling</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Pending</span><span>krever action</span></div>
+                  </div>
+                  <div class="mc-pipe-card mc-pipe-card-coaching">
+                    <div class="mc-pipe-card-title">+ 138 andre økter</div>
+                    <div class="mc-pipe-card-sub">på tvers av 6 fasiliteter</div>
+                    <div class="mc-pipe-card-row"><span class="mc-pipe-card-tag">Vis alle</span><span>→</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Tre kolonner (Neste time · I dag · Denne uken) gir tydelig tidshorisont.</li>
+        <li>Kanban-lignende — hver booking er et kort med elev, instruktør, fasilitet.</li>
+        <li>Ventende bookinger blandes inn for å flagge tildelings-behov.</li>
+        <li>Fokus på coach-fokus: hva må jeg vite nå, hva kommer senere?</li>
+        <li>Svakere for kapasitets-analyse — kombineres med Option 3 for strategisk bilde.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Mission Control Fasiliteter — valget avhenger av hvilken arbeidsflyt som prioriteres.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Dag-schedule</th><th>2: Ukesoversikt</th><th>3: Heatmap</th><th>4: Equipment</th><th>5: Pipeline</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig drift</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Ukentlig planlegging</td><td>Svak</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Kapasitets-analyse</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Svak</td></tr>
+        <tr><td>Utstyrs-forvaltning</td><td>Svak</td><td>Svak</td><td>Svak</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Finne ledig slot raskt</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Passer AK-brand</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Option 1 — Dag-schedule</h3>
+    <p>Option 1 er standard daglig drifts-view. Det matcher mental modellen til en coach som starter dagen med "hva skjer i dag, hvor, og hvilke slots er igjen?". Fasilitetene som kolonner og klokkeslett som rader er kjent fra klassiske timetable-UIs (Google Calendar, OpenTable, Mindbody). Option 2 (Ukesoversikt) er en sterk supplement for ukentlig planlegging, og Option 4 (Equipment-status) bør bygges som en egen tab innen samme side når drifts-volumet krever det.</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Dag-schedule):</strong> Default — daglig drift, rask slot-oversikt, ny booking.</li>
+      <li><strong>Option 2 (Ukesoversikt):</strong> Ukentlig planlegging, belegg-gjennomgang per lane.</li>
+      <li><strong>Option 3 (Heatmap):</strong> Strategisk analyse — finn huller i kalenderen.</li>
+      <li><strong>Option 4 (Equipment-status):</strong> Drifts-ansvarlig som trenger utstyrs-oversikt.</li>
+      <li><strong>Option 5 (Pipeline):</strong> Coach som vil ha fokusert "neste opp"-visning.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

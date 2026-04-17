@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Turneringsplan — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Turneringsplan</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Calendar Focus</button>
+    <button class="tab-btn" data-tab="option-2">2: Prep Checklist</button>
+    <button class="tab-btn" data-tab="option-3">3: Season Roadmap</button>
+    <button class="tab-btn" data-tab="option-4">4: Results Tracking</button>
+    <button class="tab-btn" data-tab="option-5">5: Pre-tournament Plan</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: CALENDAR FOCUS (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Calendar Focus</span></h2>
+    <p class="option-description">Personlig turneringskalender gruppert per måned — hver turnering viser dato, bane, og prep-status som liten progress bar. SAFE — matcher portalens listemønstre og gir spilleren umiddelbar oversikt.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/turneringsplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="p-shell">
+
+          <aside class="p-sidebar">
+            <div class="p-logo">AK GOLF · PORTAL</div>
+            <nav class="p-nav">
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Oversikt</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Treningsplan</a>
+              <a class="p-nav-item p-nav-active"><span class="p-nav-icon"></span>Turneringer</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Bookinger</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Statistikk</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Profil</a>
+            </nav>
+            <div class="p-sidebar-foot">v1.4 · Sesong 2026</div>
+          </aside>
+
+          <div class="p-main">
+
+            <header class="p-topbar">
+              <div class="p-crumbs">Portal / Turneringer</div>
+              <div class="p-topbar-right">
+                <span class="p-search">Søk turnering eller bane</span>
+                <span class="p-avatar">EH</span>
+              </div>
+            </header>
+
+            <section class="p-header">
+              <h1 class="p-title">Turneringsplan 2026<span class="wf-marker">1</span></h1>
+              <p class="p-subtitle">Din personlige sesongoversikt — se kommende, påmeldte og fullførte turneringer</p>
+            </section>
+
+            <section class="p-stat-strip">
+              <div class="p-stat">
+                <div class="p-stat-label">Kommende<span class="wf-marker">2</span></div>
+                <div class="p-stat-val">3</div>
+                <div class="p-stat-sub">neste: NM Match Play · 88 dager</div>
+              </div>
+              <div class="p-stat">
+                <div class="p-stat-label">Påmeldt</div>
+                <div class="p-stat-val">5</div>
+                <div class="p-stat-sub">2 venter på godkjenning</div>
+              </div>
+              <div class="p-stat">
+                <div class="p-stat-label">Fullført</div>
+                <div class="p-stat-val">8</div>
+                <div class="p-stat-sub">snitt netto −1.2 over par</div>
+              </div>
+            </section>
+
+            <section class="p-filter-row">
+              <div>
+                <span class="p-filter-label">Status</span>
+                <button class="p-pill p-pill-active">Alle</button>
+                <button class="p-pill"><span class="p-dot p-dot-upcoming"></span>Kommende</button>
+                <button class="p-pill"><span class="p-dot p-dot-registered"></span>Påmeldt</button>
+                <button class="p-pill"><span class="p-dot p-dot-done"></span>Fullført</button>
+              </div>
+              <button class="p-cta">+ Legg til turnering</button>
+            </section>
+
+            <section class="p-cal">
+
+              <div class="p-cal-months">
+                <div class="p-cal-month">
+                  <div class="p-cal-month-head">
+                    <div class="p-cal-month-title">Juli 2026<span class="wf-marker">3</span></div>
+                    <div class="p-card-label">3 turneringer</div>
+                  </div>
+                  <div class="p-cal-event">
+                    <div class="p-cal-event-date"><strong>14</strong>tir</div>
+                    <div>
+                      <div class="p-cal-event-name">NM Match Play</div>
+                      <div class="p-cal-event-sub">Trondheim GK · 3 dager · HCP-match</div>
+                    </div>
+                    <span class="p-tag p-tag-registered"><span class="p-dot p-dot-registered"></span>Påmeldt</span>
+                  </div>
+                  <div class="p-cal-event">
+                    <div class="p-cal-event-date"><strong>24</strong>fre</div>
+                    <div>
+                      <div class="p-cal-event-name">Klubbmesterskap GFGK</div>
+                      <div class="p-cal-event-sub">Gamle Fredrikstad · 2 dager · scratch</div>
+                    </div>
+                    <span class="p-tag p-tag-upcoming"><span class="p-dot p-dot-upcoming"></span>Kommende</span>
+                  </div>
+                </div>
+
+                <div class="p-cal-month">
+                  <div class="p-cal-month-head">
+                    <div class="p-cal-month-title">August 2026</div>
+                    <div class="p-card-label">2 turneringer</div>
+                  </div>
+                  <div class="p-cal-event">
+                    <div class="p-cal-event-date"><strong>08</strong>lør</div>
+                    <div>
+                      <div class="p-cal-event-name">Oslo Open</div>
+                      <div class="p-cal-event-sub">Losby GK · 2 dager · stableford</div>
+                    </div>
+                    <span class="p-tag p-tag-upcoming"><span class="p-dot p-dot-upcoming"></span>Kommende</span>
+                  </div>
+                  <div class="p-cal-event">
+                    <div class="p-cal-event-date"><strong>22</strong>lør</div>
+                    <div>
+                      <div class="p-cal-event-name">Høstcup Østfold</div>
+                      <div class="p-cal-event-sub">Onsøy GK · 1 dag · slagspill</div>
+                    </div>
+                    <span class="p-tag p-tag-registered"><span class="p-dot p-dot-registered"></span>Påmeldt</span>
+                  </div>
+                </div>
+
+                <div class="p-cal-month">
+                  <div class="p-cal-month-head">
+                    <div class="p-cal-month-title">Tidligere · 2026</div>
+                    <div class="p-card-label">8 fullført</div>
+                  </div>
+                  <div class="p-cal-event">
+                    <div class="p-cal-event-date"><strong>18</strong>jun</div>
+                    <div>
+                      <div class="p-cal-event-name">Narvik Invitational</div>
+                      <div class="p-cal-event-sub">Narvik GK · 72-hull · T14 · netto −3</div>
+                    </div>
+                    <span class="p-tag p-tag-done"><span class="p-dot p-dot-done"></span>Fullført</span>
+                  </div>
+                  <div class="p-cal-event">
+                    <div class="p-cal-event-date"><strong>02</strong>jun</div>
+                    <div>
+                      <div class="p-cal-event-name">Vårcup Bergen</div>
+                      <div class="p-cal-event-sub">Bergen GK · 36-hull · T8 · netto −2</div>
+                    </div>
+                    <span class="p-tag p-tag-done"><span class="p-dot p-dot-done"></span>Fullført</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="p-card">
+                  <div class="p-card-head">
+                    <div>
+                      <div class="p-card-label">Neste turnering</div>
+                      <h3 class="p-card-title" style="margin-top:4px;">NM Match Play<span class="wf-marker">4</span></h3>
+                    </div>
+                    <span class="p-tag p-tag-registered"><span class="p-dot p-dot-registered"></span>Påmeldt</span>
+                  </div>
+                  <p class="p-card-sub">14.–16. juli · Trondheim GK · HCP-match · 88 dager igjen</p>
+                  <div style="margin:10px 0 6px;">
+                    <div class="p-card-label" style="margin-bottom:6px;">Prep-status</div>
+                    <div class="p-prep">
+                      <div class="p-prep-track"><div class="p-prep-fill" style="width:60%;"></div></div>
+                      <div class="p-prep-val">60%</div>
+                    </div>
+                    <div class="p-li-meta" style="margin-top:8px;">6 av 10 punkter gjennomført</div>
+                  </div>
+                  <div class="p-btn-row">
+                    <button class="p-btn p-btn-primary">Åpne prep-plan</button>
+                    <button class="p-btn">Se bane-info</button>
+                  </div>
+                </div>
+
+                <div class="p-card" style="margin-top:14px;">
+                  <h3 class="p-card-title">Sesongprogresjon</h3>
+                  <p class="p-card-sub">8 av 16 planlagte turneringer fullført · 50%</p>
+                  <div class="p-prep">
+                    <div class="p-prep-track"><div class="p-prep-fill" style="width:50%;"></div></div>
+                    <div class="p-prep-val">50%</div>
+                  </div>
+                  <div class="p-li-meta" style="margin-top:8px;">Neste milepæl: NM Match Play · 14. juli</div>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Tydelig sesong-overskrift. Spilleren ser umiddelbart at dette er 2026-planen.</li>
+        <li><strong>2</strong> — KPI-strip med 3/5/8 — primærstatistikk for spilleren, ikke trener. Tekst under tallet gir kontekst.</li>
+        <li><strong>3</strong> — Gruppert per måned kronologisk. "Tidligere" samler fullførte — reduserer støy.</li>
+        <li><strong>4</strong> — Høyre-kolonne trekker ut neste turnering med prep-status. Gir én-klikks-tilgang til prep-plan.</li>
+        <li>Listemønsteret matcher portal-bookinger — læringskostnad er null.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: PREP CHECKLIST ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Prep Checklist</span></h2>
+    <p class="option-description">Kort-grid der hver kommende turnering vises som et eget prep-kort med sjekkliste inline. Fokus på handlingspunkter — hva må jeg gjøre for å være klar.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/turneringsplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="p-shell">
+
+          <aside class="p-sidebar">
+            <div class="p-logo">AK GOLF · PORTAL</div>
+            <nav class="p-nav">
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Oversikt</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Treningsplan</a>
+              <a class="p-nav-item p-nav-active"><span class="p-nav-icon"></span>Turneringer</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Bookinger</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Statistikk</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Profil</a>
+            </nav>
+            <div class="p-sidebar-foot">v1.4 · Sesong 2026</div>
+          </aside>
+
+          <div class="p-main">
+
+            <header class="p-topbar">
+              <div class="p-crumbs">Portal / Turneringer / Prep-visning</div>
+              <div class="p-topbar-right">
+                <span class="p-search">Søk turnering</span>
+                <span class="p-avatar">EH</span>
+              </div>
+            </header>
+
+            <section class="p-header">
+              <h1 class="p-title">Forberedelser<span class="wf-marker">1</span></h1>
+              <p class="p-subtitle">3 kommende turneringer · 60% samlet prep · neste frist: pakkeliste for NM (72 dager)</p>
+            </section>
+
+            <section class="p-stat-strip">
+              <div class="p-stat">
+                <div class="p-stat-label">Kommende</div>
+                <div class="p-stat-val">3</div>
+                <div class="p-stat-sub">4 utestående prep-punkter</div>
+              </div>
+              <div class="p-stat">
+                <div class="p-stat-label">Påmeldt</div>
+                <div class="p-stat-val">5</div>
+                <div class="p-stat-sub">2 venter på bekreftelse</div>
+              </div>
+              <div class="p-stat">
+                <div class="p-stat-label">Fullført</div>
+                <div class="p-stat-val">8</div>
+                <div class="p-stat-sub">Neste retro: 18. juli</div>
+              </div>
+            </section>
+
+            <section class="p-filter-row">
+              <div>
+                <span class="p-filter-label">Vis</span>
+                <button class="p-pill p-pill-active">Kommende</button>
+                <button class="p-pill">Alle påmeldte</button>
+                <button class="p-pill">Utestående punkter</button>
+              </div>
+              <button class="p-cta">+ Ny turnering</button>
+            </section>
+
+            <section class="p-prep-wrap">
+
+              <article class="p-prep-card">
+                <div class="p-prep-card-head">
+                  <div class="p-prep-card-date">14.–16. juli · 88 dager</div>
+                  <h3 class="p-prep-card-name">NM Match Play<span class="wf-marker">2</span></h3>
+                  <div class="p-prep-card-loc">Trondheim GK · HCP-match · 72-hull</div>
+                </div>
+                <ul class="p-prep-checklist">
+                  <li class="done"><span class="p-prep-check p-prep-check-done"></span>Påmelding og betaling</li>
+                  <li class="done"><span class="p-prep-check p-prep-check-done"></span>Reise og overnatting</li>
+                  <li class="done"><span class="p-prep-check p-prep-check-done"></span>Bane-recon (YouTube + GB)</li>
+                  <li class="done"><span class="p-prep-check p-prep-check-done"></span>Treningsblokk uke 24–26</li>
+                  <li class="done"><span class="p-prep-check p-prep-check-done"></span>Trackman-økt driver</li>
+                  <li class="done"><span class="p-prep-check p-prep-check-done"></span>Mental plan (Markus)</li>
+                  <li><span class="p-prep-check"></span>Pakkeliste utstyr</li>
+                  <li><span class="p-prep-check"></span>Caddie-avtale</li>
+                  <li><span class="p-prep-check"></span>Tapering siste 10 dager</li>
+                  <li><span class="p-prep-check"></span>Coaching-sesjon dagen før</li>
+                </ul>
+                <div class="p-prep-card-foot">
+                  <div class="p-prep">
+                    <div class="p-prep-track"><div class="p-prep-fill" style="width:60%;"></div></div>
+                    <div class="p-prep-val">60%</div>
+                  </div>
+                  <div class="p-btn-row">
+                    <button class="p-btn p-btn-primary">Åpne detaljer</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="p-prep-card">
+                <div class="p-prep-card-head">
+                  <div class="p-prep-card-date">24.–25. juli · 98 dager</div>
+                  <h3 class="p-prep-card-name">Klubbmesterskap GFGK<span class="wf-marker">3</span></h3>
+                  <div class="p-prep-card-loc">Gamle Fredrikstad · scratch · 36-hull</div>
+                </div>
+                <ul class="p-prep-checklist">
+                  <li class="done"><span class="p-prep-check p-prep-check-done"></span>Påmelding (medlem)</li>
+                  <li class="done"><span class="p-prep-check p-prep-check-done"></span>Bane kjenner godt</li>
+                  <li><span class="p-prep-check"></span>Greens-analyse før uke 30</li>
+                  <li><span class="p-prep-check"></span>Approach 100–150m fokus</li>
+                  <li><span class="p-prep-check"></span>Coaching-sesjon putting</li>
+                  <li><span class="p-prep-check"></span>Strategi fra hull 7 og 14</li>
+                </ul>
+                <div class="p-prep-card-foot">
+                  <div class="p-prep">
+                    <div class="p-prep-track"><div class="p-prep-fill" style="width:33%;"></div></div>
+                    <div class="p-prep-val">33%</div>
+                  </div>
+                  <div class="p-btn-row">
+                    <button class="p-btn p-btn-primary">Åpne detaljer</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="p-prep-card">
+                <div class="p-prep-card-head">
+                  <div class="p-prep-card-date">08.–09. august · 113 dager</div>
+                  <h3 class="p-prep-card-name">Oslo Open<span class="wf-marker">4</span></h3>
+                  <div class="p-prep-card-loc">Losby GK · stableford · 36-hull</div>
+                </div>
+                <ul class="p-prep-checklist">
+                  <li><span class="p-prep-check"></span>Påmelding (innen 15. juli)</li>
+                  <li><span class="p-prep-check"></span>Overnatting Lillestrøm</li>
+                  <li><span class="p-prep-check"></span>Bane-recon</li>
+                  <li><span class="p-prep-check"></span>Treningsblokk uke 30–31</li>
+                  <li><span class="p-prep-check"></span>Caddie</li>
+                </ul>
+                <div class="p-prep-card-foot">
+                  <div class="p-prep">
+                    <div class="p-prep-track"><div class="p-prep-fill" style="width:0%;"></div></div>
+                    <div class="p-prep-val">0%</div>
+                  </div>
+                  <div class="p-btn-row">
+                    <button class="p-btn p-btn-primary">Start prep</button>
+                  </div>
+                </div>
+              </article>
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Tittelen "Forberedelser" signaliserer handlingsfokus, ikke arkivering.</li>
+        <li><strong>2</strong> — Hver kortprep-liste har 10 punkter maks. NM er lengst fordi reise + caddie + tapering.</li>
+        <li><strong>3</strong> — Klubbmesterskap har færre punkter — lokale turneringer krever mindre prep.</li>
+        <li><strong>4</strong> — Tom prep (0%) viser "Start prep"-CTA — tom tilstand er en påminnelse, ikke en pinlighet.</li>
+        <li>Inline sjekkliste = færre klikk for å oppdatere status. Påvirker også dashboard-widget.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: SEASON ROADMAP ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Season Roadmap</span></h2>
+    <p class="option-description">Horisontal tidslinje over hele sesongen (mai–oktober). Prioriterte turneringer markeres større og i sort; mindre som grå punkter. Fullførte blir dempet. Visuell "årets kurve".</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/turneringsplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="p-shell">
+
+          <aside class="p-sidebar">
+            <div class="p-logo">AK GOLF · PORTAL</div>
+            <nav class="p-nav">
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Oversikt</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Treningsplan</a>
+              <a class="p-nav-item p-nav-active"><span class="p-nav-icon"></span>Turneringer</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Bookinger</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Statistikk</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Profil</a>
+            </nav>
+            <div class="p-sidebar-foot">v1.4 · Sesong 2026</div>
+          </aside>
+
+          <div class="p-main">
+
+            <header class="p-topbar">
+              <div class="p-crumbs">Portal / Turneringer / Sesong-roadmap</div>
+              <div class="p-topbar-right">
+                <span class="p-search">Søk turnering</span>
+                <span class="p-avatar">EH</span>
+              </div>
+            </header>
+
+            <section class="p-header">
+              <h1 class="p-title">Sesong-roadmap 2026<span class="wf-marker">1</span></h1>
+              <p class="p-subtitle">Mai–oktober · 16 planlagte · 8 fullført · 3 prioriterte A-turneringer</p>
+            </section>
+
+            <section class="p-stat-strip">
+              <div class="p-stat">
+                <div class="p-stat-label">Kommende</div>
+                <div class="p-stat-val">3</div>
+                <div class="p-stat-sub">1 A-turnering (NM)</div>
+              </div>
+              <div class="p-stat">
+                <div class="p-stat-label">Påmeldt</div>
+                <div class="p-stat-val">5</div>
+                <div class="p-stat-sub">total høst + sommer</div>
+              </div>
+              <div class="p-stat">
+                <div class="p-stat-label">Fullført</div>
+                <div class="p-stat-val">8</div>
+                <div class="p-stat-sub">beste: T8 Vårcup Bergen</div>
+              </div>
+            </section>
+
+            <section class="p-filter-row">
+              <div>
+                <span class="p-filter-label">Prioritet</span>
+                <button class="p-pill p-pill-active">Alle</button>
+                <button class="p-pill">A-turneringer</button>
+                <button class="p-pill">B-turneringer</button>
+                <button class="p-pill">Klubb</button>
+              </div>
+              <button class="p-cta">+ Legg til</button>
+            </section>
+
+            <section class="p-road-wrap">
+              <div class="p-road-axis">
+                <div class="p-road-month">Apr</div>
+                <div class="p-road-month">Mai</div>
+                <div class="p-road-month">Jun</div>
+                <div class="p-road-month">Jul</div>
+                <div class="p-road-month">Aug</div>
+                <div class="p-road-month">Sep</div>
+                <div class="p-road-month">Okt</div>
+              </div>
+              <div class="p-road-events">
+                <div class="p-road-event p-road-event-done" style="left:14.3%; top:10px;">
+                  <strong>Vårcup Bergen<span class="wf-marker">2</span></strong>
+                  2. juni · Bergen GK
+                  <span class="p-road-flag">B · T8 · netto −2</span>
+                </div>
+                <div class="p-road-event p-road-event-done" style="left:28.5%; top:90px;">
+                  <strong>Narvik Inv.</strong>
+                  18. juni · Narvik GK
+                  <span class="p-road-flag">B · T14 · netto −3</span>
+                </div>
+                <div class="p-road-event p-road-event-priority" style="left:42.8%; top:10px;">
+                  <strong>NM Match Play<span class="wf-marker">3</span></strong>
+                  14.–16. juli · Trondheim
+                  <span class="p-road-flag">A · prep 60% · 88 dager</span>
+                </div>
+                <div class="p-road-event" style="left:48%; top:120px;">
+                  <strong>Klubbm. GFGK</strong>
+                  24. juli · Fredrikstad
+                  <span class="p-road-flag">Klubb · prep 33%</span>
+                </div>
+                <div class="p-road-event p-road-event-priority" style="left:57%; top:30px;">
+                  <strong>Oslo Open<span class="wf-marker">4</span></strong>
+                  8. august · Losby
+                  <span class="p-road-flag">A · prep 0%</span>
+                </div>
+                <div class="p-road-event" style="left:64%; top:130px;">
+                  <strong>Høstcup Østfold</strong>
+                  22. aug · Onsøy
+                  <span class="p-road-flag">B · påmeldt</span>
+                </div>
+                <div class="p-road-event p-road-event-priority" style="left:80%; top:50px;">
+                  <strong>Norsk Amatør</strong>
+                  12. sept · Oslo GK
+                  <span class="p-road-flag">A · foreløpig</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="p-grid p-grid-2" style="padding-top:0;">
+              <div class="p-card">
+                <div class="p-card-label">A-turnering</div>
+                <h3 class="p-card-title" style="margin-top:4px;">Prioritet denne sesongen</h3>
+                <p class="p-card-sub">NM Match Play er årets hovedmål · tapering starter 4. juli · Oslo Open og Norsk Amatør er sekundærmål</p>
+                <div class="p-btn-row">
+                  <button class="p-btn p-btn-primary">Se årsplan</button>
+                </div>
+              </div>
+              <div class="p-card">
+                <div class="p-card-label">Treningsblokker</div>
+                <h3 class="p-card-title" style="margin-top:4px;">Periodisering</h3>
+                <p class="p-card-sub">Blokk 1 (mai): volum · Blokk 2 (juni): kvalitet · Blokk 3 (juli): spesifisitet · Blokk 4 (aug): konkurranse-modus</p>
+                <div class="p-btn-row">
+                  <button class="p-btn">Synk til treningsplan</button>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Roadmap gir "one glance"-oversikt over hele sesongen. Perfekt for langsiktig planlegging med trener.</li>
+        <li><strong>2</strong> — Fullførte turneringer blir dempet — ikke slettet. Resultat synlig i flag-raden.</li>
+        <li><strong>3</strong> — A-turneringer (prioritet) har sort ramme. Visuell vekting uten farge — skannbart på sekunder.</li>
+        <li><strong>4</strong> — Y-akse brukes for å unngå overlapp når turneringer er i samme måned.</li>
+        <li>Eksporterbar PDF av roadmap er naturlig neste steg — kan skrives ut til coaching-møte.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: RESULTS TRACKING ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Results Tracking</span></h2>
+    <p class="option-description">Split-view: kommende turneringer til venstre, resultater fra fullførte til høyre. Fokus på historiske data — plassering, score, SG vs felt.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/turneringsplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="p-shell">
+
+          <aside class="p-sidebar">
+            <div class="p-logo">AK GOLF · PORTAL</div>
+            <nav class="p-nav">
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Oversikt</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Treningsplan</a>
+              <a class="p-nav-item p-nav-active"><span class="p-nav-icon"></span>Turneringer</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Bookinger</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Statistikk</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Profil</a>
+            </nav>
+            <div class="p-sidebar-foot">v1.4 · Sesong 2026</div>
+          </aside>
+
+          <div class="p-main">
+
+            <header class="p-topbar">
+              <div class="p-crumbs">Portal / Turneringer / Resultater</div>
+              <div class="p-topbar-right">
+                <span class="p-search">Søk turnering</span>
+                <span class="p-avatar">EH</span>
+              </div>
+            </header>
+
+            <section class="p-header">
+              <h1 class="p-title">Turneringer og resultater<span class="wf-marker">1</span></h1>
+              <p class="p-subtitle">Kommende og påmeldte til venstre · historikk med plassering og SG til høyre</p>
+            </section>
+
+            <section class="p-stat-strip">
+              <div class="p-stat">
+                <div class="p-stat-label">Kommende</div>
+                <div class="p-stat-val">3</div>
+                <div class="p-stat-sub">neste: NM · 14. juli</div>
+              </div>
+              <div class="p-stat">
+                <div class="p-stat-label">Påmeldt</div>
+                <div class="p-stat-val">5</div>
+                <div class="p-stat-sub">inkl. 2 høstturneringer</div>
+              </div>
+              <div class="p-stat">
+                <div class="p-stat-label">Fullført</div>
+                <div class="p-stat-val">8</div>
+                <div class="p-stat-sub">beste: T8 · snitt SG +0.4</div>
+              </div>
+            </section>
+
+            <section class="p-res-wrap">
+
+              <div>
+                <h3 class="p-res-section-title">Kommende og påmeldte<span class="wf-marker">2</span></h3>
+                <p class="p-res-section-sub">Sortert på dato · klikk rad for detaljer</p>
+                <table class="p-res-table">
+                  <thead>
+                    <tr>
+                      <th>Dato</th>
+                      <th>Turnering</th>
+                      <th>Bane</th>
+                      <th>Prep</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>14.–16. jul</td>
+                      <td><strong>NM Match Play</strong></td>
+                      <td>Trondheim GK</td>
+                      <td>60%</td>
+                      <td><span class="p-tag p-tag-registered"><span class="p-dot p-dot-registered"></span>Påmeldt</span></td>
+                    </tr>
+                    <tr>
+                      <td>24.–25. jul</td>
+                      <td><strong>Klubbmest. GFGK</strong></td>
+                      <td>Gamle Fredrikstad</td>
+                      <td>33%</td>
+                      <td><span class="p-tag p-tag-upcoming"><span class="p-dot p-dot-upcoming"></span>Kommende</span></td>
+                    </tr>
+                    <tr>
+                      <td>8.–9. aug</td>
+                      <td><strong>Oslo Open</strong></td>
+                      <td>Losby GK</td>
+                      <td>0%</td>
+                      <td><span class="p-tag p-tag-upcoming"><span class="p-dot p-dot-upcoming"></span>Kommende</span></td>
+                    </tr>
+                    <tr>
+                      <td>22. aug</td>
+                      <td><strong>Høstcup Østfold</strong></td>
+                      <td>Onsøy GK</td>
+                      <td>—</td>
+                      <td><span class="p-tag p-tag-registered"><span class="p-dot p-dot-registered"></span>Påmeldt</span></td>
+                    </tr>
+                    <tr>
+                      <td>12. sept</td>
+                      <td><strong>Norsk Amatør</strong></td>
+                      <td>Oslo GK</td>
+                      <td>—</td>
+                      <td><span class="p-tag p-tag-warn"><span class="p-dot p-dot-warn"></span>Venter svar</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div>
+                <h3 class="p-res-section-title">Resultater 2026<span class="wf-marker">3</span></h3>
+                <p class="p-res-section-sub">8 fullført · snitt plassering T21 · snitt SG +0.4</p>
+                <table class="p-res-table">
+                  <thead>
+                    <tr>
+                      <th>Dato</th>
+                      <th>Turnering</th>
+                      <th class="p-res-num">Plass</th>
+                      <th class="p-res-num">Score</th>
+                      <th class="p-res-num">SG</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>18. jun</td>
+                      <td><strong>Narvik Inv.</strong></td>
+                      <td class="p-res-num">T14</td>
+                      <td class="p-res-num">−3</td>
+                      <td class="p-res-num">+0.8</td>
+                    </tr>
+                    <tr>
+                      <td>2. jun</td>
+                      <td><strong>Vårcup Bergen</strong></td>
+                      <td class="p-res-num">T8</td>
+                      <td class="p-res-num">−2</td>
+                      <td class="p-res-num">+1.2</td>
+                    </tr>
+                    <tr>
+                      <td>18. mai</td>
+                      <td><strong>Open 1 Kristiansand</strong></td>
+                      <td class="p-res-num">T24</td>
+                      <td class="p-res-num">+1</td>
+                      <td class="p-res-num">−0.3</td>
+                    </tr>
+                    <tr>
+                      <td>4. mai</td>
+                      <td><strong>Sesongstart Oslo</strong></td>
+                      <td class="p-res-num">T19</td>
+                      <td class="p-res-num">E</td>
+                      <td class="p-res-num">+0.1</td>
+                    </tr>
+                    <tr>
+                      <td>20. apr</td>
+                      <td><strong>Mulligan Indoor Cup</strong></td>
+                      <td class="p-res-num">3</td>
+                      <td class="p-res-num">—</td>
+                      <td class="p-res-num">+1.6</td>
+                    </tr>
+                    <tr>
+                      <td>5. apr</td>
+                      <td><strong>Vintercup Mulligan</strong></td>
+                      <td class="p-res-num">T11</td>
+                      <td class="p-res-num">+2</td>
+                      <td class="p-res-num">−0.4</td>
+                    </tr>
+                    <tr>
+                      <td>15. mar</td>
+                      <td><strong>Winter Series 2</strong></td>
+                      <td class="p-res-num">T33</td>
+                      <td class="p-res-num">+4</td>
+                      <td class="p-res-num">−1.1</td>
+                    </tr>
+                    <tr>
+                      <td>1. mar</td>
+                      <td><strong>Winter Series 1</strong></td>
+                      <td class="p-res-num">T28</td>
+                      <td class="p-res-num">+3</td>
+                      <td class="p-res-num">−0.7</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Tabellvisning gir spillere og trenere identisk forståelse av historikk og pipeline.</li>
+        <li><strong>2</strong> — Venstre tabell = "hva kommer". Prep-% synlig som enkel forkortelse.</li>
+        <li><strong>3</strong> — Høyre tabell = "hva har jeg gjort". SG-kolonne hentes fra DataGolf/intern stat-motor.</li>
+        <li>Eksporter til CSV eller sesongrapport er neste steg.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: PRE-TOURNAMENT PLAN (DEEP DIVE) ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Pre-tournament Plan</span></h2>
+    <p class="option-description">Dypdykk i én turnering — NM Match Play som eksempel. Faseplan (taper, mental, bane-recon) med dag-for-dag oppgaver, koblet til treningsplan.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/turneringsplan/nm-match-play</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="p-shell">
+
+          <aside class="p-sidebar">
+            <div class="p-logo">AK GOLF · PORTAL</div>
+            <nav class="p-nav">
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Oversikt</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Treningsplan</a>
+              <a class="p-nav-item p-nav-active"><span class="p-nav-icon"></span>Turneringer</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Bookinger</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Statistikk</a>
+              <a class="p-nav-item"><span class="p-nav-icon"></span>Profil</a>
+            </nav>
+            <div class="p-sidebar-foot">v1.4 · Sesong 2026</div>
+          </aside>
+
+          <div class="p-main">
+
+            <header class="p-topbar">
+              <div class="p-crumbs">Portal / Turneringer / NM Match Play</div>
+              <div class="p-topbar-right">
+                <span class="p-search">Søk oppgave</span>
+                <span class="p-avatar">EH</span>
+              </div>
+            </header>
+
+            <section class="p-header">
+              <h1 class="p-title">NM Match Play 2026<span class="wf-marker">1</span></h1>
+              <p class="p-subtitle">Forberedelsesplan · 88 dager igjen · prep 60% · 4 utestående oppgaver</p>
+            </section>
+
+            <section class="p-dd-wrap">
+
+              <aside>
+                <div class="p-dd-hero">
+                  <div class="p-dd-hero-label">A-turnering</div>
+                  <div class="p-dd-hero-title">NM Match Play</div>
+                  <div class="p-dd-hero-meta">14.–16. juli · Trondheim GK<span class="wf-marker">2</span></div>
+                  <div class="p-dd-row"><span>Format</span><strong>HCP-match</strong></div>
+                  <div class="p-dd-row"><span>Antall hull</span><strong>72 (4 runder)</strong></div>
+                  <div class="p-dd-row"><span>Startsavgift</span><strong>Betalt · 1.450 kr</strong></div>
+                  <div class="p-dd-row"><span>Reise</span><strong>SJ · 13.–17. juli</strong></div>
+                  <div class="p-dd-row"><span>Overnatting</span><strong>Scandic Lerkendal</strong></div>
+                  <div class="p-dd-row"><span>Caddie</span><strong>Ikke avtalt</strong></div>
+                  <div class="p-dd-row"><span>Coach på plass</span><strong>Anders · 15.–16. juli</strong></div>
+                  <div class="p-prep" style="margin-top:14px;">
+                    <div class="p-prep-track"><div class="p-prep-fill" style="width:60%;"></div></div>
+                    <div class="p-prep-val">60%</div>
+                  </div>
+                  <div class="p-btn-row">
+                    <button class="p-btn p-btn-primary">Åpne i treningsplan</button>
+                  </div>
+                </div>
+
+                <div class="p-card" style="margin-top:14px;">
+                  <div class="p-card-label">Bane-recon</div>
+                  <h3 class="p-card-title" style="margin-top:4px;">Trondheim GK<span class="wf-marker">3</span></h3>
+                  <p class="p-card-sub">Par 72 · 6.432m · linksinspirert · hull 7 og 14 er kritiske</p>
+                  <div class="p-btn-row">
+                    <button class="p-btn">Se banekart</button>
+                    <button class="p-btn">YouTube fly-over</button>
+                  </div>
+                </div>
+              </aside>
+
+              <div>
+                <section class="p-dd-phase">
+                  <div class="p-dd-phase-head">
+                    <div class="p-dd-phase-title">Fase 1 · Base (uke 22–26)<span class="wf-marker">4</span></div>
+                    <div class="p-dd-phase-dates">28. mai → 29. juni</div>
+                  </div>
+                  <div class="p-dd-task"><span class="p-dd-check p-dd-check-done"></span><div class="p-dd-task-text"><strong>Treningsblokk volum</strong> — 3 økter/uke, fokus driver + iron-konsistens</div><div class="p-dd-task-meta">Gjennomført</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check p-dd-check-done"></span><div class="p-dd-task-text"><strong>Trackman benchmark</strong> — baseline club speed, smash, dispersion</div><div class="p-dd-task-meta">4. juni</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check p-dd-check-done"></span><div class="p-dd-task-text"><strong>Fysisk test</strong> — rotasjon, styrke, balanse</div><div class="p-dd-task-meta">Gjennomført</div></div>
+                </section>
+
+                <section class="p-dd-phase">
+                  <div class="p-dd-phase-head">
+                    <div class="p-dd-phase-title">Fase 2 · Spesifisitet (uke 27–28)</div>
+                    <div class="p-dd-phase-dates">30. juni → 13. juli</div>
+                  </div>
+                  <div class="p-dd-task"><span class="p-dd-check p-dd-check-done"></span><div class="p-dd-task-text"><strong>Bane-simulering Trondheim</strong> — 18 hull Mulligan, 3x</div><div class="p-dd-task-meta">Gjennomført</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check p-dd-check-done"></span><div class="p-dd-task-text"><strong>Mental plan</strong> — 1:1 med Markus · trigger words, rutine</div><div class="p-dd-task-meta">Gjennomført</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check p-dd-check-done"></span><div class="p-dd-task-text"><strong>Match-play scenarier</strong> — 5 runder innendørs vs AI-motstand</div><div class="p-dd-task-meta">Gjennomført</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check"></span><div class="p-dd-task-text"><strong>Pakkeliste utstyr</strong> — sjekk driver, wedges, regnklær, GPS</div><div class="p-dd-task-meta">Frist 10. juli</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check"></span><div class="p-dd-task-text"><strong>Caddie-avtale</strong> — kontakt Lars T. (lokal caddie)</div><div class="p-dd-task-meta">Frist 7. juli</div></div>
+                </section>
+
+                <section class="p-dd-phase">
+                  <div class="p-dd-phase-head">
+                    <div class="p-dd-phase-title">Fase 3 · Tapering (uke 28–29)</div>
+                    <div class="p-dd-phase-dates">4. → 13. juli</div>
+                  </div>
+                  <div class="p-dd-task"><span class="p-dd-check"></span><div class="p-dd-task-text"><strong>Redusert volum</strong> — 2 korte økter/uke, fokus timing og tempo</div><div class="p-dd-task-meta">Start 4. juli</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check"></span><div class="p-dd-task-text"><strong>Putting og short game</strong> — 20 min daglig, ingen trøtthet</div><div class="p-dd-task-meta">4.–13. juli</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check"></span><div class="p-dd-task-text"><strong>Coaching-sesjon dagen før</strong> — 13. juli 10:00 · tune-up med Anders</div><div class="p-dd-task-meta">Booket</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check"></span><div class="p-dd-task-text"><strong>Søvn og ernæring</strong> — fast rutine 7 dager i forveien</div><div class="p-dd-task-meta">Fra 7. juli</div></div>
+                </section>
+
+                <section class="p-dd-phase">
+                  <div class="p-dd-phase-head">
+                    <div class="p-dd-phase-title">Fase 4 · Turnering</div>
+                    <div class="p-dd-phase-dates">14.–16. juli</div>
+                  </div>
+                  <div class="p-dd-task"><span class="p-dd-check"></span><div class="p-dd-task-text"><strong>Warm-up rutine</strong> — 40 min, samme struktur hver dag</div><div class="p-dd-task-meta">Daglig</div></div>
+                  <div class="p-dd-task"><span class="p-dd-check"></span><div class="p-dd-task-text"><strong>Reflekterende notat</strong> — 10 min etter hver runde · hva funket/ikke</div><div class="p-dd-task-meta">Daglig</div></div>
+                </section>
+
+              </div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Én turnering, full kontekst. Denne visningen åpnes fra alle andre options sin "Åpne"-CTA.</li>
+        <li><strong>2</strong> — Hero-kortet samler all logistikk på ett sted — reise, overnatting, caddie.</li>
+        <li><strong>3</strong> — Bane-recon er egen seksjon. Lenkes til bane-modul i portalen eller ekstern video.</li>
+        <li><strong>4</strong> — Fase-inndeling matcher periodiseringsprinsippet. Oppgaver kan synkroniseres med treningsplan.</li>
+        <li>Dette er "deep mode" — spilleren går hit når turneringen nærmer seg. Default er likevel Calendar Focus.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for portal-turneringsplan — valget avhenger av hva spilleren oftest trenger: rask oversikt, handlingsliste, langsiktig planlegging eller dypdykk.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Calendar</th><th>2: Prep</th><th>3: Roadmap</th><th>4: Results</th><th>5: Deep dive</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Rask oversikt over sesong</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Handlingsorientert (hva gjør jeg nå)</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Kobling til resultater</td><td>Svak</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Langsiktig planlegging m/ trener</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Kompleksitet i implementasjon</td><td>Lav</td><td>Middels</td><td>Høy</td><td>Middels</td><td>Høy</td></tr>
+        <tr><td>Matcher eksisterende portal-mønstre</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Middels</td><td>Middels</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Calendar Focus</h3>
+      <p>Calendar Focus matcher portal-booking og treningsplan-mønstre og gir spilleren umiddelbar oversikt uten kognitiv friksjon. Hjemmeviewet bruker måned-grupperte lister + høyre-kolonne med neste turnering og prep-status.</p>
+      <p>Implementasjonsforslag: start med Opt 1 som default. Legg til Opt 5 (Deep dive) som klikkmål på hver turnering. Opt 2 (Prep) kan være en filter-modus "Kommende". Opt 3 (Roadmap) som egen fane "Sesong" for spillere som jobber langsiktig med trener. Opt 4 (Results) eksporteres inn i Statistikk-modulen.</p>
+    </div>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Calendar Focus):</strong> Default. Dagens spiller vil vite "hva kommer" med rask prep-indikator.</li>
+      <li><strong>Option 2 (Prep Checklist):</strong> Når forberedelser er hovedaktiviteten — ofte uker 4–0 før en turnering.</li>
+      <li><strong>Option 3 (Season Roadmap):</strong> Årsplanlegging med trener — perfekt for A-turneringer og periodisering.</li>
+      <li><strong>Option 4 (Results Tracking):</strong> Spiller som orienterer seg på prestasjoner — kobling til DataGolf/SG.</li>
+      <li><strong>Option 5 (Pre-tournament Plan):</strong> Deep mode en til to uker før en A-turnering. Tapering og mental plan integrert.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

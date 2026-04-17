@@ -1,0 +1,131 @@
+/* ============================================================
+   Option 5: Editorial — Rapha / Monocle / New Yorker direction
+   Warm cream background, serif typography, editorial restraint
+   ============================================================ */
+
+/* --- Font import (Polished) --- */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,1,400;9..144,0,600;9..144,0,700;9..144,0,800&family=Inter:wght@400;500;600&display=swap');
+
+/* --- Browser chrome: macOS dots (both variants) --- */
+#frame-opt5.clean .browser-dots span:nth-child(1),
+#frame-opt5.polished .browser-dots span:nth-child(1) { background: #FF5F57; }
+#frame-opt5.clean .browser-dots span:nth-child(2),
+#frame-opt5.polished .browser-dots span:nth-child(2) { background: #FEBC2E; }
+#frame-opt5.clean .browser-dots span:nth-child(3),
+#frame-opt5.polished .browser-dots span:nth-child(3) { background: #28C840; }
+
+/* ===================== CLEAN — Rapha / Monocle ===================== */
+#frame-opt5.clean .browser-content { background: #fdf9f0; color: #324D45; font-family: Georgia, "Times New Roman", serif; }
+#frame-opt5.clean .wf-nav-editorial { background: transparent; border-bottom: 1px solid rgba(50,77,69,0.15); padding: 20px 40px; }
+#frame-opt5.clean .wf-logo-serif { font-family: Georgia, serif; font-weight: 700; color: #0A1F18; letter-spacing: -0.01em; font-size: 20px; }
+#frame-opt5.clean .wf-nav-links a { color: #324D45; font-family: -apple-system, sans-serif; font-size: 13px; letter-spacing: 0.02em; text-decoration: none; margin: 0 14px; }
+#frame-opt5.clean .wf-nav-links a:hover { color: #005840; }
+#frame-opt5.clean .wf-btn-ghost { background: transparent; border: 1px solid rgba(50,77,69,0.25); color: #324D45; padding: 8px 16px; font-family: -apple-system, sans-serif; font-size: 13px; border-radius: 2px; }
+
+#frame-opt5.clean .wf-hero-editorial { padding: 64px 40px 48px; text-align: center; max-width: 720px; margin: 0 auto; }
+#frame-opt5.clean .wf-issue { font-family: -apple-system, sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #A5B2AD; margin-bottom: 32px; }
+#frame-opt5.clean .wf-headline-editorial { font-family: Georgia, serif; font-size: 56px; font-weight: 700; color: #0A1F18; letter-spacing: -0.02em; line-height: 1.05; margin: 0 0 20px; }
+#frame-opt5.clean .wf-subhead-editorial { font-family: Georgia, serif; font-style: italic; font-size: 18px; color: #324D45; line-height: 1.5; margin: 0 0 40px; }
+#frame-opt5.clean .wf-device-wide { background: #ECF0EF; border: 1px solid rgba(50,77,69,0.1); color: #A5B2AD; padding: 80px 20px; font-family: -apple-system, sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+#frame-opt5.clean .wf-editorial-body { max-width: 640px; margin: 0 auto; padding: 64px 40px; }
+#frame-opt5.clean .wf-editorial-h2 { font-family: Georgia, serif; font-size: 32px; font-weight: 700; color: #0A1F18; letter-spacing: -0.01em; line-height: 1.2; margin: 0 0 24px; }
+#frame-opt5.clean .wf-editorial-p { font-family: Georgia, serif; font-size: 17px; line-height: 1.75; color: #324D45; margin: 0 0 20px; }
+
+#frame-opt5.clean .wf-section-dark { background: #0A1F18; color: #FFFFFF; padding: 72px 40px; text-align: center; }
+#frame-opt5.clean .wf-h2-dark { font-family: Georgia, serif; font-size: 32px; font-weight: 700; color: #FFFFFF; margin: 0 0 32px; letter-spacing: -0.01em; }
+#frame-opt5.clean .wf-pyramid { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+#frame-opt5.clean .wf-pyramid-layer { background: linear-gradient(180deg, #1A3529, #324D45); color: #FFFFFF; padding: 10px; font-family: -apple-system, sans-serif; font-size: 11px; letter-spacing: 0.18em; text-align: center; }
+#frame-opt5.clean .wf-pyramid-layer:first-child { background: #D1F843; color: #0A1F18; }
+
+#frame-opt5.clean .wf-profiles { padding: 72px 40px; max-width: 880px; margin: 0 auto; }
+#frame-opt5.clean .wf-profile { text-align: center; padding: 20px; }
+#frame-opt5.clean .wf-profile-img { width: 120px; height: 120px; border-radius: 50%; background: #ECF0EF; border: 1px solid rgba(0,88,64,0.15); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #A5B2AD; }
+#frame-opt5.clean .wf-profile h3 { font-family: Georgia, serif; font-size: 18px; font-weight: 700; color: #0A1F18; margin: 0 0 6px; letter-spacing: -0.01em; }
+#frame-opt5.clean .wf-profile p { font-family: Georgia, serif; font-style: italic; font-size: 14px; color: #324D45; margin: 0; }
+
+#frame-opt5.clean .wf-editorial-cta { padding: 64px 40px; max-width: 720px; margin: 0 auto; text-align: center; }
+#frame-opt5.clean .wf-quote { font-family: Georgia, serif; font-style: italic; font-size: 24px; line-height: 1.4; color: #0A1F18; border-left: 3px solid #005840; padding: 8px 0 8px 24px; margin: 0 0 32px; text-align: left; }
+#frame-opt5.clean .wf-btn-cta { background: #005840; color: #FFFFFF; font-family: -apple-system, sans-serif; font-size: 14px; padding: 12px 28px; border: none; border-radius: 2px; letter-spacing: 0.02em; }
+#frame-opt5.clean .wf-btn-secondary { background: transparent; color: #324D45; font-family: -apple-system, sans-serif; font-size: 14px; padding: 12px 24px; border: 1px solid rgba(50,77,69,0.25); border-radius: 2px; }
+
+#frame-opt5.clean .wf-journal-strip { padding: 64px 40px; max-width: 960px; margin: 0 auto; border-top: 1px solid rgba(50,77,69,0.15); }
+#frame-opt5.clean .wf-journal-item { background: #FFFFFF; border: 1px solid rgba(50,77,69,0.08); padding: 0 0 20px; }
+#frame-opt5.clean .wf-journal-img { background: #ECF0EF; padding: 56px 12px; font-family: -apple-system, sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #A5B2AD; text-align: center; margin-bottom: 16px; }
+#frame-opt5.clean .wf-journal-item h3 { font-family: Georgia, serif; font-size: 18px; font-weight: 700; color: #0A1F18; margin: 0 20px 6px; letter-spacing: -0.01em; }
+#frame-opt5.clean .wf-journal-item p { font-family: Georgia, serif; font-style: italic; font-size: 14px; color: #324D45; margin: 0 20px; }
+
+#frame-opt5.clean .wf-footer-editorial { background: #0A1F18; color: #A5B2AD; padding: 48px 40px 40px; border-top: 4px solid #D1F843; }
+#frame-opt5.clean .wf-footer-editorial strong { font-family: Georgia, serif; color: #FFFFFF; font-size: 15px; letter-spacing: -0.01em; }
+#frame-opt5.clean .wf-footer-editorial p { font-family: -apple-system, sans-serif; font-size: 12px; color: rgba(255,255,255,0.55); margin: 4px 0; letter-spacing: 0.02em; }
+
+/* ===================== POLISHED — New Yorker luxury ===================== */
+#frame-opt5.polished .browser-content {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0,88,64,0.02) 0%, transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(0,88,64,0.015) 0%, transparent 45%),
+    #fdf9f0;
+  color: #324D45;
+  font-family: 'Fraunces', Georgia, serif;
+}
+#frame-opt5.polished .wf-nav-editorial { background: rgba(253,249,240,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(50,77,69,0.12); padding: 22px 44px; }
+#frame-opt5.polished .wf-logo-serif { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144; font-weight: 700; color: #0A1F18; letter-spacing: -0.015em; font-size: 22px; }
+#frame-opt5.polished .wf-nav-links a { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #324D45; text-decoration: none; margin: 0 16px; transition: color 150ms ease-out; }
+#frame-opt5.polished .wf-nav-links a:hover { color: #005840; }
+#frame-opt5.polished .wf-btn-ghost { background: transparent; border: 1px solid rgba(50,77,69,0.3); color: #0A1F18; padding: 9px 18px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 1px; }
+
+#frame-opt5.polished .wf-hero-editorial { padding: 88px 44px 64px; text-align: center; max-width: 780px; margin: 0 auto; }
+#frame-opt5.polished .wf-issue { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: #A5B2AD; margin-bottom: 40px; }
+#frame-opt5.polished .wf-headline-editorial { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144; font-size: 76px; font-weight: 700; color: #0A1F18; letter-spacing: -0.035em; line-height: 1; margin: 0 0 24px; }
+#frame-opt5.polished .wf-subhead-editorial { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; font-weight: 400; color: #324D45; line-height: 1.5; margin: 0 auto 48px; max-width: 560px; }
+#frame-opt5.polished .wf-device-wide { background: linear-gradient(135deg, #ECF0EF, #fdf9f0); border: 1px solid rgba(50,77,69,0.08); box-shadow: 0 2px 24px rgba(107,91,79,0.06); color: #A5B2AD; padding: 100px 20px; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+
+#frame-opt5.polished .wf-editorial-body { max-width: 660px; margin: 0 auto; padding: 80px 44px; }
+#frame-opt5.polished .wf-editorial-h2 { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144; font-size: 40px; font-weight: 700; color: #0A1F18; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 28px; }
+#frame-opt5.polished .wf-editorial-p { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 400; line-height: 1.8; color: #324D45; margin: 0 0 22px; }
+#frame-opt5.polished .wf-editorial-body .wf-editorial-p:first-of-type::first-letter { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144; font-weight: 700; font-size: 64px; line-height: 0.9; float: left; margin: 6px 10px 0 0; color: #005840; }
+
+#frame-opt5.polished .wf-section-dark { background: linear-gradient(135deg, #0A1F18 0%, #1A3529 100%); color: #FFFFFF; padding: 88px 44px; text-align: center; position: relative; }
+#frame-opt5.polished .wf-section-dark::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 64px; height: 2px; background: #D1F843; }
+#frame-opt5.polished .wf-h2-dark { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144; font-size: 40px; font-weight: 700; color: #FFFFFF; margin: 0 0 40px; letter-spacing: -0.02em; }
+#frame-opt5.polished .wf-pyramid { max-width: 460px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+#frame-opt5.polished .wf-pyramid-layer { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.1); color: #FFFFFF; padding: 12px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-align: center; }
+#frame-opt5.polished .wf-pyramid-layer:first-child { background: #D1F843; color: #0A1F18; border-color: #D1F843; box-shadow: 0 4px 20px rgba(209,248,67,0.15); }
+
+#frame-opt5.polished .wf-profiles { padding: 88px 44px; max-width: 920px; margin: 0 auto; }
+#frame-opt5.polished .wf-profile { text-align: center; padding: 24px; }
+#frame-opt5.polished .wf-profile-img { width: 140px; height: 140px; border-radius: 50%; background: linear-gradient(135deg, #ECF0EF, #fdf9f0); border: 1px solid rgba(0,88,64,0.12); box-shadow: 0 4px 20px rgba(107,91,79,0.1); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #A5B2AD; }
+#frame-opt5.polished .wf-profile h3 { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144; font-size: 20px; font-weight: 700; color: #0A1F18; margin: 0 0 6px; letter-spacing: -0.01em; }
+#frame-opt5.polished .wf-profile p { font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; color: #324D45; margin: 0; }
+
+#frame-opt5.polished .wf-editorial-cta { padding: 72px 44px; max-width: 740px; margin: 0 auto; text-align: center; }
+#frame-opt5.polished .wf-quote { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144; font-style: italic; font-size: 28px; font-weight: 400; line-height: 1.4; color: #0A1F18; border-left: 4px solid #005840; padding: 16px 0 16px 32px; margin: 0 0 40px; text-align: left; background: rgba(255,255,255,0.4); border-radius: 0 2px 2px 0; }
+#frame-opt5.polished .wf-btn-cta { background: #005840; color: #FFFFFF; font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; padding: 13px 32px; border: none; border-radius: 1px; letter-spacing: 0.01em; transition: background 150ms ease-out; }
+#frame-opt5.polished .wf-btn-cta:hover { background: #00594C; }
+#frame-opt5.polished .wf-btn-secondary { background: transparent; color: #0A1F18; font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; padding: 13px 28px; border: 1px solid rgba(50,77,69,0.3); border-radius: 1px; }
+
+#frame-opt5.polished .wf-journal-strip { padding: 80px 44px; max-width: 1000px; margin: 0 auto; border-top: 1px solid rgba(50,77,69,0.12); }
+#frame-opt5.polished .wf-journal-item { background: #FFFFFF; padding: 0 0 24px; box-shadow: 0 2px 16px rgba(107,91,79,0.06); transition: transform 200ms ease-out, box-shadow 200ms ease-out; }
+#frame-opt5.polished .wf-journal-item:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(107,91,79,0.1); }
+#frame-opt5.polished .wf-journal-img { background: linear-gradient(135deg, #ECF0EF, #fdf9f0); padding: 64px 12px; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: #A5B2AD; text-align: center; margin-bottom: 20px; }
+#frame-opt5.polished .wf-journal-item h3 { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144; font-size: 20px; font-weight: 700; color: #0A1F18; margin: 0 24px 8px; letter-spacing: -0.01em; }
+#frame-opt5.polished .wf-journal-item p { font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; color: #324D45; margin: 0 24px; line-height: 1.5; }
+
+#frame-opt5.polished .wf-footer-editorial { background: linear-gradient(180deg, #0A1F18, #1A3529); color: rgba(255,255,255,0.55); padding: 56px 44px 48px; border-top: 4px solid #D1F843; }
+#frame-opt5.polished .wf-footer-editorial strong { font-family: 'Fraunces', serif; font-variation-settings: "opsz" 144; color: #FFFFFF; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+#frame-opt5.polished .wf-footer-editorial p { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 400; margin: 4px 0; letter-spacing: 0.02em; }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt5.polished .wf-journal-item,
+  #frame-opt5.polished .wf-btn-cta,
+  #frame-opt5.polished .wf-nav-links a { transition: none; }
+}
+
+/* --- Self-reveal: hide badge, color sub-tabs --- */
+#frame-opt5-tabs .sub-tab-badge { display: none; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"] { color: #64B5F6; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #1E88E5; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"].active { color: #1565C0; border-bottom-color: #1565C0; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"] { color: #81C784; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #43A047; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"].active { color: #2E7D32; border-bottom-color: #2E7D32; }

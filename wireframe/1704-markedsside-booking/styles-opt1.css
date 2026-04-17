@@ -1,0 +1,136 @@
+/* ===== Option 1: Classic Wizard — Clean + Polished =====
+   AK Golf Booking — trygg 4-stegs flyt. Light editorial base, lime CTA. */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* Browser chrome — macOS dots */
+#frame-opt1.clean .browser-dots span:nth-child(1),
+#frame-opt1.polished .browser-dots span:nth-child(1) { background: #ff5f57; }
+#frame-opt1.clean .browser-dots span:nth-child(2),
+#frame-opt1.polished .browser-dots span:nth-child(2) { background: #febc2e; }
+#frame-opt1.clean .browser-dots span:nth-child(3),
+#frame-opt1.polished .browser-dots span:nth-child(3) { background: #28c840; }
+
+/* =========================================================
+   CLEAN — warm cream base, confident AK palette
+   ========================================================= */
+#frame-opt1.clean .browser-content { background: #fdf9f0; color: #324D45; font-family: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif; }
+#frame-opt1.clean .wf-nav { background: #fdf9f0; border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt1.clean .wf-logo { color: #0A1F18; font-weight: 800; letter-spacing: -0.01em; }
+#frame-opt1.clean .wf-nav-links a { color: #324D45; }
+#frame-opt1.clean .wf-nav-links a:hover { color: #005840; }
+
+#frame-opt1.clean .wf-btn { background: #ffffff; color: #0A1F18; border: 1px solid rgba(0,88,64,0.18); }
+#frame-opt1.clean .wf-btn-cta,
+#frame-opt1.clean .wf-btn-cta-large { background: #D1F843; color: #0A1F18; border: none; font-weight: 600; }
+#frame-opt1.clean .wf-btn-secondary { background: transparent; color: #0A1F18; border: 1px solid rgba(0,88,64,0.18); }
+#frame-opt1.clean .wf-btn-secondary:hover { background: #F5F8F7; }
+
+#frame-opt1.clean .wf-hero { background: #fdf9f0; }
+#frame-opt1.clean .wf-hero-label { color: #005840; font-weight: 600; letter-spacing: 0.12em; border: 1px solid rgba(0,88,64,0.15); background: #E6F3F1; }
+#frame-opt1.clean .wf-headline { color: #0A1F18; }
+#frame-opt1.clean .wf-subhead { color: #5A6E66; }
+
+#frame-opt1.clean .wf-stepper { background: #ffffff; border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt1.clean .wf-step-pill { background: #ffffff; color: #7A8C85; border: 1px solid rgba(0,88,64,0.14); }
+#frame-opt1.clean .wf-step-pill.wf-active { background: #0A1F18; color: #ffffff; border-color: #0A1F18; }
+#frame-opt1.clean .wf-step-pill.wf-done { background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.2); }
+#frame-opt1.clean .wf-step-num { background: #ffffff; color: #005840; border-color: rgba(0,88,64,0.2); font-weight: 700; }
+#frame-opt1.clean .wf-step-pill.wf-active .wf-step-num { background: #D1F843; color: #0A1F18; border-color: #D1F843; }
+#frame-opt1.clean .wf-step-connector { background: rgba(0,88,64,0.16); }
+
+#frame-opt1.clean .wf-section-wide,
+#frame-opt1.clean .wf-section-narrow { background: #ffffff; }
+#frame-opt1.clean .wf-h2,
+#frame-opt1.clean .wf-h3 { color: #0A1F18; }
+
+#frame-opt1.clean .wf-service-card { background: #ffffff; border: 1px solid rgba(0,88,64,0.1); color: #324D45; }
+#frame-opt1.clean .wf-service-card:hover { border-color: rgba(0,88,64,0.25); }
+#frame-opt1.clean .wf-service-card.wf-selected { border: 2px solid #005840; background: #E6F3F1; }
+#frame-opt1.clean .wf-service-label { color: #005840; font-weight: 700; }
+#frame-opt1.clean .wf-service-title { color: #0A1F18; }
+#frame-opt1.clean .wf-service-desc { color: #5A6E66; }
+#frame-opt1.clean .wf-service-price { color: #005840; font-weight: 800; }
+#frame-opt1.clean .wf-service-meta { color: #A5B2AD; }
+#frame-opt1.clean .wf-service-badge { background: #D1F843; color: #0A1F18; font-weight: 700; letter-spacing: 0.06em; }
+
+#frame-opt1.clean .wf-wizard-footer { background: #ffffff; border-top: 1px solid rgba(0,88,64,0.08); }
+#frame-opt1.clean .wf-info-row { border-bottom: 1px solid rgba(0,88,64,0.06); color: #324D45; }
+#frame-opt1.clean .wf-info-icon { background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.18); font-weight: 700; }
+
+#frame-opt1.clean .wf-footer-dark { background: #0A1F18; color: rgba(255,255,255,0.7); }
+#frame-opt1.clean .wf-footer-dark strong { color: #ffffff; }
+#frame-opt1.clean .wf-footer-dark p { color: rgba(255,255,255,0.6); }
+
+/* =========================================================
+   POLISHED — Fraunces editorial, layered craft, lime glow
+   ========================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes opt1FadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  #frame-opt1.polished .wf-service-card { animation: opt1FadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+  #frame-opt1.polished .wf-grid-3 > :nth-child(1) { animation-delay: 0.04s; }
+  #frame-opt1.polished .wf-grid-3 > :nth-child(2) { animation-delay: 0.1s; }
+  #frame-opt1.polished .wf-grid-3 > :nth-child(3) { animation-delay: 0.16s; }
+  #frame-opt1.polished .wf-grid-3 > :nth-child(4) { animation-delay: 0.22s; }
+  #frame-opt1.polished .wf-grid-3 > :nth-child(5) { animation-delay: 0.28s; }
+  #frame-opt1.polished .wf-grid-3 > :nth-child(6) { animation-delay: 0.34s; }
+}
+
+#frame-opt1.polished .browser-content { background: linear-gradient(180deg, #fdf9f0 0%, #F5F8F7 100%); color: #324D45; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+#frame-opt1.polished .wf-nav { background: rgba(253,249,240,0.85); backdrop-filter: blur(18px) saturate(1.4); border-bottom: 1px solid rgba(0,88,64,0.06); }
+#frame-opt1.polished .wf-logo { color: #0A1F18; font-family: 'Fraunces', Georgia, serif; font-weight: 800; letter-spacing: -0.02em; font-variation-settings: "opsz" 144; }
+#frame-opt1.polished .wf-nav-links a { color: #324D45; transition: color 200ms ease-out; }
+#frame-opt1.polished .wf-nav-links a:hover { color: #005840; }
+
+#frame-opt1.polished .wf-btn { transition: transform 200ms ease-out, box-shadow 200ms ease-out, background 200ms ease-out; }
+#frame-opt1.polished .wf-btn-cta,
+#frame-opt1.polished .wf-btn-cta-large { background: #D1F843; color: #0A1F18; border: none; font-weight: 600; box-shadow: 0 4px 18px rgba(209,248,67,0.45), 0 1px 2px rgba(0,88,64,0.08); }
+#frame-opt1.polished .wf-btn-cta:hover,
+#frame-opt1.polished .wf-btn-cta-large:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(209,248,67,0.55), 0 2px 4px rgba(0,88,64,0.1); }
+#frame-opt1.polished .wf-btn-secondary { background: #ffffff; color: #0A1F18; border: 1px solid rgba(0,88,64,0.14); }
+#frame-opt1.polished .wf-btn-secondary:hover { background: #F5F8F7; border-color: rgba(0,88,64,0.25); }
+
+#frame-opt1.polished .wf-hero { background: linear-gradient(180deg, #fdf9f0 0%, #ffffff 100%); }
+#frame-opt1.polished .wf-hero-label { background: rgba(209,248,67,0.18); color: #0A1F18; border: 1px solid rgba(209,248,67,0.4); font-weight: 600; letter-spacing: 0.12em; }
+#frame-opt1.polished .wf-headline { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.03em; font-variation-settings: "opsz" 144; }
+#frame-opt1.polished .wf-subhead { color: #5A6E66; }
+
+#frame-opt1.polished .wf-stepper { background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,88,64,0.06); }
+#frame-opt1.polished .wf-step-pill { background: #ffffff; color: #7A8C85; border: 1px solid rgba(0,88,64,0.1); transition: all 300ms cubic-bezier(0.4,0,0.2,1); }
+#frame-opt1.polished .wf-step-pill.wf-active { background: linear-gradient(135deg, #0A1F18 0%, #1A3529 100%); color: #ffffff; border-color: #0A1F18; box-shadow: 0 4px 14px rgba(10,31,24,0.25); }
+#frame-opt1.polished .wf-step-pill.wf-done { background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.2); }
+#frame-opt1.polished .wf-step-num { background: #ffffff; color: #005840; border-color: rgba(0,88,64,0.2); font-weight: 700; }
+#frame-opt1.polished .wf-step-pill.wf-active .wf-step-num { background: #D1F843; color: #0A1F18; border-color: #D1F843; box-shadow: 0 0 8px rgba(209,248,67,0.6); }
+#frame-opt1.polished .wf-step-connector { background: rgba(0,88,64,0.14); }
+
+#frame-opt1.polished .wf-section-wide { background: linear-gradient(180deg, #ffffff 0%, #F5F8F7 100%); }
+#frame-opt1.polished .wf-section-narrow { background: #ffffff; }
+#frame-opt1.polished .wf-h2,
+#frame-opt1.polished .wf-h3 { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.02em; font-variation-settings: "opsz" 144; }
+
+#frame-opt1.polished .wf-service-card { background: #ffffff; border: 1px solid rgba(0,88,64,0.06); color: #324D45; box-shadow: 0 1px 3px rgba(0,88,64,0.04), 0 4px 16px rgba(0,88,64,0.05); transition: transform 300ms cubic-bezier(0.4,0,0.2,1), box-shadow 300ms cubic-bezier(0.4,0,0.2,1), border-color 300ms ease-out; }
+#frame-opt1.polished .wf-service-card:hover { transform: translateY(-2px); border-color: rgba(0,88,64,0.16); box-shadow: 0 4px 12px rgba(0,88,64,0.08), 0 12px 32px rgba(0,88,64,0.1); }
+#frame-opt1.polished .wf-service-card.wf-selected { background: linear-gradient(180deg, #FFFFFF 0%, #E6F3F1 100%); border: 2px solid #005840; box-shadow: 0 0 0 3px rgba(209,248,67,0.18), 0 8px 28px rgba(0,88,64,0.14); }
+#frame-opt1.polished .wf-service-label { color: #005840; font-weight: 700; }
+#frame-opt1.polished .wf-service-title { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.01em; }
+#frame-opt1.polished .wf-service-desc { color: #5A6E66; }
+#frame-opt1.polished .wf-service-price { font-family: 'Fraunces', Georgia, serif; color: #005840; font-weight: 800; letter-spacing: -0.02em; }
+#frame-opt1.polished .wf-service-meta { color: #A5B2AD; }
+#frame-opt1.polished .wf-service-badge { background: #D1F843; color: #0A1F18; font-weight: 700; letter-spacing: 0.06em; box-shadow: 0 2px 10px rgba(209,248,67,0.5); }
+
+#frame-opt1.polished .wf-wizard-footer { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-top: 1px solid rgba(0,88,64,0.06); }
+#frame-opt1.polished .wf-info-row { border-bottom: 1px solid rgba(0,88,64,0.06); color: #324D45; }
+#frame-opt1.polished .wf-info-icon { background: linear-gradient(135deg, #E6F3F1 0%, #D5DFDB 100%); color: #005840; border-color: rgba(0,88,64,0.14); font-weight: 700; }
+
+#frame-opt1.polished .wf-footer-dark { background: #0A1F18; color: rgba(255,255,255,0.7); }
+#frame-opt1.polished .wf-footer-dark strong { color: #ffffff; font-family: 'Fraunces', Georgia, serif; }
+#frame-opt1.polished .wf-footer-dark p { color: rgba(255,255,255,0.55); }
+
+/* --- Self-reveal: hide badge, color sub-tabs --- */
+#frame-opt1-tabs .sub-tab-badge { display: none; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"] { color: #64B5F6; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #1E88E5; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"].active { color: #1565C0; border-bottom-color: #1565C0; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"] { color: #81C784; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #43A047; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"].active { color: #2E7D32; border-bottom-color: #2E7D32; }

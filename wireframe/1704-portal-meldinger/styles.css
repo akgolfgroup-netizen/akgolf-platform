@@ -1,0 +1,172 @@
+/* === Wireframe Content CSS (B&W only) — Portal Meldinger === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL ============ */
+.wf-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 760px; background: #f5f5f5; }
+
+/* ============ SIDEBAR ============ */
+.wf-sidebar { background: #fff; border-right: 1px solid #eee; padding: 20px 14px; display: flex; flex-direction: column; gap: 18px; }
+.wf-sb-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: #000; padding: 4px 6px; }
+.wf-sb-profile { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #eee; border-radius: 12px; background: #fff; }
+.wf-sb-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-sb-profile-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-sb-profile-meta { font-size: 11px; color: #999; }
+.wf-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-sb-nav-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; padding: 8px 6px 4px; font-weight: 600; }
+.wf-sb-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; color: #333; font-size: 13px; text-decoration: none; position: relative; }
+.wf-sb-item-icon { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+.wf-sb-item.wf-active { background: #f5f5f5; color: #000; font-weight: 600; }
+.wf-sb-item.wf-active .wf-sb-item-icon { background: #000; border-color: #000; }
+.wf-sb-item-badge { margin-left: auto; background: #000; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; min-width: 18px; text-align: center; }
+
+/* ============ MAIN ============ */
+.wf-main { padding: 0; display: flex; flex-direction: column; min-height: 760px; }
+
+/* Page head */
+.wf-phead { display: flex; justify-content: space-between; align-items: flex-end; padding: 20px 24px 12px; border-bottom: 1px solid #eee; background: #fff; }
+.wf-phead-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 6px; }
+.wf-phead-h { font-size: 22px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.02em; }
+.wf-phead-sub { font-size: 12px; color: #666; margin-top: 2px; }
+.wf-phead-actions { display: flex; gap: 8px; }
+.wf-btn { padding: 8px 14px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 12px; color: #333; cursor: pointer; font-weight: 500; }
+.wf-btn-primary { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+
+/* ============ OPT1: INBOX + CHAT ============ */
+.wf-mg-split { display: grid; grid-template-columns: 320px 1fr; min-height: 680px; }
+.wf-mg-list { background: #fff; border-right: 1px solid #eee; display: flex; flex-direction: column; }
+.wf-mg-search { padding: 14px 16px; border-bottom: 1px solid #eee; }
+.wf-mg-search-input { width: 100%; padding: 8px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #999; background: #f5f5f5; }
+.wf-mg-filters { display: flex; gap: 6px; padding: 10px 16px; border-bottom: 1px solid #eee; }
+.wf-mg-filter { padding: 5px 11px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 11px; color: #666; cursor: pointer; }
+.wf-mg-filter.wf-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-mg-convos { flex: 1; overflow: hidden; }
+.wf-mg-convo { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #eee; cursor: pointer; align-items: center; }
+.wf-mg-convo.wf-active { background: #f5f5f5; border-left: 2px solid #000; padding-left: 14px; }
+.wf-mg-avatar { width: 40px; height: 40px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-mg-convo-name { font-size: 13px; font-weight: 600; color: #000; display: flex; align-items: center; gap: 6px; }
+.wf-mg-convo-role { font-size: 9px; padding: 1px 6px; border: 1px solid #ccc; border-radius: 4px; color: #666; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.wf-mg-convo-preview { font-size: 12px; color: #666; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
+.wf-mg-convo-unread .wf-mg-convo-preview { color: #000; font-weight: 600; }
+.wf-mg-convo-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.wf-mg-convo-time { font-size: 10px; color: #999; font-variant-numeric: tabular-nums; }
+.wf-mg-convo-badge { background: #000; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; min-width: 18px; text-align: center; }
+
+/* Chat pane */
+.wf-mg-chat { display: flex; flex-direction: column; background: #fff; }
+.wf-mg-chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid #eee; }
+.wf-mg-chat-name { font-size: 14px; font-weight: 700; color: #000; }
+.wf-mg-chat-meta { font-size: 11px; color: #666; margin-top: 2px; }
+.wf-mg-chat-actions { margin-left: auto; display: flex; gap: 6px; }
+.wf-mg-chat-icon { width: 32px; height: 32px; border: 1px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; }
+.wf-mg-chat-body { flex: 1; padding: 20px 24px; background: #f5f5f5; overflow-y: hidden; display: flex; flex-direction: column; gap: 10px; min-height: 440px; }
+.wf-mg-day { text-align: center; font-size: 10px; color: #999; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; padding: 8px 0; }
+.wf-mg-msg { max-width: 72%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.5; }
+.wf-mg-msg-them { background: #fff; border: 1px solid #eee; color: #333; align-self: flex-start; border-bottom-left-radius: 4px; }
+.wf-mg-msg-me { background: #000; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+.wf-mg-msg-time { font-size: 10px; color: #999; margin-top: 4px; }
+.wf-mg-msg-me .wf-mg-msg-time { color: #ccc; text-align: right; }
+.wf-mg-compose { padding: 14px 20px; border-top: 1px solid #eee; background: #fff; display: flex; gap: 10px; align-items: center; }
+.wf-mg-compose-input { flex: 1; padding: 10px 14px; border: 1px solid #ccc; border-radius: 999px; font-size: 13px; color: #999; background: #fff; }
+.wf-mg-send { padding: 10px 18px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+/* ============ OPT2: IMESSAGE MODE ============ */
+.wf-im-wrap { display: flex; flex-direction: column; padding: 20px 24px; gap: 14px; background: #f5f5f5; min-height: 680px; }
+.wf-im-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.wf-im-tab { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 12px; color: #666; cursor: pointer; }
+.wf-im-tab.wf-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-im-tab-dot { width: 6px; height: 6px; border-radius: 50%; background: #000; }
+.wf-im-tab.wf-active .wf-im-tab-dot { background: #fff; }
+.wf-im-card { background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 0; display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.wf-im-hero { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid #eee; }
+.wf-im-hero-avatar { width: 48px; height: 48px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #333; }
+.wf-im-hero-name { font-size: 16px; font-weight: 700; color: #000; }
+.wf-im-hero-status { font-size: 11px; color: #666; display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.wf-im-hero-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #666; }
+.wf-im-body { flex: 1; padding: 20px; display: flex; flex-direction: column; gap: 12px; min-height: 380px; }
+.wf-im-nav { display: flex; justify-content: space-between; padding: 10px 18px; border-top: 1px solid #eee; background: #f5f5f5; }
+.wf-im-nav-btn { padding: 6px 14px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 11px; color: #666; cursor: pointer; }
+.wf-im-compose { padding: 12px 18px; border-top: 1px solid #eee; display: flex; gap: 10px; background: #fff; }
+
+/* ============ OPT3: THREADED TOPICS ============ */
+.wf-th-wrap { padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
+.wf-th-group { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; }
+.wf-th-group-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+.wf-th-group-icon { width: 32px; height: 32px; border: 1px solid #ccc; border-radius: 8px; background: #f5f5f5; }
+.wf-th-group-title { font-size: 14px; font-weight: 700; color: #000; }
+.wf-th-group-meta { font-size: 11px; color: #666; margin-top: 1px; }
+.wf-th-group-count { margin-left: auto; background: #000; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+.wf-th-items { display: flex; flex-direction: column; gap: 8px; }
+.wf-th-item { display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; align-items: center; }
+.wf-th-item:hover { background: #f5f5f5; }
+.wf-th-item.wf-unread { background: #f5f5f5; }
+.wf-th-item-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #333; }
+.wf-th-item-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-th-item-preview { font-size: 12px; color: #666; margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 360px; }
+.wf-th-item.wf-unread .wf-th-item-preview { color: #000; font-weight: 500; }
+.wf-th-item-time { font-size: 10px; color: #999; font-variant-numeric: tabular-nums; }
+
+/* ============ OPT4: RICH MEDIA ============ */
+.wf-rm-split { display: grid; grid-template-columns: 300px 1fr; min-height: 680px; }
+.wf-rm-list { background: #fff; border-right: 1px solid #eee; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.wf-rm-convo { display: grid; grid-template-columns: 36px 1fr; gap: 10px; padding: 10px; border-radius: 10px; cursor: pointer; align-items: center; }
+.wf-rm-convo.wf-active { background: #f5f5f5; }
+.wf-rm-convo-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #333; }
+.wf-rm-convo-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-rm-convo-preview { font-size: 11px; color: #666; }
+.wf-rm-chat { display: flex; flex-direction: column; background: #fff; }
+.wf-rm-chat-head { padding: 14px 20px; border-bottom: 1px solid #eee; font-size: 14px; font-weight: 700; color: #000; }
+.wf-rm-body { flex: 1; padding: 20px; background: #f5f5f5; display: flex; flex-direction: column; gap: 12px; overflow-y: hidden; }
+.wf-rm-msg { display: flex; flex-direction: column; gap: 4px; max-width: 75%; }
+.wf-rm-msg-them { align-self: flex-start; }
+.wf-rm-msg-me { align-self: flex-end; align-items: flex-end; }
+.wf-rm-msg-text { padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.5; background: #fff; border: 1px solid #eee; color: #333; }
+.wf-rm-msg-me .wf-rm-msg-text { background: #000; color: #fff; border-color: #000; }
+.wf-rm-video { width: 260px; background: #000; border-radius: 12px; aspect-ratio: 16/9; position: relative; display: flex; align-items: center; justify-content: center; }
+.wf-rm-video-play { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center; font-size: 14px; color: #000; }
+.wf-rm-video-duration { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+.wf-rm-image { width: 220px; height: 160px; background: #ccc; border-radius: 12px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; font-weight: 600; letter-spacing: 0.08em; }
+.wf-rm-audio { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 16px; background: #fff; border: 1px solid #eee; width: 240px; }
+.wf-rm-audio-play { width: 28px; height: 28px; border-radius: 50%; background: #000; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; flex-shrink: 0; }
+.wf-rm-audio-wave { flex: 1; display: flex; align-items: center; gap: 2px; height: 20px; }
+.wf-rm-audio-bar { flex: 1; background: #666; border-radius: 1px; }
+.wf-rm-audio-time { font-size: 10px; color: #666; font-variant-numeric: tabular-nums; }
+.wf-rm-toolbar { display: flex; gap: 6px; padding: 10px 18px; border-top: 1px solid #eee; background: #fff; }
+.wf-rm-tool { width: 32px; height: 32px; border: 1px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; }
+.wf-rm-compose-wrap { padding: 0 18px 14px; background: #fff; display: flex; gap: 10px; }
+.wf-rm-compose-input { flex: 1; padding: 10px 14px; border: 1px solid #ccc; border-radius: 999px; font-size: 13px; color: #999; background: #fff; }
+
+/* ============ OPT5: AI SUMMARY ============ */
+.wf-ai-split { display: grid; grid-template-columns: 300px 1fr 260px; min-height: 680px; }
+.wf-ai-list { background: #fff; border-right: 1px solid #eee; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.wf-ai-chat { display: flex; flex-direction: column; background: #fff; border-right: 1px solid #eee; }
+.wf-ai-chat-head { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.wf-ai-chat-name { font-size: 14px; font-weight: 700; color: #000; }
+.wf-ai-chat-meta { font-size: 11px; color: #666; margin-top: 2px; }
+.wf-ai-body { flex: 1; padding: 18px 20px; background: #f5f5f5; display: flex; flex-direction: column; gap: 10px; min-height: 440px; }
+.wf-ai-panel { background: #fff; padding: 18px; display: flex; flex-direction: column; gap: 14px; overflow-y: hidden; }
+.wf-ai-panel-badge { display: inline-block; padding: 3px 8px; border: 1px solid #666; border-radius: 999px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #333; background: #eee; text-transform: uppercase; align-self: flex-start; }
+.wf-ai-panel-title { font-size: 13px; font-weight: 700; color: #000; }
+.wf-ai-section { border-left: 3px solid #000; padding: 4px 0 4px 12px; }
+.wf-ai-section-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 4px; }
+.wf-ai-section-body { font-size: 12px; color: #333; line-height: 1.5; }
+.wf-ai-bullet { font-size: 12px; color: #333; line-height: 1.5; padding-left: 14px; position: relative; }
+.wf-ai-bullet::before { content: '·'; position: absolute; left: 4px; color: #000; font-weight: 700; }
+.wf-ai-action { padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; background: #fff; font-size: 11px; color: #333; cursor: pointer; text-align: left; font-weight: 500; }
+
+/* ============ MARKERS & ANNOTATIONS ============ */
+.wf-marker { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: #000; color: #fff; font-size: 10px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+.wf-annotations { margin-top: 16px; padding: 20px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-annotations h3 { font-size: 14px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-annotations ul { margin: 0; padding-left: 20px; font-size: 13px; color: #333; }
+.wf-annotations li { margin-bottom: 6px; line-height: 1.5; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

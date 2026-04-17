@@ -1,0 +1,219 @@
+/* === Academy Wireframe Content CSS (B&W only) === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #fff */
+
+.browser-content { padding: 0; }
+
+/* ============ NAV ============ */
+.wf-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; border-bottom: 1px solid #eee;
+}
+.wf-logo { font-weight: 800; font-size: 14px; letter-spacing: 0.08em; color: #000; }
+.wf-nav-links { display: flex; gap: 20px; }
+.wf-nav-links a { color: #333; font-size: 13px; text-decoration: none; }
+.wf-nav-links a:hover { color: #000; }
+
+/* ============ BUTTONS ============ */
+.wf-btn {
+  padding: 8px 16px; border: 1px solid #000; border-radius: 999px;
+  background: #fff; color: #000; font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: background 0.2s;
+}
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-cta-large { padding: 14px 28px; font-size: 15px; background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta-large:hover { background: #333; }
+.wf-btn-secondary { background: #fff; color: #333; border-color: #ccc; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #333; }
+.wf-btn-ghost-light { background: transparent; border: 1px solid #666; color: #fff; }
+.wf-btn-ghost-light:hover { background: #333; }
+
+/* ============ HERO ============ */
+.wf-hero {
+  padding: 64px 32px 48px; text-align: center; max-width: 820px; margin: 0 auto;
+}
+.wf-hero-label {
+  display: inline-block; font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #666; margin-bottom: 16px; font-weight: 600;
+  border: 1px solid #ccc; padding: 4px 10px; border-radius: 999px;
+}
+.wf-headline { font-size: 42px; font-weight: 800; color: #000; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 16px; }
+.wf-headline-split { font-size: 32px; font-weight: 700; color: #000; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 16px; }
+.wf-subhead { font-size: 17px; color: #333; line-height: 1.6; margin: 0 0 28px; max-width: 620px; margin-left: auto; margin-right: auto; }
+.wf-subhead-large { font-size: 19px; color: #333; line-height: 1.55; margin: 0 0 32px; max-width: 680px; margin-left: auto; margin-right: auto; }
+.wf-cta-row { display: flex; gap: 12px; justify-content: center; margin-bottom: 32px; flex-wrap: wrap; }
+
+/* Team hero photo */
+.wf-team-hero { margin: 32px auto 0; max-width: 760px; }
+.wf-team-photo { background: #eee; border: 1px solid #ccc; border-radius: 12px; padding: 140px 20px; text-align: center; color: #999; font-size: 12px; }
+.wf-team-caption { margin-top: 12px; font-size: 13px; color: #666; text-align: center; }
+
+/* Device mockup */
+.wf-device {
+  background: #eee; border: 1px solid #ccc; border-radius: 8px;
+  color: #999; font-size: 12px; padding: 80px 20px; text-align: center;
+  margin: 0;
+}
+.wf-device-medium { padding: 100px 20px; }
+
+/* ============ TRUST BAR ============ */
+.wf-trust-bar {
+  display: flex; justify-content: space-around; padding: 20px 32px;
+  background: #f5f5f5; border-top: 1px solid #eee; border-bottom: 1px solid #eee;
+  font-size: 12px; color: #666; flex-wrap: wrap; gap: 16px;
+}
+
+/* ============ SECTIONS ============ */
+.wf-h2 { font-size: 28px; font-weight: 700; color: #000; text-align: center; margin: 0 0 16px; letter-spacing: -0.01em; }
+
+.wf-method-intro, .wf-packages, .wf-cases, .wf-how, .wf-team-section, .wf-team-strip, .wf-team-footer, .wf-about, .wf-step-full { padding: 56px 32px; }
+.wf-step-alt { background: #fafafa; }
+
+.wf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 880px; margin: 0 auto; }
+.wf-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 920px; margin: 0 auto; }
+.wf-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 920px; margin: 0 auto; }
+.wf-grid-5-compact { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; max-width: 920px; margin: 24px auto 0; }
+
+/* ============ LAYER / METHOD CARDS ============ */
+.wf-layer-card { padding: 16px 12px; background: #fff; border: 1px solid #eee; border-radius: 10px; text-align: center; }
+.wf-layer-card h3 { font-size: 14px; font-weight: 700; color: #000; margin: 8px 0 6px; letter-spacing: 0.06em; }
+.wf-layer-card p { font-size: 11px; color: #666; line-height: 1.4; margin: 0; }
+.wf-layer-tag { font-size: 10px; color: #999; font-weight: 600; letter-spacing: 0.08em; }
+
+/* ============ PACKAGES ============ */
+.wf-pkg {
+  padding: 24px 18px; border: 1px solid #eee; border-radius: 14px; text-align: center; background: #fff;
+  position: relative; display: flex; flex-direction: column;
+}
+.wf-pkg-featured { border-color: #000; border-width: 2px; }
+.wf-pkg-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #000; color: #fff; font-size: 10px; padding: 3px 10px; border-radius: 999px; font-weight: 600; letter-spacing: 0.08em; }
+.wf-pkg-label { font-size: 10px; color: #999; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+.wf-pkg-name { font-size: 16px; font-weight: 700; color: #000; margin-bottom: 8px; }
+.wf-pkg-price { font-size: 22px; font-weight: 800; color: #000; margin-bottom: 16px; }
+.wf-pkg-price span { font-size: 12px; font-weight: 500; color: #666; margin-left: 2px; }
+.wf-pkg ul { list-style: none; padding: 0; margin: 0 0 18px; font-size: 12px; color: #333; text-align: left; }
+.wf-pkg li { padding: 6px 0; border-bottom: 1px solid #eee; }
+.wf-pkg li:last-child { border-bottom: none; }
+.wf-pkg p { font-size: 12px; color: #666; margin: 0 0 16px; }
+.wf-pkg .wf-btn { width: 100%; margin-top: auto; }
+
+/* ============ CASES ============ */
+.wf-case { padding: 20px; border: 1px solid #eee; border-radius: 12px; background: #fff; }
+.wf-case-avatar { width: 40px; height: 40px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #666; margin-bottom: 12px; }
+.wf-case-result { font-size: 22px; font-weight: 800; color: #000; margin-bottom: 4px; }
+.wf-case-time { font-size: 12px; color: #666; margin-bottom: 12px; }
+.wf-case-quote { font-size: 13px; color: #333; font-style: italic; margin-bottom: 12px; line-height: 1.5; }
+.wf-case-name { font-size: 12px; color: #999; font-weight: 500; }
+
+/* ============ DARK SECTIONS ============ */
+.wf-section-dark {
+  background: #000; color: #fff; padding: 64px 32px; text-align: center;
+}
+.wf-h2-dark { font-size: 30px; font-weight: 700; color: #fff; margin: 0 0 16px; letter-spacing: -0.01em; }
+.wf-subhead-dark { font-size: 16px; color: #999; line-height: 1.6; margin: 0 0 24px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.wf-pyramid-label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #999; margin-bottom: 16px; font-weight: 600; }
+.wf-cta-band { padding: 80px 32px; }
+
+/* Pyramide */
+.wf-pyramid { max-width: 500px; margin: 0 auto 32px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.wf-pyramid-layer {
+  height: 32px; background: #333; border: 1px solid #666; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+}
+.wf-pyramid-layer:last-child { background: #fff; color: #000; border-color: #fff; }
+.wf-pyramid-layer:nth-child(4) { background: #eee; color: #000; border-color: #eee; }
+.wf-pyramid-layer:nth-child(3) { background: #ccc; color: #000; border-color: #ccc; }
+.wf-pyramid-layer:nth-child(2) { background: #666; color: #fff; border-color: #666; }
+
+/* Method detail rows */
+.wf-method-detail { max-width: 600px; margin: 24px auto 24px; text-align: left; }
+.wf-detail-row { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid #333; }
+.wf-detail-row:last-child { border-bottom: none; }
+.wf-detail-tag { font-size: 11px; color: #999; font-weight: 700; letter-spacing: 0.08em; min-width: 48px; padding-top: 2px; }
+.wf-detail-text { font-size: 13px; color: #ccc; line-height: 1.5; flex: 1; }
+
+/* ============ PORTAL STRIP ============ */
+.wf-portal-strip { padding: 48px 32px; background: #f5f5f5; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+.wf-portal-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+.wf-portal-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 12px; font-weight: 600; }
+.wf-portal-inner h3 { font-size: 22px; font-weight: 700; margin: 0 0 8px; color: #000; }
+.wf-portal-inner p { font-size: 14px; color: #666; margin: 0 0 20px; line-height: 1.6; }
+
+/* ============ COACH PROFILE (Opt 3) ============ */
+.wf-hero-portrait { padding: 48px 32px; max-width: 960px; margin: 0 auto; }
+.wf-portrait-split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.wf-portrait-img { background: #eee; border: 1px solid #ccc; border-radius: 12px; padding: 160px 20px; text-align: center; color: #999; font-size: 12px; }
+.wf-portrait-text { text-align: left; }
+.wf-portrait-text .wf-hero-label { margin-bottom: 12px; }
+
+.wf-about { background: #fafafa; }
+.wf-about-inner { max-width: 640px; margin: 0 auto; text-align: left; }
+.wf-about-inner .wf-h2 { text-align: left; margin-bottom: 24px; }
+.wf-about-p { font-size: 16px; color: #333; line-height: 1.7; margin: 0 0 20px; }
+.wf-about-sig { font-size: 13px; color: #666; margin-top: 16px; font-style: italic; }
+
+.wf-stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); padding: 32px 32px; background: #000; color: #fff; gap: 16px; }
+.wf-stat-item { text-align: center; }
+.wf-stat-num { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 4px; letter-spacing: -0.02em; }
+.wf-stat-item p { font-size: 11px; color: #999; margin: 0; letter-spacing: 0.06em; text-transform: uppercase; }
+
+.wf-team-row { display: flex; gap: 16px; padding: 20px; border: 1px solid #eee; border-radius: 12px; background: #fff; align-items: flex-start; }
+.wf-team-avatar { width: 48px; height: 48px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #666; flex-shrink: 0; }
+.wf-team-row h3 { font-size: 15px; font-weight: 700; margin: 0 0 4px; color: #000; }
+.wf-team-row p { font-size: 13px; color: #666; margin: 0; }
+
+/* ============ TEAM SECTION (Opt 2/4) ============ */
+.wf-team-card { padding: 24px; border: 1px solid #eee; border-radius: 12px; background: #fff; text-align: left; }
+.wf-team-portrait { background: #eee; border: 1px solid #ccc; border-radius: 10px; padding: 80px 20px; text-align: center; color: #999; font-size: 11px; margin-bottom: 16px; }
+.wf-team-role { font-size: 10px; color: #999; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+.wf-team-card h3 { font-size: 18px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-team-card p { font-size: 13px; color: #666; line-height: 1.6; margin: 0; }
+.wf-team-card-small { padding: 16px; border: 1px solid #eee; border-radius: 12px; background: #fff; text-align: center; }
+.wf-team-card-small h3 { font-size: 14px; font-weight: 700; margin: 10px 0 4px; color: #000; }
+.wf-team-card-small p { font-size: 12px; color: #666; margin: 0; }
+
+/* ============ RESULTS WALL (Opt 4) ============ */
+.wf-hero-results { max-width: 920px; padding-bottom: 32px; }
+.wf-results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0; }
+.wf-result-tile { padding: 20px 12px; border: 1px solid #eee; border-radius: 10px; background: #fff; text-align: center; }
+.wf-result-big { font-size: 28px; font-weight: 800; color: #000; letter-spacing: -0.02em; margin-bottom: 4px; }
+.wf-result-time { font-size: 11px; color: #999; margin-bottom: 4px; }
+.wf-result-name { font-size: 12px; color: #666; font-weight: 500; }
+
+/* How-cards (Opt 4) */
+.wf-how-card { padding: 24px 20px; border: 1px solid #eee; border-radius: 12px; background: #fff; text-align: left; }
+.wf-how-num { font-size: 11px; color: #999; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 10px; }
+.wf-how-card h3 { font-size: 16px; font-weight: 700; color: #000; margin: 0 0 8px; }
+.wf-how-card p { font-size: 13px; color: #666; line-height: 1.5; margin: 0; }
+
+/* ============ PROGRAM JOURNEY (Opt 5) ============ */
+.wf-journey-preview { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 32px; }
+.wf-journey-node { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.wf-journey-dot { width: 36px; height: 36px; border-radius: 50%; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; }
+.wf-journey-node span { font-size: 12px; color: #666; font-weight: 500; }
+.wf-journey-line { flex: 0 1 80px; height: 1px; background: #ccc; }
+
+.wf-step-label { display: inline-block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #999; font-weight: 700; margin-bottom: 8px; }
+.wf-step-text p { font-size: 15px; color: #333; line-height: 1.7; margin: 0 0 16px; }
+.wf-step-list { list-style: none; padding: 0; margin: 16px 0 0; font-size: 13px; color: #333; }
+.wf-step-list li { padding: 8px 0; border-bottom: 1px solid #eee; }
+.wf-step-list li:last-child { border-bottom: none; }
+.wf-step-list li:before { content: "— "; color: #999; }
+
+/* ============ FOOTER ============ */
+.wf-footer-dark { background: #000; color: #999; padding: 48px 32px 32px; }
+.wf-footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 840px; margin: 0 auto; }
+.wf-footer-cols > div strong { color: #fff; font-size: 13px; display: block; margin-bottom: 10px; letter-spacing: 0.04em; }
+.wf-footer-cols > div p { font-size: 12px; color: #999; margin: 4px 0; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }
+.wf-recommendation code { background: #eee; padding: 2px 6px; border-radius: 4px; font-size: 12px; }

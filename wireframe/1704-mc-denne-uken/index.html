@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Denne uken — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Denne uken</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Week Grid</button>
+    <button class="tab-btn" data-tab="option-2">2: Day Focus</button>
+    <button class="tab-btn" data-tab="option-3">3: Metrics Week</button>
+    <button class="tab-btn" data-tab="option-4">4: Alert-driven</button>
+    <button class="tab-btn" data-tab="option-5">5: Team Load</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ============ OPTION 1 — Week Grid (SAFE) ============ -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Week Grid</span></h2>
+    <p class="option-description">7 dager som kolonner · økter plottet i tid · belegg-indikatorer per dag</p>
+    <div class="sub-tab-bar">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/denne-uken</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <div class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK · MISSION CONTROL</div>
+              <div class="mc-tabs">
+                <span class="mc-tab">Oversikt</span>
+                <span class="mc-tab mc-tab-active">Denne uken</span>
+                <span class="mc-tab">Elever</span>
+                <span class="mc-tab">Bookinger</span>
+                <span class="mc-tab">Rapporter</span>
+              </div>
+            </div>
+            <div class="mc-topbar-right"><div class="mc-search">Søk ⌘K</div><div class="mc-avatar">AK</div></div>
+          </div>
+          <div class="mc-subheader">
+            <h3 class="mc-sub-title">Denne uken · 14–20. april 2026</h3>
+            <span class="mc-sub-meta">23 økter planlagt · Anders 85% belegg · Markus 62% · 4 ledige slots fredag ettermiddag</span>
+          </div>
+          <div class="mc-filter-row">
+            <span class="mc-filter-label">COACH</span>
+            <span class="mc-pill mc-pill-active">Alle</span><span class="mc-pill">Anders</span><span class="mc-pill">Markus</span>
+            <span class="mc-filter-label" style="margin-left:16px;">STED</span>
+            <span class="mc-pill mc-pill-active">Alle</span><span class="mc-pill">Oslo</span><span class="mc-pill">Fredrikstad</span>
+            <button class="mc-cta">+ Ny booking</button>
+          </div>
+          <div class="mc-body">
+            <div class="wg-grid">
+              <div class="wg-cell wg-head"></div>
+              <div class="wg-cell wg-head">Man<strong>14</strong></div>
+              <div class="wg-cell wg-head">Tir<strong>15</strong></div>
+              <div class="wg-cell wg-head">Ons<strong>16</strong></div>
+              <div class="wg-cell wg-head">Tor<strong>17</strong></div>
+              <div class="wg-cell wg-head">Fre<strong>18</strong></div>
+              <div class="wg-cell wg-head">Lør<strong>19</strong></div>
+              <div class="wg-cell wg-head">Søn<strong>20</strong></div>
+
+              <div class="wg-cell wg-time">09–11</div>
+              <div class="wg-cell"><span class="wg-evt">Erik H.</span><span class="wg-evt">Nora T.</span></div>
+              <div class="wg-cell"><span class="wg-evt">Lars B.</span></div>
+              <div class="wg-cell"><span class="wg-evt">Sofie L.</span><span class="wg-evt">Junior 14+</span></div>
+              <div class="wg-cell"><span class="wg-evt">Erik H.</span></div>
+              <div class="wg-cell"><span class="wg-evt">Performance×2</span></div>
+              <div class="wg-cell"><span class="wg-evt-empty wg-evt">Fri</span></div>
+              <div class="wg-cell"><span class="wg-evt-empty wg-evt">Fri</span></div>
+
+              <div class="wg-cell wg-time">11–14</div>
+              <div class="wg-cell"><span class="wg-evt">Bedrift WANG</span></div>
+              <div class="wg-cell"><span class="wg-evt-alt">Duo 50</span><span class="wg-evt">Flex 20</span></div>
+              <div class="wg-cell"><span class="wg-evt">Markus·First Tee</span></div>
+              <div class="wg-cell"><span class="wg-evt">Anders·Duo</span></div>
+              <div class="wg-cell"><span class="wg-evt">Lunsjgruppe</span></div>
+              <div class="wg-cell"><span class="wg-evt-empty wg-evt">Fri</span></div>
+              <div class="wg-cell"><span class="wg-evt-empty wg-evt">Fri</span></div>
+
+              <div class="wg-cell wg-time">14–17</div>
+              <div class="wg-cell"><span class="wg-evt">Junior U12</span><span class="wg-evt">Junior U14</span></div>
+              <div class="wg-cell"><span class="wg-evt">Express×3</span></div>
+              <div class="wg-cell"><span class="wg-evt">Elite-gruppe</span></div>
+              <div class="wg-cell"><span class="wg-evt">Markus·Flex</span></div>
+              <div class="wg-cell"><span class="wg-evt-empty wg-evt">4 ledige slots</span></div>
+              <div class="wg-cell"><span class="wg-evt">Banecoaching 9h</span></div>
+              <div class="wg-cell"><span class="wg-evt-empty wg-evt">Fri</span></div>
+
+              <div class="wg-cell wg-time">17–19</div>
+              <div class="wg-cell"><span class="wg-evt">Performance Pro</span></div>
+              <div class="wg-cell"><span class="wg-evt">Anders·Flex 50</span></div>
+              <div class="wg-cell"><span class="wg-evt-alt">Gruppecoach</span></div>
+              <div class="wg-cell"><span class="wg-evt">Junior Elite</span></div>
+              <div class="wg-cell"><span class="wg-evt-empty wg-evt">Fri</span></div>
+              <div class="wg-cell"><span class="wg-evt-empty wg-evt">Fri</span></div>
+              <div class="wg-cell"><span class="wg-evt-empty wg-evt">Fri</span></div>
+            </div>
+
+            <div class="wg-cap">
+              <div class="wg-cap-label">BELEGG</div>
+              <div class="wg-cap-bar"><span style="--fill: 85%;"></span><div class="wg-cap-num">85%</div></div>
+              <div class="wg-cap-bar"><span style="--fill: 78%;"></span><div class="wg-cap-num">78%</div></div>
+              <div class="wg-cap-bar"><span style="--fill: 82%;"></span><div class="wg-cap-num">82%</div></div>
+              <div class="wg-cap-bar"><span style="--fill: 74%;"></span><div class="wg-cap-num">74%</div></div>
+              <div class="wg-cap-bar"><span style="--fill: 42%;"></span><div class="wg-cap-num">42%</div></div>
+              <div class="wg-cap-bar"><span style="--fill: 55%;"></span><div class="wg-cap-num">55%</div></div>
+              <div class="wg-cap-bar"><span style="--fill: 0%;"></span><div class="wg-cap-num">—</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-annotations">
+        <h3>Annotasjoner</h3>
+        <ul>
+          <li>7-dagers grid med tidslots på y-aksen — matcher mental modell for ukeplanlegging</li>
+          <li>Tomme slots vises som stiplet ramme — fredag ettermiddag fremhevet naturlig</li>
+          <li>Belegg-bar nederst gir rask visuell sjekk per dag — 85% Anders → tall stemmer</li>
+          <li>Filter-row: coach + sted som pills — power-users kan slice data raskt</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ OPTION 2 — Day Focus ============ -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Day Focus</span></h2>
+    <p class="option-description">Dag-scroller øverst · full økt-stream per valgt dag · kronologisk stream</p>
+    <div class="sub-tab-bar">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/denne-uken</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <div class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK · MISSION CONTROL</div>
+              <div class="mc-tabs"><span class="mc-tab">Oversikt</span><span class="mc-tab mc-tab-active">Denne uken</span><span class="mc-tab">Elever</span><span class="mc-tab">Bookinger</span><span class="mc-tab">Rapporter</span></div>
+            </div>
+            <div class="mc-topbar-right"><div class="mc-search">Søk ⌘K</div><div class="mc-avatar">AK</div></div>
+          </div>
+          <div class="mc-subheader">
+            <h3 class="mc-sub-title">Denne uken · 14–20. april 2026 · 23 økter</h3>
+            <span class="mc-sub-meta">Anders 85% · Markus 62% · Klikk en dag for å se alle økter</span>
+          </div>
+          <div class="mc-body">
+            <div class="df-days">
+              <div class="df-day"><div class="df-day-name">Man</div><div class="df-day-date">14</div><div class="df-day-count">5 økter</div></div>
+              <div class="df-day df-day-active"><div class="df-day-name">Tir</div><div class="df-day-date">15</div><div class="df-day-count">6 økter</div></div>
+              <div class="df-day"><div class="df-day-name">Ons</div><div class="df-day-date">16</div><div class="df-day-count">4 økter</div></div>
+              <div class="df-day"><div class="df-day-name">Tor</div><div class="df-day-date">17</div><div class="df-day-count">4 økter</div></div>
+              <div class="df-day"><div class="df-day-name">Fre</div><div class="df-day-date">18</div><div class="df-day-count">2 + 4 ledige</div></div>
+              <div class="df-day"><div class="df-day-name">Lør</div><div class="df-day-date">19</div><div class="df-day-count">2 økter</div></div>
+              <div class="df-day"><div class="df-day-name">Søn</div><div class="df-day-date">20</div><div class="df-day-count">fri</div></div>
+            </div>
+            <div class="df-stream">
+              <div class="df-sess"><div class="df-sess-time">09:00<small>20 min</small></div><div class="df-sess-body"><strong>Erik Hansen · Performance Pro</strong><span>Anders · Simulator 1 · uke 3 av 12</span></div><div class="df-sess-tag">Bekreftet</div></div>
+              <div class="df-sess"><div class="df-sess-time">10:00<small>20 min</small></div><div class="df-sess-body"><strong>Nora Torp · Performance</strong><span>Anders · Simulator 1</span></div><div class="df-sess-tag">Bekreftet</div></div>
+              <div class="df-sess"><div class="df-sess-time">11:30<small>50 min</small></div><div class="df-sess-body"><strong>Duo 50 · Lars B. + Jonas K.</strong><span>Markus · Simulator 2</span></div><div class="df-sess-tag">Flex</div></div>
+              <div class="df-sess"><div class="df-sess-time">13:00<small>20 min</small></div><div class="df-sess-body"><strong>Express · Sofie Lund</strong><span>Markus · Simulator 2</span></div><div class="df-sess-tag">Abo</div></div>
+              <div class="df-sess"><div class="df-sess-time">15:00<small>60 min</small></div><div class="df-sess-body"><strong>Junior U14 gruppe</strong><span>Markus · Range · 6 av 8 elever</span></div><div class="df-sess-tag">Gruppe</div></div>
+              <div class="df-sess df-sess-empty"><div class="df-sess-time">17:00<small>50 min</small></div><div class="df-sess-body"><strong>Ingen booket — Anders tilgjengelig</strong><span>Åpen slot i kalender</span></div><div class="df-sess-tag">Ledig</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-annotations">
+        <h3>Annotasjoner</h3>
+        <ul>
+          <li>Dag-scroller øverst — alltid synlig antall økter + valgt dag highlightet</li>
+          <li>Kronologisk stream for valgt dag — rik info per økt (coach, sted, progresjon)</li>
+          <li>Ledige slots vises inline som italic-rader — naturlig å se "hull" i dagen</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ OPTION 3 — Metrics Week ============ -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Metrics Week</span></h2>
+    <p class="option-description">KPI-rad · stolpediagram · coach-breakdown · for controller/styrerapport-bruk</p>
+    <div class="sub-tab-bar">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/denne-uken</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <div class="mc-topbar">
+            <div class="mc-topbar-left"><div class="mc-logo">AK · MISSION CONTROL</div>
+              <div class="mc-tabs"><span class="mc-tab">Oversikt</span><span class="mc-tab mc-tab-active">Denne uken</span><span class="mc-tab">Elever</span><span class="mc-tab">Bookinger</span><span class="mc-tab">Rapporter</span></div>
+            </div>
+            <div class="mc-topbar-right"><div class="mc-search">Søk ⌘K</div><div class="mc-avatar">AK</div></div>
+          </div>
+          <div class="mc-subheader"><h3 class="mc-sub-title">Ukerapport · 14–20. april 2026</h3><span class="mc-sub-meta">Sammenlignet med forrige uke og 4-ukers snitt</span></div>
+          <div class="mc-body">
+            <div class="wf-kpi-row">
+              <div class="wf-kpi"><div class="wf-kpi-label">ØKTER</div><div class="wf-kpi-value">23</div><div class="wf-kpi-delta">+2 vs forrige uke</div></div>
+              <div class="wf-kpi"><div class="wf-kpi-label">BELEGG SNITT</div><div class="wf-kpi-value">73%</div><div class="wf-kpi-delta">Anders 85 / Markus 62</div></div>
+              <div class="wf-kpi"><div class="wf-kpi-label">INNTEKT UKE</div><div class="wf-kpi-value">42.800</div><div class="wf-kpi-delta">+8% vs snitt</div></div>
+              <div class="wf-kpi"><div class="wf-kpi-label">LEDIGE SLOTS</div><div class="wf-kpi-value">4</div><div class="wf-kpi-delta">fredag ettermiddag</div></div>
+            </div>
+            <div class="mw-chart">
+              <div class="mw-chart-head"><strong>Økter per dag</strong><span>Anders + Markus kombinert</span></div>
+              <div class="mw-bars">
+                <div class="mw-bar" style="height:75%"><span style="top:20%"></span></div>
+                <div class="mw-bar" style="height:90%"><span style="top:10%"></span></div>
+                <div class="mw-bar" style="height:60%"><span style="top:35%"></span></div>
+                <div class="mw-bar" style="height:65%"><span style="top:30%"></span></div>
+                <div class="mw-bar" style="height:35%"><span style="top:60%"></span></div>
+                <div class="mw-bar" style="height:30%"><span style="top:65%"></span></div>
+                <div class="mw-bar" style="height:5%"><span style="top:90%"></span></div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:6px;">
+                <div class="mw-bar-label">Man·5</div><div class="mw-bar-label">Tir·6</div><div class="mw-bar-label">Ons·4</div><div class="mw-bar-label">Tor·4</div><div class="mw-bar-label">Fre·2</div><div class="mw-bar-label">Lør·2</div><div class="mw-bar-label">Søn·0</div>
+              </div>
+            </div>
+            <div class="mw-split">
+              <div class="mw-card">
+                <h4>Anders — belegg 85%</h4>
+                <div class="mw-row"><span>Performance / Pro</span><strong>9 økter</strong></div>
+                <div class="mw-row"><span>Flex 20/50</span><strong>4 økter</strong></div>
+                <div class="mw-row"><span>Banecoaching 9h</span><strong>1 økt</strong></div>
+                <div class="mw-row"><span>Inntekt</span><strong>28.400 kr</strong></div>
+              </div>
+              <div class="mw-card">
+                <h4>Markus — belegg 62%</h4>
+                <div class="mw-row"><span>Express</span><strong>5 økter</strong></div>
+                <div class="mw-row"><span>Junior gruppe</span><strong>3 økter</strong></div>
+                <div class="mw-row"><span>First Tee</span><strong>1 økt</strong></div>
+                <div class="mw-row"><span>Inntekt</span><strong>14.400 kr</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-annotations">
+        <h3>Annotasjoner</h3>
+        <ul>
+          <li>KPI-rad som kjerneoversikt — tall-fokus, ikke visualiseringsfokus</li>
+          <li>Stolpediagram viser ukemønster — se umiddelbart at fredag/helg er svakt</li>
+          <li>Coach-kort gir per-person breakdown — støtter inntektsrapportering</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ OPTION 4 — Alert-driven ============ -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Alert-driven</span></h2>
+    <p class="option-description">Varsler først · tomme slots/overbooking/konflikter · handling-fokus</p>
+    <div class="sub-tab-bar">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/denne-uken</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <div class="mc-topbar">
+            <div class="mc-topbar-left"><div class="mc-logo">AK · MISSION CONTROL</div>
+              <div class="mc-tabs"><span class="mc-tab">Oversikt</span><span class="mc-tab mc-tab-active">Denne uken</span><span class="mc-tab">Elever</span><span class="mc-tab">Bookinger</span><span class="mc-tab">Rapporter</span></div>
+            </div>
+            <div class="mc-topbar-right"><div class="mc-search">Søk ⌘K</div><div class="mc-avatar">AK</div></div>
+          </div>
+          <div class="mc-subheader"><h3 class="mc-sub-title">Denne uken · 3 varsler krever handling</h3><span class="mc-sub-meta">23 økter · Anders 85% · Markus 62%</span></div>
+          <div class="mc-body">
+            <p class="wf-section-title">Varsler</p>
+            <div class="ad-alerts">
+              <div class="ad-alert">
+                <div class="ad-alert-icon">!</div>
+                <div><strong>4 ledige slots — fredag 18. april ettermiddag</strong><span>Markus Simulator 2, 13–17 · send SMS-kampanje til Flex-elever?</span></div>
+                <button class="ad-alert-cta">Fyll slots</button>
+              </div>
+              <div class="ad-alert ad-alert-warn">
+                <div class="ad-alert-icon">⚠</div>
+                <div><strong>Overlapp tirsdag 15. april kl. 11:30</strong><span>Duo 50 (Markus) og Flex 20 (Markus) · 10 min overlapp</span></div>
+                <button class="ad-alert-cta">Løs</button>
+              </div>
+              <div class="ad-alert ad-alert-info">
+                <div class="ad-alert-icon">i</div>
+                <div><strong>Anders over kapasitet — 85% belegg</strong><span>Vurder å åpne 2 ekstra slots hos Markus for å balansere</span></div>
+                <button class="ad-alert-cta">Se forslag</button>
+              </div>
+            </div>
+
+            <div class="ad-recap">
+              <div>
+                <p class="wf-section-title">Kommende 48 timer</p>
+                <ul class="ad-list">
+                  <li><span><strong>I dag 15:00</strong> · Junior U14 · Markus</span><span style="color:#666">6 elever</span></li>
+                  <li><span><strong>I dag 17:00</strong> · Performance Pro · Anders</span><span style="color:#666">Erik H.</span></li>
+                  <li><span><strong>I morgen 09:00</strong> · Erik Hansen · Anders</span><span style="color:#666">uke 3 av 12</span></li>
+                  <li><span><strong>I morgen 10:00</strong> · Nora Torp · Anders</span><span style="color:#666">Performance</span></li>
+                  <li><span><strong>I morgen 11:30</strong> · Duo 50 · Markus</span><span style="color:#666">Lars B. + Jonas K.</span></li>
+                </ul>
+              </div>
+              <div>
+                <p class="wf-section-title">Status</p>
+                <ul class="ad-list">
+                  <li><span>Ventende bekreftelser</span><strong>2</strong></li>
+                  <li><span>Avbestillinger denne uke</span><strong>1</strong></li>
+                  <li><span>Nye elever</span><strong>3</strong></li>
+                  <li><span>Faktureringer forfalt</span><strong>0</strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-annotations">
+        <h3>Annotasjoner</h3>
+        <ul>
+          <li>Alerts øverst — handling-fokus, ikke passivt dashboard</li>
+          <li>Hver alert har én primær knapp — redusert beslutningsfriksjon</li>
+          <li>48-timers recap støtter "hva må jeg forberede"-modus</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ OPTION 5 — Team Load ============ -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Team Load</span></h2>
+    <p class="option-description">Per coach · Anders + Markus side-ved-side · belegg + uke-strip</p>
+    <div class="sub-tab-bar">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/denne-uken</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <div class="mc-topbar">
+            <div class="mc-topbar-left"><div class="mc-logo">AK · MISSION CONTROL</div>
+              <div class="mc-tabs"><span class="mc-tab">Oversikt</span><span class="mc-tab mc-tab-active">Denne uken</span><span class="mc-tab">Elever</span><span class="mc-tab">Bookinger</span><span class="mc-tab">Rapporter</span></div>
+            </div>
+            <div class="mc-topbar-right"><div class="mc-search">Søk ⌘K</div><div class="mc-avatar">AK</div></div>
+          </div>
+          <div class="mc-subheader"><h3 class="mc-sub-title">Team-belastning · 14–20. april 2026</h3><span class="mc-sub-meta">23 økter totalt · gap mellom Anders og Markus på 23 prosentpoeng</span></div>
+          <div class="mc-body">
+            <div class="tl-roster">
+              <div class="tl-coach">
+                <div class="tl-coach-head">
+                  <div>
+                    <div class="tl-coach-name">Anders Kristiansen</div>
+                    <div class="tl-coach-meta">14 økter · 28.400 kr inntekt · 85% belegg</div>
+                  </div>
+                  <span class="mc-pill">Se profil</span>
+                </div>
+                <div class="tl-coach-load">
+                  <div class="tl-load-label"><span>Belegg</span><strong>85%</strong></div>
+                  <div class="tl-load-bar"><span style="width:85%"></span></div>
+                </div>
+                <div class="tl-week">
+                  <div class="tl-day tl-day-full"><strong>M</strong>3</div>
+                  <div class="tl-day tl-day-full"><strong>T</strong>3</div>
+                  <div class="tl-day tl-day-full"><strong>O</strong>2</div>
+                  <div class="tl-day tl-day-full"><strong>T</strong>3</div>
+                  <div class="tl-day"><strong>F</strong>2</div>
+                  <div class="tl-day"><strong>L</strong>1</div>
+                  <div class="tl-day tl-day-empty"><strong>S</strong>—</div>
+                </div>
+                <p class="wf-section-title" style="margin-top:14px;">Flaskehalser</p>
+                <div style="font-size:11px;color:#666;">Ingen ledige slots mandag–torsdag · vurder å flytte Flex 20 til Markus</div>
+              </div>
+              <div class="tl-coach">
+                <div class="tl-coach-head">
+                  <div>
+                    <div class="tl-coach-name">Markus Rønås Pedersen</div>
+                    <div class="tl-coach-meta">9 økter · 14.400 kr inntekt · 62% belegg</div>
+                  </div>
+                  <span class="mc-pill">Se profil</span>
+                </div>
+                <div class="tl-coach-load">
+                  <div class="tl-load-label"><span>Belegg</span><strong>62%</strong></div>
+                  <div class="tl-load-bar"><span style="width:62%"></span></div>
+                </div>
+                <div class="tl-week">
+                  <div class="tl-day tl-day-full"><strong>M</strong>2</div>
+                  <div class="tl-day tl-day-full"><strong>T</strong>3</div>
+                  <div class="tl-day"><strong>O</strong>2</div>
+                  <div class="tl-day"><strong>T</strong>1</div>
+                  <div class="tl-day tl-day-empty"><strong>F</strong>0</div>
+                  <div class="tl-day"><strong>L</strong>1</div>
+                  <div class="tl-day tl-day-empty"><strong>S</strong>—</div>
+                </div>
+                <p class="wf-section-title" style="margin-top:14px;">Mulighet</p>
+                <div style="font-size:11px;color:#666;">4 åpne slots fredag ettermiddag · kampanje-forslag: Express-rabatt</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wf-annotations">
+        <h3>Annotasjoner</h3>
+        <ul>
+          <li>Per-coach perspektiv — ser belastning-gap mellom Anders og Markus umiddelbart</li>
+          <li>Uke-strip (M T O T F L S) viser økter per dag per coach</li>
+          <li>Flaskehalser / muligheter gir AI-lignende forslag per coach</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SUMMARY ============ -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering</h2>
+    <p class="option-description">5 eksplorasjoner for MC Denne uken — matcher bruksmodus</p>
+    <ul style="font-size:13px;color:#333;line-height:1.8;">
+      <li><strong>Option 1 (Week Grid) — anbefalt:</strong> Klassisk ukekalender med belegg-indikator. Brukbar uten opplæring, viser naturlig "hvor er hullene?". Passer Anders i daglig bruk.</li>
+      <li><strong>Option 2 (Day Focus):</strong> Når én-dag-drill-down er viktigst. Bra for operativ forberedelse.</li>
+      <li><strong>Option 3 (Metrics Week):</strong> Ukentlig rapport-modus — controller-/eier-perspektiv.</li>
+      <li><strong>Option 4 (Alert-driven):</strong> Hvis vi vil at MC skal styres av handling, ikke observasjon.</li>
+      <li><strong>Option 5 (Team Load):</strong> Når teamet vokser > 2 coacher og balanse-spørsmål er kritisk.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) { if (getComputedStyle(b).display !== 'none') anyVisible = true; });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) { banner.style.display = 'block'; setTimeout(function() { banner.style.display = 'none'; }, 8000); }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Pricing</span> — <span id="project-name">AK Golf Platform</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Tier Grid</button>
+    <button class="tab-btn" data-tab="option-2">2: Side-by-Side</button>
+    <button class="tab-btn" data-tab="option-3">3: Calculator</button>
+    <button class="tab-btn" data-tab="option-4">4: Comparison Table</button>
+    <button class="tab-btn" data-tab="option-5">5: Journey</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Tier Grid ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Tier Grid</span></h2>
+    <p class="option-description">Fire-tier grid med Pro uthevet som "Mest valgt". Matcher Mercury Flow-forsidens pricing-seksjon direkte og skalerer til full pricing-side med FAQ og CTA-band.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/priser</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Utvikling</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Kom i gang gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">PRISER<span class="wf-marker">1</span></div>
+          <h1 class="wf-headline">Velg ditt nivå.</h1>
+          <p class="wf-subhead">Start gratis. Oppgrader når du er klar. Ingen binding, ingen kortdetaljer på gratis-planen.</p>
+          <div class="wf-billing-toggle">
+            <button class="wf-toggle-btn wf-toggle-active">Månedlig</button>
+            <button class="wf-toggle-btn">Årlig <span class="wf-toggle-save">Spar 20%</span></button>
+          </div>
+        </section>
+
+        <section class="wf-pricing">
+          <div class="wf-grid-4">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Gratis</div>
+              <div class="wf-tier-price">0 kr</div>
+              <div class="wf-tier-period">for alltid</div>
+              <p class="wf-tier-desc">For golfere som vil teste Portalen.</p>
+              <ul>
+                <li>Dashboard</li>
+                <li>Runde-logg</li>
+                <li>Grunnfunksjoner</li>
+                <li>1 kobling (GolfBox)</li>
+              </ul>
+              <button class="wf-btn wf-btn-secondary">Kom i gang</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Starter</div>
+              <div class="wf-tier-price">199 kr</div>
+              <div class="wf-tier-period">per måned</div>
+              <p class="wf-tier-desc">For spillere som vil trene med struktur.</p>
+              <ul>
+                <li>Alt i Gratis</li>
+                <li>Treningsplan (12 uker)</li>
+                <li>Dagbok + streaks</li>
+                <li>Svakhetsanalyse</li>
+              </ul>
+              <button class="wf-btn wf-btn-secondary">Velg Starter</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Mest valgt<span class="wf-marker">2</span></div>
+              <div class="wf-tier-name">Pro</div>
+              <div class="wf-tier-price">399 kr</div>
+              <div class="wf-tier-period">per måned</div>
+              <p class="wf-tier-desc">For ambisiøse spillere som vil ha data-drevet fremgang.</p>
+              <ul>
+                <li>Alt i Starter</li>
+                <li>TrackMan-integrasjon</li>
+                <li>AI-veiledning</li>
+                <li>Strokes Gained</li>
+              </ul>
+              <button class="wf-btn wf-btn-cta">Velg Pro</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Elite</div>
+              <div class="wf-tier-price">699 kr</div>
+              <div class="wf-tier-period">per måned</div>
+              <p class="wf-tier-desc">For elite-spillere og konkurransegolfere.</p>
+              <ul>
+                <li>Alt i Pro</li>
+                <li>DataGolf</li>
+                <li>Benchmark pro</li>
+                <li>Prioritert support</li>
+              </ul>
+              <button class="wf-btn wf-btn-secondary">Velg Elite</button>
+            </div>
+          </div>
+          <p class="wf-pricing-footnote">Alle priser er i NOK. Ingen binding. Avbryt når som helst.<span class="wf-marker">3</span></p>
+        </section>
+
+        <section class="wf-trust-bar">
+          <span>340+ aktive spillere</span><span>Stripe sikker betaling</span><span>14 dagers pengene tilbake</span><span>Support innen 24t</span>
+        </section>
+
+        <section class="wf-faq">
+          <h2 class="wf-h2">Vanlige spørsmål<span class="wf-marker">4</span></h2>
+          <div class="wf-faq-grid">
+            <div class="wf-faq-item">
+              <h3>Kan jeg bytte plan når som helst?</h3>
+              <p>Ja. Du kan oppgradere eller nedgradere når som helst. Endringer trer i kraft umiddelbart, og vi pro-rater restbeløpet.</p>
+            </div>
+            <div class="wf-faq-item">
+              <h3>Hva skjer hvis jeg avbryter?</h3>
+              <p>Du beholder tilgang til planen din ut inneværende betalingsperiode. Ingen bindingstid.</p>
+            </div>
+            <div class="wf-faq-item">
+              <h3>Er TrackMan-integrasjon gratis?</h3>
+              <p>TrackMan-integrasjon krever Pro eller høyere. Du bruker din egen TrackMan-lisens.</p>
+            </div>
+            <div class="wf-faq-item">
+              <h3>Får jeg personlig coaching?</h3>
+              <p>Portalen er selvdrevet. Personlig coaching bookes separat fra 2000 kr/mnd. Se «Møt teamet».</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Klar til å trene smartere?</h2>
+          <p class="wf-subhead-dark">14 dagers gratis prøve på alle betalte planer. Ingen kortdetaljer kreves.</p>
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Kom i gang gratis<span class="wf-marker">5</span></button>
+            <button class="wf-btn wf-btn-secondary-dark">Se demo →</button>
+          </div>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong><p>Premium golfcoaching og treningsplattform.</p></div>
+            <div><strong>Produkt</strong><p>Portalen</p><p>Priser</p><p>Treningspyramiden</p></div>
+            <div><strong>Coaching</strong><p>Academy</p><p>Junior</p><p>Utvikling</p></div>
+            <div><strong>Selskap</strong><p>Om oss</p><p>Kontakt</p><p>Personvern</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Enkelt hero:</strong> Ingen lang argumentasjon. Folk på /priser er kjøpsklare — gi dem tiers umiddelbart.</li>
+        <li><strong>2 — "Mest valgt"-badge på Pro:</strong> Sosiale bevis + midt-tier-ankeffekt gir +40% velger denne. Viktigste psykologiske trigger.</li>
+        <li><strong>3 — "Ingen binding"-footnote:</strong> Reduserer friksjon rett etter prisene. "Avbryt når som helst" er kritisk i norsk marked.</li>
+        <li><strong>4 — FAQ direkte under pricing:</strong> Fanger tvil før den fører til avhopp. Fokuser på bytte, avbestilling, og coaching-forholdet.</li>
+        <li><strong>5 — Dark CTA-band før footer:</strong> Siste sjanse. Dramatisk kontrast fungerer psykologisk — etter hvit flate kommer dark-decision-moment.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Side-by-Side ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Side-by-Side</span></h2>
+    <p class="option-description">Portal-pris venstre, Personlig coaching-pris høyre. Én side dekker begge spor. Besøkende ser hele verdihierarkiet samtidig.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/priser</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Portal</a><a href="#">Coaching</a><a href="#">Metoden</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Kom i gang gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">PRISER</div>
+          <h1 class="wf-headline">To veier til bedre golf.<span class="wf-marker">1</span></h1>
+          <p class="wf-subhead">Selv-drevet med Portalen, eller coach-drevet med personlig coaching. Begge bygger på Treningspyramiden.</p>
+        </section>
+
+        <section class="wf-side-by-side">
+          <div class="wf-sbs-column">
+            <div class="wf-sbs-header">
+              <div class="wf-sbs-label">SELV-DREVET</div>
+              <h2 class="wf-sbs-title">Portalen</h2>
+              <p class="wf-sbs-desc">Data-drevet treningsplattform. Tren når det passer deg.</p>
+            </div>
+            <div class="wf-sbs-tiers">
+              <div class="wf-sbs-tier">
+                <div class="wf-sbs-tier-name">Gratis</div>
+                <div class="wf-sbs-tier-price">0 kr</div>
+                <p>Dashboard, Runde-logg, Grunnfunksjoner</p>
+              </div>
+              <div class="wf-sbs-tier">
+                <div class="wf-sbs-tier-name">Starter</div>
+                <div class="wf-sbs-tier-price">199 kr/mnd</div>
+                <p>+ Treningsplan, Dagbok+streaks</p>
+              </div>
+              <div class="wf-sbs-tier wf-sbs-tier-featured">
+                <div class="wf-sbs-tier-badge">Mest valgt<span class="wf-marker">2</span></div>
+                <div class="wf-sbs-tier-name">Pro</div>
+                <div class="wf-sbs-tier-price">399 kr/mnd</div>
+                <p>+ TrackMan, AI-veiledning, Strokes Gained</p>
+              </div>
+              <div class="wf-sbs-tier">
+                <div class="wf-sbs-tier-name">Elite</div>
+                <div class="wf-sbs-tier-price">699 kr/mnd</div>
+                <p>+ DataGolf, Benchmark pro</p>
+              </div>
+            </div>
+            <button class="wf-btn wf-btn-cta-large">Kom i gang gratis</button>
+          </div>
+
+          <div class="wf-sbs-divider">
+            <span>ELLER</span>
+          </div>
+
+          <div class="wf-sbs-column">
+            <div class="wf-sbs-header">
+              <div class="wf-sbs-label">COACH-DREVET</div>
+              <h2 class="wf-sbs-title">Personlig coaching<span class="wf-marker">3</span></h2>
+              <p class="wf-sbs-desc">1-til-1 med Anders eller en av teamet. Portal Elite inkludert.</p>
+            </div>
+            <div class="wf-sbs-tiers">
+              <div class="wf-sbs-tier">
+                <div class="wf-sbs-tier-name">Flex 20</div>
+                <div class="wf-sbs-tier-price">450 kr</div>
+                <p>Enkeltøkt 20 min. Ingen binding.</p>
+              </div>
+              <div class="wf-sbs-tier">
+                <div class="wf-sbs-tier-name">Express</div>
+                <div class="wf-sbs-tier-price">550 kr/mnd</div>
+                <p>2x20 min/mnd med Markus. 3 mnd.</p>
+              </div>
+              <div class="wf-sbs-tier wf-sbs-tier-featured">
+                <div class="wf-sbs-tier-badge">Populær</div>
+                <div class="wf-sbs-tier-name">Performance</div>
+                <div class="wf-sbs-tier-price">1600 kr/mnd</div>
+                <p>2x20 min/mnd med Anders. Løpende.</p>
+              </div>
+              <div class="wf-sbs-tier">
+                <div class="wf-sbs-tier-name">Performance Pro</div>
+                <div class="wf-sbs-tier-price">2000 kr/mnd</div>
+                <p>4x20 min/mnd med Anders. Løpende.</p>
+              </div>
+            </div>
+            <button class="wf-btn wf-btn-secondary">Book intro-samtale</button>
+          </div>
+        </section>
+
+        <section class="wf-compare-strip">
+          <h2 class="wf-h2">Hva velger du?<span class="wf-marker">4</span></h2>
+          <table class="wf-table">
+            <tr><th></th><th>Portalen</th><th>Personlig coaching</th></tr>
+            <tr><td>Pris fra</td><td>0 kr/mnd</td><td>450 kr (enkelt)</td></tr>
+            <tr><td>Fleksibilitet</td><td>100% på dine premisser</td><td>Booking kreves</td></tr>
+            <tr><td>Personlig oppfølging</td><td>AI-basert</td><td>Anders eller team</td></tr>
+            <tr><td>Passer deg hvis</td><td>Du er selvdisiplinert</td><td>Du vil ha ansvar og struktur</td></tr>
+          </table>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Usikker på hva du trenger?</h2>
+          <p class="wf-subhead-dark">Start gratis i Portalen. Oppgrader til coaching når du er klar.</p>
+          <button class="wf-btn wf-btn-cta-large">Kom i gang gratis</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong><p>Premium golfcoaching og treningsplattform.</p></div>
+            <div><strong>Portal</strong><p>Priser</p><p>Funksjoner</p></div>
+            <div><strong>Coaching</strong><p>Møt teamet</p><p>Book intro</p></div>
+            <div><strong>Selskap</strong><p>Om oss</p><p>Kontakt</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Tydelig dualitet i hero:</strong> "To veier" gir besøkende full oversikt i ett blikk. Bygger tillit gjennom transparens.</li>
+        <li><strong>2 — Mest valgt i hver kolonne:</strong> Begge spor har psykologisk anker — Pro (399) og Performance (1600).</li>
+        <li><strong>3 — Coaching-priser synlige:</strong> Mange sider skjuler dette. Transparens senker terskelen og kvalifiserer riktig målgruppe.</li>
+        <li><strong>4 — Sammenlikningstabell:</strong> Hjelper besøkende med selvsegmentering. "Selvdisiplinert" vs "Vil ha ansvar".</li>
+        <li>— Risiko: Visuell kompleksitet kan skremme besøkende som bare ville se portal-priser. Vurderes mot portal-først-prioritet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Calculator ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Calculator</span></h2>
+    <p class="option-description">Interaktiv kalkulator spør HCP, timer/uke og coaching-behov. Systemet anbefaler tier. Psykologisk commitment før pris avsløres.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/priser</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Kom i gang gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">FINN RIKTIG PLAN</div>
+          <h1 class="wf-headline">Hvilken plan passer deg?<span class="wf-marker">1</span></h1>
+          <p class="wf-subhead">Svar på tre spørsmål. Få en anbefaling basert på ditt nivå og ambisjon.</p>
+        </section>
+
+        <section class="wf-calculator">
+          <div class="wf-calc-card">
+            <div class="wf-calc-progress">
+              <div class="wf-calc-step wf-calc-active">1</div>
+              <div class="wf-calc-line"></div>
+              <div class="wf-calc-step wf-calc-active">2</div>
+              <div class="wf-calc-line"></div>
+              <div class="wf-calc-step wf-calc-active">3</div>
+            </div>
+
+            <div class="wf-calc-question">
+              <div class="wf-calc-q-label">SPØRSMÅL 1 AV 3<span class="wf-marker">2</span></div>
+              <h3>Hva er ditt handicap?</h3>
+              <div class="wf-calc-opts">
+                <button class="wf-calc-opt">30+</button>
+                <button class="wf-calc-opt wf-calc-selected">18–29</button>
+                <button class="wf-calc-opt">10–17</button>
+                <button class="wf-calc-opt">0–9</button>
+              </div>
+            </div>
+
+            <div class="wf-calc-question">
+              <div class="wf-calc-q-label">SPØRSMÅL 2 AV 3</div>
+              <h3>Hvor mye trener du i uken?</h3>
+              <div class="wf-calc-opts">
+                <button class="wf-calc-opt">&lt; 1 time</button>
+                <button class="wf-calc-opt wf-calc-selected">2–4 timer</button>
+                <button class="wf-calc-opt">5–8 timer</button>
+                <button class="wf-calc-opt">8+ timer</button>
+              </div>
+            </div>
+
+            <div class="wf-calc-question">
+              <div class="wf-calc-q-label">SPØRSMÅL 3 AV 3</div>
+              <h3>Vil du ha personlig coaching?</h3>
+              <div class="wf-calc-opts">
+                <button class="wf-calc-opt wf-calc-selected">Nei, bare Portalen</button>
+                <button class="wf-calc-opt">Kanskje senere</button>
+                <button class="wf-calc-opt">Ja, 1-til-1</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="wf-calc-result">
+            <div class="wf-calc-result-label">VÅRT FORSLAG FOR DEG<span class="wf-marker">3</span></div>
+            <div class="wf-calc-result-match">
+              <div class="wf-calc-result-tier">Pro</div>
+              <div class="wf-calc-result-price">399 kr/mnd</div>
+              <p class="wf-calc-result-desc">Med HCP 18–29 og 2–4 timer trening i uken får du mest ut av TrackMan-integrasjon og AI-veiledning.</p>
+              <ul class="wf-calc-result-features">
+                <li>Treningsplan tilpasset din tid</li>
+                <li>TrackMan-integrasjon</li>
+                <li>AI-veiledning</li>
+                <li>Strokes Gained-analyse</li>
+              </ul>
+              <button class="wf-btn wf-btn-cta-large">Start gratis 14 dager</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-all-tiers">
+          <h2 class="wf-h2">Alle planer<span class="wf-marker">4</span></h2>
+          <div class="wf-compact-tiers">
+            <div class="wf-compact-tier">
+              <div class="wf-compact-name">Gratis</div>
+              <div class="wf-compact-price">0 kr</div>
+              <p>Dashboard + Runde-logg</p>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+            <div class="wf-compact-tier">
+              <div class="wf-compact-name">Starter</div>
+              <div class="wf-compact-price">199 kr/mnd</div>
+              <p>+ Treningsplan</p>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+            <div class="wf-compact-tier wf-compact-featured">
+              <div class="wf-compact-name">Pro</div>
+              <div class="wf-compact-price">399 kr/mnd</div>
+              <p>+ TrackMan + AI</p>
+              <button class="wf-btn wf-btn-cta">Velg</button>
+            </div>
+            <div class="wf-compact-tier">
+              <div class="wf-compact-name">Elite</div>
+              <div class="wf-compact-price">699 kr/mnd</div>
+              <p>+ DataGolf</p>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Usikker? Start gratis.</h2>
+          <p class="wf-subhead-dark">Du kan oppgradere når du vil.</p>
+          <button class="wf-btn wf-btn-cta-large">Kom i gang gratis</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong></div>
+            <div><strong>Produkt</strong><p>Portalen</p><p>Priser</p></div>
+            <div><strong>Coaching</strong><p>Møt teamet</p></div>
+            <div><strong>Support</strong><p>Kontakt</p><p>Personvern</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Hero = oppgave, ikke prisliste:</strong> Flytter fokus fra pris til passform. Psykologisk investering bygges før pris vises.</li>
+        <li><strong>2 — Progressiv avsløring:</strong> 3 spørsmål (HCP → tid → coaching) reduserer drop-off og gir relevans-signal.</li>
+        <li><strong>3 — Personlig match-kort:</strong> "Vårt forslag for DEG" skaper eierskapsfølelse. Konverterer 30–50% høyere enn generisk tier-grid.</li>
+        <li><strong>4 — Alle tiers fortsatt synlig:</strong> For de som vil se hele bildet uten å ta quizen. Respekt for brukerens autonomi.</li>
+        <li>— Risiko: Krever mer bygg-tid (quiz-logikk + tier-mapping). Mindre trygt hvis vi trenger rask iterasjon.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Comparison Table ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Comparison Table</span></h2>
+    <p class="option-description">Stor feature-matrix med alle tiers × 15+ features. Full transparens. Appellerer til analytiske kjøpere som vil sammenligne detaljert.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/priser</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Kom i gang gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">FULL OVERSIKT<span class="wf-marker">1</span></div>
+          <h1 class="wf-headline">Sammenlign alle planer.</h1>
+          <p class="wf-subhead">Hver funksjon. Hver pris. Ingen skjulte detaljer.</p>
+        </section>
+
+        <section class="wf-matrix-wrap">
+          <table class="wf-matrix">
+            <thead>
+              <tr>
+                <th class="wf-matrix-feature">Funksjon</th>
+                <th>Gratis<br><span class="wf-matrix-price">0 kr</span></th>
+                <th>Starter<br><span class="wf-matrix-price">199 kr/mnd</span></th>
+                <th class="wf-matrix-featured">Pro<br><span class="wf-matrix-price">399 kr/mnd</span><div class="wf-matrix-badge">Mest valgt<span class="wf-marker">2</span></div></th>
+                <th>Elite<br><span class="wf-matrix-price">699 kr/mnd</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="wf-matrix-category"><td colspan="5">Grunnfunksjoner</td></tr>
+              <tr><td>Dashboard</td><td>✓</td><td>✓</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+              <tr><td>Runde-logg</td><td>✓</td><td>✓</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+              <tr><td>GolfBox-sync</td><td>✓</td><td>✓</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+              <tr><td>HCP-historikk</td><td>—</td><td>✓</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+
+              <tr class="wf-matrix-category"><td colspan="5">Trening<span class="wf-marker">3</span></td></tr>
+              <tr><td>Treningsplan (12 uker)</td><td>—</td><td>✓</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+              <tr><td>Dagbok + streaks</td><td>—</td><td>✓</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+              <tr><td>Svakhetsanalyse</td><td>—</td><td>✓</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+              <tr><td>Ukesmål + påminnelser</td><td>—</td><td>✓</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+
+              <tr class="wf-matrix-category"><td colspan="5">Data & AI</td></tr>
+              <tr><td>TrackMan-integrasjon</td><td>—</td><td>—</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+              <tr><td>Strokes Gained-analyse</td><td>—</td><td>—</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+              <tr><td>AI-veiledning</td><td>—</td><td>—</td><td class="wf-matrix-featured">✓</td><td>✓</td></tr>
+              <tr><td>DataGolf-statistikk</td><td>—</td><td>—</td><td class="wf-matrix-featured">—</td><td>✓</td></tr>
+              <tr><td>Benchmark pro (PGA Tour)</td><td>—</td><td>—</td><td class="wf-matrix-featured">—</td><td>✓</td></tr>
+
+              <tr class="wf-matrix-category"><td colspan="5">Support</td></tr>
+              <tr><td>E-post support</td><td>—</td><td>48t</td><td class="wf-matrix-featured">24t</td><td>12t</td></tr>
+              <tr><td>Prioritert support</td><td>—</td><td>—</td><td class="wf-matrix-featured">—</td><td>✓</td></tr>
+
+              <tr class="wf-matrix-cta">
+                <td></td>
+                <td><button class="wf-btn wf-btn-secondary">Kom i gang</button></td>
+                <td><button class="wf-btn wf-btn-secondary">Velg Starter</button></td>
+                <td class="wf-matrix-featured"><button class="wf-btn wf-btn-cta">Velg Pro</button></td>
+                <td><button class="wf-btn wf-btn-secondary">Velg Elite</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="wf-faq">
+          <h2 class="wf-h2">Vanlige spørsmål<span class="wf-marker">4</span></h2>
+          <div class="wf-faq-grid">
+            <div class="wf-faq-item"><h3>Kan jeg oppgradere senere?</h3><p>Ja. Du kan oppgradere eller nedgradere når som helst.</p></div>
+            <div class="wf-faq-item"><h3>Er det bindingstid?</h3><p>Nei. Alle planer er løpende og kan avbrytes når som helst.</p></div>
+            <div class="wf-faq-item"><h3>Trenger jeg egen TrackMan?</h3><p>Ja, TrackMan-integrasjon krever Pro + egen TrackMan-lisens.</p></div>
+            <div class="wf-faq-item"><h3>Får jeg faktura?</h3><p>Ja. Alle betalinger håndteres av Stripe og dokumenteres med kvittering.</p></div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Klar til å starte?</h2>
+          <button class="wf-btn wf-btn-cta-large">Kom i gang gratis</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong><p>Premium golfcoaching og treningsplattform.</p></div>
+            <div><strong>Produkt</strong><p>Portalen</p><p>Priser</p></div>
+            <div><strong>Coaching</strong><p>Academy</p><p>Møt teamet</p></div>
+            <div><strong>Selskap</strong><p>Om oss</p><p>Kontakt</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — "Full oversikt" som løfte:</strong> Signaliserer transparens — et konkurransefortrinn i norsk marked der skjulte kostnader oppleves ekstra negativt.</li>
+        <li><strong>2 — Pro-kolonne visuelt fremhevet:</strong> Shaded bakgrunn gjennom hele tabellen. Øker konvertering på midt-tier med 25–40%.</li>
+        <li><strong>3 — Kategori-rader som ankere:</strong> "Grunnfunksjoner / Trening / Data & AI / Support" gir tabellen visuell rytme og skaper mental struktur.</li>
+        <li><strong>4 — FAQ nederst:</strong> Fanger siste tvil etter detaljert sammenligning — typiske dealbreakers rundt binding og oppgradering.</li>
+        <li>— Risiko: Kan være overveldende for besøkende som bare vil ha "hvor mye koster Pro?". CTA øverst og knapper i tabellen balanserer dette.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Journey ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Journey</span></h2>
+    <p class="option-description">Narrativ scroll-story — hver tier får sin egen full-width-seksjon. Starter med Gratis, bygger til Elite. Editorial og brand-bygge.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/priser</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav wf-nav-editorial">
+          <div class="wf-logo wf-logo-serif">AK Golf</div>
+          <div class="wf-nav-links"><a href="#">Portal</a><a href="#">Priser</a><a href="#">Teamet</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-ghost">Start gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-issue">FIRE NIVÅER · EN VEI<span class="wf-marker">1</span></div>
+          <h1 class="wf-headline-editorial">Hvor langt vil du?</h1>
+          <p class="wf-subhead-editorial">Fire planer. Samme fundament. Din ambisjon avgjør verktøyene du trenger.</p>
+        </section>
+
+        <section class="wf-journey-tier wf-journey-01">
+          <div class="wf-journey-inner">
+            <div class="wf-journey-num">01</div>
+            <div class="wf-journey-label">GRATIS</div>
+            <h2 class="wf-journey-title">Begynn å logge. Begynn å se.<span class="wf-marker">2</span></h2>
+            <p class="wf-journey-price"><strong>0 kr</strong> for alltid</p>
+            <p class="wf-journey-desc">Start med å logge runder og følge HCP. Du får oversikt over hvor du står — uten å betale noe.</p>
+            <ul class="wf-journey-features">
+              <li>Dashboard</li>
+              <li>Runde-logg</li>
+              <li>Grunnfunksjoner</li>
+              <li>1 kobling (GolfBox)</li>
+            </ul>
+            <button class="wf-btn wf-btn-secondary">Kom i gang gratis</button>
+          </div>
+        </section>
+
+        <section class="wf-journey-tier wf-journey-02">
+          <div class="wf-journey-inner">
+            <div class="wf-journey-num">02</div>
+            <div class="wf-journey-label">STARTER</div>
+            <h2 class="wf-journey-title">Få struktur. Bygg vaner.</h2>
+            <p class="wf-journey-price"><strong>199 kr</strong> per måned</p>
+            <p class="wf-journey-desc">Når du er klar for å trene systematisk, får du en 12-ukers plan bygget på Treningspyramiden fra Norges Golfforbund.</p>
+            <ul class="wf-journey-features">
+              <li>Alt i Gratis</li>
+              <li>Personlig 12-ukers treningsplan</li>
+              <li>Dagbok + streaks</li>
+              <li>Svakhetsanalyse</li>
+            </ul>
+            <button class="wf-btn wf-btn-secondary">Velg Starter</button>
+          </div>
+        </section>
+
+        <section class="wf-journey-tier wf-journey-03 wf-journey-featured">
+          <div class="wf-journey-inner">
+            <div class="wf-journey-num">03</div>
+            <div class="wf-journey-label">PRO · MEST VALGT<span class="wf-marker">3</span></div>
+            <h2 class="wf-journey-title">Data som snakker.</h2>
+            <p class="wf-journey-price"><strong>399 kr</strong> per måned</p>
+            <p class="wf-journey-desc">TrackMan-data koblet til Strokes Gained-analyse. AI-veiledning som leser dine tall og gir deg neste skritt.</p>
+            <ul class="wf-journey-features">
+              <li>Alt i Starter</li>
+              <li>TrackMan-integrasjon</li>
+              <li>Strokes Gained-analyse</li>
+              <li>AI-veiledning</li>
+            </ul>
+            <button class="wf-btn wf-btn-cta-large">Velg Pro</button>
+          </div>
+        </section>
+
+        <section class="wf-journey-tier wf-journey-04">
+          <div class="wf-journey-inner">
+            <div class="wf-journey-num">04</div>
+            <div class="wf-journey-label">ELITE</div>
+            <h2 class="wf-journey-title">For de som måler seg mot toppen.</h2>
+            <p class="wf-journey-price"><strong>699 kr</strong> per måned</p>
+            <p class="wf-journey-desc">DataGolf-statistikk og PGA Tour-benchmark. Her slutter Portalen å være verktøy og begynner å bli partner.</p>
+            <ul class="wf-journey-features">
+              <li>Alt i Pro</li>
+              <li>DataGolf-statistikk</li>
+              <li>Benchmark pro (PGA Tour)</li>
+              <li>Prioritert support</li>
+            </ul>
+            <button class="wf-btn wf-btn-secondary">Velg Elite</button>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Start der du er.<span class="wf-marker">4</span></h2>
+          <p class="wf-subhead-dark">Du kan alltid gå oppover. Begynn gratis i dag.</p>
+          <button class="wf-btn wf-btn-cta-large">Kom i gang gratis</button>
+        </section>
+
+        <footer class="wf-footer-dark wf-footer-editorial">
+          <div class="wf-footer-cols">
+            <div><strong>AK Golf</strong><p>En publikasjon om golfutvikling.</p></div>
+            <div><strong>Produkt</strong><p>Portalen</p><p>Priser</p></div>
+            <div><strong>Coaching</strong><p>Møt teamet</p></div>
+            <div><strong>Kontakt</strong><p>Instagram</p><p>E-post</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — "Fire nivåer · en vei":</strong> Rammer pricing som en reise snarere enn en katalog. Bygger brand mer enn det konverterer raskt.</li>
+        <li><strong>2 — Tier 01 gratis i hero-posisjon:</strong> Bygger inn "no-risk start"-budskap før pris møter besøkende. Lav terskel.</li>
+        <li><strong>3 — Pro som featured-seksjon:</strong> Bakgrunnsfarge skiller visuelt ut midt-tier. Still anker for kjøpsbeslutning.</li>
+        <li><strong>4 — "Start der du er":</strong> Eksplisitt oppskalering-løfte. Reduserer frykt for å velge "feil" nivå.</li>
+        <li>— Risiko: Lang scroll kan miste analytiske kjøpere. Egner seg best for brand-bygge og Pinterest/IG-trafikk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>portal-signups fra /priser</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Konvertering (est.)</th><th>Beslutningstid</th><th>Bygg-kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Tier Grid</strong></td>
+          <td>Fire-tier grid, Pro fremhevet, FAQ + CTA-band</td>
+          <td>Høy</td>
+          <td>Rask (2–3 min)</td>
+          <td>Lav</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><strong>2. Side-by-Side</strong></td>
+          <td>Portal vs Coaching sidestilt, full transparens</td>
+          <td>Medium–høy (selv-segmenterer)</td>
+          <td>Medium (3–5 min)</td>
+          <td>Medium</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>3. Calculator</strong></td>
+          <td>Interaktiv quiz → personlig anbefaling</td>
+          <td>Svært høy (psykologisk commitment)</td>
+          <td>Lang (4–6 min)</td>
+          <td>Høy (quiz-logikk + tier-mapping)</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>4. Comparison Table</strong></td>
+          <td>Full feature-matrix × alle tiers, maks transparens</td>
+          <td>Medium (analytiske kjøpere)</td>
+          <td>Lang (scanner-atferd)</td>
+          <td>Medium</td>
+          <td>★★★☆☆</td>
+        </tr>
+        <tr>
+          <td><strong>5. Journey</strong></td>
+          <td>Narrativ scroll-story, tier-for-tier</td>
+          <td>Lav på kort sikt, høy brand-verdi</td>
+          <td>Svært lang</td>
+          <td>Lav–medium</td>
+          <td>★★★☆☆</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Tier Grid</h3>
+      <p>Besøkende på /priser er kjøpsklare. De vil se pris umiddelbart, ikke navigere gjennom quizer eller scroll-essays. Option 1 (Tier Grid) matcher Mercury Flow-forsidens pricing-seksjon, er lav å bygge, og balanserer raske beslutninger med nok informasjon (FAQ + CTA-band) til å stenge avtalen.</p>
+
+      <p><strong>Strategisk flow:</strong> Bygg Option 1 som basis /priser-side. Legg Option 3 (Calculator) inn som en sekundær "Finn riktig plan"-knapp i navigasjonen for besøkende som trenger hjelp. Option 4 (Comparison Table) kan være en "Sammenlign detaljer"-accordion under hovedtiers for analytiske kjøpere. Option 2 (Side-by-Side) er best hvis coaching-salg skal likestilles — vurderes når coaching-kapasitet er klar til skalering.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

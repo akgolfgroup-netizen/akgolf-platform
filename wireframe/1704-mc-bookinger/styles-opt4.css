@@ -1,0 +1,141 @@
+/* === Option 4: Table Power — Clean + Polished === */
+#frame-opt4-tabs .sub-tab-badge { display: none; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"] { color: #000; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"].active { color: #000; border-bottom-color: #000; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"] { color: #000; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"].active { color: #000; border-bottom-color: #000; }
+
+/* ================ CLEAN ================ */
+.clean #frame-opt4 { font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif; }
+.clean #frame-opt4 .mc-shell { background: #F5F8F7; }
+
+.clean #frame-opt4 .mc-topbar { background: #0A1F18; color: #fff; border-bottom: 1px solid #1A3529; }
+.clean #frame-opt4 .mc-tab { color: rgba(255,255,255,0.6); }
+.clean #frame-opt4 .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.clean #frame-opt4 .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 600; }
+.clean #frame-opt4 .mc-logo { color: #fff; }
+.clean #frame-opt4 .mc-search { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); }
+.clean #frame-opt4 .mc-avatar { background: #D1F843; color: #0A1F18; }
+
+.clean #frame-opt4 .mc-bulk-bar { background: #005840; color: #fff; border-bottom: 1px solid #00594C; }
+.clean #frame-opt4 .mc-bulk-btn { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.18); color: #fff; }
+.clean #frame-opt4 .mc-bulk-btn:hover { background: rgba(255,255,255,0.2); }
+
+.clean #frame-opt4 .mc-col-filter-row { background: #fff; border-bottom: 1px solid #ECF0EF; }
+.clean #frame-opt4 .mc-col-filter { background: #F5F8F7; border-color: #D5DFDB; color: #7A8C85; }
+
+.clean #frame-opt4 .mc-table thead th { background: #F5F8F7; color: #A5B2AD; border-bottom-color: #ECF0EF; }
+.clean #frame-opt4 .mc-table thead th.mc-th-sorted { color: #005840; }
+.clean #frame-opt4 .mc-table tbody td { border-bottom-color: #ECF0EF; color: #324D45; }
+.clean #frame-opt4 .mc-table tbody tr { background: #fff; }
+.clean #frame-opt4 .mc-table tbody tr:hover { background: #F5F8F7; }
+.clean #frame-opt4 .mc-table tbody tr.mc-tr-selected { background: #E6F3F1; }
+.clean #frame-opt4 .mc-cb { background: #fff; border-color: #D5DFDB; }
+.clean #frame-opt4 .mc-cb-checked { background: #005840; border-color: #005840; }
+.clean #frame-opt4 .mc-td-id { color: #7A8C85; }
+.clean #frame-opt4 .mc-td-name { color: #0A1F18; }
+.clean #frame-opt4 .mc-td-sub { color: #A5B2AD; }
+.clean #frame-opt4 .mc-td-price { color: #0A1F18; font-feature-settings: "tnum"; }
+
+.clean #frame-opt4 .mc-status-pending { background: #C48A32; }
+.clean #frame-opt4 .mc-status-confirmed { background: #2A7D5A; }
+.clean #frame-opt4 .mc-status-completed { background: #005840; }
+.clean #frame-opt4 .mc-status-cancelled { background: #FCEAE8; border: 1px solid #B84233; }
+.clean #frame-opt4 .mc-status-noshow { background: repeating-linear-gradient(45deg, #FCEAE8, #FCEAE8 3px, #fff 3px, #fff 6px); border: 1px solid #B84233; }
+.clean #frame-opt4 .mc-tag-pending { background: #FDF4E4; border-color: #C48A32; color: #7A5520; }
+.clean #frame-opt4 .mc-tag-confirmed { background: #E8F5EF; border-color: #2A7D5A; color: #1A4D36; }
+.clean #frame-opt4 .mc-tag-completed { background: #005840; color: #fff; border-color: #005840; }
+.clean #frame-opt4 .mc-tag-cancelled { background: #fff; border-color: #D5DFDB; color: #A5B2AD; }
+.clean #frame-opt4 .mc-tag-noshow { background: #FCEAE8; border-color: #B84233; color: #7A2C22; }
+
+/* ================ POLISHED ================ */
+.polished #frame-opt4 {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: "cv02", "cv11", "ss01";
+}
+.polished #frame-opt4 .mc-shell { background: linear-gradient(180deg, #F5F8F7 0%, #ECF0EF 100%); }
+
+.polished #frame-opt4 .mc-topbar {
+  background: linear-gradient(180deg, #0A1F18 0%, #071610 100%);
+  border-bottom: 1px solid rgba(209,248,67,0.12);
+  box-shadow: 0 8px 24px rgba(10,31,24,0.28);
+}
+.polished #frame-opt4 .mc-logo { color: #D1F843; letter-spacing: 0.14em; }
+.polished #frame-opt4 .mc-tab { color: rgba(255,255,255,0.55); transition: all 180ms cubic-bezier(0.4,0,0.2,1); }
+.polished #frame-opt4 .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.polished #frame-opt4 .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; box-shadow: 0 0 0 1px rgba(209,248,67,0.45), 0 6px 18px rgba(209,248,67,0.24); }
+.polished #frame-opt4 .mc-search { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); color: rgba(255,255,255,0.65); }
+.polished #frame-opt4 .mc-avatar { background: #D1F843; color: #0A1F18; box-shadow: 0 0 0 2px rgba(209,248,67,0.22), 0 4px 12px rgba(10,31,24,0.4); }
+
+.polished #frame-opt4 .mc-bulk-bar {
+  background: linear-gradient(90deg, #005840 0%, #00594C 100%);
+  color: #fff;
+  border-bottom: 1px solid #005840;
+  box-shadow: 0 4px 16px rgba(0,88,64,0.2);
+}
+.polished #frame-opt4 .mc-bulk-info strong { color: #D1F843; font-weight: 800; }
+.polished #frame-opt4 .mc-bulk-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: #fff; font-weight: 600; border-radius: 6px;
+  transition: all 160ms cubic-bezier(0.4,0,0.2,1);
+}
+.polished #frame-opt4 .mc-bulk-btn:hover {
+  background: #D1F843; color: #0A1F18; border-color: #D1F843;
+  box-shadow: 0 4px 12px rgba(209,248,67,0.3);
+}
+
+.polished #frame-opt4 .mc-col-filter-row { background: #fff; border-bottom: 1px solid rgba(10,31,24,0.06); }
+.polished #frame-opt4 .mc-col-filter {
+  background: #F5F8F7; border: 1px solid rgba(10,31,24,0.06);
+  color: #7A8C85; border-radius: 6px;
+  font-family: "JetBrains Mono", "SF Mono", monospace;
+  font-size: 11px;
+}
+
+.polished #frame-opt4 .mc-table-wrap { background: #fff; }
+.polished #frame-opt4 .mc-table thead th {
+  background: #F5F8F7; color: #A5B2AD; letter-spacing: 0.14em;
+  border-bottom: 1px solid rgba(10,31,24,0.08);
+  font-weight: 700;
+}
+.polished #frame-opt4 .mc-table thead th.mc-th-sorted { color: #005840; }
+.polished #frame-opt4 .mc-table tbody td {
+  border-bottom: 1px solid rgba(10,31,24,0.04);
+  color: #324D45;
+}
+.polished #frame-opt4 .mc-table tbody tr { background: #fff; transition: background 120ms; }
+.polished #frame-opt4 .mc-table tbody tr:hover { background: #F5F8F7; }
+.polished #frame-opt4 .mc-table tbody tr.mc-tr-selected { background: #E6F3F1; box-shadow: inset 3px 0 0 #005840; }
+.polished #frame-opt4 .mc-cb { background: #fff; border: 1px solid rgba(10,31,24,0.2); transition: all 160ms; }
+.polished #frame-opt4 .mc-cb-checked {
+  background: #005840; border-color: #005840;
+  box-shadow: 0 2px 6px rgba(0,88,64,0.24);
+}
+.polished #frame-opt4 .mc-td-id {
+  color: #7A8C85;
+  font-family: "JetBrains Mono", "SF Mono", monospace;
+  font-weight: 500;
+}
+.polished #frame-opt4 .mc-td-name { color: #0A1F18; font-weight: 700; }
+.polished #frame-opt4 .mc-td-sub { color: #A5B2AD; }
+.polished #frame-opt4 .mc-td-price {
+  color: #0A1F18; font-weight: 800;
+  font-family: "JetBrains Mono", "SF Mono", monospace; font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.polished #frame-opt4 .mc-status-pending { background: #C48A32; }
+.polished #frame-opt4 .mc-status-confirmed { background: #2A7D5A; }
+.polished #frame-opt4 .mc-status-completed { background: #005840; }
+.polished #frame-opt4 .mc-status-cancelled { background: #FCEAE8; border: 1px solid #B84233; }
+.polished #frame-opt4 .mc-status-noshow { background: repeating-linear-gradient(45deg, #FCEAE8, #FCEAE8 3px, #fff 3px, #fff 6px); border: 1px solid #B84233; }
+.polished #frame-opt4 .mc-tag-pending { background: #FDF4E4; border-color: rgba(196,138,50,0.35); color: #7A5520; font-weight: 700; }
+.polished #frame-opt4 .mc-tag-confirmed { background: #E8F5EF; border-color: rgba(42,125,90,0.3); color: #1A4D36; font-weight: 700; }
+.polished #frame-opt4 .mc-tag-completed { background: #005840; color: #fff; border-color: #005840; font-weight: 700; }
+.polished #frame-opt4 .mc-tag-cancelled { background: #fff; border-color: rgba(10,31,24,0.1); color: #A5B2AD; }
+.polished #frame-opt4 .mc-tag-noshow { background: #FCEAE8; border-color: rgba(184,66,51,0.3); color: #7A2C22; font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  .polished #frame-opt4 * { transition: none !important; transform: none !important; }
+}

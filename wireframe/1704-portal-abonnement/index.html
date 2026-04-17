@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abonnement — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Abonnement</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Current + Upgrade</button>
+    <button class="tab-btn" data-tab="option-2">2: Usage Focus</button>
+    <button class="tab-btn" data-tab="option-3">3: Compare All Tiers</button>
+    <button class="tab-btn" data-tab="option-4">4: Invoice History</button>
+    <button class="tab-btn" data-tab="option-5">5: Goals + Tier</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Current + Upgrade (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Current + Upgrade</span></h2>
+    <p class="option-description">Nåværende tier som stort hero-kort øverst (Pro, 399 kr/mnd, neste faktura 17. mai). Upgrade-kort med Elite under. Stripe Customer Portal-lenke for fakturadetaljer. Trygt, tydelig, match med portalens etablerte mønster.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Abonnement</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Faktura 17. mai<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">399 kr trekkes fra kort •• 4242</div>
+              <button class="wf-sb-cta-btn">Se fakturadetaljer</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Abonnement · medlem siden januar 2025</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Månedlig</span><span class="wf-mtopbar-chip">Stripe</span></div>
+            </div>
+
+            <section class="wf-tier-hero">
+              <div class="wf-tier-hero-left">
+                <div class="wf-tier-hero-eyebrow">Nåværende abonnement<span class="wf-marker">2</span></div>
+                <div class="wf-tier-hero-name">AK Golf Pro</div>
+                <div class="wf-tier-hero-meta">
+                  <span>399 kr/mnd</span>
+                  <span>·</span>
+                  <span>Utløper 17. mai 2026</span>
+                  <span>·</span>
+                  <span>Fornyes automatisk</span>
+                </div>
+                <div class="wf-tier-actions">
+                  <button class="wf-tier-btn wf-tier-btn-primary">Administrer i Stripe →</button>
+                  <button class="wf-tier-btn wf-tier-btn-ghost">Bytt plan</button>
+                </div>
+              </div>
+              <div class="wf-tier-hero-right">
+                <div class="wf-tier-stat">
+                  <div class="wf-tier-stat-label">Brukte økter</div>
+                  <div class="wf-tier-stat-value">4 / 10</div>
+                </div>
+                <div class="wf-tier-stat">
+                  <div class="wf-tier-stat-label">Neste faktura</div>
+                  <div class="wf-tier-stat-value">399 kr</div>
+                </div>
+                <div class="wf-tier-stat">
+                  <div class="wf-tier-stat-label">Dager igjen</div>
+                  <div class="wf-tier-stat-value">30</div>
+                </div>
+                <div class="wf-tier-stat">
+                  <div class="wf-tier-stat-label">Status</div>
+                  <div class="wf-tier-stat-value">Aktiv</div>
+                </div>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Bruk denne måneden<span class="wf-marker">3</span></div>
+                  <span class="wf-ai-badge">4/10 økter</span>
+                </div>
+                <div class="wf-usage-grid" style="grid-template-columns: repeat(2, 1fr)">
+                  <div class="wf-usage-card" style="padding: 12px; border: none; background: #f5f5f5">
+                    <div class="wf-usage-label">Coaching-økter</div>
+                    <div class="wf-usage-value">4<span class="wf-usage-value-max">/10</span></div>
+                    <div class="wf-usage-bar"><div class="wf-usage-fill" style="width:40%"></div></div>
+                    <div class="wf-usage-sub">6 økter igjen · fornyes 17. mai</div>
+                  </div>
+                  <div class="wf-usage-card" style="padding: 12px; border: none; background: #f5f5f5">
+                    <div class="wf-usage-label">Trackman-tid</div>
+                    <div class="wf-usage-value">3<span class="wf-usage-value-max">/6 t</span></div>
+                    <div class="wf-usage-bar"><div class="wf-usage-fill" style="width:50%"></div></div>
+                    <div class="wf-usage-sub">3 timer igjen</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Oppgrader til Elite<span class="wf-marker">4</span></div>
+                  <span class="wf-ai-badge">Anbefalt</span>
+                </div>
+                <div class="wf-c-value">599 kr<span style="font-size:14px; color:#999; font-weight:500; margin-left:4px">/mnd</span></div>
+                <ul class="wf-upgrade-features">
+                  <li class="wf-upgrade-feature wf-on">Ubegrenset coaching-økter</li>
+                  <li class="wf-upgrade-feature wf-on">Ubegrenset Trackman-tid</li>
+                  <li class="wf-upgrade-feature wf-on">Prioritert booking 6 uker fram</li>
+                </ul>
+                <button class="wf-sb-cta-btn" style="margin-top:auto">Oppgrader for 200 kr/mnd mer</button>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Siste fakturaer<span class="wf-marker">5</span></div>
+                  <button class="wf-c-link">Åpne Stripe-portal →</button>
+                </div>
+                <table class="wf-invoice-table">
+                  <thead><tr><th>Dato</th><th>Beskrivelse</th><th>Beløp</th><th>Status</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td>17. apr 2026</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">Last ned</button></td></tr>
+                    <tr><td>17. mar 2026</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">Last ned</button></td></tr>
+                    <tr><td>17. feb 2026</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">Last ned</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Sidebar-CTA:</strong> Neste faktura-dato + beløp + maskert kortnummer. Direkte lenke til Stripe-fakturadetaljer.</li>
+        <li><strong>2 — Hero-kort:</strong> Nåværende plan dominerer — mørkt kort, stort navn (Pro), pris + utløp + autofornying inline. Stripe-knapp primær.</li>
+        <li><strong>3 — Bruk-widget:</strong> To viktigste kvoter (økter + Trackman-tid) med progresjonsbar. Bidrar til forståelsen av tier-verdi.</li>
+        <li><strong>4 — Upgrade-kort:</strong> Elite (599 kr) med 3 nøkkelfordeler + "200 kr/mnd mer" gir anchoring. Ingen ned-grade synlig — reduserer churn-risiko.</li>
+        <li><strong>5 — Faktura-historikk:</strong> Inline tabell for kontroll, men lenke til Stripe Customer Portal for full håndtering (kortbytte, osv).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Usage Focus ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Usage Focus</span></h2>
+    <p class="option-description">Kvota-bruk som primær visual. Tre store ring/bar-meters øverst (økter 4/10, Trackman 3/6 t, AI-kreditter 180/500). Upgrade-CTA inline når man nærmer seg grensen. Passer aktive brukere som presser tieren.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Bruk &amp; plan</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Pro · 399 kr</div>
+              <div class="wf-sb-cta-desc">30 dager igjen av syklus</div>
+              <button class="wf-sb-cta-btn">Administrer</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Bruk &amp; plan · syklus 17. apr — 17. mai</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Denne syklusen</span><span class="wf-mtopbar-chip">Forrige</span><span class="wf-mtopbar-chip">3 mnd</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Bruk<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">Du bruker 73% av Pro</h1>
+                <p class="wf-page-head-sub">10 dager inn i syklusen · holdt du tempoet ville du gått tom 5 dager før neste faktura</p>
+              </div>
+              <span class="wf-ai-badge">Nær grensen</span>
+            </section>
+
+            <div class="wf-usage-grid">
+              <div class="wf-usage-card">
+                <div class="wf-usage-head">
+                  <div class="wf-usage-label">Coaching-økter<span class="wf-marker">2</span></div>
+                </div>
+                <div class="wf-usage-value">4<span class="wf-usage-value-max">/10</span></div>
+                <div class="wf-usage-bar"><div class="wf-usage-fill" style="width:40%"></div></div>
+                <div class="wf-usage-sub">6 økter igjen · snitt 1 per 3 dager</div>
+              </div>
+              <div class="wf-usage-card">
+                <div class="wf-usage-head">
+                  <div class="wf-usage-label">Trackman-tid</div>
+                </div>
+                <div class="wf-usage-value">3<span class="wf-usage-value-max">/6 t</span></div>
+                <div class="wf-usage-bar"><div class="wf-usage-fill wf-usage-fill-warn" style="width:50%"></div></div>
+                <div class="wf-usage-sub">3 t igjen · du har brukt 50% på 10 dager</div>
+              </div>
+              <div class="wf-usage-card">
+                <div class="wf-usage-head">
+                  <div class="wf-usage-label">AI-kreditter</div>
+                </div>
+                <div class="wf-usage-value">380<span class="wf-usage-value-max">/500</span></div>
+                <div class="wf-usage-bar"><div class="wf-usage-fill" style="width:76%"></div></div>
+                <div class="wf-usage-sub">120 igjen · nær grensen</div>
+              </div>
+            </div>
+
+            <div class="wf-c wf-c-dark">
+              <div class="wf-c-row">
+                <div>
+                  <div class="wf-c-label" style="color:#999">Prognose<span class="wf-marker">3</span></div>
+                  <div class="wf-c-value" style="color:#fff; font-size: 20px; line-height: 1.3; letter-spacing: 0">Du når grensen 12. mai — 5 dager før fornyelse</div>
+                  <div class="wf-c-sub" style="color:#ccc; margin-top:6px">AI-kreditter og Trackman-tid er høyrisiko. Oppgrader til Elite for ubegrenset — eller reduser bruken.</div>
+                </div>
+                <button class="wf-tier-btn wf-tier-btn-primary">Oppgrader til Elite</button>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-label">Din plan<span class="wf-marker">4</span></div>
+                <div class="wf-c-value">AK Golf Pro</div>
+                <div class="wf-c-sub">399 kr/mnd · neste faktura 17. mai · kort •• 4242</div>
+                <div style="display:flex; gap:8px; margin-top:auto">
+                  <button class="wf-tier-btn wf-tier-btn-ghost" style="color:#333; border-color:#ccc">Bytt plan</button>
+                  <button class="wf-tier-btn wf-tier-btn-ghost" style="color:#333; border-color:#ccc">Stripe-portal</button>
+                </div>
+              </div>
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-label">Hva får du med Elite?</div>
+                <ul class="wf-upgrade-features">
+                  <li class="wf-upgrade-feature wf-on">Ubegrenset økter (nå: 10)</li>
+                  <li class="wf-upgrade-feature wf-on">Ubegrenset Trackman (nå: 6 t)</li>
+                  <li class="wf-upgrade-feature wf-on">Ubegrenset AI-kreditter (nå: 500)</li>
+                </ul>
+                <div class="wf-c-sub">+200 kr/mnd · avbryt når som helst</div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Bruks-narrativ øverst:</strong> "Du bruker 73% av Pro" — gir kontekst før tall. Peker på dagsforbruk-prognose.</li>
+        <li><strong>2 — 3 store bruks-meter:</strong> Coaching, Trackman, AI-kreditter. Hver sin bar + antall igjen + dagstakt.</li>
+        <li><strong>3 — Prognose-hero:</strong> Mørkt kort med konkret dato når grensen nås. Skaper urgency uten å være pushy — gir også "reduser bruk" som alternativ.</li>
+        <li><strong>4 — Plan sekundært:</strong> Pris, dato, kort-info nederst. Ikke tier-shopping-fokus.</li>
+        <li>— Styrke: Power-brukere føler verdien. Svakhet: Nye kunder uten høy bruk ser "tom" skjerm.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Compare All Tiers ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Compare All Tiers</span></h2>
+    <p class="option-description">Alle 4 tiers side-by-side i pris-matrise (Starter / Pro / Elite / Coach). Din tier uthevet. Funksjoner som rader under. Klassisk SaaS-pattern — ideelt når brukere vurderer oppgradering eller nedgradering.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Abonnement</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Pro · 399 kr</div>
+              <div class="wf-sb-cta-desc">Aktiv · fornyes 17. mai</div>
+              <button class="wf-sb-cta-btn">Stripe-portal</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Planer · finn den som passer deg</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Månedlig</span><span class="wf-mtopbar-chip">Årlig (−20%)</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Sammenlign planer<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">4 planer. Bytt når du vil.</h1>
+                <p class="wf-page-head-sub">Din plan: Pro · 399 kr/mnd · neste faktura 17. mai 2026</p>
+              </div>
+              <span class="wf-badge-active">Du er på Pro</span>
+            </section>
+
+            <div class="wf-upgrade-grid">
+              <div class="wf-upgrade-card">
+                <div class="wf-upgrade-name">Starter</div>
+                <div class="wf-upgrade-price"><span class="wf-upgrade-price-val">199</span><span class="wf-upgrade-price-unit">kr/mnd</span></div>
+                <div class="wf-upgrade-desc">Kom i gang med basis. Passer deg som spiller sporadisk.</div>
+                <ul class="wf-upgrade-features">
+                  <li class="wf-upgrade-feature wf-on">4 coaching-økter</li>
+                  <li class="wf-upgrade-feature wf-on">2 t Trackman</li>
+                  <li class="wf-upgrade-feature">AI-coach</li>
+                  <li class="wf-upgrade-feature">Prioritet-booking</li>
+                </ul>
+                <button class="wf-upgrade-btn">Nedgrader</button>
+              </div>
+              <div class="wf-upgrade-card wf-current">
+                <div class="wf-upgrade-pill">Din plan<span class="wf-marker">2</span></div>
+                <div class="wf-upgrade-name">Pro</div>
+                <div class="wf-upgrade-price"><span class="wf-upgrade-price-val">399</span><span class="wf-upgrade-price-unit">kr/mnd</span></div>
+                <div class="wf-upgrade-desc">Den mest populære. For aktive spillere med ukesvis trening.</div>
+                <ul class="wf-upgrade-features">
+                  <li class="wf-upgrade-feature wf-on">10 coaching-økter</li>
+                  <li class="wf-upgrade-feature wf-on">6 t Trackman</li>
+                  <li class="wf-upgrade-feature wf-on">500 AI-kreditter</li>
+                  <li class="wf-upgrade-feature">Prioritet-booking</li>
+                </ul>
+                <button class="wf-upgrade-btn wf-upgrade-btn-current">Nåværende</button>
+              </div>
+              <div class="wf-upgrade-card wf-recommended">
+                <div class="wf-upgrade-pill-ghost">Anbefalt<span class="wf-marker">3</span></div>
+                <div class="wf-upgrade-name">Elite</div>
+                <div class="wf-upgrade-price"><span class="wf-upgrade-price-val">599</span><span class="wf-upgrade-price-unit">kr/mnd</span></div>
+                <div class="wf-upgrade-desc">Ingen grenser. For deg som trener som en proff.</div>
+                <ul class="wf-upgrade-features">
+                  <li class="wf-upgrade-feature wf-on">Ubegrenset økter</li>
+                  <li class="wf-upgrade-feature wf-on">Ubegrenset Trackman</li>
+                  <li class="wf-upgrade-feature wf-on">Ubegrenset AI</li>
+                  <li class="wf-upgrade-feature wf-on">Prioritet-booking</li>
+                </ul>
+                <button class="wf-upgrade-btn wf-upgrade-btn-primary">Oppgrader til Elite</button>
+              </div>
+              <div class="wf-upgrade-card">
+                <div class="wf-upgrade-name">Coach</div>
+                <div class="wf-upgrade-price"><span class="wf-upgrade-price-val">1 290</span><span class="wf-upgrade-price-unit">kr/mnd</span></div>
+                <div class="wf-upgrade-desc">Alt i Elite + månedlig 1:1 med Anders Kristiansen.</div>
+                <ul class="wf-upgrade-features">
+                  <li class="wf-upgrade-feature wf-on">Alt i Elite</li>
+                  <li class="wf-upgrade-feature wf-on">1:1 med Anders (1 t/mnd)</li>
+                  <li class="wf-upgrade-feature wf-on">Skreddersydd plan</li>
+                  <li class="wf-upgrade-feature wf-on">Video-analyse</li>
+                </ul>
+                <button class="wf-upgrade-btn">Kontakt salg</button>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-label">Full funksjonsoversikt<span class="wf-marker">4</span></div>
+              <table class="wf-compare">
+                <thead>
+                  <tr><th>Funksjon</th><th>Starter</th><th class="wf-your">Pro</th><th>Elite</th><th>Coach</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Coaching-økter</td><td>4</td><td class="wf-your">10</td><td>∞</td><td>∞</td></tr>
+                  <tr><td>Trackman-tid</td><td>2 t</td><td class="wf-your">6 t</td><td>∞</td><td>∞</td></tr>
+                  <tr><td>AI-coach</td><td>—</td><td class="wf-your">500</td><td>∞</td><td>∞</td></tr>
+                  <tr><td>Prioritet-booking</td><td><span class="wf-compare-mark"></span></td><td class="wf-your"><span class="wf-compare-mark"></span></td><td><span class="wf-compare-mark wf-on"></span></td><td><span class="wf-compare-mark wf-on"></span></td></tr>
+                  <tr><td>1:1 med Anders</td><td><span class="wf-compare-mark"></span></td><td class="wf-your"><span class="wf-compare-mark"></span></td><td><span class="wf-compare-mark"></span></td><td><span class="wf-compare-mark wf-on"></span></td></tr>
+                  <tr><td>Pris</td><td class="wf-compare-price">199 kr</td><td class="wf-your wf-compare-price">399 kr</td><td class="wf-compare-price">599 kr</td><td class="wf-compare-price">1 290 kr</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — SaaS-matrise:</strong> 4 kolonner. Pro uthevet med border. Anchoring via Elite ("anbefalt").</li>
+        <li><strong>2 — Din plan:</strong> Tydelig pill + deaktivert knapp. Reduserer feil-klikk.</li>
+        <li><strong>3 — Elite som anker:</strong> "Anbefalt"-pill gir subtilt press uten å være aggressiv.</li>
+        <li><strong>4 — Funksjonsoversikt:</strong> Full matrise med sjekk-ikoner. Fjerner usikkerhet.</li>
+        <li>— Styrke: Tydelig beslutningsstøtte. Svakhet: Tar mye plass — bruker må scrolle.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Invoice History ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Invoice History</span></h2>
+    <p class="option-description">Faktura-fokus. Tabell med 12 mnd historikk + total-sum + kvitteringer. Upgrade-CTA sekundært til høyre. Passer bokføring-fokuserte brukere (bedrifter, regnskap).</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Fakturering</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">12 mnd totalt</div>
+              <div class="wf-sb-cta-desc">4 788 kr betalt · 0 utestående</div>
+              <button class="wf-sb-cta-btn">Last ned alle</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Fakturering · 12 mnd historikk</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">12 mnd</span><span class="wf-mtopbar-chip">24 mnd</span><span class="wf-mtopbar-chip">Alle</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Fakturering<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">4 788 kr betalt siste 12 mnd</h1>
+                <p class="wf-page-head-sub">12 av 12 fakturaer betalt · neste faktura 17. mai 2026 · 399 kr</p>
+              </div>
+              <span class="wf-ai-badge">Alt OK</span>
+            </section>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-3">
+                <div class="wf-c-label">Totalt 12 mnd<span class="wf-marker">2</span></div>
+                <div class="wf-c-value">4 788</div>
+                <div class="wf-c-sub">kr · inkl. mva</div>
+              </div>
+              <div class="wf-c wf-bc-3">
+                <div class="wf-c-label">Snitt per mnd</div>
+                <div class="wf-c-value">399</div>
+                <div class="wf-c-sub">kr · Pro-plan</div>
+              </div>
+              <div class="wf-c wf-bc-3">
+                <div class="wf-c-label">Neste faktura</div>
+                <div class="wf-c-value">399</div>
+                <div class="wf-c-sub">kr · 17. mai 2026</div>
+              </div>
+              <div class="wf-c wf-bc-3">
+                <div class="wf-c-label">Betalingsmetode</div>
+                <div class="wf-c-value" style="font-size: 20px">•• 4242</div>
+                <div class="wf-c-sub">Visa · utløper 09/28</div>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-row">
+                <div class="wf-c-label">Faktura-historikk<span class="wf-marker">3</span></div>
+                <button class="wf-c-link">Åpne Stripe-portal →</button>
+              </div>
+              <table class="wf-invoice-table">
+                <thead><tr><th>Nr.</th><th>Dato</th><th>Beskrivelse</th><th>Beløp</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                  <tr><td>#2026-04</td><td>17. apr 2026</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">PDF</button></td></tr>
+                  <tr><td>#2026-03</td><td>17. mar 2026</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">PDF</button></td></tr>
+                  <tr><td>#2026-02</td><td>17. feb 2026</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">PDF</button></td></tr>
+                  <tr><td>#2026-01</td><td>17. jan 2026</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">PDF</button></td></tr>
+                  <tr><td>#2025-12</td><td>17. des 2025</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">PDF</button></td></tr>
+                  <tr><td>#2025-11</td><td>17. nov 2025</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">PDF</button></td></tr>
+                  <tr><td>#2025-10</td><td>17. okt 2025</td><td>AK Golf Pro · månedlig</td><td class="wf-invoice-amount">399 kr</td><td><span class="wf-invoice-status wf-invoice-status-paid">Betalt</span></td><td><button class="wf-invoice-link">PDF</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wf-stripe-row">
+              <div class="wf-stripe-text"><strong>Stripe Customer Portal<span class="wf-marker">4</span></strong> · Bytt kort, last ned fakturaer, oppdater fakturaadresse og pause abonnementet.</div>
+              <button class="wf-tier-btn wf-tier-btn-ghost" style="color:#000; border-color:#000">Åpne portal →</button>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Totalsum som narrativ:</strong> "4 788 kr betalt" gir oversikt for regnskap og vurdering av verdi.</li>
+        <li><strong>2 — KPI-rad:</strong> Total, snitt, neste, kort. Alt på én linje.</li>
+        <li><strong>3 — Faktura-tabell:</strong> Nr, dato, beskrivelse, beløp, status, PDF. Standard regnskap-format.</li>
+        <li><strong>4 — Stripe-portal-banner:</strong> Dedikert rad for portal-link. Bytt av kort og adresse skjer i Stripe.</li>
+        <li>— Styrke: Bokføring-brukere. Svakhet: Lite motivasjon til upgrade — ikke primær-flyt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Goals + Tier ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Goals + Tier</span></h2>
+    <p class="option-description">Koblet måloppnåelse til tier-upgrade. "Du er 68% mot sesongmålet ditt — Elite gir deg ubegrenset trening for å komme i mål." Fremgangsbarer + anbefalt tier basert på fremgang.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mål &amp; plan</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">68% mot mål</div>
+              <div class="wf-sb-cta-desc">4 mnd igjen av sesongen</div>
+              <button class="wf-sb-cta-btn">Se framdrift</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mål &amp; plan · sesongmål 2026</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">2026</span><span class="wf-mtopbar-chip">Historie</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Mål + plan<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">Du er 68% mot sesongmålet</h1>
+                <p class="wf-page-head-sub">Elite-planen ville akselerert fremgangen din med estimert 14 dager</p>
+              </div>
+              <span class="wf-ai-badge">68% · 4 mnd igjen</span>
+            </section>
+
+            <div class="wf-c">
+              <div class="wf-c-row"><div class="wf-c-label">Dine sesongmål 2026<span class="wf-marker">2</span></div><span class="wf-ai-badge">3 aktive mål</span></div>
+              <div>
+                <div class="wf-goal-row">
+                  <div class="wf-goal-check wf-done"></div>
+                  <div class="wf-goal-body">
+                    <div class="wf-goal-title">HCP fra +1.2 til scratch (0.0)</div>
+                    <div class="wf-goal-sub">Krever 8 runder under par · du har 5/8 · fremgang 62%</div>
+                    <div class="wf-goal-bar"><div class="wf-goal-fill" style="width:62%"></div></div>
+                  </div>
+                  <div class="wf-goal-pct">62%</div>
+                </div>
+                <div class="wf-goal-row">
+                  <div class="wf-goal-check wf-done"></div>
+                  <div class="wf-goal-body">
+                    <div class="wf-goal-title">Strokes Gained Putting opp 1.0</div>
+                    <div class="wf-goal-sub">Krever 40 t målrettet putt-trening · 31/40 t · fremgang 78%</div>
+                    <div class="wf-goal-bar"><div class="wf-goal-fill" style="width:78%"></div></div>
+                  </div>
+                  <div class="wf-goal-pct">78%</div>
+                </div>
+                <div class="wf-goal-row">
+                  <div class="wf-goal-check"></div>
+                  <div class="wf-goal-body">
+                    <div class="wf-goal-title">Konsistens driver: 70% fairway</div>
+                    <div class="wf-goal-sub">Nåværende: 58% · mål innen 01.09 · fremgang 42%</div>
+                    <div class="wf-goal-bar"><div class="wf-goal-fill" style="width:42%"></div></div>
+                  </div>
+                  <div class="wf-goal-pct">42%</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-c wf-c-dark">
+              <div class="wf-c-row">
+                <div>
+                  <div class="wf-c-label" style="color:#999">AI-anbefaling<span class="wf-marker">3</span></div>
+                  <div class="wf-c-value" style="color:#fff; font-size: 20px; line-height: 1.3; letter-spacing: 0; margin-top: 4px">Elite gir deg nok øktvolum til å nå alle tre mål før sesongslutt</div>
+                  <div class="wf-c-sub" style="color:#ccc; margin-top:6px">Fairway-målet ditt er bak skjema. Elite fjerner øktbegrensningen — 10 → ubegrenset. AI anslår +14 dagers akselerasjon.</div>
+                </div>
+                <button class="wf-tier-btn wf-tier-btn-primary">Oppgrader til Elite</button>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-label">Din plan nå<span class="wf-marker">4</span></div>
+                <div class="wf-c-value">Pro</div>
+                <div class="wf-c-sub">399 kr/mnd · 4/10 økter brukt · 30 dager igjen</div>
+                <div style="display:flex; gap:8px; margin-top:auto">
+                  <button class="wf-tier-btn wf-tier-btn-ghost" style="color:#333; border-color:#ccc">Stripe-portal</button>
+                  <button class="wf-tier-btn wf-tier-btn-ghost" style="color:#333; border-color:#ccc">Bytt plan</button>
+                </div>
+              </div>
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-label">Elite — skulle du bytte?</div>
+                <div class="wf-c-value">599 kr</div>
+                <div class="wf-c-sub">+200 kr/mnd · ubegrenset alt</div>
+                <ul class="wf-upgrade-features" style="margin-top:8px">
+                  <li class="wf-upgrade-feature wf-on">+ 14 dager raskere måloppnåelse</li>
+                  <li class="wf-upgrade-feature wf-on">+ Ubegrenset fairway-trening</li>
+                </ul>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Mål før plan:</strong> Starter med "hvor langt er du" — tier er middel, ikke mål.</li>
+        <li><strong>2 — 3 konkrete sesongmål:</strong> Fra golfdata. HCP, SG Putting, Fairway %. Viser progresjons-barer og status per mål.</li>
+        <li><strong>3 — AI kobler mål til tier:</strong> "Fairway-målet ditt er bak skjema. Elite fjerner øktbegrensningen." — konkret kausalitet, ikke generisk upsell.</li>
+        <li><strong>4 — Plan som verktøy:</strong> "Din plan nå" + "Skulle du bytte?" — sammenlignet ikke som SaaS-matrise men som to løsninger for mål.</li>
+        <li>— Styrke: Sterk kobling data → verdi → upgrade. Svakhet: Krever mål-data (ikke alle har satt mål).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>spilleren forstår status på abonnementet, ser neste faktura, og kan handle (bytte / oppgradere / finne faktura) på under 15 sekunder</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>5-sek oversikt</th><th>Upgrade-signal</th><th>Faktura-tilgang</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Current + Upgrade</strong></td><td>Hero-kort + upgrade + Stripe-link</td><td>Svært høy</td><td>Subtilt</td><td>Inline + Stripe</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Usage Focus</strong></td><td>Kvota-bruk primært, upgrade kontekstuelt</td><td>Høy (bruks-fokus)</td><td>Kontekstuelt (nær grense)</td><td>Sekundært</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Compare All Tiers</strong></td><td>Pris-matrise + funksjonstabell</td><td>Medium (mye info)</td><td>Sterkt (anchoring)</td><td>Ikke primært</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>4. Invoice History</strong></td><td>Regnskap-fokus, upgrade sekundært</td><td>Medium</td><td>Svakt</td><td>Primært</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>5. Goals + Tier</strong></td><td>Kobling mål → tier gjennom AI</td><td>Medium (mål-narrativ)</td><td>Sterkt (data-drevet)</td><td>Sekundært</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Current + Upgrade</h3>
+      <p>Matcher portalens etablerte bento-stil direkte. Hero-kort med Pro-plan (mørkt, 34px tittel, 4 KPI-celler: brukte økter 4/10, neste faktura 399 kr, 30 dager igjen, Aktiv). Bruk-widget + Upgrade-kort i 50/50-rad. Full faktura-tabell nederst med Stripe-portal-lenke. Ett blikk viser: plan, utløp, bruk, neste faktura — og gir én klikk til oppgradering eller Stripe-portalen.</p>
+      <p><strong>Strategisk flow:</strong> Option 1 = default. Option 3 (Compare) åpnes som modal ved "Bytt plan". Option 4 (Invoice) er arkivlenke bak "Åpne Stripe-portal". Option 2 (Usage) egnet for power-brukere med høyt forbruk — kan switches til som sub-tab "Bruk" i stedet for separat side. Option 5 (Goals) koblet inn som AI-innsikt-kort på Option 1 når bruker har mål-data.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

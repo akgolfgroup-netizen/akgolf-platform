@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategi — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Strategi</span> — <span id="project-name">AK Golf Platform</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Hole by Hole</button>
+    <button class="tab-btn" data-tab="option-2">2: Overview Map</button>
+    <button class="tab-btn" data-tab="option-3">3: Risk Calculator</button>
+    <button class="tab-btn" data-tab="option-4">4: Pre-shot Routine</button>
+    <button class="tab-btn" data-tab="option-5">5: Dispersion Viz</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1 ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Hole by Hole</span></h2>
+    <p class="option-description">Velg bane, naviger hull 1–18 som en DECADE-bok. Anbefalt klubb, målsoner og faresoner per hull.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/strategi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="strategi-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item active">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item">Profil</a>
+            </nav>
+            <div class="sb-cta">Book time</div>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Strategi · DECADE</div>
+                <h3 class="page-title">Oslo Golfklubb</h3>
+              </div>
+              <div class="course-switch">
+                <select><option>Oslo GK — Bogstad</option><option>Losby GK</option><option>Miklagard GK</option></select>
+                <button class="btn-sec">Bytt tee</button>
+              </div>
+            </header>
+
+            <div class="hole-nav"><span class="anno" data-n="1">①</span>
+              <button class="hn-arrow">‹</button>
+              <div class="hn-chips">
+                <button class="hn-chip">1</button><button class="hn-chip">2</button><button class="hn-chip">3</button><button class="hn-chip">4</button>
+                <button class="hn-chip active">5</button>
+                <button class="hn-chip">6</button><button class="hn-chip">7</button><button class="hn-chip">8</button><button class="hn-chip">9</button>
+                <button class="hn-chip">10</button><button class="hn-chip">11</button><button class="hn-chip">12</button><button class="hn-chip">13</button><button class="hn-chip">14</button><button class="hn-chip">15</button><button class="hn-chip">16</button><button class="hn-chip">17</button><button class="hn-chip">18</button>
+              </div>
+              <button class="hn-arrow">›</button>
+            </div>
+
+            <section class="hole-hero">
+              <div class="hh-meta">
+                <span class="hh-label">Hull 5</span>
+                <span class="hh-dot">·</span>
+                <span>Par 4</span>
+                <span class="hh-dot">·</span>
+                <span>385 m</span>
+                <span class="hh-dot">·</span>
+                <span>HCP 7</span>
+              </div>
+              <div class="hh-title">Dogleg høyre · vann venstre, bunker 230 m</div>
+            </section>
+
+            <div class="strategi-grid">
+              <section class="card hole-viz"><span class="anno" data-n="2">②</span>
+                <div class="card-label">Hull-layout</div>
+                <svg viewBox="0 0 420 220" class="hole-svg" aria-label="Hull 5 layout">
+                  <rect x="0" y="0" width="420" height="220" fill="#fff"/>
+                  <path d="M 30 180 Q 150 120 250 120 Q 340 120 380 60" stroke="#000" stroke-width="28" fill="none" opacity="0.08"/>
+                  <path d="M 30 180 Q 150 120 250 120 Q 340 120 380 60" stroke="#000" stroke-width="2" fill="none" stroke-dasharray="4 6"/>
+                  <circle cx="30" cy="180" r="6" fill="#000"/>
+                  <text x="42" y="185" font-size="10" fill="#333">Tee</text>
+                  <ellipse cx="210" cy="135" rx="44" ry="20" fill="none" stroke="#000"/>
+                  <text x="185" y="138" font-size="9" fill="#333">Målsone A</text>
+                  <circle cx="380" cy="60" r="8" fill="none" stroke="#000" stroke-width="2"/>
+                  <circle cx="380" cy="60" r="3" fill="#000"/>
+                  <text x="352" y="48" font-size="10" fill="#333">Green</text>
+                  <rect x="160" y="160" width="50" height="30" fill="#ccc"/>
+                  <text x="170" y="178" font-size="9" fill="#333">Vann</text>
+                  <circle cx="285" cy="100" r="12" fill="#eee" stroke="#999"/>
+                  <text x="274" y="104" font-size="9" fill="#333">BNK</text>
+                </svg>
+              </section>
+
+              <section class="card recc"><span class="anno" data-n="3">③</span>
+                <div class="card-label">Anbefalt strategi</div>
+                <div class="recc-club">
+                  <div class="rc-big">3W</div>
+                  <div class="rc-sub">
+                    <div class="rc-line"><span>Carry</span><b>215 m</b></div>
+                    <div class="rc-line"><span>Dispersion</span><b>±35 m</b></div>
+                    <div class="rc-line"><span>Treff fairway</span><b>72 %</b></div>
+                  </div>
+                </div>
+                <div class="recc-target">Sikt mot målsone A (venstre halvdel)</div>
+                <button class="btn-primary">Bruk anbefaling</button>
+              </section>
+
+              <section class="card danger"><span class="anno" data-n="4">④</span>
+                <div class="card-label">Faresoner</div>
+                <ul class="danger-list">
+                  <li><span class="d-pill">Venstre</span> Vann 180–220 m — unngå</li>
+                  <li><span class="d-pill">Høyre</span> Bunker 230 m — 8 % risk m/3W</li>
+                  <li><span class="d-pill">Bak</span> OB bak green — underclub ved vind</li>
+                </ul>
+              </section>
+
+              <section class="card preshot">
+                <div class="card-label">Pre-shot rutine</div>
+                <ol class="ps-list">
+                  <li>Sjekk vind og lie</li>
+                  <li>Velg mål (målsone A)</li>
+                  <li>Bekreft klubb (3W)</li>
+                  <li>Visualiser ballflukt</li>
+                  <li>Pust ut — commit</li>
+                </ol>
+              </section>
+
+              <section class="card alt">
+                <div class="card-label">Alternativ: aggressiv</div>
+                <div class="alt-row"><span>Driver over hjørnet</span><b>62 % fairway</b></div>
+                <div class="alt-row"><span>Forventet rest</span><b>110 m inn</b></div>
+                <div class="alt-row"><span>Vann-risk</span><b>18 %</b></div>
+                <button class="btn-ghost">Se alternativ</button>
+              </section>
+            </div>
+
+            <footer class="hole-foot">
+              <button class="btn-sec">‹ Hull 4</button>
+              <div class="progress"><span>Hull 5 av 18</span><div class="bar"><div class="fill" style="width:27%"></div></div></div>
+              <button class="btn-primary">Hull 6 ›</button>
+            </footer>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h4>UX-notater</h4>
+      <ol>
+        <li><b>Hull-navigasjon</b> — 18 chips horisontalt, aktivt hull highlightet. Piler for forrige/neste. Mønster fra portal sub-nav.</li>
+        <li><b>Hull-layout (SVG)</b> — Strek-tegnet oversikt over hullet med målsoner (ellipser), faresoner (solid) og green. Gjenbrukbart komponent.</li>
+        <li><b>Anbefalt strategi-kort</b> — Stort klubb-token + dispersion + fairway-%. Primærbeslutning på ett blikk.</li>
+        <li><b>Faresoner-liste</b> — Retning + avstand + risk-%. Gir konkret "hva du skal unngå" uten å overbelaste kartet.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2 ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Overview Map</span></h2>
+    <p class="option-description">Spatialt baneoversikt — alle 18 hull som interaktivt kart med strategi-badges og HCP-indeks.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/strategi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="strategi-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item active">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item">Profil</a>
+            </nav>
+            <div class="sb-cta">Book time</div>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Strategi · Baneoversikt</div>
+                <h3 class="page-title">Oslo GK — Bogstad</h3>
+              </div>
+              <div class="course-switch">
+                <button class="btn-sec">Filtrer: Alle hull</button>
+                <button class="btn-primary">Eksporter plan</button>
+              </div>
+            </header>
+
+            <div class="map-layout"><span class="anno" data-n="1">①</span>
+              <div class="map-area">
+                <svg viewBox="0 0 600 400" class="course-svg" aria-label="Baneoversikt">
+                  <rect width="600" height="400" fill="#f7f7f7"/>
+                  <g fill="none" stroke="#333" stroke-width="1.5">
+                    <circle cx="80" cy="60" r="22"/><text x="75" y="64" font-size="11" fill="#000">1</text>
+                    <circle cx="170" cy="90" r="22"/><text x="165" y="94" font-size="11" fill="#000">2</text>
+                    <circle cx="260" cy="55" r="22"/><text x="255" y="59" font-size="11" fill="#000">3</text>
+                    <circle cx="360" cy="110" r="22"/><text x="355" y="114" font-size="11" fill="#000">4</text>
+                  </g>
+                  <g>
+                    <circle cx="470" cy="70" r="28" fill="#eee" stroke="#000" stroke-width="2"/>
+                    <text x="463" y="75" font-size="13" fill="#000" font-weight="700">5</text>
+                  </g>
+                  <g fill="none" stroke="#333" stroke-width="1.5">
+                    <circle cx="540" cy="160" r="22"/><text x="535" y="164" font-size="11" fill="#000">6</text>
+                    <circle cx="480" cy="220" r="22"/><text x="475" y="224" font-size="11" fill="#000">7</text>
+                    <circle cx="390" cy="260" r="22"/><text x="385" y="264" font-size="11" fill="#000">8</text>
+                    <circle cx="300" cy="310" r="22"/><text x="295" y="314" font-size="11" fill="#000">9</text>
+                    <circle cx="210" cy="340" r="22"/><text x="205" y="344" font-size="11" fill="#000">10</text>
+                    <circle cx="110" cy="310" r="22"/><text x="100" y="314" font-size="11" fill="#000">11</text>
+                    <circle cx="60" cy="220" r="22"/><text x="55" y="224" font-size="11" fill="#000">12</text>
+                    <circle cx="130" cy="150" r="22"/><text x="120" y="154" font-size="11" fill="#000">13</text>
+                    <circle cx="220" cy="200" r="22"/><text x="215" y="204" font-size="11" fill="#000">14</text>
+                    <circle cx="310" cy="170" r="22"/><text x="305" y="174" font-size="11" fill="#000">15</text>
+                    <circle cx="380" cy="200" r="22"/><text x="375" y="204" font-size="11" fill="#000">16</text>
+                    <circle cx="450" cy="290" r="22"/><text x="445" y="294" font-size="11" fill="#000">17</text>
+                    <circle cx="520" cy="350" r="22"/><text x="515" y="354" font-size="11" fill="#000">18</text>
+                  </g>
+                  <text x="24" y="386" font-size="10" fill="#666">Klikk et hull for detaljer</text>
+                </svg>
+              </div>
+
+              <aside class="map-detail"><span class="anno" data-n="2">②</span>
+                <div class="md-head">
+                  <span class="md-num">5</span>
+                  <div>
+                    <div class="md-title">Par 4 · 385 m</div>
+                    <div class="md-sub">HCP 7 · Dogleg høyre</div>
+                  </div>
+                </div>
+                <div class="badges">
+                  <span class="badge">Aggressiv: 62%</span>
+                  <span class="badge">Konservativ: 72%</span>
+                  <span class="badge warn">Vann venstre</span>
+                </div>
+                <div class="md-reco">
+                  <div class="card-label">Anbefalt</div>
+                  <div class="reco-line"><b>3W</b> fra tee — målsone venstre fairway</div>
+                  <div class="reco-line"><b>7-jern</b> inn til bakre platå</div>
+                </div>
+                <button class="btn-primary full">Åpne hull 5</button>
+              </aside>
+            </div>
+
+            <section class="hole-strip"><span class="anno" data-n="3">③</span>
+              <div class="card-label">Alle 18 hull</div>
+              <div class="strip-grid">
+                <div class="strip-cell"><b>1</b><span>Par 4 · 340m</span><em>Dr → 9i</em></div>
+                <div class="strip-cell"><b>2</b><span>Par 3 · 155m</span><em>6i</em></div>
+                <div class="strip-cell"><b>3</b><span>Par 5 · 495m</span><em>Dr → 3W → W</em></div>
+                <div class="strip-cell"><b>4</b><span>Par 4 · 370m</span><em>Dr → 8i</em></div>
+                <div class="strip-cell active"><b>5</b><span>Par 4 · 385m</span><em>3W → 7i</em></div>
+                <div class="strip-cell"><b>6</b><span>Par 3 · 180m</span><em>5i</em></div>
+                <div class="strip-cell"><b>7</b><span>Par 4 · 360m</span><em>Dr → 9i</em></div>
+                <div class="strip-cell"><b>8</b><span>Par 5 · 510m</span><em>Dr → 5W → PW</em></div>
+                <div class="strip-cell"><b>9</b><span>Par 4 · 330m</span><em>3W → PW</em></div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h4>UX-notater</h4>
+      <ol>
+        <li><b>Interaktivt banekart</b> — Alle 18 hull som sirkler i bane-layout. Aktivt hull markert større.</li>
+        <li><b>Detaljpanel (høyre drawer)</b> — Viser anbefalinger for valgt hull. Oppdateres på klikk — ingen full-sidebytte.</li>
+        <li><b>Hull-stripe nederst</b> — Snabb-oversikt over par, avstand og klubb per hull. Horisontal scroll på mobil.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3 ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Risk Calculator</span></h2>
+    <p class="option-description">Kalkuler forventet score per hull — aggressiv vs konservativ linje, med sannsynlighet og EV-tall.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/strategi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="strategi-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item active">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item">Profil</a>
+            </nav>
+            <div class="sb-cta">Book time</div>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Strategi · Risk Calculator</div>
+                <h3 class="page-title">Oslo GK · Hull 5</h3>
+              </div>
+              <div class="course-switch">
+                <span class="chip-sm">Par 4</span>
+                <span class="chip-sm">385 m</span>
+                <span class="chip-sm">HCP 7</span>
+              </div>
+            </header>
+
+            <section class="compare"><span class="anno" data-n="1">①</span>
+              <article class="comp-card agg">
+                <div class="comp-head">Aggressiv</div>
+                <div class="comp-club">Driver</div>
+                <div class="comp-big">4.15</div>
+                <div class="comp-lbl">Forventet score</div>
+                <ul class="comp-list">
+                  <li><span>Birdie-sjanse</span><b>14 %</b></li>
+                  <li><span>Par-sjanse</span><b>58 %</b></li>
+                  <li><span>Bogey eller verre</span><b>28 %</b></li>
+                  <li><span>Vann-risk</span><b>18 %</b></li>
+                </ul>
+              </article>
+
+              <div class="comp-vs">VS</div>
+
+              <article class="comp-card cons selected">
+                <div class="comp-head">Konservativ</div>
+                <div class="comp-club">3-kølle</div>
+                <div class="comp-big">4.08</div>
+                <div class="comp-lbl">Forventet score</div>
+                <ul class="comp-list">
+                  <li><span>Birdie-sjanse</span><b>9 %</b></li>
+                  <li><span>Par-sjanse</span><b>74 %</b></li>
+                  <li><span>Bogey eller verre</span><b>17 %</b></li>
+                  <li><span>Vann-risk</span><b>4 %</b></li>
+                </ul>
+                <div class="comp-badge">Anbefalt</div>
+              </article>
+            </section>
+
+            <section class="card sliders"><span class="anno" data-n="2">②</span>
+              <div class="card-label">Justér vurdering</div>
+              <div class="slider-row">
+                <label>Vind (m/s)</label>
+                <input type="range" min="0" max="12" value="4">
+                <span class="slv">4</span>
+              </div>
+              <div class="slider-row">
+                <label>Lie</label>
+                <select><option>Tee</option><option>Fairway</option><option>Rough</option></select>
+              </div>
+              <div class="slider-row">
+                <label>Selvtillit</label>
+                <input type="range" min="0" max="10" value="7">
+                <span class="slv">7/10</span>
+              </div>
+              <div class="slider-row">
+                <label>Score-strategi</label>
+                <div class="seg">
+                  <button>Beskytt</button><button class="on">Balanse</button><button>Push</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="card breakdown"><span class="anno" data-n="3">③</span>
+              <div class="card-label">Utfall-fordeling — Konservativ (3-kølle)</div>
+              <div class="bars">
+                <div class="bar-row"><span class="br-lbl">Eagle</span><div class="br-track"><div class="br-fill" style="width:1%"></div></div><span class="br-val">1 %</span></div>
+                <div class="bar-row"><span class="br-lbl">Birdie</span><div class="br-track"><div class="br-fill" style="width:9%"></div></div><span class="br-val">9 %</span></div>
+                <div class="bar-row"><span class="br-lbl">Par</span><div class="br-track"><div class="br-fill" style="width:74%"></div></div><span class="br-val">74 %</span></div>
+                <div class="bar-row"><span class="br-lbl">Bogey</span><div class="br-track"><div class="br-fill" style="width:13%"></div></div><span class="br-val">13 %</span></div>
+                <div class="bar-row"><span class="br-lbl">Dobbel+</span><div class="br-track"><div class="br-fill" style="width:3%"></div></div><span class="br-val">3 %</span></div>
+              </div>
+            </section>
+
+            <footer class="calc-foot">
+              <span class="note">Basert på din bag + Oslo GK hull-data + NGF-metodikk</span>
+              <button class="btn-primary">Lås valg</button>
+            </footer>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h4>UX-notater</h4>
+      <ol>
+        <li><b>Sammenligningskort</b> — Aggressiv vs konservativ side-om-side. Forventet score dominerer visuelt.</li>
+        <li><b>Justerings-slidere</b> — Brukeren kan endre forutsetninger (vind, lie, selvtillit) og se beregning oppdateres.</li>
+        <li><b>Utfall-fordeling</b> — Sannsynlighet per utfall (eagle → dobbel+) som horisontale barer. Gjør tallet konkret.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4 ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Pre-shot Routine</span></h2>
+    <p class="option-description">Pre-shot checklist som primær — trinnvis rutine før hvert slag. Fokus på beslutningskvalitet.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/strategi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="strategi-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item active">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item">Profil</a>
+            </nav>
+            <div class="sb-cta">Book time</div>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Strategi · Pre-shot</div>
+                <h3 class="page-title">Hull 5 — tee-slag</h3>
+              </div>
+              <div class="course-switch">
+                <span class="chip-sm">Oslo GK</span>
+                <button class="btn-sec">Hopp til hull 6</button>
+              </div>
+            </header>
+
+            <section class="ps-hero"><span class="anno" data-n="1">①</span>
+              <div class="ps-step">Steg 3 av 5</div>
+              <h2 class="ps-q">Hvilket mål sikter du på?</h2>
+              <p class="ps-help">Velg en konkret punkt på fairway — ikke hele fairway.</p>
+            </section>
+
+            <section class="ps-options"><span class="anno" data-n="2">②</span>
+              <button class="ps-opt">
+                <span class="ps-label">A</span>
+                <div>
+                  <b>Venstre halvdel fairway</b>
+                  <span>215 m — unngår bunker høyre</span>
+                </div>
+              </button>
+              <button class="ps-opt on">
+                <span class="ps-label">B</span>
+                <div>
+                  <b>Målsone A (senter)</b>
+                  <span>210 m — optimal vinkel inn</span>
+                </div>
+              </button>
+              <button class="ps-opt">
+                <span class="ps-label">C</span>
+                <div>
+                  <b>Over hjørnet</b>
+                  <span>255 m — aggressiv linje</span>
+                </div>
+              </button>
+            </section>
+
+            <section class="ps-progress"><span class="anno" data-n="3">③</span>
+              <div class="card-label">Pre-shot checklist</div>
+              <ol class="ps-check">
+                <li class="done"><span class="box">✓</span>Sjekk vind og lie</li>
+                <li class="done"><span class="box">✓</span>Les hull-layout</li>
+                <li class="current"><span class="box">●</span>Velg mål (punkt, ikke sone)</li>
+                <li><span class="box"></span>Bekreft klubb og ballflukt</li>
+                <li><span class="box"></span>Pust ut — commit 100 %</li>
+              </ol>
+            </section>
+
+            <section class="card context">
+              <div class="card-label">Kontekst fra din bag</div>
+              <div class="ctx-grid">
+                <div><span>3W snitt</span><b>215 m</b></div>
+                <div><span>Dispersion</span><b>±35 m</b></div>
+                <div><span>Fairway %</span><b>72 %</b></div>
+                <div><span>Siste 5 hull 5</span><b>4.2 snitt</b></div>
+              </div>
+            </section>
+
+            <footer class="calc-foot">
+              <button class="btn-sec">‹ Tilbake</button>
+              <button class="btn-primary">Neste steg ›</button>
+            </footer>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h4>UX-notater</h4>
+      <ol>
+        <li><b>Steg-for-steg hero</b> — Én beslutning om gangen. Tvinger fokus.</li>
+        <li><b>Målvalg som kort</b> — 3 konkrete mål med avstand og rasjonale. Valgt kort highlightet.</li>
+        <li><b>Checklist-progresjon</b> — Tydelig visuell status: hva er gjort, hva nå, hva gjenstår.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5 ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Dispersion Viz</span></h2>
+    <p class="option-description">Data-first: visualiser bag-dispersion (ellipser) direkte på hull-layout. Velg klubb, se landingssone.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/strategi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="strategi-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item active">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item">Profil</a>
+            </nav>
+            <div class="sb-cta">Book time</div>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Strategi · Dispersion</div>
+                <h3 class="page-title">Hull 5 · din bag</h3>
+              </div>
+              <div class="course-switch">
+                <span class="chip-sm">TrackMan-data</span>
+                <button class="btn-sec">Oppdater bag</button>
+              </div>
+            </header>
+
+            <div class="disp-layout">
+              <section class="disp-viz"><span class="anno" data-n="1">①</span>
+                <div class="card-label">Hull-layout · valgt klubb: 3W</div>
+                <svg viewBox="0 0 520 300" class="disp-svg" aria-label="Dispersion på hull 5">
+                  <rect width="520" height="300" fill="#fafafa"/>
+                  <path d="M 40 260 Q 200 170 330 170 Q 440 170 490 80" stroke="#000" stroke-width="40" fill="none" opacity="0.08"/>
+                  <path d="M 40 260 Q 200 170 330 170 Q 440 170 490 80" stroke="#333" stroke-width="1" fill="none" stroke-dasharray="3 5"/>
+                  <rect x="210" y="225" width="70" height="45" fill="#ccc"/>
+                  <text x="220" y="252" font-size="10" fill="#333">Vann</text>
+                  <circle cx="370" cy="140" r="16" fill="#eee" stroke="#999"/>
+                  <text x="360" y="144" font-size="9" fill="#333">BNK</text>
+                  <g>
+                    <ellipse cx="290" cy="175" rx="80" ry="30" fill="none" stroke="#000" stroke-width="2"/>
+                    <ellipse cx="290" cy="175" rx="55" ry="20" fill="none" stroke="#000" stroke-dasharray="4 4"/>
+                    <ellipse cx="290" cy="175" rx="28" ry="10" fill="#000" opacity="0.15"/>
+                    <text x="340" y="145" font-size="10" fill="#333">90 % dispersion</text>
+                    <text x="340" y="160" font-size="10" fill="#666">50 % kjerne</text>
+                  </g>
+                  <circle cx="40" cy="260" r="5" fill="#000"/>
+                  <text x="52" y="265" font-size="10" fill="#333">Tee</text>
+                  <circle cx="490" cy="80" r="7" fill="none" stroke="#000" stroke-width="2"/>
+                  <text x="460" y="68" font-size="10" fill="#333">Green</text>
+                </svg>
+                <div class="disp-meta">
+                  <span>Carry-snitt <b>215 m</b></span>
+                  <span>Venstre/høyre SD <b>±18 m</b></span>
+                  <span>Treff fairway <b>72 %</b></span>
+                  <span>Overlapp vann <b>3 %</b></span>
+                </div>
+              </section>
+
+              <aside class="disp-sidebar"><span class="anno" data-n="2">②</span>
+                <div class="card-label">Velg klubb fra bag</div>
+                <ul class="club-list">
+                  <li><span class="cl-name">Driver</span><span class="cl-meta">245 m · ±42 m</span></li>
+                  <li class="on"><span class="cl-name">3W</span><span class="cl-meta">215 m · ±35 m</span></li>
+                  <li><span class="cl-name">5W</span><span class="cl-meta">200 m · ±28 m</span></li>
+                  <li><span class="cl-name">4H</span><span class="cl-meta">185 m · ±22 m</span></li>
+                  <li><span class="cl-name">5i</span><span class="cl-meta">170 m · ±18 m</span></li>
+                  <li><span class="cl-name">6i</span><span class="cl-meta">158 m · ±15 m</span></li>
+                  <li><span class="cl-name">7i</span><span class="cl-meta">145 m · ±13 m</span></li>
+                </ul>
+              </aside>
+            </div>
+
+            <section class="card comparator"><span class="anno" data-n="3">③</span>
+              <div class="card-label">Sammenlign dispersion</div>
+              <table class="cmp-table">
+                <thead><tr><th>Klubb</th><th>Carry</th><th>Dispersion</th><th>Treff fairway</th><th>Vann-risk</th><th>Handling</th></tr></thead>
+                <tbody>
+                  <tr><td>Driver</td><td>245 m</td><td>±42 m</td><td>58 %</td><td>14 %</td><td><button class="btn-ghost">Overlegg</button></td></tr>
+                  <tr class="on"><td><b>3W</b></td><td>215 m</td><td>±35 m</td><td>72 %</td><td>3 %</td><td><button class="btn-sec">Valgt</button></td></tr>
+                  <tr><td>5W</td><td>200 m</td><td>±28 m</td><td>81 %</td><td>1 %</td><td><button class="btn-ghost">Overlegg</button></td></tr>
+                  <tr><td>4H</td><td>185 m</td><td>±22 m</td><td>86 %</td><td>0 %</td><td><button class="btn-ghost">Overlegg</button></td></tr>
+                </tbody>
+              </table>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h4>UX-notater</h4>
+      <ol>
+        <li><b>Dispersion-ellipser på hull</b> — 90 % og 50 %-ellipser viser hvor ballen faktisk lander med valgt klubb.</li>
+        <li><b>Klubb-liste (høyre)</b> — Hele bag med carry og dispersion. Klikk for å oppdatere hull-viz.</li>
+        <li><b>Sammenligningstabell</b> — Direkte sammenligning av alle klubb-alternativer for dette hullet.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Summary</h2>
+    <p class="option-description">DECADE-strategi i Portalen — fem tilnærminger til hull-for-hull beslutningsstøtte.</p>
+    <table class="summary-table">
+      <thead>
+        <tr><th>Opt</th><th>Navn</th><th>UX-filosofi</th><th>Overall UX</th></tr>
+      </thead>
+      <tbody>
+        <tr class="rec-row"><td>1</td><td><b>Hole by Hole</b></td><td>DECADE-bok: én side per hull, 18 chips for nav. Bruker portalens eksisterende sub-nav-mønster.</td><td>★★★★★</td></tr>
+        <tr><td>2</td><td>Overview Map</td><td>Spatialt banekart + detail-drawer. Sexy, men krever bane-geometri-data vi ikke har ennå.</td><td>★★★★</td></tr>
+        <tr><td>3</td><td>Risk Calculator</td><td>EV-sammenligning aggressiv vs konservativ. Sterkt for data-folk, tungt for 18-HCP.</td><td>★★★</td></tr>
+        <tr><td>4</td><td>Pre-shot Routine</td><td>Checklist-først. Bra som sub-modus, men for smal som hovedfane.</td><td>★★★</td></tr>
+        <tr><td>5</td><td>Dispersion Viz</td><td>Data-rikt: TrackMan-ellipser på hull. Premium-feel, men forutsetter TrackMan-data.</td><td>★★★★</td></tr>
+      </tbody>
+    </table>
+    <div class="recommendation">
+      <b>Anbefaling: Option 1 — Hole by Hole.</b>
+      Matcher DECADE-formatet golferne kjenner, bygger på portalens eksisterende sidebar + sub-nav, og fungerer uten avansert geometri- eller TrackMan-data. Dispersion-viz (Opt 5) og Risk Calculator (Opt 3) passer som fordypende sub-visninger senere.
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

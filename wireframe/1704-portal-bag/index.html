@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bag — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Bag</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Classic Grid</button>
+    <button class="tab-btn" data-tab="option-2">2: Visual Bag</button>
+    <button class="tab-btn" data-tab="option-3">3: Gap Chart</button>
+    <button class="tab-btn" data-tab="option-4">4: Equipment Lab</button>
+    <button class="tab-btn" data-tab="option-5">5: Recommendations</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Classic Grid ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Classic Grid</span></h2>
+    <p class="option-description">Klassisk datatabell: 14 klubber fra driver til putter. Carry, dispersion og gap vises per rad. Gap &gt; 10m flagges med anbefaling i egen panel til høyre.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1a"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1a)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1a"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1a)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/bag</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div></div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Bag</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">3 gap-problemer</div><div class="wf-sb-cta-desc">AI foreslår justering</div><button class="wf-sb-cta-btn">Se anbefalinger</button></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar"><div class="wf-mtopbar-left">Bag · 14 klubber</div><div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-active">Alle</span><span class="wf-mtopbar-chip">Woods</span><span class="wf-mtopbar-chip">Irons</span><span class="wf-mtopbar-chip">Wedges</span></div></div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Min bag</div>
+                <h1 class="wf-page-h">14 klubber · snitt-gap 12.4m<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Basert på 186 TrackMan-slag siste 30 dager</p>
+              </div>
+              <div class="wf-page-meta">
+                <div><strong>258m</strong>Lengste carry</div>
+                <div><strong>3</strong>Gap-varsler</div>
+                <div><strong>8.4m</strong>Snitt dispersion</div>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-row"><div class="wf-c-label">Klubbe-liste · carry &amp; gap<span class="wf-marker">2</span></div><button class="wf-c-link">Eksporter</button></div>
+                <div class="wf-club-table">
+                  <div class="wf-club-row wf-club-row-head"><div></div><div>Klubbe</div><div>Carry</div><div>Gap</div><div>Dispersion</div><div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">D</div><div class="wf-club-name">Driver</div><div><div class="wf-club-carry">258<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap">—</div><div class="wf-club-disp">9.2m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:100%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">3W</div><div class="wf-club-name">3-wood</div><div><div class="wf-club-carry">232<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-ok">26 ✓</div><div class="wf-club-disp">8.8m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:90%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">5W</div><div class="wf-club-name">5-wood</div><div><div class="wf-club-carry">214<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-ok">18 ✓</div><div class="wf-club-disp">8.2m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:83%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">4i</div><div class="wf-club-name">4-iron</div><div><div class="wf-club-carry">197<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-warn">17 !</div><div class="wf-club-disp">7.6m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:76%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">5i</div><div class="wf-club-name">5-iron</div><div><div class="wf-club-carry">184<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-ok">13 ✓</div><div class="wf-club-disp">7.1m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:71%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">6i</div><div class="wf-club-name">6-iron</div><div><div class="wf-club-carry">171<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-ok">13 ✓</div><div class="wf-club-disp">6.8m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:66%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">7i</div><div class="wf-club-name">7-iron</div><div><div class="wf-club-carry">158<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-ok">13 ✓</div><div class="wf-club-disp">6.4m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:61%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">8i</div><div class="wf-club-name">8-iron</div><div><div class="wf-club-carry">146<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-ok">12 ✓</div><div class="wf-club-disp">5.9m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:57%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">9i</div><div class="wf-club-name">9-iron</div><div><div class="wf-club-carry">132<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-warn">14 !</div><div class="wf-club-disp">5.4m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:51%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">PW</div><div class="wf-club-name">Pitching wedge</div><div><div class="wf-club-carry">118<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-ok">14 ✓</div><div class="wf-club-disp">4.9m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:46%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">50</div><div class="wf-club-name">Gap 50°</div><div><div class="wf-club-carry">104<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-ok">14 ✓</div><div class="wf-club-disp">4.6m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:40%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">54</div><div class="wf-club-name">Sand 54°</div><div><div class="wf-club-carry">88<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-warn">16 !</div><div class="wf-club-disp">4.2m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:34%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">58</div><div class="wf-club-name">Lob 58°</div><div><div class="wf-club-carry">74<span class="wf-club-carry-sub">m</span></div></div><div class="wf-club-gap wf-club-gap-ok">14 ✓</div><div class="wf-club-disp">3.8m</div><div class="wf-club-bar"><div class="wf-club-bar-fill" style="width:29%"></div></div></div>
+                  <div class="wf-club-row"><div class="wf-club-ic">P</div><div class="wf-club-name">Putter</div><div><div class="wf-club-carry">—</div></div><div class="wf-club-gap">—</div><div class="wf-club-disp">—</div><div class="wf-club-bar"></div></div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Gap-anbefalinger<span class="wf-marker">3</span></div>
+                <div class="wf-rec-list">
+                  <div class="wf-rec"><div class="wf-rec-title">4-iron → 3-iron eller 2H</div><p class="wf-rec-desc">Gap 17m (3W → 4i) er stort. Hybrid lukker gapet og gir mer konsistens.</p></div>
+                  <div class="wf-rec"><div class="wf-rec-title">9-iron bag-check</div><p class="wf-rec-desc">Gap 14m til 8i er ok, men dispersion er høy. Sjekk loft/lie.</p></div>
+                  <div class="wf-rec"><div class="wf-rec-title">Sand 54° justering</div><p class="wf-rec-desc">Gap PW → 50° → 54° er 16m. Vurder 52° som erstatter for 54°.</p></div>
+                </div>
+                <div style="margin-top:auto; padding-top:14px; border-top: 1px solid #eee;">
+                  <div class="wf-c-label">Oppsummering</div>
+                  <p class="wf-c-sub" style="margin-top:6px;">11 gap analysert · 3 over 10m-terskel · 8 ok</p>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Snitt-gap i topp:</strong> Gir umiddelbar kontekst. 12.4m = spredd sett. Under 12m er "tight bag".</li>
+        <li><strong>2 — Tabell med bar:</strong> Visuell carry-progresjon ved siden av tall. Leses i én skanning.</li>
+        <li><strong>3 — Anbefalinger inline:</strong> Ikke gjemt i AI-tab. Direkte handlingspunkter koblet til data i tabellen.</li>
+        <li>— Tier-passing: fungerer for Starter (enkel liste) til Elite (detaljert dispersion).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Visual Bag ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Visual Bag</span></h2>
+    <p class="option-description">Illustrert golf-bag med klubber som grid-celler. Klikk en klubbe for å se detaljer i panelet. Romantisk, leken — ikke Elite-optimalisert.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2a"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2a)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2a"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2a)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/bag</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div></div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Bag</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">Sesong-check</div><div class="wf-sb-cta-desc">Book fitting med Anders</div><button class="wf-sb-cta-btn">Book time</button></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar"><div class="wf-mtopbar-left">Bag · visuell</div><div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Del</span></div></div>
+            <section class="wf-page-head">
+              <div><div class="wf-page-eyebrow">Min bag</div><h1 class="wf-page-h">Klikk en klubbe for detaljer<span class="wf-marker">1</span></h1><p class="wf-page-sub">Trykk for TrackMan-data og anbefalinger</p></div>
+              <div class="wf-page-meta"><div><strong>14</strong>klubber</div><div><strong>7i</strong>valgt</div></div>
+            </section>
+
+            <div class="wf-bento">
+              <div class="wf-bag wf-bc-5">
+                <div class="wf-bag-frame">
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">D</div><div class="wf-bag-club-carry">258m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">3W</div><div class="wf-bag-club-carry">232m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">5W</div><div class="wf-bag-club-carry">214m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">4i</div><div class="wf-bag-club-carry">197m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">5i</div><div class="wf-bag-club-carry">184m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">6i</div><div class="wf-bag-club-carry">171m</div></div>
+                  <div class="wf-bag-club wf-active"><div class="wf-bag-club-name">7i</div><div class="wf-bag-club-carry">158m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">8i</div><div class="wf-bag-club-carry">146m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">9i</div><div class="wf-bag-club-carry">132m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">PW</div><div class="wf-bag-club-carry">118m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">50°</div><div class="wf-bag-club-carry">104m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">54°</div><div class="wf-bag-club-carry">88m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">58°</div><div class="wf-bag-club-carry">74m</div></div>
+                  <div class="wf-bag-club"><div class="wf-bag-club-name">P</div><div class="wf-bag-club-carry">Putter</div></div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-7">
+                <div class="wf-bag-detail">
+                  <h2 class="wf-bag-detail-h">7-iron<span class="wf-marker">2</span></h2>
+                  <p class="wf-bag-detail-sub">Mizuno JPX · standard lie · S300</p>
+                  <div class="wf-bag-detail-grid">
+                    <div class="wf-bag-stat"><div class="wf-bag-stat-label">Carry</div><div class="wf-bag-stat-value">158<span style="font-size:11px;color:#999;"> m</span></div></div>
+                    <div class="wf-bag-stat"><div class="wf-bag-stat-label">Spin</div><div class="wf-bag-stat-value">6 820</div></div>
+                    <div class="wf-bag-stat"><div class="wf-bag-stat-label">Peak hgt</div><div class="wf-bag-stat-value">28m</div></div>
+                    <div class="wf-bag-stat"><div class="wf-bag-stat-label">Landing</div><div class="wf-bag-stat-value">45°</div></div>
+                    <div class="wf-bag-stat"><div class="wf-bag-stat-label">Dispersion</div><div class="wf-bag-stat-value">6.4m</div></div>
+                    <div class="wf-bag-stat"><div class="wf-bag-stat-label">Smash</div><div class="wf-bag-stat-value">1.38</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-label">Gap til nabo-klubbe<span class="wf-marker">3</span></div>
+                <div class="wf-c-row"><div class="wf-c-sub"><strong style="color:#000">6-iron 171m</strong> → 7-iron 158m · gap 13m ✓</div><div class="wf-c-sub"><strong style="color:#000">7-iron 158m</strong> → 8-iron 146m · gap 12m ✓</div></div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Bag-illustrasjon:</strong> Emosjonell identifikasjon — "dette er min bag". Leken, men krever vertikal plass.</li>
+        <li><strong>2 — Detalj-panel høyre:</strong> TrackMan-data per klubbe. Lær spilleren å lese carry + spin + peak høyde.</li>
+        <li><strong>3 — Gap-kontekst:</strong> Alltid vis forrige/neste klubbe for valgt. Kontekstuell, ikke overveldende.</li>
+        <li>— Risiko: Utstyrstunge fittere vil savne tabell-sortering. Kombiner med Option 1 som toggle.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Gap Chart ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Gap Chart</span></h2>
+    <p class="option-description">Stolpediagram med alle 13 slaglengde-klubber side om side. Gap over 10m uthevet. Ett blikk → du ser hvor bag'en er ujevn.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3a"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3a)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3a"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3a)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/bag</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div></div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Bag</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">Last opp økt</div><div class="wf-sb-cta-desc">TrackMan CSV auto-parsed</div><button class="wf-sb-cta-btn">Importer</button></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar"><div class="wf-mtopbar-left">Bag · gap-chart</div><div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-active">Carry</span><span class="wf-mtopbar-chip">Total</span><span class="wf-mtopbar-chip">Launch</span></div></div>
+            <section class="wf-page-head">
+              <div><div class="wf-page-eyebrow">Carry-ladder</div><h1 class="wf-page-h">Slaglengder per klubbe<span class="wf-marker">1</span></h1><p class="wf-page-sub">Hvitt = &gt; 10m gap · sort = innenfor terskel</p></div>
+              <div class="wf-page-meta"><div><strong>13</strong>klubber med carry</div><div><strong>3</strong>gap &gt; 10m</div></div>
+            </section>
+
+            <div class="wf-gap-chart">
+              <div class="wf-gap-axis-y"><span>260</span><span>200</span><span>140</span><span>80</span><span>20</span></div>
+              <div class="wf-gap-grid">
+                <div class="wf-gap-col"><div class="wf-gap-value">258</div><div class="wf-gap-bar" style="height:100%"></div><div class="wf-gap-label">D</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">232</div><div class="wf-gap-bar" style="height:90%"></div><div class="wf-gap-label">3W</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">214</div><div class="wf-gap-bar" style="height:83%"></div><div class="wf-gap-label">5W</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">197</div><div class="wf-gap-bar wf-warn" style="height:76%"></div><div class="wf-gap-label">4i</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">184</div><div class="wf-gap-bar" style="height:71%"></div><div class="wf-gap-label">5i</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">171</div><div class="wf-gap-bar" style="height:66%"></div><div class="wf-gap-label">6i</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">158</div><div class="wf-gap-bar" style="height:61%"></div><div class="wf-gap-label">7i</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">146</div><div class="wf-gap-bar" style="height:57%"></div><div class="wf-gap-label">8i</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">132</div><div class="wf-gap-bar wf-warn" style="height:51%"></div><div class="wf-gap-label">9i</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">118</div><div class="wf-gap-bar" style="height:46%"></div><div class="wf-gap-label">PW</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">104</div><div class="wf-gap-bar" style="height:40%"></div><div class="wf-gap-label">50°</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">88</div><div class="wf-gap-bar wf-warn" style="height:34%"></div><div class="wf-gap-label">54°</div></div>
+                <div class="wf-gap-col"><div class="wf-gap-value">74</div><div class="wf-gap-bar" style="height:29%"></div><div class="wf-gap-label">58°</div></div>
+              </div>
+              <div class="wf-gap-legend">
+                <div><span class="wf-gap-legend-dot"></span>Innenfor gap-terskel (&lt; 10m)</div>
+                <div><span class="wf-gap-legend-dot wf-warn"></span>Gap &gt; 10m til forrige klubbe</div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row"><div class="wf-c-label">Gap-analyse<span class="wf-marker">2</span></div><span class="wf-ai-badge">3 flagget</span></div>
+                <p class="wf-c-sub" style="line-height:1.6">Stolpediagrammet viser carry per klubbe. Bag'en er jevn i mellomrommet 5-iron til 8-iron, men har gap-problemer i <strong>3W→4i (17m)</strong>, <strong>PW→9i (14m)</strong> og <strong>50°→54° (16m)</strong>. Typisk mønster for spillere som har vokst carry på lange klubber uten å oppdatere wedge-setup.</p>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Gap-chart som hovedelement:</strong> Visuell hierarki — ett diagram forteller hele historien.</li>
+        <li><strong>2 — Narrativ tolkning:</strong> Data alene er kald. En setning forklarer hva det betyr for spilleren.</li>
+        <li>— Passer spillere som vil ha én-skjerm-visuell oversikt. Supplement til Option 1, ikke erstatning.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Equipment Lab ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Equipment Lab</span></h2>
+    <p class="option-description">TrackMan-dybde per klubbe. Venstre-rail med alle klubber, hoved-panel viser detaljert session-data + spredningsellipse for valgt klubbe.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4a"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4a)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4a"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4a)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/bag</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Elite · HCP +1.2</div></div></div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Bag</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">TrackMan koblet</div><div class="wf-sb-cta-desc">Studio 3 · auto-sync</div><button class="wf-sb-cta-btn">Se sesjoner</button></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar"><div class="wf-mtopbar-left">Bag · lab</div><div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">7d</span><span class="wf-mtopbar-chip wf-active">30d</span><span class="wf-mtopbar-chip">90d</span></div></div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-3">
+                <div class="wf-c-label">Alle klubber<span class="wf-marker">1</span></div>
+                <div class="wf-lab-clubs">
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">D</div><div class="wf-lab-club-name">Driver</div><div class="wf-lab-club-carry">258m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">3W</div><div class="wf-lab-club-name">3-wood</div><div class="wf-lab-club-carry">232m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">5W</div><div class="wf-lab-club-name">5-wood</div><div class="wf-lab-club-carry">214m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">4i</div><div class="wf-lab-club-name">4-iron</div><div class="wf-lab-club-carry">197m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">5i</div><div class="wf-lab-club-name">5-iron</div><div class="wf-lab-club-carry">184m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">6i</div><div class="wf-lab-club-name">6-iron</div><div class="wf-lab-club-carry">171m</div></div>
+                  <div class="wf-lab-club wf-active"><div class="wf-lab-club-ic">7i</div><div class="wf-lab-club-name">7-iron</div><div class="wf-lab-club-carry">158m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">8i</div><div class="wf-lab-club-name">8-iron</div><div class="wf-lab-club-carry">146m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">9i</div><div class="wf-lab-club-name">9-iron</div><div class="wf-lab-club-carry">132m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">PW</div><div class="wf-lab-club-name">PW</div><div class="wf-lab-club-carry">118m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">50</div><div class="wf-lab-club-name">Gap 50°</div><div class="wf-lab-club-carry">104m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">54</div><div class="wf-lab-club-name">Sand 54°</div><div class="wf-lab-club-carry">88m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">58</div><div class="wf-lab-club-name">Lob 58°</div><div class="wf-lab-club-carry">74m</div></div>
+                  <div class="wf-lab-club"><div class="wf-lab-club-ic">P</div><div class="wf-lab-club-name">Putter</div><div class="wf-lab-club-carry">—</div></div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-9">
+                <div class="wf-lab-detail">
+                  <div class="wf-lab-head">
+                    <div>
+                      <div class="wf-c-label">Valgt klubbe<span class="wf-marker">2</span></div>
+                      <div class="wf-lab-head-name">7-iron</div>
+                    </div>
+                    <div class="wf-lab-head-meta">Mizuno JPX 925 · S300 · 2° upright · 28 slag · siste 30d</div>
+                  </div>
+
+                  <div class="wf-lab-stats">
+                    <div class="wf-lab-stat"><div class="wf-lab-stat-label">Carry</div><div class="wf-lab-stat-value">158m</div><div class="wf-lab-stat-sub">±4.2m std dev</div></div>
+                    <div class="wf-lab-stat"><div class="wf-lab-stat-label">Total</div><div class="wf-lab-stat-value">165m</div><div class="wf-lab-stat-sub">+7m rollout</div></div>
+                    <div class="wf-lab-stat"><div class="wf-lab-stat-label">Ball speed</div><div class="wf-lab-stat-value">54.8</div><div class="wf-lab-stat-sub">m/s</div></div>
+                    <div class="wf-lab-stat"><div class="wf-lab-stat-label">Club speed</div><div class="wf-lab-stat-value">39.6</div><div class="wf-lab-stat-sub">m/s</div></div>
+                    <div class="wf-lab-stat"><div class="wf-lab-stat-label">Smash</div><div class="wf-lab-stat-value">1.38</div><div class="wf-lab-stat-sub">7i optimal 1.35-1.40</div></div>
+                    <div class="wf-lab-stat"><div class="wf-lab-stat-label">Spin</div><div class="wf-lab-stat-value">6 820</div><div class="wf-lab-stat-sub">rpm</div></div>
+                    <div class="wf-lab-stat"><div class="wf-lab-stat-label">Launch</div><div class="wf-lab-stat-value">17.2°</div><div class="wf-lab-stat-sub">peak 28m</div></div>
+                    <div class="wf-lab-stat"><div class="wf-lab-stat-label">Land-vinkel</div><div class="wf-lab-stat-value">45°</div><div class="wf-lab-stat-sub">ideell</div></div>
+                  </div>
+
+                  <div>
+                    <div class="wf-c-label">Dispersion-ellipse<span class="wf-marker">3</span></div>
+                    <div class="wf-lab-dispersion" style="margin-top:10px">
+                      <div class="wf-lab-ellipse"></div>
+                      <div class="wf-lab-target"></div>
+                      <div class="wf-lab-dot" style="left:48%; top:42%;"></div>
+                      <div class="wf-lab-dot" style="left:54%; top:38%;"></div>
+                      <div class="wf-lab-dot" style="left:46%; top:46%;"></div>
+                      <div class="wf-lab-dot" style="left:51%; top:40%;"></div>
+                      <div class="wf-lab-dot" style="left:53%; top:44%;"></div>
+                      <div class="wf-lab-dot" style="left:47%; top:41%;"></div>
+                      <div class="wf-lab-dot" style="left:50%; top:43%;"></div>
+                      <div class="wf-lab-dot" style="left:49%; top:39%;"></div>
+                      <div class="wf-lab-dot" style="left:55%; top:42%;"></div>
+                      <div class="wf-lab-dot" style="left:52%; top:45%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Venstre-rail klubbeliste:</strong> All state synlig samtidig. Rask navigasjon mellom klubber.</li>
+        <li><strong>2 — 8-stat grid:</strong> TrackMan-komplett. Carry, total, speed, smash, spin, launch, land. Power-user.</li>
+        <li><strong>3 — Dispersion-ellipse:</strong> Visualiser spredning — ikke bare tall. Koblet til mål-sirkel.</li>
+        <li>— Tier-passing: Elite-only. Starter blir overveldet. Vis basic-versjon for &lt; Pro.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Recommendations ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Recommendations</span></h2>
+    <p class="option-description">AI er hovedflaten. Analyse først, data sekundært. Mørkt hero med "din bag har 3 gap-problemer", konkrete anbefalinger under.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5a"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5a)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5a"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5a)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/bag</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div></div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Bag</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">Book fitting</div><div class="wf-sb-cta-desc">Test anbefalingene med Anders</div><button class="wf-sb-cta-btn">Book time</button></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar"><div class="wf-mtopbar-left">Bag · AI-analyse</div><div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Vis data</span></div></div>
+
+            <section class="wf-ai-hero">
+              <div class="wf-ai-hero-eyebrow">AI-Analyse<span class="wf-marker">1</span></div>
+              <h1 class="wf-ai-hero-title">Din bag har 3 gap-problemer</h1>
+              <p class="wf-ai-hero-body">Basert på 186 TrackMan-slag siste 30d har bag'en 3 gap &gt; 10m som skaper inkonsistens i scoring-sonen (100–150m). Høyeste impakt: bytt ut 4-iron med en 2-hybrid. Estimert SG-gevinst: +0.4 per runde.</p>
+              <div class="wf-ai-hero-meta">
+                <div><strong>3</strong>Gap flagget</div>
+                <div><strong>+0.4</strong>SG-gevinst estimert</div>
+                <div><strong>86%</strong>AI-konfidens</div>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+              <div class="wf-rec-card wf-bc-4">
+                <div class="wf-rec-card-head"><div class="wf-rec-card-num">1</div><div class="wf-rec-card-title">Bytt 4-iron → 2-hybrid<span class="wf-marker">2</span></div></div>
+                <p class="wf-rec-card-body">Gap 3W (232m) → 4i (197m) er <strong>17m</strong>. 2H vil lande på ~210m og lukke gapet. Hybrid gir mer launch og mykere landing — bedre for inngang til par-5s.</p>
+                <div class="wf-rec-card-meta"><div>Impact: <strong>Høy</strong></div><div>SG: <strong>+0.2</strong></div><div>Cost: <strong>4 500 kr</strong></div></div>
+                <div class="wf-rec-actions"><button class="wf-rec-btn wf-rec-btn-primary">Book fitting</button><button class="wf-rec-btn">Se alternativ</button></div>
+              </div>
+
+              <div class="wf-rec-card wf-bc-4">
+                <div class="wf-rec-card-head"><div class="wf-rec-card-num">2</div><div class="wf-rec-card-title">Sjekk 9-iron loft<span class="wf-marker">3</span></div></div>
+                <p class="wf-rec-card-body">Gap PW (118m) → 9i (132m) er <strong>14m</strong>, og 9i har høyere dispersion (5.4m vs 4.9m). Loft kan være 1-2° sterkere enn spec. Fitting anbefales.</p>
+                <div class="wf-rec-card-meta"><div>Impact: <strong>Medium</strong></div><div>SG: <strong>+0.1</strong></div><div>Cost: <strong>500 kr</strong></div></div>
+                <div class="wf-rec-actions"><button class="wf-rec-btn wf-rec-btn-primary">Book loft-check</button><button class="wf-rec-btn">Skip</button></div>
+              </div>
+
+              <div class="wf-rec-card wf-bc-4">
+                <div class="wf-rec-card-head"><div class="wf-rec-card-num">3</div><div class="wf-rec-card-title">52° i stedet for 54°</div></div>
+                <p class="wf-rec-card-body">Gap 50° (104m) → 54° (88m) er <strong>16m</strong>. Et 52° wedge vil lande på ~96m og gi jevnere progresjon i scoring-sonen.</p>
+                <div class="wf-rec-card-meta"><div>Impact: <strong>Medium</strong></div><div>SG: <strong>+0.1</strong></div><div>Cost: <strong>1 800 kr</strong></div></div>
+                <div class="wf-rec-actions"><button class="wf-rec-btn wf-rec-btn-primary">Book fitting</button><button class="wf-rec-btn">Se alternativ</button></div>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row"><div class="wf-c-label">Oppsummering</div><button class="wf-c-link">Se full bag-liste →</button></div>
+                <p class="wf-c-sub" style="line-height:1.6">11 av 14 klubber er innenfor gap-terskel. 3 klubber trenger vurdering. Total estimert SG-gevinst ved full implementasjon: <strong style="color:#000">+0.4 per runde</strong>. Budsjett: <strong style="color:#000">6 800 kr</strong>. Anbefalt rekkefølge: 1 → 3 → 2.</p>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — AI-hero først:</strong> "Din bag har 3 problemer" er sterkere enn en tabell. Dramatisk overskrift.</li>
+        <li><strong>2 — Anbefalinger som kort:</strong> Impact + SG-estimat + kostnad. Økonomisk + sportslig rasjonale.</li>
+        <li><strong>3 — Direkte "Book fitting" CTA:</strong> Konverterer anbefaling til coaching-booking. Forretningsmål.</li>
+        <li>— Risiko: AI-fokusert kan føles for aggressivt. Gi alltid "Vis data" utgang til tabell-view.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>5-sekunders bag-oversikt + handlingsfremmende gap-analyse</strong>.</p>
+    <table class="wf-summary-table">
+      <thead><tr><th>Opsjon</th><th>Filosofi</th><th>5-sek oversikt</th><th>Tier-passing</th><th>Kompleksitet</th><th>Score</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Classic Grid</strong></td><td>Tabell + anbefalinger sidestilt</td><td>Svært høy</td><td>Alle tiers</td><td>Lav</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Visual Bag</strong></td><td>Illustrert bag + detalj-panel</td><td>Medium (krever klikk)</td><td>Starter + Pro</td><td>Medium</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>3. Gap Chart</strong></td><td>Stort stolpediagram</td><td>Svært høy (én graf)</td><td>Alle tiers</td><td>Lav–medium</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Equipment Lab</strong></td><td>TrackMan-dybde per klubbe</td><td>Høy for Elite</td><td>Elite kun</td><td>Høy</td><td>★★★★☆</td></tr>
+        <tr><td><strong>5. Recommendations</strong></td><td>AI-first, anbefalinger dominerer</td><td>Høy</td><td>Pro + Elite</td><td>Medium</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Classic Grid</h3>
+      <p>Klassisk tabell med carry, dispersion og gap per rad gir full oversikt på én skjerm. Anbefalinger sidestilt skaper direkte kobling mellom data og handling. Fungerer for alle tiers fra Starter (les tallene) til Elite (sammenlign per kolonne). Lav byggekompleksitet — eksisterer allerede i UI-biblioteket.</p>
+      <p><strong>Strategisk flow:</strong> Option 1 som default. Option 3 (Gap Chart) som toggle/sub-view når spiller vil se visuell progresjon. Option 4 (Equipment Lab) under "Detaljer per klubbe" — Elite-only dyp-dive. Option 5 (Recommendations) som AI-banner øverst i Option 1 når det finnes flaggede gap.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

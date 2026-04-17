@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Økter — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Økter</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Session List</button>
+    <button class="tab-btn" data-tab="option-2">2: Notes First</button>
+    <button class="tab-btn" data-tab="option-3">3: Timeline Feed</button>
+    <button class="tab-btn" data-tab="option-4">4: Student-grouped</button>
+    <button class="tab-btn" data-tab="option-5">5: Analytics</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: SESSION LIST ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Session List</span></h2>
+    <p class="option-description">Fullfort/avlyst/no-show-okter som sorterbar liste. Oppmoteprosent per instruktor/periode i KPI-strip. Klikk rad → notater-drawer. SAFE — speiler Bookinger-monsteret.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/okter</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs"><a class="mc-tab">Oversikt</a><a class="mc-tab">Bookinger</a><a class="mc-tab mc-tab-active">Økter</a><a class="mc-tab">Elever</a><a class="mc-tab">Rapporter</a></div>
+            </div>
+            <div class="mc-topbar-right"><span class="mc-search">Søk elev / økt-notat</span><span class="mc-avatar">AK</span></div>
+          </header>
+
+          <section class="mc-subheader">
+            <h2 class="mc-subhead-title">Økter<span class="wf-marker">1</span></h2>
+            <div class="mc-subhead-meta">142 fullført siste 30 dager · 92% oppmøte · 8 notater venter</div>
+          </section>
+
+          <section class="mc-kpi-strip">
+            <div class="mc-kpi-card"><div class="mc-kpi-label">FULLFØRT 30D</div><div class="mc-kpi-val">142</div><div class="mc-kpi-sub">Anders 88 · Markus 54</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-label">OPPMØTE</div><div class="mc-kpi-val">92%</div><div class="mc-kpi-sub">mål 90% · +2 pp</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-label">NO-SHOW</div><div class="mc-kpi-val">7</div><div class="mc-kpi-sub">4.9% · 2 denne uken</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-label">NOTAT MANGLER<span class="wf-marker">2</span></div><div class="mc-kpi-val">8</div><div class="mc-kpi-sub">innen 24 timer</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-label">AI-SUMMARY</div><div class="mc-kpi-val">134</div><div class="mc-kpi-sub">94% av notater</div></div>
+          </section>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">STATUS</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-completed"></span>Fullført</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-noshow"></span>No-show</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-cancelled"></span>Avlyst</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-draft"></span>Notat mangler</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">INSTRUKTØR</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill">Anders</button>
+              <button class="mc-pill">Markus</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">PERIODE</span>
+              <button class="mc-pill mc-pill-active">30 dager</button>
+              <button class="mc-pill">7 dager</button>
+              <button class="mc-pill mc-pill-ghost">Tilpass</button>
+            </div>
+            <button class="mc-cta">Eksporter</button>
+          </section>
+
+          <section class="mc-list-wrap">
+            <div class="mc-list-row mc-list-head">
+              <span>TID ↓</span>
+              <span>ELEV</span>
+              <span>NOTAT / SAMMENDRAG</span>
+              <span>INSTRUKTØR</span>
+              <span>OPPMØTE 30D</span>
+              <span>VARIGHET</span>
+              <span></span>
+            </div>
+
+            <div class="mc-list-row mc-row-selected">
+              <div class="mc-list-time"><strong>Tor 11:00</strong><span>16. apr</span></div>
+              <div class="mc-list-who"><div class="mc-list-avatar">EH</div><div><div class="mc-list-name">Erik Hansen<span class="wf-marker">3</span></div><div class="mc-list-sub">HCP 14 · Oslo GK</div></div></div>
+              <div class="mc-list-notes-preview">"Fokuserte på setup og takeaway. Anbefaler putting-drill 10x daglig."</div>
+              <div class="mc-list-service">Anders</div>
+              <div class="mc-attend-bar"><div class="mc-attend-track"><div class="mc-attend-fill" style="width:100%"></div></div>100%</div>
+              <div class="mc-list-duration">20 min</div>
+              <div class="mc-list-actions"><button class="mc-icon-btn" title="Åpne notat">◉</button><button class="mc-icon-btn" title="Meldinger">✉</button><button class="mc-icon-btn" title="Mer">⋯</button></div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Tor 14:00</strong><span>16. apr</span></div>
+              <div class="mc-list-who"><div class="mc-list-avatar">NT</div><div><div class="mc-list-name">Nora Torp</div><div class="mc-list-sub">HCP 22 · Losby</div></div></div>
+              <div class="mc-list-notes-preview"><span class="mc-ai-chip">AI</span> &nbsp;"Bedret balanse i backswing. Neste: tempo-drill med metronom."</div>
+              <div class="mc-list-service">Anders</div>
+              <div class="mc-attend-bar"><div class="mc-attend-track"><div class="mc-attend-fill" style="width:88%"></div></div>88%</div>
+              <div class="mc-list-duration">20 min</div>
+              <div class="mc-list-actions"><button class="mc-icon-btn" title="Åpne">◉</button><button class="mc-icon-btn" title="Mer">⋯</button></div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Ons 09:30</strong><span>15. apr</span></div>
+              <div class="mc-list-who"><div class="mc-list-avatar">SV</div><div><div class="mc-list-name">Sofie Vik</div><div class="mc-list-sub">HCP 18 · Mulligan</div></div></div>
+              <div class="mc-list-notes-preview" style="color:#999;"><span class="mc-status-tag mc-tag-draft">Notat mangler</span> — Anders må fylle inn innen 24t</div>
+              <div class="mc-list-service">Anders</div>
+              <div class="mc-attend-bar"><div class="mc-attend-track"><div class="mc-attend-fill" style="width:92%"></div></div>92%</div>
+              <div class="mc-list-duration">20 min</div>
+              <div class="mc-list-actions"><button class="mc-icon-btn" title="Skriv notat">✎</button><button class="mc-icon-btn" title="Mer">⋯</button></div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Ons 14:00</strong><span>15. apr</span></div>
+              <div class="mc-list-who"><div class="mc-list-avatar">JG</div><div><div class="mc-list-name">Junior 10–13</div><div class="mc-list-sub">7 spillere · GFGK</div></div></div>
+              <div class="mc-list-notes-preview">"Progresjon i chip-teknikk. 5 av 7 nådde mål. Fortsett med avstandskontroll."</div>
+              <div class="mc-list-service">Anders</div>
+              <div class="mc-attend-bar"><div class="mc-attend-track"><div class="mc-attend-fill" style="width:100%"></div></div>7/7</div>
+              <div class="mc-list-duration">60 min</div>
+              <div class="mc-list-actions"><button class="mc-icon-btn" title="Åpne">◉</button><button class="mc-icon-btn" title="Mer">⋯</button></div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Tir 14:00</strong><span>14. apr</span></div>
+              <div class="mc-list-who"><div class="mc-list-avatar">MR</div><div><div class="mc-list-name">Markus Roinås P.<span class="wf-marker">4</span></div><div class="mc-list-sub">HCP 8 · GFGK</div></div></div>
+              <div class="mc-list-notes-preview" style="color:#666;"><span class="mc-status-tag mc-tag-noshow">No-show</span> — 2. gang siste 30 dager, send reminder</div>
+              <div class="mc-list-service">Anders</div>
+              <div class="mc-attend-bar"><div class="mc-attend-track"><div class="mc-attend-fill" style="width:78%"></div></div>78%</div>
+              <div class="mc-list-duration">— min</div>
+              <div class="mc-list-actions"><button class="mc-icon-btn" title="Send melding">✉</button><button class="mc-icon-btn" title="Mer">⋯</button></div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Tir 10:00</strong><span>14. apr</span></div>
+              <div class="mc-list-who"><div class="mc-list-avatar">LB</div><div><div class="mc-list-name">Lars Berg</div><div class="mc-list-sub">HCP 12 · Mulligan</div></div></div>
+              <div class="mc-list-notes-preview"><span class="mc-ai-chip">AI</span> &nbsp;"Dispersjon redusert fra 28m til 19m. Klar for nytt fokus: approach."</div>
+              <div class="mc-list-service">Markus</div>
+              <div class="mc-attend-bar"><div class="mc-attend-track"><div class="mc-attend-fill" style="width:96%"></div></div>96%</div>
+              <div class="mc-list-duration">20 min</div>
+              <div class="mc-list-actions"><button class="mc-icon-btn" title="Åpne">◉</button><button class="mc-icon-btn" title="Mer">⋯</button></div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Man 16:30</strong><span>13. apr</span></div>
+              <div class="mc-list-who"><div class="mc-list-avatar">FT</div><div><div class="mc-list-name">First Tee kurs 3/8</div><div class="mc-list-sub">8 deltakere</div></div></div>
+              <div class="mc-list-notes-preview">"Grip og stance. Alle fikk grunnoppfattning. Neste: backswing tempo."</div>
+              <div class="mc-list-service">Markus</div>
+              <div class="mc-attend-bar"><div class="mc-attend-track"><div class="mc-attend-fill" style="width:88%"></div></div>7/8</div>
+              <div class="mc-list-duration">90 min</div>
+              <div class="mc-list-actions"><button class="mc-icon-btn" title="Åpne">◉</button><button class="mc-icon-btn" title="Mer">⋯</button></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Subheader er handlingsorientert: fullført antall + oppmøteprosent + notat-backlog. Anders ser backlog på 1 sekund.</li>
+        <li><strong>2</strong> — "Notat mangler" som KPI — en tydelig påminnelse før 24t-fristen.</li>
+        <li><strong>3</strong> — Radens hovedverdi er SAMMENDRAGET — ikke "status" eller "pris". Økter handler om innhold.</li>
+        <li><strong>4</strong> — No-show vises uten drama men med kontekst ("2. gang siste 30 dager") som gir handling.</li>
+        <li>AI-chip markerer hvilke notater som har AI-summary — visuelt raskt skille fra håndskrevne notater.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: NOTES FIRST ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Notes First</span></h2>
+    <p class="option-description">Notat-leser-layout: liste til venstre, full notat + AI-summary til høyre. Fokus: lese og bruke sammendrag, key points og action items. Ikke liste-management.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/okter</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left"><div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs"><a class="mc-tab">Oversikt</a><a class="mc-tab">Bookinger</a><a class="mc-tab mc-tab-active">Økter</a><a class="mc-tab">Elever</a><a class="mc-tab">Rapporter</a></div>
+            </div>
+            <div class="mc-topbar-right"><span class="mc-search">Søk notat / elev</span><span class="mc-avatar">AK</span></div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">VIEW<span class="wf-marker">1</span></span>
+              <button class="mc-pill">Liste</button>
+              <button class="mc-pill mc-pill-active">Notater</button>
+              <button class="mc-pill">Timeline</button>
+              <button class="mc-pill">Per elev</button>
+              <button class="mc-pill">Stats</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">FILTER</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill"><span class="mc-ai-chip" style="border:none;padding:0;background:transparent;">AI</span>AI-summary</button>
+              <button class="mc-pill">Med action-items</button>
+            </div>
+            <button class="mc-cta">Ny økt</button>
+          </section>
+
+          <section class="mc-notes-wrap">
+            <div class="mc-notes-list">
+              <div class="mc-notes-list-head">134 ØKTER · SORTERT NYLIG<span class="wf-marker">2</span></div>
+
+              <div class="mc-notes-item mc-notes-item-selected">
+                <div class="mc-notes-item-top"><div class="mc-notes-item-name">Erik Hansen</div><div class="mc-notes-item-date">16. apr · 11:00</div></div>
+                <div class="mc-notes-item-preview">Fokuserte på setup og takeaway. Anbefaler putting-drill 10x daglig.</div>
+                <div class="mc-notes-item-meta"><span class="mc-ai-chip">AI</span> Anders · 20 min · 3 action-items</div>
+              </div>
+
+              <div class="mc-notes-item">
+                <div class="mc-notes-item-top"><div class="mc-notes-item-name">Nora Torp</div><div class="mc-notes-item-date">16. apr · 14:00</div></div>
+                <div class="mc-notes-item-preview">Bedret balanse i backswing. Neste: tempo-drill med metronom på 65 bpm.</div>
+                <div class="mc-notes-item-meta"><span class="mc-ai-chip">AI</span> Anders · 20 min</div>
+              </div>
+
+              <div class="mc-notes-item">
+                <div class="mc-notes-item-top"><div class="mc-notes-item-name">Junior 10–13</div><div class="mc-notes-item-date">15. apr · 14:00</div></div>
+                <div class="mc-notes-item-preview">Progresjon i chip-teknikk. 5 av 7 nådde mål. Fortsett med avstandskontroll.</div>
+                <div class="mc-notes-item-meta">Anders · 60 min · gruppe</div>
+              </div>
+
+              <div class="mc-notes-item">
+                <div class="mc-notes-item-top"><div class="mc-notes-item-name">Lars Berg</div><div class="mc-notes-item-date">14. apr · 10:00</div></div>
+                <div class="mc-notes-item-preview">Dispersjon redusert fra 28m til 19m. Klar for nytt fokus: approach.</div>
+                <div class="mc-notes-item-meta"><span class="mc-ai-chip">AI</span> Markus · 20 min</div>
+              </div>
+
+              <div class="mc-notes-item">
+                <div class="mc-notes-item-top"><div class="mc-notes-item-name">First Tee kurs 3/8</div><div class="mc-notes-item-date">13. apr · 16:30</div></div>
+                <div class="mc-notes-item-preview">Grip og stance. Alle fikk grunnoppfattning. Neste: backswing tempo.</div>
+                <div class="mc-notes-item-meta">Markus · 90 min · 8 deltakere</div>
+              </div>
+
+              <div class="mc-notes-item">
+                <div class="mc-notes-item-top"><div class="mc-notes-item-name">Sofie Vik</div><div class="mc-notes-item-date">10. apr · 09:30</div></div>
+                <div class="mc-notes-item-preview">Setup-korreksjon + ball-posisjon. Filmet fra bak — sender til spiller.</div>
+                <div class="mc-notes-item-meta"><span class="mc-ai-chip">AI</span> Anders · 20 min · 2 action-items</div>
+              </div>
+            </div>
+
+            <div class="mc-notes-detail">
+              <div class="mc-notes-detail-head">
+                <div>
+                  <h3 class="mc-notes-detail-title">Erik Hansen · 16. apr 11:00</h3>
+                  <div class="mc-notes-detail-meta">Anders · 20 min · Performance Pro · Simulator 2 · HCP 14</div>
+                </div>
+                <div class="mc-notes-detail-actions"><button class="mc-icon-btn" title="Rediger">✎</button><button class="mc-icon-btn" title="Del">→</button><button class="mc-icon-btn" title="Mer">⋯</button></div>
+              </div>
+
+              <div class="mc-note-section">
+                <div class="mc-note-section-label"><span class="mc-ai-chip">AI</span> &nbsp;SAMMENDRAG<span class="wf-marker">3</span></div>
+                <div class="mc-note-summary">"Fokuserte på setup og takeaway. Erik har tendens til å åpne skuldre tidlig — jobbet med speil-drill. Bedret konsistens i carry-avstand (+4m). Anbefaler putting-drill 10x daglig frem til neste økt."</div>
+              </div>
+
+              <div class="mc-note-section">
+                <div class="mc-note-section-label">KEY POINTS</div>
+                <ul class="mc-note-bullets">
+                  <li class="mc-note-bullet"><span class="mc-note-bullet-marker">01</span><span>Setup: for bred stance — justerte til skulderbredde.</span></li>
+                  <li class="mc-note-bullet"><span class="mc-note-bullet-marker">02</span><span>Takeaway: skuldre åpner før hofter — speil-drill hjalp.</span></li>
+                  <li class="mc-note-bullet"><span class="mc-note-bullet-marker">03</span><span>Carry-konsistens 7-jern: SD ned fra 4.2m til 2.8m.</span></li>
+                </ul>
+              </div>
+
+              <div class="mc-note-section">
+                <div class="mc-note-section-label">FOKUSOMRÅDER<span class="wf-marker">4</span></div>
+                <ul class="mc-note-bullets">
+                  <li class="mc-note-bullet"><span class="mc-note-bullet-marker">●</span><span>Putting — kortdistanse, stroke-lengde-kontroll.</span></li>
+                  <li class="mc-note-bullet"><span class="mc-note-bullet-marker">●</span><span>Takeaway-tempo — hofte-rotasjon først.</span></li>
+                </ul>
+              </div>
+
+              <div class="mc-note-section">
+                <div class="mc-note-section-label">ACTION ITEMS</div>
+                <div class="mc-action-items">
+                  <div class="mc-action-item"><span class="mc-action-item-cb"></span><span>Putting-drill 10x daglig (2m, 4m, 6m) — minst 5 dager/uke.</span></div>
+                  <div class="mc-action-item"><span class="mc-action-item-cb"></span><span>Speil-drill hjemme: 20 takeaways foran speil, 3x/uke.</span></div>
+                  <div class="mc-action-item"><span class="mc-action-item-cb"></span><span>Neste økt: mål 80m jern-spredning &lt; 3m SD.</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — View-switcher øverst gir tilgang til alle fem opsjoner — "Notes" er default for denne ruten.</li>
+        <li><strong>2</strong> — Notat-liste til venstre er scrollbar, viser 2-linjers preview. Fokus på innhold, ikke metadata.</li>
+        <li><strong>3</strong> — AI-sammendrag er hovedelementet — 2-3 setninger, italic, venstre-stripe-markør for visuell vekt.</li>
+        <li><strong>4</strong> — Key points / fokusområder / action items er tre strukturerte seksjoner som matcher datamodellen.</li>
+        <li>Action items har checkbox — trener kan merke som fullført, eller eksportere til treningsplan.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: TIMELINE FEED ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Timeline Feed</span></h2>
+    <p class="option-description">Kronologisk feed med store kort og AI-sammendrag inline. "Filmisk" sesjonsflyt — scroll gjennom uken som å lese en dagbok.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/okter</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left"><div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs"><a class="mc-tab">Oversikt</a><a class="mc-tab">Bookinger</a><a class="mc-tab mc-tab-active">Økter</a><a class="mc-tab">Elever</a><a class="mc-tab">Rapporter</a></div>
+            </div>
+            <div class="mc-topbar-right"><span class="mc-search">Søk økter</span><span class="mc-avatar">AK</span></div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group"><span class="mc-filter-label">VIEW</span><button class="mc-pill">Liste</button><button class="mc-pill">Notater</button><button class="mc-pill mc-pill-active">Timeline</button><button class="mc-pill">Per elev</button><button class="mc-pill">Stats</button></div>
+            <div class="mc-filter-group"><span class="mc-filter-label">INSTR.</span><button class="mc-pill mc-pill-active">Alle</button><button class="mc-pill">Anders</button><button class="mc-pill">Markus</button></div>
+            <button class="mc-cta">Ny økt</button>
+          </section>
+
+          <section class="mc-feed-wrap">
+            <div class="mc-feed-head">
+              <h2 class="mc-feed-title">Siste økter<span class="wf-marker">1</span></h2>
+              <div class="mc-feed-meta">14 økter siste 7 dager · 92% oppmøte · 11 med AI-summary</div>
+            </div>
+
+            <div class="mc-feed-groups">
+              <div class="mc-feed-group">
+                <div class="mc-feed-day-head">
+                  <div class="mc-feed-day">Torsdag 16. april</div>
+                  <div class="mc-feed-day-sub">I DAG<span class="wf-marker">2</span></div>
+                  <div class="mc-feed-day-stats">4 økter · 80 min coaching · 0 no-show</div>
+                </div>
+                <div class="mc-feed-track">
+                  <div class="mc-feed-event">
+                    <div class="mc-feed-time">11:00<span>20 min</span></div>
+                    <div class="mc-feed-event-head">
+                      <div class="mc-feed-event-who"><div class="mc-list-avatar">EH</div><div><div class="mc-feed-event-name">Erik Hansen</div><div class="mc-feed-event-sub">Performance Pro · Anders · Sim 2</div></div></div>
+                      <span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>Fullført</span>
+                    </div>
+                    <div class="mc-feed-event-summary"><span class="mc-ai-chip">AI</span> &nbsp;"Fokuserte på setup og takeaway. Anbefaler putting-drill 10x daglig. Neste: approach 80m."</div>
+                    <div class="mc-feed-event-foot"><div class="mc-feed-event-tags"><span class="mc-feed-tag">Putting</span><span class="mc-feed-tag">Setup</span><span class="mc-feed-tag">3 action-items</span></div><span>HCP 14</span></div>
+                  </div>
+
+                  <div class="mc-feed-event">
+                    <div class="mc-feed-time">14:00<span>20 min</span></div>
+                    <div class="mc-feed-event-head">
+                      <div class="mc-feed-event-who"><div class="mc-list-avatar">NT</div><div><div class="mc-feed-event-name">Nora Torp</div><div class="mc-feed-event-sub">Performance · Anders · Sim 1</div></div></div>
+                      <span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>Fullført</span>
+                    </div>
+                    <div class="mc-feed-event-summary"><span class="mc-ai-chip">AI</span> &nbsp;"Bedret balanse i backswing. Tempo-drill med metronom på 65 bpm var effektivt."</div>
+                    <div class="mc-feed-event-foot"><div class="mc-feed-event-tags"><span class="mc-feed-tag">Tempo</span><span class="mc-feed-tag">Balanse</span></div><span>HCP 22</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-feed-group">
+                <div class="mc-feed-day-head">
+                  <div class="mc-feed-day">Onsdag 15. april</div>
+                  <div class="mc-feed-day-sub">I GÅR</div>
+                  <div class="mc-feed-day-stats">3 økter · 1 notat mangler<span class="wf-marker">3</span></div>
+                </div>
+                <div class="mc-feed-track">
+                  <div class="mc-feed-event mc-feed-event-noshow">
+                    <div class="mc-feed-time">09:30<span>20 min</span></div>
+                    <div class="mc-feed-event-head">
+                      <div class="mc-feed-event-who"><div class="mc-list-avatar">SV</div><div><div class="mc-feed-event-name">Sofie Vik</div><div class="mc-feed-event-sub">Performance · Anders · Sim 3</div></div></div>
+                      <span class="mc-status-tag mc-tag-draft">Notat mangler</span>
+                    </div>
+                    <div class="mc-feed-event-summary" style="color:#999;font-style:normal;">Ingen notat lagret ennå — Anders må fylle inn innen 24 timer.</div>
+                    <div class="mc-feed-event-foot"><div class="mc-feed-event-tags"><span class="mc-feed-tag">HCP 18</span></div><button class="mc-pill mc-pill-active">Skriv notat</button></div>
+                  </div>
+
+                  <div class="mc-feed-event">
+                    <div class="mc-feed-time">14:00<span>60 min</span></div>
+                    <div class="mc-feed-event-head">
+                      <div class="mc-feed-event-who"><div class="mc-list-avatar">JG</div><div><div class="mc-feed-event-name">Junior 10–13</div><div class="mc-feed-event-sub">Gruppecoaching · Anders · Utendørs · 7 spillere</div></div></div>
+                      <span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>Fullført</span>
+                    </div>
+                    <div class="mc-feed-event-summary">"Progresjon i chip-teknikk. 5 av 7 nådde mål. Fortsett med avstandskontroll. Individuell tilbakemelding sendt til hver spiller."</div>
+                    <div class="mc-feed-event-foot"><div class="mc-feed-event-tags"><span class="mc-feed-tag">Chip</span><span class="mc-feed-tag">Gruppe</span><span class="mc-feed-tag">Oppmøte 7/7</span></div><span>60 min</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-feed-group">
+                <div class="mc-feed-day-head">
+                  <div class="mc-feed-day">Tirsdag 14. april</div>
+                  <div class="mc-feed-day-sub">3 DAGER SIDEN</div>
+                  <div class="mc-feed-day-stats">2 økter · 1 no-show</div>
+                </div>
+                <div class="mc-feed-track">
+                  <div class="mc-feed-event mc-feed-event-cancelled">
+                    <div class="mc-feed-time">14:00<span>— min</span></div>
+                    <div class="mc-feed-event-head">
+                      <div class="mc-feed-event-who"><div class="mc-list-avatar">MR</div><div><div class="mc-feed-event-name">Markus Roinås P.</div><div class="mc-feed-event-sub">Performance Pro · Anders · Banecoaching</div></div></div>
+                      <span class="mc-status-tag mc-tag-noshow">No-show</span>
+                    </div>
+                    <div class="mc-feed-event-summary" style="color:#666;">2. gang siste 30 dager — send reminder før neste booking. Belastet pakke.</div>
+                    <div class="mc-feed-event-foot"><div class="mc-feed-event-tags"><span class="mc-feed-tag">HCP 8</span></div><button class="mc-pill">Send melding</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Timeline-header viser totalt antall + AI-dekning — kvalitet på notater signaliseres øverst.</li>
+        <li><strong>2</strong> — "I DAG / I GÅR / 3 DAGER SIDEN" er naturlig orientering — timeline blir "dagbok".</li>
+        <li><strong>3</strong> — Notat-manglende vises prominent med CTA for å skrive rett fra feed.</li>
+        <li>AI-sammendraget er inline i hvert kort — ingen klikk nødvendig for å se essensen av økten.</li>
+        <li>Tags viser tema — "Putting", "Tempo" — gjør det lett å skanne hva øktene har handlet om.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: STUDENT-GROUPED ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Student-grouped</span></h2>
+    <p class="option-description">Gruppert per elev (accordion). Ekspanderende kort viser økthistorikk per person, med oppmøte, total tid og progresjon. Perfekt for 1-til-1-coaching-flow.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/okter</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left"><div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs"><a class="mc-tab">Oversikt</a><a class="mc-tab">Bookinger</a><a class="mc-tab mc-tab-active">Økter</a><a class="mc-tab">Elever</a><a class="mc-tab">Rapporter</a></div>
+            </div>
+            <div class="mc-topbar-right"><span class="mc-search">Søk elev</span><span class="mc-avatar">AK</span></div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group"><span class="mc-filter-label">VIEW</span><button class="mc-pill">Liste</button><button class="mc-pill">Notater</button><button class="mc-pill">Timeline</button><button class="mc-pill mc-pill-active">Per elev<span class="wf-marker">1</span></button><button class="mc-pill">Stats</button></div>
+            <div class="mc-filter-group"><span class="mc-filter-label">SORTER</span><button class="mc-pill mc-pill-active">Siste økt</button><button class="mc-pill">Aktivitet</button><button class="mc-pill">Oppmøte</button></div>
+            <button class="mc-cta">Ny økt</button>
+          </section>
+
+          <section class="mc-students-wrap">
+            <div class="mc-student-card">
+              <div class="mc-student-card-head">
+                <div class="mc-list-avatar">EH</div>
+                <div><div class="mc-student-head-name">Erik Hansen</div><div class="mc-student-head-sub">HCP 14 · Oslo GK · Performance Pro · Anders<span class="wf-marker">2</span></div></div>
+                <div class="mc-student-head-stats">
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">ØKTER 30D</div><div class="mc-student-stat-val">8</div></div>
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">OPPMØTE</div><div class="mc-student-stat-val">100%</div></div>
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">HCP Δ</div><div class="mc-student-stat-val">−1.4</div></div>
+                </div>
+                <div class="mc-student-toggle">▾</div>
+              </div>
+              <div class="mc-student-sessions">
+                <div class="mc-student-session">
+                  <div class="mc-student-session-date">16. apr<span>tor 11:00</span></div>
+                  <div class="mc-student-session-summary">"Fokuserte på setup og takeaway. Anbefaler putting-drill 10x daglig."</div>
+                  <div class="mc-student-session-dur">20 min</div>
+                  <div><span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>OK</span></div>
+                </div>
+                <div class="mc-student-session">
+                  <div class="mc-student-session-date">9. apr<span>tor 11:00</span></div>
+                  <div class="mc-student-session-summary">"Approach 100m — dispersjon fra 8m til 5m. Bra fremgang på trail-arm rotation."</div>
+                  <div class="mc-student-session-dur">20 min</div>
+                  <div><span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>OK</span></div>
+                </div>
+                <div class="mc-student-session">
+                  <div class="mc-student-session-date">2. apr<span>tor 11:00</span></div>
+                  <div class="mc-student-session-summary">"Driver-tempo. Overrotasjon i backswing — øvet halv-swing-drill."</div>
+                  <div class="mc-student-session-dur">20 min</div>
+                  <div><span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>OK</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-student-card">
+              <div class="mc-student-card-head">
+                <div class="mc-list-avatar">NT</div>
+                <div><div class="mc-student-head-name">Nora Torp</div><div class="mc-student-head-sub">HCP 22 · Losby · Performance · Anders</div></div>
+                <div class="mc-student-head-stats">
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">ØKTER 30D</div><div class="mc-student-stat-val">6</div></div>
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">OPPMØTE</div><div class="mc-student-stat-val">88%</div></div>
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">HCP Δ</div><div class="mc-student-stat-val">−2.8<span class="wf-marker">3</span></div></div>
+                </div>
+                <div class="mc-student-toggle">▾</div>
+              </div>
+              <div class="mc-student-sessions">
+                <div class="mc-student-session">
+                  <div class="mc-student-session-date">16. apr<span>tor 14:00</span></div>
+                  <div class="mc-student-session-summary">"Bedret balanse i backswing. Neste: tempo-drill med metronom på 65 bpm."</div>
+                  <div class="mc-student-session-dur">20 min</div>
+                  <div><span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>OK</span></div>
+                </div>
+                <div class="mc-student-session">
+                  <div class="mc-student-session-date">9. apr<span>tor 14:00</span></div>
+                  <div class="mc-student-session-summary">"Chipping 20-40m. Ballposisjon for langt bak — justerte."</div>
+                  <div class="mc-student-session-dur">20 min</div>
+                  <div><span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>OK</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-student-card">
+              <div class="mc-student-card-head">
+                <div class="mc-list-avatar">MR</div>
+                <div><div class="mc-student-head-name">Markus Roinås P.<span class="wf-marker">4</span></div><div class="mc-student-head-sub">HCP 8 · GFGK · Performance Pro · Anders</div></div>
+                <div class="mc-student-head-stats">
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">ØKTER 30D</div><div class="mc-student-stat-val">5</div></div>
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">OPPMØTE</div><div class="mc-student-stat-val">78%</div></div>
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">HCP Δ</div><div class="mc-student-stat-val">+0.2</div></div>
+                </div>
+                <div class="mc-student-toggle">▾</div>
+              </div>
+              <div class="mc-student-sessions">
+                <div class="mc-student-session">
+                  <div class="mc-student-session-date">14. apr<span>tir 14:00</span></div>
+                  <div class="mc-student-session-summary" style="color:#666;">2. gang no-show siste 30 dager — følg opp kontakt-preferanser.</div>
+                  <div class="mc-student-session-dur">— min</div>
+                  <div><span class="mc-status-tag mc-tag-noshow">No-show</span></div>
+                </div>
+                <div class="mc-student-session">
+                  <div class="mc-student-session-date">7. apr<span>tir 14:00</span></div>
+                  <div class="mc-student-session-summary">"Bane-coaching 9 hull. Fairway-spill 5/9 — putting-kvalitet OK."</div>
+                  <div class="mc-student-session-dur">90 min</div>
+                  <div><span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>OK</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-student-card">
+              <div class="mc-student-card-head">
+                <div class="mc-list-avatar">LB</div>
+                <div><div class="mc-student-head-name">Lars Berg</div><div class="mc-student-head-sub">HCP 12 · Mulligan · Express Pro · Markus</div></div>
+                <div class="mc-student-head-stats">
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">ØKTER 30D</div><div class="mc-student-stat-val">7</div></div>
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">OPPMØTE</div><div class="mc-student-stat-val">96%</div></div>
+                  <div class="mc-student-stat"><div class="mc-student-stat-label">HCP Δ</div><div class="mc-student-stat-val">−0.8</div></div>
+                </div>
+                <div class="mc-student-toggle">▸</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — "Per elev" er mental-modell matchet mot hvordan trenere tenker: kunden først, datoen andre.</li>
+        <li><strong>2</strong> — Elev-header har avatar + navn + HCP + pakke + primærtrener — full kontekst på 1 linje.</li>
+        <li><strong>3</strong> — HCP Δ per elev over 30 dager = den ultimate KPI-en som viser at treningen virker.</li>
+        <li><strong>4</strong> — No-show-mønster vises naturlig i elev-historikken — lett å se om mønster repeterer seg.</li>
+        <li>Accordion-modell lar trenere fokusere på én elev om gangen uten å miste oversikt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: ANALYTICS ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Analytics</span></h2>
+    <p class="option-description">Statistisk oversikt over ØKT-EFFEKT: HCP-endring per elev, temafrekvens, oppmøtetrend, coaching-volum. For rapportering til styret og for å se om metodikken virker.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/okter</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left"><div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs"><a class="mc-tab">Oversikt</a><a class="mc-tab">Bookinger</a><a class="mc-tab mc-tab-active">Økter</a><a class="mc-tab">Elever</a><a class="mc-tab">Rapporter</a></div>
+            </div>
+            <div class="mc-topbar-right"><span class="mc-search">Søk</span><span class="mc-avatar">AK</span></div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group"><span class="mc-filter-label">VIEW</span><button class="mc-pill">Liste</button><button class="mc-pill">Notater</button><button class="mc-pill">Timeline</button><button class="mc-pill">Per elev</button><button class="mc-pill mc-pill-active">Stats</button></div>
+            <div class="mc-filter-group"><span class="mc-filter-label">PERIODE</span><button class="mc-pill">7d</button><button class="mc-pill mc-pill-active">30d</button><button class="mc-pill">90d</button><button class="mc-pill">YTD</button></div>
+            <button class="mc-cta">Eksporter rapport</button>
+          </section>
+
+          <section class="mc-analytics-wrap">
+            <div class="mc-an-card mc-an-card-span-4"><div class="mc-an-label">TOTALT ØKTER<span class="wf-marker">1</span></div><div class="mc-an-val">142</div><div class="mc-an-sub">+18% vs forrige periode</div></div>
+            <div class="mc-an-card mc-an-card-span-4"><div class="mc-an-label">OPPMØTE SNITT</div><div class="mc-an-val">92%</div><div class="mc-an-sub">mål 90% · +2 pp</div></div>
+            <div class="mc-an-card mc-an-card-span-4"><div class="mc-an-label">HCP Δ SNITT<span class="wf-marker">2</span></div><div class="mc-an-val">−1.3</div><div class="mc-an-sub">28 aktive elever</div></div>
+
+            <div class="mc-an-card mc-an-card-span-8">
+              <div class="mc-an-label">HCP-ENDRING PER ELEV (TOP 8)</div>
+              <div class="mc-an-bar-list">
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Nora Torp</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:90%"></div></div><div class="mc-an-bar-val mc-an-delta-pos">−2.8</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Sofie Vik</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:72%"></div></div><div class="mc-an-bar-val mc-an-delta-pos">−2.2</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Erik Hansen</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:48%"></div></div><div class="mc-an-bar-val mc-an-delta-pos">−1.4</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Lars Berg</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:28%"></div></div><div class="mc-an-bar-val mc-an-delta-pos">−0.8</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Junior Oslo-gruppe</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:22%"></div></div><div class="mc-an-bar-val mc-an-delta-pos">−0.6</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Tone Rød</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:14%"></div></div><div class="mc-an-bar-val mc-an-delta-pos">−0.4</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Johan Fjeld</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:6%"></div></div><div class="mc-an-bar-val">±0.0</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Markus Roinås P.</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:4%;background:#999"></div></div><div class="mc-an-bar-val mc-an-delta-neg">+0.2</div></div>
+              </div>
+            </div>
+
+            <div class="mc-an-card mc-an-card-span-4">
+              <div class="mc-an-label">TEMAFREKVENS<span class="wf-marker">3</span></div>
+              <div class="mc-an-bar-list">
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Putting</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:82%"></div></div><div class="mc-an-bar-val">41</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Setup / Stance</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:68%"></div></div><div class="mc-an-bar-val">34</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Tempo / Rytme</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:54%"></div></div><div class="mc-an-bar-val">27</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Chip / Pitch</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:44%"></div></div><div class="mc-an-bar-val">22</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Driver</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:32%"></div></div><div class="mc-an-bar-val">16</div></div>
+                <div class="mc-an-bar-row"><div class="mc-an-bar-label">Mental</div><div class="mc-an-bar-track"><div class="mc-an-bar-fill" style="width:16%"></div></div><div class="mc-an-bar-val">8</div></div>
+              </div>
+            </div>
+
+            <div class="mc-an-card mc-an-card-span-8">
+              <div class="mc-an-label">OPPMØTETREND 30 DAGER<span class="wf-marker">4</span></div>
+              <div class="mc-an-spark"><div class="mc-an-spark-line"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:#999;margin-top:4px;"><span>18. mar</span><span>1. apr</span><span>16. apr</span></div>
+            </div>
+
+            <div class="mc-an-card mc-an-card-span-4">
+              <div class="mc-an-label">NO-SHOW FORDELING</div>
+              <div class="mc-an-val">7</div>
+              <div class="mc-an-sub">Markus R. 2 · Tone 1 · Johan 1 · ...</div>
+            </div>
+
+            <div class="mc-an-card mc-an-card-span-12">
+              <div class="mc-an-label">ØKT-EFFEKT PER ELEV (30D)</div>
+              <table class="mc-an-effect-table">
+                <thead><tr><th>Elev</th><th>Pakke</th><th>Økter</th><th>Oppmøte</th><th>Tema</th><th>HCP start</th><th>HCP nå</th><th>Δ</th></tr></thead>
+                <tbody>
+                  <tr><td class="mc-an-td-name">Nora Torp</td><td>Performance</td><td>6</td><td>88%</td><td>Tempo, Balanse</td><td>24.8</td><td>22.0</td><td class="mc-an-td-val mc-an-delta-pos">−2.8</td></tr>
+                  <tr><td class="mc-an-td-name">Sofie Vik</td><td>Performance</td><td>7</td><td>92%</td><td>Setup, Putting</td><td>20.2</td><td>18.0</td><td class="mc-an-td-val mc-an-delta-pos">−2.2</td></tr>
+                  <tr><td class="mc-an-td-name">Erik Hansen</td><td>Performance Pro</td><td>8</td><td>100%</td><td>Approach, Setup</td><td>15.4</td><td>14.0</td><td class="mc-an-td-val mc-an-delta-pos">−1.4</td></tr>
+                  <tr><td class="mc-an-td-name">Lars Berg</td><td>Express Pro</td><td>7</td><td>96%</td><td>Driver, Dispersjon</td><td>12.8</td><td>12.0</td><td class="mc-an-td-val mc-an-delta-pos">−0.8</td></tr>
+                  <tr><td class="mc-an-td-name">Markus Roinås P.</td><td>Performance Pro</td><td>5</td><td>78%</td><td>Bane-management</td><td>7.8</td><td>8.0</td><td class="mc-an-td-val mc-an-delta-neg">+0.2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — KPI-strip øverst gir 3 store tall: volum, kvalitet (oppmøte), effekt (HCP Δ).</li>
+        <li><strong>2</strong> — HCP Δ er den ultimate KPI-en. Negativ er bra — handicap går ned når spillere blir bedre.</li>
+        <li><strong>3</strong> — Temafrekvens avslører hva trenerne faktisk jobber med — data for sportsplanlegging.</li>
+        <li><strong>4</strong> — Sparkline for oppmøte viser trend uten detaljer — rask "føler" for periode.</li>
+        <li>Tabell nederst er eksporter-klar — CSV for styrerapport eller månedsoppgjør.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for økt-administrasjon — valget avhenger av hvilket mental-modell Anders/Markus bruker: liste, notat-lesing, filmisk tidslinje, per-elev eller analytisk oversikt.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Session List</th><th>2: Notes First</th><th>3: Timeline Feed</th><th>4: Student-grouped</th><th>5: Analytics</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Oversikt (volum)</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Notat-fokus</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Svak</td></tr>
+        <tr><td>Action items-flow</td><td>Svak</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Svak</td></tr>
+        <tr><td>Per elev-kontekst</td><td>Svak</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Sterk (tabell)</td></tr>
+        <tr><td>Rapportering / eksport</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Oppmøte-synlighet</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Matcher Bookinger-UX</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Svak</td><td>Svak</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Session List</h3>
+      <p>Option 1 matcher Bookinger-viewet 1:1 og gir Anders umiddelbar oversikt over fullførte økter, oppmøteprosent og notat-backlog. Samme mental-modell reduserer læringskurve og gir konsistent admin-opplevelse.</p>
+      <p>Kombinér med Option 2 (Notes First) som "drill-in" — klikk på en rad i Session List åpner Notes First-drawer. Option 5 (Analytics) bør ligge som eget tab for rapportering og styrearbeid.</p>
+      <p>Option 4 (Student-grouped) er et sterkt sekundærvalg når kontekst er "hvordan går det med Erik?" framfor "hva skjedde i dag?".</p>
+    </div>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Session List):</strong> Default. Daglig økt-admin, notat-backlog, oppmøteoppfølging.</li>
+      <li><strong>Option 2 (Notes First):</strong> Fokus på notat-kvalitet og action items — les og del.</li>
+      <li><strong>Option 3 (Timeline Feed):</strong> Filmisk dagbok — scroll gjennom uken.</li>
+      <li><strong>Option 4 (Student-grouped):</strong> 1-til-1 oppfølging — "hvordan går det med eleven?".</li>
+      <li><strong>Option 5 (Analytics):</strong> Rapport til styret, månedsoppgjør, sportsplanlegging.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

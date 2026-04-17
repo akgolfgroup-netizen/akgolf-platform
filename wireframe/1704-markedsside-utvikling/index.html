@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utvikling — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Utvikling</span> — <span id="project-name">AK Golf Platform</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Data First</button>
+    <button class="tab-btn" data-tab="option-2">2: Pro Benchmark</button>
+    <button class="tab-btn" data-tab="option-3">3: TrackMan Lab</button>
+    <button class="tab-btn" data-tab="option-4">4: Path to Pro</button>
+    <button class="tab-btn" data-tab="option-5">5: Metric Wall</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Data First ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Data First</span></h2>
+    <p class="option-description">Whoop-inspirert tech-performance med LIGHT base. Portal-screenshot dominerer hero, data-features i grid, Treningspyramiden i dark-seksjon. Trygt valg for HCP <=10-segmentet.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/utvikling</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Utvikling</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Book vurderingsøkt</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">UTVIKLING · HCP &le;10<span class="wf-marker">1</span></div>
+          <h1 class="wf-headline">Data-drevet golfutvikling for de som vil til topps.</h1>
+          <p class="wf-subhead">For seriøse golfere som vil nå amatør- og pro-nivå. TrackMan, Strokes Gained og DataGolf pro-benchmark, alt samlet i Portalen — tolket av coach som har tatt 340+ spillere gjennom reisen.</p>
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt<span class="wf-marker">2</span></button>
+            <button class="wf-btn wf-btn-secondary">Start gratis i Portalen →</button>
+          </div>
+          <div class="wf-device wf-device-large">Portal-screenshot: Strokes Gained-dashboard + TrackMan-feed<span class="wf-marker">3</span></div>
+        </section>
+
+        <section class="wf-metric-bar">
+          <div class="wf-metric-item"><div class="wf-metric-num">340+</div><div class="wf-metric-label">spillere på metoden</div></div>
+          <div class="wf-metric-item"><div class="wf-metric-num">−4.2</div><div class="wf-metric-label">HCP-snitt, 6 mnd</div></div>
+          <div class="wf-metric-item"><div class="wf-metric-num">2300+</div><div class="wf-metric-label">TrackMan-økter</div></div>
+          <div class="wf-metric-item"><div class="wf-metric-num">12</div><div class="wf-metric-label">pros i benchmark</div></div>
+        </section>
+
+        <section class="wf-feature-grid">
+          <div class="wf-section-label">DATA-LAG<span class="wf-marker">4</span></div>
+          <h2 class="wf-h2">Fem datakilder. Én plan.</h2>
+          <div class="wf-grid-3">
+            <div class="wf-card wf-card-data">
+              <div class="wf-icon-box">01</div>
+              <h3>TrackMan</h3>
+              <p>Club speed, carry, spin, face angle, impact location. Hver swing lagret og trendet over tid.</p>
+              <div class="wf-data-row">
+                <span class="wf-data-label">CLUB SPEED</span><span class="wf-data-num">112<span class="wf-data-unit">mph</span></span>
+              </div>
+            </div>
+            <div class="wf-card wf-card-data">
+              <div class="wf-icon-box">02</div>
+              <h3>Strokes Gained</h3>
+              <p>Tee / Approach / Short / Putting. Vi vet nøyaktig hvor slagene taper seg — mot banesnitt og pros.</p>
+              <div class="wf-data-row">
+                <span class="wf-data-label">SG APPROACH</span><span class="wf-data-num">+0.8</span>
+              </div>
+            </div>
+            <div class="wf-card wf-card-data">
+              <div class="wf-icon-box">03</div>
+              <h3>DataGolf benchmark</h3>
+              <p>Sammenlign dine tall mot PGA Tour-snitt og amatør-tour. Ser hva som kreves for å klatre.</p>
+              <div class="wf-data-row">
+                <span class="wf-data-label">DIN APPR 150m</span><span class="wf-data-num">8.4m</span>
+              </div>
+            </div>
+            <div class="wf-card wf-card-data">
+              <div class="wf-icon-box">04</div>
+              <h3>AI-veiledning</h3>
+              <p>Personalisert prompt-analyse basert på dine egne tall. Ett verktøy i verktøykassen.</p>
+            </div>
+            <div class="wf-card wf-card-data">
+              <div class="wf-icon-box">05</div>
+              <h3>Mental score</h3>
+              <p>Daglig 1-min sjekk-in. Kobles mot runder for å finne mentale mønstre.</p>
+            </div>
+            <div class="wf-card wf-card-data">
+              <div class="wf-icon-box">06</div>
+              <h3>Rundelogg</h3>
+              <p>Hvert slag, hver beslutning. GPS + DECADE-strategi. Basis for all videre analyse.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark">
+          <div class="wf-pyramid-label">RAMMEVERK</div>
+          <h2 class="wf-h2-dark">Treningspyramiden<span class="wf-marker">5</span></h2>
+          <p class="wf-subhead-dark">Fem lag. Hver økt plasseres. Fordelingen tilpasses kategorien din — turneringsklar vs offseason.</p>
+          <div class="wf-pyramid">
+            <div class="wf-pyramid-layer" style="width:20%">TURN</div>
+            <div class="wf-pyramid-layer" style="width:40%">SPILL</div>
+            <div class="wf-pyramid-layer" style="width:60%">SLAG</div>
+            <div class="wf-pyramid-layer" style="width:80%">TEK</div>
+            <div class="wf-pyramid-layer" style="width:100%">FYS</div>
+          </div>
+          <p class="wf-subhead-dark">Utviklet av Norges Golfforbund. Satt i system gjennom AK Golf sin coaching-filosofi i 15 år.</p>
+        </section>
+
+        <section class="wf-team">
+          <div class="wf-section-label">TEAMET</div>
+          <h2 class="wf-h2">Coach som kjenner reisen</h2>
+          <div class="wf-grid-2">
+            <div class="wf-team-card">
+              <div class="wf-team-img">[Portrett: Anders]</div>
+              <div class="wf-team-body">
+                <h3>Anders Kristiansen</h3>
+                <p class="wf-team-role">Hovedcoach · 15 år</p>
+                <p>Utviklet 12 spillere til amatør-tour. Spesialisert på HCP 10 → 0 → +2-reisen. TrackMan-sertifisert og DataGolf-analytiker.</p>
+              </div>
+            </div>
+            <div class="wf-team-card">
+              <div class="wf-team-img">[Portrett: Markus]</div>
+              <div class="wf-team-body">
+                <h3>Markus Roinås P.</h3>
+                <p class="wf-team-role">Assistent-coach</p>
+                <p>Yngre perspektiv på moderne performance-data. Junior-utvikling og mental trening.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-pricing">
+          <div class="wf-section-label">PAKKER</div>
+          <h2 class="wf-h2">Velg ditt utviklingsløp</h2>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Utvikling Basis</div>
+              <div class="wf-tier-price">2400 <span class="wf-tier-unit">kr/mnd</span></div>
+              <ul>
+                <li>2 × 60 min coaching</li>
+                <li>Portal Pro inkludert</li>
+                <li>TrackMan-tilgang</li>
+                <li>Månedlig data-review</li>
+              </ul>
+              <button class="wf-btn wf-btn-secondary">Velg Basis</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Anbefalt</div>
+              <div class="wf-tier-name">Utvikling Elite</div>
+              <div class="wf-tier-price">4800 <span class="wf-tier-unit">kr/mnd</span></div>
+              <ul>
+                <li>4 × 60 min coaching</li>
+                <li>Portal Elite inkludert</li>
+                <li>DataGolf premium</li>
+                <li>Hjemmebesøk 1× / mnd</li>
+                <li>Direkte-meldinger 24/7</li>
+              </ul>
+              <button class="wf-btn wf-btn-cta">Velg Elite</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Camp</div>
+              <div class="wf-tier-price">8500 <span class="wf-tier-unit">kr</span></div>
+              <ul>
+                <li>3 dager intensiv</li>
+                <li>Vår- eller sommer</li>
+                <li>Gruppe (maks 6)</li>
+                <li>Full data-pakke</li>
+              </ul>
+              <button class="wf-btn wf-btn-secondary">Se neste camp</button>
+            </div>
+          </div>
+          <p class="wf-pricing-note">Vurderingsøkt: 1500 kr (1 time). Trekkes fra første faktura ved abonnement.<span class="wf-marker">6</span></p>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Klar til å se hvor du står?</h2>
+          <p class="wf-subhead-dark">Book en 1-times vurderingsøkt. Vi kartlegger hvor du taper slag og bygger et løp.</p>
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt<span class="wf-marker">7</span></button>
+            <button class="wf-btn wf-btn-ghost-dark">Start gratis i Portalen →</button>
+          </div>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong><p>Premium golfcoaching og treningsplattform.</p></div>
+            <div><strong>Utvikling</strong><p>Basis</p><p>Elite</p><p>Camp</p></div>
+            <div><strong>Portal</strong><p>Funksjoner</p><p>Priser</p><p>TrackMan</p></div>
+            <div><strong>Selskap</strong><p>Om oss</p><p>Kontakt</p><p>Personvern</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Målgruppe-tag:</strong> "HCP &le;10" filtrerer ut feil besøkende umiddelbart. Seriøst nivå er tydelig kommunisert.</li>
+        <li><strong>2 — Primær CTA = vurderingsøkt:</strong> Ikke "kom i gang gratis" her — seriøse spillere forventer samtale, ikke selvbetjening. "Start gratis i Portalen" som sekundær for low-commitment.</li>
+        <li><strong>3 — Data-screenshot:</strong> Viser SG + TrackMan-feed i samme bilde. Kommuniserer at dette er en helhet, ikke en samling widgets.</li>
+        <li><strong>4 — Data-lag-seksjon:</strong> 6 datakilder i 3×2 grid med inline mini-metrikker på de første tre. Signaliserer data-dybde uten å bli teknisk.</li>
+        <li><strong>5 — Treningspyramiden i dark:</strong> Dramatisk kontrast bygger metodens tyngde. Mercury-taktikk, samme som forsiden.</li>
+        <li><strong>6 — Vurderingsøkt-prising:</strong> 1500 kr kan virke høyt, men "trekkes fra" + plassering under pakker gjør det til lav-terskel.</li>
+        <li><strong>7 — CTA-band med begge alternativer:</strong> Lime vurderingsøkt (primær) + ghost "Start i Portalen" (sekundær). Fanger begge intensjonsnivåer før footer.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Pro Benchmark ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Pro Benchmark</span></h2>
+    <p class="option-description">Hero = direkte sammenligning mot DataGolf-pros. "Din approach vs PGA Tour". Bygger gap-følelse som motiverer HCP &le;10-spillere.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/utvikling</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Utvikling</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Book vurderingsøkt</button>
+        </nav>
+
+        <section class="wf-hero wf-hero-benchmark">
+          <div class="wf-hero-label">PRO BENCHMARK<span class="wf-marker">1</span></div>
+          <h1 class="wf-headline">Sammenlign deg mot pros. På alle mål.</h1>
+          <p class="wf-subhead">DataGolf-data fra PGA Tour, Challenge Tour og amatør-tour. Portalen viser hvor du er — og nøyaktig hva som kreves for neste steg.</p>
+
+          <div class="wf-benchmark-card">
+            <div class="wf-benchmark-label">APPROACH FRA 150 METER · SISTE 50 SLAG</div>
+            <div class="wf-benchmark-grid">
+              <div class="wf-benchmark-row">
+                <span class="wf-benchmark-who">Du</span>
+                <div class="wf-benchmark-bar"><div class="wf-benchmark-fill" style="width:62%"></div></div>
+                <span class="wf-benchmark-num">8.4m</span>
+              </div>
+              <div class="wf-benchmark-row wf-benchmark-target">
+                <span class="wf-benchmark-who">Challenge Tour-snitt</span>
+                <div class="wf-benchmark-bar"><div class="wf-benchmark-fill" style="width:78%"></div></div>
+                <span class="wf-benchmark-num">6.2m</span>
+              </div>
+              <div class="wf-benchmark-row wf-benchmark-pro">
+                <span class="wf-benchmark-who">PGA Tour-snitt<span class="wf-marker">2</span></span>
+                <div class="wf-benchmark-bar"><div class="wf-benchmark-fill" style="width:100%"></div></div>
+                <span class="wf-benchmark-num">5.1m</span>
+              </div>
+            </div>
+            <p class="wf-benchmark-gap">Du er 3.3 meter fra PGA Tour på denne. Vi vet hva som kreves.</p>
+          </div>
+
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt</button>
+            <button class="wf-btn wf-btn-secondary">Start gratis i Portalen →</button>
+          </div>
+        </section>
+
+        <section class="wf-measure">
+          <div class="wf-section-label">HVORDAN VI MÅLER</div>
+          <h2 class="wf-h2">Fire lag data. En samlet baseline.<span class="wf-marker">3</span></h2>
+          <div class="wf-grid-4">
+            <div class="wf-measure-card">
+              <div class="wf-measure-num">01</div>
+              <h4>TrackMan-test</h4>
+              <p>Full-sving test: 5 jern, 3 drivers, 5 wedges. Etablerer baseline på 15 min.</p>
+            </div>
+            <div class="wf-measure-card">
+              <div class="wf-measure-num">02</div>
+              <h4>Rundelogg</h4>
+              <p>5 runder logget med slag-for-slag. Genererer din Strokes Gained-profil.</p>
+            </div>
+            <div class="wf-measure-card">
+              <div class="wf-measure-num">03</div>
+              <h4>DataGolf-match</h4>
+              <p>Automatisk sammenligning mot pros på samme baner og avstander.</p>
+            </div>
+            <div class="wf-measure-card">
+              <div class="wf-measure-num">04</div>
+              <h4>Mental baseline</h4>
+              <p>Tre uker med daglig sjekk-in. Mønstre i press-situasjoner avsløres.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-trackman">
+          <div class="wf-trackman-left">
+            <div class="wf-section-label">TRACKMAN INTEGRASJON</div>
+            <h2 class="wf-h2-left">Hver swing går rett i planen.</h2>
+            <p>TrackMan-studio i Fredrikstad. Dine data synkroniseres til Portalen i sanntid. Coachen ser trendene dine før neste økt.</p>
+            <ul class="wf-trackman-list">
+              <li>Club speed, ball speed, smash factor</li>
+              <li>Spin axis, launch angle, carry</li>
+              <li>Impact location på hver sving</li>
+              <li>Session-by-session sammenligning</li>
+            </ul>
+          </div>
+          <div class="wf-trackman-right">
+            <div class="wf-device wf-device-medium">TrackMan-studio foto + data-overlay</div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark">
+          <h2 class="wf-h2-dark">Coach-boost over data</h2>
+          <p class="wf-subhead-dark">Data alene gjør deg ikke bedre. AK Golf sin coaching-filosofi bygger på Treningspyramiden fra NGF — dataen brukes som diagnose, coachen som behandling.</p>
+          <div class="wf-pyramid">
+            <div class="wf-pyramid-layer" style="width:20%">TURN</div>
+            <div class="wf-pyramid-layer" style="width:40%">SPILL</div>
+            <div class="wf-pyramid-layer" style="width:60%">SLAG</div>
+            <div class="wf-pyramid-layer" style="width:80%">TEK</div>
+            <div class="wf-pyramid-layer" style="width:100%">FYS</div>
+          </div>
+        </section>
+
+        <section class="wf-pricing">
+          <h2 class="wf-h2">Pakker</h2>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Utvikling Basis</div>
+              <div class="wf-tier-price">2400 <span class="wf-tier-unit">kr/mnd</span></div>
+              <ul><li>2×60 min</li><li>Portal Pro</li><li>TrackMan</li></ul>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Anbefalt</div>
+              <div class="wf-tier-name">Utvikling Elite</div>
+              <div class="wf-tier-price">4800 <span class="wf-tier-unit">kr/mnd</span></div>
+              <ul><li>4×60 min</li><li>Portal Elite</li><li>DataGolf premium</li><li>Hjemmebesøk 1×/mnd</li></ul>
+              <button class="wf-btn wf-btn-cta">Velg</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Camp</div>
+              <div class="wf-tier-price">8500 <span class="wf-tier-unit">kr</span></div>
+              <ul><li>3 dager</li><li>Maks 6 deltakere</li><li>Full data-pakke</li></ul>
+              <button class="wf-btn wf-btn-secondary">Se datoer</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Lukk gapet.</h2>
+          <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong></div>
+            <div><strong>Utvikling</strong><p>Pakker</p><p>Camp</p></div>
+            <div><strong>Data</strong><p>TrackMan</p><p>DataGolf</p></div>
+            <div><strong>Selskap</strong><p>Om oss</p><p>Kontakt</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Hero = benchmark-kort:</strong> Istedenfor produktscreenshot, vises direkte sammenligning mellom Deg / Challenge Tour / PGA Tour. Skaper gap-følelse.</li>
+        <li><strong>2 — Målbar gap:</strong> "3.3 meter fra PGA Tour" er konkret og umiddelbart handlingsbart. Utløser "det kan jeg klare"-respons.</li>
+        <li><strong>3 — Måling som USP:</strong> 4 lag data-innsamling bygger tillit til at dette ikke er gjetting. Seriøs målgruppe krever metodisk rigour.</li>
+        <li>— Risiko: Benchmark-data krever faktisk DataGolf-partnerskap. Må verifiseres juridisk før launch.</li>
+        <li>— Styrke: Differensierer fra konkurrenter som ikke har pro-benchmark.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: TrackMan Lab ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">TrackMan Lab</span></h2>
+    <p class="option-description">Fysisk TrackMan-studio som helten. Hero: stort foto av studioet. Bygger troverdighet rundt infrastruktur, ikke bare software.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/utvikling</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Utvikling</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Book vurderingsøkt</button>
+        </nav>
+
+        <section class="wf-hero wf-hero-lab">
+          <div class="wf-hero-split-lab">
+            <div class="wf-lab-left">
+              <div class="wf-hero-label">LAB · FREDRIKSTAD<span class="wf-marker">1</span></div>
+              <h1 class="wf-headline">Laboratorium for seriøs utvikling.</h1>
+              <p class="wf-subhead">TrackMan-studio, videooppsett, biomekanisk analyse. Hver datapunkt synkroniseres til Portalen og behandles av coachen din.</p>
+              <div class="wf-cta-row">
+                <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt</button>
+                <button class="wf-btn wf-btn-secondary">Se studioet →</button>
+              </div>
+            </div>
+            <div class="wf-lab-right">
+              <div class="wf-device wf-device-studio">[Stort foto: TrackMan-studio]<span class="wf-marker">2</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-data-collect">
+          <div class="wf-section-label">DATA VI SAMLER<span class="wf-marker">3</span></div>
+          <h2 class="wf-h2">27 målepunkter. Hver sving.</h2>
+          <div class="wf-grid-3">
+            <div class="wf-collect-card">
+              <h4>Sving-mekanikk</h4>
+              <ul>
+                <li>Club speed</li>
+                <li>Attack angle</li>
+                <li>Club path</li>
+                <li>Face angle</li>
+                <li>Swing plane</li>
+              </ul>
+            </div>
+            <div class="wf-collect-card">
+              <h4>Ball-flyt</h4>
+              <ul>
+                <li>Ball speed</li>
+                <li>Launch angle</li>
+                <li>Spin rate</li>
+                <li>Spin axis</li>
+                <li>Apex height</li>
+              </ul>
+            </div>
+            <div class="wf-collect-card">
+              <h4>Resultat</h4>
+              <ul>
+                <li>Carry distance</li>
+                <li>Total distance</li>
+                <li>Side</li>
+                <li>Dispersion</li>
+                <li>Impact location</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-ai-layer">
+          <div class="wf-section-label">AI-LAGET</div>
+          <h2 class="wf-h2">Data + AI + Coach.<span class="wf-marker">4</span></h2>
+          <div class="wf-grid-3">
+            <div class="wf-ai-card">
+              <div class="wf-ai-num">1</div>
+              <h3>Data måles</h3>
+              <p>TrackMan og Portalen samler råtall fra hver økt.</p>
+            </div>
+            <div class="wf-ai-card">
+              <div class="wf-ai-num">2</div>
+              <h3>AI identifiserer</h3>
+              <p>AI-veiledning finner mønstre i dataen, foreslår fokusområder.</p>
+            </div>
+            <div class="wf-ai-card">
+              <div class="wf-ai-num">3</div>
+              <h3>Coach tolker</h3>
+              <p>Anders eller coachen din oversetter dataen til konkrete tiltak.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark">
+          <h2 class="wf-h2-dark">Rammeverket bak</h2>
+          <p class="wf-subhead-dark">Treningspyramiden fra Norges Golfforbund — 15 år i AK Golf sin coaching-filosofi.</p>
+          <div class="wf-pyramid">
+            <div class="wf-pyramid-layer" style="width:20%">TURN</div>
+            <div class="wf-pyramid-layer" style="width:40%">SPILL</div>
+            <div class="wf-pyramid-layer" style="width:60%">SLAG</div>
+            <div class="wf-pyramid-layer" style="width:80%">TEK</div>
+            <div class="wf-pyramid-layer" style="width:100%">FYS</div>
+          </div>
+        </section>
+
+        <section class="wf-pricing">
+          <h2 class="wf-h2">Pakker</h2>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Utvikling Basis</div>
+              <div class="wf-tier-price">2400 <span class="wf-tier-unit">kr/mnd</span></div>
+              <ul><li>2×60 min</li><li>Portal Pro</li><li>Lab-tilgang</li></ul>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Anbefalt</div>
+              <div class="wf-tier-name">Utvikling Elite</div>
+              <div class="wf-tier-price">4800 <span class="wf-tier-unit">kr/mnd</span></div>
+              <ul><li>4×60 min</li><li>Portal Elite</li><li>DataGolf premium</li><li>Hjemmebesøk</li></ul>
+              <button class="wf-btn wf-btn-cta">Velg</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Camp</div>
+              <div class="wf-tier-price">8500 <span class="wf-tier-unit">kr</span></div>
+              <ul><li>3 dager intensiv</li><li>I Laben</li></ul>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Kom til Laben.</h2>
+          <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong></div>
+            <div><strong>Lab</strong><p>Fredrikstad</p><p>Book tid</p></div>
+            <div><strong>Data</strong><p>TrackMan</p><p>DataGolf</p></div>
+            <div><strong>Selskap</strong><p>Kontakt</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Lab-positioning:</strong> "Laboratorium" endrer narrativet fra "coaching-plattform" til "forskningsinstitusjon". Seriøs tone hever prisvillighet.</li>
+        <li><strong>2 — Studio-foto som helten:</strong> Fysisk bygning er salgsargument. Konkurrenter uten studio kan ikke matche.</li>
+        <li><strong>3 — 27 målepunkter:</strong> Spesifikk tallsetting viser metodisk dybde uten å virke teknisk. Treffer den data-orienterte målgruppen.</li>
+        <li><strong>4 — Tredelt prosess:</strong> Data → AI → Coach synliggjør at dette IKKE er rent AI-produkt. Menneskelig coach er eksplisitt siste ledd.</li>
+        <li>— Risiko: Krever at studioet ser godt ut på foto. Bilder må være profesjonelt produsert.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Path to Pro ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Path to Pro</span></h2>
+    <p class="option-description">Narrativ struktur: HCP 10 → 5 → 0 → +2. Stages som kapitler i transformasjons-historie. En case-spiller i hver stage.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/utvikling</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Utvikling</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Book vurderingsøkt</button>
+        </nav>
+
+        <section class="wf-hero wf-hero-path">
+          <div class="wf-hero-label">FRA HCP 10 TIL PRO<span class="wf-marker">1</span></div>
+          <h1 class="wf-headline">Reisen er kartlagt. Følger du den?</h1>
+          <p class="wf-subhead">Fire stages. Hver med egne datamål og treningsprotokoller. Vi har guidet 12 spillere til amatør- og pro-tour på denne veien.</p>
+
+          <div class="wf-path-viz">
+            <div class="wf-path-stage wf-path-current"><div class="wf-path-num">10</div><div class="wf-path-lbl">HCP</div></div>
+            <div class="wf-path-line"></div>
+            <div class="wf-path-stage"><div class="wf-path-num">5</div><div class="wf-path-lbl">HCP</div></div>
+            <div class="wf-path-line"></div>
+            <div class="wf-path-stage"><div class="wf-path-num">0</div><div class="wf-path-lbl">HCP</div></div>
+            <div class="wf-path-line"></div>
+            <div class="wf-path-stage wf-path-pro"><div class="wf-path-num">+2</div><div class="wf-path-lbl">PRO</div></div>
+          </div>
+
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt</button>
+          </div>
+        </section>
+
+        <section class="wf-stage">
+          <div class="wf-stage-num">STAGE 1</div>
+          <h2 class="wf-h2-left">HCP 10 → 5<span class="wf-marker">2</span></h2>
+          <div class="wf-grid-2">
+            <div class="wf-stage-desc">
+              <p>Du har teknikk-fundament. Nå handler det om dispersion — kontroll på lengder og retning. Approach blir hovedfokus.</p>
+              <ul class="wf-stage-list">
+                <li>Mål: SG Approach -1.0 → +0.5</li>
+                <li>Tid: 6–9 måneder</li>
+                <li>Protokoll: 60/20/20 (TEK/SLAG/SPILL)</li>
+              </ul>
+            </div>
+            <div class="wf-stage-case">
+              <div class="wf-stage-case-img">[Case-bilde]</div>
+              <div class="wf-stage-case-name">Erik, 42</div>
+              <div class="wf-stage-case-result">HCP 10 → 4.8 · 8 mnd</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-stage wf-stage-alt">
+          <div class="wf-stage-num">STAGE 2</div>
+          <h2 class="wf-h2-left">HCP 5 → 0</h2>
+          <div class="wf-grid-2">
+            <div class="wf-stage-desc">
+              <p>Kort-spillet bestemmer alt her. SG Short og SG Putting må nærme seg Challenge Tour-snitt. Mental protokoll introduseres.</p>
+              <ul class="wf-stage-list">
+                <li>Mål: SG Short 0 → +0.8</li>
+                <li>Tid: 9–18 måneder</li>
+                <li>Protokoll: 30/30/40 (TEK/SLAG/SPILL)</li>
+              </ul>
+            </div>
+            <div class="wf-stage-case">
+              <div class="wf-stage-case-img">[Case-bilde]</div>
+              <div class="wf-stage-case-name">Lars, 28</div>
+              <div class="wf-stage-case-result">HCP 4.8 → 0.2 · 14 mnd</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-stage">
+          <div class="wf-stage-num">STAGE 3</div>
+          <h2 class="wf-h2-left">HCP 0 → +2</h2>
+          <div class="wf-grid-2">
+            <div class="wf-stage-desc">
+              <p>Nå konkurrerer du om amatør-ranking. Ultra-presis data blir regel. DataGolf pro-benchmark aktiveres. Banecoaching og press-trening.</p>
+              <ul class="wf-stage-list">
+                <li>Mål: PGA-match på approach</li>
+                <li>Tid: 12–24 måneder</li>
+                <li>Protokoll: individuell</li>
+              </ul>
+            </div>
+            <div class="wf-stage-case">
+              <div class="wf-stage-case-img">[Case-bilde]</div>
+              <div class="wf-stage-case-name">Sofie, 21</div>
+              <div class="wf-stage-case-result">HCP 0 → +2.4 · Nå på tour</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark">
+          <h2 class="wf-h2-dark">Treningspyramiden ligger under alle stages</h2>
+          <p class="wf-subhead-dark">Proporsjonene endres — fundamentet er konstant. NGF sin metode, AK Golf sin filosofi.</p>
+          <div class="wf-pyramid">
+            <div class="wf-pyramid-layer" style="width:20%">TURN</div>
+            <div class="wf-pyramid-layer" style="width:40%">SPILL</div>
+            <div class="wf-pyramid-layer" style="width:60%">SLAG</div>
+            <div class="wf-pyramid-layer" style="width:80%">TEK</div>
+            <div class="wf-pyramid-layer" style="width:100%">FYS</div>
+          </div>
+        </section>
+
+        <section class="wf-pricing">
+          <h2 class="wf-h2">Pakker</h2>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Utvikling Basis</div>
+              <div class="wf-tier-price">2400 <span class="wf-tier-unit">kr/mnd</span></div>
+              <p class="wf-tier-recommend">Stage 1–2</p>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-name">Utvikling Elite</div>
+              <div class="wf-tier-price">4800 <span class="wf-tier-unit">kr/mnd</span></div>
+              <p class="wf-tier-recommend">Stage 2–3</p>
+              <button class="wf-btn wf-btn-cta">Velg</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Camp</div>
+              <div class="wf-tier-price">8500 <span class="wf-tier-unit">kr</span></div>
+              <p class="wf-tier-recommend">Booster mellom stages</p>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Hvor er du nå?</h2>
+          <p class="wf-subhead-dark">Vurderingsøkten kartlegger din faktiske stage og definerer neste mål.</p>
+          <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong></div>
+            <div><strong>Stages</strong><p>HCP 10→5</p><p>HCP 5→0</p><p>HCP 0→+2</p></div>
+            <div><strong>Pakker</strong><p>Basis</p><p>Elite</p><p>Camp</p></div>
+            <div><strong>Kontakt</strong><p>E-post</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Narrativ struktur:</strong> Progresjons-visualisering i hero viser hele reisen umiddelbart. Besøkende plasserer seg selv.</li>
+        <li><strong>2 — Stages som kapitler:</strong> Hver stage har mål, tid og protokoll. Konkret og etterprøvbart, ikke generisk "bli bedre"-løfte.</li>
+        <li>— Case-spiller per stage gir konkret bevis på hver milepæl.</li>
+        <li>— Pakker anbefales per stage — hjelper spilleren plassere seg i rett produkt.</li>
+        <li>— Risiko: Krever 3 reelle case-spillere med dokumenterbare resultater. Må bekreftes før launch.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Metric Wall ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Metric Wall</span></h2>
+    <p class="option-description">Dashboard-aktig landing med 8 store metrikker i hero. Data-tett, Linear/Whoop-aktig. Treffer spillere som elsker tall.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/utvikling</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Utvikling</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Book vurderingsøkt</button>
+        </nav>
+
+        <section class="wf-hero wf-hero-wall">
+          <div class="wf-hero-label">UTVIKLING I TALL<span class="wf-marker">1</span></div>
+          <h1 class="wf-headline">Data vi har. Resultater vi leverer.</h1>
+
+          <div class="wf-wall-grid">
+            <div class="wf-wall-cell wf-wall-large"><div class="wf-wall-num">340+</div><div class="wf-wall-lbl">spillere på metoden</div></div>
+            <div class="wf-wall-cell"><div class="wf-wall-num">−4.2</div><div class="wf-wall-lbl">HCP-snitt senket</div></div>
+            <div class="wf-wall-cell"><div class="wf-wall-num">2300</div><div class="wf-wall-lbl">TrackMan-økter</div></div>
+            <div class="wf-wall-cell"><div class="wf-wall-num">12</div><div class="wf-wall-lbl">pros i benchmark</div></div>
+            <div class="wf-wall-cell"><div class="wf-wall-num">15</div><div class="wf-wall-lbl">år coaching</div></div>
+            <div class="wf-wall-cell"><div class="wf-wall-num">27</div><div class="wf-wall-lbl">målepunkter/sving</div></div>
+            <div class="wf-wall-cell"><div class="wf-wall-num">94%</div><div class="wf-wall-lbl">retention 6 mnd</div></div>
+            <div class="wf-wall-cell"><div class="wf-wall-num">5</div><div class="wf-wall-lbl">lag i pyramiden</div></div>
+          </div>
+
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt<span class="wf-marker">2</span></button>
+            <button class="wf-btn wf-btn-secondary">Start gratis i Portalen →</button>
+          </div>
+        </section>
+
+        <section class="wf-method">
+          <div class="wf-section-label">METODE<span class="wf-marker">3</span></div>
+          <h2 class="wf-h2">Hvorfor tallene ser slik ut</h2>
+          <div class="wf-grid-3">
+            <div class="wf-method-card">
+              <h4>01 · Måling</h4>
+              <p>TrackMan + rundelogg + DataGolf + mental sjekk-in. Baseline etableres i uke 1.</p>
+            </div>
+            <div class="wf-method-card">
+              <h4>02 · Plan</h4>
+              <p>Treningspyramiden justeres mot din datasignatur. Fordeling tilpasses sesong og kategori.</p>
+            </div>
+            <div class="wf-method-card">
+              <h4>03 · Coaching</h4>
+              <p>2–4 personlige økter per måned. AI-veiledning mellom øktene. Alt logges mot baseline.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-data-features">
+          <div class="wf-section-label">DATA-FUNKSJONER</div>
+          <h2 class="wf-h2">Portalen for deg som liker tall</h2>
+          <div class="wf-grid-4">
+            <div class="wf-feature-tile"><h4>TrackMan</h4><p>Full integrasjon</p></div>
+            <div class="wf-feature-tile"><h4>Strokes Gained</h4><p>Tee/App/Short/Putt</p></div>
+            <div class="wf-feature-tile"><h4>DataGolf</h4><p>Pro-benchmark</p></div>
+            <div class="wf-feature-tile"><h4>AI-veiledning</h4><p>Pattern detection</p></div>
+            <div class="wf-feature-tile"><h4>Mental score</h4><p>Daily check-in</p></div>
+            <div class="wf-feature-tile"><h4>Rundelogg</h4><p>Slag-for-slag</p></div>
+            <div class="wf-feature-tile"><h4>DECADE</h4><p>Strategi-coach</p></div>
+            <div class="wf-feature-tile"><h4>Video-sync</h4><p>Coach-markører</p></div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark">
+          <h2 class="wf-h2-dark">Treningspyramiden</h2>
+          <div class="wf-pyramid">
+            <div class="wf-pyramid-layer" style="width:20%">TURN</div>
+            <div class="wf-pyramid-layer" style="width:40%">SPILL</div>
+            <div class="wf-pyramid-layer" style="width:60%">SLAG</div>
+            <div class="wf-pyramid-layer" style="width:80%">TEK</div>
+            <div class="wf-pyramid-layer" style="width:100%">FYS</div>
+          </div>
+          <p class="wf-subhead-dark">NGF sin metode. AK Golf sin coaching-filosofi.</p>
+        </section>
+
+        <section class="wf-pricing">
+          <h2 class="wf-h2">Pakker</h2>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Basis</div>
+              <div class="wf-tier-price">2400 <span class="wf-tier-unit">kr/mnd</span></div>
+              <ul><li>2×60 min</li><li>Portal Pro</li></ul>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Anbefalt</div>
+              <div class="wf-tier-name">Elite</div>
+              <div class="wf-tier-price">4800 <span class="wf-tier-unit">kr/mnd</span></div>
+              <ul><li>4×60 min</li><li>Portal Elite</li><li>DataGolf premium</li></ul>
+              <button class="wf-btn wf-btn-cta">Velg</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Camp</div>
+              <div class="wf-tier-price">8500 <span class="wf-tier-unit">kr</span></div>
+              <ul><li>3 dager</li></ul>
+              <button class="wf-btn wf-btn-secondary">Velg</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Bli en av 340.</h2>
+          <button class="wf-btn wf-btn-cta-large">Book vurderingsøkt</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong></div>
+            <div><strong>Data</strong><p>TrackMan</p><p>DataGolf</p></div>
+            <div><strong>Utvikling</strong><p>Basis</p><p>Elite</p></div>
+            <div><strong>Kontakt</strong><p>E-post</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Metric Wall som hero:</strong> 8 tall i grid signaliserer data-modenhet. Linear/Whoop-energi appellerer direkte til tech-orienterte HCP &le;10-spillere.</li>
+        <li><strong>2 — CTA mellom metrics og method:</strong> Første CTA-mulighet tidlig, for de som er umiddelbart overbevist av tallene.</li>
+        <li><strong>3 — Metode forklarer tallene:</strong> Besøkende som er skeptiske får metodisk svar på hvorfor tallene er reelle.</li>
+        <li>— Risiko: Alle metrikker må være sann og verifiserbar. Må ikke jukses.</li>
+        <li>— Passer best for å skalere etter 500+ spillere — tallene må være imponerende i seg selv.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>konvertere seriøse HCP &le;10-spillere til vurderingsøkt eller Portal-signup</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Vurderingsøkt-CTR (est.)</th><th>Brand-signal</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Data First</strong></td>
+          <td>Whoop-aktig tech-performance m/ light base og dark pyramide. Portal-screenshot som helten.</td>
+          <td>Høy</td>
+          <td>Tech-premium</td>
+          <td>Medium</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><strong>2. Pro Benchmark</strong></td>
+          <td>Hero = direkte DataGolf-sammenligning. "Din approach vs PGA Tour" gap-følelse.</td>
+          <td>Svært høy hvis data er ekte</td>
+          <td>Elite performance</td>
+          <td>Medium–høy (DataGolf)</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>3. TrackMan Lab</strong></td>
+          <td>Fysisk studio som helten. Laboratorium-narrativ. 27 målepunkter per sving.</td>
+          <td>Høy i lokalmarkedet Fredrikstad</td>
+          <td>Institusjonell</td>
+          <td>Lav (krever bra foto)</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>4. Path to Pro</strong></td>
+          <td>Stages HCP 10→5→0→+2. Narrativ progresjon med case per stage.</td>
+          <td>Medium (krever selv-plassering)</td>
+          <td>Journey/coaching</td>
+          <td>Medium (3 case-spillere)</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>5. Metric Wall</strong></td>
+          <td>8-tall dashboard-hero. Linear/Whoop data-tett landing.</td>
+          <td>Høy blant tall-orienterte</td>
+          <td>Data-first SaaS</td>
+          <td>Lav</td>
+          <td>★★★☆☆</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Data First</h3>
+      <p>Matcher AK Golf sin eksisterende visuelle identitet (light base med dark dramatic seksjoner) og kobler naturlig til resten av markedssiden. Portal-screenshot som hero kommuniserer produkt, data-grid bygger dybde, Treningspyramiden i dark gir metodisk tyngde. Tilstrekkelig differensiert fra Academy/Junior-sidene via tech-performance tonefall uten å bryte designsystemet.</p>
+
+      <p><strong>Strategisk flow:</strong> Start med Option 1 som basis. Test Option 2 (Pro Benchmark) som A/B etter 3 måneder hvis DataGolf-integrasjonen er live og juridisk klarert. Option 3 (TrackMan Lab) er sterkt kandidat hvis studioet blir profesjonelt fotografert — kan bli hero-element for hele utvikling-segmentet. Option 4 og 5 har begge lavere flow men fungerer som innhold på underseksjoner.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

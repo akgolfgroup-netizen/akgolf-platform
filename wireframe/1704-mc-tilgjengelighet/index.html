@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Tilgjengelighet — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Tilgjengelighet</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Ukes-grid</button>
+    <button class="tab-btn" data-tab="option-2">2: Unntak-liste</button>
+    <button class="tab-btn" data-tab="option-3">3: Instruktør-sammenlign</button>
+    <button class="tab-btn" data-tab="option-4">4: Google Calendar-sync</button>
+    <button class="tab-btn" data-tab="option-5">5: Smart auto-fyll</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Ukes-grid ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Ukes-grid</span></h2>
+    <p class="option-description">Uke-mal per instruktør med tidsgrid. Drag-drop ledige slots. Safe default for daglig drift.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/tilgjengelighet</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Tilgjengelighet</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-sub-head">
+            <div>
+              <h3>Tilgjengelighet · Uke 16 (13.–19. april)</h3>
+              <div class="wf-sub-head-meta">Standard uke-mal per instruktør</div>
+            </div>
+            <div class="wf-btn-row">
+              <span class="wf-btn">← Forrige</span>
+              <span class="wf-btn">I dag</span>
+              <span class="wf-btn">Neste →</span>
+              <span class="wf-btn wf-btn-primary">+ Legg til slot</span>
+            </div>
+          </div>
+
+          <div class="wf-instr-row">
+            <span class="wf-instr-pill wf-instr-pill-active">Anders Kristiansen</span>
+            <span class="wf-instr-pill">Markus Roinås Pedersen</span>
+          </div>
+
+          <div class="wf-card">
+            <div class="wf-card-head"><span>Ukesmal — Anders</span><span>Tir/Ons/Tor 10–15, Fre 10–13</span></div>
+            <div class="wf-week">
+              <div class="wf-week-head"></div>
+              <div class="wf-week-head">Man 13</div>
+              <div class="wf-week-head">Tir 14</div>
+              <div class="wf-week-head">Ons 15</div>
+              <div class="wf-week-head">Tor 16</div>
+              <div class="wf-week-head">Fre 17</div>
+              <div class="wf-week-head">Lør 18</div>
+              <div class="wf-week-head">Søn 19</div>
+
+              <div class="wf-week-time">09:00</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+
+              <div class="wf-week-time">10:00</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-booked">Erik H.</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+
+              <div class="wf-week-time">11:00</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell wf-week-cell-booked">Nora T.</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-booked">Lars B.</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+
+              <div class="wf-week-time">12:00</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+
+              <div class="wf-week-time">13:00</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell wf-week-cell-booked">Junior 14+</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-blocked">Stengt</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+
+              <div class="wf-week-time">14:00</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-booked">Sofie L.</div>
+              <div class="wf-week-cell wf-week-cell-available">Ledig</div>
+              <div class="wf-week-cell wf-week-cell-blocked">Stengt</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+
+              <div class="wf-week-time">15:00</div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+              <div class="wf-week-cell"></div>
+            </div>
+          </div>
+
+          <div class="wf-grid" style="margin-top:12px;">
+            <div class="wf-card wf-span-4">
+              <div class="wf-card-head"><span>Ukes-stats</span></div>
+              <ul class="wf-list">
+                <li><span>Ledige slots</span><span>12</span></li>
+                <li><span>Bookede slots</span><span>5</span></li>
+                <li><span>Belegg</span><span>29 %</span></li>
+                <li><span>Total timer</span><span>18 t</span></li>
+              </ul>
+            </div>
+            <div class="wf-card wf-span-8">
+              <div class="wf-card-head"><span>Regler</span><span>3 aktive</span></div>
+              <ul class="wf-list">
+                <li><span>Buffertid mellom økter</span><span>15 min</span></li>
+                <li><span>Max advance booking Performance</span><span>28 dager</span></li>
+                <li><span>Max advance booking Flex</span><span>21 dager</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Grid gir visuell oversikt: ledig (grønn), booket (grå), blokkert (stripet).</li>
+        <li>Per-instruktør pills øverst — bytt kontekst raskt mellom Anders og Markus.</li>
+        <li>Drag-drop: klikk og drag for å markere ledig tid, klikk eksisterende slot for å endre.</li>
+        <li>Ukenavigasjon (Forrige/I dag/Neste) følger datostandard.</li>
+        <li>Stats-kort under gridet gir kvantitativ sammenheng uten å stjele plass.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Unntak-liste ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Unntak-liste</span></h2>
+    <p class="option-description">Fokus på blokkerte tider, ferier, sykdom. Linear-aktig list over alle unntak fra standard uke.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/tilgjengelighet</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · MC</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Tilgjengelighet</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-sub-head">
+            <div>
+              <h3>Unntak fra standard uke</h3>
+              <div class="wf-sub-head-meta">Ferier, sykdom, konferanser, enkeltdager</div>
+            </div>
+            <div class="wf-btn-row">
+              <span class="wf-btn">Filter: Alle</span>
+              <span class="wf-btn wf-btn-primary">+ Nytt unntak</span>
+            </div>
+          </div>
+
+          <div class="wf-instr-row">
+            <span class="wf-instr-pill wf-instr-pill-active">Alle instruktører</span>
+            <span class="wf-instr-pill">Anders</span>
+            <span class="wf-instr-pill">Markus</span>
+          </div>
+
+          <div class="wf-ex-list">
+            <div class="wf-ex-item">
+              <div class="wf-ex-date">31.03–07.04</div>
+              <div class="wf-ex-title">Påskeferie — uke 14</div>
+              <div class="wf-ex-type">Ferie · Anders</div>
+              <span class="wf-ex-tag">Aktiv</span>
+            </div>
+            <div class="wf-ex-item">
+              <div class="wf-ex-date">08.05–10.05</div>
+              <div class="wf-ex-title">Konferanse: TrackMan Oslo</div>
+              <div class="wf-ex-type">Konferanse · Anders</div>
+              <span class="wf-ex-tag">Kommer</span>
+            </div>
+            <div class="wf-ex-item">
+              <div class="wf-ex-date">17.04</div>
+              <div class="wf-ex-title">Stengt fredag (helligdag)</div>
+              <div class="wf-ex-type">Helligdag · Alle</div>
+              <span class="wf-ex-tag">Aktiv</span>
+            </div>
+            <div class="wf-ex-item">
+              <div class="wf-ex-date">22.04</div>
+              <div class="wf-ex-title">Tidlig stenging — halv dag</div>
+              <div class="wf-ex-type">Enkeltdag · Markus</div>
+              <span class="wf-ex-tag">Kommer</span>
+            </div>
+            <div class="wf-ex-item">
+              <div class="wf-ex-date">01.05</div>
+              <div class="wf-ex-title">Arbeidernes dag</div>
+              <div class="wf-ex-type">Helligdag · Alle</div>
+              <span class="wf-ex-tag">Kommer</span>
+            </div>
+            <div class="wf-ex-item">
+              <div class="wf-ex-date">15.07–28.07</div>
+              <div class="wf-ex-title">Sommerferie uke 29–30</div>
+              <div class="wf-ex-type">Ferie · Anders</div>
+              <span class="wf-ex-tag">Planlagt</span>
+            </div>
+          </div>
+
+          <div class="wf-grid" style="margin-top:14px;">
+            <div class="wf-card wf-span-6">
+              <div class="wf-card-head"><span>Påvirkede bookinger</span></div>
+              <ul class="wf-list">
+                <li><span>Uke 14 påske</span><span>4 bookinger reschedulet</span></li>
+                <li><span>08.–10. mai konferanse</span><span>6 bookinger blokkert</span></li>
+                <li><span>Sommerferie uke 29–30</span><span>0 bookinger (ingen ennå)</span></li>
+              </ul>
+            </div>
+            <div class="wf-card wf-span-6">
+              <div class="wf-card-head"><span>Handling</span></div>
+              <ul class="wf-list">
+                <li><span>Send melding til 4 elever om påskeferie</span><span>→</span></li>
+                <li><span>Blokker konferanse-uke i Google Calendar</span><span>→</span></li>
+                <li><span>Opprett vikar-plan for Markus 22.04</span><span>→</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>List-layout gir rask skanning av alle unntak sortert på dato.</li>
+        <li>Filter på instruktør + type (ferie/konferanse/enkeltdag/helligdag).</li>
+        <li>"Påvirkede bookinger"-kort viser konsekvens — binder unntak til driftsflyt.</li>
+        <li>Handling-kolonne tvinger oppfølging (send melding, blokker kalender, vikar).</li>
+        <li>Skalerer bedre enn grid når mange unntak over lengre tid.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Instruktør-sammenlign ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Instruktør-sammenlign</span></h2>
+    <p class="option-description">Alle coaches side-by-side. Brukes for booking-strategi og kapasitetsplanlegging.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/tilgjengelighet</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Tilgjengelighet</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-sub-head">
+            <div>
+              <h3>Sammenlign instruktører · Onsdag 15. april</h3>
+              <div class="wf-sub-head-meta">Side-by-side visning for booking-strategi</div>
+            </div>
+            <div class="wf-btn-row">
+              <span class="wf-btn">Dag ▾</span>
+              <span class="wf-btn">Onsdag ▾</span>
+              <span class="wf-btn wf-btn-primary">+ Tildel booking</span>
+            </div>
+          </div>
+
+          <div class="wf-card" style="padding: 0;">
+            <div class="wf-compare">
+              <div class="wf-compare-head">Tid</div>
+              <div class="wf-compare-head">Anders Kristiansen</div>
+              <div class="wf-compare-head">Markus Roinås Pedersen</div>
+
+              <div class="wf-compare-time">09:00</div>
+              <div class="wf-compare-cell">—</div>
+              <div class="wf-compare-cell wf-compare-cell-busy">Lars B. · Express</div>
+
+              <div class="wf-compare-time">10:00</div>
+              <div class="wf-compare-cell wf-compare-cell-busy">Erik H. · Performance</div>
+              <div class="wf-compare-cell wf-compare-cell-avail">Ledig</div>
+
+              <div class="wf-compare-time">11:00</div>
+              <div class="wf-compare-cell wf-compare-cell-avail">Ledig</div>
+              <div class="wf-compare-cell wf-compare-cell-avail">Ledig</div>
+
+              <div class="wf-compare-time">12:00</div>
+              <div class="wf-compare-cell wf-compare-cell-avail">Ledig</div>
+              <div class="wf-compare-cell wf-compare-cell-busy">First Tee (8)</div>
+
+              <div class="wf-compare-time">13:00</div>
+              <div class="wf-compare-cell wf-compare-cell-avail">Ledig</div>
+              <div class="wf-compare-cell wf-compare-cell-busy">First Tee (8)</div>
+
+              <div class="wf-compare-time">14:00</div>
+              <div class="wf-compare-cell wf-compare-cell-busy">Sofie L. · Flex 20</div>
+              <div class="wf-compare-cell wf-compare-cell-avail">Ledig</div>
+
+              <div class="wf-compare-time">15:00</div>
+              <div class="wf-compare-cell">—</div>
+              <div class="wf-compare-cell wf-compare-cell-avail">Ledig</div>
+            </div>
+          </div>
+
+          <div class="wf-grid" style="margin-top:12px;">
+            <div class="wf-card wf-span-6">
+              <div class="wf-card-head"><span>Anders · Onsdag</span><span>3 av 5 slots</span></div>
+              <ul class="wf-list">
+                <li><span>Bookede timer</span><span>3 t</span></li>
+                <li><span>Ledige timer</span><span>2 t</span></li>
+                <li><span>Belegg</span><span>60 %</span></li>
+                <li><span>Inntekt i dag</span><span>4.800 kr</span></li>
+              </ul>
+            </div>
+            <div class="wf-card wf-span-6">
+              <div class="wf-card-head"><span>Markus · Onsdag</span><span>3 av 7 slots</span></div>
+              <ul class="wf-list">
+                <li><span>Bookede timer</span><span>3 t</span></li>
+                <li><span>Ledige timer</span><span>4 t</span></li>
+                <li><span>Belegg</span><span>43 %</span></li>
+                <li><span>Inntekt i dag</span><span>3.200 kr</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Side-by-side matriser gjør det trivielt å se hvem som har ledig kapasitet nå.</li>
+        <li>Grønn = ledig, rød = booket. Ingen gråsone — beslutningen skal være umiddelbar.</li>
+        <li>"+ Tildel booking" i header støtter admin-flyt: finn slot, tildel elev direkte.</li>
+        <li>Per-instruktør stats under matrisen gir tall for å balansere belastning.</li>
+        <li>Best for dager med høy booking-trykk eller vikar-allokering.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Google Calendar-sync ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Google Calendar-sync</span></h2>
+    <p class="option-description">Konfigurasjon av 2-veis sync mot Google Calendar. Per-instruktør kontoer med detaljerte sync-regler.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/tilgjengelighet</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · MC</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Tilgjengelighet</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-sub-head">
+            <div>
+              <h3>Google Calendar · 2-veis sync</h3>
+              <div class="wf-sub-head-meta">Tilkoblede kontoer og sync-innstillinger</div>
+            </div>
+            <div class="wf-btn-row">
+              <span class="wf-btn">Sync nå</span>
+              <span class="wf-btn wf-btn-primary">+ Koble til konto</span>
+            </div>
+          </div>
+
+          <div class="wf-grid">
+            <div class="wf-card wf-span-7">
+              <div class="wf-card-head"><span>Tilkoblede kontoer</span><span>2 aktive</span></div>
+              <div class="wf-gcal-account">
+                <div class="wf-gcal-avatar">AK</div>
+                <div class="wf-gcal-info">
+                  <strong>anders@akgolf.no</strong>
+                  Anders Kristiansen · sist synkronisert for 3 min siden
+                  <div class="wf-gcal-status">Tilkoblet · 2-veis</div>
+                </div>
+                <div class="wf-toggle"></div>
+              </div>
+              <div class="wf-gcal-account">
+                <div class="wf-gcal-avatar">MR</div>
+                <div class="wf-gcal-info">
+                  <strong>markus@akgolf.no</strong>
+                  Markus Roinås Pedersen · sist synkronisert for 7 min siden
+                  <div class="wf-gcal-status">Tilkoblet · 2-veis</div>
+                </div>
+                <div class="wf-toggle"></div>
+              </div>
+
+              <div class="wf-sync-config">
+                <div class="wf-sync-row"><span>Opprett event i Google ved ny booking</span><span>På</span></div>
+                <div class="wf-sync-row"><span>Blokker slot ved privat event i Google</span><span>På</span></div>
+                <div class="wf-sync-row"><span>Inkluder elev-navn i event-tittel</span><span>På</span></div>
+                <div class="wf-sync-row"><span>Send møteinvitasjon til elev</span><span>Av</span></div>
+                <div class="wf-sync-row"><span>Sync-intervall</span><span>5 min</span></div>
+              </div>
+            </div>
+
+            <div class="wf-card wf-span-5">
+              <div class="wf-card-head"><span>Sync-logg</span><span>Siste 24 t</span></div>
+              <ul class="wf-list">
+                <li><span>Event opprettet: Erik H. ons 10:00</span><span>3 min</span></li>
+                <li><span>Event oppdatert: Lars B. reschedule</span><span>1 t</span></li>
+                <li><span>Ekstern event lest: anders@ 14:00</span><span>2 t</span></li>
+                <li><span>Sync kjørt OK — 4 endringer</span><span>5 t</span></li>
+                <li><span>Konflikt løst: dobbelbooking 11:00</span><span>18 t</span></li>
+                <li><span>Sync kjørt OK — 0 endringer</span><span>23 t</span></li>
+              </ul>
+              <div class="wf-card-head" style="margin-top:14px; padding-top:10px; border-top:1px solid #eee;"><span>Konflikter</span><span>0 åpne</span></div>
+              <div style="font-size:11px; color:#888;">Alle konflikter er løst automatisk i henhold til prioritets-regler.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Per-konto visning (anders@akgolf.no, markus@akgolf.no) med tydelig status.</li>
+        <li>Toggle per regel — ikke bare på/av for hele sync-en, men granulert kontroll.</li>
+        <li>Sync-logg bygger tillit: Anders kan se hva som faktisk skjer i bakgrunnen.</li>
+        <li>Konflikt-håndtering synliggjort — hvis noe går galt vises det her, ikke i support.</li>
+        <li>Konfigurasjonsside — ikke daglig bruk. Plassert som egen fane i Tilgjengelighet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Smart auto-fyll ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Smart auto-fyll</span></h2>
+    <p class="option-description">AI-forslag basert på historikk. Foreslår optimale slots ut fra booking-mønster og spiller-preferanser.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/tilgjengelighet</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Tilgjengelighet</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-sub-head">
+            <div>
+              <h3>Smart auto-fyll · AI-forslag</h3>
+              <div class="wf-sub-head-meta">Forslag basert på 90 dager historikk</div>
+            </div>
+            <div class="wf-btn-row">
+              <span class="wf-btn">Innstillinger</span>
+              <span class="wf-btn wf-btn-primary">Bruk alle forslag</span>
+            </div>
+          </div>
+
+          <div class="wf-ai-banner">
+            AI analyserte 148 økter fra siste 90 dager. 5 forslag for uke 17 — 2 høy konfidens, 3 middels.
+          </div>
+
+          <div class="wf-grid">
+            <div class="wf-span-8">
+              <div class="wf-suggestion">
+                <div class="wf-suggestion-head">
+                  <div class="wf-suggestion-title">Legg til slot: Tirsdag 22.04 kl. 15:00–16:00 (Anders)</div>
+                  <div class="wf-suggestion-conf">92 % KONFIDENS</div>
+                </div>
+                <div class="wf-suggestion-body">
+                  Tirsdager kl. 15:00 er etterspurt — 8 av 12 forespørsler siste 60 dager har vært i dette tidsrommet. Forlenger standarduka med 1 time.
+                </div>
+                <div class="wf-suggestion-actions">
+                  <span class="wf-btn wf-btn-primary">Godta</span>
+                  <span class="wf-btn">Utsett</span>
+                  <span class="wf-btn">Avvis</span>
+                </div>
+              </div>
+
+              <div class="wf-suggestion">
+                <div class="wf-suggestion-head">
+                  <div class="wf-suggestion-title">Erik Hansen: foreslå fast slot tirsdag 10:00</div>
+                  <div class="wf-suggestion-conf">88 % KONFIDENS</div>
+                </div>
+                <div class="wf-suggestion-body">
+                  Erik har booket tirsdag 10:00 4 av 5 siste ganger. Konverter til fast abonnement-slot for å redusere manuell koordinering.
+                </div>
+                <div class="wf-suggestion-actions">
+                  <span class="wf-btn wf-btn-primary">Godta</span>
+                  <span class="wf-btn">Utsett</span>
+                  <span class="wf-btn">Avvis</span>
+                </div>
+              </div>
+
+              <div class="wf-suggestion">
+                <div class="wf-suggestion-head">
+                  <div class="wf-suggestion-title">Fjern slot: Fredag 10:00 (Markus)</div>
+                  <div class="wf-suggestion-conf">71 % KONFIDENS</div>
+                </div>
+                <div class="wf-suggestion-body">
+                  Fredag 10:00 hos Markus har kun 2 bookinger siste 30 dager (17 % belegg). Frigi til konferansetid eller vikar-backup.
+                </div>
+                <div class="wf-suggestion-actions">
+                  <span class="wf-btn wf-btn-primary">Godta</span>
+                  <span class="wf-btn">Utsett</span>
+                  <span class="wf-btn">Avvis</span>
+                </div>
+              </div>
+
+              <div class="wf-suggestion">
+                <div class="wf-suggestion-head">
+                  <div class="wf-suggestion-title">Blokker mai: Anders på konferanse 08.–10. mai</div>
+                  <div class="wf-suggestion-conf">99 % KONFIDENS</div>
+                </div>
+                <div class="wf-suggestion-body">
+                  Kalender-event "TrackMan Oslo" funnet. Opprett automatisk unntak og informer 6 berørte elever.
+                </div>
+                <div class="wf-suggestion-actions">
+                  <span class="wf-btn wf-btn-primary">Godta</span>
+                  <span class="wf-btn">Utsett</span>
+                  <span class="wf-btn">Avvis</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-span-4">
+              <div class="wf-card">
+                <div class="wf-card-head"><span>Historikk-innsikt</span></div>
+                <ul class="wf-list">
+                  <li><span>Booking-topp</span><span>Tir 10–12</span></li>
+                  <li><span>Lavest belegg</span><span>Fre ettermiddag</span></li>
+                  <li><span>Snitt advance-time</span><span>9 dager</span></li>
+                  <li><span>No-show rate</span><span>3 %</span></li>
+                  <li><span>Reschedule rate</span><span>12 %</span></li>
+                </ul>
+              </div>
+              <div class="wf-card" style="margin-top:12px;">
+                <div class="wf-card-head"><span>Tidligere forslag</span><span>12 godtatt</span></div>
+                <ul class="wf-list">
+                  <li><span>Godtatt</span><span>12</span></li>
+                  <li><span>Avvist</span><span>3</span></li>
+                  <li><span>Utsatt</span><span>2</span></li>
+                  <li><span>Presisjon</span><span>84 %</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>AI-banner øverst forklarer alltid hvor forslagene kommer fra (88 økter, 90 dager).</li>
+        <li>Konfidens-prosent gjør det trivielt å skille høy-kvalitets forslag fra gjetninger.</li>
+        <li>Tre handlinger per forslag: Godta, Utsett, Avvis — tvinger beslutning, aldri passiv.</li>
+        <li>Historikk-innsikt bygger tillit — vis dataene AI bygger på.</li>
+        <li>Presisjon-score (84 %) holder AI-forslagene ansvarlige over tid.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Tilgjengelighet — valget avhenger av hvilken arbeidsflyt som skal støttes først.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Ukes-grid</th><th>2: Unntak-liste</th><th>3: Sammenlign</th><th>4: Google-sync</th><th>5: AI auto-fyll</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig drift</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Ferie/unntak-håndtering</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Kapasitetsplanlegging</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Ekstern kalender-integrasjon</td><td>Svak</td><td>Svak</td><td>Svak</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Lærbarhet (nye brukere)</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Svak</td></tr>
+        <tr><td>Passer AK-brand</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Middels</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Option 1 — Ukes-grid</h3>
+    <p>Option 1 er den visuelle standarden for tilgjengelighets-UI og dekker 80 % av daglig bruk: se ukemal, legg til/fjern slots, forstå belegg. Grid-layout matcher mentalmodellen av "uken min", og per-instruktør pills skalerer fra 2 til 5+ coaches. Option 2 (Unntak-liste) er et sterkt supplement som egen underfane for langsiktig ferie-planlegging. Option 4 (Google-sync) bør implementeres som en separat innstillingsside. Option 3 og 5 kan komme senere når datagrunnlaget er rikere.</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Ukes-grid):</strong> Default. Best for daglig drift og visuell slot-håndtering.</li>
+      <li><strong>Option 2 (Unntak-liste):</strong> Egen underfane — ferier, sykdom, konferanser.</li>
+      <li><strong>Option 3 (Sammenlign):</strong> Hvis admin må balansere mellom flere coaches samtidig.</li>
+      <li><strong>Option 4 (Google-sync):</strong> Innstillinger-side — konfigurasjon, ikke daglig bruk.</li>
+      <li><strong>Option 5 (AI auto-fyll):</strong> Senere fase når 6+ måneder historikk er tilgjengelig.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

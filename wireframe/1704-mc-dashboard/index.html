@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission Control — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Mission Control</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: XPO Style</button>
+    <button class="tab-btn" data-tab="option-2">2: Linear Admin</button>
+    <button class="tab-btn" data-tab="option-3">3: Classic KPI</button>
+    <button class="tab-btn" data-tab="option-4">4: Command Bar</button>
+    <button class="tab-btn" data-tab="option-5">5: Focus Today</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1 ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">XPO Style</span></h2>
+    <p class="option-description">Dark topbar, lys body, KPI-row, divisjons-kort, gantt-chart — XPO TMS-estetikk</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab wf-mc-tab-active">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-kpi-row">
+            <div class="wf-kpi"><div class="wf-kpi-label">ØKTER I DAG</div><div class="wf-kpi-value">5</div><div class="wf-kpi-delta">+1 vs snitt</div></div>
+            <div class="wf-kpi"><div class="wf-kpi-label">AKTIVE ELEVER</div><div class="wf-kpi-value">42</div><div class="wf-kpi-delta">+3 denne uken</div></div>
+            <div class="wf-kpi"><div class="wf-kpi-label">VENTENDE BOOKINGER</div><div class="wf-kpi-value">3</div><div class="wf-kpi-delta">krever handling</div></div>
+            <div class="wf-kpi"><div class="wf-kpi-label">MTD INNTEKT</div><div class="wf-kpi-value">187.400 kr</div><div class="wf-kpi-delta">+12% vs budsjett</div></div>
+            <div class="wf-kpi"><div class="wf-kpi-label">BELEGG SIMULATOR</div><div class="wf-kpi-value">68%</div><div class="wf-kpi-delta">denne uken</div></div>
+          </div>
+
+          <div class="wf-mc-grid">
+            <div class="wf-mc-card wf-span-6">
+              <div class="wf-card-head"><span>Personlig coaching</span><span class="wf-card-meta">Oslo · Anders</span></div>
+              <div class="wf-gantt">
+                <div class="wf-gantt-head"><span>08</span><span>10</span><span>12</span><span>14</span><span>16</span><span>18</span></div>
+                <div class="wf-gantt-lane"><span class="wf-gantt-label">Anders</span><span class="wf-gantt-bar" style="left:10%;width:12%;">Erik H.</span><span class="wf-gantt-bar" style="left:30%;width:10%;">Nora T.</span><span class="wf-gantt-bar" style="left:55%;width:14%;">Junior 14+</span></div>
+                <div class="wf-gantt-lane"><span class="wf-gantt-label">Markus</span><span class="wf-gantt-bar" style="left:22%;width:10%;">Lars B.</span><span class="wf-gantt-bar" style="left:45%;width:12%;">First Tee</span></div>
+                <div class="wf-gantt-lane"><span class="wf-gantt-label">Simulator 2</span><span class="wf-gantt-bar wf-gantt-bar-ghost" style="left:12%;width:20%;">Ledig</span><span class="wf-gantt-bar" style="left:40%;width:18%;">Bedrift WANG</span></div>
+              </div>
+            </div>
+
+            <div class="wf-mc-card wf-span-3">
+              <div class="wf-card-head"><span>Ventende bookinger</span><span class="wf-card-meta">3</span></div>
+              <ul class="wf-list">
+                <li><span>Erik Hansen · Flex 20</span><span class="wf-tag">Reschedule</span></li>
+                <li><span>Nora Torp · Performance</span><span class="wf-tag">Ny booking</span></li>
+                <li><span>Lars Berg · Duo 50</span><span class="wf-tag">Avbestilling</span></li>
+              </ul>
+              <div class="wf-card-foot">Se alle →</div>
+            </div>
+
+            <div class="wf-mc-card wf-span-3">
+              <div class="wf-card-head"><span>Divisjoner</span></div>
+              <div class="wf-div-list">
+                <div class="wf-div-item"><span class="wf-div-dot wf-div-coaching"></span><span>Personlig coaching</span><span class="wf-div-val">28</span></div>
+                <div class="wf-div-item"><span class="wf-div-dot wf-div-junior"></span><span>Junior Academy</span><span class="wf-div-val">14</span></div>
+                <div class="wf-div-item"><span class="wf-div-dot wf-div-ai"></span><span>AI / Portalen</span><span class="wf-div-val">112 aktive</span></div>
+              </div>
+            </div>
+
+            <div class="wf-mc-card wf-span-6">
+              <div class="wf-card-head"><span>Inntekt siste 30 dager</span><span class="wf-card-meta">MTD 187.400 kr</span></div>
+              <div class="wf-chart-area">[ stolpediagram — daglig inntekt ]</div>
+            </div>
+
+            <div class="wf-mc-card wf-span-6">
+              <div class="wf-card-head"><span>Siste aktivitet</span></div>
+              <ul class="wf-list">
+                <li><span>Erik Hansen logget ny runde</span><span class="wf-card-meta">2 min</span></li>
+                <li><span>Anders publiserte treningsøkt</span><span class="wf-card-meta">18 min</span></li>
+                <li><span>Ny elev: Sofie Lund (Junior)</span><span class="wf-card-meta">1 t</span></li>
+                <li><span>Stripe: betaling 1.600 kr mottatt</span><span class="wf-card-meta">2 t</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Dark topbar gir tydelig admin-kontekst og skiller seg fra spillerportalen.</li>
+        <li>KPI-row alltid synlig øverst — 5 kjernetall som definerer dagen.</li>
+        <li>Gantt-chart viser alle instruktører og ressurser på én tidsakse — drag-to-reschedule.</li>
+        <li>Divisjoner-kort bruker fargekodet dot (coaching, junior, AI) matchet med MC-tokens.</li>
+        <li>Ventende bookinger fremhevet som "krever handling" — tydelig inbox-logikk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2 ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Linear Admin</span></h2>
+    <p class="option-description">Superhuman/Linear-aktig minimalistisk, keyboard-først, tett informasjon</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · MC</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab wf-mc-tab-active">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-search">⌘K  Søk · hopp · kjør handling</div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body wf-body-compact">
+          <div class="wf-linear-rail">
+            <div class="wf-linear-head">I DAG · 17. APR</div>
+            <div class="wf-linear-row"><span class="wf-dot"></span><span class="wf-linear-main">5 økter</span><span class="wf-linear-meta">Anders 3 · Markus 2</span><span class="wf-linear-kbd">G</span></div>
+            <div class="wf-linear-row"><span class="wf-dot wf-dot-warn"></span><span class="wf-linear-main">3 ventende bookinger</span><span class="wf-linear-meta">krever godkjenning</span><span class="wf-linear-kbd">B</span></div>
+            <div class="wf-linear-row"><span class="wf-dot"></span><span class="wf-linear-main">42 aktive elever</span><span class="wf-linear-meta">+3 denne uken</span><span class="wf-linear-kbd">E</span></div>
+            <div class="wf-linear-row"><span class="wf-dot"></span><span class="wf-linear-main">MTD inntekt 187.400 kr</span><span class="wf-linear-meta">+12% vs budsjett</span><span class="wf-linear-kbd">R</span></div>
+
+            <div class="wf-linear-head">DAGENS ØKTER</div>
+            <div class="wf-linear-row"><span class="wf-time">09:00</span><span class="wf-linear-main">Erik Hansen — Performance 20 min</span><span class="wf-linear-meta">Anders · Sim 3</span></div>
+            <div class="wf-linear-row"><span class="wf-time">10:00</span><span class="wf-linear-main">Nora Torp — Flex 20</span><span class="wf-linear-meta">Anders · Sim 1</span></div>
+            <div class="wf-linear-row"><span class="wf-time">11:30</span><span class="wf-linear-main">Lars Berg — Express Pro</span><span class="wf-linear-meta">Markus · Sim 2</span></div>
+            <div class="wf-linear-row"><span class="wf-time">14:00</span><span class="wf-linear-main">Junior 14+ gruppe (6)</span><span class="wf-linear-meta">Anders · Utendørs</span></div>
+            <div class="wf-linear-row"><span class="wf-time">16:30</span><span class="wf-linear-main">First Tee kurs (8)</span><span class="wf-linear-meta">Markus · Sim 1+2</span></div>
+
+            <div class="wf-linear-head">INBOX · 3 ELEMENTER</div>
+            <div class="wf-linear-row"><span class="wf-dot wf-dot-warn"></span><span class="wf-linear-main">Reschedule: Erik Hansen</span><span class="wf-linear-meta">fra tirs 10:00 → ?</span></div>
+            <div class="wf-linear-row"><span class="wf-dot wf-dot-warn"></span><span class="wf-linear-main">Ny booking: Nora Torp</span><span class="wf-linear-meta">Performance, mangler slot</span></div>
+            <div class="wf-linear-row"><span class="wf-dot wf-dot-warn"></span><span class="wf-linear-main">Avbestilling: Lars Berg</span><span class="wf-linear-meta">innen frist, refunder</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Informasjonstett rail-layout — 20+ rader synlig uten scroll.</li>
+        <li>Keyboard-snarveier (G, B, E, R) synlige på alle rader — power-user først.</li>
+        <li>CMD+K-søk i topbar hopper til enhver elev, booking eller handling.</li>
+        <li>Inbox-seksjon samler "krever handling" nederst — tydelig slutt-på-dag-rutine.</li>
+        <li>Ingen grafer — data som tekst/tall. Linear/Superhuman-estetikk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3 ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Classic KPI</span></h2>
+    <p class="option-description">Stripe-admin-aktig tradisjonell KPI-grid med grafer</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab wf-mc-tab-active">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-stripe-head">
+            <h3>Oversikt — siste 30 dager</h3>
+            <div class="wf-stripe-filters"><span>30 dager ▾</span><span>Alle divisjoner ▾</span><span>Eksport</span></div>
+          </div>
+
+          <div class="wf-kpi-grid">
+            <div class="wf-kpi-big">
+              <div class="wf-kpi-label">MTD INNTEKT</div>
+              <div class="wf-kpi-value">187.400 kr</div>
+              <div class="wf-kpi-delta">+12% vs forrige periode</div>
+              <div class="wf-sparkline">[ sparkline 30d ]</div>
+            </div>
+            <div class="wf-kpi-big">
+              <div class="wf-kpi-label">AKTIVE ELEVER</div>
+              <div class="wf-kpi-value">42</div>
+              <div class="wf-kpi-delta">+3 nye</div>
+              <div class="wf-sparkline">[ sparkline 30d ]</div>
+            </div>
+            <div class="wf-kpi-big">
+              <div class="wf-kpi-label">ØKTER LEVERT</div>
+              <div class="wf-kpi-value">148</div>
+              <div class="wf-kpi-delta">94% gjennomført</div>
+              <div class="wf-sparkline">[ sparkline 30d ]</div>
+            </div>
+            <div class="wf-kpi-big">
+              <div class="wf-kpi-label">BELEGG SIMULATOR</div>
+              <div class="wf-kpi-value">68%</div>
+              <div class="wf-kpi-delta">Mål: 75%</div>
+              <div class="wf-sparkline">[ sparkline 30d ]</div>
+            </div>
+          </div>
+
+          <div class="wf-mc-grid">
+            <div class="wf-mc-card wf-span-8">
+              <div class="wf-card-head"><span>Inntekt per uke</span><span class="wf-card-meta">Personlig coaching · Junior · Software</span></div>
+              <div class="wf-chart-area wf-chart-big">[ stablet linje-graf · tre divisjoner ]</div>
+            </div>
+            <div class="wf-mc-card wf-span-4">
+              <div class="wf-card-head"><span>Top produkter</span></div>
+              <ul class="wf-list">
+                <li><span>Performance 1600 kr/mnd</span><span>18 abo</span></li>
+                <li><span>Express 550 kr/mnd</span><span>11 abo</span></li>
+                <li><span>First Tee kurs</span><span>8 plasser</span></li>
+                <li><span>Flex 20 (450 kr)</span><span>24 økter</span></li>
+                <li><span>Duo 50</span><span>6 økter</span></li>
+              </ul>
+            </div>
+
+            <div class="wf-mc-card wf-span-6">
+              <div class="wf-card-head"><span>Venter på handling</span><span class="wf-card-meta">3</span></div>
+              <table class="wf-table">
+                <tr><th>Elev</th><th>Type</th><th>Status</th><th></th></tr>
+                <tr><td>Erik Hansen</td><td>Reschedule</td><td>Åpen</td><td>→</td></tr>
+                <tr><td>Nora Torp</td><td>Ny booking</td><td>Åpen</td><td>→</td></tr>
+                <tr><td>Lars Berg</td><td>Avbestilling</td><td>Åpen</td><td>→</td></tr>
+              </table>
+            </div>
+            <div class="wf-mc-card wf-span-6">
+              <div class="wf-card-head"><span>Elev-retensjon</span></div>
+              <div class="wf-chart-area">[ cohort-graf · månedlig churn ]</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Klassisk Stripe-admin-layout — filter-rad øverst, KPI-grid, chart + tabell.</li>
+        <li>Hvert KPI-kort har egen sparkline — tydelig trend-signal uten klikk.</li>
+        <li>Tabell for "venter på handling" — enkelt å skanne 5–10 rader raskt.</li>
+        <li>Bra for månedsrapportering og controller-bruk, ikke daglig drift.</li>
+        <li>Krever mer skjermplass — fungerer best på desktop.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4 ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Command Bar</span></h2>
+    <p class="option-description">Global command bar (CMD+K) for alt, Slack-aktig</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · MC</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab wf-mc-tab-active">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body wf-body-cmd">
+          <div class="wf-cmd-palette">
+            <div class="wf-cmd-input">⌘K  Søk elev, kjør handling, hopp til side...</div>
+            <div class="wf-cmd-section">NYLIG BRUKT</div>
+            <div class="wf-cmd-row"><span>Bekreft ventende booking</span><span class="wf-kbd">↵</span></div>
+            <div class="wf-cmd-row"><span>Gå til Erik Hansen</span><span class="wf-kbd">⌘ 1</span></div>
+            <div class="wf-cmd-row"><span>Opprett ny elev</span><span class="wf-kbd">N</span></div>
+            <div class="wf-cmd-section">HANDLINGER</div>
+            <div class="wf-cmd-row"><span>Send påminnelse (SMS)</span><span class="wf-kbd">⌘ R</span></div>
+            <div class="wf-cmd-row"><span>Eksporter månedsrapport</span><span class="wf-kbd">⌘ E</span></div>
+            <div class="wf-cmd-row"><span>Start økt-loggføring</span><span class="wf-kbd">⌘ L</span></div>
+          </div>
+
+          <div class="wf-cmd-below">
+            <div class="wf-kpi-row">
+              <div class="wf-kpi"><div class="wf-kpi-label">ØKTER I DAG</div><div class="wf-kpi-value">5</div></div>
+              <div class="wf-kpi"><div class="wf-kpi-label">AKTIVE ELEVER</div><div class="wf-kpi-value">42</div></div>
+              <div class="wf-kpi"><div class="wf-kpi-label">VENTENDE</div><div class="wf-kpi-value">3</div></div>
+              <div class="wf-kpi"><div class="wf-kpi-label">MTD INNTEKT</div><div class="wf-kpi-value">187.400 kr</div></div>
+            </div>
+            <div class="wf-mc-grid">
+              <div class="wf-mc-card wf-span-6"><div class="wf-card-head"><span>Kanal-feed</span></div><ul class="wf-list"><li><span>#booking — Erik reschedule 10:00 → ?</span><span class="wf-card-meta">2 min</span></li><li><span>#betaling — 1.600 kr mottatt (Nora)</span><span class="wf-card-meta">18 min</span></li><li><span>#elev — Sofie Lund registrert</span><span class="wf-card-meta">1 t</span></li><li><span>#drift — simulator 2 kalibrert</span><span class="wf-card-meta">3 t</span></li></ul></div>
+              <div class="wf-mc-card wf-span-6"><div class="wf-card-head"><span>Dagens økter</span></div><ul class="wf-list"><li><span>09:00 Erik H. · Performance</span><span>Anders</span></li><li><span>10:00 Nora T. · Flex 20</span><span>Anders</span></li><li><span>14:00 Junior 14+ (6)</span><span>Anders</span></li></ul></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Command bar er alltid synlig — CMD+K er primært navigasjonsverktøy.</li>
+        <li>Slack-aktig feed viser løpende aktivitet på tvers av divisjoner (#booking, #betaling).</li>
+        <li>Hurtighandlinger (send SMS, eksporter rapport) uten å forlate dashboard.</li>
+        <li>Keyboard-snarveier eksplisitt merket — tvinger power-user-adopsjon.</li>
+        <li>KPI-row degradert til sekundær info — command bar er hovedfokus.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5 ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Focus Today</span></h2>
+    <p class="option-description">I dag-fokus — dagens økter, elever, ventende oppgaver</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab wf-mc-tab-active">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab">Rapporter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-today-hero">
+            <div class="wf-today-label">FREDAG 17. APRIL</div>
+            <h2 class="wf-today-title">God morgen, Anders. 5 økter i dag.</h2>
+            <div class="wf-today-sub">3 ventende bookinger krever handling · Neste økt kl. 09:00 med Erik Hansen</div>
+          </div>
+
+          <div class="wf-mc-grid">
+            <div class="wf-mc-card wf-span-8">
+              <div class="wf-card-head"><span>Dagens timeline</span><span class="wf-card-meta">5 økter · 4t 20min coaching</span></div>
+              <div class="wf-today-timeline">
+                <div class="wf-today-slot"><span class="wf-time">09:00</span><div class="wf-today-body"><div class="wf-today-title2">Erik Hansen · Performance 20 min</div><div class="wf-today-meta">Sim 3 · HCP 14 · fokus: approach</div></div></div>
+                <div class="wf-today-slot"><span class="wf-time">10:00</span><div class="wf-today-body"><div class="wf-today-title2">Nora Torp · Flex 20</div><div class="wf-today-meta">Sim 1 · HCP 22 · fokus: putting</div></div></div>
+                <div class="wf-today-slot"><span class="wf-time">11:30</span><div class="wf-today-body"><div class="wf-today-title2">Lars Berg · Express Pro</div><div class="wf-today-meta">Markus · Sim 2</div></div></div>
+                <div class="wf-today-slot"><span class="wf-time">14:00</span><div class="wf-today-body"><div class="wf-today-title2">Junior 14+ gruppe (6)</div><div class="wf-today-meta">Utendørs · fokus: puttekonkurranse</div></div></div>
+                <div class="wf-today-slot"><span class="wf-time">16:30</span><div class="wf-today-body"><div class="wf-today-title2">First Tee kurs (8)</div><div class="wf-today-meta">Markus · Sim 1+2</div></div></div>
+              </div>
+            </div>
+
+            <div class="wf-mc-card wf-span-4">
+              <div class="wf-card-head"><span>Krever handling</span><span class="wf-card-meta">3</span></div>
+              <ul class="wf-list wf-list-action">
+                <li><div><div class="wf-list-title">Erik Hansen</div><div class="wf-list-sub">Reschedule · fra tirs 10:00</div></div><span class="wf-tag">Bekreft</span></li>
+                <li><div><div class="wf-list-title">Nora Torp</div><div class="wf-list-sub">Ny booking · mangler slot</div></div><span class="wf-tag">Tildel</span></li>
+                <li><div><div class="wf-list-title">Lars Berg</div><div class="wf-list-sub">Avbestilling · innen frist</div></div><span class="wf-tag">Refunder</span></li>
+              </ul>
+            </div>
+
+            <div class="wf-mc-card wf-span-4">
+              <div class="wf-kpi-label">I DAG</div>
+              <div class="wf-kpi-value">5 økter</div>
+              <div class="wf-kpi-delta">Belegg 83% — 1 ledig slot igjen</div>
+            </div>
+            <div class="wf-mc-card wf-span-4">
+              <div class="wf-kpi-label">DENNE UKEN</div>
+              <div class="wf-kpi-value">28 økter</div>
+              <div class="wf-kpi-delta">24 personlig · 4 gruppe</div>
+            </div>
+            <div class="wf-mc-card wf-span-4">
+              <div class="wf-kpi-label">MTD INNTEKT</div>
+              <div class="wf-kpi-value">187.400 kr</div>
+              <div class="wf-kpi-delta">+12% vs budsjett</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Hero-greeting setter dagens kontekst — "5 økter i dag" er viktigste tall.</li>
+        <li>Timeline dominerer — dagens plan er det Anders trenger mest oftest.</li>
+        <li>"Krever handling" fremhevet i egen kolonne med tydelige action-tags.</li>
+        <li>Sekundær-KPI (uke, MTD) ligger under — ikke i veien for dagsplanen.</li>
+        <li>Best for daglig bruk — svakere for rapportering/analyse.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Mission Control — valget avhenger av hvilken arbeidsdag som skal støttes først.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: XPO</th><th>2: Linear</th><th>3: Classic KPI</th><th>4: Command</th><th>5: Focus Today</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig drift</td><td>Sterk</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Rapportering</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Svak</td><td>Svak</td></tr>
+        <tr><td>Power-user / keyboard</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Lærbarhet (nye brukere)</td><td>Sterk</td><td>Svak</td><td>Sterk</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Ressurs-scheduling</td><td>Sterk (gantt)</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Passer AK-brand</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Middels</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Option 1 — XPO Style</h3>
+    <p>Option 1 balanserer daglig drift (gantt + KPI-row) med oversikt over alle divisjoner, og matcher best MC-tokens som allerede er definert i designsystemet (coaching, junior, AI). Gantt-chart er unikt verdiskapende for en coach-bedrift med flere instruktører og simulator-ressurser. Option 5 (Focus Today) er en sterk toer hvis primærbrukeren nesten utelukkende er Anders selv — men skalerer dårligere når flere instruktører logger inn.</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (XPO):</strong> Default. Best for multi-instruktør, multi-ressurs.</li>
+      <li><strong>Option 2 (Linear):</strong> Hvis power-user-hastighet er viktigste krav.</li>
+      <li><strong>Option 3 (Classic KPI):</strong> Hvis dashboard skal være controller-/styrerapport.</li>
+      <li><strong>Option 4 (Command):</strong> Hvis vi senere bygger en CMD+K-først arbeidsflyt.</li>
+      <li><strong>Option 5 (Focus Today):</strong> Hvis én-coach-bruk dominerer.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

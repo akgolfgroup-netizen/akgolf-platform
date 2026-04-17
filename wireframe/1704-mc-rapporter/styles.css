@@ -1,0 +1,135 @@
+/* === Rapporter Wireframe Styles — shared structure (B&W) === */
+
+/* MC Shell — Dark topbar + light body */
+.wf-mc-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background: #111;
+  color: #fff;
+  border-radius: 4px 4px 0 0;
+}
+.wf-mc-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; white-space: nowrap; }
+.wf-mc-tabs { display: flex; gap: 14px; flex: 1; }
+.wf-mc-tab { font-size: 12px; color: #999; padding: 4px 2px; cursor: default; }
+.wf-mc-tab-active { color: #fff; border-bottom: 1px solid #fff; }
+.wf-mc-profile { width: 28px; height: 28px; border-radius: 50%; background: #333; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+
+.wf-mc-body {
+  padding: 16px 12px;
+  background: #fafafa;
+  border-radius: 0 0 4px 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  color: #222;
+}
+
+/* Page head */
+.wf-rep-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wf-rep-title { font-size: 15px; font-weight: 600; color: #111; }
+.wf-rep-filters { display: flex; gap: 8px; }
+.wf-rep-filter { font-size: 11px; padding: 4px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #555; }
+.wf-rep-filter-primary { background: #111; color: #fff; border-color: #111; }
+
+/* KPI Row */
+.wf-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
+.wf-kpi { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px 12px; }
+.wf-kpi-label { font-size: 9px; font-weight: 600; letter-spacing: 0.08em; color: #999; text-transform: uppercase; margin-bottom: 4px; }
+.wf-kpi-value { font-size: 18px; font-weight: 700; color: #111; font-variant-numeric: tabular-nums; }
+.wf-kpi-delta { font-size: 10px; color: #666; margin-top: 2px; }
+.wf-kpi-delta-pos { color: #2a7d5a; }
+.wf-kpi-delta-neg { color: #b84233; }
+
+/* Grid system */
+.wf-rep-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+.wf-span-3 { grid-column: span 3; }
+.wf-span-4 { grid-column: span 4; }
+.wf-span-6 { grid-column: span 6; }
+.wf-span-7 { grid-column: span 7; }
+.wf-span-8 { grid-column: span 8; }
+.wf-span-12 { grid-column: span 12; }
+
+/* Cards */
+.wf-rep-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; }
+.wf-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.wf-card-head > span:first-child { font-size: 12px; font-weight: 600; color: #111; }
+.wf-card-meta { font-size: 10px; color: #888; }
+
+/* Chart placeholders */
+.wf-chart { border: 1px dashed #ccc; border-radius: 3px; height: 140px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 11px; background: #fcfcfc; }
+.wf-chart-lg { height: 200px; }
+.wf-chart-sm { height: 80px; }
+.wf-sparkline { border: 1px dashed #ddd; border-radius: 3px; height: 30px; margin-top: 6px; display: flex; align-items: center; justify-content: center; color: #bbb; font-size: 10px; }
+
+/* Tables */
+.wf-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.wf-table th { text-align: left; padding: 6px 8px; background: #f4f4f4; color: #555; font-weight: 600; border-bottom: 1px solid #ddd; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+.wf-table td { padding: 6px 8px; border-bottom: 1px solid #eee; color: #333; font-variant-numeric: tabular-nums; }
+.wf-table tr:last-child td { border-bottom: none; }
+.wf-table td.wf-num { text-align: right; font-weight: 600; }
+
+/* Lists */
+.wf-list { list-style: none; margin: 0; padding: 0; }
+.wf-list li { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #eee; font-size: 11px; color: #333; }
+.wf-list li:last-child { border-bottom: none; }
+
+/* Tags/badges */
+.wf-tag { font-size: 9px; padding: 2px 7px; border: 1px solid #ccc; border-radius: 10px; background: #f9f9f9; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }
+.wf-tag-live { background: #111; color: #fff; border-color: #111; }
+
+/* Export buttons */
+.wf-export-row { display: flex; gap: 6px; }
+.wf-export-btn { font-size: 10px; padding: 4px 10px; border: 1px solid #bbb; border-radius: 3px; background: #fff; color: #333; display: inline-flex; align-items: center; gap: 4px; }
+.wf-export-btn-primary { background: #111; color: #fff; border-color: #111; }
+
+/* OPT 2 — Periode-sammenlign */
+.wf-compare-row { display: grid; grid-template-columns: 1fr 80px 1fr 60px; gap: 8px; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 11px; }
+.wf-compare-row:last-child { border-bottom: none; }
+.wf-compare-label { font-weight: 600; color: #111; font-size: 12px; }
+.wf-compare-val { font-variant-numeric: tabular-nums; color: #333; font-size: 13px; font-weight: 600; }
+.wf-compare-arrow { text-align: center; color: #999; font-size: 14px; }
+.wf-compare-delta { text-align: right; font-size: 11px; font-weight: 600; }
+
+/* OPT 3 — Export First */
+.wf-query-bar { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px 12px; margin-bottom: 12px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.wf-query-label { font-size: 10px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; }
+.wf-query-chip { font-size: 11px; padding: 4px 10px; border: 1px solid #bbb; border-radius: 12px; background: #fff; color: #333; }
+.wf-query-chip-active { background: #111; color: #fff; border-color: #111; }
+
+.wf-preview-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; }
+.wf-preview-tbl { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px; }
+.wf-export-panel { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; }
+.wf-export-panel h4 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin: 0 0 10px 0; }
+.wf-export-option { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border: 1px solid #ddd; border-radius: 3px; margin-bottom: 6px; font-size: 11px; cursor: default; }
+.wf-export-option-active { border-color: #111; background: #f4f4f4; }
+
+/* OPT 4 — Drill-down */
+.wf-breadcrumb { font-size: 11px; color: #888; margin-bottom: 10px; }
+.wf-breadcrumb strong { color: #111; }
+.wf-breadcrumb .wf-crumb-sep { margin: 0 6px; color: #ccc; }
+
+.wf-drill-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 11px; cursor: default; }
+.wf-drill-row:last-child { border-bottom: none; }
+.wf-drill-row-active { background: #f4f4f4; border-left: 3px solid #111; padding-left: 9px; }
+.wf-drill-label { font-weight: 600; color: #111; font-size: 12px; }
+.wf-drill-meta { color: #888; font-size: 10px; margin-top: 2px; }
+.wf-drill-val { font-variant-numeric: tabular-nums; font-weight: 600; color: #111; }
+.wf-drill-indicator { color: #aaa; font-size: 12px; margin-left: 8px; }
+
+/* OPT 5 — Scheduled */
+.wf-sched-row { display: grid; grid-template-columns: 1fr 160px 140px 80px; gap: 10px; align-items: center; padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 11px; }
+.wf-sched-row:last-child { border-bottom: none; }
+.wf-sched-title { font-weight: 600; color: #111; font-size: 12px; }
+.wf-sched-sub { color: #888; font-size: 10px; margin-top: 2px; }
+.wf-sched-toggle { width: 32px; height: 18px; background: #111; border-radius: 10px; position: relative; }
+.wf-sched-toggle::after { content: ''; width: 14px; height: 14px; background: #fff; border-radius: 50%; position: absolute; top: 2px; right: 2px; }
+.wf-sched-toggle-off { background: #ddd; }
+.wf-sched-toggle-off::after { right: auto; left: 2px; }
+
+.wf-sched-new { background: #fff; border: 1px dashed #bbb; border-radius: 4px; padding: 12px; text-align: center; font-size: 11px; color: #888; margin-top: 8px; }
+
+/* Summary table */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+.wf-summary-table th, .wf-summary-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+.wf-summary-table th { background: #f4f4f4; font-weight: 600; }

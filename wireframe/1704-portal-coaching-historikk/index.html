@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coaching-historikk — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">x</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Coaching-historikk</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Session Cards</button>
+    <button class="tab-btn" data-tab="option-2">2: Timeline Journey</button>
+    <button class="tab-btn" data-tab="option-3">3: Coach Profile</button>
+    <button class="tab-btn" data-tab="option-4">4: Focus Trend</button>
+    <button class="tab-btn" data-tab="option-5">5: Action Items</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: SESSION CARDS (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Session Cards</span></h2>
+    <p class="option-description">SAFE-valg. Reversert kronologisk liste med ett kort per okt: dato, trener, AI-oppsummering, nokkelpunkter og fokusomrader. Filter pa trener/fokus oeverst.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/coaching-historikk</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK PORTAL</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Dashboard</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Bookinger</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Coaching-historikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Treningsplan</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Statistikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Profil</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Coaching-historikk</h1>
+                <p class="wf-page-sub">24 okter siden oppstart · Siste: 7. mai med Anders</p>
+              </div>
+              <div class="wf-page-actions"><button class="wf-btn">Eksporter PDF</button></div>
+            </div>
+            <div class="wf-filter-row">
+              <span class="wf-filter-label">TRENER</span>
+              <button class="wf-pill wf-pill-active">Alle</button>
+              <button class="wf-pill">Anders (18)</button>
+              <button class="wf-pill">Markus (6)</button>
+              <span class="wf-filter-sep"></span>
+              <span class="wf-filter-label">FOKUS</span>
+              <button class="wf-pill">Putting</button>
+              <button class="wf-pill">Setup</button>
+              <button class="wf-pill">Swing</button>
+              <button class="wf-pill">Kort spill</button>
+            </div>
+            <div class="wf-session-list">
+              <article class="wf-session-card">
+                <header class="wf-session-head">
+                  <div class="wf-session-date"><div class="wf-session-day">07</div><div class="wf-session-mon">MAI</div></div>
+                  <div class="wf-session-title-block">
+                    <div class="wf-session-trainer">Anders Kristiansen</div>
+                    <div class="wf-session-meta">Performance 20 min · Sim 3 · kl. 10:00</div>
+                  </div>
+                  <span class="wf-badge-latest">Siste okt</span>
+                </header>
+                <div class="wf-session-body">
+                  <div class="wf-session-summary-label">AI-OPPSUMMERING</div>
+                  <p class="wf-session-summary">Fokus pa setup og takeaway. Erik viste god progresjon i hoftevinkel fra forrige okt, men trenger fortsatt stabilisering i armsving paa backswing. Putting-rytme forbedret — 60% treff fra 3 meter.</p>
+                  <div class="wf-session-columns">
+                    <div class="wf-session-col">
+                      <div class="wf-col-label">NOKKELPUNKTER</div>
+                      <ul class="wf-bullet-list">
+                        <li>Hoftevinkel 28° (+3° vs snitt)</li>
+                        <li>Armsving plane stabilisert</li>
+                        <li>Putting-rytme 1:2 konsistent</li>
+                      </ul>
+                    </div>
+                    <div class="wf-session-col">
+                      <div class="wf-col-label">FOKUSOMRADER</div>
+                      <div class="wf-focus-tags">
+                        <span class="wf-focus-tag">Setup</span>
+                        <span class="wf-focus-tag">Takeaway</span>
+                        <span class="wf-focus-tag">Putting-rytme</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <footer class="wf-session-foot">
+                  <span class="wf-foot-link">Se video</span>
+                  <span class="wf-foot-link">Apne treningsplan</span>
+                  <span class="wf-foot-link">Full rapport</span>
+                </footer>
+              </article>
+              <article class="wf-session-card">
+                <header class="wf-session-head">
+                  <div class="wf-session-date"><div class="wf-session-day">30</div><div class="wf-session-mon">APR</div></div>
+                  <div class="wf-session-title-block">
+                    <div class="wf-session-trainer">Anders Kristiansen</div>
+                    <div class="wf-session-meta">Performance 20 min · Sim 3 · kl. 10:00</div>
+                  </div>
+                </header>
+                <div class="wf-session-body">
+                  <div class="wf-session-summary-label">AI-OPPSUMMERING</div>
+                  <p class="wf-session-summary">Teknisk fokus pa takeaway. Armsving-plane drev til venstre — korrigerte med drill "Lat tennisball i høyre armhule". Kort spill fra 40m: god progresjon, 7/10 innenfor 3m.</p>
+                  <div class="wf-session-columns">
+                    <div class="wf-session-col">
+                      <div class="wf-col-label">NOKKELPUNKTER</div>
+                      <ul class="wf-bullet-list">
+                        <li>Takeaway-plane korrigert</li>
+                        <li>Pitch 40m: 7/10 innenfor 3m</li>
+                        <li>Tempo 3:1 forskjell konsistent</li>
+                      </ul>
+                    </div>
+                    <div class="wf-session-col">
+                      <div class="wf-col-label">FOKUSOMRADER</div>
+                      <div class="wf-focus-tags">
+                        <span class="wf-focus-tag">Takeaway</span>
+                        <span class="wf-focus-tag">Pitch</span>
+                        <span class="wf-focus-tag">Tempo</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <footer class="wf-session-foot">
+                  <span class="wf-foot-link">Se video</span>
+                  <span class="wf-foot-link">Apne treningsplan</span>
+                  <span class="wf-foot-link">Full rapport</span>
+                </footer>
+              </article>
+              <article class="wf-session-card">
+                <header class="wf-session-head">
+                  <div class="wf-session-date"><div class="wf-session-day">23</div><div class="wf-session-mon">APR</div></div>
+                  <div class="wf-session-title-block">
+                    <div class="wf-session-trainer">Markus Roinas</div>
+                    <div class="wf-session-meta">Express Pro 20 min · Sim 2 · kl. 14:30</div>
+                  </div>
+                </header>
+                <div class="wf-session-body">
+                  <div class="wf-session-summary-label">AI-OPPSUMMERING</div>
+                  <p class="wf-session-summary">Driver-treff: 8/10 fairway-hit. Jobbet med angle-of-attack og opp-og-inn-swing. Ny driver passer bedre — smash factor opp fra 1.42 til 1.48.</p>
+                  <div class="wf-session-columns">
+                    <div class="wf-session-col">
+                      <div class="wf-col-label">NOKKELPUNKTER</div>
+                      <ul class="wf-bullet-list">
+                        <li>Smash factor 1.48 (+4%)</li>
+                        <li>Angle of attack +2.5°</li>
+                        <li>Fairway-hit 80%</li>
+                      </ul>
+                    </div>
+                    <div class="wf-session-col">
+                      <div class="wf-col-label">FOKUSOMRADER</div>
+                      <div class="wf-focus-tags">
+                        <span class="wf-focus-tag">Driver</span>
+                        <span class="wf-focus-tag">Angle of attack</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article class="wf-session-card wf-session-card-collapsed">
+                <header class="wf-session-head">
+                  <div class="wf-session-date"><div class="wf-session-day">16</div><div class="wf-session-mon">APR</div></div>
+                  <div class="wf-session-title-block">
+                    <div class="wf-session-trainer">Anders Kristiansen</div>
+                    <div class="wf-session-meta">Performance 20 min · Sim 1 · Fokus: Setup + balance</div>
+                  </div>
+                  <span class="wf-foot-link">Utvid</span>
+                </header>
+              </article>
+              <article class="wf-session-card wf-session-card-collapsed">
+                <header class="wf-session-head">
+                  <div class="wf-session-date"><div class="wf-session-day">09</div><div class="wf-session-mon">APR</div></div>
+                  <div class="wf-session-title-block">
+                    <div class="wf-session-trainer">Anders Kristiansen</div>
+                    <div class="wf-session-meta">Performance 20 min · Utendors · Fokus: Putting-rytme</div>
+                  </div>
+                  <span class="wf-foot-link">Utvid</span>
+                </header>
+              </article>
+            </div>
+            <div class="wf-load-more">Vis 19 eldre okter</div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Reversert kronologi — siste okt oeverst alltid, markert med "Siste okt"-badge.</li>
+        <li>Hvert kort viser AI-oppsummering, noekkelpunkter (bullets) og fokusomrader (tags) side om side.</li>
+        <li>Filter oeverst paa trener og fokusomrade — en-klikks segmentering.</li>
+        <li>Eldre okter kollapser automatisk (kun dato + trener + fokus) — redusere visuelt stoy.</li>
+        <li>Handlingslenker nederst: Se video, Apne treningsplan, Full rapport — direkte crossover til andre portal-sider.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: TIMELINE JOURNEY ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Timeline Journey</span></h2>
+    <p class="option-description">Vertikal reise-visualisering med sentral linje. Hver oekt er et punkt paa reisen med milestones, HCP-endringer og "aha-oeyeblikk" markert.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/coaching-historikk</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK PORTAL</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Dashboard</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Bookinger</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Coaching-historikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Treningsplan</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Statistikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Profil</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Din coaching-reise</h1>
+                <p class="wf-page-sub">24 okter · HCP 18.4 → 14.2 · 9 maneder</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn wf-btn-active">Alle okter</button>
+                <button class="wf-btn">Milepaler</button>
+              </div>
+            </div>
+            <div class="wf-timeline">
+              <div class="wf-timeline-milestone">
+                <div class="wf-timeline-marker wf-timeline-marker-milestone"></div>
+                <div class="wf-timeline-content">
+                  <div class="wf-timeline-milestone-label">MILEPAEL · 7. MAI</div>
+                  <div class="wf-timeline-milestone-title">HCP 14.2 — personlig rekord</div>
+                  <div class="wf-timeline-milestone-sub">Ned fra 18.4 siden oppstart. 4.2 slag bedre paa 9 maneder.</div>
+                </div>
+              </div>
+              <div class="wf-timeline-node">
+                <div class="wf-timeline-marker"></div>
+                <div class="wf-timeline-content">
+                  <div class="wf-timeline-head-row">
+                    <div class="wf-timeline-date">7. mai 2026</div>
+                    <div class="wf-timeline-trainer">Anders</div>
+                  </div>
+                  <div class="wf-timeline-title">Setup + takeaway</div>
+                  <div class="wf-timeline-summary">Hoftevinkel stabilisert. Armsving-plane forbedret. Putting 60% fra 3m.</div>
+                  <div class="wf-timeline-focus">
+                    <span class="wf-focus-tag">Setup</span>
+                    <span class="wf-focus-tag">Takeaway</span>
+                    <span class="wf-focus-tag">Putting</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wf-timeline-node">
+                <div class="wf-timeline-marker"></div>
+                <div class="wf-timeline-content">
+                  <div class="wf-timeline-head-row">
+                    <div class="wf-timeline-date">30. april 2026</div>
+                    <div class="wf-timeline-trainer">Anders</div>
+                  </div>
+                  <div class="wf-timeline-title">Takeaway-plane korrigert</div>
+                  <div class="wf-timeline-summary">Drill "Lat tennisball i høyre armhule" ga umiddelbar forskjell. Pitch 40m: 7/10.</div>
+                  <div class="wf-timeline-focus">
+                    <span class="wf-focus-tag">Takeaway</span>
+                    <span class="wf-focus-tag">Pitch</span>
+                  </div>
+                  <div class="wf-timeline-insight">AHA — Ball-posisjon i armhule loser plane-problemet</div>
+                </div>
+              </div>
+              <div class="wf-timeline-node">
+                <div class="wf-timeline-marker"></div>
+                <div class="wf-timeline-content">
+                  <div class="wf-timeline-head-row">
+                    <div class="wf-timeline-date">23. april 2026</div>
+                    <div class="wf-timeline-trainer">Markus</div>
+                  </div>
+                  <div class="wf-timeline-title">Driver-treff + smash factor</div>
+                  <div class="wf-timeline-summary">Ny driver gir +4% smash factor. Fairway-hit 8/10.</div>
+                  <div class="wf-timeline-focus">
+                    <span class="wf-focus-tag">Driver</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wf-timeline-milestone">
+                <div class="wf-timeline-marker wf-timeline-marker-milestone"></div>
+                <div class="wf-timeline-content">
+                  <div class="wf-timeline-milestone-label">MILEPAEL · 15. APRIL</div>
+                  <div class="wf-timeline-milestone-title">Første runde under 85</div>
+                  <div class="wf-timeline-milestone-sub">83 slag paa Oslo GK, +2 over par paa front 9.</div>
+                </div>
+              </div>
+              <div class="wf-timeline-node">
+                <div class="wf-timeline-marker"></div>
+                <div class="wf-timeline-content">
+                  <div class="wf-timeline-head-row">
+                    <div class="wf-timeline-date">16. april 2026</div>
+                    <div class="wf-timeline-trainer">Anders</div>
+                  </div>
+                  <div class="wf-timeline-title">Setup + balanse</div>
+                  <div class="wf-timeline-summary">Vektdistribusjon 60/40. Balanse-ovelser lagt til treningsplan.</div>
+                </div>
+              </div>
+              <div class="wf-timeline-node wf-timeline-node-dim">
+                <div class="wf-timeline-marker"></div>
+                <div class="wf-timeline-content">
+                  <div class="wf-timeline-head-row">
+                    <div class="wf-timeline-date">9. april 2026</div>
+                    <div class="wf-timeline-trainer">Anders</div>
+                  </div>
+                  <div class="wf-timeline-title">Putting-rytme</div>
+                </div>
+              </div>
+              <div class="wf-timeline-load-more">18 eldre okter nedover ↓</div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Vertikal linje binder reisen sammen — man skjønner utviklingen visuelt.</li>
+        <li>Milepaeler (HCP-nedgang, første runde under 85) markert som storre noder — skiller seg fra vanlig okt.</li>
+        <li>AHA-oyeblikk kan markeres automatisk av AI basert paa noekkelpunkter — personlig reise.</li>
+        <li>Eldre okter (>30 dager) dimmes ned — fokus paa siste 4-6 uker.</li>
+        <li>Mindre analytisk enn Option 1, mer emosjonell og motiverende — for spillerportalen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: COACH PROFILE ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Coach Profile</span></h2>
+    <p class="option-description">Gruppert per trener. To kolonner (Anders / Markus) med deres spesifikke okter, fokusmonster og progresjon. Sammenligning paa tvers av trenere.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/coaching-historikk</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK PORTAL</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Dashboard</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Bookinger</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Coaching-historikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Treningsplan</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Statistikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Profil</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Coaching-historikk</h1>
+                <p class="wf-page-sub">Gruppert per trener · 24 okter totalt</p>
+              </div>
+            </div>
+            <div class="wf-coach-split">
+              <section class="wf-coach-col">
+                <header class="wf-coach-head">
+                  <div class="wf-coach-avatar">AK</div>
+                  <div>
+                    <div class="wf-coach-name">Anders Kristiansen</div>
+                    <div class="wf-coach-title">Hovedtrener · 18 okter</div>
+                  </div>
+                </header>
+                <div class="wf-coach-stats">
+                  <div class="wf-coach-stat"><div class="wf-coach-stat-label">FORSTE OKT</div><div class="wf-coach-stat-val">14. okt</div></div>
+                  <div class="wf-coach-stat"><div class="wf-coach-stat-label">SNITT/MND</div><div class="wf-coach-stat-val">2.0</div></div>
+                  <div class="wf-coach-stat"><div class="wf-coach-stat-label">FOKUS-MIX</div><div class="wf-coach-stat-val">Teknikk</div></div>
+                </div>
+                <div class="wf-coach-subsec">TOPP FOKUSOMRADER</div>
+                <div class="wf-focus-bars">
+                  <div class="wf-focus-bar"><span>Setup</span><span class="wf-focus-bar-track"><span class="wf-focus-bar-fill" style="width:80%"></span></span><span class="wf-focus-bar-val">14</span></div>
+                  <div class="wf-focus-bar"><span>Takeaway</span><span class="wf-focus-bar-track"><span class="wf-focus-bar-fill" style="width:55%"></span></span><span class="wf-focus-bar-val">10</span></div>
+                  <div class="wf-focus-bar"><span>Putting</span><span class="wf-focus-bar-track"><span class="wf-focus-bar-fill" style="width:45%"></span></span><span class="wf-focus-bar-val">8</span></div>
+                  <div class="wf-focus-bar"><span>Pitch</span><span class="wf-focus-bar-track"><span class="wf-focus-bar-fill" style="width:30%"></span></span><span class="wf-focus-bar-val">5</span></div>
+                </div>
+                <div class="wf-coach-subsec">SISTE OKTER</div>
+                <div class="wf-coach-session">
+                  <div class="wf-coach-session-date">7. mai</div>
+                  <div class="wf-coach-session-sum">Setup + takeaway — hoftevinkel stabilisert</div>
+                </div>
+                <div class="wf-coach-session">
+                  <div class="wf-coach-session-date">30. apr</div>
+                  <div class="wf-coach-session-sum">Takeaway-plane korrigert med drill</div>
+                </div>
+                <div class="wf-coach-session">
+                  <div class="wf-coach-session-date">16. apr</div>
+                  <div class="wf-coach-session-sum">Setup + balanse — vektdistribusjon</div>
+                </div>
+                <div class="wf-coach-more">Vis 15 eldre okter med Anders</div>
+              </section>
+              <section class="wf-coach-col">
+                <header class="wf-coach-head">
+                  <div class="wf-coach-avatar">MR</div>
+                  <div>
+                    <div class="wf-coach-name">Markus Roinas</div>
+                    <div class="wf-coach-title">Spesialist · 6 okter</div>
+                  </div>
+                </header>
+                <div class="wf-coach-stats">
+                  <div class="wf-coach-stat"><div class="wf-coach-stat-label">FORSTE OKT</div><div class="wf-coach-stat-val">12. feb</div></div>
+                  <div class="wf-coach-stat"><div class="wf-coach-stat-label">SNITT/MND</div><div class="wf-coach-stat-val">1.2</div></div>
+                  <div class="wf-coach-stat"><div class="wf-coach-stat-label">FOKUS-MIX</div><div class="wf-coach-stat-val">Driver</div></div>
+                </div>
+                <div class="wf-coach-subsec">TOPP FOKUSOMRADER</div>
+                <div class="wf-focus-bars">
+                  <div class="wf-focus-bar"><span>Driver</span><span class="wf-focus-bar-track"><span class="wf-focus-bar-fill" style="width:70%"></span></span><span class="wf-focus-bar-val">5</span></div>
+                  <div class="wf-focus-bar"><span>Angle of attack</span><span class="wf-focus-bar-track"><span class="wf-focus-bar-fill" style="width:55%"></span></span><span class="wf-focus-bar-val">4</span></div>
+                  <div class="wf-focus-bar"><span>Jern</span><span class="wf-focus-bar-track"><span class="wf-focus-bar-fill" style="width:30%"></span></span><span class="wf-focus-bar-val">2</span></div>
+                </div>
+                <div class="wf-coach-subsec">SISTE OKTER</div>
+                <div class="wf-coach-session">
+                  <div class="wf-coach-session-date">23. apr</div>
+                  <div class="wf-coach-session-sum">Driver-treff + smash factor 1.48</div>
+                </div>
+                <div class="wf-coach-session">
+                  <div class="wf-coach-session-date">2. apr</div>
+                  <div class="wf-coach-session-sum">Angle of attack +2° — carry 245m</div>
+                </div>
+                <div class="wf-coach-session">
+                  <div class="wf-coach-session-date">19. mar</div>
+                  <div class="wf-coach-session-sum">Jern 7 — trajectory og spin</div>
+                </div>
+                <div class="wf-coach-more">Vis 3 eldre okter med Markus</div>
+              </section>
+            </div>
+            <aside class="wf-coach-compare">
+              <div class="wf-coach-compare-label">SAMMENLIGNING</div>
+              <p class="wf-coach-compare-body">Anders fokuserer paa teknisk grunnarbeid (setup, takeaway). Markus supplerer med power/driver-spesifikk trening. Kombinasjonen gir bred dekning — fortsett 3:1-balanse.</p>
+            </aside>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Side-ved-side gruppering gjor trener-rollene tydelige og visualiserer deres spesialomrader.</li>
+        <li>Fokus-bars per trener viser hva de faktisk jobber med — setter forventninger for neste booking.</li>
+        <li>AI-sammenligning nederst konkluderer fordelingen — strategisk innsikt, ikke bare historikk.</li>
+        <li>Passer best naar spiller har flere trenere — singelt-trener-spillere blir for sparsomt.</li>
+        <li>Skalerer daarlig til 3+ trenere — kolonner blir for trange.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: FOCUS TREND ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Focus Areas Trend</span></h2>
+    <p class="option-description">Datasentrert visning. Fokusomrader over tid som heatmap / stakket graf — ser hva du har jobbet mest med de siste 12 ukene. Identifiserer blindsoner.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/coaching-historikk</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK PORTAL</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Dashboard</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Bookinger</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Coaching-historikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Treningsplan</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Statistikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Profil</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Fokusomrader over tid</h1>
+                <p class="wf-page-sub">Siste 12 uker · hva du har jobbet med per okt</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">4 uker</button>
+                <button class="wf-btn wf-btn-active">12 uker</button>
+                <button class="wf-btn">Hele</button>
+              </div>
+            </div>
+            <div class="wf-heatmap-wrap">
+              <div class="wf-heatmap-head">
+                <span></span>
+                <span>U10</span><span>U11</span><span>U12</span><span>U13</span><span>U14</span><span>U15</span><span>U16</span><span>U17</span><span>U18</span><span>U19</span><span>U20</span><span>U21</span>
+              </div>
+              <div class="wf-heatmap-row">
+                <span class="wf-heatmap-label">Setup</span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+              </div>
+              <div class="wf-heatmap-row">
+                <span class="wf-heatmap-label">Takeaway</span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+              </div>
+              <div class="wf-heatmap-row">
+                <span class="wf-heatmap-label">Putting</span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+              </div>
+              <div class="wf-heatmap-row">
+                <span class="wf-heatmap-label">Pitch</span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+              </div>
+              <div class="wf-heatmap-row">
+                <span class="wf-heatmap-label">Driver</span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+              </div>
+              <div class="wf-heatmap-row">
+                <span class="wf-heatmap-label">Mental</span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+              </div>
+              <div class="wf-heatmap-legend">
+                <span>Mindre</span>
+                <span class="wf-heatmap-cell wf-hm-0"></span>
+                <span class="wf-heatmap-cell wf-hm-1"></span>
+                <span class="wf-heatmap-cell wf-hm-2"></span>
+                <span class="wf-heatmap-cell wf-hm-3"></span>
+                <span>Mer</span>
+              </div>
+            </div>
+            <div class="wf-insight-grid">
+              <article class="wf-insight-card">
+                <div class="wf-insight-label">TOPP FOKUS</div>
+                <div class="wf-insight-value">Setup</div>
+                <div class="wf-insight-sub">Jobbet i 11 av 12 uker · 30% av total tid</div>
+              </article>
+              <article class="wf-insight-card">
+                <div class="wf-insight-label">OKENDE</div>
+                <div class="wf-insight-value">Takeaway</div>
+                <div class="wf-insight-sub">3x mer siste 4 uker vs uke 10-13</div>
+              </article>
+              <article class="wf-insight-card wf-insight-card-warn">
+                <div class="wf-insight-label">BLINDSONE</div>
+                <div class="wf-insight-value">Mental</div>
+                <div class="wf-insight-sub">Ikke beroert paa 12 uker — vurder booking</div>
+              </article>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Heatmap er primaert organiseringsprinsipp — fokusomrader i rader, uker i kolonner.</li>
+        <li>Intensitet 0-3 = grader av tid brukt paa det omradet i en gitt uke.</li>
+        <li>AI-insights nederst: topp-fokus, okende trend, blindsone — tre klare takeaways.</li>
+        <li>"Blindsone"-kortet (rodt merket) er unikt verdiskapende — peker paa hva man IKKE har jobbet med.</li>
+        <li>Abstraherer bort enkelt-oktinnhold — brukes i tillegg til Option 1, ikke i stedet for.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: ACTION ITEMS ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Action Items</span></h2>
+    <p class="option-description">Handlingsorientert. Samler alle "ToDo-anbefalinger" fra alle okter i en kategorisert sjekkliste — hva har treneren bedt deg gjore?</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/coaching-historikk</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK PORTAL</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Dashboard</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Bookinger</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Coaching-historikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Treningsplan</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Statistikk</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Profil</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Anbefalinger fra treneren</h1>
+                <p class="wf-page-sub">14 action items fra siste 8 okter · 6 aktive · 8 fullfort</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn wf-btn-active">Aktive (6)</button>
+                <button class="wf-btn">Fullfort (8)</button>
+                <button class="wf-btn">Alle</button>
+              </div>
+            </div>
+            <div class="wf-action-group">
+              <div class="wf-action-group-head">
+                <div class="wf-action-group-title">TEKNIKK · 3 aktive</div>
+              </div>
+              <div class="wf-action-item">
+                <input type="checkbox" class="wf-action-check">
+                <div class="wf-action-body">
+                  <div class="wf-action-text">Drill "Lat tennisball i høyre armhule" — 10 min daglig</div>
+                  <div class="wf-action-meta">Fra 30. april med Anders · Fokus: Takeaway</div>
+                </div>
+                <div class="wf-action-prio wf-prio-high">HOY</div>
+              </div>
+              <div class="wf-action-item">
+                <input type="checkbox" class="wf-action-check">
+                <div class="wf-action-body">
+                  <div class="wf-action-text">Video opptak av setup 3x uka, sjekk hoftevinkel 28°</div>
+                  <div class="wf-action-meta">Fra 7. mai med Anders · Fokus: Setup</div>
+                </div>
+                <div class="wf-action-prio wf-prio-med">MED</div>
+              </div>
+              <div class="wf-action-item">
+                <input type="checkbox" class="wf-action-check">
+                <div class="wf-action-body">
+                  <div class="wf-action-text">Balanse-ovelser: 1-ben putting, 5 min per okt</div>
+                  <div class="wf-action-meta">Fra 16. april med Anders · Fokus: Balanse</div>
+                </div>
+                <div class="wf-action-prio wf-prio-med">MED</div>
+              </div>
+            </div>
+            <div class="wf-action-group">
+              <div class="wf-action-group-head">
+                <div class="wf-action-group-title">KORT SPILL · 2 aktive</div>
+              </div>
+              <div class="wf-action-item">
+                <input type="checkbox" class="wf-action-check">
+                <div class="wf-action-body">
+                  <div class="wf-action-text">Pitch 40m-drill: 30 baller, mal 8/10 innenfor 3m</div>
+                  <div class="wf-action-meta">Fra 30. april med Anders · Fokus: Pitch</div>
+                </div>
+                <div class="wf-action-prio wf-prio-high">HOY</div>
+              </div>
+              <div class="wf-action-item">
+                <input type="checkbox" class="wf-action-check">
+                <div class="wf-action-body">
+                  <div class="wf-action-text">Putting fra 3m: 20 baller per okt, rapporter treff-prosent</div>
+                  <div class="wf-action-meta">Fra 7. mai med Anders · Fokus: Putting-rytme</div>
+                </div>
+                <div class="wf-action-prio wf-prio-low">LAV</div>
+              </div>
+            </div>
+            <div class="wf-action-group">
+              <div class="wf-action-group-head">
+                <div class="wf-action-group-title">UTSTYR · 1 aktiv</div>
+              </div>
+              <div class="wf-action-item">
+                <input type="checkbox" class="wf-action-check">
+                <div class="wf-action-body">
+                  <div class="wf-action-text">Test ny driver (Callaway AI Smoke) over 5 okter</div>
+                  <div class="wf-action-meta">Fra 23. april med Markus · Fokus: Driver</div>
+                </div>
+                <div class="wf-action-prio wf-prio-med">MED</div>
+              </div>
+            </div>
+            <div class="wf-action-group wf-action-group-dim">
+              <div class="wf-action-group-head">
+                <div class="wf-action-group-title">FULLFORT · 8 items</div>
+                <span class="wf-foot-link">Vis alle</span>
+              </div>
+              <div class="wf-action-item wf-action-item-done">
+                <input type="checkbox" class="wf-action-check" checked>
+                <div class="wf-action-body">
+                  <div class="wf-action-text">Bygge konsistens i tempo 3:1</div>
+                  <div class="wf-action-meta">Fullfort 2. april · 3 okter etter anbefaling</div>
+                </div>
+              </div>
+              <div class="wf-action-item wf-action-item-done">
+                <input type="checkbox" class="wf-action-check" checked>
+                <div class="wf-action-body">
+                  <div class="wf-action-text">Vektdistribusjon 60/40 ved adress</div>
+                  <div class="wf-action-meta">Fullfort 19. mars · 2 okter etter anbefaling</div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Action-fokus: hva skal jeg GJORE, ikke hva ble SAGT.</li>
+        <li>Gruppert per fokusomrade (Teknikk, Kort spill, Utstyr) — matcher hvordan spilleren tenker treningsomtale.</li>
+        <li>Prio-tags (HOY/MED/LAV) settes av AI basert paa hvor ofte en anbefaling repeteres paa tvers av okter.</li>
+        <li>Fullfort-seksjonen dimmes ned — motivasjon uten a stele oppmerksomhet fra aktive items.</li>
+        <li>Tett integrert med treningsplan — hvert action item kan sendes direkte som ukesmal.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Coaching-historikk. Valget avhenger av om siden er et referanseverktoy, en motivasjonsreise eller en aktiv sjekkliste.</p>
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Cards</th><th>2: Timeline</th><th>3: Coach</th><th>4: Focus</th><th>5: Action</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Skannbarhet</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Emosjonell drakraft</td><td>Svak</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Analytisk innsikt</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Handlingsutlosende</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Skalerer til 50+ okter</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Mobil-egnet</td><td>Sterk</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Session Cards</h3>
+      <p>Option 1 er det trygge og skalerbare valget. Reversert kronologi matcher hvordan spilleren tenker ("hva skjedde sist?"), AI-oppsummeringen er forstesiders-innhold og filter-loesningen lar brukeren raskt finne okter per trener eller fokus. Option 2 (Timeline) er sterk for markedsforingsvideoer og onboarding, men for tung som daglig referanse. Option 5 (Action Items) er en sterk kandidat for en egen underfane — ikke erstatning for historikken.</p>
+      <h3>Naar velge hvilket</h3>
+      <ul>
+        <li><strong>Option 1 (Cards):</strong> Default. Fungerer best for de fleste spillere.</li>
+        <li><strong>Option 2 (Timeline):</strong> Onboarding, arsoppsummering, motiverende "din reise"-visning.</li>
+        <li><strong>Option 3 (Coach):</strong> Multi-trener-spillere som Erik (Anders + Markus).</li>
+        <li><strong>Option 4 (Focus):</strong> Som underfane i statistikk eller coach-analyse, ikke selvstendig side.</li>
+        <li><strong>Option 5 (Action):</strong> Som ny side ved siden av historikken — ToDo-varianten.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

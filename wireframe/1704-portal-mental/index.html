@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Game — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Mental Game</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Score Dashboard</button>
+    <button class="tab-btn" data-tab="option-2">2: Journal First</button>
+    <button class="tab-btn" data-tab="option-3">3: Reflection Flow</button>
+    <button class="tab-btn" data-tab="option-4">4: Heatmap History</button>
+    <button class="tab-btn" data-tab="option-5">5: Goals + Habits</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Score Dashboard (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Score Dashboard</span></h2>
+    <p class="option-description">Firedelt mental profil (Focus, Confidence, Commitment, Acceptance) som hovedoversikt. Trendgraf siste 10 runder + AI-innsikt + nylige journal-notater. Spilleren ser mental tilstand på 5 sekunder.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Logg runde<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">Scoren din oppdateres automatisk</div>
+              <button class="wf-sb-cta-btn">Ny registrering</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mental · siste 10 runder</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">7d</span><span class="wf-mtopbar-chip">30d</span><span class="wf-mtopbar-chip">Alle</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Mental Game</div>
+                <h1 class="wf-page-head-h">Din mentale profil</h1>
+                <p class="wf-page-head-sub">4 kjerne-dimensjoner · snitt siste 10 runder · trend stigende</p>
+              </div>
+              <span class="wf-ai-badge">Stigende</span>
+            </section>
+
+            <div class="wf-mscore-grid">
+              <div class="wf-mscore">
+                <div class="wf-mscore-head"><span class="wf-mscore-label">Focus<span class="wf-marker">2</span></span><span class="wf-mscore-dot wf-mscore-dot-hi"></span></div>
+                <div class="wf-mscore-value">7<span class="wf-mscore-value-unit">/10</span></div>
+                <div class="wf-mscore-bar"><div class="wf-mscore-fill" style="width:70%"></div></div>
+                <div class="wf-mscore-trend">+0.8 siste 5 runder</div>
+              </div>
+              <div class="wf-mscore">
+                <div class="wf-mscore-head"><span class="wf-mscore-label">Confidence</span><span class="wf-mscore-dot wf-mscore-dot-md"></span></div>
+                <div class="wf-mscore-value">6<span class="wf-mscore-value-unit">/10</span></div>
+                <div class="wf-mscore-bar"><div class="wf-mscore-fill" style="width:60%"></div></div>
+                <div class="wf-mscore-trend">+0.3 siste 5 runder</div>
+              </div>
+              <div class="wf-mscore">
+                <div class="wf-mscore-head"><span class="wf-mscore-label">Commitment</span><span class="wf-mscore-dot wf-mscore-dot-hi"></span></div>
+                <div class="wf-mscore-value">8<span class="wf-mscore-value-unit">/10</span></div>
+                <div class="wf-mscore-bar"><div class="wf-mscore-fill" style="width:80%"></div></div>
+                <div class="wf-mscore-trend">stabil · høyeste nivå</div>
+              </div>
+              <div class="wf-mscore">
+                <div class="wf-mscore-head"><span class="wf-mscore-label">Acceptance</span><span class="wf-mscore-dot wf-mscore-dot-lo"></span></div>
+                <div class="wf-mscore-value">5<span class="wf-mscore-value-unit">/10</span></div>
+                <div class="wf-mscore-bar"><div class="wf-mscore-fill" style="width:50%"></div></div>
+                <div class="wf-mscore-trend">fokusområde</div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Trend · siste 10 runder<span class="wf-marker">3</span></div>
+                  <span class="wf-ai-badge">Total snitt</span>
+                </div>
+                <div class="wf-trend-chart">
+                  <div class="wf-trend-bar" style="height:48%"></div>
+                  <div class="wf-trend-bar" style="height:52%"></div>
+                  <div class="wf-trend-bar" style="height:45%"></div>
+                  <div class="wf-trend-bar" style="height:58%"></div>
+                  <div class="wf-trend-bar" style="height:62%"></div>
+                  <div class="wf-trend-bar" style="height:56%"></div>
+                  <div class="wf-trend-bar" style="height:68%"></div>
+                  <div class="wf-trend-bar" style="height:72%"></div>
+                  <div class="wf-trend-bar" style="height:70%"></div>
+                  <div class="wf-trend-bar" style="height:78%"></div>
+                </div>
+                <div class="wf-trend-axis"><span>R1</span><span>R2</span><span>R3</span><span>R4</span><span>R5</span><span>R6</span><span>R7</span><span>R8</span><span>R9</span><span>R10</span></div>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">AI-innsikt<span class="wf-marker">4</span></div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI · i dag</div>
+                  <p class="wf-insight-body">"Commitment ligger høyt og stabilt. Acceptance er ditt svakeste ledd — særlig etter bogey. Jobb med pre-shot routine på hull etter feil."</p>
+                </div>
+                <button class="wf-sb-cta-btn" style="margin-top:auto">Se full analyse</button>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Nylige journal-notater<span class="wf-marker">5</span></div>
+                  <button class="wf-c-link">Åpne dagbok →</button>
+                </div>
+                <div class="wf-journal-list">
+                  <div class="wf-journal-entry">
+                    <div class="wf-journal-date">14 APR</div>
+                    <div class="wf-journal-body">
+                      <p>"Mistet fokus på hull 14 etter dbl. Pustet ikke før neste tee."</p>
+                      <div class="wf-journal-tags"><span class="wf-journal-tag">Focus</span><span class="wf-journal-tag">Hull 14</span></div>
+                    </div>
+                  </div>
+                  <div class="wf-journal-entry">
+                    <div class="wf-journal-date">11 APR</div>
+                    <div class="wf-journal-body">
+                      <p>"Bra kontroll på 3-putts. Holdt fast ved rutinen selv under press."</p>
+                      <div class="wf-journal-tags"><span class="wf-journal-tag">Commitment</span><span class="wf-journal-tag">Putt</span></div>
+                    </div>
+                  </div>
+                  <div class="wf-journal-entry">
+                    <div class="wf-journal-date">7 APR</div>
+                    <div class="wf-journal-body">
+                      <p>"Slet med å slippe dårlige slag. Tok med meg feil fra hull 6 hele runden."</p>
+                      <div class="wf-journal-tags"><span class="wf-journal-tag">Acceptance</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Sidebar-CTA:</strong> "Logg runde" som primærhandling — mental data fylles inn ved rundelogging, ikke separat.</li>
+        <li><strong>2 — 4 kjerne-dimensjoner:</strong> Focus, Confidence, Commitment, Acceptance — standard i idrettspsykologi. Bar + fargedot gir rask skanning av nivå (hi/md/lo).</li>
+        <li><strong>3 — Trendgraf:</strong> 10 runder horisontalt. "Stigende" er den viktigste fortellingen — motivasjon for fortsatt logging.</li>
+        <li><strong>4 — AI-innsikt inline:</strong> Peker på svakeste ledd (Acceptance) med konkret aksjon. Kobler data til trening.</li>
+        <li><strong>5 — Journal-snapshot:</strong> 3 siste notater med tagging. Tags kobler notat til dimensjon.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Journal First ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Journal First</span></h2>
+    <p class="option-description">Dagbok som primær inngang. Stor inputboks øverst med scoreinput inline. Spilleren logger tanker FØRST, så kommer data. Passer refleksive spillere som foretrekker narrativ over metrikk.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Dagbok</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">23 notater</div>
+              <div class="wf-sb-cta-desc">5 denne uka · streak 7 dager</div>
+              <button class="wf-sb-cta-btn">Se historikk</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mental dagbok · torsdag 17. april</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">I dag</span><span class="wf-mtopbar-chip">Arkiv</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Dagbok</div>
+                <h1 class="wf-page-head-h">Hvordan var runden i hodet ditt?<span class="wf-marker">1</span></h1>
+                <p class="wf-page-head-sub">Skriv fritt — legg til score etter. Alt er privat.</p>
+              </div>
+              <span class="wf-ai-badge">Privat</span>
+            </section>
+
+            <div class="wf-c">
+              <div class="wf-c-label">Notat · runde 14. april<span class="wf-marker">2</span></div>
+              <div class="wf-journal-input">
+                <textarea class="wf-journal-textarea" placeholder="Skriv hva du tenker. Hva gikk bra? Hva gikk skeis? Hva vil du huske til neste gang?">Hull 1–9 gikk bra, solid rutine. Holdt fokus etter en dårlig drive på hull 4. Hull 14: dbl bogey, mistet fokus, resten av runden preget av irritasjon. Godt skudd inn på 18 for å redde runden. Må jobbe med å slippe feil raskere.</textarea>
+                <div class="wf-journal-inline-scores">
+                  <div class="wf-journal-inline-score">
+                    <div class="wf-journal-inline-label">Focus</div>
+                    <div class="wf-journal-slider">
+                      <span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span>
+                    </div>
+                    <div class="wf-mscore-trend" style="margin-top:6px">7/10</div>
+                  </div>
+                  <div class="wf-journal-inline-score">
+                    <div class="wf-journal-inline-label">Confidence</div>
+                    <div class="wf-journal-slider">
+                      <span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span>
+                    </div>
+                    <div class="wf-mscore-trend" style="margin-top:6px">6/10</div>
+                  </div>
+                  <div class="wf-journal-inline-score">
+                    <div class="wf-journal-inline-label">Commitment</div>
+                    <div class="wf-journal-slider">
+                      <span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span>
+                    </div>
+                    <div class="wf-mscore-trend" style="margin-top:6px">8/10</div>
+                  </div>
+                  <div class="wf-journal-inline-score">
+                    <div class="wf-journal-inline-label">Acceptance</div>
+                    <div class="wf-journal-slider">
+                      <span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot wf-filled"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span><span class="wf-journal-slider-dot"></span>
+                    </div>
+                    <div class="wf-mscore-trend" style="margin-top:6px">5/10</div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:10px">
+                  <button class="wf-sb-cta-btn" style="flex:1">Lagre notat</button>
+                  <button class="wf-flow-btn wf-flow-btn-ghost">Avbryt</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-row"><div class="wf-c-label">Tidligere notater<span class="wf-marker">3</span></div><button class="wf-c-link">Se alle 23 →</button></div>
+              <div class="wf-journal-list">
+                <div class="wf-journal-entry">
+                  <div class="wf-journal-date">11 APR</div>
+                  <div class="wf-journal-body">
+                    <p>"Bra kontroll på 3-putts. Holdt fast ved rutinen selv under press. Følte meg i flyt fra hull 10."</p>
+                    <div class="wf-journal-tags"><span class="wf-journal-tag">Commitment 8</span><span class="wf-journal-tag">Focus 8</span><span class="wf-journal-tag">Putt</span></div>
+                  </div>
+                </div>
+                <div class="wf-journal-entry">
+                  <div class="wf-journal-date">7 APR</div>
+                  <div class="wf-journal-body">
+                    <p>"Slet med å slippe dårlige slag. Tok med meg feil fra hull 6 hele runden. Må ha bedre reset-rutine."</p>
+                    <div class="wf-journal-tags"><span class="wf-journal-tag">Acceptance 4</span><span class="wf-journal-tag">Reset</span></div>
+                  </div>
+                </div>
+                <div class="wf-journal-entry">
+                  <div class="wf-journal-date">4 APR</div>
+                  <div class="wf-journal-body">
+                    <p>"Første runde med ny rutine. Skrev ned mål før hver tee-shot. Funket overraskende bra."</p>
+                    <div class="wf-journal-tags"><span class="wf-journal-tag">Focus 8</span><span class="wf-journal-tag">Rutine</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Tekst først:</strong> Mental erfaring er narrativ. Spør "hvordan var det i hodet?" — ikke "gi en score".</li>
+        <li><strong>2 — Score inline:</strong> Etter fri tekst, inline 4 slidere. Prikker 1–10 gir raskt tap-mønster uten å forstyrre skriveflow.</li>
+        <li><strong>3 — Historikk:</strong> Siste notater lett tilgjengelige for å bygge mønstergjenkjenning.</li>
+        <li>— Styrke: Reflekterende spillere. Svakhet: De som bare vil se tall fort.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Reflection Flow ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Reflection Flow</span></h2>
+    <p class="option-description">Post-runde refleksjon som guided flow. Spørsmål for spørsmål. Steg 1/6: "Hvor fokusert var du?" → 2/6 Confidence → 3/6 Commitment → 4/6 Acceptance → 5/6 fritekst → 6/6 oppsummering. 2 minutter total.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/refleksjon</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Refleksjon pågår</div>
+              <div class="wf-sb-cta-desc">2 av 6 steg · 90 sek igjen</div>
+              <button class="wf-sb-cta-btn">Lagre utkast</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Post-runde refleksjon · Losby 14. april</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Avbryt</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Guided refleksjon<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">Steg 2 av 6 · Confidence</h1>
+                <p class="wf-page-head-sub">Svar ærlig. Ingen sender dette noe sted.</p>
+              </div>
+              <span class="wf-ai-badge">2/6</span>
+            </section>
+
+            <div class="wf-flow-progress">
+              <div class="wf-flow-step wf-done"></div>
+              <div class="wf-flow-step wf-active"></div>
+              <div class="wf-flow-step"></div>
+              <div class="wf-flow-step"></div>
+              <div class="wf-flow-step"></div>
+              <div class="wf-flow-step"></div>
+            </div>
+
+            <div class="wf-flow-card">
+              <div class="wf-flow-eyebrow">Confidence<span class="wf-marker">2</span></div>
+              <h2 class="wf-flow-question">Hvor selvsikker var du før viktige slag?</h2>
+              <p class="wf-flow-sub">Tenk på tee-shots, approaches over 120m, og putts for par. Score 1–10.</p>
+              <div class="wf-flow-scale">
+                <button class="wf-flow-scale-btn">1</button>
+                <button class="wf-flow-scale-btn">2</button>
+                <button class="wf-flow-scale-btn">3</button>
+                <button class="wf-flow-scale-btn">4</button>
+                <button class="wf-flow-scale-btn">5</button>
+                <button class="wf-flow-scale-btn wf-active">6</button>
+                <button class="wf-flow-scale-btn">7</button>
+                <button class="wf-flow-scale-btn">8</button>
+                <button class="wf-flow-scale-btn">9</button>
+                <button class="wf-flow-scale-btn">10</button>
+              </div>
+              <div class="wf-flow-actions">
+                <button class="wf-flow-btn wf-flow-btn-ghost">← Forrige</button>
+                <button class="wf-flow-btn wf-flow-btn-primary">Neste →</button>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-label">Dine tidligere svar<span class="wf-marker">3</span></div>
+              <div class="wf-c-grid3">
+                <div>
+                  <div class="wf-mscore-label">Steg 1 · Focus</div>
+                  <div class="wf-c-value" style="font-size:24px; margin-top:6px">7<span class="wf-mscore-value-unit">/10</span></div>
+                </div>
+                <div>
+                  <div class="wf-mscore-label">Neste · Commitment</div>
+                  <div class="wf-c-sub" style="margin-top:6px">Kommer</div>
+                </div>
+                <div>
+                  <div class="wf-mscore-label">Til slutt · Acceptance</div>
+                  <div class="wf-c-sub" style="margin-top:6px">Kommer</div>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Guided steg-for-steg:</strong> Stort, sentrert. Én ting å tenke på. Reduserer cognitive load etter runde når spiller er sliten.</li>
+        <li><strong>2 — Åpen spørsmålsformulering:</strong> "Hvor selvsikker var du før viktige slag?" — konkret, ikke abstrakt.</li>
+        <li><strong>3 — Progress synlig:</strong> Ser hvor du er + hva som kommer. Motvirker "hvor lang tid tar dette?"-friksjon.</li>
+        <li>— Styrke: Ekstrem tydelighet + lav barriere. Svakhet: 6 steg kan bli kjedelig over tid — må ha "quick log"-modus også.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Heatmap History ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Heatmap History</span></h2>
+    <p class="option-description">Kalender-heatmap som viser mental tilstand per dag (snitt av 4 dimensjoner). Inspirert av GitHub-bidrag. Sesongoversikt 12 uker. Klikk på dag → detaljer.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Streak: 7 dager</div>
+              <div class="wf-sb-cta-desc">Lengste: 14 · start i dag</div>
+              <button class="wf-sb-cta-btn">Logg i dag</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mental historikk · siste 12 uker</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">12 uker</span><span class="wf-mtopbar-chip">26 uker</span><span class="wf-mtopbar-chip">52 uker</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Historikk</div>
+                <h1 class="wf-page-head-h">Din mentale kalender<span class="wf-marker">1</span></h1>
+                <p class="wf-page-head-sub">84 dager · 41 runder logget · snitt 6.4/10</p>
+              </div>
+              <span class="wf-ai-badge">Snitt 6.4</span>
+            </section>
+
+            <div class="wf-c">
+              <div class="wf-c-row">
+                <div class="wf-c-label">Heatmap · siste 12 uker<span class="wf-marker">2</span></div>
+                <span class="wf-c-sub">Mørkere = bedre mental tilstand</span>
+              </div>
+              <div class="wf-heatmap">
+                <div class="wf-heat-cell wf-heat-0"></div><div class="wf-heat-cell wf-heat-1"></div><div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-1"></div><div class="wf-heat-cell wf-heat-0"></div><div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-3"></div>
+                <div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-1"></div><div class="wf-heat-cell wf-heat-0"></div><div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-4"></div><div class="wf-heat-cell wf-heat-3"></div>
+                <div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-1"></div><div class="wf-heat-cell wf-heat-0"></div><div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-4"></div>
+                <div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-4"></div><div class="wf-heat-cell wf-heat-3"></div>
+                <div class="wf-heat-cell wf-heat-1"></div><div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-0"></div><div class="wf-heat-cell wf-heat-1"></div><div class="wf-heat-cell wf-heat-2"></div>
+                <div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-4"></div><div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-2"></div><div class="wf-heat-cell wf-heat-3"></div><div class="wf-heat-cell wf-heat-4"></div>
+              </div>
+              <div class="wf-heatmap-legend">
+                <span>Ingen data</span>
+                <span class="wf-heatmap-legend-box wf-heat-0"></span>
+                <span class="wf-heatmap-legend-box wf-heat-1"></span>
+                <span class="wf-heatmap-legend-box wf-heat-2"></span>
+                <span class="wf-heatmap-legend-box wf-heat-3"></span>
+                <span class="wf-heatmap-legend-box wf-heat-4"></span>
+                <span>10/10</span>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Beste dag<span class="wf-marker">3</span></div>
+                <div class="wf-c-value">9.2</div>
+                <div class="wf-c-sub">Losby · 11. april — "Flow state på bakre 9"</div>
+              </div>
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Verste dag</div>
+                <div class="wf-c-value">3.4</div>
+                <div class="wf-c-sub">Oslo GK · 23. mars — "Mistet fokus etter regn på hull 3"</div>
+              </div>
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Streak</div>
+                <div class="wf-c-value">7d</div>
+                <div class="wf-c-sub">Logget daglig · beste 14</div>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-label">Mønster AI fant<span class="wf-marker">4</span></div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI · denne uka</div>
+                  <p class="wf-insight-body">"Mandager er dine svakeste dager mentalt (snitt 5.1). Du scorer best torsdag–lørdag (snitt 7.2). Vurder mindre intensitet på mandagsrunder."</p>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kalender som narrativ:</strong> 84 dager på ett skjermbilde. Umiddelbar forståelse av konsistens og trender.</li>
+        <li><strong>2 — GitHub-mønster:</strong> Kjent fra utviklere, enkelt å lese. Hover viser dato + score + notat.</li>
+        <li><strong>3 — Beste/verste-dag:</strong> Åpner emosjonell kobling — "husker du 11. april?".</li>
+        <li><strong>4 — Mønster-AI:</strong> Passer sterkt inn i sesong-planlegging. Kobler mental data til kalender og trening.</li>
+        <li>— Styrke: Langsiktig motivasjon. Svakhet: Nye brukere ser blank kalender.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Goals + Habits ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Goals + Habits</span></h2>
+    <p class="option-description">Mentale mål og daglige vaner i én flate. Lang sikt (sesongmål) + kort sikt (daily checklist). Habit-tracker 7 dagers sporing. Passer spillere som motiveres av struktur og gamification.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">3 av 4 i dag</div>
+              <div class="wf-sb-cta-desc">Én vane igjen før dagens streak</div>
+              <button class="wf-sb-cta-btn">Sjekk av siste</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mål &amp; vaner · uke 16</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Uke</span><span class="wf-mtopbar-chip">Måned</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Mental utvikling</div>
+                <h1 class="wf-page-head-h">Mål og daglige vaner<span class="wf-marker">1</span></h1>
+                <p class="wf-page-head-sub">2 aktive sesongmål · 4 daglige vaner · streak 7 dager</p>
+              </div>
+              <span class="wf-ai-badge">7d streak</span>
+            </section>
+
+            <div class="wf-c">
+              <div class="wf-c-row"><div class="wf-c-label">Sesongmål · 2026<span class="wf-marker">2</span></div><button class="wf-c-link">+ Nytt mål</button></div>
+              <div>
+                <div class="wf-goal-item">
+                  <div class="wf-goal-check wf-done"></div>
+                  <div class="wf-goal-body">
+                    <div class="wf-goal-title">Acceptance-score opp fra 5 til 7</div>
+                    <div class="wf-goal-sub">Nåværende snitt: 5.2/10 · mål innen 30.09 · 42% fremgang</div>
+                    <div class="wf-mscore-bar" style="margin-top:6px"><div class="wf-mscore-fill" style="width:42%"></div></div>
+                  </div>
+                  <div class="wf-goal-streak">Aktiv</div>
+                </div>
+                <div class="wf-goal-item">
+                  <div class="wf-goal-check wf-done"></div>
+                  <div class="wf-goal-body">
+                    <div class="wf-goal-title">Pre-shot routine på 100% av tee-shots</div>
+                    <div class="wf-goal-sub">Nåværende: 78% · mål innen 15.06 · 78% fremgang</div>
+                    <div class="wf-mscore-bar" style="margin-top:6px"><div class="wf-mscore-fill" style="width:78%"></div></div>
+                  </div>
+                  <div class="wf-goal-streak">Aktiv</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-row"><div class="wf-c-label">Daglige vaner<span class="wf-marker">3</span></div><span class="wf-ai-badge">Uke 16</span></div>
+              <div>
+                <div class="wf-goal-item">
+                  <div class="wf-goal-check wf-done"></div>
+                  <div class="wf-goal-body">
+                    <div class="wf-goal-title">Mental visualisering · 5 min morgen</div>
+                    <div class="wf-goal-sub">7/7 dager denne uka · streak 14d</div>
+                    <div class="wf-habit-row">
+                      <div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div>
+                    </div>
+                  </div>
+                  <div class="wf-goal-streak">14d</div>
+                </div>
+                <div class="wf-goal-item">
+                  <div class="wf-goal-check wf-done"></div>
+                  <div class="wf-goal-body">
+                    <div class="wf-goal-title">Pusteøvelse · før hver runde</div>
+                    <div class="wf-goal-sub">3/3 runder · streak 7 runder</div>
+                    <div class="wf-habit-row">
+                      <div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell"></div><div class="wf-habit-cell"></div>
+                    </div>
+                  </div>
+                  <div class="wf-goal-streak">7r</div>
+                </div>
+                <div class="wf-goal-item">
+                  <div class="wf-goal-check wf-done"></div>
+                  <div class="wf-goal-body">
+                    <div class="wf-goal-title">Post-runde refleksjon · 2 min</div>
+                    <div class="wf-goal-sub">6/7 dager · streak 12d</div>
+                    <div class="wf-habit-row">
+                      <div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell wf-filled"></div>
+                    </div>
+                  </div>
+                  <div class="wf-goal-streak">12d</div>
+                </div>
+                <div class="wf-goal-item">
+                  <div class="wf-goal-check"></div>
+                  <div class="wf-goal-body">
+                    <div class="wf-goal-title">Søvn 7+ timer</div>
+                    <div class="wf-goal-sub">3/7 dager · må prioriteres</div>
+                    <div class="wf-habit-row">
+                      <div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell"></div><div class="wf-habit-cell"></div><div class="wf-habit-cell wf-filled"></div><div class="wf-habit-cell"></div>
+                    </div>
+                  </div>
+                  <div class="wf-goal-streak">3/7</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-label">AI-forslag<span class="wf-marker">4</span></div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI · basert på vanene dine</div>
+                  <p class="wf-insight-body">"Du er sterk på visualisering og refleksjon. Søvn er svakeste ledd — 3 dårlige netter siste uka korrelerer med Acceptance-score på 4. Legg til 'Skjerm av kl. 22' som ny vane."</p>
+                </div>
+              </div>
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Total fremgang</div>
+                <div class="wf-c-value">76%</div>
+                <div class="wf-c-sub">av alle vaner denne uka</div>
+                <div class="wf-mscore-bar" style="margin-top:auto"><div class="wf-mscore-fill" style="width:76%"></div></div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Mål + vane i samme:</strong> Langsiktig motivasjon + daglig aksjon koblet. Sesongmål er KONSEKVENS av vaner.</li>
+        <li><strong>2 — Progresjonsbar på mål:</strong> Synlig 78% gir "nær mål"-dopamin.</li>
+        <li><strong>3 — Habit-tracker 7 dager:</strong> Små, fylte celler gir rask visuell feedback. Klikk = huk av.</li>
+        <li><strong>4 — AI-kobling:</strong> AI ser på tvers (søvn → Acceptance) og foreslår ny vane. Dette er systemets intelligens.</li>
+        <li>— Styrke: Gamification + struktur. Svakhet: Krever disiplin å sette opp — ikke passivt for alle tiers.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>spilleren forstår mental status, ser trend og kan handle (logge eller trene) på under 10 sekunder</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>5-sek oversikt</th><th>Daglig friksjon</th><th>Kobling til runde</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Score Dashboard</strong></td><td>4 dimensjoner øverst, trend + journal under</td><td>Svært høy</td><td>Lav (passiv)</td><td>Sterk (per runde)</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Journal First</strong></td><td>Skriv først, scor etter. Narrativ primær.</td><td>Medium</td><td>Medium (skriveflyt)</td><td>Sterk (selve loggingen)</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Reflection Flow</strong></td><td>Guided 6-stegs flow post-runde</td><td>Lav (er flow, ikke oversikt)</td><td>Høy (2 min per gang)</td><td>Ekstremt sterk</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>4. Heatmap History</strong></td><td>GitHub-style kalender over mental state</td><td>Medium (krever fortolkning)</td><td>Lav (passiv)</td><td>Medium (aggregert)</td><td>★★★★☆</td></tr>
+        <tr><td><strong>5. Goals + Habits</strong></td><td>Sesongmål + daily checklist + habit-tracker</td><td>Medium</td><td>Høy (daglig interaksjon)</td><td>Medium</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Score Dashboard</h3>
+      <p>Matcher portalens etablerte "stat-kort + bento"-mønster direkte. Spilleren ser de 4 mentale dimensjonene (Focus 7, Confidence 6, Commitment 8, Acceptance 5) øverst, trendgraf siste 10 runder + AI-innsikt midten, journal-snapshot nederst. Passer alle tier-nivåer og kan kombineres med Option 3 (Reflection Flow) som modal ved rundelogging og Option 4 (Heatmap) som sub-tab under "Historikk".</p>
+      <p><strong>Strategisk flow:</strong> Dashboard (Opt 1) = default. Post-runde = Reflection Flow (Opt 3) som modal. Historikk-sub-tab = Heatmap (Opt 4). Goals/Habits (Opt 5) = egen sub-side for Pro/Elite. Journal First (Opt 2) = skrivemodus innen dagbok-fanen. Alle 5 blir deler av samme Mental Game-opplevelse, men Opt 1 er inngangen.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

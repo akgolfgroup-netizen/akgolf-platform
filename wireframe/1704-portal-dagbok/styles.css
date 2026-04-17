@@ -1,0 +1,324 @@
+/* === Wireframe Content CSS (B&W only) — Portal Dagbok === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ PORTAL SHELL ============ */
+.wf-portal-shell {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  min-height: 760px;
+  background: #f5f5f5;
+}
+.wf-sidebar {
+  background: #000;
+  padding: 20px 0 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  border-right: 1px solid #333;
+}
+.wf-sidebar-logo {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: #fff; color: #000;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 13px; letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.wf-sidebar-nav { display: flex; flex-direction: column; gap: 4px; width: 100%; padding: 0 8px; }
+.wf-side-item {
+  color: #999; font-size: 10px; padding: 10px 4px;
+  text-align: center; border-radius: 8px; cursor: pointer;
+  letter-spacing: 0.04em; font-weight: 500;
+}
+.wf-side-item:hover { background: #333; color: #fff; }
+.wf-side-item.wf-active { background: #fff; color: #000; font-weight: 700; }
+.wf-sidebar-user {
+  margin-top: auto; width: 32px; height: 32px; border-radius: 50%;
+  background: #333; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; border: 1px solid #666;
+}
+
+/* ============ MAIN ============ */
+.wf-main {
+  padding: 24px 32px 32px;
+  display: flex; flex-direction: column; gap: 20px; min-width: 0;
+}
+.wf-page-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-bottom: 12px; border-bottom: 1px solid #eee;
+}
+.wf-crumbs { font-size: 11px; color: #999; letter-spacing: 0.04em; margin-bottom: 6px; }
+.wf-page-title { font-size: 24px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.01em; }
+.wf-page-sub { font-size: 13px; color: #666; margin: 6px 0 0; }
+
+/* ============ BUTTONS ============ */
+.wf-btn {
+  padding: 9px 18px; border: 1px solid #000; border-radius: 999px;
+  background: #fff; color: #000; font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: background 0.2s;
+}
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-secondary { background: #fff; color: #333; border-color: #ccc; }
+.wf-btn-secondary:hover { background: #f5f5f5; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #666; }
+.wf-btn-ghost:hover { background: #eee; color: #000; }
+.wf-btn-small { padding: 6px 12px; font-size: 11px; }
+.wf-btn-block { width: 100%; }
+.wf-btn-wide { padding: 13px 28px; font-size: 14px; }
+
+/* ============ GENERIC CARD ============ */
+.wf-card {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px;
+}
+.wf-card-label {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #999; font-weight: 700; margin-bottom: 8px;
+}
+.wf-card-title { font-size: 16px; font-weight: 700; color: #000; margin: 0 0 12px; }
+
+/* ============ OPTION 1 — STREAK HUB ============ */
+.wf-dagbok-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 16px;
+}
+.wf-streak-hero {
+  grid-column: span 1;
+  background: #000; color: #fff;
+  border-radius: 14px; padding: 24px;
+  display: flex; flex-direction: column; gap: 10px;
+  position: relative;
+}
+.wf-streak-hero .wf-card-label { color: #999; }
+.wf-streak-big { font-size: 64px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; }
+.wf-streak-unit { font-size: 13px; color: #999; font-weight: 500; margin-top: 4px; }
+.wf-streak-meta {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  border-top: 1px solid #333; padding-top: 14px; margin-top: 8px;
+}
+.wf-streak-meta-row .wf-sm { font-size: 10px; color: #999; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+.wf-streak-meta-row .wf-lg { font-size: 20px; color: #fff; font-weight: 800; }
+
+.wf-plan-ring-card {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.wf-ring {
+  width: 140px; height: 140px; margin: 0 auto;
+  position: relative;
+}
+.wf-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.wf-ring-track { stroke: #eee; fill: none; stroke-width: 10; }
+.wf-ring-fill { stroke: #000; fill: none; stroke-width: 10; stroke-linecap: round; }
+.wf-ring-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.wf-ring-big { font-size: 28px; font-weight: 900; color: #000; line-height: 1; }
+.wf-ring-sub { font-size: 10px; color: #999; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-top: 4px; }
+.wf-plan-note { font-size: 12px; color: #666; text-align: center; }
+
+.wf-last-okt { display: flex; flex-direction: column; gap: 10px; }
+.wf-last-title { font-size: 15px; font-weight: 700; color: #000; margin: 0; }
+.wf-last-meta { font-size: 12px; color: #666; }
+.wf-tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.wf-tag {
+  padding: 4px 10px; border: 1px solid #ccc; border-radius: 999px;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #333; font-weight: 700; background: #fff;
+}
+.wf-tag-solid { background: #000; color: #fff; border-color: #000; }
+
+.wf-log-list {
+  display: flex; flex-direction: column; gap: 0;
+}
+.wf-log-row {
+  display: grid; grid-template-columns: 72px 1fr auto;
+  gap: 14px; align-items: center;
+  padding: 14px 0; border-bottom: 1px solid #eee;
+}
+.wf-log-row:last-child { border-bottom: none; }
+.wf-log-date { font-size: 11px; color: #999; letter-spacing: 0.06em; font-weight: 600; }
+.wf-log-body .wf-log-ttl { font-size: 14px; font-weight: 700; color: #000; margin: 0 0 3px; }
+.wf-log-body .wf-log-sub { font-size: 12px; color: #666; }
+.wf-log-dur { font-size: 12px; color: #333; font-weight: 700; }
+.wf-log-list-section { grid-column: span 3; }
+.wf-log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+
+.wf-log-cta {
+  padding: 9px 14px; border-radius: 999px;
+  background: #fff; border: 1px dashed #999; color: #333;
+  font-size: 12px; cursor: pointer; font-weight: 500;
+}
+
+/* ============ OPTION 2 — TIMELINE JOURNAL ============ */
+.wf-timeline-wrap { display: grid; grid-template-columns: 200px 1fr; gap: 24px; }
+.wf-timeline-aside {
+  display: flex; flex-direction: column; gap: 16px;
+  padding: 16px; background: #fff; border: 1px solid #eee; border-radius: 14px;
+  align-self: flex-start; position: sticky; top: 16px;
+}
+.wf-filter-group { display: flex; flex-direction: column; gap: 6px; }
+.wf-filter-label {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #999; font-weight: 700;
+}
+.wf-filter-item {
+  font-size: 12px; color: #333; padding: 6px 10px; border-radius: 8px; cursor: pointer;
+}
+.wf-filter-item:hover { background: #f5f5f5; }
+.wf-filter-item.wf-active { background: #000; color: #fff; font-weight: 600; }
+
+.wf-timeline {
+  position: relative;
+  padding-left: 32px;
+}
+.wf-timeline::before {
+  content: ''; position: absolute; left: 10px; top: 6px; bottom: 6px;
+  width: 2px; background: #eee;
+}
+.wf-tl-entry {
+  position: relative; margin-bottom: 18px;
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 16px 20px;
+}
+.wf-tl-entry::before {
+  content: ''; position: absolute; left: -26px; top: 22px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; border: 2px solid #000;
+}
+.wf-tl-entry.wf-tl-pr::before { background: #000; }
+.wf-tl-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+}
+.wf-tl-date { font-size: 11px; color: #999; letter-spacing: 0.06em; font-weight: 600; }
+.wf-tl-title { font-size: 15px; font-weight: 700; color: #000; margin: 0 0 4px; }
+.wf-tl-meta { font-size: 12px; color: #666; margin-bottom: 10px; }
+.wf-tl-lmpr {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  padding: 10px; background: #f5f5f5; border-radius: 10px; margin-top: 10px;
+}
+.wf-lmpr-block .wf-lmpr-lbl {
+  font-size: 9px; color: #999; letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 700; margin-bottom: 4px;
+}
+.wf-lmpr-block .wf-lmpr-val { font-size: 12px; color: #000; font-weight: 600; }
+
+/* ============ OPTION 3 — QUICK LOG ============ */
+.wf-quicklog-hero {
+  background: #000; color: #fff;
+  border-radius: 18px; padding: 40px 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  text-align: center;
+}
+.wf-ql-label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #999; font-weight: 700; }
+.wf-ql-title { font-size: 40px; font-weight: 900; margin: 0; letter-spacing: -0.025em; }
+.wf-ql-sub { font-size: 14px; color: #ccc; max-width: 480px; margin: 0; }
+.wf-ql-btn {
+  padding: 16px 40px; border-radius: 999px; background: #fff; color: #000;
+  font-size: 16px; font-weight: 700; border: none; cursor: pointer;
+  letter-spacing: -0.01em;
+}
+.wf-ql-chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.wf-ql-chip {
+  padding: 8px 14px; background: transparent; border: 1px solid #666;
+  border-radius: 999px; color: #ccc; font-size: 12px; cursor: pointer;
+}
+.wf-ql-chip:hover { border-color: #fff; color: #fff; }
+
+.wf-quicklog-sub-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px;
+}
+.wf-qs-card { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; }
+.wf-qs-big { font-size: 32px; font-weight: 900; color: #000; line-height: 1; }
+.wf-qs-lbl { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #999; font-weight: 700; margin-top: 6px; }
+.wf-qs-recent {
+  margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee;
+  font-size: 12px; color: #666; line-height: 1.5;
+}
+.wf-qs-recent strong { color: #000; font-weight: 700; }
+
+/* ============ OPTION 4 — CALENDAR HEATMAP ============ */
+.wf-heatmap-card {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 24px;
+}
+.wf-heatmap-head {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 20px;
+}
+.wf-heatmap-title { font-size: 18px; font-weight: 800; color: #000; margin: 0; }
+.wf-heatmap-legend { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #666; }
+.wf-legend-swatch { display: flex; gap: 2px; }
+.wf-legend-swatch span { width: 12px; height: 12px; border-radius: 2px; border: 1px solid #eee; }
+
+.wf-heatmap-grid {
+  display: grid;
+  grid-template-columns: 30px repeat(12, 1fr);
+  gap: 4px;
+}
+.wf-hm-wkday { font-size: 10px; color: #999; display: flex; align-items: center; font-weight: 600; }
+.wf-hm-week { display: flex; flex-direction: column; gap: 4px; }
+.wf-hm-cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 3px; border: 1px solid #eee;
+  background: #fff;
+}
+.wf-hm-cell.l1 { background: #eee; }
+.wf-hm-cell.l2 { background: #ccc; border-color: #ccc; }
+.wf-hm-cell.l3 { background: #666; border-color: #666; }
+.wf-hm-cell.l4 { background: #000; border-color: #000; }
+.wf-hm-month-labels {
+  display: grid; grid-template-columns: 30px repeat(12, 1fr);
+  gap: 4px; margin-bottom: 6px;
+  font-size: 10px; color: #999; letter-spacing: 0.06em; font-weight: 600;
+  text-transform: uppercase;
+}
+
+.wf-hm-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;
+}
+.wf-hm-stat .wf-hm-big { font-size: 22px; font-weight: 900; color: #000; line-height: 1; }
+.wf-hm-stat .wf-hm-lbl { font-size: 11px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-top: 4px; }
+
+/* ============ OPTION 5 — ANALYTICS MODE ============ */
+.wf-analytics-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.wf-analytics-grid .wf-wide { grid-column: span 2; }
+.wf-bar-row {
+  display: grid; grid-template-columns: 90px 1fr 40px;
+  gap: 12px; align-items: center;
+  padding: 10px 0;
+}
+.wf-bar-row + .wf-bar-row { border-top: 1px solid #f5f5f5; }
+.wf-bar-label { font-size: 12px; color: #333; font-weight: 600; }
+.wf-bar-track { height: 8px; background: #eee; border-radius: 999px; overflow: hidden; }
+.wf-bar-fill { height: 100%; background: #000; border-radius: 999px; }
+.wf-bar-val { font-size: 12px; color: #000; font-weight: 700; text-align: right; }
+
+.wf-donut-card { display: flex; gap: 20px; align-items: center; }
+.wf-donut { width: 160px; height: 160px; flex-shrink: 0; position: relative; }
+.wf-donut svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.wf-donut-legend { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.wf-donut-item { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; font-size: 12px; }
+.wf-donut-swatch { width: 10px; height: 10px; border-radius: 2px; }
+.wf-donut-val { font-weight: 700; color: #000; }
+
+.wf-summary-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.wf-ss-card {
+  background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px;
+}
+.wf-ss-big { font-size: 24px; font-weight: 900; color: #000; line-height: 1; }
+.wf-ss-lbl { font-size: 10px; color: #999; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; margin-top: 4px; }
+.wf-ss-trend { font-size: 11px; color: #666; margin-top: 6px; }
+
+/* ============ SUMMARY TABLE ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

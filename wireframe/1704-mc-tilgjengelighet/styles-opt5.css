@@ -1,0 +1,62 @@
+/* === Option 5: Smart auto-fyll (AI) — Clean + Polished === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* =============== CLEAN =============== */
+#frame-opt5.clean .browser-content { padding: 0; background: #f5f5f7; font-family: 'Inter', -apple-system, sans-serif; }
+#frame-opt5.clean .wf-mc-topbar { background: #0a1f18; color: #fff; padding: 12px 20px; border-radius: 0; }
+#frame-opt5.clean .wf-mc-logo { color: #fff; font-weight: 700; letter-spacing: -0.015em; font-size: 13px; }
+#frame-opt5.clean .wf-mc-tab { color: rgba(255,255,255,0.55); font-size: 13px; }
+#frame-opt5.clean .wf-mc-tab-active { color: #d1f843; border-bottom-color: #d1f843; font-weight: 600; }
+#frame-opt5.clean .wf-mc-profile { background: rgba(255,255,255,0.1); color: #fff; font-size: 11px; }
+#frame-opt5.clean .wf-mc-body { background: #f5f5f7; padding: 20px; border-radius: 0; }
+#frame-opt5.clean .wf-sub-head h3 { font-size: 18px; font-weight: 700; color: #0a1f18; letter-spacing: -0.015em; }
+#frame-opt5.clean .wf-sub-head-meta { color: #7a8c85; font-size: 12px; }
+#frame-opt5.clean .wf-btn { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: #324d45; border: 1px solid #d5dfdb; border-radius: 8px; padding: 6px 12px; background: #fff; }
+#frame-opt5.clean .wf-btn-primary { background: #af52de; color: #fff; border-color: #af52de; }
+#frame-opt5.clean .wf-ai-banner { background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 10px; color: #6b21a8; font-size: 12px; font-weight: 500; padding: 12px 14px; }
+#frame-opt5.clean .wf-card { background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); padding: 16px; }
+#frame-opt5.clean .wf-card-head { font-size: 13px; font-weight: 600; color: #0a1f18; }
+#frame-opt5.clean .wf-card-head span:last-child { color: #7a8c85; font-size: 11px; font-weight: 400; }
+#frame-opt5.clean .wf-suggestion { background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); padding: 16px; position: relative; }
+#frame-opt5.clean .wf-suggestion-title { font-size: 13px; font-weight: 600; color: #0a1f18; letter-spacing: -0.01em; }
+#frame-opt5.clean .wf-suggestion-conf { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #af52de; font-weight: 700; letter-spacing: 0.04em; }
+#frame-opt5.clean .wf-suggestion-body { font-size: 12px; color: #5a6e66; line-height: 1.55; }
+#frame-opt5.clean .wf-list li { color: #324d45; font-size: 12px; border-bottom-color: #ecf0ef; }
+#frame-opt5.clean .wf-list li span:last-child { color: #0a1f18; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+
+/* =============== POLISHED =============== */
+#frame-opt5.polished { font-family: 'Inter', -apple-system, sans-serif; }
+#frame-opt5.polished .browser-content { padding: 0; background: #f5f5f7; }
+#frame-opt5.polished .wf-mc-topbar { background: linear-gradient(180deg, #0a1f18 0%, #0d2820 100%); color: #fff; padding: 14px 24px; border-radius: 0; border-bottom: 1px solid rgba(175,82,222,0.1); box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 16px rgba(0,0,0,0.2); }
+#frame-opt5.polished .wf-mc-logo { color: #fff; font-weight: 700; font-size: 13px; letter-spacing: -0.015em; }
+#frame-opt5.polished .wf-mc-tab { color: rgba(255,255,255,0.55); font-size: 13px; transition: color 200ms cubic-bezier(0.4,0,0.2,1); }
+#frame-opt5.polished .wf-mc-tab:hover { color: rgba(255,255,255,0.8); }
+#frame-opt5.polished .wf-mc-tab-active { color: #d1f843; border-bottom-color: #d1f843; font-weight: 600; text-shadow: 0 0 20px rgba(209,248,67,0.4); }
+#frame-opt5.polished .wf-mc-profile { background: rgba(175,82,222,0.15); border: 1px solid rgba(175,82,222,0.3); color: #d1a7f0; font-size: 11px; font-weight: 600; }
+#frame-opt5.polished .wf-mc-body { background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(175,82,222,0.04) 0%, transparent 60%), #f5f5f7; padding: 24px; min-height: 560px; }
+#frame-opt5.polished .wf-sub-head h3 { font-size: 20px; font-weight: 700; color: #0a1f18; letter-spacing: -0.02em; margin-bottom: 2px; }
+#frame-opt5.polished .wf-sub-head-meta { color: #7a8c85; font-size: 12px; }
+#frame-opt5.polished .wf-btn { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: #324d45; border: 1px solid rgba(0,0,0,0.08); border-radius: 20px; padding: 7px 14px; background: #fff; transition: all 200ms cubic-bezier(0.4,0,0.2,1); box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+#frame-opt5.polished .wf-btn:hover { border-color: rgba(0,0,0,0.12); transform: translateY(-1px); }
+#frame-opt5.polished .wf-btn-primary { background: linear-gradient(180deg, #af52de 0%, #9b3fd0 100%); color: #fff; border-color: #af52de; box-shadow: 0 1px 3px rgba(175,82,222,0.3), 0 4px 12px rgba(175,82,222,0.15); }
+#frame-opt5.polished .wf-ai-banner { background: linear-gradient(180deg, #faf5ff 0%, #f3e9ff 100%); border: 1px solid rgba(175,82,222,0.2); border-radius: 12px; color: #6b21a8; font-size: 12px; font-weight: 500; padding: 14px 16px; box-shadow: 0 1px 3px rgba(175,82,222,0.06), inset 0 0 30px rgba(175,82,222,0.04); position: relative; }
+#frame-opt5.polished .wf-ai-banner::before { content: ''; position: absolute; top: 0; left: 16px; right: 16px; height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(175,82,222,0.5) 50%, transparent 100%); }
+#frame-opt5.polished .wf-card { background: #fff; border: none; border-radius: 16px; box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03); padding: 18px; position: relative; }
+#frame-opt5.polished .wf-card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.01) 100%); pointer-events: none; }
+#frame-opt5.polished .wf-card-head { font-size: 13px; font-weight: 600; color: #0a1f18; letter-spacing: -0.01em; }
+#frame-opt5.polished .wf-card-head span:last-child { color: #7a8c85; font-size: 11px; font-weight: 400; font-family: 'JetBrains Mono', monospace; }
+#frame-opt5.polished .wf-suggestion { background: #fff; border: none; border-radius: 14px; box-shadow: 0 0 0 1px rgba(175,82,222,0.08), 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(175,82,222,0.04); padding: 18px; position: relative; transition: all 200ms cubic-bezier(0.4,0,0.2,1); }
+#frame-opt5.polished .wf-suggestion:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(175,82,222,0.15), 0 4px 12px rgba(175,82,222,0.08); }
+#frame-opt5.polished .wf-suggestion::before { content: ''; position: absolute; top: 0; left: 18px; right: 18px; height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(175,82,222,0.3) 50%, transparent 100%); }
+#frame-opt5.polished .wf-suggestion-title { font-size: 13px; font-weight: 700; color: #0a1f18; letter-spacing: -0.015em; }
+#frame-opt5.polished .wf-suggestion-conf { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #6b21a8; font-weight: 700; letter-spacing: 0.06em; background: rgba(175,82,222,0.08); padding: 3px 8px; border-radius: 6px; }
+#frame-opt5.polished .wf-suggestion-body { font-size: 12px; color: #5a6e66; line-height: 1.6; }
+#frame-opt5.polished .wf-list li { color: #324d45; font-size: 12px; border-bottom: 1px solid rgba(0,0,0,0.04); padding: 10px 0; font-weight: 500; }
+#frame-opt5.polished .wf-list li span:last-child { color: #0a1f18; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: -0.01em; }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt5.polished *, #frame-opt5.clean * { transition: none !important; animation: none !important; }
+}
+
+/* Hide generating badges — Phase 2 complete */
+#frame-opt5 .sub-tab-badge { display: none; }

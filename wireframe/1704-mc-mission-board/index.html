@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission Board — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Mission Board</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Real-time Hub</button>
+    <button class="tab-btn" data-tab="option-2">2: Focus Mode</button>
+    <button class="tab-btn" data-tab="option-3">3: Team View</button>
+    <button class="tab-btn" data-tab="option-4">4: Metrics Wall</button>
+    <button class="tab-btn" data-tab="option-5">5: Timeline Feed</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: REAL-TIME HUB ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Real-time Hub</span></h2>
+    <p class="option-description">Live KPI-strip med sparklines, 30d area-chart for bookinger, ukesmåls-ring, dagens schedule og alerts. Auto-refresh hvert 5. min. SAFE — standard admin mission control.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/mission-board</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab mc-tab-active">Mission Board</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-refresh-pill"><span class="mc-refresh-dot"></span>Auto · 5 min</span>
+              <span class="mc-search">Søk · ⌘K</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-subheader">
+            <div>
+              <h2 class="mc-subhead-title">Mission Board<span class="wf-marker">1</span></h2>
+              <div class="mc-subhead-meta">Fredag 17. apr · Oppdatert for 42 sek siden · Neste refresh om 4:18</div>
+            </div>
+            <div class="mc-subhead-actions">
+              <button class="mc-cta-ghost mc-cta">Ukerapport</button>
+              <button class="mc-cta">Ny booking</button>
+            </div>
+          </section>
+
+          <section class="mc-kpi-strip">
+            <div class="mc-kpi-card">
+              <div class="mc-kpi-label">ØKTER DENNE UKE</div>
+              <div class="mc-kpi-val">17 <span class="mc-wall-unit">/ 20</span></div>
+              <svg class="mc-kpi-spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline class="mc-kpi-spark-line" points="0,14 14,12 28,10 42,8 56,11 70,7 84,5 100,4"/></svg>
+              <div class="mc-kpi-sub"><span class="mc-kpi-delta-pos">85%</span> mot ukemål</div>
+            </div>
+            <div class="mc-kpi-card">
+              <div class="mc-kpi-label">AKTIVE ELEVER</div>
+              <div class="mc-kpi-val">42</div>
+              <svg class="mc-kpi-spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline class="mc-kpi-spark-line" points="0,16 14,14 28,13 42,10 56,9 70,8 84,7 100,5"/></svg>
+              <div class="mc-kpi-sub"><span class="mc-kpi-delta-pos">+3</span> siste 7 dager</div>
+            </div>
+            <div class="mc-kpi-card">
+              <div class="mc-kpi-label">VENTENDE HANDLINGER</div>
+              <div class="mc-kpi-val">3</div>
+              <svg class="mc-kpi-spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline class="mc-kpi-spark-line" points="0,8 14,6 28,10 42,4 56,8 70,6 84,4 100,6"/></svg>
+              <div class="mc-kpi-sub">krever godkjenning</div>
+            </div>
+            <div class="mc-kpi-card">
+              <div class="mc-kpi-label">MTD INNTEKT</div>
+              <div class="mc-kpi-val">187 400</div>
+              <svg class="mc-kpi-spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline class="mc-kpi-spark-line" points="0,17 14,15 28,12 42,11 56,9 70,7 84,6 100,4"/></svg>
+              <div class="mc-kpi-sub">kr · <span class="mc-kpi-delta-pos">+12%</span> vs budsjett</div>
+            </div>
+            <div class="mc-kpi-card">
+              <div class="mc-kpi-label">BELEGG SIMULATOR</div>
+              <div class="mc-kpi-val">68<span class="mc-wall-unit">%</span></div>
+              <svg class="mc-kpi-spark" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline class="mc-kpi-spark-line" points="0,12 14,10 28,8 42,9 56,6 70,8 84,5 100,6"/></svg>
+              <div class="mc-kpi-sub">mål: 75%</div>
+            </div>
+          </section>
+
+          <div class="mc-body">
+            <div class="mc-card mc-span-8">
+              <div class="mc-card-head">
+                <h3 class="mc-card-title">Bookinger siste 30 dager<span class="wf-marker">2</span></h3>
+                <span class="mc-card-meta">148 levert · 6 ventende · 2 no-show</span>
+              </div>
+              <div class="mc-area-legend">
+                <span><span class="mc-area-legend-dot"></span>Personlig coaching</span>
+                <span><span class="mc-area-legend-dot" style="background:#999;"></span>Gruppe / Junior</span>
+              </div>
+              <div class="mc-area-chart">
+                <svg viewBox="0 0 600 140" preserveAspectRatio="none">
+                  <line class="mc-area-grid" x1="0" y1="35" x2="600" y2="35"/>
+                  <line class="mc-area-grid" x1="0" y1="70" x2="600" y2="70"/>
+                  <line class="mc-area-grid" x1="0" y1="105" x2="600" y2="105"/>
+                  <path class="mc-area-fill" d="M0,110 L20,100 L40,95 L60,105 L80,88 L100,80 L120,92 L140,75 L160,68 L180,70 L200,60 L220,65 L240,55 L260,50 L280,58 L300,45 L320,48 L340,40 L360,50 L380,38 L400,42 L420,35 L440,45 L460,32 L480,38 L500,30 L520,35 L540,28 L560,32 L580,25 L600,30 L600,140 L0,140 Z"/>
+                  <polyline class="mc-area-line" points="0,110 20,100 40,95 60,105 80,88 100,80 120,92 140,75 160,68 180,70 200,60 220,65 240,55 260,50 280,58 300,45 320,48 340,40 360,50 380,38 400,42 420,35 440,45 460,32 480,38 500,30 520,35 540,28 560,32 580,25 600,30"/>
+                  <circle class="mc-area-dot" cx="600" cy="30" r="3"/>
+                  <text class="mc-area-axis" x="5" y="130">18. mar</text>
+                  <text class="mc-area-axis" x="295" y="130">3. apr</text>
+                  <text class="mc-area-axis" x="560" y="130">17. apr</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="mc-card mc-span-4">
+              <div class="mc-card-head">
+                <h3 class="mc-card-title">Ukemål<span class="wf-marker">3</span></h3>
+                <span class="mc-card-meta">20 økter</span>
+              </div>
+              <div class="mc-ring-wrap">
+                <svg class="mc-ring" viewBox="0 0 110 110">
+                  <circle class="mc-ring-track" cx="55" cy="55" r="46"/>
+                  <circle class="mc-ring-fill" cx="55" cy="55" r="46" stroke-dasharray="289" stroke-dashoffset="43" transform="rotate(-90 55 55)"/>
+                  <text class="mc-ring-center" x="55" y="58">85%</text>
+                  <text class="mc-ring-center-sub" x="55" y="74">OPPNÅDD</text>
+                </svg>
+                <div class="mc-ring-stats">
+                  <div class="mc-ring-stat-row"><span>Levert</span><strong>17</strong></div>
+                  <div class="mc-ring-stat-row"><span>Planlagt</span><strong>4</strong></div>
+                  <div class="mc-ring-stat-row"><span>Kansellert</span><strong>1</strong></div>
+                  <div class="mc-ring-stat-row"><span>Gjenstår</span><strong>3</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-card mc-span-7">
+              <div class="mc-card-head">
+                <h3 class="mc-card-title">Dagens schedule<span class="wf-marker">4</span></h3>
+                <span class="mc-card-meta">5 økter · 4t 20min</span>
+              </div>
+              <div class="mc-schedule">
+                <div class="mc-sched-row">
+                  <div class="mc-sched-time">08:00</div>
+                  <div><div class="mc-sched-name">Erik Hansen · Performance 20</div><div class="mc-sched-sub">Anders · Sim 3 · HCP 14</div></div>
+                  <span class="mc-sched-badge">Ferdig</span>
+                </div>
+                <div class="mc-sched-row mc-sched-row-now">
+                  <div class="mc-sched-time">09:00</div>
+                  <div><div class="mc-sched-name">Nora Torp · Flex 20</div><div class="mc-sched-sub">Anders · Sim 1 · fokus: putting</div></div>
+                  <span class="mc-sched-badge">Pågår</span>
+                </div>
+                <div class="mc-sched-row">
+                  <div class="mc-sched-time">10:30</div>
+                  <div><div class="mc-sched-name">Lars Berg · Express Pro</div><div class="mc-sched-sub">Markus · Sim 2</div></div>
+                  <span class="mc-sched-badge">Neste</span>
+                </div>
+                <div class="mc-sched-row">
+                  <div class="mc-sched-time">14:00</div>
+                  <div><div class="mc-sched-name">Junior 14+ gruppe (6)</div><div class="mc-sched-sub">Anders · Utendørs · puttekonkurranse</div></div>
+                  <span class="mc-sched-badge">Planlagt</span>
+                </div>
+                <div class="mc-sched-row">
+                  <div class="mc-sched-time">16:30</div>
+                  <div><div class="mc-sched-name">First Tee kurs (8)</div><div class="mc-sched-sub">Markus · Sim 1+2</div></div>
+                  <span class="mc-sched-badge">Planlagt</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-card mc-span-5">
+              <div class="mc-card-head">
+                <h3 class="mc-card-title">Alerts<span class="wf-marker">5</span></h3>
+                <span class="mc-card-meta">3 handlinger</span>
+              </div>
+              <div class="mc-alert-list">
+                <div class="mc-alert">
+                  <div class="mc-alert-icon mc-alert-icon-warn">!</div>
+                  <div class="mc-alert-body">
+                    <div class="mc-alert-title">Reschedule: Erik Hansen</div>
+                    <div class="mc-alert-sub">Ba om ny tid — fra tirs 10:00 til ?</div>
+                  </div>
+                  <div class="mc-alert-time">2 min</div>
+                </div>
+                <div class="mc-alert">
+                  <div class="mc-alert-icon mc-alert-icon-warn">!</div>
+                  <div class="mc-alert-body">
+                    <div class="mc-alert-title">Ny booking venter: Nora Torp</div>
+                    <div class="mc-alert-sub">Performance-abo · mangler slot-tildeling</div>
+                  </div>
+                  <div class="mc-alert-time">18 min</div>
+                </div>
+                <div class="mc-alert">
+                  <div class="mc-alert-icon mc-alert-icon-warn">!</div>
+                  <div class="mc-alert-body">
+                    <div class="mc-alert-title">Avbestilling: Lars Berg</div>
+                    <div class="mc-alert-sub">Duo 50 · innenfor frist · refunder</div>
+                  </div>
+                  <div class="mc-alert-time">1 t</div>
+                </div>
+                <div class="mc-alert">
+                  <div class="mc-alert-icon mc-alert-icon-info">i</div>
+                  <div class="mc-alert-body">
+                    <div class="mc-alert-title">Ukerapport sendt</div>
+                    <div class="mc-alert-sub">Sammendrag for uke 16 · 17/20 økter, 42 aktive</div>
+                  </div>
+                  <div class="mc-alert-time">mandag</div>
+                </div>
+              </div>
+              <div class="mc-card-foot">Se alle alerts →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>1 — KPI-strip med sparkline i hvert kort: umiddelbar trend-lesing uten klikk.</li>
+        <li>2 — Area-chart viser bookinger siste 30d, stablet for coaching vs gruppe. Siste punkt highlighted.</li>
+        <li>3 — Ring-chart visualiserer ukemål: 17 av 20 (85%). Stats-liste til høyre fylder ut detaljer.</li>
+        <li>4 — Dagens schedule med "Pågår"-markering (venstre kantstripe) og rolle-badge. 5 økter, komprimert.</li>
+        <li>5 — Alerts er auto-generert fra reschedules, nye bookinger, avbestillinger. Ukerapport automatisk hver mandag.</li>
+        <li>Auto-refresh hvert 5. min — pill i topbar viser neste refresh. Synlig puls-dot.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: FOCUS MODE ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Focus Mode</span></h2>
+    <p class="option-description">Dagens 3–5 viktigste oppgaver stort og tydelig. Ingen KPI-strip, ingen grafer — bare "hva må jeg gjøre nå". Hero-greeting + nummerert task-liste.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/mission-board</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab mc-tab-active">Mission Board</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-refresh-pill"><span class="mc-refresh-dot"></span>Auto · 5 min</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-focus-hero">
+            <div class="mc-focus-label">Fredag 17. april</div>
+            <h2 class="mc-focus-title">God morgen, Anders.<br>3 viktigste ting i dag.</h2>
+            <div class="mc-focus-sub">5 økter totalt · neste økt 09:00 · 17/20 mot ukemål (85%)</div>
+          </section>
+
+          <div class="mc-focus-list">
+            <div class="mc-focus-task mc-focus-task-primary">
+              <div class="mc-focus-task-num">01</div>
+              <div>
+                <div class="mc-focus-task-title">Godkjenn reschedule — Erik Hansen</div>
+                <div class="mc-focus-task-sub">Ba om å flytte økten fra tirs 10:00 til onsdag morgen. Gi svar før lunsj.</div>
+                <div class="mc-focus-task-meta">Venter · 2 min siden</div>
+              </div>
+              <div class="mc-focus-task-action">
+                <span class="mc-focus-tag">Handling</span>
+                <span class="mc-focus-eta">Neste opp</span>
+              </div>
+            </div>
+
+            <div class="mc-focus-task">
+              <div class="mc-focus-task-num">02</div>
+              <div>
+                <div class="mc-focus-task-title">Tildel slot — Nora Torp Performance</div>
+                <div class="mc-focus-task-sub">Ny booking mangler simulator-tildeling. Sim 1 er ledig 10:00.</div>
+                <div class="mc-focus-task-meta">Venter · 18 min siden</div>
+              </div>
+              <div class="mc-focus-task-action">
+                <span class="mc-focus-tag">Handling</span>
+                <span class="mc-focus-eta">~ 5 min</span>
+              </div>
+            </div>
+
+            <div class="mc-focus-task">
+              <div class="mc-focus-task-num">03</div>
+              <div>
+                <div class="mc-focus-task-title">Forbered Junior 14+ gruppe kl. 14:00</div>
+                <div class="mc-focus-task-sub">Puttekonkurranse utendørs, 6 elever. Sjekk materiell og baneplass.</div>
+                <div class="mc-focus-task-meta">Planlegging · før 13:45</div>
+              </div>
+              <div class="mc-focus-task-action">
+                <span class="mc-focus-tag">Fokus</span>
+                <span class="mc-focus-eta">4t igjen</span>
+              </div>
+            </div>
+
+            <div class="mc-focus-task">
+              <div class="mc-focus-task-num mc-focus-task-num-muted">04</div>
+              <div>
+                <div class="mc-focus-task-title">Refunder Lars Berg — Duo 50</div>
+                <div class="mc-focus-task-sub">Avbestilling innenfor frist. Kan kjøres automatisk i Stripe.</div>
+                <div class="mc-focus-task-meta">Lavprioritet · ikke hastverk</div>
+              </div>
+              <div class="mc-focus-task-action">
+                <span class="mc-focus-tag">Admin</span>
+                <span class="mc-focus-eta">~ 2 min</span>
+              </div>
+            </div>
+
+            <div class="mc-focus-task">
+              <div class="mc-focus-task-num mc-focus-task-num-muted">05</div>
+              <div>
+                <div class="mc-focus-task-title">Skriv kort oppdatering til Erik etter økten</div>
+                <div class="mc-focus-task-sub">Approach var fokus i dag — noter progresjon i spillerprofil.</div>
+                <div class="mc-focus-task-meta">Etter 08:20</div>
+              </div>
+              <div class="mc-focus-task-action">
+                <span class="mc-focus-tag">Coaching</span>
+                <span class="mc-focus-eta">Etterarbeid</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Én nummerert liste — dagens 3–5 viktigste. Ingen KPI, ingen graf, ingen støy.</li>
+        <li>Task #1 visuelt løftet: tykkere kant, grå bakgrunn, "Neste opp" ETA-label.</li>
+        <li>ETA + meta-tag (Handling / Fokus / Admin / Coaching) gir kontekst uten å åpne.</li>
+        <li>Oppgave 4-5 er dempet (task-num-muted) — hint om prioritet via visuell vekt.</li>
+        <li>Best for Anders alene. Skalerer dårlig med flere instruktører — hver ville trengt egen liste.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: TEAM VIEW ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Team View</span></h2>
+    <p class="option-description">Per-instruktør kort (Anders / Markus) + samlet oppsummering. Hver instruktør har egne KPI-er, progress bar mot ukemål, og neste økt. Bygget for 2+ coacher.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/mission-board</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab mc-tab-active">Mission Board</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-refresh-pill"><span class="mc-refresh-dot"></span>Auto · 5 min</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-subheader">
+            <div>
+              <h2 class="mc-subhead-title">Team Mission Board</h2>
+              <div class="mc-subhead-meta">Fredag 17. apr · Uke 16 · 2 instruktører aktive</div>
+            </div>
+            <div class="mc-subhead-actions">
+              <button class="mc-cta-ghost mc-cta">Ukerapport</button>
+            </div>
+          </section>
+
+          <div class="mc-team-grid">
+            <div class="mc-team-card">
+              <div class="mc-team-head">
+                <div class="mc-team-avatar">AK</div>
+                <div>
+                  <div class="mc-team-name">Anders Kristiansen</div>
+                  <div class="mc-team-role">Head Coach · Performance</div>
+                </div>
+                <span class="mc-team-status">På vakt</span>
+              </div>
+              <div class="mc-team-kpi-row">
+                <div class="mc-team-kpi"><div class="mc-team-kpi-label">Økter i dag</div><div class="mc-team-kpi-val">3</div></div>
+                <div class="mc-team-kpi"><div class="mc-team-kpi-label">Uke</div><div class="mc-team-kpi-val">11/12</div></div>
+                <div class="mc-team-kpi"><div class="mc-team-kpi-label">Aktive elever</div><div class="mc-team-kpi-val">28</div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:4px;"><span>Ukemål</span><span>92%</span></div>
+                <div class="mc-team-bar"><div class="mc-team-bar-fill" style="width:92%;"></div></div>
+              </div>
+              <div class="mc-team-next">
+                <span style="font-size:10px;letter-spacing:0.1em;color:#999;text-transform:uppercase;font-weight:700;">Neste økt · 09:00</span>
+                <strong>Nora Torp · Flex 20</strong>
+                <span style="color:#666;font-size:11px;">Sim 1 · fokus: putting</span>
+              </div>
+            </div>
+
+            <div class="mc-team-card">
+              <div class="mc-team-head">
+                <div class="mc-team-avatar">MR</div>
+                <div>
+                  <div class="mc-team-name">Markus R. Pedersen</div>
+                  <div class="mc-team-role">Assistant Coach · Junior</div>
+                </div>
+                <span class="mc-team-status">På vakt</span>
+              </div>
+              <div class="mc-team-kpi-row">
+                <div class="mc-team-kpi"><div class="mc-team-kpi-label">Økter i dag</div><div class="mc-team-kpi-val">2</div></div>
+                <div class="mc-team-kpi"><div class="mc-team-kpi-label">Uke</div><div class="mc-team-kpi-val">6/8</div></div>
+                <div class="mc-team-kpi"><div class="mc-team-kpi-label">Aktive elever</div><div class="mc-team-kpi-val">14</div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:4px;"><span>Ukemål</span><span>75%</span></div>
+                <div class="mc-team-bar"><div class="mc-team-bar-fill" style="width:75%;"></div></div>
+              </div>
+              <div class="mc-team-next">
+                <span style="font-size:10px;letter-spacing:0.1em;color:#999;text-transform:uppercase;font-weight:700;">Neste økt · 10:30</span>
+                <strong>Lars Berg · Express Pro</strong>
+                <span style="color:#666;font-size:11px;">Sim 2</span>
+              </div>
+            </div>
+
+            <div class="mc-team-card mc-team-combined">
+              <div class="mc-team-combined-label">Samlet denne uken</div>
+              <div class="mc-team-combined-val">17<span style="font-size:18px;color:#999;">/20</span></div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:4px;"><span>Ukemål</span><span>85%</span></div>
+                <div class="mc-team-bar"><div class="mc-team-bar-fill" style="width:85%;"></div></div>
+              </div>
+              <div class="mc-divider"></div>
+              <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;">
+                <div style="display:flex;justify-content:space-between;"><span style="color:#666;">Aktive elever</span><strong>42</strong></div>
+                <div style="display:flex;justify-content:space-between;"><span style="color:#666;">Ventende</span><strong>3</strong></div>
+                <div style="display:flex;justify-content:space-between;"><span style="color:#666;">MTD inntekt</span><strong>187 400 kr</strong></div>
+                <div style="display:flex;justify-content:space-between;"><span style="color:#666;">Belegg simulator</span><strong>68%</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Hver instruktør har eget kort med status, KPI-er, progress og neste økt.</li>
+        <li>Samlet-kort til høyre viser team-totaler og ledelse-relevante tall.</li>
+        <li>Skalerer naturlig — bare legg til flere kort når nye instruktører starter.</li>
+        <li>Mindre fokus på tid/schedule — disse ligger på Kalender-tab.</li>
+        <li>Ukemål per instruktør gir god løpende motivasjon uten å være konkurranse.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: METRICS WALL ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Metrics Wall</span></h2>
+    <p class="option-description">Stor 12-rutes KPI-grid. Alle viktige tall samtidig — inntekt, elever, belegg, churn, konvertering, no-show, refund-rate, NPS, etc. Controller-/styrebruk.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/mission-board</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab mc-tab-active">Mission Board</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-refresh-pill"><span class="mc-refresh-dot"></span>Auto · 5 min</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-subheader">
+            <div>
+              <h2 class="mc-subhead-title">Metrics Wall</h2>
+              <div class="mc-subhead-meta">Alle nøkkeltall · siste 30 dager · månedsperiode</div>
+            </div>
+            <div class="mc-subhead-actions">
+              <button class="mc-cta-ghost mc-cta">Eksport CSV</button>
+              <button class="mc-cta">Ukerapport</button>
+            </div>
+          </section>
+
+          <div class="mc-wall">
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">Økter uke 16</div>
+              <div class="mc-wall-val">17<span class="mc-wall-unit">/ 20</span></div>
+              <div class="mc-wall-progress"><div class="mc-wall-progress-fill" style="width:85%;"></div></div>
+              <div class="mc-wall-sub">85% mot ukemål</div>
+            </div>
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">MTD Inntekt</div>
+              <div class="mc-wall-val">187<span class="mc-wall-unit">k kr</span></div>
+              <svg class="mc-wall-spark" viewBox="0 0 100 24" preserveAspectRatio="none"><polyline class="mc-kpi-spark-line" points="0,20 14,18 28,14 42,12 56,10 70,8 84,7 100,5"/></svg>
+              <div class="mc-wall-sub"><span class="mc-wall-delta">+12%</span> vs budsjett</div>
+            </div>
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">Aktive elever</div>
+              <div class="mc-wall-val">42</div>
+              <svg class="mc-wall-spark" viewBox="0 0 100 24" preserveAspectRatio="none"><polyline class="mc-kpi-spark-line" points="0,18 14,17 28,15 42,13 56,11 70,10 84,8 100,6"/></svg>
+              <div class="mc-wall-sub"><span class="mc-wall-delta">+3 uke</span></div>
+            </div>
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">Ventende bookinger</div>
+              <div class="mc-wall-val">3</div>
+              <div class="mc-wall-sub">krever godkjenning</div>
+            </div>
+
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">Belegg simulator</div>
+              <div class="mc-wall-val">68<span class="mc-wall-unit">%</span></div>
+              <div class="mc-wall-progress"><div class="mc-wall-progress-fill" style="width:68%;"></div></div>
+              <div class="mc-wall-sub">mål 75%</div>
+            </div>
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">Økter levert 30d</div>
+              <div class="mc-wall-val">148</div>
+              <svg class="mc-wall-spark" viewBox="0 0 100 24" preserveAspectRatio="none"><polyline class="mc-kpi-spark-line" points="0,16 14,12 28,14 42,10 56,8 70,9 84,6 100,4"/></svg>
+              <div class="mc-wall-sub">94% gjennomført</div>
+            </div>
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">No-show rate</div>
+              <div class="mc-wall-val">1.3<span class="mc-wall-unit">%</span></div>
+              <div class="mc-wall-sub">2 av 148 økter</div>
+            </div>
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">Churn 30d</div>
+              <div class="mc-wall-val">2.4<span class="mc-wall-unit">%</span></div>
+              <div class="mc-wall-sub">1 abo kansellert</div>
+            </div>
+
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">Snitt HCP elever</div>
+              <div class="mc-wall-val">16.8</div>
+              <div class="mc-wall-sub"><span class="mc-wall-delta">-0.6</span> siste kvartal</div>
+            </div>
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">Nye leads 30d</div>
+              <div class="mc-wall-val">24</div>
+              <svg class="mc-wall-spark" viewBox="0 0 100 24" preserveAspectRatio="none"><polyline class="mc-kpi-spark-line" points="0,18 14,16 28,12 42,14 56,10 70,8 84,6 100,5"/></svg>
+              <div class="mc-wall-sub">12 konverterte</div>
+            </div>
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">Konverteringsrate</div>
+              <div class="mc-wall-val">50<span class="mc-wall-unit">%</span></div>
+              <div class="mc-wall-progress"><div class="mc-wall-progress-fill" style="width:50%;"></div></div>
+              <div class="mc-wall-sub">mål 45%</div>
+            </div>
+            <div class="mc-wall-card">
+              <div class="mc-wall-label">NPS siste 30d</div>
+              <div class="mc-wall-val">+62</div>
+              <div class="mc-wall-sub">18 svar · 14 promoters</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>12 KPI-kort i 4×3 grid — hele virksomheten på én skjerm.</li>
+        <li>Sparkline ELLER progress bar per kort, ikke begge — velges ut fra om målet er trend eller måloppnåelse.</li>
+        <li>Ingen dagsplan, ingen alerts — rent rapporterings-view, ikke daglig drift.</li>
+        <li>Best for ukentlig/månedlig gjennomgang med regnskapsfører eller styret.</li>
+        <li>Svakere for "hva må jeg gjøre nå" — krever supplerende view for daglig bruk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: TIMELINE FEED ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Timeline Feed</span></h2>
+    <p class="option-description">Kronologisk aktivitets-feed (ny booking, melding, økt fullført, betaling). Stream av alt som skjer. Sidebar med filter og samlet telleverk.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/mission-board</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab mc-tab-active">Mission Board</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-refresh-pill"><span class="mc-refresh-dot"></span>Auto · 5 min</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-subheader">
+            <div>
+              <h2 class="mc-subhead-title">Aktivitets-feed</h2>
+              <div class="mc-subhead-meta">Live · siste 48 timer · 42 hendelser</div>
+            </div>
+          </section>
+
+          <div class="mc-feed-wrap">
+            <div>
+              <div class="mc-feed">
+                <div class="mc-feed-day-head">
+                  <span class="mc-feed-day">I dag · 17. apr</span>
+                  <span class="mc-feed-day-sub">Fredag</span>
+                  <span class="mc-feed-day-stats">18 hendelser</span>
+                </div>
+                <div class="mc-feed-event mc-feed-event-msg">
+                  <div>
+                    <div class="mc-feed-ev-type">Reschedule</div>
+                    <div class="mc-feed-ev-title">Erik Hansen ba om ny tid</div>
+                    <div class="mc-feed-ev-sub">Fra tirs 10:00 → onsdag morgen</div>
+                  </div>
+                  <div class="mc-feed-ev-time">09:42</div>
+                </div>
+                <div class="mc-feed-event mc-feed-event-booking">
+                  <div>
+                    <div class="mc-feed-ev-type">Ny booking</div>
+                    <div class="mc-feed-ev-title">Nora Torp — Performance-abo</div>
+                    <div class="mc-feed-ev-sub">Mangler slot-tildeling</div>
+                  </div>
+                  <div class="mc-feed-ev-time">09:26</div>
+                </div>
+                <div class="mc-feed-event mc-feed-event-done">
+                  <div>
+                    <div class="mc-feed-ev-type">Økt fullført</div>
+                    <div class="mc-feed-ev-title">Erik Hansen · Performance 20</div>
+                    <div class="mc-feed-ev-sub">Anders · Sim 3 · approach-fokus</div>
+                  </div>
+                  <div class="mc-feed-ev-time">08:20</div>
+                </div>
+                <div class="mc-feed-event mc-feed-event-pay">
+                  <div>
+                    <div class="mc-feed-ev-type">Betaling</div>
+                    <div class="mc-feed-ev-title">1 600 kr mottatt — Nora Torp</div>
+                    <div class="mc-feed-ev-sub">Stripe · Performance 1600 kr/mnd</div>
+                  </div>
+                  <div class="mc-feed-ev-time">07:55</div>
+                </div>
+                <div class="mc-feed-event mc-feed-event-msg">
+                  <div>
+                    <div class="mc-feed-ev-type">Avbestilling</div>
+                    <div class="mc-feed-ev-title">Lars Berg · Duo 50</div>
+                    <div class="mc-feed-ev-sub">Innen frist · refunder</div>
+                  </div>
+                  <div class="mc-feed-ev-time">07:10</div>
+                </div>
+
+                <div class="mc-feed-day-head">
+                  <span class="mc-feed-day">I går · 16. apr</span>
+                  <span class="mc-feed-day-sub">Torsdag</span>
+                  <span class="mc-feed-day-stats">12 hendelser</span>
+                </div>
+                <div class="mc-feed-event mc-feed-event-done">
+                  <div>
+                    <div class="mc-feed-ev-type">Økt fullført</div>
+                    <div class="mc-feed-ev-title">First Tee kurs (8)</div>
+                    <div class="mc-feed-ev-sub">Markus · Sim 1+2</div>
+                  </div>
+                  <div class="mc-feed-ev-time">18:00</div>
+                </div>
+                <div class="mc-feed-event mc-feed-event-booking">
+                  <div>
+                    <div class="mc-feed-ev-type">Ny elev</div>
+                    <div class="mc-feed-ev-title">Sofie Lund registrert · Junior</div>
+                    <div class="mc-feed-ev-sub">Via portal · venter på velkomst</div>
+                  </div>
+                  <div class="mc-feed-ev-time">14:12</div>
+                </div>
+                <div class="mc-feed-event mc-feed-event-pay">
+                  <div>
+                    <div class="mc-feed-ev-type">Betaling</div>
+                    <div class="mc-feed-ev-title">550 kr mottatt — Ida Haug</div>
+                    <div class="mc-feed-ev-sub">Stripe · Express 550 kr/mnd</div>
+                  </div>
+                  <div class="mc-feed-ev-time">10:03</div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="mc-feed-side">
+              <div class="mc-feed-side-card">
+                <div class="mc-feed-side-label">Ukens aktivitet</div>
+                <div class="mc-feed-side-val">42</div>
+                <div class="mc-feed-side-sub">hendelser · snitt 6/dag</div>
+              </div>
+              <div class="mc-feed-side-card">
+                <div class="mc-feed-side-label">Filtrer</div>
+                <div class="mc-feed-filter">
+                  <div class="mc-feed-filter-row mc-feed-filter-row-active"><span>Alle</span><span class="mc-feed-filter-count">42</span></div>
+                  <div class="mc-feed-filter-row"><span>Bookinger</span><span class="mc-feed-filter-count">14</span></div>
+                  <div class="mc-feed-filter-row"><span>Økter fullført</span><span class="mc-feed-filter-count">11</span></div>
+                  <div class="mc-feed-filter-row"><span>Meldinger</span><span class="mc-feed-filter-count">8</span></div>
+                  <div class="mc-feed-filter-row"><span>Betalinger</span><span class="mc-feed-filter-count">9</span></div>
+                </div>
+              </div>
+              <div class="mc-feed-side-card">
+                <div class="mc-feed-side-label">Ukemål</div>
+                <div class="mc-feed-side-val">17/20</div>
+                <div class="mc-feed-side-sub">85% oppnådd</div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kronologisk stream — hver hendelse typet og tidsstempel-kodet. Dag-grupper.</li>
+        <li>Bullet-pulserer i tidslinjen har semantikk: fylt svart = fullført, ring = melding/pending.</li>
+        <li>Filter-sidebar lar deg isolere type (kun bookinger, kun betalinger).</li>
+        <li>Best for transparent historikk og audit — "hva skjedde i går?"</li>
+        <li>Svakere for planlegging — feeden er reaktiv, ikke proaktiv.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Mission Board — valget avhenger av om dashboardet skal være daglig drift (opt 1-2-3), rapportering (opt 4), eller revisjon/audit (opt 5).</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Real-time Hub</th><th>2: Focus Mode</th><th>3: Team View</th><th>4: Metrics Wall</th><th>5: Timeline Feed</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig drift (Anders)</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Team / multi-instruktør</td><td>Sterk</td><td>Svak</td><td>Sterk</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Rapportering / styret</td><td>Middels</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Real-time awareness</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>"Hva gjør jeg nå"</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Svak</td></tr>
+        <tr><td>Lærbarhet (nye brukere)</td><td>Sterk</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Passer AK-brand</td><td>Sterk</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Middels</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Real-time Hub</h3>
+      <p>Option 1 balanserer daglig drift (dagens schedule + alerts) med oversikt (KPI-strip + area chart + ukemåls-ring). Den er det eneste alternativet som svarer på alle fire spørsmål samtidig: «Hvordan ligger vi an denne uken?», «Hva skjer i dag?», «Hva må jeg handle på?», og «Hvordan ser trenden ut?». Passer både Anders alene og scenarier der Markus logger inn. Auto-refresh hvert 5. min gjør at dashboardet føles levende uten å være støyende.</p>
+      <p>Option 2 (Focus Mode) er en sterk toer når Anders jobber alene og kun trenger dagens tre viktigste oppgaver. Option 3 (Team View) blir mer relevant når det er 3+ instruktører. Option 4 og 5 egner seg bedre som underliggende views (f.eks. Rapporter-tab) enn som primær Mission Board.</p>
+    </div>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Real-time Hub):</strong> Default. Best balanse for hybrid daglig + oversikt.</li>
+      <li><strong>Option 2 (Focus Mode):</strong> Solo-bruk. Hvis Anders ønsker "én-liste" mental modell.</li>
+      <li><strong>Option 3 (Team View):</strong> Når team vokser til 3+ coacher.</li>
+      <li><strong>Option 4 (Metrics Wall):</strong> Som Rapporter-side, ikke mission board.</li>
+      <li><strong>Option 5 (Timeline Feed):</strong> Som audit/log-side under Rapporter.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

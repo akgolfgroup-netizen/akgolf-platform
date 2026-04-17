@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AK Golf Platform — Wireframe-bibliotek</title>
+  <style>
+    :root {
+      --primary: #005840;
+      --accent: #D1F843;
+      --accent-text: #0A1F18;
+      --surface: #ECF0EF;
+      --background: #fdf9f0;
+      --text: #324D45;
+      --muted: #A5B2AD;
+      --black: #0A1F18;
+      --white: #FFFFFF;
+      --grey-50: #F5F8F7;
+      --grey-200: #D5DFDB;
+      --grey-700: #324D45;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    header {
+      text-align: center;
+      padding: 64px 0 48px;
+      border-bottom: 1px solid rgba(0, 88, 64, 0.08);
+      margin-bottom: 48px;
+    }
+
+    .brand {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 44px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin: 0 0 16px;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      color: var(--grey-700);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 88, 64, 0.12);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid rgba(0, 88, 64, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 88, 64, 0.015) 100%);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 88, 64, 0.06), 0 1px 3px rgba(0, 88, 64, 0.04);
+      border-color: rgba(0, 88, 64, 0.18);
+    }
+
+    .card.featured {
+      border-color: var(--primary);
+      background: linear-gradient(180deg, var(--white) 0%, rgba(209, 248, 67, 0.04) 100%);
+    }
+
+    .card-slug {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--grey-700);
+      margin: 0;
+    }
+
+    .card-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0, 88, 64, 0.06);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      background: var(--grey-50);
+      color: var(--primary);
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .tag.done {
+      background: rgba(42, 125, 90, 0.12);
+      color: #1A4D36;
+    }
+
+    .tag.new {
+      background: rgba(209, 248, 67, 0.3);
+      color: var(--accent-text);
+    }
+
+    .arrow {
+      margin-left: auto;
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    footer.legal {
+      text-align: center;
+      padding: 40px 0 0;
+      border-top: 1px solid rgba(0, 88, 64, 0.08);
+      margin-top: 64px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer.legal a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 32px; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .section-desc { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <header>
+    <div class="brand">AK Golf Platform · Wireframe-bibliotek</div>
+    <h1>9 strategiske skjermer, 45 UX-opsjoner</h1>
+    <p class="subtitle">
+      Hvert kort åpner et wireframe med 5 UX-opsjoner (1 Safe + 4 exploratory) og Clean + Polished fargevarianter. Bygget på Mercury Flow (markedsside), The Athletic-DNA (portal) og XPO TMS-estetikk (Mission Control).
+    </p>
+  </header>
+
+  <!-- ============ MARKEDSSIDE ============ -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-label">01 — Markedsside</span>
+      <h2 class="section-title">Akkvisisjon &amp; konvertering</h2>
+      <span class="section-desc">5 skjermer · Mercury Flow-mal</span>
+    </div>
+
+    <div class="grid">
+
+      <a class="card featured" href="1704-markedsside-forside/index.html">
+        <span class="card-slug">/</span>
+        <h3 class="card-title">Forside</h3>
+        <p class="card-desc">
+          Mercury Flow — editorial hybrid med dark-seksjoner for Treningspyramiden og CTA-band. Valgt retning.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="tag">Mercury Flow valgt</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-markedsside-pricing/index.html">
+        <span class="card-slug">/priser</span>
+        <h3 class="card-title">Pricing</h3>
+        <p class="card-desc">
+          Tier-sammenligning (Gratis/Starter/Pro/Elite) med fokus på portal-konvertering. 5 opsjoner fra grid til kalkulator.
+        </p>
+        <div class="card-meta">
+          <span class="tag new">Nytt</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-markedsside-academy/index.html">
+        <span class="card-slug">/academy</span>
+        <h3 class="card-title">Academy</h3>
+        <p class="card-desc">
+          AK Golf Academy coaching — Anders + Markus. Personlig 1-til-1, Mercury-mal med coaching-fokus.
+        </p>
+        <div class="card-meta">
+          <span class="tag new">Nytt</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-markedsside-junior/index.html">
+        <span class="card-slug">/junior-academy</span>
+        <h3 class="card-title">Junior Academy</h3>
+        <p class="card-desc">
+          Foreldre-målrettet. Varmere tonefall, aldersgrupper 8–18, NGF-godkjent junior-coaching.
+        </p>
+        <div class="card-meta">
+          <span class="tag new">Nytt</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-markedsside-utvikling/index.html">
+        <span class="card-slug">/utvikling</span>
+        <h3 class="card-title">Utvikling</h3>
+        <p class="card-desc">
+          Elite/performance. Tech-premium tone — TrackMan, DataGolf benchmark, Whoop-estetikk med light base.
+        </p>
+        <div class="card-meta">
+          <span class="tag new">Nytt</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ PORTAL ============ -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-label">02 — Portal</span>
+      <h2 class="section-title">Innlogget spilleropplevelse</h2>
+      <span class="section-desc">3 skjermer · Apple-minimalisme</span>
+    </div>
+
+    <div class="grid">
+
+      <a class="card" href="1704-portal-planlegger-v2/index.html">
+        <span class="card-slug">/portal/treningsplan/ny</span>
+        <h3 class="card-title">Planlegger 2.0</h3>
+        <p class="card-desc">
+          6-stegs pyramide-wizard fra VISION §3.1. Tidsrom → Pyramide → Tilgjengelighet → Fokus → Generer → Bekreft.
+        </p>
+        <div class="card-meta">
+          <span class="tag new">VISION</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-kalender/index.html">
+        <span class="card-slug">/portal/kalender</span>
+        <h3 class="card-title">Kalender</h3>
+        <p class="card-desc">
+          Apple Calendar-inspirert. Bookings + coaching + trening + turneringer merged. Google Calendar-sync.
+        </p>
+        <div class="card-meta">
+          <span class="tag new">PARTIAL → full</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-dashboard-v2/index.html">
+        <span class="card-slug">/portal</span>
+        <h3 class="card-title">Dashboard v2</h3>
+        <p class="card-desc">
+          Redesign-vurdering. The Athletic-ref som utgangspunkt. KPI-rad, widgets, coach insight.
+        </p>
+        <div class="card-meta">
+          <span class="tag">Redesign</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ MISSION CONTROL ============ -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-label">03 — Mission Control</span>
+      <h2 class="section-title">Instruktør-arbeidsstasjon</h2>
+      <span class="section-desc">2 skjermer · XPO TMS-stil</span>
+    </div>
+
+    <div class="grid">
+
+      <a class="card" href="1704-mc-dashboard/index.html">
+        <span class="card-slug">/portal/admin</span>
+        <h3 class="card-title">MC Dashboard</h3>
+        <p class="card-desc">
+          XPO TMS-mal. Dark topbar + lys body. KPI-row (8 tall), divisjons-kort, inntekt-trend, høyre drawer.
+        </p>
+        <div class="card-meta">
+          <span class="tag new">Redesign</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-kalender/index.html">
+        <span class="card-slug">/portal/admin/kalender</span>
+        <h3 class="card-title">MC Kalender</h3>
+        <p class="card-desc">
+          Gantt-timeline. Instruktør-lanes, dra-og-slipp reschedule, fargekodete bookings, høyre drawer med detaljer.
+        </p>
+        <div class="card-meta">
+          <span class="tag new">Redesign</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <footer class="legal">
+    <p>
+      Wireframes generert 2026-04-17 · Design-context: <a href="brain/design-context.md">brain/design-context.md</a> · Design-taste: <a href="brain/design-taste.md">brain/design-taste.md</a>
+    </p>
+    <p>
+      Merkevare: AK Golf · Produkt: Portalen · Metode: Treningspyramiden (Norges Golfforbund) · Filosofi: AK Golf sin coaching
+    </p>
+  </footer>
+
+</div>
+
+</body>
+</html>

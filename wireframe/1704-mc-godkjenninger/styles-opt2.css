@@ -1,0 +1,130 @@
+/* Option 2: Kanban — Clean + Polished */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+
+/* ==================== CLEAN ==================== */
+.clean .browser-dots span:nth-child(1) { background: #ff5f57; }
+.clean .browser-dots span:nth-child(2) { background: #febc2e; }
+.clean .browser-dots span:nth-child(3) { background: #28c840; }
+
+.clean .mc-shell { background: #F5F8F7; color: #0A1F18; }
+.clean .mc-sidebar { background: #0A1F18; }
+.clean .mc-sidebar-logo { color: #D1F843; }
+.clean .mc-nav a { color: #A5B2AD; }
+.clean .mc-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.clean .mc-nav a.active { background: rgba(209,248,67,0.1); color: #D1F843; border-left: 3px solid #D1F843; border-radius: 0 4px 4px 0; }
+
+.clean .mc-topbar { border-bottom-color: #D5DFDB; }
+.clean .mc-page-title { color: #0A1F18; }
+.clean .mc-page-sub { color: #5A6E66; }
+.clean .mc-topbar-meta { color: #5A6E66; }
+
+.clean .kanban-col { background: #ECF0EF; border-color: #D5DFDB; border-radius: 12px; }
+.clean .kanban-col:nth-child(1) { background: #FDF4E4; border-color: #E8D9B8; }
+.clean .kanban-col:nth-child(2) { background: #E8F5EF; border-color: #B8DDC9; }
+.clean .kanban-col:nth-child(3) { background: #FCEAE8; border-color: #E8C4BF; }
+.clean .kanban-header { color: #324D45; }
+.clean .kanban-col:nth-child(1) .kanban-header { color: #7A5520; }
+.clean .kanban-col:nth-child(2) .kanban-header { color: #1A4D36; }
+.clean .kanban-col:nth-child(3) .kanban-header { color: #7A2C22; }
+.clean .kanban-count { background: #fff; color: #324D45; border-color: transparent; border-radius: 12px; font-weight: 600; }
+
+.clean .kanban-card { background: #fff; border-color: #E8E8E8; border-radius: 10px; }
+.clean .kanban-card:hover { border-color: #005840; }
+.clean .kanban-card-type { color: #7A8C85; }
+.clean .kanban-card-title { color: #0A1F18; }
+.clean .kanban-card-meta { color: #5A6E66; }
+.clean .kanban-card-footer { border-top-color: #F5F8F7; color: #A5B2AD; }
+
+.clean .summary-table { background: #fff; border-color: #ECF0EF; border-radius: 12px; overflow: hidden; }
+.clean .summary-table th { background: #F5F8F7; color: #7A8C85; }
+.clean .summary-stars { color: #005840; }
+.clean .summary-rationale { background: #E6F3F1; border-color: #D5DFDB; border-radius: 12px; }
+
+/* ==================== POLISHED ==================== */
+.polished { font-family: 'Inter', -apple-system, sans-serif; }
+.polished .mc-page-title { font-family: 'Fraunces', Georgia, serif; font-weight: 600; letter-spacing: -0.02em; }
+.polished h2 { font-family: 'Fraunces', Georgia, serif; }
+
+.polished .browser-dots span:nth-child(1) { background: #ff5f57; }
+.polished .browser-dots span:nth-child(2) { background: #febc2e; }
+.polished .browser-dots span:nth-child(3) { background: #28c840; }
+
+.polished .mc-shell { background: linear-gradient(180deg, #F5F8F7, #ECF0EF); }
+.polished .mc-sidebar { background: linear-gradient(180deg, #0A1F18, #1A3529); }
+.polished .mc-sidebar-logo { color: #D1F843; letter-spacing: 0.06em; }
+.polished .mc-nav a { color: #A5B2AD; transition: all 200ms cubic-bezier(0.4,0,0.2,1); }
+.polished .mc-nav a:hover { background: rgba(255,255,255,0.08); color: #fff; transform: translateX(2px); }
+.polished .mc-nav a.active { background: linear-gradient(90deg, rgba(209,248,67,0.18), rgba(209,248,67,0.04)); color: #D1F843; border-left: 3px solid #D1F843; border-radius: 0 6px 6px 0; box-shadow: inset 0 0 20px rgba(209,248,67,0.05); }
+
+.polished .mc-topbar { border-bottom: 1px solid rgba(0,0,0,0.06); }
+.polished .mc-page-sub { color: #5A6E66; }
+.polished .mc-topbar-meta { color: #5A6E66; }
+
+.polished .kanban { gap: 14px; }
+.polished .kanban-col {
+  border-radius: 16px;
+  padding: 14px;
+  transition: all 300ms cubic-bezier(0.4,0,0.2,1);
+  animation: kSlideIn 500ms cubic-bezier(0.16,1,0.3,1) both;
+}
+.polished .kanban-col:nth-child(1) {
+  background: linear-gradient(180deg, #FDF4E4 0%, #FAEBC8 100%);
+  border: 1px solid rgba(196,138,50,0.18);
+  box-shadow: 0 1px 3px rgba(196,138,50,0.08), 0 4px 16px rgba(196,138,50,0.06);
+  animation-delay: 0ms;
+}
+.polished .kanban-col:nth-child(2) {
+  background: linear-gradient(180deg, #E8F5EF 0%, #D1EADF 100%);
+  border: 1px solid rgba(42,125,90,0.18);
+  box-shadow: 0 1px 3px rgba(42,125,90,0.08), 0 4px 16px rgba(42,125,90,0.06);
+  animation-delay: 80ms;
+}
+.polished .kanban-col:nth-child(3) {
+  background: linear-gradient(180deg, #FCEAE8 0%, #F5D4CE 100%);
+  border: 1px solid rgba(184,66,51,0.18);
+  box-shadow: 0 1px 3px rgba(184,66,51,0.08), 0 4px 16px rgba(184,66,51,0.06);
+  animation-delay: 160ms;
+}
+.polished .kanban-header { letter-spacing: 0.08em; font-weight: 700; }
+.polished .kanban-col:nth-child(1) .kanban-header { color: #7A5520; }
+.polished .kanban-col:nth-child(2) .kanban-header { color: #1A4D36; }
+.polished .kanban-col:nth-child(3) .kanban-header { color: #7A2C22; }
+.polished .kanban-count { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); color: #324D45; border: 1px solid rgba(255,255,255,0.8); border-radius: 12px; font-weight: 700; }
+
+.polished .kanban-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.03);
+  transition: all 200ms cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+}
+.polished .kanban-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: transparent; transition: background 200ms; }
+.polished .kanban-col:nth-child(1) .kanban-card:hover::before { background: #C48A32; }
+.polished .kanban-col:nth-child(2) .kanban-card:hover::before { background: #2A7D5A; }
+.polished .kanban-col:nth-child(3) .kanban-card:hover::before { background: #B84233; }
+.polished .kanban-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); }
+.polished .kanban-card-type { color: #7A8C85; font-weight: 700; }
+.polished .kanban-card-title { color: #0A1F18; font-weight: 600; }
+.polished .kanban-card-meta { color: #5A6E66; }
+.polished .kanban-card-footer { border-top: 1px solid rgba(0,0,0,0.04); color: #A5B2AD; }
+
+.polished .summary-table { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.polished .summary-table th { background: #F5F8F7; color: #7A8C85; }
+.polished .summary-stars { color: #005840; letter-spacing: 3px; }
+.polished .summary-rationale { background: linear-gradient(135deg, #E6F3F1, #D1F84333); border: 1px solid rgba(0,88,64,0.12); border-radius: 14px; }
+.polished .summary-rationale strong { color: #005840; }
+
+@keyframes kSlideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .polished *, .polished *::before, .polished *::after { animation: none !important; transition: none !important; }
+}
+
+#frame-opt2-tabs .sub-tab-badge { display: none; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"] { color: #64B5F6; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #1E88E5; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"].active { color: #1565C0; border-bottom-color: #1565C0; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"] { color: #81C784; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #43A047; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"].active { color: #2E7D32; border-bottom-color: #2E7D32; }

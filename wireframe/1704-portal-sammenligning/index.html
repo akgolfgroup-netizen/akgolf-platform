@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sammenligning — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Sammenligning</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Peer Dashboard</button>
+    <button class="tab-btn" data-tab="option-2">2: Leaderboard</button>
+    <button class="tab-btn" data-tab="option-3">3: Category Deep</button>
+    <button class="tab-btn" data-tab="option-4">4: Progress Race</button>
+    <button class="tab-btn" data-tab="option-5">5: Stat Duel</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Peer Dashboard (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Peer Dashboard</span></h2>
+    <p class="option-description">Trygg standard. 6 kategorier i 3×2 kort-grid med "over/under snitt"-indikator, din verdi vs. peer-snitt og en visuell bar. Toppsammendrag viser "Du er over snitt i 4 av 6 kategorier".</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sammenligning</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div>
+                <div class="wf-sb-profile-name">Erik Hansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP 14.2</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sammenligning</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-pro-lock">
+              <div class="wf-sb-pro-lock-title">Pro-funksjon</div>
+              <div class="wf-sb-pro-lock-desc">Peer-sammenligning er del av Pro-abonnementet</div>
+            </div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div>Torsdag 17. april · Uke 16</div>
+              <div><span class="wf-mtopbar-chip">Søk</span><span class="wf-mtopbar-chip">Varsler</span></div>
+            </div>
+
+            <section class="wf-pghead">
+              <div>
+                <div class="wf-pghead-eyebrow">Sammenligning</div>
+                <h1>Hvordan står du vs. likesinnede?<span class="wf-marker">1</span></h1>
+                <p class="wf-pghead-sub">Peer-gruppen består av spillere med HCP 12–16 · sist 90 dager</p>
+              </div>
+              <div class="wf-pghead-pro-badge">Pro</div>
+            </section>
+
+            <section class="wf-peer-ctx">
+              <span class="wf-peer-ctx-label">Peer-gruppe<span class="wf-marker">2</span></span>
+              <span class="wf-peer-ctx-pill wf-active">HCP 12–16</span>
+              <span class="wf-peer-ctx-pill">HCP 8–12</span>
+              <span class="wf-peer-ctx-pill">Alle Pro</span>
+              <span class="wf-peer-ctx-pill">Klubb</span>
+              <span class="wf-peer-ctx-label" style="margin-left:auto">Periode</span>
+              <span class="wf-peer-ctx-pill wf-active">90d</span>
+              <span class="wf-peer-ctx-pill">6 mnd</span>
+            </section>
+
+            <section class="wf-head-summary">
+              <div>
+                <div class="wf-head-summary-label">Oppsummering<span class="wf-marker">3</span></div>
+                <div class="wf-head-summary-value">4 / 6</div>
+                <div class="wf-head-summary-sub">kategorier over snitt · basert på 148 peers</div>
+              </div>
+              <div class="wf-head-summary-meter"><div class="wf-head-summary-meter-fill" style="width:67%"></div></div>
+            </section>
+
+            <section class="wf-o1-grid">
+              <div class="wf-o1-card">
+                <div class="wf-o1-card-head">
+                  <div class="wf-o1-card-label">Strokes Gained<span class="wf-marker">4</span></div>
+                  <div class="wf-o1-indicator wf-over">Over snitt</div>
+                </div>
+                <div class="wf-o1-card-value-row">
+                  <div class="wf-o1-value-you">+1.2</div>
+                  <div class="wf-o1-value-peer">peer: −0.4</div>
+                </div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Peer</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill" style="width:45%"></div></div></div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Du</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill wf-you" style="width:72%"></div></div></div>
+                <div class="wf-o1-card-delta">+1.6 bedre per runde</div>
+              </div>
+
+              <div class="wf-o1-card">
+                <div class="wf-o1-card-head">
+                  <div class="wf-o1-card-label">Score-snitt</div>
+                  <div class="wf-o1-indicator wf-over">Over snitt</div>
+                </div>
+                <div class="wf-o1-card-value-row">
+                  <div class="wf-o1-value-you">82.4</div>
+                  <div class="wf-o1-value-peer">peer: 85.1</div>
+                </div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Peer</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill" style="width:60%"></div></div></div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Du</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill wf-you" style="width:75%"></div></div></div>
+                <div class="wf-o1-card-delta">2.7 slag lavere</div>
+              </div>
+
+              <div class="wf-o1-card">
+                <div class="wf-o1-card-head">
+                  <div class="wf-o1-card-label">Fairway %</div>
+                  <div class="wf-o1-indicator wf-over">Over snitt</div>
+                </div>
+                <div class="wf-o1-card-value-row">
+                  <div class="wf-o1-value-you">62 %</div>
+                  <div class="wf-o1-value-peer">peer: 54 %</div>
+                </div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Peer</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill" style="width:54%"></div></div></div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Du</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill wf-you" style="width:62%"></div></div></div>
+                <div class="wf-o1-card-delta">+8 prosentpoeng</div>
+              </div>
+
+              <div class="wf-o1-card">
+                <div class="wf-o1-card-head">
+                  <div class="wf-o1-card-label">GIR %</div>
+                  <div class="wf-o1-indicator wf-under">Under snitt</div>
+                </div>
+                <div class="wf-o1-card-value-row">
+                  <div class="wf-o1-value-you">41 %</div>
+                  <div class="wf-o1-value-peer">peer: 46 %</div>
+                </div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Peer</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill" style="width:46%"></div></div></div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Du</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill wf-you" style="width:41%"></div></div></div>
+                <div class="wf-o1-card-delta">−5 prosentpoeng</div>
+              </div>
+
+              <div class="wf-o1-card">
+                <div class="wf-o1-card-head">
+                  <div class="wf-o1-card-label">Putts / GIR</div>
+                  <div class="wf-o1-indicator wf-over">Over snitt</div>
+                </div>
+                <div class="wf-o1-card-value-row">
+                  <div class="wf-o1-value-you">1.78</div>
+                  <div class="wf-o1-value-peer">peer: 1.86</div>
+                </div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Peer</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill" style="width:50%"></div></div></div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Du</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill wf-you" style="width:68%"></div></div></div>
+                <div class="wf-o1-card-delta">−0.08 bedre</div>
+              </div>
+
+              <div class="wf-o1-card">
+                <div class="wf-o1-card-head">
+                  <div class="wf-o1-card-label">Scrambling</div>
+                  <div class="wf-o1-indicator wf-under">Under snitt</div>
+                </div>
+                <div class="wf-o1-card-value-row">
+                  <div class="wf-o1-value-you">38 %</div>
+                  <div class="wf-o1-value-peer">peer: 44 %</div>
+                </div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Peer</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill" style="width:44%"></div></div></div>
+                <div class="wf-o1-bar-row"><span class="wf-o1-bar-label">Du</span><div class="wf-o1-bar-track"><div class="wf-o1-bar-fill wf-you" style="width:38%"></div></div></div>
+                <div class="wf-o1-card-delta">−6 prosentpoeng</div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Annotasjoner</h3>
+      <ul>
+        <li><strong>1. Page header</strong> — Klar Pro-badge signaliserer at dette er en premium-funksjon.</li>
+        <li><strong>2. Peer-kontekst</strong> — Bruker ser eksplisitt hvilken peer-gruppe og periode tallene gjelder.</li>
+        <li><strong>3. Summary headline</strong> — "4 / 6 over snitt" gir umiddelbar forståelse før detaljene.</li>
+        <li><strong>4. Stat-kort</strong> — Hver kategori har over/under-indikator, du vs. peer, bar-sammenligning og eksplisitt delta.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Leaderboard ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Leaderboard</span></h2>
+    <p class="option-description">Rangert tabell blant peer-gruppen. Din rad fremhevet. Kategori-tabs bytter rangering. Sidebar viser din rank + nærmeste spillere + over/under-teller.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sammenligning</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div>
+                <div class="wf-sb-profile-name">Erik Hansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP 14.2</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sammenligning</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-pro-lock">
+              <div class="wf-sb-pro-lock-title">Pro-funksjon</div>
+              <div class="wf-sb-pro-lock-desc">Peer-sammenligning er del av Pro</div>
+            </div>
+          </aside>
+          <main class="wf-main">
+            <section class="wf-pghead">
+              <div>
+                <div class="wf-pghead-eyebrow">Sammenligning · Leaderboard</div>
+                <h1>Din plassering blant 148 peers<span class="wf-marker">1</span></h1>
+                <p class="wf-pghead-sub">HCP 12–16 · sist 90 dager</p>
+              </div>
+              <div class="wf-pghead-pro-badge">Pro</div>
+            </section>
+
+            <div class="wf-o2-wrap">
+              <div class="wf-o2-lb">
+                <div class="wf-o2-lb-head">
+                  <div>
+                    <div class="wf-o2-lb-title">Rangering — Strokes Gained<span class="wf-marker">2</span></div>
+                    <div class="wf-o2-lb-sub">Du er på plass 34 av 148 (topp 23 %)</div>
+                  </div>
+                </div>
+                <div class="wf-o2-lb-tabs">
+                  <span class="wf-o2-lb-tab wf-active">SG</span>
+                  <span class="wf-o2-lb-tab">Score</span>
+                  <span class="wf-o2-lb-tab">Fairway %</span>
+                  <span class="wf-o2-lb-tab">GIR %</span>
+                  <span class="wf-o2-lb-tab">Putts/GIR</span>
+                  <span class="wf-o2-lb-tab">Scrambling</span>
+                </div>
+                <div class="wf-o2-row">
+                  <div class="wf-o2-rank">31</div>
+                  <div class="wf-o2-user"><div class="wf-o2-user-avatar">MB</div><div class="wf-o2-user-name">Martin Berg</div></div>
+                  <div class="wf-o2-hcp">HCP 13.4</div>
+                  <div class="wf-o2-sg">+1.4</div>
+                </div>
+                <div class="wf-o2-row">
+                  <div class="wf-o2-rank">32</div>
+                  <div class="wf-o2-user"><div class="wf-o2-user-avatar">OL</div><div class="wf-o2-user-name">Ola Lund</div></div>
+                  <div class="wf-o2-hcp">HCP 15.1</div>
+                  <div class="wf-o2-sg">+1.3</div>
+                </div>
+                <div class="wf-o2-row">
+                  <div class="wf-o2-rank">33</div>
+                  <div class="wf-o2-user"><div class="wf-o2-user-avatar">IS</div><div class="wf-o2-user-name">Ida Solheim</div></div>
+                  <div class="wf-o2-hcp">HCP 12.8</div>
+                  <div class="wf-o2-sg">+1.3</div>
+                </div>
+                <div class="wf-o2-row wf-you">
+                  <div class="wf-o2-rank">34</div>
+                  <div class="wf-o2-user"><div class="wf-o2-user-avatar">EH</div><div class="wf-o2-user-name">Erik Hansen<span class="wf-o2-user-you">(du)</span></div></div>
+                  <div class="wf-o2-hcp">HCP 14.2</div>
+                  <div class="wf-o2-sg">+1.2</div>
+                </div>
+                <div class="wf-o2-row">
+                  <div class="wf-o2-rank">35</div>
+                  <div class="wf-o2-user"><div class="wf-o2-user-avatar">KV</div><div class="wf-o2-user-name">Kari Voll</div></div>
+                  <div class="wf-o2-hcp">HCP 14.0</div>
+                  <div class="wf-o2-sg">+1.1</div>
+                </div>
+                <div class="wf-o2-row">
+                  <div class="wf-o2-rank">36</div>
+                  <div class="wf-o2-user"><div class="wf-o2-user-avatar">JR</div><div class="wf-o2-user-name">Jens Rud</div></div>
+                  <div class="wf-o2-hcp">HCP 16.0</div>
+                  <div class="wf-o2-sg">+1.0</div>
+                </div>
+                <div class="wf-o2-row">
+                  <div class="wf-o2-rank">37</div>
+                  <div class="wf-o2-user"><div class="wf-o2-user-avatar">TA</div><div class="wf-o2-user-name">Tor Aase</div></div>
+                  <div class="wf-o2-hcp">HCP 13.2</div>
+                  <div class="wf-o2-sg">+0.9</div>
+                </div>
+              </div>
+              <aside class="wf-o2-aside">
+                <div class="wf-o2-mini">
+                  <div class="wf-o2-mini-label">Din plassering<span class="wf-marker">3</span></div>
+                  <div class="wf-o2-mini-big">#34</div>
+                  <div class="wf-o2-mini-sub">av 148 peers · topp 23 %</div>
+                </div>
+                <div class="wf-o2-mini">
+                  <div class="wf-o2-mini-label">Over / under snitt</div>
+                  <div class="wf-o2-mini-list">
+                    <div class="wf-o2-mini-row"><span>SG</span><span>Over</span></div>
+                    <div class="wf-o2-mini-row"><span>Score</span><span>Over</span></div>
+                    <div class="wf-o2-mini-row"><span>Fairway %</span><span>Over</span></div>
+                    <div class="wf-o2-mini-row"><span>GIR %</span><span>Under</span></div>
+                    <div class="wf-o2-mini-row"><span>Putts/GIR</span><span>Over</span></div>
+                    <div class="wf-o2-mini-row"><span>Scrambling</span><span>Under</span></div>
+                  </div>
+                </div>
+                <div class="wf-o2-mini">
+                  <div class="wf-o2-mini-label">Til topp 25</div>
+                  <div class="wf-o2-mini-big">+0.4</div>
+                  <div class="wf-o2-mini-sub">SG per runde · 9 plasser opp</div>
+                </div>
+              </aside>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Annotasjoner</h3>
+      <ul>
+        <li><strong>1. Ranking-header</strong> — Umiddelbar kontekst: plass og prosentil blant peers.</li>
+        <li><strong>2. Kategori-tabs</strong> — Bytter leaderboard mellom 6 metrikker uten sidebytte.</li>
+        <li><strong>3. Sidebar</strong> — Komplementerer tabellen med rask over/under-sjekk og "hvor mye for å rykke opp".</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Category Deep ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Category Deep</span></h2>
+    <p class="option-description">Venstre kategorimeny, høyre detalj. Velg 1 av 6 kategorier og se dypdykk: du vs. peer, distribusjon, percentile og topp-5 innenfor akkurat denne metrikken.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sammenligning</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div>
+                <div class="wf-sb-profile-name">Erik Hansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP 14.2</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sammenligning</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-pro-lock">
+              <div class="wf-sb-pro-lock-title">Pro-funksjon</div>
+              <div class="wf-sb-pro-lock-desc">Peer-sammenligning er del av Pro</div>
+            </div>
+          </aside>
+          <main class="wf-main">
+            <section class="wf-pghead">
+              <div>
+                <div class="wf-pghead-eyebrow">Sammenligning · Kategori-dypdykk</div>
+                <h1>Velg metrikk — dypdykk mot peers<span class="wf-marker">1</span></h1>
+                <p class="wf-pghead-sub">HCP 12–16 · 148 peers · sist 90 dager</p>
+              </div>
+              <div class="wf-pghead-pro-badge">Pro</div>
+            </section>
+
+            <div class="wf-o3-wrap">
+              <aside class="wf-o3-catlist">
+                <div class="wf-o3-cat"><span>SG</span><span class="wf-o3-cat-dir">Over</span></div>
+                <div class="wf-o3-cat"><span>Score</span><span class="wf-o3-cat-dir">Over</span></div>
+                <div class="wf-o3-cat wf-active"><span>Fairway %<span class="wf-marker">2</span></span><span class="wf-o3-cat-dir">Over</span></div>
+                <div class="wf-o3-cat"><span>GIR %</span><span class="wf-o3-cat-dir">Under</span></div>
+                <div class="wf-o3-cat"><span>Putts / GIR</span><span class="wf-o3-cat-dir">Over</span></div>
+                <div class="wf-o3-cat"><span>Scrambling</span><span class="wf-o3-cat-dir">Under</span></div>
+              </aside>
+
+              <section class="wf-o3-detail">
+                <div class="wf-o3-detail-head">
+                  <div>
+                    <div class="wf-o3-detail-title">Fairway %<span class="wf-marker">3</span></div>
+                    <div class="wf-o3-detail-sub">Du er i 78. percentil av peer-gruppen</div>
+                  </div>
+                </div>
+
+                <div class="wf-o3-pair">
+                  <div class="wf-o3-pair-cell wf-you">
+                    <div class="wf-o3-pair-label">Du</div>
+                    <div class="wf-o3-pair-val">62 %</div>
+                    <div class="wf-o3-pair-sub">18 runder · +4 vs forrige 90d</div>
+                  </div>
+                  <div class="wf-o3-pair-cell">
+                    <div class="wf-o3-pair-label">Peer-snitt</div>
+                    <div class="wf-o3-pair-val">54 %</div>
+                    <div class="wf-o3-pair-sub">148 peers · HCP 12–16</div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="wf-o3-pair-label" style="opacity:0.7">Distribusjon — peer-gruppe<span class="wf-marker">4</span></div>
+                  <div class="wf-o3-dist">
+                    <div class="wf-o3-dist-bar" style="height:20%"></div>
+                    <div class="wf-o3-dist-bar" style="height:35%"></div>
+                    <div class="wf-o3-dist-bar" style="height:55%"></div>
+                    <div class="wf-o3-dist-bar" style="height:72%"></div>
+                    <div class="wf-o3-dist-bar wf-peer" style="height:90%"></div>
+                    <div class="wf-o3-dist-bar" style="height:78%"></div>
+                    <div class="wf-o3-dist-bar wf-you" style="height:60%"></div>
+                    <div class="wf-o3-dist-bar" style="height:45%"></div>
+                    <div class="wf-o3-dist-bar" style="height:30%"></div>
+                    <div class="wf-o3-dist-bar" style="height:18%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="wf-o3-pair-label" style="opacity:0.7">Topp 5 i peer-gruppen</div>
+                  <div class="wf-o3-list">
+                    <div class="wf-o3-list-item"><span>1 · Martin Berg</span><span class="wf-o3-list-item-val">78 %</span></div>
+                    <div class="wf-o3-list-item"><span>2 · Ida Solheim</span><span class="wf-o3-list-item-val">74 %</span></div>
+                    <div class="wf-o3-list-item"><span>3 · Ola Lund</span><span class="wf-o3-list-item-val">71 %</span></div>
+                    <div class="wf-o3-list-item"><span>4 · Tor Aase</span><span class="wf-o3-list-item-val">68 %</span></div>
+                    <div class="wf-o3-list-item"><span>5 · Kari Voll</span><span class="wf-o3-list-item-val">66 %</span></div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Annotasjoner</h3>
+      <ul>
+        <li><strong>1. Layout</strong> — Master-detail: kategori til venstre, alt detaljinnhold på høyre side.</li>
+        <li><strong>2. Aktiv kategori</strong> — Tydelig aktiv state. Hver kategori viser over/under-retning som forhåndsinfo.</li>
+        <li><strong>3. Pair-cells</strong> — Du mørk, peer lys. Umiddelbar duell-visualisering.</li>
+        <li><strong>4. Distribusjon</strong> — Histogram viser hele peer-fordelingen, med din posisjon markert.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Progress Race ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Progress Race</span></h2>
+    <p class="option-description">Du vs. 3 venner med samme HCP — konkurranse-modus. Progress-bar per spiller viser fremgang siste 90 dager, timeline viser uke-for-uke, milepæler under.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sammenligning</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div>
+                <div class="wf-sb-profile-name">Erik Hansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP 14.2</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sammenligning</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-pro-lock">
+              <div class="wf-sb-pro-lock-title">Pro-funksjon</div>
+              <div class="wf-sb-pro-lock-desc">Peer-sammenligning er del av Pro</div>
+            </div>
+          </aside>
+          <main class="wf-main">
+            <section class="wf-pghead">
+              <div>
+                <div class="wf-pghead-eyebrow">Sammenligning · Progress Race</div>
+                <h1>Du vs. 3 venner — samme HCP-sjikt<span class="wf-marker">1</span></h1>
+                <p class="wf-pghead-sub">Konkurransen løper hele 90 dagers perioden · HCP 12–16</p>
+              </div>
+              <div class="wf-pghead-pro-badge">Pro</div>
+            </section>
+
+            <section class="wf-o4-race">
+              <div class="wf-o4-race-head">
+                <div class="wf-o4-race-title">SG-fremgang siste 90 dager<span class="wf-marker">2</span></div>
+                <div class="wf-o4-race-sub">Bar = nåværende SG · mål: +1.5</div>
+              </div>
+              <div class="wf-o4-racer">
+                <div class="wf-o4-racer-user wf-you"><div class="wf-o4-racer-avatar">EH</div>Du</div>
+                <div class="wf-o4-racer-track"><div class="wf-o4-racer-fill wf-you" style="width:80%"></div></div>
+                <div class="wf-o4-racer-val">+1.2</div>
+              </div>
+              <div class="wf-o4-racer">
+                <div class="wf-o4-racer-user"><div class="wf-o4-racer-avatar">MB</div>Martin Berg</div>
+                <div class="wf-o4-racer-track"><div class="wf-o4-racer-fill" style="width:93%"></div></div>
+                <div class="wf-o4-racer-val">+1.4</div>
+              </div>
+              <div class="wf-o4-racer">
+                <div class="wf-o4-racer-user"><div class="wf-o4-racer-avatar">OL</div>Ola Lund</div>
+                <div class="wf-o4-racer-track"><div class="wf-o4-racer-fill" style="width:73%"></div></div>
+                <div class="wf-o4-racer-val">+1.1</div>
+              </div>
+              <div class="wf-o4-racer">
+                <div class="wf-o4-racer-user"><div class="wf-o4-racer-avatar">IS</div>Ida Solheim</div>
+                <div class="wf-o4-racer-track"><div class="wf-o4-racer-fill" style="width:60%"></div></div>
+                <div class="wf-o4-racer-val">+0.9</div>
+              </div>
+
+              <div class="wf-o4-timeline">
+                <div class="wf-o4-timeline-bar wf-you" style="height:28%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:40%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:55%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:50%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:62%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:70%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:66%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:78%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:84%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:80%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:88%"></div>
+                <div class="wf-o4-timeline-bar wf-you" style="height:92%"></div>
+              </div>
+              <div class="wf-o4-timeline-labels"><span>uke 4</span><span>uke 8</span><span>uke 12</span></div>
+            </section>
+
+            <section class="wf-o4-milestones">
+              <div class="wf-o4-ms">
+                <div class="wf-o4-ms-label">Foran deg<span class="wf-marker">3</span></div>
+                <div class="wf-o4-ms-val">Martin</div>
+                <div class="wf-o4-ms-sub">0.2 SG foran · 2 plasseringer</div>
+              </div>
+              <div class="wf-o4-ms">
+                <div class="wf-o4-ms-label">Bak deg</div>
+                <div class="wf-o4-ms-val">Ola + Ida</div>
+                <div class="wf-o4-ms-sub">0.1 og 0.3 SG bak</div>
+              </div>
+              <div class="wf-o4-ms">
+                <div class="wf-o4-ms-label">Sprint siste 14 dager</div>
+                <div class="wf-o4-ms-val">+0.3 SG</div>
+                <div class="wf-o4-ms-sub">Best i gruppen denne perioden</div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Annotasjoner</h3>
+      <ul>
+        <li><strong>1. Hook</strong> — 3 konkrete venner, ikke abstrakt peer-gruppe. Øker engasjement.</li>
+        <li><strong>2. Progress bars + timeline</strong> — Nåværende rangering og historikk i samme seksjon.</li>
+        <li><strong>3. Milepæler</strong> — Narrativ rundt løpet: hvem er foran, hvem bak, hvem sprinter.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Stat Duel ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Stat Duel</span></h2>
+    <p class="option-description">Velg én venn fra peer-gruppen og få en head-to-head duell. VS-layout øverst, full duell-tabell for alle 6 kategorier, vinner-markering per rad og total-tally til slutt.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sammenligning</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div>
+                <div class="wf-sb-profile-name">Erik Hansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP 14.2</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sammenligning</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-pro-lock">
+              <div class="wf-sb-pro-lock-title">Pro-funksjon</div>
+              <div class="wf-sb-pro-lock-desc">Peer-sammenligning er del av Pro</div>
+            </div>
+          </aside>
+          <main class="wf-main">
+            <section class="wf-pghead">
+              <div>
+                <div class="wf-pghead-eyebrow">Sammenligning · Stat Duel</div>
+                <h1>Velg én motstander — head-to-head<span class="wf-marker">1</span></h1>
+                <p class="wf-pghead-sub">HCP 12–16 · 6 kategorier · sist 90 dager</p>
+              </div>
+              <div class="wf-pghead-pro-badge">Pro</div>
+            </section>
+
+            <section class="wf-o5-pickbar">
+              <span class="wf-o5-pickbar-label">Motstander<span class="wf-marker">2</span></span>
+              <span class="wf-o5-pick wf-active"><span class="wf-o5-pick-av">MB</span>Martin Berg</span>
+              <span class="wf-o5-pick"><span class="wf-o5-pick-av">OL</span>Ola Lund</span>
+              <span class="wf-o5-pick"><span class="wf-o5-pick-av">IS</span>Ida Solheim</span>
+              <span class="wf-o5-pick"><span class="wf-o5-pick-av">KV</span>Kari Voll</span>
+              <span class="wf-o5-pick">+ Søk</span>
+            </section>
+
+            <section class="wf-o5-vs">
+              <div class="wf-o5-vs-side wf-you">
+                <div class="wf-o5-vs-av">EH</div>
+                <div class="wf-o5-vs-name">Erik Hansen</div>
+                <div class="wf-o5-vs-meta">HCP 14.2 · Oslo GK</div>
+                <div class="wf-o5-vs-score">4</div>
+              </div>
+              <div class="wf-o5-vs-center">VS</div>
+              <div class="wf-o5-vs-side">
+                <div class="wf-o5-vs-av">MB</div>
+                <div class="wf-o5-vs-name">Martin Berg</div>
+                <div class="wf-o5-vs-meta">HCP 13.4 · Bogstad GK</div>
+                <div class="wf-o5-vs-score">2</div>
+              </div>
+            </section>
+
+            <section class="wf-o5-dueltable">
+              <div class="wf-o5-duelrow">
+                <div class="wf-o5-duelrow-val wf-left wf-win">+1.2</div>
+                <div class="wf-o5-duelrow-label">Strokes Gained<span class="wf-marker">3</span></div>
+                <div class="wf-o5-duelrow-val wf-right">+1.4</div>
+              </div>
+              <div class="wf-o5-duelrow">
+                <div class="wf-o5-duelrow-val wf-left wf-win">82.4</div>
+                <div class="wf-o5-duelrow-label">Score-snitt</div>
+                <div class="wf-o5-duelrow-val wf-right">83.1</div>
+              </div>
+              <div class="wf-o5-duelrow">
+                <div class="wf-o5-duelrow-val wf-left">62 %</div>
+                <div class="wf-o5-duelrow-label">Fairway %</div>
+                <div class="wf-o5-duelrow-val wf-right wf-win">68 %</div>
+              </div>
+              <div class="wf-o5-duelrow">
+                <div class="wf-o5-duelrow-val wf-left">41 %</div>
+                <div class="wf-o5-duelrow-label">GIR %</div>
+                <div class="wf-o5-duelrow-val wf-right wf-win">49 %</div>
+              </div>
+              <div class="wf-o5-duelrow">
+                <div class="wf-o5-duelrow-val wf-left wf-win">1.78</div>
+                <div class="wf-o5-duelrow-label">Putts / GIR</div>
+                <div class="wf-o5-duelrow-val wf-right">1.84</div>
+              </div>
+              <div class="wf-o5-duelrow">
+                <div class="wf-o5-duelrow-val wf-left wf-win">38 %</div>
+                <div class="wf-o5-duelrow-label">Scrambling</div>
+                <div class="wf-o5-duelrow-val wf-right">36 %</div>
+              </div>
+            </section>
+
+            <section class="wf-o5-tally">
+              <div class="wf-o5-tally-cell wf-you">
+                <div class="wf-o5-tally-label">Du vinner<span class="wf-marker">4</span></div>
+                <div class="wf-o5-tally-val">4 / 6</div>
+              </div>
+              <div class="wf-o5-tally-cell">
+                <div class="wf-o5-tally-label">Martin vinner</div>
+                <div class="wf-o5-tally-val">2 / 6</div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Annotasjoner</h3>
+      <ul>
+        <li><strong>1. Hook</strong> — Konkret 1-mot-1 motstander. Social motivation.</li>
+        <li><strong>2. Pick-bar</strong> — Bytt motstander uten sidebytte. Søk for å finne andre peers.</li>
+        <li><strong>3. Duel-tabell</strong> — Symmetrisk rad per kategori, vinner-markering (✓) per rad.</li>
+        <li><strong>4. Tally</strong> — Final-score som et sluttbilde. Gamifies comparison.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Summary</h2>
+    <div class="wf-summary">
+      <p>Fem mønstre for peer-sammenligning i portalen. Alle er Pro-gated og bygger på samme datagrunnlag (6 kategorier: SG, Score, Fairway %, GIR %, Putts/GIR, Scrambling · peer-gruppe HCP 12–16 · 90 dager).</p>
+      <table class="wf-summary-table">
+        <thead>
+          <tr><th>Option</th><th>Styrke</th><th>Svakhet</th><th>Best for</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>1. Peer Dashboard</strong></td><td>Rask oversikt, alle 6 kategorier synlige samtidig, tydelig over/under-indikator</td><td>Ikke dypdykk — må til annen side for detaljer</td><td>Standardflate, første besøk</td></tr>
+          <tr><td>2. Leaderboard</td><td>Konkret plassering, motiverende "hvor mye for å rykke opp"</td><td>Krever sammenligning på én metrikk av gangen</td><td>Konkurranse-innstilte brukere</td></tr>
+          <tr><td>3. Category Deep</td><td>Percentile, distribusjon, topp-5 — analytisk dybde</td><td>Tung informasjon, mindre "wow" ved første blikk</td><td>Avanserte brukere, coach-samarbeid</td></tr>
+          <tr><td>4. Progress Race</td><td>Sosial hook, narrativ, konkrete venner</td><td>Krever at brukeren har venner i peer-gruppen</td><td>Engasjerte sosiale spillere</td></tr>
+          <tr><td>5. Stat Duel</td><td>Gamified, 1-mot-1 engasjement, tally-effekt</td><td>Kun én motstander om gangen — ikke bred oversikt</td><td>Retention / viral loop</td></tr>
+        </tbody>
+      </table>
+      <div class="wf-summary-rec">
+        <strong>Anbefaling: Option 1 — Peer Dashboard.</strong> Trygg standardflate som svarer på hovedspørsmålet "hvordan står jeg vs. likesinnede?" uten kognitiv belastning. Alle 6 kategorier leses i ett blikk, med tydelig over/under-indikator og delta-tall. De andre fire kan legges inn som underflater eller Pro-utvidelser senere — Option 5 (Stat Duel) er sterk kandidat for iterasjon 2 pga. viral / social hook.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+/* ===== Option 1: Student Plans List — Clean + Polished =====
+   AK Golf MC Treningsplaner — tett liste med progress-barer og ukens fokus.
+   Selectors: #frame-opt1.clean / #frame-opt1.polished */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* Self-reveal badges */
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"] .sub-tab-badge,
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"] .sub-tab-badge { display: none; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"] { color: #666; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #333; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"].active { color: #000; border-bottom-color: #000; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"] { color: #666; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #333; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"].active { color: #000; border-bottom-color: #000; }
+
+/* macOS dots */
+#frame-opt1.clean .browser-dots span:nth-child(1), #frame-opt1.polished .browser-dots span:nth-child(1) { background: #ff5f57; }
+#frame-opt1.clean .browser-dots span:nth-child(2), #frame-opt1.polished .browser-dots span:nth-child(2) { background: #febc2e; }
+#frame-opt1.clean .browser-dots span:nth-child(3), #frame-opt1.polished .browser-dots span:nth-child(3) { background: #28c840; }
+
+/* ===== CLEAN ===== */
+#frame-opt1.clean .browser-content { background: #F5F8F7; font-family: 'Inter', -apple-system, system-ui, sans-serif; padding: 0; }
+#frame-opt1.clean .mc-shell { background: #F5F8F7; }
+#frame-opt1.clean .mc-topbar { background: #0A1F18; border-bottom: 1px solid rgba(209,248,67,0.1); }
+#frame-opt1.clean .mc-logo { color: #D1F843; }
+#frame-opt1.clean .mc-tab { color: rgba(255,255,255,0.55); }
+#frame-opt1.clean .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+#frame-opt1.clean .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; }
+#frame-opt1.clean .mc-search { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.55); }
+#frame-opt1.clean .mc-avatar { background: #D1F843; color: #0A1F18; font-weight: 700; }
+
+#frame-opt1.clean .mc-filter-row { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt1.clean .mc-filter-label { color: #A5B2AD; }
+#frame-opt1.clean .mc-search-input { background: #F5F8F7; border-color: rgba(0,88,64,0.1); color: #7A8C85; }
+#frame-opt1.clean .mc-pill { background: #fff; border-color: rgba(0,88,64,0.1); color: #324D45; }
+#frame-opt1.clean .mc-pill:hover { background: #F5F8F7; }
+#frame-opt1.clean .mc-pill-active { background: #005840; color: #fff; border-color: #005840; }
+#frame-opt1.clean .mc-pill-ghost { background: transparent; border-color: rgba(0,88,64,0.08); color: #7A8C85; }
+#frame-opt1.clean .mc-cta { background: #D1F843; color: #0A1F18; border-color: #D1F843; font-weight: 700; }
+
+#frame-opt1.clean .mc-kpi-strip { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt1.clean .mc-kpi { background: #F5F8F7; border-color: rgba(0,88,64,0.06); border-radius: 12px; }
+#frame-opt1.clean .mc-kpi-label { color: #A5B2AD; }
+#frame-opt1.clean .mc-kpi-val { color: #0A1F18; font-family: 'Inter'; }
+#frame-opt1.clean .mc-kpi-sub { color: #7A8C85; }
+
+#frame-opt1.clean .mc-avatar-lg { background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.1); font-weight: 700; }
+#frame-opt1.clean .mc-avatar-sm { background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.1); }
+
+#frame-opt1.clean .mc-plan-row-head { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.08); color: #A5B2AD; }
+#frame-opt1.clean .mc-plans-grid { background: #fff; }
+#frame-opt1.clean .mc-plan-row { border-bottom: 1px solid rgba(0,88,64,0.06); }
+#frame-opt1.clean .mc-plan-row:hover { background: #F5F8F7; }
+#frame-opt1.clean .mc-plan-elev-name { color: #0A1F18; }
+#frame-opt1.clean .mc-plan-elev-meta { color: #7A8C85; }
+#frame-opt1.clean .mc-plan-focus { color: #324D45; }
+#frame-opt1.clean .mc-plan-focus-week { color: #005840; }
+#frame-opt1.clean .mc-plan-bar { background: rgba(0,88,64,0.08); }
+#frame-opt1.clean .mc-plan-bar span { background: #005840; }
+#frame-opt1.clean .mc-plan-progress { color: #7A8C85; }
+#frame-opt1.clean .mc-plan-count { color: #0A1F18; }
+#frame-opt1.clean .mc-plan-instructor { color: #7A8C85; }
+#frame-opt1.clean .mc-plan-icon-btn { background: #fff; border-color: rgba(0,88,64,0.1); color: #7A8C85; }
+#frame-opt1.clean .mc-plan-icon-btn:hover { background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.2); }
+
+#frame-opt1.clean .mc-pagination { background: #fff; border-top: 1px solid rgba(0,88,64,0.08); color: #7A8C85; }
+
+/* ===== POLISHED ===== */
+#frame-opt1.polished .browser-content { background: #F5F8F7; font-family: 'Inter', -apple-system, system-ui, sans-serif; padding: 0; }
+#frame-opt1.polished .mc-shell { background: #F5F8F7; }
+#frame-opt1.polished .mc-topbar {
+  background: linear-gradient(180deg, #0A1F18 0%, #051a13 100%);
+  border-bottom: 1px solid rgba(209,248,67,0.12);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 12px rgba(0,0,0,0.15);
+}
+#frame-opt1.polished .mc-logo { color: #D1F843; letter-spacing: 0.12em; font-weight: 800; }
+#frame-opt1.polished .mc-tab { color: rgba(255,255,255,0.55); transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+#frame-opt1.polished .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+#frame-opt1.polished .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; box-shadow: 0 0 0 1px rgba(209,248,67,0.25), 0 2px 8px rgba(209,248,67,0.2); }
+#frame-opt1.polished .mc-search { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); }
+#frame-opt1.polished .mc-avatar { background: #D1F843; color: #0A1F18; font-weight: 800; box-shadow: 0 2px 6px rgba(209,248,67,0.25); }
+
+#frame-opt1.polished .mc-filter-row { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.06); box-shadow: 0 1px 0 rgba(0,88,64,0.03); }
+#frame-opt1.polished .mc-filter-label { color: #A5B2AD; font-weight: 700; }
+#frame-opt1.polished .mc-search-input { background: #F5F8F7; border-color: rgba(0,88,64,0.08); color: #7A8C85; }
+#frame-opt1.polished .mc-pill { background: #fff; border-color: rgba(0,88,64,0.1); color: #324D45; transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+#frame-opt1.polished .mc-pill:hover { background: #F5F8F7; border-color: rgba(0,88,64,0.2); transform: translateY(-1px); }
+#frame-opt1.polished .mc-pill-active { background: #005840; color: #fff; border-color: #005840; box-shadow: 0 2px 6px rgba(0,88,64,0.2); }
+#frame-opt1.polished .mc-pill-ghost { background: transparent; border-color: rgba(0,88,64,0.08); color: #7A8C85; }
+#frame-opt1.polished .mc-cta {
+  background: #D1F843; color: #0A1F18; border: 1px solid rgba(209,248,67,0.7); font-weight: 700;
+  box-shadow: 0 2px 8px rgba(209,248,67,0.3), 0 0 0 1px rgba(10,31,24,0.05) inset;
+  transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+#frame-opt1.polished .mc-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(209,248,67,0.4); }
+
+#frame-opt1.polished .mc-kpi-strip { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.06); }
+#frame-opt1.polished .mc-kpi {
+  background: #F5F8F7; border: 1px solid rgba(0,88,64,0.04); border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 8px rgba(0,0,0,0.02);
+}
+#frame-opt1.polished .mc-kpi-label { color: #A5B2AD; font-weight: 700; }
+#frame-opt1.polished .mc-kpi-val { color: #0A1F18; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+#frame-opt1.polished .mc-kpi-sub { color: #7A8C85; }
+
+#frame-opt1.polished .mc-avatar-lg {
+  background: linear-gradient(135deg, #E6F3F1 0%, #F5F8F7 100%);
+  color: #005840; border: 1px solid rgba(0,88,64,0.1); font-weight: 700;
+}
+#frame-opt1.polished .mc-avatar-sm { background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.1); font-weight: 700; }
+
+#frame-opt1.polished .mc-plan-row-head { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.08); color: #A5B2AD; font-weight: 700; letter-spacing: 0.1em; }
+#frame-opt1.polished .mc-plans-grid { background: #fff; }
+#frame-opt1.polished .mc-plan-row { border-bottom: 1px solid rgba(0,88,64,0.05); transition: background 0.2s cubic-bezier(0.4,0,0.2,1); }
+#frame-opt1.polished .mc-plan-row:hover { background: #F5F8F7; box-shadow: inset 3px 0 0 #005840; }
+#frame-opt1.polished .mc-plan-elev-name { color: #0A1F18; letter-spacing: -0.01em; }
+#frame-opt1.polished .mc-plan-elev-meta { color: #7A8C85; }
+#frame-opt1.polished .mc-plan-focus { color: #324D45; line-height: 1.5; }
+#frame-opt1.polished .mc-plan-focus-week { color: #005840; font-weight: 700; letter-spacing: 0.1em; }
+#frame-opt1.polished .mc-plan-bar {
+  background: rgba(0,88,64,0.08); height: 5px; border-radius: 3px;
+}
+#frame-opt1.polished .mc-plan-bar span {
+  background: linear-gradient(90deg, #005840 0%, #2A7D5A 100%);
+  box-shadow: 0 0 8px rgba(0,88,64,0.3);
+}
+#frame-opt1.polished .mc-plan-progress { color: #7A8C85; font-variant-numeric: tabular-nums; }
+#frame-opt1.polished .mc-plan-count { color: #0A1F18; font-variant-numeric: tabular-nums; }
+#frame-opt1.polished .mc-plan-instructor { color: #7A8C85; }
+#frame-opt1.polished .mc-plan-icon-btn {
+  background: #fff; border: 1px solid rgba(0,88,64,0.08); color: #7A8C85;
+  transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+#frame-opt1.polished .mc-plan-icon-btn:hover {
+  background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.2);
+  transform: translateY(-1px); box-shadow: 0 2px 4px rgba(0,88,64,0.1);
+}
+
+#frame-opt1.polished .mc-pagination { background: #fff; border-top: 1px solid rgba(0,88,64,0.06); color: #7A8C85; }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt1.polished .mc-plan-row, #frame-opt1.polished .mc-pill, #frame-opt1.polished .mc-cta, #frame-opt1.polished .mc-tab, #frame-opt1.polished .mc-plan-icon-btn { transition: none; }
+  #frame-opt1.polished .mc-pill:hover, #frame-opt1.polished .mc-cta:hover, #frame-opt1.polished .mc-plan-icon-btn:hover { transform: none; }
+}

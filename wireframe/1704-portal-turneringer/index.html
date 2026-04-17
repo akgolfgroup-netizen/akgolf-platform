@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turneringer — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Turneringer</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Discover</button>
+    <button class="tab-btn" data-tab="option-2">2: Map View</button>
+    <button class="tab-btn" data-tab="option-3">3: My Calendar</button>
+    <button class="tab-btn" data-tab="option-4">4: Pro Tour Focus</button>
+    <button class="tab-btn" data-tab="option-5">5: Level Filter</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Discover ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Discover</span></h2>
+    <p class="option-description">Søkbar discovery-side: søk + filter-chips (nivå, type, sted, periode), grid med turneringskort, side-panel for påmelding og forberedelses-checklist. Dekker alle kildene (lokalt, NGF, PGA, Euro via DataGolf).</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Turneringer<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Finn turneringer — fra klubbmesterskap til PGA Tour. Meld deg på, planlegg forberedelsene og følg spillere du heier på.</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Mine påmeldinger (3)</button>
+                <button class="wf-btn wf-btn-cta">+ Ny påmelding</button>
+              </div>
+            </div>
+
+            <div class="wf-toolbar"><span class="wf-marker">2</span>
+              <div class="wf-search"><span class="wf-search-ico"></span><span class="wf-search-input">Søk turnering, klubb, spiller …</span></div>
+              <span class="wf-chip wf-active">Alle<span class="wf-chip-count">284</span></span>
+              <span class="wf-chip">Lokalt<span class="wf-chip-count">42</span></span>
+              <span class="wf-chip">NGF<span class="wf-chip-count">87</span></span>
+              <span class="wf-chip">PGA<span class="wf-chip-count">48</span></span>
+              <span class="wf-chip">Euro<span class="wf-chip-count">52</span></span>
+              <span class="wf-chip">Apr–Jun</span>
+            </div>
+
+            <div class="wf-split">
+              <div>
+                <div class="wf-section-head">
+                  <span class="wf-section-title">KOMMENDE (12)</span>
+                  <span class="wf-section-meta">Sortert: nærmest først</span>
+                </div>
+                <div class="wf-tourn-grid"><span class="wf-marker">3</span>
+                  <article class="wf-tourn">
+                    <div class="wf-tourn-head">
+                      <span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>Klubb</span>
+                      <span class="wf-tourn-status wf-status-registered">Påmeldt</span>
+                    </div>
+                    <div><h3 class="wf-tourn-name">Klubbmesterskap 2026 — R1</h3><div class="wf-tourn-host">Oslo Golfklubb</div></div>
+                    <div class="wf-tourn-meta">
+                      <span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>18.–19. apr</span>
+                      <span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>36 hull</span>
+                      <span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>Slag</span>
+                    </div>
+                    <div class="wf-tourn-foot"><span class="wf-tourn-spots"><strong>54</strong> / 72 plasser</span><div class="wf-tourn-actions"><button class="wf-tourn-btn">Detaljer</button></div></div>
+                  </article>
+                  <article class="wf-tourn">
+                    <div class="wf-tourn-head"><span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>NGF Regional</span><span class="wf-tourn-status">Åpen</span></div>
+                    <div><h3 class="wf-tourn-name">Østlands-Tour #3</h3><div class="wf-tourn-host">Losby GK · 54 hull</div></div>
+                    <div class="wf-tourn-meta"><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>26.–28. apr</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>HCP ≤ 10.4</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>650 kr</span></div>
+                    <div class="wf-tourn-foot"><span class="wf-tourn-spots"><strong>31</strong> / 60 plasser</span><div class="wf-tourn-actions"><button class="wf-tourn-btn">Detaljer</button><button class="wf-tourn-btn wf-tourn-btn-primary">Meld på</button></div></div>
+                  </article>
+                  <article class="wf-tourn">
+                    <div class="wf-tourn-head"><span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>PGA Tour</span><span class="wf-tourn-status">Følger</span></div>
+                    <div><h3 class="wf-tourn-name">RBC Heritage</h3><div class="wf-tourn-host">Harbour Town GL · Hilton Head</div></div>
+                    <div class="wf-tourn-meta"><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>17.–20. apr</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>$20M</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>Signature</span></div>
+                    <div class="wf-tourn-foot"><span class="wf-tourn-spots">Forsvarer: <strong>S. Scheffler</strong></span><div class="wf-tourn-actions"><button class="wf-tourn-btn">Leaderboard</button></div></div>
+                  </article>
+                  <article class="wf-tourn">
+                    <div class="wf-tourn-head"><span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>DP World</span><span class="wf-tourn-status">Følger</span></div>
+                    <div><h3 class="wf-tourn-name">Volvo China Open</h3><div class="wf-tourn-host">Hidden Grace GC · Shenzhen</div></div>
+                    <div class="wf-tourn-meta"><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>24.–27. apr</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>€2.3M</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>Rolex</span></div>
+                    <div class="wf-tourn-foot"><span class="wf-tourn-spots">Forsvarer: <strong>A. Rai</strong></span><div class="wf-tourn-actions"><button class="wf-tourn-btn">Leaderboard</button></div></div>
+                  </article>
+                </div>
+              </div>
+
+              <aside>
+                <div class="wf-panel"><span class="wf-marker">4</span>
+                  <h3 class="wf-panel-title">Meld på — Østlands-Tour #3</h3>
+                  <p class="wf-panel-sub">Din Pro-pakke dekker påmeldingsavgiften.</p>
+                  <div class="wf-form-row"><span class="wf-form-label">Plan-nivå</span><div class="wf-form-plan"><span class="wf-form-plan-badge">PRO</span><span>Dekker 650 kr · 4 igjen i år</span></div></div>
+                  <div class="wf-form-row"><span class="wf-form-label">HCP ved påmelding</span><div class="wf-form-input">8.2 (pr. 15. apr)</div></div>
+                  <div class="wf-form-row"><span class="wf-form-label">Notater til coach</span><div class="wf-form-input wf-form-textarea">Første turnering etter skade — ønsker taktisk plan.</div></div>
+                  <button class="wf-btn wf-btn-cta" style="width:100%; justify-content:center;">Bekreft påmelding</button>
+                </div>
+
+                <div class="wf-panel" style="margin-top:12px;">
+                  <h3 class="wf-panel-title">Forberedelser<span class="wf-marker">5</span></h3>
+                  <p class="wf-panel-sub">Klubbmesterskap — 3 dager igjen</p>
+                  <div class="wf-prep-list">
+                    <div class="wf-prep-item"><span class="wf-prep-check wf-done"></span><div><div class="wf-prep-label wf-done">Bane-recon runde</div><div class="wf-prep-meta">Søn 14. apr</div></div></div>
+                    <div class="wf-prep-item"><span class="wf-prep-check wf-done"></span><div><div class="wf-prep-label wf-done">Yardage-book oppdatert</div><div class="wf-prep-meta">Lastet ned fra klubb</div></div></div>
+                    <div class="wf-prep-item"><span class="wf-prep-check"></span><div><div class="wf-prep-label">Putting-økt: 3–6m</div><div class="wf-prep-meta">Plan: tirs kveld</div></div></div>
+                    <div class="wf-prep-item"><span class="wf-prep-check"></span><div><div class="wf-prep-label">Strategi-møte m/ Anders</div><div class="wf-prep-meta">Ikke booket</div></div></div>
+                    <div class="wf-prep-item"><span class="wf-prep-check"></span><div><div class="wf-prep-label">Utstyrs-sjekk</div><div class="wf-prep-meta">Grips, baller, glove</div></div></div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul>
+      <li>1 — Sidetittel + kontekst: dekker lokalt, NGF, PGA og Euro i samme vy.</li>
+      <li>2 — Søk + filter-chips med live-telling per kategori og periode-chip.</li>
+      <li>3 — Turneringskort med nivå-badge, status, meta og primærhandling (Meld på / Leaderboard).</li>
+      <li>4 — Påmeldings-panel viser plan-nivå (dekning), HCP, og notater til coach.</li>
+      <li>5 — Forberedelses-checklist auto-generert per turnering med status og deadlines.</li>
+    </ul></div>
+  </div>
+
+  <!-- ===== OPTION 2: Map View ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Map View</span></h2>
+    <p class="option-description">Turneringer plassert geografisk på et kart — pins kodet etter nivå. Bra for å se hva som skjer i nærheten og planlegge reise til NGF-turneringer.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer?view=map</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div><h1 class="wf-page-title">Kartvisning</h1><p class="wf-page-sub">Turneringer nær deg — innenfor 200 km radius.</p></div>
+              <div class="wf-page-actions"><button class="wf-btn">Liste</button><button class="wf-btn wf-active wf-btn-cta">Kart</button></div>
+            </div>
+            <div class="wf-toolbar">
+              <span class="wf-chip wf-active">Alle</span>
+              <span class="wf-chip">Klubb</span>
+              <span class="wf-chip">NGF</span>
+              <span class="wf-chip">Internasjonal</span>
+              <span class="wf-chip">&lt; 100 km</span>
+              <span class="wf-chip">&lt; 200 km</span>
+              <span class="wf-chip">Apr–Jun</span>
+            </div>
+
+            <div class="wf-map"><span class="wf-marker">1</span>
+              <div class="wf-map-canvas">
+                <div class="wf-map-legend">
+                  <div class="wf-map-legend-row"><span class="wf-map-legend-dot"></span>Klubb (12)</div>
+                  <div class="wf-map-legend-row"><span class="wf-map-legend-dot" style="background:#333;"></span>NGF (8)</div>
+                  <div class="wf-map-legend-row"><span class="wf-map-legend-dot" style="background:#999;"></span>Internasjonal (3)</div>
+                </div>
+                <div class="wf-map-zoom"><button>+</button><button>−</button></div>
+                <div class="wf-map-pin wf-pin-active" style="top:28%; left:42%;"><span class="wf-map-pin-label">3</span></div>
+                <div class="wf-map-pin" style="top:20%; left:55%;"><span class="wf-map-pin-label">1</span></div>
+                <div class="wf-map-pin" style="top:45%; left:38%;"><span class="wf-map-pin-label">2</span></div>
+                <div class="wf-map-pin" style="top:58%; left:52%;"><span class="wf-map-pin-label">1</span></div>
+                <div class="wf-map-pin" style="top:36%; left:68%;"><span class="wf-map-pin-label">4</span></div>
+                <div class="wf-map-pin" style="top:65%; left:30%;"><span class="wf-map-pin-label">1</span></div>
+                <div class="wf-map-pin" style="top:72%; left:62%;"><span class="wf-map-pin-label">2</span></div>
+              </div>
+            </div>
+
+            <div class="wf-section-head"><span class="wf-section-title">VALGT OMRÅDE — OSLO</span><span class="wf-section-meta">3 turneringer, neste 60 dager</span></div>
+            <div class="wf-tourn-grid">
+              <article class="wf-tourn">
+                <div class="wf-tourn-head"><span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>Klubb</span><span class="wf-tourn-status">Åpen</span></div>
+                <div><h3 class="wf-tourn-name">Oslo Open 2026</h3><div class="wf-tourn-host">Oslo GK · 12 km</div></div>
+                <div class="wf-tourn-meta"><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>5. mai</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>18 hull</span></div>
+                <div class="wf-tourn-foot"><span class="wf-tourn-spots"><strong>42</strong> / 80</span><div class="wf-tourn-actions"><button class="wf-tourn-btn wf-tourn-btn-primary">Meld på</button></div></div>
+              </article>
+              <article class="wf-tourn">
+                <div class="wf-tourn-head"><span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>NGF</span><span class="wf-tourn-status">Åpen</span></div>
+                <div><h3 class="wf-tourn-name">Losby Challenge</h3><div class="wf-tourn-host">Losby GK · 24 km</div></div>
+                <div class="wf-tourn-meta"><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>12.–13. mai</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>HCP ≤ 8</span></div>
+                <div class="wf-tourn-foot"><span class="wf-tourn-spots"><strong>18</strong> / 54</span><div class="wf-tourn-actions"><button class="wf-tourn-btn wf-tourn-btn-primary">Meld på</button></div></div>
+              </article>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul><li>1 — Pins grupperer turneringer per klubb, tall viser antall. Legend oppe til venstre.</li></ul></div>
+  </div>
+
+  <!-- ===== OPTION 3: My Calendar ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">My Calendar</span></h2>
+    <p class="option-description">Månedskalender med kun dine påmeldinger og følgede turneringer fremhevet. Designet for spillere som allerede har planer — mindre discovery, mer oversikt.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer?view=min</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div><h1 class="wf-page-title">Mine turneringer</h1><p class="wf-page-sub">3 påmeldinger · 7 følger · sesongen 2026.</p></div>
+              <div class="wf-page-actions"><button class="wf-btn">Finn flere</button><button class="wf-btn wf-btn-cta">+ Ny påmelding</button></div>
+            </div>
+
+            <div class="wf-split">
+              <div class="wf-cal-month">
+                <div class="wf-cal-head"><button class="wf-btn-icon">‹</button><span class="wf-cal-title">April 2026</span><button class="wf-btn-icon">›</button></div>
+                <div class="wf-cal-grid">
+                  <div class="wf-cal-day-label">Man</div><div class="wf-cal-day-label">Tir</div><div class="wf-cal-day-label">Ons</div><div class="wf-cal-day-label">Tor</div><div class="wf-cal-day-label">Fre</div><div class="wf-cal-day-label">Lør</div><div class="wf-cal-day-label">Søn</div>
+                  <div class="wf-cal-cell wf-outside"><span class="wf-cal-cell-num">31</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">1</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">2</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">3</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">4</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">5</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">6</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">7</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">8</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">9</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">10</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">11</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">12</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">13</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">14</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">15</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">16</span></div>
+                  <div class="wf-cal-cell wf-has-tourn"><span class="wf-cal-cell-num">17</span><span class="wf-cal-tourn-mini">RBC Heritage</span><span class="wf-cal-dot"></span></div>
+                  <div class="wf-cal-cell wf-registered"><span class="wf-cal-cell-num">18</span><span class="wf-cal-tourn-mini">Klubb-MS R1</span><span class="wf-cal-dot"></span></div>
+                  <div class="wf-cal-cell wf-registered"><span class="wf-cal-cell-num">19</span><span class="wf-cal-tourn-mini">Klubb-MS R2</span><span class="wf-cal-dot"></span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">20</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">21</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">22</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">23</span></div>
+                  <div class="wf-cal-cell wf-has-tourn"><span class="wf-cal-cell-num">24</span><span class="wf-cal-tourn-mini">China Open</span><span class="wf-cal-dot"></span></div>
+                  <div class="wf-cal-cell wf-has-tourn"><span class="wf-cal-cell-num">25</span><span class="wf-cal-tourn-mini">China Open</span><span class="wf-cal-dot"></span></div>
+                  <div class="wf-cal-cell wf-registered"><span class="wf-cal-cell-num">26</span><span class="wf-cal-tourn-mini">Østland #3</span><span class="wf-cal-dot"></span></div>
+                  <div class="wf-cal-cell wf-registered"><span class="wf-cal-cell-num">27</span><span class="wf-cal-tourn-mini">Østland #3</span><span class="wf-cal-dot"></span></div>
+                  <div class="wf-cal-cell wf-registered"><span class="wf-cal-cell-num">28</span><span class="wf-cal-tourn-mini">Østland #3</span><span class="wf-cal-dot"></span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">29</span></div>
+                  <div class="wf-cal-cell"><span class="wf-cal-cell-num">30</span></div>
+                  <div class="wf-cal-cell wf-outside"><span class="wf-cal-cell-num">1</span></div>
+                  <div class="wf-cal-cell wf-outside"><span class="wf-cal-cell-num">2</span></div>
+                  <div class="wf-cal-cell wf-outside"><span class="wf-cal-cell-num">3</span></div>
+                </div>
+              </div>
+
+              <aside>
+                <div class="wf-panel">
+                  <h3 class="wf-panel-title">Neste påmelding</h3>
+                  <p class="wf-panel-sub">Om 3 dager · Oslo GK</p>
+                  <div style="font-size:14px; font-weight:700; color:#000; margin-bottom:4px;">Klubbmesterskap 2026</div>
+                  <div style="font-size:11px; color:#666; margin-bottom:10px;">18.–19. apr · 36 hull · Slag</div>
+                  <button class="wf-btn" style="width:100%; justify-content:center;">Se forberedelser (3/5)</button>
+                </div>
+                <div class="wf-panel" style="margin-top:12px;">
+                  <h3 class="wf-panel-title">Sesongmål 2026</h3>
+                  <div style="font-size:11px; color:#666; line-height:1.6;">
+                    <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #eee;"><span>Turneringer</span><strong style="color:#000;">3 / 8</strong></div>
+                    <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed #eee;"><span>NGF-poeng</span><strong style="color:#000;">140</strong></div>
+                    <div style="display:flex; justify-content:space-between; padding:6px 0;"><span>Beste plassering</span><strong style="color:#000;">T8</strong></div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul><li>Kalender — svart celle = påmeldt, outline = følger. Høyre panel viser neste påmelding + sesongmål.</li></ul></div>
+  </div>
+
+  <!-- ===== OPTION 4: Pro Tour Focus ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Pro Tour Focus</span></h2>
+    <p class="option-description">Schedule-tabell med kun PGA + DP World Tour fra DataGolf. For spillere som vil følge proffene, se leaderboards og lære av forsvarere.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer?view=pro</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div><h1 class="wf-page-title">Pro Tour Schedule</h1><p class="wf-page-sub">PGA Tour og DP World Tour — data fra DataGolf. Oppdatert ukentlig.</p></div>
+              <div class="wf-page-actions"><button class="wf-btn">Mine favoritt-spillere (4)</button><button class="wf-btn">Eksporter</button></div>
+            </div>
+
+            <div class="wf-tour-tabs">
+              <button class="wf-tour-tab wf-active">PGA Tour</button>
+              <button class="wf-tour-tab">DP World Tour</button>
+              <button class="wf-tour-tab">LIV</button>
+              <button class="wf-tour-tab">Majors</button>
+            </div>
+
+            <div class="wf-tour-row" style="background:#fafafa; font-weight:700; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:#999;">
+              <div>Uke</div><div>Turnering</div><div>Premiepott</div><div>Forsvarer</div><div></div>
+            </div>
+            <div class="wf-tour-row">
+              <div><div class="wf-tour-date">17–20</div><div class="wf-tour-date-mo">APR</div></div>
+              <div><div class="wf-tour-name">RBC Heritage</div><div class="wf-tour-course">Harbour Town GL · Hilton Head</div></div>
+              <div class="wf-tour-purse">$20.0M · Signature</div>
+              <div class="wf-tour-defender">S. Scheffler</div>
+              <div><button class="wf-tour-follow wf-active">Følger</button></div>
+            </div>
+            <div class="wf-tour-row">
+              <div><div class="wf-tour-date">24–27</div><div class="wf-tour-date-mo">APR</div></div>
+              <div><div class="wf-tour-name">Zurich Classic</div><div class="wf-tour-course">TPC Louisiana · New Orleans</div></div>
+              <div class="wf-tour-purse">$9.2M · Team</div>
+              <div class="wf-tour-defender">R. McIlroy / S. Lowry</div>
+              <div><button class="wf-tour-follow">Følg</button></div>
+            </div>
+            <div class="wf-tour-row">
+              <div><div class="wf-tour-date">1–4</div><div class="wf-tour-date-mo">MAI</div></div>
+              <div><div class="wf-tour-name">CJ Cup Byron Nelson</div><div class="wf-tour-course">TPC Craig Ranch · McKinney</div></div>
+              <div class="wf-tour-purse">$9.9M</div>
+              <div class="wf-tour-defender">T. Fleetwood</div>
+              <div><button class="wf-tour-follow">Følg</button></div>
+            </div>
+            <div class="wf-tour-row">
+              <div><div class="wf-tour-date">8–11</div><div class="wf-tour-date-mo">MAI</div></div>
+              <div><div class="wf-tour-name">Truist Championship</div><div class="wf-tour-course">Quail Hollow Club · Charlotte</div></div>
+              <div class="wf-tour-purse">$20.0M · Signature</div>
+              <div class="wf-tour-defender">R. McIlroy</div>
+              <div><button class="wf-tour-follow wf-active">Følger</button></div>
+            </div>
+            <div class="wf-tour-row">
+              <div><div class="wf-tour-date">15–18</div><div class="wf-tour-date-mo">MAI</div></div>
+              <div><div class="wf-tour-name">PGA Championship</div><div class="wf-tour-course">Quail Hollow · Charlotte</div></div>
+              <div class="wf-tour-purse">$19.0M · Major</div>
+              <div class="wf-tour-defender">X. Schauffele</div>
+              <div><button class="wf-tour-follow wf-active">Følger</button></div>
+            </div>
+            <div class="wf-tour-row">
+              <div><div class="wf-tour-date">22–25</div><div class="wf-tour-date-mo">MAI</div></div>
+              <div><div class="wf-tour-name">Charles Schwab Challenge</div><div class="wf-tour-course">Colonial CC · Fort Worth</div></div>
+              <div class="wf-tour-purse">$9.5M</div>
+              <div class="wf-tour-defender">D. Berger</div>
+              <div><button class="wf-tour-follow">Følg</button></div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul><li>Tabell-layout optimalisert for ukentlig skanning. Følger-knapp sender varsel ved leaderboard-oppdateringer.</li></ul></div>
+  </div>
+
+  <!-- ===== OPTION 5: Level Filter ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Level Filter</span></h2>
+    <p class="option-description">Fire store nivå-kort på toppen (Klubb, Regional, Norsk, Internasjonal). Klikk filtrerer alt under. For brukere som tenker i hierarkier.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer?level=regional</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div><h1 class="wf-page-title">Turneringer per nivå</h1><p class="wf-page-sub">Velg hvilket konkurransenivå du vil utforske.</p></div>
+              <div class="wf-page-actions"><button class="wf-btn wf-btn-cta">+ Ny påmelding</button></div>
+            </div>
+
+            <div class="wf-level-grid">
+              <div class="wf-level-card">
+                <div class="wf-level-label">Klubb</div>
+                <div class="wf-level-count">42</div>
+                <div class="wf-level-desc">Klubbmesterskap, månedstreff, matchplay. Lav terskel, lokalt.</div>
+              </div>
+              <div class="wf-level-card wf-active">
+                <div class="wf-level-label">Regional</div>
+                <div class="wf-level-count">87</div>
+                <div class="wf-level-desc">NGF-turneringer i ditt distrikt. HCP-krav og NGF-poeng.</div>
+              </div>
+              <div class="wf-level-card">
+                <div class="wf-level-label">Norsk</div>
+                <div class="wf-level-count">24</div>
+                <div class="wf-level-desc">NGF Tour, NM, Norsk Open. Nasjonalt nivå.</div>
+              </div>
+              <div class="wf-level-card">
+                <div class="wf-level-label">Internasjonal</div>
+                <div class="wf-level-count">131</div>
+                <div class="wf-level-desc">PGA, DP World, LIV, Majors. Følg og lær.</div>
+              </div>
+            </div>
+
+            <div class="wf-section-head"><span class="wf-section-title">REGIONAL — NGF ØSTLANDSDISTRIKT</span><span class="wf-section-meta">12 turneringer, sesongen 2026</span></div>
+            <div class="wf-tourn-grid">
+              <article class="wf-tourn">
+                <div class="wf-tourn-head"><span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>NGF Regional</span><span class="wf-tourn-status">Åpen</span></div>
+                <div><h3 class="wf-tourn-name">Østlands-Tour #3</h3><div class="wf-tourn-host">Losby GK</div></div>
+                <div class="wf-tourn-meta"><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>26.–28. apr</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>HCP ≤ 10.4</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>NGF 12p</span></div>
+                <div class="wf-tourn-foot"><span class="wf-tourn-spots"><strong>31</strong> / 60</span><div class="wf-tourn-actions"><button class="wf-tourn-btn wf-tourn-btn-primary">Meld på</button></div></div>
+              </article>
+              <article class="wf-tourn">
+                <div class="wf-tourn-head"><span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>NGF Regional</span><span class="wf-tourn-status">Åpen</span></div>
+                <div><h3 class="wf-tourn-name">Miklagard Open</h3><div class="wf-tourn-host">Miklagard GK</div></div>
+                <div class="wf-tourn-meta"><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>10.–11. mai</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>HCP ≤ 15</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>NGF 8p</span></div>
+                <div class="wf-tourn-foot"><span class="wf-tourn-spots"><strong>44</strong> / 96</span><div class="wf-tourn-actions"><button class="wf-tourn-btn wf-tourn-btn-primary">Meld på</button></div></div>
+              </article>
+              <article class="wf-tourn">
+                <div class="wf-tourn-head"><span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>NGF Regional</span><span class="wf-tourn-status">Ventliste</span></div>
+                <div><h3 class="wf-tourn-name">Kongsberg Masters</h3><div class="wf-tourn-host">Kongsberg GK</div></div>
+                <div class="wf-tourn-meta"><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>24.–25. mai</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>HCP ≤ 6</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>NGF 15p</span></div>
+                <div class="wf-tourn-foot"><span class="wf-tourn-spots"><strong>60</strong> / 60 · 4 på liste</span><div class="wf-tourn-actions"><button class="wf-tourn-btn">Ventliste</button></div></div>
+              </article>
+              <article class="wf-tourn">
+                <div class="wf-tourn-head"><span class="wf-tourn-level"><span class="wf-tourn-level-dot"></span>NGF Regional</span><span class="wf-tourn-status">Åpen</span></div>
+                <div><h3 class="wf-tourn-name">Tyrifjord Cup</h3><div class="wf-tourn-host">Tyrifjord GK</div></div>
+                <div class="wf-tourn-meta"><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>7.–8. jun</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>HCP ≤ 12</span><span class="wf-tourn-meta-row"><span class="wf-tourn-meta-ico"></span>NGF 10p</span></div>
+                <div class="wf-tourn-foot"><span class="wf-tourn-spots"><strong>22</strong> / 72</span><div class="wf-tourn-actions"><button class="wf-tourn-btn wf-tourn-btn-primary">Meld på</button></div></div>
+              </article>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul><li>Fire nivå-kort fungerer som radio-filter. Aktiv = svart. Listen under oppdateres live.</li></ul></div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning av alternativer</h2>
+    <p class="option-description">Vurdering av hvert alternativ mot målgruppe, kompleksitet og teknisk risiko.</p>
+
+    <table class="wf-rec-table">
+      <thead><tr><th>Alternativ</th><th>Styrke</th><th>Primær bruker</th><th>Kompleksitet</th><th>Teknisk risiko</th><th>Score</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Discover</strong></td><td>Dekker alle kilder i én vy, søkbar, påmelding inline</td><td>Alle spillere</td><td>Middels</td><td>Lav</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Map View</strong></td><td>Geografisk oversikt, bra for reise-planlegging</td><td>Regionale spillere</td><td>Høy (kart-API)</td><td>Middels (Mapbox)</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>3. My Calendar</strong></td><td>Rent fokus på mine planer, tett på sesongmål</td><td>Aktive turneringsspillere</td><td>Lav</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Pro Tour Focus</strong></td><td>Schedule-tabell for fans av PGA/Euro</td><td>Fans, ikke aktive</td><td>Lav</td><td>Middels (DataGolf)</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>5. Level Filter</strong></td><td>Hierarkisk filter, tydelig mental modell</td><td>Nivå-bevisste spillere</td><td>Lav</td><td>Lav</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Discover (med My Calendar som viktig fallback-tab)</h3>
+      <p>Discover er den eneste visningen som dekker alle fire kildene (lokalt, NGF, PGA, Euro) i én enhetlig IA. Søk + filter-chips + kort-grid er et kjent mønster og lavkomplekst å bygge. Påmeldings-panelet og forberedelses-checklist ligger ved siden av listen — brukeren slipper å navigere bort for å handle.</p>
+      <p><strong>Implementasjons-flow:</strong></p>
+      <ul>
+        <li>Lever Option 1 som primær visning på /portal/turneringer.</li>
+        <li>Bytt mellom "Alle" og "Mine" (Option 3) via tab-toggle i toolbar.</li>
+        <li>Kart (Option 2) som sekundær view-toggle — krever Mapbox, skyver til Fase 2.</li>
+        <li>Pro Tour (Option 4) som dedikert underseksjon når brukeren klikker PGA/Euro-chip.</li>
+        <li>Level-kortene (Option 5) kan gjenbrukes som entry-point på Oversikt-siden.</li>
+      </ul>
+      <p><strong>Teknisk:</strong> Lokalt + NGF via Golfbox-sync. PGA/Euro via DataGolf API. Plan-nivå-dekning av påmeldingsavgift kobles mot CoachingPackage i Prisma. Forberedelses-checklist genereres fra turneringens type + dager igjen.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

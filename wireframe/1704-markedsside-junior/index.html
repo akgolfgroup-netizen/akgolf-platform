@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Junior Academy — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Junior Academy</span> — <span id="project-name">AK Golf Platform</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Parent Trust</button>
+    <button class="tab-btn" data-tab="option-2">2: Age Journey</button>
+    <button class="tab-btn" data-tab="option-3">3: Pyramid Learn</button>
+    <button class="tab-btn" data-tab="option-4">4: Coach Close-Up</button>
+    <button class="tab-btn" data-tab="option-5">5: Results Story</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Parent Trust ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Parent Trust</span></h2>
+    <p class="option-description">Tillitsbygging først — for foreldre som vurderer å sende barnet sitt til golf. Trust-strip, alders-gruppering, metode, NGF-godkjenning. Trygg standard.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/junior-academy</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Utvikling</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Book prøveøkt</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">JUNIOR ACADEMY · 8–18 ÅR<span class="wf-marker">1</span></div>
+          <h1 class="wf-headline">La barna dine lære å elske golfen — og bli gode.</h1>
+          <p class="wf-subhead">Junior Academy gir barn og ungdom strukturert golfopplæring tilpasset alder og modning. Trygt miljø, tydelig progresjon, en voksen som bryr seg.</p>
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Book prøveøkt<span class="wf-marker">2</span></button>
+            <button class="wf-btn wf-btn-secondary">Se programmet →</button>
+          </div>
+          <div class="wf-device wf-device-large">Foto: junior-gruppe på grønt gress, smilende trener i bakgrunn<span class="wf-marker">3</span></div>
+        </section>
+
+        <section class="wf-trust-strip">
+          <div class="wf-trust-grid">
+            <div class="wf-trust-item">
+              <div class="wf-trust-number">NGF</div>
+              <div class="wf-trust-label">Følger Norges Golfforbund sin juniorpyramide<span class="wf-marker">4</span></div>
+            </div>
+            <div class="wf-trust-item">
+              <div class="wf-trust-number">120+</div>
+              <div class="wf-trust-label">juniorer trener hos oss hvert år</div>
+            </div>
+            <div class="wf-trust-item">
+              <div class="wf-trust-number">15 år</div>
+              <div class="wf-trust-label">erfaring med junior-coaching</div>
+            </div>
+            <div class="wf-trust-item">
+              <div class="wf-trust-number">1:4</div>
+              <div class="wf-trust-label">maks trener-forhold i gruppe</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-age-groups">
+          <h2 class="wf-h2">Tilpasset alder og utvikling<span class="wf-marker">5</span></h2>
+          <p class="wf-subhead" style="margin-bottom:40px">Barn utvikler seg i ulikt tempo. Junior Academy deler inn etter alder og modning — ikke én størrelse for alle.</p>
+          <div class="wf-grid-3">
+            <div class="wf-age-card">
+              <div class="wf-age-range">8–12 ÅR</div>
+              <h3 class="wf-age-title">Lek og lær</h3>
+              <p class="wf-age-desc">Motorikk, balanse, koordinasjon — gjennom lek. Golfen kommer naturlig når grunnlaget er på plass.</p>
+              <ul class="wf-age-focus-list">
+                <li>Moro, mestring, trygghet</li>
+                <li>Enkel teknikk + spill på banen</li>
+                <li>Sosialt samspill i gruppe</li>
+              </ul>
+              <div class="wf-age-meta"><span>60 min · 1x/uke</span></div>
+            </div>
+            <div class="wf-age-card">
+              <div class="wf-age-range">13–15 ÅR</div>
+              <h3 class="wf-age-title">Teknikk og struktur</h3>
+              <p class="wf-age-desc">Dypere teknisk arbeid, introduksjon til HCP-system og turnering. Strukturert progresjon med individuelle mål.</p>
+              <ul class="wf-age-focus-list">
+                <li>Treningspyramiden fra NGF</li>
+                <li>Egen treningsplan i Portalen</li>
+                <li>Regionale turneringer</li>
+              </ul>
+              <div class="wf-age-meta"><span>90 min · 1–2x/uke</span></div>
+            </div>
+            <div class="wf-age-card">
+              <div class="wf-age-range">16–18 ÅR</div>
+              <h3 class="wf-age-title">Konkurranse og retning</h3>
+              <p class="wf-age-desc">For ungdom som sikter mot elitenivå, college eller videre satsing. Individuell plan + TrackMan-analyse.</p>
+              <ul class="wf-age-focus-list">
+                <li>Trackman + video-analyse</li>
+                <li>Fysisk trening + mental coaching</li>
+                <li>Nasjonale turneringer + college-prep</li>
+              </ul>
+              <div class="wf-age-meta"><span>120 min · 2–3x/uke</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark">
+          <div class="wf-pyramid-label">METODEN</div>
+          <h2 class="wf-h2-dark">Treningspyramiden — også for juniorer<span class="wf-marker">6</span></h2>
+          <p class="wf-subhead-dark">Fem lag. Vi starter med FYS — motorikk og bevegelse — og bygger oppover etter hvert som barnet modnes. Ingen hopper over grunnlaget.</p>
+          <div class="wf-pyramid">
+            <div class="wf-pyramid-layer" style="width:20%">TURN</div>
+            <div class="wf-pyramid-layer" style="width:40%">SPILL</div>
+            <div class="wf-pyramid-layer" style="width:60%">SLAG</div>
+            <div class="wf-pyramid-layer" style="width:80%">TEK</div>
+            <div class="wf-pyramid-layer" style="width:100%">FYS</div>
+          </div>
+          <p class="wf-subhead-dark">Utviklet av Norges Golfforbund. Implementert gjennom AK Golf sin coaching-filosofi i 15 år.</p>
+        </section>
+
+        <section class="wf-pricing">
+          <h2 class="wf-h2">Pakker for junior-coaching</h2>
+          <p class="wf-subhead" style="margin-bottom:40px">Fra enkeltokt til intensiv skoleferie-uke. Velg det som passer barnet.</p>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Drop-in</div>
+              <div class="wf-tier-price">450 kr</div>
+              <div class="wf-tier-price-unit">per enkeltøkt</div>
+              <ul>
+                <li>Gruppetrening 60–120 min</li>
+                <li>Treningspyramiden-fokus</li>
+                <li>Ingen binding</li>
+                <li>Perfekt for å prøve</li>
+              </ul>
+              <button class="wf-btn wf-btn-secondary">Book drop-in</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Mest valgt</div>
+              <div class="wf-tier-name">Månedspakke</div>
+              <div class="wf-tier-price">1 200 kr</div>
+              <div class="wf-tier-price-unit">per måned</div>
+              <ul>
+                <li>4 økter per måned</li>
+                <li>Egen gruppe etter alder</li>
+                <li>Portal-tilgang (treningslogg)</li>
+                <li>Foreldre-rapport hver måned</li>
+              </ul>
+              <button class="wf-btn wf-btn-cta">Start månedspakke</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Intensiv</div>
+              <div class="wf-tier-price">2 800 kr</div>
+              <div class="wf-tier-price-unit">for hele uken</div>
+              <ul>
+                <li>5 dager i skoleferie</li>
+                <li>Kl. 10–14 hver dag</li>
+                <li>Lunsj inkludert</li>
+                <li>Avslutning med turnering</li>
+              </ul>
+              <button class="wf-btn wf-btn-secondary">Se datoer</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-faq">
+          <h2 class="wf-h2">Spørsmål foreldre stiller<span class="wf-marker">7</span></h2>
+          <div class="wf-faq-list">
+            <div class="wf-faq-item">
+              <h4>Trenger barnet mitt eget golfutstyr?</h4>
+              <p>Nei. Vi låner ut junior-køller og baller på alle økter. Hvis barnet fortsetter over lengre tid anbefaler vi eget sett, og vi hjelper gjerne med valg.</p>
+            </div>
+            <div class="wf-faq-item">
+              <h4>Er det trygt å la barnet være alene på treningen?</h4>
+              <p>Alle våre trenere har gyldig politiattest. Vi følger NGF sine retningslinjer for juniorarbeid. Foreldre er alltid velkomne til å være til stede.</p>
+            </div>
+            <div class="wf-faq-item">
+              <h4>Barnet mitt har aldri spilt golf. Er det for sent å starte?</h4>
+              <p>Nei. Vi tar inn barn på alle nivå, også nybegynnere. Mange av våre beste juniorer startet da de var 10–12 år.</p>
+            </div>
+            <div class="wf-faq-item">
+              <h4>Hva hvis barnet ikke liker det?</h4>
+              <p>Drop-in (450 kr) er laget for å prøve. Månedspakken har ingen bindingstid — du sier opp når som helst.</p>
+            </div>
+            <div class="wf-faq-item">
+              <h4>Konkurrerer Junior Academy med klubben vår?</h4>
+              <p>Nei, tvert imot. Vi samarbeider med hjemmeklubben og supplerer klubbens egen juniortrening. Mange av våre juniorer spiller turneringer for klubben sin.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Klar til å prøve?</h2>
+          <p class="wf-subhead-dark">Book en prøveøkt — 60 minutter, 450 kr. Ingen forpliktelser etterpå.</p>
+          <button class="wf-btn wf-btn-cta-large">Book prøveøkt<span class="wf-marker">8</span></button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF JUNIOR ACADEMY</strong><p>Strukturert golfopplæring for barn 8–18 år. NGF-metodikk.</p></div>
+            <div><strong>Program</strong><p>Aldersgrupper</p><p>Intensiv-uker</p><p>Prøveøkt</p></div>
+            <div><strong>For foreldre</strong><p>FAQ</p><p>Kontakt</p><p>Politiattester</p></div>
+            <div><strong>AK Golf</strong><p>Academy</p><p>Utvikling</p><p>Om oss</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Aldersspekter i hero-label:</strong> "8–18 år" leser umiddelbart for foreldre — ingen tvil om hvem siden er for.</li>
+        <li><strong>2 — Primær CTA "Book prøveøkt":</strong> Lavere barriere enn "månedspakke" eller "registrer". 450 kr + 60 min = overkommelig for skeptiske foreldre.</li>
+        <li><strong>3 — Foto, ikke dashboard-mockup:</strong> Junior er ikke portal-driven — foreldre trenger å se trygt miljø og glade barn.</li>
+        <li><strong>4 — NGF først, tall rundt:</strong> NGF = autoritetsankeret. 120+ juniorer + 15 år + 1:4 trener-forhold = konkret trygghet.</li>
+        <li><strong>5 — Aldersgrupper før pakker:</strong> Foreldre vil se "passer barnet mitt inn her" før de ser pris.</li>
+        <li><strong>6 — Metode-seksjon (dark) kort:</strong> Pyramide-dramatikk, men mindre tung enn Academy — juniorforeldre orker ikke pedagogikk-dyp.</li>
+        <li><strong>7 — FAQ adresserer foreldre-bekymringer:</strong> Utstyr, trygghet, nybegynner, oppsigelse, klubb-konflikt — de fem spørsmålene som stoppet konvertering i nåværende funnel.</li>
+        <li><strong>8 — CTA-band i dark før footer:</strong> Fanger opp foreldre som scrollet gjennom FAQ. Samme CTA som hero — konsistens.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Age Journey ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Age Journey</span></h2>
+    <p class="option-description">Scroll-story gjennom alle aldersgrupper: fra 8-åring som starter enkelt til 18-åring som konkurrerer. Full-width alternerende strips. Bygger visuell progresjon.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/junior-academy</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Utvikling</a><a href="#">Priser</a></div>
+          <button class="wf-btn wf-btn-cta">Book prøveøkt</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">JUNIOR ACADEMY</div>
+          <h1 class="wf-headline">Fra første swing til første turnering.<span class="wf-marker">1</span></h1>
+          <p class="wf-subhead-large">Ti år med golf, fordelt på tre utviklingstrinn. Dette er reisen gjennom Junior Academy.</p>
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Book prøveøkt</button>
+            <button class="wf-btn wf-btn-ghost">Scroll ned ↓</button>
+          </div>
+        </section>
+
+        <section class="wf-age-journey-row">
+          <div>
+            <div class="wf-age-journey-label">TRINN 01 · ALDER 8–12</div>
+            <div class="wf-age-journey-num">8</div>
+            <h2 class="wf-age-journey-title">Lek og lær<span class="wf-marker">2</span></h2>
+            <p class="wf-age-journey-body">Motorikk og balanse først, teknikk etterpå. Barna leker seg til bevegelsesmønstre som er grunnlaget for all senere golfutvikling. Gruppetrening 60 min, fokus på moro og mestring.</p>
+            <ul class="wf-age-focus-list">
+              <li>Rullerende stasjoner: chipping, putting, fullslag</li>
+              <li>Spill på par-3 bane etter hvert</li>
+              <li>Egen startleir hver vår + høst</li>
+            </ul>
+          </div>
+          <div class="wf-age-journey-visual">Foto: 10-åring med junior-kølle, grønt gress, sollys</div>
+        </section>
+
+        <section class="wf-age-journey-row">
+          <div class="wf-age-journey-visual">Foto: 14-åring i fullslag, fokusert uttrykk, range</div>
+          <div>
+            <div class="wf-age-journey-label">TRINN 02 · ALDER 13–15</div>
+            <div class="wf-age-journey-num">13</div>
+            <h2 class="wf-age-journey-title">Teknikk og struktur<span class="wf-marker">3</span></h2>
+            <p class="wf-age-journey-body">Barnet møter HCP-systemet, lærer Treningspyramiden fra NGF og får egen treningsplan i Portalen. 90 min økter, 1–2 ganger i uka. Første regionale turneringer.</p>
+            <ul class="wf-age-focus-list">
+              <li>Individuell teknisk oppfølging + video</li>
+              <li>Portal-tilgang med personlig loggbok</li>
+              <li>Turneringsforberedelse + mental trening</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="wf-age-journey-row">
+          <div>
+            <div class="wf-age-journey-label">TRINN 03 · ALDER 16–18</div>
+            <div class="wf-age-journey-num">16</div>
+            <h2 class="wf-age-journey-title">Konkurranse og retning<span class="wf-marker">4</span></h2>
+            <p class="wf-age-journey-body">For de som vil videre — elite, college eller seriøs klubbgolf. 120 min 2–3 ganger i uka, Trackman-analyse, fysisk trening, mental coaching. Nasjonale turneringer og college-rådgivning.</p>
+            <ul class="wf-age-focus-list">
+              <li>TrackMan + DataGolf-integrasjon</li>
+              <li>Strength &amp; conditioning-plan</li>
+              <li>College-scouting + CV-bygging</li>
+            </ul>
+          </div>
+          <div class="wf-age-journey-visual">Foto: 17-åring på turneringsbane, skygge på green</div>
+        </section>
+
+        <section class="wf-pricing">
+          <h2 class="wf-h2">Pakker gjennom hele reisen</h2>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Drop-in</div>
+              <div class="wf-tier-price">450 kr</div>
+              <div class="wf-tier-price-unit">per enkeltøkt</div>
+              <ul><li>Gruppetrening</li><li>Ingen binding</li><li>Perfekt for å prøve</li></ul>
+              <button class="wf-btn wf-btn-secondary">Book</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Mest valgt</div>
+              <div class="wf-tier-name">Månedspakke</div>
+              <div class="wf-tier-price">1 200 kr</div>
+              <div class="wf-tier-price-unit">per måned</div>
+              <ul><li>4 økter/måned</li><li>Portal-tilgang</li><li>Foreldre-rapport</li></ul>
+              <button class="wf-btn wf-btn-cta">Start</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Intensiv</div>
+              <div class="wf-tier-price">2 800 kr</div>
+              <div class="wf-tier-price-unit">skoleferie-uke</div>
+              <ul><li>5 dager x 4t</li><li>Lunsj inkludert</li><li>Turnering-avslutning</li></ul>
+              <button class="wf-btn wf-btn-secondary">Datoer</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-profiles">
+          <h2 class="wf-h2">Teamet som følger barnet gjennom reisen<span class="wf-marker">5</span></h2>
+          <div class="wf-grid-3">
+            <div class="wf-profile"><div class="wf-profile-img">ANDERS</div><h3>Anders Kristiansen</h3><p>Hovedtrener · 15 år junior-erfaring</p></div>
+            <div class="wf-profile"><div class="wf-profile-img">MARKUS</div><h3>Markus Rønås-Pedersen</h3><p>Juniortrener · 13–18 år</p></div>
+            <div class="wf-profile"><div class="wf-profile-img">ASSISTENT</div><h3>Assistenttrener</h3><p>Starter-gruppe 8–12</p></div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Start reisen — 450 kr</h2>
+          <p class="wf-subhead-dark">En prøveøkt er alt som trengs for å finne ut om Junior Academy passer.</p>
+          <button class="wf-btn wf-btn-cta-large">Book prøveøkt</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF JUNIOR</strong><p>8–18 år. Tre trinn. Én retning.</p></div>
+            <div><strong>Program</strong><p>8–12 Lek og lær</p><p>13–15 Teknikk</p><p>16–18 Konkurranse</p></div>
+            <div><strong>For foreldre</strong><p>FAQ</p><p>Kontakt</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Hero som løfte:</strong> "Fra første swing til første turnering" — lover en reise, ikke bare én økt.</li>
+        <li><strong>2 — Alternerende layout:</strong> Rad 1 tekst venstre / foto høyre, rad 2 flippet. Gir visuell rytme og holder oppmerksomhet over scroll.</li>
+        <li><strong>3 — Store alder-tall (8, 13, 16):</strong> Visuelle ankre — foreldre kan skumme og finne "sitt" trinn.</li>
+        <li><strong>4 — Trinnvis progresjon:</strong> 8-åring leker, 13-åring strukturerer, 16-åring konkurrerer — viser hva barnet kan bli, ikke bare hva det er nå.</li>
+        <li><strong>5 — Team etter journey, før CTA:</strong> Foreldre møter menneskene bak reisen rett før de konverterer.</li>
+        <li>— Sterkere story-struktur enn Opt 1, men fungerer best hvis vi har gode foto av hver aldersgruppe.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Pyramid Learn ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Pyramid Learn</span></h2>
+    <p class="option-description">Metode-først, for foreldre som er opptatt av pedagogikken. Treningspyramiden stor og sentralt, deretter alderstilpasning. Signaliserer seriøsitet og struktur.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/junior-academy</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Metoden</a><a href="#">Aldersgrupper</a><a href="#">Priser</a><a href="#">FAQ</a></div>
+          <button class="wf-btn wf-btn-cta">Book prøveøkt</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">JUNIOR ACADEMY · NGF-METODIKK<span class="wf-marker">1</span></div>
+          <h1 class="wf-headline">Slik bygger barnet ditt ferdigheter som varer.</h1>
+          <p class="wf-subhead-large">Junior Academy bruker Treningspyramiden fra Norges Golfforbund — samme metode som har formet elitejuniorer i 20 år. Tilpasset din 8-, 13- eller 16-åring.</p>
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Book prøveøkt</button>
+            <button class="wf-btn wf-btn-secondary">Se metoden ↓</button>
+          </div>
+        </section>
+
+        <section class="wf-section-dark">
+          <div class="wf-pyramid-label">TRENINGSPYRAMIDEN · NORGES GOLFFORBUND</div>
+          <h2 class="wf-h2-dark">Fem lag. Bygget nedenfra.<span class="wf-marker">2</span></h2>
+          <p class="wf-subhead-dark">Fundamentet er fysisk og motorisk utvikling. Over det — teknikk, slag, spill og til slutt turnering. Barn starter nederst, uansett alder.</p>
+          <div class="wf-pyramid">
+            <div class="wf-pyramid-layer" style="width:20%">TURN — Turneringer</div>
+            <div class="wf-pyramid-layer" style="width:40%">SPILL — Banespill</div>
+            <div class="wf-pyramid-layer" style="width:60%">SLAG — Slag-arbeid</div>
+            <div class="wf-pyramid-layer" style="width:80%">TEK — Teknikk</div>
+            <div class="wf-pyramid-layer" style="width:100%">FYS — Fysisk &amp; motorisk</div>
+          </div>
+          <p class="wf-subhead-dark">Utviklet av Norges Golfforbund. Implementert gjennom AK Golf sin coaching-filosofi i 15 år.</p>
+        </section>
+
+        <section class="wf-method-section">
+          <div class="wf-method-left">
+            <h3 class="wf-h2-left">Hvorfor pyramiden virker for juniorer<span class="wf-marker">3</span></h3>
+            <p>Barn som hopper rett til "teknikk og turnering" uten fundament får platåer — eller slutter. Motorisk utvikling kan ikke kortsluttes; nervebaner bygges på en bestemt måte.</p>
+            <p>Vi starter derfor med FYS uansett alder — lek, balanse og kroppsbeherskelse. Når grunnlaget er der, legger vi på teknikk. Når teknikken sitter, kommer slagarbeid. Deretter spill på bane. Turnering kommer sist, når barnet er klar.</p>
+            <p>Resultatet: barn som ikke bare blir bedre, men forblir bedre. Færre skader. Mindre frustrasjon. Mer glede.</p>
+          </div>
+          <div class="wf-method-right">
+            <h4>Hva det betyr i praksis</h4>
+            <ul>
+              <li>8-åring jobber 80% FYS/TEK, 20% SLAG</li>
+              <li>13-åring jobber 40% TEK/SLAG, 40% SPILL, 20% turnering</li>
+              <li>17-åring jobber 30% SPILL, 30% TURN, 40% teknisk finjustering</li>
+              <li>Hvert barn får egen fordeling basert på status</li>
+              <li>Foreldre får månedlig rapport på hvor barnet står</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="wf-age-groups">
+          <h2 class="wf-h2">Pyramiden i praksis — tre aldersgrupper</h2>
+          <div class="wf-grid-3">
+            <div class="wf-age-card">
+              <div class="wf-age-range">8–12 ÅR</div>
+              <h3 class="wf-age-title">Fundament</h3>
+              <p class="wf-age-desc">FYS + tidlig TEK. Lek er læringsverktøyet.</p>
+              <div class="wf-age-meta"><span>60 min · 1x/uke</span></div>
+            </div>
+            <div class="wf-age-card">
+              <div class="wf-age-range">13–15 ÅR</div>
+              <h3 class="wf-age-title">Oppbygging</h3>
+              <p class="wf-age-desc">TEK + SLAG + SPILL. Introduksjon til turnering.</p>
+              <div class="wf-age-meta"><span>90 min · 1–2x/uke</span></div>
+            </div>
+            <div class="wf-age-card">
+              <div class="wf-age-range">16–18 ÅR</div>
+              <h3 class="wf-age-title">Konkurranse</h3>
+              <p class="wf-age-desc">SPILL + TURN. Fintuning på alle lag.</p>
+              <div class="wf-age-meta"><span>120 min · 2–3x/uke</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-pricing">
+          <h2 class="wf-h2">Velg pakke</h2>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Drop-in</div>
+              <div class="wf-tier-price">450 kr</div>
+              <div class="wf-tier-price-unit">per enkeltøkt</div>
+              <ul><li>Én økt</li><li>Gruppetrening</li><li>Ingen binding</li></ul>
+              <button class="wf-btn wf-btn-secondary">Book</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Mest valgt</div>
+              <div class="wf-tier-name">Månedspakke</div>
+              <div class="wf-tier-price">1 200 kr</div>
+              <div class="wf-tier-price-unit">per måned</div>
+              <ul><li>4 økter/måned</li><li>Portal-tilgang</li><li>Månedlig rapport</li></ul>
+              <button class="wf-btn wf-btn-cta">Start</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Intensiv</div>
+              <div class="wf-tier-price">2 800 kr</div>
+              <div class="wf-tier-price-unit">skoleferie-uke</div>
+              <ul><li>5 dager</li><li>Lunsj inkludert</li><li>Avslutning med turnering</li></ul>
+              <button class="wf-btn wf-btn-secondary">Datoer</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-cta-simple">
+          <h2 class="wf-h2">Book prøveøkt — test metoden</h2>
+          <p class="wf-subhead">450 kr. 60 minutter. Se hvordan barnet ditt reagerer på strukturert progresjon.</p>
+          <button class="wf-btn wf-btn-cta-large">Book prøveøkt</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF JUNIOR</strong><p>NGF-metodikk. Strukturert progresjon.</p></div>
+            <div><strong>Metode</strong><p>Treningspyramiden</p><p>FYS → TURN</p></div>
+            <div><strong>For foreldre</strong><p>FAQ</p><p>Kontakt</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — NGF-metodikk i hero-label:</strong> Treffer foreldre som googler "junior golftrening metode" — pedagogikk-orienterte kjøpere.</li>
+        <li><strong>2 — Pyramide som hovedvisual:</strong> Pyramiden overtar hero's rolle — metoden ER produktet her.</li>
+        <li><strong>3 — Hvorfor virker det-seksjon:</strong> Pedagogikk-forklaring for foreldre som vil forstå "hvorfor" før "hva".</li>
+        <li>— Appellerer til en underkjøpergruppe, men kan føles tung for foreldre som bare vil se barn spille golf. Brukes hvis junior-coachingen konkurrerer mot mer "lek-orienterte" alternativer.</li>
+        <li>— Mindre emosjonelt enn Opt 1 og 4. Kompenseres ved god copy og forklarende illustrasjoner.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Coach Close-Up ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Coach Close-Up</span></h2>
+    <p class="option-description">Hero er juniortreneren — Markus eller Anders sammen med en junior. Personlig tillit først, struktur og pris etterpå. Slår best for foreldre som tenker "hvem er denne personen".</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/junior-academy</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Coach</a><a href="#">Filosofi</a><a href="#">Priser</a><a href="#">Book</a></div>
+          <button class="wf-btn wf-btn-cta">Book prøveøkt</button>
+        </nav>
+
+        <section class="wf-coach-hero">
+          <div class="wf-coach-portrait">Foto: Markus/Anders m/junior-elev i nærbilde, varm belysning<span class="wf-marker">1</span></div>
+          <div>
+            <div class="wf-coach-name">MØT MARKUS · JUNIORTRENER</div>
+            <blockquote class="wf-coach-quote">"Jobben min er ikke å skape proffer. Den er å skape barn som elsker å trene, og som fortsetter å trene hele livet."<span class="wf-marker">2</span></blockquote>
+            <p class="wf-coach-bio">Markus har trent juniorer i 8 år, fra nybegynnere til landslag. Han kjenner foreldrene like godt som barna — og vet at tillit må bygges i begge retninger.</p>
+            <div class="wf-coach-credentials">Tidligere landslagsspiller · 8 år juniorerfaring · Gyldig politiattest</div>
+            <div class="wf-cta-row" style="margin-top:24px">
+              <button class="wf-btn wf-btn-cta-large">Book prøveøkt m/Markus</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-coaching-strip">
+          <div class="wf-coaching-inner">
+            <h3>Filosofien som styrer alt vi gjør<span class="wf-marker">3</span></h3>
+            <p>Glede før prestasjon. Grunnlag før teknikk. Utvikling før rangering. Foreldre før forventninger.</p>
+          </div>
+        </section>
+
+        <section class="wf-day-in-life">
+          <h2 class="wf-h2">En typisk onsdag i Academy<span class="wf-marker">4</span></h2>
+          <p class="wf-subhead" style="margin-bottom:32px">Slik ser en økt ut — fra barnet slipper bilen til de forlater rangen.</p>
+          <div class="wf-timeline">
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-time">17:00</div>
+              <div class="wf-timeline-content"><h4>Oppmøte og oppvarming</h4><p>Barna hilser, gjør bevegelsesleker sammen, lærer koordinasjon gjennom spill.</p></div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-time">17:15</div>
+              <div class="wf-timeline-content"><h4>Stasjonstrening</h4><p>Tre stasjoner: putting, chipping, fullslag. Markus roterer mellom. Ingen sitter passivt.</p></div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-time">17:45</div>
+              <div class="wf-timeline-content"><h4>Spill-konkurranse</h4><p>Lagkonkurranse på par-3 bane. Fokus på glede, samarbeid, holdning.</p></div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-time">18:05</div>
+              <div class="wf-timeline-content"><h4>Felles avslutning</h4><p>Hva gikk bra? Hva jobber vi med neste uke? Barna får korte individuelle tilbakemeldinger.</p></div>
+            </div>
+            <div class="wf-timeline-item">
+              <div class="wf-timeline-time">18:15</div>
+              <div class="wf-timeline-content"><h4>Foreldre-sjekk</h4><p>Markus er tilgjengelig 10 min etter økten for korte spørsmål fra foreldre.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-pricing">
+          <h2 class="wf-h2">Pakker</h2>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Drop-in</div>
+              <div class="wf-tier-price">450 kr</div>
+              <div class="wf-tier-price-unit">per enkeltøkt</div>
+              <ul><li>Gruppetrening</li><li>Ingen binding</li></ul>
+              <button class="wf-btn wf-btn-secondary">Book</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Mest valgt</div>
+              <div class="wf-tier-name">Månedspakke</div>
+              <div class="wf-tier-price">1 200 kr</div>
+              <div class="wf-tier-price-unit">per måned</div>
+              <ul><li>4 økter/måned</li><li>Portal-tilgang</li><li>Månedlig rapport</li></ul>
+              <button class="wf-btn wf-btn-cta">Start</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Intensiv</div>
+              <div class="wf-tier-price">2 800 kr</div>
+              <div class="wf-tier-price-unit">skoleferie-uke</div>
+              <ul><li>5 dager</li><li>Lunsj</li><li>Turnering</li></ul>
+              <button class="wf-btn wf-btn-secondary">Datoer</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-cases">
+          <h2 class="wf-h2">Barna og foreldrene hører fra Markus<span class="wf-marker">5</span></h2>
+          <div class="wf-grid-3">
+            <div class="wf-case"><div class="wf-case-avatar">FM</div><p class="wf-case-quote">"Datteren min gledet seg hver torsdag. Det er det som teller."</p><div class="wf-case-name">Foreldre til Ella, 10 år</div></div>
+            <div class="wf-case"><div class="wf-case-avatar">JH</div><p class="wf-case-quote">"Markus ser sønnen min — ikke bare hans swing."</p><div class="wf-case-name">Foreldre til Johan, 14 år</div></div>
+            <div class="wf-case"><div class="wf-case-avatar">SV</div><p class="wf-case-quote">"Hun kom tilbake fra intensiv-uka med ny selvtillit."</p><div class="wf-case-name">Foreldre til Sofie, 16 år</div></div>
+          </div>
+        </section>
+
+        <section class="wf-cta-simple">
+          <h2 class="wf-h2">Book prøveøkt — møt Markus selv</h2>
+          <button class="wf-btn wf-btn-cta-large">Book prøveøkt</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF JUNIOR</strong><p>Trenere du kan stole på.</p></div>
+            <div><strong>Team</strong><p>Markus</p><p>Anders</p></div>
+            <div><strong>Kontakt</strong><p>post@akgolf.no</p><p>+47 xxx xx xxx</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Coach + junior-portrett:</strong> Foreldre leser ansikter før de leser tekst. Dette er det første-inntrykket som avgjør klikk på "Book".</li>
+        <li><strong>2 — Sitat som posisjonering:</strong> "Ikke skape proffer — skape barn som elsker å trene" differensierer direkte mot elite-fokuserte konkurrenter.</li>
+        <li><strong>3 — Filosofi-strip kort:</strong> Fire prinsipper i én setning. Foreldre som vil grave dypere har metode-siden; de som ikke gjør det får kjernen her.</li>
+        <li><strong>4 — "Typisk onsdag" timeline:</strong> Gjør det abstrakte konkret. Foreldre vet nøyaktig hva barnet gjør klokka 17:30.</li>
+        <li><strong>5 — Foreldre-testimonials, ikke HCP-tall:</strong> Emosjon slår data på junior-beslutninger.</li>
+        <li>— Svakhet: sterkt avhengig av kvaliteten på coach-bildet. Feil foto og hele siden faller sammen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Results Story ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Results Story</span></h2>
+    <p class="option-description">Hero med konkret transformasjon: "Fra HCP 36 til 18 på 2 år". For foreldre som sammenligner junior-tilbud på resultat. Data-drevet, men med varme.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/junior-academy</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Resultater</a><a href="#">Metode</a><a href="#">Priser</a><a href="#">Kontakt</a></div>
+          <button class="wf-btn wf-btn-cta">Book prøveøkt</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-badge">JUNIORCASE · 24 MÅNEDER</div>
+          <h1 class="wf-headline-proof">36 → 18<span class="wf-marker">1</span></h1>
+          <p class="wf-subhead-large">Ella var 10 år og hadde aldri holdt en kølle da hun startet. To år senere er hun klubbens ungdomsmester. Dette er ikke magi — det er Treningspyramiden, anvendt konsekvent.</p>
+          <div class="wf-device wf-device-medium">Foto: Ella på green, før/etter-grafikk med tidslinje</div>
+          <div class="wf-cta-row">
+            <button class="wf-btn wf-btn-cta-large">Book prøveøkt</button>
+            <button class="wf-btn wf-btn-secondary">Les Ellas historie →</button>
+          </div>
+        </section>
+
+        <section class="wf-cases-stack">
+          <h2 class="wf-h2">Flere resultater fra Junior Academy<span class="wf-marker">2</span></h2>
+          <div class="wf-grid-3">
+            <div class="wf-case-big">
+              <div class="wf-case-label">12 MÅNEDER</div>
+              <div class="wf-case-result-big">42 → 24</div>
+              <p class="wf-case-time">Johan, 13 år</p>
+              <p class="wf-case-quote">"Han ville slutte etter tre måneder. Markus fikk han til å fortsette — og nå spiller han turnering."</p>
+              <div class="wf-case-name">— Far til Johan</div>
+            </div>
+            <div class="wf-case-big">
+              <div class="wf-case-label">18 MÅNEDER</div>
+              <div class="wf-case-result-big">28 → 12</div>
+              <p class="wf-case-time">Sofie, 16 år</p>
+              <p class="wf-case-quote">"Hun vet nå hva hun må jobbe med — og hun gjør det uten at vi må mase."</p>
+              <div class="wf-case-name">— Mor til Sofie</div>
+            </div>
+            <div class="wf-case-big">
+              <div class="wf-case-label">24 MÅNEDER</div>
+              <div class="wf-case-result-big">54 → 22</div>
+              <p class="wf-case-time">Mikael, 11 år</p>
+              <p class="wf-case-quote">"Fra 'jeg er dårlig' til 'jeg blir bedre hver uke'. Det er det Junior Academy gjorde."</p>
+              <div class="wf-case-name">— Mor til Mikael</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark">
+          <div class="wf-pyramid-label">HVORDAN</div>
+          <h2 class="wf-h2-dark">Alle disse resultatene bygger på én metode<span class="wf-marker">3</span></h2>
+          <p class="wf-subhead-dark">Treningspyramiden fra Norges Golfforbund, anvendt gjennom AK Golf sin coaching-filosofi.</p>
+          <div class="wf-pyramid">
+            <div class="wf-pyramid-layer" style="width:20%">TURN</div>
+            <div class="wf-pyramid-layer" style="width:40%">SPILL</div>
+            <div class="wf-pyramid-layer" style="width:60%">SLAG</div>
+            <div class="wf-pyramid-layer" style="width:80%">TEK</div>
+            <div class="wf-pyramid-layer" style="width:100%">FYS</div>
+          </div>
+          <p class="wf-subhead-dark">Ingen snarveier. Hvert barn starter på FYS — uansett alder eller talent.</p>
+        </section>
+
+        <section class="wf-age-groups">
+          <h2 class="wf-h2">Passer barnet ditt inn?</h2>
+          <div class="wf-grid-3">
+            <div class="wf-age-card">
+              <div class="wf-age-range">8–12 ÅR</div>
+              <h3 class="wf-age-title">Start her</h3>
+              <p class="wf-age-desc">Fundament gjennom lek. Barna lærer uten å vite at de lærer.</p>
+              <div class="wf-age-meta"><span>60 min · 1x/uke · 450 kr drop-in</span></div>
+            </div>
+            <div class="wf-age-card">
+              <div class="wf-age-range">13–15 ÅR</div>
+              <h3 class="wf-age-title">Bygg videre</h3>
+              <p class="wf-age-desc">Teknikk og struktur. Egen plan i Portalen.</p>
+              <div class="wf-age-meta"><span>90 min · 1–2x/uke</span></div>
+            </div>
+            <div class="wf-age-card">
+              <div class="wf-age-range">16–18 ÅR</div>
+              <h3 class="wf-age-title">Gå videre</h3>
+              <p class="wf-age-desc">Turnering, college, elite. TrackMan + mental coaching.</p>
+              <div class="wf-age-meta"><span>120 min · 2–3x/uke</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-pricing">
+          <h2 class="wf-h2">Start med en drop-in</h2>
+          <div class="wf-grid-3">
+            <div class="wf-tier">
+              <div class="wf-tier-name">Drop-in</div>
+              <div class="wf-tier-price">450 kr</div>
+              <div class="wf-tier-price-unit">per enkeltøkt</div>
+              <ul><li>Én økt</li><li>Gruppe</li><li>Ingen binding</li></ul>
+              <button class="wf-btn wf-btn-secondary">Book</button>
+            </div>
+            <div class="wf-tier wf-tier-featured">
+              <div class="wf-tier-badge">Mest valgt</div>
+              <div class="wf-tier-name">Månedspakke</div>
+              <div class="wf-tier-price">1 200 kr</div>
+              <div class="wf-tier-price-unit">per måned</div>
+              <ul><li>4 økter/måned</li><li>Portal</li><li>Rapport</li></ul>
+              <button class="wf-btn wf-btn-cta">Start</button>
+            </div>
+            <div class="wf-tier">
+              <div class="wf-tier-name">Intensiv</div>
+              <div class="wf-tier-price">2 800 kr</div>
+              <div class="wf-tier-price-unit">ferie-uke</div>
+              <ul><li>5 dager</li><li>Lunsj</li><li>Turnering</li></ul>
+              <button class="wf-btn wf-btn-secondary">Datoer</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-profiles">
+          <h2 class="wf-h2">Teamet som gjør dette mulig</h2>
+          <div class="wf-grid-3">
+            <div class="wf-profile"><div class="wf-profile-img">ANDERS</div><h3>Anders Kristiansen</h3><p>Hovedtrener · 15 år</p></div>
+            <div class="wf-profile"><div class="wf-profile-img">MARKUS</div><h3>Markus Rønås-Pedersen</h3><p>Juniortrener · 8 år</p></div>
+            <div class="wf-profile"><div class="wf-profile-img">TEAM</div><h3>Assistenttrenere</h3><p>Starter-grupper</p></div>
+          </div>
+        </section>
+
+        <section class="wf-section-dark wf-cta-band">
+          <h2 class="wf-h2-dark">Ditt barns historie kan være den neste</h2>
+          <p class="wf-subhead-dark">Start med en drop-in. 450 kr. 60 minutter.</p>
+          <button class="wf-btn wf-btn-cta-large">Book prøveøkt</button>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF JUNIOR</strong><p>Resultater, ikke løfter.</p></div>
+            <div><strong>Program</strong><p>8–12</p><p>13–15</p><p>16–18</p></div>
+            <div><strong>Kontakt</strong><p>FAQ</p><p>E-post</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Stort HCP-tall som hero:</strong> 36→18 leser umiddelbart som "dette virker". Foreldre som sammenligner tilbud får konkret svar.</li>
+        <li><strong>2 — Tre junior-cases stacked:</strong> 12/18/24 måneder — viser at resultater tar tid, ikke overlover.</li>
+        <li><strong>3 — Metode etter cases:</strong> Først beviser vi at det virker, så forklarer vi hvorfor. Psykologi: kredibilitet først, forklaring etter.</li>
+        <li>— Risiko: Kan virke for resultatfokusert — foreldre som "bare vil at barnet skal ha det gøy" kan føle seg feil plassert. Mitigeres med varme sitater og glede-fokus i copy.</li>
+        <li>— Krever reelle juniorcases med navn og bilde. Må innhentes samtykke fra foreldre.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Summary &amp; Anbefaling</h2>
+    <p class="option-description">Oversikt over 5 retninger for Junior Academy — og hvilken som er tryggest å lansere først.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Tilnærming</th>
+          <th>Styrker</th>
+          <th>Risiko</th>
+          <th>Beste case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1 · Parent Trust</strong></td>
+          <td>Trygg tillitsbygging med NGF, aldersgrupper, FAQ</td>
+          <td>Dekker alle foreldre-bekymringer; lav barriere</td>
+          <td>Kan virke konvensjonell</td>
+          <td>Primær standard</td>
+        </tr>
+        <tr>
+          <td>2 · Age Journey</td>
+          <td>Story-scroll gjennom 8→13→16</td>
+          <td>Visuelt engasjerende; viser progresjon</td>
+          <td>Krever gode foto per aldersgruppe</td>
+          <td>Når vi har foto-bibliotek</td>
+        </tr>
+        <tr>
+          <td>3 · Pyramid Learn</td>
+          <td>Metode først, for pedagogikk-orienterte</td>
+          <td>Differensierer mot "bare gøy"-konkurrenter</td>
+          <td>Kan føles tung for vanlige foreldre</td>
+          <td>Når vi konkurrerer mot seriøse aktører</td>
+        </tr>
+        <tr>
+          <td>4 · Coach Close-Up</td>
+          <td>Markus/Anders i hero med junior</td>
+          <td>Sterkest tillit; menneske først</td>
+          <td>Avhengig av fotokvalitet</td>
+          <td>Når Markus er hovedfigur</td>
+        </tr>
+        <tr>
+          <td>5 · Results Story</td>
+          <td>HCP-transformasjoner i hero</td>
+          <td>Konkret, sammenlignbart, data-drevet</td>
+          <td>Kan virke for prestasjonsfokusert</td>
+          <td>For ambisiøse foreldre</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>★ Anbefaling: Option 1 — Parent Trust</h3>
+      <p><strong>Hvorfor:</strong> Primærmålgruppa er foreldre som vurderer om barnet skal starte med organisert golftrening — ikke foreldre som allerede har elitejuniorer. Parent Trust treffer denne majoriteten best: tydelig aldersinndeling, NGF-autoritet, FAQ som svarer på reelle bekymringer (utstyr, trygghet, oppsigelse, klubb-konflikt).</p>
+      <p><strong>Taktisk:</strong> Start med Opt 1 som lansering. Bruk Opt 4 (Coach Close-Up) som A/B-variant når vi har profesjonelle coach-bilder. Opt 5 (Results Story) blir en egen "success stories"-seksjon som lever under /junior-academy/resultater.</p>
+      <p><strong>Ikke lansér Opt 3 (Pyramid Learn) først</strong> — den er for metode-tung for foreldre som bare vil se om dette er et trygt tilbud for barnet deres.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

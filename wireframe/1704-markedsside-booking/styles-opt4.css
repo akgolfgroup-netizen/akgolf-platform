@@ -1,0 +1,156 @@
+/* ===== Option 4: Instructor First — Clean + Polished =====
+   AK Golf Booking — coach som entry point. Portrett-fokusert editorial. */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&display=swap');
+
+#frame-opt4.clean .browser-dots span:nth-child(1),
+#frame-opt4.polished .browser-dots span:nth-child(1) { background: #ff5f57; }
+#frame-opt4.clean .browser-dots span:nth-child(2),
+#frame-opt4.polished .browser-dots span:nth-child(2) { background: #febc2e; }
+#frame-opt4.clean .browser-dots span:nth-child(3),
+#frame-opt4.polished .browser-dots span:nth-child(3) { background: #28c840; }
+
+/* =========================================================
+   CLEAN — cream base, coach-portretter i fokus
+   ========================================================= */
+#frame-opt4.clean .browser-content { background: #fdf9f0; color: #324D45; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+#frame-opt4.clean .wf-nav { background: #fdf9f0; border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt4.clean .wf-logo { color: #0A1F18; font-weight: 800; letter-spacing: -0.01em; }
+#frame-opt4.clean .wf-nav-links a { color: #324D45; }
+#frame-opt4.clean .wf-nav-links a:hover { color: #005840; }
+
+#frame-opt4.clean .wf-btn-cta,
+#frame-opt4.clean .wf-btn-cta-large { background: #D1F843; color: #0A1F18; border: none; font-weight: 600; }
+#frame-opt4.clean .wf-btn-secondary { background: #ffffff; color: #0A1F18; border: 1px solid rgba(0,88,64,0.18); }
+#frame-opt4.clean .wf-btn-secondary:hover { background: #F5F8F7; }
+
+#frame-opt4.clean .wf-hero { background: #fdf9f0; }
+#frame-opt4.clean .wf-hero-label { color: #005840; font-weight: 600; letter-spacing: 0.12em; background: #E6F3F1; border: 1px solid rgba(0,88,64,0.15); }
+#frame-opt4.clean .wf-headline { color: #0A1F18; }
+#frame-opt4.clean .wf-subhead { color: #5A6E66; }
+
+#frame-opt4.clean .wf-section-wide { background: #fdf9f0; }
+#frame-opt4.clean .wf-section-tight { background: #ffffff; }
+#frame-opt4.clean .wf-h2,
+#frame-opt4.clean .wf-h3 { color: #0A1F18; }
+
+#frame-opt4.clean .wf-coach-card { background: #ffffff; border: 1px solid rgba(0,88,64,0.1); }
+#frame-opt4.clean .wf-coach-card:hover { border-color: rgba(0,88,64,0.25); }
+#frame-opt4.clean .wf-coach-card.wf-selected { background: #ffffff; border: 2px solid #005840; }
+#frame-opt4.clean .wf-coach-portrait { background: linear-gradient(135deg, #1A3529 0%, #0A1F18 100%); color: rgba(209,248,67,0.5); border: none; }
+#frame-opt4.clean .wf-coach-role { color: #005840; font-weight: 700; letter-spacing: 0.12em; }
+#frame-opt4.clean .wf-coach-name { color: #0A1F18; }
+#frame-opt4.clean .wf-coach-bio { color: #5A6E66; }
+#frame-opt4.clean .wf-coach-tag { background: #E6F3F1; color: #005840; border: 1px solid rgba(0,88,64,0.14); font-weight: 600; }
+
+#frame-opt4.clean .wf-coach-avatar { background: #0A1F18; color: #D1F843; border-color: transparent; font-weight: 700; }
+
+#frame-opt4.clean .wf-service-card { background: #ffffff; border: 1px solid rgba(0,88,64,0.1); }
+#frame-opt4.clean .wf-service-card:hover { border-color: rgba(0,88,64,0.25); }
+#frame-opt4.clean .wf-service-card.wf-selected { border: 2px solid #005840; background: #E6F3F1; }
+#frame-opt4.clean .wf-service-label { color: #005840; font-weight: 700; }
+#frame-opt4.clean .wf-service-title { color: #0A1F18; }
+#frame-opt4.clean .wf-service-desc { color: #5A6E66; }
+#frame-opt4.clean .wf-service-price { color: #005840; font-weight: 800; }
+
+#frame-opt4.clean .wf-calendar { background: #ffffff; border: 1px solid rgba(0,88,64,0.08); }
+#frame-opt4.clean .wf-cal-title { color: #0A1F18; }
+#frame-opt4.clean .wf-cal-nav-btn { background: #F5F8F7; color: #5A6E66; border-color: rgba(0,88,64,0.1); }
+#frame-opt4.clean .wf-cal-nav-btn:hover { background: #E6F3F1; color: #005840; }
+#frame-opt4.clean .wf-cal-dow { color: #A5B2AD; }
+#frame-opt4.clean .wf-cal-day { color: #324D45; }
+#frame-opt4.clean .wf-cal-day.wf-available { border-color: rgba(0,88,64,0.14); color: #005840; font-weight: 600; }
+#frame-opt4.clean .wf-cal-day.wf-available:hover { background: #E6F3F1; border-color: #005840; }
+#frame-opt4.clean .wf-cal-day.wf-selected { background: #0A1F18; color: #D1F843; border-color: #0A1F18; }
+#frame-opt4.clean .wf-cal-day.wf-full { color: #A5B2AD; }
+#frame-opt4.clean .wf-cal-day.wf-empty { color: #D5DFDB; }
+
+#frame-opt4.clean .wf-time-slot { background: #ffffff; border: 1px solid rgba(0,88,64,0.14); color: #324D45; }
+#frame-opt4.clean .wf-time-slot:hover { border-color: #005840; background: #E6F3F1; color: #005840; }
+#frame-opt4.clean .wf-time-slot.wf-selected { background: #0A1F18; color: #D1F843; border-color: #0A1F18; font-weight: 700; }
+
+#frame-opt4.clean .wf-footer-dark { background: #0A1F18; color: rgba(255,255,255,0.7); }
+#frame-opt4.clean .wf-footer-dark strong { color: #ffffff; }
+#frame-opt4.clean .wf-footer-dark p { color: rgba(255,255,255,0.55); }
+
+/* =========================================================
+   POLISHED — Fraunces editorial, portrett-gradient, premium
+   ========================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes opt4SlideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+  #frame-opt4.polished .wf-coach-card { animation: opt4SlideIn 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+  #frame-opt4.polished .wf-grid-2 > :nth-child(2) { animation-delay: 0.12s; }
+}
+
+#frame-opt4.polished .browser-content { background: linear-gradient(180deg, #fdf9f0 0%, #ffffff 100%); color: #324D45; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+#frame-opt4.polished .wf-nav { background: rgba(253,249,240,0.85); backdrop-filter: blur(18px) saturate(1.4); border-bottom: 1px solid rgba(0,88,64,0.06); }
+#frame-opt4.polished .wf-logo { color: #0A1F18; font-family: 'Fraunces', Georgia, serif; font-weight: 800; letter-spacing: -0.02em; font-variation-settings: "opsz" 144; }
+#frame-opt4.polished .wf-nav-links a { color: #324D45; transition: color 200ms; }
+#frame-opt4.polished .wf-nav-links a:hover { color: #005840; }
+
+#frame-opt4.polished .wf-btn { transition: all 200ms ease-out; }
+#frame-opt4.polished .wf-btn-cta,
+#frame-opt4.polished .wf-btn-cta-large { background: #D1F843; color: #0A1F18; border: none; font-weight: 700; box-shadow: 0 4px 18px rgba(209,248,67,0.45), 0 1px 2px rgba(0,88,64,0.08); }
+#frame-opt4.polished .wf-btn-cta:hover,
+#frame-opt4.polished .wf-btn-cta-large:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(209,248,67,0.58); }
+#frame-opt4.polished .wf-btn-secondary { background: #ffffff; color: #0A1F18; border: 1px solid rgba(0,88,64,0.14); }
+#frame-opt4.polished .wf-btn-secondary:hover { background: #F5F8F7; border-color: rgba(0,88,64,0.25); }
+
+#frame-opt4.polished .wf-hero { background: transparent; }
+#frame-opt4.polished .wf-hero-label { background: rgba(209,248,67,0.18); color: #0A1F18; border: 1px solid rgba(209,248,67,0.4); font-weight: 600; letter-spacing: 0.12em; }
+#frame-opt4.polished .wf-headline { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.03em; font-variation-settings: "opsz" 144; }
+#frame-opt4.polished .wf-subhead { color: #5A6E66; }
+
+#frame-opt4.polished .wf-section-wide { background: transparent; }
+#frame-opt4.polished .wf-section-tight { background: linear-gradient(180deg, #ffffff 0%, #F5F8F7 100%); border-top: 1px solid rgba(0,88,64,0.06); }
+#frame-opt4.polished .wf-h2,
+#frame-opt4.polished .wf-h3 { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.02em; font-variation-settings: "opsz" 144; }
+
+#frame-opt4.polished .wf-coach-card { background: #ffffff; border: 1px solid rgba(0,88,64,0.06); box-shadow: 0 2px 6px rgba(0,88,64,0.04), 0 12px 36px rgba(0,88,64,0.08); transition: all 300ms cubic-bezier(0.4,0,0.2,1); }
+#frame-opt4.polished .wf-coach-card:hover { transform: translateY(-2px); border-color: rgba(0,88,64,0.14); box-shadow: 0 4px 12px rgba(0,88,64,0.08), 0 20px 50px rgba(0,88,64,0.12); }
+#frame-opt4.polished .wf-coach-card.wf-selected { background: linear-gradient(180deg, #ffffff 0%, #E6F3F1 100%); border: 2px solid #005840; box-shadow: 0 0 0 3px rgba(209,248,67,0.2), 0 12px 40px rgba(0,88,64,0.14); }
+#frame-opt4.polished .wf-coach-portrait { background: linear-gradient(135deg, #0A1F18 0%, #005840 100%); color: rgba(209,248,67,0.4); border: none; box-shadow: 0 8px 24px rgba(10,31,24,0.25), inset 0 0 60px rgba(209,248,67,0.04); }
+#frame-opt4.polished .wf-coach-role { color: #005840; font-weight: 700; letter-spacing: 0.12em; }
+#frame-opt4.polished .wf-coach-name { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.01em; }
+#frame-opt4.polished .wf-coach-bio { color: #5A6E66; }
+#frame-opt4.polished .wf-coach-tag { background: rgba(0,88,64,0.06); color: #005840; border: 1px solid rgba(0,88,64,0.12); font-weight: 600; transition: all 180ms; }
+#frame-opt4.polished .wf-coach-tag:hover { background: #E6F3F1; border-color: rgba(0,88,64,0.25); }
+
+#frame-opt4.polished .wf-coach-avatar { background: linear-gradient(135deg, #0A1F18 0%, #1A3529 100%); color: #D1F843; border-color: transparent; font-weight: 700; box-shadow: 0 4px 12px rgba(10,31,24,0.2); }
+
+#frame-opt4.polished .wf-service-card { background: #ffffff; border: 1px solid rgba(0,88,64,0.06); box-shadow: 0 1px 3px rgba(0,88,64,0.04), 0 4px 14px rgba(0,88,64,0.05); transition: all 250ms cubic-bezier(0.4,0,0.2,1); }
+#frame-opt4.polished .wf-service-card:hover { transform: translateY(-2px); border-color: rgba(0,88,64,0.16); box-shadow: 0 4px 12px rgba(0,88,64,0.08), 0 12px 28px rgba(0,88,64,0.1); }
+#frame-opt4.polished .wf-service-card.wf-selected { background: linear-gradient(180deg, #FFFFFF 0%, #E6F3F1 100%); border: 2px solid #005840; box-shadow: 0 0 0 3px rgba(209,248,67,0.2), 0 8px 24px rgba(0,88,64,0.12); }
+#frame-opt4.polished .wf-service-label { color: #005840; font-weight: 700; }
+#frame-opt4.polished .wf-service-title { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.01em; }
+#frame-opt4.polished .wf-service-desc { color: #5A6E66; }
+#frame-opt4.polished .wf-service-price { font-family: 'Fraunces', Georgia, serif; color: #005840; font-weight: 800; letter-spacing: -0.02em; }
+
+#frame-opt4.polished .wf-calendar { background: #ffffff; border: 1px solid rgba(0,88,64,0.06); box-shadow: 0 2px 8px rgba(0,88,64,0.05), 0 12px 32px rgba(0,88,64,0.06); }
+#frame-opt4.polished .wf-cal-title { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; }
+#frame-opt4.polished .wf-cal-nav-btn { background: #F5F8F7; color: #5A6E66; border-color: rgba(0,88,64,0.08); transition: all 180ms; }
+#frame-opt4.polished .wf-cal-nav-btn:hover { background: #E6F3F1; color: #005840; }
+#frame-opt4.polished .wf-cal-dow { color: #A5B2AD; font-weight: 700; }
+#frame-opt4.polished .wf-cal-day { color: #324D45; transition: all 200ms cubic-bezier(0.4,0,0.2,1); }
+#frame-opt4.polished .wf-cal-day.wf-available { border-color: rgba(0,88,64,0.1); color: #005840; font-weight: 600; }
+#frame-opt4.polished .wf-cal-day.wf-available:hover { background: #E6F3F1; border-color: #005840; transform: scale(1.05); }
+#frame-opt4.polished .wf-cal-day.wf-selected { background: linear-gradient(135deg, #0A1F18 0%, #1A3529 100%); color: #D1F843; border-color: #0A1F18; font-weight: 700; box-shadow: 0 2px 10px rgba(10,31,24,0.3); }
+#frame-opt4.polished .wf-cal-day.wf-full { color: #A5B2AD; }
+#frame-opt4.polished .wf-cal-day.wf-empty { color: #D5DFDB; }
+
+#frame-opt4.polished .wf-time-slot { background: #ffffff; border: 1px solid rgba(0,88,64,0.1); color: #324D45; transition: all 180ms cubic-bezier(0.4,0,0.2,1); }
+#frame-opt4.polished .wf-time-slot:hover { transform: translateY(-1px); border-color: #005840; background: #E6F3F1; color: #005840; }
+#frame-opt4.polished .wf-time-slot.wf-selected { background: linear-gradient(135deg, #0A1F18 0%, #1A3529 100%); color: #D1F843; border-color: #0A1F18; font-weight: 700; box-shadow: 0 4px 14px rgba(10,31,24,0.25), 0 0 0 3px rgba(209,248,67,0.18); }
+
+#frame-opt4.polished .wf-footer-dark { background: #0A1F18; color: rgba(255,255,255,0.7); }
+#frame-opt4.polished .wf-footer-dark strong { color: #ffffff; font-family: 'Fraunces', Georgia, serif; }
+#frame-opt4.polished .wf-footer-dark p { color: rgba(255,255,255,0.55); }
+
+/* --- Self-reveal: hide badge, color sub-tabs --- */
+#frame-opt4-tabs .sub-tab-badge { display: none; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"] { color: #64B5F6; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #1E88E5; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"].active { color: #1565C0; border-bottom-color: #1565C0; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"] { color: #81C784; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #43A047; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"].active { color: #2E7D32; border-bottom-color: #2E7D32; }

@@ -1,0 +1,100 @@
+{
+  "$schema": "./hours-per-sg-table.schema.json",
+  "version": "1.0.0",
+  "lastCalibration": "2026-04-17",
+  "nextReviewDate": "2026-07-17",
+  "status": "expert_estimate_uncalibrated",
+  "methodology": "docs/strategy/COACHING_FORECAST_METHODOLOGY.md#6-trinn-d-hours-per-sg-kalibrering",
+  "description": "Estimerte timer med deliberate practice som kreves for å forbedre SG med +0.1 i gitt kategori, på gitt utgangsnivå (A–K). Basert på Ericsson deliberate practice-forskning, Broadies SG-analyser og AK Golf Academys interne observasjoner. MÅ kalibreres mot egen database når n > 50 fullførte forecasts.",
+  "unitsPerStep": 0.1,
+  "unit": "hours_deliberate_practice",
+  "overlapFactor": {
+    "value": 0.55,
+    "description": "Multiplikator for å justere rå summert timetall til effektiv tid når flere kategorier trenes parallelt. 0.55 = 45% overlap-gevinst. Ekspert-estimat.",
+    "citation": "Ericsson et al. (1993); AK Golf Academy internal observations (n≈300, 2019–2026)"
+  },
+  "levelGroups": {
+    "KG": {
+      "label": "Nybegynner til mellomnivå",
+      "categories": ["K", "J", "I", "H", "G"],
+      "handicapRange": [20, 54],
+      "description": "Teknikken er udannet, raske forbedringer mulig"
+    },
+    "FD": {
+      "label": "Kompetent til dyktig",
+      "categories": ["F", "E", "D"],
+      "handicapRange": [9, 19],
+      "description": "Teknikken begynner å bli stabil, tydelige svakheter å jobbe med"
+    },
+    "CB": {
+      "label": "Meget dyktig til ekspert",
+      "categories": ["C", "B"],
+      "handicapRange": [3, 8],
+      "description": "Elite amatør-nivå, små forbedringer krever store timer"
+    },
+    "A": {
+      "label": "Elite",
+      "categories": ["A"],
+      "handicapRange": [-4, 2],
+      "description": "Proff-nivå, marginale forbedringer med diminishing returns"
+    }
+  },
+  "hoursPerTenthSg": {
+    "OTT": {
+      "KG": { "hours": 50, "ci95Low": 35, "ci95High": 75 },
+      "FD": { "hours": 70, "ci95Low": 50, "ci95High": 100 },
+      "CB": { "hours": 100, "ci95Low": 70, "ci95High": 140 },
+      "A": { "hours": 150, "ci95Low": 105, "ci95High": 210 }
+    },
+    "APP": {
+      "KG": { "hours": 70, "ci95Low": 50, "ci95High": 100 },
+      "FD": { "hours": 100, "ci95Low": 70, "ci95High": 140 },
+      "CB": { "hours": 140, "ci95Low": 98, "ci95High": 200 },
+      "A": { "hours": 200, "ci95Low": 140, "ci95High": 280 }
+    },
+    "ARG": {
+      "KG": { "hours": 40, "ci95Low": 28, "ci95High": 60 },
+      "FD": { "hours": 60, "ci95Low": 42, "ci95High": 85 },
+      "CB": { "hours": 90, "ci95Low": 63, "ci95High": 130 },
+      "A": { "hours": 140, "ci95Low": 98, "ci95High": 200 }
+    },
+    "PUTT": {
+      "KG": { "hours": 25, "ci95Low": 18, "ci95High": 38 },
+      "FD": { "hours": 40, "ci95Low": 28, "ci95High": 60 },
+      "CB": { "hours": 65, "ci95Low": 46, "ci95High": 95 },
+      "A": { "hours": 110, "ci95Low": 77, "ci95High": 155 }
+    }
+  },
+  "empiricalDistribution": {
+    "description": "Historisk fordeling av hvor forbedringen kommer fra når SG_total øker med +1.0 eller mer. Brukes som regularisering mot ekstreme headroom-estimater. Se metodologi seksjon 5.3.",
+    "source": "DataGolf SG Decomposition analyse (n≈80 PGA Tour, 2017–2024). Ekspert-syntese.",
+    "shares": {
+      "OTT": { "mean": 0.22, "stdDev": 0.08 },
+      "APP": { "mean": 0.46, "stdDev": 0.12 },
+      "ARG": { "mean": 0.18, "stdDev": 0.06 },
+      "PUTT": { "mean": 0.14, "stdDev": 0.09 }
+    },
+    "regularizationWeight": 0.3,
+    "regularizationFormula": "final_allocation = 0.7 * headroom_allocation + 0.3 * empirical_allocation"
+  },
+  "levelTransitions": {
+    "description": "Heuristikk for å oppdatere nivå når spilleren forbedres gjennom målperioden. Hvis SG-delta krysser en kategori-grense, bytter modellen til neste levelGroup midtveis.",
+    "midpointRule": "Nivåbytte skjer når halvparten av SG-deltaet er oppnådd"
+  },
+  "disclaimers": [
+    "Tallene er ekspert-estimater, ikke validerte mot vår egen produksjonsdata per 2026-04-17.",
+    "Individuell variasjon er betydelig (±40%).",
+    "Forutsetter deliberate practice (målrettet trening med feedback), ikke 'ranslå'.",
+    "Antar coach-tilstedeværelse minst 2 timer/uke og tilstrekkelig fasilitetstilgang.",
+    "Gyldig for aldersgruppen 13–21 år (junior-kalibrering). Voksne kan ha andre kurver.",
+    "Ingen hensyn til pubertet, skader eller psykososiale faktorer."
+  ],
+  "revisionHistory": [
+    {
+      "version": "1.0.0",
+      "date": "2026-04-17",
+      "change": "Initial ekspert-estimat. Ingen validering mot egen database ennå.",
+      "author": "AK Golf Software + Anders Kristiansen"
+    }
+  ]
+}

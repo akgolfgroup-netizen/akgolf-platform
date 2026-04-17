@@ -1,0 +1,145 @@
+/* ============================================================
+ * OPTION 3 — Kapasitet-heatmap · Clean + Polished
+ * Utnyttelse per fasilitet per time · Green heat scale
+ * ============================================================ */
+
+#frame-opt3.clean,
+#frame-opt3.polished {
+  --pri: #005840;
+  --accent: #D1F843;
+  --acc-text: #0A1F18;
+  --bg: #F5F8F7;
+  --text: #324D45;
+  --ink: #0A1F18;
+  --muted: #A5B2AD;
+  --grey-200: #D5DFDB;
+  --grey-500: #5A6E66;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Topbar dark */
+#frame-opt3.clean .mc-topbar,
+#frame-opt3.polished .mc-topbar {
+  background: #0A1F18; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 12px 24px;
+}
+#frame-opt3.polished .mc-topbar { background: linear-gradient(180deg, #0A1F18 0%, #0D2620 100%); }
+#frame-opt3.clean .mc-logo,
+#frame-opt3.polished .mc-logo { color: #fff; letter-spacing: 0.14em; font-weight: 800; }
+#frame-opt3.clean .mc-tab,
+#frame-opt3.polished .mc-tab { color: rgba(255,255,255,0.6); transition: all 200ms ease; }
+#frame-opt3.clean .mc-tab:hover,
+#frame-opt3.polished .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+#frame-opt3.clean .mc-tab-active,
+#frame-opt3.polished .mc-tab-active { background: var(--accent); color: var(--acc-text); font-weight: 700; }
+#frame-opt3.clean .mc-search,
+#frame-opt3.polished .mc-search { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); border-radius: 8px; }
+#frame-opt3.clean .mc-avatar,
+#frame-opt3.polished .mc-avatar { background: var(--accent); color: var(--acc-text); font-weight: 800; }
+
+/* Filter row */
+#frame-opt3.clean .mc-filter-row,
+#frame-opt3.polished .mc-filter-row {
+  background: #fff; border-bottom: 1px solid var(--grey-200); padding: 14px 24px;
+}
+#frame-opt3.clean .mc-filter-label,
+#frame-opt3.polished .mc-filter-label { color: var(--muted); font-weight: 700; letter-spacing: 0.1em; }
+#frame-opt3.clean .mc-pill,
+#frame-opt3.polished .mc-pill {
+  border: 1px solid var(--grey-200); color: var(--text); background: #fff;
+  border-radius: 999px; font-weight: 500; transition: all 200ms ease;
+}
+#frame-opt3.clean .mc-pill:hover,
+#frame-opt3.polished .mc-pill:hover { border-color: var(--pri); color: var(--pri); }
+#frame-opt3.clean .mc-pill-active,
+#frame-opt3.polished .mc-pill-active { background: var(--pri); color: #fff; border-color: var(--pri); }
+
+/* Body */
+#frame-opt3.clean .mc-body,
+#frame-opt3.polished .mc-body { padding: 24px; background: var(--bg); }
+#frame-opt3.polished .mc-body {
+  background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,88,64,0.025) 0%, transparent 60%), var(--bg);
+}
+
+/* Heatmap */
+#frame-opt3.clean .mc-heatmap,
+#frame-opt3.polished .mc-heatmap {
+  background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 16px; overflow: hidden;
+}
+#frame-opt3.polished .mc-heatmap {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
+}
+#frame-opt3.clean .mc-hm-head,
+#frame-opt3.polished .mc-hm-head {
+  background: #FAFCFB; border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+#frame-opt3.clean .mc-hm-head-cell,
+#frame-opt3.polished .mc-hm-head-cell {
+  color: var(--muted); font-weight: 700; letter-spacing: 0.04em;
+  border-right: 1px solid rgba(0,0,0,0.04);
+  font-variant-numeric: tabular-nums;
+}
+#frame-opt3.clean .mc-hm-row,
+#frame-opt3.polished .mc-hm-row {
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+#frame-opt3.clean .mc-hm-row:last-child,
+#frame-opt3.polished .mc-hm-row:last-child { border-bottom: none; }
+#frame-opt3.clean .mc-hm-lane,
+#frame-opt3.polished .mc-hm-lane {
+  background: #FAFCFB; color: var(--ink); font-weight: 700;
+  border-right: 1px solid rgba(0,0,0,0.04);
+}
+#frame-opt3.clean .mc-hm-lane-meta,
+#frame-opt3.polished .mc-hm-lane-meta { color: var(--muted); font-weight: 500; }
+
+/* Heat cells — green scale */
+#frame-opt3.clean .mc-hm-cell,
+#frame-opt3.polished .mc-hm-cell {
+  border-right: 1px solid rgba(255,255,255,0.5);
+  font-weight: 700; font-variant-numeric: tabular-nums;
+  transition: all 200ms ease;
+}
+#frame-opt3.clean .mc-hm-cell:hover,
+#frame-opt3.polished .mc-hm-cell:hover { outline: 2px solid var(--accent); outline-offset: -2px; z-index: 5; }
+
+#frame-opt3.clean .mc-hm-0,
+#frame-opt3.polished .mc-hm-0 { background: #FAFCFB; color: #D5DFDB; }
+#frame-opt3.clean .mc-hm-1,
+#frame-opt3.polished .mc-hm-1 { background: rgba(0,88,64,0.1); color: var(--grey-500); }
+#frame-opt3.clean .mc-hm-2,
+#frame-opt3.polished .mc-hm-2 { background: rgba(0,88,64,0.25); color: var(--ink); }
+#frame-opt3.clean .mc-hm-3,
+#frame-opt3.polished .mc-hm-3 { background: rgba(0,88,64,0.55); color: #fff; }
+#frame-opt3.clean .mc-hm-4,
+#frame-opt3.polished .mc-hm-4 { background: var(--pri); color: #fff; }
+#frame-opt3.polished .mc-hm-4 {
+  background: linear-gradient(180deg, #00604A 0%, var(--pri) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* Summary stats */
+#frame-opt3.clean .mc-hm-summary,
+#frame-opt3.polished .mc-hm-summary { margin-top: 16px; }
+#frame-opt3.clean .mc-hm-stat,
+#frame-opt3.polished .mc-hm-stat {
+  background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 12px 14px;
+}
+#frame-opt3.polished .mc-hm-stat {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+#frame-opt3.clean .mc-hm-stat-label,
+#frame-opt3.polished .mc-hm-stat-label { color: var(--muted); font-weight: 700; letter-spacing: 0.1em; }
+#frame-opt3.clean .mc-hm-stat-val,
+#frame-opt3.polished .mc-hm-stat-val { color: var(--ink); font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+#frame-opt3.clean .mc-hm-stat-sub,
+#frame-opt3.polished .mc-hm-stat-sub { color: var(--grey-500); }
+
+/* Legend (inline color swatches already styled inline in HTML but shared) */
+#frame-opt3.clean .mc-legend-item,
+#frame-opt3.polished .mc-legend-item { color: var(--grey-500); font-size: 11px; }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt3.clean *, #frame-opt3.polished * { transition: none !important; animation: none !important; }
+}

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Runde-tracking — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">x</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Runde-tracking</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Hole Focus</button>
+    <button class="tab-btn" data-tab="option-2">2: Quick Tap</button>
+    <button class="tab-btn" data-tab="option-3">3: Full Data</button>
+    <button class="tab-btn" data-tab="option-4">4: DECADE Strategy</button>
+    <button class="tab-btn" data-tab="option-5">5: Voice First</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Hole Focus ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Hole Focus</span></h2>
+    <p class="option-description">SAFE-valg. Ett hull om gangen, stor score-display, score-pad med navngitte valg (eagle/birdie/par/bogey/double), neste-hull-navigering i bunn. Mobile-first for bruk på banen.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame mobile-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/runde/123</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="wf-shell">
+
+          <div class="wf-statusbar">
+            <span>09:42</span>
+            <div class="wf-statusbar-right"><span>5G</span><span>100%</span></div>
+          </div>
+
+          <div class="wf-appbar">
+            <button class="wf-appbar-back">&lt;</button>
+            <div>
+              <div class="wf-appbar-title-sub">Runde pågår</div>
+              <div class="wf-appbar-title">Oslo Golfklubb</div>
+            </div>
+            <button class="wf-appbar-menu">...</button>
+          </div>
+
+          <div class="wf-livestrip">
+            <div class="wf-livestrip-cell">
+              <div class="wf-livestrip-label">Total</div>
+              <div class="wf-livestrip-value">+2</div>
+              <div class="wf-livestrip-unit">score</div>
+            </div>
+            <div class="wf-livestrip-cell">
+              <div class="wf-livestrip-label">Hull</div>
+              <div class="wf-livestrip-value">9/18</div>
+            </div>
+            <div class="wf-livestrip-cell">
+              <div class="wf-livestrip-label">FW</div>
+              <div class="wf-livestrip-value">5/8</div>
+            </div>
+            <div class="wf-livestrip-cell">
+              <div class="wf-livestrip-label">GIR</div>
+              <div class="wf-livestrip-value">4/8</div>
+            </div>
+          </div>
+
+          <div class="wf-holenav">
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">1</div><div class="wf-holenav-pill-score">4</div></div>
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">2</div><div class="wf-holenav-pill-score">5</div></div>
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">3</div><div class="wf-holenav-pill-score">3</div></div>
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">4</div><div class="wf-holenav-pill-score">4</div></div>
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">5</div><div class="wf-holenav-pill-score">4</div></div>
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">6</div><div class="wf-holenav-pill-score">6</div></div>
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">7</div><div class="wf-holenav-pill-score">3</div></div>
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">8</div><div class="wf-holenav-pill-score">5</div></div>
+            <div class="wf-holenav-pill wf-active"><div class="wf-holenav-pill-num">9</div><div class="wf-holenav-pill-score">—</div></div>
+            <div class="wf-holenav-pill"><div class="wf-holenav-pill-num">10</div><div class="wf-holenav-pill-score">—</div></div>
+            <div class="wf-holenav-pill"><div class="wf-holenav-pill-num">11</div><div class="wf-holenav-pill-score">—</div></div>
+            <div class="wf-holenav-pill"><div class="wf-holenav-pill-num">12</div><div class="wf-holenav-pill-score">—</div></div>
+          </div>
+
+          <div class="wf-live">
+
+            <div class="wf-hole">
+              <div class="wf-hole-head">
+                <div>
+                  <div class="wf-hole-num">Hull 9<span class="wf-marker">1</span></div>
+                  <h1 class="wf-hole-title">Dogleg høyre</h1>
+                  <div class="wf-hole-course">Oslo Golfklubb · HCP 7</div>
+                </div>
+                <div class="wf-hole-meta-badge">Dogleg R</div>
+              </div>
+              <div class="wf-hole-meta">
+                <div class="wf-hole-meta-cell">
+                  <div class="wf-hole-meta-label">Par</div>
+                  <div class="wf-hole-meta-value">4</div>
+                </div>
+                <div class="wf-hole-meta-cell">
+                  <div class="wf-hole-meta-label">Lengde</div>
+                  <div class="wf-hole-meta-value">384m</div>
+                </div>
+                <div class="wf-hole-meta-cell">
+                  <div class="wf-hole-meta-label">Index</div>
+                  <div class="wf-hole-meta-value">7</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-score-display">
+              <div class="wf-score-label">Din score<span class="wf-marker">2</span></div>
+              <div class="wf-score-value">4</div>
+              <div class="wf-score-rel">Par</div>
+            </div>
+
+            <div class="wf-scorepad">
+              <button class="wf-scorepad-btn">
+                2<span class="wf-scorepad-btn-label">Eagle</span>
+              </button>
+              <button class="wf-scorepad-btn">
+                3<span class="wf-scorepad-btn-label">Birdie</span>
+              </button>
+              <button class="wf-scorepad-btn wf-active">
+                4<span class="wf-scorepad-btn-label">Par</span>
+              </button>
+              <button class="wf-scorepad-btn">
+                5<span class="wf-scorepad-btn-label">Bogey</span>
+              </button>
+              <button class="wf-scorepad-btn">
+                6<span class="wf-scorepad-btn-label">Dbl</span>
+              </button>
+            </div>
+
+            <div class="wf-stats-card">
+              <div class="wf-stats-title">Stats<span class="wf-marker">3</span></div>
+              <div class="wf-stats-row">
+                <div>
+                  <div class="wf-stats-label">Fairway</div>
+                  <div class="wf-stats-sub">Drive-treff</div>
+                </div>
+                <div class="wf-stats-toggle">
+                  <button class="wf-stats-btn">Venstre</button>
+                  <button class="wf-stats-btn wf-active">FW</button>
+                  <button class="wf-stats-btn">Høyre</button>
+                </div>
+              </div>
+              <div class="wf-stats-row">
+                <div>
+                  <div class="wf-stats-label">GIR</div>
+                  <div class="wf-stats-sub">Green i regulering</div>
+                </div>
+                <div class="wf-stats-toggle">
+                  <button class="wf-stats-btn wf-active">Ja</button>
+                  <button class="wf-stats-btn">Nei</button>
+                </div>
+              </div>
+              <div class="wf-stats-row">
+                <div>
+                  <div class="wf-stats-label">Putts</div>
+                  <div class="wf-stats-sub">Antall på greenen</div>
+                </div>
+                <div class="wf-stepper">
+                  <button class="wf-stepper-btn">−</button>
+                  <div class="wf-stepper-val">2</div>
+                  <button class="wf-stepper-btn">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-decade">
+              <div class="wf-decade-head">
+                <div class="wf-decade-label">DECADE-strategi<span class="wf-marker">4</span></div>
+                <span class="wf-decade-badge">Valgfri</span>
+              </div>
+              <h3 class="wf-decade-title">Spill til venstre fairway</h3>
+              <p class="wf-decade-desc">Dogleg bryter til høyre etter 220m. Siktepunkt 15m venstre for senter reduserer straffeområde.</p>
+            </div>
+
+          </div>
+
+          <div class="wf-holenav-bottom">
+            <button class="wf-navbtn">← Hull 8</button>
+            <button class="wf-navbtn wf-navbtn-primary">Neste hull →<span class="wf-marker">5</span></button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Hull-info øverst:</strong> Nummer + dogleg-type + par/lengde/index. Spilleren ser det han trenger for strategi før score.</li>
+        <li><strong>2 — Stor score-display:</strong> 72px tabular-nums. Tydelig "hva scoret jeg" før input. Ingen tvil i direktesol på banen.</li>
+        <li><strong>3 — Stat-toggles er sekundære:</strong> FW/GIR/putts under score. Ikke i veien for primær handling.</li>
+        <li><strong>4 — DECADE som valgfri kontekst:</strong> Vises, men ikke påtvinges. Badge "Valgfri" gir tillatelse til å ignorere.</li>
+        <li><strong>5 — Primær CTA nederst:</strong> "Neste hull" er største knapp. Tommelfinger-vennlig, forventet flyt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Quick Tap ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Quick Tap</span></h2>
+    <p class="option-description">Minimal UI, ekstremt store +/- knapper for score. Swipe mellom hull. For spillere som bare vil logge tall raskt uten distraksjoner. Ingen stats før runden er ferdig.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame mobile-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/runde/123</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <div class="wf-statusbar">
+            <span>09:42</span>
+            <div class="wf-statusbar-right"><span>5G</span><span>100%</span></div>
+          </div>
+
+          <div class="wf-appbar">
+            <button class="wf-appbar-back">&lt;</button>
+            <div>
+              <div class="wf-appbar-title-sub">+2 · Hull 9 av 18</div>
+              <div class="wf-appbar-title">Oslo Golfklubb</div>
+            </div>
+            <button class="wf-appbar-menu">...</button>
+          </div>
+
+          <div class="wf-live">
+
+            <div class="wf-hole" style="text-align:center">
+              <div class="wf-hole-num">Hull 9 · Par 4 · 384m<span class="wf-marker">1</span></div>
+              <h1 class="wf-hole-title" style="font-size:36px; margin: 10px 0">Dogleg høyre</h1>
+            </div>
+
+            <div class="wf-score-display">
+              <div class="wf-score-label">Score</div>
+              <div class="wf-score-value" style="font-size: 96px">4</div>
+              <div class="wf-score-rel">Par</div>
+            </div>
+
+            <div class="wf-bigtap">
+              <button class="wf-bigtap-btn wf-bigtap-btn-minus"><span>−</span><span class="wf-bigtap-btn-label">Bedre</span></button>
+              <button class="wf-bigtap-btn" style="background:#eee"><span>=</span><span class="wf-bigtap-btn-label">Par</span></button>
+              <button class="wf-bigtap-btn wf-bigtap-btn-primary"><span>+</span><span class="wf-bigtap-btn-label">Verre</span></button>
+            </div>
+
+            <div class="wf-swipe-hint">
+              <span class="wf-swipe-hint-arrow">←</span>
+              <span>Swipe for å bytte hull<span class="wf-marker">2</span></span>
+              <span class="wf-swipe-hint-arrow">→</span>
+            </div>
+
+            <div class="wf-hole" style="padding:14px">
+              <div class="wf-hole-meta" style="border:none; padding: 0">
+                <div class="wf-hole-meta-cell">
+                  <div class="wf-hole-meta-label">Total</div>
+                  <div class="wf-hole-meta-value">+2</div>
+                </div>
+                <div class="wf-hole-meta-cell">
+                  <div class="wf-hole-meta-label">Hull igjen</div>
+                  <div class="wf-hole-meta-value">9</div>
+                </div>
+                <div class="wf-hole-meta-cell">
+                  <div class="wf-hole-meta-label">Tid</div>
+                  <div class="wf-hole-meta-value">2t 14m</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="wf-holenav-bottom">
+            <button class="wf-navbtn">← Hull 8</button>
+            <button class="wf-navbtn wf-navbtn-primary">Neste hull →</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Minimal info:</strong> Par + lengde inline, ingen stats-felter synlig. Spilleren fokuserer på tall.</li>
+        <li><strong>2 — Swipe-gest:</strong> Venstre/høyre bytter hull. Hint nederst lærer spilleren gesten. Mindre trykk, mer flyt.</li>
+        <li>— Risiko: Mistet data-granularitet (ingen FW/GIR live). Må lagres post-runde eller blir aldri fylt inn.</li>
+        <li>— Styrke: Kortest tid fra første slag til logget score. For "jeg vil bare ha scoren"-spilleren.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Full Data ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Full Data</span></h2>
+    <p class="option-description">Alt synlig per hull — score, putts, FW, GIR, scrambling, penalty, sand-save. For data-nerden som vil logge komplett shot-by-shot på banen.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame mobile-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/runde/123</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <div class="wf-statusbar">
+            <span>09:42</span>
+            <div class="wf-statusbar-right"><span>5G</span><span>100%</span></div>
+          </div>
+
+          <div class="wf-appbar">
+            <button class="wf-appbar-back">&lt;</button>
+            <div>
+              <div class="wf-appbar-title-sub">Full logg</div>
+              <div class="wf-appbar-title">Hull 9 · Par 4</div>
+            </div>
+            <button class="wf-appbar-menu">...</button>
+          </div>
+
+          <div class="wf-livestrip">
+            <div class="wf-livestrip-cell"><div class="wf-livestrip-label">Total</div><div class="wf-livestrip-value">+2</div></div>
+            <div class="wf-livestrip-cell"><div class="wf-livestrip-label">Hull</div><div class="wf-livestrip-value">9/18</div></div>
+            <div class="wf-livestrip-cell"><div class="wf-livestrip-label">FW</div><div class="wf-livestrip-value">5/8</div></div>
+            <div class="wf-livestrip-cell"><div class="wf-livestrip-label">GIR</div><div class="wf-livestrip-value">4/8</div></div>
+          </div>
+
+          <div class="wf-holenav">
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">6</div><div class="wf-holenav-pill-score">6</div></div>
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">7</div><div class="wf-holenav-pill-score">3</div></div>
+            <div class="wf-holenav-pill wf-done"><div class="wf-holenav-pill-num">8</div><div class="wf-holenav-pill-score">5</div></div>
+            <div class="wf-holenav-pill wf-active"><div class="wf-holenav-pill-num">9</div><div class="wf-holenav-pill-score">—</div></div>
+            <div class="wf-holenav-pill"><div class="wf-holenav-pill-num">10</div><div class="wf-holenav-pill-score">—</div></div>
+            <div class="wf-holenav-pill"><div class="wf-holenav-pill-num">11</div><div class="wf-holenav-pill-score">—</div></div>
+            <div class="wf-holenav-pill"><div class="wf-holenav-pill-num">12</div><div class="wf-holenav-pill-score">—</div></div>
+          </div>
+
+          <div class="wf-live">
+
+            <div class="wf-fulldata">
+              <div class="wf-stats-title">Komplett logg<span class="wf-marker">1</span></div>
+
+              <div class="wf-fulldata-grid">
+                <div class="wf-fulldata-cell wf-active">
+                  <div class="wf-fulldata-cell-label">Score</div>
+                  <div class="wf-fulldata-cell-value">4</div>
+                  <div class="wf-fulldata-cell-sub">Par</div>
+                </div>
+                <div class="wf-fulldata-cell">
+                  <div class="wf-fulldata-cell-label">Putts</div>
+                  <div class="wf-fulldata-cell-value">2</div>
+                  <div class="wf-fulldata-cell-sub">stepper</div>
+                </div>
+                <div class="wf-fulldata-cell">
+                  <div class="wf-fulldata-cell-label">Club 1</div>
+                  <div class="wf-fulldata-cell-value">D</div>
+                  <div class="wf-fulldata-cell-sub">Driver</div>
+                </div>
+              </div>
+
+              <div class="wf-stats-row">
+                <div>
+                  <div class="wf-stats-label">Fairway</div>
+                  <div class="wf-stats-sub">Hvor landet drivet?</div>
+                </div>
+                <div class="wf-stats-toggle">
+                  <button class="wf-stats-btn">V</button>
+                  <button class="wf-stats-btn wf-active">FW</button>
+                  <button class="wf-stats-btn">H</button>
+                  <button class="wf-stats-btn">R</button>
+                </div>
+              </div>
+              <div class="wf-stats-row">
+                <div>
+                  <div class="wf-stats-label">GIR</div>
+                  <div class="wf-stats-sub">Green i regulering</div>
+                </div>
+                <div class="wf-stats-toggle">
+                  <button class="wf-stats-btn wf-active">Ja</button>
+                  <button class="wf-stats-btn">Nei</button>
+                </div>
+              </div>
+              <div class="wf-stats-row">
+                <div>
+                  <div class="wf-stats-label">Scrambling</div>
+                  <div class="wf-stats-sub">Opp-og-ned miss GIR</div>
+                </div>
+                <div class="wf-stats-toggle">
+                  <button class="wf-stats-btn">N/A</button>
+                  <button class="wf-stats-btn">Nei</button>
+                  <button class="wf-stats-btn">Ja</button>
+                </div>
+              </div>
+              <div class="wf-stats-row">
+                <div>
+                  <div class="wf-stats-label">Sand save</div>
+                  <div class="wf-stats-sub">Opp fra bunker</div>
+                </div>
+                <div class="wf-stats-toggle">
+                  <button class="wf-stats-btn wf-active">N/A</button>
+                  <button class="wf-stats-btn">Ja</button>
+                  <button class="wf-stats-btn">Nei</button>
+                </div>
+              </div>
+              <div class="wf-stats-row">
+                <div>
+                  <div class="wf-stats-label">Penalty</div>
+                  <div class="wf-stats-sub">Straffeslag</div>
+                </div>
+                <div class="wf-stepper">
+                  <button class="wf-stepper-btn">−</button>
+                  <div class="wf-stepper-val">0</div>
+                  <button class="wf-stepper-btn">+</button>
+                </div>
+              </div>
+
+              <div class="wf-hole-meta">
+                <div class="wf-hole-meta-cell">
+                  <div class="wf-hole-meta-label">Par</div>
+                  <div class="wf-hole-meta-value">4</div>
+                </div>
+                <div class="wf-hole-meta-cell">
+                  <div class="wf-hole-meta-label">Lengde</div>
+                  <div class="wf-hole-meta-value">384m</div>
+                </div>
+                <div class="wf-hole-meta-cell">
+                  <div class="wf-hole-meta-label">HCP</div>
+                  <div class="wf-hole-meta-value">7</div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="wf-holenav-bottom">
+            <button class="wf-navbtn">← Hull 8</button>
+            <button class="wf-navbtn wf-navbtn-primary">Neste →<span class="wf-marker">2</span></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Alt på én side:</strong> Score, putts, FW, GIR, scrambling, sand save, penalty. Data-komplett men krever scrolling.</li>
+        <li><strong>2 — "Neste" som gate:</strong> Kan bruke valideringsregel — tving inn alle felt for datarenhet.</li>
+        <li>— Risiko: For mye trykk per hull. Holder runden nede fra 4 til 5+ timer. Ikke for vanlig spiller.</li>
+        <li>— Styrke: Gir AK sin SG-beregning komplette data. Kan også kobles til TrackMan-økter.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: DECADE Strategy ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">DECADE Strategy</span></h2>
+    <p class="option-description">Strategi-anbefaling FØR slaget, deretter logging. Pedagogisk mønster — AK sin coaching-filosofi sitter i produktet. DECADE-prinsipper: spill fra statistisk optimal landingspunkt.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame mobile-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/runde/123</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <div class="wf-statusbar">
+            <span>09:42</span>
+            <div class="wf-statusbar-right"><span>5G</span><span>100%</span></div>
+          </div>
+
+          <div class="wf-appbar">
+            <button class="wf-appbar-back">&lt;</button>
+            <div>
+              <div class="wf-appbar-title-sub">+2 · 9/18</div>
+              <div class="wf-appbar-title">Strategi-modus</div>
+            </div>
+            <button class="wf-appbar-menu">...</button>
+          </div>
+
+          <div class="wf-live">
+
+            <div class="wf-hole">
+              <div class="wf-hole-head">
+                <div>
+                  <div class="wf-hole-num">Hull 9</div>
+                  <h1 class="wf-hole-title">Dogleg høyre · 384m</h1>
+                  <div class="wf-hole-course">Par 4 · HCP 7</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-decade wf-dark">
+              <div class="wf-decade-head">
+                <div class="wf-decade-label">DECADE-plan<span class="wf-marker">1</span></div>
+                <span class="wf-decade-badge">Anbefalt</span>
+              </div>
+              <h3 class="wf-decade-title">Konservativ dogleg — venstre fairway</h3>
+              <p class="wf-decade-desc">Doglegg bryter ved 220m. Sikte 15m venstre for senter. Unngår straffeområde høyre. Forventet approach: 145m fra fairway.</p>
+              <div class="wf-decade-list">
+                <div class="wf-decade-item"><span>Tee-slag</span><strong>Driver · 230m carry</strong></div>
+                <div class="wf-decade-item"><span>Siktepunkt</span><strong>Venstre kant fairway</strong></div>
+                <div class="wf-decade-item"><span>Approach</span><strong>7-jern til senter green</strong></div>
+                <div class="wf-decade-item"><span>Unngå</span><strong>Høyre straffeområde</strong></div>
+              </div>
+            </div>
+
+            <div class="wf-stats-card">
+              <div class="wf-stats-title">Statistisk kontekst<span class="wf-marker">2</span></div>
+              <div class="wf-stats-row">
+                <div class="wf-stats-label">Par-snitt (klubb)</div>
+                <div class="wf-stats-label" style="font-weight:800">4.31</div>
+              </div>
+              <div class="wf-stats-row">
+                <div class="wf-stats-label">Din score hull 9 siste 5 runder</div>
+                <div class="wf-stats-label" style="font-weight:800">+0.6</div>
+              </div>
+              <div class="wf-stats-row">
+                <div class="wf-stats-label">FW-treff (deg)</div>
+                <div class="wf-stats-label" style="font-weight:800">58%</div>
+              </div>
+            </div>
+
+            <div class="wf-score-display">
+              <div class="wf-score-label">Logg score etter hullet</div>
+              <div class="wf-score-value">—</div>
+              <div class="wf-score-rel">Trykk når hullet er ferdig</div>
+            </div>
+
+            <div class="wf-scorepad">
+              <button class="wf-scorepad-btn">2<span class="wf-scorepad-btn-label">Eagle</span></button>
+              <button class="wf-scorepad-btn">3<span class="wf-scorepad-btn-label">Birdie</span></button>
+              <button class="wf-scorepad-btn">4<span class="wf-scorepad-btn-label">Par</span></button>
+              <button class="wf-scorepad-btn">5<span class="wf-scorepad-btn-label">Bogey</span></button>
+              <button class="wf-scorepad-btn">6<span class="wf-scorepad-btn-label">Dbl</span></button>
+            </div>
+
+          </div>
+
+          <div class="wf-holenav-bottom">
+            <button class="wf-navbtn">← Hull 8</button>
+            <button class="wf-navbtn wf-navbtn-primary">Neste →</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Strategi FØR score:</strong> Mørkt strategi-kort dominerer. Spilleren leser plan før slaget. Koplet til AK sin coaching.</li>
+        <li><strong>2 — Statistisk kontekst:</strong> Par-snitt + din historikk + FW%. Gir spilleren datadrevet tiltro til strategien.</li>
+        <li>— Passer Pro/Elite og DECADE-entusiaster. For nybegynner blir det støy før han forstår DECADE.</li>
+        <li>— Kan låses bak Pro-tier som salgsargument.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Voice First ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Voice First</span></h2>
+    <p class="option-description">Tall-diktering som primær input. "Hull 9, fire, ett putt, fairway traff." AI-parsing til felter. Hender fri for utstyr. Oppsummering etter hver hullogging.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame mobile-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/runde/123</div>
+        <div class="browser-controls">- [] x</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <div class="wf-statusbar">
+            <span>09:42</span>
+            <div class="wf-statusbar-right"><span>5G</span><span>100%</span></div>
+          </div>
+
+          <div class="wf-appbar">
+            <button class="wf-appbar-back">&lt;</button>
+            <div>
+              <div class="wf-appbar-title-sub">+2 · Hull 9/18</div>
+              <div class="wf-appbar-title">Stemme-logg</div>
+            </div>
+            <button class="wf-appbar-menu">...</button>
+          </div>
+
+          <div class="wf-live">
+
+            <div class="wf-hole" style="text-align:center">
+              <div class="wf-hole-num">Hull 9 · Par 4 · 384m</div>
+              <h1 class="wf-hole-title" style="font-size:28px; margin: 6px 0">Dogleg høyre</h1>
+            </div>
+
+            <div class="wf-voice">
+              <div class="wf-voice-label">Trykk og snakk<span class="wf-marker">1</span></div>
+              <div class="wf-voice-mic">o</div>
+              <div class="wf-voice-heard">"Fire slag, ett putt, fairway venstre"</div>
+              <div class="wf-voice-parsed">
+                Forstått: <strong>Score 4 · 1 putt · FW traff (venstre)</strong>
+              </div>
+              <div class="wf-voice-actions">
+                <button class="wf-voice-btn">Bekreft</button>
+                <button class="wf-voice-btn wf-voice-btn-ghost">Si på nytt</button>
+              </div>
+              <div class="wf-voice-hint">Støttet: "tre slag", "ett putt", "fairway", "green regulering", "bogey"<span class="wf-marker">2</span></div>
+            </div>
+
+            <div class="wf-voice-summary">
+              <div class="wf-stats-title">Hull 9 · oppsummering<span class="wf-marker">3</span></div>
+              <div class="wf-voice-summary-row"><span>Score</span><strong>4 (Par)</strong></div>
+              <div class="wf-voice-summary-row"><span>Fairway</span><strong>Traff · venstre</strong></div>
+              <div class="wf-voice-summary-row"><span>GIR</span><strong>Ja</strong></div>
+              <div class="wf-voice-summary-row"><span>Putts</span><strong>1</strong></div>
+              <div class="wf-voice-summary-row"><span>Total etter hull 9</span><strong>+2</strong></div>
+            </div>
+
+          </div>
+
+          <div class="wf-holenav-bottom">
+            <button class="wf-navbtn">← Hull 8</button>
+            <button class="wf-navbtn wf-navbtn-primary">Neste hull →</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Stemme-diktering:</strong> Mørkt mic-kort dominerer. AI-parsing til felter. "Hender-fri" er stort salgsargument.</li>
+        <li><strong>2 — Godkjente frasemønstre:</strong> Små hint for hvilke fraser systemet forstår. Bygger mental modell.</li>
+        <li><strong>3 — Bekreftelses-oppsummering:</strong> Viser hva AI tolket. Bekreft → lagre. Reduserer feil-logging.</li>
+        <li>— Risiko: Støy på banen (vind, prat). Krever alltid fallback til tap. Kan kombineres med Option 1.</li>
+        <li>— Premium-differensiator: Ingen konkurrenter har dette på norsk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>rask, korrekt runde-logging mobilt på banen — uten å ødelegge flyten i runden</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Tid/hull</th><th>Data-dybde</th><th>Tier-passing</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Hole Focus</strong></td><td>Ett hull, stor score, stats sekundært</td><td>~15 sek</td><td>Medium (score+FW+GIR+putt)</td><td>Alle tiers</td><td>*****</td></tr>
+        <tr><td><strong>2. Quick Tap</strong></td><td>Bare +/-, swipe mellom hull</td><td>~5 sek</td><td>Lav (kun score)</td><td>Nybegynner, casual</td><td>****</td></tr>
+        <tr><td><strong>3. Full Data</strong></td><td>Alt synlig per hull</td><td>~45 sek</td><td>Høy (SG-ready)</td><td>Elite, datanerds</td><td>***</td></tr>
+        <tr><td><strong>4. DECADE Strategy</strong></td><td>Strategi først, deretter logging</td><td>~20 sek</td><td>Medium + strategi</td><td>Pro/Elite, DECADE-fans</td><td>***</td></tr>
+        <tr><td><strong>5. Voice First</strong></td><td>Diktering + AI-parsing</td><td>~10 sek</td><td>Medium</td><td>Power + hands-busy</td><td>***</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Hole Focus</h3>
+      <p>Balanserer flyt og data. Stort score-display gjør primær handling utvetydig i sollys på banen. Score-pad med navngitte valg (eagle/birdie/par/bogey/double) gir tommelfinger-vennlig input uten tastatur. FW/GIR/putts som sekundære toggles sikrer at AK sin SG-beregning får data uten å forstyrre flyten. DECADE-kortet vises som valgfri kontekst — ikke påtvunget. Passer alle tiers fra Visitor til Elite.</p>
+      <p><strong>Strategisk flow:</strong> Implementer Option 1 som default. Option 2 (Quick Tap) tilbys som "Enkel modus"-toggle for casual spillere. Option 3 (Full Data) aktiveres i innstillinger for Elite-tier. Option 4 (DECADE) blir en Pro-feature som forhåndsvises som salgsargument. Option 5 (Voice) bygges som universal input-lag på toppen av alle opsjoner — mic-knapp i alle modus.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Profil — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Profil</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Dashboard</button>
+    <button class="tab-btn" data-tab="option-2">2: Tabs</button>
+    <button class="tab-btn" data-tab="option-3">3: Showcase</button>
+    <button class="tab-btn" data-tab="option-4">4: Linear List</button>
+    <button class="tab-btn" data-tab="option-5">5: Social Profile</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: DASHBOARD (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Dashboard</span></h2>
+    <p class="option-description">Profil-header på toppen, deretter KPI-rad, achievements-grid og HCP-historikk. Alt synlig uten klikk. Trygt, lesbart, passer alle brukere.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="p-layout">
+
+          <aside class="p-sidebar">
+            <div class="p-sidebar-logo">AK GOLF</div>
+            <nav class="p-sidebar-nav">
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Dashboard</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Bookinger</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Treningsplan</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Statistikk</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Sosialt</div>
+              <div class="p-sidebar-item p-sidebar-item-active"><span class="p-sidebar-ico">EH</span>Profil</div>
+            </nav>
+            <div class="p-sidebar-footer"><span class="p-sidebar-ico">EH</span>Erik Hansen</div>
+          </aside>
+
+          <main class="p-main">
+            <header class="p-topbar">
+              <div class="p-topbar-title">Profil</div>
+              <div class="p-topbar-actions">
+                <button class="p-btn">Del profil</button>
+                <button class="p-btn p-btn-primary">Rediger</button>
+              </div>
+            </header>
+
+            <div class="p-body">
+              <div class="p-profile-header">
+                <div class="p-profile-avatar">EH</div>
+                <div class="p-profile-main">
+                  <div class="p-profile-name-row">
+                    <span class="p-profile-name">Erik Hansen</span>
+                    <span class="p-profile-badge">KATEGORI D</span>
+                    <span class="p-profile-badge">MEDLEM SIDEN 2024</span>
+                  </div>
+                  <div class="p-profile-meta">
+                    <span>Oslo Golfklubb</span><span>HCP 14.2 (fra 22.0)</span><span>Performance 1600 kr/mnd</span>
+                  </div>
+                </div>
+                <div class="p-profile-stats">
+                  <div class="p-profile-stat"><span class="p-profile-stat-label">HCP</span><span class="p-profile-stat-value">14.2</span><span class="p-profile-stat-sub">-7.8 siden start</span></div>
+                  <div class="p-profile-stat"><span class="p-profile-stat-label">ØKTER</span><span class="p-profile-stat-value">48</span><span class="p-profile-stat-sub">siste 12 mnd</span></div>
+                  <div class="p-profile-stat"><span class="p-profile-stat-label">ACHIEVEMENTS</span><span class="p-profile-stat-value">12</span><span class="p-profile-stat-sub">2 legendary</span></div>
+                </div>
+              </div>
+
+              <div class="p-kpi-row">
+                <div class="p-kpi"><div class="p-kpi-label">HCP-ENDRING</div><div class="p-kpi-value">-7.8</div><div class="p-kpi-delta">siste 12 mnd</div></div>
+                <div class="p-kpi"><div class="p-kpi-label">BESTE RUNDE</div><div class="p-kpi-value">74</div><div class="p-kpi-delta">Oslo GK · 2. apr</div></div>
+                <div class="p-kpi"><div class="p-kpi-label">STREAK</div><div class="p-kpi-value">14d</div><div class="p-kpi-delta">lengste: 28d</div></div>
+                <div class="p-kpi"><div class="p-kpi-label">VENNER</div><div class="p-kpi-value">23</div><div class="p-kpi-delta">3 aktive nå</div></div>
+              </div>
+
+              <div class="p-grid">
+                <div class="p-card p-span-8">
+                  <div class="p-card-head"><span class="p-card-title">Achievements</span><a class="p-card-meta">Se alle (12) →</a></div>
+                  <div class="p-ach-grid">
+                    <div class="p-ach" data-rarity="legendary"><div class="p-ach-icon">★</div><div class="p-ach-title">Første 74</div><div class="p-ach-meta">2. apr 2026</div><span class="p-ach-rarity">Legendary</span></div>
+                    <div class="p-ach" data-rarity="epic"><div class="p-ach-icon">◆</div><div class="p-ach-title">HCP under 15</div><div class="p-ach-meta">15. mar 2026</div><span class="p-ach-rarity">Epic</span></div>
+                    <div class="p-ach" data-rarity="rare"><div class="p-ach-icon">▲</div><div class="p-ach-title">50 økter</div><div class="p-ach-meta">10. mar 2026</div><span class="p-ach-rarity">Rare</span></div>
+                    <div class="p-ach" data-rarity="common"><div class="p-ach-icon">●</div><div class="p-ach-title">30-dagers streak</div><div class="p-ach-meta">1. mar 2026</div><span class="p-ach-rarity">Common</span></div>
+                    <div class="p-ach" data-rarity="rare"><div class="p-ach-icon">▲</div><div class="p-ach-title">Første birdie</div><div class="p-ach-meta">12. feb 2026</div><span class="p-ach-rarity">Rare</span></div>
+                    <div class="p-ach" data-rarity="epic"><div class="p-ach-icon">◆</div><div class="p-ach-title">10 under par-hull</div><div class="p-ach-meta">5. feb 2026</div><span class="p-ach-rarity">Epic</span></div>
+                    <div class="p-ach" data-rarity="common"><div class="p-ach-icon">●</div><div class="p-ach-title">Første runde</div><div class="p-ach-meta">20. mar 2024</div><span class="p-ach-rarity">Common</span></div>
+                    <div class="p-ach" data-rarity="legendary"><div class="p-ach-icon">★</div><div class="p-ach-title">Eagle</div><div class="p-ach-meta">28. mar 2026</div><span class="p-ach-rarity">Legendary</span></div>
+                  </div>
+                </div>
+
+                <div class="p-card p-span-4">
+                  <div class="p-card-head"><span class="p-card-title">HCP-historikk</span><span class="p-card-meta">22.0 → 14.2</span></div>
+                  <div class="p-chart">
+                    <svg class="p-chart-svg" viewBox="0 0 300 120" preserveAspectRatio="none">
+                      <polyline fill="none" stroke="currentColor" stroke-width="2" points="0,10 25,18 50,24 75,30 100,38 125,50 150,58 175,66 200,74 225,82 250,90 275,98 300,106" />
+                    </svg>
+                  </div>
+                  <ul class="p-list" style="margin-top:12px;">
+                    <li><div class="p-list-title">Apr 2026</div><span class="p-list-sub">14.2</span></li>
+                    <li><div class="p-list-title">Jan 2026</div><span class="p-list-sub">16.8</span></li>
+                    <li><div class="p-list-title">Mar 2024</div><span class="p-list-sub">22.0</span></li>
+                  </ul>
+                </div>
+
+                <div class="p-card p-span-12">
+                  <div class="p-card-head"><span class="p-card-title">Siste aktivitet</span><a class="p-card-meta">Se alle →</a></div>
+                  <ul class="p-list">
+                    <li><div><div class="p-list-title">15. apr · Performance-økt gjennomført</div><div class="p-list-sub">Anders · Sim 3 · fokus approach 100-140 m</div></div><span class="p-tag p-tag-good">Gjennomført</span></li>
+                    <li><div><div class="p-list-title">12. apr · Ny PB — putting 3 m</div><div class="p-list-sub">8 av 10 · ny linje-rutine fungerer</div></div><span class="p-tag">Milestone</span></li>
+                    <li><div><div class="p-list-title">2. apr · Runde 74 på Oslo GK</div><div class="p-list-sub">Par 72 · netto 62 · HCP -0.4</div></div><span class="p-tag p-tag-good">Beste runde</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Alt synlig uten klikk — profil-header + KPI + achievements + HCP + aktivitet.</li>
+        <li>Achievements grid har rarity-farger (Common/Rare/Epic/Legendary) for gamification.</li>
+        <li>HCP-historikk som sparkline + tre datapunkter gir rask kontekst.</li>
+        <li>Anbefalt default — skalerer fra ny elev (lite data) til veteran (fylt dashboard).</li>
+        <li>Mobilvennlig: grid kollapser til én kolonne, KPI til 2x2.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: TABS ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Tabs</span></h2>
+    <p class="option-description">Fire tabs: Oversikt / Stats / Achievements / Innstillinger. Hver tab dypdykker i én dimensjon. Godt for spillere med mye data.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="p-layout">
+          <aside class="p-sidebar">
+            <div class="p-sidebar-logo">AK GOLF</div>
+            <nav class="p-sidebar-nav">
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Dashboard</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Bookinger</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Treningsplan</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Statistikk</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Sosialt</div>
+              <div class="p-sidebar-item p-sidebar-item-active"><span class="p-sidebar-ico">EH</span>Profil</div>
+            </nav>
+            <div class="p-sidebar-footer"><span class="p-sidebar-ico">EH</span>Erik Hansen</div>
+          </aside>
+
+          <main class="p-main">
+            <header class="p-topbar">
+              <div class="p-topbar-title">Profil</div>
+              <div class="p-topbar-actions"><button class="p-btn p-btn-primary">Rediger</button></div>
+            </header>
+
+            <div class="p-body">
+              <div class="p-profile-header">
+                <div class="p-profile-avatar">EH</div>
+                <div class="p-profile-main">
+                  <div class="p-profile-name-row"><span class="p-profile-name">Erik Hansen</span><span class="p-profile-badge">KATEGORI D</span></div>
+                  <div class="p-profile-meta"><span>Oslo Golfklubb</span><span>38 år</span><span>Medlem siden mars 2024</span></div>
+                </div>
+                <div class="p-profile-stats">
+                  <div class="p-profile-stat"><span class="p-profile-stat-label">HCP</span><span class="p-profile-stat-value">14.2</span></div>
+                  <div class="p-profile-stat"><span class="p-profile-stat-label">ØKTER</span><span class="p-profile-stat-value">48</span></div>
+                </div>
+              </div>
+
+              <nav class="p-subtabs">
+                <a class="p-subtab p-subtab-active">Oversikt</a>
+                <a class="p-subtab">Stats</a>
+                <a class="p-subtab">Achievements <span class="p-subtab-count">12</span></a>
+                <a class="p-subtab">Innstillinger</a>
+              </nav>
+
+              <div class="p-grid">
+                <div class="p-card p-span-8">
+                  <div class="p-card-head"><span class="p-card-title">Om Erik</span></div>
+                  <ul class="p-list">
+                    <li><div class="p-list-key" style="color:#666;">Navn</div><span class="p-list-title">Erik Hansen</span></li>
+                    <li><div class="p-list-key" style="color:#666;">E-post</div><span class="p-list-title">erik.hansen@example.no</span></li>
+                    <li><div class="p-list-key" style="color:#666;">Klubb</div><span class="p-list-title">Oslo Golfklubb</span></li>
+                    <li><div class="p-list-key" style="color:#666;">Coach</div><span class="p-list-title">Anders Kristiansen</span></li>
+                    <li><div class="p-list-key" style="color:#666;">Abonnement</div><span class="p-list-title">Performance 1600 kr/mnd</span></li>
+                  </ul>
+                </div>
+
+                <div class="p-card p-span-4">
+                  <div class="p-card-head"><span class="p-card-title">Kjerne-stats</span></div>
+                  <ul class="p-list">
+                    <li><div class="p-list-sub">HCP</div><span class="p-list-title">14.2</span></li>
+                    <li><div class="p-list-sub">Runder 2026</div><span class="p-list-title">8</span></li>
+                    <li><div class="p-list-sub">Snittscore</div><span class="p-list-title">84.5</span></li>
+                    <li><div class="p-list-sub">Beste runde</div><span class="p-list-title">74</span></li>
+                  </ul>
+                </div>
+
+                <div class="p-card p-span-12">
+                  <div class="p-card-head"><span class="p-card-title">HCP-historikk</span><span class="p-card-meta">22.0 → 14.2 (12 mnd)</span></div>
+                  <div class="p-chart p-chart-big">
+                    <svg class="p-chart-svg" viewBox="0 0 600 180" preserveAspectRatio="none" style="height:160px;">
+                      <polyline fill="none" stroke="currentColor" stroke-width="2" points="0,20 50,28 100,38 150,52 200,62 250,72 300,88 350,100 400,112 450,128 500,140 550,152 600,160" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Klassisk tabs-mønster — lærbart og skalerer til mye data.</li>
+        <li>Oversikt-tab viser kjerne-info. Stats/Achievements/Innstillinger ligger ett klikk unna.</li>
+        <li>Bra for spillere som trenger dypdykk i én kategori av gangen.</li>
+        <li>Svakere for "alt-i-ett"-opplevelse enn Option 1.</li>
+        <li>Passer vokter/Performance-abo hvor spilleren returnerer ofte.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: SHOWCASE ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Showcase</span></h2>
+    <p class="option-description">Rapha-stil editorial portrett med story og kjerne-stats. Markedsføringsaktig følelse — delbar, stolt, personlig.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="p-layout">
+          <aside class="p-sidebar">
+            <div class="p-sidebar-logo">AK GOLF</div>
+            <nav class="p-sidebar-nav">
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Dashboard</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Bookinger</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Treningsplan</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Statistikk</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Sosialt</div>
+              <div class="p-sidebar-item p-sidebar-item-active"><span class="p-sidebar-ico">EH</span>Profil</div>
+            </nav>
+            <div class="p-sidebar-footer"><span class="p-sidebar-ico">EH</span>Erik Hansen</div>
+          </aside>
+
+          <main class="p-main">
+            <header class="p-topbar">
+              <div class="p-topbar-title">Profil</div>
+              <div class="p-topbar-actions"><button class="p-btn">Del</button><button class="p-btn p-btn-primary">Rediger</button></div>
+            </header>
+
+            <div class="p-body">
+              <div class="p-showcase">
+                <div class="p-showcase-portrait">EH</div>
+                <div class="p-showcase-body">
+                  <span class="p-showcase-eyebrow">Medlem siden mars 2024 · Kategori D</span>
+                  <h1 class="p-showcase-title">Erik Hansen</h1>
+                  <p class="p-showcase-story">Startet på 22 i handicap i mars 2024. To år senere har jernlaget blitt sterkeste våpen, putting har klikket, og første runde under 75 kom på Oslo GK i april 2026. Treningspyramiden holder balansen mellom teknikk og spill — 48 økter gjennom Performance-programmet viser.</p>
+                  <div class="p-showcase-stats">
+                    <div><div class="p-showcase-stat-label">HCP</div><div class="p-showcase-stat-value">14.2</div></div>
+                    <div><div class="p-showcase-stat-label">Beste runde</div><div class="p-showcase-stat-value">74</div></div>
+                    <div><div class="p-showcase-stat-label">Økter</div><div class="p-showcase-stat-value">48</div></div>
+                    <div><div class="p-showcase-stat-label">Achievements</div><div class="p-showcase-stat-value">12</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-grid">
+                <div class="p-card p-span-6">
+                  <div class="p-card-head"><span class="p-card-title">Utvalgte achievements</span></div>
+                  <div class="p-ach-grid" style="grid-template-columns:repeat(3,1fr);">
+                    <div class="p-ach" data-rarity="legendary"><div class="p-ach-icon">★</div><div class="p-ach-title">Første 74</div><span class="p-ach-rarity">Legendary</span></div>
+                    <div class="p-ach" data-rarity="legendary"><div class="p-ach-icon">★</div><div class="p-ach-title">Eagle</div><span class="p-ach-rarity">Legendary</span></div>
+                    <div class="p-ach" data-rarity="epic"><div class="p-ach-icon">◆</div><div class="p-ach-title">HCP under 15</div><span class="p-ach-rarity">Epic</span></div>
+                  </div>
+                </div>
+
+                <div class="p-card p-span-6">
+                  <div class="p-card-head"><span class="p-card-title">HCP-reise</span><span class="p-card-meta">22.0 → 14.2</span></div>
+                  <div class="p-chart">
+                    <svg class="p-chart-svg" viewBox="0 0 300 120" preserveAspectRatio="none">
+                      <polyline fill="none" stroke="currentColor" stroke-width="2" points="0,10 25,18 50,24 75,30 100,38 125,50 150,58 175,66 200,74 225,82 250,90 275,98 300,106" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Editorial-stil — stor portrett, fortelling, signatur-stats.</li>
+        <li>Fungerer godt som delt lenke (sosialt, Instagram-story).</li>
+        <li>Bygger eierskap og identitet — spilleren ser seg selv som "atlet".</li>
+        <li>Krever gode tekstuelle data (story genereres automatisk fra stats/milepæler).</li>
+        <li>Svakere for hyppig bruk — dette er en "se seg selv"-profil, ikke arbeidsverktøy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: LINEAR LIST ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Linear List</span></h2>
+    <p class="option-description">Alt listet under hverandre — personalia, stats, achievements, HCP, innstillinger. Null dekorasjon, maks tetthet. Notion/Linear-følelse.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="p-layout">
+          <aside class="p-sidebar">
+            <div class="p-sidebar-logo">AK GOLF</div>
+            <nav class="p-sidebar-nav">
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Dashboard</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Bookinger</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Treningsplan</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Statistikk</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Sosialt</div>
+              <div class="p-sidebar-item p-sidebar-item-active"><span class="p-sidebar-ico">EH</span>Profil</div>
+            </nav>
+            <div class="p-sidebar-footer"><span class="p-sidebar-ico">EH</span>Erik Hansen</div>
+          </aside>
+
+          <main class="p-main">
+            <header class="p-topbar">
+              <div class="p-topbar-title">Erik Hansen</div>
+              <div class="p-topbar-actions"><button class="p-btn p-btn-primary">Rediger</button></div>
+            </header>
+
+            <div class="p-body" style="max-width:720px; margin:0 auto;">
+              <div class="p-linear">
+
+                <div class="p-linear-section">
+                  <div class="p-linear-label">Personalia</div>
+                  <div class="p-linear-row"><span class="p-linear-key">Navn</span><span class="p-linear-val">Erik Hansen</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">E-post</span><span class="p-linear-val">erik.hansen@example.no</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Klubb</span><span class="p-linear-val">Oslo Golfklubb</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Medlem siden</span><span class="p-linear-val">20. mars 2024</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Coach</span><span class="p-linear-val">Anders Kristiansen</span></div>
+                </div>
+
+                <div class="p-linear-section">
+                  <div class="p-linear-label">Golf-stats</div>
+                  <div class="p-linear-row"><span class="p-linear-key">HCP</span><span class="p-linear-val">14.2</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">HCP-endring siste 12 mnd</span><span class="p-linear-val">-7.8</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Beste runde</span><span class="p-linear-val">74 (Oslo GK, 2. apr 2026)</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Runder 2026</span><span class="p-linear-val">8</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Snittscore</span><span class="p-linear-val">84.5</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Økter totalt</span><span class="p-linear-val">48</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Streak</span><span class="p-linear-val">14 dager</span></div>
+                </div>
+
+                <div class="p-linear-section">
+                  <div class="p-linear-label">Achievements (12)</div>
+                  <div class="p-linear-row"><span class="p-linear-key">★ Første 74</span><span class="p-linear-val">Legendary · 2. apr 2026</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">★ Eagle</span><span class="p-linear-val">Legendary · 28. mar 2026</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">◆ HCP under 15</span><span class="p-linear-val">Epic · 15. mar 2026</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">◆ 10 under par-hull</span><span class="p-linear-val">Epic · 5. feb 2026</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">▲ 50 økter</span><span class="p-linear-val">Rare · 10. mar 2026</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">▲ Første birdie</span><span class="p-linear-val">Rare · 12. feb 2026</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">● 30-dagers streak</span><span class="p-linear-val">Common · 1. mar 2026</span></div>
+                </div>
+
+                <div class="p-linear-section">
+                  <div class="p-linear-label">HCP-historikk</div>
+                  <div class="p-chart">
+                    <svg class="p-chart-svg" viewBox="0 0 600 120" preserveAspectRatio="none">
+                      <polyline fill="none" stroke="currentColor" stroke-width="2" points="0,10 50,18 100,24 150,30 200,38 250,50 300,58 350,66 400,74 450,82 500,90 550,98 600,106" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="p-linear-section">
+                  <div class="p-linear-label">Innstillinger</div>
+                  <div class="p-linear-row"><span class="p-linear-key">Varsler</span><span class="p-linear-val">E-post + SMS</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Språk</span><span class="p-linear-val">Norsk bokmål</span></div>
+                  <div class="p-linear-row"><span class="p-linear-key">Synlighet</span><span class="p-linear-val">Kun venner</span></div>
+                </div>
+
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Maks tetthet — alt på én skjerm, ingen dekorasjon.</li>
+        <li>Notion/Linear-følelse — rask scanning for power-users.</li>
+        <li>Bra for admin/coach-visninger hvor alt skal leses kjapt.</li>
+        <li>Svakere som "hjemme-profil" — mangler følelse, stolthet, gamification.</li>
+        <li>Passer hvis spilleren primært er dataorientert og ikke trenger visuelle belønninger.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: SOCIAL PROFILE ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Social Profile</span></h2>
+    <p class="option-description">Fokus på sosial dimensjon — venner, challenges, leaderboards. Mindre individ-stats, mer "hvem spiller du mot".</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="p-layout">
+          <aside class="p-sidebar">
+            <div class="p-sidebar-logo">AK GOLF</div>
+            <nav class="p-sidebar-nav">
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Dashboard</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Bookinger</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Treningsplan</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Statistikk</div>
+              <div class="p-sidebar-item"><span class="p-sidebar-ico">◻</span>Sosialt</div>
+              <div class="p-sidebar-item p-sidebar-item-active"><span class="p-sidebar-ico">EH</span>Profil</div>
+            </nav>
+            <div class="p-sidebar-footer"><span class="p-sidebar-ico">EH</span>Erik Hansen</div>
+          </aside>
+
+          <main class="p-main">
+            <header class="p-topbar">
+              <div class="p-topbar-title">Profil</div>
+              <div class="p-topbar-actions"><button class="p-btn">Legg til venn</button><button class="p-btn p-btn-primary">Start challenge</button></div>
+            </header>
+
+            <div class="p-body">
+              <div class="p-social-hero">
+                <div class="p-profile-avatar">EH</div>
+                <div style="flex:1;">
+                  <div class="p-profile-name-row"><span class="p-profile-name">Erik Hansen</span><span class="p-profile-badge">HCP 14.2</span></div>
+                  <div class="p-profile-meta"><span>Oslo Golfklubb</span><span>Medlem siden 2024</span></div>
+                </div>
+                <div class="p-social-counts">
+                  <div class="p-social-count"><span class="p-social-count-val">23</span><span class="p-social-count-lbl">Venner</span></div>
+                  <div class="p-social-count"><span class="p-social-count-val">5</span><span class="p-social-count-lbl">Challenges</span></div>
+                  <div class="p-social-count"><span class="p-social-count-val">#12</span><span class="p-social-count-lbl">Klubb-rank</span></div>
+                </div>
+              </div>
+
+              <div class="p-grid">
+                <div class="p-card p-span-8">
+                  <div class="p-card-head"><span class="p-card-title">Venner</span><a class="p-card-meta">Se alle (23) →</a></div>
+                  <div class="p-friend-grid">
+                    <div class="p-friend"><span class="p-friend-av">MK</span><div><div class="p-friend-name">Marius Kristiansen</div><div class="p-friend-meta">HCP 8.4 · Aktiv nå</div></div></div>
+                    <div class="p-friend"><span class="p-friend-av">JS</span><div><div class="p-friend-name">Jonas Solberg</div><div class="p-friend-meta">HCP 15.8 · 3t siden</div></div></div>
+                    <div class="p-friend"><span class="p-friend-av">AH</span><div><div class="p-friend-name">Anne Hagen</div><div class="p-friend-meta">HCP 18.2 · I går</div></div></div>
+                    <div class="p-friend"><span class="p-friend-av">TB</span><div><div class="p-friend-name">Thomas Berg</div><div class="p-friend-meta">HCP 11.0 · Aktiv nå</div></div></div>
+                    <div class="p-friend"><span class="p-friend-av">KL</span><div><div class="p-friend-name">Kari Lund</div><div class="p-friend-meta">HCP 20.4 · 2d siden</div></div></div>
+                    <div class="p-friend"><span class="p-friend-av">PH</span><div><div class="p-friend-name">Per Halvorsen</div><div class="p-friend-meta">HCP 13.1 · I dag</div></div></div>
+                    <div class="p-friend"><span class="p-friend-av">IS</span><div><div class="p-friend-name">Ida Strand</div><div class="p-friend-meta">HCP 9.6 · 1t siden</div></div></div>
+                    <div class="p-friend"><span class="p-friend-av">RW</span><div><div class="p-friend-name">Rune Wiig</div><div class="p-friend-meta">HCP 16.5 · 4d siden</div></div></div>
+                  </div>
+                </div>
+
+                <div class="p-card p-span-4">
+                  <div class="p-card-head"><span class="p-card-title">Aktive challenges</span></div>
+                  <div class="p-challenge">
+                    <div><div class="p-challenge-title">30 dager · 15 økter</div><div class="p-challenge-sub">mot Marius · 12/15</div><div class="p-challenge-prog"><span class="p-challenge-prog-fill" style="width:80%;"></span></div></div>
+                    <span class="p-tag p-tag-good">Leder</span>
+                  </div>
+                  <div class="p-challenge">
+                    <div><div class="p-challenge-title">Putting-duell</div><div class="p-challenge-sub">mot Thomas · 48/60</div><div class="p-challenge-prog"><span class="p-challenge-prog-fill" style="width:80%;"></span></div></div>
+                    <span class="p-tag">-3</span>
+                  </div>
+                  <div class="p-challenge">
+                    <div><div class="p-challenge-title">Ny PB</div><div class="p-challenge-sub">solo · 74 → 72</div><div class="p-challenge-prog"><span class="p-challenge-prog-fill" style="width:50%;"></span></div></div>
+                    <span class="p-tag">Aktiv</span>
+                  </div>
+                </div>
+
+                <div class="p-card p-span-12">
+                  <div class="p-card-head"><span class="p-card-title">Klubb-leaderboard · Oslo GK (HCP-endring 12 mnd)</span></div>
+                  <ul class="p-list">
+                    <li><div><div class="p-list-title">#10 — Marius Kristiansen</div><div class="p-list-sub">HCP 8.4 · -5.2</div></div><span class="p-tag">Venn</span></li>
+                    <li><div><div class="p-list-title">#11 — Ida Strand</div><div class="p-list-sub">HCP 9.6 · -8.1</div></div><span class="p-tag">Venn</span></li>
+                    <li><div><div class="p-list-title">#12 — Erik Hansen</div><div class="p-list-sub">HCP 14.2 · -7.8</div></div><span class="p-tag p-tag-good">Deg</span></li>
+                    <li><div><div class="p-list-title">#13 — Per Halvorsen</div><div class="p-list-sub">HCP 13.1 · -4.5</div></div><span class="p-tag">Venn</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Sosialt først — venner, challenges og leaderboard dominerer visning.</li>
+        <li>Gamification kjerne: challenges med progressbar, rank på klubben.</li>
+        <li>Bra for yngre spillere og de som spiller sosialt fremfor konkurranse.</li>
+        <li>Svakere for solo-spiller eller profesjonell tilnærming — kan føles "lekete".</li>
+        <li>Kan kombineres med Option 1 som en egen "Sosialt"-tab.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Portal Profil — valget avhenger av hvilken rolle profilsiden skal ha for spilleren.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Dashboard</th><th>2: Tabs</th><th>3: Showcase</th><th>4: Linear List</th><th>5: Social</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Lærbarhet (nye brukere)</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Oversikt på ett skjermbilde</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Gamification (achievements)</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Stolthet / delbar</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Admin/funksjon-effektivitet</td><td>Sterk</td><td>Sterk</td><td>Svak</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Mobil-friendly</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Passer AK-brand</td><td>Sterk</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Middels</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Option 1 — Dashboard</h3>
+    <p>Dashboard er tryggest — profil-header + KPI + achievements + HCP-historikk + aktivitet gir alt på ett skjermbilde uten læringsbarriere. Passer både nye elever (lite data, men åpen struktur) og veteraner (fylt dashboard). Skalerer på mobil ved å stable grid. Option 3 (Showcase) er sterk toer for delbar merkevareopplevelse. Option 5 (Social) kan bygges inn som et sosialt kort i Dashboard, eller som egen underside.</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Dashboard):</strong> Default. Best for alle brukertyper.</li>
+      <li><strong>Option 2 (Tabs):</strong> Hvis spilleren har mye data og trenger dypdykk.</li>
+      <li><strong>Option 3 (Showcase):</strong> Hvis profil skal deles eksternt (social proof, merkevarebygging).</li>
+      <li><strong>Option 4 (Linear List):</strong> Hvis tetthet og skanning er viktigst (power-user, admin).</li>
+      <li><strong>Option 5 (Social):</strong> Hvis sosial/gamification-dimensjon er primærmotivasjon.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

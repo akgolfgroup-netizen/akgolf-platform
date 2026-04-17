@@ -1,0 +1,134 @@
+/* === Option 2: Focus Mode — Clean + Polished === */
+#frame-opt2-tabs .sub-tab-badge { display: none; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"] { color: #000; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"].active { color: #000; border-bottom-color: #000; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"] { color: #000; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"].active { color: #000; border-bottom-color: #000; }
+
+/* ================ CLEAN ================ */
+.clean #frame-opt2 { font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif; }
+.clean #frame-opt2 .mc-shell { background: #fff; }
+.clean #frame-opt2 .mc-topbar { background: #0A1F18; color: #fff; border-bottom: 1px solid #1A3529; }
+.clean #frame-opt2 .mc-logo { color: #fff; letter-spacing: 0.12em; }
+.clean #frame-opt2 .mc-tab { color: rgba(255,255,255,0.6); }
+.clean #frame-opt2 .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.clean #frame-opt2 .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 600; }
+.clean #frame-opt2 .mc-avatar { background: #D1F843; color: #0A1F18; }
+.clean #frame-opt2 .mc-refresh-pill { color: rgba(255,255,255,0.6); }
+.clean #frame-opt2 .mc-refresh-dot { background: #2A7D5A; }
+
+.clean #frame-opt2 .mc-focus-hero { background: linear-gradient(180deg, #E6F3F1 0%, #F5F8F7 100%); border-bottom: 1px solid #ECF0EF; padding: 40px 32px; }
+.clean #frame-opt2 .mc-focus-label { color: #005840; letter-spacing: 0.14em; }
+.clean #frame-opt2 .mc-focus-title { color: #0A1F18; font-size: 32px; letter-spacing: -0.025em; line-height: 1.15; }
+.clean #frame-opt2 .mc-focus-sub { color: #5A6E66; font-size: 14px; }
+
+.clean #frame-opt2 .mc-focus-list { padding: 24px 32px; gap: 12px; }
+.clean #frame-opt2 .mc-focus-task { background: #fff; border: 1px solid #ECF0EF; border-radius: 14px; padding: 20px 24px; transition: border-color 160ms; }
+.clean #frame-opt2 .mc-focus-task:hover { border-color: #D5DFDB; }
+.clean #frame-opt2 .mc-focus-task-primary { border: 2px solid #005840; background: #E6F3F1; padding: 19px 23px; }
+.clean #frame-opt2 .mc-focus-task-num { color: #005840; font-size: 32px; font-weight: 800; letter-spacing: -0.03em; }
+.clean #frame-opt2 .mc-focus-task-num-muted { color: #A5B2AD; }
+.clean #frame-opt2 .mc-focus-task-title { color: #0A1F18; font-size: 16px; font-weight: 700; }
+.clean #frame-opt2 .mc-focus-task-sub { color: #5A6E66; }
+.clean #frame-opt2 .mc-focus-task-meta { color: #A5B2AD; letter-spacing: 0.1em; }
+.clean #frame-opt2 .mc-focus-tag { background: #ECF0EF; color: #324D45; letter-spacing: 0.1em; }
+.clean #frame-opt2 .mc-focus-task-primary .mc-focus-tag { background: #005840; color: #D1F843; }
+.clean #frame-opt2 .mc-focus-eta { color: #5A6E66; }
+
+/* ================ POLISHED ================ */
+.polished #frame-opt2 {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: "cv02", "cv11", "ss01";
+}
+.polished #frame-opt2 .mc-shell { background: #fff; }
+.polished #frame-opt2 .mc-topbar {
+  background: linear-gradient(180deg, #0A1F18 0%, #071610 100%);
+  border-bottom: 1px solid rgba(209,248,67,0.12);
+  box-shadow: 0 8px 24px rgba(10,31,24,0.28);
+}
+.polished #frame-opt2 .mc-logo { color: #D1F843; letter-spacing: 0.14em; }
+.polished #frame-opt2 .mc-tab { color: rgba(255,255,255,0.55); transition: all 180ms cubic-bezier(0.4,0,0.2,1); }
+.polished #frame-opt2 .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.polished #frame-opt2 .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; box-shadow: 0 0 0 1px rgba(209,248,67,0.45), 0 6px 18px rgba(209,248,67,0.24); }
+.polished #frame-opt2 .mc-avatar { background: #D1F843; color: #0A1F18; box-shadow: 0 0 0 2px rgba(209,248,67,0.22), 0 4px 12px rgba(10,31,24,0.4); }
+.polished #frame-opt2 .mc-refresh-pill { color: rgba(255,255,255,0.55); letter-spacing: 0.1em; }
+.polished #frame-opt2 .mc-refresh-dot { background: #D1F843; box-shadow: 0 0 0 3px rgba(209,248,67,0.24), 0 0 10px rgba(209,248,67,0.6); animation: mb2-pulse 2.4s ease-in-out infinite; }
+@keyframes mb2-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.polished #frame-opt2 .mc-focus-hero {
+  background: linear-gradient(135deg, #E6F3F1 0%, #F5F8F7 50%, #fff 100%);
+  border-bottom: 1px solid rgba(10,31,24,0.06);
+  padding: 48px 40px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.polished #frame-opt2 .mc-focus-hero::before {
+  content: "";
+  position: absolute;
+  right: -40px; top: -40px;
+  width: 240px; height: 240px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(209,248,67,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.polished #frame-opt2 .mc-focus-label { color: #005840; letter-spacing: 0.16em; font-weight: 700; }
+.polished #frame-opt2 .mc-focus-title { color: #0A1F18; font-size: 36px; letter-spacing: -0.03em; line-height: 1.1; font-weight: 800; }
+.polished #frame-opt2 .mc-focus-sub { color: #5A6E66; font-size: 14px; }
+
+.polished #frame-opt2 .mc-focus-list { padding: 28px 40px 40px; gap: 14px; }
+.polished #frame-opt2 .mc-focus-task {
+  background: #fff;
+  border: 1px solid rgba(10,31,24,0.06);
+  border-radius: 16px;
+  padding: 22px 26px;
+  box-shadow: 0 1px 3px rgba(10,31,24,0.04), 0 4px 12px rgba(10,31,24,0.03);
+  transition: transform 200ms cubic-bezier(0.4,0,0.2,1), box-shadow 200ms, border-color 200ms;
+}
+.polished #frame-opt2 .mc-focus-task:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(10,31,24,0.08), 0 12px 32px rgba(10,31,24,0.04);
+  border-color: rgba(10,31,24,0.1);
+}
+.polished #frame-opt2 .mc-focus-task-primary {
+  border: 2px solid #005840;
+  background: linear-gradient(135deg, #E6F3F1 0%, #F5F8F7 100%);
+  box-shadow: 0 2px 6px rgba(0,88,64,0.12), 0 12px 32px rgba(0,88,64,0.08);
+  padding: 21px 25px;
+  position: relative;
+}
+.polished #frame-opt2 .mc-focus-task-primary::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 20px; right: 20px; height: 2px;
+  background: linear-gradient(90deg, transparent, #D1F843, transparent);
+  border-radius: 2px;
+}
+.polished #frame-opt2 .mc-focus-task-num {
+  color: #005840;
+  font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+.polished #frame-opt2 .mc-focus-task-num-muted { color: #A5B2AD; }
+.polished #frame-opt2 .mc-focus-task-title { color: #0A1F18; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+.polished #frame-opt2 .mc-focus-task-sub { color: #5A6E66; line-height: 1.5; }
+.polished #frame-opt2 .mc-focus-task-meta { color: #A5B2AD; letter-spacing: 0.12em; font-weight: 600; }
+.polished #frame-opt2 .mc-focus-tag {
+  background: #ECF0EF;
+  color: #324D45;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.polished #frame-opt2 .mc-focus-task-primary .mc-focus-tag {
+  background: #0A1F18;
+  color: #D1F843;
+  box-shadow: 0 2px 6px rgba(10,31,24,0.2);
+}
+.polished #frame-opt2 .mc-focus-eta { color: #5A6E66; font-family: "JetBrains Mono", monospace; font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  .polished #frame-opt2 * { transition: none !important; transform: none !important; animation: none !important; }
+}

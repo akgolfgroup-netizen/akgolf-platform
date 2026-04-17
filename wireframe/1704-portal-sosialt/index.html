@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sosialt — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Sosialt</span> — <span id="project-name">AK Golf Platform</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Friends + Leaderboards</button>
+    <button class="tab-btn" data-tab="option-2">2: Feed Activity</button>
+    <button class="tab-btn" data-tab="option-3">3: Challenges Hub</button>
+    <button class="tab-btn" data-tab="option-4">4: Leaderboard Focus</button>
+    <button class="tab-btn" data-tab="option-5">5: Invite + Grow</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1 ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Friends + Leaderboards</span></h2>
+    <p class="option-description">Balansert sosialflate — venneforespørsler, live leaderboards og aktive challenges i én pragmatisk oversikt.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/sosialt</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="portal-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item active">Sosialt</a>
+            </nav>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Portal</div>
+                <h3 class="page-title">Sosialt</h3>
+                <p class="page-sub">Venner, leaderboards og utfordringer</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn-ghost">Invitér venn</button>
+                <button class="btn-primary">Legg til venn <span class="wf-annot">①</span></button>
+              </div>
+            </header>
+
+            <div class="sub-nav">
+              <a href="#" class="sn-item active">Oversikt</a>
+              <a href="#" class="sn-item">Venner <span class="sn-count">12</span></a>
+              <a href="#" class="sn-item">Leaderboards</a>
+              <a href="#" class="sn-item">Challenges</a>
+            </div>
+
+            <div class="kpi-row">
+              <div class="kpi">
+                <div class="kpi-label">Venner</div>
+                <div class="kpi-val">12</div>
+                <div class="kpi-ctx">+2 siste 30d</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Din plass</div>
+                <div class="kpi-val">#4</div>
+                <div class="kpi-ctx">HCP-forbedring</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Aktive challenges</div>
+                <div class="kpi-val">2</div>
+                <div class="kpi-ctx">1 nær mål</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">Streak</div>
+                <div class="kpi-val">11d</div>
+                <div class="kpi-ctx">Beste: 18d</div>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <section class="card">
+                <div class="card-head">
+                  <h4>Venneforespørsler <span class="wf-annot">②</span></h4>
+                  <span class="badge-count">3</span>
+                </div>
+                <ul class="req-list">
+                  <li class="req-row">
+                    <div class="avatar"></div>
+                    <div class="req-meta">
+                      <div class="req-name">Martin Lund</div>
+                      <div class="req-sub">HCP 18,4 · Oslo GK</div>
+                    </div>
+                    <div class="req-actions">
+                      <button class="btn-xs-primary">Godta</button>
+                      <button class="btn-xs-ghost">Avslå</button>
+                    </div>
+                  </li>
+                  <li class="req-row">
+                    <div class="avatar"></div>
+                    <div class="req-meta">
+                      <div class="req-name">Ida Berntsen</div>
+                      <div class="req-sub">HCP 22,1 · Miklagard</div>
+                    </div>
+                    <div class="req-actions">
+                      <button class="btn-xs-primary">Godta</button>
+                      <button class="btn-xs-ghost">Avslå</button>
+                    </div>
+                  </li>
+                  <li class="req-row">
+                    <div class="avatar"></div>
+                    <div class="req-meta">
+                      <div class="req-name">Jonas Wik</div>
+                      <div class="req-sub">HCP 9,8 · Losby</div>
+                    </div>
+                    <div class="req-actions">
+                      <button class="btn-xs-primary">Godta</button>
+                      <button class="btn-xs-ghost">Avslå</button>
+                    </div>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="card">
+                <div class="card-head">
+                  <h4>Aktive challenges <span class="wf-annot">③</span></h4>
+                  <a href="#" class="link">Se alle</a>
+                </div>
+                <ul class="ch-list">
+                  <li class="ch-row">
+                    <div class="ch-meta">
+                      <div class="ch-name">14-dagers putting</div>
+                      <div class="ch-sub">Dag 11 av 14 · 8 deltar</div>
+                    </div>
+                    <div class="progress"><span style="width:78%"></span></div>
+                    <div class="ch-right">78%</div>
+                  </li>
+                  <li class="ch-row">
+                    <div class="ch-meta">
+                      <div class="ch-name">100 ball drill</div>
+                      <div class="ch-sub">62 / 100 · 5 deltar</div>
+                    </div>
+                    <div class="progress"><span style="width:62%"></span></div>
+                    <div class="ch-right">62%</div>
+                  </li>
+                </ul>
+                <button class="btn-link">+ Ny challenge</button>
+              </section>
+            </div>
+
+            <section class="card">
+              <div class="card-head">
+                <h4>Leaderboards <span class="wf-annot">④</span></h4>
+                <div class="tab-pills">
+                  <button class="pill active">HCP-forbedring</button>
+                  <button class="pill">Runder denne mnd</button>
+                  <button class="pill">Streak</button>
+                </div>
+              </div>
+              <table class="lb-table">
+                <thead><tr><th>#</th><th>Navn</th><th>Klubb</th><th class="num">HCP nå</th><th class="num">Endring</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>Sara Holm</td><td>Oslo GK</td><td class="num">12,4</td><td class="num pos">−3,1</td></tr>
+                  <tr><td>2</td><td>Tobias Ree</td><td>Losby</td><td class="num">16,0</td><td class="num pos">−2,4</td></tr>
+                  <tr><td>3</td><td>Ellen Aas</td><td>Miklagard</td><td class="num">9,8</td><td class="num pos">−1,9</td></tr>
+                  <tr class="you"><td>4</td><td>Du</td><td>Oslo GK</td><td class="num">14,2</td><td class="num pos">−1,4</td></tr>
+                  <tr><td>5</td><td>Petter Nes</td><td>Bærum</td><td class="num">20,6</td><td class="num pos">−1,2</td></tr>
+                </tbody>
+              </table>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="num">①</span> Én primær CTA — reduserer valgparalyse</li>
+        <li><span class="num">②</span> Ventende forespørsler øverst med telleindikator</li>
+        <li><span class="num">③</span> Challenges inline med progress-barer</li>
+        <li><span class="num">④</span> Leaderboard m/ byttbare kategorier og "Du"-rad fremhevet</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2 ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Feed Activity</span></h2>
+    <p class="option-description">Strava-inspirert feed av venners runder, øvelser og milepæler — kronologisk, engasjerende, scroll-vennlig.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/sosialt</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="portal-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item active">Sosialt</a>
+            </nav>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Portal · Sosialt</div>
+                <h3 class="page-title">Feed</h3>
+                <p class="page-sub">Se hva vennene dine trener og spiller</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn-ghost">Filter</button>
+                <button class="btn-primary">Legg ut aktivitet <span class="wf-annot">①</span></button>
+              </div>
+            </header>
+
+            <div class="feed-layout">
+              <div class="feed-col">
+                <div class="feed-filter"><span class="wf-annot">②</span>
+                  <button class="pill active">Alle</button>
+                  <button class="pill">Runder</button>
+                  <button class="pill">Trening</button>
+                  <button class="pill">Milepæler</button>
+                </div>
+
+                <article class="feed-post">
+                  <header class="post-head">
+                    <div class="avatar"></div>
+                    <div class="post-meta">
+                      <div class="post-name">Sara Holm <span class="post-verb">spilte 18 hull</span></div>
+                      <div class="post-sub">Oslo GK · i går kl. 15:20</div>
+                    </div>
+                    <button class="icon-btn">···</button>
+                  </header>
+                  <div class="post-stats">
+                    <div><span class="ps-lab">Score</span><span class="ps-val">82 (+10)</span></div>
+                    <div><span class="ps-lab">FIR</span><span class="ps-val">9/14</span></div>
+                    <div><span class="ps-lab">GIR</span><span class="ps-val">7/18</span></div>
+                    <div><span class="ps-lab">Putts</span><span class="ps-val">32</span></div>
+                  </div>
+                  <div class="post-chart"><div class="chart-placeholder">score-kart / hull-for-hull</div></div>
+                  <footer class="post-foot">
+                    <button class="react-btn">♡ 4 likes</button>
+                    <button class="react-btn">💬 2 kommentarer</button>
+                    <button class="react-btn">Gi PR</button>
+                  </footer>
+                </article>
+
+                <article class="feed-post">
+                  <header class="post-head">
+                    <div class="avatar"></div>
+                    <div class="post-meta">
+                      <div class="post-name">Tobias Ree <span class="post-verb">fullførte 100 ball drill</span></div>
+                      <div class="post-sub">Miklagard range · 2t siden</div>
+                    </div>
+                    <button class="icon-btn">···</button>
+                  </header>
+                  <div class="post-stats">
+                    <div><span class="ps-lab">Baller</span><span class="ps-val">100</span></div>
+                    <div><span class="ps-lab">Snitt</span><span class="ps-val">164m</span></div>
+                    <div><span class="ps-lab">Spredning</span><span class="ps-val">12m</span></div>
+                  </div>
+                  <footer class="post-foot">
+                    <button class="react-btn">♡ 7</button>
+                    <button class="react-btn">💬 1</button>
+                    <button class="react-btn">Gi PR</button>
+                  </footer>
+                </article>
+
+                <article class="feed-post milestone">
+                  <header class="post-head">
+                    <div class="avatar"></div>
+                    <div class="post-meta">
+                      <div class="post-name">Ellen Aas <span class="post-verb">nådde ny HCP-milepæl 9,8</span></div>
+                      <div class="post-sub">Oslo GK · 1d siden</div>
+                    </div>
+                  </header>
+                  <div class="milestone-card">Gikk fra 11,2 → 9,8 på 6 uker</div>
+                  <footer class="post-foot">
+                    <button class="react-btn">♡ 14</button>
+                    <button class="react-btn">💬 5</button>
+                  </footer>
+                </article>
+              </div>
+
+              <aside class="feed-aside">
+                <div class="card compact">
+                  <h4>Forespørsler <span class="badge-count">3</span></h4>
+                  <ul class="mini-list">
+                    <li><div class="avatar xs"></div>Martin Lund <button class="btn-xxs">Godta</button></li>
+                    <li><div class="avatar xs"></div>Ida Berntsen <button class="btn-xxs">Godta</button></li>
+                    <li><div class="avatar xs"></div>Jonas Wik <button class="btn-xxs">Godta</button></li>
+                  </ul>
+                </div>
+                <div class="card compact">
+                  <h4>Active challenges <span class="wf-annot">③</span></h4>
+                  <div class="mini-ch">
+                    <div class="mini-ch-name">14-dagers putting</div>
+                    <div class="progress"><span style="width:78%"></span></div>
+                  </div>
+                  <div class="mini-ch">
+                    <div class="mini-ch-name">100 ball drill</div>
+                    <div class="progress"><span style="width:62%"></span></div>
+                  </div>
+                </div>
+                <div class="card compact">
+                  <h4>Topp 3 denne uken</h4>
+                  <ol class="mini-lb">
+                    <li>Sara Holm · −3,1</li>
+                    <li>Tobias Ree · −2,4</li>
+                    <li>Ellen Aas · −1,9</li>
+                  </ol>
+                </div>
+              </aside>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="num">①</span> Én primær handling: dele aktivitet</li>
+        <li><span class="num">②</span> Filtreringspiller øverst — feed er primærtinnhold</li>
+        <li><span class="num">③</span> Sidekolonne holder challenges/forespørsler uten å bryte feed-flyt</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3 ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Challenges Hub</span></h2>
+    <p class="option-description">Challenge-sentrert hub for å oppdage, bli med og skape putting-drills og skill-utfordringer.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/sosialt</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="portal-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item active">Sosialt</a>
+            </nav>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Portal · Sosialt</div>
+                <h3 class="page-title">Challenges</h3>
+                <p class="page-sub">Oppdag, bli med og skap utfordringer</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn-ghost">Mine challenges</button>
+                <button class="btn-primary">+ Opprett challenge <span class="wf-annot">①</span></button>
+              </div>
+            </header>
+
+            <div class="ch-tabs"><span class="wf-annot">②</span>
+              <button class="pill active">Aktive (2)</button>
+              <button class="pill">Oppdag (12)</button>
+              <button class="pill">Ferdige (5)</button>
+            </div>
+
+            <section class="card hero-challenge">
+              <div class="hc-left">
+                <div class="eyebrow">Din aktive challenge</div>
+                <h3 class="hc-title">14-dagers putting</h3>
+                <p class="hc-desc">Fullfør 100 putts per dag i 14 dager. Sara, Tobias og 6 andre deltar.</p>
+                <div class="hc-meta">
+                  <span>Dag 11 / 14</span>
+                  <span>·</span>
+                  <span>8 deltakere</span>
+                  <span>·</span>
+                  <span>Slutter lør 19. apr</span>
+                </div>
+                <div class="progress big"><span style="width:78%"></span></div>
+              </div>
+              <div class="hc-right">
+                <div class="rank-pod">
+                  <div class="rank"><span class="rk-pos">1</span><span class="rk-name">Sara</span><span class="rk-val">1400</span></div>
+                  <div class="rank"><span class="rk-pos">2</span><span class="rk-name">Tobias</span><span class="rk-val">1350</span></div>
+                  <div class="rank self"><span class="rk-pos">3</span><span class="rk-name">Du</span><span class="rk-val">1100</span></div>
+                </div>
+              </div>
+            </section>
+
+            <div class="grid-2">
+              <section class="card">
+                <div class="card-head"><h4>Din andre aktive <span class="wf-annot">③</span></h4></div>
+                <div class="ch-detail">
+                  <div class="ch-detail-top">
+                    <div class="ch-name">100 ball drill</div>
+                    <div class="ch-sub">62 / 100 baller · 5 deltar</div>
+                  </div>
+                  <div class="progress"><span style="width:62%"></span></div>
+                  <div class="ch-detail-foot">
+                    <button class="btn-ghost">Se detaljer</button>
+                    <button class="btn-primary">Logg dagens økt</button>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="card-head"><h4>Oppdag nye challenges <span class="wf-annot">④</span></h4></div>
+                <ul class="discover-list">
+                  <li class="disc-row">
+                    <div class="disc-meta">
+                      <div class="disc-name">7-dagers chip-fokus</div>
+                      <div class="disc-sub">50 chip-slag/dag · 12 deltar</div>
+                    </div>
+                    <button class="btn-xs-primary">Bli med</button>
+                  </li>
+                  <li class="disc-row">
+                    <div class="disc-meta">
+                      <div class="disc-name">Driver carry +5m</div>
+                      <div class="disc-sub">30 dager · 8 deltar</div>
+                    </div>
+                    <button class="btn-xs-primary">Bli med</button>
+                  </li>
+                  <li class="disc-row">
+                    <div class="disc-meta">
+                      <div class="disc-name">Under 35 putts runde</div>
+                      <div class="disc-sub">5 runder · 15 deltar</div>
+                    </div>
+                    <button class="btn-xs-primary">Bli med</button>
+                  </li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="card">
+              <div class="card-head"><h4>Nylig fullført</h4></div>
+              <ul class="done-list">
+                <li>Putt fra 1m — 95% treff (du) · 2 uker siden · <span class="pos">#1</span></li>
+                <li>Range 200 baller — Tobias · 3 uker siden · <span>#3</span></li>
+                <li>30-dagers streak — Sara · 1 mnd siden · <span>#2</span></li>
+              </ul>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="num">①</span> "Opprett" er primær — driver UGC og engasjement</li>
+        <li><span class="num">②</span> Segmenterte tabs: aktivt / oppdag / ferdig</li>
+        <li><span class="num">③</span> Hero-challenge får dominerende plass med leaderboard</li>
+        <li><span class="num">④</span> Oppdag-liste i sidekolonne oppfordrer til å bli med</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4 ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Leaderboard Focus</span></h2>
+    <p class="option-description">Ranking-fokusert dypdykk med flere kategorier: HCP-forbedring, volum, streak — for konkurranseinstinkt.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/sosialt</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="portal-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item active">Sosialt</a>
+            </nav>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Portal · Sosialt</div>
+                <h3 class="page-title">Leaderboards</h3>
+                <p class="page-sub">Ranking på tvers av venner og klubber</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn-ghost">Periode: 30 dager</button>
+                <button class="btn-primary">Del min plassering</button>
+              </div>
+            </header>
+
+            <div class="lb-tabs"><span class="wf-annot">①</span>
+              <button class="pill active">HCP-forbedring</button>
+              <button class="pill">Runder denne mnd</button>
+              <button class="pill">Streak</button>
+              <button class="pill">Snitt score</button>
+              <button class="pill">GIR %</button>
+            </div>
+
+            <section class="hero-rank card"><span class="wf-annot">②</span>
+              <div class="hr-pod silver">
+                <div class="pod-avatar"></div>
+                <div class="pod-pos">2</div>
+                <div class="pod-name">Tobias Ree</div>
+                <div class="pod-val">−2,4</div>
+              </div>
+              <div class="hr-pod gold">
+                <div class="pod-crown">★</div>
+                <div class="pod-avatar"></div>
+                <div class="pod-pos">1</div>
+                <div class="pod-name">Sara Holm</div>
+                <div class="pod-val">−3,1</div>
+              </div>
+              <div class="hr-pod bronze">
+                <div class="pod-avatar"></div>
+                <div class="pod-pos">3</div>
+                <div class="pod-name">Ellen Aas</div>
+                <div class="pod-val">−1,9</div>
+              </div>
+            </section>
+
+            <section class="card">
+              <div class="card-head">
+                <h4>Full ranking <span class="wf-annot">③</span></h4>
+                <div class="lb-meta">12 venner · oppdatert nå</div>
+              </div>
+              <table class="lb-table detailed">
+                <thead>
+                  <tr>
+                    <th>#</th><th>Spiller</th><th>Klubb</th>
+                    <th class="num">HCP start</th><th class="num">HCP nå</th>
+                    <th class="num">Endring</th><th class="num">Runder</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>Sara Holm</td><td>Oslo GK</td><td class="num">15,5</td><td class="num">12,4</td><td class="num pos">−3,1</td><td class="num">14</td></tr>
+                  <tr><td>2</td><td>Tobias Ree</td><td>Losby</td><td class="num">18,4</td><td class="num">16,0</td><td class="num pos">−2,4</td><td class="num">11</td></tr>
+                  <tr><td>3</td><td>Ellen Aas</td><td>Miklagard</td><td class="num">11,7</td><td class="num">9,8</td><td class="num pos">−1,9</td><td class="num">9</td></tr>
+                  <tr class="you"><td>4</td><td>Du</td><td>Oslo GK</td><td class="num">15,6</td><td class="num">14,2</td><td class="num pos">−1,4</td><td class="num">8</td></tr>
+                  <tr><td>5</td><td>Petter Nes</td><td>Bærum</td><td class="num">21,8</td><td class="num">20,6</td><td class="num pos">−1,2</td><td class="num">7</td></tr>
+                  <tr><td>6</td><td>Martin Lund</td><td>Oslo GK</td><td class="num">19,0</td><td class="num">18,4</td><td class="num pos">−0,6</td><td class="num">5</td></tr>
+                  <tr><td>7</td><td>Ida Berntsen</td><td>Miklagard</td><td class="num">22,5</td><td class="num">22,1</td><td class="num pos">−0,4</td><td class="num">4</td></tr>
+                  <tr><td>8</td><td>Jonas Wik</td><td>Losby</td><td class="num">10,2</td><td class="num">9,8</td><td class="num pos">−0,4</td><td class="num">6</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="grid-2">
+              <section class="card">
+                <div class="card-head"><h4>Din utvikling</h4></div>
+                <div class="chart-placeholder sm">HCP-linje siste 90 dager: 15,6 → 14,2</div>
+                <div class="mini-stats">
+                  <div><span class="ms-l">Plass forrige mnd</span><span class="ms-v">#6</span></div>
+                  <div><span class="ms-l">Plass nå</span><span class="ms-v">#4 <span class="pos">↑2</span></span></div>
+                </div>
+              </section>
+              <section class="card">
+                <div class="card-head"><h4>Ventende & challenges</h4></div>
+                <div class="mini-row">3 venneforespørsler venter · <a href="#" class="link">Se</a></div>
+                <div class="mini-row">2 aktive challenges · 14-dagers putting, 100 ball drill</div>
+              </section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="num">①</span> Mange kategorier — dypdykk i ranking</li>
+        <li><span class="num">②</span> Top-3 podium skaper emosjonell pull</li>
+        <li><span class="num">③</span> Full ranking m/ før/etter — fokus på forbedring, ikke score</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5 ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Invite + Grow</span></h2>
+    <p class="option-description">Vekst-først — inviter venner, referral-belønninger, gamifisert community-bygging.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/sosialt</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="portal-shell">
+          <aside class="portal-sidebar">
+            <div class="sb-logo">AK</div>
+            <nav class="sb-nav">
+              <a href="#" class="sb-item">Oversikt</a>
+              <a href="#" class="sb-item">Planlegg</a>
+              <a href="#" class="sb-item">Tren</a>
+              <a href="#" class="sb-item">Spill</a>
+              <a href="#" class="sb-item">Analyser</a>
+              <a href="#" class="sb-item active">Sosialt</a>
+            </nav>
+          </aside>
+          <main class="portal-main">
+            <header class="page-head">
+              <div>
+                <div class="eyebrow">Portal · Sosialt</div>
+                <h3 class="page-title">Bygg flokken din</h3>
+                <p class="page-sub">Jo flere venner, jo bedre konkurranse — og flere frynsegoder</p>
+              </div>
+            </header>
+
+            <section class="card invite-hero"><span class="wf-annot">①</span>
+              <div class="ih-left">
+                <div class="eyebrow">Invitasjonskode</div>
+                <div class="invite-code">GOLF-SARA-8421</div>
+                <p class="ih-desc">Del koden med en golfvenn. Når de registrerer seg får begge 1 måned Pro gratis.</p>
+                <div class="ih-actions">
+                  <button class="btn-primary">Kopiér lenke</button>
+                  <button class="btn-ghost">Del via SMS</button>
+                  <button class="btn-ghost">Del via e-post</button>
+                </div>
+              </div>
+              <div class="ih-right">
+                <div class="reward-tier">
+                  <div class="rt-num">3</div>
+                  <div class="rt-lab">av 5 venner</div>
+                </div>
+                <div class="progress big"><span style="width:60%"></span></div>
+                <div class="rt-next">+2 invitasjoner til "Elite sosial"-badge</div>
+              </div>
+            </section>
+
+            <div class="grid-3">
+              <section class="card reward-card">
+                <div class="reward-icon">◆</div>
+                <div class="reward-title">1 venn</div>
+                <div class="reward-desc">1 uke Pro gratis</div>
+                <div class="reward-state done">Oppnådd</div>
+              </section>
+              <section class="card reward-card">
+                <div class="reward-icon">◆</div>
+                <div class="reward-title">3 venner</div>
+                <div class="reward-desc">1 mnd Pro gratis</div>
+                <div class="reward-state done">Oppnådd</div>
+              </section>
+              <section class="card reward-card active">
+                <div class="reward-icon">★</div>
+                <div class="reward-title">5 venner</div>
+                <div class="reward-desc">"Elite sosial"-badge + 3 mnd Pro</div>
+                <div class="reward-state">Neste mål</div>
+              </section>
+            </div>
+
+            <section class="card">
+              <div class="card-head">
+                <h4>Foreslåtte kontakter <span class="wf-annot">②</span></h4>
+                <a href="#" class="link">Importer fra kontakter</a>
+              </div>
+              <ul class="suggest-list">
+                <li class="sug-row">
+                  <div class="avatar"></div>
+                  <div class="sug-meta">
+                    <div class="sug-name">Kristian Dahl</div>
+                    <div class="sug-sub">3 felles venner · Oslo GK</div>
+                  </div>
+                  <button class="btn-xs-primary">Invitér</button>
+                </li>
+                <li class="sug-row">
+                  <div class="avatar"></div>
+                  <div class="sug-meta">
+                    <div class="sug-name">Marte Svendsen</div>
+                    <div class="sug-sub">2 felles venner · Miklagard</div>
+                  </div>
+                  <button class="btn-xs-primary">Invitér</button>
+                </li>
+                <li class="sug-row">
+                  <div class="avatar"></div>
+                  <div class="sug-meta">
+                    <div class="sug-name">Erlend Haug</div>
+                    <div class="sug-sub">Spilte samme runde 5/4 · Losby</div>
+                  </div>
+                  <button class="btn-xs-primary">Invitér</button>
+                </li>
+              </ul>
+            </section>
+
+            <div class="grid-2">
+              <section class="card">
+                <div class="card-head"><h4>Venner som venter <span class="wf-annot">③</span></h4><span class="badge-count">3</span></div>
+                <ul class="mini-list">
+                  <li><div class="avatar xs"></div>Martin Lund <button class="btn-xxs">Godta</button></li>
+                  <li><div class="avatar xs"></div>Ida Berntsen <button class="btn-xxs">Godta</button></li>
+                  <li><div class="avatar xs"></div>Jonas Wik <button class="btn-xxs">Godta</button></li>
+                </ul>
+              </section>
+              <section class="card">
+                <div class="card-head"><h4>Aktive challenges</h4></div>
+                <div class="mini-ch">
+                  <div class="mini-ch-name">14-dagers putting · 78%</div>
+                  <div class="progress"><span style="width:78%"></span></div>
+                </div>
+                <div class="mini-ch">
+                  <div class="mini-ch-name">100 ball drill · 62%</div>
+                  <div class="progress"><span style="width:62%"></span></div>
+                </div>
+                <a href="#" class="link">Se leaderboard →</a>
+              </section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="num">①</span> Referral-hero med progress mot reward-tiers</li>
+        <li><span class="num">②</span> Foreslåtte kontakter m/ kontekst (felles venner, klubb)</li>
+        <li><span class="num">③</span> Forespørsler og challenges sekundært — vekst er primært</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Summary &amp; Recommendation</h2>
+    <p class="option-description">Sammenligning på tvers av de fem UX-filosofiene for Portal Sosialt.</p>
+    <div class="summary-wrap">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Navn</th>
+            <th>Beskrivelse</th>
+            <th class="num">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="rec-row">
+            <td>1</td>
+            <td><strong>Friends + Leaderboards</strong></td>
+            <td>Balansert oversikt — forespørsler, leaderboards og challenges sideordnet.</td>
+            <td class="num">★★★★★</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Feed Activity</td>
+            <td>Strava-feed med sosiale reaksjoner — skalerer med flere venner.</td>
+            <td class="num">★★★★☆</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Challenges Hub</td>
+            <td>Challenge-sentrert — driver gjentatt engasjement og UGC.</td>
+            <td class="num">★★★☆☆</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Leaderboard Focus</td>
+            <td>Dypdykk i ranking — sterk for konkurranseinstinkt, tyngre å vedlikeholde.</td>
+            <td class="num">★★★☆☆</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Invite + Grow</td>
+            <td>Referral-fokus — perfekt når community er tomt, men sekundært som hjemskjerm.</td>
+            <td class="num">★★★☆☆</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="rec-block">
+        <h3>Anbefaling: Option 1 — Friends + Leaderboards</h3>
+        <p>Option 1 gjenspeiler portalens eksisterende IA (sidebar + sub-nav + kort-grid), leverer alle tre primære jobs-to-be-done (godta venner, sjekke rangering, jobbe med challenges) i én skjerm, og holder seg innenfor Apple-minimalisme-stilen. Feed (Opt 2) blir sterk når community vokser; Grow (Opt 5) bør vurderes som separat "tom tilstand"-opplevelse.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

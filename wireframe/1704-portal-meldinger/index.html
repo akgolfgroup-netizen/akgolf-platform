@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meldinger — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Meldinger</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Inbox + Chat</button>
+    <button class="tab-btn" data-tab="option-2">2: iMessage Mode</button>
+    <button class="tab-btn" data-tab="option-3">3: Threaded Topics</button>
+    <button class="tab-btn" data-tab="option-4">4: Rich Media</button>
+    <button class="tab-btn" data-tab="option-5">5: AI Summary</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: INBOX + CHAT ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Inbox + Chat</span></h2>
+    <p class="option-description">Samtaleliste venstre, chat-vindu hoyre — klassisk e-post/Messenger-layout</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/meldinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK · PORTAL</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">HCP 14,2</div></div></div>
+            <nav class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Dashboard</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Treningsplan</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Meldinger<span class="wf-sb-item-badge">5</span></a>
+            </nav>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-phead">
+              <div><div class="wf-phead-eyebrow">Kommunikasjon</div><h1 class="wf-phead-h">Meldinger</h1><div class="wf-phead-sub">4 samtaler · 5 uleste meldinger</div></div>
+              <div class="wf-phead-actions"><button class="wf-btn-primary wf-btn">Ny melding</button></div>
+            </div>
+
+            <div class="wf-mg-split">
+              <aside class="wf-mg-list">
+                <div class="wf-mg-search"><div class="wf-mg-search-input">Sok samtaler...</div></div>
+                <div class="wf-mg-filters">
+                  <button class="wf-mg-filter wf-active">Alle</button>
+                  <button class="wf-mg-filter">Uleste</button>
+                  <button class="wf-mg-filter">Coaches</button>
+                </div>
+                <div class="wf-mg-convos">
+                  <div class="wf-mg-convo wf-active wf-mg-convo-unread">
+                    <div class="wf-mg-avatar">AK</div>
+                    <div><div class="wf-mg-convo-name">Anders <span class="wf-mg-convo-role">Coach</span></div><div class="wf-mg-convo-preview">Se paa approach-okta pa onsdag...</div></div>
+                    <div class="wf-mg-convo-meta"><span class="wf-mg-convo-time">09:42</span><span class="wf-mg-convo-badge">2</span></div>
+                  </div>
+                  <div class="wf-mg-convo wf-mg-convo-unread">
+                    <div class="wf-mg-avatar">MR</div>
+                    <div><div class="wf-mg-convo-name">Markus <span class="wf-mg-convo-role">Coach</span></div><div class="wf-mg-convo-preview">Bra jobba paa putting i dag!</div></div>
+                    <div class="wf-mg-convo-meta"><span class="wf-mg-convo-time">08:15</span><span class="wf-mg-convo-badge">1</span></div>
+                  </div>
+                  <div class="wf-mg-convo wf-mg-convo-unread">
+                    <div class="wf-mg-avatar">AD</div>
+                    <div><div class="wf-mg-convo-name">Admin <span class="wf-mg-convo-role">System</span></div><div class="wf-mg-convo-preview">Booking bekreftet for fredag...</div></div>
+                    <div class="wf-mg-convo-meta"><span class="wf-mg-convo-time">igaar</span><span class="wf-mg-convo-badge">1</span></div>
+                  </div>
+                  <div class="wf-mg-convo wf-mg-convo-unread">
+                    <div class="wf-mg-avatar">NT</div>
+                    <div><div class="wf-mg-convo-name">Challenges · Nora <span class="wf-mg-convo-role">Venn</span></div><div class="wf-mg-convo-preview">Utfordrer deg pa 9 hull fredag!</div></div>
+                    <div class="wf-mg-convo-meta"><span class="wf-mg-convo-time">igaar</span><span class="wf-mg-convo-badge">1</span></div>
+                  </div>
+                  <div class="wf-mg-convo">
+                    <div class="wf-mg-avatar">LB</div>
+                    <div><div class="wf-mg-convo-name">Lars Berg <span class="wf-mg-convo-role">Venn</span></div><div class="wf-mg-convo-preview">Takk for runden!</div></div>
+                    <div class="wf-mg-convo-meta"><span class="wf-mg-convo-time">tirs</span></div>
+                  </div>
+                </div>
+              </aside>
+
+              <section class="wf-mg-chat">
+                <div class="wf-mg-chat-head">
+                  <div class="wf-mg-avatar">AK</div>
+                  <div><div class="wf-mg-chat-name">Anders Kristiansen</div><div class="wf-mg-chat-meta">Din coach · Online</div></div>
+                  <div class="wf-mg-chat-actions"><div class="wf-mg-chat-icon"></div><div class="wf-mg-chat-icon"></div></div>
+                </div>
+                <div class="wf-mg-chat-body">
+                  <div class="wf-mg-day">I DAG</div>
+                  <div class="wf-mg-msg wf-mg-msg-them">Hei Erik! Saa du fikk inn en god omgang i gaar. Vi tar en rask titt paa approach-statistikken paa onsdag.<div class="wf-mg-msg-time">09:40</div></div>
+                  <div class="wf-mg-msg wf-mg-msg-them">Jeg har lastet opp den nye drillen for 100m inn — proev gjerne paa simulator.<div class="wf-mg-msg-time">09:41</div></div>
+                  <div class="wf-mg-msg wf-mg-msg-me">Skal gjore det! Er 9:30 greit pa onsdag?<div class="wf-mg-msg-time">09:48</div></div>
+                </div>
+                <div class="wf-mg-compose">
+                  <div class="wf-mg-compose-input">Skriv en melding...</div>
+                  <button class="wf-mg-send">Send</button>
+                </div>
+              </section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Klassisk 2-kolonne layout — samtaleliste venstre, aktiv chat hoyre. Kjent mental modell.</li>
+        <li>Ulest-badges paa convo og sidebar — umiddelbar oversikt uten a apne.</li>
+        <li>Role-tags (Coach, Venn, System) skiller kommunikasjonstyper tydelig.</li>
+        <li>Filter-chips (Alle, Uleste, Coaches) for rask triage.</li>
+        <li>Default: viser coach-samtalen — prioritert kontekst for elev.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: IMESSAGE MODE ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">iMessage Mode</span></h2>
+    <p class="option-description">Fokuser paa en samtale om gangen — swipe/tabs mellom personer, full skjerm chat</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/meldinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK · PORTAL</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">HCP 14,2</div></div></div>
+            <nav class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Dashboard</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Treningsplan</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Meldinger<span class="wf-sb-item-badge">5</span></a>
+            </nav>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-phead">
+              <div><div class="wf-phead-eyebrow">Kommunikasjon</div><h1 class="wf-phead-h">Samtaler</h1><div class="wf-phead-sub">Veksle mellom samtaler med taber</div></div>
+            </div>
+
+            <div class="wf-im-wrap">
+              <div class="wf-im-tabs">
+                <div class="wf-im-tab wf-active"><span class="wf-im-tab-dot"></span>Anders (2)</div>
+                <div class="wf-im-tab"><span class="wf-im-tab-dot"></span>Markus (1)</div>
+                <div class="wf-im-tab"><span class="wf-im-tab-dot"></span>Admin (1)</div>
+                <div class="wf-im-tab"><span class="wf-im-tab-dot"></span>Nora (1)</div>
+                <div class="wf-im-tab">Lars Berg</div>
+              </div>
+
+              <div class="wf-im-card">
+                <div class="wf-im-hero">
+                  <div class="wf-im-hero-avatar">AK</div>
+                  <div><div class="wf-im-hero-name">Anders Kristiansen</div><div class="wf-im-hero-status"><span class="wf-im-hero-status-dot"></span>Online · Din coach</div></div>
+                </div>
+                <div class="wf-im-body">
+                  <div class="wf-mg-day">I DAG · 17. APRIL</div>
+                  <div class="wf-mg-msg wf-mg-msg-them">Hei Erik! Fin omgang i gaar — +3 etter 18. Viste god fremgang paa driver.<div class="wf-mg-msg-time">09:40</div></div>
+                  <div class="wf-mg-msg wf-mg-msg-them">Se gjerne paa approach-drillen for 100m. Vi kjorer gjennom den paa onsdag.<div class="wf-mg-msg-time">09:41</div></div>
+                  <div class="wf-mg-msg wf-mg-msg-me">Takk! Er 9:30 greit paa onsdag? Jeg kan ogsaa 10:30.<div class="wf-mg-msg-time">09:48</div></div>
+                  <div class="wf-mg-msg wf-mg-msg-them">9:30 fungerer fint. Sim 3 er booket. Ses da!<div class="wf-mg-msg-time">09:52</div></div>
+                </div>
+                <div class="wf-im-nav">
+                  <button class="wf-im-nav-btn">← Markus</button>
+                  <span style="font-size:11px;color:#999;">1 av 5 samtaler</span>
+                  <button class="wf-im-nav-btn">Admin →</button>
+                </div>
+                <div class="wf-im-compose">
+                  <div class="wf-mg-compose-input">Svar Anders...</div>
+                  <button class="wf-mg-send">Send</button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kun en samtale synlig om gangen — dyp fokus, mindre distraksjon.</li>
+        <li>Horisontale taber med uleste-prikker — swipe-vennlig paa mobil.</li>
+        <li>Hero-header med avatar, navn og status tar over ufrac for samtalekontekst.</li>
+        <li>Nav-piler nederst for sekvensiell gjennomgang av uleste.</li>
+        <li>Svakere for skanning av mange samtaler — best for 5-10 aktive threads.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: THREADED TOPICS ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Threaded Topics</span></h2>
+    <p class="option-description">Gruppert per tema — Coaching, Bookinger, Challenges, Admin</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/meldinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK · PORTAL</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">HCP 14,2</div></div></div>
+            <nav class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Dashboard</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Treningsplan</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Meldinger<span class="wf-sb-item-badge">5</span></a>
+            </nav>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-phead">
+              <div><div class="wf-phead-eyebrow">Kommunikasjon</div><h1 class="wf-phead-h">Meldinger etter tema</h1><div class="wf-phead-sub">Gruppert for rask oversikt</div></div>
+              <div class="wf-phead-actions"><button class="wf-btn-primary wf-btn">Ny melding</button></div>
+            </div>
+
+            <div class="wf-th-wrap">
+              <div class="wf-th-group">
+                <div class="wf-th-group-head">
+                  <div class="wf-th-group-icon"></div>
+                  <div><div class="wf-th-group-title">Coaching</div><div class="wf-th-group-meta">Meldinger fra dine coaches</div></div>
+                  <div class="wf-th-group-count">3 nye</div>
+                </div>
+                <div class="wf-th-items">
+                  <div class="wf-th-item wf-unread">
+                    <div class="wf-th-item-avatar">AK</div>
+                    <div><div class="wf-th-item-name">Anders Kristiansen</div><div class="wf-th-item-preview">Se paa approach-okta pa onsdag — ny drill lastet opp</div></div>
+                    <div class="wf-th-item-time">09:42</div>
+                  </div>
+                  <div class="wf-th-item wf-unread">
+                    <div class="wf-th-item-avatar">MR</div>
+                    <div><div class="wf-th-item-name">Markus Roinaas-Pedersen</div><div class="wf-th-item-preview">Bra jobba paa putting i dag! Fortsett rutinen.</div></div>
+                    <div class="wf-th-item-time">08:15</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-th-group">
+                <div class="wf-th-group-head">
+                  <div class="wf-th-group-icon"></div>
+                  <div><div class="wf-th-group-title">Bookinger</div><div class="wf-th-group-meta">Bekreftelser og paaminnelser</div></div>
+                  <div class="wf-th-group-count">1 ny</div>
+                </div>
+                <div class="wf-th-items">
+                  <div class="wf-th-item wf-unread">
+                    <div class="wf-th-item-avatar">AD</div>
+                    <div><div class="wf-th-item-name">Booking-system</div><div class="wf-th-item-preview">Performance 20 min fredag 19. april kl. 10:00 — bekreftet</div></div>
+                    <div class="wf-th-item-time">igaar</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-th-group">
+                <div class="wf-th-group-head">
+                  <div class="wf-th-group-icon"></div>
+                  <div><div class="wf-th-group-title">Challenges</div><div class="wf-th-group-meta">Meldinger fra venner og konkurranser</div></div>
+                  <div class="wf-th-group-count">1 ny</div>
+                </div>
+                <div class="wf-th-items">
+                  <div class="wf-th-item wf-unread">
+                    <div class="wf-th-item-avatar">NT</div>
+                    <div><div class="wf-th-item-name">Nora Torp</div><div class="wf-th-item-preview">Utfordrer deg paa 9 hull fredag kveld — godtar du?</div></div>
+                    <div class="wf-th-item-time">igaar</div>
+                  </div>
+                  <div class="wf-th-item">
+                    <div class="wf-th-item-avatar">LB</div>
+                    <div><div class="wf-th-item-name">Lars Berg</div><div class="wf-th-item-preview">Takk for runden! God kamp.</div></div>
+                    <div class="wf-th-item-time">tirs</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-th-group">
+                <div class="wf-th-group-head">
+                  <div class="wf-th-group-icon"></div>
+                  <div><div class="wf-th-group-title">Admin</div><div class="wf-th-group-meta">Abonnement og kontoinfo</div></div>
+                  <div class="wf-th-group-count">0 nye</div>
+                </div>
+                <div class="wf-th-items">
+                  <div class="wf-th-item">
+                    <div class="wf-th-item-avatar">AD</div>
+                    <div><div class="wf-th-item-name">AK Golf Academy</div><div class="wf-th-item-preview">Faktura for april er betalt — takk!</div></div>
+                    <div class="wf-th-item-time">10. apr</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Tema-grupper (Coaching, Bookinger, Challenges, Admin) gir mental kategorisering.</li>
+        <li>Antall nye per gruppe synlig som badge — triage paa seksjonsnivaa.</li>
+        <li>Klikk paa tema kan kollapse/ekspandere — skaler bra naar antall meldinger oker.</li>
+        <li>Coaches og challenges kan ha egne notifikasjons-settings per tema.</li>
+        <li>Svakere for enkeltsamtaler som krever dialog — bedre for oversikt enn chat.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: RICH MEDIA ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Rich Media</span></h2>
+    <p class="option-description">Video, bilder, audio inline — coach kan sende swing-analyse, drill-videoer direkte i chat</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/meldinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK · PORTAL</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">HCP 14,2</div></div></div>
+            <nav class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Dashboard</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Treningsplan</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Meldinger<span class="wf-sb-item-badge">5</span></a>
+            </nav>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-phead">
+              <div><div class="wf-phead-eyebrow">Kommunikasjon</div><h1 class="wf-phead-h">Meldinger</h1><div class="wf-phead-sub">Video, bilder og audio inline</div></div>
+            </div>
+
+            <div class="wf-rm-split">
+              <aside class="wf-rm-list">
+                <div class="wf-rm-convo wf-active">
+                  <div class="wf-rm-convo-avatar">AK</div>
+                  <div><div class="wf-rm-convo-name">Anders</div><div class="wf-rm-convo-preview">Sendt video · 09:41</div></div>
+                </div>
+                <div class="wf-rm-convo">
+                  <div class="wf-rm-convo-avatar">MR</div>
+                  <div><div class="wf-rm-convo-name">Markus</div><div class="wf-rm-convo-preview">Audio · 08:15</div></div>
+                </div>
+                <div class="wf-rm-convo">
+                  <div class="wf-rm-convo-avatar">AD</div>
+                  <div><div class="wf-rm-convo-name">Admin</div><div class="wf-rm-convo-preview">Booking-bekreftelse</div></div>
+                </div>
+                <div class="wf-rm-convo">
+                  <div class="wf-rm-convo-avatar">NT</div>
+                  <div><div class="wf-rm-convo-name">Nora</div><div class="wf-rm-convo-preview">Bildet fra ronden</div></div>
+                </div>
+              </aside>
+
+              <section class="wf-rm-chat">
+                <div class="wf-rm-chat-head">Anders Kristiansen · Din coach</div>
+                <div class="wf-rm-body">
+                  <div class="wf-mg-day">I DAG</div>
+                  <div class="wf-rm-msg wf-rm-msg-them">
+                    <div class="wf-rm-msg-text">Hei Erik! Her er swing-analysen fra i gaar.</div>
+                  </div>
+                  <div class="wf-rm-msg wf-rm-msg-them">
+                    <div class="wf-rm-video"><div class="wf-rm-video-play">▶</div><div class="wf-rm-video-duration">0:48</div></div>
+                    <div class="wf-mg-msg-time">09:40</div>
+                  </div>
+                  <div class="wf-rm-msg wf-rm-msg-them">
+                    <div class="wf-rm-msg-text">Her er en referanse-drill for approach 100m.</div>
+                    <div class="wf-rm-image">IMG · drill-kart.jpg</div>
+                    <div class="wf-mg-msg-time">09:41</div>
+                  </div>
+                  <div class="wf-rm-msg wf-rm-msg-me">
+                    <div class="wf-rm-msg-text">Takk! Skal proeve det.</div>
+                    <div class="wf-mg-msg-time">09:48</div>
+                  </div>
+                  <div class="wf-rm-msg wf-rm-msg-me">
+                    <div class="wf-rm-audio">
+                      <div class="wf-rm-audio-play">▶</div>
+                      <div class="wf-rm-audio-wave">
+                        <span class="wf-rm-audio-bar" style="height:6px;"></span><span class="wf-rm-audio-bar" style="height:14px;"></span><span class="wf-rm-audio-bar" style="height:10px;"></span><span class="wf-rm-audio-bar" style="height:18px;"></span><span class="wf-rm-audio-bar" style="height:8px;"></span><span class="wf-rm-audio-bar" style="height:16px;"></span><span class="wf-rm-audio-bar" style="height:12px;"></span><span class="wf-rm-audio-bar" style="height:6px;"></span>
+                      </div>
+                      <div class="wf-rm-audio-time">0:12</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="wf-rm-compose-wrap">
+                  <div class="wf-rm-compose-input">Skriv eller lim inn media...</div>
+                  <button class="wf-mg-send">Send</button>
+                </div>
+                <div class="wf-rm-toolbar">
+                  <div class="wf-rm-tool" title="Foto"></div>
+                  <div class="wf-rm-tool" title="Video"></div>
+                  <div class="wf-rm-tool" title="Audio"></div>
+                  <div class="wf-rm-tool" title="Fil"></div>
+                  <div class="wf-rm-tool" title="Okt"></div>
+                </div>
+              </section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Video-player inline for swing-analyse — coach sender direkte uten ekstern verktoy.</li>
+        <li>Bilde-thumbnails med trykk for full visning — drill-kart, baneskisser.</li>
+        <li>Audio-meldinger med waveform — rask feedback uten aa skrive.</li>
+        <li>Verktoy-linje nederst for rask media-valg (foto, video, audio, fil, okt-link).</li>
+        <li>Tyngre for mobil-data — trenger caching og thumbnail-generering.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: AI SUMMARY ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">AI Summary</span></h2>
+    <p class="option-description">AI oppsummerer lange samtaler — hovedpunkter, action items, neste steg</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/meldinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK · PORTAL</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">HCP 14,2</div></div></div>
+            <nav class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Dashboard</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Treningsplan</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Meldinger<span class="wf-sb-item-badge">5</span></a>
+            </nav>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-phead">
+              <div><div class="wf-phead-eyebrow">Kommunikasjon</div><h1 class="wf-phead-h">Meldinger med AI-oppsummering</h1><div class="wf-phead-sub">4 samtaler · 5 uleste</div></div>
+            </div>
+
+            <div class="wf-ai-split">
+              <aside class="wf-ai-list">
+                <div class="wf-rm-convo wf-active">
+                  <div class="wf-rm-convo-avatar">AK</div>
+                  <div><div class="wf-rm-convo-name">Anders</div><div class="wf-rm-convo-preview">2 uleste · 18 msgs</div></div>
+                </div>
+                <div class="wf-rm-convo">
+                  <div class="wf-rm-convo-avatar">MR</div>
+                  <div><div class="wf-rm-convo-name">Markus</div><div class="wf-rm-convo-preview">1 ulest · 7 msgs</div></div>
+                </div>
+                <div class="wf-rm-convo">
+                  <div class="wf-rm-convo-avatar">AD</div>
+                  <div><div class="wf-rm-convo-name">Admin</div><div class="wf-rm-convo-preview">1 ulest · 3 msgs</div></div>
+                </div>
+                <div class="wf-rm-convo">
+                  <div class="wf-rm-convo-avatar">NT</div>
+                  <div><div class="wf-rm-convo-name">Nora</div><div class="wf-rm-convo-preview">1 ulest · 12 msgs</div></div>
+                </div>
+              </aside>
+
+              <section class="wf-ai-chat">
+                <div class="wf-ai-chat-head"><div class="wf-ai-chat-name">Anders Kristiansen</div><div class="wf-ai-chat-meta">18 meldinger siden 10. april</div></div>
+                <div class="wf-ai-body">
+                  <div class="wf-mg-day">I DAG</div>
+                  <div class="wf-mg-msg wf-mg-msg-them">Hei Erik! Saa du fikk inn en god omgang...<div class="wf-mg-msg-time">09:40</div></div>
+                  <div class="wf-mg-msg wf-mg-msg-them">Jeg har lastet opp den nye drillen for 100m inn...<div class="wf-mg-msg-time">09:41</div></div>
+                  <div class="wf-mg-msg wf-mg-msg-me">Skal gjore det! Er 9:30 greit paa onsdag?<div class="wf-mg-msg-time">09:48</div></div>
+                  <div class="wf-mg-msg wf-mg-msg-them">9:30 fungerer fint. Sim 3 er booket.<div class="wf-mg-msg-time">09:52</div></div>
+                </div>
+                <div class="wf-mg-compose">
+                  <div class="wf-mg-compose-input">Skriv en melding...</div>
+                  <button class="wf-mg-send">Send</button>
+                </div>
+              </section>
+
+              <aside class="wf-ai-panel">
+                <span class="wf-ai-panel-badge">AI-oppsummering</span>
+                <div class="wf-ai-panel-title">Siste 7 dagers samtale</div>
+
+                <div class="wf-ai-section">
+                  <div class="wf-ai-section-label">Hovedtema</div>
+                  <div class="wf-ai-section-body">Approach-spill fra 100m — coach har identifisert moenster og anbefalt drill.</div>
+                </div>
+
+                <div class="wf-ai-section">
+                  <div class="wf-ai-section-label">Action items</div>
+                  <div class="wf-ai-bullet">Proev ny drill paa simulator for onsdag</div>
+                  <div class="wf-ai-bullet">Book okt 9:30 onsdag (Sim 3)</div>
+                  <div class="wf-ai-bullet">Legg inn 100m approach i treningsplan</div>
+                </div>
+
+                <div class="wf-ai-section">
+                  <div class="wf-ai-section-label">Neste steg</div>
+                  <div class="wf-ai-section-body">Onsdag 9:30 · Sim 3 · fokus approach 100m</div>
+                </div>
+
+                <div class="wf-ai-section">
+                  <div class="wf-ai-section-label">Foreslatte svar</div>
+                  <button class="wf-ai-action">"Takk, ses onsdag!"</button>
+                  <button class="wf-ai-action">"Kan jeg se drillen forst?"</button>
+                  <button class="wf-ai-action">"Book 10:30 i stedet"</button>
+                </div>
+              </aside>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>3-kolonne layout — liste, chat og AI-panel synlig samtidig.</li>
+        <li>AI trekker ut hovedtema, action items og neste steg fra lang samtale.</li>
+        <li>Foreslatte svar akselererer respons uten aa skrive fra bunnen.</li>
+        <li>Action items kan linkes til treningsplan/bookinger automatisk.</li>
+        <li>Krever robust AI-orkestrering — dyreste aa bygge og drifte.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Meldinger — valget avhenger av hvor mye kommunikasjon som er coach-drevet vs. sosial.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Inbox+Chat</th><th>2: iMessage</th><th>3: Threaded</th><th>4: Rich Media</th><th>5: AI Summary</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Rask skanning</td><td>Sterk</td><td>Svak</td><td>Sterk</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Dyp fokus paa en samtale</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Coach-elev dialog</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Sosiale venner/challenges</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Laerbarhet (nye brukere)</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Teknisk kompleksitet</td><td>Lav</td><td>Lav</td><td>Lav</td><td>Middels</td><td>Hoy</td></tr>
+        <tr><td>Passer AK-brand</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Inbox + Chat</h3>
+      <p>Option 1 er bransjestandard for en grunn: klassisk 2-kolonne gir best balanse mellom oversikt og dybde. Samtaleliste til venstre med ulest-badges og role-tags dekker coach, admin og venner i samme flate, og chat-vinduet fungerer likt for alle. Dette er riktig fundament aa bygge paa — Rich Media (opt 4) kan legges til som lag senere (send video/audio-knapper i compose), og AI-oppsummering (opt 5) som opt-in panel paa lange samtaler. Opt 2 (iMessage) er elegant for mobil, men daarlig paa desktop. Opt 3 (tema-gruppering) er nyttig som filter-modus, ikke primaer-visning.</p>
+    </div>
+
+    <h3>Naar velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Inbox + Chat):</strong> Default. Best for mixed coach/sosiale samtaler.</li>
+      <li><strong>Option 2 (iMessage):</strong> Hvis mobil er primaer plattform og f samtaler.</li>
+      <li><strong>Option 3 (Threaded):</strong> Hvis mange system-meldinger drukner viktige coach-threads.</li>
+      <li><strong>Option 4 (Rich Media):</strong> Hvis swing-video og audio-feedback er kjernefunksjon.</li>
+      <li><strong>Option 5 (AI Summary):</strong> Senere fase — krever lang samtalehistorikk for verdi.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

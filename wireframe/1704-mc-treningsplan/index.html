@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Treningsplaner — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Treningsplaner</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Student Plans List</button>
+    <button class="tab-btn" data-tab="option-2">2: Template Library</button>
+    <button class="tab-btn" data-tab="option-3">3: Week Editor</button>
+    <button class="tab-btn" data-tab="option-4">4: Bulk Creator</button>
+    <button class="tab-btn" data-tab="option-5">5: AI-assisted</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: STUDENT PLANS LIST (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Student Plans List</span></h2>
+    <p class="option-description">Alle 42 aktive planer i én kompakt liste. Klikk rad → åpne uke-editor for eleven. Filter på instruktør og status. Ideelt for daglig drift: "hvilke planer må jeg oppdatere i dag?"</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/treningsplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Treningsplaner</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk plan · ⌘K</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">SØK</span>
+              <span class="mc-search-input">Navn, fokusord...</span>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">INSTRUKTØR</span>
+              <button class="mc-pill mc-pill-active">Alle (42)</button>
+              <button class="mc-pill">Anders (28)</button>
+              <button class="mc-pill">Markus (14)</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">STATUS</span>
+              <button class="mc-pill mc-pill-active">Aktiv</button>
+              <button class="mc-pill">Trenger oppd.</button>
+              <button class="mc-pill mc-pill-ghost">Arkivert</button>
+            </div>
+            <button class="mc-cta">+ Ny plan</button>
+          </section>
+
+          <section class="mc-kpi-strip">
+            <div class="mc-kpi"><div class="mc-kpi-label">AKTIVE PLANER</div><div class="mc-kpi-val">42</div><div class="mc-kpi-sub">+3 siste uke</div></div>
+            <div class="mc-kpi"><div class="mc-kpi-label">UKER I SNITT</div><div class="mc-kpi-val">6.8</div><div class="mc-kpi-sub">per plan</div></div>
+            <div class="mc-kpi"><div class="mc-kpi-label">GJENNOMFØRT</div><div class="mc-kpi-val">87%</div><div class="mc-kpi-sub">økter fullført</div></div>
+            <div class="mc-kpi"><div class="mc-kpi-label">TRENGER OPPD.</div><div class="mc-kpi-val">5</div><div class="mc-kpi-sub">eldre enn 14d</div></div>
+          </section>
+
+          <div class="mc-plan-row-head">
+            <span>ELEV</span>
+            <span>UKENS FOKUS</span>
+            <span>FREMDRIFT</span>
+            <span>ØKTER</span>
+            <span>INSTRUKTØR</span>
+            <span></span>
+          </div>
+
+          <section class="mc-plans-grid">
+            <article class="mc-plan-row">
+              <div class="mc-plan-elev">
+                <span class="mc-avatar-lg">EH</span>
+                <div class="mc-plan-elev-info">
+                  <span class="mc-plan-elev-name">Erik Hansen</span>
+                  <span class="mc-plan-elev-meta">A · HCP 4.2 · Uke 3/12</span>
+                </div>
+              </div>
+              <div>
+                <div class="mc-plan-focus-week">UKE 3 · 15.–21. APR</div>
+                <div class="mc-plan-focus">Putting konsistens 3–6m. Tempo drill hver morgen, 15 min.</div>
+              </div>
+              <div class="mc-plan-progress">
+                <div class="mc-plan-bar"><span style="width:78%;"></span></div>
+                <span>78% · 11 av 14</span>
+              </div>
+              <div class="mc-plan-count">4 / ukens</div>
+              <div class="mc-plan-instructor">Anders</div>
+              <div class="mc-plan-actions">
+                <button class="mc-plan-icon-btn">✎</button>
+                <button class="mc-plan-icon-btn">⎘</button>
+              </div>
+            </article>
+
+            <article class="mc-plan-row">
+              <div class="mc-plan-elev">
+                <span class="mc-avatar-lg">NT</span>
+                <div class="mc-plan-elev-info">
+                  <span class="mc-plan-elev-name">Nora Torp</span>
+                  <span class="mc-plan-elev-meta">C · HCP 18.6 · Uke 5/8</span>
+                </div>
+              </div>
+              <div>
+                <div class="mc-plan-focus-week">UKE 5 · 15.–21. APR</div>
+                <div class="mc-plan-focus">Utslag med driver — stabilitet i tempo. Balance training 3× per uke.</div>
+              </div>
+              <div class="mc-plan-progress">
+                <div class="mc-plan-bar"><span style="width:62%;"></span></div>
+                <span>62% · 18 av 29</span>
+              </div>
+              <div class="mc-plan-count">3 / ukens</div>
+              <div class="mc-plan-instructor">Anders</div>
+              <div class="mc-plan-actions">
+                <button class="mc-plan-icon-btn">✎</button>
+                <button class="mc-plan-icon-btn">⎘</button>
+              </div>
+            </article>
+
+            <article class="mc-plan-row">
+              <div class="mc-plan-elev">
+                <span class="mc-avatar-lg">LB</span>
+                <div class="mc-plan-elev-info">
+                  <span class="mc-plan-elev-name">Lars Berg</span>
+                  <span class="mc-plan-elev-meta">B · HCP 10.1 · Uke 2/6</span>
+                </div>
+              </div>
+              <div>
+                <div class="mc-plan-focus-week">UKE 2 · 15.–21. APR</div>
+                <div class="mc-plan-focus">Jern 7: distanse og spredning. 50-baller test onsdag.</div>
+              </div>
+              <div class="mc-plan-progress">
+                <div class="mc-plan-bar"><span style="width:91%;"></span></div>
+                <span>91% · 10 av 11</span>
+              </div>
+              <div class="mc-plan-count">4 / ukens</div>
+              <div class="mc-plan-instructor">Markus</div>
+              <div class="mc-plan-actions">
+                <button class="mc-plan-icon-btn">✎</button>
+                <button class="mc-plan-icon-btn">⎘</button>
+              </div>
+            </article>
+
+            <article class="mc-plan-row">
+              <div class="mc-plan-elev">
+                <span class="mc-avatar-lg">SL</span>
+                <div class="mc-plan-elev-info">
+                  <span class="mc-plan-elev-name">Sofie Lund</span>
+                  <span class="mc-plan-elev-meta">D · HCP 24.0 · Uke 1/10</span>
+                </div>
+              </div>
+              <div>
+                <div class="mc-plan-focus-week">UKE 1 · 15.–21. APR</div>
+                <div class="mc-plan-focus">Grunnlag: grep og stance. Innspilling hver økt til video-bibliotek.</div>
+              </div>
+              <div class="mc-plan-progress">
+                <div class="mc-plan-bar"><span style="width:25%;"></span></div>
+                <span>25% · 2 av 8</span>
+              </div>
+              <div class="mc-plan-count">3 / ukens</div>
+              <div class="mc-plan-instructor">Markus</div>
+              <div class="mc-plan-actions">
+                <button class="mc-plan-icon-btn">✎</button>
+                <button class="mc-plan-icon-btn">⎘</button>
+              </div>
+            </article>
+
+            <article class="mc-plan-row">
+              <div class="mc-plan-elev">
+                <span class="mc-avatar-lg">EA</span>
+                <div class="mc-plan-elev-info">
+                  <span class="mc-plan-elev-name">Emma Andersen</span>
+                  <span class="mc-plan-elev-meta">B · HCP 8.5 · Uke 4/8</span>
+                </div>
+              </div>
+              <div>
+                <div class="mc-plan-focus-week">UKE 4 · 15.–21. APR</div>
+                <div class="mc-plan-focus">Kort spill under 30m. Chipping med 3 køller — bredde og banevariasjon.</div>
+              </div>
+              <div class="mc-plan-progress">
+                <div class="mc-plan-bar"><span style="width:84%;"></span></div>
+                <span>84% · 16 av 19</span>
+              </div>
+              <div class="mc-plan-count">4 / ukens</div>
+              <div class="mc-plan-instructor">Anders</div>
+              <div class="mc-plan-actions">
+                <button class="mc-plan-icon-btn">✎</button>
+                <button class="mc-plan-icon-btn">⎘</button>
+              </div>
+            </article>
+
+            <article class="mc-plan-row">
+              <div class="mc-plan-elev">
+                <span class="mc-avatar-lg">MK</span>
+                <div class="mc-plan-elev-info">
+                  <span class="mc-plan-elev-name">Mia Kristoffersen</span>
+                  <span class="mc-plan-elev-meta">C · HCP 16.8 · Uke 6/8</span>
+                </div>
+              </div>
+              <div>
+                <div class="mc-plan-focus-week">UKE 6 · 15.–21. APR</div>
+                <div class="mc-plan-focus">Mental rutine og pre-shot. Banespill lørdag som utfordring.</div>
+              </div>
+              <div class="mc-plan-progress">
+                <div class="mc-plan-bar"><span style="width:55%;"></span></div>
+                <span>55% · 12 av 22</span>
+              </div>
+              <div class="mc-plan-count">2 / ukens</div>
+              <div class="mc-plan-instructor">Anders</div>
+              <div class="mc-plan-actions">
+                <button class="mc-plan-icon-btn">✎</button>
+                <button class="mc-plan-icon-btn">⎘</button>
+              </div>
+            </article>
+
+            <article class="mc-plan-row">
+              <div class="mc-plan-elev">
+                <span class="mc-avatar-lg">TV</span>
+                <div class="mc-plan-elev-info">
+                  <span class="mc-plan-elev-name">Thomas Vik</span>
+                  <span class="mc-plan-elev-meta">C · HCP 14.2 · Uke 7/8</span>
+                </div>
+              </div>
+              <div>
+                <div class="mc-plan-focus-week">UKE 7 · 15.–21. APR</div>
+                <div class="mc-plan-focus">Høsttest: 9 hull på banen mandag. Fullstendig notering på hvert slag.</div>
+              </div>
+              <div class="mc-plan-progress">
+                <div class="mc-plan-bar"><span style="width:97%;"></span></div>
+                <span>97% · 28 av 29</span>
+              </div>
+              <div class="mc-plan-count">3 / ukens</div>
+              <div class="mc-plan-instructor">Anders</div>
+              <div class="mc-plan-actions">
+                <button class="mc-plan-icon-btn">✎</button>
+                <button class="mc-plan-icon-btn">⎘</button>
+              </div>
+            </article>
+          </section>
+
+          <footer class="mc-pagination">
+            <span>Viser 1–7 av 42 planer</span>
+            <div class="mc-page-btns">
+              <button class="mc-pill mc-pill-ghost">◂ Forrige</button>
+              <button class="mc-pill mc-pill-active">1</button>
+              <button class="mc-pill">2</button>
+              <button class="mc-pill">3</button>
+              <button class="mc-pill">Neste ▸</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Liste-layout viser ukens fokustekst midt i raden — treneren ser umiddelbart hva eleven jobber med denne uken.</li>
+        <li>Fremdriftsbar + tall (78% · 11 av 14) gir to-nivå innsikt — visuell og eksakt — uten å forlate listen.</li>
+        <li>Filter på instruktør lar Anders/Markus skille egne elever. Status-filter trekker frem 5 planer eldre enn 14 dager.</li>
+        <li>Handlingsknapper (✎ rediger, ⎘ duplicate) høyrejusteres per rad — ingen kontekstmeny nødvendig.</li>
+        <li>Klikk-hvor-som-helst på raden åpner Week Editor (Option 3) som detaljvisning — kombinasjon anbefales.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: TEMPLATE LIBRARY ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Template Library</span></h2>
+    <p class="option-description">Bibliotek av gjenbrukbare planmaler kategorisert etter spillerniva. Duplicate-til-elev i to klikk. Løser "jeg lager samme plan 20 ganger" — standardisert basis, individuell finjustering.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/treningsplan/maler</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Treningsplaner</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">⌘K Søk</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-tpl-head">
+            <div class="mc-tpl-title-block">
+              <div class="mc-tpl-super">BIBLIOTEK</div>
+              <h2 class="mc-tpl-title">12 planmaler · 8 kategorier</h2>
+              <p class="mc-tpl-sub">Bruk maler som startpunkt, tilpass deretter per elev. 218 planer generert fra maler så langt.</p>
+            </div>
+            <div class="mc-filter-group">
+              <button class="mc-pill mc-pill-active">Alle (12)</button>
+              <button class="mc-pill">HCP &lt;5 (2)</button>
+              <button class="mc-pill">HCP 5–15 (5)</button>
+              <button class="mc-pill">HCP 16–28 (3)</button>
+              <button class="mc-pill">Nybegynner (2)</button>
+              <button class="mc-cta">+ Ny mal</button>
+            </div>
+          </section>
+
+          <section class="mc-tpl-grid">
+            <article class="mc-tpl-card">
+              <div class="mc-tpl-card-head">
+                <span class="mc-tpl-tag mc-tpl-tag-a">HCP &lt;5</span>
+                <span class="mc-tpl-uses">42 planer</span>
+              </div>
+              <div class="mc-tpl-name">Elite Performance 12-uker</div>
+              <p class="mc-tpl-desc">Periodisert 12-ukers plan for spillere med klubbmesterskap-ambisjoner. Vekt på presisjon og SG-analyse.</p>
+              <div class="mc-tpl-stats">
+                <div class="mc-tpl-stat"><span>UKER</span><strong>12</strong></div>
+                <div class="mc-tpl-stat"><span>ØKTER</span><strong>48</strong></div>
+                <div class="mc-tpl-stat"><span>FREKV.</span><strong>4/uke</strong></div>
+              </div>
+              <div class="mc-tpl-foot">
+                <button class="mc-action">Se mal</button>
+                <button class="mc-action mc-action-primary">Kopier til elev</button>
+              </div>
+            </article>
+
+            <article class="mc-tpl-card">
+              <div class="mc-tpl-card-head">
+                <span class="mc-tpl-tag mc-tpl-tag-b">HCP 5–15</span>
+                <span class="mc-tpl-uses">38 planer</span>
+              </div>
+              <div class="mc-tpl-name">Konkurranse 8-uker</div>
+              <p class="mc-tpl-desc">Bygger utslagskonsistens og kort spill. Ideell for elever som skal spille klubbmesterskap eller turneringer.</p>
+              <div class="mc-tpl-stats">
+                <div class="mc-tpl-stat"><span>UKER</span><strong>8</strong></div>
+                <div class="mc-tpl-stat"><span>ØKTER</span><strong>32</strong></div>
+                <div class="mc-tpl-stat"><span>FREKV.</span><strong>4/uke</strong></div>
+              </div>
+              <div class="mc-tpl-foot">
+                <button class="mc-action">Se mal</button>
+                <button class="mc-action mc-action-primary">Kopier til elev</button>
+              </div>
+            </article>
+
+            <article class="mc-tpl-card">
+              <div class="mc-tpl-card-head">
+                <span class="mc-tpl-tag mc-tpl-tag-b">HCP 5–15</span>
+                <span class="mc-tpl-uses">27 planer</span>
+              </div>
+              <div class="mc-tpl-name">Sesongstart 6-uker</div>
+              <p class="mc-tpl-desc">Vekker opp kroppen etter vintermåneder. Økning i volum og intensitet uke for uke.</p>
+              <div class="mc-tpl-stats">
+                <div class="mc-tpl-stat"><span>UKER</span><strong>6</strong></div>
+                <div class="mc-tpl-stat"><span>ØKTER</span><strong>18</strong></div>
+                <div class="mc-tpl-stat"><span>FREKV.</span><strong>3/uke</strong></div>
+              </div>
+              <div class="mc-tpl-foot">
+                <button class="mc-action">Se mal</button>
+                <button class="mc-action mc-action-primary">Kopier til elev</button>
+              </div>
+            </article>
+
+            <article class="mc-tpl-card">
+              <div class="mc-tpl-card-head">
+                <span class="mc-tpl-tag mc-tpl-tag-c">HCP 16–28</span>
+                <span class="mc-tpl-uses">34 planer</span>
+              </div>
+              <div class="mc-tpl-name">Utvikling 8-uker</div>
+              <p class="mc-tpl-desc">Balansert fokus på teknikk, kortspill og putting. Mindre krevende økter, høyere repetisjon.</p>
+              <div class="mc-tpl-stats">
+                <div class="mc-tpl-stat"><span>UKER</span><strong>8</strong></div>
+                <div class="mc-tpl-stat"><span>ØKTER</span><strong>24</strong></div>
+                <div class="mc-tpl-stat"><span>FREKV.</span><strong>3/uke</strong></div>
+              </div>
+              <div class="mc-tpl-foot">
+                <button class="mc-action">Se mal</button>
+                <button class="mc-action mc-action-primary">Kopier til elev</button>
+              </div>
+            </article>
+
+            <article class="mc-tpl-card">
+              <div class="mc-tpl-card-head">
+                <span class="mc-tpl-tag mc-tpl-tag-c">HCP 16–28</span>
+                <span class="mc-tpl-uses">19 planer</span>
+              </div>
+              <div class="mc-tpl-name">Vintertrening 10-uker</div>
+              <p class="mc-tpl-desc">Simulator-basert plan for vintersesong. Innspilling og SG-sporing hver økt.</p>
+              <div class="mc-tpl-stats">
+                <div class="mc-tpl-stat"><span>UKER</span><strong>10</strong></div>
+                <div class="mc-tpl-stat"><span>ØKTER</span><strong>30</strong></div>
+                <div class="mc-tpl-stat"><span>FREKV.</span><strong>3/uke</strong></div>
+              </div>
+              <div class="mc-tpl-foot">
+                <button class="mc-action">Se mal</button>
+                <button class="mc-action mc-action-primary">Kopier til elev</button>
+              </div>
+            </article>
+
+            <article class="mc-tpl-card">
+              <div class="mc-tpl-card-head">
+                <span class="mc-tpl-tag">NYBEGYNNER</span>
+                <span class="mc-tpl-uses">26 planer</span>
+              </div>
+              <div class="mc-tpl-name">First Tee 10-uker</div>
+              <p class="mc-tpl-desc">For helt ferske golfere. Fra grep og stance til første bane-runde. Video-bibliotek inkludert.</p>
+              <div class="mc-tpl-stats">
+                <div class="mc-tpl-stat"><span>UKER</span><strong>10</strong></div>
+                <div class="mc-tpl-stat"><span>ØKTER</span><strong>20</strong></div>
+                <div class="mc-tpl-stat"><span>FREKV.</span><strong>2/uke</strong></div>
+              </div>
+              <div class="mc-tpl-foot">
+                <button class="mc-action">Se mal</button>
+                <button class="mc-action mc-action-primary">Kopier til elev</button>
+              </div>
+            </article>
+          </section>
+
+          <footer class="mc-pagination">
+            <span>Viser 1–6 av 12 maler · 218 planer generert totalt</span>
+            <div class="mc-page-btns">
+              <button class="mc-pill">Sortér: Mest brukt</button>
+              <button class="mc-pill">Eksporter bibliotek</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>3-kolonne grid med tydelig kategori-tag øverst gir umiddelbar gjenkjenning etter HCP-nivå.</li>
+        <li>Bruks-teller (42 planer, 38 planer) viser hvilke maler som er "hits" — intuitivt valg.</li>
+        <li>"Kopier til elev" er primær-CTA — åpner modal med elevsøk og tilpasnings-dialog.</li>
+        <li>Filter-pills matcher HCP-bøtter fra Elever-siden — konsistens på tvers av MC.</li>
+        <li>Best som komplement til Option 1 — biblioteket spares for opprettelse, listen for drift.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: WEEK EDITOR ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Week Editor</span></h2>
+    <p class="option-description">Editerer én uke for én elev. Dra-og-slipp øvelser fra sidebiblioteket til dager. Ukens fokustekst øverst. Optimalt for skreddersøm og sesongjusteringer.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/treningsplan/erik-hansen/uke-3</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Treningsplaner</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">⌘K Søk</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-we-head">
+            <div class="mc-we-elev-pick">
+              <span class="mc-avatar-sm">EH</span>
+              <span><strong>Erik Hansen</strong> · A · HCP 4.2</span>
+              <span style="color:#999;">▾</span>
+            </div>
+            <div class="mc-we-week-nav">
+              <button>◂</button>
+              <span>Uke 3 · 15.–21. april 2026</span>
+              <button>▸</button>
+              <button class="mc-pill mc-pill-ghost" style="margin-left:8px;">Uke 3 av 12</button>
+            </div>
+            <div class="mc-filter-group">
+              <button class="mc-pill">Auto-lagret</button>
+              <button class="mc-pill">Forhåndsvis</button>
+              <button class="mc-cta" style="margin-left:0;">Publiser til elev</button>
+            </div>
+          </section>
+
+          <section class="mc-we-focus-bar">
+            <span class="mc-we-focus-label">UKENS FOKUS</span>
+            <p class="mc-we-focus-text">"Putting konsistens 3–6 meter. Tempo drill hver morgen, 15 min. Mål: 80% treff på alle målrunder torsdag og søndag."</p>
+          </section>
+
+          <section class="mc-we-body">
+            <aside class="mc-we-lib">
+              <span class="mc-we-lib-title">ØVELSESBIBLIOTEK</span>
+              <div class="mc-we-lib-item">
+                <strong>Tempo drill putting</strong>
+                <span>Putting · 15 min</span>
+              </div>
+              <div class="mc-we-lib-item">
+                <strong>Målputting 3–6m</strong>
+                <span>Putting · 20 min</span>
+              </div>
+              <div class="mc-we-lib-item">
+                <strong>Chipping 3-kølle</strong>
+                <span>Kort spill · 30 min</span>
+              </div>
+              <div class="mc-we-lib-item">
+                <strong>Jern 7 — 50 baller</strong>
+                <span>Jern · 45 min</span>
+              </div>
+              <div class="mc-we-lib-item">
+                <strong>Driver stabilitet</strong>
+                <span>Utslag · 40 min</span>
+              </div>
+              <div class="mc-we-lib-item">
+                <strong>9-hull på banen</strong>
+                <span>Banespill · 90 min</span>
+              </div>
+              <div class="mc-we-lib-item">
+                <strong>SG-test simulator</strong>
+                <span>Analyse · 60 min</span>
+              </div>
+              <div class="mc-we-lib-item">
+                <strong>Video-innspilling</strong>
+                <span>Teknikk · 20 min</span>
+              </div>
+            </aside>
+
+            <div class="mc-we-week">
+              <div class="mc-we-day">
+                <div class="mc-we-day-head">
+                  <span class="mc-we-day-name">MAN</span>
+                  <span class="mc-we-day-date">15</span>
+                </div>
+                <div class="mc-we-session mc-we-session-done">
+                  <strong>Tempo drill</strong>
+                  <span>Putting · 15 min</span>
+                </div>
+                <div class="mc-we-session mc-we-session-done">
+                  <strong>Målputting 3–6m</strong>
+                  <span>Putting · 20 min</span>
+                </div>
+              </div>
+
+              <div class="mc-we-day">
+                <div class="mc-we-day-head">
+                  <span class="mc-we-day-name">TIR</span>
+                  <span class="mc-we-day-date">16</span>
+                </div>
+                <div class="mc-we-session mc-we-session-done">
+                  <strong>Jern 7 — 50 baller</strong>
+                  <span>Jern · 45 min</span>
+                </div>
+              </div>
+
+              <div class="mc-we-day mc-we-day-active">
+                <div class="mc-we-day-head">
+                  <span class="mc-we-day-name">ONS</span>
+                  <span class="mc-we-day-date">17</span>
+                </div>
+                <div class="mc-we-session">
+                  <strong>Tempo drill</strong>
+                  <span>Putting · 15 min</span>
+                </div>
+                <div class="mc-we-session">
+                  <strong>Chipping 3-kølle</strong>
+                  <span>Kort spill · 30 min</span>
+                </div>
+              </div>
+
+              <div class="mc-we-day">
+                <div class="mc-we-day-head">
+                  <span class="mc-we-day-name">TOR</span>
+                  <span class="mc-we-day-date">18</span>
+                </div>
+                <div class="mc-we-session">
+                  <strong>SG-test simulator</strong>
+                  <span>Analyse · 60 min</span>
+                </div>
+                <div class="mc-we-session">
+                  <strong>Målputting 3–6m</strong>
+                  <span>Putting · 20 min</span>
+                </div>
+              </div>
+
+              <div class="mc-we-day">
+                <div class="mc-we-day-head">
+                  <span class="mc-we-day-name">FRE</span>
+                  <span class="mc-we-day-date">19</span>
+                </div>
+                <div class="mc-we-drop">slipp økt her</div>
+              </div>
+
+              <div class="mc-we-day">
+                <div class="mc-we-day-head">
+                  <span class="mc-we-day-name">LØR</span>
+                  <span class="mc-we-day-date">20</span>
+                </div>
+                <div class="mc-we-session">
+                  <strong>9-hull på banen</strong>
+                  <span>Banespill · 90 min</span>
+                </div>
+              </div>
+
+              <div class="mc-we-day">
+                <div class="mc-we-day-head">
+                  <span class="mc-we-day-name">SØN</span>
+                  <span class="mc-we-day-date">21</span>
+                </div>
+                <div class="mc-we-session">
+                  <strong>Tempo drill</strong>
+                  <span>Putting · 15 min</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="mc-pagination">
+            <span><strong>11 økter</strong> denne uken · 3 gjennomført · 8 planlagt · sist endret 14. apr 09:42</span>
+            <div class="mc-page-btns">
+              <button class="mc-pill">Dupliser til uke 4</button>
+              <button class="mc-pill mc-pill-active">Publiser →</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Dra-og-slipp fra venstre bibliotek til dag-kolonner — direkte manipulasjon er raskest for erfarne trenere.</li>
+        <li>Ukens fokustekst øverst med stor sitat-stil minner treneren om den overordnede intensjonen.</li>
+        <li>Gjennomførte økter markeres med strike-through og stiplet ramme — historikk synlig uten å skygge for nye.</li>
+        <li>"Publiser til elev" er eksplisitt — auto-lagring gjelder kun kladd. Elever ser ikke endringer før publisering.</li>
+        <li>"Dupliser til uke 4" løser hyppig bruk: uker bygges ofte inkrementelt fra forrige.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: BULK PLAN CREATOR ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Bulk Plan Creator</span></h2>
+    <p class="option-description">Velg flere elever samtidig, definer en felles plan-skjelett, publiser til alle i én operasjon. Ideelt for sesongstart, gruppekurs og treningsleir-opplegg.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/treningsplan/bulk</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Treningsplaner</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">⌘K Søk</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-bulk-head">
+            <div class="mc-bulk-stepper">
+              <span class="mc-bulk-step"><span class="mc-bulk-step-num">1</span>Velg elever</span>
+              <span>→</span>
+              <span class="mc-bulk-step mc-bulk-step-active"><span class="mc-bulk-step-num">2</span>Definer plan</span>
+              <span>→</span>
+              <span class="mc-bulk-step"><span class="mc-bulk-step-num">3</span>Forhåndsvis</span>
+              <span>→</span>
+              <span class="mc-bulk-step"><span class="mc-bulk-step-num">4</span>Publiser</span>
+            </div>
+            <button class="mc-pill">Avbryt</button>
+          </section>
+
+          <section class="mc-bulk-body">
+            <aside class="mc-bulk-elever">
+              <span class="mc-filter-label">6 ELEVER VALGT</span>
+              <div class="mc-bulk-elev-pick mc-bulk-elev-pick-selected">
+                <input type="checkbox" checked>
+                <span class="mc-avatar-sm">EH</span>
+                <span class="mc-bulk-elev-name">Erik Hansen</span>
+                <span class="mc-bulk-elev-hcp">4.2</span>
+              </div>
+              <div class="mc-bulk-elev-pick mc-bulk-elev-pick-selected">
+                <input type="checkbox" checked>
+                <span class="mc-avatar-sm">EA</span>
+                <span class="mc-bulk-elev-name">Emma Andersen</span>
+                <span class="mc-bulk-elev-hcp">8.5</span>
+              </div>
+              <div class="mc-bulk-elev-pick mc-bulk-elev-pick-selected">
+                <input type="checkbox" checked>
+                <span class="mc-avatar-sm">LB</span>
+                <span class="mc-bulk-elev-name">Lars Berg</span>
+                <span class="mc-bulk-elev-hcp">10.1</span>
+              </div>
+              <div class="mc-bulk-elev-pick mc-bulk-elev-pick-selected">
+                <input type="checkbox" checked>
+                <span class="mc-avatar-sm">TV</span>
+                <span class="mc-bulk-elev-name">Thomas Vik</span>
+                <span class="mc-bulk-elev-hcp">14.2</span>
+              </div>
+              <div class="mc-bulk-elev-pick mc-bulk-elev-pick-selected">
+                <input type="checkbox" checked>
+                <span class="mc-avatar-sm">MK</span>
+                <span class="mc-bulk-elev-name">Mia Kristoffersen</span>
+                <span class="mc-bulk-elev-hcp">16.8</span>
+              </div>
+              <div class="mc-bulk-elev-pick mc-bulk-elev-pick-selected">
+                <input type="checkbox" checked>
+                <span class="mc-avatar-sm">NT</span>
+                <span class="mc-bulk-elev-name">Nora Torp</span>
+                <span class="mc-bulk-elev-hcp">18.6</span>
+              </div>
+              <div class="mc-bulk-elev-pick">
+                <input type="checkbox">
+                <span class="mc-avatar-sm">SL</span>
+                <span class="mc-bulk-elev-name">Sofie Lund</span>
+                <span class="mc-bulk-elev-hcp">24.0</span>
+              </div>
+              <button class="mc-pill mc-pill-ghost" style="margin-top:8px;">+ Legg til flere</button>
+            </aside>
+
+            <div class="mc-bulk-plan">
+              <div class="mc-bulk-field">
+                <span class="mc-bulk-field-label">PLAN-NAVN</span>
+                <div class="mc-bulk-input">Sesongstart 2026 — Konkurransegruppe</div>
+              </div>
+
+              <div class="mc-bulk-field">
+                <span class="mc-bulk-field-label">BASERT PÅ MAL</span>
+                <div class="mc-filter-group">
+                  <button class="mc-pill mc-pill-active">Konkurranse 8-uker</button>
+                  <button class="mc-pill">Bytt mal ▾</button>
+                </div>
+              </div>
+
+              <div class="mc-bulk-field">
+                <span class="mc-bulk-field-label">VARIGHET OG OPPSTART</span>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                  <div class="mc-bulk-input">22. april 2026</div>
+                  <div class="mc-bulk-input">8 uker (til 16. juni)</div>
+                </div>
+              </div>
+
+              <div class="mc-bulk-field">
+                <span class="mc-bulk-field-label">UKENS FOKUS (UKE 1)</span>
+                <div class="mc-bulk-textarea">Sesongoppstart: volum over intensitet. Jern 7 og putting som grunnblokk. Målinger: benchmark-runde onsdag.</div>
+              </div>
+
+              <div class="mc-bulk-field">
+                <span class="mc-bulk-field-label">UKE 1 — 4 ØKTER</span>
+                <div class="mc-bulk-sessions">
+                  <div class="mc-bulk-session">
+                    <span class="mc-bulk-session-day">MAN 22.04</span>
+                    <span class="mc-bulk-session-name">Jern 7 — 50 baller</span>
+                    <span class="mc-bulk-session-dur">45 min</span>
+                    <span class="mc-bulk-session-del">×</span>
+                  </div>
+                  <div class="mc-bulk-session">
+                    <span class="mc-bulk-session-day">ONS 24.04</span>
+                    <span class="mc-bulk-session-name">Benchmark 9-hull</span>
+                    <span class="mc-bulk-session-dur">90 min</span>
+                    <span class="mc-bulk-session-del">×</span>
+                  </div>
+                  <div class="mc-bulk-session">
+                    <span class="mc-bulk-session-day">FRE 26.04</span>
+                    <span class="mc-bulk-session-name">Putting tempo + 3–6m</span>
+                    <span class="mc-bulk-session-dur">35 min</span>
+                    <span class="mc-bulk-session-del">×</span>
+                  </div>
+                  <div class="mc-bulk-session">
+                    <span class="mc-bulk-session-day">LØR 27.04</span>
+                    <span class="mc-bulk-session-name">Kortspill tett rundt green</span>
+                    <span class="mc-bulk-session-dur">60 min</span>
+                    <span class="mc-bulk-session-del">×</span>
+                  </div>
+                  <button class="mc-action" style="align-self:flex-start;">+ Legg til økt</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="mc-bulk-foot">
+            <span class="mc-bulk-foot-info"><strong>6 elever</strong> × <strong>8 uker</strong> × <strong>4 økter/uke</strong> = <strong>192 økter</strong> publiseres. Individuelle justeringer tilgjengelig etter publisering.</span>
+            <div class="mc-page-btns">
+              <button class="mc-pill" style="background:#1a1a1a;border-color:#333;color:#ccc;">◂ Tilbake</button>
+              <button class="mc-pill mc-pill-active" style="background:#fff;color:#000;border-color:#fff;">Forhåndsvis →</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>4-stegs stepper gir klar progresjon: velg → definer → forhåndsvis → publiser. Trygt mot uhell.</li>
+        <li>Elev-panel til venstre er alltid synlig under redigering — ingen glemte spillere.</li>
+        <li>Regnestykket i bunnstrip ("6 × 8 × 4 = 192 økter") gir konsekvens-bevissthet før publisering.</li>
+        <li>"Individuelle justeringer tilgjengelig etter publisering" understreker at bulk er startpunkt, ikke låst.</li>
+        <li>Ideelt for sesongstart (april) og konkurranseoppkjøringer — mindre for daglig drift.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: AI-ASSISTED ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">AI-assisted</span></h2>
+    <p class="option-description">AI genererer plan basert på elev-profil (HCP, svakheter, booking-historikk, SG-data). Treneren justerer fremfor å starte fra blank. Reduserer opprettelsestid fra 20 min til 2 min.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/treningsplan/ai</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Treningsplaner</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">⌘K Søk</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-ai-head">
+            <div class="mc-ai-title-block">
+              <span class="mc-ai-super">AI-ASSISTERT</span>
+              <h2 class="mc-ai-title">Generer treningsplan</h2>
+              <span class="mc-ai-sub">AI foreslår basert på elev-profil · du redigerer · du publiserer</span>
+            </div>
+            <div class="mc-filter-group">
+              <button class="mc-pill">Siste 5 AI-planer</button>
+              <button class="mc-pill mc-pill-active">Ny generering</button>
+            </div>
+          </section>
+
+          <section class="mc-ai-body">
+            <aside class="mc-ai-input-col">
+              <span class="mc-ai-input-title">INPUT</span>
+
+              <div class="mc-ai-profile">
+                <div class="mc-ai-profile-head">
+                  <span class="mc-avatar-lg">NT</span>
+                  <div>
+                    <div class="mc-ai-profile-name">Nora Torp</div>
+                    <div class="mc-ai-profile-meta">C · Fredrikstad GK · 24 omganger siste år</div>
+                  </div>
+                </div>
+                <div class="mc-ai-profile-stats">
+                  <div class="mc-ai-profile-stat"><span>HCP</span><strong>18.6</strong></div>
+                  <div class="mc-ai-profile-stat"><span>SG-SVAK</span><strong>Putting</strong></div>
+                  <div class="mc-ai-profile-stat"><span>ØKTER/UKE</span><strong>3</strong></div>
+                </div>
+              </div>
+
+              <div class="mc-ai-param">
+                <span class="mc-ai-param-label">FOKUS</span>
+                <div class="mc-ai-param-chips">
+                  <button class="mc-pill mc-pill-active">Putting</button>
+                  <button class="mc-pill mc-pill-active">Utslag</button>
+                  <button class="mc-pill">Kort spill</button>
+                  <button class="mc-pill">Mental</button>
+                </div>
+              </div>
+
+              <div class="mc-ai-param">
+                <span class="mc-ai-param-label">VARIGHET</span>
+                <div class="mc-ai-param-chips">
+                  <button class="mc-pill">4 uker</button>
+                  <button class="mc-pill">6 uker</button>
+                  <button class="mc-pill mc-pill-active">8 uker</button>
+                  <button class="mc-pill">12 uker</button>
+                </div>
+              </div>
+
+              <div class="mc-ai-param">
+                <span class="mc-ai-param-label">INTENSITET</span>
+                <div class="mc-ai-param-chips">
+                  <button class="mc-pill">Myk</button>
+                  <button class="mc-pill mc-pill-active">Balansert</button>
+                  <button class="mc-pill">Høy</button>
+                </div>
+              </div>
+
+              <div class="mc-ai-param">
+                <span class="mc-ai-param-label">MÅL</span>
+                <div class="mc-bulk-textarea" style="font-size:12px;">Klubbmesterskap 15. juni. Mål: senke HCP til 15 innen sesongslutt.</div>
+              </div>
+
+              <button class="mc-ai-generate">
+                ✦ Generer plan <span>(regenerér · ⌘G)</span>
+              </button>
+            </aside>
+
+            <div class="mc-ai-output-col">
+              <div class="mc-ai-plan-head">
+                <div>
+                  <h3 class="mc-ai-plan-title">Forslag: 8-ukers plan for Nora</h3>
+                  <span style="font-size:11px;color:#999;">Generert 14. apr · 24 økter · Balansert · Putting + Utslag</span>
+                </div>
+                <span class="mc-ai-plan-badge">KLADD · IKKE PUBLISERT</span>
+              </div>
+
+              <div class="mc-ai-insight">
+                <span class="mc-ai-insight-label">AI-BEGRUNNELSE</span>
+                <p class="mc-ai-insight-text">"Nora mister 1.4 slag per runde på putting (SG-data siste 12 omganger). Jeg har vektlagt putting 40% av økt-volum, utslag 35%, og langt spill 25%. Benchmark-runder hver 4. uke gir målbar fremgang mot klubbmesterskap."</p>
+              </div>
+
+              <div class="mc-ai-sessions">
+                <div class="mc-ai-session">
+                  <span class="mc-ai-session-day">UKE 1 MAN</span>
+                  <span class="mc-ai-session-name">Putting tempo-drill (4 posisjoner)</span>
+                  <span class="mc-ai-session-type">PUTTING</span>
+                  <span class="mc-ai-session-dur">35 min</span>
+                </div>
+                <div class="mc-ai-session">
+                  <span class="mc-ai-session-day">UKE 1 ONS</span>
+                  <span class="mc-ai-session-name">Driver — stabilitetsfokus</span>
+                  <span class="mc-ai-session-type">UTSLAG</span>
+                  <span class="mc-ai-session-dur">45 min</span>
+                </div>
+                <div class="mc-ai-session">
+                  <span class="mc-ai-session-day">UKE 1 LØR</span>
+                  <span class="mc-ai-session-name">9-hull benchmark (SG-tracking)</span>
+                  <span class="mc-ai-session-type">BANE</span>
+                  <span class="mc-ai-session-dur">90 min</span>
+                </div>
+                <div class="mc-ai-session">
+                  <span class="mc-ai-session-day">UKE 2 MAN</span>
+                  <span class="mc-ai-session-name">Målputting 3–6m (30 kuler)</span>
+                  <span class="mc-ai-session-type">PUTTING</span>
+                  <span class="mc-ai-session-dur">30 min</span>
+                </div>
+                <div class="mc-ai-session">
+                  <span class="mc-ai-session-day">UKE 2 ONS</span>
+                  <span class="mc-ai-session-name">Jern 7 — spredningstest</span>
+                  <span class="mc-ai-session-type">JERN</span>
+                  <span class="mc-ai-session-dur">40 min</span>
+                </div>
+                <div class="mc-ai-session">
+                  <span class="mc-ai-session-day">UKE 2 FRE</span>
+                  <span class="mc-ai-session-name">Driver + putting kombi-økt</span>
+                  <span class="mc-ai-session-type">UTSLAG</span>
+                  <span class="mc-ai-session-dur">60 min</span>
+                </div>
+                <div style="text-align:center; padding:10px; color:#999; font-size:11px; font-style:italic;">+ 18 flere økter (uke 3–8)</div>
+              </div>
+
+              <div class="mc-ai-foot-actions">
+                <button class="mc-action">Regenerér</button>
+                <button class="mc-action">Åpne i Week Editor</button>
+                <button class="mc-action mc-action-primary">Godkjenn og publiser</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Venstre kolonne er "input til AI" — elev-profil + parametere. AI leser SG-data og foreslår vekting.</li>
+        <li>AI-begrunnelsen i eget kort med sitat-stil gjør logikken transparent — treneren ser hvorfor før han redigerer.</li>
+        <li>"KLADD · IKKE PUBLISERT" badge hindrer utilsiktet utsending — alle AI-planer er redigerbare før godkjenning.</li>
+        <li>"Åpne i Week Editor" bygger bro til Option 3 — AI starter, manuell finjustering fullfører.</li>
+        <li>Forutsetter god SG-data per elev — ikke alle har TrackMan-historikk ennå. Best for A/B-elever i starten.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for administrering av treningsplaner. Valget avhenger av om hovedbruken er daglig drift (liste), opprettelse (maler/bulk/AI), eller skreddersøm (editor).</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: List</th><th>2: Templates</th><th>3: Editor</th><th>4: Bulk</th><th>5: AI</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig drift (42 aktive planer)</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Svak</td><td>Svak</td></tr>
+        <tr><td>Opprette ny plan raskt</td><td>Svak</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Individuell skreddersøm</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Skalerer 100+ planer</td><td>Sterk</td><td>Sterk</td><td>Svak</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Sesongstart (bulk)</td><td>Svak</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Krever data-modenhet</td><td>Nei</td><td>Nei</td><td>Nei</td><td>Delvis</td><td>Ja (SG)</td></tr>
+        <tr><td>Passer AK-brand</td><td>Sterk</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Student Plans List (hovedvisning)</h3>
+      <p>Listen er det operative senteret — 42 aktive planer, 5 som trenger oppdatering, fremdriftsbarer per elev. Treneren starter dagen her og dykker ned i én plan om gangen. Option 3 (Week Editor) åpnes via klikk på rad — kombinasjonen er essensiell.</p>
+      <p>Option 2 (Template Library) og Option 5 (AI) legges som sekundære opprettelsesflyter. Option 4 (Bulk) reserveres for sesongstart og treningsleir 2–3 ganger i året. Utenom dette: for komplekst for daglig bruk.</p>
+    </div>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (List):</strong> Default. Daglig drift og oppfølging av 42 aktive planer.</li>
+      <li><strong>Option 2 (Templates):</strong> Når du trenger en ny plan og en mal passer — duplicate-modus.</li>
+      <li><strong>Option 3 (Editor):</strong> Ukentlig vedlikehold og individuelle justeringer — åpnet fra Option 1.</li>
+      <li><strong>Option 4 (Bulk):</strong> Sesongstart (april), gruppekurs, treningsleir — 2–3 ganger/år.</li>
+      <li><strong>Option 5 (AI):</strong> Nye A/B-elever med SG-historikk. Krever data-modenhet — bygger seg i 2026.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

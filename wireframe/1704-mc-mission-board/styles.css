@@ -1,0 +1,196 @@
+/* === Mission Board — Wireframe Content CSS (B&W only) === */
+/* Tokens: #000, #111, #333, #666, #999, #ccc, #eee, #f5f5f5, #fafafa, #fff */
+
+.browser-content { padding: 0; }
+.browser-frame { max-width: 1100px; }
+
+/* ============ MC SHELL ============ */
+.mc-shell { background: #fff; min-height: 720px; display: flex; flex-direction: column; }
+
+/* ============ TOPBAR (dark) ============ */
+.mc-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px; background: #111; color: #fff; border-bottom: 1px solid #333;
+}
+.mc-topbar-left { display: flex; align-items: center; gap: 32px; }
+.mc-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; }
+.mc-tabs { display: flex; gap: 4px; }
+.mc-tab { padding: 6px 14px; border-radius: 999px; font-size: 12px; color: #aaa; cursor: pointer; }
+.mc-tab:hover { color: #fff; background: #222; }
+.mc-tab-active { color: #000; background: #fff; font-weight: 600; }
+.mc-topbar-right { display: flex; align-items: center; gap: 16px; }
+.mc-search { font-size: 12px; color: #999; border: 1px solid #333; padding: 6px 14px; border-radius: 6px; background: #1a1a1a; }
+.mc-avatar { width: 28px; height: 28px; border-radius: 999px; background: #fff; color: #000; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.mc-refresh-pill { font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
+.mc-refresh-dot { width: 6px; height: 6px; border-radius: 999px; background: #999; }
+
+/* ============ SUB HEADER ============ */
+.mc-subheader { padding: 14px 20px 12px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: flex-end; }
+.mc-subhead-title { font-size: 18px; font-weight: 800; color: #000; margin: 0 0 2px; letter-spacing: -0.015em; }
+.mc-subhead-meta { font-size: 12px; color: #666; }
+.mc-subhead-actions { display: flex; gap: 8px; align-items: center; }
+.mc-cta { padding: 7px 16px; border-radius: 999px; background: #000; color: #fff; border: 1px solid #000; font-size: 13px; font-weight: 600; cursor: pointer; }
+.mc-cta-ghost { background: #fff; color: #333; border: 1px solid #ccc; }
+
+/* ============ KPI STRIP ============ */
+.mc-kpi-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 14px 20px; background: #fafafa; border-bottom: 1px solid #eee; }
+.mc-kpi-card { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 10px 14px; position: relative; }
+.mc-kpi-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; }
+.mc-kpi-val { font-size: 24px; font-weight: 800; color: #000; margin-top: 4px; line-height: 1; font-variant-numeric: tabular-nums; }
+.mc-kpi-sub { font-size: 11px; color: #666; margin-top: 4px; }
+.mc-kpi-spark { height: 20px; margin-top: 6px; display: block; width: 100%; }
+.mc-kpi-spark-line { stroke: #666; stroke-width: 1.5; fill: none; }
+.mc-kpi-spark-fill { fill: #eee; }
+.mc-kpi-delta-pos { color: #333; font-weight: 600; }
+.mc-kpi-delta-neg { color: #666; font-weight: 600; }
+
+/* ============ GRID CONTAINER ============ */
+.mc-body { padding: 20px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; background: #fff; }
+.mc-span-4 { grid-column: span 4; }
+.mc-span-6 { grid-column: span 6; }
+.mc-span-8 { grid-column: span 8; }
+.mc-span-12 { grid-column: span 12; }
+
+/* ============ CARD ============ */
+.mc-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.mc-card-head { display: flex; justify-content: space-between; align-items: baseline; }
+.mc-card-title { font-size: 13px; font-weight: 700; color: #000; letter-spacing: -0.01em; margin: 0; }
+.mc-card-meta { font-size: 11px; color: #999; font-weight: 500; }
+.mc-card-foot { font-size: 11px; color: #666; text-align: right; padding-top: 4px; border-top: 1px solid #eee; cursor: pointer; }
+
+/* ============ AREA CHART (Opt 1) ============ */
+.mc-area-chart { height: 160px; background: #fafafa; border: 1px dashed #eee; border-radius: 6px; position: relative; padding: 12px; }
+.mc-area-chart svg { width: 100%; height: 100%; display: block; }
+.mc-area-line { stroke: #333; stroke-width: 2; fill: none; }
+.mc-area-fill { fill: #eee; }
+.mc-area-grid { stroke: #eee; stroke-width: 1; }
+.mc-area-dot { fill: #000; }
+.mc-area-axis { font-size: 9px; fill: #999; }
+.mc-area-legend { display: flex; gap: 12px; font-size: 10px; color: #666; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; }
+.mc-area-legend-dot { width: 8px; height: 8px; border-radius: 2px; background: #333; display: inline-block; margin-right: 4px; }
+
+/* ============ GOAL RING ============ */
+.mc-ring-wrap { display: flex; align-items: center; gap: 16px; }
+.mc-ring { width: 110px; height: 110px; flex-shrink: 0; }
+.mc-ring-track { stroke: #eee; stroke-width: 10; fill: none; }
+.mc-ring-fill { stroke: #000; stroke-width: 10; fill: none; stroke-linecap: round; }
+.mc-ring-center { font-size: 22px; font-weight: 800; fill: #000; text-anchor: middle; font-variant-numeric: tabular-nums; }
+.mc-ring-center-sub { font-size: 9px; fill: #999; text-anchor: middle; letter-spacing: 0.08em; }
+.mc-ring-stats { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.mc-ring-stat-row { display: flex; justify-content: space-between; font-size: 12px; }
+.mc-ring-stat-row strong { color: #000; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mc-ring-stat-row span { color: #666; }
+
+/* ============ SCHEDULE LIST ============ */
+.mc-schedule { display: flex; flex-direction: column; gap: 8px; }
+.mc-sched-row { display: grid; grid-template-columns: 60px 1fr auto; gap: 12px; align-items: center; padding: 8px 10px; border: 1px solid #eee; border-radius: 6px; background: #fff; }
+.mc-sched-row:hover { background: #fafafa; }
+.mc-sched-row-now { border-color: #000; background: #fafafa; position: relative; }
+.mc-sched-row-now::before { content: ""; position: absolute; left: -1px; top: 0; bottom: 0; width: 3px; background: #000; border-radius: 3px 0 0 3px; }
+.mc-sched-time { font-size: 12px; font-weight: 700; color: #000; font-variant-numeric: tabular-nums; }
+.mc-sched-name { font-size: 12px; font-weight: 600; color: #111; }
+.mc-sched-sub { font-size: 10px; color: #999; margin-top: 1px; }
+.mc-sched-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 3px; background: #eee; color: #333; text-transform: uppercase; }
+
+/* ============ ALERTS ============ */
+.mc-alert-list { display: flex; flex-direction: column; gap: 8px; }
+.mc-alert { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid #eee; border-radius: 6px; background: #fff; }
+.mc-alert-icon { width: 24px; height: 24px; border-radius: 999px; background: #eee; color: #333; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.mc-alert-icon-warn { background: #333; color: #fff; }
+.mc-alert-icon-info { background: #fff; color: #333; border: 1px solid #ccc; }
+.mc-alert-body { min-width: 0; }
+.mc-alert-title { font-size: 12px; font-weight: 700; color: #000; }
+.mc-alert-sub { font-size: 11px; color: #666; margin-top: 2px; }
+.mc-alert-time { font-size: 10px; color: #999; white-space: nowrap; }
+
+/* ============ FOCUS MODE (Opt 2) ============ */
+.mc-focus-hero { padding: 24px 20px; background: #fafafa; border-bottom: 1px solid #eee; }
+.mc-focus-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: #999; text-transform: uppercase; }
+.mc-focus-title { font-size: 24px; font-weight: 800; color: #000; margin: 4px 0 4px; letter-spacing: -0.02em; }
+.mc-focus-sub { font-size: 13px; color: #666; }
+.mc-focus-list { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.mc-focus-task { display: grid; grid-template-columns: 48px 1fr auto; gap: 16px; padding: 18px 20px; border: 1px solid #eee; border-radius: 10px; background: #fff; align-items: center; }
+.mc-focus-task-primary { border-color: #000; border-width: 2px; background: #fafafa; }
+.mc-focus-task-num { font-size: 28px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; text-align: center; letter-spacing: -0.02em; }
+.mc-focus-task-num-muted { color: #ccc; }
+.mc-focus-task-title { font-size: 15px; font-weight: 700; color: #000; margin-bottom: 4px; }
+.mc-focus-task-sub { font-size: 12px; color: #666; }
+.mc-focus-task-meta { font-size: 11px; color: #999; margin-top: 4px; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
+.mc-focus-task-action { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.mc-focus-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 3px; background: #eee; color: #333; text-transform: uppercase; }
+.mc-focus-eta { font-size: 11px; color: #666; font-weight: 600; }
+
+/* ============ TEAM VIEW (Opt 3) ============ */
+.mc-team-grid { padding: 20px; display: grid; grid-template-columns: repeat(2, 1fr) 280px; gap: 16px; }
+.mc-team-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.mc-team-head { display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+.mc-team-avatar { width: 40px; height: 40px; border-radius: 999px; background: #eee; color: #333; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.mc-team-name { font-size: 14px; font-weight: 800; color: #000; }
+.mc-team-role { font-size: 11px; color: #999; }
+.mc-team-status { margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 3px; background: #eee; color: #333; text-transform: uppercase; }
+.mc-team-kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mc-team-kpi { padding: 10px; background: #fafafa; border-radius: 6px; }
+.mc-team-kpi-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #999; text-transform: uppercase; }
+.mc-team-kpi-val { font-size: 18px; font-weight: 800; color: #000; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.mc-team-bar { height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
+.mc-team-bar-fill { height: 100%; background: #333; border-radius: 3px; }
+.mc-team-next { font-size: 12px; color: #333; }
+.mc-team-next strong { color: #000; display: block; font-size: 13px; }
+.mc-team-combined { display: flex; flex-direction: column; gap: 12px; }
+.mc-team-combined-val { font-size: 36px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.mc-team-combined-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #999; text-transform: uppercase; }
+
+/* ============ METRICS WALL (Opt 4) ============ */
+.mc-wall { padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.mc-wall-card { padding: 16px; background: #fff; border: 1px solid #eee; border-radius: 8px; }
+.mc-wall-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; text-transform: uppercase; }
+.mc-wall-val { font-size: 30px; font-weight: 800; color: #000; margin-top: 6px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.mc-wall-unit { font-size: 13px; font-weight: 600; color: #666; margin-left: 4px; }
+.mc-wall-sub { font-size: 11px; color: #666; margin-top: 6px; }
+.mc-wall-spark { height: 24px; margin-top: 8px; }
+.mc-wall-progress { height: 4px; background: #eee; border-radius: 2px; margin-top: 8px; overflow: hidden; }
+.mc-wall-progress-fill { height: 100%; background: #333; border-radius: 2px; }
+.mc-wall-delta { display: inline-block; margin-top: 6px; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; background: #eee; color: #333; letter-spacing: 0.04em; }
+
+/* ============ TIMELINE FEED (Opt 5) ============ */
+.mc-feed-wrap { padding: 20px; display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+.mc-feed { display: flex; flex-direction: column; gap: 0; position: relative; padding-left: 24px; }
+.mc-feed::before { content: ""; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 2px; background: #eee; }
+.mc-feed-day-head { display: flex; align-items: baseline; gap: 10px; margin: 16px 0 12px -24px; padding: 6px 0 6px 24px; border-bottom: 1px solid #eee; }
+.mc-feed-day-head:first-child { margin-top: 0; }
+.mc-feed-day { font-size: 13px; font-weight: 800; color: #000; letter-spacing: -0.01em; }
+.mc-feed-day-sub { font-size: 11px; color: #999; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.mc-feed-day-stats { margin-left: auto; font-size: 11px; color: #666; }
+.mc-feed-event { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 10px 14px; border: 1px solid #eee; border-radius: 8px; background: #fff; margin-bottom: 8px; position: relative; align-items: center; }
+.mc-feed-event::before { content: ""; position: absolute; left: -20px; top: 16px; width: 8px; height: 8px; border-radius: 999px; background: #fff; border: 2px solid #333; }
+.mc-feed-event-booking::before { background: #333; border-color: #333; }
+.mc-feed-event-msg::before { background: #fff; border-color: #666; }
+.mc-feed-event-done::before { background: #000; border-color: #000; }
+.mc-feed-event-pay::before { background: #666; border-color: #666; }
+.mc-feed-ev-type { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #999; text-transform: uppercase; }
+.mc-feed-ev-title { font-size: 13px; font-weight: 700; color: #000; margin-top: 2px; }
+.mc-feed-ev-sub { font-size: 11px; color: #666; margin-top: 2px; }
+.mc-feed-ev-time { font-size: 11px; color: #999; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mc-feed-side { display: flex; flex-direction: column; gap: 12px; }
+.mc-feed-side-card { padding: 14px; background: #fafafa; border: 1px solid #eee; border-radius: 8px; }
+.mc-feed-side-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; text-transform: uppercase; margin-bottom: 6px; }
+.mc-feed-side-val { font-size: 22px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.mc-feed-side-sub { font-size: 11px; color: #666; margin-top: 4px; }
+.mc-feed-filter { display: flex; flex-direction: column; gap: 4px; }
+.mc-feed-filter-row { display: flex; justify-content: space-between; font-size: 11px; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+.mc-feed-filter-row:hover { background: #fff; }
+.mc-feed-filter-row-active { background: #000; color: #fff; }
+.mc-feed-filter-row-active span { color: #fff; }
+.mc-feed-filter-count { color: #999; font-variant-numeric: tabular-nums; }
+
+/* ============ UTIL ============ */
+.mc-divider { height: 1px; background: #eee; margin: 4px 0; }
+.mc-empty { font-size: 12px; color: #999; padding: 20px; text-align: center; }
+
+/* ============ SUMMARY TABLE ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 12px; color: #333; margin-top: 12px; }
+.wf-summary-table th, .wf-summary-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; vertical-align: top; }
+.wf-summary-table th { background: #fafafa; font-size: 11px; color: #666; font-weight: 700; letter-spacing: 0.04em; }
+.wf-recommendation { margin-top: 20px; padding: 16px; background: #fafafa; border: 1px solid #eee; border-radius: 8px; }
+.wf-recommendation h3 { margin: 0 0 8px; font-size: 14px; color: #000; }
+.wf-recommendation p { font-size: 12px; color: #333; line-height: 1.6; margin: 0 0 10px; }

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Økonomi — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Økonomi</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Financial Dashboard</button>
+    <button class="tab-btn" data-tab="option-2">2: Cash Flow</button>
+    <button class="tab-btn" data-tab="option-3">3: Transactions Power</button>
+    <button class="tab-btn" data-tab="option-4">4: Service Breakdown</button>
+    <button class="tab-btn" data-tab="option-5">5: Forecast</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: FINANCIAL DASHBOARD (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Financial Dashboard</span></h2>
+    <p class="option-description">MTD/YTD/YoY øverst, inntekts-trend, top-selgende tjenester, nyeste transaksjoner. Controller-default.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/okonomi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Rapporter</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Økonomi</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-ek-head">
+            <div class="wf-ek-title">Økonomi · april 2026</div>
+            <div class="wf-ek-filters">
+              <span class="wf-ek-filter wf-ek-filter-primary">MTD ▾</span>
+              <span class="wf-ek-filter">Alle selskaper ▾</span>
+              <span class="wf-ek-filter">Eksporter ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">MTD INNTEKT</div>
+              <div class="wf-bigkpi-val">187.400 kr</div>
+              <div class="wf-bigkpi-sub"><span class="wf-kpi-delta-pos">+14,1%</span> vs forrige mnd</div>
+            </div>
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">YTD INNTEKT</div>
+              <div class="wf-bigkpi-val">1.802.500 kr</div>
+              <div class="wf-bigkpi-sub"><span class="wf-kpi-delta-pos">+42,0%</span> YoY (fjor: 1.269.360)</div>
+            </div>
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">TRANSAKSJONER MTD</div>
+              <div class="wf-bigkpi-val">156</div>
+              <div class="wf-bigkpi-sub">snitt 1.201 kr · 4 refundert</div>
+            </div>
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">AKTIVE ABO (MRR)</div>
+              <div class="wf-bigkpi-val">94.850 kr</div>
+              <div class="wf-bigkpi-sub">34 abo · <span class="wf-kpi-delta-pos">+5 siste 30d</span></div>
+            </div>
+          </div>
+
+          <div class="wf-ek-grid">
+            <div class="wf-ek-card wf-span-8">
+              <div class="wf-card-head">
+                <span>Inntekt siste 12 måneder</span>
+                <span class="wf-card-meta">stablet · Stripe + Vipps</span>
+              </div>
+              <div class="wf-chart wf-chart-lg">[ stablet linje · YoY-overlay ]</div>
+            </div>
+            <div class="wf-ek-card wf-span-4">
+              <div class="wf-card-head">
+                <span>Top 5 tjenester</span>
+                <span class="wf-card-meta">MTD</span>
+              </div>
+              <ul class="wf-list">
+                <li><span>Performance 1600/mnd</span><span>28.800 kr</span></li>
+                <li><span>Performance Pro 2000</span><span>18.000 kr</span></li>
+                <li><span>Flex 20 (450 kr)</span><span>10.800 kr</span></li>
+                <li><span>First Tee kurs</span><span>10.360 kr</span></li>
+                <li><span>Express 550/mnd</span><span>6.050 kr</span></li>
+              </ul>
+            </div>
+
+            <div class="wf-ek-card wf-span-12">
+              <div class="wf-card-head">
+                <span>Siste transaksjoner</span>
+                <span class="wf-card-meta">156 i april · klikk for detalj</span>
+              </div>
+              <table class="wf-table">
+                <tr><th>Dato</th><th>Kunde</th><th>Tjeneste</th><th>Kilde</th><th>Beløp</th><th>Status</th></tr>
+                <tr><td>17. apr 14:22</td><td>Erik Hansen</td><td>Performance 1600</td><td><span class="wf-tag wf-tag-stripe">Stripe</span></td><td class="wf-num">1.600 kr</td><td><span class="wf-tag wf-tag-success">Betalt</span></td></tr>
+                <tr><td>17. apr 11:08</td><td>Nora Torp</td><td>Flex 20</td><td><span class="wf-tag wf-tag-vipps">Vipps</span></td><td class="wf-num">450 kr</td><td><span class="wf-tag wf-tag-success">Betalt</span></td></tr>
+                <tr><td>16. apr 19:45</td><td>Lars Berg</td><td>Express Pro</td><td><span class="wf-tag wf-tag-stripe">Stripe</span></td><td class="wf-num">1.000 kr</td><td><span class="wf-tag wf-tag-success">Betalt</span></td></tr>
+                <tr><td>16. apr 16:30</td><td>Sofie Lund</td><td>Junior 14+</td><td><span class="wf-tag wf-tag-stripe">Stripe</span></td><td class="wf-num">1.350 kr</td><td><span class="wf-tag wf-tag-success">Betalt</span></td></tr>
+                <tr><td>15. apr 20:12</td><td>Martin Aas</td><td>First Tee</td><td><span class="wf-tag wf-tag-vipps">Vipps</span></td><td class="wf-num">1.295 kr</td><td><span class="wf-tag wf-tag-success">Betalt</span></td></tr>
+                <tr><td>14. apr 09:55</td><td>Kari Dahl</td><td>Flex 20</td><td><span class="wf-tag wf-tag-stripe">Stripe</span></td><td class="wf-num">450 kr</td><td><span class="wf-tag wf-tag-error">Refundert</span></td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Safe default — fire store KPI-kort øverst dekker MTD, YTD, transaksjoner og MRR.</li>
+        <li>Inntekts-trend dominerer midten (8 kol) med top-tjenester ved siden (4 kol) for kontekst.</li>
+        <li>Transaksjons-tabell nederst gir controller rask tilgang uten å dominere hovedvisning.</li>
+        <li>Stripe/Vipps badges gir umiddelbar kilde-attribusjon.</li>
+        <li>YoY og forrige-mnd sammenligninger er synlige på hver KPI, ikke i egen fane.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: CASH FLOW ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Cash Flow</span></h2>
+    <p class="option-description">Innkommende vs utgående med margin-bar — klassisk resultatregnskap-logikk.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/okonomi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Rapporter</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Økonomi</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-ek-head">
+            <div class="wf-ek-title">Cash flow · april 2026</div>
+            <div class="wf-ek-filters">
+              <span class="wf-ek-filter wf-ek-filter-primary">MTD ▾</span>
+              <span class="wf-ek-filter">Budsjett-sammenligning</span>
+              <span class="wf-ek-filter">Eksporter</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">INN</div>
+              <div class="wf-bigkpi-val" style="color:#2a7d5a;">+187.400</div>
+              <div class="wf-bigkpi-sub">156 transaksjoner</div>
+            </div>
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">UT</div>
+              <div class="wf-bigkpi-val" style="color:#b84233;">−92.340</div>
+              <div class="wf-bigkpi-sub">lønn, leie, software</div>
+            </div>
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">NETTO</div>
+              <div class="wf-bigkpi-val">95.060 kr</div>
+              <div class="wf-bigkpi-sub"><span class="wf-kpi-delta-pos">+8,2%</span> vs forrige mnd</div>
+            </div>
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">MARGIN</div>
+              <div class="wf-bigkpi-val">50,7%</div>
+              <div class="wf-bigkpi-sub">mål: 55% · <span class="wf-kpi-delta-neg">−4,3pp</span></div>
+            </div>
+          </div>
+
+          <div class="wf-ek-grid">
+            <div class="wf-ek-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Innkommende — per kategori</span>
+                <span class="wf-card-meta">187.400 kr totalt</span>
+              </div>
+              <div class="wf-flow-row">
+                <div><div class="wf-flow-label">Abonnement (MRR)</div><div class="wf-card-meta">34 aktive</div></div>
+                <div class="wf-flow-arrow">→</div>
+                <div><div class="wf-flow-val wf-flow-in">+94.850 kr</div></div>
+                <div class="wf-card-meta">50,6%</div>
+              </div>
+              <div class="wf-flow-row">
+                <div><div class="wf-flow-label">Flex / engangsøkter</div><div class="wf-card-meta">36 økter</div></div>
+                <div class="wf-flow-arrow">→</div>
+                <div><div class="wf-flow-val wf-flow-in">+38.200 kr</div></div>
+                <div class="wf-card-meta">20,4%</div>
+              </div>
+              <div class="wf-flow-row">
+                <div><div class="wf-flow-label">Kurs (First Tee, camp)</div><div class="wf-card-meta">8 påmeldte</div></div>
+                <div class="wf-flow-arrow">→</div>
+                <div><div class="wf-flow-val wf-flow-in">+30.150 kr</div></div>
+                <div class="wf-card-meta">16,1%</div>
+              </div>
+              <div class="wf-flow-row">
+                <div><div class="wf-flow-label">Junior / Utvikling</div><div class="wf-card-meta">klubbavtaler</div></div>
+                <div class="wf-flow-arrow">→</div>
+                <div><div class="wf-flow-val wf-flow-in">+24.200 kr</div></div>
+                <div class="wf-card-meta">12,9%</div>
+              </div>
+            </div>
+
+            <div class="wf-ek-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Utgående — per kategori</span>
+                <span class="wf-card-meta">92.340 kr totalt</span>
+              </div>
+              <div class="wf-flow-row">
+                <div><div class="wf-flow-label">Lønn (Markus + hon.)</div><div class="wf-card-meta">inkl. AGA</div></div>
+                <div class="wf-flow-arrow">→</div>
+                <div><div class="wf-flow-val wf-flow-out">−52.000 kr</div></div>
+                <div class="wf-card-meta">56,3%</div>
+              </div>
+              <div class="wf-flow-row">
+                <div><div class="wf-flow-label">Lokale / leie</div><div class="wf-card-meta">Mulligan + GFGK</div></div>
+                <div class="wf-flow-arrow">→</div>
+                <div><div class="wf-flow-val wf-flow-out">−18.400 kr</div></div>
+                <div class="wf-card-meta">19,9%</div>
+              </div>
+              <div class="wf-flow-row">
+                <div><div class="wf-flow-label">Software (Supabase, Stripe, API)</div><div class="wf-card-meta">abonnementer</div></div>
+                <div class="wf-flow-arrow">→</div>
+                <div><div class="wf-flow-val wf-flow-out">−8.740 kr</div></div>
+                <div class="wf-card-meta">9,5%</div>
+              </div>
+              <div class="wf-flow-row">
+                <div><div class="wf-flow-label">Markedsføring + diverse</div><div class="wf-card-meta">Meta, Google, utstyr</div></div>
+                <div class="wf-flow-arrow">→</div>
+                <div><div class="wf-flow-val wf-flow-out">−13.200 kr</div></div>
+                <div class="wf-card-meta">14,3%</div>
+              </div>
+            </div>
+
+            <div class="wf-ek-card wf-span-12">
+              <div class="wf-card-head">
+                <span>Netto per uke · april</span>
+                <span class="wf-card-meta">stablet: inn = grønn, ut = rød, netto = sort linje</span>
+              </div>
+              <div class="wf-chart wf-chart-lg">[ barcode-bar stablet diagram · 4 uker ]</div>
+              <div class="wf-margin-bar"><div class="wf-margin-fill" style="width:50.7%"></div></div>
+              <div class="wf-card-meta" style="margin-top:6px;">Margin MTD: 50,7% · mål 55%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Resultatregnskap-logikk — INN, UT, NETTO, MARGIN som fire KPI-kort med rød/grønn koding.</li>
+        <li>To speilvendte tabeller i midten — leses som klassisk "T-konto".</li>
+        <li>Margin-bar synliggjør hvor nær målsetting (55%) er nådd uten å kreve tall-lesing.</li>
+        <li>Stablet ukesgraf nederst viser mønsteret over tid — netto-linje kutter gjennom stabelen.</li>
+        <li>Best for controllers og regnskapsfører — svakere for salgs-/produkt-drevet innsikt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: TRANSACTIONS POWER ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Transactions Power</span></h2>
+    <p class="option-description">Søk, filtre, pagination, eksport — power-user tabell for regnskapsavstemming.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/okonomi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Rapporter</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Økonomi</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-ek-head">
+            <div class="wf-ek-title">Transaksjoner</div>
+            <div class="wf-ek-filters">
+              <span class="wf-ek-filter">Lagrede filtre ▾</span>
+              <span class="wf-ek-filter wf-ek-filter-primary">Eksporter CSV</span>
+            </div>
+          </div>
+
+          <div class="wf-filter-bar">
+            <input class="wf-search" placeholder="Søk kunde, e-post eller transaksjons-ID…">
+            <span class="wf-filter-label">PERIODE</span>
+            <span class="wf-filter-chip">I dag</span>
+            <span class="wf-filter-chip">Uke</span>
+            <span class="wf-filter-chip wf-filter-chip-active">Måned</span>
+            <span class="wf-filter-chip">YTD</span>
+            <span class="wf-filter-label">KILDE</span>
+            <span class="wf-filter-chip wf-filter-chip-active">Alle</span>
+            <span class="wf-filter-chip">Stripe</span>
+            <span class="wf-filter-chip">Vipps</span>
+            <span class="wf-filter-label">STATUS</span>
+            <span class="wf-filter-chip wf-filter-chip-active">Alle</span>
+            <span class="wf-filter-chip">Betalt</span>
+            <span class="wf-filter-chip">Refundert</span>
+            <span class="wf-filter-chip">Feilet</span>
+          </div>
+
+          <div class="wf-ek-card wf-span-12">
+            <div class="wf-card-head">
+              <span>156 transaksjoner · 187.400 kr</span>
+              <span class="wf-card-meta">side 1 av 7 · 25 per side</span>
+            </div>
+            <table class="wf-table">
+              <tr>
+                <th>Dato ↓</th><th>ID</th><th>Kunde</th><th>Tjeneste</th><th>Kilde</th>
+                <th>Brutto</th><th>Gebyr</th><th>Netto</th><th>Status</th>
+              </tr>
+              <tr>
+                <td>17. apr 14:22</td><td>tx_7K4nQ2</td><td>Erik Hansen</td><td>Performance 1600</td>
+                <td><span class="wf-tag wf-tag-stripe">Stripe</span></td>
+                <td class="wf-num">1.600</td><td class="wf-num">48</td><td class="wf-num">1.552</td>
+                <td><span class="wf-tag wf-tag-success">Betalt</span></td>
+              </tr>
+              <tr>
+                <td>17. apr 11:08</td><td>vp_3A9mF1</td><td>Nora Torp</td><td>Flex 20</td>
+                <td><span class="wf-tag wf-tag-vipps">Vipps</span></td>
+                <td class="wf-num">450</td><td class="wf-num">9</td><td class="wf-num">441</td>
+                <td><span class="wf-tag wf-tag-success">Betalt</span></td>
+              </tr>
+              <tr>
+                <td>16. apr 19:45</td><td>tx_9P2kR7</td><td>Lars Berg</td><td>Express Pro</td>
+                <td><span class="wf-tag wf-tag-stripe">Stripe</span></td>
+                <td class="wf-num">1.000</td><td class="wf-num">30</td><td class="wf-num">970</td>
+                <td><span class="wf-tag wf-tag-success">Betalt</span></td>
+              </tr>
+              <tr>
+                <td>16. apr 16:30</td><td>tx_5M8jT4</td><td>Sofie Lund</td><td>Junior 14+</td>
+                <td><span class="wf-tag wf-tag-stripe">Stripe</span></td>
+                <td class="wf-num">1.350</td><td class="wf-num">40</td><td class="wf-num">1.310</td>
+                <td><span class="wf-tag wf-tag-success">Betalt</span></td>
+              </tr>
+              <tr>
+                <td>15. apr 20:12</td><td>vp_1B7xH9</td><td>Martin Aas</td><td>First Tee</td>
+                <td><span class="wf-tag wf-tag-vipps">Vipps</span></td>
+                <td class="wf-num">1.295</td><td class="wf-num">26</td><td class="wf-num">1.269</td>
+                <td><span class="wf-tag wf-tag-success">Betalt</span></td>
+              </tr>
+              <tr>
+                <td>14. apr 09:55</td><td>tx_6V3nL2</td><td>Kari Dahl</td><td>Flex 20</td>
+                <td><span class="wf-tag wf-tag-stripe">Stripe</span></td>
+                <td class="wf-num">450</td><td class="wf-num">14</td><td class="wf-num">436</td>
+                <td><span class="wf-tag wf-tag-error">Refundert</span></td>
+              </tr>
+              <tr>
+                <td>13. apr 18:01</td><td>tx_2C5wQ8</td><td>Jonas Ek</td><td>Duo 50</td>
+                <td><span class="wf-tag wf-tag-stripe">Stripe</span></td>
+                <td class="wf-num">900</td><td class="wf-num">27</td><td class="wf-num">873</td>
+                <td><span class="wf-tag wf-tag-success">Betalt</span></td>
+              </tr>
+              <tr>
+                <td>12. apr 13:40</td><td>vp_8D2rP6</td><td>Ida Solli</td><td>Flex 20</td>
+                <td><span class="wf-tag wf-tag-vipps">Vipps</span></td>
+                <td class="wf-num">450</td><td class="wf-num">9</td><td class="wf-num">441</td>
+                <td><span class="wf-tag wf-tag-warn">Venter</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Power-user tabell — søk + filtre i én rad, kolonner for Stripe/Vipps-gebyr og netto.</li>
+        <li>Søkefelt først — de fleste oppgaver starter med "finn en transaksjon".</li>
+        <li>Gebyr-kolonne er kritisk for avstemming (Stripe 3%, Vipps 1,99%).</li>
+        <li>Sortering og pagination som standard — 156 rader krever det.</li>
+        <li>Eksport er primær CTA i toppen, ikke skjult i meny. Regnskapsfører får rask tilgang.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: SERVICE BREAKDOWN ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Service Breakdown</span></h2>
+    <p class="option-description">Inntekt per tjenestekategori med bar-chart — hvilke produkter driver omsetningen?</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/okonomi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Rapporter</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Økonomi</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-ek-head">
+            <div class="wf-ek-title">Inntekt per tjeneste</div>
+            <div class="wf-ek-filters">
+              <span class="wf-ek-filter wf-ek-filter-primary">MTD ▾</span>
+              <span class="wf-ek-filter">Per trener</span>
+              <span class="wf-ek-filter">Eksporter</span>
+            </div>
+          </div>
+
+          <div class="wf-ek-grid">
+            <div class="wf-ek-card wf-span-12">
+              <div class="wf-card-head">
+                <span>Personlig coaching · 112.800 kr (60,2%)</span>
+                <span class="wf-card-meta">Anders + Markus · 4 tjenester</span>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">Performance 1600</div><div class="wf-svc-meta">18 abo · Anders</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:65%"></div></div>
+                <div class="wf-svc-val">28.800 kr</div><div class="wf-svc-pct">15,4%</div>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">Performance Pro 2000</div><div class="wf-svc-meta">9 abo · Anders</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:41%"></div></div>
+                <div class="wf-svc-val">18.000 kr</div><div class="wf-svc-pct">9,6%</div>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">Flex 20 (450 kr)</div><div class="wf-svc-meta">24 økter · Anders</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:25%"></div></div>
+                <div class="wf-svc-val">10.800 kr</div><div class="wf-svc-pct">5,8%</div>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">Express Pro 1000</div><div class="wf-svc-meta">12 abo · Markus</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:27%"></div></div>
+                <div class="wf-svc-val">12.000 kr</div><div class="wf-svc-pct">6,4%</div>
+              </div>
+            </div>
+
+            <div class="wf-ek-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Junior Academy · 54.400 kr (29,0%)</span>
+                <span class="wf-card-meta">Markus + junior-team</span>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">Junior 14+</div><div class="wf-svc-meta">22 barn</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:55%"></div></div>
+                <div class="wf-svc-val">29.700 kr</div><div class="wf-svc-pct">15,9%</div>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">First Tee kurs</div><div class="wf-svc-meta">8 påmeldte</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:30%"></div></div>
+                <div class="wf-svc-val">10.360 kr</div><div class="wf-svc-pct">5,5%</div>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">Junior gruppe 10-13</div><div class="wf-svc-meta">14 barn</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:42%"></div></div>
+                <div class="wf-svc-val">14.340 kr</div><div class="wf-svc-pct">7,6%</div>
+              </div>
+            </div>
+
+            <div class="wf-ek-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Utvikling / Software · 20.200 kr (10,8%)</span>
+                <span class="wf-card-meta">klubbavtaler + AI-abo</span>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">GFGK klubbavtale</div><div class="wf-svc-meta">1 klubb</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:45%"></div></div>
+                <div class="wf-svc-val">9.500 kr</div><div class="wf-svc-pct">5,1%</div>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">AI-abo Pro</div><div class="wf-svc-meta">14 brukere</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:32%"></div></div>
+                <div class="wf-svc-val">6.700 kr</div><div class="wf-svc-pct">3,6%</div>
+              </div>
+              <div class="wf-svc-row">
+                <div><div class="wf-svc-label">Bane-coaching 9 hull</div><div class="wf-svc-meta">3 økter</div></div>
+                <div class="wf-svc-bar"><div class="wf-svc-fill" style="width:19%"></div></div>
+                <div class="wf-svc-val">4.000 kr</div><div class="wf-svc-pct">2,1%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Tre kategorier (Coaching, Junior, Utvikling) som seksjoner — matcher divisjonsstrukturen.</li>
+        <li>Horisontale barer innen hver kategori — lengde = relativ inntekt i kategorien.</li>
+        <li>Beløp + prosent i høyre kolonne for både kategori- og tjeneste-nivå.</li>
+        <li>Ingen kart/diagram — data SNAKKER direkte via bar-lengden.</li>
+        <li>Best for produktbeslutninger: "Skal vi skalere Performance eller droppe Flex 20?"</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: FORECAST ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Forecast</span></h2>
+    <p class="option-description">Prognose basert på MRR, pipeline og historikk — hva lander vi på ved månedsslutt?</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/okonomi</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Rapporter</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Økonomi</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-ek-head">
+            <div class="wf-ek-title">Prognose · april → desember 2026</div>
+            <div class="wf-ek-filters">
+              <span class="wf-ek-filter wf-ek-filter-primary">Base case ▾</span>
+              <span class="wf-ek-filter">Bull</span>
+              <span class="wf-ek-filter">Bear</span>
+              <span class="wf-ek-filter">Eksporter</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">LANDING APRIL</div>
+              <div class="wf-bigkpi-val">215.800 kr</div>
+              <div class="wf-bigkpi-sub">pace: 187.400 hittil · +28.400 igjen</div>
+            </div>
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">Q2 2026 PROGNOSE</div>
+              <div class="wf-bigkpi-val">650.000 kr</div>
+              <div class="wf-bigkpi-sub"><span class="wf-kpi-delta-pos">+38%</span> YoY</div>
+            </div>
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">ÅRSPROGNOSE 2026</div>
+              <div class="wf-bigkpi-val">2.680.000 kr</div>
+              <div class="wf-bigkpi-sub">mål: 2.500.000 · <span class="wf-kpi-delta-pos">+7,2% over</span></div>
+            </div>
+            <div class="wf-bigkpi">
+              <div class="wf-bigkpi-label">PIPELINE-VERDI</div>
+              <div class="wf-bigkpi-val">186.500 kr</div>
+              <div class="wf-bigkpi-sub">12 leads · 4 kurs-kohorter</div>
+            </div>
+          </div>
+
+          <div class="wf-ek-grid">
+            <div class="wf-ek-card wf-span-8">
+              <div class="wf-card-head">
+                <span>Faktisk vs prognose</span>
+                <span class="wf-card-meta">sort linje = actuals · stiplet = base case · bånd = bull/bear</span>
+              </div>
+              <div class="wf-chart wf-chart-lg">[ linjediagram m/ konfidensbånd · jan → des ]</div>
+            </div>
+
+            <div class="wf-ek-card wf-span-4">
+              <div class="wf-card-head">
+                <span>Prognose-konfidens</span>
+                <span class="wf-card-meta">base case</span>
+              </div>
+              <div class="wf-pipeline-ring">87%</div>
+              <div class="wf-card-meta" style="text-align:center;">Basert på MRR-stabilitet (34 abo), pipeline-conversion (62% historisk) og sesong-mønster.</div>
+            </div>
+
+            <div class="wf-ek-card wf-span-12">
+              <div class="wf-card-head">
+                <span>Månedsprognose · Q2–Q4 2026</span>
+                <span class="wf-card-meta">base case · inkl. sesongjustering</span>
+              </div>
+              <div class="wf-fc-row wf-fc-row-header">
+                <div>Måned</div><div style="text-align:right;">Base</div><div style="text-align:right;">Bull (+15%)</div><div style="text-align:right;">Bear (−20%)</div>
+              </div>
+              <div class="wf-fc-row">
+                <div><div class="wf-fc-label">April 2026</div><div class="wf-fc-meta">pace + pipeline</div></div>
+                <div class="wf-fc-val wf-fc-val-bold">215.800</div>
+                <div class="wf-fc-val">248.200</div>
+                <div class="wf-fc-val">172.600</div>
+              </div>
+              <div class="wf-fc-row">
+                <div><div class="wf-fc-label">Mai 2026</div><div class="wf-fc-meta">høysesong start</div></div>
+                <div class="wf-fc-val wf-fc-val-bold">232.000</div>
+                <div class="wf-fc-val">266.800</div>
+                <div class="wf-fc-val">185.600</div>
+              </div>
+              <div class="wf-fc-row">
+                <div><div class="wf-fc-label">Juni 2026</div><div class="wf-fc-meta">full drift + juni-camp</div></div>
+                <div class="wf-fc-val wf-fc-val-bold">248.400</div>
+                <div class="wf-fc-val">285.700</div>
+                <div class="wf-fc-val">198.700</div>
+              </div>
+              <div class="wf-fc-row">
+                <div><div class="wf-fc-label">Juli 2026</div><div class="wf-fc-meta">lavsesong · ferie</div></div>
+                <div class="wf-fc-val wf-fc-val-bold">148.000</div>
+                <div class="wf-fc-val">170.200</div>
+                <div class="wf-fc-val">118.400</div>
+              </div>
+              <div class="wf-fc-row">
+                <div><div class="wf-fc-label">August–September</div><div class="wf-fc-meta">sesong-pickup</div></div>
+                <div class="wf-fc-val wf-fc-val-bold">480.200</div>
+                <div class="wf-fc-val">552.200</div>
+                <div class="wf-fc-val">384.200</div>
+              </div>
+              <div class="wf-fc-row">
+                <div><div class="wf-fc-label">Oktober–desember</div><div class="wf-fc-meta">Mulligan indoor-sesong</div></div>
+                <div class="wf-fc-val wf-fc-val-bold">558.400</div>
+                <div class="wf-fc-val">642.200</div>
+                <div class="wf-fc-val">446.700</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Prognose-først — KPI-er viser hva vi lander på, ikke bare hva vi har gjort.</li>
+        <li>Scenario-chips (Base/Bull/Bear) i toppen — klikk for å reberegne hele visningen.</li>
+        <li>Konfidensring gir gut-check: 87% sikkerhet betyr "pålitelig nok for styremøte".</li>
+        <li>Månedsrad-tabell nederst gir detalj-nedbrytning med sesongjustering synliggjort.</li>
+        <li>Best for strategiske beslutninger og investeringsplanlegging — svakere for daglig drift.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for MC Økonomi — valget avhenger av om hovedbrukeren (Anders/regnskapsfører) vil ha rask lesning, cash-fokus, transaksjonsdetaljer, produktinnsikt eller fremtids-pek.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Dashboard</th><th>2: Cash Flow</th><th>3: Transactions</th><th>4: Service</th><th>5: Forecast</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig oversikt</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Middels</td><td>Svak</td></tr>
+        <tr><td>Regnskapsavstemming</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Svak</td><td>Svak</td></tr>
+        <tr><td>Produktbeslutninger</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Styremøte-underlag</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Månedsavslutning</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Svak</td></tr>
+        <tr><td>Lærbarhet</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Middels</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Option 1 — Financial Dashboard</h3>
+    <p>Dashboard er trygg default fordi 80% av bruk er "hva er status akkurat nå?". MTD/YTD/YoY + trend + top-tjenester + siste transaksjoner dekker 90% av spørsmålene Anders har ukentlig. Stripe/Vipps-badges gir kilde-attribusjon, og transaksjonstabellen er klikkbar → åpner Option 3 (detaljert tabell) som drill-down. Option 2 (Cash Flow) bør ligge som egen fane innenfor, og Option 5 (Forecast) som kvartalsrapport-bilag.</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Dashboard):</strong> Default. Ukentlig lesning, rask status.</li>
+      <li><strong>Option 2 (Cash Flow):</strong> Månedsavslutning og margin-oppfølging.</li>
+      <li><strong>Option 3 (Transactions):</strong> Regnskapsavstemming og når regnskapsfører er primærbruker.</li>
+      <li><strong>Option 4 (Service Breakdown):</strong> Produktbeslutninger — skalere/droppe tjenester.</li>
+      <li><strong>Option 5 (Forecast):</strong> Strategisk planlegging, styremøter, investeringsbeslutninger.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

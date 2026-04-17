@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Godkjenninger — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Godkjenninger</span> — <span id="project-name">AK Golf Platform</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Inbox</button>
+    <button class="tab-btn" data-tab="option-2">2: Kanban</button>
+    <button class="tab-btn" data-tab="option-3">3: Detail First</button>
+    <button class="tab-btn" data-tab="option-4">4: Bulk Actions</button>
+    <button class="tab-btn" data-tab="option-5">5: Risk Score</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1 ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Inbox</span></h2>
+    <p class="option-description">Ventende godkjenninger som en prioritert e-post-inbox — rad for rad, med godkjenn/avslå per oppføring. Kjent mønster fra Mission Control; lav læringskurve.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/godkjenninger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Bookinger</a>
+              <a href="#">Spillere</a>
+              <a href="#">Instruktører</a>
+              <a href="#" class="active">Godkjenninger <span style="float:right;background:#fff;color:#000;border-radius:10px;padding:0 6px;font-size:10px;font-weight:700;">7</span></a>
+              <a href="#">Økonomi</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+          </aside>
+          <main class="mc-main">
+            <div class="mc-topbar">
+              <div>
+                <h1 class="mc-page-title">Godkjenninger <span class="wf-annot">①</span></h1>
+                <div class="mc-page-sub">Ventende forespørsler som krever manuell godkjenning</div>
+              </div>
+              <div class="mc-topbar-meta">
+                <span>Oppdatert for 2 min siden</span>
+                <span>Anders K.</span>
+              </div>
+            </div>
+
+            <div class="mc-kpis">
+              <div class="mc-kpi"><div class="mc-kpi-label">Ventende</div><div class="mc-kpi-value">7</div><div class="mc-kpi-sub">2 eldre enn 24t</div></div>
+              <div class="mc-kpi"><div class="mc-kpi-label">Godkjent i dag</div><div class="mc-kpi-value">12</div><div class="mc-kpi-sub">+3 vs. i går</div></div>
+              <div class="mc-kpi"><div class="mc-kpi-label">Avslått denne uken</div><div class="mc-kpi-value">4</div><div class="mc-kpi-sub">Refusjoner: 2</div></div>
+              <div class="mc-kpi"><div class="mc-kpi-label">Snitt svartid</div><div class="mc-kpi-value">1.8t</div><div class="mc-kpi-sub">Mål: under 4t</div></div>
+            </div>
+
+            <div class="mc-filters">
+              <button class="mc-pill active">Alle (7)</button>
+              <button class="mc-pill">Booking (3)</button>
+              <button class="mc-pill">Aktivitet (2)</button>
+              <button class="mc-pill">Refusjon (2)</button>
+              <input class="mc-search" type="text" placeholder="Søk etter navn, type eller ID…">
+            </div>
+
+            <div class="inbox-list" role="list"> <span class="wf-annot">②</span>
+              <div class="inbox-row unread">
+                <div></div>
+                <div>
+                  <div class="inbox-type">Ny booking</div>
+                  <div class="inbox-meta">Sofie V.</div>
+                </div>
+                <div>
+                  <div class="inbox-title">Performance — Tirsdag 22. apr, 15:00</div>
+                  <div class="inbox-meta">Instruktør: Anders · Sted: Mulligan Fredrikstad</div>
+                </div>
+                <div class="inbox-time">Ventende 2t</div>
+                <div class="inbox-actions">
+                  <button class="btn-reject">Avslå</button>
+                  <button class="btn-approve">Godkjenn</button>
+                </div>
+              </div>
+              <div class="inbox-row unread">
+                <div></div>
+                <div>
+                  <div class="inbox-type">Fasilitet</div>
+                  <div class="inbox-meta">Gruppe Junior 14+</div>
+                </div>
+                <div>
+                  <div class="inbox-title">Gruppeøkt — Søndag 27. apr, 10:00–12:00</div>
+                  <div class="inbox-meta">12 deltakere · Bane 1 + short game-område</div>
+                </div>
+                <div class="inbox-time">Ventende 6t</div>
+                <div class="inbox-actions">
+                  <button class="btn-reject">Avslå</button>
+                  <button class="btn-approve">Godkjenn</button>
+                </div>
+              </div>
+              <div class="inbox-row">
+                <div></div>
+                <div>
+                  <div class="inbox-type">Refusjon</div>
+                  <div class="inbox-meta">Erik H.</div>
+                </div>
+                <div>
+                  <div class="inbox-title">Refusjonsanmodning — 2 400 kr</div>
+                  <div class="inbox-meta">Begrunnelse: Avlyst pga. sykdom · Dokumentasjon vedlagt</div>
+                </div>
+                <div class="inbox-time">1d 3t</div>
+                <div class="inbox-actions">
+                  <button class="btn-reject">Avslå</button>
+                  <button class="btn-approve">Godkjenn</button>
+                </div>
+              </div>
+              <div class="inbox-row">
+                <div></div>
+                <div>
+                  <div class="inbox-type">Ny booking</div>
+                  <div class="inbox-meta">Jonas R.</div>
+                </div>
+                <div>
+                  <div class="inbox-title">Flex 90 — Lørdag 26. apr, 09:30</div>
+                  <div class="inbox-meta">Førstegangsklient · Bane: GFGK</div>
+                </div>
+                <div class="inbox-time">1d 8t</div>
+                <div class="inbox-actions">
+                  <button class="btn-reject">Avslå</button>
+                  <button class="btn-approve">Godkjenn</button>
+                </div>
+              </div>
+              <div class="inbox-row">
+                <div></div>
+                <div>
+                  <div class="inbox-type">Ny booking</div>
+                  <div class="inbox-meta">Maria L.</div>
+                </div>
+                <div>
+                  <div class="inbox-title">Performance Pro — Onsdag 23. apr, 17:00</div>
+                  <div class="inbox-meta">Abo-kunde · Instruktør: Markus</div>
+                </div>
+                <div class="inbox-time">2d</div>
+                <div class="inbox-actions">
+                  <button class="btn-reject">Avslå</button>
+                  <button class="btn-approve">Godkjenn</button>
+                </div>
+              </div>
+              <div class="inbox-row">
+                <div></div>
+                <div>
+                  <div class="inbox-type">Fasilitet</div>
+                  <div class="inbox-meta">WANG Toppidrett</div>
+                </div>
+                <div>
+                  <div class="inbox-title">Simulator 2 — Hele torsdag 24. apr</div>
+                  <div class="inbox-meta">Skoleklasse · 6 timer blokkering</div>
+                </div>
+                <div class="inbox-time">2d 4t</div>
+                <div class="inbox-actions">
+                  <button class="btn-reject">Avslå</button>
+                  <button class="btn-approve">Godkjenn</button>
+                </div>
+              </div>
+              <div class="inbox-row">
+                <div></div>
+                <div>
+                  <div class="inbox-type">Refusjon</div>
+                  <div class="inbox-meta">Lars T.</div>
+                </div>
+                <div>
+                  <div class="inbox-title">Refusjonsanmodning — 1 295 kr</div>
+                  <div class="inbox-meta">First Tee-kurs · Kunde flyttet <span class="wf-annot">③</span></div>
+                </div>
+                <div class="inbox-time">3d</div>
+                <div class="inbox-actions">
+                  <button class="btn-reject">Avslå</button>
+                  <button class="btn-approve">Godkjenn</button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Merknader — Inbox</h3>
+      <ol>
+        <li><span class="wf-annot">①</span> Sidekart bevares fra eksisterende Mission Control-sidebar — godkjenninger får badge-teller.</li>
+        <li><span class="wf-annot">②</span> Én rad = én godkjenning. Type-etikett til venstre, innhold i midten, handling til høyre. Godkjenn er primærknapp (sort), Avslå åpner kommentarmodal.</li>
+        <li><span class="wf-annot">③</span> Klikk på tittel åpner detaljpanel over — rask oversikt uten å forlate lista.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2 ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Kanban</span></h2>
+    <p class="option-description">Tre kolonner — Ventende, Godkjent, Avslått — med kort som kan dra-og-slippes. Visuell fremdrift, lett å se "hvor ting står".</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/godkjenninger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Bookinger</a>
+              <a href="#">Spillere</a>
+              <a href="#" class="active">Godkjenninger</a>
+              <a href="#">Økonomi</a>
+              <a href="#">Rapporter</a>
+            </nav>
+          </aside>
+          <main class="mc-main">
+            <div class="mc-topbar">
+              <div>
+                <h1 class="mc-page-title">Godkjenninger — Kanban <span class="wf-annot">①</span></h1>
+                <div class="mc-page-sub">Dra kort mellom kolonner for å endre status</div>
+              </div>
+              <div class="mc-topbar-meta"><span>Filter: Denne uken ▾</span></div>
+            </div>
+
+            <div class="kanban">
+              <div class="kanban-col">
+                <div class="kanban-header">Ventende <span class="kanban-count">7</span></div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Ny booking</div>
+                  <div class="kanban-card-title">Sofie V. — Performance</div>
+                  <div class="kanban-card-meta">Tir 22. apr · 15:00</div>
+                  <div class="kanban-card-footer"><span>Ventende 2t</span><span>Anders</span></div>
+                </div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Fasilitet</div>
+                  <div class="kanban-card-title">Gruppe Junior 14+</div>
+                  <div class="kanban-card-meta">Søn 27. apr · 10:00</div>
+                  <div class="kanban-card-footer"><span>Ventende 6t</span><span>12 deltakere</span></div>
+                </div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Refusjon</div>
+                  <div class="kanban-card-title">Erik H. — 2 400 kr</div>
+                  <div class="kanban-card-meta">Sykdomsavbestilling</div>
+                  <div class="kanban-card-footer"><span>1d 3t</span><span>Dokumentert</span></div>
+                </div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Ny booking</div>
+                  <div class="kanban-card-title">Jonas R. — Flex 90</div>
+                  <div class="kanban-card-meta">Lør 26. apr · 09:30</div>
+                  <div class="kanban-card-footer"><span>1d 8t</span><span>Ny kunde</span></div>
+                </div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Fasilitet</div>
+                  <div class="kanban-card-title">WANG — Simulator 2</div>
+                  <div class="kanban-card-meta">Tor 24. apr · hele dagen</div>
+                  <div class="kanban-card-footer"><span>2d 4t</span><span>Blokk 6t</span></div>
+                </div>
+              </div>
+
+              <div class="kanban-col">
+                <div class="kanban-header">Godkjent <span class="kanban-count">12</span></div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Ny booking</div>
+                  <div class="kanban-card-title">Anders P. — Performance Pro</div>
+                  <div class="kanban-card-meta">Man 21. apr · 10:00</div>
+                  <div class="kanban-card-footer"><span>Godkjent 14:22</span><span>Markus</span></div>
+                </div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Refusjon</div>
+                  <div class="kanban-card-title">Ingrid S. — 450 kr</div>
+                  <div class="kanban-card-meta">Flex 20 · Kulturell feilbestilling</div>
+                  <div class="kanban-card-footer"><span>Godkjent 11:08</span><span>Auto-prosess</span></div>
+                </div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Fasilitet</div>
+                  <div class="kanban-card-title">GFGK — Juniortur</div>
+                  <div class="kanban-card-meta">Fre 25. apr</div>
+                  <div class="kanban-card-footer"><span>Godkjent 09:40</span><span>—</span></div>
+                </div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Ny booking</div>
+                  <div class="kanban-card-title">Mari K. — Express</div>
+                  <div class="kanban-card-meta">Ons 23. apr · 16:00</div>
+                  <div class="kanban-card-footer"><span>Godkjent i går</span><span>Markus</span></div>
+                </div>
+              </div>
+
+              <div class="kanban-col">
+                <div class="kanban-header">Avslått <span class="kanban-count">4</span></div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Refusjon</div>
+                  <div class="kanban-card-title">Nora B. — 900 kr <span class="wf-annot">②</span></div>
+                  <div class="kanban-card-meta">Kommentar: Over 14 dager</div>
+                  <div class="kanban-card-footer"><span>Avslått i går</span><span>Anders</span></div>
+                </div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Ny booking</div>
+                  <div class="kanban-card-title">Tor K. — Performance</div>
+                  <div class="kanban-card-meta">Konflikt med annen time</div>
+                  <div class="kanban-card-footer"><span>Avslått 17/4</span><span>Auto</span></div>
+                </div>
+                <div class="kanban-card">
+                  <div class="kanban-card-type">Fasilitet</div>
+                  <div class="kanban-card-title">Bedriftsevent — Simulator <span class="wf-annot">③</span></div>
+                  <div class="kanban-card-meta">Kapasitet overskredet</div>
+                  <div class="kanban-card-footer"><span>Avslått 16/4</span><span>Tilbud sendt</span></div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Merknader — Kanban</h3>
+      <ol>
+        <li><span class="wf-annot">①</span> Tre kolonner som speiler livssyklus. Drag-and-drop mellom kolonner bekreftes med modal.</li>
+        <li><span class="wf-annot">②</span> Avslåtte kort viser avslagskommentar for sporbarhet — lett å klage/omgjøre.</li>
+        <li><span class="wf-annot">③</span> Kort med «Tilbud sendt»-markering knyttes til salgsflyt hvis forespørselen ble avslått men med alternativ.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3 ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Detail First</span></h2>
+    <p class="option-description">Én godkjenning om gangen i fullt fokus — all kontekst, historikk og relasjoner synlig. Neste-knapp fører til neste kø-element. Minimerer feilklikk.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/godkjenninger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Bookinger</a>
+              <a href="#">Spillere</a>
+              <a href="#" class="active">Godkjenninger</a>
+              <a href="#">Økonomi</a>
+            </nav>
+          </aside>
+          <main class="mc-main">
+            <div class="mc-topbar">
+              <div>
+                <h1 class="mc-page-title">Godkjenning 1 av 7 <span class="wf-annot">①</span></h1>
+                <div class="mc-page-sub">Gjennomgå én forespørsel om gangen med full kontekst</div>
+              </div>
+              <div class="mc-topbar-meta"><span>Behandlet i dag: 12</span></div>
+            </div>
+
+            <div class="detail-layout">
+              <div class="detail-queue">
+                <div class="detail-queue-title">Kø (7)</div>
+                <div class="queue-item active">
+                  <div class="queue-item-title">Sofie V. — Booking</div>
+                  <div class="queue-item-meta">Ventende 2t</div>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-item-title">Junior 14+ — Aktivitet</div>
+                  <div class="queue-item-meta">Ventende 6t</div>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-item-title">Erik H. — Refusjon</div>
+                  <div class="queue-item-meta">1d 3t</div>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-item-title">Jonas R. — Booking</div>
+                  <div class="queue-item-meta">1d 8t</div>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-item-title">Maria L. — Booking</div>
+                  <div class="queue-item-meta">2d</div>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-item-title">WANG — Fasilitet</div>
+                  <div class="queue-item-meta">2d 4t</div>
+                </div>
+                <div class="queue-item">
+                  <div class="queue-item-title">Lars T. — Refusjon</div>
+                  <div class="queue-item-meta">3d</div>
+                </div>
+              </div>
+
+              <div class="detail-panel">
+                <div class="detail-head">
+                  <div>
+                    <div class="detail-type">Ny booking · Ventende 2t</div>
+                    <div class="detail-title">Sofie V. — Performance</div>
+                    <div class="detail-sub">Tirsdag 22. april, 15:00–15:20 · Instruktør: Anders Kristiansen</div>
+                  </div>
+                  <div style="font-size:12px;color:#666;text-align:right;">ID: BKNG-20426<br>Sendt 13:22</div>
+                </div>
+
+                <div class="detail-grid">
+                  <div>
+                    <div class="detail-field-label">Kunde</div>
+                    <div class="detail-field-value">Sofie Vestby (sofie@eksempel.no)</div>
+                  </div>
+                  <div>
+                    <div class="detail-field-label">Abonnement</div>
+                    <div class="detail-field-value">Performance Pro — 2/4 økter brukt</div>
+                  </div>
+                  <div>
+                    <div class="detail-field-label">Tjeneste</div>
+                    <div class="detail-field-value">Performance · 20 min · 1 600 kr/mnd</div>
+                  </div>
+                  <div>
+                    <div class="detail-field-label">Lokasjon</div>
+                    <div class="detail-field-value">Mulligan Fredrikstad — Simulator 1</div>
+                  </div>
+                  <div>
+                    <div class="detail-field-label">Historikk</div>
+                    <div class="detail-field-value">12 fullførte økter · 1 avlyst · HCP 18.4</div>
+                  </div>
+                  <div>
+                    <div class="detail-field-label">Konflikter <span class="wf-annot">②</span></div>
+                    <div class="detail-field-value">Ingen — simulatoren er ledig, Anders har åpent vindu</div>
+                  </div>
+                </div>
+
+                <div class="detail-context">
+                  <div class="detail-context-title">Notat fra kunde</div>
+                  «Ønsker å jobbe med driver-stability før turnering 4. mai. Kan jeg få med meg videoanalyse fra forrige økt?»
+                </div>
+
+                <div class="detail-actions">
+                  <button class="btn-skip">Hopp over →</button>
+                  <button class="btn-large-reject">Avslå (m/ kommentar)</button>
+                  <button class="btn-large-approve">Godkjenn og gå videre <span class="wf-annot">③</span></button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Merknader — Detail First</h3>
+      <ol>
+        <li><span class="wf-annot">①</span> Teller i overskriften viser fremdrift og skaper flyt — føles som «inbox zero».</li>
+        <li><span class="wf-annot">②</span> Kontekstkolonne viser automatisk konflikt-sjekk før admin trenger å beslutte.</li>
+        <li><span class="wf-annot">③</span> Godkjenn-knapp tar deg automatisk til neste i køen — optimalisert for rask gjennomgang.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4 ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Bulk Actions</span></h2>
+    <p class="option-description">Avkrysningsbokser i tabell — velg flere og godkjenn/avslå i masseaksjon. Optimalisert for dager med mange like forespørsler (f.eks. junior-camp-påmeldinger).</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/godkjenninger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Bookinger</a>
+              <a href="#">Spillere</a>
+              <a href="#" class="active">Godkjenninger</a>
+              <a href="#">Økonomi</a>
+            </nav>
+          </aside>
+          <main class="mc-main">
+            <div class="mc-topbar">
+              <div>
+                <h1 class="mc-page-title">Godkjenninger — Bulk</h1>
+                <div class="mc-page-sub">Velg flere og behandle i masseaksjon</div>
+              </div>
+              <div class="mc-topbar-meta"><span>7 ventende</span></div>
+            </div>
+
+            <div class="mc-filters">
+              <button class="mc-pill active">Ventende (7)</button>
+              <button class="mc-pill">Booking</button>
+              <button class="mc-pill">Aktivitet</button>
+              <button class="mc-pill">Refusjon</button>
+              <input class="mc-search" type="text" placeholder="Søk…">
+            </div>
+
+            <div class="bulk-toolbar active-selection">
+              <span>3 valgt <span class="wf-annot">①</span> · Total verdi: 4 800 kr</span>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <button class="btn-reject">Avslå valgte</button>
+                <button class="btn-approve">Godkjenn valgte</button>
+              </div>
+            </div>
+
+            <table class="bulk-table">
+              <thead>
+                <tr>
+                  <th style="width:36px;"><input type="checkbox" class="bulk-checkbox" checked></th>
+                  <th>Type</th>
+                  <th>Kunde / gruppe</th>
+                  <th>Detaljer</th>
+                  <th>Sendt</th>
+                  <th>Verdi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="selected">
+                  <td><input type="checkbox" class="bulk-checkbox" checked></td>
+                  <td>Booking</td>
+                  <td>Sofie V.</td>
+                  <td>Performance · Tir 22/4 15:00</td>
+                  <td>2t</td>
+                  <td>1 600 kr</td>
+                </tr>
+                <tr class="selected">
+                  <td><input type="checkbox" class="bulk-checkbox" checked></td>
+                  <td>Booking</td>
+                  <td>Jonas R.</td>
+                  <td>Flex 90 · Lør 26/4 09:30</td>
+                  <td>1d 8t</td>
+                  <td>1 800 kr</td>
+                </tr>
+                <tr class="selected">
+                  <td><input type="checkbox" class="bulk-checkbox" checked></td>
+                  <td>Booking</td>
+                  <td>Maria L.</td>
+                  <td>Performance Pro · Ons 23/4 17:00</td>
+                  <td>2d</td>
+                  <td>1 400 kr</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="bulk-checkbox"></td>
+                  <td>Aktivitet</td>
+                  <td>Gruppe Junior 14+</td>
+                  <td>Gruppeøkt · Søn 27/4 10:00</td>
+                  <td>6t</td>
+                  <td>5 400 kr</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="bulk-checkbox"></td>
+                  <td>Aktivitet</td>
+                  <td>WANG Toppidrett</td>
+                  <td>Simulator 2 · Tor 24/4 heldag <span class="wf-annot">②</span></td>
+                  <td>2d 4t</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="bulk-checkbox"></td>
+                  <td>Refusjon</td>
+                  <td>Erik H.</td>
+                  <td>Sykdomsavbestilling · dokumentert</td>
+                  <td>1d 3t</td>
+                  <td>−2 400 kr</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="bulk-checkbox"></td>
+                  <td>Refusjon</td>
+                  <td>Lars T.</td>
+                  <td>First Tee · kunden flyttet <span class="wf-annot">③</span></td>
+                  <td>3d</td>
+                  <td>−1 295 kr</td>
+                </tr>
+              </tbody>
+            </table>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Merknader — Bulk Actions</h3>
+      <ol>
+        <li><span class="wf-annot">①</span> Sticky toolbar øverst viser antall valgte og total verdi — behold bevissthet om omfang.</li>
+        <li><span class="wf-annot">②</span> Ikke-kompatible rader (f.eks. refusjoner blandet med bookinger) advarer før masseakjon.</li>
+        <li><span class="wf-annot">③</span> Refusjon vises med negativ verdi for raskt økonomisk overblikk.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5 ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Risk Score</span></h2>
+    <p class="option-description">AI rangerer forespørsler etter risiko — grønn (auto-godkjenn-klar), gul (raskt blikk), rød (trenger nøye gjennomgang). Triage-drevet kø.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/godkjenninger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Bookinger</a>
+              <a href="#">Spillere</a>
+              <a href="#" class="active">Godkjenninger</a>
+              <a href="#">Økonomi</a>
+            </nav>
+          </aside>
+          <main class="mc-main">
+            <div class="mc-topbar">
+              <div>
+                <h1 class="mc-page-title">Godkjenninger — AI Triage <span class="wf-annot">①</span></h1>
+                <div class="mc-page-sub">AI rangerer risiko basert på historikk, beløp og kontekst</div>
+              </div>
+              <div class="mc-topbar-meta"><span>Modell: claude-sonnet · 94% treff siste 30d</span></div>
+            </div>
+
+            <div class="risk-groups">
+              <div class="risk-group">
+                <div class="risk-group-header">
+                  <div>
+                    <span class="risk-badge low">Lav risiko</span>
+                    <span class="risk-group-sub" style="margin-left:10px;">3 forespørsler — AI anbefaler auto-godkjenning</span>
+                  </div>
+                  <button class="risk-group-action">Godkjenn alle 3 →</button>
+                </div>
+                <div class="risk-row">
+                  <div>
+                    <div class="risk-score">12</div>
+                    <div class="risk-score-label">score</div>
+                  </div>
+                  <div>
+                    <div class="risk-content-title">Sofie V. — Performance</div>
+                    <div class="risk-content-meta">Tir 22/4 15:00 · Abo-kunde · 12 økter historikk</div>
+                  </div>
+                  <div class="risk-reason">Standard booking, ingen konflikter, kunde i god standing.</div>
+                  <div class="inbox-actions">
+                    <button class="btn-reject">Avslå</button>
+                    <button class="btn-approve">Godkjenn</button>
+                  </div>
+                </div>
+                <div class="risk-row">
+                  <div>
+                    <div class="risk-score">18</div>
+                    <div class="risk-score-label">score</div>
+                  </div>
+                  <div>
+                    <div class="risk-content-title">Maria L. — Performance Pro</div>
+                    <div class="risk-content-meta">Ons 23/4 17:00 · Abo-kunde</div>
+                  </div>
+                  <div class="risk-reason">Innenfor abo-kvote, regelmessig bookingmønster.</div>
+                  <div class="inbox-actions">
+                    <button class="btn-reject">Avslå</button>
+                    <button class="btn-approve">Godkjenn</button>
+                  </div>
+                </div>
+                <div class="risk-row">
+                  <div>
+                    <div class="risk-score">21</div>
+                    <div class="risk-score-label">score</div>
+                  </div>
+                  <div>
+                    <div class="risk-content-title">Jonas R. — Flex 90</div>
+                    <div class="risk-content-meta">Lør 26/4 09:30 · Førstegangskunde</div>
+                  </div>
+                  <div class="risk-reason">Betaling bekreftet, ingen blokkerte tider.</div>
+                  <div class="inbox-actions">
+                    <button class="btn-reject">Avslå</button>
+                    <button class="btn-approve">Godkjenn</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="risk-group">
+                <div class="risk-group-header">
+                  <div>
+                    <span class="risk-badge med">Middels risiko</span>
+                    <span class="risk-group-sub" style="margin-left:10px;">2 forespørsler — raskt blikk anbefalt</span>
+                  </div>
+                  <button class="risk-group-action">Åpne alle →</button>
+                </div>
+                <div class="risk-row">
+                  <div>
+                    <div class="risk-score">54</div>
+                    <div class="risk-score-label">score</div>
+                  </div>
+                  <div>
+                    <div class="risk-content-title">Gruppe Junior 14+ — Aktivitet <span class="wf-annot">②</span></div>
+                    <div class="risk-content-meta">Søn 27/4 10:00 · 12 deltakere</div>
+                  </div>
+                  <div class="risk-reason">Høyt volum, delt ansvar. Sjekk at instruktørforhold er dekket.</div>
+                  <div class="inbox-actions">
+                    <button class="btn-reject">Avslå</button>
+                    <button class="btn-approve">Godkjenn</button>
+                  </div>
+                </div>
+                <div class="risk-row">
+                  <div>
+                    <div class="risk-score">62</div>
+                    <div class="risk-score-label">score</div>
+                  </div>
+                  <div>
+                    <div class="risk-content-title">WANG — Simulator 2 heldag</div>
+                    <div class="risk-content-meta">Tor 24/4 · 6 timer blokk</div>
+                  </div>
+                  <div class="risk-reason">Lang eksklusiv blokkering — vurder tapt inntektspotensial.</div>
+                  <div class="inbox-actions">
+                    <button class="btn-reject">Avslå</button>
+                    <button class="btn-approve">Godkjenn</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="risk-group">
+                <div class="risk-group-header">
+                  <div>
+                    <span class="risk-badge high">Høy risiko</span>
+                    <span class="risk-group-sub" style="margin-left:10px;">2 forespørsler — krever gjennomgang</span>
+                  </div>
+                  <button class="risk-group-action">Se detaljer →</button>
+                </div>
+                <div class="risk-row">
+                  <div>
+                    <div class="risk-score">82</div>
+                    <div class="risk-score-label">score</div>
+                  </div>
+                  <div>
+                    <div class="risk-content-title">Erik H. — Refusjon 2 400 kr <span class="wf-annot">③</span></div>
+                    <div class="risk-content-meta">Sykdomsavbestilling · 3. refusjon siste 6 mnd</div>
+                  </div>
+                  <div class="risk-reason">Mønster av gjentatte refusjoner — sjekk legitimitet.</div>
+                  <div class="inbox-actions">
+                    <button class="btn-reject">Avslå</button>
+                    <button class="btn-approve">Godkjenn</button>
+                  </div>
+                </div>
+                <div class="risk-row">
+                  <div>
+                    <div class="risk-score">88</div>
+                    <div class="risk-score-label">score</div>
+                  </div>
+                  <div>
+                    <div class="risk-content-title">Lars T. — Refusjon 1 295 kr</div>
+                    <div class="risk-content-meta">First Tee · kurs startet for 9 dager siden</div>
+                  </div>
+                  <div class="risk-reason">Utenfor refusjonsvindu. Manuell vurdering nødvendig.</div>
+                  <div class="inbox-actions">
+                    <button class="btn-reject">Avslå</button>
+                    <button class="btn-approve">Godkjenn</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Merknader — Risk Score</h3>
+      <ol>
+        <li><span class="wf-annot">①</span> AI-modellen trenes på historiske godkjenninger og rangerer nye mot samme mønstre.</li>
+        <li><span class="wf-annot">②</span> Risikoscore kombinerer beløp, historikk, timing og kundestatus.</li>
+        <li><span class="wf-annot">③</span> Høy-risiko-flagg løfter anomalier som gjentatte refusjoner til toppen.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Summary &amp; Recommendation</h2>
+    <div class="summary-wrap">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Alternativ</th>
+            <th>Beskrivelse</th>
+            <th>Hastighet</th>
+            <th>Kontekst</th>
+            <th>Skala</th>
+            <th>Totalt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Inbox</strong></td>
+            <td>Ventende som prioritert e-post-liste, handlinger per rad</td>
+            <td><span class="summary-stars">★★★★★</span></td>
+            <td><span class="summary-stars">★★★★☆</span></td>
+            <td><span class="summary-stars">★★★★☆</span></td>
+            <td><span class="summary-stars">★★★★★</span></td>
+          </tr>
+          <tr>
+            <td><strong>2. Kanban</strong></td>
+            <td>Tre kolonner — ventende, godkjent, avslått</td>
+            <td><span class="summary-stars">★★★☆☆</span></td>
+            <td><span class="summary-stars">★★★☆☆</span></td>
+            <td><span class="summary-stars">★★★☆☆</span></td>
+            <td><span class="summary-stars">★★★☆☆</span></td>
+          </tr>
+          <tr>
+            <td><strong>3. Detail First</strong></td>
+            <td>Én om gangen, full kontekst + neste-knapp</td>
+            <td><span class="summary-stars">★★★☆☆</span></td>
+            <td><span class="summary-stars">★★★★★</span></td>
+            <td><span class="summary-stars">★★☆☆☆</span></td>
+            <td><span class="summary-stars">★★★★☆</span></td>
+          </tr>
+          <tr>
+            <td><strong>4. Bulk Actions</strong></td>
+            <td>Velg flere, masseaksjon</td>
+            <td><span class="summary-stars">★★★★★</span></td>
+            <td><span class="summary-stars">★★☆☆☆</span></td>
+            <td><span class="summary-stars">★★★★★</span></td>
+            <td><span class="summary-stars">★★★★☆</span></td>
+          </tr>
+          <tr>
+            <td><strong>5. Risk Score</strong></td>
+            <td>AI-triage: lav / middels / høy risiko</td>
+            <td><span class="summary-stars">★★★★☆</span></td>
+            <td><span class="summary-stars">★★★★★</span></td>
+            <td><span class="summary-stars">★★★★★</span></td>
+            <td><span class="summary-stars">★★★★☆</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="summary-rationale">
+        <strong>Anbefaling: Option 1 — Inbox</strong>
+        Inbox-mønsteret matcher eksisterende Mission Control (tabell + sidebar), har lav læringskurve og skalerer fint til dagens volum (7–15 ventende per dag). Legg til AI-drevet sorterings-pill (lånt fra Option 5) og valgbare rader (lånt fra Option 4) som progressiv utvidelse når volumet øker. Detail First (Option 3) anbefales som sekundær visning fra Inbox — ikke som standardmodus.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

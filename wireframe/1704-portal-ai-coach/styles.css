@@ -1,0 +1,442 @@
+/* === Wireframe Content CSS (B&W only) — AI Coach === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ PORTAL SHELL ============ */
+.wf-portal-shell {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  min-height: 720px;
+  background: #f5f5f5;
+}
+
+.wf-sidebar {
+  background: #000;
+  padding: 20px 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border-right: 1px solid #333;
+}
+.wf-sidebar-logo {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: #fff; color: #000;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 13px; letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.wf-sidebar-nav {
+  display: flex; flex-direction: column; gap: 4px;
+  width: 100%; padding: 0 8px;
+}
+.wf-side-item {
+  color: #999;
+  font-size: 10px;
+  padding: 10px 4px;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.wf-side-item:hover { background: #333; color: #fff; }
+.wf-side-item.wf-active { background: #fff; color: #000; font-weight: 700; }
+.wf-sidebar-user {
+  margin-top: auto;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: #333; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  border: 1px solid #666;
+}
+
+/* ============ MAIN ============ */
+.wf-main {
+  padding: 24px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.wf-page-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-bottom: 12px; border-bottom: 1px solid #eee;
+}
+.wf-crumbs { font-size: 11px; color: #999; letter-spacing: 0.04em; margin-bottom: 6px; }
+.wf-page-title { font-size: 24px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.01em; }
+.wf-page-sub { font-size: 12px; color: #666; margin-top: 4px; }
+
+/* ============ BUTTONS ============ */
+.wf-btn {
+  padding: 9px 18px;
+  border: 1px solid #000;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-secondary { background: #fff; color: #333; border-color: #ccc; }
+.wf-btn-secondary:hover { background: #f5f5f5; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #666; }
+.wf-btn-ghost:hover { background: #eee; color: #000; }
+.wf-btn-small { padding: 6px 12px; font-size: 11px; }
+.wf-btn-block { width: 100%; }
+.wf-btn-wide { padding: 11px 28px; }
+.wf-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ============ GENERIC AI BOX ============ */
+.wf-ai-box {
+  padding: 14px 16px;
+  background: #f5f5f5;
+  border: 1px dashed #999;
+  border-radius: 10px;
+}
+.wf-ai-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+.wf-ai-label::before {
+  content: "✦";
+  font-size: 11px;
+  color: #333;
+}
+.wf-ai-box p { font-size: 13px; color: #333; line-height: 1.5; margin: 0; }
+
+/* ============ OPTION 1 — CHAT CLASSIC ============ */
+.wf-chat-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+  min-height: 600px;
+}
+.wf-chat-panel {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+}
+.wf-chat-history {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+}
+.wf-msg { display: flex; gap: 12px; align-items: flex-start; }
+.wf-msg-user { justify-content: flex-end; }
+.wf-msg-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #000; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+  flex-shrink: 0;
+}
+.wf-msg-avatar.wf-ai-avatar {
+  background: #fff; color: #000; border: 1px dashed #999;
+}
+.wf-bubble {
+  max-width: 480px;
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  border-radius: 14px 14px 14px 4px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+}
+.wf-bubble p { margin: 0 0 6px; }
+.wf-bubble p:last-child { margin-bottom: 0; }
+.wf-bubble-user {
+  background: #000; color: #fff; border-color: #000;
+  border-radius: 14px 14px 4px 14px;
+  font-weight: 500;
+}
+.wf-bubble-ai { border-style: dashed; border-color: #999; background: #fff; }
+
+.wf-chat-composer {
+  padding: 14px 16px;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.wf-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 13px;
+  color: #333;
+}
+.wf-icon-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid #ccc; background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; cursor: pointer; color: #666;
+}
+
+.wf-context-panel {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.wf-ctx-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.wf-ctx-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.wf-ctx-row { display: flex; justify-content: space-between; font-size: 12px; color: #666; padding: 4px 0; }
+.wf-ctx-row strong { color: #000; font-weight: 700; }
+.wf-ctx-divider { height: 1px; background: #eee; margin: 6px 0; }
+
+/* ============ OPTION 2 — QUICK INSIGHT ============ */
+.wf-qi-layout { display: flex; flex-direction: column; gap: 20px; }
+.wf-qi-prompts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.wf-qi-prompt {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.wf-qi-prompt:hover { border-color: #999; background: #fafafa; }
+.wf-qi-prompt-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: #333;
+  margin-bottom: 4px;
+}
+.wf-qi-prompt-title { font-size: 13px; font-weight: 700; color: #000; line-height: 1.3; }
+.wf-qi-prompt-desc { font-size: 11px; color: #999; line-height: 1.4; }
+
+.wf-qi-chat {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 14px;
+  min-height: 340px;
+}
+.wf-qi-composer {
+  display: flex; gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+/* ============ OPTION 3 — VOICE FIRST ============ */
+.wf-voice-stage {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  min-height: 600px;
+}
+.wf-voice-mic {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: #000;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+.wf-voice-mic::before,
+.wf-voice-mic::after {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+.wf-voice-mic::after { inset: -36px; border-color: #eee; }
+.wf-voice-mic-icon {
+  font-size: 48px; color: #fff; font-weight: 700;
+}
+.wf-voice-status {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 700;
+}
+.wf-voice-transcript {
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px 24px;
+  max-width: 560px;
+  width: 100%;
+  font-size: 15px;
+  color: #333;
+  line-height: 1.6;
+  text-align: center;
+  font-style: italic;
+}
+.wf-voice-transcript strong { color: #000; font-style: normal; }
+.wf-voice-response {
+  background: #fff;
+  border: 1px dashed #999;
+  border-radius: 12px;
+  padding: 18px 22px;
+  max-width: 560px;
+  width: 100%;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.6;
+}
+.wf-voice-footer {
+  display: flex; gap: 10px;
+}
+
+/* ============ OPTION 4 — ACTION DRIVEN ============ */
+.wf-ad-layout { display: flex; flex-direction: column; gap: 16px; }
+.wf-ad-question {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #333;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.wf-ad-question strong { color: #000; font-weight: 600; }
+.wf-ad-answer {
+  background: #fff;
+  border: 1px dashed #999;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.wf-ad-answer-header { display: flex; align-items: center; gap: 10px; }
+.wf-ad-answer h3 { margin: 0; font-size: 16px; font-weight: 800; color: #000; }
+.wf-ad-answer-body {
+  font-size: 13px; color: #333; line-height: 1.6;
+}
+.wf-ad-bullets { margin: 0; padding-left: 20px; font-size: 13px; color: #333; line-height: 1.7; }
+.wf-ad-bullets li { margin-bottom: 4px; }
+.wf-ad-actions {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  padding-top: 12px; border-top: 1px solid #eee;
+}
+.wf-ad-action {
+  padding: 10px 16px;
+  border: 1px solid #000;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+}
+.wf-ad-action-cta { background: #000; color: #fff; }
+.wf-ad-composer {
+  display: flex; gap: 10px; align-items: center;
+  background: #fff; border: 1px solid #eee; border-radius: 999px;
+  padding: 6px 6px 6px 16px;
+}
+.wf-ad-composer input {
+  flex: 1; border: none; background: transparent;
+  font-size: 13px; color: #333; outline: none;
+}
+
+/* ============ OPTION 5 — DASHBOARD MODE ============ */
+.wf-db-hero {
+  background: #fff;
+  border: 1px dashed #999;
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+.wf-db-hero-text h2 {
+  font-size: 18px; font-weight: 800; color: #000;
+  margin: 0 0 6px; letter-spacing: -0.01em;
+}
+.wf-db-hero-text p {
+  font-size: 13px; color: #333; line-height: 1.5; margin: 0;
+}
+.wf-db-hero-actions { display: flex; gap: 8px; }
+
+.wf-db-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.wf-db-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 8px;
+  min-height: 150px;
+}
+.wf-db-card-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 700;
+}
+.wf-db-card-title { font-size: 14px; font-weight: 700; color: #000; line-height: 1.3; }
+.wf-db-card-body { font-size: 12px; color: #666; line-height: 1.5; flex: 1; }
+.wf-db-card-cta {
+  font-size: 11px; color: #000;
+  font-weight: 600; cursor: pointer;
+  padding-top: 6px; border-top: 1px solid #eee;
+}
+
+.wf-db-ask {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex; gap: 10px; align-items: center;
+}
+.wf-db-ask .wf-input { flex: 1; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

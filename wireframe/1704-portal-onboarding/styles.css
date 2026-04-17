@@ -1,0 +1,602 @@
+/* === Wireframe Content CSS (B&W only) === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ PORTAL SHELL ============ */
+.wf-portal-shell {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  min-height: 720px;
+  background: #f5f5f5;
+}
+
+.wf-sidebar {
+  background: #000;
+  padding: 20px 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border-right: 1px solid #333;
+}
+.wf-sidebar-logo {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: #fff; color: #000;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 13px; letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.wf-sidebar-nav {
+  display: flex; flex-direction: column; gap: 4px;
+  width: 100%; padding: 0 8px;
+}
+.wf-side-item {
+  color: #999;
+  font-size: 10px;
+  padding: 10px 4px;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.wf-side-item:hover { background: #333; color: #fff; }
+.wf-side-item.wf-active { background: #fff; color: #000; font-weight: 700; }
+.wf-sidebar-user {
+  margin-top: auto;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: #333; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+  border: 1px solid #666;
+}
+
+/* ============ MAIN ============ */
+.wf-main {
+  padding: 24px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.wf-wizard-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-bottom: 12px; border-bottom: 1px solid #eee;
+}
+.wf-crumbs { font-size: 11px; color: #999; letter-spacing: 0.04em; margin-bottom: 6px; }
+.wf-wizard-title { font-size: 24px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.01em; }
+
+/* ============ BUTTONS ============ */
+.wf-btn {
+  padding: 9px 18px;
+  border: 1px solid #000;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-secondary { background: #fff; color: #333; border-color: #ccc; }
+.wf-btn-secondary:hover { background: #f5f5f5; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #666; }
+.wf-btn-ghost:hover { background: #eee; color: #000; }
+.wf-btn-small { padding: 6px 12px; font-size: 11px; }
+.wf-btn-block { width: 100%; }
+.wf-btn-wide { padding: 11px 28px; }
+.wf-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ============ INPUTS ============ */
+.wf-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font-size: 13px;
+  font-family: inherit;
+}
+.wf-input:focus { outline: none; border-color: #000; }
+.wf-field-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ============ PROGRESS (Opt 1) ============ */
+.wf-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 16px 0 8px;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-progress-dot {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #999;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+.wf-progress-dot.wf-done { background: #000; color: #fff; border-color: #000; }
+.wf-progress-dot.wf-active { background: #fff; color: #000; border-color: #000; border-width: 2px; }
+.wf-progress-bar { flex: 1; height: 2px; background: #eee; }
+.wf-progress-bar.wf-done { background: #000; }
+.wf-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  max-width: 720px;
+  margin: 0 auto 8px;
+  width: 100%;
+  font-size: 10px;
+  color: #999;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.wf-progress-labels span { flex: 1; text-align: center; }
+.wf-progress-labels .wf-active { color: #000; }
+
+/* ============ STEP CARD ============ */
+.wf-step-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 32px;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-step-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.wf-step-title { font-size: 26px; font-weight: 800; color: #000; margin: 0 0 8px; letter-spacing: -0.01em; }
+.wf-step-desc { font-size: 14px; color: #666; line-height: 1.6; margin: 0 0 24px; }
+
+/* ============ HCP INPUT (Opt 1) ============ */
+.wf-hcp-field { padding: 8px 0 16px; }
+.wf-hcp-input-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.wf-hcp-input {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  padding: 14px 10px;
+  letter-spacing: -0.01em;
+}
+.wf-hcp-range { position: relative; padding: 12px 0; }
+.wf-range-track {
+  position: relative;
+  height: 4px;
+  background: #eee;
+  border-radius: 999px;
+}
+.wf-range-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: #000;
+  border-radius: 999px;
+}
+.wf-range-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px; height: 18px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 50%;
+}
+.wf-range-marks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 10px;
+  color: #999;
+  font-weight: 600;
+}
+.wf-hcp-chips {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 12px;
+}
+
+/* ============ CHIPS (shared) ============ */
+.wf-chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.wf-chip {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.wf-chip:hover { border-color: #666; }
+.wf-chip-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+
+/* ============ AI BOX ============ */
+.wf-ai-box {
+  margin: 20px 0 0;
+  padding: 14px 16px;
+  background: #f5f5f5;
+  border: 1px dashed #999;
+  border-radius: 10px;
+}
+.wf-ai-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.wf-ai-box p { font-size: 13px; color: #333; line-height: 1.5; margin: 0; }
+.wf-ai-chat { margin-top: 12px; }
+.wf-ai-goal { margin: 20px auto 0; max-width: 720px; width: 100%; }
+.wf-ai-game { margin-top: 20px; }
+
+/* ============ STEP NAV (Opt 1) ============ */
+.wf-step-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-step-count { font-size: 12px; color: #666; font-weight: 500; }
+
+/* ============ OPTION 2 — CHAT ============ */
+.wf-main-chat { gap: 16px; }
+.wf-chat-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-bottom: 12px; border-bottom: 1px solid #eee;
+}
+.wf-chat-progress {
+  font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #666;
+  padding: 6px 12px; border: 1px solid #ccc; border-radius: 999px;
+  font-weight: 600;
+}
+.wf-chat-stage {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 20px;
+  min-height: 520px;
+}
+.wf-chat-feed {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.wf-chat-msg { display: flex; gap: 12px; align-items: flex-start; }
+.wf-chat-msg-user { justify-content: flex-end; }
+.wf-chat-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #000; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+  flex-shrink: 0;
+}
+.wf-chat-bubble {
+  max-width: 460px;
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  border-radius: 14px 14px 14px 4px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+}
+.wf-chat-bubble p { margin: 0; }
+.wf-chat-bubble-user {
+  background: #000; color: #fff; border-color: #000;
+  border-radius: 14px 14px 4px 14px; font-weight: 500;
+}
+.wf-chat-input-row {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  padding: 6px 40px;
+}
+.wf-chat-chip {
+  padding: 7px 14px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  background: #fff;
+  color: #333;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.wf-chat-chip:hover { border-color: #666; }
+.wf-chat-chip-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-chat-preview {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-self: flex-start;
+}
+.wf-preview-title {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 700;
+}
+.wf-preview-row {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: #666;
+}
+.wf-preview-row strong { color: #000; font-weight: 700; }
+.wf-preview-divider { height: 1px; background: #eee; margin: 4px 0; }
+.wf-preview-note { font-size: 11px; color: #999; margin: 6px 0 0; text-align: center; }
+
+/* ============ OPTION 3 — GOAL FIRST ============ */
+.wf-main-goal { padding: 32px 40px; gap: 24px; }
+.wf-goal-header { text-align: center; max-width: 680px; margin: 0 auto; }
+.wf-goal-hero-title {
+  font-size: 34px; font-weight: 800; color: #000;
+  letter-spacing: -0.02em; margin: 8px 0;
+}
+.wf-goal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-goal-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 24px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.wf-goal-card:hover { border-color: #999; }
+.wf-goal-card.wf-goal-selected { border-color: #000; border-width: 2px; padding: 23px; }
+.wf-goal-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #333;
+  margin-bottom: 12px;
+}
+.wf-goal-title { font-size: 17px; font-weight: 700; color: #000; margin-bottom: 6px; letter-spacing: -0.01em; }
+.wf-goal-desc { font-size: 13px; color: #666; line-height: 1.5; margin-bottom: 10px; }
+.wf-goal-meta { font-size: 11px; color: #999; font-weight: 600; letter-spacing: 0.04em; }
+.wf-goal-badge {
+  position: absolute;
+  top: 16px; right: 16px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  background: #000;
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.wf-step-nav-goal {
+  max-width: 720px;
+  padding: 16px 4px;
+  background: transparent;
+  border: none;
+}
+
+/* ============ OPTION 4 — SINGLE SCROLL ============ */
+.wf-main-scroll { gap: 16px; padding: 24px 32px 80px; }
+.wf-scroll-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+.wf-scroll-sub { font-size: 13px; color: #666; margin: 6px 0 14px; }
+.wf-scroll-progress-bar {
+  position: relative;
+  height: 8px;
+  background: #eee;
+  border-radius: 999px;
+  margin-top: 8px;
+}
+.wf-scroll-progress-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: #000;
+  border-radius: 999px;
+}
+.wf-scroll-progress-text {
+  position: absolute;
+  right: 0; top: 14px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 600;
+}
+.wf-scroll-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-scroll-section {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+}
+.wf-scroll-section.wf-scroll-done { opacity: 0.55; }
+.wf-scroll-section.wf-scroll-active { border-color: #000; border-width: 2px; padding: 19px; }
+.wf-scroll-num {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #999;
+  font-weight: 700;
+}
+.wf-scroll-q { font-size: 14px; font-weight: 700; color: #000; margin-bottom: 10px; }
+.wf-scroll-a { font-size: 13px; color: #666; }
+.wf-scroll-input { max-width: 360px; }
+.wf-scroll-hint { font-size: 11px; color: #999; margin: 8px 0 0; }
+.wf-pyramid-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.wf-scroll-sticky-cta {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  max-width: 680px;
+  margin: 8px auto 0;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+}
+.wf-scroll-summary { font-size: 12px; color: #666; font-weight: 500; }
+
+/* ============ OPTION 5 — GAMIFIED ============ */
+.wf-main-game { gap: 16px; padding: 24px 40px 40px; }
+.wf-game-header { padding-bottom: 16px; border-bottom: 1px solid #eee; }
+.wf-game-xp-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.wf-game-level {
+  padding: 6px 12px;
+  background: #000;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.wf-game-xp-bar {
+  position: relative;
+  height: 14px;
+  background: #eee;
+  border-radius: 999px;
+  overflow: visible;
+}
+.wf-game-xp-fill {
+  height: 100%;
+  background: #000;
+  border-radius: 999px;
+}
+.wf-game-xp-text {
+  position: absolute;
+  right: 0; top: 18px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #666;
+  font-weight: 600;
+}
+.wf-game-streak {
+  padding: 6px 12px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  font-size: 11px;
+  color: #333;
+  font-weight: 600;
+}
+.wf-game-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-game-step {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+}
+.wf-game-step.wf-game-done { opacity: 0.6; background: #f5f5f5; }
+.wf-game-step.wf-game-active { border-color: #000; border-width: 2px; padding: 15px; }
+.wf-game-step.wf-game-locked { opacity: 0.4; background: #f5f5f5; }
+.wf-game-step-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+.wf-game-step.wf-game-locked .wf-game-step-icon { background: #ccc; color: #666; }
+.wf-game-step-title { font-size: 14px; font-weight: 700; color: #000; margin-bottom: 4px; }
+.wf-game-step-desc { font-size: 12px; color: #666; line-height: 1.5; }
+.wf-game-step-xp {
+  font-size: 13px;
+  font-weight: 800;
+  color: #000;
+  letter-spacing: -0.01em;
+}
+.wf-game-input { max-width: 360px; margin: 10px 0 10px; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

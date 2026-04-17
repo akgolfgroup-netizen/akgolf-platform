@@ -1,0 +1,134 @@
+/* ===== Option 2: Age Journey — Clean + Polished =====
+   Editorial scroll-story — each age group as a full-width strip with big numerals. */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* Browser chrome — macOS dots */
+#frame-opt2.clean .browser-dots span:nth-child(1),
+#frame-opt2.polished .browser-dots span:nth-child(1) { background: #ff5f57; }
+#frame-opt2.clean .browser-dots span:nth-child(2),
+#frame-opt2.polished .browser-dots span:nth-child(2) { background: #febc2e; }
+#frame-opt2.clean .browser-dots span:nth-child(3),
+#frame-opt2.polished .browser-dots span:nth-child(3) { background: #28c840; }
+
+/* =========================================================
+   CLEAN — alternating cream/white strips, big numerals
+   ========================================================= */
+#frame-opt2.clean .browser-content { background: #fdf9f0; color: #324D45; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+#frame-opt2.clean .wf-nav { background: #fdf9f0; border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt2.clean .wf-logo { color: #0A1F18; font-weight: 800; letter-spacing: -0.01em; }
+#frame-opt2.clean .wf-nav-links a { color: #324D45; }
+#frame-opt2.clean .wf-nav-links a:hover { color: #005840; }
+
+#frame-opt2.clean .wf-btn-cta,
+#frame-opt2.clean .wf-btn-cta-large { background: #D1F843; color: #0A1F18; border: none; font-weight: 600; }
+#frame-opt2.clean .wf-btn-secondary { background: transparent; color: #0A1F18; border: 1px solid rgba(0,88,64,0.18); }
+#frame-opt2.clean .wf-btn-ghost { background: transparent; color: #5A6E66; border: none; }
+
+#frame-opt2.clean .wf-hero { background: #fdf9f0; }
+#frame-opt2.clean .wf-hero-label { color: #005840; background: rgba(0,88,64,0.06); border-color: rgba(0,88,64,0.15); }
+#frame-opt2.clean .wf-headline { color: #0A1F18; }
+#frame-opt2.clean .wf-subhead, #frame-opt2.clean .wf-subhead-large { color: #5A6E66; }
+
+/* Alternating strips */
+#frame-opt2.clean .wf-age-journey-row:nth-child(odd) { background: #ffffff; border-bottom-color: rgba(0,88,64,0.06); }
+#frame-opt2.clean .wf-age-journey-row:nth-child(even) { background: #fdf9f0; border-bottom-color: rgba(0,88,64,0.06); }
+#frame-opt2.clean .wf-age-journey-label { color: #005840; font-weight: 700; letter-spacing: 0.16em; }
+#frame-opt2.clean .wf-age-journey-num { color: #0A1F18; font-weight: 900; }
+#frame-opt2.clean .wf-age-journey-title { color: #0A1F18; }
+#frame-opt2.clean .wf-age-journey-body { color: #5A6E66; }
+#frame-opt2.clean .wf-age-focus-list li { color: #5A6E66; border-bottom-color: rgba(0,88,64,0.06); }
+#frame-opt2.clean .wf-age-journey-visual { background: #F5F0E5; color: #7A8C85; border: 1px solid rgba(0,88,64,0.08); }
+
+#frame-opt2.clean .wf-pricing { background: #ffffff; }
+#frame-opt2.clean .wf-h2 { color: #0A1F18; }
+#frame-opt2.clean .wf-tier { background: #ffffff; border: 1px solid rgba(0,88,64,0.08); color: #324D45; }
+#frame-opt2.clean .wf-tier-name { color: #5A6E66; }
+#frame-opt2.clean .wf-tier-price { color: #005840; font-weight: 800; }
+#frame-opt2.clean .wf-tier-price-unit { color: #A5B2AD; }
+#frame-opt2.clean .wf-tier ul li { color: #5A6E66; border-bottom: 1px solid rgba(0,88,64,0.06); }
+#frame-opt2.clean .wf-tier-featured { background: #E6F3F1; border: 2px solid #005840; }
+#frame-opt2.clean .wf-tier-badge { background: #D1F843; color: #0A1F18; font-weight: 700; letter-spacing: 0.06em; }
+
+#frame-opt2.clean .wf-profiles { background: #fdf9f0; }
+#frame-opt2.clean .wf-profile-img { background: #F5F0E5; border-color: rgba(0,88,64,0.1); color: #7A8C85; }
+#frame-opt2.clean .wf-profile h3 { color: #0A1F18; }
+
+#frame-opt2.clean .wf-section-dark,
+#frame-opt2.clean .wf-cta-band,
+#frame-opt2.clean .wf-footer-dark { background: #0A1F18; color: #ffffff; }
+#frame-opt2.clean .wf-h2-dark { color: #ffffff; }
+#frame-opt2.clean .wf-subhead-dark { color: rgba(255,255,255,0.72); }
+#frame-opt2.clean .wf-footer-dark strong { color: #ffffff; }
+#frame-opt2.clean .wf-footer-dark p { color: rgba(255,255,255,0.6); }
+
+/* =========================================================
+   POLISHED — Fraunces huge numerals, elegant scroll rhythm
+   ========================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes opt2SlideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes opt2SlideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  #frame-opt2.polished .wf-age-journey-row { animation: opt2SlideIn 0.8s cubic-bezier(0.16,1,0.3,1) both; }
+  #frame-opt2.polished .wf-age-journey-row:nth-child(even) { animation-name: opt2SlideInRight; }
+}
+
+#frame-opt2.polished .browser-content { background: #fdf9f0; color: #324D45; font-family: 'Inter', system-ui, sans-serif; }
+#frame-opt2.polished .wf-nav { background: rgba(253,249,240,0.9); backdrop-filter: blur(18px) saturate(1.4); border-bottom: 1px solid rgba(0,88,64,0.06); }
+#frame-opt2.polished .wf-logo { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 800; letter-spacing: -0.02em; }
+#frame-opt2.polished .wf-nav-links a { color: #324D45; transition: color 200ms ease-out; }
+#frame-opt2.polished .wf-nav-links a:hover { color: #005840; }
+
+#frame-opt2.polished .wf-btn-cta,
+#frame-opt2.polished .wf-btn-cta-large { background: #D1F843; color: #0A1F18; border: none; font-weight: 600; box-shadow: 0 4px 16px rgba(209,248,67,0.45), 0 1px 2px rgba(0,88,64,0.08); transition: transform 200ms ease-out, box-shadow 200ms ease-out; }
+#frame-opt2.polished .wf-btn-cta:hover,
+#frame-opt2.polished .wf-btn-cta-large:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(209,248,67,0.55); }
+#frame-opt2.polished .wf-btn-secondary { background: #ffffff; color: #0A1F18; border: 1px solid rgba(0,88,64,0.14); }
+#frame-opt2.polished .wf-btn-secondary:hover { background: #fdf9f0; }
+
+#frame-opt2.polished .wf-hero { background: linear-gradient(180deg, #fdf9f0 0%, #FFFCF5 100%); }
+#frame-opt2.polished .wf-hero-label { background: rgba(0,88,64,0.08); color: #005840; border: 1px solid rgba(0,88,64,0.15); }
+#frame-opt2.polished .wf-headline { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.03em; }
+#frame-opt2.polished .wf-subhead, #frame-opt2.polished .wf-subhead-large { color: #5A6E66; }
+
+/* Journey rows — alternating with editorial craft */
+#frame-opt2.polished .wf-age-journey-row:nth-child(odd) { background: #ffffff; border-bottom-color: rgba(0,88,64,0.06); }
+#frame-opt2.polished .wf-age-journey-row:nth-child(even) { background: linear-gradient(180deg, #fdf9f0 0%, #FFFCF5 100%); border-bottom-color: rgba(0,88,64,0.06); }
+#frame-opt2.polished .wf-age-journey-label { color: #005840; font-weight: 700; letter-spacing: 0.18em; }
+#frame-opt2.polished .wf-age-journey-num { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 900; letter-spacing: -0.05em; font-variation-settings: "opsz" 144; background: linear-gradient(180deg, #0A1F18 0%, #005840 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+#frame-opt2.polished .wf-age-journey-title { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.02em; font-variation-settings: "opsz" 144; }
+#frame-opt2.polished .wf-age-journey-body { color: #5A6E66; line-height: 1.75; }
+#frame-opt2.polished .wf-age-focus-list li { color: #5A6E66; border-bottom-color: rgba(0,88,64,0.06); }
+#frame-opt2.polished .wf-age-journey-visual { background: linear-gradient(135deg, #F5F0E5 0%, #ECE5D5 100%); color: #7A8C85; border: 1px solid rgba(0,88,64,0.06); box-shadow: 0 4px 16px rgba(107,91,79,0.08), 0 16px 48px rgba(107,91,79,0.1); }
+
+#frame-opt2.polished .wf-pricing { background: #ffffff; }
+#frame-opt2.polished .wf-h2 { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; letter-spacing: -0.02em; }
+#frame-opt2.polished .wf-tier { background: #ffffff; border: 1px solid rgba(0,88,64,0.06); color: #324D45; box-shadow: 0 1px 3px rgba(107,91,79,0.05), 0 4px 16px rgba(107,91,79,0.07); transition: transform 300ms cubic-bezier(0.4,0,0.2,1), box-shadow 300ms cubic-bezier(0.4,0,0.2,1); }
+#frame-opt2.polished .wf-tier:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(107,91,79,0.08), 0 12px 32px rgba(107,91,79,0.12); }
+#frame-opt2.polished .wf-tier-name { font-family: 'Fraunces', Georgia, serif; color: #5A6E66; font-weight: 600; }
+#frame-opt2.polished .wf-tier-price { font-family: 'Fraunces', Georgia, serif; color: #005840; font-weight: 800; letter-spacing: -0.02em; }
+#frame-opt2.polished .wf-tier-price-unit { color: #A5B2AD; }
+#frame-opt2.polished .wf-tier-featured { background: linear-gradient(180deg, #FFFFFF 0%, #E6F3F1 100%); border: 1px solid rgba(209,248,67,0.6); box-shadow: 0 0 0 3px rgba(209,248,67,0.18), 0 8px 32px rgba(0,88,64,0.12); }
+#frame-opt2.polished .wf-tier-badge { background: #D1F843; color: #0A1F18; font-weight: 700; letter-spacing: 0.06em; box-shadow: 0 2px 8px rgba(209,248,67,0.4); }
+
+#frame-opt2.polished .wf-profiles { background: linear-gradient(180deg, #fdf9f0 0%, #FFFCF5 100%); }
+#frame-opt2.polished .wf-profile-img { background: linear-gradient(135deg, #F5F0E5 0%, #ECE5D5 100%); border: 1px solid rgba(0,88,64,0.08); color: #7A8C85; box-shadow: 0 4px 12px rgba(107,91,79,0.08); }
+#frame-opt2.polished .wf-profile h3 { font-family: 'Fraunces', Georgia, serif; color: #0A1F18; font-weight: 700; }
+
+#frame-opt2.polished .wf-section-dark,
+#frame-opt2.polished .wf-cta-band { background: linear-gradient(135deg, #0A1F18 0%, #1A3529 100%); color: #ffffff; position: relative; overflow: hidden; }
+#frame-opt2.polished .wf-section-dark::before,
+#frame-opt2.polished .wf-cta-band::before { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px; background: linear-gradient(90deg, transparent, rgba(209,248,67,0.5), transparent); pointer-events: none; }
+#frame-opt2.polished .wf-footer-dark { background: #0A1F18; color: rgba(255,255,255,0.7); }
+#frame-opt2.polished .wf-h2-dark { font-family: 'Fraunces', Georgia, serif; color: #ffffff; font-weight: 700; letter-spacing: -0.02em; }
+#frame-opt2.polished .wf-subhead-dark { color: rgba(255,255,255,0.72); }
+#frame-opt2.polished .wf-footer-dark strong { color: #ffffff; font-family: 'Fraunces', Georgia, serif; }
+#frame-opt2.polished .wf-footer-dark p { color: rgba(255,255,255,0.55); }
+
+/* --- Self-reveal --- */
+#frame-opt2-tabs .sub-tab-badge { display: none; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"] { color: #64B5F6; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #1E88E5; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"].active { color: #1565C0; border-bottom-color: #1565C0; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"] { color: #81C784; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #43A047; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"].active { color: #2E7D32; border-bottom-color: #2E7D32; }

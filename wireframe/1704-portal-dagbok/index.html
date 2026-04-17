@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dagbok — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Dagbok</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Streak Hub</button>
+    <button class="tab-btn" data-tab="option-2">2: Timeline Journal</button>
+    <button class="tab-btn" data-tab="option-3">3: Quick Log</button>
+    <button class="tab-btn" data-tab="option-4">4: Calendar Heatmap</button>
+    <button class="tab-btn" data-tab="option-5">5: Analytics Mode</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Streak Hub ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Streak Hub</span></h2>
+    <p class="option-description">Streak er helten. Current/longest/freezes øverst som stor sort hero, planprogress-ring og siste økt i top-row, deretter logg-liste. Balansert oversikt som både motiverer og gir data.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/dagbok</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item wf-active">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / Tren / Dagbok</div>
+                <h1 class="wf-page-title">Treningsdagbok<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Hold streak levende. Registrer hver økt med L-M-PR.</p>
+              </div>
+              <button class="wf-btn wf-btn-cta">+ Logg økt<span class="wf-marker">5</span></button>
+            </header>
+
+            <div class="wf-dagbok-grid">
+
+              <section class="wf-streak-hero">
+                <div class="wf-card-label">Aktiv streak<span class="wf-marker">2</span></div>
+                <div>
+                  <span class="wf-streak-big">14</span>
+                  <div class="wf-streak-unit">dager på rad</div>
+                </div>
+                <div class="wf-streak-meta">
+                  <div class="wf-streak-meta-row">
+                    <div class="wf-sm">Lengst</div>
+                    <div class="wf-lg">23 d</div>
+                  </div>
+                  <div class="wf-streak-meta-row">
+                    <div class="wf-sm">Freezes</div>
+                    <div class="wf-lg">2 / 3</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="wf-card wf-plan-ring-card">
+                <div class="wf-card-label">Plan-fremdrift</div>
+                <div class="wf-ring">
+                  <svg viewBox="0 0 100 100">
+                    <circle class="wf-ring-track" cx="50" cy="50" r="42"></circle>
+                    <circle class="wf-ring-fill" cx="50" cy="50" r="42"
+                      stroke-dasharray="263.89" stroke-dashoffset="105.56"></circle>
+                  </svg>
+                  <div class="wf-ring-center">
+                    <div class="wf-ring-big">3/5</div>
+                    <div class="wf-ring-sub">Denne uken</div>
+                  </div>
+                </div>
+                <p class="wf-plan-note">2 økter igjen før søndag.<span class="wf-marker">3</span></p>
+              </section>
+
+              <section class="wf-card wf-last-okt">
+                <div class="wf-card-label">Siste økt</div>
+                <h3 class="wf-last-title">Putting 20–40 m</h3>
+                <div class="wf-last-meta">I går, 18:30 · 30 min · Anlegg</div>
+                <div class="wf-tag-row">
+                  <span class="wf-tag wf-tag-solid">SPILL</span>
+                  <span class="wf-tag">KOLLE</span>
+                  <span class="wf-tag">BANE</span>
+                </div>
+                <button class="wf-btn wf-btn-secondary wf-btn-small">Se detaljer</button>
+              </section>
+
+              <section class="wf-card wf-log-list-section">
+                <div class="wf-log-header">
+                  <h3 class="wf-card-title">Logg — siste 14 dager<span class="wf-marker">4</span></h3>
+                  <button class="wf-log-cta">+ Rask logg</button>
+                </div>
+                <div class="wf-log-list">
+                  <div class="wf-log-row">
+                    <div class="wf-log-date">16. apr</div>
+                    <div class="wf-log-body">
+                      <h4 class="wf-log-ttl">Putting 20–40 m</h4>
+                      <div class="wf-log-sub">SPILL · KOLLE · BANE · 30 baller</div>
+                    </div>
+                    <div class="wf-log-dur">30 min</div>
+                  </div>
+                  <div class="wf-log-row">
+                    <div class="wf-log-date">15. apr</div>
+                    <div class="wf-log-body">
+                      <h4 class="wf-log-ttl">Jern 7 — 120–150 m</h4>
+                      <div class="wf-log-sub">SLAG · BALL · LUKT · variert avstand</div>
+                    </div>
+                    <div class="wf-log-dur">45 min</div>
+                  </div>
+                  <div class="wf-log-row">
+                    <div class="wf-log-date">14. apr</div>
+                    <div class="wf-log-body">
+                      <h4 class="wf-log-ttl">Driver konsistens</h4>
+                      <div class="wf-log-sub">SLAG · ARM · LUKT · 20 slag</div>
+                    </div>
+                    <div class="wf-log-dur">25 min</div>
+                  </div>
+                  <div class="wf-log-row">
+                    <div class="wf-log-date">13. apr</div>
+                    <div class="wf-log-body">
+                      <h4 class="wf-log-ttl">Chip opp-og-ned</h4>
+                      <div class="wf-log-sub">SPILL · MÅL · PRESS · 3 posisjoner</div>
+                    </div>
+                    <div class="wf-log-dur">20 min</div>
+                  </div>
+                  <div class="wf-log-row">
+                    <div class="wf-log-date">12. apr</div>
+                    <div class="wf-log-body">
+                      <h4 class="wf-log-ttl">Fysisk — mobilitet</h4>
+                      <div class="wf-log-sub">FYS · ARM · LUKT</div>
+                    </div>
+                    <div class="wf-log-dur">35 min</div>
+                  </div>
+                </div>
+              </section>
+
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Dagbok som navndrag:</strong> Tydelig at dette er loggføring, ikke planlegging. Breadcrumb signaliserer plass i "Tren"-grenen.</li>
+        <li><strong>2 — Streak = hero:</strong> Stort svart kort med 14 dager, lengste streak og freezes (inspirert av Duolingo). Motivasjonen før data.</li>
+        <li><strong>3 — Plan-ring:</strong> Bygger bro til Planlegger (3/5 uke). Svart ring fylles etter hvert som økter logges.</li>
+        <li><strong>4 — Logg-liste:</strong> Siste 14 dager kronologisk med L-M-PR-tagger synlig. Enkel scanning av variasjon i trening.</li>
+        <li><strong>5 — Primær CTA:</strong> "+ Logg økt" i topbar — alltid ett klikk unna loggføring.</li>
+        <li>— Safe-valg: Kombinerer alt brukeren trenger på én side uten å bli overveldende.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Timeline Journal ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Timeline Journal</span></h2>
+    <p class="option-description">Ren kronologisk timeline med filterpanel. Alle økter som tidslinje-entries med L-M-PR og tagger inline. For brukeren som vil skrolle gjennom historikken.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/dagbok</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item wf-active">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / Tren / Dagbok</div>
+                <h1 class="wf-page-title">Dagbok — tidslinje<span class="wf-marker">1</span></h1>
+              </div>
+              <button class="wf-btn wf-btn-cta">+ Logg økt</button>
+            </header>
+
+            <div class="wf-timeline-wrap">
+              <aside class="wf-timeline-aside">
+                <div class="wf-filter-group">
+                  <div class="wf-filter-label">Pyramide<span class="wf-marker">2</span></div>
+                  <div class="wf-filter-item wf-active">Alle</div>
+                  <div class="wf-filter-item">FYS</div>
+                  <div class="wf-filter-item">TEK</div>
+                  <div class="wf-filter-item">SLAG</div>
+                  <div class="wf-filter-item">SPILL</div>
+                  <div class="wf-filter-item">TURN</div>
+                </div>
+                <div class="wf-filter-group">
+                  <div class="wf-filter-label">Læringsfase</div>
+                  <div class="wf-filter-item">KOLLE</div>
+                  <div class="wf-filter-item">ARM</div>
+                  <div class="wf-filter-item">BALL</div>
+                  <div class="wf-filter-item">MÅL</div>
+                </div>
+                <div class="wf-filter-group">
+                  <div class="wf-filter-label">Periode</div>
+                  <div class="wf-filter-item wf-active">Siste 30 d</div>
+                  <div class="wf-filter-item">Sesong</div>
+                  <div class="wf-filter-item">Hele</div>
+                </div>
+              </aside>
+
+              <div class="wf-timeline">
+
+                <div class="wf-tl-entry wf-tl-pr">
+                  <div class="wf-tl-head">
+                    <h4 class="wf-tl-title">Putting 20–40 m</h4>
+                    <div class="wf-tl-date">I GÅR · 18:30</div>
+                  </div>
+                  <div class="wf-tl-meta">30 min · Anlegg · 30 baller fra 8 avstander<span class="wf-marker">3</span></div>
+                  <div class="wf-tag-row">
+                    <span class="wf-tag wf-tag-solid">SPILL</span>
+                    <span class="wf-tag">Personlig rekord</span>
+                  </div>
+                  <div class="wf-tl-lmpr">
+                    <div class="wf-lmpr-block">
+                      <div class="wf-lmpr-lbl">Læringsfase</div>
+                      <div class="wf-lmpr-val">KOLLE</div>
+                    </div>
+                    <div class="wf-lmpr-block">
+                      <div class="wf-lmpr-lbl">Miljø</div>
+                      <div class="wf-lmpr-val">BANE</div>
+                    </div>
+                    <div class="wf-lmpr-block">
+                      <div class="wf-lmpr-lbl">Press</div>
+                      <div class="wf-lmpr-val">—</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wf-tl-entry">
+                  <div class="wf-tl-head">
+                    <h4 class="wf-tl-title">Jern 7 — 120–150 m</h4>
+                    <div class="wf-tl-date">15. APR · 10:00</div>
+                  </div>
+                  <div class="wf-tl-meta">45 min · Range · 40 slag variert avstand</div>
+                  <div class="wf-tag-row">
+                    <span class="wf-tag wf-tag-solid">SLAG</span>
+                  </div>
+                  <div class="wf-tl-lmpr">
+                    <div class="wf-lmpr-block">
+                      <div class="wf-lmpr-lbl">Læringsfase</div>
+                      <div class="wf-lmpr-val">BALL</div>
+                    </div>
+                    <div class="wf-lmpr-block">
+                      <div class="wf-lmpr-lbl">Miljø</div>
+                      <div class="wf-lmpr-val">LUKT</div>
+                    </div>
+                    <div class="wf-lmpr-block">
+                      <div class="wf-lmpr-lbl">Press</div>
+                      <div class="wf-lmpr-val">—</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wf-tl-entry">
+                  <div class="wf-tl-head">
+                    <h4 class="wf-tl-title">Chip opp-og-ned</h4>
+                    <div class="wf-tl-date">13. APR · 16:15</div>
+                  </div>
+                  <div class="wf-tl-meta">20 min · Anlegg · 3 posisjoner x 10 slag</div>
+                  <div class="wf-tag-row">
+                    <span class="wf-tag wf-tag-solid">SPILL</span>
+                  </div>
+                  <div class="wf-tl-lmpr">
+                    <div class="wf-lmpr-block">
+                      <div class="wf-lmpr-lbl">Læringsfase</div>
+                      <div class="wf-lmpr-val">MÅL</div>
+                    </div>
+                    <div class="wf-lmpr-block">
+                      <div class="wf-lmpr-lbl">Miljø</div>
+                      <div class="wf-lmpr-val">BANE</div>
+                    </div>
+                    <div class="wf-lmpr-block">
+                      <div class="wf-lmpr-lbl">Press</div>
+                      <div class="wf-lmpr-val">Score 6/10</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Tidslinje fremfor dashboard:</strong> Økter som vertikal strøm. Egner seg når bruker har mange økter å skanne.</li>
+        <li><strong>2 — Filter-aside til venstre:</strong> Pyramide, læringsfase, periode. Sticky så det følger scroll.</li>
+        <li><strong>3 — L-M-PR inline i hver entry:</strong> Strukturerte metadata synlig direkte — ingen ekstra klikk for å se kontekst.</li>
+        <li>— Risiko: Mister streak-motivasjon. Krever at bruker allerede er motivert å logge.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Quick Log ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Quick Log</span></h2>
+    <p class="option-description">Loggføring er jobben. Stort svart hero-kort med "Logg økt" som primær handling, sekundær mal-chips, kompakte stat-kort under.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/dagbok</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item wf-active">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / Tren / Dagbok</div>
+                <h1 class="wf-page-title">Dagbok</h1>
+              </div>
+              <button class="wf-btn wf-btn-secondary">Se alle økter</button>
+            </header>
+
+            <section class="wf-quicklog-hero">
+              <div class="wf-ql-label">Torsdag 17. april<span class="wf-marker">1</span></div>
+              <h2 class="wf-ql-title">Hva trente du i dag?</h2>
+              <p class="wf-ql-sub">Logg økten med L-M-PR på under 30 sekunder. Streaken din er 14 dager — ikke brekk den nå.<span class="wf-marker">2</span></p>
+              <button class="wf-ql-btn">+ Logg økt</button>
+              <div style="font-size:10px;color:#999;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;margin-top:8px;">Eller velg mal:<span class="wf-marker">3</span></div>
+              <div class="wf-ql-chips">
+                <button class="wf-ql-chip">Putting 20–40 m</button>
+                <button class="wf-ql-chip">Jern 7 range</button>
+                <button class="wf-ql-chip">Chip opp-og-ned</button>
+                <button class="wf-ql-chip">Driver konsistens</button>
+                <button class="wf-ql-chip">Fysisk mobilitet</button>
+              </div>
+            </section>
+
+            <div class="wf-quicklog-sub-grid">
+              <section class="wf-qs-card">
+                <div class="wf-qs-big">14</div>
+                <div class="wf-qs-lbl">Dager på rad</div>
+                <div class="wf-qs-recent">Lengste: <strong>23 d</strong> · Freezes: <strong>2 / 3</strong></div>
+              </section>
+              <section class="wf-qs-card">
+                <div class="wf-qs-big">3 / 5</div>
+                <div class="wf-qs-lbl">Plan denne uken</div>
+                <div class="wf-qs-recent">Siste økt: <strong>Putting 20–40 m</strong>, i går 30 min<span class="wf-marker">4</span></div>
+              </section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kontekst-signal:</strong> Datoen i label øverst forankrer at "i dag" er fokuset.</li>
+        <li><strong>2 — Streak som kopi:</strong> Bruker streaken som motivasjon direkte i CTA-teksten.</li>
+        <li><strong>3 — Maler som fast track:</strong> Chips for sist brukte/anbefalte økt-typer gir ett-klikks loggføring.</li>
+        <li><strong>4 — Sekundær info komprimert:</strong> Streak, plan og siste økt på to små kort under hero — uten å stjele fokus.</li>
+        <li>— Best for nye/uregelmessige brukere. Power-users vil savne full logg-historikk uten ekstra klikk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Calendar Heatmap ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Calendar Heatmap</span></h2>
+    <p class="option-description">GitHub-stil heatmap: 12 uker x 7 dager hvor hver celle er én dag. Intensitet viser aktivitetsnivå. Visuell kontinuitet over tid.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/dagbok</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item wf-active">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / Tren / Dagbok</div>
+                <h1 class="wf-page-title">Aktivitetsoversikt — 12 uker<span class="wf-marker">1</span></h1>
+              </div>
+              <button class="wf-btn wf-btn-cta">+ Logg økt</button>
+            </header>
+
+            <section class="wf-heatmap-card">
+              <div class="wf-heatmap-head">
+                <h3 class="wf-heatmap-title">Siste 12 uker</h3>
+                <div class="wf-heatmap-legend">
+                  Mindre
+                  <span class="wf-legend-swatch">
+                    <span></span>
+                    <span style="background:#eee;"></span>
+                    <span style="background:#ccc;"></span>
+                    <span style="background:#666;"></span>
+                    <span style="background:#000;"></span>
+                  </span>
+                  Mer<span class="wf-marker">2</span>
+                </div>
+              </div>
+
+              <div class="wf-heatmap-grid">
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div class="wf-hm-wkday">Ma</div>
+                  <div class="wf-hm-wkday">Ti</div>
+                  <div class="wf-hm-wkday">On</div>
+                  <div class="wf-hm-wkday">To</div>
+                  <div class="wf-hm-wkday">Fr</div>
+                  <div class="wf-hm-wkday">Lø</div>
+                  <div class="wf-hm-wkday">Sø</div>
+                </div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l1"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell"></div><div class="wf-hm-cell l1"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l1"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l3"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l1"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l1"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l1"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l3"></div><div class="wf-hm-cell"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l1"></div><div class="wf-hm-cell"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l1"></div><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l2"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l1"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l1"></div><div class="wf-hm-cell l2"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l3"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l2"></div></div>
+                <div class="wf-hm-week"><div class="wf-hm-cell l4"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l3"></div><div class="wf-hm-cell l4"></div><div class="wf-hm-cell"></div><div class="wf-hm-cell"></div><div class="wf-hm-cell"></div></div>
+              </div>
+
+              <div class="wf-hm-stats">
+                <div class="wf-hm-stat">
+                  <div class="wf-hm-big">47</div>
+                  <div class="wf-hm-lbl">Økter totalt<span class="wf-marker">3</span></div>
+                </div>
+                <div class="wf-hm-stat">
+                  <div class="wf-hm-big">14</div>
+                  <div class="wf-hm-lbl">Aktiv streak</div>
+                </div>
+                <div class="wf-hm-stat">
+                  <div class="wf-hm-big">23</div>
+                  <div class="wf-hm-lbl">Lengst streak</div>
+                </div>
+                <div class="wf-hm-stat">
+                  <div class="wf-hm-big">3.9</div>
+                  <div class="wf-hm-lbl">Økter / uke</div>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Heatmap som hovedvisning:</strong> Ett blikk viser både konsistens og intensitet. Kjent mønster fra GitHub/Strava.</li>
+        <li><strong>2 — Intensitet via gråtoner:</strong> 5 nivåer (0, 1, 2, 3, 4+ økter). B&W holder mønsteret lesbart uten farger.</li>
+        <li><strong>3 — Summary-stats under:</strong> Totalt, streak, lengst, snitt. Numrene kontekstualiserer mønsteret.</li>
+        <li>— Passer best som ekstra fane, ikke primær dagbok — mangler L-M-PR-detaljer per økt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Analytics Mode ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Analytics Mode</span></h2>
+    <p class="option-description">Stats over økt-typer (pyramide-fordeling), volum per uke, L-M-PR-fordeling og oppsummeringsstats. For data-drevne brukere.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/dagbok</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item wf-active">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / Tren / Dagbok</div>
+                <h1 class="wf-page-title">Dagbok — analyse<span class="wf-marker">1</span></h1>
+              </div>
+              <button class="wf-btn wf-btn-cta">+ Logg økt</button>
+            </header>
+
+            <section class="wf-summary-stats">
+              <div class="wf-ss-card">
+                <div class="wf-ss-big">47</div>
+                <div class="wf-ss-lbl">Økter 12 uker</div>
+                <div class="wf-ss-trend">+12% vs forrige periode</div>
+              </div>
+              <div class="wf-ss-card">
+                <div class="wf-ss-big">32t</div>
+                <div class="wf-ss-lbl">Totalt volum</div>
+                <div class="wf-ss-trend">Snitt 41 min / økt</div>
+              </div>
+              <div class="wf-ss-card">
+                <div class="wf-ss-big">14</div>
+                <div class="wf-ss-lbl">Aktiv streak</div>
+                <div class="wf-ss-trend">Lengst 23 dager</div>
+              </div>
+              <div class="wf-ss-card">
+                <div class="wf-ss-big">3.9</div>
+                <div class="wf-ss-lbl">Økter / uke</div>
+                <div class="wf-ss-trend">Mål: 5 · Avvik -1,1</div>
+              </div>
+            </section>
+
+            <div class="wf-analytics-grid">
+              <section class="wf-card">
+                <h3 class="wf-card-title">Pyramide-fordeling<span class="wf-marker">2</span></h3>
+                <div class="wf-bar-row">
+                  <span class="wf-bar-label">SLAG</span>
+                  <div class="wf-bar-track"><div class="wf-bar-fill" style="width:42%;"></div></div>
+                  <span class="wf-bar-val">42%</span>
+                </div>
+                <div class="wf-bar-row">
+                  <span class="wf-bar-label">TEK</span>
+                  <div class="wf-bar-track"><div class="wf-bar-fill" style="width:24%;"></div></div>
+                  <span class="wf-bar-val">24%</span>
+                </div>
+                <div class="wf-bar-row">
+                  <span class="wf-bar-label">SPILL</span>
+                  <div class="wf-bar-track"><div class="wf-bar-fill" style="width:18%;"></div></div>
+                  <span class="wf-bar-val">18%</span>
+                </div>
+                <div class="wf-bar-row">
+                  <span class="wf-bar-label">FYS</span>
+                  <div class="wf-bar-track"><div class="wf-bar-fill" style="width:11%;"></div></div>
+                  <span class="wf-bar-val">11%</span>
+                </div>
+                <div class="wf-bar-row">
+                  <span class="wf-bar-label">TURN</span>
+                  <div class="wf-bar-track"><div class="wf-bar-fill" style="width:5%;"></div></div>
+                  <span class="wf-bar-val">5%</span>
+                </div>
+              </section>
+
+              <section class="wf-card wf-donut-card">
+                <div class="wf-donut">
+                  <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#eee" stroke-width="16"/>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#000" stroke-width="16"
+                      stroke-dasharray="100 151" stroke-dashoffset="0"/>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#666" stroke-width="16"
+                      stroke-dasharray="60 191" stroke-dashoffset="-100"/>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#ccc" stroke-width="16"
+                      stroke-dasharray="40 211" stroke-dashoffset="-160"/>
+                  </svg>
+                </div>
+                <div class="wf-donut-legend">
+                  <div class="wf-donut-item">
+                    <span class="wf-donut-swatch" style="background:#000;"></span>
+                    <span>KOLLE · Læring</span>
+                    <span class="wf-donut-val">40%</span>
+                  </div>
+                  <div class="wf-donut-item">
+                    <span class="wf-donut-swatch" style="background:#666;"></span>
+                    <span>ARM · Automatisering</span>
+                    <span class="wf-donut-val">24%</span>
+                  </div>
+                  <div class="wf-donut-item">
+                    <span class="wf-donut-swatch" style="background:#ccc;"></span>
+                    <span>BALL · Variasjon</span>
+                    <span class="wf-donut-val">16%</span>
+                  </div>
+                  <div class="wf-donut-item">
+                    <span class="wf-donut-swatch" style="background:#eee;"></span>
+                    <span>MÅL · Press</span>
+                    <span class="wf-donut-val">20%</span>
+                  </div>
+                  <div style="font-size:10px;color:#999;margin-top:6px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;">Læringsfase-miks<span class="wf-marker">3</span></div>
+                </div>
+              </section>
+
+              <section class="wf-card wf-wide">
+                <h3 class="wf-card-title">Volum per uke — 12 uker<span class="wf-marker">4</span></h3>
+                <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:8px;align-items:end;height:140px;padding:8px 0;">
+                  <div style="background:#ccc;height:40%;border-radius:3px;"></div>
+                  <div style="background:#ccc;height:55%;border-radius:3px;"></div>
+                  <div style="background:#666;height:70%;border-radius:3px;"></div>
+                  <div style="background:#666;height:60%;border-radius:3px;"></div>
+                  <div style="background:#666;height:75%;border-radius:3px;"></div>
+                  <div style="background:#000;height:90%;border-radius:3px;"></div>
+                  <div style="background:#666;height:65%;border-radius:3px;"></div>
+                  <div style="background:#000;height:85%;border-radius:3px;"></div>
+                  <div style="background:#000;height:95%;border-radius:3px;"></div>
+                  <div style="background:#666;height:78%;border-radius:3px;"></div>
+                  <div style="background:#000;height:88%;border-radius:3px;"></div>
+                  <div style="background:#000;height:100%;border-radius:3px;"></div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:8px;font-size:10px;color:#999;margin-top:6px;text-align:center;">
+                  <span>U5</span><span>U6</span><span>U7</span><span>U8</span><span>U9</span><span>U10</span><span>U11</span><span>U12</span><span>U13</span><span>U14</span><span>U15</span><span>U16</span>
+                </div>
+              </section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Stats-first:</strong> Fire store nøkkeltall øverst. Brukeren ser trender før detaljer.</li>
+        <li><strong>2 — Pyramide-fordeling:</strong> Viser hvor mye tid som faktisk har gått til hvert lag — sammenliknbart mot planlagt fordeling.</li>
+        <li><strong>3 — L-M-PR som donut:</strong> Læringsfase-miks visualisert — se om bruker kjører for mye i KOLLE eller for lite i MÅL/Press.</li>
+        <li><strong>4 — Volum-bars:</strong> 12 uker søylediagram. Identifiser svakheter og toppuker.</li>
+        <li>— Passer best som "Analyse"-tab under dagbok. Ikke primær landingsside.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Fem opsjoner vurdert mot målet: <strong>hold treningsdisiplin levende og fang struktur-data (L-M-PR) per økt</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Motivasjon</th><th>Data-dybde</th><th>Læringskurve</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Streak Hub</strong></td>
+          <td>Streak + plan-progress + logg-liste i ett dashboard</td>
+          <td>Høy (streak som hero)</td>
+          <td>Medium</td>
+          <td>Null — kjent mønster</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><strong>2. Timeline Journal</strong></td>
+          <td>Kronologisk strøm av økter med filter</td>
+          <td>Lav (ingen streak)</td>
+          <td>Høy (L-M-PR inline)</td>
+          <td>Lav</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>3. Quick Log</strong></td>
+          <td>Hero rettet mot loggføring, minimalt oversikt</td>
+          <td>Medium</td>
+          <td>Lav</td>
+          <td>Null</td>
+          <td>★★★☆☆</td>
+        </tr>
+        <tr>
+          <td><strong>4. Calendar Heatmap</strong></td>
+          <td>GitHub-stil 12-ukers heatmap</td>
+          <td>Høy (mønster synlig)</td>
+          <td>Lav (mangler L-M-PR)</td>
+          <td>Null — kjent fra Strava/GH</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>5. Analytics Mode</strong></td>
+          <td>Fordeling, volum, L-M-PR-miks</td>
+          <td>Lav</td>
+          <td>Høy</td>
+          <td>Medium</td>
+          <td>★★★☆☆</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Streak Hub</h3>
+      <p>Streak Hub treffer både motivasjon (streak-hero som øverste visuelle anker) og struktur (plan-ring, siste økt, logg-liste med L-M-PR-tagger). Det etablerer dagbok som et sted bruker kommer tilbake daglig — ikke bare en historikklogg.</p>
+      <p><strong>Strategisk flow:</strong> Option 1 som MVP. Bygg Option 2 (Timeline) og Option 4 (Heatmap) som sub-faner under dagbok for brukere som vil dypdykke. Option 5 (Analytics) flyttes til Analyser-seksjonen der det hører hjemme faglig. Option 3 (Quick Log) kan implementeres som mobil-første visning.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

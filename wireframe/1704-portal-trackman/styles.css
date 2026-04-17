@@ -1,0 +1,251 @@
+/* === Wireframe Content CSS (B&W only) — Portal Statistikk === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL ============ */
+.wf-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 760px; background: #f5f5f5; }
+
+/* ============ SIDEBAR ============ */
+.wf-sidebar { background: #fff; border-right: 1px solid #eee; padding: 20px 14px; display: flex; flex-direction: column; gap: 18px; }
+.wf-sb-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: #000; padding: 4px 6px; }
+.wf-sb-profile { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #eee; border-radius: 12px; background: #fff; }
+.wf-sb-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-sb-profile-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-sb-profile-meta { font-size: 11px; color: #999; }
+.wf-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-sb-nav-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; padding: 8px 6px 4px; font-weight: 600; }
+.wf-sb-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; color: #333; font-size: 13px; text-decoration: none; }
+.wf-sb-item-icon { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+.wf-sb-item.wf-active { background: #f5f5f5; color: #000; font-weight: 600; }
+.wf-sb-item.wf-active .wf-sb-item-icon { background: #000; border-color: #000; }
+.wf-sb-cta { margin-top: auto; padding: 16px 14px; border: 1px solid #ccc; border-radius: 12px; background: #fff; text-align: center; }
+.wf-sb-cta-title { font-size: 12px; font-weight: 700; color: #000; margin-bottom: 6px; }
+.wf-sb-cta-desc { font-size: 11px; color: #666; margin-bottom: 10px; line-height: 1.4; }
+.wf-sb-cta-btn { width: 100%; padding: 9px 12px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+/* ============ MAIN ============ */
+.wf-main { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+
+/* Topbar */
+.wf-mtopbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; }
+.wf-mtopbar-left { font-size: 12px; color: #666; }
+.wf-mtopbar-right { display: flex; gap: 8px; align-items: center; }
+.wf-mtopbar-chip { padding: 6px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #333; cursor: pointer; }
+.wf-mtopbar-chip.wf-active { background: #000; color: #fff; border-color: #000; }
+
+/* ============ PAGE HEAD ============ */
+.wf-phead { display: flex; justify-content: space-between; align-items: flex-end; padding: 4px 0 4px; }
+.wf-phead-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 6px; }
+.wf-phead-h { font-size: 26px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.02em; }
+.wf-phead-sub { font-size: 13px; color: #666; margin-top: 4px; }
+.wf-phead-actions { display: flex; gap: 8px; }
+
+/* ============ BENTO GRID ============ */
+.wf-bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+.wf-bc-3 { grid-column: span 3; }
+.wf-bc-4 { grid-column: span 4; }
+.wf-bc-5 { grid-column: span 5; }
+.wf-bc-6 { grid-column: span 6; }
+.wf-bc-7 { grid-column: span 7; }
+.wf-bc-8 { grid-column: span 8; }
+.wf-bc-9 { grid-column: span 9; }
+.wf-bc-12 { grid-column: span 12; }
+
+/* ============ CARD PRIMITIVES ============ */
+.wf-c { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px; min-height: 120px; }
+.wf-c-dark { background: #000; color: #fff; border-color: #000; }
+.wf-c-dark .wf-c-label { color: #999; }
+.wf-c-dark .wf-c-value { color: #fff; }
+.wf-c-dark .wf-c-sub { color: #ccc; }
+.wf-c-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-c-title { font-size: 13px; font-weight: 600; color: #000; margin: 0; }
+.wf-c-value { font-size: 32px; font-weight: 800; color: #000; line-height: 1; letter-spacing: -0.02em; }
+.wf-c-value-xl { font-size: 44px; font-weight: 900; letter-spacing: -0.03em; }
+.wf-c-unit { font-size: 13px; color: #666; font-weight: 500; margin-left: 4px; }
+.wf-c-sub { font-size: 12px; color: #666; }
+.wf-c-pos { color: #000; font-weight: 700; }
+.wf-c-neg { color: #666; font-weight: 700; }
+.wf-c-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.wf-c-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.wf-c-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.wf-c-grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.wf-c-link { font-size: 12px; color: #000; font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; }
+
+/* ============ KPI ============ */
+.wf-kpi { display: flex; flex-direction: column; gap: 6px; }
+.wf-kpi-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-kpi-value { font-size: 32px; font-weight: 800; color: #000; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.wf-kpi-sub { font-size: 11px; color: #666; }
+.wf-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* ============ SG BARS (shared) ============ */
+.wf-sg-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+.wf-sg-label { width: 90px; font-size: 12px; color: #333; font-weight: 600; }
+.wf-sg-track { flex: 1; height: 10px; background: #eee; border-radius: 999px; position: relative; overflow: hidden; }
+.wf-sg-track::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #ccc; }
+.wf-sg-fill-pos { position: absolute; left: 50%; top: 0; bottom: 0; background: #000; border-radius: 999px; }
+.wf-sg-fill-neg { position: absolute; right: 50%; top: 0; bottom: 0; background: #999; border-radius: 999px; }
+.wf-sg-val { width: 50px; text-align: right; font-size: 12px; font-weight: 700; color: #000; font-variant-numeric: tabular-nums; }
+
+/* ============ PERIOD FILTER ============ */
+.wf-period { display: inline-flex; gap: 0; border: 1px solid #ccc; border-radius: 999px; padding: 3px; background: #fff; }
+.wf-period-btn { padding: 6px 14px; background: transparent; border: none; border-radius: 999px; font-size: 12px; color: #666; cursor: pointer; font-weight: 500; }
+.wf-period-btn.wf-active { background: #000; color: #fff; font-weight: 600; }
+
+/* ============ CHART (sparkline / trend placeholder) ============ */
+.wf-chart { height: 160px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; display: flex; align-items: flex-end; padding: 12px; gap: 4px; position: relative; }
+.wf-chart-bar { flex: 1; background: linear-gradient(to top, #000, #666); border-radius: 3px 3px 0 0; min-height: 4px; }
+.wf-chart-label-row { display: flex; justify-content: space-between; font-size: 10px; color: #999; margin-top: 4px; padding: 0 4px; }
+.wf-chart-line { position: relative; height: 120px; background: #fafafa; border: 1px solid #eee; border-radius: 10px; padding: 12px; }
+.wf-chart-line svg { width: 100%; height: 100%; }
+
+/* ============ STACKED VOLUME BARS ============ */
+.wf-stack-row { display: grid; grid-template-columns: 60px 1fr 50px; gap: 10px; align-items: center; padding: 4px 0; }
+.wf-stack-label { font-size: 11px; color: #666; font-weight: 600; }
+.wf-stack-bar { display: flex; height: 16px; border-radius: 4px; overflow: hidden; border: 1px solid #eee; }
+.wf-stack-seg { height: 100%; }
+.wf-stack-fys { background: #000; }
+.wf-stack-tek { background: #333; }
+.wf-stack-slag { background: #666; }
+.wf-stack-spill { background: #999; }
+.wf-stack-turn { background: #ccc; }
+.wf-stack-total { font-size: 11px; color: #333; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.wf-stack-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; }
+.wf-stack-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
+.wf-stack-legend-swatch { width: 10px; height: 10px; border-radius: 2px; }
+
+/* ============ COMPARE (opt3) ============ */
+.wf-cmp-table { display: grid; grid-template-columns: 1fr repeat(3, 1fr); gap: 0; border: 1px solid #eee; border-radius: 12px; overflow: hidden; background: #fff; }
+.wf-cmp-head { padding: 12px 14px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; background: #f5f5f5; border-bottom: 1px solid #eee; }
+.wf-cmp-cell { padding: 14px; border-bottom: 1px solid #eee; border-right: 1px solid #eee; }
+.wf-cmp-cell:last-child { border-right: none; }
+.wf-cmp-cell:nth-last-child(-n+4) { border-bottom: none; }
+.wf-cmp-metric { font-size: 13px; font-weight: 600; color: #000; }
+.wf-cmp-val { font-size: 22px; font-weight: 800; color: #000; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.wf-cmp-delta { font-size: 11px; color: #666; margin-top: 2px; }
+.wf-cmp-you { background: #f9f9f9; }
+.wf-cmp-you .wf-cmp-val { color: #000; }
+
+/* ============ DEEP DIVE (opt4) ============ */
+.wf-seg { display: flex; gap: 6px; flex-wrap: wrap; padding: 4px 0 2px; }
+.wf-seg-btn { padding: 8px 14px; border: 1px solid #ccc; border-radius: 10px; background: #fff; font-size: 12px; color: #666; cursor: pointer; font-weight: 500; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 110px; }
+.wf-seg-btn .wf-seg-val { font-size: 14px; font-weight: 800; color: #333; }
+.wf-seg-btn.wf-active { background: #000; color: #fff; border-color: #000; }
+.wf-seg-btn.wf-active .wf-seg-val { color: #fff; }
+
+.wf-dd-hero { background: #000; color: #fff; border-radius: 16px; padding: 24px; display: grid; grid-template-columns: 1fr 180px; gap: 20px; align-items: center; }
+.wf-dd-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; font-weight: 700; margin-bottom: 8px; }
+.wf-dd-title { font-size: 24px; font-weight: 800; color: #fff; margin: 0 0 6px; letter-spacing: -0.02em; }
+.wf-dd-desc { font-size: 13px; color: #ccc; margin: 0 0 14px; line-height: 1.5; }
+.wf-dd-stats { display: flex; gap: 22px; }
+.wf-dd-stat { }
+.wf-dd-stat-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #999; font-weight: 700; margin-bottom: 4px; }
+.wf-dd-stat-val { font-size: 22px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+.wf-dd-big { font-size: 56px; font-weight: 900; color: #fff; line-height: 1; text-align: center; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.wf-dd-big-label { font-size: 11px; color: #999; text-align: center; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; font-weight: 700; }
+
+/* ============ GOALS (opt5) ============ */
+.wf-goal { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.wf-goal-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.wf-goal-title { font-size: 14px; font-weight: 700; color: #000; margin: 0; }
+.wf-goal-target { font-size: 11px; color: #666; }
+.wf-goal-badge { padding: 3px 9px; border: 1px solid #ccc; border-radius: 999px; font-size: 10px; font-weight: 700; color: #333; background: #fff; letter-spacing: 0.06em; }
+.wf-goal-badge.wf-on { background: #000; color: #fff; border-color: #000; }
+.wf-goal-badge.wf-off { background: #eee; color: #666; }
+.wf-goal-progress { display: flex; align-items: center; gap: 10px; }
+.wf-goal-track { flex: 1; height: 8px; background: #eee; border-radius: 999px; overflow: hidden; }
+.wf-goal-fill { height: 100%; background: #000; border-radius: 999px; }
+.wf-goal-pct { font-size: 13px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; min-width: 40px; text-align: right; }
+.wf-goal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 11px; color: #666; }
+.wf-goal-row strong { display: block; font-size: 15px; font-weight: 800; color: #000; margin-bottom: 2px; font-variant-numeric: tabular-nums; }
+
+/* ============ STORY TIMELINE (opt2) ============ */
+.wf-story-hero { background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 24px; display: grid; grid-template-columns: 200px 1fr; gap: 20px; }
+.wf-story-title { font-size: 14px; font-weight: 700; color: #000; margin: 0 0 14px; }
+.wf-story-chart { background: #fafafa; border: 1px solid #eee; border-radius: 10px; height: 160px; padding: 12px; display: flex; align-items: flex-end; gap: 4px; }
+.wf-story-bar { flex: 1; background: linear-gradient(to top, #000, #666); border-radius: 3px 3px 0 0; min-height: 4px; }
+.wf-story-row { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px 20px; display: grid; grid-template-columns: 100px 1fr auto; gap: 16px; align-items: center; }
+.wf-story-period { font-size: 12px; font-weight: 700; color: #000; letter-spacing: 0.08em; text-transform: uppercase; }
+.wf-story-period-sub { font-size: 10px; color: #999; margin-top: 2px; }
+.wf-story-summary { font-size: 13px; color: #333; line-height: 1.5; }
+.wf-story-stats { display: flex; gap: 16px; font-size: 11px; color: #666; }
+.wf-story-stats strong { display: block; font-size: 16px; color: #000; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+/* ============ AI BADGE + NOTE ============ */
+.wf-ai-badge { display: inline-block; padding: 3px 8px; border: 1px solid #666; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #333; background: #eee; }
+.wf-insight-note { border-left: 3px solid #000; padding: 4px 0 4px 14px; }
+.wf-insight-body { font-size: 13px; color: #333; line-height: 1.5; margin: 0; }
+
+/* ============ MARKERS & ANNOTATIONS ============ */
+.wf-marker { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: #000; color: #fff; font-size: 10px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+.wf-annotations { margin-top: 16px; padding: 20px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-annotations h3 { font-size: 14px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-annotations ul { margin: 0; padding-left: 20px; font-size: 13px; color: #333; }
+.wf-annotations li { margin-bottom: 6px; line-height: 1.5; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }
+
+/* ============ TRACKMAN-SPECIFIC WIREFRAME PRIMITIVES ============ */
+
+/* Chips row (reused) */
+.wf-tm-chips { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.wf-tm-chip { padding: 5px 11px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 11px; color: #666; cursor: pointer; font-weight: 500; }
+.wf-tm-chip.wf-active { background: #000; color: #fff; border-color: #000; }
+
+/* Session table */
+.wf-tm-table { display: flex; flex-direction: column; border: 1px solid #eee; border-radius: 10px; overflow: hidden; background: #fff; }
+.wf-tm-row { display: grid; grid-template-columns: 1fr 1fr 0.6fr 0.8fr 0.7fr 0.7fr 0.8fr; gap: 10px; padding: 10px 14px; font-size: 12px; color: #333; border-bottom: 1px solid #eee; font-variant-numeric: tabular-nums; }
+.wf-tm-row:last-child { border-bottom: none; }
+.wf-tm-row.wf-tm-head { background: #f5f5f5; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-tm-row.wf-tm-hl { background: #000; color: #fff; font-weight: 700; }
+
+/* Club grid (Option 1 snapshot + Option 2 focus) */
+.wf-tm-clubgrid { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; }
+.wf-tm-club { border: 1px solid #eee; border-radius: 8px; padding: 10px 6px; text-align: center; background: #fff; display: flex; flex-direction: column; gap: 2px; }
+.wf-tm-club-name { font-size: 11px; font-weight: 700; color: #000; }
+.wf-tm-club-val { font-size: 13px; font-weight: 800; color: #333; font-variant-numeric: tabular-nums; }
+.wf-tm-club-sub { font-size: 9px; color: #999; }
+
+/* Option 2 — Club Focus layout */
+.wf-cf-layout { display: grid; grid-template-columns: 280px 1fr; gap: 14px; }
+.wf-cf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; align-content: start; background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 12px; }
+.wf-cf-cell { padding: 10px 8px; border: 1px solid #eee; border-radius: 8px; background: #fff; display: flex; flex-direction: column; gap: 2px; align-items: flex-start; cursor: pointer; font-family: inherit; }
+.wf-cf-cell.wf-active { background: #000; border-color: #000; color: #fff; }
+.wf-cf-cell.wf-active .wf-cf-name, .wf-cf-cell.wf-active .wf-cf-val { color: #fff; }
+.wf-cf-name { font-size: 11px; font-weight: 700; color: #000; }
+.wf-cf-val { font-size: 12px; font-weight: 700; color: #666; font-variant-numeric: tabular-nums; }
+.wf-cf-detail { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.wf-cf-dhead { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+.wf-cf-dtitle { font-size: 28px; font-weight: 800; color: #000; margin: 4px 0 2px; letter-spacing: -0.02em; }
+.wf-cf-big { font-size: 48px; font-weight: 900; color: #000; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.wf-cf-big-unit { font-size: 18px; color: #666; font-weight: 600; margin-left: 2px; }
+.wf-cf-params { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.wf-cf-param { border: 1px solid #eee; border-radius: 10px; padding: 10px 12px; background: #fff; display: flex; flex-direction: column; gap: 4px; }
+.wf-cf-pval { font-size: 18px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+
+/* Option 3 — Trend markers */
+.wf-td-hero { padding: 20px; }
+.wf-td-markers { display: flex; gap: 18px; margin-top: 8px; font-size: 11px; color: #666; flex-wrap: wrap; }
+.wf-td-marker { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid #eee; border-radius: 999px; background: #f9f9f9; font-weight: 600; color: #333; font-variant-numeric: tabular-nums; }
+
+/* Option 4 — Last Session Hero */
+.wf-ls-hero { background: #000; color: #fff; border-radius: 16px; padding: 24px; display: grid; grid-template-columns: 1fr 180px; gap: 20px; align-items: center; }
+.wf-ls-hl { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.wf-ls-hl-row { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border: 1px solid #eee; border-radius: 10px; background: #fff; }
+.wf-ls-hl-title { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-ls-hl-val { font-size: 20px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.wf-ls-hl-sub { font-size: 11px; color: #999; }
+
+/* Option 5 — Comparison extra */
+.wf-cmp-wrap { background: transparent; }
+.wf-cmp-list { margin: 0; padding-left: 18px; font-size: 13px; color: #333; line-height: 1.6; }
+.wf-cmp-list li { margin-bottom: 6px; }
+.wf-cmp-list strong { color: #000; font-weight: 700; }

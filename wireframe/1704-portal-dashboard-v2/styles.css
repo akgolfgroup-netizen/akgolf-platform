@@ -1,0 +1,301 @@
+/* === Wireframe Content CSS (B&W only) — Portal Dashboard v2 === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL (sidebar + main) ============ */
+.wf-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 760px; background: #f5f5f5; }
+.wf-shell-1col { display: block; background: #f5f5f5; }
+
+/* ============ SIDEBAR ============ */
+.wf-sidebar {
+  background: #fff; border-right: 1px solid #eee;
+  padding: 20px 14px; display: flex; flex-direction: column; gap: 18px;
+}
+.wf-sb-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: #000; padding: 4px 6px; }
+.wf-sb-profile {
+  display: flex; align-items: center; gap: 10px; padding: 10px;
+  border: 1px solid #eee; border-radius: 12px; background: #fff;
+}
+.wf-sb-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-sb-profile-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-sb-profile-meta { font-size: 11px; color: #999; }
+
+.wf-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-sb-nav-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; padding: 8px 6px 4px; font-weight: 600; }
+.wf-sb-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px 10px;
+  border-radius: 10px; color: #333; font-size: 13px; text-decoration: none;
+}
+.wf-sb-item-icon { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+.wf-sb-item.wf-active { background: #f5f5f5; color: #000; font-weight: 600; }
+.wf-sb-item.wf-active .wf-sb-item-icon { background: #000; border-color: #000; }
+.wf-sb-item:hover { background: #f5f5f5; color: #000; }
+.wf-sb-divider { height: 1px; background: #eee; margin: 4px 0; }
+
+.wf-sb-cta {
+  margin-top: auto; padding: 16px 14px; border: 1px solid #ccc; border-radius: 12px;
+  background: #fff; text-align: center;
+}
+.wf-sb-cta-title { font-size: 12px; font-weight: 700; color: #000; margin-bottom: 6px; }
+.wf-sb-cta-desc { font-size: 11px; color: #666; margin-bottom: 10px; line-height: 1.4; }
+.wf-sb-cta-btn { width: 100%; padding: 9px 12px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+/* ============ MAIN ============ */
+.wf-main { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+.wf-main-wide { padding: 24px 28px; }
+
+/* Topbar inside main */
+.wf-mtopbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 8px;
+}
+.wf-mtopbar-left { font-size: 12px; color: #666; }
+.wf-mtopbar-right { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #666; }
+.wf-mtopbar-chip { padding: 6px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #333; }
+
+/* ============ GREETING HERO ============ */
+.wf-greet {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px 22px;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.wf-greet-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 6px; font-weight: 600; }
+.wf-greet-h { font-size: 24px; font-weight: 700; color: #000; margin: 0 0 4px; letter-spacing: -0.01em; }
+.wf-greet-sub { font-size: 13px; color: #666; margin: 0; }
+.wf-greet-badge {
+  padding: 6px 12px; border: 1px solid #000; border-radius: 999px; background: #000; color: #fff;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+}
+
+/* ============ BENTO GRID ============ */
+.wf-bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+.wf-bc-3 { grid-column: span 3; }
+.wf-bc-4 { grid-column: span 4; }
+.wf-bc-5 { grid-column: span 5; }
+.wf-bc-6 { grid-column: span 6; }
+.wf-bc-7 { grid-column: span 7; }
+.wf-bc-8 { grid-column: span 8; }
+.wf-bc-9 { grid-column: span 9; }
+.wf-bc-12 { grid-column: span 12; }
+
+/* ============ CARD PRIMITIVES ============ */
+.wf-c {
+  background: #fff; border: 1px solid #eee; border-radius: 14px;
+  padding: 18px; display: flex; flex-direction: column; gap: 10px;
+  min-height: 120px;
+}
+.wf-c-dark { background: #000; color: #fff; border-color: #000; }
+.wf-c-dark .wf-c-label { color: #999; }
+.wf-c-dark .wf-c-value { color: #fff; }
+.wf-c-dark .wf-c-sub { color: #ccc; }
+.wf-c-accent { background: #eee; border-color: #ccc; }
+.wf-c-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-c-title { font-size: 13px; font-weight: 600; color: #000; margin: 0; }
+.wf-c-value { font-size: 32px; font-weight: 800; color: #000; line-height: 1; letter-spacing: -0.02em; }
+.wf-c-value-xl { font-size: 42px; font-weight: 900; letter-spacing: -0.03em; }
+.wf-c-unit { font-size: 13px; color: #666; font-weight: 500; margin-left: 4px; }
+.wf-c-sub { font-size: 12px; color: #666; }
+.wf-c-trend-up { color: #000; font-weight: 600; }
+.wf-c-trend-down { color: #666; font-weight: 600; }
+.wf-c-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.wf-c-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.wf-c-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.wf-c-link { font-size: 12px; color: #000; font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; }
+
+/* Booking hero card */
+.wf-booking-hero { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px; }
+.wf-booking-title { font-size: 18px; font-weight: 700; color: #000; margin: 6px 0 4px; }
+.wf-booking-meta { font-size: 13px; color: #666; }
+.wf-booking-row { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; gap: 10px; }
+.wf-booking-actions { display: flex; gap: 8px; }
+
+/* Pro Status (dark) */
+.wf-pro {
+  background: #000; color: #fff; border-radius: 14px; padding: 20px;
+  display: flex; flex-direction: column; gap: 14px; min-height: 200px;
+}
+.wf-pro-eyebrow { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; font-weight: 700; }
+.wf-pro-user { display: flex; align-items: center; gap: 12px; }
+.wf-pro-avatar { width: 44px; height: 44px; border-radius: 50%; background: #333; border: 1px solid #666;
+  display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; }
+.wf-pro-name { font-size: 15px; font-weight: 700; color: #fff; }
+.wf-pro-meta { font-size: 11px; color: #999; }
+.wf-pro-hcp { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #333; padding-top: 12px; }
+.wf-pro-hcp-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #999; font-weight: 700; }
+.wf-pro-hcp-value { font-size: 34px; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -0.02em; }
+.wf-pro-hcp-badge { padding: 4px 10px; border: 1px solid #fff; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #fff; }
+
+/* Week calendar */
+.wf-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.wf-wday {
+  background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 10px 6px;
+  text-align: center; font-size: 11px; color: #666;
+}
+.wf-wday-name { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 4px; }
+.wf-wday-num { font-size: 16px; font-weight: 700; color: #333; line-height: 1; }
+.wf-wday-dot { width: 5px; height: 5px; border-radius: 50%; background: #333; margin: 6px auto 0; }
+.wf-wday.wf-active { background: #000; color: #fff; border-color: #000; }
+.wf-wday.wf-active .wf-wday-name, .wf-wday.wf-active .wf-wday-num { color: #fff; }
+.wf-wday.wf-active .wf-wday-dot { background: #fff; }
+
+/* TrackMan widget */
+.wf-trackman-stat { display: flex; flex-direction: column; gap: 4px; padding: 10px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-trackman-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; font-weight: 600; }
+.wf-trackman-value { font-size: 18px; font-weight: 800; color: #000; }
+.wf-trackman-spark { height: 20px; background: linear-gradient(90deg, #ccc 0%, #666 100%); border-radius: 4px; margin-top: 6px; opacity: 0.4; }
+
+/* KPI inline cards */
+.wf-kpi { display: flex; flex-direction: column; gap: 6px; }
+.wf-kpi-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-kpi-value { font-size: 28px; font-weight: 800; color: #000; line-height: 1; }
+.wf-kpi-sub { font-size: 11px; color: #666; }
+
+/* Coach note (option 1) */
+.wf-coach-note { border-left: 3px solid #000; padding-left: 14px; }
+.wf-coach-note-author { font-size: 11px; color: #666; font-weight: 600; margin-bottom: 6px; }
+.wf-coach-note-body { font-size: 13px; color: #333; line-height: 1.5; font-style: italic; margin: 0; }
+
+/* AI insight badge */
+.wf-ai-badge { display: inline-block; padding: 3px 8px; border: 1px solid #666; border-radius: 999px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #333; background: #eee; }
+
+/* Quick actions */
+.wf-quick { display: flex; flex-direction: column; gap: 6px; }
+.wf-quick-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 10px 12px; background: #fff; border: 1px solid #ccc; border-radius: 10px;
+  font-size: 13px; color: #000; cursor: pointer;
+}
+.wf-quick-btn:hover { background: #f5f5f5; }
+.wf-quick-btn-primary { background: #000; color: #fff; border-color: #000; }
+.wf-quick-arrow { font-size: 14px; color: #666; }
+.wf-quick-btn-primary .wf-quick-arrow { color: #fff; }
+
+/* Achievements */
+.wf-ach-row { display: flex; gap: 8px; }
+.wf-ach { flex: 1; padding: 10px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; text-align: center; }
+.wf-ach-ic { width: 32px; height: 32px; border-radius: 50%; background: #eee; border: 1px solid #ccc; margin: 0 auto 4px;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #333; }
+.wf-ach-name { font-size: 10px; font-weight: 600; color: #333; }
+
+/* Ring (streaks) */
+.wf-ring { width: 64px; height: 64px; border-radius: 50%; border: 4px solid #eee; border-top-color: #000;
+  display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+.wf-ring-value { font-size: 14px; font-weight: 800; color: #000; }
+
+/* Focus Today (option 2) */
+.wf-focus-hero {
+  background: #000; color: #fff; border-radius: 18px; padding: 28px; text-align: center;
+}
+.wf-focus-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; font-weight: 700; margin-bottom: 10px; }
+.wf-focus-title { font-size: 30px; font-weight: 800; color: #fff; margin: 0 0 8px; letter-spacing: -0.02em; }
+.wf-focus-sub { font-size: 14px; color: #999; margin: 0 0 18px; }
+.wf-focus-meta { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; }
+.wf-focus-meta-item { font-size: 12px; color: #ccc; }
+.wf-focus-meta-item strong { color: #fff; font-size: 15px; display: block; }
+.wf-focus-actions { display: flex; gap: 10px; justify-content: center; }
+.wf-focus-btn-primary { padding: 12px 20px; background: #fff; color: #000; border: none; border-radius: 999px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.wf-focus-btn-ghost { padding: 12px 20px; background: transparent; color: #fff; border: 1px solid #666; border-radius: 999px; font-size: 13px; cursor: pointer; }
+
+.wf-plan-list { display: flex; flex-direction: column; gap: 0; }
+.wf-plan-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid #eee; }
+.wf-plan-item:last-child { border-bottom: none; }
+.wf-plan-ic { width: 36px; height: 36px; border: 1px solid #ccc; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #666; }
+.wf-plan-body { flex: 1; }
+.wf-plan-title { font-size: 14px; font-weight: 600; color: #000; margin: 0 0 3px; }
+.wf-plan-desc { font-size: 12px; color: #666; margin: 0; }
+.wf-plan-time { font-size: 12px; color: #666; font-weight: 500; flex-shrink: 0; }
+
+/* Mini stats row (option 2) */
+.wf-mini-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+/* Data rich KPI strip (option 3) */
+.wf-kpi-strip {
+  display: grid; grid-template-columns: repeat(8, 1fr); gap: 0;
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px 0;
+}
+.wf-kpi-strip-cell { padding: 0 16px; border-right: 1px solid #eee; display: flex; flex-direction: column; gap: 4px; }
+.wf-kpi-strip-cell:last-child { border-right: none; }
+
+/* Widget rich (opt 3) */
+.wf-widget { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; }
+.wf-widget-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wf-widget-title { font-size: 13px; font-weight: 700; color: #000; }
+.wf-widget-tabs { display: flex; gap: 4px; }
+.wf-widget-tab { padding: 4px 10px; font-size: 11px; border: 1px solid #eee; border-radius: 999px; background: #fff; color: #666; cursor: pointer; }
+.wf-widget-tab.wf-active { background: #000; color: #fff; border-color: #000; }
+.wf-widget-chart { height: 140px; background: #f5f5f5; border: 1px solid #eee; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 11px; }
+.wf-sg-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+.wf-sg-label { width: 80px; font-size: 11px; color: #666; font-weight: 600; }
+.wf-sg-bar { flex: 1; height: 8px; background: #eee; border-radius: 999px; position: relative; overflow: hidden; }
+.wf-sg-fill { height: 100%; background: #000; border-radius: 999px; }
+.wf-sg-val { width: 42px; text-align: right; font-size: 11px; font-weight: 700; color: #000; }
+
+/* Progress Story (option 4) */
+.wf-hcp-hero {
+  background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 24px; display: grid; grid-template-columns: 220px 1fr; gap: 20px;
+}
+.wf-hcp-stat { display: flex; flex-direction: column; gap: 8px; }
+.wf-hcp-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-hcp-value { font-size: 56px; font-weight: 900; color: #000; line-height: 1; letter-spacing: -0.04em; }
+.wf-hcp-delta { font-size: 13px; color: #666; }
+.wf-hcp-chart { background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; min-height: 160px; display: flex; align-items: flex-end; padding: 16px; gap: 6px; }
+.wf-hcp-bar { flex: 1; background: linear-gradient(to top, #000, #666); border-radius: 3px 3px 0 0; }
+
+.wf-period-section {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px;
+}
+.wf-period-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+.wf-period-title { font-size: 14px; font-weight: 700; color: #000; }
+.wf-period-meta { font-size: 12px; color: #666; }
+.wf-period-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* Command Center (option 5) */
+.wf-cmd-hero { background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 32px; text-align: center; }
+.wf-cmd-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 14px; }
+.wf-cmd-bar {
+  max-width: 600px; margin: 0 auto 16px; padding: 14px 18px;
+  background: #f5f5f5; border: 1px solid #ccc; border-radius: 14px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 15px; color: #333;
+}
+.wf-cmd-bar-icon { width: 16px; height: 16px; border: 1px solid #666; border-radius: 4px; flex-shrink: 0; }
+.wf-cmd-bar-placeholder { flex: 1; text-align: left; color: #999; }
+.wf-cmd-bar-kbd { padding: 3px 8px; background: #fff; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; color: #666; font-family: monospace; }
+.wf-cmd-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.wf-cmd-chip { padding: 6px 12px; background: #fff; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #333; cursor: pointer; }
+.wf-cmd-chip:hover { background: #eee; }
+
+.wf-results { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; }
+.wf-results-head { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 10px; }
+.wf-result-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
+.wf-result-row:last-child { border-bottom: none; }
+.wf-result-ic { width: 28px; height: 28px; border: 1px solid #ccc; border-radius: 8px; flex-shrink: 0; }
+.wf-result-main { display: flex; align-items: center; gap: 12px; flex: 1; }
+.wf-result-title { font-size: 13px; font-weight: 600; color: #000; }
+.wf-result-meta { font-size: 11px; color: #999; }
+.wf-result-kbd { padding: 2px 6px; background: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; font-size: 10px; color: #666; font-family: monospace; }
+
+/* ============ MARKERS ============ */
+.wf-marker {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%; background: #000; color: #fff;
+  font-size: 10px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+}
+
+/* ============ ANNOTATIONS ============ */
+.wf-annotations { margin-top: 16px; padding: 20px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-annotations h3 { font-size: 14px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-annotations ul { margin: 0; padding-left: 20px; font-size: 13px; color: #333; }
+.wf-annotations li { margin-bottom: 6px; line-height: 1.5; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

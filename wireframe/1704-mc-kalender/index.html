@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Kalender — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Kalender</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Gantt Timeline</button>
+    <button class="tab-btn" data-tab="option-2">2: Instructor Grid</button>
+    <button class="tab-btn" data-tab="option-3">3: Capacity Heatmap</button>
+    <button class="tab-btn" data-tab="option-4">4: Drag & Drop</button>
+    <button class="tab-btn" data-tab="option-5">5: Day Lanes</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Gantt Timeline ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Gantt Timeline</span></h2>
+    <p class="option-description">Full XPO-stil gantt. Dark topbar, horisontal tidslinje, instruktører som lanes, bookings som fargede horisontale barer. Høyre drawer med booking-detaljer.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk elev / booking</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">UKE<span class="wf-marker">1</span></span>
+              <button class="mc-pill">◂</button>
+              <span class="mc-week-label">Uke 16 · 13–19. april 2026</span>
+              <button class="mc-pill">▸</button>
+              <button class="mc-pill mc-pill-ghost">I dag</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">INSTRUKTØR</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill">Anders</button>
+              <button class="mc-pill">Markus</button>
+              <button class="mc-pill">+ Coach 3</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">TYPE</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill"><span class="mc-dot mc-dot-coaching"></span>Coaching</button>
+              <button class="mc-pill"><span class="mc-dot mc-dot-trening"></span>Trening</button>
+              <button class="mc-pill"><span class="mc-dot mc-dot-turnering"></span>Turnering</button>
+              <button class="mc-pill"><span class="mc-dot mc-dot-blokkert"></span>Blokkert</button>
+            </div>
+            <button class="mc-cta">+ Ny booking</button>
+          </section>
+
+          <section class="mc-body mc-body-gantt">
+            <div class="mc-gantt">
+              <div class="mc-gantt-header">
+                <div class="mc-lane-label mc-lane-label-head">INSTRUKTØR<span class="wf-marker">2</span></div>
+                <div class="mc-timeline">
+                  <div class="mc-day-head">Man 13</div>
+                  <div class="mc-day-head">Tir 14</div>
+                  <div class="mc-day-head">Ons 15</div>
+                  <div class="mc-day-head">Tor 16</div>
+                  <div class="mc-day-head">Fre 17</div>
+                  <div class="mc-day-head">Lør 18</div>
+                  <div class="mc-day-head">Søn 19</div>
+                </div>
+              </div>
+
+              <div class="mc-gantt-row">
+                <div class="mc-lane-label">
+                  <div class="mc-lane-name">Anders K.</div>
+                  <div class="mc-lane-meta">12 økter · 94% fylt</div>
+                </div>
+                <div class="mc-timeline mc-timeline-tracks">
+                  <div class="mc-track"></div><div class="mc-track"></div><div class="mc-track"></div>
+                  <div class="mc-track"></div><div class="mc-track"></div><div class="mc-track"></div>
+                  <div class="mc-track"></div>
+                  <div class="mc-bar mc-bar-coaching" style="left:15%; width:5%;">Sofie V. 10:00<span class="wf-marker">3</span></div>
+                  <div class="mc-bar mc-bar-coaching" style="left:21%; width:5%;">Lars M. 14:00</div>
+                  <div class="mc-bar mc-bar-coaching" style="left:36%; width:5%;">Erik H. 09:00</div>
+                  <div class="mc-bar mc-bar-trening" style="left:58%; width:14%;">Junior-gruppe 09–12</div>
+                  <div class="mc-bar mc-bar-coaching" style="left:79%; width:5%;">Noah B. 11:00</div>
+                </div>
+              </div>
+
+              <div class="mc-gantt-row">
+                <div class="mc-lane-label">
+                  <div class="mc-lane-name">Markus R.P.</div>
+                  <div class="mc-lane-meta">9 økter · 72% fylt</div>
+                </div>
+                <div class="mc-timeline mc-timeline-tracks">
+                  <div class="mc-track"></div><div class="mc-track"></div><div class="mc-track"></div>
+                  <div class="mc-track"></div><div class="mc-track"></div><div class="mc-track"></div>
+                  <div class="mc-track"></div>
+                  <div class="mc-bar mc-bar-coaching" style="left:2%; width:5%;">Ida F. 08:40</div>
+                  <div class="mc-bar mc-bar-coaching mc-bar-active" style="left:30%; width:5%;">Erik H. 15:00<span class="wf-marker">4</span></div>
+                  <div class="mc-bar mc-bar-coaching" style="left:44%; width:5%;">Thomas L. 13:20</div>
+                  <div class="mc-bar mc-bar-coaching" style="left:65%; width:5%;">Marte K. 16:00</div>
+                </div>
+              </div>
+
+              <div class="mc-gantt-row">
+                <div class="mc-lane-label">
+                  <div class="mc-lane-name">+ Coach 3</div>
+                  <div class="mc-lane-meta">Ikke tildelt</div>
+                </div>
+                <div class="mc-timeline mc-timeline-tracks">
+                  <div class="mc-track"></div><div class="mc-track"></div><div class="mc-track"></div>
+                  <div class="mc-track"></div><div class="mc-track"></div><div class="mc-track"></div>
+                  <div class="mc-track"></div>
+                  <div class="mc-empty-lane">Slots kan tildeles ny coach</div>
+                </div>
+              </div>
+
+              <div class="mc-gantt-row">
+                <div class="mc-lane-label">
+                  <div class="mc-lane-name">Fasilitet</div>
+                  <div class="mc-lane-meta">Simulator · range</div>
+                </div>
+                <div class="mc-timeline mc-timeline-tracks">
+                  <div class="mc-track"></div><div class="mc-track"></div><div class="mc-track"></div>
+                  <div class="mc-track"></div><div class="mc-track"></div><div class="mc-track"></div>
+                  <div class="mc-track"></div>
+                  <div class="mc-bar mc-bar-blokkert" style="left:71%; width:14%;">Klubbmesterskap lør 08–18<span class="wf-marker">5</span></div>
+                </div>
+              </div>
+
+              <div class="mc-gantt-hours">
+                <span>08</span><span>10</span><span>12</span><span>14</span><span>16</span><span>18</span>
+              </div>
+            </div>
+
+            <aside class="mc-drawer">
+              <div class="mc-drawer-head">
+                <span class="mc-drawer-label">BOOKING-DETALJER<span class="wf-marker">6</span></span>
+                <button class="mc-drawer-close">✕</button>
+              </div>
+              <div class="mc-drawer-body">
+                <div class="mc-drawer-hero">
+                  <div class="mc-drawer-avatar">SV</div>
+                  <div>
+                    <div class="mc-drawer-name">Sofie V.</div>
+                    <div class="mc-drawer-sub">HCP 14 · Kunde siden 2024</div>
+                  </div>
+                </div>
+
+                <div class="mc-drawer-meta">
+                  <div class="mc-drawer-row"><span>Tid</span><strong>Tir 14. apr · 10:00–10:20</strong></div>
+                  <div class="mc-drawer-row"><span>Type</span><strong>Personlig coaching</strong></div>
+                  <div class="mc-drawer-row"><span>Coach</span><strong>Anders K.</strong></div>
+                  <div class="mc-drawer-row"><span>Sted</span><strong>Simulator 1</strong></div>
+                  <div class="mc-drawer-row"><span>Status</span><strong class="mc-drawer-status">Bekreftet</strong></div>
+                  <div class="mc-drawer-row"><span>Betalt</span><strong>Via Performance-abo</strong></div>
+                </div>
+
+                <div class="mc-drawer-note">
+                  <span class="mc-drawer-label-sm">NOTAT FRA ELEV</span>
+                  <p>"Ønsker fokus på driver-dispersjon. Sliter med pull siste runder."</p>
+                </div>
+
+                <div class="mc-drawer-actions">
+                  <button class="mc-action mc-action-primary">Endre tid</button>
+                  <button class="mc-action">Send melding</button>
+                  <button class="mc-action">Marker fullført</button>
+                  <button class="mc-action mc-action-danger">Avbestill<span class="wf-marker">7</span></button>
+                </div>
+              </div>
+            </aside>
+          </section>
+
+          <section class="mc-legend">
+            <span class="mc-legend-item"><span class="mc-dot mc-dot-coaching"></span>Coaching-økt (lime)</span>
+            <span class="mc-legend-item"><span class="mc-dot mc-dot-trening"></span>Gruppe / trening</span>
+            <span class="mc-legend-item"><span class="mc-dot mc-dot-turnering"></span>Turnering</span>
+            <span class="mc-legend-item"><span class="mc-dot mc-dot-blokkert"></span>Blokkert fasilitet</span>
+            <span class="mc-legend-item mc-legend-item-ghost">Dra bar for å reschedule · Rød ramme = konflikt</span>
+          </section>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Uke-nav + quick-filters:</strong> Piler for prev/neste uke, "I dag" for rask retur. Filter-pills for instruktør og type; multi-select mulig ved klikk.</li>
+        <li><strong>2 — Instruktør-lane:</strong> Hver coach har egen rad med navn + fill-rate (94% / 72%). Gir umiddelbar kapasitet-oversikt.</li>
+        <li><strong>3 — Event-bar:</strong> Horisontal bar med elev-navn + starttid. Fargekodet per type. Hover viser full tooltip, klikk åpner drawer.</li>
+        <li><strong>4 — Aktiv booking:</strong> Bar med lime ring viser hvilken som er valgt (matcher drawer-innhold).</li>
+        <li><strong>5 — Fasilitet-lane:</strong> Ikke-coach ressurser (klubbmesterskap, blokkerte dager) får egen bunn-lane for å unngå forvirring.</li>
+        <li><strong>6 — Høyre drawer:</strong> Alt om valgt booking: elev-info, tid, notat fra elev, status. RonDesignLab-mønster.</li>
+        <li><strong>7 — Avbestill:</strong> Rød knapp; trigger refusjonsregler-dialog (varsler automatisk om retningslinjer basert på hvor nær økten er).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Instructor Grid ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Instructor Grid</span></h2>
+    <p class="option-description">Google Calendar-resource view. Hver instruktør er egen kolonne, hver time er rad. Events plasseres som blokker i cellene.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <button class="mc-pill">◂</button>
+              <span class="mc-week-label">Tirsdag 14. april 2026<span class="wf-marker">1</span></span>
+              <button class="mc-pill">▸</button>
+              <button class="mc-pill mc-pill-ghost">I dag</button>
+            </div>
+            <div class="mc-filter-group">
+              <button class="mc-pill">Uke</button>
+              <button class="mc-pill mc-pill-active">Dag</button>
+              <button class="mc-pill">Måned</button>
+            </div>
+            <button class="mc-cta">+ Ny booking</button>
+          </section>
+
+          <section class="mc-grid-wrapper">
+            <div class="mc-grid">
+              <div class="mc-grid-header">
+                <div class="mc-grid-time-head">TID</div>
+                <div class="mc-grid-col-head">
+                  <div class="mc-col-name">Anders K.<span class="wf-marker">2</span></div>
+                  <div class="mc-col-fill">6 av 8 slots fylt</div>
+                </div>
+                <div class="mc-grid-col-head">
+                  <div class="mc-col-name">Markus R.P.</div>
+                  <div class="mc-col-fill">4 av 8 slots fylt</div>
+                </div>
+                <div class="mc-grid-col-head mc-grid-col-head-facility">
+                  <div class="mc-col-name">Simulator / bane</div>
+                  <div class="mc-col-fill">Fasilitet</div>
+                </div>
+              </div>
+
+              <div class="mc-grid-row">
+                <div class="mc-grid-time">08:00</div>
+                <div class="mc-grid-cell mc-grid-cell-empty">Ledig</div>
+                <div class="mc-grid-cell">
+                  <div class="mc-event mc-event-coaching">
+                    <div class="mc-event-time">08:40</div>
+                    <div class="mc-event-title">Ida F.</div>
+                    <div class="mc-event-sub">Coaching · Sim 2</div>
+                  </div>
+                </div>
+                <div class="mc-grid-cell mc-grid-cell-empty">—</div>
+              </div>
+
+              <div class="mc-grid-row">
+                <div class="mc-grid-time">10:00</div>
+                <div class="mc-grid-cell">
+                  <div class="mc-event mc-event-coaching mc-event-active">
+                    <div class="mc-event-time">10:00</div>
+                    <div class="mc-event-title">Sofie V.<span class="wf-marker">3</span></div>
+                    <div class="mc-event-sub">Coaching · Sim 1 · HCP 14</div>
+                  </div>
+                </div>
+                <div class="mc-grid-cell mc-grid-cell-empty">Ledig</div>
+                <div class="mc-grid-cell mc-grid-cell-empty">—</div>
+              </div>
+
+              <div class="mc-grid-row">
+                <div class="mc-grid-time">12:00</div>
+                <div class="mc-grid-cell">
+                  <div class="mc-event mc-event-coaching">
+                    <div class="mc-event-time">12:20</div>
+                    <div class="mc-event-title">Jon A.</div>
+                    <div class="mc-event-sub">Express · Range</div>
+                  </div>
+                </div>
+                <div class="mc-grid-cell mc-grid-cell-empty">Ledig</div>
+                <div class="mc-grid-cell mc-grid-cell-empty">—</div>
+              </div>
+
+              <div class="mc-grid-row">
+                <div class="mc-grid-time">14:00</div>
+                <div class="mc-grid-cell">
+                  <div class="mc-event mc-event-coaching">
+                    <div class="mc-event-time">14:00</div>
+                    <div class="mc-event-title">Lars M.</div>
+                    <div class="mc-event-sub">Performance · Sim 1</div>
+                  </div>
+                </div>
+                <div class="mc-grid-cell">
+                  <div class="mc-event mc-event-coaching">
+                    <div class="mc-event-time">13:20</div>
+                    <div class="mc-event-title">Thomas L.</div>
+                    <div class="mc-event-sub">Express · Sim 2</div>
+                  </div>
+                </div>
+                <div class="mc-grid-cell mc-grid-cell-empty">—</div>
+              </div>
+
+              <div class="mc-grid-row">
+                <div class="mc-grid-time">16:00</div>
+                <div class="mc-grid-cell mc-grid-cell-empty">Lunsjblokk<span class="wf-marker">4</span></div>
+                <div class="mc-grid-cell">
+                  <div class="mc-event mc-event-coaching">
+                    <div class="mc-event-time">16:00</div>
+                    <div class="mc-event-title">Marte K.</div>
+                    <div class="mc-event-sub">Coaching · Sim 1</div>
+                  </div>
+                </div>
+                <div class="mc-grid-cell mc-grid-cell-empty">—</div>
+              </div>
+
+              <div class="mc-grid-row">
+                <div class="mc-grid-time">18:00</div>
+                <div class="mc-grid-cell">
+                  <div class="mc-event mc-event-trening">
+                    <div class="mc-event-time">18:00–20:00</div>
+                    <div class="mc-event-title">Junior-gruppe</div>
+                    <div class="mc-event-sub">6 deltakere · Range</div>
+                  </div>
+                </div>
+                <div class="mc-grid-cell mc-grid-cell-empty">Ledig</div>
+                <div class="mc-grid-cell mc-grid-cell-empty">—</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="mc-summary-strip">
+            <div class="mc-summary-item"><span>I dag</span><strong>10 bookinger</strong></div>
+            <div class="mc-summary-item"><span>Fyllingsrate</span><strong>67%</strong></div>
+            <div class="mc-summary-item"><span>Ledige slots</span><strong>5</strong></div>
+            <div class="mc-summary-item"><span>Neste ledige</span><strong>Anders 08:00</strong></div>
+          </section>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Dag-view i stedet for uke:</strong> Grid-layouten egner seg best for én dag ad gangen. Uke/måned-toggle tilgjengelig.</li>
+        <li><strong>2 — Kolonne per ressurs:</strong> Anders, Markus, fasilitet. Fill-rate under navn for rask kapasitet-lesing.</li>
+        <li><strong>3 — Event-kort i celle:</strong> Kompakt kort med tid, elev, type og sted. Klikk for detaljer (drawer eller modal).</li>
+        <li><strong>4 — Tomme slots:</strong> "Ledig" eller "Lunsjblokk" for tydelig visuell kapasitet. Klikk for å opprette booking.</li>
+        <li>— Google Calendar-mønster er kjent men mindre "admin-tools"-følelse enn gantt. Bra for daglig planlegging.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Capacity Heatmap ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Capacity Heatmap</span></h2>
+    <p class="option-description">Heatmap-fokus: farger indikerer kapasitet-utnyttelse. Rask beslutnings-overflate for hvor nye slots bør åpnes.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-kpi-row">
+            <div class="mc-kpi"><span class="mc-kpi-label">DENNE UKEN</span><span class="mc-kpi-val">21</span><span class="mc-kpi-sub">bookinger</span></div>
+            <div class="mc-kpi"><span class="mc-kpi-label">FYLLINGSRATE</span><span class="mc-kpi-val">83%</span><span class="mc-kpi-sub">+6 vs forrige uke</span></div>
+            <div class="mc-kpi"><span class="mc-kpi-label">LEDIGE SLOTS</span><span class="mc-kpi-val">9</span><span class="mc-kpi-sub">som kan fylles</span></div>
+            <div class="mc-kpi"><span class="mc-kpi-label">INNTEKT</span><span class="mc-kpi-val">38 400</span><span class="mc-kpi-sub">kr booket</span></div>
+          </section>
+
+          <section class="mc-heatmap-wrap">
+            <div class="mc-heatmap-head">
+              <h3 class="mc-heatmap-title">Kapasitet · Anders K.<span class="wf-marker">1</span></h3>
+              <div class="mc-filter-group">
+                <button class="mc-pill mc-pill-active">Anders</button>
+                <button class="mc-pill">Markus</button>
+                <button class="mc-pill">Begge</button>
+              </div>
+            </div>
+
+            <div class="mc-heatmap">
+              <div class="mc-hm-row mc-hm-row-head">
+                <div class="mc-hm-time"></div>
+                <div class="mc-hm-day">Man 13</div>
+                <div class="mc-hm-day">Tir 14</div>
+                <div class="mc-hm-day">Ons 15</div>
+                <div class="mc-hm-day">Tor 16</div>
+                <div class="mc-hm-day">Fre 17</div>
+                <div class="mc-hm-day">Lør 18</div>
+                <div class="mc-hm-day">Søn 19</div>
+              </div>
+              <div class="mc-hm-row">
+                <div class="mc-hm-time">08</div>
+                <div class="mc-hm-cell mc-hm-c1">1</div>
+                <div class="mc-hm-cell mc-hm-c2">2</div>
+                <div class="mc-hm-cell mc-hm-c3">3</div>
+                <div class="mc-hm-cell mc-hm-c1">1</div>
+                <div class="mc-hm-cell mc-hm-c4">—</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+              </div>
+              <div class="mc-hm-row">
+                <div class="mc-hm-time">10</div>
+                <div class="mc-hm-cell mc-hm-c3">3<span class="wf-marker">2</span></div>
+                <div class="mc-hm-cell mc-hm-c3">3</div>
+                <div class="mc-hm-cell mc-hm-c2">2</div>
+                <div class="mc-hm-cell mc-hm-c3">3</div>
+                <div class="mc-hm-cell mc-hm-c4">—</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+              </div>
+              <div class="mc-hm-row">
+                <div class="mc-hm-time">12</div>
+                <div class="mc-hm-cell mc-hm-c1">1</div>
+                <div class="mc-hm-cell mc-hm-c2">2</div>
+                <div class="mc-hm-cell mc-hm-c1">1</div>
+                <div class="mc-hm-cell mc-hm-c2">2</div>
+                <div class="mc-hm-cell mc-hm-c4">—</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+              </div>
+              <div class="mc-hm-row">
+                <div class="mc-hm-time">14</div>
+                <div class="mc-hm-cell mc-hm-c3">3</div>
+                <div class="mc-hm-cell mc-hm-c3">3</div>
+                <div class="mc-hm-cell mc-hm-c3">3</div>
+                <div class="mc-hm-cell mc-hm-c2">2</div>
+                <div class="mc-hm-cell mc-hm-c4">—</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+              </div>
+              <div class="mc-hm-row">
+                <div class="mc-hm-time">16</div>
+                <div class="mc-hm-cell mc-hm-c2">2</div>
+                <div class="mc-hm-cell mc-hm-c1">1</div>
+                <div class="mc-hm-cell mc-hm-c2">2</div>
+                <div class="mc-hm-cell mc-hm-c3">3</div>
+                <div class="mc-hm-cell mc-hm-c4">—</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+              </div>
+              <div class="mc-hm-row">
+                <div class="mc-hm-time">18</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+                <div class="mc-hm-cell mc-hm-c1">1</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+                <div class="mc-hm-cell mc-hm-c4">—</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+                <div class="mc-hm-cell mc-hm-c0">0</div>
+              </div>
+            </div>
+
+            <div class="mc-heatmap-legend">
+              <span>Utnyttelse:</span>
+              <span class="mc-legend-chip mc-hm-c0">Ledig</span>
+              <span class="mc-legend-chip mc-hm-c1">Lav</span>
+              <span class="mc-legend-chip mc-hm-c2">Medium</span>
+              <span class="mc-legend-chip mc-hm-c3">Full</span>
+              <span class="mc-legend-chip mc-hm-c4">Stengt</span>
+            </div>
+          </section>
+
+          <section class="mc-insight-row">
+            <div class="mc-insight">
+              <span class="mc-insight-label">INNSIKT<span class="wf-marker">3</span></span>
+              <p><strong>Tirsdag 10:00–12:00</strong> er mest etterspurt. Vurder å åpne 1–2 ekstra slots her for Markus.</p>
+            </div>
+            <div class="mc-insight">
+              <span class="mc-insight-label">INGEN BOOKINGER</span>
+              <p><strong>Torsdag</strong> er blokkert (Anders på reise). Fredag er ledig — kan promoteres.</p>
+            </div>
+            <div class="mc-insight">
+              <span class="mc-insight-label">OVERFYLT</span>
+              <p>Onsdag 14:00 har venteliste på 2 elever. Forsøk å reschedule til fredag.</p>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Heatmap per coach:</strong> Én coach ad gangen gir klarhet. "Begge" summerer totalkapasitet.</li>
+        <li><strong>2 — Tall viser booking-antall:</strong> Ikke prosent — admin tenker i konkrete økter. Farge = utnyttelse.</li>
+        <li><strong>3 — Actionable insights:</strong> Heatmap er lite verdt alene; kombiner med konkrete anbefalinger ("åpne flere slots på X-tid").</li>
+        <li>— Klikk i en celle åpner liste over bookinger i den timen. Ikke primær driver — kapasitet er primær.</li>
+        <li>— Best som sekundær view supplerende gantt; ikke daglig-bruk view.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Drag & Drop ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Drag & Drop</span></h2>
+    <p class="option-description">Kanban-aktig. Ubooket slot-kø venstre, uke-dager som kolonner høyre. Admin drar slots inn i dager.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-week-label">Uke 16 · Planleggingsmodus<span class="wf-marker">1</span></span>
+            </div>
+            <div class="mc-filter-group">
+              <button class="mc-pill mc-pill-active">Anders</button>
+              <button class="mc-pill">Markus</button>
+            </div>
+            <button class="mc-cta">Publiser endringer</button>
+          </section>
+
+          <section class="mc-kanban">
+            <aside class="mc-pool">
+              <div class="mc-pool-head">
+                <span class="mc-pool-title">Ikke tildelt<span class="wf-marker">2</span></span>
+                <span class="mc-pool-count">6</span>
+              </div>
+              <p class="mc-pool-hint">Dra et kort inn i en dag for å planlegge.</p>
+
+              <div class="mc-slot mc-slot-coaching">
+                <div class="mc-slot-tag">COACHING 20 MIN</div>
+                <div class="mc-slot-name">Sofie V.</div>
+                <div class="mc-slot-sub">HCP 14 · Performance</div>
+                <div class="mc-slot-pref">Ønsket: Tir 10–12</div>
+              </div>
+
+              <div class="mc-slot mc-slot-coaching">
+                <div class="mc-slot-tag">COACHING 20 MIN</div>
+                <div class="mc-slot-name">Erik H.</div>
+                <div class="mc-slot-sub">HCP 18 · Express</div>
+                <div class="mc-slot-pref">Ønsket: Ons 15–17</div>
+              </div>
+
+              <div class="mc-slot mc-slot-coaching">
+                <div class="mc-slot-tag">COACHING 20 MIN</div>
+                <div class="mc-slot-name">Noah B.</div>
+                <div class="mc-slot-sub">HCP 12 · Performance Pro</div>
+                <div class="mc-slot-pref">Ønsket: Fredag morgen</div>
+              </div>
+
+              <div class="mc-slot mc-slot-trening">
+                <div class="mc-slot-tag">GRUPPE 3 TIMER</div>
+                <div class="mc-slot-name">Junior-gruppe</div>
+                <div class="mc-slot-sub">6 deltakere · Range</div>
+                <div class="mc-slot-pref">Ukentlig · fredag</div>
+              </div>
+
+              <div class="mc-slot mc-slot-coaching">
+                <div class="mc-slot-tag">FLEX 20</div>
+                <div class="mc-slot-name">Ventende: 2 stk</div>
+                <div class="mc-slot-sub">Engangs-økter</div>
+              </div>
+            </aside>
+
+            <div class="mc-days">
+              <div class="mc-day-col">
+                <div class="mc-day-head-col"><strong>Man 13</strong><span>2 økter</span></div>
+                <div class="mc-day-drop">
+                  <div class="mc-slot mc-slot-coaching mc-slot-placed">
+                    <div class="mc-slot-time">09:00</div>
+                    <div class="mc-slot-name">Ida F.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-day-col">
+                <div class="mc-day-head-col"><strong>Tir 14</strong><span>4 økter</span></div>
+                <div class="mc-day-drop mc-day-drop-active">
+                  <div class="mc-slot mc-slot-coaching mc-slot-placed">
+                    <div class="mc-slot-time">10:00</div>
+                    <div class="mc-slot-name">Sofie V.<span class="wf-marker">3</span></div>
+                  </div>
+                  <div class="mc-drop-hint">Slipp her for å tildele</div>
+                </div>
+              </div>
+
+              <div class="mc-day-col">
+                <div class="mc-day-head-col"><strong>Ons 15</strong><span>3 økter</span></div>
+                <div class="mc-day-drop">
+                  <div class="mc-slot mc-slot-coaching mc-slot-placed">
+                    <div class="mc-slot-time">15:00</div>
+                    <div class="mc-slot-name">Erik H.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-day-col">
+                <div class="mc-day-head-col"><strong>Tor 16</strong><span>Av</span></div>
+                <div class="mc-day-drop mc-day-drop-closed">Anders ute av drift</div>
+              </div>
+
+              <div class="mc-day-col">
+                <div class="mc-day-head-col"><strong>Fre 17</strong><span>1 økt</span></div>
+                <div class="mc-day-drop">
+                  <div class="mc-slot mc-slot-trening mc-slot-placed">
+                    <div class="mc-slot-time">09–12</div>
+                    <div class="mc-slot-name">Junior-gruppe</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-day-col">
+                <div class="mc-day-head-col"><strong>Lør 18</strong><span>Blokkert</span></div>
+                <div class="mc-day-drop mc-day-drop-closed">
+                  <div class="mc-slot mc-slot-blokkert mc-slot-placed">
+                    <div class="mc-slot-time">08–18</div>
+                    <div class="mc-slot-name">Klubbmesterskap</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-day-col">
+                <div class="mc-day-head-col"><strong>Søn 19</strong><span>0 økter</span></div>
+                <div class="mc-day-drop mc-day-drop-empty">Ingen økter planlagt<span class="wf-marker">4</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="mc-publish-strip">
+            <div class="mc-publish-text">
+              <strong>3 endringer ikke publisert.</strong> Elever vil bli varslet via e-post og SMS når du publiserer.
+            </div>
+            <div class="mc-publish-actions">
+              <button class="mc-action">Angre alle</button>
+              <button class="mc-action mc-action-primary">Publiser og varsle</button>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — "Planleggingsmodus":</strong> Tydelig at dette er for proaktiv planlegging, ikke reaktiv oppslag. Endringer publiseres i batch.</li>
+        <li><strong>2 — Ubooket slot-kø:</strong> Ventende elever + tilbakevendende økter som må plasseres. Preferanse-tidspunkt vises.</li>
+        <li><strong>3 — Drop-zone aktiv:</strong> Stiplet ramme når admin drar. Konflikter viser rød markering før slipp.</li>
+        <li><strong>4 — Tomme dager eksplisitt:</strong> "Ingen økter planlagt" inviterer til handling vs. bare tom plass.</li>
+        <li>— Krever drag-drop-bibliotek (dnd-kit el.l.) — implementasjon medium kompleksitet. Veldig bra for ukentlig planlegging.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Day Lanes ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Day Lanes</span></h2>
+    <p class="option-description">Dag-view med swim-lanes per instruktør. Detaljert for én dag om gangen. Bra for daglig planlegging av en travel dag.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab mc-tab-active">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-daynav">
+            <button class="mc-pill">◂ Man 13</button>
+            <div class="mc-day-hero">
+              <span class="mc-day-super">DAG-OVERSIKT<span class="wf-marker">1</span></span>
+              <h2>Tirsdag 14. april</h2>
+              <span class="mc-day-meta">10 bookinger · 67% fylt · 38 400 kr omsetning</span>
+            </div>
+            <button class="mc-pill">Ons 15 ▸</button>
+          </section>
+
+          <section class="mc-lanes">
+
+            <div class="mc-lane">
+              <div class="mc-lane-header">
+                <div class="mc-lane-badge">ANDERS K.<span class="wf-marker">2</span></div>
+                <div class="mc-lane-stats">6 økter · 120 min coaching</div>
+              </div>
+              <div class="mc-lane-track">
+                <div class="mc-lane-hours">
+                  <span>08</span><span>10</span><span>12</span><span>14</span><span>16</span><span>18</span>
+                </div>
+                <div class="mc-lane-events">
+                  <div class="mc-lane-event mc-event-coaching" style="left:4%; width:6%;">
+                    <div class="mc-le-time">08:20</div>
+                    <div class="mc-le-name">Ida F.</div>
+                  </div>
+                  <div class="mc-lane-event mc-event-coaching mc-event-active" style="left:20%; width:6%;">
+                    <div class="mc-le-time">10:00</div>
+                    <div class="mc-le-name">Sofie V.<span class="wf-marker">3</span></div>
+                  </div>
+                  <div class="mc-lane-event mc-event-coaching" style="left:36%; width:6%;">
+                    <div class="mc-le-time">12:20</div>
+                    <div class="mc-le-name">Jon A.</div>
+                  </div>
+                  <div class="mc-lane-event mc-event-coaching" style="left:52%; width:6%;">
+                    <div class="mc-le-time">14:00</div>
+                    <div class="mc-le-name">Lars M.</div>
+                  </div>
+                  <div class="mc-lane-event mc-event-coaching" style="left:68%; width:6%;">
+                    <div class="mc-le-time">16:00</div>
+                    <div class="mc-le-name">Noah B.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-lane">
+              <div class="mc-lane-header">
+                <div class="mc-lane-badge">MARKUS R.P.</div>
+                <div class="mc-lane-stats">4 økter · 80 min coaching</div>
+              </div>
+              <div class="mc-lane-track">
+                <div class="mc-lane-hours">
+                  <span>08</span><span>10</span><span>12</span><span>14</span><span>16</span><span>18</span>
+                </div>
+                <div class="mc-lane-events">
+                  <div class="mc-lane-event mc-event-coaching" style="left:7%; width:6%;">
+                    <div class="mc-le-time">08:40</div>
+                    <div class="mc-le-name">Erik H.</div>
+                  </div>
+                  <div class="mc-lane-event mc-event-coaching" style="left:45%; width:6%;">
+                    <div class="mc-le-time">13:20</div>
+                    <div class="mc-le-name">Thomas L.</div>
+                  </div>
+                  <div class="mc-lane-event mc-event-coaching" style="left:67%; width:6%;">
+                    <div class="mc-le-time">16:00</div>
+                    <div class="mc-le-name">Marte K.</div>
+                  </div>
+                  <div class="mc-lane-event mc-event-trening" style="left:82%; width:16%;">
+                    <div class="mc-le-time">18:00–20:00</div>
+                    <div class="mc-le-name">Junior-gruppe</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-lane">
+              <div class="mc-lane-header">
+                <div class="mc-lane-badge mc-lane-badge-facility">FASILITET</div>
+                <div class="mc-lane-stats">Simulator 1–2 · Range</div>
+              </div>
+              <div class="mc-lane-track">
+                <div class="mc-lane-hours">
+                  <span>08</span><span>10</span><span>12</span><span>14</span><span>16</span><span>18</span>
+                </div>
+                <div class="mc-lane-events">
+                  <div class="mc-lane-event mc-event-blokkert" style="left:32%; width:10%;">
+                    <div class="mc-le-time">12:00–13:00</div>
+                    <div class="mc-le-name">Lunsj-stengt<span class="wf-marker">4</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <section class="mc-day-footer">
+            <div class="mc-day-notes">
+              <h4>Dagens notater</h4>
+              <ul>
+                <li>Sofie V. har notat: fokus på driver-dispersjon.</li>
+                <li>Lars M. ønsker rebooke til onsdag hvis mulig.</li>
+                <li>Junior-gruppen har 1 ny deltaker i dag (Lukas O.).</li>
+              </ul>
+            </div>
+            <div class="mc-day-actions">
+              <button class="mc-action">Eksporter dag (PDF)</button>
+              <button class="mc-action">Send påminnelser<span class="wf-marker">5</span></button>
+              <button class="mc-action mc-action-primary">+ Ny booking</button>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Én dag i fokus:</strong> Helt annen modus enn uke-gantt. Admin planlegger én travel dag grundig.</li>
+        <li><strong>2 — Swim-lane per coach:</strong> Hver lane er et tydelig "territorium". Fasilitet-lane i bunn.</li>
+        <li><strong>3 — Event-kort:</strong> Kompakt med tid + elev-navn. Klikk for detaljer i modal eller side-drawer.</li>
+        <li><strong>4 — Blokkerte perioder:</strong> Lunsj-stengt / reservert facility er eksplisitt synlig i fasilitet-lane.</li>
+        <li><strong>5 — Send påminnelser:</strong> Batch-aksjon for alle dagens elever. Sparer tid.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>rask reschedule + full oversikt for én coach + admin</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Ukeoversikt</th><th>Reschedule-flyt</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Gantt Timeline</strong></td>
+          <td>XPO-stil dark topbar + horisontal tidslinje + høyre drawer</td>
+          <td>Svært god — hele uken synlig</td>
+          <td>Drag bar, klikk drawer</td>
+          <td>Medium</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><strong>2. Instructor Grid</strong></td>
+          <td>Google Calendar resource view (kolonner per coach)</td>
+          <td>Én dag av gangen</td>
+          <td>Kjent mønster, klikk-drag</td>
+          <td>Medium</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>3. Capacity Heatmap</strong></td>
+          <td>Fargefokus på utnyttelse — beslutning over daglig bruk</td>
+          <td>Ja, men lav detalj</td>
+          <td>Ikke primær</td>
+          <td>Lav</td>
+          <td>★★★☆☆</td>
+        </tr>
+        <tr>
+          <td><strong>4. Drag & Drop</strong></td>
+          <td>Kanban — slot-pool venstre, uke-dager høyre</td>
+          <td>Ja, planleggingsfokus</td>
+          <td>Ekte drag-drop</td>
+          <td>Høy (dnd-kit)</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>5. Day Lanes</strong></td>
+          <td>Dag-dypdykk med swim-lanes per coach</td>
+          <td>Nei — kun én dag</td>
+          <td>Drag i lane</td>
+          <td>Lav–medium</td>
+          <td>★★★☆☆</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Gantt Timeline</h3>
+      <p>Matcher RonDesignLab XPO-referansen eksakt (design-context sier "100% sånn jeg vil ha det"). Horisontal gantt gir hele uken på én skjerm, lanes per coach gjør konflikter åpenbare, høyre drawer holder detaljene strukturerte. Lime-bars for coaching gir brand-signatur uten å støye.</p>
+
+      <p><strong>Strategisk flow:</strong> Start med Option 1 som primær view. Vurder Option 4 (drag & drop) som egen "Planleggingsmodus"-toggle når ukentlig planlegging (vs. reaktiv oppslag) blir en egen arbeidsform. Option 3 (heatmap) kan bli en egen tab for ledelse / kapasitetsplanlegging på tvers av uker.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

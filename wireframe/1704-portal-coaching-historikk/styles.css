@@ -1,0 +1,157 @@
+/* === Portal Coaching-historikk — Wireframe Content CSS (B&W only) === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fafafa, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; min-height: 620px; }
+.browser-frame { max-width: 1100px; }
+
+/* ============ APP SHELL (portal light) ============ */
+.wf-app { display: grid; grid-template-columns: 200px 1fr; min-height: 620px; }
+.wf-sidebar { background: #fff; border-right: 1px solid #eee; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; }
+.wf-sidebar-logo { font-weight: 800; font-size: 12px; letter-spacing: 0.08em; color: #000; padding: 6px 10px 18px; border-bottom: 1px solid #eee; margin-bottom: 10px; }
+.wf-nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; font-size: 13px; color: #666; cursor: pointer; }
+.wf-nav-item:hover { background: #f5f5f5; color: #000; }
+.wf-nav-item.wf-active { background: #000; color: #fff; }
+.wf-nav-ico { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 3px; flex-shrink: 0; }
+.wf-active .wf-nav-ico { border-color: #fff; }
+.wf-main { padding: 20px 24px 28px; background: #f5f5f5; overflow: hidden; position: relative; }
+
+/* ============ PAGE HEAD ============ */
+.wf-page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.wf-page-title { font-size: 22px; font-weight: 700; color: #000; margin: 0 0 4px; letter-spacing: -0.01em; }
+.wf-page-sub { font-size: 13px; color: #666; margin: 0; }
+.wf-page-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ============ BUTTONS + PILLS ============ */
+.wf-btn { padding: 7px 14px; border: 1px solid #ccc; border-radius: 999px; background: #fff; color: #333; font-size: 12px; font-weight: 500; cursor: pointer; }
+.wf-btn:hover { background: #eee; }
+.wf-btn-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-pill { padding: 5px 12px; border-radius: 999px; background: #fff; border: 1px solid #ccc; font-size: 12px; color: #333; cursor: pointer; }
+.wf-pill:hover { background: #eee; }
+.wf-pill-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+
+/* ============ FILTER ROW ============ */
+.wf-filter-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 10px 14px; }
+.wf-filter-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; margin-right: 4px; }
+.wf-filter-sep { width: 1px; height: 20px; background: #eee; margin: 0 8px; }
+
+/* ============ FOCUS TAGS ============ */
+.wf-focus-tag { display: inline-flex; padding: 3px 10px; border-radius: 999px; background: #eee; color: #333; font-size: 11px; font-weight: 600; border: 1px solid #ddd; }
+
+/* ============ OPT 1: SESSION CARDS ============ */
+.wf-session-list { display: flex; flex-direction: column; gap: 12px; }
+.wf-session-card { background: #fff; border: 1px solid #eee; border-radius: 12px; overflow: hidden; }
+.wf-session-head { display: flex; align-items: center; gap: 16px; padding: 14px 18px; border-bottom: 1px solid #eee; }
+.wf-session-date { width: 56px; height: 56px; border: 1px solid #ddd; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; background: #fafafa; }
+.wf-session-day { font-size: 20px; font-weight: 800; color: #000; line-height: 1; }
+.wf-session-mon { font-size: 10px; font-weight: 700; color: #666; letter-spacing: 0.08em; margin-top: 2px; }
+.wf-session-title-block { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.wf-session-trainer { font-size: 15px; font-weight: 700; color: #000; }
+.wf-session-meta { font-size: 12px; color: #666; }
+.wf-badge-latest { padding: 4px 10px; background: #000; color: #fff; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.wf-session-body { padding: 16px 18px; }
+.wf-session-summary-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; margin-bottom: 6px; }
+.wf-session-summary { font-size: 13px; line-height: 1.55; color: #333; margin: 0 0 14px; }
+.wf-session-columns { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; padding-top: 12px; border-top: 1px solid #eee; }
+.wf-session-col { display: flex; flex-direction: column; gap: 8px; }
+.wf-col-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; }
+.wf-bullet-list { margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 4px; }
+.wf-bullet-list li { font-size: 12px; color: #333; line-height: 1.4; }
+.wf-focus-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.wf-session-foot { display: flex; gap: 18px; padding: 10px 18px; background: #fafafa; border-top: 1px solid #eee; }
+.wf-foot-link { font-size: 12px; color: #333; font-weight: 600; cursor: pointer; text-decoration: underline; text-decoration-color: #ccc; }
+.wf-foot-link:hover { color: #000; text-decoration-color: #000; }
+.wf-session-card-collapsed .wf-session-head { border-bottom: none; padding: 12px 18px; }
+.wf-session-card-collapsed .wf-session-trainer { font-size: 13px; }
+.wf-load-more { text-align: center; padding: 14px; font-size: 12px; color: #666; margin-top: 12px; border: 1px dashed #ccc; border-radius: 8px; cursor: pointer; }
+
+/* ============ OPT 2: TIMELINE ============ */
+.wf-timeline { position: relative; padding-left: 28px; }
+.wf-timeline::before { content: ''; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: #ddd; }
+.wf-timeline-node, .wf-timeline-milestone { position: relative; margin-bottom: 18px; }
+.wf-timeline-marker { position: absolute; left: -22px; top: 8px; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid #666; }
+.wf-timeline-marker-milestone { width: 20px; height: 20px; left: -25px; top: 6px; background: #000; border-color: #000; }
+.wf-timeline-content { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 12px 16px; }
+.wf-timeline-milestone .wf-timeline-content { background: #fafafa; border: 1px solid #999; }
+.wf-timeline-milestone-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #000; margin-bottom: 4px; }
+.wf-timeline-milestone-title { font-size: 16px; font-weight: 800; color: #000; margin-bottom: 4px; }
+.wf-timeline-milestone-sub { font-size: 12px; color: #666; }
+.wf-timeline-head-row { display: flex; justify-content: space-between; font-size: 11px; color: #666; margin-bottom: 4px; font-weight: 600; letter-spacing: 0.04em; }
+.wf-timeline-date { color: #000; }
+.wf-timeline-title { font-size: 14px; font-weight: 700; color: #000; margin-bottom: 4px; }
+.wf-timeline-summary { font-size: 12px; color: #333; line-height: 1.5; margin-bottom: 8px; }
+.wf-timeline-focus { display: flex; gap: 6px; flex-wrap: wrap; }
+.wf-timeline-insight { margin-top: 10px; padding: 8px 12px; background: #f0f0f0; border-left: 3px solid #000; font-size: 11px; color: #333; font-weight: 600; }
+.wf-timeline-node-dim .wf-timeline-content { opacity: 0.55; }
+.wf-timeline-load-more { text-align: center; padding: 12px; font-size: 12px; color: #999; font-style: italic; }
+
+/* ============ OPT 3: COACH PROFILE ============ */
+.wf-coach-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.wf-coach-col { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.wf-coach-head { display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+.wf-coach-avatar { width: 44px; height: 44px; border-radius: 50%; background: #eee; color: #000; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; border: 1px solid #ccc; }
+.wf-coach-name { font-size: 15px; font-weight: 700; color: #000; }
+.wf-coach-title { font-size: 12px; color: #666; margin-top: 2px; }
+.wf-coach-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.wf-coach-stat { background: #fafafa; border-radius: 8px; padding: 10px; }
+.wf-coach-stat-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #999; }
+.wf-coach-stat-val { font-size: 14px; font-weight: 800; color: #000; margin-top: 3px; }
+.wf-coach-subsec { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; margin-top: 4px; }
+.wf-focus-bars { display: flex; flex-direction: column; gap: 6px; }
+.wf-focus-bar { display: grid; grid-template-columns: 110px 1fr 30px; gap: 8px; align-items: center; font-size: 12px; color: #333; }
+.wf-focus-bar-track { height: 8px; background: #eee; border-radius: 999px; overflow: hidden; }
+.wf-focus-bar-fill { display: block; height: 100%; background: #000; }
+.wf-focus-bar-val { font-size: 11px; font-weight: 700; color: #000; text-align: right; font-variant-numeric: tabular-nums; }
+.wf-coach-session { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 12px; }
+.wf-coach-session-date { color: #666; font-weight: 600; min-width: 50px; }
+.wf-coach-session-sum { color: #333; flex: 1; }
+.wf-coach-more { font-size: 11px; color: #666; padding: 6px 0; cursor: pointer; text-align: center; font-style: italic; }
+.wf-coach-compare { margin-top: 16px; background: #fafafa; border: 1px solid #eee; border-left: 3px solid #000; border-radius: 6px; padding: 12px 16px; }
+.wf-coach-compare-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #000; margin-bottom: 6px; }
+.wf-coach-compare-body { font-size: 12px; color: #333; margin: 0; line-height: 1.55; }
+
+/* ============ OPT 4: HEATMAP ============ */
+.wf-heatmap-wrap { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+.wf-heatmap-head { display: grid; grid-template-columns: 110px repeat(12, 1fr); gap: 3px; margin-bottom: 6px; font-size: 10px; color: #999; font-weight: 600; text-align: center; }
+.wf-heatmap-row { display: grid; grid-template-columns: 110px repeat(12, 1fr); gap: 3px; margin-bottom: 3px; align-items: center; }
+.wf-heatmap-label { font-size: 12px; font-weight: 600; color: #333; }
+.wf-heatmap-cell { height: 26px; border-radius: 4px; border: 1px solid #eee; }
+.wf-hm-0 { background: #fafafa; }
+.wf-hm-1 { background: #e0e0e0; }
+.wf-hm-2 { background: #999; }
+.wf-hm-3 { background: #333; }
+.wf-heatmap-legend { display: flex; align-items: center; gap: 6px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #eee; font-size: 11px; color: #666; justify-content: flex-end; }
+.wf-heatmap-legend .wf-heatmap-cell { width: 22px; height: 14px; }
+.wf-insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.wf-insight-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; }
+.wf-insight-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; }
+.wf-insight-value { font-size: 20px; font-weight: 800; color: #000; margin: 6px 0 4px; }
+.wf-insight-sub { font-size: 12px; color: #666; line-height: 1.45; }
+.wf-insight-card-warn { background: #fafafa; border: 1px solid #000; }
+
+/* ============ OPT 5: ACTION ITEMS ============ */
+.wf-action-group { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; }
+.wf-action-group-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid #eee; margin-bottom: 10px; }
+.wf-action-group-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #000; }
+.wf-action-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+.wf-action-item:last-child { border-bottom: none; }
+.wf-action-check { margin-top: 3px; width: 16px; height: 16px; accent-color: #000; cursor: pointer; }
+.wf-action-body { flex: 1; }
+.wf-action-text { font-size: 13px; font-weight: 600; color: #000; line-height: 1.4; }
+.wf-action-meta { font-size: 11px; color: #666; margin-top: 3px; }
+.wf-action-prio { padding: 3px 8px; border-radius: 4px; font-size: 9px; font-weight: 800; letter-spacing: 0.08em; border: 1px solid #ccc; flex-shrink: 0; }
+.wf-prio-high { background: #000; color: #fff; border-color: #000; }
+.wf-prio-med { background: #666; color: #fff; border-color: #666; }
+.wf-prio-low { background: #eee; color: #333; }
+.wf-action-item-done .wf-action-text { text-decoration: line-through; color: #999; }
+.wf-action-group-dim { background: #fafafa; }
+.wf-action-group-dim .wf-action-group-title { color: #666; }
+
+/* ============ SUMMARY TABLE ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 12px; color: #333; margin-top: 12px; }
+.wf-summary-table th, .wf-summary-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; vertical-align: top; }
+.wf-summary-table th { background: #fafafa; font-size: 11px; color: #666; font-weight: 700; letter-spacing: 0.04em; }
+.wf-recommendation { margin-top: 20px; padding: 16px; background: #fafafa; border: 1px solid #eee; border-radius: 8px; }
+.wf-recommendation h3 { margin: 0 0 8px; font-size: 14px; color: #000; }
+.wf-recommendation p { font-size: 12px; color: #333; line-height: 1.6; margin: 0 0 10px; }
+.wf-recommendation ul { margin: 0; padding-left: 20px; }
+.wf-recommendation li { font-size: 12px; color: #333; line-height: 1.5; }

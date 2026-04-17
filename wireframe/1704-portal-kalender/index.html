@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalender — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Kalender</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Week Apple</button>
+    <button class="tab-btn" data-tab="option-2">2: Month Grid</button>
+    <button class="tab-btn" data-tab="option-3">3: Day Focus</button>
+    <button class="tab-btn" data-tab="option-4">4: Timeline Feed</button>
+    <button class="tab-btn" data-tab="option-5">5: Agenda List</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Week Apple ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Week Apple</span></h2>
+    <p class="option-description">Apple Calendar-inspirert ukevisning. 7 kolonner (Man–Søn), 24 timer vertikalt. Events som fargede blokker. Klassisk, trygg og kjent — lav kognitiv belastning.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">portal.akgolf.no/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Kalender</div>
+            <div class="wf-sidebar-foot">
+              <div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Kalender<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Alt i Portalen på ett sted — bookinger, coaching-økter, treningsøkter og turneringer.</p>
+              </div>
+              <div class="wf-page-actions">
+                <span class="wf-sync-hint"><span class="wf-sync-hint-dot"></span>Google Cal synkronisert</span>
+                <button class="wf-btn">Synk-innstillinger<span class="wf-marker">2</span></button>
+                <button class="wf-btn wf-btn-cta">+ Ny booking</button>
+              </div>
+            </div>
+
+            <div class="wf-filter-bar">
+              <span class="wf-filter-label">Vis</span>
+              <div class="wf-filter-group">
+                <span class="wf-chip wf-type-booking wf-active"><span class="wf-chip-dot"></span>Booking</span>
+                <span class="wf-chip wf-type-coaching wf-active"><span class="wf-chip-dot"></span>Coaching</span>
+                <span class="wf-chip wf-type-trening wf-active"><span class="wf-chip-dot"></span>Trening</span>
+                <span class="wf-chip wf-type-turnering wf-active"><span class="wf-chip-dot"></span>Turnering</span>
+              </div>
+            </div>
+
+            <div class="wf-week-bar">
+              <div class="wf-week-nav">
+                <button class="wf-btn-icon">‹</button>
+                <button class="wf-btn">Denne uken</button>
+                <button class="wf-btn-icon">›</button>
+                <span class="wf-week-title">April 2026</span>
+                <span class="wf-week-range">· uke 16 · 13.–19. apr</span>
+              </div>
+              <div class="wf-week-view-toggle">
+                <button>Dag</button>
+                <button class="wf-active">Uke</button>
+                <button>Måned</button>
+                <button>Agenda</button>
+              </div>
+            </div>
+
+            <div class="wf-week"><span class="wf-marker">3</span>
+              <div class="wf-week-head">
+                <div class="wf-gutter"></div>
+                <div><div class="wf-day-label">Man</div><div class="wf-day-num">13</div></div>
+                <div class="wf-day-today"><div class="wf-day-label">Tir</div><div class="wf-day-num">14</div></div>
+                <div><div class="wf-day-label">Ons</div><div class="wf-day-num">15</div></div>
+                <div><div class="wf-day-label">Tor</div><div class="wf-day-num">16</div></div>
+                <div><div class="wf-day-label">Fre</div><div class="wf-day-num">17</div></div>
+                <div><div class="wf-day-label">Lør</div><div class="wf-day-num">18</div></div>
+                <div><div class="wf-day-label">Søn</div><div class="wf-day-num">19</div></div>
+              </div>
+              <div class="wf-week-body">
+                <div class="wf-hours">
+                  <div class="wf-hour">08:00</div>
+                  <div class="wf-hour">09:00</div>
+                  <div class="wf-hour">10:00</div>
+                  <div class="wf-hour">11:00</div>
+                  <div class="wf-hour">12:00</div>
+                  <div class="wf-hour">13:00</div>
+                  <div class="wf-hour">14:00</div>
+                  <div class="wf-hour">15:00</div>
+                  <div class="wf-hour">16:00</div>
+                  <div class="wf-hour">17:00</div>
+                  <div class="wf-hour">18:00</div>
+                  <div class="wf-hour">19:00</div>
+                </div>
+                <!-- Mon -->
+                <div class="wf-day-col">
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                </div>
+                <!-- Tue (today) -->
+                <div class="wf-day-col">
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-event wf-ev-booking" style="top:76px; height:30px;"><span class="wf-event-time">10:00–10:20</span><span class="wf-event-title">Coaching m/ Anders</span></div>
+                </div>
+                <!-- Wed -->
+                <div class="wf-day-col">
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-event wf-ev-trening" style="top:328px; height:58px;"><span class="wf-event-time">17:00–18:00</span><span class="wf-event-title">Short game (Planlegger)</span></div>
+                </div>
+                <!-- Thu -->
+                <div class="wf-day-col">
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-event wf-ev-coaching" style="top:40px; height:30px;"><span class="wf-event-time">09:00–09:20</span><span class="wf-event-title">Oppfølging video</span></div>
+                </div>
+                <!-- Fri -->
+                <div class="wf-day-col">
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-event wf-ev-trening" style="top:256px; height:58px;"><span class="wf-event-time">15:00–16:00</span><span class="wf-event-title">Putting 20–40m</span></div>
+                </div>
+                <!-- Sat -->
+                <div class="wf-day-col">
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-event wf-ev-turnering" style="top:40px; height:160px;"><span class="wf-event-time">09:00–13:30</span><span class="wf-event-title">Klubbmesterskap R1</span></div>
+                </div>
+                <!-- Sun -->
+                <div class="wf-day-col">
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                  <div class="wf-hour-slot"></div><div class="wf-hour-slot"></div><div class="wf-hour-slot"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-legend"><span class="wf-marker">4</span>
+              <div class="wf-legend-item"><span class="wf-legend-swatch"></span>Booking (instruktør)</div>
+              <div class="wf-legend-item"><span class="wf-legend-swatch wf-sw-coaching"></span>Coaching (gjennomført)</div>
+              <div class="wf-legend-item"><span class="wf-legend-swatch wf-sw-trening"></span>Trening (egen økt)</div>
+              <div class="wf-legend-item"><span class="wf-legend-swatch wf-sw-turnering"></span>Turnering</div>
+            </div>
+
+            <button class="wf-btn-fab" title="Ny event">+</button>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Klar etikett:</strong> "Kalender" uten tekniske detaljer. Subtittel forklarer hva som er merged (bookinger, coaching, trening, turneringer).</li>
+        <li><strong>2 — Google Cal-sync synlig:</strong> Status-pill viser at sync er på. "Synk-innstillinger" åpner modal — valgfritt, ikke påtvunget.</li>
+        <li><strong>3 — Ukegrid er primærflaten:</strong> 7×12 timer. Apple Calendar-mønster — 90% av brukere kjenner det umiddelbart. Aktiv dag får uthevet dato-pill.</li>
+        <li><strong>4 — Fargelegenden nederst:</strong> Sekundær, men gjør fargekoden lærbar. Event-type-filterne øverst er primærkontrollen.</li>
+        <li>— Floating "+ Ny"-knapp: Hurtigvei til ny event/booking uten å navigere bort fra kalenderen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Month Grid ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Month Grid</span></h2>
+    <p class="option-description">Klassisk måned-grid (6×7). Events som fargede pills i cellene. Dag-detalj-panel til høyre når celle klikkes. Helikopter-view — bra for sesongplanlegging og turneringsoversikt.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">portal.akgolf.no/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Kalender</div>
+            <div class="wf-sidebar-foot">
+              <div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Kalender</h1>
+                <p class="wf-page-sub">Månedsoversikt — klikk en dag for detaljer.</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Synk-innstillinger</button>
+                <button class="wf-btn wf-btn-cta">+ Ny booking</button>
+              </div>
+            </div>
+
+            <div class="wf-week-bar">
+              <div class="wf-week-nav">
+                <button class="wf-btn-icon">‹</button>
+                <button class="wf-btn">I dag</button>
+                <button class="wf-btn-icon">›</button>
+                <span class="wf-week-title">April 2026<span class="wf-marker">1</span></span>
+              </div>
+              <div class="wf-week-view-toggle">
+                <button>Dag</button>
+                <button>Uke</button>
+                <button class="wf-active">Måned</button>
+                <button>Agenda</button>
+              </div>
+            </div>
+
+            <div class="wf-filter-bar">
+              <span class="wf-filter-label">Vis</span>
+              <span class="wf-chip wf-type-booking wf-active"><span class="wf-chip-dot"></span>Booking</span>
+              <span class="wf-chip wf-type-coaching wf-active"><span class="wf-chip-dot"></span>Coaching</span>
+              <span class="wf-chip wf-type-trening wf-active"><span class="wf-chip-dot"></span>Trening</span>
+              <span class="wf-chip wf-type-turnering wf-active"><span class="wf-chip-dot"></span>Turnering</span>
+            </div>
+
+            <div class="wf-month-layout">
+              <div class="wf-month"><span class="wf-marker">2</span>
+                <div class="wf-month-head">
+                  <div>Man</div><div>Tir</div><div>Ons</div><div>Tor</div><div>Fre</div><div>Lør</div><div>Søn</div>
+                </div>
+                <div class="wf-month-grid">
+                  <div class="wf-month-cell wf-other-month"><span class="wf-cell-num">30</span></div>
+                  <div class="wf-month-cell wf-other-month"><span class="wf-cell-num">31</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">1</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">2</span><div class="wf-cell-events"><span class="wf-pill wf-pill-trening">Putt · 30min</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">3</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">4</span><div class="wf-cell-events"><span class="wf-pill">10:00 Coaching</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">5</span></div>
+
+                  <div class="wf-month-cell"><span class="wf-cell-num">6</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">7</span><div class="wf-cell-events"><span class="wf-pill">10:00 Coaching</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">8</span><div class="wf-cell-events"><span class="wf-pill wf-pill-trening">Chip · 45min</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">9</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">10</span><div class="wf-cell-events"><span class="wf-pill wf-pill-trening">Tee · 40min</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">11</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">12</span></div>
+
+                  <div class="wf-month-cell"><span class="wf-cell-num">13</span></div>
+                  <div class="wf-month-cell wf-today"><span class="wf-cell-num">14</span><div class="wf-cell-events"><span class="wf-pill">10:00 Coaching</span></div></div>
+                  <div class="wf-month-cell wf-selected"><span class="wf-cell-num">15</span><div class="wf-cell-events"><span class="wf-pill wf-pill-trening">Short game</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">16</span><div class="wf-cell-events"><span class="wf-pill wf-pill-coaching">Video</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">17</span><div class="wf-cell-events"><span class="wf-pill wf-pill-trening">Putt 20–40m</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">18</span><div class="wf-cell-events"><span class="wf-pill wf-pill-turnering">Klubbmst. R1</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">19</span><div class="wf-cell-events"><span class="wf-pill wf-pill-turnering">Klubbmst. R2</span></div></div>
+
+                  <div class="wf-month-cell"><span class="wf-cell-num">20</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">21</span><div class="wf-cell-events"><span class="wf-pill">10:00 Coaching</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">22</span><div class="wf-cell-events"><span class="wf-pill wf-pill-trening">Jern · 60min</span><span class="wf-pill-more">+1 flere</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">23</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">24</span><div class="wf-cell-events"><span class="wf-pill wf-pill-trening">Range</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">25</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">26</span></div>
+
+                  <div class="wf-month-cell"><span class="wf-cell-num">27</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">28</span><div class="wf-cell-events"><span class="wf-pill">10:00 Coaching</span></div></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">29</span></div>
+                  <div class="wf-month-cell"><span class="wf-cell-num">30</span></div>
+                  <div class="wf-month-cell wf-other-month"><span class="wf-cell-num">1</span></div>
+                  <div class="wf-month-cell wf-other-month"><span class="wf-cell-num">2</span></div>
+                  <div class="wf-month-cell wf-other-month"><span class="wf-cell-num">3</span></div>
+                </div>
+              </div>
+
+              <aside class="wf-detail-panel"><span class="wf-marker">3</span>
+                <div class="wf-detail-head">
+                  <div class="wf-detail-date">Onsdag 15. april</div>
+                  <div class="wf-detail-sub">1 event · neste om 2 timer</div>
+                </div>
+                <div class="wf-detail-events">
+                  <div class="wf-detail-event">
+                    <div>
+                      <div class="wf-detail-event-time">17:00</div>
+                    </div>
+                    <div>
+                      <div class="wf-detail-event-title">Short game-økt</div>
+                      <div class="wf-detail-event-meta">Fra Planlegger · 60min · Chip + pitch 20–40m</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="wf-drawer-actions">
+                  <button class="wf-btn">Rediger</button>
+                  <button class="wf-btn wf-btn-ghost">Fjern fra kalender</button>
+                </div>
+              </aside>
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Måneds-tittel fremst:</strong> "April 2026" er forankringen. "I dag"-knapp returnerer til nåværende måned.</li>
+        <li><strong>2 — Tett informasjonstetthet:</strong> Turneringer (18.–19.) blir umiddelbart synlige som varsel-pills — bra for langtidsplanlegging.</li>
+        <li><strong>3 — Detalj-panel til høyre:</strong> Viser selektert dag uten å navigere bort. Lyst footprint for å unngå kognitiv bytte av kontekst.</li>
+        <li>— "+1 flere" i tette dager: Forhindrer at cellene eksploderer. Klikk ekspanderer dagen i panelet.</li>
+        <li>— Best for: Sesong-planlegging, turnerings-overblikk, ukeanalyse på høyt nivå. Ikke best for tidsnøyaktig planlegging.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Day Focus ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Day Focus</span></h2>
+    <p class="option-description">Fokuser én dag. Tidslinje med events + detaljer. Mini-kalender til venstre for rask navigasjon. Best når du planlegger dagen din nøye eller har mange events per dag.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">portal.akgolf.no/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Kalender</div>
+            <div class="wf-sidebar-foot">
+              <div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Kalender</h1>
+                <p class="wf-page-sub">Dagsfokus — én dag om gangen, alle detaljer synlige.</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Synk-innstillinger</button>
+                <button class="wf-btn wf-btn-cta">+ Ny booking</button>
+              </div>
+            </div>
+
+            <div class="wf-week-bar">
+              <div class="wf-week-nav">
+                <button class="wf-btn-icon">‹</button>
+                <button class="wf-btn">I dag</button>
+                <button class="wf-btn-icon">›</button>
+                <span class="wf-week-title">Tirsdag 14. april 2026</span>
+              </div>
+              <div class="wf-week-view-toggle">
+                <button class="wf-active">Dag</button>
+                <button>Uke</button>
+                <button>Måned</button>
+                <button>Agenda</button>
+              </div>
+            </div>
+
+            <div class="wf-day-layout">
+              <aside>
+                <div class="wf-mini-cal"><span class="wf-marker">1</span>
+                  <div class="wf-mini-head">
+                    <button>‹</button>
+                    <span>April 2026</span>
+                    <button>›</button>
+                  </div>
+                  <div class="wf-mini-grid">
+                    <div class="wf-mini-dow">M</div><div class="wf-mini-dow">T</div><div class="wf-mini-dow">O</div>
+                    <div class="wf-mini-dow">T</div><div class="wf-mini-dow">F</div><div class="wf-mini-dow">L</div><div class="wf-mini-dow">S</div>
+
+                    <div class="wf-mini-day wf-other">30</div><div class="wf-mini-day wf-other">31</div>
+                    <div class="wf-mini-day">1</div><div class="wf-mini-day wf-has">2</div>
+                    <div class="wf-mini-day">3</div><div class="wf-mini-day wf-has">4</div><div class="wf-mini-day">5</div>
+
+                    <div class="wf-mini-day">6</div><div class="wf-mini-day wf-has">7</div>
+                    <div class="wf-mini-day wf-has">8</div><div class="wf-mini-day">9</div>
+                    <div class="wf-mini-day wf-has">10</div><div class="wf-mini-day">11</div><div class="wf-mini-day">12</div>
+
+                    <div class="wf-mini-day">13</div><div class="wf-mini-day wf-has wf-selected">14</div>
+                    <div class="wf-mini-day wf-has">15</div><div class="wf-mini-day wf-has">16</div>
+                    <div class="wf-mini-day wf-has">17</div><div class="wf-mini-day wf-has">18</div>
+                    <div class="wf-mini-day wf-has">19</div>
+
+                    <div class="wf-mini-day">20</div><div class="wf-mini-day wf-has">21</div>
+                    <div class="wf-mini-day wf-has">22</div><div class="wf-mini-day">23</div>
+                    <div class="wf-mini-day wf-has">24</div><div class="wf-mini-day">25</div><div class="wf-mini-day">26</div>
+
+                    <div class="wf-mini-day">27</div><div class="wf-mini-day wf-has">28</div>
+                    <div class="wf-mini-day">29</div><div class="wf-mini-day">30</div>
+                    <div class="wf-mini-day wf-other">1</div><div class="wf-mini-day wf-other">2</div><div class="wf-mini-day wf-other">3</div>
+                  </div>
+                </div>
+
+                <div class="wf-upcoming"><span class="wf-marker">2</span>
+                  <h4>Kommende</h4>
+                  <div class="wf-upcoming-list">
+                    <div class="wf-upcoming-item">Short game-økt<small>Ons 15.04 · 17:00</small></div>
+                    <div class="wf-upcoming-item">Oppfølging video<small>Tor 16.04 · 09:00</small></div>
+                    <div class="wf-upcoming-item">Putting 20–40m<small>Fre 17.04 · 15:00</small></div>
+                    <div class="wf-upcoming-item">Klubbmesterskap R1<small>Lør 18.04 · 09:00</small></div>
+                  </div>
+                </div>
+              </aside>
+
+              <section class="wf-day-panel">
+                <div class="wf-day-head">
+                  <div>
+                    <div class="wf-day-date-big">Tirsdag 14. april</div>
+                    <div class="wf-day-date-sub">1 event i dag · ingen konflikter</div>
+                  </div>
+                  <button class="wf-btn wf-btn-cta">+ Ny event</button>
+                </div>
+
+                <div class="wf-day-timeline"><span class="wf-marker">3</span>
+                  <div class="wf-day-row"><span class="wf-day-time">08:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                  <div class="wf-day-row"><span class="wf-day-time">09:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                  <div class="wf-day-row">
+                    <span class="wf-day-time">10:00</span>
+                    <div class="wf-day-event"><strong>Coaching m/ Anders Kristiansen</strong><small>10:00–10:20 · Oslo Golfklubb · Simulator 3</small></div>
+                  </div>
+                  <div class="wf-day-row"><span class="wf-day-time">11:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                  <div class="wf-day-row"><span class="wf-day-time">12:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                  <div class="wf-day-row"><span class="wf-day-time">13:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                  <div class="wf-day-row"><span class="wf-day-time">14:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                  <div class="wf-day-row"><span class="wf-day-time">15:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                  <div class="wf-day-row"><span class="wf-day-time">16:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                  <div class="wf-day-row"><span class="wf-day-time">17:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                  <div class="wf-day-row"><span class="wf-day-time">18:00</span><div class="wf-day-event wf-empty">Ledig</div></div>
+                </div>
+              </section>
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Mini-kalender venstre:</strong> Rask visuell scan av måneden. Prikker under dato = har event. Gir kontekst mens du fokuserer på én dag.</li>
+        <li><strong>2 — "Kommende" liste:</strong> Neste 4–5 events ligger synlige under mini-cal — så du alltid vet hva som kommer uten å klikke.</li>
+        <li><strong>3 — Tom tid er synlig:</strong> "Ledig" markeres eksplisitt — viktig for planlegging. Bruker vet hvor det er plass til ny trening/booking.</li>
+        <li>— Best for: Spillere som har mange daglige gjøremål eller vil mikroplanlegge. Mindre bra for sporadiske brukere (overkill).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Timeline Feed ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Timeline Feed</span></h2>
+    <p class="option-description">Kronologisk feed av kommende events. Gruppert per dag: "I dag / I morgen / Denne uken / Senere". Mobil-first — perfekt for raske sjekk underveis.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">portal.akgolf.no/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Kalender</div>
+            <div class="wf-sidebar-foot">
+              <div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Kalender<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Kronologisk feed — se hva som skjer nå, i morgen og fremover.</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Synk-innstillinger</button>
+                <button class="wf-btn wf-btn-cta">+ Ny booking</button>
+              </div>
+            </div>
+
+            <div class="wf-week-bar">
+              <div class="wf-week-nav">
+                <span class="wf-week-title">Kommende events</span>
+                <span class="wf-week-range">· 8 totalt · neste om 2 timer</span>
+              </div>
+              <div class="wf-week-view-toggle">
+                <button>Dag</button>
+                <button>Uke</button>
+                <button>Måned</button>
+                <button class="wf-active">Feed</button>
+              </div>
+            </div>
+
+            <div class="wf-feed"><span class="wf-marker">2</span>
+
+              <div class="wf-feed-group">
+                <div class="wf-feed-head">
+                  <span class="wf-feed-title">I dag</span>
+                  <span class="wf-feed-sub">Tirsdag 14. april</span>
+                  <span class="wf-feed-count">1 event</span>
+                </div>
+                <div class="wf-feed-list">
+                  <div class="wf-feed-item">
+                    <div class="wf-feed-time">10:00<small>10:20</small></div>
+                    <div class="wf-feed-body"><strong>Coaching m/ Anders Kristiansen</strong><span>Oslo Golfklubb · Simulator 3</span></div>
+                    <div class="wf-feed-type"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-feed-group">
+                <div class="wf-feed-head">
+                  <span class="wf-feed-title">I morgen</span>
+                  <span class="wf-feed-sub">Onsdag 15. april</span>
+                  <span class="wf-feed-count">1 event</span>
+                </div>
+                <div class="wf-feed-list">
+                  <div class="wf-feed-item">
+                    <div class="wf-feed-time">17:00<small>18:00</small></div>
+                    <div class="wf-feed-body"><strong>Short game-økt</strong><span>Fra Planlegger · Chip + pitch 20–40m</span></div>
+                    <div class="wf-feed-type wf-ev-trening"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-feed-group">
+                <div class="wf-feed-head">
+                  <span class="wf-feed-title">Denne uken</span>
+                  <span class="wf-feed-sub">16.–19. april</span>
+                  <span class="wf-feed-count">4 events</span>
+                </div>
+                <div class="wf-feed-list">
+                  <div class="wf-feed-item">
+                    <div class="wf-feed-time">TOR<small>09:00</small></div>
+                    <div class="wf-feed-body"><strong>Oppfølging video</strong><span>Coaching · 20 min</span></div>
+                    <div class="wf-feed-type wf-ev-coaching"></div>
+                  </div>
+                  <div class="wf-feed-item">
+                    <div class="wf-feed-time">FRE<small>15:00</small></div>
+                    <div class="wf-feed-body"><strong>Putting 20–40m</strong><span>Trening · 60 min · fra Planlegger</span></div>
+                    <div class="wf-feed-type wf-ev-trening"></div>
+                  </div>
+                  <div class="wf-feed-item">
+                    <div class="wf-feed-time">LØR<small>09:00</small></div>
+                    <div class="wf-feed-body"><strong>Klubbmesterskap, runde 1</strong><span>Oslo Golfklubb · 18 hull</span></div>
+                    <div class="wf-feed-type wf-ev-turnering"></div>
+                  </div>
+                  <div class="wf-feed-item">
+                    <div class="wf-feed-time">SØN<small>09:00</small></div>
+                    <div class="wf-feed-body"><strong>Klubbmesterskap, runde 2</strong><span>Oslo Golfklubb · 18 hull</span></div>
+                    <div class="wf-feed-type wf-ev-turnering"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-feed-group">
+                <div class="wf-feed-head">
+                  <span class="wf-feed-title">Senere</span>
+                  <span class="wf-feed-sub">Neste uke +</span>
+                  <span class="wf-feed-count">2 events</span>
+                </div>
+                <div class="wf-feed-list">
+                  <div class="wf-feed-item">
+                    <div class="wf-feed-time">21.04<small>10:00</small></div>
+                    <div class="wf-feed-body"><strong>Coaching m/ Anders</strong><span>Oslo Golfklubb · Simulator 3</span></div>
+                    <div class="wf-feed-type"></div>
+                  </div>
+                  <div class="wf-feed-item">
+                    <div class="wf-feed-time">22.04<small>17:00</small></div>
+                    <div class="wf-feed-body"><strong>Jernspill 7–PW</strong><span>Trening · 60 min</span></div>
+                    <div class="wf-feed-type wf-ev-trening"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — "Feed" som mental modell:</strong> Ikke kalender — heller "what's next"-liste. Lavere terskel for sporadiske brukere.</li>
+        <li><strong>2 — Tidsgrupper gir rytme:</strong> "I dag" / "I morgen" / "Denne uken" / "Senere" — folk tenker i disse bøttene, ikke i datoer.</li>
+        <li>— Fargestripen til høyre: Rask visuell klassifisering uten å lese teksten (booking / coaching / trening / turnering).</li>
+        <li>— Mobil-first: Feeden fungerer like godt på telefon. Uken/måneden blir trang på liten skjerm.</li>
+        <li>— Begrensning: Dårlig for langsiktig planlegging (måneder fram). Best som sekundær visning eller mobil-hovedvisning.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Agenda List ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Agenda List</span></h2>
+    <p class="option-description">Rein liste — neste 20 events. Sorterbar, filtrerbar. Tett datavisning. Klikk åpner detaljer i høyre drawer. Power-user-view — ingen visuell metafor, bare data.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">portal.akgolf.no/kalender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-app">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Kalender</div>
+            <div class="wf-sidebar-foot">
+              <div class="wf-sidebar-user"><span class="wf-sidebar-avatar">EH</span><span>Erik H.</span></div>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Kalender</h1>
+                <p class="wf-page-sub">Alle events i listeform — sorterbar og filtrerbar.</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Eksporter .ics</button>
+                <button class="wf-btn">Synk-innstillinger</button>
+                <button class="wf-btn wf-btn-cta">+ Ny booking</button>
+              </div>
+            </div>
+
+            <div class="wf-filter-bar"><span class="wf-marker">1</span>
+              <span class="wf-filter-label">Type</span>
+              <span class="wf-chip wf-type-booking wf-active"><span class="wf-chip-dot"></span>Booking</span>
+              <span class="wf-chip wf-type-coaching wf-active"><span class="wf-chip-dot"></span>Coaching</span>
+              <span class="wf-chip wf-type-trening wf-active"><span class="wf-chip-dot"></span>Trening</span>
+              <span class="wf-chip wf-type-turnering wf-active"><span class="wf-chip-dot"></span>Turnering</span>
+              <span style="width:1px;height:18px;background:#eee;margin:0 6px;"></span>
+              <span class="wf-filter-label">Tid</span>
+              <span class="wf-chip wf-active">Kommende</span>
+              <span class="wf-chip">Denne uken</span>
+              <span class="wf-chip">Neste 30 dager</span>
+              <span class="wf-chip">Alle</span>
+            </div>
+
+            <div class="wf-agenda-layout">
+              <div>
+                <div class="wf-agenda-head">
+                  <div>Dato</div>
+                  <div>Tid</div>
+                  <div>Event</div>
+                  <div>Type</div>
+                  <div>Status</div>
+                </div>
+                <div class="wf-agenda-list"><span class="wf-marker">2</span>
+                  <div class="wf-agenda-row wf-selected">
+                    <div class="wf-agenda-date">Tir 14.04<small>I dag</small></div>
+                    <div class="wf-agenda-time">10:00–10:20</div>
+                    <div class="wf-agenda-title"><strong>Coaching m/ Anders</strong><span>Oslo Golfklubb · Simulator 3</span></div>
+                    <div><span class="wf-agenda-type">Booking</span></div>
+                    <div class="wf-agenda-status">Bekreftet</div>
+                  </div>
+                  <div class="wf-agenda-row">
+                    <div class="wf-agenda-date">Ons 15.04<small>I morgen</small></div>
+                    <div class="wf-agenda-time">17:00–18:00</div>
+                    <div class="wf-agenda-title"><strong>Short game-økt</strong><span>Fra Planlegger · 60 min</span></div>
+                    <div><span class="wf-agenda-type wf-ev-trening">Trening</span></div>
+                    <div class="wf-agenda-status">Planlagt</div>
+                  </div>
+                  <div class="wf-agenda-row">
+                    <div class="wf-agenda-date">Tor 16.04<small>2 dager</small></div>
+                    <div class="wf-agenda-time">09:00–09:20</div>
+                    <div class="wf-agenda-title"><strong>Oppfølging video</strong><span>Anders · video + notater</span></div>
+                    <div><span class="wf-agenda-type wf-ev-coaching">Coaching</span></div>
+                    <div class="wf-agenda-status">Planlagt</div>
+                  </div>
+                  <div class="wf-agenda-row">
+                    <div class="wf-agenda-date">Fre 17.04<small>3 dager</small></div>
+                    <div class="wf-agenda-time">15:00–16:00</div>
+                    <div class="wf-agenda-title"><strong>Putting 20–40m</strong><span>Fra Planlegger · 60 min</span></div>
+                    <div><span class="wf-agenda-type wf-ev-trening">Trening</span></div>
+                    <div class="wf-agenda-status">Planlagt</div>
+                  </div>
+                  <div class="wf-agenda-row">
+                    <div class="wf-agenda-date">Lør 18.04<small>4 dager</small></div>
+                    <div class="wf-agenda-time">09:00–13:30</div>
+                    <div class="wf-agenda-title"><strong>Klubbmesterskap, runde 1</strong><span>Oslo Golfklubb · 18 hull</span></div>
+                    <div><span class="wf-agenda-type wf-ev-turnering">Turnering</span></div>
+                    <div class="wf-agenda-status">Påmeldt</div>
+                  </div>
+                  <div class="wf-agenda-row">
+                    <div class="wf-agenda-date">Søn 19.04<small>5 dager</small></div>
+                    <div class="wf-agenda-time">09:00–13:30</div>
+                    <div class="wf-agenda-title"><strong>Klubbmesterskap, runde 2</strong><span>Oslo Golfklubb · 18 hull</span></div>
+                    <div><span class="wf-agenda-type wf-ev-turnering">Turnering</span></div>
+                    <div class="wf-agenda-status">Påmeldt</div>
+                  </div>
+                  <div class="wf-agenda-row">
+                    <div class="wf-agenda-date">Tir 21.04<small>neste uke</small></div>
+                    <div class="wf-agenda-time">10:00–10:20</div>
+                    <div class="wf-agenda-title"><strong>Coaching m/ Anders</strong><span>Oslo Golfklubb · Simulator 3</span></div>
+                    <div><span class="wf-agenda-type">Booking</span></div>
+                    <div class="wf-agenda-status">Bekreftet</div>
+                  </div>
+                  <div class="wf-agenda-row">
+                    <div class="wf-agenda-date">Ons 22.04<small>neste uke</small></div>
+                    <div class="wf-agenda-time">17:00–18:00</div>
+                    <div class="wf-agenda-title"><strong>Jernspill 7–PW</strong><span>Fra Planlegger · 60 min</span></div>
+                    <div><span class="wf-agenda-type wf-ev-trening">Trening</span></div>
+                    <div class="wf-agenda-status">Planlagt</div>
+                  </div>
+                </div>
+              </div>
+
+              <aside class="wf-agenda-drawer"><span class="wf-marker">3</span>
+                <div class="wf-drawer-head">
+                  <div>
+                    <div class="wf-drawer-title">Coaching m/ Anders</div>
+                    <div class="wf-drawer-meta">Tirsdag 14. april · 10:00–10:20</div>
+                  </div>
+                </div>
+                <div class="wf-drawer-fields">
+                  <div class="wf-drawer-field">
+                    <span class="wf-drawer-field-label">Type</span>
+                    <span class="wf-drawer-field-value">Booking</span>
+                  </div>
+                  <div class="wf-drawer-field">
+                    <span class="wf-drawer-field-label">Varighet</span>
+                    <span class="wf-drawer-field-value">20 minutter</span>
+                  </div>
+                  <div class="wf-drawer-field">
+                    <span class="wf-drawer-field-label">Sted</span>
+                    <span class="wf-drawer-field-value">Oslo Golfklubb · Simulator 3</span>
+                  </div>
+                  <div class="wf-drawer-field">
+                    <span class="wf-drawer-field-label">Coach</span>
+                    <span class="wf-drawer-field-value">Anders Kristiansen</span>
+                  </div>
+                  <div class="wf-drawer-field">
+                    <span class="wf-drawer-field-label">Pakke</span>
+                    <span class="wf-drawer-field-value">Performance Pro</span>
+                  </div>
+                  <div class="wf-drawer-field">
+                    <span class="wf-drawer-field-label">Status</span>
+                    <span class="wf-drawer-field-value">Bekreftet</span>
+                  </div>
+                </div>
+                <div class="wf-drawer-actions">
+                  <button class="wf-btn wf-btn-cta">Åpne booking</button>
+                  <button class="wf-btn">Endre tidspunkt</button>
+                  <button class="wf-btn wf-btn-ghost">Avbestill</button>
+                </div>
+              </aside>
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Dobbel filtrering:</strong> Type-filter + tid-filter lar power-users skrelle ned raskt. "Vis kun turneringer neste 30 dager".</li>
+        <li><strong>2 — Tabell-tetthet:</strong> Mer informasjon synlig enn i grid-visninger. Dato-kolonne har relativt tidsformat ("2 dager") som hint.</li>
+        <li><strong>3 — Drawer med full detalj:</strong> Uten å miste kontekst. Actions tydelig separert (primær / sekundær / destruktiv).</li>
+        <li>— Best for: Erfarne brukere, mange events per uke, behov for rask operasjon (avbestille, endre).</li>
+        <li>— Svakhet: Savner visuell "hvor mye tid har jeg ledig"-fornemmelse. Ingen forståelse av tomrom.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot brukerbehov: <strong>samlet kalender for spiller som både booker coaching, trener etter plan og deltar i turneringer</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Best for</th><th>Kognitiv last</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Week Apple</strong></td>
+          <td>Apple Cal-inspirert ukegrid, 7×24t</td>
+          <td>90% av spillere — kjent mønster</td>
+          <td>Lav (universelt mønster)</td>
+          <td>Medium</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><strong>2. Month Grid</strong></td>
+          <td>Måned + detalj-panel til høyre</td>
+          <td>Sesongplanlegging, turneringsoversikt</td>
+          <td>Lav</td>
+          <td>Medium</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>3. Day Focus</strong></td>
+          <td>Mini-cal + én dag-tidslinje</td>
+          <td>Mikroplanlegging, daglig rutine</td>
+          <td>Medium (to navigasjoner)</td>
+          <td>Medium</td>
+          <td>★★★☆☆</td>
+        </tr>
+        <tr>
+          <td><strong>4. Timeline Feed</strong></td>
+          <td>Kronologisk feed, tidsgruppert</td>
+          <td>Mobil, sporadiske brukere, rask "hva neste?"</td>
+          <td>Svært lav</td>
+          <td>Lav</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>5. Agenda List</strong></td>
+          <td>Filtrerbar tabell + drawer</td>
+          <td>Power users, mange events, operasjon</td>
+          <td>Høy (krever filter-forståelse)</td>
+          <td>Lav</td>
+          <td>★★★☆☆</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Week Apple (med Agenda som fallback)</h3>
+      <p>Apple Calendar er den mest universelle kalender-metaforen — 90% av brukerne kjenner ukegridet fra iPhone/macOS. Det gir umiddelbar forståelse av tidsfordeling, tomrom og overlapp. Fargekoden (booking / coaching / trening / turnering) fungerer best i ukevisningen fordi events er store nok til å lese tittel + tid.</p>
+
+      <p><strong>Implementasjons-flow:</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Lever Option 1 (Week Apple) som primær visning — standard når man åpner /portal/kalender.</li>
+        <li>Legg til view-toggle (Dag / Uke / Måned / Agenda) som lar brukeren bytte uten å navigere bort. Måned = Option 2-visualisering, Agenda = Option 5-visualisering.</li>
+        <li>Google Cal 2-veis sync ligger bak "Synk-innstillinger"-knappen i page head — ikke påtvunget, men alltid tilgjengelig.</li>
+        <li>Mobil: Auto-fallback til Option 4 (Feed) under 640px — ukegridet blir uleselig på liten skjerm.</li>
+      </ul>
+
+      <p style="margin-top:12px;"><strong>Teknisk:</strong> API for kalender finnes allerede. Week Apple-komponenten kan gjenbrukes mellom Portal og Mission Control (MC-kalender har samme datamodell men flere events per dag). Fargene mappes direkte til design-tokens: primary (booking), info (coaching), ai (trening), warning (turnering).</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

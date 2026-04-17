@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analyse — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Analyse</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Bento Grid</button>
+    <button class="tab-btn" data-tab="option-2">2: Area Focus</button>
+    <button class="tab-btn" data-tab="option-3">3: Training vs Results</button>
+    <button class="tab-btn" data-tab="option-4">4: Weak Spots First</button>
+    <button class="tab-btn" data-tab="option-5">5: Quick Actions</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Bento Grid (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Bento Grid</span></h2>
+    <p class="option-description">Trygg og komplett. KPI-rad (GIR / FW / Putts / Scrambling) øverst, HCP-trend og SG-breakdown i midten, pro-gated TrackMan-kort nede. Alt på én skjerm, ingen klikking for å se helheten.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/analyse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP 14.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Analyse</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">TrackMan koblet</div>
+              <div class="wf-sb-cta-desc">12 økter siste 30d</div>
+              <button class="wf-sb-cta-btn">Se data</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Analyse · 24 runder registrert</div>
+              <div class="wf-period">
+                <button class="wf-period-btn">30d</button>
+                <button class="wf-period-btn wf-active">90d</button>
+                <button class="wf-period-btn">Sesong</button>
+                <button class="wf-period-btn">1 år</button>
+              </div>
+            </div>
+
+            <section class="wf-phead">
+              <div>
+                <div class="wf-phead-eyebrow">Dybde-analyse · siste 90 dager</div>
+                <h1 class="wf-phead-h">Analyse</h1>
+                <div class="wf-phead-sub">24 runder · 12 TrackMan-økter · oppdatert i dag 09:14</div>
+              </div>
+              <div class="wf-phead-actions">
+                <button class="wf-mtopbar-chip">Eksporter</button>
+                <button class="wf-mtopbar-chip">Last opp runde</button>
+              </div>
+            </section>
+
+            <div class="wf-kpi-row">
+              <div class="wf-c"><div class="wf-kpi"><div class="wf-kpi-label">GIR<span class="wf-marker">1</span></div><div class="wf-kpi-value">48%</div><div class="wf-kpi-sub">+3 mot forrige</div></div></div>
+              <div class="wf-c"><div class="wf-kpi"><div class="wf-kpi-label">Fairway</div><div class="wf-kpi-value">62%</div><div class="wf-kpi-sub">styrke · stabilt</div></div></div>
+              <div class="wf-c"><div class="wf-kpi"><div class="wf-kpi-label">Putts/runde</div><div class="wf-kpi-value">31.4</div><div class="wf-kpi-sub">−0.8 mot forrige</div></div></div>
+              <div class="wf-c"><div class="wf-kpi"><div class="wf-kpi-label">Scrambling</div><div class="wf-kpi-value">42%</div><div class="wf-kpi-sub">svakhet · fokus</div></div></div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-7">
+                <div class="wf-c-row"><div class="wf-c-label">Handicap · 6 måneder<span class="wf-marker">2</span></div><span class="wf-ai-badge">−8.0</span></div>
+                <div class="wf-hcp-trend">
+                  <div class="wf-hcp-bar" style="height:95%"></div>
+                  <div class="wf-hcp-bar" style="height:90%"></div>
+                  <div class="wf-hcp-bar" style="height:82%"></div>
+                  <div class="wf-hcp-bar" style="height:78%"></div>
+                  <div class="wf-hcp-bar" style="height:72%"></div>
+                  <div class="wf-hcp-bar" style="height:66%"></div>
+                  <div class="wf-hcp-bar" style="height:60%"></div>
+                  <div class="wf-hcp-bar" style="height:52%"></div>
+                  <div class="wf-hcp-bar" style="height:48%"></div>
+                  <div class="wf-hcp-bar" style="height:44%"></div>
+                  <div class="wf-hcp-bar" style="height:40%"></div>
+                  <div class="wf-hcp-bar" style="height:36%"></div>
+                </div>
+                <div class="wf-hcp-markers"><span>Okt (22.2)</span><span>Jan (17.4)</span><span>Apr (14.2)</span></div>
+                <div class="wf-c-sub">Sterkeste 6-måneders utvikling så langt. Takt 1.33 slag/mnd.</div>
+              </div>
+
+              <div class="wf-c wf-bc-5">
+                <div class="wf-c-label">AI-innsikt<span class="wf-marker">3</span></div>
+                <div class="wf-insight-note">
+                  <p class="wf-insight-body">"Scrambling 42% er største flaskehals. Hver prosent opp = 0.3 slag lavere snittscore. 12 ukers kort-spill-fokus kan bringe HCP til 11."</p>
+                </div>
+                <div class="wf-c-sub" style="margin-top:auto">Generert 17. april · basert på 24 runder</div>
+              </div>
+
+              <div class="wf-c wf-bc-7">
+                <div class="wf-c-row"><div class="wf-c-label">Strokes Gained · breakdown<span class="wf-marker">4</span></div><span class="wf-ai-badge">90d</span></div>
+                <div>
+                  <div class="wf-sg-row"><div class="wf-sg-label">Tee</div><div class="wf-sg-track"><div class="wf-sg-fill-pos" style="width:20%"></div></div><div class="wf-sg-val">+0.4</div></div>
+                  <div class="wf-sg-row"><div class="wf-sg-label">Approach</div><div class="wf-sg-track"><div class="wf-sg-fill-neg" style="width:45%"></div></div><div class="wf-sg-val">−0.9</div></div>
+                  <div class="wf-sg-row"><div class="wf-sg-label">Short game</div><div class="wf-sg-track"><div class="wf-sg-fill-neg" style="width:30%"></div></div><div class="wf-sg-val">−0.6</div></div>
+                  <div class="wf-sg-row"><div class="wf-sg-label">Putting</div><div class="wf-sg-track"><div class="wf-sg-fill-pos" style="width:15%"></div></div><div class="wf-sg-val">+0.3</div></div>
+                </div>
+                <div class="wf-c-sub">Approach + short game = 78% av tapte slag. Prioriter her.</div>
+              </div>
+
+              <div class="wf-tm-card wf-bc-5">
+                <div class="wf-c-row"><div class="wf-c-label">TrackMan · driver<span class="wf-marker">5</span></div><span class="wf-pro-badge">Pro</span></div>
+                <div class="wf-tm-row">
+                  <div class="wf-tm-stat"><div class="wf-tm-stat-label">Club speed</div><div class="wf-tm-stat-val">142</div></div>
+                  <div class="wf-tm-stat"><div class="wf-tm-stat-label">Carry</div><div class="wf-tm-stat-val">245m</div></div>
+                  <div class="wf-tm-stat"><div class="wf-tm-stat-label">Smash</div><div class="wf-tm-stat-val">1.48</div></div>
+                </div>
+                <div class="wf-tm-lock">Siste økt: 11. april · 48 slag · Mulligan Fredrikstad</div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — KPI-rad øverst:</strong> GIR / FW / Putts / Scrambling — de fire tallene som oppsummerer rundeformen. Tabulær-tall, store, 5-sekunders skann.</li>
+        <li><strong>2 — HCP-trend bento:</strong> 6-måneders stolpegraf viser −8.0-reisen. Emosjonell ankring før detaljdata.</li>
+        <li><strong>3 — AI-innsikt:</strong> Kobler data til handling — "her er flaskehalsen, her er planen". Lilla aksent i polished-variant.</li>
+        <li><strong>4 — SG-breakdown horisontalt:</strong> Samme primitiv som Statistikk for konsistens. Viser hvor slagene tapes.</li>
+        <li><strong>5 — TrackMan pro-gated:</strong> Mørkt kort = premium-tier. Ikke gjemt, bare tydelig pro-merket. Hook for upgrade.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Area Focus ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Area Focus</span></h2>
+    <p class="option-description">Velg område — se kun det. 4 store knapper øverst (Tee / Approach / Short / Putting) med SG-verdi. Klikk velger, resten av skjermen fylles med kontekstuell dybde for valgt område. Reduserer kognitiv belastning.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/analyse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">HCP 14.2</div></div></div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Analyse</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">Fokus nå</div><div class="wf-sb-cta-desc">Short game — 42% scrambling</div><button class="wf-sb-cta-btn">Start øvelse</button></div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Analyse · velg område</div>
+              <div class="wf-period">
+                <button class="wf-period-btn">30d</button>
+                <button class="wf-period-btn wf-active">90d</button>
+                <button class="wf-period-btn">Sesong</button>
+                <button class="wf-period-btn">1 år</button>
+              </div>
+            </div>
+
+            <section class="wf-phead">
+              <div>
+                <div class="wf-phead-eyebrow">Dybde per område<span class="wf-marker">1</span></div>
+                <h1 class="wf-phead-h">Ett fokus om gangen</h1>
+                <div class="wf-phead-sub">Velg område — rest av skjerm viser dybdedata for valgt del</div>
+              </div>
+            </section>
+
+            <div class="wf-area-grid">
+              <button class="wf-area-btn"><div class="wf-area-label">Tee</div><div class="wf-area-val">+0.4</div><div class="wf-area-sub">SG · styrke</div></button>
+              <button class="wf-area-btn"><div class="wf-area-label">Approach</div><div class="wf-area-val">−0.9</div><div class="wf-area-sub">SG · 48% GIR</div></button>
+              <button class="wf-area-btn wf-active"><div class="wf-area-label">Short game</div><div class="wf-area-val">−0.6</div><div class="wf-area-sub">SG · 42% scrambling</div></button>
+              <button class="wf-area-btn"><div class="wf-area-label">Putting</div><div class="wf-area-val">+0.3</div><div class="wf-area-sub">31.4 putts/runde</div></button>
+            </div>
+
+            <section class="wf-area-hero">
+              <div>
+                <div class="wf-area-hero-eyebrow">Valgt område · short game<span class="wf-marker">2</span></div>
+                <h2 class="wf-area-hero-title">Chip, pitch og sand</h2>
+                <p class="wf-area-hero-desc">Scrambling 42% betyr at du lager par fra utenfor green i 4 av 10 hull. Hver +10% = ~2 slag mindre per runde.</p>
+                <div class="wf-area-hero-row">
+                  <div><div class="wf-area-hero-stat-label">Scrambling</div><div class="wf-area-hero-stat-val">42%</div></div>
+                  <div><div class="wf-area-hero-stat-label">Sand saves</div><div class="wf-area-hero-stat-val">28%</div></div>
+                  <div><div class="wf-area-hero-stat-label">Avg prox</div><div class="wf-area-hero-stat-val">3.4m</div></div>
+                </div>
+              </div>
+              <div>
+                <div class="wf-area-hero-big">−0.6</div>
+                <div class="wf-area-hero-biglabel">SG per runde</div>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-row"><div class="wf-c-label">Utvikling siste 90d<span class="wf-marker">3</span></div><span class="wf-ai-badge">+0.4</span></div>
+                <div class="wf-chart">
+                  <div class="wf-chart-bar" style="height:30%"></div>
+                  <div class="wf-chart-bar" style="height:36%"></div>
+                  <div class="wf-chart-bar" style="height:32%"></div>
+                  <div class="wf-chart-bar" style="height:42%"></div>
+                  <div class="wf-chart-bar" style="height:40%"></div>
+                  <div class="wf-chart-bar" style="height:48%"></div>
+                  <div class="wf-chart-bar" style="height:52%"></div>
+                  <div class="wf-chart-bar" style="height:55%"></div>
+                  <div class="wf-chart-bar" style="height:60%"></div>
+                  <div class="wf-chart-bar" style="height:58%"></div>
+                  <div class="wf-chart-bar" style="height:66%"></div>
+                  <div class="wf-chart-bar" style="height:70%"></div>
+                </div>
+                <div class="wf-chart-label-row"><span>Uke 4</span><span>Uke 8</span><span>Uke 12</span></div>
+              </div>
+
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-label">Anbefalt trening<span class="wf-marker">4</span></div>
+                <div class="wf-c-grid3">
+                  <div style="padding:12px; background:#f5f5f5; border:1px solid #eee; border-radius:10px"><div class="wf-c-label">Øvelse 1</div><div style="font-size:13px; font-weight:700; margin-top:4px">Chip-ladder 10-30m</div><div class="wf-c-sub" style="margin-top:4px">3x/uke</div></div>
+                  <div style="padding:12px; background:#f5f5f5; border:1px solid #eee; border-radius:10px"><div class="wf-c-label">Øvelse 2</div><div style="font-size:13px; font-weight:700; margin-top:4px">Opp-og-ned 9 hull</div><div class="wf-c-sub" style="margin-top:4px">2x/uke</div></div>
+                  <div style="padding:12px; background:#f5f5f5; border:1px solid #eee; border-radius:10px"><div class="wf-c-label">Øvelse 3</div><div style="font-size:13px; font-weight:700; margin-top:4px">Bunker-drill</div><div class="wf-c-sub" style="margin-top:4px">1x/uke</div></div>
+                </div>
+                <button class="wf-c-link">Se full plan →</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Område-velger:</strong> 4 store kort, SG-verdi direkte synlig. Klikk = bytt fokus. Ingen scroll, ingen sub-tabs.</li>
+        <li><strong>2 — Valgt-hero:</strong> Stor beskrivelse + nøkkeltall + SG-verdi. Klar visuell identitet for valget.</li>
+        <li><strong>3 — Kun trend for valgt:</strong> Grafen viser bare området du har valgt. Mindre støy.</li>
+        <li><strong>4 — Trening inline:</strong> "Svak her → gjør disse øvelsene". Lukker loop uten sidebytte.</li>
+        <li>— Styrke: Fokus. Svakhet: Må klikke for helhet — ikke 5-sek oversikt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Training vs Results ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Training vs Results</span></h2>
+    <p class="option-description">Kobler trening-volum til stats-endring. Korrelasjonsscore øverst, split-view (trening-volum venstre, stats-endring høyre), og "hvilken trening ga størst effekt"-innsikt. Analytisk og actionable.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/analyse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">72 økter · 24 runder</div></div></div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Effekt-analyse</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">Sterk kobling</div><div class="wf-sb-cta-desc">0.78 korrelasjon</div><button class="wf-sb-cta-btn">Se historikk</button></div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Effekt-analyse · 90 dager</div>
+              <div class="wf-period">
+                <button class="wf-period-btn">30d</button>
+                <button class="wf-period-btn wf-active">90d</button>
+                <button class="wf-period-btn">Sesong</button>
+                <button class="wf-period-btn">1 år</button>
+              </div>
+            </div>
+
+            <section class="wf-phead">
+              <div>
+                <div class="wf-phead-eyebrow">Trening kobles til resultat<span class="wf-marker">1</span></div>
+                <h1 class="wf-phead-h">Hva virker?</h1>
+                <div class="wf-phead-sub">Volum av trening vs endring i stats, per kategori</div>
+              </div>
+            </section>
+
+            <div class="wf-corr-card">
+              <div>
+                <div class="wf-corr-label">Korrelasjon · trening → HCP</div>
+                <div class="wf-corr-desc">Approach-volum har sterk sammenheng med HCP-nedgang. Jo mer du har trent approach, desto raskere faller HCP. Putting-volum er nøytralt — du er allerede på nivå.</div>
+              </div>
+              <div>
+                <div class="wf-corr-val">0.78</div>
+              </div>
+            </div>
+
+            <div class="wf-tvr-split">
+              <div class="wf-tvr-col">
+                <div class="wf-tvr-head"><div class="wf-c-label">Treningsvolum<span class="wf-marker">2</span></div><span class="wf-ai-badge">90d</span></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">Approach</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:85%"></div></div><div class="wf-vol-total">24t</div></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">Short</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:50%"></div></div><div class="wf-vol-total">14t</div></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">Putting</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:40%"></div></div><div class="wf-vol-total">11t</div></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">Tee</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:32%"></div></div><div class="wf-vol-total">9t</div></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">Fysisk</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:55%"></div></div><div class="wf-vol-total">16t</div></div>
+              </div>
+
+              <div class="wf-tvr-col">
+                <div class="wf-tvr-head"><div class="wf-c-label">Stats-endring<span class="wf-marker">3</span></div><span class="wf-ai-badge">Δ 90d</span></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">GIR</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:70%"></div></div><div class="wf-vol-total">+3%</div></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">Scrambling</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:30%"></div></div><div class="wf-vol-total">+1%</div></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">Putts</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:20%"></div></div><div class="wf-vol-total">−0.8</div></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">FW%</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:15%"></div></div><div class="wf-vol-total">±0</div></div>
+                <div class="wf-vol-row"><div class="wf-vol-label">HCP</div><div class="wf-vol-bar"><div class="wf-vol-fill" style="width:90%"></div></div><div class="wf-vol-total">−2.2</div></div>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-row"><div class="wf-c-label">Hva ga størst effekt?<span class="wf-marker">4</span></div><button class="wf-c-link">Se neste 12 uker →</button></div>
+              <div class="wf-c-grid3">
+                <div style="padding:14px; background:#f5f5f5; border:1px solid #eee; border-radius:10px"><div class="wf-c-label">Topp 1</div><div style="font-size:14px; font-weight:700; margin-top:6px">Approach-volum</div><div class="wf-c-sub" style="margin-top:4px">24t → +3% GIR, −0.4 SG approach</div></div>
+                <div style="padding:14px; background:#f5f5f5; border:1px solid #eee; border-radius:10px"><div class="wf-c-label">Topp 2</div><div style="font-size:14px; font-weight:700; margin-top:6px">Fysisk trening</div><div class="wf-c-sub" style="margin-top:4px">16t → +4 mph club speed (TrackMan)</div></div>
+                <div style="padding:14px; background:#f5f5f5; border:1px solid #eee; border-radius:10px"><div class="wf-c-label">Topp 3</div><div style="font-size:14px; font-weight:700; margin-top:6px">Short-game</div><div class="wf-c-sub" style="margin-top:4px">14t → kun +1% scrambling — øk volumet</div></div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Korrelasjonsscore øverst:</strong> Mørkt kort + én stor tall (0.78). Umiddelbar "fungerer det?"-svar.</li>
+        <li><strong>2 — Split-view volum vs endring:</strong> Parallelle barer viser input (trening) og output (stats-endring). Koblingen blir visuell.</li>
+        <li><strong>3 — Stats-endring høyre:</strong> Speilet layout — kolonne venstre = hva du gjorde, kolonne høyre = hva som skjedde.</li>
+        <li><strong>4 — Topp 3 effekt:</strong> Rangerer hva som faktisk flyttet nålen. Styrer neste periodes planlegging.</li>
+        <li>— Krever data: minst 60 dager trening + 10 runder for å være meningsfullt. Onboarding-hint for nye brukere.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Weak Spots First ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Weak Spots First</span></h2>
+    <p class="option-description">Systemet rangerer svakheter. Topp 3 vises som store rang-kort (#1, #2, #3) med impact-score, stats og direkte trenings-plan. Aggressivt action-orientert — du ser hva du skal gjøre.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/analyse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">HCP 14.2</div></div></div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Svakheter</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">Potensial</div><div class="wf-sb-cta-desc">−3.2 slag på 12 uker</div><button class="wf-sb-cta-btn">Se plan</button></div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Svakheter · rangert etter impact</div>
+              <div class="wf-period">
+                <button class="wf-period-btn">30d</button>
+                <button class="wf-period-btn wf-active">90d</button>
+                <button class="wf-period-btn">Sesong</button>
+                <button class="wf-period-btn">1 år</button>
+              </div>
+            </div>
+
+            <section class="wf-phead">
+              <div>
+                <div class="wf-phead-eyebrow">Topp 3 flaskehalser<span class="wf-marker">1</span></div>
+                <h1 class="wf-phead-h">Hva koster deg mest?</h1>
+                <div class="wf-phead-sub">Systemet rangerer etter tapte slag per runde og potensial for forbedring</div>
+              </div>
+            </section>
+
+            <div class="wf-wspot">
+              <div class="wf-wspot-head">
+                <div style="display:flex; gap:14px; align-items:center">
+                  <div class="wf-wspot-rank">1</div>
+                  <div><h3 class="wf-wspot-title">Approach · 100–140m<span class="wf-marker">2</span></h3><div class="wf-wspot-meta">SG −0.9 · dispersion 8.4m · 78% av tapte slag</div></div>
+                </div>
+                <span class="wf-wspot-impact">−1.4 slag</span>
+              </div>
+              <div class="wf-wspot-stats">
+                <div><div class="wf-wspot-stat-label">GIR</div><div class="wf-wspot-stat-val">48%</div></div>
+                <div><div class="wf-wspot-stat-label">Prox</div><div class="wf-wspot-stat-val">14.2m</div></div>
+                <div><div class="wf-wspot-stat-label">Mål</div><div class="wf-wspot-stat-val">6m</div></div>
+              </div>
+              <div class="wf-wspot-plan">12 ukers plan: 3 økter/uke på dispersion-drill 100m, tempo-drill wedge, press-drill 140m. Forventet effekt: +0.5 SG, GIR 48% → 55%.</div>
+              <button class="wf-wspot-cta">Legg i treningsplan →</button>
+            </div>
+
+            <div class="wf-wspot">
+              <div class="wf-wspot-head">
+                <div style="display:flex; gap:14px; align-items:center">
+                  <div class="wf-wspot-rank">2</div>
+                  <div><h3 class="wf-wspot-title">Scrambling · chip og sand<span class="wf-marker">3</span></h3><div class="wf-wspot-meta">42% scrambling · 28% sand saves · SG −0.6</div></div>
+                </div>
+                <span class="wf-wspot-impact">−1.1 slag</span>
+              </div>
+              <div class="wf-wspot-stats">
+                <div><div class="wf-wspot-stat-label">Scrambling</div><div class="wf-wspot-stat-val">42%</div></div>
+                <div><div class="wf-wspot-stat-label">Sand</div><div class="wf-wspot-stat-val">28%</div></div>
+                <div><div class="wf-wspot-stat-label">Mål</div><div class="wf-wspot-stat-val">55%</div></div>
+              </div>
+              <div class="wf-wspot-plan">12 ukers plan: Chip-ladder 10–30m (3x/uke), opp-og-ned 9 hull (2x/uke), bunker-drill (1x/uke). Forventet effekt: scrambling 42% → 52%.</div>
+              <button class="wf-wspot-cta">Legg i treningsplan →</button>
+            </div>
+
+            <div class="wf-wspot">
+              <div class="wf-wspot-head">
+                <div style="display:flex; gap:14px; align-items:center">
+                  <div class="wf-wspot-rank">3</div>
+                  <div><h3 class="wf-wspot-title">3-putts<span class="wf-marker">4</span></h3><div class="wf-wspot-meta">2.1 3-putts per runde · for lang avstand fra 6m+</div></div>
+                </div>
+                <span class="wf-wspot-impact">−0.7 slag</span>
+              </div>
+              <div class="wf-wspot-stats">
+                <div><div class="wf-wspot-stat-label">3-putts/runde</div><div class="wf-wspot-stat-val">2.1</div></div>
+                <div><div class="wf-wspot-stat-label">Avstand</div><div class="wf-wspot-stat-val">8.4m</div></div>
+                <div><div class="wf-wspot-stat-label">Mål</div><div class="wf-wspot-stat-val">1.0</div></div>
+              </div>
+              <div class="wf-wspot-plan">12 ukers plan: Lag-putting-drill (3x/uke), 6m-ladder (2x/uke), press-putting-runde (1x/uke). Forventet effekt: 3-putts 2.1 → 1.2.</div>
+              <button class="wf-wspot-cta">Legg i treningsplan →</button>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Ranking som rammeverk:</strong> Systemet gjør tolkningen. Brukeren trenger ikke analysere — bare handle.</li>
+        <li><strong>2 — #1 er størst:</strong> Rang-sirkel + impact-badge ("−1.4 slag") viser hva som koster mest. Binær prioritering.</li>
+        <li><strong>3 — Stats inline:</strong> 3 nøkkeltall per kort (nå / delmål / mål). Konkret nok til å være meningsfullt.</li>
+        <li><strong>4 — CTA per svakhet:</strong> "Legg i treningsplan →" — ett klikk fra diagnose til handling.</li>
+        <li>— Svakhet: Mindre helhetsoversikt. Ingen kontekst for ting som går bra. Best kombinert med Opt 1 som "main view".</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Quick Actions ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Quick Actions</span></h2>
+    <p class="option-description">Analyse + handlingskort side om side. Stats-oversikt øverst, deretter 3 action-kort: "Last opp TrackMan-data", "Registrer ny runde", "Snakk med AI Coach". Løsning for brukere som vil ha data PLUSS direkte handling.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/analyse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">HCP 14.2</div></div></div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Analyse</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">Mangler data?</div><div class="wf-sb-cta-desc">Last opp for bedre analyse</div><button class="wf-sb-cta-btn">Last opp</button></div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Analyse · oversikt + handling</div>
+              <div class="wf-period">
+                <button class="wf-period-btn">30d</button>
+                <button class="wf-period-btn wf-active">90d</button>
+                <button class="wf-period-btn">Sesong</button>
+                <button class="wf-period-btn">1 år</button>
+              </div>
+            </div>
+
+            <section class="wf-phead">
+              <div>
+                <div class="wf-phead-eyebrow">Data + handling<span class="wf-marker">1</span></div>
+                <h1 class="wf-phead-h">Analyse</h1>
+                <div class="wf-phead-sub">Rask oversikt · direkte handling — ingen sidebytter</div>
+              </div>
+            </section>
+
+            <div class="wf-kpi-row">
+              <div class="wf-c"><div class="wf-kpi"><div class="wf-kpi-label">GIR</div><div class="wf-kpi-value">48%</div><div class="wf-kpi-sub">+3</div></div></div>
+              <div class="wf-c"><div class="wf-kpi"><div class="wf-kpi-label">Fairway</div><div class="wf-kpi-value">62%</div><div class="wf-kpi-sub">stabilt</div></div></div>
+              <div class="wf-c"><div class="wf-kpi"><div class="wf-kpi-label">Putts</div><div class="wf-kpi-value">31.4</div><div class="wf-kpi-sub">−0.8</div></div></div>
+              <div class="wf-c"><div class="wf-kpi"><div class="wf-kpi-label">Scrambling</div><div class="wf-kpi-value">42%</div><div class="wf-kpi-sub">fokus</div></div></div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-row"><div class="wf-c-label">Strokes Gained<span class="wf-marker">2</span></div><span class="wf-ai-badge">90d</span></div>
+              <div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Tee</div><div class="wf-sg-track"><div class="wf-sg-fill-pos" style="width:20%"></div></div><div class="wf-sg-val">+0.4</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Approach</div><div class="wf-sg-track"><div class="wf-sg-fill-neg" style="width:45%"></div></div><div class="wf-sg-val">−0.9</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Short game</div><div class="wf-sg-track"><div class="wf-sg-fill-neg" style="width:30%"></div></div><div class="wf-sg-val">−0.6</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Putting</div><div class="wf-sg-track"><div class="wf-sg-fill-pos" style="width:15%"></div></div><div class="wf-sg-val">+0.3</div></div>
+              </div>
+            </div>
+
+            <div class="wf-qa-grid">
+              <div class="wf-qa-card">
+                <div class="wf-qa-icon">TM</div>
+                <h3 class="wf-qa-title">Last opp TrackMan<span class="wf-marker">3</span></h3>
+                <p class="wf-qa-desc">Forbedre analysen. Dra CSV fra siste økt — data ligger klart i 30 sek.</p>
+                <button class="wf-qa-btn">Last opp fil</button>
+              </div>
+
+              <div class="wf-qa-card">
+                <div class="wf-qa-icon">+R</div>
+                <h3 class="wf-qa-title">Registrer runde<span class="wf-marker">4</span></h3>
+                <p class="wf-qa-desc">Legg til score, GIR, FW og putts. Synkes automatisk med HCP-beregning.</p>
+                <button class="wf-qa-btn">Ny runde</button>
+              </div>
+
+              <div class="wf-qa-card wf-qa-dark">
+                <div class="wf-qa-icon">AI</div>
+                <h3 class="wf-qa-title">AI Coach<span class="wf-marker">5</span></h3>
+                <p class="wf-qa-desc">Still et spørsmål om dataene dine. "Hvorfor er approach så svak?" — få svar på 5 sek.</p>
+                <button class="wf-qa-btn">Start samtale</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kompakt oversikt:</strong> KPI-rad + SG — alt det viktigste på 1/3 skjerm. Resten er action.</li>
+        <li><strong>2 — SG inline:</strong> Reduserer kort-støy. Brukeren ser svakhetsmønsteret uten å scrolle.</li>
+        <li><strong>3 — TrackMan-upload:</strong> Selvbetjening. Reduserer friksjon for spillere som glemmer å laste opp.</li>
+        <li><strong>4 — Ny runde:</strong> Direkte registrering — ikke gjemt i en egen modul. Reduserer tid fra runde til data.</li>
+        <li><strong>5 — AI Coach som action:</strong> Mørkt kort = høyest kontrast. Gjør AI til en konkret handling, ikke en feature.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>gi spilleren dybdeanalyse + tydelig neste handling</strong>. Analyse er modulen der brukeren går dypt — ikke bare ser tall, men forstår hva de betyr.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>5-sek oversikt</th><th>Action-orientert</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Bento Grid</strong></td><td>KPI + HCP + SG + TrackMan — alt på én skjerm</td><td>Svært høy</td><td>Høy (AI-insight + TrackMan-hook)</td><td>Lav–medium</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Area Focus</strong></td><td>Velg område — dyp dykk på valgt</td><td>Lav (krever klikk)</td><td>Høy (trening inline)</td><td>Medium</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Training vs Results</strong></td><td>Korrelasjon volum → stats-endring</td><td>Medium</td><td>Svært høy (ROI-rangering)</td><td>Høy (krever data-modenhet)</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Weak Spots First</strong></td><td>Topp 3 svakheter rangert</td><td>Høy (rank er selvforklarende)</td><td>Svært høy (CTA per svakhet)</td><td>Medium</td><td>★★★★☆</td></tr>
+        <tr><td><strong>5. Quick Actions</strong></td><td>Kompakt data + 3 store handlingskort</td><td>Medium</td><td>Svært høy (3 direkte actions)</td><td>Lav</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Bento Grid</h3>
+      <p>Gir full oversikt på én skjerm uten å overvelde. KPI-raden (GIR / FW / Putts / Scrambling) svarer "hvordan spiller jeg?" på 5 sek, HCP-trenden gir emosjonell kontekst, SG-breakdown lokaliserer svakhet, og pro-gated TrackMan-kortet skaper konvertering til Pro-tier. Samme komponenter som Statistikk — konsistens i portalen.</p>
+      <p><strong>Strategisk flow:</strong> Implementer Option 1 som default for /portal/analyse. Option 4 (Weak Spots) kobles på som /portal/analyse/svakheter for elever med 30+ runder. Option 2 (Area Focus) blir klikk-inn-detalj fra SG-raden (Opt 1 SG-rad → Opt 2 dybde). Option 3 (Training vs Results) reserveres for Elite med 90d+ data. Option 5 (Quick Actions) er tom-state-variant for brukere med &lt;5 runder registrert.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

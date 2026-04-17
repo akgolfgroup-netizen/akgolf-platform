@@ -1,0 +1,422 @@
+/* === Wireframe Content CSS (B&W only) — Portal Bookinger === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; min-height: 600px; }
+
+/* ============ APP SHELL ============ */
+.wf-app {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  min-height: 600px;
+}
+
+.wf-sidebar {
+  background: #fff;
+  border-right: 1px solid #eee;
+  padding: 16px 12px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.wf-sidebar-logo {
+  font-weight: 800; font-size: 12px; letter-spacing: 0.08em; color: #000;
+  padding: 6px 10px 18px; border-bottom: 1px solid #eee; margin-bottom: 10px;
+}
+.wf-nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 8px;
+  font-size: 13px; color: #666; cursor: pointer;
+}
+.wf-nav-item:hover { background: #f5f5f5; color: #000; }
+.wf-nav-item.wf-active { background: #000; color: #fff; }
+.wf-nav-ico { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 3px; flex-shrink: 0; }
+.wf-active .wf-nav-ico { border-color: #fff; }
+.wf-sidebar-foot { margin-top: auto; padding-top: 12px; border-top: 1px solid #eee; }
+.wf-sidebar-user { display: flex; align-items: center; gap: 8px; padding: 8px; }
+.wf-sidebar-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #eee; border: 1px solid #ccc; font-size: 10px; color: #666;
+  display: flex; align-items: center; justify-content: center;
+}
+.wf-sidebar-user span:last-child { font-size: 11px; color: #666; }
+
+.wf-main { padding: 20px 24px 28px; background: #f5f5f5; overflow: hidden; position: relative; }
+
+/* ============ PAGE HEADER ============ */
+.wf-page-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; margin-bottom: 18px;
+}
+.wf-page-title { font-size: 22px; font-weight: 700; color: #000; margin: 0 0 4px; letter-spacing: -0.01em; }
+.wf-page-sub { font-size: 13px; color: #666; margin: 0; }
+.wf-page-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ============ BUTTONS ============ */
+.wf-btn {
+  padding: 7px 14px; border: 1px solid #ccc; border-radius: 999px;
+  background: #fff; color: #333; font-size: 12px; font-weight: 500; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #666; padding: 6px 10px; }
+.wf-btn-ghost:hover { color: #000; background: #eee; }
+.wf-btn-danger { background: #fff; color: #333; border-color: #ccc; }
+.wf-btn-icon {
+  width: 28px; height: 28px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fff; border: 1px solid #ccc; border-radius: 8px;
+  color: #666; cursor: pointer; font-size: 14px;
+}
+.wf-btn-icon:hover { background: #eee; color: #000; }
+
+/* ============ SUB NAV TABS (page-level) ============ */
+.wf-subnav {
+  display: flex; gap: 6px; margin-bottom: 14px;
+  background: #fff; border: 1px solid #eee; border-radius: 10px;
+  padding: 4px;
+}
+.wf-subnav-tab {
+  padding: 7px 14px; border-radius: 8px;
+  font-size: 12px; color: #666; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.wf-subnav-tab:hover { background: #f5f5f5; color: #000; }
+.wf-subnav-tab.wf-active { background: #000; color: #fff; font-weight: 600; }
+.wf-subnav-count {
+  font-size: 10px; padding: 1px 6px; border-radius: 999px;
+  background: #eee; color: #666; font-weight: 600;
+}
+.wf-subnav-tab.wf-active .wf-subnav-count { background: rgba(255,255,255,0.2); color: #fff; }
+
+/* ============ STATUS BADGES ============ */
+.wf-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 600;
+  padding: 3px 9px; border-radius: 999px;
+  background: #eee; color: #333;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  border: 1px solid transparent;
+}
+.wf-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #666; }
+.wf-badge.wf-status-confirmed { background: #333; color: #fff; }
+.wf-badge.wf-status-confirmed .wf-badge-dot { background: #fff; }
+.wf-badge.wf-status-pending { background: #fff; color: #333; border-color: #ccc; }
+.wf-badge.wf-status-pending .wf-badge-dot { background: #999; }
+.wf-badge.wf-status-completed { background: #eee; color: #666; }
+.wf-badge.wf-status-completed .wf-badge-dot { background: #999; }
+.wf-badge.wf-status-cancelled { background: #fff; color: #999; border: 1px dashed #ccc; text-decoration: line-through; }
+.wf-badge.wf-status-cancelled .wf-badge-dot { background: #ccc; }
+
+/* ============ HERO (Option 1) ============ */
+.wf-hero {
+  background: #fff; border: 1px solid #eee; border-radius: 12px;
+  padding: 20px 22px; margin-bottom: 18px;
+  display: grid; grid-template-columns: 1fr 220px; gap: 20px;
+  position: relative; overflow: hidden;
+}
+.wf-hero-body { display: flex; flex-direction: column; gap: 6px; }
+.wf-hero-label { font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.wf-hero-title { font-size: 22px; font-weight: 800; color: #000; letter-spacing: -0.01em; margin: 0; }
+.wf-hero-meta { font-size: 13px; color: #666; margin-top: 2px; }
+.wf-hero-meta-row { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: #666; margin-top: 10px; }
+.wf-hero-meta-row > span { display: inline-flex; align-items: center; gap: 6px; }
+.wf-hero-meta-ico { width: 14px; height: 14px; border: 1px solid #ccc; border-radius: 3px; }
+.wf-hero-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.wf-hero-side {
+  background: #fafafa; border: 1px solid #eee; border-radius: 10px;
+  padding: 12px; display: flex; flex-direction: column; gap: 8px;
+}
+.wf-hero-countdown {
+  font-size: 28px; font-weight: 800; color: #000; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.wf-hero-countdown small { font-size: 11px; color: #999; font-weight: 500; display: block; letter-spacing: 0.04em; text-transform: uppercase; margin-top: 2px; }
+
+/* ============ SECTIONS ============ */
+.wf-section { margin-bottom: 20px; }
+.wf-section-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 10px; padding: 0 2px;
+}
+.wf-section-title { font-size: 13px; font-weight: 700; color: #000; letter-spacing: -0.01em; }
+.wf-section-title small { font-size: 11px; color: #999; font-weight: 500; margin-left: 6px; }
+.wf-section-link { font-size: 11px; color: #666; cursor: pointer; }
+.wf-section-link:hover { color: #000; }
+
+/* ============ BOOKING CARD (upcoming list) ============ */
+.wf-booking-card {
+  display: grid; grid-template-columns: 60px 1fr auto;
+  gap: 14px; align-items: center;
+  padding: 12px 14px;
+  background: #fff; border: 1px solid #eee; border-radius: 10px;
+  margin-bottom: 8px; cursor: pointer;
+}
+.wf-booking-card:hover { background: #fafafa; border-color: #ccc; }
+.wf-booking-date {
+  text-align: center; padding: 4px 0; border-right: 1px solid #eee;
+  min-width: 52px;
+}
+.wf-booking-date-dow { font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.wf-booking-date-num { font-size: 20px; font-weight: 800; color: #000; letter-spacing: -0.01em; line-height: 1.1; }
+.wf-booking-date-month { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.06em; }
+.wf-booking-body { display: flex; flex-direction: column; gap: 3px; }
+.wf-booking-title { font-size: 13px; font-weight: 600; color: #000; }
+.wf-booking-meta { font-size: 11px; color: #666; display: flex; gap: 10px; flex-wrap: wrap; }
+.wf-booking-meta span { display: inline-flex; align-items: center; gap: 4px; }
+.wf-booking-time { font-size: 12px; font-weight: 600; color: #000; font-variant-numeric: tabular-nums; }
+.wf-booking-aside { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+/* ============ INFO BOX (cancellation rules) ============ */
+.wf-infobox {
+  background: #fafafa; border: 1px solid #eee; border-radius: 10px;
+  padding: 14px 16px; margin-bottom: 16px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.wf-infobox-ico {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center;
+  color: #666; font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+.wf-infobox-body { flex: 1; }
+.wf-infobox-title { font-size: 12px; font-weight: 700; color: #000; margin-bottom: 4px; }
+.wf-infobox-text { font-size: 11px; color: #666; line-height: 1.5; margin: 0 0 6px; }
+.wf-infobox-list { font-size: 11px; color: #666; margin: 4px 0 0; padding-left: 16px; }
+.wf-infobox-list li { margin-bottom: 2px; }
+
+/* ============ HISTORY TABLE ============ */
+.wf-history-head {
+  display: grid; grid-template-columns: 90px 70px 1fr 110px 90px;
+  gap: 12px; padding: 10px 14px;
+  background: #fafafa; border: 1px solid #eee;
+  border-radius: 10px 10px 0 0; border-bottom: none;
+  font-size: 10px; color: #999; letter-spacing: 0.08em;
+  text-transform: uppercase; font-weight: 600;
+}
+.wf-history-list {
+  background: #fff; border: 1px solid #eee; border-top: none;
+  border-radius: 0 0 10px 10px;
+}
+.wf-history-row {
+  display: grid; grid-template-columns: 90px 70px 1fr 110px 90px;
+  gap: 12px; padding: 11px 14px;
+  border-bottom: 1px solid #eee; align-items: center;
+  font-size: 12px; color: #333; cursor: pointer;
+}
+.wf-history-row:last-child { border-bottom: none; }
+.wf-history-row:hover { background: #fafafa; }
+.wf-history-date { font-weight: 600; color: #000; }
+.wf-history-date small { display: block; font-size: 10px; color: #999; font-weight: 500; }
+.wf-history-time { font-size: 11px; color: #666; font-variant-numeric: tabular-nums; }
+.wf-history-title strong { display: block; color: #000; font-size: 12px; }
+.wf-history-title span { font-size: 11px; color: #999; }
+
+/* ============ COMPACT LIST (Opt 2) ============ */
+.wf-compact-filter {
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  background: #fff; border: 1px solid #eee; border-radius: 10px;
+  padding: 8px 12px; margin-bottom: 12px;
+}
+.wf-compact-filter-label { font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.wf-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border: 1px solid #ccc; border-radius: 999px;
+  background: #fff; color: #666; font-size: 11px; cursor: pointer;
+}
+.wf-chip.wf-active { background: #000; color: #fff; border-color: #000; }
+.wf-chip-count { font-size: 10px; opacity: 0.7; }
+.wf-compact-search {
+  flex: 1; min-width: 140px;
+  background: #fafafa; border: 1px solid #eee; border-radius: 8px;
+  padding: 6px 10px; font-size: 11px; color: #999;
+}
+.wf-compact-list {
+  background: #fff; border: 1px solid #eee; border-radius: 10px;
+  overflow: hidden;
+}
+.wf-compact-section {
+  padding: 8px 14px;
+  background: #fafafa; border-bottom: 1px solid #eee;
+  font-size: 10px; color: #999;
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700;
+}
+.wf-compact-row {
+  display: grid; grid-template-columns: 52px 1fr auto auto;
+  gap: 12px; padding: 11px 14px;
+  border-bottom: 1px solid #eee; align-items: center;
+  cursor: pointer;
+}
+.wf-compact-row:hover { background: #fafafa; }
+.wf-compact-row:last-child { border-bottom: none; }
+.wf-compact-row-time { text-align: center; }
+.wf-compact-row-time strong { display: block; font-size: 13px; color: #000; font-weight: 700; font-variant-numeric: tabular-nums; }
+.wf-compact-row-time small { display: block; font-size: 10px; color: #999; letter-spacing: 0.04em; text-transform: uppercase; }
+.wf-compact-row-body strong { display: block; font-size: 12px; color: #000; margin-bottom: 2px; }
+.wf-compact-row-body span { font-size: 11px; color: #666; }
+.wf-compact-row-meta { font-size: 11px; color: #999; text-align: right; }
+
+/* ============ CALENDAR VIEW (Opt 3) ============ */
+.wf-cal-layout {
+  display: grid; grid-template-columns: 1fr 280px; gap: 12px;
+}
+.wf-cal-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px; background: #fff;
+  border: 1px solid #eee; border-radius: 10px 10px 0 0; border-bottom: none;
+}
+.wf-cal-nav { display: flex; align-items: center; gap: 8px; }
+.wf-cal-month { font-size: 14px; font-weight: 700; color: #000; }
+.wf-cal-grid-wrap {
+  background: #fff; border: 1px solid #eee; border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
+.wf-cal-dow {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  background: #fafafa; border-bottom: 1px solid #eee;
+}
+.wf-cal-dow > div {
+  padding: 7px 8px; font-size: 10px; color: #999;
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
+  border-right: 1px solid #eee;
+}
+.wf-cal-dow > div:last-child { border-right: none; }
+.wf-cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 70px;
+}
+.wf-cal-cell {
+  position: relative; padding: 5px 7px;
+  border-right: 1px solid #eee; border-bottom: 1px solid #eee;
+  overflow: hidden; cursor: pointer; font-size: 11px;
+}
+.wf-cal-cell:hover { background: #fafafa; }
+.wf-cal-cell:nth-child(7n) { border-right: none; }
+.wf-cal-cell.wf-other-month { background: #fafafa; color: #ccc; }
+.wf-cal-cell.wf-other-month .wf-cal-num { color: #ccc; }
+.wf-cal-cell.wf-today .wf-cal-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #000; color: #fff; width: 20px; height: 20px;
+  border-radius: 50%; font-size: 11px;
+}
+.wf-cal-cell.wf-selected { outline: 2px solid #000; outline-offset: -2px; background: #f5f5f5; }
+.wf-cal-num { font-size: 11px; font-weight: 600; color: #333; }
+.wf-cal-marker {
+  display: flex; gap: 2px; margin-top: 3px;
+}
+.wf-cal-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: #333;
+}
+.wf-cal-dot.wf-dot-pending { background: #fff; border: 1px solid #999; }
+.wf-cal-dot.wf-dot-completed { background: #999; }
+.wf-cal-pill {
+  font-size: 9px; padding: 1px 5px; border-radius: 3px;
+  background: #333; color: #fff; line-height: 1.3;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-top: 3px; display: block;
+}
+.wf-cal-side {
+  background: #fff; border: 1px solid #eee; border-radius: 10px;
+  padding: 14px; display: flex; flex-direction: column; gap: 10px;
+  height: fit-content;
+}
+.wf-cal-side-head { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 4px; }
+.wf-cal-side-date { font-size: 14px; font-weight: 700; color: #000; }
+.wf-cal-side-sub { font-size: 11px; color: #999; }
+.wf-cal-side-event {
+  padding: 10px; border: 1px solid #eee; border-radius: 8px;
+  background: #fafafa;
+}
+.wf-cal-side-event strong { display: block; font-size: 12px; color: #000; margin-bottom: 3px; }
+.wf-cal-side-event span { font-size: 11px; color: #666; }
+.wf-cal-legend { display: flex; flex-direction: column; gap: 6px; font-size: 11px; color: #666; padding-top: 10px; border-top: 1px solid #eee; }
+.wf-cal-legend-row { display: flex; align-items: center; gap: 8px; }
+
+/* ============ UPCOMING DEEP (Opt 4) ============ */
+.wf-upcoming-big {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.wf-upcoming-card {
+  background: #fff; border: 1px solid #eee; border-radius: 12px;
+  padding: 16px 18px; position: relative;
+}
+.wf-upcoming-card.wf-next-up { border-color: #000; border-width: 2px; padding: 15px 17px; }
+.wf-upcoming-pin {
+  position: absolute; top: -9px; left: 16px;
+  background: #000; color: #fff; font-size: 10px; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.wf-upcoming-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 14px; margin-bottom: 12px;
+}
+.wf-upcoming-datestamp {
+  display: flex; gap: 12px; align-items: center;
+}
+.wf-upcoming-datebox {
+  width: 54px; text-align: center; padding: 6px 0;
+  background: #fafafa; border: 1px solid #eee; border-radius: 8px;
+}
+.wf-upcoming-datebox-dow { font-size: 9px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.wf-upcoming-datebox-num { font-size: 18px; font-weight: 800; color: #000; line-height: 1; margin: 2px 0; }
+.wf-upcoming-datebox-month { font-size: 9px; color: #666; text-transform: uppercase; letter-spacing: 0.06em; }
+.wf-upcoming-headline strong { display: block; font-size: 14px; font-weight: 700; color: #000; letter-spacing: -0.01em; }
+.wf-upcoming-headline span { font-size: 12px; color: #666; }
+.wf-upcoming-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 10px; margin-bottom: 12px;
+  padding: 10px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;
+}
+.wf-upcoming-stat-label { font-size: 9px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-bottom: 3px; }
+.wf-upcoming-stat-value { font-size: 12px; font-weight: 600; color: #000; }
+.wf-upcoming-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ============ STATUS-GROUPED (Opt 5) ============ */
+.wf-status-groups {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.wf-status-group {
+  background: #fff; border: 1px solid #eee; border-radius: 10px;
+  padding: 14px; display: flex; flex-direction: column; gap: 8px;
+}
+.wf-status-group-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 8px; border-bottom: 1px solid #eee; margin-bottom: 2px;
+}
+.wf-status-group-title {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700; color: #000;
+}
+.wf-status-group-count { font-size: 10px; color: #666; background: #eee; padding: 2px 8px; border-radius: 999px; font-weight: 600; }
+.wf-status-item {
+  display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
+  padding: 9px 10px; border: 1px solid #eee; border-radius: 8px;
+  background: #fafafa; font-size: 11px;
+}
+.wf-status-item strong { display: block; font-size: 12px; color: #000; margin-bottom: 2px; }
+.wf-status-item span { color: #666; }
+.wf-status-item-time { font-size: 11px; font-weight: 600; color: #000; font-variant-numeric: tabular-nums; }
+.wf-status-group-empty {
+  padding: 16px; text-align: center; font-size: 11px; color: #999;
+  border: 1px dashed #ccc; border-radius: 8px; font-style: italic;
+}
+
+/* ============ SUMMARY TABLE ============ */
+.wf-summary-table {
+  width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px;
+  background: #fff; border: 1px solid #eee; border-radius: 10px; overflow: hidden;
+}
+.wf-summary-table th, .wf-summary-table td {
+  padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee;
+}
+.wf-summary-table th { background: #fafafa; color: #666; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+.wf-summary-table tbody tr:last-child td { border-bottom: none; }
+.wf-summary-table td strong { color: #000; }
+
+.wf-recommendation {
+  background: #fff; border: 1px solid #eee; border-radius: 10px;
+  padding: 16px 18px; margin-top: 16px;
+}
+.wf-recommendation h3 { font-size: 14px; color: #000; margin: 0 0 8px; font-weight: 700; }
+.wf-recommendation p { font-size: 12px; color: #666; line-height: 1.6; margin: 0 0 8px; }
+.wf-recommendation ul { margin: 8px 0; padding-left: 18px; }
+.wf-recommendation li { font-size: 12px; color: #666; margin-bottom: 4px; }

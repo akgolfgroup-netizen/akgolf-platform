@@ -1,0 +1,230 @@
+/* === Wireframe Content CSS (B&W only) === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #fff */
+
+.browser-content { padding: 0; }
+
+/* ============ NAV ============ */
+.wf-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; border-bottom: 1px solid #eee;
+}
+.wf-logo { font-weight: 800; font-size: 14px; letter-spacing: 0.08em; color: #000; }
+.wf-nav-links { display: flex; gap: 20px; }
+.wf-nav-links a { color: #333; font-size: 13px; text-decoration: none; }
+.wf-nav-links a:hover { color: #000; }
+
+/* ============ BUTTONS ============ */
+.wf-btn {
+  padding: 8px 16px; border: 1px solid #000; border-radius: 999px;
+  background: #fff; color: #000; font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: background 0.2s;
+}
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-cta-large { padding: 14px 28px; font-size: 15px; background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta-large:hover { background: #333; }
+.wf-btn-secondary { background: #fff; color: #333; border-color: #ccc; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #333; }
+.wf-btn-disabled { background: #eee; color: #999; border-color: #ccc; cursor: not-allowed; }
+.wf-btn-block { width: 100%; display: block; }
+
+/* ============ HERO ============ */
+.wf-hero {
+  padding: 48px 32px 32px; text-align: center; max-width: 760px; margin: 0 auto;
+}
+.wf-hero-label {
+  display: inline-block; font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #666; margin-bottom: 16px; font-weight: 600;
+  border: 1px solid #ccc; padding: 4px 10px; border-radius: 999px;
+}
+.wf-headline { font-size: 36px; font-weight: 800; color: #000; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px; }
+.wf-subhead { font-size: 16px; color: #333; line-height: 1.6; margin: 0 auto 24px; max-width: 540px; }
+
+/* ============ SECTIONS / LAYOUT ============ */
+.wf-h2 { font-size: 24px; font-weight: 700; color: #000; margin: 0 0 16px; letter-spacing: -0.01em; }
+.wf-h3 { font-size: 16px; font-weight: 700; color: #000; margin: 0 0 8px; letter-spacing: -0.01em; }
+
+.wf-section { padding: 40px 32px; }
+.wf-section-narrow { padding: 40px 32px; max-width: 760px; margin: 0 auto; }
+.wf-section-wide { padding: 40px 32px; max-width: 960px; margin: 0 auto; }
+.wf-section-tight { padding: 32px; max-width: 960px; margin: 0 auto; }
+
+.wf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.wf-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.wf-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.wf-grid-summary { display: grid; grid-template-columns: 1fr 320px; gap: 28px; }
+.wf-grid-cal { display: grid; grid-template-columns: 320px 1fr; gap: 24px; }
+.wf-grid-coach { display: grid; grid-template-columns: 260px 1fr; gap: 24px; }
+
+/* ============ WIZARD / STEPS ============ */
+.wf-stepper {
+  display: flex; align-items: center; gap: 8px; justify-content: center;
+  padding: 20px 32px; background: #fafafa; border-bottom: 1px solid #eee;
+}
+.wf-step-pill {
+  display: flex; align-items: center; gap: 8px; padding: 6px 14px;
+  border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #666;
+  background: #fff;
+}
+.wf-step-pill.wf-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-step-pill.wf-done { background: #eee; color: #333; border-color: #ccc; }
+.wf-step-num { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; background: #fff; color: #000; border: 1px solid #ccc; }
+.wf-step-pill.wf-active .wf-step-num { background: #fff; color: #000; border-color: #fff; }
+.wf-step-connector { width: 20px; height: 1px; background: #ccc; }
+
+/* ============ SERVICE CARDS ============ */
+.wf-service-card {
+  padding: 20px; border: 1px solid #eee; border-radius: 12px; background: #fff;
+  text-align: left; cursor: pointer; position: relative;
+}
+.wf-service-card:hover { border-color: #ccc; }
+.wf-service-card.wf-selected { border-color: #000; border-width: 2px; padding: 19px; }
+.wf-service-label { font-size: 10px; color: #666; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+.wf-service-title { font-size: 17px; font-weight: 700; color: #000; margin: 0 0 6px; }
+.wf-service-desc { font-size: 13px; color: #666; line-height: 1.5; margin: 0 0 14px; min-height: 38px; }
+.wf-service-price { font-size: 20px; font-weight: 800; color: #000; margin-bottom: 2px; }
+.wf-service-meta { font-size: 12px; color: #999; }
+.wf-service-badge { position: absolute; top: -10px; right: 16px; background: #000; color: #fff; font-size: 10px; padding: 3px 10px; border-radius: 999px; font-weight: 600; letter-spacing: 0.08em; }
+
+/* Compact service list */
+.wf-service-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border: 1px solid #eee; border-radius: 10px;
+  background: #fff; cursor: pointer; margin-bottom: 8px;
+}
+.wf-service-row:hover { border-color: #ccc; }
+.wf-service-row.wf-selected { border-color: #000; background: #fafafa; }
+.wf-service-row-left { display: flex; flex-direction: column; gap: 2px; }
+.wf-service-row-title { font-size: 14px; font-weight: 600; color: #000; }
+.wf-service-row-meta { font-size: 12px; color: #666; }
+.wf-service-row-price { font-size: 14px; font-weight: 700; color: #000; }
+
+/* ============ CALENDAR ============ */
+.wf-calendar { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px; }
+.wf-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wf-cal-title { font-size: 14px; font-weight: 700; color: #000; }
+.wf-cal-nav { display: flex; gap: 4px; }
+.wf-cal-nav-btn { width: 28px; height: 28px; border: 1px solid #ccc; background: #fff; border-radius: 6px; font-size: 14px; color: #666; cursor: pointer; }
+.wf-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.wf-cal-dow { font-size: 10px; color: #999; text-align: center; padding: 6px 0; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.wf-cal-day {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  border: 1px solid transparent; border-radius: 8px; font-size: 13px; color: #333;
+  cursor: pointer; background: #fff;
+}
+.wf-cal-day:hover { background: #f5f5f5; }
+.wf-cal-day.wf-available { border-color: #eee; font-weight: 600; }
+.wf-cal-day.wf-available:hover { border-color: #000; }
+.wf-cal-day.wf-selected { background: #000; color: #fff; border-color: #000; font-weight: 700; }
+.wf-cal-day.wf-empty { color: #ccc; cursor: default; }
+.wf-cal-day.wf-full { color: #ccc; cursor: not-allowed; text-decoration: line-through; }
+
+.wf-cal-legend { display: flex; gap: 16px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee; font-size: 11px; color: #666; }
+.wf-cal-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+.wf-cal-dot-avail { background: #000; }
+.wf-cal-dot-full { background: #ccc; }
+
+/* ============ TIME SLOTS ============ */
+.wf-time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.wf-time-slot {
+  padding: 10px; border: 1px solid #eee; border-radius: 8px;
+  background: #fff; text-align: center; font-size: 13px; color: #333; cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+.wf-time-slot:hover { border-color: #000; }
+.wf-time-slot.wf-selected { background: #000; color: #fff; border-color: #000; font-weight: 700; }
+.wf-time-slot.wf-disabled { color: #ccc; background: #fafafa; cursor: not-allowed; }
+
+/* ============ INSTRUCTOR CARDS ============ */
+.wf-coach-card {
+  display: flex; gap: 16px; padding: 16px; border: 1px solid #eee;
+  border-radius: 12px; background: #fff; cursor: pointer; margin-bottom: 10px;
+}
+.wf-coach-card:hover { border-color: #ccc; }
+.wf-coach-card.wf-selected { border-color: #000; border-width: 2px; padding: 15px; }
+.wf-coach-avatar {
+  width: 64px; height: 64px; border-radius: 50%; background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: #666; flex-shrink: 0;
+}
+.wf-coach-body { flex: 1; }
+.wf-coach-name { font-size: 15px; font-weight: 700; color: #000; margin: 0 0 4px; }
+.wf-coach-role { font-size: 11px; color: #666; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+.wf-coach-bio { font-size: 13px; color: #666; line-height: 1.5; margin: 0 0 8px; }
+.wf-coach-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.wf-coach-tag { font-size: 10px; color: #333; border: 1px solid #eee; padding: 2px 8px; border-radius: 999px; background: #fafafa; }
+.wf-coach-portrait { width: 100%; aspect-ratio: 3/4; background: #eee; border: 1px solid #ccc; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px; }
+
+/* ============ SUMMARY / CHECKOUT ============ */
+.wf-summary {
+  padding: 20px; border: 1px solid #eee; border-radius: 12px; background: #fafafa;
+  position: sticky; top: 16px;
+}
+.wf-summary-label { font-size: 10px; color: #666; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
+.wf-summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; border-bottom: 1px solid #eee; }
+.wf-summary-row:last-of-type { border-bottom: none; }
+.wf-summary-row-label { color: #666; }
+.wf-summary-row-value { color: #000; font-weight: 600; }
+.wf-summary-total { display: flex; justify-content: space-between; padding: 12px 0 8px; margin-top: 8px; border-top: 2px solid #000; font-size: 16px; font-weight: 800; color: #000; }
+.wf-summary-note { font-size: 11px; color: #999; margin-top: 12px; line-height: 1.5; }
+
+/* ============ FORM ============ */
+.wf-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.wf-form-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+.wf-form-label { font-size: 11px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.wf-form-input {
+  padding: 10px 12px; border: 1px solid #ccc; border-radius: 8px;
+  font-size: 14px; color: #333; background: #fff;
+}
+.wf-form-input::placeholder { color: #999; }
+.wf-form-input:focus { outline: none; border-color: #000; }
+
+/* ============ PAYMENT ============ */
+.wf-pay-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.wf-pay-option {
+  padding: 16px; border: 1px solid #eee; border-radius: 10px; background: #fff;
+  text-align: center; cursor: pointer; font-size: 13px; color: #333; font-weight: 600;
+}
+.wf-pay-option:hover { border-color: #ccc; }
+.wf-pay-option.wf-selected { border-color: #000; border-width: 2px; padding: 15px; }
+.wf-pay-label { font-size: 10px; color: #999; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 4px; font-weight: 700; }
+
+/* ============ INFO / POLICIES ============ */
+.wf-info-row {
+  display: flex; align-items: flex-start; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid #eee; font-size: 13px; color: #333;
+}
+.wf-info-row:last-child { border-bottom: none; }
+.wf-info-icon {
+  width: 24px; height: 24px; border: 1px solid #ccc; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: #666; font-weight: 700; flex-shrink: 0;
+}
+
+.wf-faq-item {
+  padding: 14px 0; border-bottom: 1px solid #eee;
+}
+.wf-faq-q { font-size: 14px; font-weight: 600; color: #000; margin: 0 0 6px; }
+.wf-faq-a { font-size: 13px; color: #666; line-height: 1.6; margin: 0; }
+
+/* ============ WIZARD FOOTER BAR ============ */
+.wf-wizard-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 32px; border-top: 1px solid #eee; background: #fff;
+}
+
+/* ============ FOOTER ============ */
+.wf-footer-dark { background: #000; color: #999; padding: 48px 32px 32px; }
+.wf-footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 840px; margin: 0 auto; }
+.wf-footer-cols > div strong { color: #fff; font-size: 13px; display: block; margin-bottom: 10px; letter-spacing: 0.04em; }
+.wf-footer-cols > div p { font-size: 12px; color: #999; margin: 4px 0; }
+
+/* ============ SUMMARY TABLE ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; vertical-align: top; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

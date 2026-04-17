@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spill — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Spill</span> — <span id="project-name">AK Golf Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Game Hub</button>
+    <button class="tab-btn" data-tab="option-2">2: Challenge Mode</button>
+    <button class="tab-btn" data-tab="option-3">3: Multiplayer Lobby</button>
+    <button class="tab-btn" data-tab="option-4">4: Scoreboard Live</button>
+    <button class="tab-btn" data-tab="option-5">5: Format Picker</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1 ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Game Hub</span></h2>
+    <p class="option-description">Sentralt knutepunkt med tre game-kort, aktive sesjoner og join-med-kode — natural extension av portalen.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/spill</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal">
+          <aside class="wf-sidebar">
+            <div class="wf-logo">AK</div>
+            <nav class="wf-nav">
+              <a href="#" class="wf-nav-item">Dashboard</a>
+              <a href="#" class="wf-nav-item">Bookinger</a>
+              <a href="#" class="wf-nav-item">Statistikk</a>
+              <a href="#" class="wf-nav-item active">Spill <span class="wf-anno">①</span></a>
+              <a href="#" class="wf-nav-item">Sosialt</a>
+              <a href="#" class="wf-nav-item">Profil</a>
+            </nav>
+          </aside>
+          <main class="wf-main">
+            <header class="wf-header">
+              <div>
+                <div class="wf-eyebrow">Portal / Spill</div>
+                <h1 class="wf-title">Spill</h1>
+                <p class="wf-sub">Tren med press. Utfordre venner. Gjør det gøy.</p>
+              </div>
+              <button class="wf-btn wf-btn-primary">+ Opprett sesjon</button>
+            </header>
+
+            <section class="wf-section">
+              <div class="wf-section-head">
+                <h2>Velg spilltype</h2>
+                <span class="wf-anno">②</span>
+              </div>
+              <div class="wf-grid-3">
+                <div class="wf-game-card">
+                  <div class="wf-game-icon">N</div>
+                  <h3>Nærspill</h3>
+                  <p>Chip, pitch og bunker under press. 6–9 hull.</p>
+                  <div class="wf-game-meta">2–4 spillere · 20 min</div>
+                  <button class="wf-btn wf-btn-ghost">Start</button>
+                </div>
+                <div class="wf-game-card">
+                  <div class="wf-game-icon">P</div>
+                  <h3>Putting</h3>
+                  <p>Avstand 3–10 m. Streak og score mot venn.</p>
+                  <div class="wf-game-meta">2 spillere · 15 min</div>
+                  <button class="wf-btn wf-btn-ghost">Start</button>
+                </div>
+                <div class="wf-game-card">
+                  <div class="wf-game-icon">T</div>
+                  <h3>Press</h3>
+                  <p>Totalslag mot klokken. Teknisk fokus.</p>
+                  <div class="wf-game-meta">1–4 spillere · 25 min</div>
+                  <button class="wf-btn wf-btn-ghost">Start</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="wf-section">
+              <div class="wf-section-head">
+                <h2>Aktive sesjoner</h2>
+                <span class="wf-anno">③</span>
+                <span class="wf-pill">2 pågående</span>
+              </div>
+              <div class="wf-session">
+                <div class="wf-session-main">
+                  <div class="wf-session-type">Putting · Press 5–10m</div>
+                  <div class="wf-session-ppl">Du vs. Erik H. · runde 2 av 5</div>
+                </div>
+                <div class="wf-session-score">
+                  <div class="wf-score-you"><span>Deg</span><b>12</b></div>
+                  <div class="wf-score-vs">vs</div>
+                  <div class="wf-score-them"><span>Erik</span><b>9</b></div>
+                </div>
+                <button class="wf-btn wf-btn-primary">Fortsett</button>
+              </div>
+              <div class="wf-session">
+                <div class="wf-session-main">
+                  <div class="wf-session-type">Nærspill · Opp-og-ned 30m</div>
+                  <div class="wf-session-ppl">Du + 3 spillere · runde 1 av 4</div>
+                </div>
+                <div class="wf-session-score">
+                  <div class="wf-score-you"><span>Deg</span><b>3</b></div>
+                  <div class="wf-score-vs">vs</div>
+                  <div class="wf-score-them"><span>Beste</span><b>5</b></div>
+                </div>
+                <button class="wf-btn wf-btn-ghost">Vent</button>
+              </div>
+            </section>
+
+            <section class="wf-section">
+              <div class="wf-section-head">
+                <h2>Bli med i sesjon</h2>
+                <span class="wf-anno">④</span>
+              </div>
+              <div class="wf-join">
+                <label>Skriv inn 6-sifret kode</label>
+                <div class="wf-join-row">
+                  <input type="text" class="wf-code" value="4 7" placeholder="— — — — — —" maxlength="6">
+                  <button class="wf-btn wf-btn-primary">Bli med</button>
+                </div>
+                <div class="wf-join-hint">Fikk du kode fra en venn? Lim inn her.</div>
+              </div>
+            </section>
+
+            <section class="wf-section">
+              <div class="wf-section-head">
+                <h2>Søk bane</h2>
+                <span class="wf-anno">⑤</span>
+              </div>
+              <div class="wf-search">
+                <input type="text" placeholder="Søk etter bane, f.eks. Oslo GK" class="wf-search-input">
+                <div class="wf-course-list">
+                  <div class="wf-course"><span>Oslo Golfklubb</span><span class="wf-course-dist">12 km</span></div>
+                  <div class="wf-course"><span>Losby Park Golf</span><span class="wf-course-dist">18 km</span></div>
+                  <div class="wf-course"><span>Bogstad Golfklubb</span><span class="wf-course-dist">9 km</span></div>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="wf-anno">①</span> Spill er ny toppnivå-nav ved siden av Bookinger og Statistikk.</li>
+        <li><span class="wf-anno">②</span> Tre spilltyper dekker coaching-kjernen: nærspill, putting og press.</li>
+        <li><span class="wf-anno">③</span> Aktive sesjoner med eksempel "Putting Press 5–10m vs Erik H., runde 2/5".</li>
+        <li><span class="wf-anno">④</span> 6-sifret kode gir friksjonsfri join uten konto-kobling.</li>
+        <li><span class="wf-anno">⑤</span> Banesøk lever nederst — brukt sjeldnere enn opprett/join.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2 ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Challenge Mode</span></h2>
+    <p class="option-description">Daglige challenges med streak-teller — gamification driver retur og konsistent trening.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/spill</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal">
+          <aside class="wf-sidebar">
+            <div class="wf-logo">AK</div>
+            <nav class="wf-nav">
+              <a href="#" class="wf-nav-item">Dashboard</a>
+              <a href="#" class="wf-nav-item">Bookinger</a>
+              <a href="#" class="wf-nav-item">Statistikk</a>
+              <a href="#" class="wf-nav-item active">Spill</a>
+              <a href="#" class="wf-nav-item">Sosialt</a>
+              <a href="#" class="wf-nav-item">Profil</a>
+            </nav>
+          </aside>
+          <main class="wf-main">
+            <header class="wf-streak-hero">
+              <div class="wf-streak-left">
+                <div class="wf-eyebrow">Din streak <span class="wf-anno">①</span></div>
+                <div class="wf-streak-num">7<span class="wf-streak-unit">dager</span></div>
+                <div class="wf-streak-sub">Neste milepæl: 10 dager → Pro-badge</div>
+              </div>
+              <div class="wf-streak-dots">
+                <div class="wf-dot filled">M</div>
+                <div class="wf-dot filled">T</div>
+                <div class="wf-dot filled">O</div>
+                <div class="wf-dot filled">T</div>
+                <div class="wf-dot filled">F</div>
+                <div class="wf-dot filled">L</div>
+                <div class="wf-dot filled today">S</div>
+                <div class="wf-dot">M</div>
+                <div class="wf-dot">T</div>
+                <div class="wf-dot">O</div>
+              </div>
+            </header>
+
+            <section class="wf-section">
+              <div class="wf-section-head">
+                <h2>Dagens challenge <span class="wf-anno">②</span></h2>
+                <span class="wf-pill">Utløper om 6t 12m</span>
+              </div>
+              <div class="wf-challenge-hero">
+                <div class="wf-challenge-icon">P</div>
+                <div class="wf-challenge-body">
+                  <div class="wf-challenge-type">PUTTING · NIVÅ 3</div>
+                  <h3>Putting Press 5–10m</h3>
+                  <p>10 putts fra variert avstand. Mål: 6 innpå.</p>
+                  <div class="wf-challenge-stats">
+                    <span><b>247</b> har fullført</span>
+                    <span><b>4.6</b> snitt</span>
+                    <span><b>+50</b> XP</span>
+                  </div>
+                </div>
+                <button class="wf-btn wf-btn-primary wf-btn-lg">Start</button>
+              </div>
+            </section>
+
+            <section class="wf-section">
+              <div class="wf-section-head">
+                <h2>Ukens challenges <span class="wf-anno">③</span></h2>
+              </div>
+              <div class="wf-grid-3">
+                <div class="wf-mini-challenge done">
+                  <div class="wf-check">✓</div>
+                  <h4>Nærspill 20m</h4>
+                  <span>5/5 gjort</span>
+                </div>
+                <div class="wf-mini-challenge">
+                  <h4>Press 9 hull</h4>
+                  <span>2/5 gjort</span>
+                </div>
+                <div class="wf-mini-challenge locked">
+                  <h4>Bunker recovery</h4>
+                  <span>Låst — nivå 4</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="wf-section">
+              <div class="wf-section-head">
+                <h2>Ledertavle denne uken <span class="wf-anno">④</span></h2>
+              </div>
+              <div class="wf-leader">
+                <div class="wf-leader-row top">
+                  <span class="wf-rank">1</span>
+                  <span class="wf-leader-name">Erik H.</span>
+                  <span class="wf-leader-streak">14 d</span>
+                  <span class="wf-leader-xp">2 180 XP</span>
+                </div>
+                <div class="wf-leader-row">
+                  <span class="wf-rank">2</span>
+                  <span class="wf-leader-name">Ida S.</span>
+                  <span class="wf-leader-streak">11 d</span>
+                  <span class="wf-leader-xp">1 920 XP</span>
+                </div>
+                <div class="wf-leader-row me">
+                  <span class="wf-rank">3</span>
+                  <span class="wf-leader-name">Du</span>
+                  <span class="wf-leader-streak">7 d</span>
+                  <span class="wf-leader-xp">1 640 XP</span>
+                </div>
+                <div class="wf-leader-row">
+                  <span class="wf-rank">4</span>
+                  <span class="wf-leader-name">Markus R.</span>
+                  <span class="wf-leader-streak">5 d</span>
+                  <span class="wf-leader-xp">1 310 XP</span>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="wf-anno">①</span> Streak-hero øverst — drar retur til plattformen.</li>
+        <li><span class="wf-anno">②</span> Dagens challenge er utløper-drevet med countdown.</li>
+        <li><span class="wf-anno">③</span> Ukens challenges gir progresjon, låst-tilstand motiverer.</li>
+        <li><span class="wf-anno">④</span> Ledertavle synliggjør sosial konkurranse.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3 ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Multiplayer Lobby</span></h2>
+    <p class="option-description">Finn venner, inviter til match — sosial discovery er inngangen til spill.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/spill</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal">
+          <aside class="wf-sidebar">
+            <div class="wf-logo">AK</div>
+            <nav class="wf-nav">
+              <a href="#" class="wf-nav-item">Dashboard</a>
+              <a href="#" class="wf-nav-item">Bookinger</a>
+              <a href="#" class="wf-nav-item">Statistikk</a>
+              <a href="#" class="wf-nav-item active">Spill</a>
+              <a href="#" class="wf-nav-item">Sosialt</a>
+              <a href="#" class="wf-nav-item">Profil</a>
+            </nav>
+          </aside>
+          <main class="wf-main">
+            <header class="wf-header">
+              <div>
+                <div class="wf-eyebrow">Portal / Spill / Lobby</div>
+                <h1 class="wf-title">Multiplayer Lobby</h1>
+              </div>
+              <div class="wf-header-actions">
+                <button class="wf-btn wf-btn-ghost">Bli med m/ kode</button>
+                <button class="wf-btn wf-btn-primary">+ Start match</button>
+              </div>
+            </header>
+
+            <div class="wf-lobby">
+              <div class="wf-lobby-col">
+                <div class="wf-section-head"><h2>Venner online <span class="wf-anno">①</span></h2><span class="wf-pill">5 tilgjengelig</span></div>
+                <div class="wf-friend-search">
+                  <input type="text" placeholder="Søk venner…" class="wf-search-input">
+                </div>
+                <div class="wf-friend-list">
+                  <div class="wf-friend">
+                    <div class="wf-avatar">EH</div>
+                    <div class="wf-friend-main"><b>Erik H.</b><span>HCP 8.2 · spiller nå</span></div>
+                    <button class="wf-btn wf-btn-primary wf-btn-sm">Inviter</button>
+                  </div>
+                  <div class="wf-friend">
+                    <div class="wf-avatar">IS</div>
+                    <div class="wf-friend-main"><b>Ida S.</b><span>HCP 14.6 · online</span></div>
+                    <button class="wf-btn wf-btn-primary wf-btn-sm">Inviter</button>
+                  </div>
+                  <div class="wf-friend">
+                    <div class="wf-avatar">MR</div>
+                    <div class="wf-friend-main"><b>Markus R.</b><span>HCP 4.1 · online</span></div>
+                    <button class="wf-btn wf-btn-primary wf-btn-sm">Inviter</button>
+                  </div>
+                  <div class="wf-friend dim">
+                    <div class="wf-avatar">OA</div>
+                    <div class="wf-friend-main"><b>Ola A.</b><span>HCP 22.0 · sist sett 2t</span></div>
+                    <button class="wf-btn wf-btn-ghost wf-btn-sm">Send SMS</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-lobby-col">
+                <div class="wf-section-head"><h2>Match-oppsett <span class="wf-anno">②</span></h2></div>
+                <div class="wf-match-setup">
+                  <div class="wf-field">
+                    <label>Spilltype</label>
+                    <div class="wf-chip-group">
+                      <button class="wf-chip active">Putting</button>
+                      <button class="wf-chip">Nærspill</button>
+                      <button class="wf-chip">Press</button>
+                    </div>
+                  </div>
+                  <div class="wf-field">
+                    <label>Format</label>
+                    <select class="wf-select">
+                      <option>Putting Press 5–10m</option>
+                      <option>Putting Stairs 3–15m</option>
+                      <option>Clutch Final</option>
+                    </select>
+                  </div>
+                  <div class="wf-field">
+                    <label>Runder</label>
+                    <div class="wf-chip-group">
+                      <button class="wf-chip">3</button>
+                      <button class="wf-chip active">5</button>
+                      <button class="wf-chip">10</button>
+                    </div>
+                  </div>
+                  <div class="wf-field">
+                    <label>Inviterte spillere</label>
+                    <div class="wf-invited">
+                      <span class="wf-invited-tag">Erik H. ×</span>
+                      <span class="wf-invited-tag">Ida S. ×</span>
+                      <button class="wf-invited-add">+ Legg til</button>
+                    </div>
+                  </div>
+                  <div class="wf-match-cta">
+                    <div class="wf-code-display">Match-kode: <b>847 293</b> <span class="wf-anno">③</span></div>
+                    <button class="wf-btn wf-btn-primary wf-btn-lg">Send invitasjon</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="wf-anno">①</span> Split view — venner til venstre, match-oppsett til høyre.</li>
+        <li><span class="wf-anno">②</span> Spilltype → format → runder → invitasjon, stepless fler-valg.</li>
+        <li><span class="wf-anno">③</span> 6-sifret kode vises parallelt med invitasjoner — kan deles eksternt.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4 ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Scoreboard Live</span></h2>
+    <p class="option-description">Live scoreboard over alle aktive games — real-time energi som trekker spillere inn.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/spill</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal">
+          <aside class="wf-sidebar">
+            <div class="wf-logo">AK</div>
+            <nav class="wf-nav">
+              <a href="#" class="wf-nav-item">Dashboard</a>
+              <a href="#" class="wf-nav-item">Bookinger</a>
+              <a href="#" class="wf-nav-item">Statistikk</a>
+              <a href="#" class="wf-nav-item active">Spill</a>
+              <a href="#" class="wf-nav-item">Sosialt</a>
+              <a href="#" class="wf-nav-item">Profil</a>
+            </nav>
+          </aside>
+          <main class="wf-main">
+            <header class="wf-header">
+              <div>
+                <div class="wf-eyebrow">Portal / Spill · Live <span class="wf-live">●</span></div>
+                <h1 class="wf-title">Scoreboard</h1>
+                <p class="wf-sub">8 aktive games · 31 spillere akkurat nå</p>
+              </div>
+              <div class="wf-header-actions">
+                <button class="wf-btn wf-btn-ghost">Filter</button>
+                <button class="wf-btn wf-btn-primary">+ Join med kode</button>
+              </div>
+            </header>
+
+            <div class="wf-filters"><span class="wf-anno">①</span>
+              <button class="wf-chip active">Alle</button>
+              <button class="wf-chip">Venner</button>
+              <button class="wf-chip">Putting</button>
+              <button class="wf-chip">Nærspill</button>
+              <button class="wf-chip">Press</button>
+            </div>
+
+            <section class="wf-section">
+              <div class="wf-section-head"><h2>Pågående <span class="wf-anno">②</span></h2></div>
+              <div class="wf-live-list">
+                <div class="wf-live-card featured">
+                  <div class="wf-live-head">
+                    <span class="wf-live-type">Putting Press 5–10m</span>
+                    <span class="wf-live-round">Runde 2/5</span>
+                    <span class="wf-live-dot">●  LIVE</span>
+                  </div>
+                  <div class="wf-live-scores">
+                    <div class="wf-score-ppl"><b>Du</b><span>12</span></div>
+                    <div class="wf-score-ppl leading"><b>Erik H.</b><span>14</span></div>
+                  </div>
+                  <div class="wf-live-foot">
+                    <div class="wf-progress"><div class="wf-progress-fill" style="width:40%"></div></div>
+                    <button class="wf-btn wf-btn-primary wf-btn-sm">Åpne</button>
+                  </div>
+                </div>
+
+                <div class="wf-live-card">
+                  <div class="wf-live-head">
+                    <span class="wf-live-type">Nærspill 30m</span>
+                    <span class="wf-live-round">Runde 1/4</span>
+                    <span class="wf-live-dot">●  LIVE</span>
+                  </div>
+                  <div class="wf-live-scores compact">
+                    <div class="wf-score-ppl"><b>Ida S.</b><span>8</span></div>
+                    <div class="wf-score-ppl leading"><b>Markus R.</b><span>10</span></div>
+                    <div class="wf-score-ppl"><b>Ola A.</b><span>6</span></div>
+                  </div>
+                  <div class="wf-live-foot">
+                    <div class="wf-progress"><div class="wf-progress-fill" style="width:25%"></div></div>
+                    <button class="wf-btn wf-btn-ghost wf-btn-sm">Se på</button>
+                  </div>
+                </div>
+
+                <div class="wf-live-card">
+                  <div class="wf-live-head">
+                    <span class="wf-live-type">Press 9 hull</span>
+                    <span class="wf-live-round">Hull 6/9</span>
+                    <span class="wf-live-dot">●  LIVE</span>
+                  </div>
+                  <div class="wf-live-scores compact">
+                    <div class="wf-score-ppl"><b>Jon N.</b><span>+3</span></div>
+                    <div class="wf-score-ppl leading"><b>Kari P.</b><span>-1</span></div>
+                  </div>
+                  <div class="wf-live-foot">
+                    <div class="wf-progress"><div class="wf-progress-fill" style="width:66%"></div></div>
+                    <button class="wf-btn wf-btn-ghost wf-btn-sm">Se på</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="wf-section">
+              <div class="wf-section-head"><h2>Nylig avsluttet <span class="wf-anno">③</span></h2></div>
+              <div class="wf-recent-row">
+                <span>Putting 3–8m · Erik H. vant mot deg</span>
+                <span class="wf-recent-score">15 – 11</span>
+                <a href="#" class="wf-link">Se sammendrag</a>
+              </div>
+              <div class="wf-recent-row">
+                <span>Nærspill 20m · Du vant</span>
+                <span class="wf-recent-score">18 – 14</span>
+                <a href="#" class="wf-link">Se sammendrag</a>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="wf-anno">①</span> Filter-chips for å skalere når mange games er aktive.</li>
+        <li><span class="wf-anno">②</span> Live-kort med countdown/progress, "leading"-highlight og watch-mode.</li>
+        <li><span class="wf-anno">③</span> Nylig avsluttet gir retrospektivt innblikk uten å forlate siden.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5 ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Format Picker</span></h2>
+    <p class="option-description">Velg format først (strokeplay, stableford, matchplay, bestball, scramble) — format driver valg.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/spill</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal">
+          <aside class="wf-sidebar">
+            <div class="wf-logo">AK</div>
+            <nav class="wf-nav">
+              <a href="#" class="wf-nav-item">Dashboard</a>
+              <a href="#" class="wf-nav-item">Bookinger</a>
+              <a href="#" class="wf-nav-item">Statistikk</a>
+              <a href="#" class="wf-nav-item active">Spill</a>
+              <a href="#" class="wf-nav-item">Sosialt</a>
+              <a href="#" class="wf-nav-item">Profil</a>
+            </nav>
+          </aside>
+          <main class="wf-main">
+            <header class="wf-header">
+              <div>
+                <div class="wf-eyebrow">Portal / Spill / Nytt spill</div>
+                <h1 class="wf-title">Velg format</h1>
+                <p class="wf-sub">Start med å velge spillformat. Bane og spillere vaelges etterpå.</p>
+              </div>
+            </header>
+
+            <div class="wf-steps">
+              <div class="wf-step active"><span>1</span> Format</div>
+              <div class="wf-step"><span>2</span> Bane</div>
+              <div class="wf-step"><span>3</span> Spillere</div>
+              <div class="wf-step"><span>4</span> Start</div>
+            </div>
+
+            <div class="wf-format-grid"><span class="wf-anno">①</span>
+              <div class="wf-format selected">
+                <div class="wf-format-head"><h3>Strokeplay</h3><span class="wf-format-tag">Klassisk</span></div>
+                <p>Totalsum over 18 hull. Lavest score vinner.</p>
+                <ul class="wf-format-meta">
+                  <li>1–4 spillere</li>
+                  <li>18 hull · 3–4t</li>
+                  <li>HCP brutto/netto</li>
+                </ul>
+              </div>
+              <div class="wf-format">
+                <div class="wf-format-head"><h3>Stableford</h3><span class="wf-format-tag">Punkter</span></div>
+                <p>Poeng per hull basert på netto score. Høyest vinner.</p>
+                <ul class="wf-format-meta">
+                  <li>1–4 spillere</li>
+                  <li>18 hull · 3–4t</li>
+                  <li>HCP-vennlig</li>
+                </ul>
+              </div>
+              <div class="wf-format">
+                <div class="wf-format-head"><h3>Matchplay</h3><span class="wf-format-tag">1v1</span></div>
+                <p>Hull-for-hull duell. Vinn flest hull.</p>
+                <ul class="wf-format-meta">
+                  <li>2 spillere</li>
+                  <li>9–18 hull</li>
+                  <li>Taktisk</li>
+                </ul>
+              </div>
+              <div class="wf-format">
+                <div class="wf-format-head"><h3>Bestball</h3><span class="wf-format-tag">Lag</span></div>
+                <p>Beste score fra laget teller på hvert hull.</p>
+                <ul class="wf-format-meta">
+                  <li>2 lag · 2–4 spillere</li>
+                  <li>18 hull</li>
+                  <li>Sosialt</li>
+                </ul>
+              </div>
+              <div class="wf-format">
+                <div class="wf-format-head"><h3>Scramble</h3><span class="wf-format-tag">Lag</span></div>
+                <p>Alle slår — beste ball velges, alle slår derfra.</p>
+                <ul class="wf-format-meta">
+                  <li>2–4 per lag</li>
+                  <li>18 hull · 3t</li>
+                  <li>Nybegynner-vennlig</li>
+                </ul>
+              </div>
+              <div class="wf-format micro">
+                <div class="wf-format-head"><h3>Micro-games</h3><span class="wf-format-tag">Trening</span></div>
+                <p>Putting Press, Nærspill, Bunker recovery.</p>
+                <ul class="wf-format-meta">
+                  <li>1–4 spillere</li>
+                  <li>15–30 min</li>
+                  <li>Uten bane</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="wf-step-foot"><span class="wf-anno">②</span>
+              <div class="wf-selected-summary">Valgt: <b>Strokeplay</b> · 1–4 spillere · 18 hull</div>
+              <div class="wf-step-actions">
+                <button class="wf-btn wf-btn-ghost">Avbryt</button>
+                <button class="wf-btn wf-btn-primary">Neste: Velg bane →</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <ol>
+        <li><span class="wf-anno">①</span> Seks format-kort inkl. Micro-games for treningspress uten bane.</li>
+        <li><span class="wf-anno">②</span> Step-wizard med persistent valgt-oppsummering og neste-CTA.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Summary & Recommendation</h2>
+    <p class="option-description">Sammenligning av alle fem UX-retninger for Portal Spill.</p>
+    <div class="wf-summary">
+      <table class="wf-sum-table">
+        <thead>
+          <tr><th>#</th><th>Navn</th><th>Beskrivelse</th><th>Overall UX</th></tr>
+        </thead>
+        <tbody>
+          <tr class="rec-row">
+            <td>1</td>
+            <td><b>Game Hub</b></td>
+            <td>Tre game-kort, aktive sesjoner, join-med-kode, banesøk.</td>
+            <td>★★★★★</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Challenge Mode</td>
+            <td>Daglig challenge + streak-teller + ledertavle.</td>
+            <td>★★★★</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Multiplayer Lobby</td>
+            <td>Venner + match-oppsett i split view.</td>
+            <td>★★★★</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Scoreboard Live</td>
+            <td>Real-time live games + filter + watch-mode.</td>
+            <td>★★★</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Format Picker</td>
+            <td>Format-først wizard (strokeplay, stableford, matchplay…).</td>
+            <td>★★★</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="wf-rec">
+        <h3>Anbefaling: Option 1 — Game Hub</h3>
+        <p>Game Hub er den eneste retningen som dekker alle kjernebrukerne i én skjerm: opprett sesjon, se aktive, join-med-kode, og finn bane. Challenge Mode (2) kan legges som delkomponent senere for gamification. Formatet matcher portal-arkitekturen — light canvas, sidebar, kort-mønster — og krever minst teknisk løft for go-live.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

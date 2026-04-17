@@ -1,0 +1,263 @@
+/* === Wireframe Content CSS (B&W only) === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #fff */
+
+.browser-content { padding: 0; }
+
+/* ============ NAV ============ */
+.wf-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; border-bottom: 1px solid #eee;
+}
+.wf-logo { font-weight: 800; font-size: 14px; letter-spacing: 0.08em; color: #000; }
+.wf-logo-serif { font-family: Georgia, serif; font-weight: 400; font-size: 18px; letter-spacing: 0; }
+.wf-nav-links { display: flex; gap: 20px; }
+.wf-nav-links a { color: #333; font-size: 13px; text-decoration: none; }
+.wf-nav-links a:hover { color: #000; }
+.wf-nav-editorial { padding: 20px 24px; border-bottom: 1px solid #ccc; }
+
+/* ============ BUTTONS ============ */
+.wf-btn {
+  padding: 8px 16px; border: 1px solid #000; border-radius: 999px;
+  background: #fff; color: #000; font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: background 0.2s;
+}
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-cta-large { padding: 14px 28px; font-size: 15px; background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta-large:hover { background: #333; }
+.wf-btn-secondary { background: #fff; color: #333; border-color: #ccc; }
+.wf-btn-secondary-dark { background: transparent; color: #fff; border-color: #666; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #333; }
+
+/* ============ HERO ============ */
+.wf-hero {
+  padding: 56px 32px 32px; text-align: center; max-width: 760px; margin: 0 auto;
+}
+.wf-hero-label {
+  display: inline-block; font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #666; margin-bottom: 16px; font-weight: 600;
+  border: 1px solid #ccc; padding: 4px 10px; border-radius: 999px;
+}
+.wf-headline { font-size: 42px; font-weight: 800; color: #000; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 16px; }
+.wf-headline-editorial { font-family: Georgia, serif; font-size: 48px; font-weight: 400; line-height: 1.15; margin: 0 0 20px; color: #000; }
+.wf-subhead { font-size: 16px; color: #333; line-height: 1.6; margin: 0 auto 24px; max-width: 560px; }
+.wf-subhead-editorial { font-family: Georgia, serif; font-size: 18px; font-style: italic; color: #666; line-height: 1.6; margin: 0 0 40px; }
+.wf-issue { font-size: 10px; letter-spacing: 0.2em; color: #666; text-transform: uppercase; margin-bottom: 24px; }
+.wf-cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ============ BILLING TOGGLE (Opt 1) ============ */
+.wf-billing-toggle {
+  display: inline-flex; gap: 4px; padding: 4px; border: 1px solid #ccc;
+  border-radius: 999px; background: #f5f5f5; margin-top: 8px;
+}
+.wf-toggle-btn {
+  padding: 8px 18px; border-radius: 999px; border: none; background: transparent;
+  font-size: 13px; color: #666; cursor: pointer; font-weight: 500;
+}
+.wf-toggle-active { background: #000; color: #fff; }
+.wf-toggle-save { font-size: 10px; color: #666; margin-left: 4px; }
+.wf-toggle-active .wf-toggle-save { color: #ccc; }
+
+/* ============ TRUST BAR ============ */
+.wf-trust-bar {
+  display: flex; justify-content: space-around; padding: 20px 32px;
+  background: #f5f5f5; border-top: 1px solid #eee; border-bottom: 1px solid #eee;
+  font-size: 12px; color: #666; flex-wrap: wrap; gap: 16px;
+}
+
+/* ============ SECTIONS ============ */
+.wf-h2 { font-size: 28px; font-weight: 700; color: #000; text-align: center; margin: 0 0 32px; letter-spacing: -0.01em; }
+
+.wf-pricing, .wf-faq, .wf-compare-strip, .wf-all-tiers, .wf-matrix-wrap { padding: 56px 32px; }
+.wf-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1120px; margin: 0 auto; }
+
+/* ============ PRICING TIERS (Opt 1) ============ */
+.wf-tier {
+  padding: 28px 20px; border: 1px solid #eee; border-radius: 12px; text-align: left; background: #fff;
+  position: relative; display: flex; flex-direction: column;
+}
+.wf-tier-featured { border-color: #000; border-width: 2px; }
+.wf-tier-badge { position: absolute; top: -10px; left: 20px; background: #000; color: #fff; font-size: 10px; padding: 3px 10px; border-radius: 999px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.wf-tier-name { font-size: 12px; color: #666; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 8px; }
+.wf-tier-price { font-size: 32px; font-weight: 800; color: #000; letter-spacing: -0.02em; line-height: 1; }
+.wf-tier-period { font-size: 12px; color: #999; margin: 4px 0 12px; }
+.wf-tier-desc { font-size: 13px; color: #666; line-height: 1.5; margin: 0 0 16px; }
+.wf-tier ul { list-style: none; padding: 0; margin: 0 0 20px; font-size: 13px; color: #333; flex: 1; }
+.wf-tier li { padding: 6px 0; border-bottom: 1px solid #eee; }
+.wf-tier li:last-child { border-bottom: none; }
+.wf-tier .wf-btn { width: 100%; padding: 10px 16px; }
+.wf-pricing-footnote { text-align: center; font-size: 12px; color: #999; margin-top: 24px; }
+
+/* ============ FAQ ============ */
+.wf-faq { background: #f9f9f9; }
+.wf-faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 920px; margin: 0 auto; }
+.wf-faq-item { padding: 20px; background: #fff; border: 1px solid #eee; border-radius: 12px; }
+.wf-faq-item h3 { font-size: 15px; font-weight: 600; color: #000; margin: 0 0 8px; }
+.wf-faq-item p { font-size: 13px; color: #666; line-height: 1.5; margin: 0; }
+
+/* ============ DARK SECTIONS ============ */
+.wf-section-dark {
+  background: #000; color: #fff; padding: 64px 32px; text-align: center;
+}
+.wf-h2-dark { font-size: 30px; font-weight: 700; color: #fff; margin: 0 0 16px; letter-spacing: -0.01em; }
+.wf-subhead-dark { font-size: 16px; color: #999; line-height: 1.6; margin: 0 0 32px; }
+.wf-cta-band { padding: 72px 32px; }
+
+/* ============ SIDE BY SIDE (Opt 2) ============ */
+.wf-side-by-side {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px;
+  padding: 32px; max-width: 1200px; margin: 0 auto; align-items: start;
+}
+.wf-sbs-column {
+  padding: 32px 24px; border: 1px solid #ccc; border-radius: 16px; background: #fff;
+}
+.wf-sbs-header { text-align: left; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+.wf-sbs-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #666; margin-bottom: 8px; font-weight: 700; }
+.wf-sbs-title { font-size: 26px; font-weight: 800; color: #000; margin: 0 0 10px; letter-spacing: -0.01em; }
+.wf-sbs-desc { font-size: 13px; color: #666; line-height: 1.5; margin: 0; }
+.wf-sbs-tiers { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.wf-sbs-tier {
+  padding: 16px; border: 1px solid #eee; border-radius: 10px; background: #fafafa;
+  position: relative;
+}
+.wf-sbs-tier-featured { border-color: #000; background: #fff; border-width: 2px; }
+.wf-sbs-tier-badge { position: absolute; top: -8px; right: 12px; background: #000; color: #fff; font-size: 9px; padding: 2px 8px; border-radius: 999px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.wf-sbs-tier-name { font-size: 11px; color: #666; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+.wf-sbs-tier-price { font-size: 20px; font-weight: 800; color: #000; margin-bottom: 6px; letter-spacing: -0.01em; }
+.wf-sbs-tier p { font-size: 12px; color: #666; margin: 0; line-height: 1.4; }
+.wf-sbs-column .wf-btn { width: 100%; padding: 12px; }
+.wf-sbs-divider {
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: horizontal-tb; padding: 120px 0 0;
+}
+.wf-sbs-divider span {
+  font-size: 11px; color: #999; letter-spacing: 0.2em; font-weight: 700;
+  border: 1px solid #ccc; padding: 6px 10px; border-radius: 999px; background: #fff;
+}
+
+/* ============ COMPARE STRIP (Opt 2) ============ */
+.wf-compare-strip { max-width: 840px; margin: 0 auto; }
+.wf-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.wf-table th, .wf-table td { padding: 12px 16px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-table th { font-weight: 700; color: #000; background: #f5f5f5; }
+.wf-table td:first-child { font-weight: 600; color: #333; }
+
+/* ============ CALCULATOR (Opt 3) ============ */
+.wf-calculator {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;
+  padding: 32px; max-width: 1120px; margin: 0 auto;
+}
+.wf-calc-card {
+  padding: 28px; background: #fff; border: 1px solid #ccc; border-radius: 16px;
+}
+.wf-calc-progress {
+  display: flex; align-items: center; gap: 4px; margin-bottom: 24px;
+}
+.wf-calc-step {
+  width: 28px; height: 28px; border: 1px solid #ccc; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; color: #999;
+  font-weight: 600;
+}
+.wf-calc-active { background: #000; color: #fff; border-color: #000; }
+.wf-calc-line { flex: 1; height: 1px; background: #ccc; }
+.wf-calc-question { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+.wf-calc-question:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+.wf-calc-q-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #666; margin-bottom: 8px; font-weight: 600; }
+.wf-calc-question h3 { font-size: 16px; font-weight: 600; color: #000; margin: 0 0 14px; }
+.wf-calc-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.wf-calc-opt { padding: 8px 14px; border: 1px solid #ccc; border-radius: 999px; background: #fff; cursor: pointer; font-size: 13px; color: #333; }
+.wf-calc-opt:hover { border-color: #666; }
+.wf-calc-selected { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+
+.wf-calc-result {
+  padding: 32px 28px; background: #f5f5f5; border: 1px solid #ccc; border-radius: 16px;
+  position: sticky; top: 20px; align-self: start;
+}
+.wf-calc-result-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #666; margin-bottom: 14px; font-weight: 700; }
+.wf-calc-result-tier { font-size: 32px; font-weight: 800; color: #000; margin-bottom: 4px; letter-spacing: -0.02em; }
+.wf-calc-result-price { font-size: 20px; font-weight: 700; color: #333; margin-bottom: 14px; }
+.wf-calc-result-desc { font-size: 13px; color: #666; line-height: 1.5; margin: 0 0 16px; }
+.wf-calc-result-features { list-style: none; padding: 0; margin: 0 0 20px; font-size: 13px; color: #333; }
+.wf-calc-result-features li { padding: 4px 0; border-bottom: 1px solid #e5e5e5; }
+.wf-calc-result-features li:last-child { border-bottom: none; }
+.wf-calc-result .wf-btn { width: 100%; }
+
+/* ============ COMPACT TIERS (Opt 3 lower) ============ */
+.wf-compact-tiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 1000px; margin: 0 auto; }
+.wf-compact-tier {
+  padding: 20px 16px; border: 1px solid #eee; border-radius: 10px; background: #fff;
+  text-align: center;
+}
+.wf-compact-featured { border-color: #000; border-width: 2px; }
+.wf-compact-name { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 600; margin-bottom: 6px; }
+.wf-compact-price { font-size: 18px; font-weight: 800; color: #000; margin-bottom: 8px; }
+.wf-compact-tier p { font-size: 12px; color: #666; margin: 0 0 14px; }
+.wf-compact-tier .wf-btn { width: 100%; padding: 8px; font-size: 12px; }
+
+/* ============ MATRIX (Opt 4) ============ */
+.wf-matrix-wrap { max-width: 1120px; margin: 0 auto; padding: 32px 24px 64px; }
+.wf-matrix { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #eee; }
+.wf-matrix th, .wf-matrix td { padding: 12px 16px; border-bottom: 1px solid #eee; text-align: center; }
+.wf-matrix th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 14px; padding: 16px; position: relative; }
+.wf-matrix .wf-matrix-feature { text-align: left; min-width: 180px; }
+.wf-matrix td:first-child { text-align: left; font-weight: 500; color: #333; }
+.wf-matrix .wf-matrix-price { display: block; font-size: 12px; font-weight: 500; color: #666; margin-top: 4px; }
+.wf-matrix .wf-matrix-featured { background: #f0f0f0; }
+.wf-matrix th.wf-matrix-featured { background: #000; color: #fff; }
+.wf-matrix th.wf-matrix-featured .wf-matrix-price { color: #ccc; }
+.wf-matrix-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; font-size: 9px; padding: 3px 8px; border-radius: 999px; border: 1px solid #000; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.wf-matrix-category td { background: #fafafa; font-weight: 700 !important; color: #000 !important; text-align: left !important; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 16px; }
+.wf-matrix-cta td { padding: 20px 16px; background: #fff; }
+.wf-matrix-cta td.wf-matrix-featured { background: #f0f0f0; }
+
+/* ============ JOURNEY (Opt 5) ============ */
+.wf-journey-tier {
+  padding: 72px 32px; border-bottom: 1px solid #eee;
+}
+.wf-journey-inner {
+  max-width: 720px; margin: 0 auto; text-align: center;
+}
+.wf-journey-num {
+  font-family: Georgia, serif; font-size: 14px; color: #999; margin-bottom: 16px;
+  letter-spacing: 0.2em;
+}
+.wf-journey-label {
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #666;
+  margin-bottom: 20px; font-weight: 700;
+}
+.wf-journey-title {
+  font-family: Georgia, serif; font-size: 40px; font-weight: 400; color: #000;
+  line-height: 1.15; margin: 0 0 20px; letter-spacing: -0.01em;
+}
+.wf-journey-price {
+  font-size: 16px; color: #333; margin: 0 0 16px;
+}
+.wf-journey-price strong { font-size: 28px; font-weight: 800; color: #000; letter-spacing: -0.02em; }
+.wf-journey-desc {
+  font-family: Georgia, serif; font-size: 16px; color: #666; line-height: 1.7;
+  margin: 0 auto 28px; max-width: 560px;
+}
+.wf-journey-features {
+  list-style: none; padding: 0; margin: 0 auto 32px; max-width: 420px;
+  text-align: left; font-size: 14px; color: #333;
+}
+.wf-journey-features li { padding: 8px 0; border-bottom: 1px solid #eee; }
+.wf-journey-features li:last-child { border-bottom: none; }
+.wf-journey-featured { background: #f5f5f5; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; }
+
+/* ============ FOOTER ============ */
+.wf-footer-dark { background: #000; color: #999; padding: 48px 32px 32px; }
+.wf-footer-editorial { border-top: 4px solid #333; }
+.wf-footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 840px; margin: 0 auto; }
+.wf-footer-cols > div strong { color: #fff; font-size: 13px; display: block; margin-bottom: 10px; letter-spacing: 0.04em; }
+.wf-footer-cols > div p { font-size: 12px; color: #999; margin: 4px 0; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

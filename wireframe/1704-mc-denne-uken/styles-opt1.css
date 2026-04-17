@@ -1,0 +1,115 @@
+/* === OPT 1 — Week Grid · Clean + Polished === */
+/* Brand: #005840 primary, #D1F843 accent, Inter, layered shadows */
+
+#frame-opt1.clean, #frame-opt1.polished { font-family: 'Inter', -apple-system, sans-serif; }
+#frame-opt1.clean .browser-url, #frame-opt1.polished .browser-url { font-feature-settings: 'cv11'; }
+#frame-opt1.clean .mc-shell, #frame-opt1.polished .mc-shell { background: #F5F8F7; min-height: 700px; }
+
+/* Topbar — dark */
+#frame-opt1.clean .mc-topbar,
+#frame-opt1.polished .mc-topbar {
+  background: #0A1F18; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 12px 20px;
+}
+#frame-opt1.clean .mc-logo, #frame-opt1.polished .mc-logo { color: #fff; font-weight: 700; letter-spacing: .08em; font-size: 12px; }
+#frame-opt1.clean .mc-tab, #frame-opt1.polished .mc-tab { color: rgba(255,255,255,0.55); font-weight: 500; transition: color .18s, background .18s; }
+#frame-opt1.clean .mc-tab:hover, #frame-opt1.polished .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.06); }
+#frame-opt1.clean .mc-tab-active, #frame-opt1.polished .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; }
+#frame-opt1.clean .mc-search, #frame-opt1.polished .mc-search { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+#frame-opt1.clean .mc-avatar, #frame-opt1.polished .mc-avatar { background: #D1F843; color: #0A1F18; }
+
+/* Subheader */
+#frame-opt1.clean .mc-subheader, #frame-opt1.polished .mc-subheader { background: #fff; border-bottom: 1px solid rgba(0,0,0,0.06); }
+#frame-opt1.clean .mc-sub-title, #frame-opt1.polished .mc-sub-title { color: #0A1F18; font-weight: 700; letter-spacing: -.015em; font-size: 17px; }
+#frame-opt1.clean .mc-sub-meta, #frame-opt1.polished .mc-sub-meta { color: #5A6E66; font-size: 12px; }
+
+/* Filter row */
+#frame-opt1.clean .mc-filter-row, #frame-opt1.polished .mc-filter-row { background: #fff; border-bottom: 1px solid rgba(0,0,0,0.06); }
+#frame-opt1.clean .mc-filter-label, #frame-opt1.polished .mc-filter-label { color: #A5B2AD; font-size: 10px; font-weight: 700; letter-spacing: .12em; }
+#frame-opt1.clean .mc-pill, #frame-opt1.polished .mc-pill {
+  border: 1px solid rgba(0,0,0,0.08); color: #324D45; background: #fff; font-weight: 500;
+  transition: background .18s, border-color .18s;
+}
+#frame-opt1.clean .mc-pill:hover, #frame-opt1.polished .mc-pill:hover { background: #F5F8F7; border-color: rgba(0,0,0,0.12); }
+#frame-opt1.clean .mc-pill-active, #frame-opt1.polished .mc-pill-active { background: #005840; color: #fff; border-color: #005840; }
+#frame-opt1.clean .mc-cta, #frame-opt1.polished .mc-cta {
+  background: #D1F843; color: #0A1F18; border-color: #D1F843; font-weight: 700;
+  transition: opacity .18s, transform .18s;
+}
+#frame-opt1.clean .mc-cta:hover, #frame-opt1.polished .mc-cta:hover { opacity: .88; }
+
+/* Body */
+#frame-opt1.clean .mc-body, #frame-opt1.polished .mc-body { background: #F5F8F7; padding: 20px; }
+
+/* Week grid */
+#frame-opt1.clean .wg-grid, #frame-opt1.polished .wg-grid {
+  background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.02);
+  overflow: hidden;
+}
+#frame-opt1.clean .wg-cell, #frame-opt1.polished .wg-cell {
+  border-right: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding: 10px 8px; min-height: 52px;
+}
+#frame-opt1.clean .wg-head, #frame-opt1.polished .wg-head {
+  background: #F5F8F7; font-size: 11px; color: #5A6E66; text-align: center; font-weight: 600; letter-spacing: .04em;
+}
+#frame-opt1.clean .wg-head strong, #frame-opt1.polished .wg-head strong { color: #0A1F18; font-size: 15px; font-weight: 800; }
+#frame-opt1.clean .wg-time, #frame-opt1.polished .wg-time { background: #F5F8F7; color: #A5B2AD; font-weight: 600; font-size: 10px; letter-spacing: .04em; }
+
+/* Events — subtle green tint, no heavy fills */
+#frame-opt1.clean .wg-evt, #frame-opt1.polished .wg-evt {
+  background: rgba(0,88,64,0.06); border-left: 3px solid #005840; color: #0A1F18;
+  border-radius: 4px; padding: 5px 7px; font-size: 10.5px; font-weight: 500;
+  margin-bottom: 3px;
+}
+#frame-opt1.clean .wg-evt-alt, #frame-opt1.polished .wg-evt-alt {
+  background: rgba(0,122,255,0.06); border-left-color: #007AFF;
+}
+#frame-opt1.clean .wg-evt-empty, #frame-opt1.polished .wg-evt-empty {
+  background: #fff; border: 1px dashed rgba(0,0,0,0.18); border-left: 1px dashed rgba(0,0,0,0.18);
+  color: #A5B2AD; font-style: italic;
+}
+
+/* Capacity bar */
+#frame-opt1.clean .wg-cap, #frame-opt1.polished .wg-cap {
+  background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 10px; padding: 10px 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+#frame-opt1.clean .wg-cap-label, #frame-opt1.polished .wg-cap-label { color: #A5B2AD; font-size: 10px; letter-spacing: .12em; font-weight: 700; align-self: center; }
+#frame-opt1.clean .wg-cap-bar span, #frame-opt1.polished .wg-cap-bar span {
+  background: rgba(0,88,64,0.1); height: 7px; border-radius: 4px;
+}
+#frame-opt1.clean .wg-cap-bar span::after, #frame-opt1.polished .wg-cap-bar span::after {
+  background: #005840; border-radius: 4px;
+}
+#frame-opt1.clean .wg-cap-num, #frame-opt1.polished .wg-cap-num { color: #324D45; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ===== POLISHED ONLY — layered shadows, accent glow on active nav ===== */
+#frame-opt1.polished .mc-tab-active {
+  box-shadow: 0 0 0 1px rgba(209,248,67,0.2), 0 4px 12px rgba(209,248,67,0.25);
+}
+#frame-opt1.polished .wg-grid {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);
+}
+#frame-opt1.polished .wg-evt {
+  box-shadow: inset 0 0 0 1px rgba(0,88,64,0.08);
+  transition: background .2s cubic-bezier(0.4,0,0.2,1), transform .2s cubic-bezier(0.4,0,0.2,1);
+}
+#frame-opt1.polished .wg-evt:hover { background: rgba(0,88,64,0.1); transform: translateY(-1px); }
+#frame-opt1.polished .wg-cap {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+}
+#frame-opt1.polished .wg-cap-bar span::after {
+  background: linear-gradient(90deg, #005840 0%, #00594C 100%);
+  box-shadow: 0 0 8px rgba(0,88,64,0.25);
+}
+#frame-opt1.polished .mc-cta {
+  box-shadow: 0 2px 4px rgba(209,248,67,0.3), 0 0 0 1px rgba(0,0,0,0.04);
+}
+#frame-opt1.polished .mc-cta:hover { transform: translateY(-1px); }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt1.polished *, #frame-opt1.clean * { transition: none !important; animation: none !important; }
+}

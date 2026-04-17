@@ -1,0 +1,102 @@
+/* === OPT 2 — Story Timeline · Clean + Polished === */
+
+#frame-opt2-tabs .sub-tab-badge { display: none; }
+
+/* ====================== CLEAN ====================== */
+.clean#frame-opt2 .browser-content,
+.clean#frame-opt2 .wf-shell { background: #F5F8F7; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #0A1F18; }
+.clean#frame-opt2 .wf-sidebar { background: #fff; border-right: 1px solid #D5DFDB; }
+.clean#frame-opt2 .wf-sb-logo { color: #005840; }
+.clean#frame-opt2 .wf-sb-profile { border-color: #D5DFDB; }
+.clean#frame-opt2 .wf-sb-avatar { background: #E6F3F1; border-color: #005840; color: #005840; }
+.clean#frame-opt2 .wf-sb-profile-name { color: #0A1F18; }
+.clean#frame-opt2 .wf-sb-profile-meta { color: #5A6E66; }
+.clean#frame-opt2 .wf-sb-item { color: #324D45; }
+.clean#frame-opt2 .wf-sb-item-icon { border-color: #A5B2AD; }
+.clean#frame-opt2 .wf-sb-item.wf-active { background: #005840; color: #fff; }
+.clean#frame-opt2 .wf-sb-item.wf-active .wf-sb-item-icon { background: #D1F843; border-color: #D1F843; }
+.clean#frame-opt2 .wf-sb-cta { border-color: #D5DFDB; background: #F5F8F7; }
+.clean#frame-opt2 .wf-sb-cta-title { color: #0A1F18; }
+.clean#frame-opt2 .wf-sb-cta-desc { color: #5A6E66; }
+.clean#frame-opt2 .wf-sb-cta-btn { background: #005840; color: #fff; }
+
+.clean#frame-opt2 .wf-mtopbar-left { color: #5A6E66; }
+.clean#frame-opt2 .wf-period { border-color: #D5DFDB; background: #fff; }
+.clean#frame-opt2 .wf-period-btn { color: #5A6E66; }
+.clean#frame-opt2 .wf-period-btn.wf-active { background: #005840; color: #fff; }
+
+.clean#frame-opt2 .wf-story-hero { background: #fff; border-color: #D5DFDB; }
+.clean#frame-opt2 .wf-phead-eyebrow { color: #7A8C85; }
+.clean#frame-opt2 .wf-phead-h { color: #005840; font-weight: 900; }
+.clean#frame-opt2 .wf-phead-sub { color: #5A6E66; }
+.clean#frame-opt2 .wf-c-label { color: #7A8C85; }
+.clean#frame-opt2 .wf-story-chart { background: #F5F8F7; border-color: #D5DFDB; }
+.clean#frame-opt2 .wf-story-bar { background: linear-gradient(to top, #005840, #2A7D5A); }
+.clean#frame-opt2 .wf-story-bar:last-child { background: linear-gradient(to top, #005840, #D1F843); }
+
+.clean#frame-opt2 .wf-story-row { background: #fff; border-color: #D5DFDB; }
+.clean#frame-opt2 .wf-story-period { color: #005840; }
+.clean#frame-opt2 .wf-story-period-sub { color: #7A8C85; }
+.clean#frame-opt2 .wf-story-summary { color: #324D45; }
+.clean#frame-opt2 .wf-story-stats { color: #5A6E66; }
+.clean#frame-opt2 .wf-story-stats strong { color: #0A1F18; }
+
+.clean#frame-opt2 .wf-c { background: #fff; border-color: #D5DFDB; box-shadow: 0 1px 2px rgba(10,31,24,0.04); }
+.clean#frame-opt2 .wf-ai-badge { background: #FAF5FF; border-color: #AF52DE; color: #6B21A8; }
+.clean#frame-opt2 .wf-marker { background: #005840; color: #fff; }
+
+/* ====================== POLISHED ====================== */
+.polished#frame-opt2 .browser-content,
+.polished#frame-opt2 .wf-shell { background: #F5F8F7; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #0A1F18; }
+.polished#frame-opt2 .wf-sidebar { background: #fff; border-right: 1px solid rgba(10,31,24,0.06); box-shadow: 1px 0 3px rgba(10,31,24,0.02); }
+.polished#frame-opt2 .wf-sb-logo { color: #005840; letter-spacing: 0.12em; }
+.polished#frame-opt2 .wf-sb-profile { border-color: rgba(10,31,24,0.06); background: #F5F8F7; }
+.polished#frame-opt2 .wf-sb-avatar { background: linear-gradient(135deg, #005840, #00594C); border: 0; color: #D1F843; font-weight: 800; }
+.polished#frame-opt2 .wf-sb-profile-name { color: #0A1F18; font-weight: 700; }
+.polished#frame-opt2 .wf-sb-profile-meta { color: #2A7D5A; font-weight: 600; }
+.polished#frame-opt2 .wf-sb-item { color: #324D45; transition: all 200ms cubic-bezier(0.4,0,0.2,1); }
+.polished#frame-opt2 .wf-sb-item:hover { background: #ECF0EF; }
+.polished#frame-opt2 .wf-sb-item-icon { border-color: #A5B2AD; }
+.polished#frame-opt2 .wf-sb-item.wf-active { background: #0A1F18; color: #fff; font-weight: 600; box-shadow: 0 4px 12px rgba(10,31,24,0.15); }
+.polished#frame-opt2 .wf-sb-item.wf-active .wf-sb-item-icon { background: #D1F843; border-color: #D1F843; }
+.polished#frame-opt2 .wf-sb-cta { border: 1px solid rgba(10,31,24,0.06); background: linear-gradient(180deg, #fff, #F5F8F7); }
+.polished#frame-opt2 .wf-sb-cta-title { color: #0A1F18; }
+.polished#frame-opt2 .wf-sb-cta-desc { color: #5A6E66; }
+.polished#frame-opt2 .wf-sb-cta-btn { background: #D1F843; color: #0A1F18; font-weight: 700; transition: transform 200ms; }
+.polished#frame-opt2 .wf-sb-cta-btn:hover { transform: translateY(-1px); }
+
+.polished#frame-opt2 .wf-mtopbar-left { color: #5A6E66; font-weight: 500; }
+.polished#frame-opt2 .wf-period { border: 1px solid rgba(10,31,24,0.06); background: #fff; box-shadow: 0 1px 2px rgba(10,31,24,0.03); }
+.polished#frame-opt2 .wf-period-btn { color: #5A6E66; transition: all 200ms; }
+.polished#frame-opt2 .wf-period-btn.wf-active { background: #0A1F18; color: #fff; font-weight: 600; }
+
+.polished#frame-opt2 .wf-story-hero { background: linear-gradient(180deg, #fff, #F5F8F7); border: 1px solid rgba(10,31,24,0.06); box-shadow: 0 4px 16px rgba(10,31,24,0.05); position: relative; overflow: hidden; }
+.polished#frame-opt2 .wf-story-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #005840, #D1F843, #005840); }
+.polished#frame-opt2 .wf-phead-eyebrow { color: #005840; font-weight: 700; }
+.polished#frame-opt2 .wf-phead-h { color: #005840; font-weight: 900; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
+.polished#frame-opt2 .wf-phead-sub { color: #5A6E66; }
+.polished#frame-opt2 .wf-c-label { color: #7A8C85; font-weight: 700; }
+
+.polished#frame-opt2 .wf-story-chart { background: #F5F8F7; border: 1px solid rgba(10,31,24,0.06); position: relative; }
+.polished#frame-opt2 .wf-story-bar { background: linear-gradient(to top, #B84233, #D44A3A); border-radius: 4px 4px 0 0; animation: story2-rise 900ms cubic-bezier(0.16,1,0.3,1) both; transform-origin: bottom; }
+.polished#frame-opt2 .wf-story-bar:nth-child(n+7) { background: linear-gradient(to top, #2A7D5A, #34C471); }
+.polished#frame-opt2 .wf-story-bar:last-child { background: linear-gradient(to top, #005840, #D1F843); box-shadow: 0 0 12px rgba(209,248,67,0.5); }
+@keyframes story2-rise { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+
+.polished#frame-opt2 .wf-story-row { background: #fff; border: 1px solid rgba(10,31,24,0.06); box-shadow: 0 1px 3px rgba(10,31,24,0.04), 0 4px 8px rgba(10,31,24,0.02); position: relative; transition: box-shadow 300ms cubic-bezier(0.4,0,0.2,1), transform 300ms cubic-bezier(0.4,0,0.2,1); }
+.polished#frame-opt2 .wf-story-row::before { content: ''; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; background: #005840; border-radius: 0 2px 2px 0; }
+.polished#frame-opt2 .wf-story-row:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(10,31,24,0.08), 0 8px 24px rgba(10,31,24,0.04); }
+.polished#frame-opt2 .wf-story-period { color: #005840; font-weight: 800; }
+.polished#frame-opt2 .wf-story-period-sub { color: #7A8C85; font-weight: 500; }
+.polished#frame-opt2 .wf-story-summary { color: #324D45; line-height: 1.55; }
+.polished#frame-opt2 .wf-story-stats { color: #5A6E66; font-weight: 600; }
+.polished#frame-opt2 .wf-story-stats strong { color: #0A1F18; font-weight: 800; }
+
+.polished#frame-opt2 .wf-c { background: #fff; border: 1px solid rgba(10,31,24,0.06); box-shadow: 0 1px 3px rgba(10,31,24,0.04), 0 4px 8px rgba(10,31,24,0.02); position: relative; }
+.polished#frame-opt2 .wf-c::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgba(255,255,255,0), rgba(10,31,24,0.01)); pointer-events: none; }
+.polished#frame-opt2 .wf-ai-badge { background: #FAF5FF; border: 1px solid rgba(175,82,222,0.25); color: #6B21A8; font-weight: 700; }
+.polished#frame-opt2 .wf-marker { background: #005840; color: #D1F843; font-weight: 800; box-shadow: 0 2px 4px rgba(0,88,64,0.25); }
+
+@media (prefers-reduced-motion: reduce) {
+  .polished#frame-opt2 *, .polished#frame-opt2 *::before { animation: none !important; transition: none !important; }
+}

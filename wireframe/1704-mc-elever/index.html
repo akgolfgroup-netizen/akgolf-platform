@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Elever — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Elever</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Grid Cards</button>
+    <button class="tab-btn" data-tab="option-2">2: Data Table</button>
+    <button class="tab-btn" data-tab="option-3">3: Segment Dashboard</button>
+    <button class="tab-btn" data-tab="option-4">4: Map View</button>
+    <button class="tab-btn" data-tab="option-5">5: Pipeline</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: GRID CARDS (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Grid Cards</span></h2>
+    <p class="option-description">Elev-kort i 3-kolonne grid. Søk + filter øverst, KPI-rad, kort viser avatar, HCP, A-K kategori og siste økt — optimalt for visuell gjenkjenning.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/elever</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab mc-tab-active">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk elev · ⌘K</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">SØK</span>
+              <span class="mc-search-input">Navn, klubb, e-post...</span>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">KATEGORI</span>
+              <button class="mc-pill mc-pill-active">Alle (42)</button>
+              <button class="mc-pill">A (3)</button>
+              <button class="mc-pill">B (8)</button>
+              <button class="mc-pill">C (14)</button>
+              <button class="mc-pill">D-K (17)</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">STATUS</span>
+              <button class="mc-pill">Aktiv</button>
+              <button class="mc-pill mc-pill-ghost">Inaktiv</button>
+            </div>
+            <button class="mc-cta">+ Ny elev</button>
+          </section>
+
+          <section class="mc-kpi-strip">
+            <div class="mc-kpi"><div class="mc-kpi-label">AKTIVE ELEVER</div><div class="mc-kpi-val">42</div><div class="mc-kpi-sub">+3 denne uken</div></div>
+            <div class="mc-kpi"><div class="mc-kpi-label">GJENNOMSNITT HCP</div><div class="mc-kpi-val">16.4</div><div class="mc-kpi-sub">−0.8 siste 90d</div></div>
+            <div class="mc-kpi"><div class="mc-kpi-label">ØKTER DENNE MND</div><div class="mc-kpi-val">148</div><div class="mc-kpi-sub">94% gjennomført</div></div>
+            <div class="mc-kpi"><div class="mc-kpi-label">NYE SISTE 30d</div><div class="mc-kpi-val">7</div><div class="mc-kpi-sub">2 fra Junior</div></div>
+          </section>
+
+          <section class="mc-cards-grid">
+            <!-- Card 1 -->
+            <article class="mc-card">
+              <div class="mc-card-head">
+                <div class="mc-avatar-lg">EH</div>
+                <span class="mc-cat mc-cat-a">A</span>
+              </div>
+              <div class="mc-card-name">Erik Hansen</div>
+              <div class="mc-card-meta">Oslo Golfklubb</div>
+              <div class="mc-card-stats">
+                <div><span>HCP</span><strong>4.2</strong></div>
+                <div><span>Plan</span><strong>Performance Pro</strong></div>
+              </div>
+              <div class="mc-card-foot">
+                <span class="mc-card-foot-label">Siste økt</span>
+                <span>11. apr · Anders</span>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="mc-card">
+              <div class="mc-card-head">
+                <div class="mc-avatar-lg">NT</div>
+                <span class="mc-cat mc-cat-c">C</span>
+              </div>
+              <div class="mc-card-name">Nora Torp</div>
+              <div class="mc-card-meta">Fredrikstad GK</div>
+              <div class="mc-card-stats">
+                <div><span>HCP</span><strong>18.6</strong></div>
+                <div><span>Plan</span><strong>Performance</strong></div>
+              </div>
+              <div class="mc-card-foot">
+                <span class="mc-card-foot-label">Siste økt</span>
+                <span>15. apr · Anders</span>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="mc-card">
+              <div class="mc-card-head">
+                <div class="mc-avatar-lg">LB</div>
+                <span class="mc-cat mc-cat-b">B</span>
+              </div>
+              <div class="mc-card-name">Lars Berg</div>
+              <div class="mc-card-meta">Bærum GK</div>
+              <div class="mc-card-stats">
+                <div><span>HCP</span><strong>10.1</strong></div>
+                <div><span>Plan</span><strong>Express Pro</strong></div>
+              </div>
+              <div class="mc-card-foot">
+                <span class="mc-card-foot-label">Siste økt</span>
+                <span>14. apr · Markus</span>
+              </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="mc-card">
+              <div class="mc-card-head">
+                <div class="mc-avatar-lg">SL</div>
+                <span class="mc-cat mc-cat-d">D</span>
+              </div>
+              <div class="mc-card-name">Sofie Lund</div>
+              <div class="mc-card-meta">Onsøy GK · Junior</div>
+              <div class="mc-card-stats">
+                <div><span>HCP</span><strong>24.0</strong></div>
+                <div><span>Plan</span><strong>First Tee</strong></div>
+              </div>
+              <div class="mc-card-foot">
+                <span class="mc-card-foot-label">Siste økt</span>
+                <span>12. apr · Markus</span>
+              </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="mc-card">
+              <div class="mc-card-head">
+                <div class="mc-avatar-lg">MK</div>
+                <span class="mc-cat mc-cat-c">C</span>
+              </div>
+              <div class="mc-card-name">Mia Kristoffersen</div>
+              <div class="mc-card-meta">Oslo Golfklubb</div>
+              <div class="mc-card-stats">
+                <div><span>HCP</span><strong>16.8</strong></div>
+                <div><span>Plan</span><strong>Flex 20</strong></div>
+              </div>
+              <div class="mc-card-foot">
+                <span class="mc-card-foot-label">Siste økt</span>
+                <span>09. apr · Anders</span>
+              </div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="mc-card mc-card-warn">
+              <div class="mc-card-head">
+                <div class="mc-avatar-lg">JS</div>
+                <span class="mc-cat mc-cat-e">E</span>
+              </div>
+              <div class="mc-card-name">Jonas Solberg</div>
+              <div class="mc-card-meta">Fredrikstad GK</div>
+              <div class="mc-card-stats">
+                <div><span>HCP</span><strong>28.4</strong></div>
+                <div><span>Plan</span><strong>Gruppe</strong></div>
+              </div>
+              <div class="mc-card-foot">
+                <span class="mc-card-foot-label mc-card-foot-warn">Inaktiv 32 dager</span>
+                <span>→ følg opp</span>
+              </div>
+            </article>
+
+            <!-- Card 7 -->
+            <article class="mc-card">
+              <div class="mc-card-head">
+                <div class="mc-avatar-lg">EA</div>
+                <span class="mc-cat mc-cat-b">B</span>
+              </div>
+              <div class="mc-card-name">Emma Andersen</div>
+              <div class="mc-card-meta">Asker GK</div>
+              <div class="mc-card-stats">
+                <div><span>HCP</span><strong>8.5</strong></div>
+                <div><span>Plan</span><strong>Performance</strong></div>
+              </div>
+              <div class="mc-card-foot">
+                <span class="mc-card-foot-label">Siste økt</span>
+                <span>16. apr · Anders</span>
+              </div>
+            </article>
+
+            <!-- Card 8 -->
+            <article class="mc-card">
+              <div class="mc-card-head">
+                <div class="mc-avatar-lg">TV</div>
+                <span class="mc-cat mc-cat-c">C</span>
+              </div>
+              <div class="mc-card-name">Thomas Vik</div>
+              <div class="mc-card-meta">Bærum GK</div>
+              <div class="mc-card-stats">
+                <div><span>HCP</span><strong>14.2</strong></div>
+                <div><span>Plan</span><strong>Flex 20</strong></div>
+              </div>
+              <div class="mc-card-foot">
+                <span class="mc-card-foot-label">Siste økt</span>
+                <span>08. apr · Anders</span>
+              </div>
+            </article>
+          </section>
+
+          <footer class="mc-pagination">
+            <span>Viser 1–8 av 42</span>
+            <div class="mc-page-btns">
+              <button class="mc-pill mc-pill-ghost">◂ Forrige</button>
+              <button class="mc-pill mc-pill-active">1</button>
+              <button class="mc-pill">2</button>
+              <button class="mc-pill">3</button>
+              <button class="mc-pill">Neste ▸</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Grid med 3 kolonner gir visuell gjenkjenning — avatar + navn først, kategori-badge som fargekode i hjørnet.</li>
+        <li>Filter-row fikserer A-K kategorier som pills — Anders kan hurtig filtrere sine toppspillere (A/B) vs bredde (C-K).</li>
+        <li>KPI-strip under filter gir helikopter-tall (42 aktive, 148 økter, 7 nye) — uten å forlate siden.</li>
+        <li>Kort med 32+ dager inaktivitet får gul varselfarge i foot — tydelig follow-up-signal.</li>
+        <li>"+ Ny elev" CTA pinned til høyre i filter-row — alltid synlig selv ved scroll.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: DATA TABLE ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Data Table</span></h2>
+    <p class="option-description">Tett tabell med sorterbare kolonner, bulk-actions, inline-edit. Optimalt for power-user og månedsoppsummering — 20+ rader synlig uten scroll.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/elever</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab mc-tab-active">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">⌘K Søk</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-table-toolbar">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">VELGT</span>
+              <span class="mc-sel-count">3 elever</span>
+              <button class="mc-pill">Send melding</button>
+              <button class="mc-pill">Endre plan</button>
+              <button class="mc-pill mc-pill-ghost">Eksporter</button>
+            </div>
+            <div class="mc-filter-group">
+              <button class="mc-pill">Kolonner ▾</button>
+              <button class="mc-pill">Filter ▾</button>
+              <button class="mc-cta">+ Ny elev</button>
+            </div>
+          </section>
+
+          <table class="mc-table">
+            <thead>
+              <tr>
+                <th class="mc-th-check"><input type="checkbox"></th>
+                <th>Navn ▴</th>
+                <th>Kat</th>
+                <th>HCP ▾</th>
+                <th>Klubb</th>
+                <th>Plan</th>
+                <th>Siste booking</th>
+                <th>Neste</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="mc-tr-selected">
+                <td><input type="checkbox" checked></td>
+                <td><div class="mc-table-name"><span class="mc-avatar-sm">EA</span>Emma Andersen</div></td>
+                <td><span class="mc-cat mc-cat-b">B</span></td>
+                <td class="mc-num">8.5</td>
+                <td>Asker GK</td>
+                <td>Performance</td>
+                <td>16. apr · Anders</td>
+                <td>23. apr · 10:00</td>
+                <td><span class="mc-status mc-status-active">Aktiv</span></td>
+                <td class="mc-row-actions">···</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td><div class="mc-table-name"><span class="mc-avatar-sm">EH</span>Erik Hansen</div></td>
+                <td><span class="mc-cat mc-cat-a">A</span></td>
+                <td class="mc-num">4.2</td>
+                <td>Oslo Golfklubb</td>
+                <td>Performance Pro</td>
+                <td>11. apr · Anders</td>
+                <td>18. apr · 09:00</td>
+                <td><span class="mc-status mc-status-active">Aktiv</span></td>
+                <td class="mc-row-actions">···</td>
+              </tr>
+              <tr class="mc-tr-selected">
+                <td><input type="checkbox" checked></td>
+                <td><div class="mc-table-name"><span class="mc-avatar-sm">JS</span>Jonas Solberg</div></td>
+                <td><span class="mc-cat mc-cat-e">E</span></td>
+                <td class="mc-num">28.4</td>
+                <td>Fredrikstad GK</td>
+                <td>Gruppe</td>
+                <td>15. mar · Markus</td>
+                <td>—</td>
+                <td><span class="mc-status mc-status-warn">Inaktiv 32d</span></td>
+                <td class="mc-row-actions">···</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td><div class="mc-table-name"><span class="mc-avatar-sm">LB</span>Lars Berg</div></td>
+                <td><span class="mc-cat mc-cat-b">B</span></td>
+                <td class="mc-num">10.1</td>
+                <td>Bærum GK</td>
+                <td>Express Pro</td>
+                <td>14. apr · Markus</td>
+                <td>21. apr · 11:30</td>
+                <td><span class="mc-status mc-status-active">Aktiv</span></td>
+                <td class="mc-row-actions">···</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td><div class="mc-table-name"><span class="mc-avatar-sm">MK</span>Mia Kristoffersen</div></td>
+                <td><span class="mc-cat mc-cat-c">C</span></td>
+                <td class="mc-num">16.8</td>
+                <td>Oslo Golfklubb</td>
+                <td>Flex 20</td>
+                <td>09. apr · Anders</td>
+                <td>—</td>
+                <td><span class="mc-status mc-status-pending">Flex</span></td>
+                <td class="mc-row-actions">···</td>
+              </tr>
+              <tr class="mc-tr-selected">
+                <td><input type="checkbox" checked></td>
+                <td><div class="mc-table-name"><span class="mc-avatar-sm">NT</span>Nora Torp</div></td>
+                <td><span class="mc-cat mc-cat-c">C</span></td>
+                <td class="mc-num">18.6</td>
+                <td>Fredrikstad GK</td>
+                <td>Performance</td>
+                <td>15. apr · Anders</td>
+                <td>22. apr · 10:00</td>
+                <td><span class="mc-status mc-status-active">Aktiv</span></td>
+                <td class="mc-row-actions">···</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td><div class="mc-table-name"><span class="mc-avatar-sm">SL</span>Sofie Lund</div></td>
+                <td><span class="mc-cat mc-cat-d">D</span></td>
+                <td class="mc-num">24.0</td>
+                <td>Onsøy GK</td>
+                <td>First Tee</td>
+                <td>12. apr · Markus</td>
+                <td>26. apr · 14:00</td>
+                <td><span class="mc-status mc-status-active">Aktiv · Junior</span></td>
+                <td class="mc-row-actions">···</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td><div class="mc-table-name"><span class="mc-avatar-sm">TV</span>Thomas Vik</div></td>
+                <td><span class="mc-cat mc-cat-c">C</span></td>
+                <td class="mc-num">14.2</td>
+                <td>Bærum GK</td>
+                <td>Flex 20</td>
+                <td>08. apr · Anders</td>
+                <td>—</td>
+                <td><span class="mc-status mc-status-pending">Flex</span></td>
+                <td class="mc-row-actions">···</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <footer class="mc-pagination">
+            <span>Viser 1–8 av 42 elever</span>
+            <div class="mc-page-btns">
+              <button class="mc-pill mc-pill-ghost">◂</button>
+              <button class="mc-pill mc-pill-active">1</button>
+              <button class="mc-pill">2</button>
+              <button class="mc-pill">3</button>
+              <button class="mc-pill">▸</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Sorterbare kolonner (Navn ▴, HCP ▾) gir power-user-hastighet — stable sort for multi-kolonne.</li>
+        <li>Bulk-select med checkbox aktiverer toolbar-aksjoner: Send melding, Endre plan, Eksporter.</li>
+        <li>Kompakt 8 rader + toolbar + pagination i samme skjermflate som 6 kort gir — tett informasjonsdensitet.</li>
+        <li>Status-kolonne med fargede badges (Aktiv/Inaktiv/Flex) erstatter separat varsel-kolonne.</li>
+        <li>Inline-edit på plan/neste-booking ved klikk — aldri forlate tabellen for vanlige oppgaver.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: SEGMENT DASHBOARD ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Segment Dashboard</span></h2>
+    <p class="option-description">Grupperer elever etter HCP-bøtter (&lt;5, 5–15, 16–28, 29+), aktivitetsnivå og status. Gir innsikt om porteføljesammensetning — ideelt for trend-bevissthet.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/elever</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab mc-tab-active">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">⌘K Søk</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-seg-head">
+            <div class="mc-seg-title-block">
+              <div class="mc-seg-super">ELEVPORTEFØLJE</div>
+              <h2 class="mc-seg-title">42 aktive elever · segmentert</h2>
+              <p class="mc-seg-sub">Gjennomsnitt HCP 16.4 · 148 økter siste 30 dager · 94% gjennomføring</p>
+            </div>
+            <div class="mc-filter-group">
+              <button class="mc-pill mc-pill-active">HCP</button>
+              <button class="mc-pill">Aktivitet</button>
+              <button class="mc-pill">Klubb</button>
+              <button class="mc-pill">Plan</button>
+              <button class="mc-cta">+ Ny elev</button>
+            </div>
+          </section>
+
+          <section class="mc-seg-grid">
+            <!-- Segment A: <5 -->
+            <article class="mc-seg-card">
+              <div class="mc-seg-band mc-seg-band-a">
+                <span class="mc-seg-label">TOPPKATEGORI</span>
+                <span class="mc-seg-tag">HCP &lt;5</span>
+              </div>
+              <div class="mc-seg-body">
+                <div class="mc-seg-count">3</div>
+                <div class="mc-seg-meta">elever · 2 A, 1 B</div>
+                <ul class="mc-seg-list">
+                  <li><span class="mc-avatar-sm">EH</span><span>Erik Hansen</span><strong>4.2</strong></li>
+                  <li><span class="mc-avatar-sm">EA</span><span>Emma Andersen</span><strong>8.5</strong></li>
+                  <li><span class="mc-avatar-sm">LB</span><span>Lars Berg</span><strong>10.1</strong></li>
+                </ul>
+                <div class="mc-seg-foot">
+                  <span>Snitt økter/mnd</span>
+                  <strong>6.8</strong>
+                </div>
+              </div>
+            </article>
+
+            <!-- Segment B: 5-15 -->
+            <article class="mc-seg-card">
+              <div class="mc-seg-band mc-seg-band-b">
+                <span class="mc-seg-label">ETABLERT</span>
+                <span class="mc-seg-tag">HCP 5–15</span>
+              </div>
+              <div class="mc-seg-body">
+                <div class="mc-seg-count">14</div>
+                <div class="mc-seg-meta">elever · 8 C, 6 B</div>
+                <ul class="mc-seg-list">
+                  <li><span class="mc-avatar-sm">TV</span><span>Thomas Vik</span><strong>14.2</strong></li>
+                  <li><span class="mc-avatar-sm">MK</span><span>Mia Kristoffersen</span><strong>16.8</strong></li>
+                  <li><span class="mc-list-more">+ 12 flere</span></li>
+                </ul>
+                <div class="mc-seg-foot">
+                  <span>Snitt økter/mnd</span>
+                  <strong>4.2</strong>
+                </div>
+              </div>
+            </article>
+
+            <!-- Segment C: 16-28 -->
+            <article class="mc-seg-card">
+              <div class="mc-seg-band mc-seg-band-c">
+                <span class="mc-seg-label">UTVIKLING</span>
+                <span class="mc-seg-tag">HCP 16–28</span>
+              </div>
+              <div class="mc-seg-body">
+                <div class="mc-seg-count">20</div>
+                <div class="mc-seg-meta">elever · 12 C, 8 D</div>
+                <ul class="mc-seg-list">
+                  <li><span class="mc-avatar-sm">NT</span><span>Nora Torp</span><strong>18.6</strong></li>
+                  <li><span class="mc-avatar-sm">SL</span><span>Sofie Lund</span><strong>24.0</strong></li>
+                  <li><span class="mc-list-more">+ 18 flere</span></li>
+                </ul>
+                <div class="mc-seg-foot">
+                  <span>Snitt økter/mnd</span>
+                  <strong>3.1</strong>
+                </div>
+              </div>
+            </article>
+
+            <!-- Segment D: 29+ -->
+            <article class="mc-seg-card">
+              <div class="mc-seg-band mc-seg-band-d">
+                <span class="mc-seg-label">NYBEGYNNER</span>
+                <span class="mc-seg-tag">HCP 29+</span>
+              </div>
+              <div class="mc-seg-body">
+                <div class="mc-seg-count">5</div>
+                <div class="mc-seg-meta">elever · 5 E-K</div>
+                <ul class="mc-seg-list">
+                  <li><span class="mc-avatar-sm">JS</span><span>Jonas Solberg</span><strong>28.4</strong></li>
+                  <li><span class="mc-list-more">+ 4 flere</span></li>
+                </ul>
+                <div class="mc-seg-foot">
+                  <span>Snitt økter/mnd</span>
+                  <strong>2.4</strong>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section class="mc-seg-insights">
+            <div class="mc-insight">
+              <div class="mc-insight-label">AKTIVITET</div>
+              <p><strong>8 elever</strong> har ikke booket på 30+ dager — 3 i D-segmentet.</p>
+            </div>
+            <div class="mc-insight">
+              <div class="mc-insight-label">VEKST</div>
+              <p>Toppsegmentet (&lt;5) har <strong>−0.8 snitt-HCP</strong> siste 90d — coaching fungerer.</p>
+            </div>
+            <div class="mc-insight">
+              <div class="mc-insight-label">BALANSE</div>
+              <p>Porteføljens tyngdepunkt er HCP 16–28 (48%) — god bredde for wangkurs.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>HCP-bøtter matcher NGF-segmentering — naturlig for coach-hjernen (topp / etablert / utvikling / nybegynner).</li>
+        <li>Tallet dominerer i hvert segment-kort (3, 14, 20, 5) — øyeblikkelig portefølje-forståelse.</li>
+        <li>Filter-pills bytter segmentering i samme layout: HCP → Aktivitet → Klubb → Plan — persistent grid-struktur.</li>
+        <li>Insights-strip nederst gir 3 handlingsrettede observasjoner — "8 har ikke booket på 30+ dager" er direkte aksjon.</li>
+        <li>Best for månedlig/kvartalsvis porteføljegjennomgang — ikke for daglig drift.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: MAP VIEW ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Map View</span></h2>
+    <p class="option-description">Geografisk fordeling per klubbtilhørighet. Norgeskart med clustering, liste-panel til høyre med aktiv klubb uthevet. Bra for reise-planlegging og regionale satsninger.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/elever</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab mc-tab-active">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">⌘K Søk</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-map-head">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">REGION</span>
+              <button class="mc-pill mc-pill-active">Hele Norge</button>
+              <button class="mc-pill">Østlandet</button>
+              <button class="mc-pill">Vestlandet</button>
+              <button class="mc-pill">Midt-Norge</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">VIS</span>
+              <button class="mc-pill">Klubber</button>
+              <button class="mc-pill mc-pill-active">Elever</button>
+              <button class="mc-pill">Tetthet</button>
+            </div>
+            <button class="mc-cta">+ Ny elev</button>
+          </section>
+
+          <section class="mc-map-body">
+            <div class="mc-map">
+              <div class="mc-map-placeholder">
+                <div class="mc-map-outline">[ kart-silhuett · Norge ]</div>
+                <span class="mc-map-cluster" style="top: 68%; left: 58%;"><strong>18</strong><em>Oslo-området</em></span>
+                <span class="mc-map-cluster" style="top: 72%; left: 62%;"><strong>9</strong><em>Østfold</em></span>
+                <span class="mc-map-cluster" style="top: 64%; left: 48%;"><strong>6</strong><em>Vestfold</em></span>
+                <span class="mc-map-cluster mc-map-cluster-sm" style="top: 48%; left: 36%;"><strong>4</strong><em>Bergen</em></span>
+                <span class="mc-map-cluster mc-map-cluster-sm" style="top: 38%; left: 54%;"><strong>3</strong><em>Trondheim</em></span>
+                <span class="mc-map-cluster mc-map-cluster-sm" style="top: 22%; left: 48%;"><strong>2</strong><em>Nord-Norge</em></span>
+              </div>
+              <div class="mc-map-legend">
+                <span class="mc-legend-item"><span class="mc-map-dot mc-map-dot-lg"></span>10+ elever</span>
+                <span class="mc-legend-item"><span class="mc-map-dot"></span>3–9 elever</span>
+                <span class="mc-legend-item"><span class="mc-map-dot mc-map-dot-sm"></span>1–2 elever</span>
+              </div>
+            </div>
+
+            <aside class="mc-map-panel">
+              <div class="mc-map-panel-head">
+                <span class="mc-drawer-label">VALGT REGION</span>
+                <h3 class="mc-map-panel-title">Oslo-området</h3>
+                <div class="mc-map-panel-meta">18 elever · 4 klubber · 42% av portefølje</div>
+              </div>
+
+              <div class="mc-map-panel-body">
+                <div class="mc-map-club">
+                  <div class="mc-map-club-head"><strong>Oslo Golfklubb</strong><span>9</span></div>
+                  <ul class="mc-seg-list">
+                    <li><span class="mc-avatar-sm">EH</span><span>Erik Hansen</span><strong>4.2</strong></li>
+                    <li><span class="mc-avatar-sm">MK</span><span>Mia Kristoffersen</span><strong>16.8</strong></li>
+                    <li><span class="mc-list-more">+ 7 flere</span></li>
+                  </ul>
+                </div>
+                <div class="mc-map-club">
+                  <div class="mc-map-club-head"><strong>Asker GK</strong><span>4</span></div>
+                  <ul class="mc-seg-list">
+                    <li><span class="mc-avatar-sm">EA</span><span>Emma Andersen</span><strong>8.5</strong></li>
+                    <li><span class="mc-list-more">+ 3 flere</span></li>
+                  </ul>
+                </div>
+                <div class="mc-map-club">
+                  <div class="mc-map-club-head"><strong>Bærum GK</strong><span>3</span></div>
+                  <ul class="mc-seg-list">
+                    <li><span class="mc-avatar-sm">LB</span><span>Lars Berg</span><strong>10.1</strong></li>
+                    <li><span class="mc-avatar-sm">TV</span><span>Thomas Vik</span><strong>14.2</strong></li>
+                    <li><span class="mc-list-more">+ 1 flere</span></li>
+                  </ul>
+                </div>
+                <div class="mc-map-club">
+                  <div class="mc-map-club-head"><strong>Holtsmark GK</strong><span>2</span></div>
+                  <ul class="mc-seg-list">
+                    <li><span class="mc-list-more">2 elever</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="mc-map-panel-foot">
+                <button class="mc-action mc-action-primary">Se alle 18 elever</button>
+                <button class="mc-action">Planlegg reise-dag</button>
+              </div>
+            </aside>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kart-first layout gir geografisk intuisjon — "hvor bor mine elever" blir umiddelbart synlig.</li>
+        <li>Cluster-markers med tall (18, 9, 6) skalerer med antall — lett å se tyngdepunkter.</li>
+        <li>Høyre panel viser valgt region med klubb-gruppering — åpne-og-drill-ned uten å miste kontekst.</li>
+        <li>"Planlegg reise-dag" CTA i panel-foten knytter geografi til operativ planlegging.</li>
+        <li>Relevant når vi vurderer regional ekspansjon, off-site workshops eller klubb-samarbeid — mindre daglig.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: PIPELINE ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Pipeline</span></h2>
+    <p class="option-description">Kanban-stil pipeline: Ny → Aktiv → Ventende → Inaktiv. Drag-to-move mellom kolonner, fokuserer på livssyklus og retention-arbeid.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/elever</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab">Bookinger</a>
+                <a class="mc-tab mc-tab-active">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">⌘K Søk</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-pipe-head">
+            <div class="mc-seg-title-block">
+              <div class="mc-seg-super">LIVSSYKLUS</div>
+              <h2 class="mc-seg-title">Elev-pipeline · 4 stadier</h2>
+            </div>
+            <div class="mc-filter-group">
+              <button class="mc-pill">Denne uken</button>
+              <button class="mc-pill mc-pill-active">Siste 30d</button>
+              <button class="mc-pill">All tid</button>
+              <button class="mc-cta">+ Ny elev</button>
+            </div>
+          </section>
+
+          <section class="mc-pipe-grid">
+            <!-- Col 1: Ny -->
+            <div class="mc-pipe-col">
+              <div class="mc-pipe-col-head">
+                <div>
+                  <span class="mc-pipe-label">NY</span>
+                  <span class="mc-pipe-hint">Siste 30 dager</span>
+                </div>
+                <span class="mc-pipe-count">7</span>
+              </div>
+              <div class="mc-pipe-bar"><span style="width:17%;"></span></div>
+              <div class="mc-pipe-list">
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-card-head"><span class="mc-avatar-sm">SL</span><span class="mc-cat mc-cat-d">D</span></div>
+                  <div class="mc-pipe-name">Sofie Lund</div>
+                  <div class="mc-pipe-meta">Onsøy GK · HCP 24.0</div>
+                  <div class="mc-pipe-foot">Registrert 02. apr</div>
+                </article>
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-card-head"><span class="mc-avatar-sm">AB</span><span class="mc-cat mc-cat-f">F</span></div>
+                  <div class="mc-pipe-name">Andreas Bye</div>
+                  <div class="mc-pipe-meta">GFGK · HCP 36</div>
+                  <div class="mc-pipe-foot">Registrert 10. apr</div>
+                </article>
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-list-more">+ 5 flere</div>
+                </article>
+              </div>
+            </div>
+
+            <!-- Col 2: Aktiv -->
+            <div class="mc-pipe-col">
+              <div class="mc-pipe-col-head">
+                <div>
+                  <span class="mc-pipe-label mc-pipe-label-active">AKTIV</span>
+                  <span class="mc-pipe-hint">Booket siste 14d</span>
+                </div>
+                <span class="mc-pipe-count">27</span>
+              </div>
+              <div class="mc-pipe-bar mc-pipe-bar-active"><span style="width:66%;"></span></div>
+              <div class="mc-pipe-list">
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-card-head"><span class="mc-avatar-sm">EH</span><span class="mc-cat mc-cat-a">A</span></div>
+                  <div class="mc-pipe-name">Erik Hansen</div>
+                  <div class="mc-pipe-meta">Oslo GK · HCP 4.2</div>
+                  <div class="mc-pipe-foot">Neste: 18. apr 09:00</div>
+                </article>
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-card-head"><span class="mc-avatar-sm">NT</span><span class="mc-cat mc-cat-c">C</span></div>
+                  <div class="mc-pipe-name">Nora Torp</div>
+                  <div class="mc-pipe-meta">Fredrikstad GK · HCP 18.6</div>
+                  <div class="mc-pipe-foot">Neste: 22. apr 10:00</div>
+                </article>
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-card-head"><span class="mc-avatar-sm">EA</span><span class="mc-cat mc-cat-b">B</span></div>
+                  <div class="mc-pipe-name">Emma Andersen</div>
+                  <div class="mc-pipe-meta">Asker GK · HCP 8.5</div>
+                  <div class="mc-pipe-foot">Neste: 23. apr 10:00</div>
+                </article>
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-list-more">+ 24 flere</div>
+                </article>
+              </div>
+            </div>
+
+            <!-- Col 3: Ventende -->
+            <div class="mc-pipe-col">
+              <div class="mc-pipe-col-head">
+                <div>
+                  <span class="mc-pipe-label mc-pipe-label-warn">VENTENDE</span>
+                  <span class="mc-pipe-hint">14–30d uten booking</span>
+                </div>
+                <span class="mc-pipe-count">5</span>
+              </div>
+              <div class="mc-pipe-bar mc-pipe-bar-warn"><span style="width:12%;"></span></div>
+              <div class="mc-pipe-list">
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-card-head"><span class="mc-avatar-sm">MK</span><span class="mc-cat mc-cat-c">C</span></div>
+                  <div class="mc-pipe-name">Mia Kristoffersen</div>
+                  <div class="mc-pipe-meta">Oslo GK · HCP 16.8</div>
+                  <div class="mc-pipe-foot">Siste økt: 09. apr</div>
+                </article>
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-card-head"><span class="mc-avatar-sm">TV</span><span class="mc-cat mc-cat-c">C</span></div>
+                  <div class="mc-pipe-name">Thomas Vik</div>
+                  <div class="mc-pipe-meta">Bærum GK · HCP 14.2</div>
+                  <div class="mc-pipe-foot">Siste økt: 08. apr</div>
+                </article>
+                <article class="mc-pipe-card">
+                  <div class="mc-pipe-list-more">+ 3 flere</div>
+                </article>
+              </div>
+            </div>
+
+            <!-- Col 4: Inaktiv -->
+            <div class="mc-pipe-col">
+              <div class="mc-pipe-col-head">
+                <div>
+                  <span class="mc-pipe-label mc-pipe-label-dead">INAKTIV</span>
+                  <span class="mc-pipe-hint">30+ dager</span>
+                </div>
+                <span class="mc-pipe-count">3</span>
+              </div>
+              <div class="mc-pipe-bar mc-pipe-bar-dead"><span style="width:7%;"></span></div>
+              <div class="mc-pipe-list">
+                <article class="mc-pipe-card mc-pipe-card-dead">
+                  <div class="mc-pipe-card-head"><span class="mc-avatar-sm">JS</span><span class="mc-cat mc-cat-e">E</span></div>
+                  <div class="mc-pipe-name">Jonas Solberg</div>
+                  <div class="mc-pipe-meta">Fredrikstad GK · HCP 28.4</div>
+                  <div class="mc-pipe-foot">Siste økt: 15. mar</div>
+                </article>
+                <article class="mc-pipe-card mc-pipe-card-dead">
+                  <div class="mc-pipe-list-more">+ 2 flere</div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <footer class="mc-pipe-foot-strip">
+            <span class="mc-pipe-foot-text"><strong>Retention:</strong> 92% · <strong>Ny-rate:</strong> 17% · <strong>Tap:</strong> 5 siste 90d</span>
+            <div class="mc-page-btns">
+              <button class="mc-pill">Eksporter pipeline</button>
+              <button class="mc-pill mc-pill-active">Start win-back kampanje →</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Pipeline-metaforen gjør livssyklus tydelig — "hvor mange må jeg følge opp nå" er umiddelbart synlig.</li>
+        <li>Drag-to-move mellom kolonner oppdaterer status — direkte-manipulasjon er raskest for power-user.</li>
+        <li>Fargede progress-barer (aktiv=mørk, ventende=gul, inaktiv=grå) gir visuell trykk-indikasjon.</li>
+        <li>Win-back-CTA i bunnen kobler pipeline til faktiske kampanjer — aksjonerbar, ikke bare informativ.</li>
+        <li>Krever mye skjermplass horisontalt — 4 kolonner + kort = 1280px+ minimum. Mindre fleksibel på tablet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for elev-administrasjon. Valget styres av om hovedbruken er daglig operativ eller strategisk/analytisk.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Grid Cards</th><th>2: Data Table</th><th>3: Segment</th><th>4: Map</th><th>5: Pipeline</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig bruk (finn én elev)</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Bulk-håndtering</td><td>Svak</td><td>Sterk</td><td>Svak</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Porteføljeinnsikt</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Retention / win-back</td><td>Middels</td><td>Middels</td><td>Middels</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Visuell gjenkjenning</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Skalerer til 200+ elever</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Passer AK-brand</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Middels</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Grid Cards</h3>
+      <p>Grid Cards balanserer visuell gjenkjenning (avatar + navn + kategori-badge) med effektive filtere og KPI-strip. For Anders er daglig "finn en elev"-bruksmønster hyppigst, og kort er mer skannbart enn tabellrader når vi har 42 aktive elever. Data Table (Option 2) er en sterk toer og bør være tilgjengelig som toggle når bulk-oppgaver eller eksport dominerer.</p>
+      <p>På lengre sikt (100+ elever) bør Segment Dashboard (Option 3) integreres som separat "Analyse"-view, og Pipeline (Option 5) som egen win-back-funksjon i stedet for hovedside.</p>
+    </div>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Grid Cards):</strong> Default. Best for visuell bruk og &lt;50 aktive.</li>
+      <li><strong>Option 2 (Data Table):</strong> Når bulk-aksjoner (SMS, eksport, planendring) dominerer arbeidsflyten.</li>
+      <li><strong>Option 3 (Segment):</strong> Strategisk månedlig/kvartalsvis porteføljegjennomgang.</li>
+      <li><strong>Option 4 (Map):</strong> Reise-planlegging eller regional ekspansjon.</li>
+      <li><strong>Option 5 (Pipeline):</strong> Når retention og win-back blir fast operativ rutine.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

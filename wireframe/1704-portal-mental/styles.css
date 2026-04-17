@@ -1,0 +1,158 @@
+/* === Wireframe Content CSS (B&W only) — Portal Mental Game === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL ============ */
+.wf-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 760px; background: #f5f5f5; }
+
+/* ============ SIDEBAR ============ */
+.wf-sidebar { background: #fff; border-right: 1px solid #eee; padding: 20px 14px; display: flex; flex-direction: column; gap: 18px; }
+.wf-sb-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: #000; padding: 4px 6px; }
+.wf-sb-profile { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #eee; border-radius: 12px; background: #fff; }
+.wf-sb-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-sb-profile-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-sb-profile-meta { font-size: 11px; color: #999; }
+.wf-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-sb-nav-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; padding: 8px 6px 4px; font-weight: 600; }
+.wf-sb-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; color: #333; font-size: 13px; text-decoration: none; }
+.wf-sb-item-icon { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+.wf-sb-item.wf-active { background: #f5f5f5; color: #000; font-weight: 600; }
+.wf-sb-item.wf-active .wf-sb-item-icon { background: #000; border-color: #000; }
+.wf-sb-cta { margin-top: auto; padding: 16px 14px; border: 1px solid #ccc; border-radius: 12px; background: #fff; text-align: center; }
+.wf-sb-cta-title { font-size: 12px; font-weight: 700; color: #000; margin-bottom: 6px; }
+.wf-sb-cta-desc { font-size: 11px; color: #666; margin-bottom: 10px; line-height: 1.4; }
+.wf-sb-cta-btn { width: 100%; padding: 9px 12px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+/* ============ MAIN ============ */
+.wf-main { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+.wf-mtopbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; }
+.wf-mtopbar-left { font-size: 12px; color: #666; }
+.wf-mtopbar-right { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #666; }
+.wf-mtopbar-chip { padding: 6px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #333; }
+
+/* ============ PAGE HEADER ============ */
+.wf-page-head { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px 22px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.wf-page-head-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 6px; font-weight: 600; }
+.wf-page-head-h { font-size: 22px; font-weight: 700; color: #000; margin: 0 0 4px; letter-spacing: -0.01em; }
+.wf-page-head-sub { font-size: 13px; color: #666; margin: 0; }
+
+/* ============ BENTO & CARDS ============ */
+.wf-bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+.wf-bc-3 { grid-column: span 3; }
+.wf-bc-4 { grid-column: span 4; }
+.wf-bc-5 { grid-column: span 5; }
+.wf-bc-6 { grid-column: span 6; }
+.wf-bc-7 { grid-column: span 7; }
+.wf-bc-8 { grid-column: span 8; }
+.wf-bc-9 { grid-column: span 9; }
+.wf-bc-12 { grid-column: span 12; }
+.wf-c { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px; min-height: 120px; }
+.wf-c-dark { background: #000; color: #fff; border-color: #000; }
+.wf-c-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-c-title { font-size: 13px; font-weight: 600; color: #000; margin: 0; }
+.wf-c-value { font-size: 32px; font-weight: 800; color: #000; line-height: 1; letter-spacing: -0.02em; }
+.wf-c-sub { font-size: 12px; color: #666; }
+.wf-c-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.wf-c-link { font-size: 12px; color: #000; font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; }
+
+/* ============ MENTAL SCORES (4 core: Focus / Confidence / Commitment / Acceptance) ============ */
+.wf-mscore-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.wf-mscore { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.wf-mscore-head { display: flex; align-items: center; justify-content: space-between; }
+.wf-mscore-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-mscore-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid #999; background: #fff; }
+.wf-mscore-dot-hi { background: #000; border-color: #000; }
+.wf-mscore-dot-md { background: #999; border-color: #999; }
+.wf-mscore-dot-lo { background: #fff; border-color: #333; border-width: 2px; }
+.wf-mscore-value { font-size: 34px; font-weight: 900; color: #000; line-height: 1; letter-spacing: -0.03em; }
+.wf-mscore-value-unit { font-size: 14px; color: #999; font-weight: 500; margin-left: 4px; }
+.wf-mscore-bar { height: 6px; background: #eee; border-radius: 999px; overflow: hidden; }
+.wf-mscore-fill { height: 100%; background: #000; border-radius: 999px; }
+.wf-mscore-trend { font-size: 11px; color: #666; }
+
+/* Trend chart (horizontal sparkline-style) */
+.wf-trend-chart { height: 160px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; padding: 14px; display: flex; align-items: flex-end; gap: 6px; }
+.wf-trend-bar { flex: 1; background: linear-gradient(to top, #000, #666); border-radius: 3px 3px 0 0; }
+.wf-trend-axis { display: flex; justify-content: space-between; margin-top: 6px; font-size: 10px; color: #999; }
+
+/* ============ JOURNAL / DAGBOK ============ */
+.wf-journal-input { display: flex; flex-direction: column; gap: 10px; }
+.wf-journal-textarea { width: 100%; min-height: 120px; padding: 14px; border: 1px solid #ccc; border-radius: 10px; background: #fff; font-size: 13px; color: #333; font-family: inherit; resize: none; }
+.wf-journal-inline-scores { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 6px; }
+.wf-journal-inline-score { padding: 10px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; text-align: center; }
+.wf-journal-inline-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; font-weight: 600; margin-bottom: 4px; }
+.wf-journal-slider { display: flex; gap: 3px; justify-content: center; }
+.wf-journal-slider-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid #ccc; background: #fff; }
+.wf-journal-slider-dot.wf-filled { background: #000; border-color: #000; }
+.wf-journal-list { display: flex; flex-direction: column; gap: 0; }
+.wf-journal-entry { padding: 14px 0; border-bottom: 1px solid #eee; display: flex; gap: 14px; align-items: flex-start; }
+.wf-journal-entry:last-child { border-bottom: none; }
+.wf-journal-date { flex-shrink: 0; width: 60px; font-size: 11px; color: #666; font-weight: 600; }
+.wf-journal-body { flex: 1; }
+.wf-journal-body p { margin: 0 0 6px; font-size: 13px; color: #333; line-height: 1.5; }
+.wf-journal-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.wf-journal-tag { padding: 2px 8px; background: #eee; border-radius: 999px; font-size: 10px; color: #666; font-weight: 600; }
+
+/* ============ REFLECTION FLOW (option 3) ============ */
+.wf-flow-progress { display: flex; gap: 6px; margin-bottom: 18px; }
+.wf-flow-step { flex: 1; height: 4px; background: #eee; border-radius: 999px; }
+.wf-flow-step.wf-active { background: #000; }
+.wf-flow-step.wf-done { background: #666; }
+.wf-flow-card { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 28px; text-align: center; }
+.wf-flow-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 10px; }
+.wf-flow-question { font-size: 26px; font-weight: 700; color: #000; margin: 0 0 10px; letter-spacing: -0.02em; }
+.wf-flow-sub { font-size: 13px; color: #666; margin: 0 0 24px; }
+.wf-flow-scale { display: flex; gap: 6px; justify-content: center; margin-bottom: 18px; }
+.wf-flow-scale-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid #ccc; background: #fff; font-size: 14px; font-weight: 700; color: #333; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.wf-flow-scale-btn.wf-active { background: #000; color: #fff; border-color: #000; }
+.wf-flow-actions { display: flex; gap: 10px; justify-content: center; }
+.wf-flow-btn { padding: 10px 20px; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.wf-flow-btn-primary { background: #000; color: #fff; border: none; }
+.wf-flow-btn-ghost { background: transparent; color: #333; border: 1px solid #ccc; }
+
+/* ============ HEATMAP (option 4) ============ */
+.wf-heatmap { display: grid; grid-template-columns: repeat(14, 1fr); gap: 4px; padding: 16px; background: #fff; border: 1px solid #eee; border-radius: 10px; }
+.wf-heat-cell { aspect-ratio: 1; border-radius: 3px; background: #eee; border: 1px solid #eee; }
+.wf-heat-0 { background: #f5f5f5; }
+.wf-heat-1 { background: #ddd; }
+.wf-heat-2 { background: #999; }
+.wf-heat-3 { background: #333; }
+.wf-heat-4 { background: #000; }
+.wf-heatmap-legend { display: flex; justify-content: flex-end; align-items: center; gap: 6px; margin-top: 10px; font-size: 10px; color: #666; }
+.wf-heatmap-legend-box { width: 12px; height: 12px; border-radius: 3px; }
+
+/* ============ GOALS / HABITS (option 5) ============ */
+.wf-goal-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid #eee; }
+.wf-goal-item:last-child { border-bottom: none; }
+.wf-goal-check { width: 20px; height: 20px; border-radius: 6px; border: 1px solid #ccc; flex-shrink: 0; }
+.wf-goal-check.wf-done { background: #000; border-color: #000; }
+.wf-goal-body { flex: 1; }
+.wf-goal-title { font-size: 14px; font-weight: 600; color: #000; margin: 0 0 3px; }
+.wf-goal-sub { font-size: 11px; color: #666; }
+.wf-goal-streak { padding: 4px 10px; border: 1px solid #ccc; border-radius: 999px; font-size: 10px; font-weight: 700; color: #333; background: #f5f5f5; }
+.wf-habit-row { display: flex; gap: 4px; margin-top: 8px; }
+.wf-habit-cell { flex: 1; height: 22px; border-radius: 4px; background: #eee; border: 1px solid #eee; }
+.wf-habit-cell.wf-filled { background: #000; border-color: #000; }
+
+/* ============ INSIGHT / AI (neutral B&W) ============ */
+.wf-ai-badge { display: inline-block; padding: 3px 8px; border: 1px solid #666; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #333; background: #eee; }
+.wf-insight-note { border-left: 3px solid #000; padding-left: 14px; }
+.wf-insight-body { font-size: 13px; color: #333; line-height: 1.5; font-style: italic; margin: 0; }
+.wf-insight-author { font-size: 11px; color: #666; font-weight: 600; margin-bottom: 6px; }
+
+/* ============ MARKERS / ANNOTATIONS ============ */
+.wf-marker { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: #000; color: #fff; font-size: 10px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+.wf-annotations { margin-top: 16px; padding: 20px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-annotations h3 { font-size: 14px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-annotations ul { margin: 0; padding-left: 20px; font-size: 13px; color: #333; }
+.wf-annotations li { margin-bottom: 6px; line-height: 1.5; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

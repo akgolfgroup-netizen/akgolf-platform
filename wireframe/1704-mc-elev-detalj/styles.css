@@ -1,0 +1,276 @@
+/* === Wireframe Content CSS — MC Elev-detalj (B&W only) === */
+/* Tokens: #000, #111, #333, #666, #999, #ccc, #eee, #f5f5f5, #fafafa, #fff */
+
+.browser-content { padding: 0; }
+.browser-frame { max-width: 1100px; }
+
+/* ============ MC SHELL ============ */
+.mc-shell { background: #fff; min-height: 720px; display: flex; flex-direction: column; }
+
+/* ============ TOPBAR (dark) ============ */
+.mc-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px; background: #111; color: #fff;
+  border-bottom: 1px solid #333;
+}
+.mc-topbar-left { display: flex; align-items: center; gap: 32px; }
+.mc-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; }
+.mc-tabs { display: flex; gap: 4px; }
+.mc-tab {
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 12px; color: #aaa; cursor: pointer;
+  border: 1px solid transparent;
+}
+.mc-tab:hover { color: #fff; background: #222; }
+.mc-tab-active { color: #000; background: #fff; font-weight: 600; }
+.mc-topbar-right { display: flex; align-items: center; gap: 16px; }
+.mc-search {
+  font-size: 12px; color: #999;
+  border: 1px solid #333; padding: 6px 14px; border-radius: 6px; background: #1a1a1a;
+}
+.mc-avatar {
+  width: 28px; height: 28px; border-radius: 999px;
+  background: #fff; color: #000; font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ============ BREADCRUMB BAR ============ */
+.mc-crumb {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px; background: #fafafa; border-bottom: 1px solid #eee;
+  font-size: 12px; color: #666;
+}
+.mc-crumb a { color: #333; text-decoration: none; }
+.mc-crumb-sep { margin: 0 6px; color: #ccc; }
+.mc-crumb-actions { display: flex; gap: 8px; }
+.mc-crumb-btn {
+  padding: 5px 12px; border-radius: 6px; border: 1px solid #ccc; background: #fff;
+  font-size: 12px; color: #333; cursor: pointer;
+}
+.mc-crumb-btn-primary { background: #000; border-color: #000; color: #fff; }
+
+/* ============ PROFILE HEADER ============ */
+.mc-profile-header {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px; background: #fff; border-bottom: 1px solid #eee;
+}
+.mc-profile-avatar {
+  width: 72px; height: 72px; border-radius: 999px;
+  background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700; color: #333; flex-shrink: 0;
+}
+.mc-profile-main { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.mc-profile-name-row { display: flex; align-items: center; gap: 10px; }
+.mc-profile-name { font-size: 20px; font-weight: 800; color: #000; }
+.mc-profile-badge {
+  padding: 2px 8px; border-radius: 4px; border: 1px solid #ccc; background: #fafafa;
+  font-size: 10px; color: #666; font-weight: 600; letter-spacing: 0.08em;
+}
+.mc-profile-meta { font-size: 13px; color: #666; }
+.mc-profile-meta span + span::before { content: "·"; margin: 0 8px; color: #ccc; }
+.mc-profile-stats { display: flex; gap: 28px; }
+.mc-profile-stat { display: flex; flex-direction: column; gap: 2px; text-align: right; }
+.mc-profile-stat-label { font-size: 10px; color: #999; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.mc-profile-stat-value { font-size: 18px; font-weight: 700; color: #000; font-variant-numeric: tabular-nums; }
+.mc-profile-stat-sub { font-size: 11px; color: #666; }
+
+/* ============ TABS NAV (sub-nav for elev-detalj) ============ */
+.mc-subtabs {
+  display: flex; gap: 4px; padding: 0 20px; background: #fff;
+  border-bottom: 1px solid #eee;
+}
+.mc-subtab {
+  padding: 12px 16px; font-size: 13px; color: #666; cursor: pointer;
+  border-bottom: 2px solid transparent; font-weight: 500;
+}
+.mc-subtab:hover { color: #000; }
+.mc-subtab-active { color: #000; border-bottom-color: #000; font-weight: 700; }
+.mc-subtab-count {
+  display: inline-block; padding: 1px 6px; border-radius: 8px;
+  background: #f5f5f5; color: #666; font-size: 10px; font-weight: 600; margin-left: 4px;
+}
+
+/* ============ BODY ============ */
+.mc-body { padding: 20px; background: #fafafa; }
+
+/* ============ GRID LAYOUT ============ */
+.mc-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+.mc-span-3 { grid-column: span 3; }
+.mc-span-4 { grid-column: span 4; }
+.mc-span-5 { grid-column: span 5; }
+.mc-span-6 { grid-column: span 6; }
+.mc-span-7 { grid-column: span 7; }
+.mc-span-8 { grid-column: span 8; }
+.mc-span-9 { grid-column: span 9; }
+.mc-span-12 { grid-column: span 12; }
+
+/* ============ CARDS ============ */
+.mc-card { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 16px; }
+.mc-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.mc-card-title { font-size: 13px; font-weight: 700; color: #000; letter-spacing: 0.02em; }
+.mc-card-meta { font-size: 11px; color: #999; }
+
+/* ============ KPI MINI ============ */
+.mc-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.mc-kpi {
+  background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.mc-kpi-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; }
+.mc-kpi-value { font-size: 22px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; }
+.mc-kpi-delta { font-size: 11px; color: #666; }
+
+/* ============ LISTS ============ */
+.mc-list { list-style: none; padding: 0; margin: 0; }
+.mc-list li {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0; border-bottom: 1px solid #eee; font-size: 12px; color: #333;
+}
+.mc-list li:last-child { border-bottom: none; }
+.mc-list-title { font-weight: 600; color: #000; font-size: 13px; }
+.mc-list-sub { color: #999; font-size: 11px; }
+.mc-tag {
+  padding: 2px 8px; border-radius: 4px; background: #f5f5f5; color: #666;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+}
+.mc-tag-good { background: #eee; color: #000; }
+
+/* ============ CHART PLACEHOLDER ============ */
+.mc-chart {
+  background: #fafafa; border: 1px dashed #ddd; border-radius: 6px;
+  padding: 20px; text-align: center; color: #999; font-size: 12px;
+  min-height: 120px; display: flex; align-items: center; justify-content: center;
+}
+.mc-chart-big { min-height: 200px; }
+
+/* ============ STROKES GAINED BARS ============ */
+.mc-sg-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 12px; }
+.mc-sg-label { width: 80px; color: #666; }
+.mc-sg-bar-wrap { flex: 1; height: 6px; background: #f0f0f0; border-radius: 3px; position: relative; }
+.mc-sg-bar { position: absolute; top: 0; bottom: 0; background: #333; border-radius: 3px; }
+.mc-sg-bar-neg { background: #999; }
+.mc-sg-val { width: 40px; text-align: right; font-variant-numeric: tabular-nums; color: #000; font-weight: 600; }
+
+/* ============ PYRAMID (Treningsfordeling) ============ */
+.mc-pyr { display: flex; flex-direction: column; gap: 6px; }
+.mc-pyr-row { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+.mc-pyr-label { width: 90px; color: #666; }
+.mc-pyr-bar-wrap { flex: 1; height: 14px; background: #f5f5f5; border-radius: 3px; position: relative; }
+.mc-pyr-bar { height: 100%; background: #333; border-radius: 3px; }
+.mc-pyr-val { width: 40px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* ============ TIMELINE FEED ============ */
+.mc-feed { display: flex; flex-direction: column; }
+.mc-feed-group { margin-bottom: 16px; }
+.mc-feed-date { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; padding: 6px 0; border-bottom: 1px solid #eee; margin-bottom: 8px; }
+.mc-feed-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
+.mc-feed-item:last-child { border-bottom: none; }
+.mc-feed-icon {
+  width: 32px; height: 32px; border-radius: 999px; flex-shrink: 0;
+  background: #f5f5f5; border: 1px solid #e5e5e5;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #666;
+}
+.mc-feed-body { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.mc-feed-title { font-size: 13px; font-weight: 600; color: #000; }
+.mc-feed-meta { font-size: 11px; color: #999; }
+.mc-feed-time { font-size: 11px; color: #999; flex-shrink: 0; }
+
+/* ============ SPLIT PANE (Opt 3) ============ */
+.mc-split { display: flex; gap: 0; min-height: 520px; }
+.mc-split-left {
+  width: 280px; flex-shrink: 0; background: #fff;
+  border-right: 1px solid #eee; padding: 20px;
+}
+.mc-split-right { flex: 1; padding: 20px; background: #fafafa; }
+.mc-split-nav { display: flex; flex-direction: column; gap: 2px; margin-top: 16px; }
+.mc-split-nav-item {
+  padding: 10px 12px; font-size: 13px; color: #666; border-radius: 6px; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mc-split-nav-item:hover { background: #f5f5f5; color: #000; }
+.mc-split-nav-active { background: #f0f0f0; color: #000; font-weight: 600; }
+
+/* ============ SECTION NAV (Opt 2 sticky) ============ */
+.mc-section-nav {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; gap: 2px; padding: 10px 20px;
+  background: rgba(255,255,255,0.95); border-bottom: 1px solid #eee;
+}
+.mc-section-nav a {
+  padding: 6px 12px; font-size: 12px; color: #666; text-decoration: none;
+  border-radius: 4px;
+}
+.mc-section-nav a:hover { background: #f5f5f5; color: #000; }
+.mc-section-nav a.mc-section-nav-active { background: #f0f0f0; color: #000; font-weight: 600; }
+
+.mc-section { margin-bottom: 24px; }
+.mc-section-title { font-size: 14px; font-weight: 800; color: #000; margin: 0 0 12px; letter-spacing: 0.02em; }
+
+/* ============ COMMAND PALETTE (Opt 5) ============ */
+.mc-cmd-wrap { max-width: 640px; margin: 40px auto; }
+.mc-cmd-lead { text-align: center; font-size: 14px; color: #666; margin-bottom: 16px; }
+.mc-cmd-lead strong { color: #000; font-weight: 700; }
+.mc-cmd-input {
+  width: 100%; padding: 14px 16px; font-size: 14px;
+  border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #333;
+  margin-bottom: 12px;
+}
+.mc-cmd-list { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 8px; }
+.mc-cmd-section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999;
+  padding: 8px 10px 4px;
+}
+.mc-cmd-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 10px; border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+.mc-cmd-row:hover { background: #f5f5f5; }
+.mc-cmd-row-active { background: #f0f0f0; }
+.mc-cmd-row-main { display: flex; gap: 10px; align-items: center; }
+.mc-cmd-row-icon {
+  width: 28px; height: 28px; border-radius: 6px; background: #f5f5f5; border: 1px solid #eee;
+  display: flex; align-items: center; justify-content: center; font-size: 11px; color: #666; font-weight: 700;
+}
+.mc-kbd {
+  display: inline-block; padding: 2px 6px;
+  border: 1px solid #ddd; border-bottom-width: 2px; border-radius: 4px;
+  background: #fafafa; font-size: 10px; color: #666; font-family: -apple-system, monospace;
+  margin-left: 4px;
+}
+
+/* ============ CHAT ============ */
+.mc-chat { display: flex; flex-direction: column; gap: 10px; max-height: 280px; overflow-y: auto; }
+.mc-chat-msg { display: flex; gap: 10px; font-size: 12px; }
+.mc-chat-msg-coach .mc-chat-bubble { background: #f0f0f0; color: #000; }
+.mc-chat-msg-elev { flex-direction: row-reverse; }
+.mc-chat-msg-elev .mc-chat-bubble { background: #111; color: #fff; }
+.mc-chat-bubble { padding: 8px 12px; border-radius: 10px; max-width: 70%; }
+.mc-chat-meta { font-size: 10px; color: #999; margin-top: 2px; }
+.mc-chat-input {
+  margin-top: 10px; display: flex; gap: 6px;
+  padding: 8px; border: 1px solid #eee; border-radius: 6px; background: #fff;
+}
+.mc-chat-input input {
+  flex: 1; border: none; outline: none; font-size: 12px; background: transparent;
+}
+.mc-chat-input button {
+  padding: 4px 12px; background: #000; color: #fff; border: none; border-radius: 4px;
+  font-size: 11px; cursor: pointer;
+}
+
+/* ============ TABLE ============ */
+.mc-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.mc-table th, .mc-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+.mc-table th { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #999; text-transform: uppercase; }
+.mc-table td { color: #333; }
+.mc-table tfoot td { font-weight: 700; color: #000; border-top: 2px solid #ddd; }
+
+/* ============ SUMMARY TABLE ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+.wf-summary-table th, .wf-summary-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
+.wf-summary-table th { background: #fafafa; font-weight: 700; color: #000; font-size: 12px; letter-spacing: 0.04em; }

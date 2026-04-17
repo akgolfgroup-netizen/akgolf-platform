@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Booking</span> — <span id="project-name">AK Golf Platform</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Classic Wizard</button>
+    <button class="tab-btn" data-tab="option-2">2: One Screen</button>
+    <button class="tab-btn" data-tab="option-3">3: Calendar First</button>
+    <button class="tab-btn" data-tab="option-4">4: Instructor First</button>
+    <button class="tab-btn" data-tab="option-5">5: Quick Book</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Classic Wizard (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Classic Wizard</span></h2>
+    <p class="option-description">Trygt 4-stegs wizard som matcher eksisterende BookingWizard-komponent. Tjeneste → Dato/tid → Instruktør → Betaling. Én beslutning om gangen, klart progresjonsspor, minimerer beslutningsfrykt.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/booking</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Utvikling</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Kom i gang gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">BOOKING</div>
+          <h1 class="wf-headline">Book en coaching-okt</h1>
+          <p class="wf-subhead">Velg tjeneste, tid og instruktor. Betal med kort eller Vipps. Ferdig pa under to minutter.</p>
+        </section>
+
+        <div class="wf-stepper">
+          <div class="wf-step-pill wf-active"><span class="wf-step-num">1</span> Tjeneste<span class="wf-marker">1</span></div>
+          <span class="wf-step-connector"></span>
+          <div class="wf-step-pill"><span class="wf-step-num">2</span> Dato og tid</div>
+          <span class="wf-step-connector"></span>
+          <div class="wf-step-pill"><span class="wf-step-num">3</span> Instruktor</div>
+          <span class="wf-step-connector"></span>
+          <div class="wf-step-pill"><span class="wf-step-num">4</span> Betaling</div>
+        </div>
+
+        <section class="wf-section-wide">
+          <h2 class="wf-h2">Velg tjeneste<span class="wf-marker">2</span></h2>
+          <div class="wf-grid-3">
+            <div class="wf-service-card">
+              <div class="wf-service-label">ABONNEMENT</div>
+              <div class="wf-service-title">Performance</div>
+              <p class="wf-service-desc">2 x 20 min per maned. Strukturert oppfolging fra Anders eller Markus.</p>
+              <div class="wf-service-price">1 600 kr/mnd</div>
+              <div class="wf-service-meta">20 min per okt . Lopende</div>
+            </div>
+            <div class="wf-service-card wf-selected">
+              <div class="wf-service-badge">Mest valgt</div>
+              <div class="wf-service-label">ABONNEMENT</div>
+              <div class="wf-service-title">Performance Pro</div>
+              <p class="wf-service-desc">4 x 20 min per maned. Raskere fremgang, tettere coaching-dialog.</p>
+              <div class="wf-service-price">2 000 kr/mnd</div>
+              <div class="wf-service-meta">20 min per okt . Lopende</div>
+            </div>
+            <div class="wf-service-card">
+              <div class="wf-service-label">ENKELTOKT</div>
+              <div class="wf-service-title">Flex 20</div>
+              <p class="wf-service-desc">En 20-minutters okt uten binding. Perfekt for a teste coaching-formatet.</p>
+              <div class="wf-service-price">450 kr</div>
+              <div class="wf-service-meta">20 min . Enkeltbetaling</div>
+            </div>
+            <div class="wf-service-card">
+              <div class="wf-service-label">DUO . ABONNEMENT</div>
+              <div class="wf-service-title">Performance Duo</div>
+              <p class="wf-service-desc">For to spillere sammen. Motivasjon og struktur i par.</p>
+              <div class="wf-service-price">2 400 kr/mnd</div>
+              <div class="wf-service-meta">20 min per okt . Lopende</div>
+            </div>
+            <div class="wf-service-card">
+              <div class="wf-service-label">DUO . ENKELTOKT</div>
+              <div class="wf-service-title">Flex 20 Duo</div>
+              <p class="wf-service-desc">Enkeltokt for to. Lav terskel for a prove sammen.</p>
+              <div class="wf-service-price">650 kr</div>
+              <div class="wf-service-meta">20 min . Enkeltbetaling</div>
+            </div>
+            <div class="wf-service-card">
+              <div class="wf-service-label">ENKELTOKT</div>
+              <div class="wf-service-title">Flex 50</div>
+              <p class="wf-service-desc">Dyp okt for turneringsforberedelse eller utfordring med helsving.</p>
+              <div class="wf-service-price">950 kr</div>
+              <div class="wf-service-meta">50 min . Enkeltbetaling</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="wf-wizard-footer">
+          <button class="wf-btn wf-btn-secondary">Avbryt</button>
+          <button class="wf-btn wf-btn-cta">Neste: Dato og tid<span class="wf-marker">3</span></button>
+        </div>
+
+        <section class="wf-section-narrow">
+          <h2 class="wf-h2">Slik fungerer booking</h2>
+          <div class="wf-info-row"><div class="wf-info-icon">01</div><div><strong>Velg i ditt tempo.</strong> Du kan ga tilbake og endre helt til du bekrefter betaling.</div></div>
+          <div class="wf-info-row"><div class="wf-info-icon">02</div><div><strong>Betal sikkert.</strong> Kort via Stripe eller Vipps. Ingen skjulte gebyrer.</div></div>
+          <div class="wf-info-row"><div class="wf-info-icon">03</div><div><strong>Avbestilling.</strong> Inntil 24 t for okten er det fri avbestilling. Etter det faktureres full pris.</div></div>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong><p>Premium golfcoaching og treningsplattform.</p></div>
+            <div><strong>Produkt</strong><p>Portalen</p><p>Priser</p></div>
+            <div><strong>Coaching</strong><p>Academy</p><p>Booking</p></div>
+            <div><strong>Selskap</strong><p>Om oss</p><p>Kontakt</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — 4-stegs progress:</strong> Visuell ankerlinje. Brukere vet alltid hvor de er og hvor mye som gjenstar. Fjerner "er jeg nesten ferdig?"-angst.</li>
+        <li><strong>2 — Tjeneste forst:</strong> Pris og forpliktelse defineres for tidsvalg. Reduserer friksjon nar slot er valgt og bruker ser pris for forste gang.</li>
+        <li><strong>3 — Primaer CTA bunn:</strong> Tydelig progresjon mot neste steg. Sekundaer avbryt venstre balanserer.</li>
+        <li>— "Mest valgt"-badge pa Performance Pro: anchoring mot midterste tier (+40 prosent velger den).</li>
+        <li>— Duo og enkeltokter i samme grid: full transparens. Reduserer antall sporsmal i support.</li>
+        <li>— Info-seksjon i bunn: bygger tillit under beslutning. Avbestillingsregler alltid synlige.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: One Screen ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">One Screen</span></h2>
+    <p class="option-description">Alt pa en side. Venstre kolonne er en sekvensiell velger (tjeneste -> dato -> tid -> instruktor), hoyre kolonne er levende summary som oppdateres nar valg gjores. Null friksjon for erfarne kjopere.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/booking</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Junior</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Kom i gang gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">BOOKING</div>
+          <h1 class="wf-headline">Book en coaching-okt</h1>
+          <p class="wf-subhead">Alt pa ett sted. Gjor valgene til venstre, bekreft til hoyre.</p>
+        </section>
+
+        <section class="wf-section-wide">
+          <div class="wf-grid-summary">
+
+            <div>
+              <div style="margin-bottom:28px;">
+                <h3 class="wf-h3">1. Tjeneste<span class="wf-marker">1</span></h3>
+                <div class="wf-service-row wf-selected"><div class="wf-service-row-left"><span class="wf-service-row-title">Performance Pro</span><span class="wf-service-row-meta">4 x 20 min per mnd . Abonnement</span></div><span class="wf-service-row-price">2 000 kr/mnd</span></div>
+                <div class="wf-service-row"><div class="wf-service-row-left"><span class="wf-service-row-title">Performance</span><span class="wf-service-row-meta">2 x 20 min per mnd . Abonnement</span></div><span class="wf-service-row-price">1 600 kr/mnd</span></div>
+                <div class="wf-service-row"><div class="wf-service-row-left"><span class="wf-service-row-title">Flex 20</span><span class="wf-service-row-meta">Enkeltokt . 20 min</span></div><span class="wf-service-row-price">450 kr</span></div>
+                <div class="wf-service-row"><div class="wf-service-row-left"><span class="wf-service-row-title">Performance Duo</span><span class="wf-service-row-meta">For to . 20 min per okt</span></div><span class="wf-service-row-price">2 400 kr/mnd</span></div>
+                <div class="wf-service-row"><div class="wf-service-row-left"><span class="wf-service-row-title">Flex 20 Duo</span><span class="wf-service-row-meta">Enkeltokt for to . 20 min</span></div><span class="wf-service-row-price">650 kr</span></div>
+              </div>
+
+              <div style="margin-bottom:28px;">
+                <h3 class="wf-h3">2. Dato</h3>
+                <div class="wf-calendar">
+                  <div class="wf-cal-header">
+                    <div class="wf-cal-title">Mai 2026</div>
+                    <div class="wf-cal-nav"><button class="wf-cal-nav-btn">&lsaquo;</button><button class="wf-cal-nav-btn">&rsaquo;</button></div>
+                  </div>
+                  <div class="wf-cal-grid">
+                    <div class="wf-cal-dow">M</div><div class="wf-cal-dow">T</div><div class="wf-cal-dow">O</div><div class="wf-cal-dow">T</div><div class="wf-cal-dow">F</div><div class="wf-cal-dow">L</div><div class="wf-cal-dow">S</div>
+                    <div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-full">1</div><div class="wf-cal-day wf-available">2</div><div class="wf-cal-day wf-full">3</div><div class="wf-cal-day wf-available">4</div>
+                    <div class="wf-cal-day wf-available">5</div><div class="wf-cal-day wf-available">6</div><div class="wf-cal-day wf-full">7</div><div class="wf-cal-day wf-available">8</div><div class="wf-cal-day wf-available">9</div><div class="wf-cal-day wf-full">10</div><div class="wf-cal-day wf-available">11</div>
+                    <div class="wf-cal-day wf-available">12</div><div class="wf-cal-day wf-selected">13</div><div class="wf-cal-day wf-available">14</div><div class="wf-cal-day wf-available">15</div><div class="wf-cal-day wf-available">16</div><div class="wf-cal-day wf-full">17</div><div class="wf-cal-day wf-available">18</div>
+                    <div class="wf-cal-day wf-available">19</div><div class="wf-cal-day wf-available">20</div><div class="wf-cal-day wf-available">21</div><div class="wf-cal-day wf-available">22</div><div class="wf-cal-day wf-available">23</div><div class="wf-cal-day wf-full">24</div><div class="wf-cal-day wf-available">25</div>
+                    <div class="wf-cal-day wf-available">26</div><div class="wf-cal-day wf-available">27</div><div class="wf-cal-day wf-available">28</div><div class="wf-cal-day wf-available">29</div><div class="wf-cal-day wf-available">30</div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div>
+                  </div>
+                  <div class="wf-cal-legend"><span><span class="wf-cal-dot wf-cal-dot-avail"></span>Ledig</span><span><span class="wf-cal-dot wf-cal-dot-full"></span>Fullt</span></div>
+                </div>
+              </div>
+
+              <div style="margin-bottom:28px;">
+                <h3 class="wf-h3">3. Tidspunkt</h3>
+                <div class="wf-time-grid">
+                  <div class="wf-time-slot">09:00</div>
+                  <div class="wf-time-slot">09:30</div>
+                  <div class="wf-time-slot wf-selected">10:00</div>
+                  <div class="wf-time-slot wf-disabled">10:30</div>
+                  <div class="wf-time-slot">11:00</div>
+                  <div class="wf-time-slot">11:30</div>
+                  <div class="wf-time-slot wf-disabled">13:00</div>
+                  <div class="wf-time-slot">13:30</div>
+                  <div class="wf-time-slot">14:00</div>
+                  <div class="wf-time-slot">14:30</div>
+                  <div class="wf-time-slot">15:00</div>
+                  <div class="wf-time-slot wf-disabled">15:30</div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="wf-h3">4. Instruktor</h3>
+                <div class="wf-coach-card wf-selected">
+                  <div class="wf-coach-avatar">AK</div>
+                  <div class="wf-coach-body">
+                    <div class="wf-coach-role">HOVEDINSTRUKTOR</div>
+                    <h4 class="wf-coach-name">Anders Kristiansen</h4>
+                    <p class="wf-coach-bio">15 ars erfaring med personlig coaching. Performance, TrackMan-analyse, strategi.</p>
+                  </div>
+                </div>
+                <div class="wf-coach-card">
+                  <div class="wf-coach-avatar">MR</div>
+                  <div class="wf-coach-body">
+                    <div class="wf-coach-role">INSTRUKTOR</div>
+                    <h4 class="wf-coach-name">Markus Roinas Pedersen</h4>
+                    <p class="wf-coach-bio">Tidligere elite. Spesialist pa teknikk og juniorutvikling.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <aside>
+              <div class="wf-summary">
+                <div class="wf-summary-label">Din booking<span class="wf-marker">2</span></div>
+                <div class="wf-summary-row"><span class="wf-summary-row-label">Tjeneste</span><span class="wf-summary-row-value">Performance Pro</span></div>
+                <div class="wf-summary-row"><span class="wf-summary-row-label">Dato</span><span class="wf-summary-row-value">13. mai 2026</span></div>
+                <div class="wf-summary-row"><span class="wf-summary-row-label">Tid</span><span class="wf-summary-row-value">10:00 - 10:20</span></div>
+                <div class="wf-summary-row"><span class="wf-summary-row-label">Instruktor</span><span class="wf-summary-row-value">Anders Kristiansen</span></div>
+                <div class="wf-summary-row"><span class="wf-summary-row-label">Varighet</span><span class="wf-summary-row-value">20 min</span></div>
+                <div class="wf-summary-total"><span>Manedspris</span><span>2 000 kr</span></div>
+                <p class="wf-summary-note">Lopende abonnement. Avsluttes nar du vil i Portalen. Fri avbestilling av enkeltokter inntil 24 t for.</p>
+                <button class="wf-btn wf-btn-cta-large wf-btn-block" style="margin-top:16px;">Bekreft og betal<span class="wf-marker">3</span></button>
+                <button class="wf-btn wf-btn-secondary wf-btn-block" style="margin-top:8px;">Betal med Vipps</button>
+              </div>
+            </aside>
+
+          </div>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong><p>Premium golfcoaching.</p></div>
+            <div><strong>Produkt</strong><p>Portalen</p><p>Priser</p></div>
+            <div><strong>Coaching</strong><p>Academy</p><p>Booking</p></div>
+            <div><strong>Selskap</strong><p>Kontakt</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Ingen wizard:</strong> Alle fire seksjoner synlige samtidig. Erfarne brukere fullforer pa 30 sek.</li>
+        <li><strong>2 — Sticky summary:</strong> Oppdateres live nar bruker velger. Fungerer som visuell ankring. Bruker ser alltid hva som blir bestilt.</li>
+        <li><strong>3 — Dobbel CTA:</strong> Kort og Vipps side om side i summary. Reduserer klikk for Vipps-brukere (stor del av norsk marked).</li>
+        <li>— Risiko: Lengre side, mer scroll. Mobilversjon ma kollapse summary til sticky bottom bar.</li>
+        <li>— Passer erfarne kunder og returnerende brukere. Nye kunder kan bli overveldet av alt pa en gang.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Calendar First ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Calendar First</span></h2>
+    <p class="option-description">Start med kalenderen ("Nar vil du spille?"), filtrer sa ned tjeneste og instruktor basert pa hva som faktisk er ledig. Perfekt for tidspress-brukere som har en spesifikk dag.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/booking</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Kom i gang gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">BOOKING</div>
+          <h1 class="wf-headline">Nar vil du spille?<span class="wf-marker">1</span></h1>
+          <p class="wf-subhead">Velg en dag forst. Vi viser deg hva som er ledig.</p>
+        </section>
+
+        <section class="wf-section-wide">
+          <div class="wf-grid-cal">
+
+            <div>
+              <div class="wf-calendar">
+                <div class="wf-cal-header">
+                  <div class="wf-cal-title">Mai 2026</div>
+                  <div class="wf-cal-nav"><button class="wf-cal-nav-btn">&lsaquo;</button><button class="wf-cal-nav-btn">&rsaquo;</button></div>
+                </div>
+                <div class="wf-cal-grid">
+                  <div class="wf-cal-dow">M</div><div class="wf-cal-dow">T</div><div class="wf-cal-dow">O</div><div class="wf-cal-dow">T</div><div class="wf-cal-dow">F</div><div class="wf-cal-dow">L</div><div class="wf-cal-dow">S</div>
+                  <div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-full">1</div><div class="wf-cal-day wf-available">2</div><div class="wf-cal-day wf-full">3</div><div class="wf-cal-day wf-available">4</div>
+                  <div class="wf-cal-day wf-available">5</div><div class="wf-cal-day wf-available">6</div><div class="wf-cal-day wf-full">7</div><div class="wf-cal-day wf-available">8</div><div class="wf-cal-day wf-available">9</div><div class="wf-cal-day wf-full">10</div><div class="wf-cal-day wf-available">11</div>
+                  <div class="wf-cal-day wf-available">12</div><div class="wf-cal-day wf-selected">13</div><div class="wf-cal-day wf-available">14</div><div class="wf-cal-day wf-available">15</div><div class="wf-cal-day wf-available">16</div><div class="wf-cal-day wf-full">17</div><div class="wf-cal-day wf-available">18</div>
+                  <div class="wf-cal-day wf-available">19</div><div class="wf-cal-day wf-available">20</div><div class="wf-cal-day wf-available">21</div><div class="wf-cal-day wf-available">22</div><div class="wf-cal-day wf-available">23</div><div class="wf-cal-day wf-full">24</div><div class="wf-cal-day wf-available">25</div>
+                  <div class="wf-cal-day wf-available">26</div><div class="wf-cal-day wf-available">27</div><div class="wf-cal-day wf-available">28</div><div class="wf-cal-day wf-available">29</div><div class="wf-cal-day wf-available">30</div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div>
+                </div>
+                <div class="wf-cal-legend"><span><span class="wf-cal-dot wf-cal-dot-avail"></span>Ledig</span><span><span class="wf-cal-dot wf-cal-dot-full"></span>Fullt</span></div>
+              </div>
+
+              <div style="margin-top:20px;">
+                <h3 class="wf-h3">Filtre</h3>
+                <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                  <span class="wf-coach-tag">Alle instruktorer</span>
+                  <span class="wf-coach-tag">Abonnement</span>
+                  <span class="wf-coach-tag">Enkeltokter</span>
+                  <span class="wf-coach-tag">20 min</span>
+                  <span class="wf-coach-tag">50 min</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="wf-h3">Ledige tider. Onsdag 13. mai 2026<span class="wf-marker">2</span></h3>
+              <p style="font-size:13px; color:#666; margin:0 0 20px;">12 ledige tider hos 2 instruktorer</p>
+
+              <div style="margin-bottom:24px;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                  <div class="wf-coach-avatar" style="width:40px; height:40px; font-size:13px;">AK</div>
+                  <div><strong style="font-size:14px; color:#000;">Anders Kristiansen</strong><div style="font-size:11px; color:#666;">Performance . Performance Pro . Flex 20</div></div>
+                </div>
+                <div class="wf-time-grid">
+                  <div class="wf-time-slot">09:00</div>
+                  <div class="wf-time-slot">09:30</div>
+                  <div class="wf-time-slot wf-selected">10:00</div>
+                  <div class="wf-time-slot">11:00</div>
+                  <div class="wf-time-slot">13:30</div>
+                  <div class="wf-time-slot">14:00</div>
+                  <div class="wf-time-slot">14:30</div>
+                  <div class="wf-time-slot">15:00</div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                  <div class="wf-coach-avatar" style="width:40px; height:40px; font-size:13px;">MR</div>
+                  <div><strong style="font-size:14px; color:#000;">Markus Roinas Pedersen</strong><div style="font-size:11px; color:#666;">Express . Express Pro . Flex 20</div></div>
+                </div>
+                <div class="wf-time-grid">
+                  <div class="wf-time-slot">08:00</div>
+                  <div class="wf-time-slot">08:30</div>
+                  <div class="wf-time-slot">12:00</div>
+                  <div class="wf-time-slot">16:00</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <section class="wf-section-tight" style="border-top:1px solid #eee;">
+          <h3 class="wf-h3">Valgt: 13. mai kl. 10:00 hos Anders<span class="wf-marker">3</span></h3>
+          <p style="font-size:13px; color:#666; margin:0 0 16px;">Velg tjeneste for a fortsette:</p>
+          <div class="wf-grid-3">
+            <div class="wf-service-row wf-selected"><div class="wf-service-row-left"><span class="wf-service-row-title">Performance Pro</span><span class="wf-service-row-meta">20 min . Abo</span></div><span class="wf-service-row-price">2 000 /mnd</span></div>
+            <div class="wf-service-row"><div class="wf-service-row-left"><span class="wf-service-row-title">Performance</span><span class="wf-service-row-meta">20 min . Abo</span></div><span class="wf-service-row-price">1 600 /mnd</span></div>
+            <div class="wf-service-row"><div class="wf-service-row-left"><span class="wf-service-row-title">Flex 20</span><span class="wf-service-row-meta">20 min . Enkelt</span></div><span class="wf-service-row-price">450 kr</span></div>
+          </div>
+          <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+            <button class="wf-btn wf-btn-cta-large">Ga til betaling</button>
+          </div>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong></div>
+            <div><strong>Produkt</strong><p>Portalen</p></div>
+            <div><strong>Coaching</strong><p>Booking</p></div>
+            <div><strong>Kontakt</strong><p>post@akgolf.no</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Hero stiller sporsmalet:</strong> "Nar vil du spille?" Brukeren svarer ved a trykke en dag. Null avledning.</li>
+        <li><strong>2 — Gruppert per instruktor:</strong> Reduserer kognitiv last. Bruker ser "Anders har disse tidene, Markus har disse" uten a matte filtrere aktivt.</li>
+        <li><strong>3 — Tjeneste til sist:</strong> Omvendt flow. Slot forst, pris sist. Fungerer nar pris ikke er hovedfriksjon (returnerende kunder).</li>
+        <li>— Risiko: Nye brukere kan bli forvirret nar de ser ledige tider uten a vite pris. Mitigeres ved at pris vises i tjeneste-kortene.</li>
+        <li>— Passer best hvis over 60 prosent av bookinger skjer fra returnerende kunder med kjent pris-preferanse.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Instructor First ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Instructor First</span></h2>
+    <p class="option-description">Velg coach forst. Presenterer Anders og Markus som fullverdige profiler med bio, spesialiteter og tjenestene de tilbyr. Relasjon for transaksjon. Bygger tillit for dyrere tjenester.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/booking</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Teamet</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Kom i gang gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">BOOKING</div>
+          <h1 class="wf-headline">Hvem vil du trene med?<span class="wf-marker">1</span></h1>
+          <p class="wf-subhead">Velg en coach. Vi viser deres tjenester og ledige tider.</p>
+        </section>
+
+        <section class="wf-section-wide">
+          <div class="wf-grid-2">
+            <div class="wf-coach-card wf-selected">
+              <div class="wf-coach-portrait" style="width:120px; height:160px; aspect-ratio:unset;">[Portrett]</div>
+              <div class="wf-coach-body">
+                <div class="wf-coach-role">HOVEDINSTRUKTOR</div>
+                <h3 class="wf-coach-name" style="font-size:20px;">Anders Kristiansen</h3>
+                <p class="wf-coach-bio">15 ars erfaring med personlig coaching. Jobber med alt fra HCP 30 til elite. Spesialist pa Treningspyramiden, TrackMan-analyse og banestrategi.</p>
+                <div class="wf-coach-tags">
+                  <span class="wf-coach-tag">Performance</span>
+                  <span class="wf-coach-tag">Performance Pro</span>
+                  <span class="wf-coach-tag">Flex 20/50/90</span>
+                  <span class="wf-coach-tag">Duo</span>
+                </div>
+                <div style="margin-top:14px; font-size:12px; color:#666;">Fra 450 kr per okt . Fra 1 600 kr/mnd</div>
+                <button class="wf-btn wf-btn-cta" style="margin-top:14px;">Se ledige tider<span class="wf-marker">2</span></button>
+              </div>
+            </div>
+            <div class="wf-coach-card">
+              <div class="wf-coach-portrait" style="width:120px; height:160px; aspect-ratio:unset;">[Portrett]</div>
+              <div class="wf-coach-body">
+                <div class="wf-coach-role">INSTRUKTOR</div>
+                <h3 class="wf-coach-name" style="font-size:20px;">Markus Roinas Pedersen</h3>
+                <p class="wf-coach-bio">Tidligere elite-spiller. Spesialist pa teknisk utvikling og juniorer. Rask, strukturert coaching i 20-minutters Express-format.</p>
+                <div class="wf-coach-tags">
+                  <span class="wf-coach-tag">Express</span>
+                  <span class="wf-coach-tag">Express Pro</span>
+                  <span class="wf-coach-tag">First Tee</span>
+                  <span class="wf-coach-tag">Flex 20</span>
+                </div>
+                <div style="margin-top:14px; font-size:12px; color:#666;">Fra 450 kr per okt . Fra 550 kr/mnd</div>
+                <button class="wf-btn wf-btn-secondary" style="margin-top:14px;">Se ledige tider</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-tight" style="border-top:1px solid #eee;">
+          <h3 class="wf-h3">Anders sine tjenester<span class="wf-marker">3</span></h3>
+          <div class="wf-grid-3" style="margin-top:12px;">
+            <div class="wf-service-card wf-selected">
+              <div class="wf-service-label">ABONNEMENT</div>
+              <div class="wf-service-title">Performance Pro</div>
+              <p class="wf-service-desc">4 x 20 min per maned.</p>
+              <div class="wf-service-price">2 000 kr/mnd</div>
+            </div>
+            <div class="wf-service-card">
+              <div class="wf-service-label">ABONNEMENT</div>
+              <div class="wf-service-title">Performance</div>
+              <p class="wf-service-desc">2 x 20 min per maned.</p>
+              <div class="wf-service-price">1 600 kr/mnd</div>
+            </div>
+            <div class="wf-service-card">
+              <div class="wf-service-label">ENKELTOKT</div>
+              <div class="wf-service-title">Flex 20</div>
+              <p class="wf-service-desc">En 20-min okt uten binding.</p>
+              <div class="wf-service-price">450 kr</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wf-section-tight" style="border-top:1px solid #eee;">
+          <h3 class="wf-h3">Ledige tider. Anders</h3>
+          <div class="wf-grid-cal">
+            <div class="wf-calendar">
+              <div class="wf-cal-header">
+                <div class="wf-cal-title">Mai 2026</div>
+                <div class="wf-cal-nav"><button class="wf-cal-nav-btn">&lsaquo;</button><button class="wf-cal-nav-btn">&rsaquo;</button></div>
+              </div>
+              <div class="wf-cal-grid">
+                <div class="wf-cal-dow">M</div><div class="wf-cal-dow">T</div><div class="wf-cal-dow">O</div><div class="wf-cal-dow">T</div><div class="wf-cal-dow">F</div><div class="wf-cal-dow">L</div><div class="wf-cal-dow">S</div>
+                <div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-full">1</div><div class="wf-cal-day wf-available">2</div><div class="wf-cal-day wf-full">3</div><div class="wf-cal-day wf-available">4</div>
+                <div class="wf-cal-day wf-available">5</div><div class="wf-cal-day wf-available">6</div><div class="wf-cal-day wf-full">7</div><div class="wf-cal-day wf-available">8</div><div class="wf-cal-day wf-available">9</div><div class="wf-cal-day wf-full">10</div><div class="wf-cal-day wf-available">11</div>
+                <div class="wf-cal-day wf-available">12</div><div class="wf-cal-day wf-selected">13</div><div class="wf-cal-day wf-available">14</div><div class="wf-cal-day wf-available">15</div><div class="wf-cal-day wf-available">16</div><div class="wf-cal-day wf-full">17</div><div class="wf-cal-day wf-available">18</div>
+                <div class="wf-cal-day wf-available">19</div><div class="wf-cal-day wf-available">20</div><div class="wf-cal-day wf-available">21</div><div class="wf-cal-day wf-available">22</div><div class="wf-cal-day wf-available">23</div><div class="wf-cal-day wf-full">24</div><div class="wf-cal-day wf-available">25</div>
+              </div>
+            </div>
+            <div>
+              <p style="font-size:13px; color:#666; margin:0 0 10px;">Onsdag 13. mai. 8 ledige tider</p>
+              <div class="wf-time-grid">
+                <div class="wf-time-slot">09:00</div>
+                <div class="wf-time-slot">09:30</div>
+                <div class="wf-time-slot wf-selected">10:00</div>
+                <div class="wf-time-slot">11:00</div>
+                <div class="wf-time-slot">13:30</div>
+                <div class="wf-time-slot">14:00</div>
+                <div class="wf-time-slot">14:30</div>
+                <div class="wf-time-slot">15:00</div>
+              </div>
+              <button class="wf-btn wf-btn-cta-large wf-btn-block" style="margin-top:20px;">Bekreft booking</button>
+            </div>
+          </div>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong></div>
+            <div><strong>Teamet</strong><p>Anders</p><p>Markus</p></div>
+            <div><strong>Booking</strong><p>Priser</p></div>
+            <div><strong>Kontakt</strong><p>post@akgolf.no</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Coach som entry point:</strong> "Hvem vil du trene med?" personifiserer salget. Bygger relasjon for transaksjon.</li>
+        <li><strong>2 — Anders mest prominent:</strong> Portrett, CTA-knapp i lime. Markus sekundaer. Reflekterer hovedbusiness.</li>
+        <li><strong>3 — Tjenester filtreres per coach:</strong> Anders viser Performance-linjen, Markus viser Express-linjen. Unngar forvirring rundt hvem som tilbyr hva.</li>
+        <li>— Risiko: Fordobler klikk for prisbevisste brukere. De ma forst velge coach, sa tjeneste. Mitigering: "Book med hvem som helst"-knapp.</li>
+        <li>— Passer best nar AK-merkevaren er sterkere enn produkt-merkevaren. Folk kommer for Anders (eller en spesifikk coach), ikke for en tjeneste.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Quick Book ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Quick Book</span></h2>
+    <p class="option-description">3 enklere steg med smart defaults: Tjeneste -> Velg tid (kalender og slots pa en side) -> Bekreft og betal (summary og Vipps). Default coach er Anders. Default tjeneste er "Mest valgt".</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/booking</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <nav class="wf-nav">
+          <div class="wf-logo">AK GOLF</div>
+          <div class="wf-nav-links"><a href="#">Academy</a><a href="#">Priser</a><a href="#">Logg inn</a></div>
+          <button class="wf-btn wf-btn-cta">Kom i gang gratis</button>
+        </nav>
+
+        <section class="wf-hero">
+          <div class="wf-hero-label">QUICK BOOK</div>
+          <h1 class="wf-headline">Book pa 60 sekunder</h1>
+          <p class="wf-subhead">Tre steg. Smarte forslag. Vipps-betaling.</p>
+        </section>
+
+        <div class="wf-stepper">
+          <div class="wf-step-pill wf-done"><span class="wf-step-num">&check;</span> Tjeneste</div>
+          <span class="wf-step-connector"></span>
+          <div class="wf-step-pill wf-active"><span class="wf-step-num">2</span> Tid<span class="wf-marker">1</span></div>
+          <span class="wf-step-connector"></span>
+          <div class="wf-step-pill"><span class="wf-step-num">3</span> Bekreft</div>
+        </div>
+
+        <section class="wf-section-wide">
+          <div class="wf-grid-cal">
+
+            <div>
+              <div style="padding:14px 16px; background:#fafafa; border:1px solid #eee; border-radius:10px; margin-bottom:16px;">
+                <div style="font-size:10px; color:#666; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; margin-bottom:4px;">Valgt tjeneste</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <div style="font-size:15px; font-weight:700; color:#000;">Performance Pro</div>
+                    <div style="font-size:12px; color:#666;">4 x 20 min/mnd . Anders<span class="wf-marker">2</span></div>
+                  </div>
+                  <button class="wf-btn wf-btn-secondary" style="font-size:12px; padding:6px 12px;">Endre</button>
+                </div>
+              </div>
+
+              <div class="wf-calendar">
+                <div class="wf-cal-header">
+                  <div class="wf-cal-title">Mai 2026</div>
+                  <div class="wf-cal-nav"><button class="wf-cal-nav-btn">&lsaquo;</button><button class="wf-cal-nav-btn">&rsaquo;</button></div>
+                </div>
+                <div class="wf-cal-grid">
+                  <div class="wf-cal-dow">M</div><div class="wf-cal-dow">T</div><div class="wf-cal-dow">O</div><div class="wf-cal-dow">T</div><div class="wf-cal-dow">F</div><div class="wf-cal-dow">L</div><div class="wf-cal-dow">S</div>
+                  <div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-empty"></div><div class="wf-cal-day wf-full">1</div><div class="wf-cal-day wf-available">2</div><div class="wf-cal-day wf-full">3</div><div class="wf-cal-day wf-available">4</div>
+                  <div class="wf-cal-day wf-available">5</div><div class="wf-cal-day wf-available">6</div><div class="wf-cal-day wf-full">7</div><div class="wf-cal-day wf-available">8</div><div class="wf-cal-day wf-available">9</div><div class="wf-cal-day wf-full">10</div><div class="wf-cal-day wf-available">11</div>
+                  <div class="wf-cal-day wf-available">12</div><div class="wf-cal-day wf-selected">13</div><div class="wf-cal-day wf-available">14</div><div class="wf-cal-day wf-available">15</div><div class="wf-cal-day wf-available">16</div><div class="wf-cal-day wf-full">17</div><div class="wf-cal-day wf-available">18</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="wf-h3">Forste ledige tid<span class="wf-marker">3</span></h3>
+              <p style="font-size:13px; color:#666; margin:0 0 14px;">Onsdag 13. mai 2026</p>
+              <div class="wf-time-grid">
+                <div class="wf-time-slot">09:00</div>
+                <div class="wf-time-slot">09:30</div>
+                <div class="wf-time-slot wf-selected">10:00</div>
+                <div class="wf-time-slot">11:00</div>
+                <div class="wf-time-slot">13:30</div>
+                <div class="wf-time-slot">14:00</div>
+                <div class="wf-time-slot">14:30</div>
+                <div class="wf-time-slot">15:00</div>
+              </div>
+
+              <div style="margin-top:24px; padding:14px; border:1px solid #eee; border-radius:10px;">
+                <div style="font-size:11px; color:#666; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; margin-bottom:8px;">Oppsummering</div>
+                <div class="wf-summary-row"><span class="wf-summary-row-label">Performance Pro</span><span class="wf-summary-row-value">2 000 kr/mnd</span></div>
+                <div class="wf-summary-row"><span class="wf-summary-row-label">13. mai, kl. 10:00</span><span class="wf-summary-row-value">20 min</span></div>
+                <div class="wf-summary-row"><span class="wf-summary-row-label">Anders Kristiansen</span><span class="wf-summary-row-value">Hovedinstruktor</span></div>
+              </div>
+
+              <button class="wf-btn wf-btn-cta-large wf-btn-block" style="margin-top:16px;">Bekreft og betal med Vipps<span class="wf-marker">4</span></button>
+              <button class="wf-btn wf-btn-secondary wf-btn-block" style="margin-top:8px;">Betal med kort</button>
+              <p style="font-size:11px; color:#999; text-align:center; margin:12px 0 0;">Fri avbestilling inntil 24 t for okten.</p>
+            </div>
+
+          </div>
+        </section>
+
+        <footer class="wf-footer-dark">
+          <div class="wf-footer-cols">
+            <div><strong>AK GOLF</strong></div>
+            <div><strong>Produkt</strong><p>Portalen</p></div>
+            <div><strong>Coaching</strong><p>Priser</p></div>
+            <div><strong>Kontakt</strong><p>post@akgolf.no</p></div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — 3 steg, ikke 4:</strong> Instruktor-steget er kollapset inn i tjeneste (default = coach som tilbyr tjenesten). Brukere kan endre via "Endre"-knapp.</li>
+        <li><strong>2 — Smart default:</strong> Performance Pro og Anders og forste ledige tid er forhandsvalgt. Brukere som vil ha noe annet, bytter aktivt.</li>
+        <li><strong>3 — Auto-valgt forste slot:</strong> 10:00 er default. Tidsvalg blir en mini-beslutning i stedet for prominent steg.</li>
+        <li><strong>4 — Vipps forst:</strong> Primaer CTA er Vipps (norsk marked, minst friksjon). Kort som sekundaer.</li>
+        <li>— Risiko: Smart defaults kan felle kjop der brukeren vil ha Markus eller enkeltokt. Mitigeres av prominent "Endre"-knapp og "Valgt tjeneste"-kort.</li>
+        <li>— Malgruppe: Kjente kunder som vet hva de vil ha. Sparer 60 prosent av klikkene sammenlignet med Option 1.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering og anbefaling</h2>
+    <p class="option-description">Fem booking-strategier rangert mot optimaliseringsmalet: <strong>maksimere fullforte bookinger uten a ofre tillit og klarhet</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Klikk til betaling</th><th>Best for</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Classic Wizard</strong></td>
+          <td>4-stegs guidet flyt. En beslutning om gangen.</td>
+          <td>~6 klikk</td>
+          <td>Nye kunder og forstegangsbesokende</td>
+          <td>Lav (matcher eksisterende BookingWizard)</td>
+          <td>&#9733;&#9733;&#9733;&#9733;&#9733;</td>
+        </tr>
+        <tr>
+          <td><strong>2. One Screen</strong></td>
+          <td>Alt synlig samtidig med sticky summary.</td>
+          <td>~4 klikk</td>
+          <td>Erfarne kunder, lang scroll pa mobil</td>
+          <td>Medium</td>
+          <td>&#9733;&#9733;&#9733;&#9733;&#9734;</td>
+        </tr>
+        <tr>
+          <td><strong>3. Calendar First</strong></td>
+          <td>Tidspunkt som entry point. Tjeneste filtreres ut senere.</td>
+          <td>~5 klikk</td>
+          <td>Tidspress-brukere med kjent preferanse</td>
+          <td>Medium</td>
+          <td>&#9733;&#9733;&#9733;&#9734;&#9734;</td>
+        </tr>
+        <tr>
+          <td><strong>4. Instructor First</strong></td>
+          <td>Coach-profiler som forste steg. Relasjon for pris.</td>
+          <td>~7 klikk</td>
+          <td>Premium-posisjonering, coach-lojale kunder</td>
+          <td>Medium</td>
+          <td>&#9733;&#9733;&#9733;&#9734;&#9734;</td>
+        </tr>
+        <tr>
+          <td><strong>5. Quick Book</strong></td>
+          <td>3 steg med smart defaults. Vipps forst.</td>
+          <td>~3 klikk</td>
+          <td>Returnerende kunder med standard preferanse</td>
+          <td>Medium-hoy (defaults ma kalibreres)</td>
+          <td>&#9733;&#9733;&#9733;&#9733;&#9734;</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1. Classic Wizard</h3>
+      <p>Matcher eksisterende <code>BookingWizard</code>-komponent i codebase (komponent-biblioteket viser at det allerede finnes ServiceSelector, BookingDatePicker, TimeSlots og BookingSummary). Minimal ny kode. Kun stil-tilpasning av eksisterende flyt. Trygg for nye kunder som ikke har kjopt coaching for. Anker i industri-konvensjon (Calendly, Mindbody, Fresha bruker alle wizard).</p>
+
+      <p><strong>Strategisk flow:</strong> Launch med Option 1 som default. Etter 2 maneder, analyser data: hvis over 60 prosent av bookinger er fra returnerende kunder, test Option 5 (Quick Book) som A/B-variant for palogget brukere. Option 2 (One Screen) kan vurderes for portalens interne bookingside der brukere er kjent. Option 4 (Instructor First) passer best som egen landingsside fra Instagram/Facebook-annonser der coach-personlighet er hovedhook.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

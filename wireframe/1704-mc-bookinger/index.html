@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Bookinger — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Bookinger</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Smart List</button>
+    <button class="tab-btn" data-tab="option-2">2: Calendar Embed</button>
+    <button class="tab-btn" data-tab="option-3">3: Kanban Board</button>
+    <button class="tab-btn" data-tab="option-4">4: Table Power</button>
+    <button class="tab-btn" data-tab="option-5">5: Timeline Flow</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: SMART LIST ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Smart List</span></h2>
+    <p class="option-description">Sorterbar liste med filter-pills (status, dato, instruktør). Radvise actions (godkjenn, avbestill, endre tid, send melding). SAFE — matches portalens eksisterende mønstre for bookinger.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/bookinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab mc-tab-active">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk elev / booking-id</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-subheader">
+            <h2 class="mc-subhead-title">Bookinger<span class="wf-marker">1</span></h2>
+            <div class="mc-subhead-meta">12 i dag · 3 venter på godkjenning · 148 levert siste 30 dager</div>
+          </section>
+
+          <section class="mc-kpi-strip">
+            <div class="mc-kpi-card"><div class="mc-kpi-label">VENTENDE</div><div class="mc-kpi-val">3</div><div class="mc-kpi-sub">krever godkjenning</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-label">BEKREFTET I DAG</div><div class="mc-kpi-val">5</div><div class="mc-kpi-sub">Anders 3 · Markus 2</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-label">DENNE UKEN</div><div class="mc-kpi-val">28</div><div class="mc-kpi-sub">24 personlig · 4 gruppe</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-label">NO-SHOW 30 DAGER</div><div class="mc-kpi-val">2</div><div class="mc-kpi-sub">1.3% av leverte</div></div>
+            <div class="mc-kpi-card"><div class="mc-kpi-label">MTD INNTEKT</div><div class="mc-kpi-val">187.400</div><div class="mc-kpi-sub">kr · +12% vs budsjett</div></div>
+          </section>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">STATUS<span class="wf-marker">2</span></span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-pending"></span>Pending</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-completed"></span>Completed</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-cancelled"></span>Cancelled</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-noshow"></span>No-show</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">INSTRUKTØR</span>
+              <button class="mc-pill">Alle</button>
+              <button class="mc-pill mc-pill-active">Anders</button>
+              <button class="mc-pill">Markus</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">PERIODE</span>
+              <button class="mc-pill mc-pill-active">Neste 7 dager</button>
+              <button class="mc-pill mc-pill-ghost">Tilpass</button>
+            </div>
+            <button class="mc-cta">+ Ny booking</button>
+          </section>
+
+          <section class="mc-list-wrap">
+            <div class="mc-list-row mc-list-head">
+              <span>TID ↓</span>
+              <span>ELEV</span>
+              <span>INSTRUKTØR</span>
+              <span>TJENESTE</span>
+              <span>STATUS</span>
+              <span>PRIS</span>
+              <span></span>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Fre 09:00</strong><span>17. apr</span></div>
+              <div class="mc-list-who">
+                <div class="mc-list-avatar">SV</div>
+                <div><div class="mc-list-name">Sofie Vik<span class="wf-marker">3</span></div><div class="mc-list-sub">HCP 18 · Mulligan Indoor</div></div>
+              </div>
+              <div class="mc-list-instructor">Anders</div>
+              <div><div class="mc-list-service">Performance 20 min</div><div class="mc-list-service-meta">Simulator 3</div></div>
+              <div><span class="mc-status-tag mc-tag-pending"><span class="mc-status-dot mc-status-pending"></span>Pending</span></div>
+              <div><div class="mc-list-price">450 kr</div><div class="mc-list-price-meta">Flex-pakke</div></div>
+              <div class="mc-list-actions">
+                <button class="mc-icon-btn" title="Godkjenn">✓</button>
+                <button class="mc-icon-btn" title="Meldinger">✉</button>
+                <button class="mc-icon-btn" title="Mer">⋯</button>
+              </div>
+            </div>
+
+            <div class="mc-list-row mc-row-selected">
+              <div class="mc-list-time"><strong>Fre 10:30</strong><span>17. apr</span></div>
+              <div class="mc-list-who">
+                <div class="mc-list-avatar">EH</div>
+                <div><div class="mc-list-name">Erik Hansen</div><div class="mc-list-sub">HCP 14 · Oslo GK</div></div>
+              </div>
+              <div class="mc-list-instructor">Markus</div>
+              <div><div class="mc-list-service">Express Pro 20 min</div><div class="mc-list-service-meta">Simulator 2</div></div>
+              <div><span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span></div>
+              <div><div class="mc-list-price">1.000 kr/mnd</div><div class="mc-list-price-meta">Abonnement</div></div>
+              <div class="mc-list-actions">
+                <button class="mc-icon-btn" title="Endre tid">↻</button>
+                <button class="mc-icon-btn" title="Meldinger">✉</button>
+                <button class="mc-icon-btn" title="Mer">⋯</button>
+              </div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Fre 14:00</strong><span>17. apr</span></div>
+              <div class="mc-list-who">
+                <div class="mc-list-avatar">JG</div>
+                <div><div class="mc-list-name">Junior-gruppe 14+</div><div class="mc-list-sub">6 spillere · GFGK</div></div>
+              </div>
+              <div class="mc-list-instructor">Anders</div>
+              <div><div class="mc-list-service">Gruppecoaching 60 min</div><div class="mc-list-service-meta">Utendørs driving</div></div>
+              <div><span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span></div>
+              <div><div class="mc-list-price">900 kr/mnd</div><div class="mc-list-price-meta">per spiller</div></div>
+              <div class="mc-list-actions">
+                <button class="mc-icon-btn" title="Send melding">✉</button>
+                <button class="mc-icon-btn" title="Mer">⋯</button>
+              </div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Tor 11:00</strong><span>16. apr</span></div>
+              <div class="mc-list-who">
+                <div class="mc-list-avatar">NT</div>
+                <div><div class="mc-list-name">Nora Torp</div><div class="mc-list-sub">HCP 22 · Losby</div></div>
+              </div>
+              <div class="mc-list-instructor">Anders</div>
+              <div><div class="mc-list-service">Performance 20 min</div><div class="mc-list-service-meta">Simulator 1</div></div>
+              <div><span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>Completed</span></div>
+              <div><div class="mc-list-price">1.600 kr/mnd</div><div class="mc-list-price-meta">Abonnement</div></div>
+              <div class="mc-list-actions">
+                <button class="mc-icon-btn" title="Se notater">◉</button>
+                <button class="mc-icon-btn" title="Mer">⋯</button>
+              </div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Ons 09:30</strong><span>15. apr</span></div>
+              <div class="mc-list-who">
+                <div class="mc-list-avatar">LB</div>
+                <div><div class="mc-list-name">Lars Berg</div><div class="mc-list-sub">HCP 12 · Mulligan</div></div>
+              </div>
+              <div class="mc-list-instructor">Markus</div>
+              <div><div class="mc-list-service">Duo 50 min</div><div class="mc-list-service-meta">Simulator 2</div></div>
+              <div><span class="mc-status-tag mc-tag-cancelled"><span class="mc-status-dot mc-status-cancelled"></span>Cancelled</span></div>
+              <div><div class="mc-list-price">650 kr</div><div class="mc-list-price-meta">refundert</div></div>
+              <div class="mc-list-actions">
+                <button class="mc-icon-btn" title="Se detaljer">◉</button>
+                <button class="mc-icon-btn" title="Mer">⋯</button>
+              </div>
+            </div>
+
+            <div class="mc-list-row">
+              <div class="mc-list-time"><strong>Tir 14:00</strong><span>14. apr</span></div>
+              <div class="mc-list-who">
+                <div class="mc-list-avatar">MR</div>
+                <div><div class="mc-list-name">Markus Roinås P.<span class="wf-marker">4</span></div><div class="mc-list-sub">HCP 8 · GFGK</div></div>
+              </div>
+              <div class="mc-list-instructor">Anders</div>
+              <div><div class="mc-list-service">Performance Pro</div><div class="mc-list-service-meta">Banecoaching 9 hull</div></div>
+              <div><span class="mc-status-tag mc-tag-noshow"><span class="mc-status-dot mc-status-noshow"></span>No-show</span></div>
+              <div><div class="mc-list-price">0 kr</div><div class="mc-list-price-meta">belastet pakke</div></div>
+              <div class="mc-list-actions">
+                <button class="mc-icon-btn" title="Kontakt">✉</button>
+                <button class="mc-icon-btn" title="Mer">⋯</button>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Subheader viser antall i dag + antall som venter på handling. Anders får kontekst på 1 sekund.</li>
+        <li><strong>2</strong> — Status-pills matcher databaseenum (PENDING, CONFIRMED, COMPLETED, CANCELLED, NO_SHOW). Dot + label = skannbart.</li>
+        <li><strong>3</strong> — Avatar + navn + HCP/klubb gir tre informasjonsnivåer uten å bli rotete.</li>
+        <li><strong>4</strong> — No-show er synlig men ikke dramatisk — kun mønsterfylt badge. Ikke straff visuelt.</li>
+        <li>Rad-actions (✓ godkjenn, ↻ endre, ✉ meldinger, ⋯ mer) — primær-handling først. Ingen dropdown før nødvendig.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: CALENDAR EMBED ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Calendar Embed</span></h2>
+    <p class="option-description">Split-view: mini-kalender + dag-liste til venstre, detaljpanel til høyre. Klikk dag → se bookinger → velg booking → alle detaljer og handlinger i drawer.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/bookinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab mc-tab-active">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk elev / booking-id</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">VIEW<span class="wf-marker">1</span></span>
+              <button class="mc-pill">Liste</button>
+              <button class="mc-pill mc-pill-active">Kalender + detalj</button>
+              <button class="mc-pill">Kanban</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">STATUS</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-pending"></span>Pending</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-completed"></span>Completed</button>
+            </div>
+            <button class="mc-cta">+ Ny booking</button>
+          </section>
+
+          <section class="mc-split">
+            <div class="mc-split-left">
+              <div class="mc-mini-cal">
+                <div class="mc-mini-cal-head">
+                  <div class="mc-mini-cal-title">April 2026<span class="wf-marker">2</span></div>
+                  <div class="mc-mini-cal-nav">
+                    <button class="mc-pill">◂</button>
+                    <button class="mc-pill">▸</button>
+                  </div>
+                </div>
+                <div class="mc-mini-cal-grid">
+                  <div class="mc-mini-cal-dow">MA</div><div class="mc-mini-cal-dow">TI</div><div class="mc-mini-cal-dow">ON</div><div class="mc-mini-cal-dow">TO</div><div class="mc-mini-cal-dow">FR</div><div class="mc-mini-cal-dow">LØ</div><div class="mc-mini-cal-dow">SØ</div>
+                  <div class="mc-mini-cal-day mc-mini-cal-day-muted">30</div><div class="mc-mini-cal-day mc-mini-cal-day-muted">31</div>
+                  <div class="mc-mini-cal-day mc-mini-cal-day-has">1</div><div class="mc-mini-cal-day mc-mini-cal-day-has">2</div><div class="mc-mini-cal-day mc-mini-cal-day-has">3</div><div class="mc-mini-cal-day">4</div><div class="mc-mini-cal-day">5</div>
+                  <div class="mc-mini-cal-day mc-mini-cal-day-has">6</div><div class="mc-mini-cal-day mc-mini-cal-day-has">7</div><div class="mc-mini-cal-day mc-mini-cal-day-has">8</div><div class="mc-mini-cal-day mc-mini-cal-day-has">9</div><div class="mc-mini-cal-day mc-mini-cal-day-has">10</div><div class="mc-mini-cal-day">11</div><div class="mc-mini-cal-day">12</div>
+                  <div class="mc-mini-cal-day mc-mini-cal-day-has">13</div><div class="mc-mini-cal-day mc-mini-cal-day-has">14</div><div class="mc-mini-cal-day mc-mini-cal-day-has">15</div><div class="mc-mini-cal-day mc-mini-cal-day-has">16</div><div class="mc-mini-cal-day mc-mini-cal-day-active mc-mini-cal-day-has">17</div><div class="mc-mini-cal-day">18</div><div class="mc-mini-cal-day">19</div>
+                  <div class="mc-mini-cal-day mc-mini-cal-day-has">20</div><div class="mc-mini-cal-day mc-mini-cal-day-has">21</div><div class="mc-mini-cal-day mc-mini-cal-day-has">22</div><div class="mc-mini-cal-day mc-mini-cal-day-has">23</div><div class="mc-mini-cal-day mc-mini-cal-day-has">24</div><div class="mc-mini-cal-day">25</div><div class="mc-mini-cal-day">26</div>
+                  <div class="mc-mini-cal-day">27</div><div class="mc-mini-cal-day">28</div><div class="mc-mini-cal-day">29</div><div class="mc-mini-cal-day">30</div><div class="mc-mini-cal-day mc-mini-cal-day-muted">1</div><div class="mc-mini-cal-day mc-mini-cal-day-muted">2</div><div class="mc-mini-cal-day mc-mini-cal-day-muted">3</div>
+                </div>
+              </div>
+
+              <div class="mc-day-detail">
+                <h3>Fredag 17. april<span class="wf-marker">3</span></h3>
+                <div class="mc-day-detail-meta">5 bookinger · 1 pending · 4 timer coaching</div>
+                <div class="mc-day-list">
+                  <div class="mc-day-item">
+                    <div class="mc-day-item-head">
+                      <div class="mc-day-item-time">09:00</div>
+                      <span class="mc-status-tag mc-tag-pending"><span class="mc-status-dot mc-status-pending"></span>Pending</span>
+                    </div>
+                    <div class="mc-day-item-body">
+                      <div class="mc-list-avatar">SV</div>
+                      <div><div class="mc-day-item-name">Sofie Vik</div><div class="mc-day-item-sub">Performance 20 min · Anders</div></div>
+                    </div>
+                  </div>
+                  <div class="mc-day-item mc-day-item-selected">
+                    <div class="mc-day-item-head">
+                      <div class="mc-day-item-time">10:30</div>
+                      <span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span>
+                    </div>
+                    <div class="mc-day-item-body">
+                      <div class="mc-list-avatar">EH</div>
+                      <div><div class="mc-day-item-name">Erik Hansen</div><div class="mc-day-item-sub">Express Pro · Markus · Sim 2</div></div>
+                    </div>
+                  </div>
+                  <div class="mc-day-item">
+                    <div class="mc-day-item-head">
+                      <div class="mc-day-item-time">14:00</div>
+                      <span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span>
+                    </div>
+                    <div class="mc-day-item-body">
+                      <div class="mc-list-avatar">JG</div>
+                      <div><div class="mc-day-item-name">Junior 14+ (6)</div><div class="mc-day-item-sub">Gruppe 60 min · Anders</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-split-right">
+              <div class="mc-detail-head">
+                <div class="mc-detail-label">BOOKING #BK-1042<span class="wf-marker">4</span></div>
+                <div class="mc-detail-title">Erik Hansen · Express Pro</div>
+              </div>
+              <div class="mc-detail-body">
+                <div class="mc-detail-row"><span>Tid</span><strong>Fre 17. apr · 10:30–10:50</strong></div>
+                <div class="mc-detail-row"><span>Instruktør</span><strong>Markus</strong></div>
+                <div class="mc-detail-row"><span>Sted</span><strong>Mulligan Indoor · Sim 2</strong></div>
+                <div class="mc-detail-row"><span>Status</span><strong>Confirmed</strong></div>
+                <div class="mc-detail-row"><span>Pris</span><strong>1.000 kr/mnd · Abo</strong></div>
+                <div class="mc-detail-section">
+                  <h4>ELEVNOTAT</h4>
+                  <p class="mc-detail-note">"Fokus på approach 80–100m. Har jobbet med trail-arm rotation de siste to uker."</p>
+                </div>
+                <div class="mc-detail-section">
+                  <h4>HISTORIKK</h4>
+                  <div class="mc-detail-row"><span>Totalt økter</span><strong>18</strong></div>
+                  <div class="mc-detail-row"><span>Siste økt</span><strong>10. apr · Completed</strong></div>
+                  <div class="mc-detail-row"><span>No-show rate</span><strong>0%</strong></div>
+                </div>
+              </div>
+              <div class="mc-detail-actions">
+                <button class="mc-action-btn mc-action-primary">Bekreft / Godkjenn</button>
+                <button class="mc-action-btn">Endre tid</button>
+                <button class="mc-action-btn">Send SMS / E-post</button>
+                <button class="mc-action-btn mc-action-danger">Avbestill (refunder)</button>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Samme data i 3 views (Liste / Kalender+detalj / Kanban) — brukeren velger arbeidsmetode.</li>
+        <li><strong>2</strong> — Mini-kalender med prikker markerer dager som har bookinger — raskt visuelt signal.</li>
+        <li><strong>3</strong> — Dag-liste viser alle bookinger for valgt dato, klikk → fyller detalj-panel.</li>
+        <li><strong>4</strong> — Detaljpanel har elev-notat, historikk og alle actions samlet. Ingen dialog-hopping.</li>
+        <li>Best for Anders når han jobber med én booking om gangen — mest kontekstuelt fokus.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: KANBAN BOARD ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Kanban Board</span></h2>
+    <p class="option-description">Tre kolonner: Pending → Confirmed → Completed. Dra kort mellom kolonner for å endre status. Cancelled/No-show filtreres som separate visninger.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/bookinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab mc-tab-active">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk elev / booking-id</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">VIEW</span>
+              <button class="mc-pill">Liste</button>
+              <button class="mc-pill">Kalender</button>
+              <button class="mc-pill mc-pill-active">Kanban</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">PERIODE<span class="wf-marker">1</span></span>
+              <button class="mc-pill mc-pill-active">Denne uken</button>
+              <button class="mc-pill">Neste uke</button>
+              <button class="mc-pill">April</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">INSTRUKTØR</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill">Anders</button>
+              <button class="mc-pill">Markus</button>
+            </div>
+            <button class="mc-cta">+ Ny booking</button>
+          </section>
+
+          <section class="mc-kanban">
+            <div class="mc-kan-col mc-kan-col-pending">
+              <div class="mc-kan-head">
+                <div class="mc-kan-title"><span class="mc-status-dot mc-status-pending"></span>PENDING<span class="wf-marker">2</span></div>
+                <div class="mc-kan-count">3</div>
+              </div>
+              <div class="mc-kan-sub">Krever godkjenning innen 24t</div>
+              <div class="mc-kan-body">
+                <div class="mc-kan-card">
+                  <div class="mc-kan-card-head">
+                    <div class="mc-kan-time">FRE 09:00</div>
+                    <span class="mc-status-tag mc-tag-pending">Ny</span>
+                  </div>
+                  <div class="mc-kan-name">Sofie Vik</div>
+                  <div class="mc-kan-sub-line">Performance 20 min · Anders</div>
+                  <div class="mc-kan-foot">
+                    <div class="mc-kan-price">450 kr</div>
+                    <div class="mc-kan-meta">Flex-pakke</div>
+                  </div>
+                </div>
+                <div class="mc-kan-card">
+                  <div class="mc-kan-card-head">
+                    <div class="mc-kan-time">LØR 11:00</div>
+                    <span class="mc-status-tag mc-tag-pending">Reschedule</span>
+                  </div>
+                  <div class="mc-kan-name">Nora Torp</div>
+                  <div class="mc-kan-sub-line">Performance · Anders · mangler slot</div>
+                  <div class="mc-kan-foot">
+                    <div class="mc-kan-price">1.600/mnd</div>
+                    <div class="mc-kan-meta">Fra tirs 10:00</div>
+                  </div>
+                </div>
+                <div class="mc-kan-card">
+                  <div class="mc-kan-card-head">
+                    <div class="mc-kan-time">MAN 16:00</div>
+                    <span class="mc-status-tag mc-tag-pending">Avbest.</span>
+                  </div>
+                  <div class="mc-kan-name">Lars Berg</div>
+                  <div class="mc-kan-sub-line">Duo 50 · innen frist · refusjon</div>
+                  <div class="mc-kan-foot">
+                    <div class="mc-kan-price">650 kr</div>
+                    <div class="mc-kan-meta">Markus</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-kan-col mc-kan-col-confirmed">
+              <div class="mc-kan-head">
+                <div class="mc-kan-title"><span class="mc-status-dot mc-status-confirmed"></span>CONFIRMED<span class="wf-marker">3</span></div>
+                <div class="mc-kan-count">5</div>
+              </div>
+              <div class="mc-kan-sub">Aktive bookinger denne uken</div>
+              <div class="mc-kan-body">
+                <div class="mc-kan-card">
+                  <div class="mc-kan-card-head">
+                    <div class="mc-kan-time">FRE 10:30</div>
+                  </div>
+                  <div class="mc-kan-name">Erik Hansen</div>
+                  <div class="mc-kan-sub-line">Express Pro · Markus · Sim 2</div>
+                  <div class="mc-kan-foot">
+                    <div class="mc-kan-price">1.000/mnd</div>
+                    <div class="mc-kan-meta">Abo</div>
+                  </div>
+                </div>
+                <div class="mc-kan-card">
+                  <div class="mc-kan-card-head">
+                    <div class="mc-kan-time">FRE 14:00</div>
+                  </div>
+                  <div class="mc-kan-name">Junior 14+ gruppe</div>
+                  <div class="mc-kan-sub-line">6 spillere · Anders · Utendørs</div>
+                  <div class="mc-kan-foot">
+                    <div class="mc-kan-price">900/mnd</div>
+                    <div class="mc-kan-meta">pr spiller</div>
+                  </div>
+                </div>
+                <div class="mc-kan-card">
+                  <div class="mc-kan-card-head">
+                    <div class="mc-kan-time">FRE 16:30</div>
+                  </div>
+                  <div class="mc-kan-name">First Tee kurs</div>
+                  <div class="mc-kan-sub-line">8 deltakere · Markus · Sim 1+2</div>
+                  <div class="mc-kan-foot">
+                    <div class="mc-kan-price">1.295 kr</div>
+                    <div class="mc-kan-meta">Kurs</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mc-kan-col mc-kan-col-completed">
+              <div class="mc-kan-head">
+                <div class="mc-kan-title"><span class="mc-status-dot mc-status-completed"></span>COMPLETED<span class="wf-marker">4</span></div>
+                <div class="mc-kan-count">12</div>
+              </div>
+              <div class="mc-kan-sub">Gjennomført siste 7 dager</div>
+              <div class="mc-kan-body">
+                <div class="mc-kan-card">
+                  <div class="mc-kan-card-head">
+                    <div class="mc-kan-time">TOR 11:00</div>
+                  </div>
+                  <div class="mc-kan-name">Nora Torp</div>
+                  <div class="mc-kan-sub-line">Performance · notat lagret</div>
+                  <div class="mc-kan-foot">
+                    <div class="mc-kan-price">1.600/mnd</div>
+                    <div class="mc-kan-meta">Abo</div>
+                  </div>
+                </div>
+                <div class="mc-kan-card">
+                  <div class="mc-kan-card-head">
+                    <div class="mc-kan-time">TOR 14:00</div>
+                  </div>
+                  <div class="mc-kan-name">Junior 10–13</div>
+                  <div class="mc-kan-sub-line">7 spillere · Anders</div>
+                  <div class="mc-kan-foot">
+                    <div class="mc-kan-price">900/mnd</div>
+                    <div class="mc-kan-meta">pr spiller</div>
+                  </div>
+                </div>
+                <div class="mc-kan-card">
+                  <div class="mc-kan-card-head">
+                    <div class="mc-kan-time">ONS 09:30</div>
+                  </div>
+                  <div class="mc-kan-name">Sofie Vik</div>
+                  <div class="mc-kan-sub-line">Performance · notat lagret</div>
+                  <div class="mc-kan-foot">
+                    <div class="mc-kan-price">450 kr</div>
+                    <div class="mc-kan-meta">Flex</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Periode-filter styrer hva som vises i Completed-kolonnen (ellers eksploderer den).</li>
+        <li><strong>2</strong> — Pending-kolonnen er "inbox" — tydelig kø som må tømmes.</li>
+        <li><strong>3</strong> — Confirmed er "arbeidsflaten" — hva som skjer nå og fremover.</li>
+        <li><strong>4</strong> — Completed gir retrospektiv oversikt — notater lagret = kvalitetssikring.</li>
+        <li>Dra kort mellom kolonner = endre status. Raskt for Anders som foretrekker visuell grensesnitt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: TABLE POWER ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Table Power</span></h2>
+    <p class="option-description">Tett data-tabell med kolonnefilters, checkbox-seleksjon og bulk actions. For admin som vil håndtere mange bookinger samtidig — matche mental model fra Excel/Airtable.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/bookinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab mc-tab-active">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk elev / booking-id</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-bulk-bar">
+            <div class="mc-bulk-info"><strong>3 valgt</strong> av 148 totalt — handlinger gjelder alle valgte</div>
+            <div class="mc-bulk-actions">
+              <button class="mc-bulk-btn">Bekreft alle</button>
+              <button class="mc-bulk-btn">Send påminnelse</button>
+              <button class="mc-bulk-btn">Eksporter CSV</button>
+              <button class="mc-bulk-btn">Avbestill (refunder)</button>
+            </div>
+          </section>
+
+          <section class="mc-col-filter-row">
+            <div></div>
+            <div class="mc-col-filter">tid ↓</div>
+            <div class="mc-col-filter">Søk navn...</div>
+            <div class="mc-col-filter">Alle tjenester ▾</div>
+            <div class="mc-col-filter">Alle instr. ▾</div>
+            <div class="mc-col-filter">Alle status ▾</div>
+            <div class="mc-col-filter">Min–maks kr</div>
+            <div></div>
+          </section>
+
+          <section class="mc-table-wrap">
+            <table class="mc-table">
+              <thead>
+                <tr>
+                  <th><span class="mc-cb"></span></th>
+                  <th>ID<span class="wf-marker">1</span></th>
+                  <th class="mc-th-sorted">TID ↓</th>
+                  <th>ELEV</th>
+                  <th>TJENESTE</th>
+                  <th>INSTR.</th>
+                  <th>STATUS</th>
+                  <th style="text-align:right;">PRIS</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="mc-tr-selected">
+                  <td><span class="mc-cb mc-cb-checked"></span></td>
+                  <td class="mc-td-id">BK-1047</td>
+                  <td>Fre 17/4 09:00</td>
+                  <td class="mc-td-name">Sofie Vik<div class="mc-td-sub">HCP 18 · Mulligan</div></td>
+                  <td>Performance 20<div class="mc-td-sub">Sim 3</div></td>
+                  <td>Anders</td>
+                  <td><span class="mc-status-tag mc-tag-pending"><span class="mc-status-dot mc-status-pending"></span>Pending</span></td>
+                  <td class="mc-td-price">450</td>
+                  <td style="text-align:right;">⋯</td>
+                </tr>
+                <tr class="mc-tr-selected">
+                  <td><span class="mc-cb mc-cb-checked"></span></td>
+                  <td class="mc-td-id">BK-1046</td>
+                  <td>Lør 18/4 11:00</td>
+                  <td class="mc-td-name">Nora Torp<div class="mc-td-sub">HCP 22 · Losby</div></td>
+                  <td>Performance<div class="mc-td-sub">Reschedule</div></td>
+                  <td>Anders</td>
+                  <td><span class="mc-status-tag mc-tag-pending"><span class="mc-status-dot mc-status-pending"></span>Pending</span></td>
+                  <td class="mc-td-price">1.600</td>
+                  <td style="text-align:right;">⋯</td>
+                </tr>
+                <tr class="mc-tr-selected">
+                  <td><span class="mc-cb mc-cb-checked"></span></td>
+                  <td class="mc-td-id">BK-1045</td>
+                  <td>Man 20/4 16:00</td>
+                  <td class="mc-td-name">Lars Berg<div class="mc-td-sub">HCP 12 · Mulligan</div></td>
+                  <td>Duo 50<div class="mc-td-sub">Avbest.</div></td>
+                  <td>Markus</td>
+                  <td><span class="mc-status-tag mc-tag-pending"><span class="mc-status-dot mc-status-pending"></span>Pending</span></td>
+                  <td class="mc-td-price">650</td>
+                  <td style="text-align:right;">⋯</td>
+                </tr>
+                <tr>
+                  <td><span class="mc-cb"></span></td>
+                  <td class="mc-td-id">BK-1042</td>
+                  <td>Fre 17/4 10:30</td>
+                  <td class="mc-td-name">Erik Hansen<div class="mc-td-sub">HCP 14 · Oslo GK</div></td>
+                  <td>Express Pro<div class="mc-td-sub">Sim 2</div></td>
+                  <td>Markus</td>
+                  <td><span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span></td>
+                  <td class="mc-td-price">1.000</td>
+                  <td style="text-align:right;">⋯</td>
+                </tr>
+                <tr>
+                  <td><span class="mc-cb"></span></td>
+                  <td class="mc-td-id">BK-1041</td>
+                  <td>Fre 17/4 14:00</td>
+                  <td class="mc-td-name">Junior-gruppe 14+<div class="mc-td-sub">6 spillere · GFGK</div></td>
+                  <td>Gruppe 60<div class="mc-td-sub">Utendørs</div></td>
+                  <td>Anders</td>
+                  <td><span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span></td>
+                  <td class="mc-td-price">900</td>
+                  <td style="text-align:right;">⋯</td>
+                </tr>
+                <tr>
+                  <td><span class="mc-cb"></span></td>
+                  <td class="mc-td-id">BK-1038</td>
+                  <td>Tor 16/4 11:00</td>
+                  <td class="mc-td-name">Nora Torp<div class="mc-td-sub">HCP 22 · Losby</div></td>
+                  <td>Performance 20<div class="mc-td-sub">Sim 1</div></td>
+                  <td>Anders</td>
+                  <td><span class="mc-status-tag mc-tag-completed"><span class="mc-status-dot mc-status-completed"></span>Completed</span></td>
+                  <td class="mc-td-price">1.600</td>
+                  <td style="text-align:right;">⋯</td>
+                </tr>
+                <tr>
+                  <td><span class="mc-cb"></span></td>
+                  <td class="mc-td-id">BK-1035</td>
+                  <td>Ons 15/4 09:30</td>
+                  <td class="mc-td-name">Lars Berg<div class="mc-td-sub">HCP 12 · Mulligan</div></td>
+                  <td>Duo 50<div class="mc-td-sub">Sim 2</div></td>
+                  <td>Markus</td>
+                  <td><span class="mc-status-tag mc-tag-cancelled"><span class="mc-status-dot mc-status-cancelled"></span>Cancelled</span></td>
+                  <td class="mc-td-price">650</td>
+                  <td style="text-align:right;">⋯</td>
+                </tr>
+                <tr>
+                  <td><span class="mc-cb"></span></td>
+                  <td class="mc-td-id">BK-1031</td>
+                  <td>Tir 14/4 14:00</td>
+                  <td class="mc-td-name">Markus Roinås P.<div class="mc-td-sub">HCP 8 · GFGK</div></td>
+                  <td>Performance Pro<div class="mc-td-sub">Banecoach 9h</div></td>
+                  <td>Anders</td>
+                  <td><span class="mc-status-tag mc-tag-noshow"><span class="mc-status-dot mc-status-noshow"></span>No-show</span></td>
+                  <td class="mc-td-price">0</td>
+                  <td style="text-align:right;">⋯</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Booking-ID i egen kolonne (monospace) — viktig for admin-support og Stripe-matching.</li>
+        <li>Checkbox + bulk-bar øverst — velg flere → kjør handling på alle samtidig.</li>
+        <li>Kolonnefilters (per-kolonne) for rask filtrering uten å bytte skjerm.</li>
+        <li>Kolonnetsortering på klikk — TID er default. Pris/status kan sorteres også.</li>
+        <li>Best for rapportering, månedsoppgjør og bulk-håndtering. Svakere for daglig enkelt-booking.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: TIMELINE FLOW ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Timeline Flow</span></h2>
+    <p class="option-description">Kronologisk vertikal timeline gruppert per dag. Hver booking er et punkt på linjen med status-prikk. Visuelt mappet — du ser "flyten" av dagen/uken.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/bookinger</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="mc-shell">
+
+          <header class="mc-topbar">
+            <div class="mc-topbar-left">
+              <div class="mc-logo">AK GOLF · MC</div>
+              <div class="mc-tabs">
+                <a class="mc-tab">Oversikt</a>
+                <a class="mc-tab mc-tab-active">Bookinger</a>
+                <a class="mc-tab">Elever</a>
+                <a class="mc-tab">Kalender</a>
+                <a class="mc-tab">Rapporter</a>
+              </div>
+            </div>
+            <div class="mc-topbar-right">
+              <span class="mc-search">Søk elev / booking-id</span>
+              <span class="mc-avatar">AK</span>
+            </div>
+          </header>
+
+          <section class="mc-filter-row">
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">STATUS</span>
+              <button class="mc-pill mc-pill-active">Alle</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-pending"></span>Pending</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</button>
+              <button class="mc-pill"><span class="mc-status-dot mc-status-completed"></span>Completed</button>
+            </div>
+            <div class="mc-filter-group">
+              <span class="mc-filter-label">RETNING</span>
+              <button class="mc-pill mc-pill-active">Fremover</button>
+              <button class="mc-pill">Tilbake</button>
+            </div>
+            <button class="mc-cta">+ Ny booking</button>
+          </section>
+
+          <section class="mc-timeline-wrap">
+            <div class="mc-timeline-head">
+              <h2 class="mc-timeline-title">Kommende bookinger<span class="wf-marker">1</span></h2>
+              <div class="mc-timeline-meta">12 bookinger · neste 7 dager · 1 krever godkjenning</div>
+            </div>
+
+            <div class="mc-tl-groups">
+
+              <div class="mc-tl-group">
+                <div class="mc-tl-day-head">
+                  <div class="mc-tl-day">Fredag 17. april</div>
+                  <div class="mc-tl-day-sub">I DAG<span class="wf-marker">2</span></div>
+                  <div class="mc-tl-day-stats">5 bookinger · 4t 20min · 1 pending</div>
+                </div>
+                <div class="mc-tl-track">
+                  <div class="mc-tl-event mc-tl-event-pending">
+                    <div class="mc-tl-time">09:00<span>20 min</span></div>
+                    <div class="mc-tl-body">
+                      <div class="mc-tl-name-row"><div class="mc-tl-name">Sofie Vik</div><span class="mc-tl-service">· Performance 20</span></div>
+                      <div class="mc-tl-sub">Anders · Simulator 3 · HCP 18 · Mulligan Indoor</div>
+                    </div>
+                    <div class="mc-tl-side">
+                      <span class="mc-status-tag mc-tag-pending"><span class="mc-status-dot mc-status-pending"></span>Pending</span>
+                      <div class="mc-list-price">450 kr</div>
+                    </div>
+                  </div>
+                  <div class="mc-tl-event mc-tl-event-confirmed">
+                    <div class="mc-tl-time">10:30<span>20 min</span></div>
+                    <div class="mc-tl-body">
+                      <div class="mc-tl-name-row"><div class="mc-tl-name">Erik Hansen</div><span class="mc-tl-service">· Express Pro</span></div>
+                      <div class="mc-tl-sub">Markus · Simulator 2 · HCP 14 · Oslo GK</div>
+                    </div>
+                    <div class="mc-tl-side">
+                      <span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span>
+                      <div class="mc-list-price">1.000/mnd</div>
+                    </div>
+                  </div>
+                  <div class="mc-tl-event mc-tl-event-confirmed">
+                    <div class="mc-tl-time">14:00<span>60 min</span></div>
+                    <div class="mc-tl-body">
+                      <div class="mc-tl-name-row"><div class="mc-tl-name">Junior-gruppe 14+</div><span class="mc-tl-service">· Gruppecoaching</span></div>
+                      <div class="mc-tl-sub">Anders · Utendørs driving · 6 spillere · GFGK</div>
+                    </div>
+                    <div class="mc-tl-side">
+                      <span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span>
+                      <div class="mc-list-price">900/mnd</div>
+                    </div>
+                  </div>
+                  <div class="mc-tl-event mc-tl-event-confirmed">
+                    <div class="mc-tl-time">16:30<span>90 min</span></div>
+                    <div class="mc-tl-body">
+                      <div class="mc-tl-name-row"><div class="mc-tl-name">First Tee kurs</div><span class="mc-tl-service">· Gruppe nybegynner</span></div>
+                      <div class="mc-tl-sub">Markus · Simulator 1+2 · 8 deltakere</div>
+                    </div>
+                    <div class="mc-tl-side">
+                      <span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span>
+                      <div class="mc-list-price">1.295 kr</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-tl-group">
+                <div class="mc-tl-day-head">
+                  <div class="mc-tl-day">Lørdag 18. april</div>
+                  <div class="mc-tl-day-sub">I MORGEN</div>
+                  <div class="mc-tl-day-stats">2 bookinger · 1 reschedule<span class="wf-marker">3</span></div>
+                </div>
+                <div class="mc-tl-track">
+                  <div class="mc-tl-event mc-tl-event-pending">
+                    <div class="mc-tl-time">11:00<span>20 min</span></div>
+                    <div class="mc-tl-body">
+                      <div class="mc-tl-name-row"><div class="mc-tl-name">Nora Torp</div><span class="mc-tl-service">· Performance (reschedule)</span></div>
+                      <div class="mc-tl-sub">Anders · mangler slot-bekreftelse · var tirs 10:00</div>
+                    </div>
+                    <div class="mc-tl-side">
+                      <span class="mc-status-tag mc-tag-pending"><span class="mc-status-dot mc-status-pending"></span>Pending</span>
+                      <div class="mc-list-price">1.600/mnd</div>
+                    </div>
+                  </div>
+                  <div class="mc-tl-event mc-tl-event-confirmed">
+                    <div class="mc-tl-time">13:00<span>60 min</span></div>
+                    <div class="mc-tl-body">
+                      <div class="mc-tl-name-row"><div class="mc-tl-name">Junior 10–13</div><span class="mc-tl-service">· Gruppecoaching</span></div>
+                      <div class="mc-tl-sub">Anders · Utendørs · 7 spillere</div>
+                    </div>
+                    <div class="mc-tl-side">
+                      <span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span>
+                      <div class="mc-list-price">900/mnd</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mc-tl-group">
+                <div class="mc-tl-day-head">
+                  <div class="mc-tl-day">Mandag 20. april</div>
+                  <div class="mc-tl-day-sub">UKE 17</div>
+                  <div class="mc-tl-day-stats">4 bookinger</div>
+                </div>
+                <div class="mc-tl-track">
+                  <div class="mc-tl-event mc-tl-event-confirmed">
+                    <div class="mc-tl-time">09:00<span>20 min</span></div>
+                    <div class="mc-tl-body">
+                      <div class="mc-tl-name-row"><div class="mc-tl-name">Erik Hansen</div><span class="mc-tl-service">· Express Pro</span></div>
+                      <div class="mc-tl-sub">Markus · Simulator 2 · ukeøkt 2/2</div>
+                    </div>
+                    <div class="mc-tl-side">
+                      <span class="mc-status-tag mc-tag-confirmed"><span class="mc-status-dot mc-status-confirmed"></span>Confirmed</span>
+                      <div class="mc-list-price">1.000/mnd</div>
+                    </div>
+                  </div>
+                  <div class="mc-tl-event mc-tl-event-pending">
+                    <div class="mc-tl-time">16:00<span>50 min</span></div>
+                    <div class="mc-tl-body">
+                      <div class="mc-tl-name-row"><div class="mc-tl-name">Lars Berg</div><span class="mc-tl-service">· Duo 50 (avbest.)</span></div>
+                      <div class="mc-tl-sub">Markus · innen frist · vurderer refusjon</div>
+                    </div>
+                    <div class="mc-tl-side">
+                      <span class="mc-status-tag mc-tag-pending"><span class="mc-status-dot mc-status-pending"></span>Pending</span>
+                      <div class="mc-list-price">650 kr</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1</strong> — Kronologisk timeline gir "filmisk" oversikt — du scroller gjennom dagen/uken.</li>
+        <li><strong>2</strong> — Dag-header med "I DAG / I MORGEN / UKE 17" gir naturlig orientering uten kalender-widget.</li>
+        <li><strong>3</strong> — Stats per dag-header ("1 reschedule") fungerer som inbox-signal uten egen seksjon.</li>
+        <li>Status-prikk på tidslinjen er det primære visuelle signalet — skannbart fra side-øye.</li>
+        <li>Best når arbeidsmønsteret er "hva skjer etter dette?" snarere enn "hva må bekreftes?".</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for bookings-admin — valget avhenger av hvordan Anders og andre instruktører typisk jobber: én-booking-fokus, bulk-håndtering eller visuell flyt.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Smart List</th><th>2: Calendar Embed</th><th>3: Kanban</th><th>4: Table Power</th><th>5: Timeline</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Hastighet på godkjenning</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk (bulk)</td><td>Middels</td></tr>
+        <tr><td>Oversikt per dag</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Bulk-handling</td><td>Svak</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Kontekst per booking</td><td>Middels</td><td>Sterk (drawer)</td><td>Middels</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Status-endring</td><td>Middels</td><td>Middels</td><td>Sterk (drag)</td><td>Sterk (bulk)</td><td>Svak</td></tr>
+        <tr><td>Matcher eksisterende portal-UX</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Rapportering / eksport</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Sterk</td><td>Svak</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Smart List</h3>
+      <p>Option 1 matcher best hvordan dagens portal-bookinger vises og gir Anders umiddelbar oversikt pluss rad-actions uten kontekstbytte. Den fungerer som "hjem"-view med fallback til Kalender+detalj (Opt 2) for dyp kontekst og Tabell (Opt 4) for månedsoppgjør.</p>
+      <p>Kanban (Opt 3) er et sterkt alternativ hvis status-endring via dra-og-slipp blir en viktig daglig arbeidsflyt — men den krever mer skjermplass og skjuler Cancelled/No-show.</p>
+      <p>Implementasjonsforslag: start med Smart List som default, tilby view-switcher til Kalender/Kanban/Tabell/Timeline som alternative modes. Alle views deler samme filter-state.</p>
+    </div>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Smart List):</strong> Default. Daglig booking-admin for én til tre instruktører.</li>
+      <li><strong>Option 2 (Calendar Embed):</strong> Når fokus er én booking om gangen med full kontekst.</li>
+      <li><strong>Option 3 (Kanban):</strong> Hvis status-pipeline (pending → confirmed → completed) er hovedmodellen.</li>
+      <li><strong>Option 4 (Table Power):</strong> Månedsoppgjør, rapportering, bulk-handlinger.</li>
+      <li><strong>Option 5 (Timeline):</strong> Når "hva skjer neste uke" er viktigere enn "hva må bekreftes nå".</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

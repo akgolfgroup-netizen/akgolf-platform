@@ -1,0 +1,233 @@
+/* === Wireframe Content CSS — Portal Profil (B&W only) === */
+/* Tokens: #000, #111, #333, #666, #999, #ccc, #eee, #f5f5f5, #fafafa, #fff */
+
+.browser-content { padding: 0; }
+.browser-frame { max-width: 1100px; }
+
+/* ============ PORTAL SHELL ============ */
+.p-shell { background: #fff; min-height: 760px; display: flex; flex-direction: column; }
+
+/* ============ SIDEBAR (left) ============ */
+.p-layout { display: flex; min-height: 760px; }
+.p-sidebar {
+  width: 220px; flex-shrink: 0; background: #fafafa;
+  border-right: 1px solid #eee; padding: 16px 12px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.p-sidebar-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.12em; color: #000; padding: 4px 8px 8px; }
+.p-sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+.p-sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; font-size: 12px; color: #666; border-radius: 6px; cursor: pointer;
+}
+.p-sidebar-item:hover { background: #f0f0f0; color: #000; }
+.p-sidebar-item-active { background: #eee; color: #000; font-weight: 700; }
+.p-sidebar-ico {
+  width: 22px; height: 22px; border-radius: 5px; background: #fff; border: 1px solid #ddd;
+  display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; font-weight: 700;
+}
+.p-sidebar-footer { margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 8px; border-top: 1px solid #eee; font-size: 11px; color: #666; }
+
+/* ============ MAIN ============ */
+.p-main { flex: 1; display: flex; flex-direction: column; background: #fff; }
+.p-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px; border-bottom: 1px solid #eee; background: #fff;
+}
+.p-topbar-title { font-size: 14px; font-weight: 700; color: #000; letter-spacing: -0.01em; }
+.p-topbar-actions { display: flex; gap: 8px; }
+.p-btn { padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; background: #fff; font-size: 12px; color: #333; cursor: pointer; }
+.p-btn-primary { background: #000; border-color: #000; color: #fff; }
+
+/* ============ BODY ============ */
+.p-body { padding: 24px; background: #fafafa; flex: 1; }
+
+/* ============ PROFILE HEADER ============ */
+.p-profile-header {
+  background: #fff; border: 1px solid #eee; border-radius: 10px;
+  padding: 24px; display: flex; gap: 24px; align-items: center; margin-bottom: 16px;
+}
+.p-profile-avatar {
+  width: 88px; height: 88px; border-radius: 999px;
+  background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; font-weight: 800; color: #333; flex-shrink: 0;
+}
+.p-profile-main { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.p-profile-name-row { display: flex; align-items: center; gap: 10px; }
+.p-profile-name { font-size: 24px; font-weight: 800; color: #000; letter-spacing: -0.01em; }
+.p-profile-badge {
+  padding: 2px 8px; border-radius: 4px; border: 1px solid #ccc; background: #fafafa;
+  font-size: 10px; color: #666; font-weight: 700; letter-spacing: 0.08em;
+}
+.p-profile-meta { font-size: 13px; color: #666; }
+.p-profile-meta span + span::before { content: "·"; margin: 0 8px; color: #ccc; }
+
+.p-profile-stats { display: flex; gap: 24px; }
+.p-profile-stat { display: flex; flex-direction: column; gap: 2px; text-align: right; }
+.p-profile-stat-label { font-size: 10px; color: #999; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.p-profile-stat-value { font-size: 22px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.p-profile-stat-sub { font-size: 11px; color: #666; }
+
+/* ============ SUB-TABS ============ */
+.p-subtabs {
+  display: flex; gap: 4px; padding: 0 4px; margin-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+.p-subtab {
+  padding: 10px 16px; font-size: 13px; color: #666; cursor: pointer;
+  border-bottom: 2px solid transparent; font-weight: 500;
+}
+.p-subtab:hover { color: #000; }
+.p-subtab-active { color: #000; border-bottom-color: #000; font-weight: 700; }
+.p-subtab-count {
+  display: inline-block; padding: 1px 6px; border-radius: 8px;
+  background: #f0f0f0; color: #666; font-size: 10px; font-weight: 600; margin-left: 4px;
+}
+
+/* ============ GRID / CARDS ============ */
+.p-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+.p-span-3 { grid-column: span 3; }
+.p-span-4 { grid-column: span 4; }
+.p-span-5 { grid-column: span 5; }
+.p-span-6 { grid-column: span 6; }
+.p-span-7 { grid-column: span 7; }
+.p-span-8 { grid-column: span 8; }
+.p-span-9 { grid-column: span 9; }
+.p-span-12 { grid-column: span 12; }
+
+.p-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 18px; }
+.p-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.p-card-title { font-size: 13px; font-weight: 700; color: #000; letter-spacing: 0.02em; }
+.p-card-meta { font-size: 11px; color: #999; }
+
+/* ============ KPI ============ */
+.p-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.p-kpi {
+  background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 16px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.p-kpi-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; text-transform: uppercase; }
+.p-kpi-value { font-size: 26px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.p-kpi-delta { font-size: 11px; color: #666; }
+
+/* ============ ACHIEVEMENT CARD ============ */
+.p-ach-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.p-ach {
+  background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 12px;
+  display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center;
+}
+.p-ach-icon {
+  width: 44px; height: 44px; border-radius: 999px;
+  background: #fff; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: #333;
+}
+.p-ach-title { font-size: 11px; font-weight: 700; color: #000; }
+.p-ach-meta { font-size: 10px; color: #999; }
+.p-ach-rarity { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; background: #eee; color: #666; }
+
+/* rarity classes — B&W default, color added in opt-css */
+.p-ach[data-rarity="common"] { border-color: #ddd; }
+.p-ach[data-rarity="rare"] { border-color: #ccc; }
+.p-ach[data-rarity="epic"] { border-color: #999; }
+.p-ach[data-rarity="legendary"] { border-color: #666; }
+
+/* ============ HCP CHART ============ */
+.p-chart {
+  background: #fafafa; border: 1px dashed #ddd; border-radius: 8px;
+  padding: 20px; color: #999; font-size: 12px;
+  min-height: 160px; display: flex; align-items: flex-end; justify-content: center;
+  position: relative;
+}
+.p-chart-svg { width: 100%; height: 120px; }
+.p-chart-big { min-height: 220px; }
+
+/* ============ LISTS ============ */
+.p-list { list-style: none; padding: 0; margin: 0; }
+.p-list li {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid #eee; font-size: 12px; color: #333;
+}
+.p-list li:last-child { border-bottom: none; }
+.p-list-title { font-weight: 600; color: #000; font-size: 13px; }
+.p-list-sub { color: #999; font-size: 11px; }
+.p-tag {
+  padding: 2px 8px; border-radius: 4px; background: #f5f5f5; color: #666;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+}
+.p-tag-good { background: #eee; color: #000; }
+
+/* ============ SHOWCASE (Opt 3) ============ */
+.p-showcase {
+  background: #fafafa; border: 1px solid #eee; border-radius: 12px;
+  padding: 40px; display: flex; gap: 40px; align-items: center;
+  margin-bottom: 16px;
+}
+.p-showcase-portrait {
+  width: 220px; height: 260px; border-radius: 8px;
+  background: #eee; border: 1px solid #ccc; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 60px; font-weight: 800; color: #999;
+}
+.p-showcase-body { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.p-showcase-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #999; text-transform: uppercase; }
+.p-showcase-title { font-size: 32px; font-weight: 800; color: #000; letter-spacing: -0.02em; line-height: 1.1; margin: 0; }
+.p-showcase-story { font-size: 14px; color: #333; line-height: 1.6; max-width: 520px; }
+.p-showcase-stats { display: flex; gap: 28px; padding-top: 10px; border-top: 1px solid #eee; margin-top: 6px; }
+.p-showcase-stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; text-transform: uppercase; }
+.p-showcase-stat-value { font-size: 20px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; }
+
+/* ============ LINEAR LIST (Opt 4) ============ */
+.p-linear { display: flex; flex-direction: column; }
+.p-linear-section { padding: 18px 0; border-bottom: 1px solid #eee; }
+.p-linear-section:last-child { border-bottom: none; }
+.p-linear-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: #999; text-transform: uppercase; margin-bottom: 8px; }
+.p-linear-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; font-size: 13px; color: #333; }
+.p-linear-key { color: #666; }
+.p-linear-val { color: #000; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ============ SOCIAL (Opt 5) ============ */
+.p-social-hero {
+  background: #fafafa; border: 1px solid #eee; border-radius: 12px;
+  padding: 24px; display: flex; gap: 20px; align-items: center; margin-bottom: 16px;
+}
+.p-social-counts { display: flex; gap: 24px; }
+.p-social-count { display: flex; flex-direction: column; }
+.p-social-count-val { font-size: 20px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; }
+.p-social-count-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; text-transform: uppercase; }
+.p-friend-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.p-friend {
+  background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 12px;
+  display: flex; gap: 10px; align-items: center;
+}
+.p-friend-av {
+  width: 36px; height: 36px; border-radius: 999px; background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #333;
+}
+.p-friend-name { font-size: 12px; font-weight: 600; color: #000; }
+.p-friend-meta { font-size: 10px; color: #999; }
+.p-challenge { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 12px; }
+.p-challenge:last-child { border-bottom: none; }
+.p-challenge-title { font-weight: 600; color: #000; }
+.p-challenge-sub { color: #999; font-size: 11px; }
+.p-challenge-prog {
+  width: 80px; height: 4px; background: #f0f0f0; border-radius: 2px; position: relative; margin-top: 4px;
+}
+.p-challenge-prog-fill { position: absolute; top: 0; bottom: 0; left: 0; background: #333; border-radius: 2px; }
+
+/* ============ SETTINGS (Opt 2 tab) ============ */
+.p-settings { display: flex; flex-direction: column; gap: 10px; }
+.p-setting-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; background: #fff; border: 1px solid #eee; border-radius: 8px;
+  font-size: 13px;
+}
+.p-setting-key { color: #000; font-weight: 600; }
+.p-setting-sub { font-size: 11px; color: #999; margin-top: 2px; }
+.p-setting-val { color: #666; font-size: 12px; }
+
+/* ============ SUMMARY TABLE ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+.wf-summary-table th, .wf-summary-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
+.wf-summary-table th { background: #fafafa; font-weight: 700; color: #000; font-size: 12px; letter-spacing: 0.04em; }

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Coach — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">AI Coach</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Chat Classic</button>
+    <button class="tab-btn" data-tab="option-2">2: Quick Insight</button>
+    <button class="tab-btn" data-tab="option-3">3: Voice First</button>
+    <button class="tab-btn" data-tab="option-4">4: Action Driven</button>
+    <button class="tab-btn" data-tab="option-5">5: Dashboard Mode</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Chat Classic ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Chat Classic</span></h2>
+    <p class="option-description">Klassisk chat — meldingshistorikk, composer i bunn, kontekst-panel til høyre (siste runder, stats, aktiv plan). Trygt, kjent fra ChatGPT/Claude-mønsteret.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/ai-coach</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item wf-active">AI</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / AI-veiledning</div>
+                <h1 class="wf-page-title">AI Coach<span class="wf-marker">1</span></h1>
+                <div class="wf-page-sub">Veiledning basert på dine siste runder, treningsøkter og TrackMan-data.</div>
+              </div>
+              <button class="wf-btn wf-btn-ghost">Ny samtale</button>
+            </header>
+
+            <div class="wf-chat-layout">
+              <section class="wf-chat-panel">
+                <div class="wf-chat-history">
+                  <div class="wf-msg wf-msg-user">
+                    <div class="wf-bubble wf-bubble-user">Hvorfor mister jeg slag på approach?</div>
+                  </div>
+
+                  <div class="wf-msg">
+                    <div class="wf-msg-avatar wf-ai-avatar">✦</div>
+                    <div class="wf-bubble wf-bubble-ai">
+                      <p>Jeg har sett på dine 10 siste runder og 5 TrackMan-økter. Tre mønstre skiller seg ut:<span class="wf-marker">2</span></p>
+                      <p>1) Fra 120–150m mister du i snitt 1,4 slag per runde. 2) Dispersion på 8-jern er 18m — godt over pro-snitt. 3) Angle of attack på jernene er +2° (du slår opp). Vil du ha en øvelsesplan for dette?</p>
+                    </div>
+                  </div>
+
+                  <div class="wf-msg wf-msg-user">
+                    <div class="wf-bubble wf-bubble-user">Ja — og hvor lenge må jeg trene?</div>
+                  </div>
+
+                  <div class="wf-msg">
+                    <div class="wf-msg-avatar wf-ai-avatar">✦</div>
+                    <div class="wf-bubble wf-bubble-ai">
+                      <p>3 uker, 4 økter per uke á 40 min. Hovedfokus: angle of attack (speil-øvelse) og distanse-kontroll 120–150m.<span class="wf-marker">3</span></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wf-chat-composer">
+                  <input type="text" class="wf-input" placeholder="Spør AI Coach — f.eks. «Analyser siste runde»"><span class="wf-marker">4</span>
+                  <button class="wf-icon-btn">↑</button>
+                </div>
+              </section>
+
+              <aside class="wf-context-panel">
+                <div class="wf-ctx-card">
+                  <div class="wf-ctx-label">Kontekst<span class="wf-marker">5</span></div>
+                  <div class="wf-ctx-row"><span>Siste runder</span><strong>10</strong></div>
+                  <div class="wf-ctx-row"><span>Treningslogger</span><strong>20</strong></div>
+                  <div class="wf-ctx-row"><span>TrackMan-økter</span><strong>5</strong></div>
+                  <div class="wf-ctx-divider"></div>
+                  <div class="wf-ctx-row"><span>HCP</span><strong>14,2</strong></div>
+                  <div class="wf-ctx-row"><span>Trend 30 d</span><strong>−0,4</strong></div>
+                </div>
+                <div class="wf-ctx-card">
+                  <div class="wf-ctx-label">Aktiv treningsplan</div>
+                  <div class="wf-ctx-row"><span>Periode</span><strong>12 uker</strong></div>
+                  <div class="wf-ctx-row"><span>Fokus</span><strong>SLAG 40%</strong></div>
+                  <div class="wf-ctx-row"><span>Uke 3 av 12</span><strong>På plan</strong></div>
+                </div>
+                <div class="wf-ctx-card">
+                  <div class="wf-ctx-label">Siste runde</div>
+                  <div class="wf-ctx-row"><span>Bogstad GK</span><strong>82</strong></div>
+                  <div class="wf-ctx-row"><span>SG Approach</span><strong>−2,1</strong></div>
+                  <div class="wf-ctx-row"><span>Fairways</span><strong>8/14</strong></div>
+                </div>
+              </aside>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — AI-veiledning, ikke AI-produkt:</strong> Tittel og undertittel understreker at AI er et verktøy for å tolke spillerens egen data.</li>
+        <li><strong>2 — Kontekstuelt svar fra start:</strong> AI refererer eksplisitt til datagrunnlaget (10 runder, 5 TrackMan) — bygger tillit.</li>
+        <li><strong>3 — Konkret neste steg:</strong> AI foreslår alltid en handling, aldri bare analyse. Knytter seg til treningsplanen.</li>
+        <li><strong>4 — Composer i bunn:</strong> Klassisk chat-mønster. Placeholder gir forslag til første spørsmål.</li>
+        <li><strong>5 — Kontekst-panel synlig:</strong> Spilleren ser hvilke data AI har tilgang til. Åpenhet = tillit.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Quick Insight ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Quick Insight</span></h2>
+    <p class="option-description">Predefinerte insight-kort øverst ("Analyser siste runde", "Hva bør jeg trene?", "Sammenlign med forrige uke") + chat under. Lav terskel for førstegangsbrukere.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/ai-coach</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item wf-active">AI</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / AI-veiledning</div>
+                <h1 class="wf-page-title">Hva lurer du på, Erik?<span class="wf-marker">1</span></h1>
+                <div class="wf-page-sub">Velg et hurtigspørsmål eller skriv ditt eget.</div>
+              </div>
+            </header>
+
+            <div class="wf-qi-layout">
+              <div class="wf-qi-prompts">
+                <div class="wf-qi-prompt">
+                  <div class="wf-qi-prompt-icon">◐</div>
+                  <div class="wf-qi-prompt-title">Analyser siste runde<span class="wf-marker">2</span></div>
+                  <div class="wf-qi-prompt-desc">Bogstad GK · 82 · 4 dager siden</div>
+                </div>
+                <div class="wf-qi-prompt">
+                  <div class="wf-qi-prompt-icon">▲</div>
+                  <div class="wf-qi-prompt-title">Hva bør jeg trene?</div>
+                  <div class="wf-qi-prompt-desc">Basert på SG-data siste 30 dager</div>
+                </div>
+                <div class="wf-qi-prompt">
+                  <div class="wf-qi-prompt-icon">◆</div>
+                  <div class="wf-qi-prompt-title">Sammenlign med forrige uke</div>
+                  <div class="wf-qi-prompt-desc">TrackMan-trender og fremdrift</div>
+                </div>
+                <div class="wf-qi-prompt">
+                  <div class="wf-qi-prompt-icon">●</div>
+                  <div class="wf-qi-prompt-title">Juster treningsplanen</div>
+                  <div class="wf-qi-prompt-desc">Uke 3 av 12 — foreslå endringer</div>
+                </div>
+                <div class="wf-qi-prompt">
+                  <div class="wf-qi-prompt-icon">✦</div>
+                  <div class="wf-qi-prompt-title">Hvorfor mister jeg slag?</div>
+                  <div class="wf-qi-prompt-desc">SG-analyse pr. kategori</div>
+                </div>
+                <div class="wf-qi-prompt">
+                  <div class="wf-qi-prompt-icon">◈</div>
+                  <div class="wf-qi-prompt-title">Forberedelse til runde</div>
+                  <div class="wf-qi-prompt-desc">Oppvarming og mental strategi</div>
+                </div>
+              </div>
+
+              <section class="wf-qi-chat">
+                <div class="wf-msg wf-msg-user">
+                  <div class="wf-bubble wf-bubble-user">Analyser siste runde</div>
+                </div>
+                <div class="wf-msg">
+                  <div class="wf-msg-avatar wf-ai-avatar">✦</div>
+                  <div class="wf-bubble wf-bubble-ai">
+                    <p>Bogstad GK, 82 slag. Du vant slag på tee (+1,2 SG) men tapte stort på approach (−2,1 SG).<span class="wf-marker">3</span></p>
+                    <p>Største enkeltfeil: hull 14 — dobbel bogey etter mishit 150m-jernet. Fairway-treff var 8/14 (OK). Putter: 32 (snitt).</p>
+                  </div>
+                </div>
+                <div class="wf-qi-composer">
+                  <input type="text" class="wf-input" placeholder="Følg opp — f.eks. «Lag en øvelse for approach»"><span class="wf-marker">4</span>
+                  <button class="wf-icon-btn">↑</button>
+                </div>
+              </section>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Personlig åpning:</strong> "Hva lurer du på, Erik?" fjerner blank-slate-friksjon. Chat starter ikke tomt.</li>
+        <li><strong>2 — 6 kontekstuelle hurtigkort:</strong> Hver ref. faktisk data (siste runde, aktiv plan). Ikke generiske prompts.</li>
+        <li><strong>3 — Direkte svar med tall:</strong> AI leverer konkrete tall, ikke vage råd. Vekt på SG og hull-spesifikk analyse.</li>
+        <li><strong>4 — Composer etter første svar:</strong> Brukeren kan følge opp naturlig. Chat-mønsteret trer inn når spilleren ønsker dybde.</li>
+        <li>— Beste førstebrukopplevelse: 1-klikks-innsikt før krav om å skrive spørsmål.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Voice First ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Voice First</span></h2>
+    <p class="option-description">Stor mic-knapp sentralt — spilleren snakker, transcript og svar vises under. Passer for bruk på rangen eller i bil. Hands-free coach.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/ai-coach</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item wf-active">AI</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / AI-veiledning</div>
+                <h1 class="wf-page-title">Snakk med AI Coach<span class="wf-marker">1</span></h1>
+                <div class="wf-page-sub">Trykk mic-en og still spørsmålet ditt — perfekt på rangen.</div>
+              </div>
+              <button class="wf-btn wf-btn-ghost">Bytt til tekst</button>
+            </header>
+
+            <div class="wf-voice-stage">
+              <div class="wf-voice-mic" aria-label="Start opptak">
+                <span class="wf-voice-mic-icon">◉</span><span class="wf-marker">2</span>
+              </div>
+              <div class="wf-voice-status">Lytter...</div>
+
+              <div class="wf-voice-transcript">
+                <strong>"Hvorfor mister jeg slag på approach?"</strong><span class="wf-marker">3</span>
+              </div>
+
+              <div class="wf-voice-response">
+                <div class="wf-ai-label">AI Coach</div>
+                <p>Jeg ser at fra 120 til 150 meter mister du i snitt 1,4 slag per runde. Hovedårsak er dispersion på 8-jernet. Vil du ha en øvelse nå?<span class="wf-marker">4</span></p>
+              </div>
+
+              <div class="wf-voice-footer">
+                <button class="wf-btn wf-btn-secondary">Stopp</button>
+                <button class="wf-btn wf-btn-cta">Lag øvelse nå</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Klar bruks-setting:</strong> "Perfekt på rangen" — kontekst signaliseres tidlig. Bytte til tekst alltid tilgjengelig.</li>
+        <li><strong>2 — Mic som helt:</strong> Stor sentral knapp, ingen andre elementer konkurrerer. Radiell glow viser lyttetilstand.</li>
+        <li><strong>3 — Transcript live:</strong> Transkriberer det som sies. Bruker kan korrigere før sending.</li>
+        <li><strong>4 — Tale-svar + CTA:</strong> AI svarer både muntlig og skriftlig. Følge-opp-knappen "Lag øvelse nå" gir umiddelbar handling.</li>
+        <li>— Risiko: Voice UX er fortsatt umoden. Fallback til tekst må være friksjonsfri.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Action Driven ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Action Driven</span></h2>
+    <p class="option-description">AI-svar med direkte CTA-knapper ("Legg til i plan", "Send til coach", "Logg som øvelse"). Hvert svar konverterer til en konkret handling. Ikke bare råd — operativ coach.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/ai-coach</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item wf-active">AI</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / AI-veiledning</div>
+                <h1 class="wf-page-title">AI Coach — operativ<span class="wf-marker">1</span></h1>
+                <div class="wf-page-sub">Hvert svar kan bli en handling.</div>
+              </div>
+              <button class="wf-btn wf-btn-ghost">Historikk</button>
+            </header>
+
+            <div class="wf-ad-layout">
+              <div class="wf-ad-question">
+                <span>Du spurte: <strong>«Hvorfor mister jeg slag på approach?»</strong></span>
+                <button class="wf-btn wf-btn-small wf-btn-ghost">Endre</button>
+              </div>
+
+              <div class="wf-ad-answer">
+                <div class="wf-ad-answer-header">
+                  <div class="wf-msg-avatar wf-ai-avatar">✦</div>
+                  <h3>Tre mønstre fra dine data<span class="wf-marker">2</span></h3>
+                </div>
+                <div class="wf-ad-answer-body">
+                  <ul class="wf-ad-bullets">
+                    <li>Du taper 1,4 slag per runde fra 120–150m (10 siste runder)</li>
+                    <li>Dispersion på 8-jern: 18m — godt over pro-snitt på 9m</li>
+                    <li>Angle of attack på jernene er +2° (du slår opp på ballen)</li>
+                  </ul>
+                </div>
+                <div class="wf-ad-actions">
+                  <button class="wf-ad-action wf-ad-action-cta">+ Legg til i treningsplan<span class="wf-marker">3</span></button>
+                  <button class="wf-ad-action">Send til coach (Anders)</button>
+                  <button class="wf-ad-action">Logg som øvelse</button>
+                  <button class="wf-ad-action">Del med treningspartner</button>
+                  <button class="wf-ad-action">Se detaljert SG-analyse →</button>
+                </div>
+              </div>
+
+              <div class="wf-ad-composer">
+                <input type="text" placeholder="Still et nytt spørsmål..."><span class="wf-marker">4</span>
+                <button class="wf-icon-btn">↑</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Positioning:</strong> "Operativ" signaliserer at dette ikke bare er analyse. Hvert svar leder til noe konkret.</li>
+        <li><strong>2 — Strukturert svar:</strong> Bullets, ikke prosa. Lettere å skanne. Tall i hver bullet (1,4 slag, 18m, +2°).</li>
+        <li><strong>3 — Actions = verb:</strong> "Legg til", "Send", "Logg", "Del". Primær CTA i solid fill. Opp til 5 aksjoner per svar.</li>
+        <li><strong>4 — Composer i bunn:</strong> Chat-mønster beholdes, men actions dominerer flyten.</li>
+        <li>— Høyest konverteringsverdi: AI-analyse blir til treningsplan-oppføring med ett klikk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Dashboard Mode ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Dashboard Mode</span></h2>
+    <p class="option-description">AI-summary øverst (proaktivt, uten å spørre) + 6 dypdykk-kort for ulike områder. Chat-composer i bunn for fri flyt. Bruker ser innsikt med en gang.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/ai-coach</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Planlegg</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item wf-active">AI</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+
+          <main class="wf-main">
+            <header class="wf-page-header">
+              <div>
+                <div class="wf-crumbs">Portal / AI-veiledning</div>
+                <h1 class="wf-page-title">Ukes-innsikt fra AI Coach<span class="wf-marker">1</span></h1>
+                <div class="wf-page-sub">Oppdatert basert på 10 runder, 20 treningsøkter og 5 TrackMan-økter.</div>
+              </div>
+              <button class="wf-btn wf-btn-ghost">Oppdater</button>
+            </header>
+
+            <section class="wf-db-hero">
+              <div class="wf-db-hero-text">
+                <h2>Du taper 1,4 slag per runde på approach 120–150m<span class="wf-marker">2</span></h2>
+                <p>Dette er ditt største enkeltforbedringsområde denne måneden. Tre spesifikke mønstre i dataene peker på dispersion og angle of attack.</p>
+              </div>
+              <div class="wf-db-hero-actions">
+                <button class="wf-btn wf-btn-secondary">Utforsk</button>
+                <button class="wf-btn wf-btn-cta">Lag plan →</button>
+              </div>
+            </section>
+
+            <div class="wf-db-grid">
+              <div class="wf-db-card">
+                <div class="wf-db-card-label">Strokes Gained<span class="wf-marker">3</span></div>
+                <div class="wf-db-card-title">Approach er din største kostnad</div>
+                <div class="wf-db-card-body">SG Approach: −2,1. SG Tee: +1,2. Forskjellen antyder klar prioritet.</div>
+                <div class="wf-db-card-cta">Se detaljer →</div>
+              </div>
+              <div class="wf-db-card">
+                <div class="wf-db-card-label">TrackMan</div>
+                <div class="wf-db-card-title">Angle of attack +2° på jern</div>
+                <div class="wf-db-card-body">Du slår opp på ballen. Pro-snitt er −3° til −5° på 8-jern.</div>
+                <div class="wf-db-card-cta">Se TrackMan-data →</div>
+              </div>
+              <div class="wf-db-card">
+                <div class="wf-db-card-label">Runde-trend</div>
+                <div class="wf-db-card-title">HCP-trend siste 30 d: −0,4</div>
+                <div class="wf-db-card-body">Du går rett vei. Største løft kom fra putter-kontroll.</div>
+                <div class="wf-db-card-cta">Se rundehistorikk →</div>
+              </div>
+              <div class="wf-db-card">
+                <div class="wf-db-card-label">Treningsplan</div>
+                <div class="wf-db-card-title">Uke 3 av 12 — på plan</div>
+                <div class="wf-db-card-body">Du har gjennomført 4 av 4 økter denne uken. SLAG 40%.</div>
+                <div class="wf-db-card-cta">Åpne plan →</div>
+              </div>
+              <div class="wf-db-card">
+                <div class="wf-db-card-label">Neste runde</div>
+                <div class="wf-db-card-title">Oslo GK — lørdag</div>
+                <div class="wf-db-card-body">Foreslått oppvarming: 20 min 8-jern, 10 min putter.</div>
+                <div class="wf-db-card-cta">Se forberedelse →</div>
+              </div>
+              <div class="wf-db-card">
+                <div class="wf-db-card-label">Mental</div>
+                <div class="wf-db-card-title">Scoring etter bogey faller 8%</div>
+                <div class="wf-db-card-body">Du mister fokus etter dårlige hull. Øv på reset-rutine.</div>
+                <div class="wf-db-card-cta">Se øvelse →</div>
+              </div>
+            </div>
+
+            <div class="wf-db-ask">
+              <input type="text" class="wf-input" placeholder="Still et oppfølgingsspørsmål om innsikten over..."><span class="wf-marker">4</span>
+              <button class="wf-icon-btn">↑</button>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Proaktiv, ikke reaktiv:</strong> Spilleren trenger ikke spørre — AI har allerede analyser klar.</li>
+        <li><strong>2 — Én hoved-insight hero:</strong> Ett tall, én konklusjon, to handlinger. Fjerner analyse-paralyse.</li>
+        <li><strong>3 — 6 kort med eget domene:</strong> SG, TrackMan, Runde-trend, Plan, Neste runde, Mental. Hver har egen drilldown.</li>
+        <li><strong>4 — Chat som oppfølging:</strong> Composer under gir fri flyt når kort ikke svarer på det du vil vite.</li>
+        <li>— Høyest daglig engasjement: dashboard er noe du kan åpne hver dag uten å måtte spørre om noe.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner vurdert mot målet: <strong>gi spilleren kontekstuell veiledning fra egne data på under 30 sekunder</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Læringskurve</th><th>Daglig bruk</th><th>Implementering</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Chat Classic</strong></td>
+          <td>Tradisjonell chat + kontekst-panel høyre</td>
+          <td>Null — kjent fra ChatGPT/Claude</td>
+          <td>Medium</td>
+          <td>Lav (Claude API + eksisterende data)</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><strong>2. Quick Insight</strong></td>
+          <td>Predefinerte prompts + chat</td>
+          <td>Null</td>
+          <td>Høy — 1-klikks-innsikt</td>
+          <td>Medium (krever kuratte prompts)</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>3. Voice First</strong></td>
+          <td>Mic sentralt, transcript + svar</td>
+          <td>Lav — alle kan snakke</td>
+          <td>Nisje (rangen, bil)</td>
+          <td>Høy (speech-to-text + TTS)</td>
+          <td>★★★☆☆</td>
+        </tr>
+        <tr>
+          <td><strong>4. Action Driven</strong></td>
+          <td>Svar → direkte CTAs mot plan/coach</td>
+          <td>Lav</td>
+          <td>Høy — hver samtale gir output</td>
+          <td>Høy (krever integrasjoner mot alle moduler)</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>5. Dashboard Mode</strong></td>
+          <td>Proaktiv innsikt + dypdykk-kort</td>
+          <td>Null — les og bla</td>
+          <td>Høyest — daglig open</td>
+          <td>Høy (krever ferdig-bakte innsikter per domene)</td>
+          <td>★★★★☆</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Chat Classic</h3>
+      <p>Trygg MVP med rask time-to-market. Claude API + eksisterende Prisma-data = funksjonell AI Coach på få uker. Chat-mønsteret er umiddelbart kjent for brukeren, kontekst-panelet til høyre gir åpenhet om datagrunnlaget (tillitsbygging). Brukeren kan spørre alt — ingen kurering av prompts kreves.</p>
+      <p><strong>Strategisk flow:</strong> Start med Option 1. Legg til Option 2 (Quick Insight-kort) som hurtigprompt-rad øverst i chat når vi ser hvilke 5–6 spørsmål brukerne stiller mest. Option 4 (Action Driven) bygges inn i Option 1 ved å legge til action-knapper under hvert AI-svar — ingen egen side nødvendig. Option 5 (Dashboard Mode) reserveres for Pro/Elite-tier som premium-oppgradering. Option 3 (Voice) er tekniskt umoden — vent til Whisper/TTS-pris er akseptabel.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+/* === Wireframe Content CSS (B&W only) — MC Fasiliteter === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #fff */
+
+.browser-content { padding: 0; }
+.browser-frame { max-width: 1100px; }
+
+/* ============ MC SHELL ============ */
+.mc-shell { background: #fff; min-height: 680px; display: flex; flex-direction: column; }
+
+/* Topbar (dark, shared) */
+.mc-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px; background: #111; color: #fff;
+  border-bottom: 1px solid #333;
+}
+.mc-topbar-left { display: flex; align-items: center; gap: 28px; }
+.mc-logo { font-weight: 800; font-size: 12px; letter-spacing: 0.12em; }
+.mc-tabs { display: flex; gap: 4px; }
+.mc-tab { padding: 6px 12px; border-radius: 999px; font-size: 12px; color: #aaa; cursor: pointer; }
+.mc-tab:hover { color: #fff; background: #222; }
+.mc-tab-active { color: #000; background: #fff; font-weight: 600; }
+.mc-topbar-right { display: flex; align-items: center; gap: 14px; }
+.mc-search { font-size: 12px; color: #999; border: 1px solid #333; padding: 5px 12px; border-radius: 6px; background: #1a1a1a; }
+.mc-avatar { width: 26px; height: 26px; border-radius: 999px; background: #fff; color: #000; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+/* Filter row (shared) */
+.mc-filter-row { display: flex; align-items: center; gap: 18px; padding: 12px 20px; background: #fafafa; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+.mc-filter-group { display: flex; align-items: center; gap: 6px; }
+.mc-filter-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; margin-right: 4px; }
+.mc-pill { padding: 5px 11px; border-radius: 999px; border: 1px solid #ddd; background: #fff; font-size: 11px; color: #666; cursor: pointer; }
+.mc-pill-active { background: #111; color: #fff; border-color: #111; }
+.mc-pill-ghost { background: transparent; }
+.mc-cta { margin-left: auto; padding: 7px 14px; border-radius: 999px; background: #111; color: #fff; font-size: 12px; font-weight: 600; border: none; cursor: pointer; }
+.mc-cta-ghost { background: #fff; color: #111; border: 1px solid #ccc; }
+
+/* Body base */
+.mc-body { padding: 18px 20px; flex: 1; }
+
+/* Facility dots (B&W diff via pattern) */
+.mc-fdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: #111; }
+.mc-fdot-sim { background: #111; }
+.mc-fdot-putt { background: #666; }
+.mc-fdot-range { background: #ccc; border: 1px solid #999; }
+.mc-fdot-maint { background: #fff; border: 1px dashed #999; }
+
+/* Legend */
+.mc-legend { display: flex; gap: 14px; margin-left: auto; font-size: 11px; color: #666; }
+.mc-legend-item { display: inline-flex; align-items: center; gap: 5px; }
+
+/* =================================================================== */
+/* OPTION 1 — Dag-schedule (timetable per fasilitet)                    */
+/* =================================================================== */
+.mc-schedule { display: grid; grid-template-columns: 80px repeat(6, 1fr); border: 1px solid #eee; border-radius: 6px; overflow: hidden; }
+.mc-schedule-head { background: #fafafa; padding: 10px 8px; font-size: 11px; font-weight: 700; color: #666; border-bottom: 1px solid #eee; border-right: 1px solid #eee; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.mc-schedule-head:last-child { border-right: none; }
+.mc-schedule-head .mc-sh-sub { font-size: 9px; color: #999; font-weight: 400; letter-spacing: 0; }
+.mc-schedule-hour { padding: 8px 6px; font-size: 10px; font-weight: 700; color: #999; border-bottom: 1px solid #f3f3f3; border-right: 1px solid #eee; text-align: right; }
+.mc-schedule-cell { position: relative; min-height: 52px; border-bottom: 1px solid #f3f3f3; border-right: 1px solid #eee; padding: 4px; }
+.mc-schedule-cell:last-child { border-right: none; }
+.mc-sblock { border: 1px solid #ccc; border-left: 3px solid #111; padding: 5px 6px; border-radius: 3px; font-size: 10px; line-height: 1.3; background: #fff; }
+.mc-sblock-title { font-weight: 700; color: #111; }
+.mc-sblock-sub { color: #666; font-size: 9px; margin-top: 1px; }
+.mc-sblock-coaching { border-left-color: #111; background: #fafafa; }
+.mc-sblock-gruppe { border-left-color: #666; background: #f5f5f5; }
+.mc-sblock-open { border-left-color: #ccc; background: #fff; color: #999; border-style: dashed; }
+.mc-sblock-maint { border-left-color: #999; background: #fafafa; color: #666; border-style: dashed; }
+
+/* =================================================================== */
+/* OPTION 2 — Ukesoversikt (gantt per fasilitet)                         */
+/* =================================================================== */
+.mc-week { border: 1px solid #eee; border-radius: 6px; overflow: hidden; }
+.mc-week-head { display: grid; grid-template-columns: 140px repeat(7, 1fr); background: #fafafa; border-bottom: 1px solid #eee; }
+.mc-week-head-cell { padding: 8px 10px; font-size: 10px; font-weight: 700; color: #999; letter-spacing: 0.08em; border-right: 1px solid #eee; text-align: center; }
+.mc-week-head-cell:last-child { border-right: none; }
+.mc-week-head-cell .mc-wh-date { display: block; color: #111; font-size: 11px; margin-top: 2px; letter-spacing: 0; }
+.mc-week-row { display: grid; grid-template-columns: 140px 1fr; border-bottom: 1px solid #eee; min-height: 60px; }
+.mc-week-row:last-child { border-bottom: none; }
+.mc-week-lane { padding: 10px 12px; border-right: 1px solid #eee; background: #fafafa; display: flex; flex-direction: column; gap: 2px; }
+.mc-week-lane-name { font-size: 12px; font-weight: 700; color: #111; }
+.mc-week-lane-meta { font-size: 10px; color: #999; }
+.mc-week-track { position: relative; background: repeating-linear-gradient(90deg, #fff 0 calc(100%/7 - 1px), #f3f3f3 calc(100%/7 - 1px) calc(100%/7)); padding: 6px 0; }
+.mc-week-bar { position: absolute; top: 6px; bottom: 6px; border-radius: 4px; padding: 4px 6px; font-size: 9px; line-height: 1.2; color: #fff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.mc-week-bar-coaching { background: #111; }
+.mc-week-bar-gruppe { background: #666; }
+.mc-week-bar-open { background: #fff; color: #666; border: 1px dashed #ccc; }
+.mc-week-bar-maint { background: #ddd; color: #666; border: 1px dashed #999; background-image: repeating-linear-gradient(45deg, transparent, transparent 4px, #bbb 4px, #bbb 5px); }
+
+/* =================================================================== */
+/* OPTION 3 — Kapasitet-heatmap                                          */
+/* =================================================================== */
+.mc-heatmap { border: 1px solid #eee; border-radius: 6px; overflow: hidden; }
+.mc-hm-head { display: grid; grid-template-columns: 140px repeat(12, 1fr); background: #fafafa; border-bottom: 1px solid #eee; }
+.mc-hm-head-cell { padding: 7px 4px; font-size: 10px; font-weight: 700; color: #999; text-align: center; border-right: 1px solid #eee; }
+.mc-hm-head-cell:last-child { border-right: none; }
+.mc-hm-row { display: grid; grid-template-columns: 140px repeat(12, 1fr); border-bottom: 1px solid #eee; }
+.mc-hm-row:last-child { border-bottom: none; }
+.mc-hm-lane { padding: 10px 12px; font-size: 12px; color: #111; background: #fafafa; border-right: 1px solid #eee; display: flex; flex-direction: column; gap: 2px; }
+.mc-hm-lane-meta { font-size: 10px; color: #999; font-weight: 400; }
+.mc-hm-cell { min-height: 44px; border-right: 1px solid #f3f3f3; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #111; }
+.mc-hm-cell:last-child { border-right: none; }
+.mc-hm-0 { background: #fff; color: #ccc; }
+.mc-hm-1 { background: #f5f5f5; color: #666; }
+.mc-hm-2 { background: #ddd; color: #333; }
+.mc-hm-3 { background: #999; color: #fff; }
+.mc-hm-4 { background: #333; color: #fff; }
+.mc-hm-summary { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-top: 14px; }
+.mc-hm-stat { border: 1px solid #eee; border-radius: 6px; padding: 10px 12px; }
+.mc-hm-stat-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: #999; }
+.mc-hm-stat-val { font-size: 20px; font-weight: 800; color: #111; margin-top: 4px; }
+.mc-hm-stat-sub { font-size: 10px; color: #666; margin-top: 2px; }
+
+/* =================================================================== */
+/* OPTION 4 — Equipment-status                                           */
+/* =================================================================== */
+.mc-eq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.mc-eq-card { border: 1px solid #eee; border-radius: 6px; padding: 14px 16px; background: #fff; }
+.mc-eq-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.mc-eq-facility { font-size: 11px; font-weight: 700; color: #111; letter-spacing: 0.02em; }
+.mc-eq-sub { font-size: 10px; color: #999; margin-top: 2px; }
+.mc-eq-status { padding: 2px 7px; border-radius: 999px; font-size: 9px; font-weight: 700; letter-spacing: 0.04em; }
+.mc-eq-status-ok { background: #111; color: #fff; }
+.mc-eq-status-warn { background: #fff; color: #111; border: 1px dashed #999; }
+.mc-eq-status-offline { background: #fff; color: #999; border: 1px solid #ccc; }
+.mc-eq-list { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.mc-eq-item { display: flex; justify-content: space-between; padding: 6px 8px; border: 1px solid #f3f3f3; border-radius: 4px; font-size: 11px; }
+.mc-eq-item-name { color: #111; font-weight: 500; }
+.mc-eq-item-meta { color: #999; font-size: 10px; }
+.mc-eq-alerts { margin-top: 20px; border: 1px solid #eee; border-radius: 6px; padding: 12px 16px; background: #fafafa; }
+.mc-eq-alerts-title { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #999; margin-bottom: 8px; }
+.mc-eq-alert { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 12px; border-bottom: 1px solid #eee; }
+.mc-eq-alert:last-child { border-bottom: none; }
+.mc-eq-alert-dot { width: 8px; height: 8px; border-radius: 50%; background: #111; }
+.mc-eq-alert-dot-warn { background: #fff; border: 1px dashed #666; }
+.mc-eq-alert-text { flex: 1; color: #333; }
+.mc-eq-alert-meta { color: #999; font-size: 10px; }
+
+/* =================================================================== */
+/* OPTION 5 — Booking-pipeline                                           */
+/* =================================================================== */
+.mc-pipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.mc-pipe-col { background: #fafafa; border: 1px solid #eee; border-radius: 6px; padding: 12px; }
+.mc-pipe-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid #eee; }
+.mc-pipe-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #111; }
+.mc-pipe-count { font-size: 10px; font-weight: 700; color: #fff; background: #111; padding: 2px 7px; border-radius: 999px; }
+.mc-pipe-cards { display: flex; flex-direction: column; gap: 8px; max-height: 420px; overflow-y: auto; }
+.mc-pipe-card { background: #fff; border: 1px solid #eee; border-left: 3px solid #111; border-radius: 4px; padding: 8px 10px; cursor: pointer; }
+.mc-pipe-card-title { font-size: 12px; font-weight: 700; color: #111; }
+.mc-pipe-card-sub { font-size: 10px; color: #666; margin-top: 2px; }
+.mc-pipe-card-row { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: #999; }
+.mc-pipe-card-tag { display: inline-flex; align-items: center; gap: 4px; padding: 1px 6px; border: 1px solid #eee; border-radius: 3px; color: #666; background: #fafafa; }
+.mc-pipe-card-coaching { border-left-color: #111; }
+.mc-pipe-card-gruppe { border-left-color: #666; }
+.mc-pipe-card-open { border-left-color: #ccc; border-left-style: dashed; }
+
+/* Shared summary KPI row (top of options) */
+.mc-kpi-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 14px; }
+.mc-kpi-cell { border: 1px solid #eee; border-radius: 6px; padding: 10px 12px; background: #fff; }
+.mc-kpi-cell-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #999; }
+.mc-kpi-cell-val { font-size: 22px; font-weight: 800; color: #111; margin-top: 4px; line-height: 1; }
+.mc-kpi-cell-sub { font-size: 10px; color: #666; margin-top: 3px; }
+
+/* Summary table */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+.wf-summary-table th, .wf-summary-table td { padding: 8px 10px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { background: #fafafa; font-size: 11px; color: #666; letter-spacing: 0.04em; }

@@ -1,0 +1,105 @@
+/* === OPT 5 — Team Load · Clean + Polished === */
+
+#frame-opt5.clean, #frame-opt5.polished { font-family: 'Inter', -apple-system, sans-serif; }
+#frame-opt5.clean .mc-shell, #frame-opt5.polished .mc-shell { background: #F5F8F7; min-height: 700px; }
+
+/* Topbar */
+#frame-opt5.clean .mc-topbar,
+#frame-opt5.polished .mc-topbar {
+  background: #0A1F18; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 12px 20px;
+}
+#frame-opt5.clean .mc-logo, #frame-opt5.polished .mc-logo { color: #fff; font-weight: 700; font-size: 12px; letter-spacing: .08em; }
+#frame-opt5.clean .mc-tab, #frame-opt5.polished .mc-tab { color: rgba(255,255,255,0.55); font-weight: 500; }
+#frame-opt5.clean .mc-tab:hover, #frame-opt5.polished .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.06); }
+#frame-opt5.clean .mc-tab-active, #frame-opt5.polished .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; }
+#frame-opt5.clean .mc-search, #frame-opt5.polished .mc-search { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+#frame-opt5.clean .mc-avatar, #frame-opt5.polished .mc-avatar { background: #D1F843; color: #0A1F18; }
+
+/* Subheader */
+#frame-opt5.clean .mc-subheader, #frame-opt5.polished .mc-subheader { background: #fff; border-bottom: 1px solid rgba(0,0,0,0.06); }
+#frame-opt5.clean .mc-sub-title, #frame-opt5.polished .mc-sub-title { color: #0A1F18; font-weight: 700; font-size: 17px; letter-spacing: -.015em; }
+#frame-opt5.clean .mc-sub-meta, #frame-opt5.polished .mc-sub-meta { color: #5A6E66; font-size: 12px; }
+
+#frame-opt5.clean .mc-body, #frame-opt5.polished .mc-body { background: #F5F8F7; padding: 22px 20px; }
+
+/* Coach cards */
+#frame-opt5.clean .tl-coach, #frame-opt5.polished .tl-coach {
+  background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 8px rgba(0,0,0,0.02);
+  padding: 20px;
+}
+#frame-opt5.clean .tl-coach-name, #frame-opt5.polished .tl-coach-name {
+  color: #0A1F18; font-weight: 800; font-size: 15px; letter-spacing: -.015em;
+}
+#frame-opt5.clean .tl-coach-meta, #frame-opt5.polished .tl-coach-meta { color: #5A6E66; font-size: 11.5px; }
+
+/* Pill for "Se profil" */
+#frame-opt5.clean .mc-pill, #frame-opt5.polished .mc-pill {
+  background: #fff; border: 1px solid rgba(0,0,0,0.08); color: #324D45; font-weight: 500;
+}
+#frame-opt5.clean .mc-pill:hover, #frame-opt5.polished .mc-pill:hover { background: #F5F8F7; }
+
+/* Load bar */
+#frame-opt5.clean .tl-load-label, #frame-opt5.polished .tl-load-label {
+  color: #5A6E66; font-size: 11px; font-weight: 600; letter-spacing: .04em;
+}
+#frame-opt5.clean .tl-load-label strong, #frame-opt5.polished .tl-load-label strong {
+  color: #005840; font-weight: 800; font-size: 14px; font-variant-numeric: tabular-nums;
+}
+#frame-opt5.clean .tl-load-bar, #frame-opt5.polished .tl-load-bar {
+  background: rgba(0,88,64,0.08); border-radius: 5px; height: 10px;
+}
+#frame-opt5.clean .tl-load-bar span, #frame-opt5.polished .tl-load-bar span {
+  background: #005840; border-radius: 5px;
+}
+
+/* Week strip */
+#frame-opt5.clean .tl-day, #frame-opt5.polished .tl-day {
+  border: 1px solid rgba(0,0,0,0.06); border-radius: 8px; padding: 8px 2px;
+  color: #5A6E66; font-variant-numeric: tabular-nums; background: #fff; font-size: 10.5px;
+}
+#frame-opt5.clean .tl-day strong, #frame-opt5.polished .tl-day strong {
+  color: #0A1F18; font-weight: 700; font-size: 12.5px;
+}
+#frame-opt5.clean .tl-day-full, #frame-opt5.polished .tl-day-full {
+  background: #005840; color: #fff; border-color: #005840;
+}
+#frame-opt5.clean .tl-day-full strong, #frame-opt5.polished .tl-day-full strong { color: #fff; }
+#frame-opt5.clean .tl-day-empty, #frame-opt5.polished .tl-day-empty {
+  background: #F5F8F7; color: #A5B2AD; border-style: dashed;
+}
+
+#frame-opt5.clean .wf-section-title, #frame-opt5.polished .wf-section-title {
+  color: #A5B2AD; font-weight: 700; letter-spacing: .12em; font-size: 10px;
+}
+
+/* ===== POLISHED ONLY ===== */
+#frame-opt5.polished .mc-tab-active {
+  box-shadow: 0 0 0 1px rgba(209,248,67,0.2), 0 4px 12px rgba(209,248,67,0.22);
+}
+#frame-opt5.polished .tl-coach {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 12px 32px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.03);
+  transition: transform .2s cubic-bezier(0.4,0,0.2,1);
+  position: relative; overflow: hidden;
+}
+#frame-opt5.polished .tl-coach::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, #005840 0%, #D1F843 100%);
+}
+#frame-opt5.polished .tl-coach:hover { transform: translateY(-1px); }
+#frame-opt5.polished .tl-load-bar span {
+  background: linear-gradient(90deg, #005840 0%, #00594C 100%);
+  box-shadow: 0 0 8px rgba(0,88,64,0.3);
+  position: relative;
+}
+#frame-opt5.polished .tl-load-bar span::after {
+  content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 16px;
+  background: inherit; filter: blur(6px); opacity: .6;
+}
+#frame-opt5.polished .tl-day-full {
+  box-shadow: 0 2px 6px rgba(0,88,64,0.2), inset 0 0 0 1px rgba(209,248,67,0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt5.polished *, #frame-opt5.clean * { transition: none !important; animation: none !important; }
+}

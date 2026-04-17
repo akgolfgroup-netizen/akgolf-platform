@@ -1,0 +1,126 @@
+/* === Økonomi Wireframe Styles — shared structure (B&W) === */
+
+/* MC Shell — Dark topbar + light body */
+.wf-mc-topbar {
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 16px; background: #111; color: #fff;
+  border-radius: 4px 4px 0 0;
+}
+.wf-mc-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; white-space: nowrap; }
+.wf-mc-tabs { display: flex; gap: 14px; flex: 1; }
+.wf-mc-tab { font-size: 12px; color: #999; padding: 4px 2px; cursor: default; }
+.wf-mc-tab-active { color: #fff; border-bottom: 1px solid #fff; }
+.wf-mc-profile { width: 28px; height: 28px; border-radius: 50%; background: #333; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+
+.wf-mc-body {
+  padding: 16px 12px; background: #fafafa;
+  border-radius: 0 0 4px 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px; color: #222;
+}
+
+/* Page head */
+.wf-ek-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wf-ek-title { font-size: 15px; font-weight: 600; color: #111; }
+.wf-ek-filters { display: flex; gap: 8px; }
+.wf-ek-filter { font-size: 11px; padding: 4px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #555; }
+.wf-ek-filter-primary { background: #111; color: #fff; border-color: #111; }
+
+/* KPI Row */
+.wf-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
+.wf-kpi { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px 12px; }
+.wf-kpi-label { font-size: 9px; font-weight: 600; letter-spacing: 0.08em; color: #999; text-transform: uppercase; margin-bottom: 4px; }
+.wf-kpi-value { font-size: 18px; font-weight: 700; color: #111; font-variant-numeric: tabular-nums; }
+.wf-kpi-delta { font-size: 10px; color: #666; margin-top: 2px; }
+.wf-kpi-delta-pos { color: #2a7d5a; }
+.wf-kpi-delta-neg { color: #b84233; }
+
+/* Grid system */
+.wf-ek-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+.wf-span-3 { grid-column: span 3; }
+.wf-span-4 { grid-column: span 4; }
+.wf-span-5 { grid-column: span 5; }
+.wf-span-6 { grid-column: span 6; }
+.wf-span-7 { grid-column: span 7; }
+.wf-span-8 { grid-column: span 8; }
+.wf-span-12 { grid-column: span 12; }
+
+/* Cards */
+.wf-ek-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; }
+.wf-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.wf-card-head > span:first-child { font-size: 12px; font-weight: 600; color: #111; }
+.wf-card-meta { font-size: 10px; color: #888; }
+
+/* Chart placeholders */
+.wf-chart { border: 1px dashed #ccc; border-radius: 3px; height: 140px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 11px; background: #fcfcfc; }
+.wf-chart-lg { height: 200px; }
+.wf-chart-sm { height: 80px; }
+
+/* Tables */
+.wf-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.wf-table th { text-align: left; padding: 6px 8px; background: #f4f4f4; color: #555; font-weight: 600; border-bottom: 1px solid #ddd; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+.wf-table td { padding: 6px 8px; border-bottom: 1px solid #eee; color: #333; font-variant-numeric: tabular-nums; }
+.wf-table tr:last-child td { border-bottom: none; }
+.wf-table td.wf-num { text-align: right; font-weight: 600; }
+
+/* Lists */
+.wf-list { list-style: none; margin: 0; padding: 0; }
+.wf-list li { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #eee; font-size: 11px; color: #333; }
+.wf-list li:last-child { border-bottom: none; }
+
+/* Tags */
+.wf-tag { font-size: 9px; padding: 2px 7px; border: 1px solid #ccc; border-radius: 10px; background: #f9f9f9; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }
+.wf-tag-success { background: #e8f5ef; color: #2a7d5a; border-color: #cde7dc; }
+.wf-tag-warn { background: #fdf4e4; color: #7a5520; border-color: #ecdcc0; }
+.wf-tag-error { background: #fceae8; color: #7a2c22; border-color: #e7c8c4; }
+.wf-tag-vipps { background: #fff2ec; color: #a13a11; border-color: #f1cfc0; }
+.wf-tag-stripe { background: #eef0ff; color: #3d3f9e; border-color: #d5d7f0; }
+
+/* OPT 1 — Financial Dashboard */
+.wf-bigkpi { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 16px 18px; }
+.wf-bigkpi-label { font-size: 9px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.1em; }
+.wf-bigkpi-val { font-size: 26px; font-weight: 700; color: #111; font-variant-numeric: tabular-nums; margin-top: 4px; }
+.wf-bigkpi-sub { font-size: 11px; color: #666; margin-top: 4px; }
+
+/* OPT 2 — Cash Flow */
+.wf-flow-row { display: grid; grid-template-columns: 1fr 60px 1fr 70px; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 11px; }
+.wf-flow-row:last-child { border-bottom: none; }
+.wf-flow-label { font-weight: 600; color: #111; font-size: 12px; }
+.wf-flow-val { font-variant-numeric: tabular-nums; font-weight: 600; font-size: 13px; }
+.wf-flow-in { color: #2a7d5a; }
+.wf-flow-out { color: #b84233; }
+.wf-flow-arrow { text-align: center; color: #999; }
+.wf-margin-bar { height: 8px; background: #f4f4f4; border-radius: 4px; overflow: hidden; margin-top: 8px; position: relative; }
+.wf-margin-fill { position: absolute; left: 0; top: 0; bottom: 0; background: #111; border-radius: 4px; }
+
+/* OPT 3 — Transactions Power */
+.wf-filter-bar { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px 12px; margin-bottom: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.wf-filter-label { font-size: 10px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; }
+.wf-filter-chip { font-size: 11px; padding: 4px 10px; border: 1px solid #bbb; border-radius: 12px; background: #fff; color: #333; }
+.wf-filter-chip-active { background: #111; color: #fff; border-color: #111; }
+.wf-search { flex: 1; min-width: 140px; font-size: 11px; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fafafa; color: #666; }
+
+/* OPT 4 — Service Breakdown */
+.wf-svc-row { display: grid; grid-template-columns: 140px 1fr 90px 60px; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 11px; }
+.wf-svc-row:last-child { border-bottom: none; }
+.wf-svc-label { font-weight: 600; color: #111; font-size: 12px; }
+.wf-svc-meta { font-size: 10px; color: #888; }
+.wf-svc-bar { height: 8px; background: #f4f4f4; border-radius: 4px; overflow: hidden; position: relative; }
+.wf-svc-fill { position: absolute; left: 0; top: 0; bottom: 0; background: #111; border-radius: 4px; }
+.wf-svc-val { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; color: #111; }
+.wf-svc-pct { text-align: right; color: #888; font-size: 10px; }
+
+/* OPT 5 — Forecast */
+.wf-fc-row { display: grid; grid-template-columns: 1fr 110px 110px 110px; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 11px; }
+.wf-fc-row:last-child { border-bottom: none; }
+.wf-fc-row-header { font-size: 9px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+.wf-fc-label { font-weight: 600; color: #111; font-size: 12px; }
+.wf-fc-meta { font-size: 10px; color: #888; margin-top: 2px; }
+.wf-fc-val { font-variant-numeric: tabular-nums; text-align: right; color: #333; font-size: 12px; }
+.wf-fc-val-bold { font-weight: 700; color: #111; }
+.wf-pipeline-ring { width: 90px; height: 90px; border: 6px solid #eee; border-top-color: #111; border-right-color: #111; border-radius: 50%; margin: 6px auto; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #111; font-variant-numeric: tabular-nums; }
+
+/* Summary table */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+.wf-summary-table th, .wf-summary-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+.wf-summary-table th { background: #f4f4f4; font-weight: 600; }

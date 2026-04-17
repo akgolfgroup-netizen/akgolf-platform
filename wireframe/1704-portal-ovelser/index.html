@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Øvelsesbank — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Øvelsesbank</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Pyramid Filter</button>
+    <button class="tab-btn" data-tab="option-2">2: Category Cards</button>
+    <button class="tab-btn" data-tab="option-3">3: Search First</button>
+    <button class="tab-btn" data-tab="option-4">4: Recent Used</button>
+    <button class="tab-btn" data-tab="option-5">5: Table View</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Pyramid Filter (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Pyramid Filter</span></h2>
+    <p class="option-description">Trygg og kraftfull. Horisontal stacked pyramide-bar øverst (FYS/TEK/SLAG/SPILL/TURN) — klikkbare segmenter filtrerer drill-grid under. Matcher NGF-metoden visuelt og gir spilleren ett mentalt kart over alle øvelser.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/trening/ovelser</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">EH</div>
+              <div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP 14.2</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">240 øvelser</div>
+              <div class="wf-sb-cta-desc">NGF-pyramide · oppdatert</div>
+              <button class="wf-sb-cta-btn">Foreslå øvelse</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Tren · øvelsesbank</div>
+              <div class="wf-phead-actions">
+                <button class="wf-mtopbar-chip">Mine favoritter</button>
+                <button class="wf-mtopbar-chip wf-active">Alle</button>
+              </div>
+            </div>
+
+            <section class="wf-phead">
+              <div>
+                <div class="wf-phead-eyebrow">NGF-pyramiden · 240 øvelser</div>
+                <h1 class="wf-phead-h">Øvelsesbank</h1>
+                <div class="wf-phead-sub">Klikk et nivå i pyramiden for å filtrere. Alle øvelser er tagget med L-fase.</div>
+              </div>
+            </section>
+
+            <div class="wf-search">
+              <div class="wf-search-icon"></div>
+              <input class="wf-search-input" type="text" placeholder="Søk øvelse, nøkkelord eller tag (f.eks. 'putt 5m')">
+              <button class="wf-search-cta">Søk</button>
+            </div>
+
+            <div>
+              <div class="wf-c-label" style="margin-bottom:6px">Treningspyramide · NGF<span class="wf-marker">1</span></div>
+              <div class="wf-pyramid">
+                <div class="wf-pyramid-seg wf-pyramid-fys"><span class="wf-pyramid-seg-label">FYS</span><span class="wf-pyramid-seg-count">42</span></div>
+                <div class="wf-pyramid-seg wf-pyramid-tek wf-selected"><span class="wf-pyramid-seg-label">TEK</span><span class="wf-pyramid-seg-count">88</span></div>
+                <div class="wf-pyramid-seg wf-pyramid-slag"><span class="wf-pyramid-seg-label">SLAG</span><span class="wf-pyramid-seg-count">64</span></div>
+                <div class="wf-pyramid-seg wf-pyramid-spill"><span class="wf-pyramid-seg-label">SPILL</span><span class="wf-pyramid-seg-count">32</span></div>
+                <div class="wf-pyramid-seg wf-pyramid-turn"><span class="wf-pyramid-seg-label">TURN</span><span class="wf-pyramid-seg-count">14</span></div>
+              </div>
+              <div class="wf-pyramid-legend">
+                <span>Grunnlag · Fysikk</span>
+                <span>Topp · Turneringsspill</span>
+              </div>
+            </div>
+
+            <div class="wf-c-row" style="margin-top:4px">
+              <div class="wf-c-label">Resultat · TEK (88 øvelser)<span class="wf-marker">2</span></div>
+              <div style="display:flex; gap:6px">
+                <button class="wf-mtopbar-chip wf-active">Alle</button>
+                <button class="wf-mtopbar-chip">L1</button>
+                <button class="wf-mtopbar-chip">L2</button>
+                <button class="wf-mtopbar-chip">L3</button>
+                <button class="wf-mtopbar-chip">L4</button>
+              </div>
+            </div>
+
+            <div class="wf-drill-grid">
+              <div class="wf-drill">
+                <div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">TEK · L2</span></div>
+                <h3 class="wf-drill-title">Putt 5m × 10</h3>
+                <p class="wf-drill-desc">10 forsøk fra 5 meter. Suksesskriterium: 8 av 10 i hull.</p>
+                <div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div>
+                <div class="wf-drill-meta"><span class="wf-drill-meta-chip">12 min</span><span class="wf-drill-meta-chip">Putter</span></div>
+              </div>
+
+              <div class="wf-drill">
+                <div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">TEK · L3</span></div>
+                <h3 class="wf-drill-title">Clockface drill</h3>
+                <p class="wf-drill-desc">12 putts fra 3 meter rundt hullet. Mål: 10/12 uten bom.</p>
+                <div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div>
+                <div class="wf-drill-meta"><span class="wf-drill-meta-chip">15 min</span><span class="wf-drill-meta-chip">Putter</span></div>
+              </div>
+
+              <div class="wf-drill">
+                <div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">TEK · L1</span></div>
+                <h3 class="wf-drill-title">Chip landing zone</h3>
+                <p class="wf-drill-desc">Legg 3 baller innenfor 2m-ring fra 15m. 5 runder.</p>
+                <div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div>
+                <div class="wf-drill-meta"><span class="wf-drill-meta-chip">20 min</span><span class="wf-drill-meta-chip">Wedge</span></div>
+              </div>
+
+              <div class="wf-drill">
+                <div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">TEK · L2</span></div>
+                <h3 class="wf-drill-title">Iron dispersion 140m</h3>
+                <p class="wf-drill-desc">10 slag med 7-jern. Mål: 8/10 innenfor 8m-sirkel.</p>
+                <div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div>
+                <div class="wf-drill-meta"><span class="wf-drill-meta-chip">25 min</span><span class="wf-drill-meta-chip">7-jern</span></div>
+              </div>
+
+              <div class="wf-drill">
+                <div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">TEK · L3</span></div>
+                <h3 class="wf-drill-title">Driver gate drill</h3>
+                <p class="wf-drill-desc">Slå gjennom 3m-port 20m foran. 10 forsøk, 7 treff.</p>
+                <div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div>
+                <div class="wf-drill-meta"><span class="wf-drill-meta-chip">20 min</span><span class="wf-drill-meta-chip">Driver</span></div>
+              </div>
+
+              <div class="wf-drill">
+                <div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">TEK · L4</span></div>
+                <h3 class="wf-drill-title">Pressure 50/50 putt</h3>
+                <p class="wf-drill-desc">10 putts fra 2m. Treff 8+ = fullført. Under: ny runde.</p>
+                <div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span></div>
+                <div class="wf-drill-meta"><span class="wf-drill-meta-chip">18 min</span><span class="wf-drill-meta-chip">Putter</span></div>
+              </div>
+            </div>
+
+            <div class="wf-modal-wrap">
+              <div class="wf-c-label" style="margin-bottom:8px">Detalj-modal · åpnes ved klikk på øvelse<span class="wf-marker">3</span></div>
+              <div class="wf-modal">
+                <div>
+                  <div class="wf-modal-vid">VIDEO-DEMO</div>
+                  <div style="font-size:10px;color:#999;margin-top:6px;letter-spacing:0.08em">1:24 · HD</div>
+                </div>
+                <div class="wf-modal-body">
+                  <h3 class="wf-modal-h">Putt 5m × 10</h3>
+                  <div class="wf-modal-sub"><span>TEK · L2</span><span>·</span><span>12 min</span><span>·</span><span>Putter</span></div>
+                  <div class="wf-modal-section">
+                    <div class="wf-modal-section-h">Beskrivelse</div>
+                    <p class="wf-modal-body-text">Tren distansekontroll og linjelesing fra mellomdistanse. Øvelsen bygger konsistens i stroke og kalibrering av tempo.</p>
+                  </div>
+                  <div class="wf-modal-section">
+                    <div class="wf-modal-section-h">Trinn</div>
+                    <ol class="wf-modal-steps">
+                      <li>Plasser 10 baller 5m fra hull på flat linje.</li>
+                      <li>Putt én ball om gangen — noter treff/bom.</li>
+                      <li>Resett etter 10 forsøk. Gjenta 2–3 runder.</li>
+                    </ol>
+                  </div>
+                  <div class="wf-modal-ok">Suksesskriterium: 8 av 10 i hull</div>
+                </div>
+              </div>
+            </div>
+
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Pyramide som primærfilter:</strong> Stacked bar med FYS→TURN, bredde tilsvarer ca antall øvelser. Klikkbar — valgt nivå får outline. Visuelt identisk med NGF-metoden spilleren kjenner fra markedsside + treningsplan.</li>
+        <li><strong>2 — L-fase sub-filter:</strong> Etter pyramide-valg dukker L1–L4 opp som pills. Dobbelt-filtrering uten å rote sidebaren.</li>
+        <li><strong>3 — Detalj-modal:</strong> Video til venstre, beskrivelse + trinn + suksesskriterium til høyre. Konsistent med eksempelet "Putt 5m × 10, 8/10 krav".</li>
+        <li><strong>Søk alltid tilgjengelig:</strong> Øverst, men som andre-lag — pyramiden er default tilgang.</li>
+        <li><strong>Kort-anatomi:</strong> Ikon + badge (kategori·L-fase) + tittel + beskrivelse + difficulty-dots + varighet/utstyr. Maks 3 info-nivåer per kort.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Category Cards ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Category Cards</span></h2>
+    <p class="option-description">Grupper øvelser etter praktisk kategori (Putting, Chip, Driver, Jern, Fitness, Mental) — ikke etter pyramide-nivå. Spilleren tenker "jeg vil øve på putting" først, og velger det direkte. Pyramide-filter tilgjengelig som sekundær dimensjon.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/trening/ovelser</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP 14.2</div></div></div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">240 øvelser</div><div class="wf-sb-cta-desc">6 kategorier · NGF</div><button class="wf-sb-cta-btn">Foreslå øvelse</button></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar"><div class="wf-mtopbar-left">Tren · øvelsesbank</div><div class="wf-phead-actions"><button class="wf-mtopbar-chip">Mine favoritter</button><button class="wf-mtopbar-chip wf-active">Alle kategorier</button></div></div>
+            <section class="wf-phead"><div><div class="wf-phead-eyebrow">6 kategorier · 240 øvelser</div><h1 class="wf-phead-h">Øvelsesbank</h1><div class="wf-phead-sub">Velg hvilken del av spillet du vil trene på.</div></div></section>
+
+            <div class="wf-cat-grid">
+              <div class="wf-cat wf-cat-selected"><div class="wf-cat-ico"></div><div class="wf-cat-title">Putting<span class="wf-marker">1</span></div><div class="wf-cat-count">52 øvelser</div><div class="wf-cat-sub">Distanse, linje, press</div></div>
+              <div class="wf-cat"><div class="wf-cat-ico"></div><div class="wf-cat-title">Chip & Pitch</div><div class="wf-cat-count">46 øvelser</div><div class="wf-cat-sub">Under 40m fra green</div></div>
+              <div class="wf-cat"><div class="wf-cat-ico"></div><div class="wf-cat-title">Jern</div><div class="wf-cat-count">58 øvelser</div><div class="wf-cat-sub">100–180m approach</div></div>
+              <div class="wf-cat"><div class="wf-cat-ico"></div><div class="wf-cat-title">Driver</div><div class="wf-cat-count">34 øvelser</div><div class="wf-cat-sub">Tee-slag, dispersion</div></div>
+              <div class="wf-cat"><div class="wf-cat-ico"></div><div class="wf-cat-title">Fitness</div><div class="wf-cat-count">36 øvelser</div><div class="wf-cat-sub">Styrke, mobilitet, kraft</div></div>
+              <div class="wf-cat"><div class="wf-cat-ico"></div><div class="wf-cat-title">Mental</div><div class="wf-cat-count">14 øvelser</div><div class="wf-cat-sub">Fokus, rutine, press</div></div>
+            </div>
+
+            <div class="wf-c-row" style="margin-top:10px"><div class="wf-c-label">Putting · 52 øvelser<span class="wf-marker">2</span></div><div style="display:flex;gap:6px"><button class="wf-mtopbar-chip wf-active">Alle L</button><button class="wf-mtopbar-chip">L1</button><button class="wf-mtopbar-chip">L2</button><button class="wf-mtopbar-chip">L3</button><button class="wf-mtopbar-chip">L4</button></div></div>
+
+            <div class="wf-drill-grid">
+              <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L2</span></div><h3 class="wf-drill-title">Putt 5m × 10</h3><p class="wf-drill-desc">10 forsøk fra 5m. Krav: 8/10 i hull.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">12 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+              <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L3</span></div><h3 class="wf-drill-title">Clockface 3m</h3><p class="wf-drill-desc">12 putts rundt hull fra 3m. 10/12 krav.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">15 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+              <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L1</span></div><h3 class="wf-drill-title">Gate drill kort</h3><p class="wf-drill-desc">Putt gjennom 2 tees 30cm foran. 20 forsøk.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">10 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+              <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L4</span></div><h3 class="wf-drill-title">Pressure 50/50</h3><p class="wf-drill-desc">10 putts 2m. Under 8 treff = resett.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">18 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+              <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L2</span></div><h3 class="wf-drill-title">Ladder 3–9m</h3><p class="wf-drill-desc">3m, 5m, 7m, 9m — én ball hver. Runde.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">14 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+              <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L3</span></div><h3 class="wf-drill-title">Break read 4m</h3><p class="wf-drill-desc">4m sidebreak. 10 putts, 7 in/in-line.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">16 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kategori-first:</strong> Spilleren tenker "putting" før "TEK". 6 brede kort øverst gir rask orientering. Valgt kategori får outline.</li>
+        <li><strong>2 — L-fase pills nederst:</strong> Sekundærfilter etter at kategori er valgt. Kan kombineres.</li>
+        <li><strong>Styrke:</strong> Match mellomsøkes mentale modell. Svakhet: mister NGF-pyramiden som visuelt anker.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Search First ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Search First</span></h2>
+    <p class="option-description">Søk-dominant. Stor søkeboks sentrert øverst, resultat under. Filter-sidebar til venstre (kategori, L-fase, varighet, vanskelighet). Passer power-brukere som vet hva de leter etter.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/trening/ovelser</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP 14.2</div></div></div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">240 øvelser</div><div class="wf-sb-cta-desc">Søk alle</div><button class="wf-sb-cta-btn">Foreslå øvelse</button></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar"><div class="wf-mtopbar-left">Tren · øvelsesbank</div><div class="wf-phead-actions"><button class="wf-mtopbar-chip">Mine favoritter</button><button class="wf-mtopbar-chip wf-active">Søk alle</button></div></div>
+
+            <div class="wf-search-hero">
+              <div class="wf-search-hero-h">Hva vil du trene på?<span class="wf-marker">1</span></div>
+              <div class="wf-search-hero-sub">Søk i 240 øvelser. Prøv "putt 5m", "chip under pressure" eller "driver gate".</div>
+              <div class="wf-search-big">
+                <div class="wf-search-icon"></div>
+                <input type="text" placeholder="Søk øvelse, tag eller nøkkelord …">
+                <button class="wf-search-cta">Søk</button>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:220px 1fr;gap:14px;align-items:start">
+              <aside class="wf-fs">
+                <div>
+                  <div class="wf-fs-section-h">Kategori<span class="wf-marker">2</span></div>
+                  <div class="wf-fs-opts">
+                    <label class="wf-fs-opt"><span class="wf-fs-box wf-checked"></span>Putting<span class="wf-fs-count">52</span></label>
+                    <label class="wf-fs-opt"><span class="wf-fs-box"></span>Chip & Pitch<span class="wf-fs-count">46</span></label>
+                    <label class="wf-fs-opt"><span class="wf-fs-box"></span>Jern<span class="wf-fs-count">58</span></label>
+                    <label class="wf-fs-opt"><span class="wf-fs-box"></span>Driver<span class="wf-fs-count">34</span></label>
+                    <label class="wf-fs-opt"><span class="wf-fs-box"></span>Fitness<span class="wf-fs-count">36</span></label>
+                    <label class="wf-fs-opt"><span class="wf-fs-box"></span>Mental<span class="wf-fs-count">14</span></label>
+                  </div>
+                </div>
+                <div>
+                  <div class="wf-fs-section-h">L-fase</div>
+                  <div class="wf-fs-chips">
+                    <button class="wf-fs-chip">L1</button>
+                    <button class="wf-fs-chip wf-active">L2</button>
+                    <button class="wf-fs-chip">L3</button>
+                    <button class="wf-fs-chip">L4</button>
+                  </div>
+                </div>
+                <div>
+                  <div class="wf-fs-section-h">Varighet</div>
+                  <div class="wf-fs-opts">
+                    <label class="wf-fs-opt"><span class="wf-fs-box wf-checked"></span>Under 15 min<span class="wf-fs-count">78</span></label>
+                    <label class="wf-fs-opt"><span class="wf-fs-box"></span>15–30 min<span class="wf-fs-count">112</span></label>
+                    <label class="wf-fs-opt"><span class="wf-fs-box"></span>Over 30 min<span class="wf-fs-count">50</span></label>
+                  </div>
+                </div>
+                <div>
+                  <div class="wf-fs-section-h">Vanskelighet</div>
+                  <div class="wf-fs-chips">
+                    <button class="wf-fs-chip">●</button>
+                    <button class="wf-fs-chip wf-active">●●</button>
+                    <button class="wf-fs-chip">●●●</button>
+                    <button class="wf-fs-chip">●●●●</button>
+                    <button class="wf-fs-chip">●●●●●</button>
+                  </div>
+                </div>
+              </aside>
+
+              <div>
+                <div class="wf-c-row" style="margin-bottom:8px"><div class="wf-c-label">12 treff for "putt"<span class="wf-marker">3</span></div><div style="font-size:11px;color:#999">Sortert: relevans</div></div>
+                <div class="wf-drill-grid">
+                  <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L2</span></div><h3 class="wf-drill-title">Putt 5m × 10</h3><p class="wf-drill-desc">10 forsøk fra 5m. Krav: 8/10 i hull.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">12 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+                  <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L2</span></div><h3 class="wf-drill-title">Ladder 3–9m</h3><p class="wf-drill-desc">Distanse-kalibrering. 4 avstander, 1 ball hver.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">14 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+                  <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L2</span></div><h3 class="wf-drill-title">Clockface 2m</h3><p class="wf-drill-desc">8 putts rundt hull fra 2m. 8/8 for fullført.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">10 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+                  <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L2</span></div><h3 class="wf-drill-title">Distance control 10m</h3><p class="wf-drill-desc">5 putts 10m. Innenfor 1m for hvert treff.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">12 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Stor søkehero:</strong> Gir trygghet for power-brukere. "Hva vil du trene på?" er invitasjon, ikke funksjon.</li>
+        <li><strong>2 — Filter-sidebar:</strong> Multi-dimensjonelt filter (kategori, L-fase, varighet, vanskelighet). Checkbox + chips + tellere.</li>
+        <li><strong>3 — Live-resultat:</strong> Oppdateres idet man skriver. Sortering-dropdown (relevans, nyeste, kortest).</li>
+        <li><strong>Styrke:</strong> Maksimal kontroll. Svakhet: krever at spilleren vet hva de søker — dårlig for utforsking.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Recent Used ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Recent Used</span></h2>
+    <p class="option-description">Anbefalt-først. Øverst: "Fra din plan denne uken" + "Sist brukt" + "AI-anbefaling basert på svakheter". Deretter full bank. Reduserer tid-til-trening for aktive brukere.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/trening/ovelser</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP 14.2</div></div></div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">Din uke-plan</div><div class="wf-sb-cta-desc">5 øvelser venter</div><button class="wf-sb-cta-btn">Start økt</button></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar"><div class="wf-mtopbar-left">Tren · øvelsesbank</div><div class="wf-phead-actions"><button class="wf-mtopbar-chip wf-active">For deg</button><button class="wf-mtopbar-chip">Alle 240</button></div></div>
+            <section class="wf-phead"><div><div class="wf-phead-eyebrow">Personlig · basert på plan + data</div><h1 class="wf-phead-h">Øvelsesbank</h1><div class="wf-phead-sub">Forhåndsvalgt for deg. Full bank er tilgjengelig under.</div></div></section>
+
+            <div class="wf-search"><div class="wf-search-icon"></div><input class="wf-search-input" type="text" placeholder="Søk eller hopp direkte til øvelse"><button class="wf-search-cta">Søk</button></div>
+
+            <div>
+              <div class="wf-c-label" style="margin-bottom:8px">Fra din plan · denne uken<span class="wf-marker">1</span></div>
+              <div class="wf-rec-strip">
+                <div class="wf-rec"><div class="wf-rec-eyebrow">Onsdag</div><h4 class="wf-rec-title">Putt 5m × 10</h4><div class="wf-rec-meta">12 min · PUTT · L2</div><button class="wf-rec-cta">Start nå</button></div>
+                <div class="wf-rec"><div class="wf-rec-eyebrow">Torsdag</div><h4 class="wf-rec-title">Iron dispersion 140m</h4><div class="wf-rec-meta">25 min · JERN · L2</div><button class="wf-rec-cta">Start nå</button></div>
+                <div class="wf-rec"><div class="wf-rec-eyebrow">Fredag</div><h4 class="wf-rec-title">Chip landing zone</h4><div class="wf-rec-meta">20 min · CHIP · L1</div><button class="wf-rec-cta">Start nå</button></div>
+                <div class="wf-rec"><div class="wf-rec-eyebrow">Lørdag</div><h4 class="wf-rec-title">Ladder 3–9m</h4><div class="wf-rec-meta">14 min · PUTT · L2</div><button class="wf-rec-cta">Start nå</button></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="wf-c-label" style="margin-bottom:8px">AI-anbefaling · basert på Approach −0.9 SG<span class="wf-marker">2</span></div>
+              <div class="wf-rec-strip">
+                <div class="wf-rec"><div class="wf-rec-badge">AI</div><div class="wf-rec-eyebrow">Topp match</div><h4 class="wf-rec-title">Iron dispersion 140m</h4><div class="wf-rec-meta">Treffer din svakhet: approach 100–140m</div><button class="wf-rec-cta">Se øvelse</button></div>
+                <div class="wf-rec"><div class="wf-rec-badge">AI</div><div class="wf-rec-eyebrow">Anbefalt</div><h4 class="wf-rec-title">Approach ladder 100/120/140</h4><div class="wf-rec-meta">Kalibrer 3 jern-distanser</div><button class="wf-rec-cta">Se øvelse</button></div>
+                <div class="wf-rec"><div class="wf-rec-badge">AI</div><div class="wf-rec-eyebrow">Nytt tillegg</div><h4 class="wf-rec-title">Half-swing 110m</h4><div class="wf-rec-meta">Kontroll fremfor lengde</div><button class="wf-rec-cta">Se øvelse</button></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="wf-c-label" style="margin-bottom:8px">Sist brukt<span class="wf-marker">3</span></div>
+              <div class="wf-drill-grid">
+                <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">PUTT · L2</span></div><h3 class="wf-drill-title">Putt 5m × 10</h3><p class="wf-drill-desc">Brukt 3 ganger · sist 14. april. Siste resultat: 7/10.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">12 min</span><span class="wf-drill-meta-chip">Putter</span></div></div>
+                <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">JERN · L2</span></div><h3 class="wf-drill-title">Iron dispersion 140m</h3><p class="wf-drill-desc">Brukt 2 ganger · sist 11. april. Siste: 6/10.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">25 min</span><span class="wf-drill-meta-chip">7-jern</span></div></div>
+                <div class="wf-drill"><div class="wf-drill-head"><div class="wf-drill-ico"></div><span class="wf-drill-badge">CHIP · L1</span></div><h3 class="wf-drill-title">Chip landing zone</h3><p class="wf-drill-desc">Brukt 1 gang · 7. april. Resultat: 3/5.</p><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div><div class="wf-drill-meta"><span class="wf-drill-meta-chip">20 min</span><span class="wf-drill-meta-chip">Wedge</span></div></div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Plan-rad øverst:</strong> Direkte tilgang til det ukeplanen sier — reduserer friksjon for aktive brukere.</li>
+        <li><strong>2 — AI-rad:</strong> Kobler øvelsesbank til statistikk. Lilla AI-badge konsekvent med portal.</li>
+        <li><strong>3 — Sist brukt med historikk:</strong> Gjør det enkelt å gjenta og se progresjon (7/10 → 8/10).</li>
+        <li><strong>Styrke:</strong> Nullvalg-opplevelsen er kraftig — spilleren finner relevant øvelse på 1 klikk. Svakhet: krever plan + data for å fungere.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Table View ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Table View</span></h2>
+    <p class="option-description">Sortbar databasetabell for bulk-oversikt. Power-verktøy for trenere og avanserte spillere som vil sammenligne mange øvelser raskt. Én rad per drill, alle metadata synlig.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/trening/ovelser</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile"><div class="wf-sb-avatar">EH</div><div><div class="wf-sb-profile-name">Erik Hansen</div><div class="wf-sb-profile-meta">Pro · HCP 14.2</div></div></div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Statistikk</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta"><div class="wf-sb-cta-title">240 øvelser</div><div class="wf-sb-cta-desc">Tabell-visning</div><button class="wf-sb-cta-btn">Eksporter CSV</button></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-mtopbar"><div class="wf-mtopbar-left">Tren · øvelsesbank</div><div class="wf-phead-actions"><button class="wf-mtopbar-chip">Kort-visning</button><button class="wf-mtopbar-chip wf-active">Tabell</button></div></div>
+            <section class="wf-phead"><div><div class="wf-phead-eyebrow">240 øvelser · sorterbar</div><h1 class="wf-phead-h">Øvelsesbank</h1><div class="wf-phead-sub">Klikk en kolonneoverskrift for å sortere. Klikk rad for detaljer.</div></div></section>
+
+            <div class="wf-search"><div class="wf-search-icon"></div><input class="wf-search-input" type="text" placeholder="Filtrer i tabellen …"><button class="wf-search-cta">Filtrer</button></div>
+
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="wf-fs-chip wf-active">Alle</button>
+              <button class="wf-fs-chip">Putting</button>
+              <button class="wf-fs-chip">Chip</button>
+              <button class="wf-fs-chip">Jern</button>
+              <button class="wf-fs-chip">Driver</button>
+              <button class="wf-fs-chip">Fitness</button>
+              <button class="wf-fs-chip">Mental</button>
+              <span style="margin-left:auto;font-size:11px;color:#999">240 rader</span>
+            </div>
+
+            <table class="wf-tbl"><span class="wf-marker" style="position:absolute;margin-top:-8px;margin-left:-10px">1</span>
+              <thead>
+                <tr>
+                  <th class="sort">Øvelse</th>
+                  <th class="sort">Kategori</th>
+                  <th class="sort">L-fase</th>
+                  <th class="sort">Varighet</th>
+                  <th class="sort">Vansk.</th>
+                  <th class="sort">Utstyr</th>
+                  <th>Krav</th>
+                  <th>Video</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="wf-tbl-drill">Putt 5m × 10</td><td><span class="wf-tbl-tag">Putting</span></td><td>L2</td><td>12 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div></td><td>Putter</td><td>8/10 i hull</td><td>Ja</td></tr>
+                <tr><td class="wf-tbl-drill">Clockface 3m</td><td><span class="wf-tbl-tag">Putting</span></td><td>L3</td><td>15 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div></td><td>Putter</td><td>10/12</td><td>Ja</td></tr>
+                <tr><td class="wf-tbl-drill">Chip landing zone</td><td><span class="wf-tbl-tag">Chip</span></td><td>L1</td><td>20 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div></td><td>Wedge</td><td>3 av 5 i 2m-ring</td><td>Ja</td></tr>
+                <tr><td class="wf-tbl-drill">Iron dispersion 140m</td><td><span class="wf-tbl-tag">Jern</span></td><td>L2</td><td>25 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div></td><td>7-jern</td><td>8/10 i 8m</td><td>Ja</td></tr>
+                <tr><td class="wf-tbl-drill">Driver gate drill</td><td><span class="wf-tbl-tag">Driver</span></td><td>L3</td><td>20 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div></td><td>Driver</td><td>7/10 gjennom port</td><td>Ja</td></tr>
+                <tr><td class="wf-tbl-drill">Pressure 50/50 putt</td><td><span class="wf-tbl-tag">Putting</span></td><td>L4</td><td>18 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span></div></td><td>Putter</td><td>8/10 resettbar</td><td>Ja</td></tr>
+                <tr><td class="wf-tbl-drill">Ladder 3–9m</td><td><span class="wf-tbl-tag">Putting</span></td><td>L2</td><td>14 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div></td><td>Putter</td><td>4 treff på 4 avstander</td><td>Ja</td></tr>
+                <tr><td class="wf-tbl-drill">Half-swing 110m</td><td><span class="wf-tbl-tag">Jern</span></td><td>L3</td><td>22 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div></td><td>9-jern</td><td>5m dispersion</td><td>Nei</td></tr>
+                <tr><td class="wf-tbl-drill">Core stability 10 min</td><td><span class="wf-tbl-tag">Fitness</span></td><td>L1</td><td>10 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div></td><td>Matte</td><td>3 runder</td><td>Ja</td></tr>
+                <tr><td class="wf-tbl-drill">Pre-shot routine</td><td><span class="wf-tbl-tag">Mental</span></td><td>L2</td><td>8 min</td><td><div class="wf-diff"><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot wf-on"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span><span class="wf-diff-dot"></span></div></td><td>Ingen</td><td>10 rep. konsistent</td><td>Ja</td></tr>
+              </tbody>
+            </table>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#999">
+              <span>Viser 10 av 240</span>
+              <div style="display:flex;gap:6px"><button class="wf-mtopbar-chip">Forrige</button><button class="wf-mtopbar-chip">1</button><button class="wf-mtopbar-chip wf-active">2</button><button class="wf-mtopbar-chip">3</button><button class="wf-mtopbar-chip">Neste</button></div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Sorterbar tabell:</strong> Klikk kolonne for sortering. Power-verktøy for trenere som vil sammenligne bulk.</li>
+        <li><strong>Kategori-pills:</strong> Hurtigfilter over tabellen. Kombineres med søk.</li>
+        <li><strong>Styrke:</strong> Maksimal informasjonstetthet. Svakhet: kald opplevelse, krever erfaring, fungerer dårlig på mobil.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>gjøre det raskt å finne riktig øvelse — uten å miste NGF-pyramiden som pedagogisk anker</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Oppdagelse</th><th>NGF-kobling</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Pyramid Filter</strong></td><td>Pyramide som visuelt primærfilter + drill-grid</td><td>Høy (visuelt kart)</td><td>Svært høy (pyramiden ER UI)</td><td>Lav–medium</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Category Cards</strong></td><td>Grupper etter praktisk kategori (Putting, Chip, …)</td><td>Høy (kjent mental modell)</td><td>Sekundær</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Search First</strong></td><td>Søk-hero + filter-sidebar</td><td>Lav (krever forkunnskap)</td><td>Filter-dimensjon</td><td>Medium</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>4. Recent Used</strong></td><td>Anbefalt-først, bank under</td><td>Svært høy (0-klikk relevans)</td><td>Sekundær</td><td>Høy (krever plan + AI)</td><td>★★★★☆</td></tr>
+        <tr><td><strong>5. Table View</strong></td><td>Sortbar databasetabell</td><td>Medium (power-bruker)</td><td>Kolonne</td><td>Lav</td><td>★★★☆☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Pyramid Filter</h3>
+      <p>Pyramiden er allerede sentral identitetsmarkør på markedssiden og i treningsplan. Å bruke den som primærfilter her skaper konsistens og pedagogisk kobling — spilleren lærer modellen hver gang de velger øvelse. Kort-grid med badge (kategori·L-fase), difficulty-dots og meta-chips gir kompakt info uten overload. Detalj-modal (video + beskrivelse + trinn + suksesskriterium som "8 av 10 i hull") matcher eksempelet i spec-en.</p>
+      <p><strong>Strategisk flow:</strong> Implementer Option 1 som default for <code>/portal/trening/ovelser</code>. Kombiner med Opt 4-tanke: vis en rad "Fra din plan denne uken" + "AI-anbefaling" ØVER pyramide-filteret når bruker har aktiv plan — da får man gratis 0-klikk-opplevelse for aktive brukere uten å ofre utforsking for nye. Opt 5 (tabell) blir sekundær visning for Elite/trenere via toggle "Kort / Tabell". Opt 3 (Søk) er allerede dekket inline (søkebar øverst i Opt 1). Opt 2 (kategori) parkeres som fremtidig alternativ hvis pyramiden oppleves som for abstrakt.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

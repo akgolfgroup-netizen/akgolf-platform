@@ -1,0 +1,156 @@
+/* ===== Option 4: Map View — Clean + Polished =====
+   AK Golf Mission Control — Geografisk elev-oversikt.
+   Selectors: #frame-opt4.clean / #frame-opt4.polished */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* Self-reveal */
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"] .sub-tab-badge,
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"] .sub-tab-badge { display: none; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"] { color: #666; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #333; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"].active { color: #000; border-bottom-color: #000; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"] { color: #666; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #333; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"].active { color: #000; border-bottom-color: #000; }
+
+#frame-opt4.clean .browser-dots span:nth-child(1), #frame-opt4.polished .browser-dots span:nth-child(1) { background: #ff5f57; }
+#frame-opt4.clean .browser-dots span:nth-child(2), #frame-opt4.polished .browser-dots span:nth-child(2) { background: #febc2e; }
+#frame-opt4.clean .browser-dots span:nth-child(3), #frame-opt4.polished .browser-dots span:nth-child(3) { background: #28c840; }
+
+/* ===== CLEAN ===== */
+#frame-opt4.clean .browser-content { background: #F5F8F7; font-family: 'Inter', -apple-system, system-ui, sans-serif; padding: 0; }
+#frame-opt4.clean .mc-shell { background: #F5F8F7; }
+#frame-opt4.clean .mc-topbar { background: #0A1F18; border-bottom: 1px solid rgba(209,248,67,0.1); }
+#frame-opt4.clean .mc-logo { color: #D1F843; }
+#frame-opt4.clean .mc-tab { color: rgba(255,255,255,0.55); }
+#frame-opt4.clean .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+#frame-opt4.clean .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; }
+#frame-opt4.clean .mc-search { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); }
+#frame-opt4.clean .mc-avatar { background: #D1F843; color: #0A1F18; font-weight: 700; }
+
+#frame-opt4.clean .mc-map-head { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt4.clean .mc-filter-label { color: #A5B2AD; }
+#frame-opt4.clean .mc-pill { background: #fff; border-color: rgba(0,88,64,0.1); color: #324D45; }
+#frame-opt4.clean .mc-pill:hover { background: #F5F8F7; }
+#frame-opt4.clean .mc-pill-active { background: #005840; color: #fff; border-color: #005840; }
+#frame-opt4.clean .mc-cta { background: #D1F843; color: #0A1F18; border-color: #D1F843; font-weight: 700; }
+
+#frame-opt4.clean .mc-map { background: #F5F8F7; border-right-color: rgba(0,88,64,0.08); }
+#frame-opt4.clean .mc-map-placeholder { background: #fff; border-color: rgba(0,88,64,0.1); }
+#frame-opt4.clean .mc-map-outline { color: #A5B2AD; }
+#frame-opt4.clean .mc-map-cluster { background: #005840; color: #fff; border-color: #fff; box-shadow: 0 2px 8px rgba(0,88,64,0.3); }
+#frame-opt4.clean .mc-map-cluster-sm { background: #2A7D5A; }
+#frame-opt4.clean .mc-map-legend { background: #fff; border-color: rgba(0,88,64,0.06); color: #7A8C85; }
+#frame-opt4.clean .mc-map-dot { background: #005840; }
+#frame-opt4.clean .mc-map-dot-lg { background: #0A1F18; }
+#frame-opt4.clean .mc-map-dot-sm { background: #2A7D5A; }
+
+#frame-opt4.clean .mc-map-panel { background: #fff; }
+#frame-opt4.clean .mc-map-panel-head { border-bottom-color: rgba(0,88,64,0.08); }
+#frame-opt4.clean .mc-drawer-label { color: #A5B2AD; }
+#frame-opt4.clean .mc-map-panel-title { color: #0A1F18; }
+#frame-opt4.clean .mc-map-panel-meta { color: #7A8C85; }
+#frame-opt4.clean .mc-map-club { border-bottom-color: rgba(0,88,64,0.08); }
+#frame-opt4.clean .mc-map-club-head strong { color: #0A1F18; }
+#frame-opt4.clean .mc-map-club-head span { background: #E6F3F1; color: #005840; font-weight: 700; }
+#frame-opt4.clean .mc-seg-list li { color: #324D45; }
+#frame-opt4.clean .mc-seg-list li strong { color: #0A1F18; }
+#frame-opt4.clean .mc-list-more { color: #A5B2AD; }
+#frame-opt4.clean .mc-avatar-sm { background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.1); font-weight: 700; }
+
+#frame-opt4.clean .mc-map-panel-foot { border-top-color: rgba(0,88,64,0.08); }
+#frame-opt4.clean .mc-action { background: #fff; border-color: rgba(0,88,64,0.1); color: #324D45; }
+#frame-opt4.clean .mc-action:hover { background: #F5F8F7; }
+#frame-opt4.clean .mc-action-primary { background: #005840; color: #fff; border-color: #005840; font-weight: 700; }
+
+/* ===== POLISHED ===== */
+#frame-opt4.polished .browser-content { background: #F5F8F7; font-family: 'Inter', -apple-system, system-ui, sans-serif; padding: 0; }
+#frame-opt4.polished .mc-shell { background: #F5F8F7; }
+#frame-opt4.polished .mc-topbar {
+  background: linear-gradient(180deg, #0A1F18 0%, #051a13 100%);
+  border-bottom: 1px solid rgba(209,248,67,0.12);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 12px rgba(0,0,0,0.15);
+}
+#frame-opt4.polished .mc-logo { color: #D1F843; letter-spacing: 0.12em; font-weight: 800; }
+#frame-opt4.polished .mc-tab { color: rgba(255,255,255,0.55); transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+#frame-opt4.polished .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+#frame-opt4.polished .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; box-shadow: 0 0 0 1px rgba(209,248,67,0.25), 0 2px 8px rgba(209,248,67,0.2); }
+#frame-opt4.polished .mc-search { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); }
+#frame-opt4.polished .mc-avatar { background: #D1F843; color: #0A1F18; font-weight: 800; box-shadow: 0 2px 6px rgba(209,248,67,0.25); }
+
+#frame-opt4.polished .mc-map-head {
+  background: linear-gradient(180deg, #fff 0%, #F5F8F7 100%);
+  border-bottom: 1px solid rgba(0,88,64,0.08);
+}
+#frame-opt4.polished .mc-filter-label { color: #A5B2AD; font-weight: 700; }
+#frame-opt4.polished .mc-pill { background: #fff; border-color: rgba(0,88,64,0.1); color: #324D45; transition: all 0.2s ease; }
+#frame-opt4.polished .mc-pill:hover { background: #F5F8F7; transform: translateY(-1px); }
+#frame-opt4.polished .mc-pill-active { background: #005840; color: #fff; border-color: #005840; box-shadow: 0 2px 6px rgba(0,88,64,0.2); }
+#frame-opt4.polished .mc-cta {
+  background: #D1F843; color: #0A1F18; border: 1px solid rgba(209,248,67,0.7); font-weight: 700;
+  box-shadow: 0 2px 8px rgba(209,248,67,0.3);
+  transition: all 0.2s ease;
+}
+#frame-opt4.polished .mc-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(209,248,67,0.4); }
+
+#frame-opt4.polished .mc-map {
+  background: radial-gradient(ellipse at center, #F5F8F7 0%, #E6F3F1 100%);
+  border-right: 1px solid rgba(0,88,64,0.08);
+}
+#frame-opt4.polished .mc-map-placeholder {
+  background: #fff;
+  border: 1px solid rgba(0,88,64,0.08);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02), inset 0 0 60px rgba(0,88,64,0.02);
+  border-radius: 12px;
+}
+#frame-opt4.polished .mc-map-outline { color: #A5B2AD; font-family: 'Inter'; }
+
+#frame-opt4.polished .mc-map-cluster {
+  background: radial-gradient(circle at 30% 30%, #005840 0%, #003F2C 100%);
+  color: #fff; border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(0,88,64,0.35), 0 0 0 1px rgba(0,88,64,0.1);
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+  cursor: pointer;
+}
+#frame-opt4.polished .mc-map-cluster:hover { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 6px 18px rgba(0,88,64,0.45); }
+#frame-opt4.polished .mc-map-cluster-sm { background: radial-gradient(circle at 30% 30%, #2A7D5A 0%, #1E5F43 100%); box-shadow: 0 2px 8px rgba(42,125,90,0.3); }
+
+#frame-opt4.polished .mc-map-legend {
+  background: #fff; border: 1px solid rgba(0,88,64,0.06); color: #7A8C85;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+#frame-opt4.polished .mc-map-dot { background: #005840; }
+#frame-opt4.polished .mc-map-dot-lg { background: #0A1F18; }
+#frame-opt4.polished .mc-map-dot-sm { background: #2A7D5A; }
+
+#frame-opt4.polished .mc-map-panel {
+  background: #fff;
+  box-shadow: -4px 0 16px rgba(0,0,0,0.03);
+}
+#frame-opt4.polished .mc-map-panel-head { border-bottom: 1px solid rgba(0,88,64,0.08); background: linear-gradient(180deg, #fff 0%, #F5F8F7 100%); }
+#frame-opt4.polished .mc-drawer-label { color: #A5B2AD; font-weight: 700; }
+#frame-opt4.polished .mc-map-panel-title { color: #0A1F18; font-weight: 800; letter-spacing: -0.02em; }
+#frame-opt4.polished .mc-map-panel-meta { color: #7A8C85; }
+#frame-opt4.polished .mc-map-club { border-bottom: 1px solid rgba(0,88,64,0.06); }
+#frame-opt4.polished .mc-map-club-head strong { color: #0A1F18; font-weight: 700; }
+#frame-opt4.polished .mc-map-club-head span { background: #E6F3F1; color: #005840; font-weight: 700; border-radius: 999px; }
+#frame-opt4.polished .mc-seg-list li { color: #324D45; }
+#frame-opt4.polished .mc-seg-list li strong { color: #0A1F18; font-variant-numeric: tabular-nums; }
+#frame-opt4.polished .mc-list-more { color: #A5B2AD; }
+#frame-opt4.polished .mc-avatar-sm { background: #E6F3F1; color: #005840; border-color: rgba(0,88,64,0.1); font-weight: 700; }
+
+#frame-opt4.polished .mc-map-panel-foot { border-top: 1px solid rgba(0,88,64,0.08); background: #F5F8F7; }
+#frame-opt4.polished .mc-action { background: #fff; border: 1px solid rgba(0,88,64,0.1); color: #324D45; transition: all 0.2s ease; }
+#frame-opt4.polished .mc-action:hover { background: #F5F8F7; border-color: rgba(0,88,64,0.2); transform: translateY(-1px); }
+#frame-opt4.polished .mc-action-primary {
+  background: #005840; color: #fff; border-color: #005840; font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0,88,64,0.2);
+}
+#frame-opt4.polished .mc-action-primary:hover { background: #004533; box-shadow: 0 4px 10px rgba(0,88,64,0.3); }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt4.polished .mc-pill, #frame-opt4.polished .mc-cta, #frame-opt4.polished .mc-tab, #frame-opt4.polished .mc-map-cluster, #frame-opt4.polished .mc-action { transition: none; }
+  #frame-opt4.polished .mc-pill:hover, #frame-opt4.polished .mc-cta:hover, #frame-opt4.polished .mc-action:hover { transform: none; }
+  #frame-opt4.polished .mc-map-cluster:hover { transform: translate(-50%, -50%); }
+}

@@ -1385,8 +1385,8 @@ model UnifiedSkillIndex {
   vsTourAvgPct Float
   dataGolfDgId Int?
 
-  updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt DateTime               @updatedAt
+  User      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   snapshots UnifiedSkillSnapshot[]
 }
 
@@ -1418,9 +1418,9 @@ model UnifiedSkillSnapshot {
 
   vsTourAvgPct Float
 
-  UnifiedSkillIndex UnifiedSkillIndex? @relation(fields: [unifiedSkillIndexId], references: [id], onDelete: Cascade)
+  UnifiedSkillIndex   UnifiedSkillIndex? @relation(fields: [unifiedSkillIndexId], references: [id], onDelete: Cascade)
   unifiedSkillIndexId String?
-  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, createdAt])
 }
@@ -1460,6 +1460,214 @@ model TrainingPrescription {
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, generatedAt])
+}
+
+/// Coaching Forecast — matematisk prognose for spillerutvikling.
+/// Hver forecast lagres ved opprettelse og kan senere sammenlignes mot faktisk
+/// utfall (backtesting). Full metodologi: docs/strategy/COACHING_FORECAST_METHODOLOGY.md.
+model CoachingForecast {
+  id          String   @id @default(cuid())
+  userId      String
+  generatedAt DateTime @default(now())
+
+  /// Versjon av metodologi/kalibreringstabell brukt ved generering.
+  /// Eksempel: "methodology-1.0/hoursTable-1.0.0"
+  modelVersion String
+
+  // ── Input: nåværende tilstand ────────────────────────────────────
+  currentScoreAvg   Float // snitt-score på Srixon-Tour-lignende baner
+  currentSgTotal    Float // bane-justert
+  currentSgOtt      Float?
+  currentSgApp      Float?
+  currentSgArg      Float?
+  currentSgPutt     Float?
+  currentCategory   String // A–K
+  currentAge        Int
+  currentHoursPerWk Float
+
+  // ── Input: mål ───────────────────────────────────────────────────
+  targetScoreAvg  Float
+  targetCategory  String // A–K
+  deadline        DateTime
+  avgCourseRating Float // for score↔SG-konvertering
+  avgSlopeRating  Int
+
+  // ── Output: SG-delta og fordeling ────────────────────────────────
+  requiredSgDelta     Float
+  deltaAllocationJson Json // { OTT: 0.6, APP: 1.2, ARG: 0.4, PUTT: 0.1 }
+
+  // ── Output: tidsbruk ─────────────────────────────────────────────
+  estimatedTotalHours    Float
+  estimatedHoursCi95Low  Float
+  estimatedHoursCi95High Float
+  estimatedHoursPerWeek  Float
+  hoursPerCategoryJson   Json // { OTT: { hours, ci95Low, ci95High }, ... }
+
+  // ── Output: Tek/Tak/Mental/Fys-fordeling ────────────────────────
+  /// Nested JSON: { OTT: { tek: 0.65, tak: 0.10, mental: 0.10, fys: 0.15 }, ... }
+  techTactMentalPhysJson Json
+
+  // ── Output: sannsynlighet ────────────────────────────────────────
+  probabilityOfSuccess Float // 0–1, Monte-Carlo-estimert
+  confidenceInterval95 Json // [lowerBound_sgDelta, upperBound_sgDelta]
+  monteCarloRuns       Int   @default(10000)
+
+  // ── Output: forklaring (for coach/spiller) ───────────────────────
+  primaryFocusCategory String // "APP" / "OTT" / etc.
+  rootCauseJson        Json // { APP: "blandet_tek_mental", ... }
+  recommendationsJson  Json // liste med konkrete øvelsestyper/økt-IDer
+
+  // ── Antakelser (eksplisitt lagret for audit) ─────────────────────
+  assumptionsJson Json // array av antakelser som ble aktive
+
+  // ── Backtesting (fylles inn ved deadline) ────────────────────────
+  actualScoreAvg          Float?
+  actualSgTotal           Float?
+  actualHoursSpent        Float?
+  actualOutcomeMeasuredAt DateTime?
+  withinCi95              Boolean? // traff forecast innenfor 95%-CI?
+  predictionErrorSg       Float? // actual − predicted, for kalibrering
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, generatedAt])
+  @@index([deadline])
+  @@index([actualOutcomeMeasuredAt])
+}
+
+/// Nasjonal skills-benchmark per segment (alder, kjønn, region, A–K-kategori).
+/// Aggregeres nattlig fra UnifiedSkillIndex for alle aktive norske spillere.
+/// Gir AK Golf Platform en unik nasjonal skills-atlas som ingen andre i Norge har.
+model NorwegianSkillBenchmark {
+  id       String            @id @default(cuid())
+  ageGroup NorwegianAgeGroup
+  gender   NorwegianGender
+  region   NorwegianRegion
+  category String // A–K fra masterdokumentet
+
+  /// Antall unike spillere som ligger bak dette benchmarket
+  sampleSize Int
+
+  /// SG-snitt per kategori
+  sgOttMean   Float
+  sgAppMean   Float
+  sgArgMean   Float
+  sgPuttMean  Float
+  sgTotalMean Float
+
+  /// Percentiler (p10/p25/p50/p75/p90) som JSON per SG-kategori
+  sgOttPercentiles   Json
+  sgAppPercentiles   Json
+  sgArgPercentiles   Json
+  sgPuttPercentiles  Json
+  sgTotalPercentiles Json
+
+  /// TrackMan-snitt (biomekanikk) — nullable dersom få i segmentet har TrackMan
+  ballSpeedMean     Float?
+  ballSpeedStdDev   Float?
+  driverCarryMean   Float?
+  ironCarryMean     Float?
+  clubSpeedMean     Float?
+  smashFactorMean   Float?
+  offlineStdDevMean Float?
+
+  /// 20 standardtester fra masterdokument seksjon 16
+  /// Format: { testId: { mean, stdDev, p50, p90, sampleSize } }
+  testResultsJson Json
+
+  /// Mental-score snitt (fra MentalScorecardEntry)
+  mentalScoreMean Float?
+
+  /// Metadata
+  dataAsOf  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  TalentScore TalentScore[]
+
+  @@unique([ageGroup, gender, region, category])
+  @@index([ageGroup, category])
+  @@index([region, category])
+}
+
+/// Talent-score per spiller — normalisert 0–100-score som kombinerer
+/// USI, progresjon, biomekanisk potensial, mental og kontekst.
+/// Brukes til talent-ID, landslagsutvelgelse og nasjonal ranking.
+model TalentScore {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  /// Delkomponenter (alle 0–100, høyere = bedre)
+  currentUsiScore   Float
+  progressionScore  Float // forbedringsrate siste 90 dager
+  ceilingProjection Float // estimert maksnivå basert på lignende spillere
+  biomechanicScore  Float // TrackMan-baserte potensial-indikatorer
+  physicalScore     Float // alder, høyde, stabilitet
+  mentalScore       Float
+  contextScore      Float // treningstid + fasilitetstilgang
+
+  /// Samlet vektet score (0–100)
+  totalScore Float
+
+  /// Ranking
+  nationalRank Int?
+  ageGroupRank Int?
+  percentile   Float? // 0–100 i sitt segment
+
+  /// Prediksjoner
+  projectedHcp1Year  Float?
+  projectedHcp3Years Float?
+  projectedPeakHcp   Float?
+  projectedPeakAge   Int?
+
+  /// «Lignende spillere»-match (topp 5 userIds)
+  similarPlayerUserIds String[]
+  /// Format: { userId: similarity (0–1) }
+  similarityJson       Json
+
+  /// Top-3 styrker og svakheter (for UI)
+  strengthsJson       Json
+  weaknessesJson      Json
+  recommendationsJson Json
+
+  /// Referanse til segment-benchmark
+  benchmarkId String?
+
+  computedAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  User                    User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  NorwegianSkillBenchmark NorwegianSkillBenchmark? @relation(fields: [benchmarkId], references: [id])
+
+  @@index([totalScore, computedAt])
+  @@index([nationalRank])
+  @@index([ageGroupRank])
+}
+
+enum NorwegianAgeGroup {
+  U10
+  U12
+  U14
+  U16
+  U18
+  U21
+  SENIOR
+  VETERAN
+}
+
+enum NorwegianGender {
+  MALE
+  FEMALE
+  MIXED
+}
+
+/// Regioner basert på NGFs regioninndeling (forenklet)
+enum NorwegianRegion {
+  OST // Oslo/Viken
+  VEST // Vestland/Rogaland
+  MIDT // Trøndelag/Møre og Romsdal
+  NORD // Nordland/Troms/Finnmark
+  SOR // Agder/Telemark
+  ALL // Nasjonalt aggregat
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1657,6 +1865,8 @@ model User {
   UnifiedSkillIndex                           UnifiedSkillIndex?
   UnifiedSkillSnapshot                        UnifiedSkillSnapshot[]
   TrainingPrescription                        TrainingPrescription[]
+  CoachingForecast                            CoachingForecast[]
+  TalentScore                                 TalentScore?
   TrainingLog                                 TrainingLog[]
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
