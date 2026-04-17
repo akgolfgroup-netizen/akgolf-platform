@@ -8,6 +8,34 @@
 
 ---
 
+## 2026-04-17 ~22:45 — Coaching Forecast Phase 2 steg 8–10 (UI + CRON)
+
+**Jobbet med:**
+- **Steg 8 — Mission Control UI:** Ny "Forecast"-tab i `student-detail-client.tsx`. Bygget `student-forecast-tab.tsx` + `forecast-form.tsx` + `forecast-display.tsx` + `forecast-history.tsx`. Coach kan generere forecast via skjema (mål-score, deadline, course/slope rating, timer/uke, alder, diagnostikk). Viser siste forecast med nåværende tilstand, mål, delta SG, allocations per kategori med Tek/Tak/Mental/Fys stablede barer, total estimert tid med CI95, sannsynlighet, rotårsak, anbefalinger, antakelser og usikkerhet. Historikk med backtesting-status (withinCi95 + predictionErrorSg).
+- **Steg 9 — Portal UI:** Ny rute `/portal/min-plan` med `page.tsx` (server) og `min-plan-client.tsx`. Forenklet visning for spilleren: "Hvor er du nå?", "Hvor vil du?", "Hva kreves?", ærlig sannsynlighet (aldri skjult/avrundet opp, tydelig advarsel hvis < 50%). Laget player API `GET /api/portal/player/coaching-forecast` (kun autentisert bruker, egen data). Snarvei lagt til i `shortcut-pills.tsx`.
+- **Steg 10 — CRON backtesting:** `app/api/cron/coaching-forecast-backtest/route.ts` med `findForecastsReadyForBacktest`, `computePlayerSgProfile`, `predictScoreFromSg`, `backfillActualOutcome`. Henter siste 20 runder innen deadline−90 dager, beregner faktisk SG og score, oppdaterer forecast med withinCi95 og predictionErrorSg. Lagt til i `vercel.json` med schedule `0 4 * * *`. Autorisasjon via `Authorization: Bearer <CRON_SECRET>`.
+- **Kvalitetssikring:** TypeScript `--noEmit --skipLibCheck` ren for alle nye filer. ESLint ren. Alle 97 unit-tester grønne. `next build` fullført uten feil.
+
+**Nøkkelfiler:**
+- `app/admin/(authed)/elever/[id]/student-detail-client.tsx` (ny "forecast"-tab)
+- `components/portal/mission-control/student-forecast-tab.tsx`
+- `components/portal/mission-control/forecast-form.tsx`
+- `components/portal/mission-control/forecast-display.tsx`
+- `components/portal/mission-control/forecast-history.tsx`
+- `app/portal/(dashboard)/min-plan/page.tsx`
+- `app/portal/(dashboard)/min-plan/min-plan-client.tsx`
+- `app/api/portal/player/coaching-forecast/route.ts`
+- `app/api/cron/coaching-forecast-backtest/route.ts`
+- `components/portal/dashboard/shortcut-pills.tsx`
+- `vercel.json`
+
+**Neste steg:**
+- Deploy til dev og teste forecast-generering med ekte brukerdata
+- Verifiser at spiller-UI viser forecast korrekt
+- Kalibrere hours-per-SG-tabellen når n > 20 forecasts med backtest-data
+
+---
+
 ## 2026-04-15 ~23:15 — Portal Dashboard redesign + push til main
 
 **Jobbet med:**

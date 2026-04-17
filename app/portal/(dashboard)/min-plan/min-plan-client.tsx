@@ -1,0 +1,380 @@
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  Target,
+  TrendingUp,
+  Clock,
+  AlertTriangle,
+  Brain,
+  Dumbbell,
+  Map,
+  Compass,
+} from "lucide-react";
+import { Badge } from "@/components/ui";
+import { AdminProgressRing } from "@/components/portal/mission-control/ui";
+
+interface CategoryHours {
+  hours: number;
+  ci95Low: number;
+  ci95High: number;
+}
+
+interface TechTactMentalPhys {
+  tek: number;
+  tak: number;
+  mental: number;
+  fys: number;
+}
+
+interface ForecastData {
+  id: string;
+  generatedAt: string;
+  currentScoreAvg: number;
+  currentSgTotal: number;
+  currentSgOtt: number | null;
+  currentSgApp: number | null;
+  currentSgArg: number | null;
+  currentSgPutt: number | null;
+  currentCategory: string;
+  targetScoreAvg: number;
+  targetCategory: string;
+  deadline: string;
+  requiredSgDelta: number;
+  deltaAllocationJson: Record<string, number>;
+  estimatedTotalHours: number;
+  estimatedHoursCi95Low: number;
+  estimatedHoursCi95High: number;
+  estimatedHoursPerWeek: number;
+  hoursPerCategoryJson: Record<string, CategoryHours>;
+  techTactMentalPhysJson: Record<string, TechTactMentalPhys>;
+  probabilityOfSuccess: number;
+  confidenceInterval95: [number, number];
+  primaryFocusCategory: string;
+  rootCauseJson: Record<string, string>;
+  recommendationsJson: string[];
+  assumptionsJson: string[];
+  modelVersion: string;
+  monteCarloRuns: number;
+  withinCi95?: boolean | null;
+  predictionErrorSg?: number | null;
+}
+
+interface MinPlanClientProps {
+  forecast: ForecastData | null;
+  userName: string | null;
+}
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 12 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] as const },
+  },
+};
+
+const CATEGORY_LABELS: Record<string, string> = {
+  OTT: "Tee",
+  APP: "Approach",
+  ARG: "Kort spill",
+  PUTT: "Putting",
+};
+
+const CATEGORY_COLORS: Record<string, string> = {
+  OTT: "#005840",
+  APP: "#2A7D5A",
+  ARG: "#C48A32",
+  PUTT: "#007AFF",
+};
+
+const TTMP_COLORS: Record<string, string> = {
+  tek: "#005840",
+  tak: "#2A7D5A",
+  mental: "#AF52DE",
+  fys: "#007AFF",
+};
+
+const TTMP_LABELS: Record<string, string> = {
+  tek: "Teknikk",
+  tak: "Taktikk",
+  mental: "Mental",
+  fys: "Fysisk",
+};
+
+function round1(n: number): string {
+  return n.toFixed(1);
+}
+
+function formatDeadline(d: string): string {
+  const date = new Date(d);
+  return date.toLocaleDateString("no-NO", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
+  if (!forecast) {
+    return (
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="mx-auto w-full max-w-[1200px] space-y-5 pb-12 pt-2"
+      >
+        <motion.div variants={item}>
+          <h1 className="text-2xl font-bold text-black">Min plan</h1>
+          <p className="text-sm text-grey-400 mt-1">
+            Hei{userName ? `, ${userName}` : ""} — din coach har ikke laget en forecast ennå.
+          </p>
+        </motion.div>
+        <motion.div
+          variants={item}
+          className="bg-white border border-grey-200 rounded-xl p-10 text-center"
+        >
+          <Compass className="w-10 h-10 text-grey-300 mx-auto mb-3" />
+          <p className="text-sm text-grey-400 max-w-sm mx-auto">
+            Når din coach genererer en forecast, vil du se dine mål, estimert tidsbruk og
+            sannsynlighet for å nå dem her.
+          </p>
+        </motion.div>
+      </motion.div>
+    );
+  }
+
+  const probPct = Math.round(forecast.probabilityOfSuccess * 100);
+  const probColor =
+    probPct >= 70 ? "text-success-text" : probPct >= 40 ? "text-warning-text" : "text-error-text";
+  const probBadge =
+    probPct >= 70 ? "success" : probPct >= 40 ? "warning" : "error";
+  const probLabel =
+    probPct >= 70 ? "Realistisk" : probPct >= 40 ? "Krevende, men mulig" : "Vanskelig — snakk med coach";
+
+  const cats = Object.keys(forecast.deltaAllocationJson).filter((k) =>
+    ["OTT", "APP", "ARG", "PUTT"].includes(k),
+  );
+
+  return (
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="mx-auto w-full max-w-[1200px] space-y-5 pb-12 pt-2"
+    >
+      <motion.div variants={item}>
+        <h1 className="text-2xl font-bold text-black">Min plan</h1>
+        <p className="text-sm text-grey-400 mt-1">
+          Din coaching-forecast — oppdatert {new Date(forecast.generatedAt).toLocaleDateString("no-NO")}
+        </p>
+      </motion.div>
+
+      {/* Hvor er du nå → Hvor vil du */}
+      <motion.div
+        variants={item}
+        className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+      >
+        <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-2">
+            <Compass className="w-4 h-4 text-primary" />
+            <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
+              Hvor er du nå?
+            </p>
+          </div>
+          <p className="text-3xl font-bold text-black tabular-nums">
+            {round1(forecast.currentScoreAvg)}
+          </p>
+          <p className="text-sm text-grey-400 mt-0.5">
+            SG {round1(forecast.currentSgTotal)} · Kategori {forecast.currentCategory}
+          </p>
+        </div>
+
+        <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-2">
+            <Target className="w-4 h-4 text-primary" />
+            <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
+              Hvor vil du?
+            </p>
+          </div>
+          <p className="text-3xl font-bold text-black tabular-nums">
+            {round1(forecast.targetScoreAvg)}
+          </p>
+          <p className="text-sm text-grey-400 mt-0.5">
+            Innen {formatDeadline(forecast.deadline)} · Kat {forecast.targetCategory}
+          </p>
+        </div>
+
+        <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp className="w-4 h-4 text-primary" />
+            <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
+              Hva kreves?
+            </p>
+          </div>
+          <p className="text-3xl font-bold text-black tabular-nums">
+            +{round1(forecast.requiredSgDelta)}
+          </p>
+          <p className="text-sm text-grey-400 mt-0.5">
+            SG-forbedring · {round1(forecast.estimatedHoursPerWeek)} t/uke
+          </p>
+        </div>
+      </motion.div>
+
+      {/* Sannsynlighet — ærlig og tydelig */}
+      <motion.div
+        variants={item}
+        className="bg-white border border-grey-200 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6"
+      >
+        <AdminProgressRing
+          value={probPct}
+          max={100}
+          size={120}
+          strokeWidth={8}
+          valueSuffix="%"
+          label="sannsynlighet"
+        />
+        <div className="text-center sm:text-left">
+          <p className={`text-4xl font-bold tabular-nums ${probColor}`}>{probPct}%</p>
+          <p className="text-sm text-grey-400 mt-1">
+            sannsynlighet for å nå målet
+          </p>
+          <Badge variant={probBadge as never} className="mt-2">
+            {probLabel}
+          </Badge>
+          {probPct < 50 && (
+            <p className="text-xs text-error-text mt-2 max-w-sm">
+              Sannsynligheten er under 50 %. Det betyr ikke at målet er umulig, men at det krever
+              mer tid eller en justert plan. Snakk med din coach.
+            </p>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Timer + CI */}
+      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
+        <div className="flex items-center gap-2 mb-3">
+          <Clock className="w-4 h-4 text-primary" />
+          <p className="text-sm font-semibold text-black">Estimert tidsbruk</p>
+        </div>
+        <div className="flex flex-col sm:flex-row sm:items-end gap-2 sm:gap-4">
+          <p className="text-3xl font-bold text-black tabular-nums">
+            {Math.round(forecast.estimatedTotalHours)}
+            <span className="text-lg font-medium text-grey-400 ml-1">timer totalt</span>
+          </p>
+          <p className="text-sm text-grey-400 pb-1">
+            95% CI: {Math.round(forecast.estimatedHoursCi95Low)}–{Math.round(forecast.estimatedHoursCi95High)} timer
+          </p>
+        </div>
+      </motion.div>
+
+      {/* Kategori-fordeling */}
+      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6 space-y-4">
+        <div className="flex items-center gap-2">
+          <TrendingUp className="w-4 h-4 text-primary" />
+          <p className="text-sm font-semibold text-black">Fordeling per kategori</p>
+        </div>
+
+        {cats.map((cat) => {
+          const hours = forecast.hoursPerCategoryJson[cat]?.hours ?? 0;
+          const delta = forecast.deltaAllocationJson[cat] ?? 0;
+          const ttmp = forecast.techTactMentalPhysJson[cat] ?? {
+            tek: 0.25,
+            tak: 0.25,
+            mental: 0.25,
+            fys: 0.25,
+          };
+          const rootCause = forecast.rootCauseJson[cat] ?? "blandet";
+
+          return (
+            <div key={cat} className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span
+                    className="inline-block w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: CATEGORY_COLORS[cat] }}
+                  />
+                  <span className="text-sm font-medium text-black">
+                    {CATEGORY_LABELS[cat] ?? cat}
+                  </span>
+                  <span className="text-xs text-grey-400">
+                    +{round1(delta)} SG · {Math.round(hours)} t
+                  </span>
+                </div>
+                <span className="text-xs text-grey-400 capitalize">{rootCause}</span>
+              </div>
+              <div className="h-3 w-full rounded-full overflow-hidden flex">
+                {(["tek", "tak", "mental", "fys"] as const).map((key) => (
+                  <div
+                    key={key}
+                    className="h-full"
+                    style={{
+                      width: `${(ttmp[key] ?? 0) * 100}%`,
+                      backgroundColor: TTMP_COLORS[key],
+                    }}
+                    title={`${TTMP_LABELS[key]}: ${Math.round((ttmp[key] ?? 0) * 100)}%`}
+                  />
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </motion.div>
+
+      {/* Anbefalinger */}
+      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
+        <div className="flex items-center gap-2 mb-3">
+          <Brain className="w-4 h-4 text-primary" />
+          <p className="text-sm font-semibold text-black">Coach sine anbefalinger</p>
+        </div>
+        <ul className="space-y-2">
+          {forecast.recommendationsJson.map((rec, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-text">
+              <Dumbbell className="w-4 h-4 text-grey-300 mt-0.5 shrink-0" />
+              {rec}
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+
+      {/* Usikkerhet */}
+      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
+        <div className="flex items-center gap-2 mb-3">
+          <Map className="w-4 h-4 text-primary" />
+          <p className="text-sm font-semibold text-black">Usikkerhet</p>
+        </div>
+        <p className="text-sm text-text">
+          95% konfidensintervall for oppnådd SG-delta: [{" "}
+          <span className="font-mono tabular-nums">{round1(forecast.confidenceInterval95[0])}</span>
+          {" "}–{" "}
+          <span className="font-mono tabular-nums">{round1(forecast.confidenceInterval95[1])}</span>
+          {" "}]. Basert på {forecast.monteCarloRuns.toLocaleString("no-NO")} simuleringer.
+        </p>
+      </motion.div>
+
+      {/* Antakelser — alltid synlig */}
+      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
+        <div className="flex items-center gap-2 mb-3">
+          <AlertTriangle className="w-4 h-4 text-warning" />
+          <p className="text-sm font-semibold text-black">Viktige antakelser</p>
+        </div>
+        <ul className="space-y-2">
+          {forecast.assumptionsJson.map((ass, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-text">
+              <span className="text-grey-300 mt-0.5 shrink-0">·</span>
+              {ass}
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+    </motion.div>
+  );
+}

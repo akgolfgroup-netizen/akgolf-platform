@@ -1,19 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { Dumbbell, Flag, CalendarPlus, Bot, ArrowUpRight } from "lucide-react";
+import { Dumbbell, Flag, CalendarPlus, Bot, ArrowUpRight, Target } from "lucide-react";
 import { colors } from "@/lib/design-tokens";
 
 const shortcuts = [
   { href: "/portal/dagbok", icon: Dumbbell, label: "Logg trening", color: colors.primary.accent },
   { href: "/portal/runde/ny", icon: Flag, label: "Registrer runde", color: colors.data.coral },
   { href: "/portal/bookinger/ny", icon: CalendarPlus, label: "Book coaching", color: colors.primary.dark },
+  { href: "/portal/min-plan", icon: Target, label: "Min plan", color: colors.primary.main },
   { href: "/portal/ai-coach", icon: Bot, label: "AI Coach", color: colors.ai.primary },
 ];
 
 export function ShortcutPills() {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
       {shortcuts.map((s) => (
         <Link
           key={s.href}
