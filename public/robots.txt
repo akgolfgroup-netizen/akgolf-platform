@@ -1,9 +1,0 @@
-User-agent: *
-Allow: /
-
-# Sitemap
-Sitemap: https://akgolf.no/sitemap.xml
-
-# Disallow admin and portal paths
-Disallow: /portal/admin/
-Disallow: /api/

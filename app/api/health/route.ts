@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase";
+import { createServiceClient } from "@/lib/supabase/server";
 
 /**
  * Health Check Endpoint
@@ -45,7 +45,7 @@ export async function GET() {
   // Sjekk database (Supabase)
   const dbStart = Date.now();
   try {
-    const supabase = await createClient();
+    const supabase = createServiceClient();
     const { data, error } = await supabase
       .from("profiles")
       .select("count", { count: "exact", head: true })

@@ -1,0 +1,669 @@
+{
+  "meta": {
+    "name": "AK Golf Dashboard v2 Export",
+    "version": "2.0.0",
+    "exportedAt": "2026-04-15T23:32:00.000Z",
+    "source": "app/portal/(dashboard)/dashboard-client-v3.tsx",
+    "designIds": [3, 4, 5, 6]
+  },
+  "tokens": {
+    "dashboard": {
+      "maxWidth": { "value": "1400px", "type": "dimension" },
+      "gap": { "value": "20px", "type": "dimension" },
+      "sectionGap": { "value": "24px", "type": "dimension" },
+      "cardRadius": { "value": "16px", "type": "dimension" },
+      "cardPadding": { "value": "20px", "type": "dimension" },
+      "cardShadow": { "value": "0 1px 3px rgba(0,0,0,0.04)", "type": "shadow" }
+    },
+    "gradients": {
+      "nextBooking": { "value": "linear-gradient(135deg, #E85D4E 0%, #C43A2A 100%)", "type": "gradient" },
+      "trainingActivity": { "value": "linear-gradient(135deg, #E1F0E8 0%, #D4E8DC 100%)", "type": "gradient" },
+      "playerProfileOverlay": { "value": "linear-gradient(to top, #0A1F18, transparent)", "type": "gradient" }
+    }
+  },
+  "screens": [
+    {
+      "id": "dashboard-desktop",
+      "name": "Dashboard — Desktop (≥1024px)",
+      "viewport": { "width": 1440, "height": 900 },
+      "layout": {
+        "maxWidth": "1400px",
+        "padding": "8px 0 48px",
+        "gap": "24px",
+        "rows": [
+          {
+            "name": "Row 1: Welcome + Next Booking + Profile",
+            "grid": "1fr / 12 columns",
+            "gap": "20px",
+            "cells": [
+              { "colSpan": 8, "components": ["welcome-section", "next-booking-card", "ai-insights-v2 | training-activity-card"] },
+              { "colSpan": 4, "components": ["player-profile-card"] }
+            ]
+          },
+          {
+            "name": "Row 2: Week Calendar",
+            "components": ["week-calendar"]
+          },
+          {
+            "name": "Row 3: KPIs + TrackMan + Social",
+            "grid": "1fr / 4 columns",
+            "gap": "20px",
+            "cells": [
+              { "colSpan": 1, "components": ["kpi-card-handicap"] },
+              { "colSpan": 1, "components": ["kpi-card-rounds", "kpi-card-sessions"] },
+              { "colSpan": 1, "components": ["trackman-widget"] },
+              { "colSpan": 1, "components": ["social-widget"] }
+            ]
+          },
+          {
+            "name": "Row 4: Coach Insight + Achievements + Shortcuts",
+            "grid": "1fr / 3 columns",
+            "gap": "20px",
+            "cells": [
+              { "colSpan": 1, "components": ["coach-insight-card"] },
+              { "colSpan": 1, "components": ["achievements-widget"] },
+              { "colSpan": 1, "components": ["shortcut-pills"] }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dashboard-mobile",
+      "name": "Dashboard — Mobile (<640px)",
+      "viewport": { "width": 375, "height": 812 },
+      "layout": {
+        "padding": "8px 16px 48px",
+        "gap": "16px",
+        "stack": [
+          "welcome-section",
+          "player-profile-card",
+          "next-booking-card",
+          "week-calendar",
+          "kpi-card-handicap",
+          "ai-insights-v2 | training-activity-card",
+          "trackman-widget (hvis ikke beginner)",
+          "social-widget (hvis aktiv)",
+          "coach-insight-card",
+          "achievements-widget",
+          "shortcut-pills"
+        ]
+      }
+    },
+    {
+      "id": "dashboard-beginner",
+      "name": "Dashboard — Beginner Variant",
+      "description": "Skjuler TrackMan. Viser TrainingActivityCard i stedet for AI Insights. Viser Achievements + AI fallback i rad 3.",
+      "diffFromBase": [
+        "showTrackMan = false",
+        "showAdvancedAI = false",
+        "showSocial = false | true (avhengig av stats)",
+        "Rad 3: KPIs + AchievementsWidget + AiInsightsV2 (fallback)"
+      ]
+    },
+    {
+      "id": "dashboard-pro",
+      "name": "Dashboard — Pro/Advanced Variant",
+      "description": "Viser AI Insights, TrackMan, Social, og full widget-set.",
+      "diffFromBase": [
+        "showTrackMan = true",
+        "showAdvancedAI = true",
+        "showSocial = true",
+        "Rad 1: AI InsightsV2 i stedet for TrainingActivityCard"
+      ]
+    }
+  ],
+  "components": {
+    "welcome-section": {
+      "name": "Welcome Section",
+      "file": "components/portal/dashboard/welcome-section.tsx",
+      "styles": {
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "8px"
+      },
+      "children": [
+        {
+          "name": "Greeting Heading",
+          "element": "h1",
+          "styles": {
+            "fontSize": "32px",
+            "fontWeight": 700,
+            "letterSpacing": "-0.02em",
+            "color": "{colors.primary.dark}"
+          }
+        },
+        {
+          "name": "Tier Badge",
+          "element": "span",
+          "styles": {
+            "backgroundColor": "{colors.primary.accent}",
+            "color": "{colors.primary.dark}",
+            "padding": "4px 12px",
+            "borderRadius": "9999px",
+            "fontSize": "12px",
+            "fontWeight": 700
+          }
+        },
+        {
+          "name": "Member Since",
+          "element": "span",
+          "styles": {
+            "fontSize": "14px",
+            "color": "{colors.grey.400}"
+          }
+        }
+      ]
+    },
+    "next-booking-card": {
+      "name": "Next Booking Card",
+      "file": "components/portal/dashboard/next-booking-card.tsx",
+      "variants": {
+        "empty": {
+          "styles": {
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "space-between",
+            "height": "100%",
+            "borderRadius": "16px",
+            "border": "1px dashed {colors.grey.300}",
+            "backgroundColor": "{colors.primary.white}",
+            "padding": "24px",
+            "boxShadow": "{shadows.sm}"
+          },
+          "icon": {
+            "size": 48,
+            "background": "rgba(232, 93, 78, 0.08)",
+            "color": "{colors.data.coral}",
+            "borderRadius": "12px"
+          },
+          "cta": {
+            "text": "Book din neste økt",
+            "buttonVariant": "primary"
+          }
+        },
+        "filled": {
+          "styles": {
+            "display": "flex",
+            "flexDirection": "column",
+            "height": "100%",
+            "borderRadius": "16px",
+            "padding": "20px",
+            "color": "{colors.primary.white}",
+            "background": "{gradients.nextBooking}",
+            "boxShadow": "{shadows.sm}"
+          },
+          "elements": {
+            "label": {
+              "text": "Neste booking",
+              "fontSize": "10px",
+              "fontWeight": 700,
+              "textTransform": "uppercase",
+              "letterSpacing": "0.05em",
+              "color": "rgba(255,255,255,0.7)"
+            },
+            "instructorName": {
+              "fontSize": "18px",
+              "fontWeight": 700,
+              "color": "{colors.primary.white}"
+            },
+            "serviceName": {
+              "fontSize": "14px",
+              "color": "rgba(255,255,255,0.8)"
+            },
+            "initialsBadge": {
+              "size": 44,
+              "border": "1px solid rgba(255,255,255,0.2)",
+              "backgroundColor": "rgba(255,255,255,0.1)",
+              "borderRadius": "9999px",
+              "fontSize": "14px",
+              "fontWeight": 700
+            },
+            "actionButtons": {
+              "variant": "secondary",
+              "customStyles": {
+                "backgroundColor": "rgba(255,255,255,0.1)",
+                "color": "{colors.primary.white}",
+                "border": "1px solid rgba(255,255,255,0.2)"
+              },
+              "hover": {
+                "backgroundColor": "rgba(255,255,255,0.2)"
+              }
+            }
+          }
+        }
+      }
+    },
+    "week-calendar": {
+      "name": "Week Calendar",
+      "file": "components/portal/dashboard/week-calendar.tsx",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "{colors.primary.white}",
+        "padding": "16px (mobile) | 20px (desktop)",
+        "boxShadow": "{shadows.sm}"
+      },
+      "dayItem": {
+        "minWidth": "52px",
+        "flexDirection": "column",
+        "alignItems": "center",
+        "gap": "8px",
+        "padding": "12px 8px",
+        "borderRadius": "12px",
+        "states": {
+          "today": { "backgroundColor": "#000000", "color": "#FFFFFF" },
+          "active": { "backgroundColor": "{colors.grey.50}", "color": "#000000" },
+          "default": { "color": "{colors.grey.400}" }
+        },
+        "dateCircle": {
+          "size": "32px",
+          "borderRadius": "9999px",
+          "fontSize": "14px",
+          "fontWeight": 700,
+          "states": {
+            "today": { "backgroundColor": "{colors.primary.accent}", "color": "{colors.primary.dark}" },
+            "coaching": { "backgroundColor": "{colors.primary.main}", "color": "#FFFFFF" },
+            "trained": { "backgroundColor": "{colors.semantic.success}", "color": "#FFFFFF" },
+            "rest": { "backgroundColor": "{colors.grey.100}", "color": "{colors.grey.400}" },
+            "empty": { "backgroundColor": "transparent", "color": "{colors.grey.400}" }
+          }
+        },
+        "statusLabel": {
+          "fontSize": "9px",
+          "fontWeight": 700
+        }
+      }
+    },
+    "kpi-card": {
+      "name": "KPI Card",
+      "file": "components/portal/dashboard/kpi-card.tsx",
+      "styles": {
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "space-between",
+        "height": "100%",
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "{colors.primary.white}",
+        "padding": "20px",
+        "boxShadow": "{shadows.sm}",
+        "hover": {
+          "borderColor": "{colors.grey.200}",
+          "boxShadow": "{shadows.md}"
+        }
+      },
+      "elements": {
+        "label": {
+          "fontSize": "10px",
+          "fontWeight": 700,
+          "textTransform": "uppercase",
+          "letterSpacing": "0.14em",
+          "color": "{colors.grey.400}"
+        },
+        "value": {
+          "fontSize": "40px",
+          "fontWeight": 600,
+          "letterSpacing": "-0.02em",
+          "color": "#000000"
+        },
+        "sparkline": {
+          "width": 160,
+          "height": 40,
+          "color": "{accentColor}"
+        },
+        "changeBadge": {
+          "fontSize": "12px",
+          "fontWeight": 600,
+          "padding": "2px 8px",
+          "borderRadius": "9999px",
+          "variants": {
+            "positive": { "backgroundColor": "{colors.semantic.successLight}", "color": "{colors.semantic.successText}" },
+            "negative": { "backgroundColor": "{colors.semantic.errorLight}", "color": "{colors.semantic.errorText}" },
+            "neutral": { "backgroundColor": "{colors.grey.100}", "color": "{colors.grey.500}" }
+          }
+        }
+      }
+    },
+    "empty-kpi-card": {
+      "name": "Empty KPI Card",
+      "file": "app/portal/(dashboard)/dashboard-client-v3.tsx (inline)",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "{colors.primary.white}",
+        "padding": "20px",
+        "boxShadow": "{shadows.sm}",
+        "hover": {
+          "borderColor": "{colors.grey.200}",
+          "boxShadow": "{shadows.md}"
+        }
+      },
+      "ctaLink": {
+        "fontSize": "12px",
+        "fontWeight": 600,
+        "color": "{colors.primary.main}"
+      }
+    },
+    "player-profile-card": {
+      "name": "Player Profile Card",
+      "file": "components/portal/dashboard/player-profile-card.tsx",
+      "styles": {
+        "position": "relative",
+        "display": "flex",
+        "flexDirection": "column",
+        "height": "100%",
+        "minHeight": "320px",
+        "borderRadius": "16px",
+        "overflow": "hidden",
+        "boxShadow": "{shadows.sm}",
+        "backgroundColor": "{colors.primary.dark}"
+      },
+      "imageArea": {
+        "height": "45%",
+        "objectFit": "cover",
+        "overlay": "linear-gradient(to top, #0A1F18, transparent)"
+      },
+      "tierBadge": {
+        "position": "absolute",
+        "bottom": "12px",
+        "left": "12px",
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "6px",
+        "padding": "4px 10px",
+        "borderRadius": "9999px",
+        "border": "1px solid rgba(255,255,255,0.1)",
+        "backgroundColor": "rgba(0,0,0,0.4)",
+        "backdropFilter": "blur(8px)",
+        "fontSize": "10px",
+        "fontWeight": 700,
+        "textTransform": "uppercase",
+        "letterSpacing": "-0.01em",
+        "color": "#FFFFFF",
+        "dotColor": "{colors.primary.accent}"
+      },
+      "statBox": {
+        "borderRadius": "8px",
+        "padding": "12px",
+        "backgroundColor": "rgba(255,255,255,0.05)"
+      },
+      "statLabel": {
+        "fontSize": "9px",
+        "fontWeight": 700,
+        "textTransform": "uppercase",
+        "color": "rgba(255,255,255,0.4)",
+        "marginBottom": "4px"
+      },
+      "statValue": {
+        "fontSize": "20px",
+        "fontWeight": 700,
+        "colors": {
+          "hcp": "{colors.primary.accent}",
+          "rounds": "{colors.data.coral}",
+          "bestScore": "#FFFFFF"
+        }
+      }
+    },
+    "training-activity-card": {
+      "name": "Training Activity Card",
+      "file": "components/portal/dashboard/training-activity-card.tsx",
+      "styles": {
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "space-between",
+        "height": "100%",
+        "minHeight": "280px",
+        "borderRadius": "16px",
+        "padding": "20px",
+        "boxShadow": "{shadows.sm}",
+        "background": "{gradients.trainingActivity}"
+      },
+      "elements": {
+        "heading": {
+          "fontSize": "16px",
+          "fontWeight": 700,
+          "color": "{colors.primary.dark}"
+        },
+        "streakBadge": {
+          "display": "inline-flex",
+          "alignItems": "center",
+          "gap": "8px",
+          "borderRadius": "8px",
+          "padding": "6px 12px",
+          "fontSize": "12px",
+          "fontWeight": 700,
+          "backgroundColor": "{colors.primary.accent}",
+          "color": "{colors.primary.dark}"
+        },
+        "stackedBars": {
+          "display": "flex",
+          "alignItems": "flex-end",
+          "gap": "10px",
+          "barWidth": "flex-1",
+          "segments": [
+            { "color": "{colors.primary.accent}", "label": "lime" },
+            { "color": "{colors.data.coral}", "label": "orange" },
+            { "color": "rgba(255,255,255,0.6)", "label": "mint" }
+          ]
+        },
+        "footerValue": {
+          "fontSize": "24px",
+          "fontWeight": 700,
+          "color": "{colors.primary.dark}"
+        },
+        "footerLabel": {
+          "fontSize": "12px",
+          "fontWeight": 500,
+          "color": "{colors.grey.600}"
+        }
+      }
+    },
+    "ai-insights-v2": {
+      "name": "AI Insights V2",
+      "file": "components/portal/dashboard/ai-insights-v2.tsx",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.slate.800}",
+        "background": "linear-gradient(to bottom right, rgba(15, 23, 42, 0.5), rgba(30, 41, 59, 0.3))",
+        "padding": "24px"
+      },
+      "tabs": {
+        "container": {
+          "display": "flex",
+          "gap": "4px",
+          "padding": "4px",
+          "borderRadius": "8px",
+          "backgroundColor": "rgba(30, 41, 59, 0.5)"
+        },
+        "active": {
+          "backgroundColor": "{colors.slate.700}",
+          "color": "{colors.slate.100}",
+          "borderRadius": "6px",
+          "padding": "8px 12px",
+          "fontSize": "12px",
+          "fontWeight": 500
+        },
+        "inactive": {
+          "color": "{colors.slate.400}",
+          "borderRadius": "6px",
+          "padding": "8px 12px",
+          "fontSize": "12px",
+          "fontWeight": 500
+        }
+      },
+      "contentTokens": {
+        "heading": { "fontSize": "14px", "fontWeight": 600, "color": "{colors.slate.100}" },
+        "body": { "fontSize": "14px", "lineHeight": 1.6, "color": "{colors.slate.300}" },
+        "meta": { "fontSize": "12px", "color": "{colors.slate.500}", "backgroundColor": "{colors.slate.800}", "padding": "4px 8px", "borderRadius": "9999px" },
+        "progressBar": { "height": "8px", "borderRadius": "9999px", "gradient": "linear-gradient(to right, #10B981, #34D399)" },
+        "listNumber": { "size": "20px", "borderRadius": "9999px", "backgroundColor": "rgba(168, 85, 247, 0.2)", "color": "#A855F7", "fontSize": "12px", "fontWeight": 700 }
+      }
+    },
+    "coach-insight-card": {
+      "name": "Coach Insight Card",
+      "file": "components/portal/dashboard/coach-insight-card.tsx",
+      "styles": {
+        "display": "flex",
+        "flexDirection": "column",
+        "height": "100%",
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "{colors.primary.white}",
+        "padding": "20px",
+        "boxShadow": "{shadows.sm}",
+        "hover": {
+          "borderColor": "{colors.grey.200}",
+          "boxShadow": "{shadows.md}"
+        }
+      },
+      "iconCircle": {
+        "size": 32,
+        "borderRadius": "9999px",
+        "backgroundColor": "rgba(209, 248, 67, 0.13)",
+        "iconColor": "{colors.primary.dark}"
+      },
+      "heading": { "fontSize": "14px", "fontWeight": 600, "color": "#000000" },
+      "body": { "fontSize": "14px", "lineHeight": 1.6, "color": "{colors.grey.500}", "clamp": 4 },
+      "date": { "fontSize": "12px", "color": "{colors.grey.400}" },
+      "cta": { "fontSize": "12px", "fontWeight": 600, "color": "{colors.primary.main}" }
+    },
+    "shortcut-pills": {
+      "name": "Shortcut Pills",
+      "file": "components/portal/dashboard/shortcut-pills.tsx",
+      "layout": {
+        "display": "grid",
+        "gridTemplateColumns": "1fr 1fr (mobile) | repeat(4, 1fr) (desktop)",
+        "gap": "12px"
+      },
+      "pill": {
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "space-between",
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "{colors.primary.white}",
+        "padding": "16px",
+        "boxShadow": "{shadows.sm}",
+        "hover": {
+          "transform": "translateY(-2px)",
+          "borderColor": "{colors.grey.200}",
+          "boxShadow": "{shadows.md}"
+        },
+        "iconBox": {
+          "size": 40,
+          "borderRadius": "12px",
+          "backgroundColor": "{iconColor}15",
+          "iconColor": "{iconColor}"
+        },
+        "label": { "fontSize": "14px", "fontWeight": 600, "color": "#000000", "marginTop": "12px" },
+        "arrow": { "size": 16, "color": "{colors.grey.300}", "hoverColor": "{colors.grey.400}" }
+      },
+      "shortcuts": [
+        { "label": "Logg trening", "icon": "Dumbbell", "color": "{colors.primary.accent}", "href": "/portal/dagbok" },
+        { "label": "Registrer runde", "icon": "Flag", "color": "{colors.data.coral}", "href": "/portal/runde/ny" },
+        { "label": "Book coaching", "icon": "CalendarPlus", "color": "{colors.primary.dark}", "href": "/portal/bookinger/ny" },
+        { "label": "AI Coach", "icon": "Bot", "color": "{colors.ai.primary}", "href": "/portal/ai-coach" }
+      ]
+    },
+    "trackman-widget": {
+      "name": "TrackMan Widget",
+      "file": "components/portal/dashboard/trackman-widget.tsx",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.slate.800}",
+        "backgroundColor": "rgba(15, 23, 42, 0.5)",
+        "padding": "24px"
+      },
+      "emptyState": {
+        "headingColor": "{colors.slate.100}",
+        "bodyColor": "{colors.slate.400}",
+        "cta": {
+          "backgroundColor": "rgba(16, 185, 129, 0.2)",
+          "color": "#10B981",
+          "borderRadius": "8px",
+          "padding": "8px 16px",
+          "fontSize": "14px",
+          "fontWeight": 500
+        }
+      },
+      "dataState": {
+        "header": { "iconColor": "#10B981", "titleColor": "{colors.slate.100}" },
+        "lastSessionBox": {
+          "backgroundColor": "rgba(30, 41, 59, 0.5)",
+          "borderRadius": "12px",
+          "padding": "12px"
+        },
+        "sparklineColors": ["#10B981", "#3B82F6", "#F59E0B"],
+        "improvementBadge": { "color": "#10B981", "fontWeight": 500 }
+      }
+    },
+    "social-widget": {
+      "name": "Social Widget",
+      "file": "components/portal/dashboard/social-widget.tsx",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.slate.800}",
+        "backgroundColor": "rgba(15, 23, 42, 0.5)",
+        "padding": "24px"
+      },
+      "emptyState": {
+        "headingColor": "{colors.slate.100}",
+        "bodyColor": "{colors.slate.400}",
+        "cta": {
+          "backgroundColor": "rgba(245, 158, 11, 0.2)",
+          "color": "#F59E0B",
+          "borderRadius": "8px",
+          "padding": "8px 16px",
+          "fontSize": "14px",
+          "fontWeight": 500
+        }
+      },
+      "dataState": {
+        "header": { "iconColor": "#F59E0B", "titleColor": "{colors.slate.100}" },
+        "statBox": {
+          "flex": 1,
+          "textAlign": "center",
+          "backgroundColor": "rgba(30, 41, 59, 0.5)",
+          "borderRadius": "12px",
+          "padding": "12px"
+        },
+        "streakIcon": "#F97316",
+        "progressBar": { "backgroundColor": "{colors.slate.700}", "fillColor": "#F59E0B", "height": "6px", "borderRadius": "9999px" },
+        "onlineDot": { "size": 8, "color": "#22C55E", "borderRadius": "9999px" }
+      }
+    },
+    "achievements-widget": {
+      "name": "Achievements Widget",
+      "file": "components/portal/dashboard/achievements-widget.tsx",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.slate.800}",
+        "backgroundColor": "rgba(15, 23, 42, 0.5)",
+        "padding": "24px"
+      },
+      "header": { "iconColor": "#F59E0B", "titleColor": "{colors.slate.100}" },
+      "progressBar": {
+        "height": "8px",
+        "borderRadius": "9999px",
+        "backgroundColor": "{colors.slate.800}",
+        "fillGradient": "linear-gradient(to right, #F59E0B, #FACC15)"
+      },
+      "rarityStyles": {
+        "common": { "borderColor": "{colors.slate.600}", "backgroundColor": "rgba(30, 41, 59, 0.5)", "color": "{colors.slate.400}" },
+        "rare": { "borderColor": "rgba(59, 130, 246, 0.5)", "backgroundColor": "rgba(59, 130, 246, 0.1)", "color": "#60A5FA" },
+        "epic": { "borderColor": "rgba(168, 85, 247, 0.5)", "backgroundColor": "rgba(168, 85, 247, 0.1)", "color": "#C084FC" },
+        "legendary": { "borderColor": "rgba(245, 158, 11, 0.5)", "backgroundColor": "rgba(245, 158, 11, 0.1)", "color": "#FBBF24" }
+      },
+      "lockedItem": {
+        "backgroundColor": "rgba(30, 41, 59, 0.3)",
+        "borderRadius": "8px",
+        "padding": "8px",
+        "lockColor": "{colors.slate.500}",
+        "textColor": "{colors.slate.400}",
+        "progressBackground": "{colors.slate.700}",
+        "progressFill": "{colors.slate.500}"
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase";
+import { createServiceClient } from "@/lib/supabase/server";
 
 /**
  * Database Health Check
@@ -47,7 +47,7 @@ export async function GET() {
   let connectionError: string | null = null;
 
   try {
-    const supabase = await createClient();
+    const supabase = createServiceClient();
     
     // Test basic connectivity
     const { error: pingError } = await supabase

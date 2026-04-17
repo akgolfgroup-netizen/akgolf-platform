@@ -80,6 +80,7 @@ async function createTestStudent() {
       email: `student-${userId}@example.com`,
       name: `Test Student ${userId.slice(0, 5)}`,
       role: "STUDENT",
+      updatedAt: new Date(),
     },
   });
 
@@ -170,7 +171,7 @@ describe("Booking Validation", () => {
     
     // Rydd blokkerte tider
     await prisma.blockedTime.deleteMany({
-      where: { instructorId: { in: [instructorId, null] } },
+      where: { instructorId: { in: [instructorId].filter(Boolean) } },
     });
   });
 
@@ -189,7 +190,7 @@ describe("Booking Validation", () => {
       where: { id: instructorId },
     });
     await prisma.user.deleteMany({
-      where: { id: { in: [studentId, instructorId.replace(/ins/, "usr")] } },
+      where: { id: { in: [studentId, instructorId.replace(/ins/, "usr")].filter(Boolean) } },
     });
   });
 
@@ -587,7 +588,6 @@ describe("Booking Validation", () => {
           endTime: new Date(startTime.getTime() + 3600000),
           reason: "Møte",
           createdAt: new Date(),
-          updatedAt: new Date(),
         },
       });
 
@@ -619,7 +619,6 @@ describe("Booking Validation", () => {
           endTime: new Date(startTime.getTime() + 3600000),
           reason: "Ferie",
           createdAt: new Date(),
-          updatedAt: new Date(),
         },
       });
 
@@ -655,6 +654,7 @@ describe("Booking Validation", () => {
           duration: 60,
           price: 1000,
           isActive: false,
+          updatedAt: new Date(),
           Instructor: { connect: { id: instructorId } },
         },
       });

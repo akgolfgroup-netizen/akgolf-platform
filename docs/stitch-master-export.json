@@ -1,0 +1,1084 @@
+{
+  "meta": {
+    "name": "AK Golf Platform — Master Stitch Export",
+    "version": "2.0.0",
+    "exportedAt": "2026-04-17T08:30:00.000Z",
+    "source": "docs/MASTER_FEATURE_SPEC.md",
+    "scope": "Portal + Mission Control + AI Components"
+  },
+  "tokens": {
+    "colors": {
+      "primary": {
+        "main": { "value": "#005840", "type": "color" },
+        "accent": { "value": "#D1F843", "type": "color" },
+        "surface": { "value": "#ECF0EF", "type": "color" },
+        "text": { "value": "#324D45", "type": "color" },
+        "muted": { "value": "#A5B2AD", "type": "color" },
+        "dark": { "value": "#0A1F18", "type": "color" },
+        "white": { "value": "#FFFFFF", "type": "color" }
+      },
+      "semantic": {
+        "success": { "value": "#2A7D5A", "type": "color" },
+        "error": { "value": "#B84233", "type": "color" },
+        "warning": { "value": "#C48A32", "type": "color" },
+        "info": { "value": "#007AFF", "type": "color" }
+      },
+      "data": {
+        "sage": { "value": "#2A7D5A", "type": "color" },
+        "coral": { "value": "#E85D4E", "type": "color" },
+        "blue": { "value": "#007AFF", "type": "color" },
+        "lime": { "value": "#D1F843", "type": "color" }
+      },
+      "ai": {
+        "primary": { "value": "#AF52DE", "type": "color" },
+        "light": { "value": "rgba(175, 82, 222, 0.1)", "type": "color" },
+        "glow": { "value": "rgba(175, 82, 222, 0.3)", "type": "color" }
+      },
+      "slate": {
+        "800": { "value": "#1E293B", "type": "color" },
+        "700": { "value": "#334155", "type": "color" },
+        "600": { "value": "#475569", "type": "color" },
+        "500": { "value": "#64748B", "type": "color" },
+        "400": { "value": "#94A3B8", "type": "color" },
+        "300": { "value": "#CBD5E1", "type": "color" },
+        "100": { "value": "#F1F5F9", "type": "color" }
+      },
+      "grey": {
+        "50": { "value": "#F9FAFB", "type": "color" },
+        "100": { "value": "#F3F4F6", "type": "color" },
+        "200": { "value": "#E5E7EB", "type": "color" },
+        "300": { "value": "#D1D5DB", "type": "color" },
+        "400": { "value": "#9CA3AF", "type": "color" },
+        "500": { "value": "#6B7280", "type": "color" },
+        "600": { "value": "#4B5563", "type": "color" }
+      }
+    },
+    "pyramid": {
+      "FYS": { "value": "#005840", "type": "color", "label": "Fysisk", "icon": "dumbbell" },
+      "TEK": { "value": "#007AFF", "type": "color", "label": "Teknikk", "icon": "wrench" },
+      "SLAG": { "value": "#C48A32", "type": "color", "label": "Golfslag", "icon": "target" },
+      "SPILL": { "value": "#AF52DE", "type": "color", "label": "Spill", "icon": "flag" },
+      "TURN": { "value": "#E85D4E", "type": "color", "label": "Turnering", "icon": "trophy" }
+    },
+    "spacing": {
+      "1": { "value": "4px", "type": "dimension" },
+      "2": { "value": "8px", "type": "dimension" },
+      "3": { "value": "12px", "type": "dimension" },
+      "4": { "value": "16px", "type": "dimension" },
+      "5": { "value": "20px", "type": "dimension" },
+      "6": { "value": "24px", "type": "dimension" },
+      "8": { "value": "32px", "type": "dimension" },
+      "10": { "value": "40px", "type": "dimension" },
+      "12": { "value": "48px", "type": "dimension" },
+      "16": { "value": "64px", "type": "dimension" }
+    },
+    "borderRadius": {
+      "sm": { "value": "8px", "type": "dimension" },
+      "md": { "value": "12px", "type": "dimension" },
+      "lg": { "value": "16px", "type": "dimension" },
+      "xl": { "value": "24px", "type": "dimension" },
+      "2xl": { "value": "32px", "type": "dimension" },
+      "full": { "value": "9999px", "type": "dimension" }
+    },
+    "shadows": {
+      "sm": { "value": "0 1px 2px rgba(0,0,0,0.04)", "type": "shadow" },
+      "md": { "value": "0 4px 12px rgba(0,0,0,0.06)", "type": "shadow" },
+      "lg": { "value": "0 12px 40px rgba(0,0,0,0.08)", "type": "shadow" },
+      "card": { "value": "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06)", "type": "shadow" },
+      "cardHover": { "value": "0 4px 12px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08)", "type": "shadow" }
+    },
+    "typography": {
+      "fontFamily": {
+        "sans": { "value": "Inter, system-ui, sans-serif", "type": "fontFamily" },
+        "mono": { "value": "ui-monospace, SFMono-Regular, monospace", "type": "fontFamily" }
+      },
+      "sizes": {
+        "xs": { "value": "12px", "type": "fontSize" },
+        "sm": { "value": "14px", "type": "fontSize" },
+        "base": { "value": "16px", "type": "fontSize" },
+        "lg": { "value": "18px", "type": "fontSize" },
+        "xl": { "value": "20px", "type": "fontSize" },
+        "2xl": { "value": "24px", "type": "fontSize" },
+        "3xl": { "value": "30px", "type": "fontSize" },
+        "4xl": { "value": "36px", "type": "fontSize" },
+        "hero": { "value": "60px", "type": "fontSize" }
+      },
+      "weights": {
+        "medium": { "value": 500, "type": "fontWeight" },
+        "semibold": { "value": 600, "type": "fontWeight" },
+        "bold": { "value": 700, "type": "fontWeight" }
+      }
+    },
+    "motion": {
+      "duration": {
+        "fast": { "value": "200ms", "type": "duration" },
+        "normal": { "value": "300ms", "type": "duration" },
+        "slow": { "value": "500ms", "type": "duration" }
+      },
+      "ease": {
+        "premium": { "value": "cubic-bezier(0.4, 0, 0.2, 1)", "type": "cubicBezier" },
+        "spring": { "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "type": "cubicBezier" }
+      }
+    },
+    "gradients": {
+      "nextBooking": { "value": "linear-gradient(135deg, #E85D4E 0%, #C43A2A 100%)", "type": "gradient" },
+      "trainingActivity": { "value": "linear-gradient(135deg, #E1F0E8 0%, #D4E8DC 100%)", "type": "gradient" },
+      "playerProfileOverlay": { "value": "linear-gradient(to top, #0A1F18, transparent)", "type": "gradient" },
+      "aiCard": { "value": "linear-gradient(to bottom right, rgba(15, 23, 42, 0.5), rgba(30, 41, 59, 0.3))", "type": "gradient" },
+      "achievementBar": { "value": "linear-gradient(to right, #F59E0B, #FACC15)", "type": "gradient" },
+      "goalProgress": { "value": "linear-gradient(to right, #10B981, #34D399)", "type": "gradient" }
+    }
+  },
+  "screens": [
+    {
+      "id": "dashboard-desktop-pro",
+      "name": "Dashboard — Desktop Pro (1440px)",
+      "viewport": { "width": 1440, "height": 900 },
+      "description": "Full dashboard for pro/advanced user with all widgets enabled.",
+      "layout": {
+        "maxWidth": "1400px",
+        "padding": "8px 0 48px",
+        "gap": "24px",
+        "rows": [
+          {
+            "name": "Row 1: Welcome + Next Booking + Profile",
+            "grid": "12 columns",
+            "gap": "20px",
+            "cells": [
+              { "colSpan": 8, "components": ["welcome-section", "next-booking-card", "ai-insights-v2"] },
+              { "colSpan": 4, "components": ["player-profile-card"] }
+            ]
+          },
+          {
+            "name": "Row 2: Week Calendar",
+            "components": ["week-calendar"]
+          },
+          {
+            "name": "Row 3: KPIs + TrackMan + Social",
+            "grid": "4 columns",
+            "gap": "20px",
+            "cells": [
+              { "colSpan": 1, "components": ["kpi-card-handicap"] },
+              { "colSpan": 1, "components": ["kpi-card-rounds", "kpi-card-sessions"] },
+              { "colSpan": 1, "components": ["trackman-widget"] },
+              { "colSpan": 1, "components": ["social-widget"] }
+            ]
+          },
+          {
+            "name": "Row 4: Coach Insight + Achievements + Shortcuts",
+            "grid": "3 columns",
+            "gap": "20px",
+            "cells": [
+              { "colSpan": 1, "components": ["coach-insight-card"] },
+              { "colSpan": 1, "components": ["achievements-widget"] },
+              { "colSpan": 1, "components": ["shortcut-pills"] }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dashboard-mobile",
+      "name": "Dashboard — Mobile (375px)",
+      "viewport": { "width": 375, "height": 812 },
+      "layout": {
+        "padding": "8px 16px 48px",
+        "gap": "16px",
+        "stack": [
+          "welcome-section",
+          "player-profile-card",
+          "next-booking-card",
+          "week-calendar",
+          "kpi-card-handicap",
+          "ai-insights-v2",
+          "trackman-widget",
+          "social-widget",
+          "coach-insight-card",
+          "achievements-widget",
+          "shortcut-pills"
+        ]
+      }
+    },
+    {
+      "id": "training-planner-calendar",
+      "name": "Treningsplan — Kalendervisning (v3)",
+      "viewport": { "width": 1440, "height": 900 },
+      "layout": {
+        "grid": "12 columns",
+        "gap": "20px",
+        "cells": [
+          {
+            "colSpan": 9,
+            "components": ["week-calendar-grid", "session-cards"]
+          },
+          {
+            "colSpan": 3,
+            "components": ["template-library", "exercise-bank", "pyramid-filter"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "training-plan-wizard-step-1",
+      "name": "Planlegger 2.0 — Velg tidsrom",
+      "viewport": { "width": 1440, "height": 900 },
+      "description": "Vision: First step of training plan wizard.",
+      "layout": {
+        "maxWidth": "960px",
+        "centered": true,
+        "components": [
+          "wizard-header",
+          "step-indicator",
+          "time-scope-selector",
+          "wizard-footer"
+        ]
+      }
+    },
+    {
+      "id": "training-plan-wizard-step-2",
+      "name": "Planlegger 2.0 — Interaktiv pyramide",
+      "viewport": { "width": 1440, "height": 900 },
+      "description": "Vision: Pyramid selector as the core visual element.",
+      "layout": {
+        "maxWidth": "960px",
+        "centered": true,
+        "components": [
+          "wizard-header",
+          "step-indicator",
+          "pyramid-visualization",
+          "pyramid-level-descriptions",
+          "wizard-footer"
+        ]
+      }
+    },
+    {
+      "id": "training-plan-wizard-step-3",
+      "name": "Planlegger 2.0 — Tilgjengelighet",
+      "viewport": { "width": 1440, "height": 900 },
+      "layout": {
+        "maxWidth": "720px",
+        "centered": true,
+        "components": [
+          "wizard-header",
+          "step-indicator",
+          "hours-per-week-slider",
+          "day-selector",
+          "time-of-day-selector",
+          "wizard-footer"
+        ]
+      }
+    },
+    {
+      "id": "training-plan-wizard-step-4",
+      "name": "Planlegger 2.0 — Fokusområde",
+      "viewport": { "width": 1440, "height": 900 },
+      "layout": {
+        "maxWidth": "720px",
+        "centered": true,
+        "components": [
+          "wizard-header",
+          "step-indicator",
+          "focus-area-selector",
+          "ai-suggestion-card",
+          "wizard-footer"
+        ]
+      }
+    },
+    {
+      "id": "training-plan-wizard-step-5",
+      "name": "Planlegger 2.0 — Forhåndsvisning",
+      "viewport": { "width": 1440, "height": 900 },
+      "layout": {
+        "maxWidth": "1200px",
+        "centered": true,
+        "components": [
+          "wizard-header",
+          "step-indicator",
+          "weekly-plan-preview",
+          "day-detail-cards",
+          "wizard-footer"
+        ]
+      }
+    },
+    {
+      "id": "training-diary",
+      "name": "Dagbok / Treningsdagbok",
+      "viewport": { "width": 1440, "height": 900 },
+      "layout": {
+        "grid": "12 columns",
+        "gap": "20px",
+        "cells": [
+          {
+            "colSpan": 4,
+            "components": ["streak-card", "plan-progress-card", "quick-log-card"]
+          },
+          {
+            "colSpan": 8,
+            "components": ["training-history-list", "last-session-card"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "statistics",
+      "name": "Statistikk",
+      "viewport": { "width": 1440, "height": 900 },
+      "layout": {
+        "gap": "20px",
+        "rows": [
+          {
+            "name": "Header + Period Selector",
+            "components": ["page-header", "period-chips"]
+          },
+          {
+            "name": "KPIs",
+            "grid": "4 columns",
+            "components": ["kpi-avg-score", "kpi-rounds", "kpi-handicap", "kpi-sg-total"]
+          },
+          {
+            "name": "Charts row",
+            "grid": "7 + 5 columns",
+            "cells": [
+              { "colSpan": 7, "components": ["sg-breakdown-bars"] },
+              { "colSpan": 5, "components": ["training-volume-chart"] }
+            ]
+          },
+          {
+            "name": "Trends",
+            "components": ["score-trend-area-chart"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "booking-list",
+      "name": "Mine Bookinger",
+      "viewport": { "width": 1440, "height": 900 },
+      "layout": {
+        "gap": "20px",
+        "rows": [
+          { "components": ["next-booking-hero"] },
+          {
+            "grid": "8 + 4 columns",
+            "cells": [
+              { "colSpan": 8, "components": ["upcoming-timeline", "past-bookings-list"] },
+              { "colSpan": 4, "components": ["cancellation-rules-card"] }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ai-coach",
+      "name": "AI Coach",
+      "viewport": { "width": 1440, "height": 900 },
+      "layout": {
+        "gap": "20px",
+        "rows": [
+          {
+            "grid": "3 columns",
+            "components": ["ai-feature-card-1", "ai-feature-card-2", "ai-feature-card-3"]
+          },
+          {
+            "components": ["chat-container", "quick-questions"]
+          }
+        ]
+      }
+    }
+  ],
+
+  "components": {
+    "pyramid-visualization": {
+      "name": "Pyramid Visualization",
+      "description": "Interactive geometric pyramid — the core visual element for training planning.",
+      "status": "vision",
+      "styles": {
+        "container": {
+          "display": "flex",
+          "flexDirection": "column",
+          "alignItems": "center",
+          "gap": "16px",
+          "padding": "32px"
+        },
+        "pyramid": {
+          "width": "320px",
+          "maxWidth": "100%"
+        }
+      },
+      "levels": [
+        {
+          "id": "TURN",
+          "label": "Turnering",
+          "shortLabel": "TURN",
+          "color": "{colors.pyramid.TURN}",
+          "icon": "trophy",
+          "description": "Konkurranser, kvalik, ranking",
+          "percentage": "5-10%",
+          "shape": "triangle-top",
+          "selectedStyle": {
+            "fill": "{colors.pyramid.TURN}",
+            "stroke": "#FFFFFF",
+            "strokeWidth": "2px",
+            "filter": "drop-shadow(0 4px 12px rgba(232, 93, 78, 0.3))"
+          },
+          "unselectedStyle": {
+            "fill": "rgba(232, 93, 78, 0.2)",
+            "stroke": "rgba(232, 93, 78, 0.4)",
+            "strokeWidth": "1px"
+          }
+        },
+        {
+          "id": "SPILL",
+          "label": "Spill",
+          "shortLabel": "SPILL",
+          "color": "{colors.pyramid.SPILL}",
+          "icon": "flag",
+          "description": "9/18 hull, scramble, match",
+          "percentage": "15-20%",
+          "shape": "trapezoid-2",
+          "selectedStyle": {
+            "fill": "{colors.pyramid.SPILL}",
+            "stroke": "#FFFFFF",
+            "strokeWidth": "2px",
+            "filter": "drop-shadow(0 4px 12px rgba(175, 82, 222, 0.3))"
+          },
+          "unselectedStyle": {
+            "fill": "rgba(175, 82, 222, 0.2)",
+            "stroke": "rgba(175, 82, 222, 0.4)",
+            "strokeWidth": "1px"
+          }
+        },
+        {
+          "id": "SLAG",
+          "label": "Golfslag",
+          "shortLabel": "SLAG",
+          "color": "{colors.pyramid.SLAG}",
+          "icon": "target",
+          "description": "Putting, chipping, driving, jern",
+          "percentage": "25-30%",
+          "shape": "trapezoid-3",
+          "selectedStyle": {
+            "fill": "{colors.pyramid.SLAG}",
+            "stroke": "#FFFFFF",
+            "strokeWidth": "2px",
+            "filter": "drop-shadow(0 4px 12px rgba(196, 138, 50, 0.3))"
+          },
+          "unselectedStyle": {
+            "fill": "rgba(196, 138, 50, 0.2)",
+            "stroke": "rgba(196, 138, 50, 0.4)",
+            "strokeWidth": "1px"
+          }
+        },
+        {
+          "id": "TEK",
+          "label": "Teknikk",
+          "shortLabel": "TEK",
+          "color": "{colors.pyramid.TEK}",
+          "icon": "wrench",
+          "description": "Svinganalyse, video, impact",
+          "percentage": "25-30%",
+          "shape": "trapezoid-4",
+          "selectedStyle": {
+            "fill": "{colors.pyramid.TEK}",
+            "stroke": "#FFFFFF",
+            "strokeWidth": "2px",
+            "filter": "drop-shadow(0 4px 12px rgba(0, 122, 255, 0.3))"
+          },
+          "unselectedStyle": {
+            "fill": "rgba(0, 122, 255, 0.2)",
+            "stroke": "rgba(0, 122, 255, 0.4)",
+            "strokeWidth": "1px"
+          }
+        },
+        {
+          "id": "FYS",
+          "label": "Fysisk",
+          "shortLabel": "FYS",
+          "color": "{colors.pyramid.FYS}",
+          "icon": "dumbbell",
+          "description": "Styrke, mobilitet, kondisjon",
+          "percentage": "15-25%",
+          "shape": "trapezoid-5",
+          "selectedStyle": {
+            "fill": "{colors.pyramid.FYS}",
+            "stroke": "#FFFFFF",
+            "strokeWidth": "2px",
+            "filter": "drop-shadow(0 4px 12px rgba(0, 88, 64, 0.3))"
+          },
+          "unselectedStyle": {
+            "fill": "rgba(0, 88, 64, 0.2)",
+            "stroke": "rgba(0, 88, 64, 0.4)",
+            "strokeWidth": "1px"
+          }
+        }
+      ],
+      "interactions": {
+        "hover": {
+          "transform": "scale(1.02)",
+          "cursor": "pointer"
+        },
+        "click": {
+          "toggleSelection": true,
+          "allowMultiple": true
+        }
+      }
+    },
+    "pyramid-stacked-bar": {
+      "name": "Pyramid Stacked Bar",
+      "description": "Horizontal stacked bar used in exercise bank and data visualization.",
+      "styles": {
+        "container": {
+          "display": "flex",
+          "flexDirection": "column",
+          "gap": "8px",
+          "width": "100%"
+        },
+        "bar": {
+          "height": "24px",
+          "borderRadius": "12px",
+          "overflow": "hidden",
+          "display": "flex"
+        },
+        "segments": {
+          "FYS": { "backgroundColor": "{colors.pyramid.FYS}" },
+          "TEK": { "backgroundColor": "{colors.pyramid.TEK}" },
+          "SLAG": { "backgroundColor": "{colors.pyramid.SLAG}" },
+          "SPILL": { "backgroundColor": "{colors.pyramid.SPILL}" },
+          "TURN": { "backgroundColor": "{colors.pyramid.TURN}" }
+        }
+      }
+    },
+    "wizard-header": {
+      "name": "Wizard Header",
+      "styles": {
+        "textAlign": "center",
+        "marginBottom": "32px"
+      },
+      "title": {
+        "fontSize": "{typography.sizes.3xl}",
+        "fontWeight": "{typography.weights.bold}",
+        "color": "{colors.primary.dark}"
+      },
+      "subtitle": {
+        "fontSize": "{typography.sizes.base}",
+        "color": "{colors.grey.500}",
+        "marginTop": "8px"
+      }
+    },
+    "step-indicator": {
+      "name": "Step Indicator",
+      "styles": {
+        "display": "flex",
+        "justifyContent": "center",
+        "gap": "8px",
+        "marginBottom": "40px"
+      },
+      "step": {
+        "width": "40px",
+        "height": "4px",
+        "borderRadius": "2px"
+      },
+      "active": {
+        "backgroundColor": "{colors.primary.main}"
+      },
+      "inactive": {
+        "backgroundColor": "{colors.grey.200}"
+      }
+    },
+    "time-scope-selector": {
+      "name": "Time Scope Selector",
+      "description": "Three cards for selecting single session, period, or annual plan.",
+      "styles": {
+        "display": "grid",
+        "gridTemplateColumns": "repeat(3, 1fr)",
+        "gap": "16px"
+      },
+      "optionCard": {
+        "borderRadius": "{borderRadius.lg}",
+        "border": "1px solid {colors.grey.200}",
+        "padding": "24px",
+        "textAlign": "center",
+        "cursor": "pointer",
+        "transition": "all {motion.duration.fast} {motion.ease.premium}"
+      },
+      "selected": {
+        "borderColor": "{colors.primary.main}",
+        "backgroundColor": "rgba(0, 88, 64, 0.04)",
+        "boxShadow": "{shadows.md}"
+      },
+      "options": [
+        { "id": "single", "label": "Enkeltøkt", "description": "Planlegg én treningsøkt", "icon": "calendar-plus" },
+        { "id": "period", "label": "Periode", "description": "4–12 ukers plan", "icon": "calendar-range" },
+        { "id": "annual", "label": "Årsplan", "description": "52 ukers sesongplan", "icon": "calendar-days" }
+      ]
+    },
+    "focus-area-selector": {
+      "name": "Focus Area Selector",
+      "styles": {
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "12px"
+      },
+      "option": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "12px",
+        "padding": "16px",
+        "borderRadius": "{borderRadius.md}",
+        "border": "1px solid {colors.grey.200}",
+        "cursor": "pointer"
+      },
+      "selected": {
+        "borderColor": "{colors.primary.main}",
+        "backgroundColor": "rgba(0, 88, 64, 0.04)"
+      }
+    },
+    "ai-suggestion-card": {
+      "name": "AI Suggestion Card",
+      "styles": {
+        "borderRadius": "{borderRadius.lg}",
+        "border": "1px solid {colors.ai.primary}",
+        "backgroundColor": "{colors.ai.light}",
+        "padding": "20px"
+      },
+      "icon": {
+        "color": "{colors.ai.primary}",
+        "size": 24
+      },
+      "text": {
+        "color": "{colors.primary.text}",
+        "fontSize": "{typography.sizes.sm}"
+      }
+    },
+    "weekly-plan-preview": {
+      "name": "Weekly Plan Preview",
+      "styles": {
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "16px"
+      },
+      "weekCard": {
+        "borderRadius": "{borderRadius.lg}",
+        "border": "1px solid {colors.grey.200}",
+        "backgroundColor": "#FFFFFF",
+        "padding": "20px",
+        "boxShadow": "{shadows.sm}"
+      },
+      "dayPills": {
+        "display": "flex",
+        "gap": "8px",
+        "flexWrap": "wrap"
+      },
+      "dayPill": {
+        "borderRadius": "{borderRadius.full}",
+        "padding": "6px 12px",
+        "fontSize": "{typography.sizes.xs}",
+        "fontWeight": "{typography.weights.semibold}"
+      }
+    },
+    "day-detail-cards": {
+      "name": "Day Detail Cards",
+      "styles": {
+        "display": "grid",
+        "gridTemplateColumns": "repeat(7, 1fr)",
+        "gap": "12px"
+      },
+      "card": {
+        "borderRadius": "{borderRadius.md}",
+        "border": "1px solid {colors.grey.200}",
+        "padding": "12px",
+        "minHeight": "120px"
+      },
+      "dayLabel": {
+        "fontSize": "{typography.sizes.xs}",
+        "fontWeight": "{typography.weights.bold}",
+        "textTransform": "uppercase",
+        "color": "{colors.grey.500}"
+      }
+    },
+    "hours-per-week-slider": {
+      "name": "Hours Per Week Slider",
+      "styles": {
+        "track": {
+          "height": "8px",
+          "borderRadius": "4px",
+          "backgroundColor": "{colors.grey.200}"
+        },
+        "fill": {
+          "height": "8px",
+          "borderRadius": "4px",
+          "backgroundColor": "{colors.primary.main}"
+        },
+        "thumb": {
+          "width": "24px",
+          "height": "24px",
+          "borderRadius": "50%",
+          "backgroundColor": "#FFFFFF",
+          "border": "2px solid {colors.primary.main}",
+          "boxShadow": "{shadows.md}"
+        },
+        "valueLabel": {
+          "fontSize": "{typography.sizes.2xl}",
+          "fontWeight": "{typography.weights.bold}",
+          "color": "{colors.primary.dark}",
+          "textAlign": "center",
+          "marginTop": "16px"
+        }
+      },
+      "range": { "min": 2, "max": 20, "step": 0.5, "default": 6 }
+    },
+    "day-selector": {
+      "name": "Day Selector",
+      "styles": {
+        "display": "flex",
+        "gap": "8px",
+        "justifyContent": "center"
+      },
+      "dayButton": {
+        "width": "44px",
+        "height": "44px",
+        "borderRadius": "50%",
+        "border": "1px solid {colors.grey.300}",
+        "backgroundColor": "#FFFFFF",
+        "fontSize": "{typography.sizes.sm}",
+        "fontWeight": "{typography.weights.semibold}",
+        "color": "{colors.primary.text}",
+        "cursor": "pointer"
+      },
+      "selected": {
+        "backgroundColor": "{colors.primary.main}",
+        "color": "#FFFFFF",
+        "borderColor": "{colors.primary.main}"
+      }
+    },
+    "welcome-section": {
+      "name": "Welcome Section",
+      "styles": {
+        "display": "flex",
+        "flexDirection": "column",
+        "gap": "8px"
+      },
+      "heading": {
+        "fontSize": "32px",
+        "fontWeight": 700,
+        "letterSpacing": "-0.02em",
+        "color": "{colors.primary.dark}"
+      },
+      "tierBadge": {
+        "backgroundColor": "{colors.primary.accent}",
+        "color": "{colors.primary.dark}",
+        "padding": "4px 12px",
+        "borderRadius": "9999px",
+        "fontSize": "12px",
+        "fontWeight": 700
+      },
+      "memberSince": {
+        "fontSize": "14px",
+        "color": "{colors.grey.400}"
+      }
+    },
+    "next-booking-card": {
+      "name": "Next Booking Card",
+      "variants": {
+        "empty": {
+          "display": "flex",
+          "flexDirection": "column",
+          "justifyContent": "space-between",
+          "height": "100%",
+          "borderRadius": "16px",
+          "border": "1px dashed {colors.grey.300}",
+          "backgroundColor": "#FFFFFF",
+          "padding": "24px",
+          "boxShadow": "{shadows.sm}"
+        },
+        "filled": {
+          "display": "flex",
+          "flexDirection": "column",
+          "height": "100%",
+          "borderRadius": "16px",
+          "padding": "20px",
+          "color": "#FFFFFF",
+          "background": "{gradients.nextBooking}",
+          "boxShadow": "{shadows.sm}"
+        }
+      }
+    },
+    "week-calendar": {
+      "name": "Week Calendar",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "#FFFFFF",
+        "padding": "16px",
+        "boxShadow": "{shadows.sm}"
+      },
+      "dayStates": {
+        "today": { "backgroundColor": "#000000", "color": "#FFFFFF" },
+        "active": { "backgroundColor": "{colors.grey.50}", "color": "#000000" },
+        "default": { "color": "{colors.grey.400}" }
+      },
+      "dateCircleStates": {
+        "today": { "backgroundColor": "{colors.primary.accent}", "color": "{colors.primary.dark}" },
+        "coaching": { "backgroundColor": "{colors.primary.main}", "color": "#FFFFFF" },
+        "trained": { "backgroundColor": "{colors.semantic.success}", "color": "#FFFFFF" },
+        "rest": { "backgroundColor": "{colors.grey.100}", "color": "{colors.grey.400}" },
+        "empty": { "backgroundColor": "transparent", "color": "{colors.grey.400}" }
+      }
+    },
+    "kpi-card": {
+      "name": "KPI Card",
+      "styles": {
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "space-between",
+        "height": "100%",
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "#FFFFFF",
+        "padding": "20px",
+        "boxShadow": "{shadows.sm}",
+        "hover": {
+          "borderColor": "{colors.grey.200}",
+          "boxShadow": "{shadows.md}"
+        }
+      },
+      "label": {
+        "fontSize": "10px",
+        "fontWeight": 700,
+        "textTransform": "uppercase",
+        "letterSpacing": "0.14em",
+        "color": "{colors.grey.400}"
+      },
+      "value": {
+        "fontSize": "40px",
+        "fontWeight": 600,
+        "letterSpacing": "-0.02em",
+        "color": "#000000"
+      },
+      "changeBadge": {
+        "positive": { "backgroundColor": "rgba(42, 125, 90, 0.1)", "color": "{colors.semantic.success}" },
+        "negative": { "backgroundColor": "rgba(184, 66, 51, 0.1)", "color": "{colors.semantic.error}" },
+        "neutral": { "backgroundColor": "{colors.grey.100}", "color": "{colors.grey.500}" }
+      }
+    },
+    "ai-insights-v2": {
+      "name": "AI Insights V2",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.slate.700}",
+        "background": "{gradients.aiCard}",
+        "padding": "24px"
+      },
+      "tabs": {
+        "container": {
+          "display": "flex",
+          "gap": "4px",
+          "padding": "4px",
+          "borderRadius": "8px",
+          "backgroundColor": "rgba(30, 41, 59, 0.5)"
+        },
+        "active": {
+          "backgroundColor": "{colors.slate.700}",
+          "color": "{colors.slate.100}",
+          "borderRadius": "6px",
+          "padding": "8px 12px",
+          "fontSize": "12px",
+          "fontWeight": 500
+        },
+        "inactive": {
+          "color": "{colors.slate.400}",
+          "borderRadius": "6px",
+          "padding": "8px 12px",
+          "fontSize": "12px",
+          "fontWeight": 500
+        }
+      },
+      "progressBar": {
+        "height": "8px",
+        "borderRadius": "9999px",
+        "gradient": "{gradients.goalProgress}"
+      }
+    },
+    "coach-insight-card": {
+      "name": "Coach Insight Card",
+      "styles": {
+        "display": "flex",
+        "flexDirection": "column",
+        "height": "100%",
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "#FFFFFF",
+        "padding": "20px",
+        "boxShadow": "{shadows.sm}",
+        "hover": {
+          "borderColor": "{colors.grey.200}",
+          "boxShadow": "{shadows.md}"
+        }
+      }
+    },
+    "shortcut-pills": {
+      "name": "Shortcut Pills",
+      "layout": {
+        "display": "grid",
+        "gridTemplateColumns": "repeat(4, 1fr)",
+        "gap": "12px"
+      },
+      "pill": {
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "space-between",
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "#FFFFFF",
+        "padding": "16px",
+        "boxShadow": "{shadows.sm}",
+        "hover": {
+          "transform": "translateY(-2px)",
+          "borderColor": "{colors.grey.200}",
+          "boxShadow": "{shadows.md}"
+        }
+      }
+    },
+    "trackman-widget": {
+      "name": "TrackMan Widget",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.slate.700}",
+        "backgroundColor": "rgba(15, 23, 42, 0.5)",
+        "padding": "24px"
+      }
+    },
+    "social-widget": {
+      "name": "Social Widget",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.slate.700}",
+        "backgroundColor": "rgba(15, 23, 42, 0.5)",
+        "padding": "24px"
+      }
+    },
+    "achievements-widget": {
+      "name": "Achievements Widget",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.slate.700}",
+        "backgroundColor": "rgba(15, 23, 42, 0.5)",
+        "padding": "24px"
+      },
+      "progressBar": {
+        "height": "8px",
+        "borderRadius": "9999px",
+        "gradient": "{gradients.achievementBar}"
+      },
+      "rarityStyles": {
+        "common": { "borderColor": "{colors.slate.600}", "backgroundColor": "rgba(30, 41, 59, 0.5)", "color": "{colors.slate.400}" },
+        "rare": { "borderColor": "rgba(59, 130, 246, 0.5)", "backgroundColor": "rgba(59, 130, 246, 0.1)", "color": "#60A5FA" },
+        "epic": { "borderColor": "rgba(168, 85, 247, 0.5)", "backgroundColor": "rgba(168, 85, 247, 0.1)", "color": "#C084FC" },
+        "legendary": { "borderColor": "rgba(245, 158, 11, 0.5)", "backgroundColor": "rgba(245, 158, 11, 0.1)", "color": "#FBBF24" }
+      }
+    },
+    "streak-card": {
+      "name": "Streak Card",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "#FFFFFF",
+        "padding": "20px",
+        "boxShadow": "{shadows.sm}"
+      },
+      "streakNumber": {
+        "fontSize": "48px",
+        "fontWeight": 700,
+        "color": "{colors.primary.main}"
+      },
+      "flameIcon": {
+        "color": "{colors.data.coral}",
+        "size": 32
+      }
+    },
+    "plan-progress-card": {
+      "name": "Plan Progress Card",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.100}",
+        "backgroundColor": "#FFFFFF",
+        "padding": "20px",
+        "boxShadow": "{shadows.sm}"
+      },
+      "ring": {
+        "size": 120,
+        "strokeWidth": 8,
+        "trackColor": "{colors.grey.200}",
+        "fillColor": "{colors.primary.main}"
+      }
+    },
+    "sg-breakdown-bars": {
+      "name": "Strokes Gained Breakdown Bars",
+      "styles": {
+        "container": {
+          "display": "flex",
+          "flexDirection": "column",
+          "gap": "16px"
+        },
+        "barTrack": {
+          "height": "5px",
+          "borderRadius": "9999px",
+          "backgroundColor": "{colors.grey.200}",
+          "position": "relative"
+        },
+        "centerLine": {
+          "position": "absolute",
+          "left": "50%",
+          "width": "1px",
+          "height": "100%",
+          "backgroundColor": "{colors.grey.300}"
+        },
+        "positiveBar": {
+          "height": "100%",
+          "borderRadius": "9999px",
+          "backgroundColor": "{colors.semantic.success}",
+          "left": "50%"
+        },
+        "negativeBar": {
+          "height": "100%",
+          "borderRadius": "9999px",
+          "backgroundColor": "{colors.semantic.error}",
+          "right": "50%"
+        }
+      }
+    },
+    "chat-container": {
+      "name": "Chat Container",
+      "styles": {
+        "borderRadius": "16px",
+        "border": "1px solid {colors.grey.200}",
+        "backgroundColor": "#FFFFFF",
+        "padding": "20px",
+        "minHeight": "400px",
+        "display": "flex",
+        "flexDirection": "column"
+      },
+      "messageBubble": {
+        "user": {
+          "backgroundColor": "{colors.primary.main}",
+          "color": "#FFFFFF",
+          "borderRadius": "16px 16px 4px 16px",
+          "padding": "12px 16px",
+          "alignSelf": "flex-end"
+        },
+        "ai": {
+          "backgroundColor": "{colors.grey.100}",
+          "color": "{colors.primary.text}",
+          "borderRadius": "16px 16px 16px 4px",
+          "padding": "12px 16px",
+          "alignSelf": "flex-start"
+        }
+      },
+      "inputArea": {
+        "borderTop": "1px solid {colors.grey.200}",
+        "paddingTop": "16px",
+        "marginTop": "auto"
+      }
+    }
+  }
+}

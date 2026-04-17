@@ -48,6 +48,7 @@ describe("Booking-Admin Sync System", () => {
         name: testInstructor.name,
         email: testInstructor.email,
         role: "INSTRUCTOR",
+        updatedAt: new Date(),
       },
     });
 
@@ -56,6 +57,7 @@ describe("Booking-Admin Sync System", () => {
       data: {
         id: testInstructor.id,
         userId: testInstructor.userId,
+        updatedAt: new Date(),
       },
     });
 
@@ -66,6 +68,7 @@ describe("Booking-Admin Sync System", () => {
         name: testStudent.name,
         email: testStudent.email,
         role: "STUDENT",
+        updatedAt: new Date(),
       },
     });
 
@@ -79,6 +82,7 @@ describe("Booking-Admin Sync System", () => {
         bufferBefore: testServiceType.bufferBefore,
         bufferAfter: testServiceType.bufferAfter,
         category: "INDIVIDUAL",
+        updatedAt: new Date(),
       },
     });
 
@@ -218,7 +222,6 @@ describe("Booking-Admin Sync System", () => {
           startTime: slotTime,
           endTime,
           reason: "Test blokkering",
-          source: "MANUAL",
         },
       });
 
@@ -354,8 +357,6 @@ describe("Booking-Admin Sync System", () => {
           startTime: slotTime,
           endTime,
           reason: "Google Calendar Event",
-          source: "GOOGLE_CALENDAR",
-          externalId: `gc-test-${nanoid(8)}`,
         },
       });
 

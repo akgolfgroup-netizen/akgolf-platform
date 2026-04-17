@@ -562,7 +562,6 @@ describe("Booking API Integration", () => {
           endTime: new Date(startTime.getTime() + 3600000),
           reason: "Møte",
           createdAt: new Date(),
-          updatedAt: new Date(),
         },
       });
 

@@ -115,7 +115,7 @@ function SGBar({ label, value, delay }: { label: string; value: number | null; d
           className="absolute h-full rounded-full"
           style={{
             backgroundColor: isPositive
-              ? "success-text"
+              ? "#2A7D5A"
               : "#B84233",
             ...(isPositive ? { left: "50%" } : { right: "50%" }),
           }}
