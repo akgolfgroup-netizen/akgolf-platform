@@ -33,6 +33,9 @@ Sist oppdatert: 2026-04-18
 
 ## Fullfort
 
+### 2026-04-18 (senere)
+- **Turneringsplanlegger komplett (#42):** 6 kilder aktive — Olyo Juniortour (customer=877, scheduleId=16139), Østlandstour (customer=895, scheduleId=3863), Garmin Norgescup, Srixon Tour, NM (customer=18), Nordic Golf Tour, JMI Sweden, Global Junior Tour. Sync-route fyllt ut med upsert og error-isolation per kilde (POST + GET for cron). CRON 02:00 daglig. Prisma-migrasjon `isPrivate` + indekser. Spiller-opprettede turneringer private by default, staff kan opprette offentlige. Modal `add-tournament-modal.tsx`. Filtrering i `getTournamentsWithPlans` + `getPlayerTournaments` + public API. Hjelper-script `scripts/list-golfbox-schedules.ts`. Integrasjonstester i `__tests__/tournament-planner/tournament.test.ts`.
+
 ### 2026-04-18
 - **E2E-dekning booking (#30):** 3 nye Playwright-spec-filer med totalt 28 nye test-cases (e2e/booking-cancel.spec.ts, e2e/portal-booking-auth.spec.ts, e2e/booking-errors.spec.ts). test:e2e-scripts lagt til i package.json.
 - **Go-live-sjekkliste:** `docs/status/GO_LIVE_CHECKLIST.md` opprettet med komplett env-vars-liste, CRON-verifisering, DNS, Stripe-webhook, smoke-test, rollback-plan.

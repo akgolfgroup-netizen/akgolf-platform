@@ -989,12 +989,15 @@ model Tournament {
   series               String?
   source               String?
   sourceId             String?
+  isPrivate            Boolean                @default(false)
   PlayerTournamentPlan PlayerTournamentPlan[]
   User                 User?                  @relation(fields: [createdById], references: [id])
   TournamentPrep       TournamentPrep[]
 
   @@unique([source, sourceId])
   @@index([startDate])
+  @@index([createdById])
+  @@index([isPrivate])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

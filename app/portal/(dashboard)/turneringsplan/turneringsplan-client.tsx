@@ -5,10 +5,11 @@ import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
   Trophy, Calendar, CheckCircle2, MapPin,
-  ExternalLink, Target, Flag, ChevronRight,
+  ExternalLink, Target, Flag, ChevronRight, Plus,
 } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
+import { AddTournamentModal } from "@/components/portal/turneringer/add-tournament-modal";
 import { registerForTournament, type PortalTournament, type TournamentStats } from "./actions";
 
 // ── Helpers ─────────────────────────────────────────────────
@@ -48,6 +49,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
   const [activeTab, setActiveTab] = useState<TabKey>("kommende");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [registeringId, setRegisteringId] = useState<string | null>(null);
+  const [addOpen, setAddOpen] = useState(false);
 
   async function handleRegister(tournamentId: string) {
     setRegisteringId(tournamentId);
@@ -84,14 +86,31 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
     <div className="mx-auto w-full max-w-[1120px] px-6 pb-12 pt-8">
 
       {/* ═══ HEADER ═══ */}
-      <div className="mb-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-          Sesong 2026
-        </p>
-        <h1 className="mt-1 text-[28px] font-bold tracking-tight text-black">
-          Turneringsplan
-        </h1>
+      <div className="mb-8 flex items-start justify-between gap-4">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-400">
+            Sesong 2026
+          </p>
+          <h1 className="mt-1 text-[28px] font-bold tracking-tight text-black">
+            Turneringsplan
+          </h1>
+        </div>
+        <button
+          type="button"
+          onClick={() => setAddOpen(true)}
+          className="inline-flex items-center gap-2 rounded-[20px] bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-alt"
+        >
+          <Plus className="h-4 w-4" />
+          Legg til egen turnering
+        </button>
       </div>
+
+      <AddTournamentModal
+        open={addOpen}
+        onClose={() => setAddOpen(false)}
+        onSuccess={() => window.location.reload()}
+      />
+
 
       {/* ═══ STAT-KORT ═══ */}
       <div className="mb-6 grid grid-cols-3 gap-4">

@@ -24,7 +24,7 @@ export async function fetchAllSources(
     { name: "GolfBox", fn: () => fetchGolfBoxTournaments(year) },
     { name: "Nordic Golf Tour", fn: () => fetchNordicGolfTourSchedule(year) },
     { name: "JMI Sweden", fn: () => fetchJmiSchedule(year) },
-    { name: "Global Junior Tour", fn: () => fetchGlobalJuniorTourSchedule(year) },
+    { name: "Global Junior Tour", fn: () => fetchGlobalJuniorTourSchedule() },
   ];
 
   const results = await Promise.allSettled(fetchers.map((f) => f.fn()));

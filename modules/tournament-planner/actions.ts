@@ -26,14 +26,15 @@ export async function getTournamentsWithPlans(
   options?: { from?: Date; to?: Date }
 ): Promise<TournamentWithPlan[]> {
   if (isSupabase(db)) {
-    // Supabase implementation
+    // Supabase implementation — filtrer bort private turneringer som ikke eies av studenten
     let query = db
       .from("Tournament")
       .select(`
         *,
         PlayerTournamentPlan!inner(*)
       `)
-      .eq("PlayerTournamentPlan.studentId", studentId);
+      .eq("PlayerTournamentPlan.studentId", studentId)
+      .or(`isPrivate.eq.false,createdById.eq.${studentId}`);
 
     if (options?.from) {
       query = query.gte("startDate", options.from.toISOString());
@@ -69,8 +70,10 @@ export async function getTournamentsWithPlans(
       };
     }) as TournamentWithPlan[];
   } else {
-    // Prisma implementation
-    const where: Record<string, unknown> = {};
+    // Prisma implementation — filtrer bort private turneringer som ikke eies av studenten
+    const where: Record<string, unknown> = {
+      OR: [{ isPrivate: false }, { createdById: studentId }],
+    };
     if (options?.from || options?.to) {
       where.startDate = {
         ...(options.from ? { gte: options.from } : {}),

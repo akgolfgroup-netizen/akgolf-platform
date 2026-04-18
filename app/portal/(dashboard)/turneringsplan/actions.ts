@@ -36,9 +36,11 @@ export async function getPlayerTournaments(): Promise<{
   const now = new Date();
 
   // Hent alle turneringer fra og med i dag, pluss brukerens planer
+  // Filtrer bort private turneringer som ikke eies av brukeren
   const tournaments = await prisma.tournament.findMany({
     where: {
       startDate: { gte: now },
+      OR: [{ isPrivate: false }, { createdById: user.id }],
     },
     include: {
       PlayerTournamentPlan: {

@@ -8,6 +8,48 @@
 
 ---
 
+## 2026-04-18 — Turneringsplanlegger komplett: 6 kilder + manuell tillegging
+
+**Jobbet med:**
+- **Olyo + Østland via GolfBox:** Identifisert at Olyo Juniortour hostes under GolfBox customer=877, scheduleId=16139 (9 turneringer 2026). Østlandstour under customer=895, scheduleId=3863 (11 turneringer). Oppdatert `GOLFBOX_CATEGORIES` + `GOLFBOX_CUSTOMERS` i `modules/tournament-planner/golfbox.ts`.
+- **Parser utvidet:** `fetchGolfBoxSchedule` håndterer nå både `Competitions: []` (customer 18) og `Entries: {}` (customer 895) — top-level `Categories` brukes for navn-lookup. Testet med curl mot live API.
+- **Source-restrukturering:** `modules/tournament-planner/sources/golfbox.ts` bruker nå `GolfBoxScheduleSpec[]` med customerId per schedule. 5 default-kilder syncres.
+- **Sync-orkestrering:** `app/api/portal/tournament-planner/sync/route.ts` fyllt ut — looper over 4 kilder (golfbox, nordic_golf_tour, jmi_sweden, global_junior_tour), upsert via composite unique `source_sourceId`, error-isolation per kilde, telling av imported/updated/errors. Støtter både POST (manuell) og GET (Vercel CRON), autorisasjon via `TOURNAMENT_SYNC_SECRET` eller `CRON_SECRET`.
+- **CRON:** Lagt til `/api/portal/tournament-planner/sync` med schedule `0 2 * * *` i `vercel.json`.
+- **Migrasjon:** `20260418_tournament_is_private` legger til `isPrivate` boolean + indekser på `createdById` og `isPrivate`.
+- **Create-route åpnet for spillere:** `app/api/portal/tournament-planner/create/route.ts` — autentisert bruker kan opprette, validering av navn/dato/level, rate-limit 20 per 24t for ikke-staff, spillere får `isPrivate=true` automatisk, staff kan velge. Refaktorert fra Supabase til Prisma.
+- **Filtrering:** `getTournamentsWithPlans` (Prisma + Supabase) og `getPlayerTournaments` filtrerer nå `OR: [{isPrivate: false}, {createdById: user.id}]`. Public tournaments-API ekskluderer alle private.
+- **UI:** Ny `components/portal/turneringer/add-tournament-modal.tsx` med skjema (navn, datoer, nivå, sted, URL, notater). "Legg til egen turnering"-knapp øverst i `turneringsplan-client.tsx`.
+- **Tester:** `__tests__/tournament-planner/tournament.test.ts` med 3 testgrupper (manuell opprettelse, filtrering, sync upsert).
+- **Hjelper-script:** `scripts/list-golfbox-schedules.ts` for å liste tilgjengelige kategorier per customer.
+- **Kvalitetssikring:** TypeScript rent for alle nye filer. Pre-eksisterende TS-feil i `sources/index.ts` (fetchGlobalJuniorTourSchedule-argument) fikset som bonus.
+
+**Nøkkelfiler:**
+- `modules/tournament-planner/golfbox.ts` (parser utvidet, kategorier)
+- `modules/tournament-planner/sources/golfbox.ts` (multi-customer support)
+- `modules/tournament-planner/sources/index.ts` (TS-fiks)
+- `modules/tournament-planner/actions.ts` (filtrering i `getTournamentsWithPlans`)
+- `app/api/portal/tournament-planner/sync/route.ts` (full orkestrering)
+- `app/api/portal/tournament-planner/create/route.ts` (åpnet for spillere)
+- `app/api/portal/public/tournaments/route.ts` (ekskludér private)
+- `app/portal/(dashboard)/turneringsplan/actions.ts` (filtrering)
+- `app/portal/(dashboard)/turneringsplan/turneringsplan-client.tsx` (Legg til-knapp)
+- `components/portal/turneringer/add-tournament-modal.tsx` (ny)
+- `prisma/schema.prisma` (isPrivate på Tournament)
+- `prisma/migrations/20260418_tournament_is_private/migration.sql` (ny)
+- `vercel.json` (CRON)
+- `scripts/list-golfbox-schedules.ts` (ny)
+- `__tests__/tournament-planner/tournament.test.ts` (ny)
+
+**Neste steg (Anders må utføre):**
+1. **Kjør migrasjon mot prod:** `npx prisma migrate deploy` med `DIRECT_URL` satt (ikke pooler-URL). Uten dette vil `isPrivate`-filter feile.
+2. **Sett `CRON_SECRET` og `TOURNAMENT_SYNC_SECRET`** i Vercel env-vars.
+3. **Test CRON manuelt:** `curl -H "Authorization: Bearer $CRON_SECRET" https://akgolf.no/api/portal/tournament-planner/sync?year=2026` etter deploy.
+4. **Kjør unit-tester lokalt:** `npm run test -- __tests__/tournament-planner/` (krever at migrasjonen er kjørt mot lokal DB først).
+5. **Spør om andre junior-regioner (873-878)** skal inkluderes (Midt, Vestland, Rogaland, Sør, Viken Vest, Øst) — vi har kun Olyo (877) foreløpig.
+
+---
+
 ## 2026-04-18 — Backlog-sprint: HCP-prognose + auto-plan CRON + TrackMan metodikk-kontekst
 
 **Jobbet med:**

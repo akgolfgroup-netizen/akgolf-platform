@@ -91,22 +91,56 @@ export async function fetchGolfBoxSchedule(
   const competitions: GolfBoxCompetition[] = [];
   const months = season.Months;
 
+  // Top-level categories lookup (brukes av Entries-format hvor Categories er [id])
+  const topCategories: Record<number, { ID: number; Name: string }> = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const topCatList: any[] = data?.Categories ?? [];
+  for (const c of topCatList) {
+    if (c?.ID) topCategories[c.ID] = { ID: c.ID, Name: c.Name };
+  }
+
   for (const monthKey of Object.keys(months)) {
     const month = months[monthKey];
-    if (!month?.Competitions) continue;
 
-    for (const comp of month.Competitions) {
-      // Filter by scheduleId (category) if specified
-      if (scheduleId && comp.Category?.ID !== scheduleId) continue;
+    // Format A: customer 18-stil → month.Competitions: []
+    if (Array.isArray(month?.Competitions)) {
+      for (const comp of month.Competitions) {
+        if (scheduleId && comp.Category?.ID !== scheduleId) continue;
+        competitions.push({
+          ID: comp.ID,
+          Name: comp.Name,
+          StartDate: comp.StartDate,
+          EndDate: comp.EndDate,
+          VenueName: comp.VenueName,
+          Category: comp.Category,
+        });
+      }
+      continue;
+    }
 
-      competitions.push({
-        ID: comp.ID,
-        Name: comp.Name,
-        StartDate: comp.StartDate,
-        EndDate: comp.EndDate,
-        VenueName: comp.VenueName,
-        Category: comp.Category,
-      });
+    // Format B: customer 895-stil → month.Entries: { E<id>: comp }
+    if (month?.Entries && typeof month.Entries === "object") {
+      for (const entryKey of Object.keys(month.Entries)) {
+        const comp = month.Entries[entryKey];
+        // Categories er array av ID-er i dette formatet
+        const categoryIds: number[] = Array.isArray(comp.Categories)
+          ? comp.Categories
+          : [];
+        if (scheduleId && !categoryIds.includes(scheduleId)) continue;
+
+        // Finn første matchende kategori for navn-lookup
+        const catId = categoryIds[0];
+        const category = catId && topCategories[catId] ? topCategories[catId] : undefined;
+
+        competitions.push({
+          ID: comp.ID,
+          Name: comp.Name,
+          StartDate: comp.StartDate,
+          EndDate: comp.EndDate,
+          VenueName: comp.VenueName,
+          Category: category,
+        });
+      }
     }
   }
 
@@ -135,4 +169,25 @@ export const GOLFBOX_CATEGORIES: Record<number, string> = {
   9775: "Internasjonale turneringer",
   9896: "Norgesmesterskap",
   9897: "Lag-NM",
+  3863: "Østlandstour",
+  16139: "Olyo Juniortour",
+};
+
+/**
+ * Known GolfBox customers (tour-eiere).
+ *
+ * NGF (18) hoster landsdekkende serier som Garmin NC, Srixon Tour, NM.
+ * Regionale junior-tourer har egne customers:
+ *   873 Midt, 874 Vestland, 875 Rogaland, 876 Sør, 877 Viken Vest, 878 Øst
+ * Østlandstour har egen customer: 895
+ */
+export const GOLFBOX_CUSTOMERS: Record<number, string> = {
+  18: "NGF (landsdekkende)",
+  873: "Region Midt",
+  874: "Region Vestland",
+  875: "Region Rogaland",
+  876: "Region Sør",
+  877: "Region Viken Vest",
+  878: "Region Øst",
+  895: "Østlandstour",
 };

@@ -40,3 +40,4 @@ ID,Task,Category,Priority,Status,DependsOn,EstimatedHours,Notes
 39,Deploy og go-live,DevOps,High,Pending,"30,31,32,33",4,"Vercel-prosjekt konfigurert. Sjekkliste klar: docs/status/GO_LIVE_CHECKLIST.md. Blocker: build feiler på /landing/contact + /admin/treningsplan/ny (React 19/Next.js 16 useContext)"
 40,Coaching Forecast — motor + API + UI,Analytics,High,Done,,20,"SG-beregning, Monte-Carlo, MC UI, portal UI, CRON backtest — fullført 2026-04-17"
 41,Notion-database for master-todo,Operations,Low,Pending,,2,"JSON-eksport klar: docs/notion-import-master-todo.json + docs/notion-import-howto.md. Manuell import gjenstår"
+42,Turneringsplanlegger komplett (Olyo/Østland + sync + manuell),Feature,High,Done,,5,"GolfBox-kilde utvidet (customer 18+895+877), scheduleId 3863 Østlandstour + 16139 Olyo Juniortour. Sync-route fyllt ut med upsert. CRON 02:00 daglig. Migrasjon isPrivate. Spillere kan legge inn egne turneringer (private). Modal + filtrering. Tester (2026-04-18)"

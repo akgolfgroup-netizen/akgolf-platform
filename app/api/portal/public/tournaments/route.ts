@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
       .select(
         "id, name, startDate, endDate, level, course, location, registrationDeadline, series"
       )
+      .eq("isPrivate", false)
       .order("startDate", { ascending: true })
       .limit(50);
 
