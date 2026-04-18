@@ -1,0 +1,40 @@
+/* OPT 5 — Konfigurasjon · Clean + Polished */
+
+#frame-opt5-tabs .sub-tab-badge { display: none; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"] { color: #666; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #333; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"].active { color: #000; border-bottom-color: #000; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"] { color: #666; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #333; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"].active { color: #000; border-bottom-color: #000; }
+
+/* ====== CLEAN ====== */
+#frame-opt5.clean .browser-content { padding: 0; background: #fafafa; }
+#frame-opt5.clean .wf-mc-topbar { background: #0A1F18; color: #fff; padding: 12px 20px; border-radius: 0; }
+#frame-opt5.clean .wf-mc-logo { font-weight: 700; letter-spacing: 0.02em; }
+#frame-opt5.clean .wf-mc-tab { color: rgba(255,255,255,0.55); font-weight: 500; }
+#frame-opt5.clean .wf-mc-tab-active { color: #D1F843; border-bottom: 2px solid #D1F843; padding-bottom: 2px; }
+#frame-opt5.clean .wf-mc-profile { background: #D1F843; color: #0A1F18; font-weight: 700; }
+#frame-opt5.clean .wf-mc-body { background: #F5F8F7; padding: 24px 20px; border-radius: 0; color: #324D45; }
+#frame-opt5.clean .wf-rep-filter { background: #fff; border: 1px solid #D5DFDB; color: #324D45; border-radius: 20px; padding: 6px 14px; font-size: 12px; }
+#frame-opt5.clean .wf-rep-filter-primary { background: #005840; color: #fff; border-color: #005840; }
+#frame-opt5.clean .wf-rep-card { background: #fff; border: 1px solid #ECF0EF; border-radius: 12px; }
+#frame-opt5.clean .wf-config-prompt { background: #F5F8F7; border-color: #ECF0EF; }
+#frame-opt5.clean .wf-config-toggle { background: #005840; }
+
+/* ====== POLISHED ====== */
+#frame-opt5.polished .browser-content { padding: 0; background: #F5F5F7; }
+#frame-opt5.polished .wf-mc-topbar { background: linear-gradient(180deg, #0E2A22 0%, #0A1F18 100%); color: #fff; padding: 14px 22px; border-radius: 0; box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 2px 8px rgba(0,0,0,0.12); }
+#frame-opt5.polished .wf-mc-tab-active { color: #D1F843; border-bottom: 2px solid #D1F843; padding-bottom: 3px; }
+#frame-opt5.polished .wf-mc-profile { background: linear-gradient(135deg, #D1F843, #B8E035); color: #0A1F18; font-weight: 800; box-shadow: 0 2px 6px rgba(209,248,67,0.35); }
+#frame-opt5.polished .wf-mc-body { background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,88,64,0.03) 0%, transparent 60%), #F5F5F7; padding: 26px 22px; }
+#frame-opt5.polished .wf-rep-filter-primary { background: linear-gradient(180deg, #006B4E, #005840); box-shadow: 0 2px 6px rgba(0,88,64,0.25); }
+#frame-opt5.polished .wf-rep-card { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 14px; padding: 18px; box-shadow: 0 0 0 1px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03); transition: box-shadow 0.3s cubic-bezier(0.4,0,0.2,1); }
+#frame-opt5.polished .wf-rep-card:hover { box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.04); }
+#frame-opt5.polished .wf-config-prompt { background: #FAFAFC; border: 1px solid rgba(0,0,0,0.04); }
+#frame-opt5.polished .wf-config-toggle { background: linear-gradient(180deg, #006B4E, #005840); }
+#frame-opt5.polished .wf-config-toggle::after { box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt5.polished * { transition: none !important; animation: none !important; }
+}

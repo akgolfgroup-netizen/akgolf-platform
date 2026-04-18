@@ -1,0 +1,23 @@
+{
+  "swarms": {
+    "swarm-1776459542064-5qcpyo": {
+      "swarmId": "swarm-1776459542064-5qcpyo",
+      "topology": "hierarchical-mesh",
+      "maxAgents": 8,
+      "status": "running",
+      "agents": [],
+      "tasks": [],
+      "config": {
+        "topology": "hierarchical-mesh",
+        "maxAgents": 8,
+        "strategy": "specialized",
+        "communicationProtocol": "message-bus",
+        "autoScaling": true,
+        "consensusMechanism": "majority"
+      },
+      "createdAt": "2026-04-17T20:59:02.064Z",
+      "updatedAt": "2026-04-17T20:59:02.064Z"
+    }
+  },
+  "version": "3.0.0"
+}

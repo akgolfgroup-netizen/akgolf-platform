@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Assistent — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visuelle design fullfort — alle alternativer har Clean + Polished varianter
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Assistent</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">★ Anbefalt: Alternativ <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Chat</button>
+    <button class="tab-btn" data-tab="option-2">2: Kommandopalett</button>
+    <button class="tab-btn" data-tab="option-3">3: Innsiktsfeed</button>
+    <button class="tab-btn" data-tab="option-4">4: Handlingsko</button>
+    <button class="tab-btn" data-tab="option-5">5: Opplaring</button>
+    <button class="tab-btn" data-tab="summary">Sammendrag</button>
+  </nav>
+
+  <!-- ===== OPTION 1: CHAT INTERFACE ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Alternativ 1: <span class="opt-name">Chat</span></h2>
+    <p class="option-description">Samtalebasert grensesnitt — spor, analyser og handter data gjennom naturlig dialog.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/ai-assistent</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Assistent</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Assistent — spor det du lurar pa</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter">Historikk ▾</span>
+              <span class="wf-rep-filter">Ny samtale</span>
+            </div>
+          </div>
+
+          <div class="wf-chat-wrap">
+            <div class="wf-chat-msg wf-chat-user">
+              <div class="wf-chat-bubble">Hva var inntekten i forrige maned sammenlignet med aret for?</div>
+            </div>
+            <div class="wf-chat-msg wf-chat-bot">
+              <div class="wf-chat-bubble">
+                <strong>Inntekt mars 2026:</strong> 164.200 kr<br>
+                <strong>Inntekt mars 2025:</strong> 102.400 kr<br>
+                <strong>Vekst:</strong> +60,4%<br><br>
+                Storste bidragsytere:<br>
+                · Personlig coaching: +45%<br>
+                · Junior Academy: +89%<br>
+                · Software: +12%
+              </div>
+              <div class="wf-chat-actions">
+                <span class="wf-rep-filter">Vis graf</span>
+                <span class="wf-rep-filter">Eksporter</span>
+                <span class="wf-rep-filter">Forklar narmere</span>
+              </div>
+            </div>
+            <div class="wf-chat-msg wf-chat-user">
+              <div class="wf-chat-bubble">Hvilke elever har ikke booket pa 3 uker?</div>
+            </div>
+            <div class="wf-chat-msg wf-chat-bot">
+              <div class="wf-chat-bubble">
+                <strong>4 elever uten booking siste 3 uker:</strong><br><br>
+                · Erik Hansen — siste: 15. mar<br>
+                · Nora Torp — siste: 22. mar<br>
+                · Lars Berg — siste: 18. mar<br>
+                · Sofie Lund — siste: 20. mar<br><br>
+                Vil du sende en oppfølgings-e-post?
+              </div>
+              <div class="wf-chat-actions">
+                <span class="wf-rep-filter wf-rep-filter-primary">Send e-post til alle</span>
+                <span class="wf-rep-filter">Se detaljer</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="wf-chat-input-bar">
+            <div class="wf-chat-input">Skriv et sporsmal...</div>
+            <span class="wf-rep-filter wf-rep-filter-primary">Send</span>
+          </div>
+
+          <div class="wf-chat-suggestions">
+            <span class="wf-query-chip">Hva er dagens bookinger?</span>
+            <span class="wf-query-chip">Vis elever med utestende betaling</span>
+            <span class="wf-query-chip">Sammenlign denne uke med forrige</span>
+            <span class="wf-query-chip">Hvem er neste til a avslutte abonnement?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Chat er den mest intuitive inngangen for ikke-tekniske brukere.</li>
+        <li>Handlinger under hvert svar lar brukeren agere uten a skrive mer.</li>
+        <li>Forslags-chips gir raske innganger for vanlige sporsmal.</li>
+        <li>Historikk og ny samtale gir kontekst og mulighet til a starte pa nytt.</li>
+        <li>Trygg default — fungerer for alle brukernivaer.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: COMMAND PALETTE ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Alternativ 2: <span class="opt-name">Kommandopalett</span></h2>
+    <p class="option-description">Tastatur-drevet kommando-senter — Ctrl+K for a soke, kjore og navigere.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/ai-assistent</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Assistent</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-cp-overlay">
+            <div class="wf-cp-box">
+              <div class="wf-cp-search">
+                <span class="wf-cp-icon">⌘</span>
+                <input type="text" placeholder="Skriv en kommando eller sokeord..." class="wf-cp-input">
+              </div>
+              <div class="wf-cp-section">
+                <div class="wf-cp-label">Rask handlig</div>
+                <div class="wf-cp-item wf-cp-active"><span>/inntekt</span><span>Vis manedlig inntekt</span></div>
+                <div class="wf-cp-item"><span>/elever</span><span>Liste aktive elever</span></div>
+                <div class="wf-cp-item"><span>/booking</span><span>Dagens bookinger</span></div>
+                <div class="wf-cp-item"><span>/rapport</span><span>Generer rapport</span></div>
+              </div>
+              <div class="wf-cp-section">
+                <div class="wf-cp-label">Naviger til</div>
+                <div class="wf-cp-item"><span>Oversikt</span><span>Dashboard</span></div>
+                <div class="wf-cp-item"><span>Kalender</span><span>Timeplan</span></div>
+                <div class="wf-cp-item"><span>Analytics</span><span>Rapporter og innsikt</span></div>
+              </div>
+              <div class="wf-cp-section">
+                <div class="wf-cp-label">Siste sporringer</div>
+                <div class="wf-cp-item"><span>Inntekt mars vs feb</span><span>Sporring · for 2 dager siden</span></div>
+                <div class="wf-cp-item"><span>Elevliste Junior Academy</span><span>Sporring · for 5 dager siden</span></div>
+              </div>
+              <div class="wf-cp-hint">Trykk Enter for a velge · Esc for a lukke</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kommandopalett er standard i moderne verktoy — rask tilgang uten mus.</li>
+        <li>/-prefiks for handlingskommandoer, tekst for soke og navigering.</li>
+        <li>Siste sporringer gir rask gjenbruk.</li>
+        <li>Tastatur-hint nederst lærer brukeren opp.</li>
+        <li>Bra for avanserte brukere — krever husking av kommandoer.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: INSIGHT FEED ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Alternativ 3: <span class="opt-name">Innsiktsfeed</span></h2>
+    <p class="option-description">Automatisk genererte innsiktskort — trender, avvik og muligheter presentert som en nyhetsfeed.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/ai-assistent</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Assistent</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Innsikt — i dag</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">I dag ▾</span>
+              <span class="wf-rep-filter">Denne uke ▾</span>
+              <span class="wf-rep-filter">Konfigurer</span>
+            </div>
+          </div>
+
+          <div class="wf-feed">
+            <div class="wf-feed-card wf-feed-alert">
+              <div class="wf-feed-icon">!</div>
+              <div class="wf-feed-body">
+                <div class="wf-feed-title">No-show rate steget til 3,2%</div>
+                <div class="wf-feed-desc">Opp fra 2,8% forrige uke. 4 av 12 no-shows kom fra nye elever. Vurder a sende en ekstra paminnelse til forstegangsbookere.</div>
+                <div class="wf-feed-actions">
+                  <span class="wf-rep-filter wf-rep-filter-primary">Send paminnelse</span>
+                  <span class="wf-rep-filter">Se detaljer</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-feed-card wf-feed-trend">
+              <div class="wf-feed-icon">↗</div>
+              <div class="wf-feed-body">
+                <div class="wf-feed-title">Junior Academy-vekst +89% YoY</div>
+                <div class="wf-feed-desc">Mars 2026 hadde 24 nye pameldinger mot 13 i fjor. Toppalder: 12–14 ar. Vurder a apne en ekstra gruppe.</div>
+                <div class="wf-feed-actions">
+                  <span class="wf-rep-filter wf-rep-filter-primary">Apne ny gruppe</span>
+                  <span class="wf-rep-filter">Se elever</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-feed-card wf-feed-tip">
+              <div class="wf-feed-icon">💡</div>
+              <div class="wf-feed-body">
+                <div class="wf-feed-title">Ledig kapasitet lordag ettermiddag</div>
+                <div class="wf-feed-desc">Simulator 2 er bare 35% booket lordag 14–18. En kampanje med 15% rabatt denne tidsluken kan oke belegget med estimert 20%.</div>
+                <div class="wf-feed-actions">
+                  <span class="wf-rep-filter wf-rep-filter-primary">Opprett kampanje</span>
+                  <span class="wf-rep-filter">Ignorer</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-feed-card wf-feed-alert">
+              <div class="wf-feed-icon">!</div>
+              <div class="wf-feed-body">
+                <div class="wf-feed-title">2 elever med utestaende betaling > 14 dager</div>
+                <div class="wf-feed-desc">Erik Hansen: 2.400 kr (16 dager). Sofie Lund: 1.800 kr (18 dager). Total risiko: 4.200 kr.</div>
+                <div class="wf-feed-actions">
+                  <span class="wf-rep-filter wf-rep-filter-primary">Send purring</span>
+                  <span class="wf-rep-filter">Se detaljer</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-feed-card wf-feed-trend">
+              <div class="wf-feed-icon">↗</div>
+              <div class="wf-feed-body">
+                <div class="wf-feed-title">Nettsidetrafikk +24% denne uken</div>
+                <div class="wf-feed-desc">480 unike besokende mot 387 forrige uke. Toppkilder: Instagram (42%), organisk sok (31%). /academy-siden konverterer best.</div>
+                <div class="wf-feed-actions">
+                  <span class="wf-rep-filter">Se Analytics</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Feed-format er kjent fra sosiale medier — lett a skanne.</li>
+        <li>Fargekoding pa ikon (alert/trend/tip) gir rask kategorisering.</li>
+        <li>Hver innsikt har en primarhandling — ingen dead ends.</li>
+        <li>Automatisk generert — brukeren trenger ikke sporre.</li>
+        <li>Bra for daglig avsjekk — krever gode datakilder og logikk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: ACTION QUEUE ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Alternativ 4: <span class="opt-name">Handlingsko</span></h2>
+    <p class="option-description">Assistenten foreslar handlinger — du godkjenner eller avviser. Halvautomatisk arbeidsflyt.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/ai-assistent</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Assistent</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Foreslatte handlinger — 5 venter pa godkjenning</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Alle ▾</span>
+              <span class="wf-rep-filter">Godkjente</span>
+              <span class="wf-rep-filter">Avviste</span>
+            </div>
+          </div>
+
+          <div class="wf-action-queue">
+            <div class="wf-action-card">
+              <div class="wf-action-header">
+                <span class="wf-tag">Paminnelse</span>
+                <span class="wf-card-meta">Anbefalt: na</span>
+              </div>
+              <div class="wf-action-title">Send booking-paminnelse til 8 elever i morgen</div>
+              <div class="wf-action-desc">Automatisk generert e-post med tidspunkt, sted og forberedelser. Ingen manuell redigering nodvendig.</div>
+              <div class="wf-action-preview">
+                <em>Til: Erik Hansen, Nora Torp, + 6 til<br>Emne: Paminnelse: Coaching-okt 18. april</em>
+              </div>
+              <div class="wf-action-buttons">
+                <span class="wf-rep-filter wf-rep-filter-primary">Godkjenn og send</span>
+                <span class="wf-rep-filter">Rediger</span>
+                <span class="wf-rep-filter">Avvis</span>
+              </div>
+            </div>
+
+            <div class="wf-action-card">
+              <div class="wf-action-header">
+                <span class="wf-tag">Fakturering</span>
+                <span class="wf-card-meta">Anbefalt: na</span>
+              </div>
+              <div class="wf-action-title">Opprett purring for 2 elever med forsinket betaling</div>
+              <div class="wf-action-desc">Erik Hansen: 2.400 kr (16 dager). Sofie Lund: 1.800 kr (18 dager).</div>
+              <div class="wf-action-buttons">
+                <span class="wf-rep-filter wf-rep-filter-primary">Godkjenn purring</span>
+                <span class="wf-rep-filter">Se detaljer</span>
+                <span class="wf-rep-filter">Avvis</span>
+              </div>
+            </div>
+
+            <div class="wf-action-card">
+              <div class="wf-action-header">
+                <span class="wf-tag">Timeplan</span>
+                <span class="wf-card-meta">Anbefalt: i dag</span>
+              </div>
+              <div class="wf-action-title">Godkjenn timeplan-endring fra Markus</div>
+              <div class="wf-action-desc">Flytte 3 bookinger fra torsdag til fredag grunnet sykdom. Ingen konflikter oppdaget.</div>
+              <div class="wf-action-buttons">
+                <span class="wf-rep-filter wf-rep-filter-primary">Godkjenn endring</span>
+                <span class="wf-rep-filter">Se konflikter</span>
+                <span class="wf-rep-filter">Avvis</span>
+              </div>
+            </div>
+
+            <div class="wf-action-card">
+              <div class="wf-action-header">
+                <span class="wf-tag">Kampanje</span>
+                <span class="wf-card-meta">Anbefalt: denne uke</span>
+              </div>
+              <div class="wf-action-title">Start "Lordagsrabatt"-kampanje for Simulator 2</div>
+              <div class="wf-action-desc">15% rabatt lordag 14–18. Estimert okning: +20% belegg. Kostnad: ~2.400 kr i rabatt.</div>
+              <div class="wf-action-buttons">
+                <span class="wf-rep-filter wf-rep-filter-primary">Start kampanje</span>
+                <span class="wf-rep-filter">Endre detaljer</span>
+                <span class="wf-rep-filter">Avvis</span>
+              </div>
+            </div>
+
+            <div class="wf-action-card">
+              <div class="wf-action-header">
+                <span class="wf-tag">Oppfolging</span>
+                <span class="wf-card-meta">Anbefalt: i dag</span>
+              </div>
+              <div class="wf-action-title">Send win-back e-post til 3 inaktive elever</div>
+              <div class="wf-action-desc">Erik, Nora og Lars har ikke booket pa 3+ uker. Personlig tilbud: 20% pa neste okt.</div>
+              <div class="wf-action-buttons">
+                <span class="wf-rep-filter wf-rep-filter-primary">Godkjenn og send</span>
+                <span class="wf-rep-filter">Rediger tilbud</span>
+                <span class="wf-rep-filter">Avvis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Handlingsko reduserer kognitiv last — brukeren godkjenner, ikke oppretter.</li>
+        <li>Forhansvisning av e-post gir trygghet for innholdet.</li>
+        <li>Godkjenn/Rediger/Avvis-dekker alle brukerbehov.</li>
+        <li>Kategori-tagger (Paminnelse/Fakturering/etc.) gir rask scanning.</li>
+        <li>Bra for effektivisering — krever sofistikerte forslagsalgoritmer.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: TRAINING MODE ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Alternativ 5: <span class="opt-name">Opplaring</span></h2>
+    <p class="option-description">Veiledet opplaringsmodus — laer plattformen steg-for-steg med interaktive oppgaver.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/ai-assistent</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Assistent</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Opplaring — 4 av 12 moduler fullfort</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter">Oversikt</span>
+              <span class="wf-rep-filter">Din fremgang</span>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid">
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head"><span>Grunnleggende</span></div>
+              <div class="wf-train-item wf-train-done">
+                <span class="wf-train-check">✓</span>
+                <span>Logg inn og navigasjon</span>
+              </div>
+              <div class="wf-train-item wf-train-done">
+                <span class="wf-train-check">✓</span>
+                <span>Oversikt og KPI-er</span>
+              </div>
+              <div class="wf-train-item wf-train-done">
+                <span class="wf-train-check">✓</span>
+                <span>Elevoversikt</span>
+              </div>
+              <div class="wf-train-item wf-train-done">
+                <span class="wf-train-check">✓</span>
+                <span>Booking-administrasjon</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head"><span>Avansert</span></div>
+              <div class="wf-train-item wf-train-active">
+                <span class="wf-train-num">5</span>
+                <span>Rapporter og Analytics</span>
+              </div>
+              <div class="wf-train-item">
+                <span class="wf-train-num">6</span>
+                <span>Kapasitetsstyring</span>
+              </div>
+              <div class="wf-train-item">
+                <span class="wf-train-num">7</span>
+                <span>Fakturering og betaling</span>
+              </div>
+              <div class="wf-train-item">
+                <span class="wf-train-num">8</span>
+                <span>Kampanjer og priser</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head"><span>Ekspert</span></div>
+              <div class="wf-train-item">
+                <span class="wf-train-num">9</span>
+                <span>Assistent og automasjon</span>
+              </div>
+              <div class="wf-train-item">
+                <span class="wf-train-num">10</span>
+                <span>Integrasjoner (API)</span>
+              </div>
+              <div class="wf-train-item">
+                <span class="wf-train-num">11</span>
+                <span>Tilgangskontroll</span>
+              </div>
+              <div class="wf-train-item">
+                <span class="wf-train-num">12</span>
+                <span>Sikkerhet og personvern</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12" style="margin-top:10px;">
+            <div class="wf-card-head">
+              <span>Modul 5: Rapporter og Analytics</span>
+              <span class="wf-card-meta">Estimert tid: 12 min</span>
+            </div>
+            <div class="wf-train-step">
+              <div class="wf-train-step-num">1</div>
+              <div class="wf-train-step-body">
+                <div class="wf-train-step-title">Apne Rapporter-fanen</div>
+                <div class="wf-train-step-desc">Klikk pa "Rapporter" i toppmenyen. Her ser du manedlig inntekt, bookinger og elevvekst.</div>
+              </div>
+            </div>
+            <div class="wf-train-step">
+              <div class="wf-train-step-num">2</div>
+              <div class="wf-train-step-body">
+                <div class="wf-train-step-title">Endre tidsperiode</div>
+                <div class="wf-train-step-desc">Bruk filteret oppe til hoyre for a se 7 dager, 30 dager, eller egen periode.</div>
+              </div>
+            </div>
+            <div class="wf-train-step">
+              <div class="wf-train-step-num">3</div>
+              <div class="wf-train-step-body">
+                <div class="wf-train-step-title">Eksporter en rapport</div>
+                <div class="wf-train-step-desc">Klikk "Eksporter" og velg CSV eller PDF. Filen lastes ned automatisk.</div>
+              </div>
+            </div>
+            <div class="wf-train-step">
+              <div class="wf-train-step-num">4</div>
+              <div class="wf-train-step-body">
+                <div class="wf-train-step-title">Prøv det selv</div>
+                <div class="wf-train-step-desc">Eksporter en rapport for forrige maned. Assistenten sjekker om du gjorde det riktig.</div>
+              </div>
+            </div>
+            <div class="wf-action-buttons" style="margin-top:10px;">
+              <span class="wf-rep-filter wf-rep-filter-primary">Fullfor modul</span>
+              <span class="wf-rep-filter">Hopp over</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Modul-basert opplaring med fremdriftsindikator gir motivasjon.</li>
+        <li>Interaktive oppgaver ("Prøv det selv") sikrer laring gjennom handling.</li>
+        <li>Assistenten evaluerer om oppgaven ble gjort riktig.</li>
+        <li>Hopp over-knapp respekterer erfarne brukere.</li>
+        <li>Bra for onboarding — kan brukes ved ansattes forste dag.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for MC Assistent — valget avhenger av om brukeren vil sporre, kommandoere, motta, godkjenne eller lare.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Chat</th><th>2: Palett</th><th>3: Feed</th><th>4: Ko</th><th>5: Opplaring</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Intuitiv for nybegynnere</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Hurtig for avanserte</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Proaktiv (ikke sporrende)</td><td>Svak</td><td>Svak</td><td>Sterk</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Effektivisering</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Opplaring / onboarding</td><td>Middels</td><td>Svak</td><td>Middels</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Tilpasningsdyktig</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Middels</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Alternativ 1 — Chat</h3>
+    <p>Chat er den trygge standarden fordi det er universelt forstaelig — alle kan sporre pa sitt eget sprak. Det fungerer for bade nybegynnere og avanserte brukere, og er lett a utvide med nye funksjoner. Det kombineres godt med Alternativ 3 (Innsiktsfeed for proaktive varsler) og Alternativ 4 (Handlingsko for effektivisering) i en senere fase.</p>
+
+    <h3>Nar velge hvilket</h3>
+    <ul>
+      <li><strong>Alternativ 1 (Chat):</strong> Default. Spor om alt, fa svar med handlinger.</li>
+      <li><strong>Alternativ 2 (Palett):</strong> For avanserte brukere som vil jobbe med tastatur.</li>
+      <li><strong>Alternativ 3 (Feed):</strong> Proaktiv innsikt — la systemet fortelle deg hva som skjer.</li>
+      <li><strong>Alternativ 4 (Ko):</strong> Maksimal effektivisering — la assistenten foresla, du godkjenner.</li>
+      <li><strong>Alternativ 5 (Opplaring):</strong> For onboarding og kompetansehevning av teamet.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+/* OPT 4 — Results Focus · Clean + Polished */
+
+#frame-opt4-tabs .sub-tab-badge { display: none; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"] { color: #666; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #333; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"].active { color: #000; border-bottom-color: #000; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"] { color: #666; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #333; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"].active { color: #000; border-bottom-color: #000; }
+
+/* CLEAN */
+#frame-opt4.clean .browser-content { background: #F5F8F7; font-family: 'Inter', -apple-system, sans-serif; }
+#frame-opt4.clean .wf-sidebar { background: #005840; }
+#frame-opt4.clean .wf-sidebar-logo { background: #D1F843; color: #0A1F18; }
+#frame-opt4.clean .wf-side-item.wf-active { background: rgba(209,248,67,0.18); color: #D1F843; }
+#frame-opt4.clean .wf-result-row { background: #fff; border-color: rgba(0,88,64,0.08); }
+#frame-opt4.clean .wf-result-score { color: #0A1F18; }
+#frame-opt4.clean .wf-proto-btn { background: #005840; color: #fff; border-color: #005840; }
+
+/* POLISHED */
+#frame-opt4.polished .browser-content { background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,88,64,0.04) 0%, transparent 60%), #F5F8F7; font-family: 'Inter', -apple-system, sans-serif; }
+#frame-opt4.polished .wf-sidebar { background: linear-gradient(180deg, #005840 0%, #00402F 100%); }
+#frame-opt4.polished .wf-result-row { background: #fff; border: 1px solid rgba(0,88,64,0.06); border-radius: 12px; transition: all 0.3s; }
+#frame-opt4.polished .wf-result-row:hover { transform: translateX(4px); box-shadow: 0 2px 8px rgba(0,88,64,0.05); }
+#frame-opt4.polished .wf-result-score { font-family: 'JetBrains Mono', monospace; color: #0A1F18; }
+#frame-opt4.polished .wf-proto-btn { background: #D1F843; color: #0A1F18; border-color: #D1F843; font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt4.polished * { transition: none !important; }
+}

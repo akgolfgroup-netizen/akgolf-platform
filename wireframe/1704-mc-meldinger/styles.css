@@ -1,0 +1,84 @@
+/* === MC Meldinger Wireframe Styles (B&W) === */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* MC SHELL */
+.wf-mc-topbar { display: flex; align-items: center; gap: 16px; padding: 10px 16px; background: #111; color: #fff; border-radius: 4px 4px 0 0; }
+.wf-mc-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; white-space: nowrap; }
+.wf-mc-tabs { display: flex; gap: 14px; flex: 1; }
+.wf-mc-tab { font-size: 12px; color: #999; padding: 4px 2px; cursor: default; }
+.wf-mc-tab-active { color: #fff; border-bottom: 1px solid #fff; }
+.wf-mc-profile { width: 28px; height: 28px; border-radius: 50%; background: #333; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+
+.wf-mc-body { padding: 16px 12px; background: #fafafa; border-radius: 0 0 4px 4px; font-size: 12px; color: #222; }
+
+/* PAGE HEAD */
+.wf-page-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wf-page-title { font-size: 15px; font-weight: 600; color: #111; }
+.wf-page-action { font-size: 11px; padding: 4px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #555; }
+
+/* INBOX + CHAT */
+.wf-inbox-wrap { display: grid; grid-template-columns: 240px 1fr; gap: 10px; min-height: 480px; }
+.wf-inbox-list { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 8px; display: flex; flex-direction: column; gap: 4px; }
+.wf-inbox-search { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 11px; margin-bottom: 4px; }
+.wf-conv-item { padding: 8px; border-radius: 4px; cursor: pointer; }
+.wf-conv-item:hover { background: #f5f5f5; }
+.wf-conv-item.wf-active { background: #eee; }
+.wf-conv-name { font-size: 12px; font-weight: 600; color: #000; }
+.wf-conv-preview { font-size: 11px; color: #888; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wf-conv-meta { display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 4px; }
+.wf-conv-badge { background: #000; color: #fff; font-size: 9px; padding: 1px 5px; border-radius: 8px; }
+
+.wf-chat-area { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.wf-chat-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+.wf-chat-contact { font-size: 13px; font-weight: 600; color: #000; }
+.wf-chat-sub { font-size: 11px; color: #888; }
+.wf-chat-feed { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 8px 0; }
+.wf-msg { display: flex; gap: 8px; align-items: flex-start; }
+.wf-msg-self { flex-direction: row-reverse; }
+.wf-msg-avatar { width: 24px; height: 24px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; flex-shrink: 0; }
+.wf-msg-bubble { max-width: 320px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px 10px 10px 2px; padding: 8px 10px; font-size: 12px; color: #333; line-height: 1.4; }
+.wf-msg-self .wf-msg-bubble { background: #000; color: #fff; border-color: #000; border-radius: 10px 10px 2px 10px; }
+.wf-msg-time { font-size: 10px; color: #aaa; margin-top: 2px; }
+.wf-chat-input { display: flex; gap: 8px; padding-top: 8px; border-top: 1px solid #eee; }
+.wf-chat-input input { flex: 1; padding: 8px 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; }
+.wf-chat-send { padding: 8px 14px; border: 1px solid #000; border-radius: 4px; background: #000; color: #fff; font-size: 11px; font-weight: 600; }
+
+/* CONVERSATION LIST (opt2) */
+.wf-list-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px; }
+.wf-list-row { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+.wf-list-row:last-child { border-bottom: none; }
+.wf-list-avatar { width: 32px; height: 32px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.wf-list-info { flex: 1; }
+.wf-list-name { font-size: 12px; font-weight: 600; color: #000; }
+.wf-list-preview { font-size: 11px; color: #888; margin-top: 2px; }
+.wf-list-meta { font-size: 10px; color: #aaa; text-align: right; }
+
+/* PER ELEV (opt3) */
+.wf-elev-grid { display: grid; grid-template-columns: 200px 1fr; gap: 10px; }
+.wf-elev-sidebar { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px; }
+.wf-elev-item { padding: 8px; border-radius: 4px; font-size: 12px; color: #333; cursor: pointer; }
+.wf-elev-item:hover { background: #f5f5f5; }
+.wf-elev-item.wf-active { background: #eee; font-weight: 600; }
+
+/* AI SUMMARY (opt4) */
+.wf-ai-summary { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 14px; }
+.wf-ai-summary h4 { margin: 0 0 8px; font-size: 12px; color: #111; }
+.wf-ai-summary p { font-size: 12px; color: #555; line-height: 1.5; margin: 0 0 8px; }
+.wf-ai-tag { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #f5f5f5; border: 1px solid #eee; font-size: 10px; color: #666; margin-right: 4px; }
+
+/* BULK (opt5) */
+.wf-bulk-bar { display: flex; gap: 8px; margin-bottom: 10px; }
+.wf-bulk-select { padding: 5px 10px; border: 1px solid #ddd; border-radius: 4px; background: #fff; font-size: 11px; }
+.wf-bulk-btn { padding: 5px 12px; border: 1px solid #000; border-radius: 4px; background: #000; color: #fff; font-size: 11px; font-weight: 600; }
+.wf-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.wf-table th { text-align: left; padding: 6px 8px; background: #f4f4f4; color: #555; font-weight: 600; border-bottom: 1px solid #ddd; }
+.wf-table td { padding: 6px 8px; border-bottom: 1px solid #eee; color: #333; }
+
+/* Summary */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+.wf-summary-table th, .wf-summary-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+.wf-summary-table th { background: #f4f4f4; font-weight: 600; }
+.wf-recommendation { padding: 16px; border: 1px solid #000; border-radius: 8px; background: #f5f5f5; margin-top: 16px; }
+.wf-recommendation h3 { margin: 0 0 8px; font-size: 15px; }
+.wf-recommendation p { font-size: 12px; color: #333; line-height: 1.6; margin: 0; }

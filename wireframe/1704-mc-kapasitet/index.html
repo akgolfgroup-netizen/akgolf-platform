@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Kapasitet — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visuelle design fullfort — alle alternativer har Clean + Polished varianter
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Kapasitet</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">★ Anbefalt: Alternativ <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Utnyttelsesvarme</button>
+    <button class="tab-btn" data-tab="option-2">2: Prognose</button>
+    <button class="tab-btn" data-tab="option-3">3: Break-even</button>
+    <button class="tab-btn" data-tab="option-4">4: Instruktorlast</button>
+    <button class="tab-btn" data-tab="option-5">5: Fasilitetsbruk</button>
+    <button class="tab-btn" data-tab="summary">Sammendrag</button>
+  </nav>
+
+  <!-- ===== OPTION 1: UTILIZATION HEATMAP ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Alternativ 1: <span class="opt-name">Utnyttelsesvarme</span></h2>
+    <p class="option-description">Kalendervisning med fargekoding per time — morkt = fullbooket, lyst = ledig kapasitet.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/kapasitet</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Kapasitet</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Utnyttelse — denne uken</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Uke 16 ▾</span>
+              <span class="wf-rep-filter">Alle instruktorer ▾</span>
+              <span class="wf-rep-filter">Alle lokaler ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">SNITT UTNYTTELSE</div>
+              <div class="wf-kpi-value">68%</div>
+              <div class="wf-kpi-delta">mal: 80%</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">FULLBOOKEDE TIMER</div>
+              <div class="wf-kpi-value">24</div>
+              <div class="wf-kpi-delta">av 120 tilgjengelig</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">LEDIG KAPASITET</div>
+              <div class="wf-kpi-value">38</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">timer ledig</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">TOPP DAG</div>
+              <div class="wf-kpi-value">Torsdag</div>
+              <div class="wf-kpi-delta">87% utnyttet</div>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12">
+            <div class="wf-card-head">
+              <span>Ukentlig varmekart — timer x dager</span>
+              <span class="wf-card-meta">morkere = hoyere utnyttelse</span>
+            </div>
+            <div class="wf-heatmap">
+              <div class="wf-heatmap-row">
+                <div class="wf-heatmap-label">06:00</div>
+                <div class="wf-heatmap-cell wf-hm-low">10%</div>
+                <div class="wf-heatmap-cell wf-hm-low">0%</div>
+                <div class="wf-heatmap-cell wf-hm-low">0%</div>
+                <div class="wf-heatmap-cell wf-hm-low">0%</div>
+                <div class="wf-heatmap-cell wf-hm-low">0%</div>
+                <div class="wf-heatmap-cell wf-hm-low">20%</div>
+                <div class="wf-heatmap-cell wf-hm-low">0%</div>
+              </div>
+              <div class="wf-heatmap-row">
+                <div class="wf-heatmap-label">08:00</div>
+                <div class="wf-heatmap-cell wf-hm-med">55%</div>
+                <div class="wf-heatmap-cell wf-hm-high">85%</div>
+                <div class="wf-heatmap-cell wf-hm-high">90%</div>
+                <div class="wf-heatmap-cell wf-hm-high">95%</div>
+                <div class="wf-heatmap-cell wf-hm-med">70%</div>
+                <div class="wf-heatmap-cell wf-hm-med">60%</div>
+                <div class="wf-heatmap-cell wf-hm-low">30%</div>
+              </div>
+              <div class="wf-heatmap-row">
+                <div class="wf-heatmap-label">10:00</div>
+                <div class="wf-heatmap-cell wf-hm-med">65%</div>
+                <div class="wf-heatmap-cell wf-hm-high">90%</div>
+                <div class="wf-heatmap-cell wf-hm-high">100%</div>
+                <div class="wf-heatmap-cell wf-hm-high">100%</div>
+                <div class="wf-heatmap-cell wf-hm-high">80%</div>
+                <div class="wf-heatmap-cell wf-hm-med">55%</div>
+                <div class="wf-heatmap-cell wf-hm-low">40%</div>
+              </div>
+              <div class="wf-heatmap-row">
+                <div class="wf-heatmap-label">12:00</div>
+                <div class="wf-heatmap-cell wf-hm-med">50%</div>
+                <div class="wf-heatmap-cell wf-hm-med">60%</div>
+                <div class="wf-heatmap-cell wf-hm-med">55%</div>
+                <div class="wf-heatmap-cell wf-hm-med">65%</div>
+                <div class="wf-heatmap-cell wf-hm-high">85%</div>
+                <div class="wf-heatmap-cell wf-hm-med">50%</div>
+                <div class="wf-heatmap-cell wf-hm-low">25%</div>
+              </div>
+              <div class="wf-heatmap-row">
+                <div class="wf-heatmap-label">14:00</div>
+                <div class="wf-heatmap-cell wf-hm-high">80%</div>
+                <div class="wf-heatmap-cell wf-hm-high">95%</div>
+                <div class="wf-heatmap-cell wf-hm-high">100%</div>
+                <div class="wf-heatmap-cell wf-hm-high">90%</div>
+                <div class="wf-heatmap-cell wf-hm-high">85%</div>
+                <div class="wf-heatmap-cell wf-hm-med">60%</div>
+                <div class="wf-heatmap-cell wf-hm-low">35%</div>
+              </div>
+              <div class="wf-heatmap-row">
+                <div class="wf-heatmap-label">16:00</div>
+                <div class="wf-heatmap-cell wf-hm-high">90%</div>
+                <div class="wf-heatmap-cell wf-hm-high">100%</div>
+                <div class="wf-heatmap-cell wf-hm-high">95%</div>
+                <div class="wf-heatmap-cell wf-hm-high">85%</div>
+                <div class="wf-heatmap-cell wf-hm-med">70%</div>
+                <div class="wf-heatmap-cell wf-hm-low">40%</div>
+                <div class="wf-heatmap-cell wf-hm-low">20%</div>
+              </div>
+              <div class="wf-heatmap-row">
+                <div class="wf-heatmap-label">18:00</div>
+                <div class="wf-heatmap-cell wf-hm-med">70%</div>
+                <div class="wf-heatmap-cell wf-hm-high">85%</div>
+                <div class="wf-heatmap-cell wf-hm-high">80%</div>
+                <div class="wf-heatmap-cell wf-hm-med">75%</div>
+                <div class="wf-heatmap-cell wf-hm-med">60%</div>
+                <div class="wf-heatmap-cell wf-hm-low">30%</div>
+                <div class="wf-heatmap-cell wf-hm-low">10%</div>
+              </div>
+              <div class="wf-heatmap-row">
+                <div class="wf-heatmap-label">20:00</div>
+                <div class="wf-heatmap-cell wf-hm-low">30%</div>
+                <div class="wf-heatmap-cell wf-hm-low">40%</div>
+                <div class="wf-heatmap-cell wf-hm-low">35%</div>
+                <div class="wf-heatmap-cell wf-hm-low">25%</div>
+                <div class="wf-heatmap-cell wf-hm-low">20%</div>
+                <div class="wf-heatmap-cell wf-hm-low">10%</div>
+                <div class="wf-heatmap-cell wf-hm-low">0%</div>
+              </div>
+              <div class="wf-heatmap-row">
+                <div class="wf-heatmap-label"></div>
+                <div class="wf-heatmap-day">Man</div>
+                <div class="wf-heatmap-day">Tir</div>
+                <div class="wf-heatmap-day">Ons</div>
+                <div class="wf-heatmap-day">Tor</div>
+                <div class="wf-heatmap-day">Fre</div>
+                <div class="wf-heatmap-day">Lor</div>
+                <div class="wf-heatmap-day">Son</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid" style="margin-top:10px;">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Ledige vinduer denne uken</span></div>
+              <ul class="wf-list">
+                <li><span>Tirsdag 06:00–08:00</span><span>2 timer</span></li>
+                <li><span>Onsdag 06:00–08:00</span><span>2 timer</span></li>
+                <li><span>Fredag 12:00–14:00</span><span>1,5 timer</span></li>
+                <li><span>Lordag 14:00–18:00</span><span>3 timer</span></li>
+                <li><span>Sondag hele dagen</span><span>8 timer</span></li>
+              </ul>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Anbefalinger</span></div>
+              <ul class="wf-list">
+                <li><span>Tilby morgentimer til early-birds</span><span class="wf-tag">Vekst</span></li>
+                <li><span>Rabatt pa sondager for a fylle hull</span><span class="wf-tag">Vekst</span></li>
+                <li><span>Torsdag 10–16 er overbelastet</span><span class="wf-tag">Advarsel</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Varmekart er standard for kapasitetsanalyse — lett a se monster.</li>
+        <li>Mork/lys-fargekoding gjor det raskt a identifisere flaskehalser.</li>
+        <li>"Ledige vinduer"-liste konverterer innsikt til handling.</li>
+        <li>Anbefalinger knytter data til kommersielle muligheter.</li>
+        <li>Matcher Mission Control-estetikk: dark topbar + light body.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: FORECAST ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Alternativ 2: <span class="opt-name">Prognose</span></h2>
+    <p class="option-description">Se fremover — ettersporselsprognose basert pa historikk, sesong og pameldinger.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/kapasitet</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Kapasitet</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Ettersporselsprognose — neste 4 uker</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">4 uker ▾</span>
+              <span class="wf-rep-filter">Alle tjenester ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">FORVENTEDE BOOKINGER</div>
+              <div class="wf-kpi-value">178</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">+14% vs forrige 4 uker</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">ESTIMERT INNTEKT</div>
+              <div class="wf-kpi-value">224.000 kr</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">+18% vs forrige</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">KAPASITET DEKKER</div>
+              <div class="wf-kpi-value">94%</div>
+              <div class="wf-kpi-delta">av ettersporsel</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">OVERKAPASITET I</div>
+              <div class="wf-kpi-value">Uke 19</div>
+              <div class="wf-kpi-delta wf-kpi-delta-neg">108% utnyttet</div>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12">
+            <div class="wf-card-head">
+              <span>Ettersporsel vs kapasitet — neste 4 uker</span>
+              <span class="wf-card-meta">stolpe = ettersporsel · linje = kapasitet</span>
+            </div>
+            <div class="wf-chart wf-chart-lg">[ stolpediagram + linje · 4 uker · ettersporsel vs kapasitet ]</div>
+          </div>
+
+          <div class="wf-rep-grid" style="margin-top:10px;">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Uke-for-uke detaljer</span></div>
+              <table class="wf-table">
+                <tr><th>Uke</th><th>Ettersporsel</th><th>Kapasitet</th><th>Gap</th></tr>
+                <tr><td>Uke 16</td><td class="wf-num">42</td><td class="wf-num">48</td><td class="wf-num wf-kpi-delta-pos">+6</td></tr>
+                <tr><td>Uke 17</td><td class="wf-num">38</td><td class="wf-num">48</td><td class="wf-num wf-kpi-delta-pos">+10</td></tr>
+                <tr><td>Uke 18</td><td class="wf-num">45</td><td class="wf-num">48</td><td class="wf-num wf-kpi-delta-pos">+3</td></tr>
+                <tr><td>Uke 19</td><td class="wf-num">52</td><td class="wf-num">48</td><td class="wf-num wf-kpi-delta-neg">-4</td></tr>
+              </table>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Tiltak for uke 19</span></div>
+              <ul class="wf-list">
+                <li><span>Apne ekstra sondagstimer</span><span class="wf-tag">Vekst</span></li>
+                <li><span>Tilby digital okt som erstatning</span><span class="wf-tag">Digital</span></li>
+                <li><span>Varsel: vurder venteliste</span><span class="wf-tag">Advarsel</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Prognosen kombinerer historikk + pameldinger + sesongfaktor.</li>
+        <li>Gap-kolonne i tabellen identifiserer uker med over/under-kapasitet.</li>
+        <li>Tiltak-liste gir umiddelbare handlinger for flaskehals-uker.</li>
+        <li>94% dekningsgrad er nokkel-KPI for kapasitetsplanlegging.</li>
+        <li>Bra for planlegging — svakere for daglig justering.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: BREAK-EVEN ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Alternativ 3: <span class="opt-name">Break-even</span></h2>
+    <p class="option-description">Visuell break-even-analyse — hvor mange bookinger trengs for a dekke kostnader per uke/maned.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/kapasitet</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Kapasitet</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Break-even — april 2026</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Maned ▾</span>
+              <span class="wf-rep-filter">Uke ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">MANEDLIGE KOSTNADER</div>
+              <div class="wf-kpi-value">145.000 kr</div>
+              <div class="wf-kpi-delta">fast + variabel</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">SNITT INNTEKT PER BOOKING</div>
+              <div class="wf-kpi-value">1.201 kr</div>
+              <div class="wf-kpi-delta">vektet snitt</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">BOOKINGER FOR BREAK-EVEN</div>
+              <div class="wf-kpi-value">121</div>
+              <div class="wf-kpi-delta">per maned</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">AKTUELL STATUS</div>
+              <div class="wf-kpi-value">156</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">+29% over break-even</div>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12">
+            <div class="wf-card-head">
+              <span>Break-even fremdrift — april</span>
+            </div>
+            <div class="wf-be-bar">
+              <div class="wf-be-fill" style="width:78%"></div>
+              <div class="wf-be-marker" style="left:78%"></div>
+            </div>
+            <div class="wf-be-legend">
+              <span>0</span>
+              <span>Break-even: 121 bookinger</span>
+              <span>156 (78% over)</span>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid" style="margin-top:10px;">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Kostnadsstruktur</span></div>
+              <ul class="wf-list">
+                <li><span>Lokalleie</span><span>45.000 kr</span></li>
+                <li><span>Lonn instruktorer</span><span>62.000 kr</span></li>
+                <li><span>Software / verktoy</span><span>12.000 kr</span></li>
+                <li><span>Markedsforing</span><span>18.000 kr</span></li>
+                <li><span>Annet (strom, etc.)</span><span>8.000 kr</span></li>
+              </ul>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Sesongjustert break-even</span></div>
+              <table class="wf-table">
+                <tr><th>Maned</th><th>Break-even</th><th>Faktisk</th><th>Margin</th></tr>
+                <tr><td>Jan</td><td class="wf-num">105</td><td class="wf-num">98</td><td class="wf-num wf-kpi-delta-neg">-7%</td></tr>
+                <tr><td>Feb</td><td class="wf-num">110</td><td class="wf-num">118</td><td class="wf-num wf-kpi-delta-pos">+7%</td></tr>
+                <tr><td>Mar</td><td class="wf-num">115</td><td class="wf-num">142</td><td class="wf-num wf-kpi-delta-pos">+23%</td></tr>
+                <tr><td>Apr</td><td class="wf-num">121</td><td class="wf-num">156</td><td class="wf-num wf-kpi-delta-pos">+29%</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Break-even-bjelke gir umiddelbar visuell tilbakemelding pa okonomisk helse.</li>
+        <li>Kostnadsstruktur-liste gjor det tydelig hva som driver kostnadene.</li>
+        <li>Sesongjustert tabell viser trend over tid.</li>
+        <li>"+29% over break-even" er enkel a kommunisere til styret.</li>
+        <li>Bra for okonomisk oversikt — krever noyaktige kostnadsdata.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: INSTRUCTOR LOAD ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Alternativ 4: <span class="opt-name">Instruktorlast</span></h2>
+    <p class="option-description">Fordeling av arbeid per instruktor — timer, inntekt, og belastningsgrad.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/kapasitet</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Kapasitet</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Instruktorlast — denne maneden</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">April ▾</span>
+              <span class="wf-rep-filter">Alle ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12">
+            <div class="wf-card-head">
+              <span>Oversikt per instruktor</span>
+            </div>
+            <table class="wf-table">
+              <tr><th>Instruktor</th><th>Bookinger</th><th>Timer</th><th>Inntekt</th><th>Last %</th><th>Status</th></tr>
+              <tr>
+                <td><strong>Anders K.</strong></td>
+                <td class="wf-num">92</td>
+                <td class="wf-num">34,5</td>
+                <td class="wf-num">112.800 kr</td>
+                <td class="wf-num">86%</td>
+                <td><span class="wf-tag">Normal</span></td>
+              </tr>
+              <tr>
+                <td><strong>Markus R.</strong></td>
+                <td class="wf-num">48</td>
+                <td class="wf-num">18,0</td>
+                <td class="wf-num">54.400 kr</td>
+                <td class="wf-num">45%</td>
+                <td><span class="wf-tag">Ledig</span></td>
+              </tr>
+              <tr>
+                <td><strong>Junior-team</strong></td>
+                <td class="wf-num">16</td>
+                <td class="wf-num">24,0</td>
+                <td class="wf-num">20.200 kr</td>
+                <td class="wf-num">60%</td>
+                <td><span class="wf-tag">Normal</span></td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="wf-rep-grid" style="margin-top:10px;">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Anders — ukentlig fordeling</span></div>
+              <div class="wf-chart">[ soylediagram · timer per dag · 5 dager ]</div>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Markus — ukentlig fordeling</span></div>
+              <div class="wf-chart">[ soylediagram · timer per dag · 5 dager ]</div>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12" style="margin-top:10px;">
+            <div class="wf-card-head"><span>Anbefalinger</span></div>
+            <ul class="wf-list">
+              <li><span>Markus har ledig kapasitet — tilby flere tidsvinduer</span><span class="wf-tag">Vekst</span></li>
+              <li><span>Anders nermer seg 90% — vurder a begrense nye bookinger</span><span class="wf-tag">Advarsel</span></li>
+              <li><span>Junior-team kan ta flere kurs pa lordager</span><span class="wf-tag">Vekst</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Last-prosent gir umiddelbar forstaelse av kapasitetsbalanse.</li>
+        <li>Ukentlig fordeling avdekker ujevn belastning.</li>
+        <li>Anbefalinger konverterer data til bemanningsbeslutninger.</li>
+        <li>Status-kolonne (Normal/Ledig/Advarsel) gir rask scanning.</li>
+        <li>Bra for ressursfordeling — krever noyaktig time-registrering.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: FACILITY USAGE ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Alternativ 5: <span class="opt-name">Fasilitetsbruk</span></h2>
+    <p class="option-description">Oversikt over simulatorer, treningsrom og utstyr — belegg, vedlikehold og optimalisering.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/kapasitet</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Kapasitet</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Fasilitetsbruk — denne uken</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Uke 16 ▾</span>
+              <span class="wf-rep-filter">Alle fasiliteter ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">SIMULATOR BELEGG</div>
+              <div class="wf-kpi-value">72%</div>
+              <div class="wf-kpi-delta">mal: 80%</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">TRENINGSSAL BELEGG</div>
+              <div class="wf-kpi-value">45%</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">ledig kapasitet</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">UTSTYR I BRUK</div>
+              <div class="wf-kpi-value">68%</div>
+              <div class="wf-kpi-delta">av tilgjengelig sett</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">VEDLIKEHOLD PLANLAGT</div>
+              <div class="wf-kpi-value">2</div>
+              <div class="wf-kpi-delta">simulator · putting-green</div>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Simulatorer — belegg per dag</span></div>
+              <div class="wf-chart">[ soylediagram · 7 dager · Sim 1 + Sim 2 ]</div>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Treningsrom — belegg per dag</span></div>
+              <div class="wf-chart">[ soylediagram · 7 dager · Rom A + Rom B ]</div>
+            </div>
+
+            <div class="wf-rep-card wf-span-12">
+              <div class="wf-card-head"><span>Fasiliteter — statusoversikt</span></div>
+              <table class="wf-table">
+                <tr><th>Fasilitet</th><th>Belegg</th><th>Neste vedlikehold</th><th>Status</th><th>Handling</th></tr>
+                <tr><td>Simulator 1 (TrackMan)</td><td class="wf-num">82%</td><td>20. mai</td><td><span class="wf-tag wf-tag-live">OK</span></td><td>Planlegg</td></tr>
+                <tr><td>Simulator 2 (GCQuad)</td><td class="wf-num">62%</td><td>15. mai</td><td><span class="wf-tag wf-tag-live">OK</span></td><td>Planlegg</td></tr>
+                <tr><td>Treningsrom A</td><td class="wf-num">55%</td><td>—</td><td><span class="wf-tag wf-tag-live">OK</span></td><td>—</td></tr>
+                <tr><td>Treningsrom B</td><td class="wf-num">35%</td><td>—</td><td><span class="wf-tag">Ledig</span></td><td>Tilby gruppetimer</td></tr>
+                <tr><td>Putting-green</td><td class="wf-num">48%</td><td>10. mai</td><td><span class="wf-tag">Vedlikehold</span></td><td>Bestill</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Fasilitetsbruk er kritisk for fysiske lokaler — simulatorer har begrenset kapasitet.</li>
+        <li>Vedlikeholds-kolonne gir proaktiv drift istedenfor reaktiv.</li>
+        <li>Beleggsprosent per fasilitet avdekker underutnyttelse.</li>
+        <li>"Tilby gruppetimer"-handling konverterer ledig kapasitet til inntekt.</li>
+        <li>Bra for driftsleder — krever IoT-sensorer eller manuell logging.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for MC Kapasitet — valget avhenger av om fokus er timeplan, fremtid, okonomi, personell eller fasiliteter.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Varmekart</th><th>2: Prognose</th><th>3: Break-even</th><th>4: Instruktor</th><th>5: Fasilitet</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig justering</td><td>Sterk</td><td>Svak</td><td>Svak</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Fremtidsplanlegging</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Okonomisk innsikt</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Svak</td></tr>
+        <tr><td>Ressursbalanse</td><td>Sterk</td><td>Sterk</td><td>Svak</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Drift og vedlikehold</td><td>Svak</td><td>Svak</td><td>Svak</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Larbarhet</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Alternativ 1 — Utnyttelsesvarme</h3>
+    <p>Varmekartet er den trygge standarden fordi det gir umiddelbar visuell forstaelse av kapasitetsmonster. Det er universelt forstaelig, fungerer for alle fasiliteter og instruktorer, og kombineres godt med Alternativ 4 (instruktorlast) for detaljert fordeling og Alternativ 2 (prognose) for fremtidsplanlegging.</p>
+
+    <h3>Nar velge hvilket</h3>
+    <ul>
+      <li><strong>Alternativ 1 (Varmekart):</strong> Default. Se hvor det er ledig pa en blikk.</li>
+      <li><strong>Alternativ 2 (Prognose):</strong> Nar du skal planlegge bemanning og kapasitet fremover.</li>
+      <li><strong>Alternativ 3 (Break-even):</strong> Styremoter og okonomisk planlegging.</li>
+      <li><strong>Alternativ 4 (Instruktorlast):</strong> Nar du skal fordele arbeid mellom instruktorer.</li>
+      <li><strong>Alternativ 5 (Fasilitet):</strong> For driftsleder som handterer lokaler og utstyr.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

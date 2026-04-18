@@ -1,0 +1,82 @@
+/* === DECADE-tester Wireframe Styles (B&W) === */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+.wf-portal-shell { display: grid; grid-template-columns: 72px 1fr; min-height: 720px; background: #f5f5f5; }
+.wf-sidebar { background: #000; padding: 20px 0 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; border-right: 1px solid #333; }
+.wf-sidebar-logo { width: 36px; height: 36px; border-radius: 10px; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; margin-bottom: 8px; }
+.wf-sidebar-nav { display: flex; flex-direction: column; gap: 4px; width: 100%; padding: 0 8px; }
+.wf-side-item { color: #999; font-size: 10px; padding: 10px 4px; text-align: center; border-radius: 8px; cursor: pointer; letter-spacing: 0.04em; font-weight: 500; }
+.wf-side-item:hover { background: #333; color: #fff; }
+.wf-side-item.wf-active { background: #fff; color: #000; font-weight: 700; }
+.wf-sidebar-user { margin-top: auto; width: 32px; height: 32px; border-radius: 50%; background: #333; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; border: 1px solid #666; }
+
+.wf-main { padding: 24px 32px 32px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+.wf-page-header { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 8px; }
+.wf-page-title { font-size: 22px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.01em; }
+.wf-page-sub { font-size: 13px; color: #666; margin: 4px 0 0; }
+
+/* TEST CARDS */
+.wf-test-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.wf-test-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.wf-test-card:hover { border-color: #ccc; }
+.wf-test-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.wf-test-name { font-size: 14px; font-weight: 700; color: #000; }
+.wf-test-diff { font-size: 10px; padding: 2px 8px; border-radius: 999px; background: #eee; color: #666; border: 1px solid #ddd; }
+.wf-test-diff-hard { background: #333; color: #fff; border-color: #333; }
+.wf-test-desc { font-size: 12px; color: #666; line-height: 1.4; }
+.wf-test-pb { font-size: 11px; color: #333; font-weight: 600; }
+.wf-test-pb span { color: #999; font-weight: 400; }
+.wf-test-btn { padding: 7px 14px; border: 1px solid #000; border-radius: 999px; background: #000; color: #fff; font-size: 12px; font-weight: 600; text-align: center; cursor: pointer; margin-top: auto; }
+.wf-test-btn-secondary { background: #fff; color: #000; }
+
+/* LADDER */
+.wf-ladder { display: flex; flex-direction: column; gap: 4px; }
+.wf-ladder-row { display: flex; gap: 12px; align-items: center; padding: 10px 12px; background: #fff; border: 1px solid #eee; border-radius: 8px; }
+.wf-ladder-num { width: 24px; font-size: 12px; font-weight: 700; color: #999; text-align: center; }
+.wf-ladder-name { flex: 1; font-size: 13px; font-weight: 600; color: #000; }
+.wf-ladder-diff { font-size: 10px; padding: 2px 8px; border-radius: 999px; background: #eee; color: #666; }
+.wf-ladder-pb { font-size: 12px; color: #333; font-weight: 600; min-width: 60px; text-align: right; }
+.wf-ladder-row.wf-completed { border-left: 3px solid #000; padding-left: 9px; }
+
+/* PROGRESS FOCUS */
+.wf-progress-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.wf-progress-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px; text-align: center; }
+.wf-progress-card.wf-best { border-color: #000; }
+.wf-progress-icon { font-size: 28px; margin-bottom: 8px; }
+.wf-progress-test { font-size: 13px; font-weight: 700; color: #000; }
+.wf-progress-label { font-size: 10px; color: #999; margin-top: 4px; }
+.wf-progress-val { font-size: 18px; font-weight: 800; color: #000; margin-top: 8px; }
+.wf-progress-delta { font-size: 11px; color: #2a7d5a; font-weight: 600; }
+
+/* CHALLENGE ROWS */
+.wf-challenge-row { display: flex; gap: 12px; align-items: center; padding: 12px; background: #fff; border: 1px solid #eee; border-radius: 10px; }
+.wf-challenge-icon { font-size: 24px; }
+.wf-challenge-info { flex: 1; }
+.wf-challenge-name { font-size: 13px; font-weight: 700; color: #000; }
+.wf-challenge-why { font-size: 11px; color: #666; }
+.wf-challenge-cta { padding: 6px 14px; border: 1px solid #000; border-radius: 999px; background: #000; color: #fff; font-size: 11px; font-weight: 600; cursor: pointer; }
+
+/* COMPARE */
+.wf-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.wf-compare-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px; }
+.wf-compare-bar-wrap { margin: 8px 0; }
+.wf-compare-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: #666; margin-bottom: 4px; }
+.wf-compare-bar { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+.wf-compare-bar-fill { height: 100%; background: #000; border-radius: 4px; }
+.wf-compare-bar-fill-norm { background: #999; }
+
+/* FILTER BAR */
+.wf-filter-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; }
+.wf-filter-chip { padding: 6px 14px; border: 1px solid #ccc; border-radius: 999px; background: #fff; color: #333; font-size: 12px; cursor: pointer; }
+.wf-filter-chip:hover { border-color: #666; }
+.wf-filter-chip.wf-active { background: #000; color: #fff; border-color: #000; }
+
+/* Summary */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 10px 12px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; }
+.wf-recommendation { padding: 20px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 16px; }
+.wf-recommendation h3 { margin: 0 0 8px; font-size: 16px; }
+.wf-recommendation p { font-size: 13px; color: #333; line-height: 1.6; margin: 0; }

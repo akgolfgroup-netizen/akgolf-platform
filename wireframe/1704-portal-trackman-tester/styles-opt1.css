@@ -1,0 +1,33 @@
+/* OPT 1 — Protocol Library · Clean + Polished */
+
+#frame-opt1-tabs .sub-tab-badge { display: none; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"] { color: #666; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #333; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"].active { color: #000; border-bottom-color: #000; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"] { color: #666; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #333; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"].active { color: #000; border-bottom-color: #000; }
+
+/* CLEAN */
+#frame-opt1.clean .browser-content { background: #F5F8F7; font-family: 'Inter', -apple-system, sans-serif; }
+#frame-opt1.clean .wf-sidebar { background: #005840; }
+#frame-opt1.clean .wf-sidebar-logo { background: #D1F843; color: #0A1F18; }
+#frame-opt1.clean .wf-side-item.wf-active { background: rgba(209,248,67,0.18); color: #D1F843; }
+#frame-opt1.clean .wf-page-title { color: #0A1F18; }
+#frame-opt1.clean .wf-proto-card { background: #fff; border-color: rgba(0,88,64,0.08); }
+#frame-opt1.clean .wf-proto-btn { background: #005840; color: #fff; border-color: #005840; }
+#frame-opt1.clean .wf-proto-btn-secondary { background: #fff; color: #005840; border-color: rgba(0,88,64,0.2); }
+#frame-opt1.clean .wf-filter-chip.wf-active { background: #005840; color: #fff; }
+
+/* POLISHED */
+#frame-opt1.polished .browser-content { background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,88,64,0.04) 0%, transparent 60%), #F5F8F7; font-family: 'Inter', -apple-system, sans-serif; }
+#frame-opt1.polished .wf-sidebar { background: linear-gradient(180deg, #005840 0%, #00402F 100%); }
+#frame-opt1.polished .wf-proto-card { background: #fff; border: 1px solid rgba(0,88,64,0.06); border-radius: 14px; box-shadow: 0 1px 3px rgba(0,88,64,0.03); transition: all 0.3s; }
+#frame-opt1.polished .wf-proto-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,88,64,0.07); }
+#frame-opt1.polished .wf-proto-btn { background: #D1F843; color: #0A1F18; border-color: #D1F843; font-weight: 700; transition: all 0.3s; }
+#frame-opt1.polished .wf-proto-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(209,248,67,0.4); }
+#frame-opt1.polished .wf-filter-chip.wf-active { background: linear-gradient(180deg, #006A4E 0%, #005840 100%); box-shadow: 0 2px 6px rgba(0,88,64,0.2); }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt1.polished * { transition: none !important; }
+}

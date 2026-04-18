@@ -1,0 +1,108 @@
+/* === Assistent Wireframe Styles — shared structure (B&W) === */
+
+/* MC Shell — Dark topbar + light body */
+.wf-mc-topbar {
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 16px; background: #111; color: #fff;
+  border-radius: 4px 4px 0 0;
+}
+.wf-mc-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; white-space: nowrap; }
+.wf-mc-tabs { display: flex; gap: 14px; flex: 1; }
+.wf-mc-tab { font-size: 12px; color: #999; padding: 4px 2px; cursor: default; }
+.wf-mc-tab-active { color: #fff; border-bottom: 1px solid #fff; }
+.wf-mc-profile { width: 28px; height: 28px; border-radius: 50%; background: #333; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+
+.wf-mc-body {
+  padding: 16px 12px; background: #fafafa; border-radius: 0 0 4px 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px; color: #222;
+}
+
+/* Page head */
+.wf-rep-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wf-rep-title { font-size: 15px; font-weight: 600; color: #111; }
+.wf-rep-filters { display: flex; gap: 8px; }
+.wf-rep-filter { font-size: 11px; padding: 4px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #555; }
+.wf-rep-filter-primary { background: #111; color: #fff; border-color: #111; }
+
+/* Grid */
+.wf-rep-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+.wf-span-6 { grid-column: span 6; }
+.wf-span-12 { grid-column: span 12; }
+
+/* Cards */
+.wf-rep-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; }
+.wf-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.wf-card-head > span:first-child { font-size: 12px; font-weight: 600; color: #111; }
+.wf-card-meta { font-size: 10px; color: #888; }
+
+/* Query chips */
+.wf-query-chip { font-size: 11px; padding: 4px 10px; border: 1px solid #bbb; border-radius: 12px; background: #fff; color: #333; }
+
+/* OPT 1 — Chat */
+.wf-chat-wrap { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 16px; min-height: 280px; }
+.wf-chat-msg { margin-bottom: 14px; display: flex; }
+.wf-chat-user { justify-content: flex-end; }
+.wf-chat-bot { justify-content: flex-start; }
+.wf-chat-bubble { max-width: 70%; padding: 10px 14px; border-radius: 12px; font-size: 12px; line-height: 1.5; }
+.wf-chat-user .wf-chat-bubble { background: #111; color: #fff; border-bottom-right-radius: 2px; }
+.wf-chat-bot .wf-chat-bubble { background: #f4f4f4; color: #333; border-bottom-left-radius: 2px; }
+.wf-chat-actions { display: flex; gap: 6px; margin-top: 6px; margin-left: 4px; }
+.wf-chat-input-bar { display: flex; gap: 8px; margin-top: 12px; align-items: center; }
+.wf-chat-input { flex: 1; background: #fff; border: 1px solid #ddd; border-radius: 20px; padding: 8px 14px; font-size: 12px; color: #888; }
+.wf-chat-suggestions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+/* OPT 2 — Command Palette */
+.wf-cp-overlay { display: flex; justify-content: center; padding: 20px 0; }
+.wf-cp-box { background: #fff; border: 1px solid #ccc; border-radius: 8px; width: 100%; max-width: 480px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.wf-cp-search { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #eee; }
+.wf-cp-icon { font-size: 14px; color: #888; }
+.wf-cp-input { flex: 1; border: none; background: transparent; font-size: 13px; color: #333; outline: none; }
+.wf-cp-section { padding: 8px 0; border-bottom: 1px solid #eee; }
+.wf-cp-section:last-child { border-bottom: none; }
+.wf-cp-label { font-size: 9px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 14px; }
+.wf-cp-item { display: flex; justify-content: space-between; padding: 6px 14px; font-size: 12px; cursor: default; }
+.wf-cp-item:hover, .wf-cp-item.wf-cp-active { background: #f4f4f4; }
+.wf-cp-item span:first-child { font-weight: 600; color: #111; }
+.wf-cp-item span:last-child { color: #888; font-size: 11px; }
+.wf-cp-hint { font-size: 10px; color: #aaa; text-align: center; padding: 8px; border-top: 1px solid #eee; }
+
+/* OPT 3 — Insight Feed */
+.wf-feed { display: flex; flex-direction: column; gap: 10px; }
+.wf-feed-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px 14px; display: flex; gap: 12px; }
+.wf-feed-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; background: #f4f4f4; color: #666; }
+.wf-feed-alert .wf-feed-icon { background: #111; color: #fff; }
+.wf-feed-trend .wf-feed-icon { background: #333; color: #fff; }
+.wf-feed-tip .wf-feed-icon { background: #eee; color: #666; }
+.wf-feed-body { flex: 1; }
+.wf-feed-title { font-size: 12px; font-weight: 600; color: #111; margin-bottom: 4px; }
+.wf-feed-desc { font-size: 11px; color: #666; line-height: 1.4; margin-bottom: 8px; }
+.wf-feed-actions { display: flex; gap: 6px; }
+
+/* OPT 4 — Action Queue */
+.wf-action-queue { display: flex; flex-direction: column; gap: 10px; }
+.wf-action-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 14px; }
+.wf-action-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.wf-action-title { font-size: 13px; font-weight: 600; color: #111; margin-bottom: 4px; }
+.wf-action-desc { font-size: 11px; color: #666; line-height: 1.4; margin-bottom: 10px; }
+.wf-action-preview { background: #f9f9f9; border: 1px solid #eee; border-radius: 3px; padding: 8px; font-size: 11px; color: #666; margin-bottom: 10px; }
+.wf-action-buttons { display: flex; gap: 6px; }
+
+/* OPT 5 — Training Mode */
+.wf-train-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 12px; }
+.wf-train-item:last-child { border-bottom: none; }
+.wf-train-done { color: #888; }
+.wf-train-active { font-weight: 600; }
+.wf-train-check { width: 18px; height: 18px; border-radius: 50%; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
+.wf-train-num { width: 18px; height: 18px; border-radius: 50%; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #888; flex-shrink: 0; }
+.wf-train-step { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #eee; }
+.wf-train-step:last-child { border-bottom: none; }
+.wf-train-step-num { width: 24px; height: 24px; border-radius: 50%; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
+.wf-train-step-body { flex: 1; }
+.wf-train-step-title { font-size: 12px; font-weight: 600; color: #111; }
+.wf-train-step-desc { font-size: 11px; color: #666; margin-top: 2px; }
+
+/* Summary table */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+.wf-summary-table th, .wf-summary-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+.wf-summary-table th { background: #f4f4f4; font-weight: 600; }

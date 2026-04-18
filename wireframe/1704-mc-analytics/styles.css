@@ -1,0 +1,102 @@
+/* === MC Analytics Wireframe Styles (B&W) === */
+
+.browser-content { padding: 0; }
+
+/* MC Shell */
+.wf-mc-topbar { display: flex; align-items: center; gap: 16px; padding: 10px 16px; background: #111; color: #fff; border-radius: 4px 4px 0 0; }
+.wf-mc-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; white-space: nowrap; }
+.wf-mc-tabs { display: flex; gap: 14px; flex: 1; }
+.wf-mc-tab { font-size: 12px; color: #999; padding: 4px 2px; cursor: default; }
+.wf-mc-tab-active { color: #fff; border-bottom: 1px solid #fff; }
+.wf-mc-profile { width: 28px; height: 28px; border-radius: 50%; background: #333; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+
+.wf-mc-body { padding: 16px 12px; background: #fafafa; border-radius: 0 0 4px 4px; font-size: 12px; color: #222; }
+
+/* Page head */
+.wf-rep-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wf-rep-title { font-size: 15px; font-weight: 600; color: #111; }
+.wf-rep-filters { display: flex; gap: 8px; }
+.wf-rep-filter { font-size: 11px; padding: 4px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #555; }
+.wf-rep-filter-primary { background: #111; color: #fff; border-color: #111; }
+
+/* KPI Row */
+.wf-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
+.wf-kpi { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 10px 12px; }
+.wf-kpi-label { font-size: 9px; font-weight: 600; letter-spacing: 0.08em; color: #999; text-transform: uppercase; margin-bottom: 4px; }
+.wf-kpi-value { font-size: 18px; font-weight: 700; color: #111; font-variant-numeric: tabular-nums; }
+.wf-kpi-delta { font-size: 10px; color: #666; margin-top: 2px; }
+.wf-kpi-delta-pos { color: #2a7d5a; }
+.wf-kpi-delta-neg { color: #b84233; }
+
+/* Grid */
+.wf-rep-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+.wf-span-3 { grid-column: span 3; }
+.wf-span-4 { grid-column: span 4; }
+.wf-span-6 { grid-column: span 6; }
+.wf-span-8 { grid-column: span 8; }
+.wf-span-12 { grid-column: span 12; }
+
+/* Cards */
+.wf-rep-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; }
+.wf-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.wf-card-head > span:first-child { font-size: 12px; font-weight: 600; color: #111; }
+.wf-card-meta { font-size: 10px; color: #888; }
+
+/* Charts */
+.wf-chart { border: 1px dashed #ccc; border-radius: 3px; height: 140px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 11px; background: #fcfcfc; }
+.wf-chart-lg { height: 200px; }
+.wf-chart-sm { height: 80px; }
+
+/* Tables */
+.wf-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.wf-table th { text-align: left; padding: 6px 8px; background: #f4f4f4; color: #555; font-weight: 600; border-bottom: 1px solid #ddd; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+.wf-table td { padding: 6px 8px; border-bottom: 1px solid #eee; color: #333; font-variant-numeric: tabular-nums; }
+.wf-table tr:last-child td { border-bottom: none; }
+.wf-table td.wf-num { text-align: right; font-weight: 600; }
+
+/* Lists */
+.wf-list { list-style: none; margin: 0; padding: 0; }
+.wf-list li { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #eee; font-size: 11px; color: #333; }
+.wf-list li:last-child { border-bottom: none; }
+
+/* Tags */
+.wf-tag { font-size: 9px; padding: 2px 7px; border: 1px solid #ccc; border-radius: 10px; background: #f9f9f9; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }
+.wf-tag-live { background: #111; color: #fff; border-color: #111; }
+
+/* ===== OPT 2: Funnel ===== */
+.wf-funnel-wrap { display: flex; flex-direction: column; gap: 4px; }
+.wf-funnel-step { display: flex; flex-direction: column; }
+.wf-funnel-bar { background: #eee; border: 1px solid #ccc; border-radius: 4px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; font-size: 12px; }
+.wf-funnel-num { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 40px; }
+.wf-funnel-label { color: #555; }
+.wf-funnel-drop { font-size: 11px; color: #888; padding: 4px 12px; }
+.wf-funnel-why { color: #aaa; font-style: italic; }
+.wf-funnel-convert .wf-funnel-bar { background: #ddd; border-color: #999; }
+.wf-funnel-drop-final { color: #b84233; font-weight: 600; }
+
+/* ===== OPT 3: Cohort ===== */
+.wf-cohort-table td.wf-cohort-high { color: #2a7d5a; font-weight: 700; }
+.wf-cohort-table td.wf-cohort-low { color: #b84233; font-weight: 700; }
+
+/* ===== OPT 4: Goal Tracking ===== */
+.wf-goal-progress { display: flex; flex-direction: column; gap: 8px; }
+.wf-goal-bar { background: #eee; border-radius: 4px; height: 12px; overflow: hidden; }
+.wf-goal-fill { background: #111; height: 100%; border-radius: 4px; }
+.wf-goal-fill-inverse { background: #b84233; }
+.wf-goal-stats { display: flex; justify-content: space-between; font-size: 12px; color: #333; }
+.wf-goal-pace { font-size: 11px; color: #2a7d5a; }
+.wf-goal-pace-behind { color: #b84233; }
+
+/* ===== OPT 5: Raw Query ===== */
+.wf-query-builder { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+.wf-query-section { display: flex; flex-direction: column; gap: 6px; }
+.wf-query-label { font-size: 10px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; }
+.wf-query-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.wf-query-pill { font-size: 11px; padding: 4px 10px; border: 1px solid #bbb; border-radius: 12px; background: #f5f5f5; color: #333; }
+.wf-query-pill-add { border-style: dashed; color: #888; }
+.wf-query-run { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+
+/* Summary */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+.wf-summary-table th, .wf-summary-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+.wf-summary-table th { background: #f4f4f4; font-weight: 600; }

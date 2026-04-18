@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Meldinger — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visuelle design er klare — alle alternativer har Clean + Polished varianter
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+  <div class="title-bar">
+    <span><span id="feature-name">MC Meldinger</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">★ Anbefalt: Alternativ <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Inbox+Chat</button>
+    <button class="tab-btn" data-tab="option-2">2: Conversation List</button>
+    <button class="tab-btn" data-tab="option-3">3: Per Elev</button>
+    <button class="tab-btn" data-tab="option-4">4: AI Summary</button>
+    <button class="tab-btn" data-tab="option-5">5: Bulk Messaging</button>
+    <button class="tab-btn" data-tab="summary">Oppsummering</button>
+  </nav>
+
+  <!-- ===== OPTION 1: INBOX+CHAT ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Alternativ 1: <span class="opt-name">Inbox+Chat</span></h2>
+    <p class="option-description">Klassisk inbox med chat-panelet til høyre. Trygg default som matcher e-post- og Slack-DNA.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/meldinger</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Meldinger</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-page-head">
+            <div class="wf-page-title">Alle samtaler<span class="wf-marker">1</span></div>
+            <div class="wf-page-action">+ Ny melding</div>
+          </div>
+          <div class="wf-inbox-wrap">
+            <div class="wf-inbox-list">
+              <input class="wf-inbox-search" placeholder="Søk i samtaler...">
+              <div class="wf-conv-item wf-active">
+                <div class="wf-conv-name">Erik Hansen</div>
+                <div class="wf-conv-preview">Takk for tilbakemeldingen, jeg ser frem til...</div>
+                <div class="wf-conv-meta"><span>17. apr</span><span class="wf-conv-badge">2</span></div>
+              </div>
+              <div class="wf-conv-item">
+                <div class="wf-conv-name">Nora Torp</div>
+                <div class="wf-conv-preview">Kan vi flytte timen til torsdag?</div>
+                <div class="wf-conv-meta"><span>16. apr</span></div>
+              </div>
+              <div class="wf-conv-item">
+                <div class="wf-conv-name">Lars Berg</div>
+                <div class="wf-conv-preview">TrackMan-dataene ser bra ut denne uken.</div>
+                <div class="wf-conv-meta"><span>15. apr</span></div>
+              </div>
+              <div class="wf-conv-item">
+                <div class="wf-conv-name">Sofie Lund</div>
+                <div class="wf-conv-preview">Jeg har lastet opp nye swing-videoer.</div>
+                <div class="wf-conv-meta"><span>14. apr</span><span class="wf-conv-badge">1</span></div>
+              </div>
+            </div>
+            <div class="wf-chat-area">
+              <div class="wf-chat-header">
+                <div><div class="wf-chat-contact">Erik Hansen<span class="wf-marker">2</span></div><div class="wf-chat-sub">Performance · sist aktiv nå</div></div>
+              </div>
+              <div class="wf-chat-feed">
+                <div class="wf-msg">
+                  <div class="wf-msg-avatar">EH</div>
+                  <div>
+                    <div class="wf-msg-bubble">Hei Anders, kan du se på swing-videoene jeg sendte?</div>
+                    <div class="wf-msg-time">10:23</div>
+                  </div>
+                </div>
+                <div class="wf-msg wf-msg-self">
+                  <div class="wf-msg-avatar">AK</div>
+                  <div>
+                    <div class="wf-msg-bubble">Hei Erik! Ja, jeg har sett dem. Bra progresjon på backswing.</div>
+                    <div class="wf-msg-time">10:45</div>
+                  </div>
+                </div>
+                <div class="wf-msg">
+                  <div class="wf-msg-avatar">EH</div>
+                  <div>
+                    <div class="wf-msg-bubble">Takk for tilbakemeldingen, jeg ser frem til neste økt.</div>
+                    <div class="wf-msg-time">11:02</div>
+                  </div>
+                </div>
+              </div>
+              <div class="wf-chat-input">
+                <input placeholder="Skriv en melding...">
+                <button class="wf-chat-send">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Inbox+chat-layout:</strong> Klassisk to-kolonne-oppsett. Venstre = alle samtaler, høyre = aktiv chat. Umiddelbart gjenkjennelig.</li>
+        <li><strong>2 — Kontekst i header:</strong> Elevnavn + abonnement + aktiv-status gir treneren rask kontekst før de svarer.</li>
+        <li>— Trygg løsning: Matcher WhatsApp Web, Slack og andre kjente chat-verktøy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: CONVERSATION LIST ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Alternativ 2: <span class="opt-name">Conversation List</span></h2>
+    <p class="option-description">Ren liste over alle samtaler. Klikk for å åpne. Bra for rask skanning av mange meldinger.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/meldinger</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Meldinger</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-page-head">
+            <div class="wf-page-title">Alle samtaler<span class="wf-marker">1</span></div>
+            <div class="wf-page-action">+ Ny melding</div>
+          </div>
+          <div class="wf-list-card">
+            <div class="wf-list-row">
+              <div class="wf-list-avatar">EH</div>
+              <div class="wf-list-info">
+                <div class="wf-list-name">Erik Hansen<span class="wf-marker">2</span></div>
+                <div class="wf-list-preview">Takk for tilbakemeldingen, jeg ser frem til neste økt.</div>
+              </div>
+              <div class="wf-list-meta">17. apr<br><span class="wf-conv-badge">2</span></div>
+            </div>
+            <div class="wf-list-row">
+              <div class="wf-list-avatar">NT</div>
+              <div class="wf-list-info">
+                <div class="wf-list-name">Nora Torp</div>
+                <div class="wf-list-preview">Kan vi flytte timen til torsdag?</div>
+              </div>
+              <div class="wf-list-meta">16. apr</div>
+            </div>
+            <div class="wf-list-row">
+              <div class="wf-list-avatar">LB</div>
+              <div class="wf-list-info">
+                <div class="wf-list-name">Lars Berg</div>
+                <div class="wf-list-preview">TrackMan-dataene ser bra ut denne uken.</div>
+              </div>
+              <div class="wf-list-meta">15. apr</div>
+            </div>
+            <div class="wf-list-row">
+              <div class="wf-list-avatar">SL</div>
+              <div class="wf-list-info">
+                <div class="wf-list-name">Sofie Lund</div>
+                <div class="wf-list-preview">Jeg har lastet opp nye swing-videoer.</div>
+              </div>
+              <div class="wf-list-meta">14. apr<br><span class="wf-conv-badge">1</span></div>
+            </div>
+            <div class="wf-list-row">
+              <div class="wf-list-avatar">MO</div>
+              <div class="wf-list-info">
+                <div class="wf-list-name">Martin Olsen</div>
+                <div class="wf-list-preview">Når starter neste juniorsamling?</div>
+              </div>
+              <div class="wf-list-meta">12. apr</div>
+            </div>
+            <div class="wf-list-row">
+              <div class="wf-list-avatar">IK</div>
+              <div class="wf-list-info">
+                <div class="wf-list-name">Ingrid Kvam</div>
+                <div class="wf-list-preview">Takk for oppfølgingen etter runden i går.</div>
+              </div>
+              <div class="wf-list-meta">10. apr</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Ren liste:</strong> Én samtale per rad. Ingen chat-panel som tar plass. Maksimalt antall samtaler synlig.</li>
+        <li><strong>2 — Klikk for detaljer:</strong> Raden er en lenke til full samtale. Bra for å skanne raskt, deretter grave ned.</li>
+        <li>— Bra når det er mange aktive samtaler. Krever ett ekstra klikk for å svare.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: PER ELEV ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Alternativ 3: <span class="opt-name">Per Elev</span></h2>
+    <p class="option-description">Velg elev i venstre sidebar, se all kommunikasjon med denne eleven i hovedpanelet.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/meldinger</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Meldinger</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-page-head">
+            <div class="wf-page-title">Kommunikasjon per elev<span class="wf-marker">1</span></div>
+            <div class="wf-page-action">+ Ny melding</div>
+          </div>
+          <div class="wf-elev-grid">
+            <div class="wf-elev-sidebar">
+              <input class="wf-inbox-search" placeholder="Søk elev...">
+              <div class="wf-elev-item wf-active">Erik Hansen</div>
+              <div class="wf-elev-item">Nora Torp</div>
+              <div class="wf-elev-item">Lars Berg</div>
+              <div class="wf-elev-item">Sofie Lund</div>
+              <div class="wf-elev-item">Martin Olsen</div>
+              <div class="wf-elev-item">Ingrid Kvam</div>
+            </div>
+            <div class="wf-chat-area">
+              <div class="wf-chat-header">
+                <div><div class="wf-chat-contact">Erik Hansen<span class="wf-marker">2</span></div><div class="wf-chat-sub">Performance · 12 meldinger totalt</div></div>
+              </div>
+              <div class="wf-chat-feed">
+                <div class="wf-msg">
+                  <div class="wf-msg-avatar">EH</div>
+                  <div><div class="wf-msg-bubble">Hei Anders, kan du se på swing-videoene jeg sendte?</div><div class="wf-msg-time">10:23</div></div>
+                </div>
+                <div class="wf-msg wf-msg-self">
+                  <div class="wf-msg-avatar">AK</div>
+                  <div><div class="wf-msg-bubble">Hei Erik! Ja, jeg har sett dem. Bra progresjon.</div><div class="wf-msg-time">10:45</div></div>
+                </div>
+              </div>
+              <div class="wf-chat-input">
+                <input placeholder="Skriv en melding...">
+                <button class="wf-chat-send">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Elev som organisering:</strong> Venstre sidebar med elevliste. Hvert klikk bytter kontekst fullstendig.</li>
+        <li><strong>2 — Total meldingsteller:</strong> "12 meldinger totalt" gir historisk kontekst for relasjonen.</li>
+        <li>— Bra når treneren tenker "hva sa jeg til Erik?" og vil ha alt på ett sted.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: AI SUMMARY ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Alternativ 4: <span class="opt-name">AI Summary</span></h2>
+    <p class="option-description">Automatiske oppsummeringer av samtaler. Bra for treneren som har mange elever og begrenset tid.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/meldinger</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Meldinger</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-page-head">
+            <div class="wf-page-title">Oppsummeringer<span class="wf-marker">1</span></div>
+            <div class="wf-page-action">Oppdater alle</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="wf-ai-summary">
+              <h4>Erik Hansen<span class="wf-marker">2</span></h4>
+              <p>Siste samtaler handler om swing-video-opplastning og tilbakemelding på backswing-progresjon. Elev viser entusiasme og følger treningsplan.</p>
+              <div><span class="wf-ai-tag">Video</span><span class="wf-ai-tag">Backswing</span><span class="wf-ai-tag">Positiv</span></div>
+            </div>
+            <div class="wf-ai-summary">
+              <h4>Nora Torp</h4>
+              <p>Ønsket å flytte time. Ny tid bekreftet. Ingen andre temaer i siste 7 dager.</p>
+              <div><span class="wf-ai-tag">Booking</span><span class="wf-ai-tag">Logistikk</span></div>
+            </div>
+            <div class="wf-ai-summary">
+              <h4>Lars Berg</h4>
+              <p>TrackMan-data diskutert. Carry-avstander opp 5 meter denne måneden. Anbefalt økt fokus på approach 125m.</p>
+              <div><span class="wf-ai-tag">TrackMan</span><span class="wf-ai-tag">Forbedring</span></div>
+            </div>
+            <div class="wf-ai-summary">
+              <h4>Sofie Lund</h4>
+              <p>Lastet opp nye swing-videoer. Venter på tilbakemelding fra trener. Forrige tilbakemelding handlet om grip-trykk.</p>
+              <div><span class="wf-ai-tag">Video</span><span class="wf-ai-tag">Venter</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — AI-oppsummering:</strong> Automatisk sammendrag av alle samtaler per elev. Treneren skanner raskt status.</li>
+        <li><strong>2 — Tags:</strong> Nøkkelord gjør det lett å filtrere og søke. "Positiv", "Venter", "Booking" gir rask kontekst.</li>
+        <li>— Bra for treneren med 30+ elever. Krever AI-pipeline for oppsummering.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: BULK MESSAGING ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Alternativ 5: <span class="opt-name">Bulk Messaging</span></h2>
+    <p class="option-description">Send meldinger til flere elever samtidig. Bra for informasjon om avlysninger, nyheter eller påminnelser.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/meldinger</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Meldinger</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-page-head">
+            <div class="wf-page-title">Send til flere<span class="wf-marker">1</span></div>
+            <div class="wf-page-action">Forhåndsvis</div>
+          </div>
+          <div class="wf-bulk-bar">
+            <select class="wf-bulk-select"><option>Alle elever</option><option>Performance</option><option>Junior Academy</option><option>Express</option></select>
+            <select class="wf-bulk-select"><option>SMS + e-post</option><option>Kun SMS</option><option>Kun e-post</option></select>
+            <button class="wf-bulk-btn">Send</button>
+          </div>
+          <table class="wf-table">
+            <tr><th><input type="checkbox"></th><th>Navn</th><th>Telefon</th><th>E-post</th><th>Siste melding</th></tr>
+            <tr><td><input type="checkbox" checked></td><td>Erik Hansen</td><td>+47 900 00 001</td><td>erik@mail.no</td><td>17. apr</td></tr>
+            <tr><td><input type="checkbox" checked></td><td>Nora Torp</td><td>+47 900 00 002</td><td>nora@mail.no</td><td>16. apr</td></tr>
+            <tr><td><input type="checkbox" checked></td><td>Lars Berg</td><td>+47 900 00 003</td><td>lars@mail.no</td><td>15. apr</td></tr>
+            <tr><td><input type="checkbox"></td><td>Sofie Lund</td><td>+47 900 00 004</td><td>sofie@mail.no</td><td>14. apr</td></tr>
+            <tr><td><input type="checkbox"></td><td>Martin Olsen</td><td>+47 900 00 005</td><td>martin@mail.no</td><td>12. apr</td></tr>
+          </table>
+          <div style="margin-top:10px;background:#fff;border:1px solid #ddd;border-radius:4px;padding:10px;">
+            <div style="font-size:11px;color:#888;margin-bottom:4px;">MELDING (støtter {fornavn}, {dato})</div>
+            <div style="font-size:12px;color:#333;">Hei {fornavn}! Husker du på timen din {dato}? Vi sees på banen.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Bulk som separat modus:</strong> "Send til flere" er en egen visning, ikke en ettertanke i chat. Tydelig fokus.</li>
+        <li><strong>2 — Variabler:</strong> {fornavn} og {dato} lar meldingen føles personlig selv ved masseutsendelse.</li>
+        <li>— Bra for administrative meldinger. Skal ikke erstatte personlig kommunikasjon.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering & anbefaling</h2>
+    <p class="option-description">Fem retninger for MC Meldinger — valget avhenger av antall elever og kommunikasjonsmønster.</p>
+    <table class="wf-summary-table">
+      <thead><tr><th>Alternativ</th><th>Filosofi</th><th>Hurtighet</th><th>Skalerbarhet</th><th>Kompleksitet</th><th>Score</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Inbox+Chat</strong></td><td>To-kolonne, klassisk chat</td><td>Høy</td><td>Middels</td><td>Lav</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Conversation List</strong></td><td>Ren liste, klikk for chat</td><td>Middels</td><td>Høy</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Per Elev</strong></td><td>Elev-sidebar + chat</td><td>Høy</td><td>Middels</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. AI Summary</strong></td><td>Automatiske oppsummeringer</td><td>Høy</td><td>Høy</td><td>Høy</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>5. Bulk Messaging</strong></td><td>Masseutsendelse med variabler</td><td>Høy</td><td>Høy</td><td>Middels</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Alternativ 1 — Inbox+Chat</h3>
+      <p>Trygg default som matcher kjente chat-mønstre. To-kolonne-layout gir umiddelbar oversikt og rask respons. Alternativ 5 (Bulk) bør bygges som en separat funksjon for administrative meldinger, ikke som erstatning for personlig chat.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="skill-footer">This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) { if (getComputedStyle(b).display !== 'none') anyVisible = true; });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) { banner.style.display = 'block'; setTimeout(function() { banner.style.display = 'none'; }, 8000); }
+    }
+  });
+})();
+</script>
+</body>
+</html>

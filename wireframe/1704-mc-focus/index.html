@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Fokus — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visuelle design fullført — alle alternativer har Clean + Polished varianter
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Fokus</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">★ Anbefalt: Alternativ <span id="rec-number">2</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Dagskø</button>
+    <button class="tab-btn" data-tab="option-2">2: 3-ting-regel</button>
+    <button class="tab-btn" data-tab="option-3">3: Pomodoro</button>
+    <button class="tab-btn" data-tab="option-4">4: Kontekstskifte</button>
+    <button class="tab-btn" data-tab="option-5">5: Rolig modus</button>
+    <button class="tab-btn" data-tab="summary">Sammendrag</button>
+  </nav>
+
+  <!-- ===== OPTION 1: TODAY QUEUE ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Alternativ 1: <span class="opt-name">Dagskø</span></h2>
+    <p class="option-description">Prioritert oppgaveliste for dagen — sortert etter hastegrad, med tidsestimater og kontekstmerker.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/focus</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Fokus</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Dagens kø — 8 oppgaver · 4,5 timer estimert</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">I dag ▾</span>
+              <span class="wf-rep-filter">+ Legg til</span>
+            </div>
+          </div>
+
+          <div class="wf-task-list">
+            <div class="wf-task wf-task-urgent">
+              <div class="wf-task-check"></div>
+              <div class="wf-task-body">
+                <div class="wf-task-title">Godkjenn timeplan endringer — Markus</div>
+                <div class="wf-task-meta">Haster · 15 min · Booking</div>
+              </div>
+              <div class="wf-task-action">→</div>
+            </div>
+            <div class="wf-task wf-task-urgent">
+              <div class="wf-task-check"></div>
+              <div class="wf-task-body">
+                <div class="wf-task-title">Følg opp betalingsforsinkelse — 2 elever</div>
+                <div class="wf-task-meta">Haster · 20 min · Fakturering</div>
+              </div>
+              <div class="wf-task-action">→</div>
+            </div>
+            <div class="wf-task">
+              <div class="wf-task-check"></div>
+              <div class="wf-task-body">
+                <div class="wf-task-title">Forbered Junior Academy uke 17</div>
+                <div class="wf-task-meta">Normal · 45 min · Coaching</div>
+              </div>
+              <div class="wf-task-action">→</div>
+            </div>
+            <div class="wf-task">
+              <div class="wf-task-check"></div>
+              <div class="wf-task-body">
+                <div class="wf-task-title">Oppdater priser på nettsiden</div>
+                <div class="wf-task-meta">Normal · 30 min · Nettside</div>
+              </div>
+              <div class="wf-task-action">→</div>
+            </div>
+            <div class="wf-task">
+              <div class="wf-task-check"></div>
+              <div class="wf-task-body">
+                <div class="wf-task-title">Se gjennom månedsrapport april</div>
+                <div class="wf-task-meta">Normal · 60 min · Rapporter</div>
+              </div>
+              <div class="wf-task-action">→</div>
+            </div>
+            <div class="wf-task wf-task-done">
+              <div class="wf-task-check">✓</div>
+              <div class="wf-task-body">
+                <div class="wf-task-title">Send påminnelse til morgendagens bookinger</div>
+                <div class="wf-task-meta">Fullført · 10 min · Booking</div>
+              </div>
+            </div>
+            <div class="wf-task wf-task-done">
+              <div class="wf-task-check">✓</div>
+              <div class="wf-task-body">
+                <div class="wf-task-title">Svar på henvendelse fra Golfklubben</div>
+                <div class="wf-task-meta">Fullført · 15 min · Samarbeid</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid" style="margin-top:12px;">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Per kategori</span></div>
+              <ul class="wf-list">
+                <li><span>Booking</span><span>3</span></li>
+                <li><span>Coaching</span><span>2</span></li>
+                <li><span>Fakturering</span><span>1</span></li>
+                <li><span>Nettside</span><span>1</span></li>
+                <li><span>Rapporter</span><span>1</span></li>
+              </ul>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Fullføringsrate</span></div>
+              <div class="wf-chart wf-chart-sm">[ sirkeldiagram · 2/8 fullført ]</div>
+              <div class="wf-card-meta" style="text-align:center;margin-top:6px;">25% fullført · 6 gjenstår</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Flat oppgaveliste — enklest mulig, klikk for å fullføre.</li>
+        <li>Haster-oppgaver får visuell markering øverst.</li>
+        <li>Tidsestimat per oppgave hjelper med planlegging.</li>
+        <li>Kategori-tagger gjør det lett å batch-behandle.</li>
+        <li>Fullførte oppgaver gråes ut for progresjonsfølelse.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: 3-THING RULE ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Alternativ 2: <span class="opt-name">3-ting-regel</span></h2>
+    <p class="option-description">Bare tre oppgaver som betyr noe i dag. Resten er støy. Minimalistisk fokus.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/focus</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Fokus</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-three-wrap">
+            <div class="wf-three-label">Dagens 3 ting</div>
+            <div class="wf-three-sub">Hvis du bare gjør én ting — gjør den første.</div>
+
+            <div class="wf-three-item">
+              <div class="wf-three-num">1</div>
+              <div class="wf-three-body">
+                <div class="wf-three-title">Godkjenn timeplan endringer — Markus</div>
+                <div class="wf-three-meta">Haster · 15 min · Påvirker 12 bookinger</div>
+              </div>
+              <div class="wf-three-check"></div>
+            </div>
+
+            <div class="wf-three-item">
+              <div class="wf-three-num">2</div>
+              <div class="wf-three-body">
+                <div class="wf-three-title">Følg opp betalingsforsinkelse — 2 elever</div>
+                <div class="wf-three-meta">Haster · 20 min · 4.800 kr utestående</div>
+              </div>
+              <div class="wf-three-check"></div>
+            </div>
+
+            <div class="wf-three-item">
+              <div class="wf-three-num">3</div>
+              <div class="wf-three-body">
+                <div class="wf-three-title">Forbered Junior Academy uke 17</div>
+                <div class="wf-three-meta">Normal · 45 min · 8 elever påmeldt</div>
+              </div>
+              <div class="wf-three-check"></div>
+            </div>
+
+            <div class="wf-three-rest">
+              <div class="wf-three-rest-label">Andre oppgaver (5) — vis når #1–3 er ferdig</div>
+              <div class="wf-three-rest-list" style="display:none;">
+                <div class="wf-task"><div class="wf-task-check"></div><div class="wf-task-body"><div class="wf-task-title">Oppdater priser på nettsiden</div></div></div>
+                <div class="wf-task"><div class="wf-task-check"></div><div class="wf-task-body"><div class="wf-task-title">Se gjennom månedsrapport</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Radikalt minimalistisk — kun 3 oppgaver synlig.</li>
+        <li>Nummerering tvinger prioritering: #1 må gjøres først.</li>
+        <li>"Andre oppgaver" er skjult for å redusere kognitiv last.</li>
+        <li>Stor typografi og luft gir ro og klarhet.</li>
+        <li>Anbefalt for brukere som sliter med overveldelse.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: POMODORO ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Alternativ 3: <span class="opt-name">Pomodoro</span></h2>
+    <p class="option-description">25-minutters fokusøkter med pauser. Integrert med oppgaveliste og daglig statistikk.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/focus</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Fokus</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-pomo-wrap">
+            <div class="wf-pomo-timer">
+              <div class="wf-pomo-time">25:00</div>
+              <div class="wf-pomo-label">Fokusøkt — Godkjenn timeplan</div>
+              <div class="wf-pomo-controls">
+                <span class="wf-rep-filter wf-rep-filter-primary">Start</span>
+                <span class="wf-rep-filter">Pause</span>
+                <span class="wf-rep-filter">Fullfør</span>
+              </div>
+            </div>
+
+            <div class="wf-rep-grid" style="margin-top:16px;">
+              <div class="wf-rep-card wf-span-6">
+                <div class="wf-card-head"><span>Dagens økter</span></div>
+                <div class="wf-pomo-session wf-pomo-done"><span class="wf-pomo-dot"></span><span>Godkjenn timeplan</span><span>25 min</span></div>
+                <div class="wf-pomo-session wf-pomo-done"><span class="wf-pomo-dot"></span><span>E-post</span><span>25 min</span></div>
+                <div class="wf-pomo-session wf-pomo-active"><span class="wf-pomo-dot"></span><span>Følg opp betalinger</span><span>25 min</span></div>
+                <div class="wf-pomo-session"><span class="wf-pomo-dot"></span><span>Forbered Junior Academy</span><span>—</span></div>
+                <div class="wf-pomo-session"><span class="wf-pomo-dot"></span><span>Rapportgjennomgang</span><span>—</span></div>
+              </div>
+              <div class="wf-rep-card wf-span-6">
+                <div class="wf-card-head"><span>Statistikk denne uken</span></div>
+                <div class="wf-kpi" style="margin-bottom:8px;">
+                  <div class="wf-kpi-label">FULLFØRTE ØKTER</div>
+                  <div class="wf-kpi-value">12</div>
+                  <div class="wf-kpi-delta">mål: 16</div>
+                </div>
+                <div class="wf-kpi" style="margin-bottom:8px;">
+                  <div class="wf-kpi-label">FOKUSTIMER</div>
+                  <div class="wf-kpi-value">5,0</div>
+                  <div class="wf-kpi-delta">av 6,7 timer mål</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">SNITT ØKT-LENGDE</div>
+                  <div class="wf-kpi-value">24,2</div>
+                  <div class="wf-kpi-delta">minutter</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Stor timer øverst — umiddelbar tidsfølelse.</li>
+        <li>Økt-liste knytter Pomodoro til konkrete oppgaver.</li>
+        <li>Ukentlig statistikk gir motivasjon og trend.</li>
+        <li>Start/Pause/Fullfør er alltid synlig.</li>
+        <li>Bra for brukere som trenger strukturert tidsstyring.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: CONTEXT SWITCHING ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Alternativ 4: <span class="opt-name">Kontekstskifte</span></h2>
+    <p class="option-description">Grupper oppgaver etter kontekst (telefon, mail, dypt arbeid) — reduser kontekstbytte-kostnaden.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/focus</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Fokus</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Oppgaver etter kontekst — 3 grupper</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Alle ▾</span>
+              <span class="wf-rep-filter">+ Legg til</span>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid">
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>☎ Telefon</span>
+                <span class="wf-card-meta">2 oppgaver · 25 min</span>
+              </div>
+              <div class="wf-task wf-task-compact">
+                <div class="wf-task-check"></div>
+                <div class="wf-task-body">
+                  <div class="wf-task-title">Ring betalingsforsinket elev #1</div>
+                  <div class="wf-task-meta">10 min</div>
+                </div>
+              </div>
+              <div class="wf-task wf-task-compact">
+                <div class="wf-task-check"></div>
+                <div class="wf-task-body">
+                  <div class="wf-task-title">Ring betalingsforsinket elev #2</div>
+                  <div class="wf-task-meta">15 min</div>
+                </div>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>✉ E-post / Chat</span>
+                <span class="wf-card-meta">2 oppgaver · 40 min</span>
+              </div>
+              <div class="wf-task wf-task-compact">
+                <div class="wf-task-check"></div>
+                <div class="wf-task-body">
+                  <div class="wf-task-title">Svar på henvendelse fra klubb</div>
+                  <div class="wf-task-meta">20 min</div>
+                </div>
+              </div>
+              <div class="wf-task wf-task-compact">
+                <div class="wf-task-check"></div>
+                <div class="wf-task-body">
+                  <div class="wf-task-title">Send booking-bekreftelser</div>
+                  <div class="wf-task-meta">20 min</div>
+                </div>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>▣ Dyp konsentrasjon</span>
+                <span class="wf-card-meta">3 oppgaver · 2,5 timer</span>
+              </div>
+              <div class="wf-task wf-task-compact">
+                <div class="wf-task-check"></div>
+                <div class="wf-task-body">
+                  <div class="wf-task-title">Godkjenn timeplan endringer</div>
+                  <div class="wf-task-meta">45 min</div>
+                </div>
+              </div>
+              <div class="wf-task wf-task-compact">
+                <div class="wf-task-check"></div>
+                <div class="wf-task-body">
+                  <div class="wf-task-title">Forbered Junior Academy</div>
+                  <div class="wf-task-meta">60 min</div>
+                </div>
+              </div>
+              <div class="wf-task wf-task-compact">
+                <div class="wf-task-check"></div>
+                <div class="wf-task-body">
+                  <div class="wf-task-title">Se gjennom månedsrapport</div>
+                  <div class="wf-task-meta">60 min</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12" style="margin-top:10px;">
+            <div class="wf-card-head">
+              <span>Kontekstbytte-tips</span>
+            </div>
+            <ul class="wf-list">
+              <li><span>Gjør alle telefon-samtaler på én gang</span><span>sparer ~10 min</span></li>
+              <li><span>Blokker "dyp konsentrasjon" kl 09–11</span><span>færrest avbrytelser</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Oppgaver grupperes etter mental kontekst, ikke kategori.</li>
+        <li>Telefon/e-post/dypt-arbeid krever ulik hjerne-tilstand.</li>
+        <li>Batch-råd nederst hjelper brukeren planlegge dagen smartere.</li>
+        <li>Tidsestimat per gruppe gjør det lett å velge blokker.</li>
+        <li>Bra for brukere med mange avbrytelser i løpet av dagen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: CALM MODE ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Alternativ 5: <span class="opt-name">Rolig modus</span></h2>
+    <p class="option-description">Zen-visning med ett element synlig om gangen. Ingen lister, ingen tall — bare neste handling.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/focus</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Fokus</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-calm-wrap">
+            <div class="wf-calm-label">Neste handling</div>
+            <div class="wf-calm-task">Godkjenn timeplan endringer — Markus</div>
+            <div class="wf-calm-meta">Haster · 15 min · Påvirker 12 bookinger</div>
+
+            <div class="wf-calm-actions">
+              <span class="wf-rep-filter wf-rep-filter-primary">Start nå</span>
+              <span class="wf-rep-filter">Utsett 1 time</span>
+              <span class="wf-rep-filter">Deleger</span>
+              <span class="wf-rep-filter">Fullført ✓</span>
+            </div>
+
+            <div class="wf-calm-rest">
+              <div class="wf-calm-rest-label">6 oppgaver til i dag</div>
+              <div class="wf-calm-rest-hint">Trykk → for å vise neste</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kun én oppgave synlig — eliminerer beslutningsutmattelse.</li>
+        <li>Fire handlinger: start, utsett, deleger, fullfør — dekker alle valg.</li>
+        <li>Ingen KPI-er, lister eller grafer — ren ro.</li>
+        <li>"6 oppgaver til" gir kontekst uten å overvelde.</li>
+        <li>Bra for høy-stress-dager eller når man føler seg overveldet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for MC Fokus — valget avhenger av om brukeren trenger struktur, minimalisme, tidsstyring, batching eller ro.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Dagskø</th><th>2: 3-ting</th><th>3: Pomodoro</th><th>4: Kontekst</th><th>5: Rolig</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Enkel å komme i gang</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Reduserer overveldelse</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Tidsstyring</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Middels</td><td>Svak</td></tr>
+        <tr><td>Batch-effektivitet</td><td>Svak</td><td>Svak</td><td>Svak</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Progresjonsfølelse</td><td>Sterk</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Delegering/delegerbar</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Alternativ 2 — 3-ting-regel</h3>
+    <p>3-ting-regelen er den beste balansen mellom enkelhet og effektivitet. Den tvinger prioritering, reduserer kognitiv last, og fungerer for både rolige og hektiske dager. Den kombineres godt med Alternativ 1 (Dagskø som utvidet visning) og Alternativ 5 (Rolig modus for krisedager).</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Alternativ 1 (Dagskø):</strong> Når du vil se alt og prioritere selv.</li>
+      <li><strong>Alternativ 2 (3-ting):</strong> Standard. Færre valg, mer gjort.</li>
+      <li><strong>Alternativ 3 (Pomodoro):</strong> Når du trenger hjelp til å holde fokus over tid.</li>
+      <li><strong>Alternativ 4 (Kontekst):</strong> Når avbrytelser ødelegger produktiviteten.</li>
+      <li><strong>Alternativ 5 (Rolig):</strong> Når alt føles overveldende — én ting om gangen.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

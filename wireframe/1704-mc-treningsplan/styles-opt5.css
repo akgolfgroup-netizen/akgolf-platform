@@ -1,0 +1,112 @@
+/* ===== Option 5: AI-assisted — Clean + Polished ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"] .sub-tab-badge,
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"] .sub-tab-badge { display: none; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"] { color: #666; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #333; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"].active { color: #000; border-bottom-color: #000; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"] { color: #666; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #333; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"].active { color: #000; border-bottom-color: #000; }
+
+#frame-opt5.clean .browser-dots span:nth-child(1), #frame-opt5.polished .browser-dots span:nth-child(1) { background: #ff5f57; }
+#frame-opt5.clean .browser-dots span:nth-child(2), #frame-opt5.polished .browser-dots span:nth-child(2) { background: #febc2e; }
+#frame-opt5.clean .browser-dots span:nth-child(3), #frame-opt5.polished .browser-dots span:nth-child(3) { background: #28c840; }
+
+/* ===== CLEAN ===== */
+#frame-opt5.clean .browser-content { background: #F5F8F7; font-family: 'Inter', -apple-system, system-ui, sans-serif; padding: 0; }
+#frame-opt5.clean .mc-shell { background: #F5F8F7; }
+#frame-opt5.clean .mc-topbar { background: #0A1F18; border-bottom: 1px solid rgba(209,248,67,0.1); }
+#frame-opt5.clean .mc-logo { color: #D1F843; }
+#frame-opt5.clean .mc-tab { color: rgba(255,255,255,0.55); }
+#frame-opt5.clean .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+#frame-opt5.clean .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; }
+#frame-opt5.clean .mc-search { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.55); }
+#frame-opt5.clean .mc-avatar { background: #D1F843; color: #0A1F18; font-weight: 700; }
+
+#frame-opt5.clean .mc-filter-row { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt5.clean .mc-pill { background: #fff; border-color: rgba(0,88,64,0.1); color: #324D45; }
+#frame-opt5.clean .mc-pill-active { background: #005840; color: #fff; border-color: #005840; }
+#frame-opt5.clean .mc-cta { background: #D1F843; color: #0A1F18; border-color: #D1F843; font-weight: 700; }
+
+#frame-opt5.clean .mc-ai-head { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt5.clean .mc-ai-super { color: #A5B2AD; }
+#frame-opt5.clean .mc-ai-title { color: #0A1F18; }
+#frame-opt5.clean .mc-ai-sub { color: #7A8C85; }
+#frame-opt5.clean .mc-ai-input-col { background: #F5F8F7; border-right-color: rgba(0,88,64,0.08); }
+#frame-opt5.clean .mc-ai-input-title { color: #A5B2AD; }
+#frame-opt5.clean .mc-ai-profile { background: #fff; border-color: #ECF0EF; }
+#frame-opt5.clean .mc-ai-profile-name { color: #0A1F18; }
+#frame-opt5.clean .mc-ai-profile-meta { color: #7A8C85; }
+#frame-opt5.clean .mc-ai-profile-stat span { color: #A5B2AD; }
+#frame-opt5.clean .mc-ai-profile-stat strong { color: #0A1F18; }
+#frame-opt5.clean .mc-ai-param-label { color: #A5B2AD; }
+#frame-opt5.clean .mc-ai-generate { background: #005840; color: #fff; border-color: #005840; }
+#frame-opt5.clean .mc-ai-output-col { background: #fff; }
+#frame-opt5.clean .mc-ai-plan-title { color: #0A1F18; }
+#frame-opt5.clean .mc-ai-plan-badge { border-color: #005840; color: #005840; }
+#frame-opt5.clean .mc-ai-insight { background: #F5F8F7; border-color: #ECF0EF; }
+#frame-opt5.clean .mc-ai-insight-label { color: #A5B2AD; }
+#frame-opt5.clean .mc-ai-insight-text { color: #324D45; }
+#frame-opt5.clean .mc-ai-session { background: #fff; border-color: #ECF0EF; }
+#frame-opt5.clean .mc-ai-session-day { color: #005840; }
+#frame-opt5.clean .mc-ai-session-name { color: #0A1F18; }
+#frame-opt5.clean .mc-ai-session-type { color: #A5B2AD; }
+
+/* ===== POLISHED ===== */
+#frame-opt5.polished .browser-content { background: #F5F8F7; font-family: 'Inter', -apple-system, system-ui, sans-serif; padding: 0; }
+#frame-opt5.polished .mc-shell { background: #F5F8F7; }
+#frame-opt5.polished .mc-topbar {
+  background: linear-gradient(180deg, #0A1F18 0%, #051a13 100%);
+  border-bottom: 1px solid rgba(209,248,67,0.12);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 12px rgba(0,0,0,0.15);
+}
+#frame-opt5.polished .mc-logo { color: #D1F843; letter-spacing: 0.12em; font-weight: 800; }
+#frame-opt5.polished .mc-tab { color: rgba(255,255,255,0.55); transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+#frame-opt5.polished .mc-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+#frame-opt5.polished .mc-tab-active { background: #D1F843; color: #0A1F18; font-weight: 700; box-shadow: 0 0 0 1px rgba(209,248,67,0.25), 0 2px 8px rgba(209,248,67,0.2); }
+#frame-opt5.polished .mc-avatar { background: #D1F843; color: #0A1F18; font-weight: 800; box-shadow: 0 2px 6px rgba(209,248,67,0.25); }
+
+#frame-opt5.polished .mc-filter-row { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.06); box-shadow: 0 1px 0 rgba(0,88,64,0.03); }
+#frame-opt5.polished .mc-pill { background: #fff; border-color: rgba(0,88,64,0.1); color: #324D45; transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+#frame-opt5.polished .mc-pill:hover { background: #F5F8F7; border-color: rgba(0,88,64,0.2); transform: translateY(-1px); }
+#frame-opt5.polished .mc-pill-active { background: #005840; color: #fff; border-color: #005840; box-shadow: 0 2px 6px rgba(0,88,64,0.2); }
+#frame-opt5.polished .mc-cta { background: #D1F843; color: #0A1F18; border: 1px solid rgba(209,248,67,0.7); font-weight: 700; box-shadow: 0 2px 8px rgba(209,248,67,0.3); transition: all 0.2s cubic-bezier(0.4,0,0.2,1); }
+#frame-opt5.polished .mc-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(209,248,67,0.4); }
+
+#frame-opt5.polished .mc-ai-head { background: #fff; border-bottom: 1px solid rgba(0,88,64,0.06); }
+#frame-opt5.polished .mc-ai-super { color: #A5B2AD; font-weight: 700; letter-spacing: 0.12em; }
+#frame-opt5.polished .mc-ai-title { color: #0A1F18; letter-spacing: -0.025em; font-weight: 800; }
+#frame-opt5.polished .mc-ai-sub { color: #7A8C85; }
+#frame-opt5.polished .mc-ai-input-col { background: #F5F8F7; border-right: 1px solid rgba(0,88,64,0.06); }
+#frame-opt5.polished .mc-ai-profile { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+#frame-opt5.polished .mc-ai-profile-avatar {
+  background: linear-gradient(135deg, #E6F3F1 0%, #F5F8F7 100%);
+  color: #005840; border: 1px solid rgba(0,88,64,0.1);
+}
+#frame-opt5.polished .mc-ai-generate {
+  background: linear-gradient(180deg, #006B4E, #005840); color: #fff;
+  border: 1px solid #005840; box-shadow: 0 2px 6px rgba(0,88,64,0.25);
+  transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+#frame-opt5.polished .mc-ai-generate:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,88,64,0.35); }
+#frame-opt5.polished .mc-ai-plan-badge { background: #FDF4E4; border: 1px dashed #C48A32; color: #7A5520; }
+#frame-opt5.polished .mc-ai-insight {
+  background: linear-gradient(135deg, #FAF5FF 0%, #F5F8F7 100%);
+  border: 1px solid rgba(175,82,222,0.12); border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(175,82,222,0.04);
+}
+#frame-opt5.polished .mc-ai-insight-label { color: #86868B; letter-spacing: 0.1em; }
+#frame-opt5.polished .mc-ai-session {
+  background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02); transition: all 0.2s;
+}
+#frame-opt5.polished .mc-ai-session:hover { border-color: rgba(0,88,64,0.15); box-shadow: 0 2px 6px rgba(0,88,64,0.06); transform: translateY(-1px); }
+#frame-opt5.polished .mc-ai-session-day { color: #005840; font-weight: 700; }
+#frame-opt5.polished .mc-ai-session-name { color: #0A1F18; font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt5.polished .mc-pill, #frame-opt5.polished .mc-cta, #frame-opt5.polished .mc-tab, #frame-opt5.polished .mc-ai-generate, #frame-opt5.polished .mc-ai-session { transition: none; }
+  #frame-opt5.polished .mc-pill:hover, #frame-opt5.polished .mc-cta:hover, #frame-opt5.polished .mc-ai-generate:hover, #frame-opt5.polished .mc-ai-session:hover { transform: none; }
+}

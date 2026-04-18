@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Analytics — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visuelle design fullført — alle alternativer har Clean + Polished varianter
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Analytics</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">★ Anbefalt: Alternativ <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Dashboard</button>
+    <button class="tab-btn" data-tab="option-2">2: Traktfunn</button>
+    <button class="tab-btn" data-tab="option-3">3: Kohort</button>
+    <button class="tab-btn" data-tab="option-4">4: Målsporing</button>
+    <button class="tab-btn" data-tab="option-5">5: Råspørring</button>
+    <button class="tab-btn" data-tab="summary">Sammendrag</button>
+  </nav>
+
+  <!-- ===== OPTION 1: DASHBOARD ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Alternativ 1: <span class="opt-name">Dashboard</span></h2>
+    <p class="option-description">KPI-rad øverst + grafkort for trafikk, konvertering og elev-vekst. Trygg standard.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/analytics</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Analytics</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Analytics — siste 30 dager</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">30 dager ▾</span>
+              <span class="wf-rep-filter">Alle kilder ▾</span>
+              <span class="wf-rep-filter">Eksporter ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">UNIKE BESØKENDE</div>
+              <div class="wf-kpi-value">1.247</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">+18% vs forrige</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">KONVERTERINGSRATE</div>
+              <div class="wf-kpi-value">4,2%</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">+0,3 pp</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">BESØK PER BOOKING</div>
+              <div class="wf-kpi-value">23,8</div>
+              <div class="wf-kpi-delta">snitt siste 90d</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">AVBRYTELSE I KASSE</div>
+              <div class="wf-kpi-value">12,4%</div>
+              <div class="wf-kpi-delta wf-kpi-delta-neg">+1,2 pp</div>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid">
+            <div class="wf-rep-card wf-span-8">
+              <div class="wf-card-head">
+                <span>Besøk og konvertering per uke</span>
+                <span class="wf-card-meta">nettsted · portal · booking</span>
+              </div>
+              <div class="wf-chart wf-chart-lg">[ linjediagram · besøk + konvertering · 4 uker ]</div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>Trafikkilder</span>
+              </div>
+              <ul class="wf-list">
+                <li><span>Organisk søk</span><span>42%</span></li>
+                <li><span>Direkte</span><span>28%</span></li>
+                <li><span>Sosiale medier</span><span>16%</span></li>
+                <li><span>Referral</span><span>9%</span></li>
+                <li><span>Betalt</span><span>5%</span></li>
+              </ul>
+            </div>
+
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Konverteringstrakt</span>
+                <span class="wf-card-meta">bookingflyt</span>
+              </div>
+              <div class="wf-chart">[ traktdiagram · 5 steg ]</div>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Enheter og plassering</span>
+                <span class="wf-card-meta">desktop 58% · mobil 42%</span>
+              </div>
+              <div class="wf-chart">[ søylediagram · enheter + byer ]</div>
+            </div>
+
+            <div class="wf-rep-card wf-span-12">
+              <div class="wf-card-head">
+                <span>Topp sider etter konvertering</span>
+                <span class="wf-card-meta">siste 30 dager</span>
+              </div>
+              <table class="wf-table">
+                <tr><th>Side</th><th>Besøk</th><th>Konvertering</th><th>Inntekt</th><th>Avvisningsrate</th></tr>
+                <tr><td>/academy</td><td class="wf-num">432</td><td class="wf-num">6,2%</td><td class="wf-num">89.400 kr</td><td>34%</td></tr>
+                <tr><td>/booking</td><td class="wf-num">387</td><td class="wf-num">8,1%</td><td class="wf-num">67.200 kr</td><td>22%</td></tr>
+                <tr><td>/junior</td><td class="wf-num">198</td><td class="wf-num">4,5%</td><td class="wf-num">24.800 kr</td><td>41%</td></tr>
+                <tr><td>/pricing</td><td class="wf-num">156</td><td class="wf-num">3,2%</td><td class="wf-num">18.600 kr</td><td>48%</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Safe default — KPI-rad øverst, graf-kolonne under, tabell nederst.</li>
+        <li>4 KPI-kort dekker besøk, konvertering, effektivitet og friksjon (avbrytelse).</li>
+        <li>Trakt-graf gir visuell forståelse av hvor brukerne slipper av.</li>
+        <li>Topp sider-tabell hjelper med innholdsoptimalisering.</li>
+        <li>Matcher Mission Control-estetikk: dark topbar + light body.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: FUNNEL ANALYSIS ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Alternativ 2: <span class="opt-name">Traktfunn</span></h2>
+    <p class="option-description">Dypdykk i konverteringstrakt — steg-for-steg fall-off med detaljert analyse per nivå.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/analytics</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Analytics</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Traktfunn — bookingflyt</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Siste 30 dager ▾</span>
+              <span class="wf-rep-filter">Booking ▾</span>
+              <span class="wf-rep-filter">Abonnement ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-funnel-wrap">
+            <div class="wf-funnel-step">
+              <div class="wf-funnel-bar" style="width:100%"><span class="wf-funnel-num">1.247</span><span class="wf-funnel-label">Sidevisninger</span></div>
+              <div class="wf-funnel-drop">—</div>
+            </div>
+            <div class="wf-funnel-step">
+              <div class="wf-funnel-bar" style="width:68%"><span class="wf-funnel-num">848</span><span class="wf-funnel-label">Klikk "Book nå"</span></div>
+              <div class="wf-funnel-drop">−32% <span class="wf-funnel-why">(lang lastetid?)</span></div>
+            </div>
+            <div class="wf-funnel-step">
+              <div class="wf-funnel-bar" style="width:45%"><span class="wf-funnel-num">561</span><span class="wf-funnel-label">Velg tjeneste</span></div>
+              <div class="wf-funnel-drop">−34% <span class="wf-funnel-why">(for mange valg?)</span></div>
+            </div>
+            <div class="wf-funnel-step">
+              <div class="wf-funnel-bar" style="width:28%"><span class="wf-funnel-num">349</span><span class="wf-funnel-label">Velg tidspunkt</span></div>
+              <div class="wf-funnel-drop">−38% <span class="wf-funnel-why">(kalender-visning)</span></div>
+            </div>
+            <div class="wf-funnel-step">
+              <div class="wf-funnel-bar" style="width:18%"><span class="wf-funnel-num">224</span><span class="wf-funnel-label">Start kasse</span></div>
+              <div class="wf-funnel-drop">−36% <span class="wf-funnel-why">(pris-sjokk?)</span></div>
+            </div>
+            <div class="wf-funnel-step wf-funnel-convert">
+              <div class="wf-funnel-bar" style="width:12%"><span class="wf-funnel-num">52</span><span class="wf-funnel-label">Fullført betaling</span></div>
+              <div class="wf-funnel-drop wf-funnel-drop-final">−69% <span class="wf-funnel-why">(kasse-abort)</span></div>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid" style="margin-top:16px;">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Fall-off per enhet</span>
+              </div>
+              <table class="wf-table">
+                <tr><th>Steg</th><th>Desktop</th><th>Mobil</th><th>Forskjell</th></tr>
+                <tr><td>Kasse → Betalt</td><td class="wf-num">78%</td><td class="wf-num">52%</td><td class="wf-num">−26 pp</td></tr>
+                <tr><td>Tidspunkt → Kasse</td><td class="wf-num">72%</td><td class="wf-num">61%</td><td class="wf-num">−11 pp</td></tr>
+              </table>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Anbefalinger</span>
+              </div>
+              <ul class="wf-list">
+                <li><span>Mobil-kasse: forenkle steg 3–4</span><span class="wf-tag">Høy</span></li>
+                <li><span>Legg til "Populært"-badge på tjenester</span><span class="wf-tag">Middels</span></li>
+                <li><span>Tilbake-knapp i kassen mangler</span><span class="wf-tag">Høy</span></li>
+                <li><span>E-post-gjenopptak for avbrutte</span><span class="wf-tag">Lav</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Traktdiagram som hovedfokus — hvert steg viser absolutt tall, prosent og hypotese.</li>
+        <li>Fall-off-gradering gjør det lett å se hvor størst tap skjer.</li>
+        <li>Enhets-sammenligning avdekker mobil-svakheter umiddelbart.</li>
+        <li>Anbefalingsliste knytter data til handlinger.</li>
+        <li>Bra for optimalisering — svakere for overordnet trend.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: COHORT VIEW ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Alternativ 3: <span class="opt-name">Kohort</span></h2>
+    <p class="option-description">Kohort-analyse — når ble elevene med, og hvor mange er fortsatt aktive etter 1/3/6/12 mnd.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/analytics</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Analytics</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Kohort-analyse — elev-retensjon</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Abonnement ▾</span>
+              <span class="wf-rep-filter">Kurs ▾</span>
+              <span class="wf-rep-filter">Engangs ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">SNITT RETENSJON 3 MND</div>
+              <div class="wf-kpi-value">74%</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">+4 pp vs fjor</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">SNITT RETENSJON 12 MND</div>
+              <div class="wf-kpi-value">51%</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">+2 pp</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">BESTE KOHORT</div>
+              <div class="wf-kpi-value">Jan 2026</div>
+              <div class="wf-kpi-delta">82% etter 3 mnd</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">VERSTE KOHORT</div>
+              <div class="wf-kpi-value">Des 2025</div>
+              <div class="wf-kpi-delta wf-kpi-delta-neg">61% etter 3 mnd</div>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12">
+            <div class="wf-card-head">
+              <span>Retensjon per kohort (måned for start)</span>
+            </div>
+            <table class="wf-table wf-cohort-table">
+              <tr>
+                <th>Kohort</th><th>Antall</th><th>1 mnd</th><th>2 mnd</th><th>3 mnd</th><th>4 mnd</th><th>5 mnd</th><th>6 mnd</th><th>9 mnd</th><th>12 mnd</th>
+              </tr>
+              <tr><td><strong>Jan 2026</strong></td><td class="wf-num">24</td><td class="wf-num wf-cohort-high">96%</td><td class="wf-num wf-cohort-high">92%</td><td class="wf-num wf-cohort-high">82%</td><td class="wf-num">—</td><td class="wf-num">—</td><td class="wf-num">—</td><td class="wf-num">—</td><td class="wf-num">—</td></tr>
+              <tr><td><strong>Des 2025</strong></td><td class="wf-num">18</td><td class="wf-num">83%</td><td class="wf-num">72%</td><td class="wf-num wf-cohort-low">61%</td><td class="wf-num">—</td><td class="wf-num">—</td><td class="wf-num">—</td><td class="wf-num">—</td><td class="wf-num">—</td></tr>
+              <tr><td><strong>Nov 2025</strong></td><td class="wf-num">21</td><td class="wf-num wf-cohort-high">95%</td><td class="wf-num wf-cohort-high">86%</td><td class="wf-num wf-cohort-high">81%</td><td class="wf-num wf-cohort-high">76%</td><td class="wf-num">—</td><td class="wf-num">—</td><td class="wf-num">—</td><td class="wf-num">—</td></tr>
+              <tr><td><strong>Okt 2025</strong></td><td class="wf-num">16</td><td class="wf-num">88%</td><td class="wf-num">81%</td><td class="wf-num">75%</td><td class="wf-num">69%</td><td class="wf-num wf-cohort-high">63%</td><td class="wf-num">—</td><td class="wf-num">—</td><td class="wf-num">—</td></tr>
+              <tr><td><strong>Sep 2025</strong></td><td class="wf-num">19</td><td class="wf-num wf-cohort-high">100%</td><td class="wf-num wf-cohort-high">89%</td><td class="wf-num wf-cohort-high">84%</td><td class="wf-num wf-cohort-high">79%</td><td class="wf-num">74%</td><td class="wf-num wf-cohort-high">68%</td><td class="wf-num">—</td><td class="wf-num">—</td></tr>
+              <tr><td><strong>Aug 2025</strong></td><td class="wf-num">14</td><td class="wf-num">93%</td><td class="wf-num">86%</td><td class="wf-num">79%</td><td class="wf-num">71%</td><td class="wf-num">64%</td><td class="wf-num">57%</td><td class="wf-num">—</td><td class="wf-num">—</td></tr>
+              <tr><td><strong>Jul 2025</strong></td><td class="wf-num">12</td><td class="wf-num">92%</td><td class="wf-num">83%</td><td class="wf-num">75%</td><td class="wf-num">67%</td><td class="wf-num">58%</td><td class="wf-num">50%</td><td class="wf-num">—</td><td class="wf-num">—</td></tr>
+              <tr><td><strong>Jun 2025</strong></td><td class="wf-num">15</td><td class="wf-num">87%</td><td class="wf-num">80%</td><td class="wf-num">73%</td><td class="wf-num">67%</td><td class="wf-num">60%</td><td class="wf-num">53%</td><td class="wf-num wf-cohort-low">40%</td><td class="wf-num">—</td></tr>
+              <tr><td><strong>Mai 2025</strong></td><td class="wf-num">20</td><td class="wf-num wf-cohort-high">95%</td><td class="wf-num wf-cohort-high">90%</td><td class="wf-num wf-cohort-high">85%</td><td class="wf-num wf-cohort-high">80%</td><td class="wf-num wf-cohort-high">75%</td><td class="wf-num wf-cohort-high">70%</td><td class="wf-num wf-cohort-high">58%</td><td class="wf-num">—</td></tr>
+              <tr><td><strong>Apr 2025</strong></td><td class="wf-num">17</td><td class="wf-num">88%</td><td class="wf-num">82%</td><td class="wf-num">76%</td><td class="wf-num">71%</td><td class="wf-num">65%</td><td class="wf-num">59%</td><td class="wf-num">47%</td><td class="wf-num wf-cohort-low">35%</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kohort-tabell er standardformat for retensjonsanalyse — lett å lese trender diagonalt.</li>
+        <li>Farge-koding (høy/lav) gjør det raskt å identifisere sterke og svake kohorter.</li>
+        <li>KPI-rad øverst gir totalbilde før man går i detalj.</li>
+        <li>Bra for strategi og produktutvikling — svakere for daglig drift.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: GOAL TRACKING ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Alternativ 4: <span class="opt-name">Målsporing</span></h2>
+    <p class="option-description">Sett mål for inntekt, bookinger, elever — følg fremdrift mot kvartals- og årsmål.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/analytics</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Analytics</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Målsporing — Q2 2026</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Q2 2026 ▾</span>
+              <span class="wf-rep-filter">År 2026 ▾</span>
+              <span class="wf-rep-filter">+ Nytt mål</span>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Inntekt Q2</span>
+                <span class="wf-card-meta">mål: 600.000 kr</span>
+              </div>
+              <div class="wf-goal-progress">
+                <div class="wf-goal-bar"><div class="wf-goal-fill" style="width:52%"></div></div>
+                <div class="wf-goal-stats">
+                  <span><strong>312.400 kr</strong> hittil</span>
+                  <span>52%</span>
+                </div>
+                <div class="wf-goal-pace">Takt: 104% av plan · foran skjema</div>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Nye abonnenter Q2</span>
+                <span class="wf-card-meta">mål: 20</span>
+              </div>
+              <div class="wf-goal-progress">
+                <div class="wf-goal-bar"><div class="wf-goal-fill" style="width:65%"></div></div>
+                <div class="wf-goal-stats">
+                  <span><strong>13</strong> av 20</span>
+                  <span>65%</span>
+                </div>
+                <div class="wf-goal-pace">Takt: 108% · foran skjema</div>
+              </div>
+            </div>
+
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head">
+                <span>Coaching-timer Q2</span>
+                <span class="wf-card-meta">mål: 300 timer</span>
+              </div>
+              <div class="wf-goal-progress">
+                <div class="wf-goal-bar"><div class="wf-goal-fill" style="width:48%"></div></div>
+                <div class="wf-goal-stats">
+                  <span><strong>144</strong> timer hittil</span>
+                  <span>48%</span>
+                </div>
+                <div class="wf-goal-pace wf-goal-pace-behind">Takt: 96% · bak skjema</div>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head">
+                <span>No-show rate Q2</span>
+                <span class="wf-card-meta">mål: &lt; 3%</span>
+              </div>
+              <div class="wf-goal-progress">
+                <div class="wf-goal-bar"><div class="wf-goal-fill wf-goal-fill-inverse" style="width:60%"></div></div>
+                <div class="wf-goal-stats">
+                  <span><strong>3,2%</strong> nåværende</span>
+                  <span>over mål</span>
+                </div>
+                <div class="wf-goal-pace wf-goal-pace-behind">Trenger −0,3 pp for å nå mål</div>
+              </div>
+            </div>
+
+            <div class="wf-rep-card wf-span-12">
+              <div class="wf-card-head">
+                <span>Ukentlig fremdrift — inntekt</span>
+                <span class="wf-card-meta">faktisk vs planlagt</span>
+              </div>
+              <div class="wf-chart">[ søylediagram · faktisk (mørk) vs plan (lys) · 12 uker ]</div>
+            </div>
+
+            <div class="wf-rep-card wf-span-12">
+              <div class="wf-card-head">
+                <span>Alle mål — statusoversikt</span>
+              </div>
+              <table class="wf-table">
+                <tr><th>Mål</th><th>Periode</th><th>Målverdi</th><th>Nå</th><th>Status</th><th>Estimert resultat</th></tr>
+                <tr><td>Inntekt</td><td>Q2 2026</td><td class="wf-num">600.000 kr</td><td class="wf-num">312.400 kr</td><td><span class="wf-tag wf-tag-live">Foran</span></td><td class="wf-num">624.000 kr</td></tr>
+                <tr><td>Nye abo</td><td>Q2 2026</td><td class="wf-num">20</td><td class="wf-num">13</td><td><span class="wf-tag wf-tag-live">Foran</span></td><td class="wf-num">22</td></tr>
+                <tr><td>Coaching-timer</td><td>Q2 2026</td><td class="wf-num">300</td><td class="wf-num">144</td><td><span class="wf-tag">På linje</span></td><td class="wf-num">288</td></tr>
+                <tr><td>No-show</td><td>Q2 2026</td><td class="wf-num">&lt;3%</td><td class="wf-num">3,2%</td><td><span class="wf-tag">Bak</span></td><td class="wf-num">3,1%</td></tr>
+                <tr><td>Nye leads</td><td>Q2 2026</td><td class="wf-num">80</td><td class="wf-num">31</td><td><span class="wf-tag">Bak</span></td><td class="wf-num">62</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Målsporing med fremdriftsbjelker gir umiddelbar visuell tilbakemelding.</li>
+        <li>Takt-indikator sammenligner faktisk fremdrift med tidsbasert plan.</li>
+        <li>Invers bjelke for "mindre er bedre"-mål (no-show).</li>
+        <li>Ukentlig sammenligningsgraf gir detaljert innsikt i variasjon.</li>
+        <li>Estimert resultat hjelper med tidlig varsling.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: RAW QUERY ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Alternativ 5: <span class="opt-name">Råspørring</span></h2>
+    <p class="option-description">SQL-liknende spørringsbygger for avanserte brukere — drag-drop felter, filtre og gruppering.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/analytics</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Analytics</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Utforsk data</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter">Lagrede spørringer ▾</span>
+              <span class="wf-rep-filter wf-rep-filter-primary">+ Ny spørring</span>
+            </div>
+          </div>
+
+          <div class="wf-query-builder">
+            <div class="wf-query-section">
+              <div class="wf-query-label">VELG</div>
+              <div class="wf-query-pills">
+                <span class="wf-query-pill">elev.navn</span>
+                <span class="wf-query-pill">booking.dato</span>
+                <span class="wf-query-pill">booking.tjeneste</span>
+                <span class="wf-query-pill">booking.beløp</span>
+                <span class="wf-query-pill wf-query-pill-add">+ felt</span>
+              </div>
+            </div>
+            <div class="wf-query-section">
+              <div class="wf-query-label">HVOR</div>
+              <div class="wf-query-pills">
+                <span class="wf-query-pill">booking.dato >= 2026-01-01</span>
+                <span class="wf-query-pill">elev.status = "aktiv"</span>
+                <span class="wf-query-pill wf-query-pill-add">+ filter</span>
+              </div>
+            </div>
+            <div class="wf-query-section">
+              <div class="wf-query-label">GRUPPER PÅ</div>
+              <div class="wf-query-pills">
+                <span class="wf-query-pill">booking.tjeneste</span>
+                <span class="wf-query-pill wf-query-pill-add">+ gruppe</span>
+              </div>
+            </div>
+            <div class="wf-query-section">
+              <div class="wf-query-label">SORTER</div>
+              <div class="wf-query-pills">
+                <span class="wf-query-pill">booking.dato DESC</span>
+              </div>
+            </div>
+            <div class="wf-query-run">
+              <span class="wf-rep-filter wf-rep-filter-primary">Kjør spørring</span>
+              <span class="wf-card-meta">Estimert: 0,3 s · 156 rader</span>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid" style="margin-top:12px;">
+            <div class="wf-rep-card wf-span-12">
+              <div class="wf-card-head">
+                <span>Resultat — 156 rader</span>
+                <span class="wf-card-meta">kjørt nå</span>
+              </div>
+              <table class="wf-table">
+                <tr><th>Navn</th><th>Dato</th><th>Tjeneste</th><th>Beløp</th><th>Instruktør</th><th>Status</th></tr>
+                <tr><td>Erik Hansen</td><td>17. apr 2026</td><td>Performance</td><td class="wf-num">1.600 kr</td><td>Anders</td><td>Gjennomført</td></tr>
+                <tr><td>Nora Torp</td><td>17. apr 2026</td><td>Express</td><td class="wf-num">1.000 kr</td><td>Anders</td><td>Gjennomført</td></tr>
+                <tr><td>Lars Berg</td><td>16. apr 2026</td><td>Flex 20</td><td class="wf-num">450 kr</td><td>Markus</td><td>Gjennomført</td></tr>
+                <tr><td>Sofie Lund</td><td>16. apr 2026</td><td>Junior 14+</td><td class="wf-num">1.350 kr</td><td>Anders</td><td>Gjennomført</td></tr>
+                <tr><td>+ 152 rader til</td><td colspan="5"></td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>SQL-liknende bygger med visuelle "piller" i stedet for ren tekst.</li>
+        <li>+ felt / + filter / + gruppe gjør det utforskende uten å kreve syntaks-kunnskap.</li>
+        <li>Estimert kjøretid og antall rader gir trygghet før man kjører.</li>
+        <li>Resultat-tabell under med eksporteringsmuligheter.</li>
+        <li>For avanserte brukere — krever dataforståelse.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for MC Analytics — valget avhenger av om primærbrukeren vil se oversikt, analysere trakt, forstå retensjon, følge mål eller grave i rådata.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Dashboard</th><th>2: Traktfunn</th><th>3: Kohort</th><th>4: Målsporing</th><th>5: Råspørring</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Hurtig oversikt</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Konverteringsoptimalisering</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Retensjonsinnsikt</td><td>Svak</td><td>Svak</td><td>Sterk</td><td>Middels</td><td>Middels</td></tr>
+        <tr><td>Målfremdrift</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Ad-hoc analyse</td><td>Svak</td><td>Middels</td><td>Middels</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Lærbarhet</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Svak</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Alternativ 1 — Dashboard</h3>
+    <p>Dashboard er den trygge standarden fordi 80% av bruken er "hvordan går det?". Den dekker besøk, konvertering og topp sider i én visning. Den kombineres godt med Alternativ 2 (trakt-detalj) og Alternativ 4 (målsporing) i en senere fase.</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Alternativ 1 (Dashboard):</strong> Default. Daglig lesning, raske svar.</li>
+      <li><strong>Alternativ 2 (Traktfunn):</strong> Når du skal optimalisere bookingflyten.</li>
+      <li><strong>Alternativ 3 (Kohort):</strong> For å forstå hvor lenge elevene blir værende.</li>
+      <li><strong>Alternativ 4 (Målsporing):</strong> Styremøter og kvartalsgjennomganger.</li>
+      <li><strong>Alternativ 5 (Råspørring):</strong> Når standardrapporter ikke er nok.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

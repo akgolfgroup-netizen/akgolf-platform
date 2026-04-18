@@ -1,0 +1,89 @@
+/* === MC Varsler Wireframe Styles — shared structure (B&W) === */
+
+/* MC Shell — Dark topbar + light body */
+.wf-mc-topbar {
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 16px; background: #111; color: #fff; border-radius: 4px 4px 0 0;
+}
+.wf-mc-logo { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; white-space: nowrap; }
+.wf-mc-tabs { display: flex; gap: 14px; flex: 1; }
+.wf-mc-tab { font-size: 12px; color: #999; padding: 4px 2px; cursor: default; }
+.wf-mc-tab-active { color: #fff; border-bottom: 1px solid #fff; }
+.wf-mc-profile { width: 28px; height: 28px; border-radius: 50%; background: #333; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+
+.wf-mc-body {
+  padding: 16px 12px; background: #fafafa; border-radius: 0 0 4px 4px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px; color: #222;
+}
+
+/* Page head */
+.wf-rep-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wf-rep-title { font-size: 15px; font-weight: 600; color: #111; }
+.wf-rep-filters { display: flex; gap: 8px; }
+.wf-rep-filter { font-size: 11px; padding: 4px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #555; }
+.wf-rep-filter-primary { background: #111; color: #fff; border-color: #111; }
+
+/* Grid system */
+.wf-rep-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+.wf-span-4 { grid-column: span 4; }
+.wf-span-12 { grid-column: span 12; }
+
+/* Cards */
+.wf-rep-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; }
+.wf-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.wf-card-head > span:first-child { font-size: 12px; font-weight: 600; color: #111; }
+.wf-card-meta { font-size: 10px; color: #888; }
+
+/* Tags/badges */
+.wf-tag { font-size: 9px; padding: 2px 7px; border: 1px solid #ccc; border-radius: 10px; background: #f9f9f9; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }
+.wf-tag-live { background: #111; color: #fff; border-color: #111; }
+
+/* OPT 1 — Inbox */
+.wf-notif-list { display: flex; flex-direction: column; gap: 6px; }
+.wf-notif-item { display: flex; gap: 10px; background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; }
+.wf-notif-unread { background: #fff; border-left: 3px solid #111; padding-left: 9px; }
+.wf-notif-dot { width: 8px; height: 8px; border-radius: 50%; background: #111; flex-shrink: 0; margin-top: 4px; }
+.wf-notif-body { flex: 1; }
+.wf-notif-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.wf-notif-title { font-size: 12px; font-weight: 600; color: #111; }
+.wf-notif-time { font-size: 10px; color: #aaa; }
+.wf-notif-desc { font-size: 11px; color: #555; line-height: 1.4; margin-bottom: 8px; }
+.wf-notif-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* OPT 2 — Priority Filter */
+.wf-prio-section { margin-bottom: 10px; }
+.wf-prio-header { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #555; padding: 8px 0; border-bottom: 1px solid #eee; margin-bottom: 6px; }
+.wf-prio-high { color: #b84233; border-bottom-color: #ecc; }
+.wf-prio-medium { color: #997a00; border-bottom-color: #eec; }
+.wf-prio-low { color: #2a7d5a; border-bottom-color: #cec; }
+.wf-prio-badge { font-size: 12px; }
+
+/* OPT 3 — Rule Builder */
+.wf-rule-list { display: flex; flex-direction: column; gap: 8px; }
+.wf-rule-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; }
+.wf-rule-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.wf-rule-body { font-size: 12px; color: #333; line-height: 1.6; margin-bottom: 8px; }
+.wf-rule-if { font-weight: 600; color: #111; }
+.wf-rule-then { font-weight: 600; color: #111; margin-left: 4px; }
+.wf-rule-val { background: #f5f5f5; border: 1px solid #eee; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #333; }
+
+/* OPT 4 — Snooze Queue */
+.wf-snooze-list { display: flex; flex-direction: column; gap: 8px; }
+.wf-snooze-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px; }
+.wf-snooze-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.wf-snooze-meta { display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #888; margin-top: 8px; }
+
+/* OPT 5 — Digest Mode */
+.wf-digest-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; }
+.wf-digest-stat { font-size: 22px; font-weight: 700; color: #111; font-variant-numeric: tabular-nums; margin-bottom: 8px; }
+.wf-digest-list { list-style: none; margin: 0; padding: 0; font-size: 11px; color: #555; line-height: 1.6; }
+.wf-digest-timeline { display: flex; flex-direction: column; gap: 6px; }
+.wf-digest-event { display: flex; gap: 12px; font-size: 11px; color: #333; padding: 6px 0; border-bottom: 1px solid #eee; }
+.wf-digest-event:last-child { border-bottom: none; }
+.wf-digest-time { font-weight: 600; color: #888; min-width: 48px; font-variant-numeric: tabular-nums; }
+
+/* Summary */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+.wf-summary-table th, .wf-summary-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+.wf-summary-table th { background: #f4f4f4; font-weight: 600; }

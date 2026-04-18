@@ -1,0 +1,141 @@
+/* === Option 3: Day Focus — Clean + Polished === */
+/* AK Portal tokens: primary #005840, lime #D1F843, grey-50 #F5F8F7, text #324D45, muted #A5B2AD */
+
+#frame-opt3-tabs .sub-tab-badge { display: none; }
+
+/* =========================================================
+   CLEAN — Portal light, AK tokens, flat cards
+   ========================================================= */
+.clean #frame-opt3 { background: #F5F8F7; font-family: "Inter", -apple-system, sans-serif; color: #324D45; }
+.clean #frame-opt3 .browser-chrome { background: #ECF0EF; border-bottom: 1px solid #D5DFDB; }
+.clean #frame-opt3 .browser-dots span:nth-child(1) { background: #FF5F57; }
+.clean #frame-opt3 .browser-dots span:nth-child(2) { background: #FEBC2E; }
+.clean #frame-opt3 .browser-dots span:nth-child(3) { background: #28C840; }
+.clean #frame-opt3 .browser-url { background: #fff; color: #7A8C85; border-color: #D5DFDB; }
+.clean #frame-opt3 .browser-content { background: #F5F8F7; }
+
+.clean #frame-opt3 .wf-sidebar { background: #fff; border-right: 1px solid #ECF0EF; }
+.clean #frame-opt3 .wf-sidebar-logo { color: #005840; border-color: #ECF0EF; }
+.clean #frame-opt3 .wf-nav-item { color: #7A8C85; }
+.clean #frame-opt3 .wf-nav-item:hover { background: #F5F8F7; color: #324D45; }
+.clean #frame-opt3 .wf-nav-item.wf-active { background: #005840; color: #fff; }
+.clean #frame-opt3 .wf-nav-ico { border-color: #D5DFDB; background: #F5F8F7; }
+.clean #frame-opt3 .wf-active .wf-nav-ico { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); }
+.clean #frame-opt3 .wf-sidebar-avatar { background: #E6F3F1; color: #005840; border-color: #D5DFDB; }
+
+.clean #frame-opt3 .wf-page-title { color: #0A1F18; }
+.clean #frame-opt3 .wf-page-sub { color: #7A8C85; }
+.clean #frame-opt3 .wf-btn { background: #fff; color: #324D45; border-color: #D5DFDB; }
+.clean #frame-opt3 .wf-btn:hover { background: #F5F8F7; }
+.clean #frame-opt3 .wf-btn-cta { background: #D1F843; color: #0A1F18; border-color: #D1F843; }
+.clean #frame-opt3 .wf-btn-cta:hover { background: #C6EC34; }
+
+.clean #frame-opt3 .wf-week-bar { background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; }
+.clean #frame-opt3 .wf-week-title { color: #0A1F18; }
+.clean #frame-opt3 .wf-week-view-toggle { background: #F5F8F7; }
+.clean #frame-opt3 .wf-week-view-toggle button { color: #7A8C85; }
+.clean #frame-opt3 .wf-week-view-toggle button.wf-active { background: #fff; color: #0A1F18; }
+
+.clean #frame-opt3 .wf-mini-cal { background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; }
+.clean #frame-opt3 .wf-mini-head { color: #0A1F18; }
+.clean #frame-opt3 .wf-mini-dow { color: #A5B2AD; }
+.clean #frame-opt3 .wf-mini-day { color: #324D45; }
+.clean #frame-opt3 .wf-mini-day.wf-other { color: #C5CCC9; }
+.clean #frame-opt3 .wf-mini-day.wf-has { font-weight: 700; }
+.clean #frame-opt3 .wf-mini-day.wf-has::after { background: #005840; }
+.clean #frame-opt3 .wf-mini-day.wf-selected { background: #005840; color: #fff; }
+.clean #frame-opt3 .wf-mini-day.wf-selected::after { background: #D1F843; }
+
+.clean #frame-opt3 .wf-upcoming { background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; }
+.clean #frame-opt3 .wf-upcoming h4 { color: #A5B2AD; }
+.clean #frame-opt3 .wf-upcoming-item { color: #324D45; border-color: #ECF0EF; }
+.clean #frame-opt3 .wf-upcoming-item small { color: #7A8C85; }
+
+.clean #frame-opt3 .wf-day-panel { background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; }
+.clean #frame-opt3 .wf-day-date-big { color: #0A1F18; }
+.clean #frame-opt3 .wf-day-date-sub { color: #7A8C85; }
+.clean #frame-opt3 .wf-day-time { color: #A5B2AD; }
+.clean #frame-opt3 .wf-day-event { background: #005840; color: #fff; }
+.clean #frame-opt3 .wf-day-event.wf-empty { background: transparent; color: #C5CCC9; }
+.clean #frame-opt3 .wf-day-event small { color: rgba(255,255,255,0.75); }
+.clean #frame-opt3 .wf-day-event.wf-ev-coaching { background: #007AFF; }
+.clean #frame-opt3 .wf-day-event.wf-ev-trening { background: #FAF5FF; color: #6B21A8; border: 1px solid #D4A5FF; }
+.clean #frame-opt3 .wf-day-event.wf-ev-trening small { color: #AF52DE; }
+.clean #frame-opt3 .wf-day-event.wf-ev-turnering { background: #FDF4E4; color: #7A5520; border: 1px solid #C48A32; }
+.clean #frame-opt3 .wf-day-event.wf-ev-turnering small { color: #C48A32; }
+
+/* =========================================================
+   POLISHED — Layered shadows, subtle gradients, lifts
+   ========================================================= */
+.polished #frame-opt3 { background: #F5F8F7; font-family: "Inter", -apple-system, sans-serif; color: #324D45;
+  background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,88,64,0.025) 0%, transparent 60%);
+}
+.polished #frame-opt3 .browser-chrome { background: linear-gradient(180deg, #F2F5F4 0%, #ECF0EF 100%); border-bottom: 1px solid rgba(0,0,0,0.06); }
+.polished #frame-opt3 .browser-dots span:nth-child(1) { background: #FF5F57; }
+.polished #frame-opt3 .browser-dots span:nth-child(2) { background: #FEBC2E; }
+.polished #frame-opt3 .browser-dots span:nth-child(3) { background: #28C840; }
+.polished #frame-opt3 .browser-url { background: #fff; color: #7A8C85; border-color: rgba(0,0,0,0.06); box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+.polished #frame-opt3 .browser-content { background: transparent; }
+
+.polished #frame-opt3 .wf-sidebar { background: #fff; border-right: 1px solid rgba(0,0,0,0.04); box-shadow: 1px 0 3px rgba(0,0,0,0.02); }
+.polished #frame-opt3 .wf-sidebar-logo { color: #005840; letter-spacing: 0.12em; }
+.polished #frame-opt3 .wf-nav-item { color: #7A8C85; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+.polished #frame-opt3 .wf-nav-item:hover { background: #F5F8F7; color: #005840; }
+.polished #frame-opt3 .wf-nav-item.wf-active { background: linear-gradient(180deg, #006449 0%, #005840 100%); color: #fff; box-shadow: 0 2px 8px rgba(0,88,64,0.2), inset 0 1px 0 rgba(255,255,255,0.08); }
+.polished #frame-opt3 .wf-nav-ico { border-color: rgba(0,0,0,0.08); background: #F5F8F7; }
+.polished #frame-opt3 .wf-active .wf-nav-ico { background: rgba(209,248,67,0.2); border-color: rgba(209,248,67,0.3); }
+.polished #frame-opt3 .wf-sidebar-avatar { background: linear-gradient(135deg, #E6F3F1, #D4E8E3); color: #005840; border-color: rgba(0,88,64,0.1); font-weight: 600; }
+
+.polished #frame-opt3 .wf-page-title { color: #0A1F18; letter-spacing: -0.02em; }
+.polished #frame-opt3 .wf-page-sub { color: #7A8C85; }
+.polished #frame-opt3 .wf-btn { background: #fff; color: #324D45; border-color: rgba(0,0,0,0.08); transition: all 0.2s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
+.polished #frame-opt3 .wf-btn:hover { background: #F5F8F7; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+.polished #frame-opt3 .wf-btn-cta { background: linear-gradient(180deg, #DCFB5D 0%, #D1F843 100%); color: #0A1F18; border-color: #C5ED2F; font-weight: 600; box-shadow: 0 2px 6px rgba(209,248,67,0.35), inset 0 1px 0 rgba(255,255,255,0.3); }
+.polished #frame-opt3 .wf-btn-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(209,248,67,0.5); }
+
+.polished #frame-opt3 .wf-week-bar { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 14px; box-shadow: 0 0 0 1px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.02); }
+.polished #frame-opt3 .wf-week-title { color: #0A1F18; letter-spacing: -0.01em; }
+.polished #frame-opt3 .wf-week-view-toggle { background: #F5F8F7; box-shadow: inset 0 1px 2px rgba(0,0,0,0.03); }
+.polished #frame-opt3 .wf-week-view-toggle button { color: #7A8C85; transition: all 0.2s; }
+.polished #frame-opt3 .wf-week-view-toggle button.wf-active { background: #fff; color: #0A1F18; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.02); }
+
+.polished #frame-opt3 .wf-mini-cal { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.02); }
+.polished #frame-opt3 .wf-mini-head { color: #0A1F18; font-weight: 600; }
+.polished #frame-opt3 .wf-mini-dow { color: #A5B2AD; letter-spacing: 0.1em; }
+.polished #frame-opt3 .wf-mini-day { color: #324D45; transition: all 0.2s; }
+.polished #frame-opt3 .wf-mini-day:hover { background: #F5F8F7; }
+.polished #frame-opt3 .wf-mini-day.wf-other { color: #C5CCC9; }
+.polished #frame-opt3 .wf-mini-day.wf-has::after { background: #005840; box-shadow: 0 0 4px rgba(0,88,64,0.4); }
+.polished #frame-opt3 .wf-mini-day.wf-selected { background: linear-gradient(180deg, #006449 0%, #005840 100%); color: #fff; box-shadow: 0 2px 8px rgba(0,88,64,0.25); }
+.polished #frame-opt3 .wf-mini-day.wf-selected::after { background: #D1F843; }
+
+.polished #frame-opt3 .wf-upcoming { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.02); }
+.polished #frame-opt3 .wf-upcoming h4 { color: #A5B2AD; letter-spacing: 0.14em; }
+.polished #frame-opt3 .wf-upcoming-item { color: #324D45; border-color: rgba(0,0,0,0.04); }
+.polished #frame-opt3 .wf-upcoming-item small { color: #7A8C85; }
+
+.polished #frame-opt3 .wf-day-panel { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.02); }
+.polished #frame-opt3 .wf-day-date-big { color: #0A1F18; letter-spacing: -0.02em; }
+.polished #frame-opt3 .wf-day-date-sub { color: #7A8C85; }
+.polished #frame-opt3 .wf-day-time { color: #A5B2AD; font-weight: 600; }
+.polished #frame-opt3 .wf-day-event { background: linear-gradient(180deg, #006449 0%, #005840 100%); color: #fff; box-shadow: 0 2px 6px rgba(0,88,64,0.15); transition: transform 0.2s; }
+.polished #frame-opt3 .wf-day-event:hover { transform: translateY(-1px); }
+.polished #frame-opt3 .wf-day-event.wf-empty { background: transparent; color: #C5CCC9; box-shadow: none; }
+.polished #frame-opt3 .wf-day-event small { color: rgba(255,255,255,0.8); }
+.polished #frame-opt3 .wf-day-event.wf-ev-coaching { background: linear-gradient(180deg, #3399FF 0%, #007AFF 100%); box-shadow: 0 2px 6px rgba(0,122,255,0.15); }
+.polished #frame-opt3 .wf-day-event.wf-ev-trening { background: #FAF5FF; color: #6B21A8; border: 1px solid rgba(175,82,222,0.3); box-shadow: 0 1px 3px rgba(175,82,222,0.08); }
+.polished #frame-opt3 .wf-day-event.wf-ev-trening small { color: #AF52DE; }
+.polished #frame-opt3 .wf-day-event.wf-ev-turnering { background: #FDF4E4; color: #7A5520; border: 1px solid rgba(196,138,50,0.3); box-shadow: 0 1px 3px rgba(196,138,50,0.08); }
+.polished #frame-opt3 .wf-day-event.wf-ev-turnering small { color: #C48A32; }
+
+@media (prefers-reduced-motion: reduce) {
+  .polished #frame-opt3 *, .polished #frame-opt3 *::before, .polished #frame-opt3 *::after { transition: none !important; animation: none !important; }
+}
+
+/* --- Self-reveal --- */
+#frame-opt3-tabs .sub-tab-btn[data-variant="clean"] { color: #64B5F6; }
+#frame-opt3-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #1E88E5; }
+#frame-opt3-tabs .sub-tab-btn[data-variant="clean"].active { color: #1565C0; border-bottom-color: #1565C0; }
+#frame-opt3-tabs .sub-tab-btn[data-variant="polished"] { color: #81C784; }
+#frame-opt3-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #43A047; }
+#frame-opt3-tabs .sub-tab-btn[data-variant="polished"].active { color: #2E7D32; border-bottom-color: #2E7D32; }

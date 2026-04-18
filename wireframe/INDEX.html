@@ -68,6 +68,33 @@
       margin: 0 auto;
     }
 
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
     .section {
       margin-bottom: 56px;
     }
@@ -221,6 +248,8 @@
       h1 { font-size: 32px; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
       .section-desc { margin-left: 0; }
+      .stats { gap: 16px; }
+      .stat-num { font-size: 24px; }
     }
   </style>
 </head>
@@ -230,10 +259,28 @@
 
   <header>
     <div class="brand">AK Golf Platform · Wireframe-bibliotek</div>
-    <h1>9 strategiske skjermer, 45 UX-opsjoner</h1>
+    <h1>58 strategiske skjermer, 290 UX-opsjoner</h1>
     <p class="subtitle">
       Hvert kort åpner et wireframe med 5 UX-opsjoner (1 Safe + 4 exploratory) og Clean + Polished fargevarianter. Bygget på Mercury Flow (markedsside), The Athletic-DNA (portal) og XPO TMS-estetikk (Mission Control).
     </p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Markedssider</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">29</div>
+        <div class="stat-label">Portal-skjermer</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">23</div>
+        <div class="stat-label">MC-skjermer</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">290</div>
+        <div class="stat-label">UX-opsjoner</div>
+      </div>
+    </div>
   </header>
 
   <!-- ============ MARKEDSSIDE ============ -->
@@ -241,7 +288,7 @@
     <div class="section-header">
       <span class="section-label">01 — Markedsside</span>
       <h2 class="section-title">Akkvisisjon &amp; konvertering</h2>
-      <span class="section-desc">5 skjermer · Mercury Flow-mal</span>
+      <span class="section-desc">6 skjermer · Mercury Flow-mal</span>
     </div>
 
     <div class="grid">
@@ -259,6 +306,18 @@
         </div>
       </a>
 
+      <a class="card" href="1704-markedsside-booking/index.html">
+        <span class="card-slug">/booking</span>
+        <h3 class="card-title">Booking</h3>
+        <p class="card-desc">
+          Coaching-booking med tidsrom, sted og instruktørvalg. Wizard-basert flyt med kalenderintegrasjon.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
       <a class="card" href="1704-markedsside-pricing/index.html">
         <span class="card-slug">/priser</span>
         <h3 class="card-title">Pricing</h3>
@@ -266,7 +325,7 @@
           Tier-sammenligning (Gratis/Starter/Pro/Elite) med fokus på portal-konvertering. 5 opsjoner fra grid til kalkulator.
         </p>
         <div class="card-meta">
-          <span class="tag new">Nytt</span>
+          <span class="tag done">Ferdig</span>
           <span class="arrow">→</span>
         </div>
       </a>
@@ -278,7 +337,7 @@
           AK Golf Academy coaching — Anders + Markus. Personlig 1-til-1, Mercury-mal med coaching-fokus.
         </p>
         <div class="card-meta">
-          <span class="tag new">Nytt</span>
+          <span class="tag done">Ferdig</span>
           <span class="arrow">→</span>
         </div>
       </a>
@@ -290,7 +349,7 @@
           Foreldre-målrettet. Varmere tonefall, aldersgrupper 8–18, NGF-godkjent junior-coaching.
         </p>
         <div class="card-meta">
-          <span class="tag new">Nytt</span>
+          <span class="tag done">Ferdig</span>
           <span class="arrow">→</span>
         </div>
       </a>
@@ -302,7 +361,7 @@
           Elite/performance. Tech-premium tone — TrackMan, DataGolf benchmark, Whoop-estetikk med light base.
         </p>
         <div class="card-meta">
-          <span class="tag new">Nytt</span>
+          <span class="tag done">Ferdig</span>
           <span class="arrow">→</span>
         </div>
       </a>
@@ -315,10 +374,22 @@
     <div class="section-header">
       <span class="section-label">02 — Portal</span>
       <h2 class="section-title">Innlogget spilleropplevelse</h2>
-      <span class="section-desc">3 skjermer · Apple-minimalisme</span>
+      <span class="section-desc">29 skjermer · Apple-minimalisme</span>
     </div>
 
     <div class="grid">
+
+      <a class="card featured" href="1704-portal-dashboard-v2/index.html">
+        <span class="card-slug">/portal</span>
+        <h3 class="card-title">Dashboard v2</h3>
+        <p class="card-desc">
+          Redesign-vurdering. The Athletic-ref som utgangspunkt. KPI-rad, widgets, coach insight, ukekalender.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
 
       <a class="card" href="1704-portal-planlegger-v2/index.html">
         <span class="card-slug">/portal/treningsplan/ny</span>
@@ -327,7 +398,7 @@
           6-stegs pyramide-wizard fra VISION §3.1. Tidsrom → Pyramide → Tilgjengelighet → Fokus → Generer → Bekreft.
         </p>
         <div class="card-meta">
-          <span class="tag new">VISION</span>
+          <span class="tag done">Ferdig</span>
           <span class="arrow">→</span>
         </div>
       </a>
@@ -339,19 +410,319 @@
           Apple Calendar-inspirert. Bookings + coaching + trening + turneringer merged. Google Calendar-sync.
         </p>
         <div class="card-meta">
-          <span class="tag new">PARTIAL → full</span>
+          <span class="tag done">Ferdig</span>
           <span class="arrow">→</span>
         </div>
       </a>
 
-      <a class="card" href="1704-portal-dashboard-v2/index.html">
-        <span class="card-slug">/portal</span>
-        <h3 class="card-title">Dashboard v2</h3>
+      <a class="card" href="1704-portal-runde-live/index.html">
+        <span class="card-slug">/portal/runde/live</span>
+        <h3 class="card-title">Runde — Live</h3>
         <p class="card-desc">
-          Redesign-vurdering. The Athletic-ref som utgangspunkt. KPI-rad, widgets, coach insight.
+          Live scoring med GPS, slå-registrering, Strokes Gained per hull. Mobil-optimalisert.
         </p>
         <div class="card-meta">
-          <span class="tag">Redesign</span>
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-runde-oppsummering/index.html">
+        <span class="card-slug">/portal/runde/oppsummering</span>
+        <h3 class="card-title">Runde — Oppsummering</h3>
+        <p class="card-desc">
+          Post-round analyse. SG-breakdown, heatmap, høydepunkter, deling til coach og sosialt.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-statistikk/index.html">
+        <span class="card-slug">/portal/statistikk</span>
+        <h3 class="card-title">Statistikk</h3>
+        <p class="card-desc">
+          Trendanalyse over tid. HCP-utvikling, SG-kategorier, runde-historikk, sammenligning med mål.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-analyse/index.html">
+        <span class="card-slug">/portal/analyse</span>
+        <h3 class="card-title">Analyse</h3>
+        <p class="card-desc">
+          Dypdykk i egen data. Strokes Gained per kategori, svakhetsidentifisering, anbefalte økter.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-sammenligning/index.html">
+        <span class="card-slug">/portal/sammenligning</span>
+        <h3 class="card-title">Sammenligning</h3>
+        <p class="card-desc">
+          Din data vs normer, venner eller proffer. Benchmarking med anonymiserte sammenligninger.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-trackman/index.html">
+        <span class="card-slug">/portal/trackman</span>
+        <h3 class="card-title">TrackMan</h3>
+        <p class="card-desc">
+          TrackMan-data import og analyse. Ball-flight, club-data, trends over tid, prosjektil-visualisering.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-trackman-tester/index.html">
+        <span class="card-slug">/portal/trening/tester</span>
+        <h3 class="card-title">TrackMan-tester</h3>
+        <p class="card-desc">
+          100+ testprotokoller gruppert etter kategori. Protocol Library, Session Mode, Pro Benchmark.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-tester-decade/index.html">
+        <span class="card-slug">/portal/tester</span>
+        <h3 class="card-title">DECADE-tester</h3>
+        <p class="card-desc">
+          Testbibliotek med personal best, difficulty ladder, progress focus og compare mode.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-benchmark/index.html">
+        <span class="card-slug">/portal/benchmark</span>
+        <h3 class="card-title">Benchmark</h3>
+        <p class="card-desc">
+          Ferdighetstester og assessments. 50-100-150, 9 hull challenge, dispersion test, putting drills.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-ovelser/index.html">
+        <span class="card-slug">/portal/ovelser</span>
+        <h3 class="card-title">Øvelser</h3>
+        <p class="card-desc">
+          Drills-bibliotek fra coach. Filtrer etter kategori, vanskelighet og utstyr. Video + instruksjoner.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-dagbok/index.html">
+        <span class="card-slug">/portal/dagbok</span>
+        <h3 class="card-title">Dagbok</h3>
+        <p class="card-desc">
+          Treningsdagbok med L-M-PR-logging. Streaks, ukesammendrag, coach-kommentarer, refleksjon.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-ai-coach/index.html">
+        <span class="card-slug">/portal/ai-coach</span>
+        <h3 class="card-title">AI-coach</h3>
+        <p class="card-desc">
+          AI-veiledning basert på egen data. Spørsmål og svar, analyse av svakheter, anbefalinger. Ett av flere verktøy.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-mental/index.html">
+        <span class="card-slug">/portal/mental</span>
+        <h3 class="card-title">Mental trening</h3>
+        <p class="card-desc">
+          Pusteøvelser, pre-shot routine, fokus-teknikker. Integrert i treningsplanen etter Treningspyramiden.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-bookinger/index.html">
+        <span class="card-slug">/portal/bookinger</span>
+        <h3 class="card-title">Bookinger</h3>
+        <p class="card-desc">
+          Oversikt over kommende og historiske bookinger. Reschedule, avbestill, legge til notater.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-profil/index.html">
+        <span class="card-slug">/portal/profil</span>
+        <h3 class="card-title">Profil</h3>
+        <p class="card-desc">
+          Spillerprofil med HCP-historikk, mål, utstyr, preferanser. Offentlig/privat toggle.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-abonnement/index.html">
+        <span class="card-slug">/portal/abonnement</span>
+        <h3 class="card-title">Abonnement</h3>
+        <p class="card-desc">
+          Tier-håndtering (Gratis/Starter/Pro/Elite). Oppgradering, fakturering, brukshistorikk.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-onboarding/index.html">
+        <span class="card-slug">/portal/onboarding</span>
+        <h3 class="card-title">Onboarding</h3>
+        <p class="card-desc">
+          Førstegangsopplevelse. Profil-setup, HCP, mål, preferanser. Streak-boost fra dag én.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-coaching-historikk/index.html">
+        <span class="card-slug">/portal/coaching-historikk</span>
+        <h3 class="card-title">Coaching-historikk</h3>
+        <p class="card-desc">
+          Historikk over alle coaching-økter. Notater fra coach, video, drills tildelt, progresjon.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-turneringer/index.html">
+        <span class="card-slug">/portal/turneringer</span>
+        <h3 class="card-title">Turneringer</h3>
+        <p class="card-desc">
+          Turneringsoversikt og påmelding. Lokale turneringer, resultater, leaderboard, prep-pipeline.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-turneringsplan/index.html">
+        <span class="card-slug">/portal/turneringsplan</span>
+        <h3 class="card-title">Turneringsplan</h3>
+        <p class="card-desc">
+          Sesongplanlegger for turneringer. Tournaments per måned, forberedelse, restitusjon, reise.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-spill/index.html">
+        <span class="card-slug">/portal/spill</span>
+        <h3 class="card-title">Spill</h3>
+        <p class="card-desc">
+          Gamification og spillmodus. Challenges, leaderboards, badges, personlige rekorder.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-bag/index.html">
+        <span class="card-slug">/portal/bag</span>
+        <h3 class="card-title">Bag</h3>
+        <p class="card-desc">
+          Utstyrsoversikt. Køller, specs, gapping, anbefalinger fra coach. TrackMan-koblet data.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-strategi/index.html">
+        <span class="card-slug">/portal/strategi</span>
+        <h3 class="card-title">Strategi</h3>
+        <p class="card-desc">
+          Bane-strategi og course management. Hull-for-hull plan, risk/reward, vind, handicap-strategi.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-meldinger/index.html">
+        <span class="card-slug">/portal/meldinger</span>
+        <h3 class="card-title">Meldinger</h3>
+        <p class="card-desc">
+          Chat med coach og andre spillere. Gruppechat, deling av resultater, bilder og video.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-sosialt/index.html">
+        <span class="card-slug">/portal/sosialt</span>
+        <h3 class="card-title">Sosialt</h3>
+        <p class="card-desc">
+          Sosialt nettverk for spillere. Venner, grupper, feed, aktivitet, utfordringer og leaderboard.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-portal-apper/index.html">
+        <span class="card-slug">/portal/apper</span>
+        <h3 class="card-title">Apper</h3>
+        <p class="card-desc">
+          App marketplace med moduler og bundles. Kategorifilter, featured apps, aktive abonnement.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
           <span class="arrow">→</span>
         </div>
       </a>
@@ -364,19 +735,31 @@
     <div class="section-header">
       <span class="section-label">03 — Mission Control</span>
       <h2 class="section-title">Instruktør-arbeidsstasjon</h2>
-      <span class="section-desc">2 skjermer · XPO TMS-stil</span>
+      <span class="section-desc">23 skjermer · XPO TMS-stil</span>
     </div>
 
     <div class="grid">
 
-      <a class="card" href="1704-mc-dashboard/index.html">
+      <a class="card featured" href="1704-mc-dashboard/index.html">
         <span class="card-slug">/portal/admin</span>
         <h3 class="card-title">MC Dashboard</h3>
         <p class="card-desc">
           XPO TMS-mal. Dark topbar + lys body. KPI-row (8 tall), divisjons-kort, inntekt-trend, høyre drawer.
         </p>
         <div class="card-meta">
-          <span class="tag new">Redesign</span>
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-denne-uken/index.html">
+        <span class="card-slug">/portal/admin/denne-uken</span>
+        <h3 class="card-title">Denne uken</h3>
+        <p class="card-desc">
+          Ukesoversikt for instruktøren. Bookinger, økter, elev-møter, deadlines, prep-arbeid.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
           <span class="arrow">→</span>
         </div>
       </a>
@@ -385,10 +768,250 @@
         <span class="card-slug">/portal/admin/kalender</span>
         <h3 class="card-title">MC Kalender</h3>
         <p class="card-desc">
-          Gantt-timeline. Instruktør-lanes, dra-og-slipp reschedule, fargekodete bookings, høyre drawer med detaljer.
+          Gantt-timeline. Instruktør-lanes, dra-og-slipp reschedule, fargekodete bookings, høyre drawer.
         </p>
         <div class="card-meta">
-          <span class="tag new">Redesign</span>
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-bookinger/index.html">
+        <span class="card-slug">/portal/admin/bookinger</span>
+        <h3 class="card-title">Bookinger</h3>
+        <p class="card-desc">
+          Booking-administrasjon. Godkjenn, avvis, reschedule. Bulk-operasjoner og automatisk påminnelse.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-tilgjengelighet/index.html">
+        <span class="card-slug">/portal/admin/tilgjengelighet</span>
+        <h3 class="card-title">Tilgjengelighet</h3>
+        <p class="card-desc">
+          Instruktør-tilgjengelighetsstyring. Ukevisning, repetisjon, unntak, ferie, kapasitetsgrenser.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-elever/index.html">
+        <span class="card-slug">/portal/admin/elever</span>
+        <h3 class="card-title">Elever</h3>
+        <p class="card-desc">
+          Elev-oversikt med filtrering. HCP, siste aktivitet, neste booking, progresjon, status.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-elev-detalj/index.html">
+        <span class="card-slug">/portal/admin/elev/:id</span>
+        <h3 class="card-title">Elev-detalj</h3>
+        <p class="card-desc">
+          Enkeltelev-profil for coach. Progresjon, notater, treningsplan, stats, kommunikasjon.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-okter/index.html">
+        <span class="card-slug">/portal/admin/okter</span>
+        <h3 class="card-title">Økter</h3>
+        <p class="card-desc">
+          Coaching-økt-administrasjon. Planlegg, dokumenter, evaluer. Maler for ulike økttyper.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-treningsplan/index.html">
+        <span class="card-slug">/portal/admin/treningsplan</span>
+        <h3 class="card-title">Treningsplan</h3>
+        <p class="card-desc">
+          Treningsplan-admin for coach. Opprett, tilpass, følg opp. 12-ukers syklus med pyramide-fokus.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-rapporter/index.html">
+        <span class="card-slug">/portal/admin/rapporter</span>
+        <h3 class="card-title">Rapporter</h3>
+        <p class="card-desc">
+          Rapportgenerering for coach og admin. Elev-progresjon, økt-sammendrag, månedlig review.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-okonomi/index.html">
+        <span class="card-slug">/portal/admin/okonomi</span>
+        <h3 class="card-title">Økonomi</h3>
+        <p class="card-desc">
+          Økonomisk oversikt. Inntekter, utgifter, forecast, fakturering, Stripe-integrasjon.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-fasiliteter/index.html">
+        <span class="card-slug">/portal/admin/fasiliteter</span>
+        <h3 class="card-title">Fasiliteter</h3>
+        <p class="card-desc">
+          Fasilitetsadministrasjon. Baner, simulatorer, treningsområder. Booking og vedlikehold.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-godkjenninger/index.html">
+        <span class="card-slug">/portal/admin/godkjenninger</span>
+        <h3 class="card-title">Godkjenninger</h3>
+        <p class="card-desc">
+          Godkjenningskø for admin. Registreringer, endringer, avbestillinger som krever manuell review.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-mission-board/index.html">
+        <span class="card-slug">/portal/admin/mission-board</span>
+        <h3 class="card-title">Mission Board</h3>
+        <p class="card-desc">
+          Kanban-tavle for operativt arbeid. Oppgaver per elev, prioritet, frister, samarbeid mellom trenere.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-meldinger/index.html">
+        <span class="card-slug">/portal/admin/meldinger</span>
+        <h3 class="card-title">Meldinger</h3>
+        <p class="card-desc">
+          Alle elev-samtaler samlet. Inbox+chat, per elev, AI-summary, bulk messaging.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-turneringer/index.html">
+        <span class="card-slug">/portal/admin/turneringer</span>
+        <h3 class="card-title">Turneringer</h3>
+        <p class="card-desc">
+          Turneringsoversikt og admin. Elev-påmeldinger, resultater, prep-pipeline, lokal turneringsopprette.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-epostmaler/index.html">
+        <span class="card-slug">/portal/admin/e-postmaler</span>
+        <h3 class="card-title">E-postmaler</h3>
+        <p class="card-desc">
+          CRUD for e-postmaler med variabler. Template library, visual builder, A/B-testing, sendehistorikk.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-analytics/index.html">
+        <span class="card-slug">/portal/admin/analytics</span>
+        <h3 class="card-title">Analytics</h3>
+        <p class="card-desc">
+          Analytics-dashboard for admin. Dashboard, funnel analysis, cohort view, goal tracking, raw query.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-focus/index.html">
+        <span class="card-slug">/portal/admin/focus</span>
+        <h3 class="card-title">Focus</h3>
+        <p class="card-desc">
+          Focus-mode for admin. Today queue, 3-thing-rule, pomodoro, context switching, calm mode.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-kapasitet/index.html">
+        <span class="card-slug">/portal/admin/kapasitet</span>
+        <h3 class="card-title">Kapasitet</h3>
+        <p class="card-desc">
+          Kapasitetsstyring. Utilization heatmap, forecast, break-even, instructor load, facility usage.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-ai-assistent/index.html">
+        <span class="card-slug">/portal/admin/ai-assistent</span>
+        <h3 class="card-title">AI-assistent</h3>
+        <p class="card-desc">
+          AI-assistent for admin. Chat interface, command palette, insight feed, action queue, training mode.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-agenter/index.html">
+        <span class="card-slug">/portal/admin/agenter</span>
+        <h3 class="card-title">Agenter</h3>
+        <p class="card-desc">
+          MCP-agenter-konfigurasjon. Agent dashboard, workflow builder, tool inventory, run history, config mode.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="card" href="1704-mc-notifications/index.html">
+        <span class="card-slug">/portal/admin/notifications</span>
+        <h3 class="card-title">Notifications</h3>
+        <p class="card-desc">
+          Notification center for admin. Inbox, priority filter, rule builder, snooze queue, digest mode.
+        </p>
+        <div class="card-meta">
+          <span class="tag done">Ferdig</span>
           <span class="arrow">→</span>
         </div>
       </a>

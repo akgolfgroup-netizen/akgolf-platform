@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App-marked — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visuelle design er klare — alle alternativer har Clean + Polished varianter
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+  <div class="title-bar">
+    <span><span id="feature-name">App-marked</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">★ Anbefalt: Alternativ <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Marketplace Grid</button>
+    <button class="tab-btn" data-tab="option-2">2: Featured Hero</button>
+    <button class="tab-btn" data-tab="option-3">3: Bundle Focus</button>
+    <button class="tab-btn" data-tab="option-4">4: Category Tabs</button>
+    <button class="tab-btn" data-tab="option-5">5: Subscription Dashboard</button>
+    <button class="tab-btn" data-tab="summary">Oppsummering</button>
+  </nav>
+
+  <!-- ===== OPTION 1: MARKETPLACE GRID ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Alternativ 1: <span class="opt-name">Marketplace Grid</span></h2>
+    <p class="option-description">Trygg default — kort per app og bundle i et grid, filter per kategori øverst. Matcher App Store / Stripe-portal-DNA.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/apper</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item wf-active">Apper</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-header">
+              <div>
+                <h1 class="wf-page-title">App-marked<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Verktøy, apper og pakker for å forbedre spillet ditt</p>
+              </div>
+            </div>
+            <div class="wf-filter-bar">
+              <span class="wf-filter-chip wf-active">Alle</span>
+              <span class="wf-filter-chip">Analyse</span>
+              <span class="wf-filter-chip">Trening</span>
+              <span class="wf-filter-chip">Spill</span>
+              <span class="wf-filter-chip">Pakker</span>
+              <input class="wf-search" placeholder="Søk apper...">
+            </div>
+            <div class="wf-app-grid">
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📊</div>
+                <div class="wf-app-name">DECADE-test<span class="wf-marker">2</span></div>
+                <div class="wf-app-desc">Kursstrategi-test basert på Scott Fawcetts metode.</div>
+                <div class="wf-app-meta"><span class="wf-app-tag">Analyse</span><span class="wf-app-tag">Test</span></div>
+                <div class="wf-app-price">Inkludert</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📹</div>
+                <div class="wf-app-name">Swing-analyse</div>
+                <div class="wf-app-desc">Last opp videoer og få tilbakemelding fra trener.</div>
+                <div class="wf-app-meta"><span class="wf-app-tag">Trening</span><span class="wf-app-tag">Video</span></div>
+                <div class="wf-app-price">Inkludert</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">🏌️</div>
+                <div class="wf-app-name">TrackMan-protokoll</div>
+                <div class="wf-app-desc">Standardiserte testøkter med TrackMan-data.</div>
+                <div class="wf-app-meta"><span class="wf-app-tag">Analyse</span><span class="wf-app-tag">Data</span></div>
+                <div class="wf-app-price">Inkludert</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">⛳</div>
+                <div class="wf-app-name">Green-reading</div>
+                <div class="wf-app-desc">Øv på green-reading med interaktive putte-linjer.</div>
+                <div class="wf-app-meta"><span class="wf-app-tag">Spill</span><span class="wf-app-tag">Putting</span></div>
+                <div class="wf-app-price">Inkludert</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">🎯</div>
+                <div class="wf-app-name">Dispersion-tracker</div>
+                <div class="wf-app-desc">Visualiser slag-spredning per klubbe over tid.</div>
+                <div class="wf-app-meta"><span class="wf-app-tag">Analyse</span><span class="wf-app-tag">TrackMan</span></div>
+                <div class="wf-app-price">Inkludert</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📋</div>
+                <div class="wf-app-name">Treningsdagbok</div>
+                <div class="wf-app-desc">Logg økter, sett mål, følg fremgang.</div>
+                <div class="wf-app-meta"><span class="wf-app-tag">Trening</span><span class="wf-app-tag">Logg</span></div>
+                <div class="wf-app-price">Inkludert</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+            </div>
+            <div class="wf-section-head">Pakker<span class="wf-marker">3</span></div>
+            <div class="wf-app-grid">
+              <div class="wf-bundle-card">
+                <div class="wf-bundle-icon">🎁</div>
+                <div class="wf-bundle-info">
+                  <div class="wf-bundle-title">Spillerpakken</div>
+                  <div class="wf-bundle-desc">Alle analyse-apper + TrackMan-protokoller</div>
+                  <div class="wf-bundle-apps"><span>DECADE</span><span>TrackMan</span><span>Dispersion</span></div>
+                </div>
+                <div>
+                  <div class="wf-bundle-price">Inkludert</div>
+                  <div class="wf-bundle-save">Pro-pakke</div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Tydelig tittel:</strong> "App-marked" sier hva dette er. Ingen tvil om at brukeren kan finne verktøy her.</li>
+        <li><strong>2 — Kort med meta-info:</strong> Hver app har ikon, navn, beskrivelse, kategorier og CTA. Ingen skjult informasjon.</li>
+        <li><strong>3 — Pakker separat:</strong> Bundles har egen seksjon for å signalisere verdi. Skiller seg ut med bredere kort.</li>
+        <li>— Trygg løsning: Matcher portal-DNA og kjente mønstre fra App Store og Stripe.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: FEATURED HERO ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Alternativ 2: <span class="opt-name">Featured Hero</span></h2>
+    <p class="option-description">Uthevet app øverst i en hero-seksjon, resten i grid under. Bra for å promotere nye eller anbefalte apper.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/apper</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item wf-active">Apper</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-header">
+              <div>
+                <h1 class="wf-page-title">App-marked<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Verktøy, apper og pakker for å forbedre spillet ditt</p>
+              </div>
+            </div>
+            <div class="wf-hero">
+              <div class="wf-hero-icon">📊</div>
+              <div>
+                <div class="wf-hero-title">DECADE-test<span class="wf-marker">2</span></div>
+                <div class="wf-hero-desc">Kursstrategi-test basert på Scott Fawcetts metode. Mål din beslutnings-kvalitet på banen.</div>
+              </div>
+              <div class="wf-hero-cta">
+                <div class="wf-app-btn">Åpne app</div>
+                <span style="font-size:11px;color:#999;">Anbefalt for deg</span>
+              </div>
+            </div>
+            <div class="wf-section-head">Flere apper</div>
+            <div class="wf-app-grid">
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📹</div>
+                <div class="wf-app-name">Swing-analyse</div>
+                <div class="wf-app-desc">Last opp videoer og få tilbakemelding fra trener.</div>
+                <div class="wf-app-btn wf-app-btn-secondary">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">🏌️</div>
+                <div class="wf-app-name">TrackMan-protokoll</div>
+                <div class="wf-app-desc">Standardiserte testøkter med TrackMan-data.</div>
+                <div class="wf-app-btn wf-app-btn-secondary">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">⛳</div>
+                <div class="wf-app-name">Green-reading</div>
+                <div class="wf-app-desc">Øv på green-reading med interaktive putte-linjer.</div>
+                <div class="wf-app-btn wf-app-btn-secondary">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">🎯</div>
+                <div class="wf-app-name">Dispersion-tracker</div>
+                <div class="wf-app-desc">Visualiser slag-spredning per klubbe over tid.</div>
+                <div class="wf-app-btn wf-app-btn-secondary">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📋</div>
+                <div class="wf-app-name">Treningsdagbok</div>
+                <div class="wf-app-desc">Logg økter, sett mål, følg fremgang.</div>
+                <div class="wf-app-btn wf-app-btn-secondary">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">🏆</div>
+                <div class="wf-app-name">Turnerings-prep</div>
+                <div class="wf-app-desc">Forberedelses-verktøy før kommende turneringer.</div>
+                <div class="wf-app-btn wf-app-btn-secondary">Åpne</div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Hero for promotering:</strong> Én app får full oppmerksomhet øverst. Kan roteres basert på sesong eller spiller-progresjon.</li>
+        <li><strong>2 — Tydelig CTA:</strong> Hero-CTA er primærknapp. Resten er sekundære for å unngå konkurranse om oppmerksomhet.</li>
+        <li>— Bra for å introdusere nye apper. Risiko: Hvis hero er irrelevant, tar den unødvendig plass.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: BUNDLE FOCUS ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Alternativ 3: <span class="opt-name">Bundle Focus</span></h2>
+    <p class="option-description">Pakker først i fokus, enkelt-apper under. Bra for å vise frem verdi og oppgradere brukere.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/apper</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item wf-active">Apper</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-header">
+              <div>
+                <h1 class="wf-page-title">App-marked<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Verktøy, apper og pakker for å forbedre spillet ditt</p>
+              </div>
+            </div>
+            <div class="wf-section-head">Dine pakker<span class="wf-marker">2</span></div>
+            <div class="wf-bundle-card">
+              <div class="wf-bundle-icon">🎁</div>
+              <div class="wf-bundle-info">
+                <div class="wf-bundle-title">Spillerpakken</div>
+                <div class="wf-bundle-desc">Alle analyse-apper + TrackMan-protokoller</div>
+                <div class="wf-bundle-apps"><span>DECADE</span><span>TrackMan</span><span>Dispersion</span><span>Swing-video</span></div>
+              </div>
+              <div>
+                <div class="wf-bundle-price">Inkludert</div>
+                <div class="wf-bundle-save">Pro-pakke</div>
+                <div class="wf-app-btn" style="margin-top:8px;">Åpne pakke</div>
+              </div>
+            </div>
+            <div class="wf-bundle-card">
+              <div class="wf-bundle-icon">🏆</div>
+              <div class="wf-bundle-info">
+                <div class="wf-bundle-title">Turneringspakken</div>
+                <div class="wf-bundle-desc">Forberedelses-verktøy og strategi-apper</div>
+                <div class="wf-bundle-apps"><span>Prep</span><span>DECADE</span><span>Green-reading</span></div>
+              </div>
+              <div>
+                <div class="wf-bundle-price">Inkludert</div>
+                <div class="wf-bundle-save">Elite-pakke</div>
+                <div class="wf-app-btn" style="margin-top:8px;">Åpne pakke</div>
+              </div>
+            </div>
+            <div class="wf-section-head">Alle apper</div>
+            <div class="wf-app-grid">
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📊</div>
+                <div class="wf-app-name">DECADE-test</div>
+                <div class="wf-app-desc">Kursstrategi-test basert på Scott Fawcetts metode.</div>
+                <div class="wf-app-btn wf-app-btn-secondary">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">🏌️</div>
+                <div class="wf-app-name">TrackMan-protokoll</div>
+                <div class="wf-app-desc">Standardiserte testøkter med TrackMan-data.</div>
+                <div class="wf-app-btn wf-app-btn-secondary">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">⛳</div>
+                <div class="wf-app-name">Green-reading</div>
+                <div class="wf-app-desc">Øv på green-reading med interaktive putte-linjer.</div>
+                <div class="wf-app-btn wf-app-btn-secondary">Åpne</div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Pakker som helter:</strong> Hvis abonnementsnivåer gir ulik tilgang, er pakker den naturlige primær-informasjonen.</li>
+        <li><strong>2 — Tydelig verdi:</strong> "Alle analyse-apper + TrackMan" sier mer enn enkelt-apper. Bra for konvertering.</li>
+        <li>— Passer best hvis vi har flere pakkenivåer (Basic / Pro / Elite). Mindre verdi hvis alle har alt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: CATEGORY TABS ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Alternativ 4: <span class="opt-name">Category Tabs</span></h2>
+    <p class="option-description">Horisontal kategori-navigasjon som filtrerer grid-et. Bra for mange apper og enkel oppdagelse.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/apper</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item wf-active">Apper</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-header">
+              <div>
+                <h1 class="wf-page-title">App-marked<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Verktøy, apper og pakker for å forbedre spillet ditt</p>
+              </div>
+            </div>
+            <div class="wf-cat-tabs">
+              <button class="wf-cat-tab wf-active">Alle</button>
+              <button class="wf-cat-tab">Analyse</button>
+              <button class="wf-cat-tab">Trening</button>
+              <button class="wf-cat-tab">Spill</button>
+              <button class="wf-cat-tab">Pakker</button>
+              <button class="wf-cat-tab">Nytt</button>
+            </div>
+            <div class="wf-app-grid">
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📊</div>
+                <div class="wf-app-name">DECADE-test<span class="wf-marker">2</span></div>
+                <div class="wf-app-desc">Kursstrategi-test basert på Scott Fawcetts metode.</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📹</div>
+                <div class="wf-app-name">Swing-analyse</div>
+                <div class="wf-app-desc">Last opp videoer og få tilbakemelding fra trener.</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">🏌️</div>
+                <div class="wf-app-name">TrackMan-protokoll</div>
+                <div class="wf-app-desc">Standardiserte testøkter med TrackMan-data.</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">⛳</div>
+                <div class="wf-app-name">Green-reading</div>
+                <div class="wf-app-desc">Øv på green-reading med interaktive putte-linjer.</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">🎯</div>
+                <div class="wf-app-name">Dispersion-tracker</div>
+                <div class="wf-app-desc">Visualiser slag-spredning per klubbe over tid.</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📋</div>
+                <div class="wf-app-name">Treningsdagbok</div>
+                <div class="wf-app-desc">Logg økter, sett mål, følg fremgang.</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kategorier som primær-nav:</strong> Horisontal tab-bar gir rask tilgang til relevante apper. Mindre scrolling.</li>
+        <li><strong>2 — Visuelt renere:</strong> Ingen filter-chips, bare tabs. Enklere for brukere som ikke vet hva de leter etter.</li>
+        <li>— Bra for 10+ apper. Overdrevet hvis det bare er 5–6 apper totalt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: SUBSCRIPTION DASHBOARD ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Alternativ 5: <span class="opt-name">Subscription Dashboard</span></h2>
+    <p class="option-description">Dine aktive apper først, shop under. Bra for brukere som allerede har tilgang til mange verktøy.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/apper</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-portal-shell">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK</div>
+            <nav class="wf-sidebar-nav">
+              <a class="wf-side-item">Oversikt</a>
+              <a class="wf-side-item">Tren</a>
+              <a class="wf-side-item">Spill</a>
+              <a class="wf-side-item wf-active">Apper</a>
+              <a class="wf-side-item">Analyser</a>
+              <a class="wf-side-item">Mer</a>
+            </nav>
+            <div class="wf-sidebar-user">EH</div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-page-header">
+              <div>
+                <h1 class="wf-page-title">Mine apper<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Dine aktive apper og pakker</p>
+              </div>
+            </div>
+            <div class="wf-sub-row">
+              <div class="wf-sub-card">
+                <div class="wf-sub-label">DECADE-test</div>
+                <div class="wf-sub-app">
+                  <div class="wf-sub-app-icon">📊</div>
+                  <div><div class="wf-sub-app-name">Aktiv</div><div class="wf-sub-app-status">Sist brukt i går</div></div>
+                </div>
+                <div class="wf-sub-renews">Inkludert i Spillerpakken</div>
+              </div>
+              <div class="wf-sub-card">
+                <div class="wf-sub-label">TrackMan-protokoll</div>
+                <div class="wf-sub-app">
+                  <div class="wf-sub-app-icon">🏌️</div>
+                  <div><div class="wf-sub-app-name">Aktiv</div><div class="wf-sub-app-status">Sist brukt 3 dager siden</div></div>
+                </div>
+                <div class="wf-sub-renews">Inkludert i Spillerpakken</div>
+              </div>
+              <div class="wf-sub-card">
+                <div class="wf-sub-label">Swing-analyse</div>
+                <div class="wf-sub-app">
+                  <div class="wf-sub-app-icon">📹</div>
+                  <div><div class="wf-sub-app-name">Aktiv</div><div class="wf-sub-app-status">Sist brukt forrige uke</div></div>
+                </div>
+                <div class="wf-sub-renews">Inkludert i Spillerpakken</div>
+              </div>
+            </div>
+            <div class="wf-section-head">Utforsk flere<span class="wf-marker">2</span></div>
+            <div class="wf-app-grid">
+              <div class="wf-app-card">
+                <div class="wf-app-icon">⛳</div>
+                <div class="wf-app-name">Green-reading</div>
+                <div class="wf-app-desc">Øv på green-reading med interaktive putte-linjer.</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">🎯</div>
+                <div class="wf-app-name">Dispersion-tracker</div>
+                <div class="wf-app-desc">Visualiser slag-spredning per klubbe over tid.</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+              <div class="wf-app-card">
+                <div class="wf-app-icon">📋</div>
+                <div class="wf-app-name">Treningsdagbok</div>
+                <div class="wf-app-desc">Logg økter, sett mål, følg fremgang.</div>
+                <div class="wf-app-btn">Åpne</div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Personlig først:</strong> Brukeren ser umiddelbart hva de har tilgang til. Ingen irritasjon over apper de ikke kan bruke.</li>
+        <li><strong>2 — Utforsk under:</strong> Separat seksjon for nye apper holder det personlige adskilt fra det kommersielle.</li>
+        <li>— Bra for eksisterende kunder. Mindre egnet for nye brukere som ikke har noen apper ennå.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering & anbefaling</h2>
+    <p class="option-description">Fem retninger for App-marked — valget avhenger av antall apper, abonnementsnivåer og brukerbehov.</p>
+    <table class="wf-summary-table">
+      <thead><tr><th>Alternativ</th><th>Filosofi</th><th>Skalerbarhet</th><th>Oppdagelse</th><th>Kompleksitet</th><th>Score</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Marketplace Grid</strong></td><td>Grid med filter, alle apper synlig</td><td>Høy</td><td>Middels</td><td>Lav</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Featured Hero</strong></td><td>Uthevet app øverst, rest i grid</td><td>Middels</td><td>Høy</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Bundle Focus</strong></td><td>Pakker først, enkelt-apper under</td><td>Middels</td><td>Lav</td><td>Middels</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Category Tabs</strong></td><td>Horisontal kategori-navigasjon</td><td>Høy</td><td>Høy</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>5. Subscription Dashboard</strong></td><td>Dine aktive først, shop under</td><td>Lav</td><td>Middels</td><td>Middels</td><td>★★★☆☆</td></tr>
+      </tbody>
+    </table>
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Alternativ 1 — Marketplace Grid</h3>
+      <p>Trygg default som skalerer fra 5 til 50 apper. Filter-bar gir rask navigasjon, og grid er universelt forståelig. Alternativ 4 (Category Tabs) er sterk konkurrent hvis apputvalget vokser raskt. Alternativ 3 (Bundle Focus) er riktig hvis vi har tydelige abonnementspakker med ulikt innhold.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="skill-footer">This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) { if (getComputedStyle(b).display !== 'none') anyVisible = true; });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) { banner.style.display = 'block'; setTimeout(function() { banner.style.display = 'none'; }, 8000); }
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+/* OPT 5 — Råspørring · Clean + Polished */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+#frame-opt5-tabs .sub-tab-badge { display: none; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"] { color: #666; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"]:hover { color: #333; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"].active { color: #000; border-bottom-color: #000; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"] { color: #666; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"]:hover { color: #333; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"].active { color: #000; border-bottom-color: #000; }
+
+/* CLEAN */
+#frame-opt5.clean .browser-content { padding: 0; background: #fafafa; }
+#frame-opt5.clean .wf-mc-topbar { background: #0A1F18; color: #fff; padding: 12px 20px; border-radius: 0; }
+#frame-opt5.clean .wf-mc-tab-active { color: #D1F843; border-bottom: 2px solid #D1F843; padding-bottom: 2px; }
+#frame-opt5.clean .wf-mc-profile { background: #D1F843; color: #0A1F18; font-weight: 700; }
+#frame-opt5.clean .wf-mc-body { background: #F5F8F7; padding: 24px 20px; border-radius: 0; color: #324D45; }
+#frame-opt5.clean .wf-rep-filter-primary { background: #005840; color: #fff; border-color: #005840; }
+#frame-opt5.clean .wf-query-builder { background: #fff; border: 1px solid #ECF0EF; border-radius: 12px; padding: 16px; }
+#frame-opt5.clean .wf-query-label { color: #A5B2AD; font-size: 10px; }
+#frame-opt5.clean .wf-query-pill { background: #F5F8F7; border-color: #D5DFDB; color: #324D45; }
+#frame-opt5.clean .wf-query-pill-add { color: #7A8C85; }
+#frame-opt5.clean .wf-rep-card { background: #fff; border: 1px solid #ECF0EF; border-radius: 12px; padding: 16px; }
+#frame-opt5.clean .wf-table th { background: #F5F8F7; color: #5A6E66; }
+#frame-opt5.clean .wf-table td { border-bottom-color: #ECF0EF; color: #324D45; }
+
+/* POLISHED */
+#frame-opt5.polished .browser-content { padding: 0; background: #F5F5F7; }
+#frame-opt5.polished .wf-mc-topbar { background: linear-gradient(180deg, #0E2A22 0%, #0A1F18 100%); padding: 14px 22px; border-radius: 0; box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 2px 8px rgba(0,0,0,0.12); }
+#frame-opt5.polished .wf-mc-tab-active { color: #D1F843; border-bottom: 2px solid #D1F843; padding-bottom: 3px; }
+#frame-opt5.polished .wf-mc-profile { background: linear-gradient(135deg, #D1F843, #B8E035); color: #0A1F18; font-weight: 800; box-shadow: 0 2px 6px rgba(209,248,67,0.35); }
+#frame-opt5.polished .wf-mc-body { background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,88,64,0.03) 0%, transparent 60%), #F5F5F7; padding: 26px 22px; color: #1D1D1F; }
+#frame-opt5.polished .wf-rep-filter-primary { background: linear-gradient(180deg, #006B4E, #005840); box-shadow: 0 2px 6px rgba(0,88,64,0.25); }
+#frame-opt5.polished .wf-query-builder { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 14px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03); }
+#frame-opt5.polished .wf-query-label { color: #86868B; letter-spacing: 0.1em; font-weight: 600; }
+#frame-opt5.polished .wf-query-pill { background: #F5F8F7; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; color: #324D45; font-weight: 500; transition: all 0.2s; }
+#frame-opt5.polished .wf-query-pill:hover { background: #E6F3F1; border-color: #005840; }
+#frame-opt5.polished .wf-query-pill-add { border-style: dashed; color: #86868B; }
+#frame-opt5.polished .wf-rep-card { background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 14px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03); }
+#frame-opt5.polished .wf-table th { background: #FAFAFC; color: #6E6E73; font-size: 10px; letter-spacing: 0.08em; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.06); }
+#frame-opt5.polished .wf-table td { color: #1D1D1F; border-bottom-color: rgba(0,0,0,0.04); }
+#frame-opt5.polished .wf-table td.wf-num { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  #frame-opt5.polished * { transition: none !important; animation: none !important; }
+}

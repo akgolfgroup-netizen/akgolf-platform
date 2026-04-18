@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Varsler — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visuelle design er klare — alle alternativer har Clean + Polished varianter
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+  <div class="title-bar">
+    <span><span id="feature-name">MC Varsler</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">★ Anbefalt: Alternativ <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Innboks</button>
+    <button class="tab-btn" data-tab="option-2">2: Prioritet</button>
+    <button class="tab-btn" data-tab="option-3">3: Regelbygger</button>
+    <button class="tab-btn" data-tab="option-4">4: Utsatt-kø</button>
+    <button class="tab-btn" data-tab="option-5">5: Oppsummering</button>
+    <button class="tab-btn" data-tab="summary">Oppsummering</button>
+  </nav>
+
+  <!-- ===== OPTION 1: INBOX ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Alternativ 1: <span class="opt-name">Innboks</span></h2>
+    <p class="option-description">Klassisk innboks — alle varsler i kronologisk rekkefølge, med lest/ulest og kategorier.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/notifications</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Varsler</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Innboks — 8 uleste · 34 totalt</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Alle ▾</span>
+              <span class="wf-rep-filter">Marker alle som lest</span>
+              <span class="wf-rep-filter">Innstillinger</span>
+            </div>
+          </div>
+          <div class="wf-notif-list">
+            <div class="wf-notif wf-notif-unread">
+              <div class="wf-notif-icon wf-notif-alert">!</div>
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">No-show rate steget til 3,2%</div>
+                <div class="wf-notif-desc">Opp fra 2,8% forrige uke. 4 av 12 no-shows fra nye elever.</div>
+                <div class="wf-notif-meta">Analytics · 12 min siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Håndter</span>
+                <span class="wf-rep-filter">Utsatt</span>
+              </div>
+            </div>
+            <div class="wf-notif wf-notif-unread">
+              <div class="wf-notif-icon wf-notif-booking">B</div>
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Ny booking: Performance 1600 — Erik Hansen</div>
+                <div class="wf-notif-desc">Torsdag 18. april 14:00 · Anders K.</div>
+                <div class="wf-notif-meta">Booking · 25 min siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Se</span>
+                <span class="wf-rep-filter">Utsatt</span>
+              </div>
+            </div>
+            <div class="wf-notif wf-notif-unread">
+              <div class="wf-notif-icon wf-notif-pay">P</div>
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Betalingsforsinkelse: Sofie Lund — 1.800 kr</div>
+                <div class="wf-notif-desc">18 dager forsinket. Forrige purring sendt 5. april.</div>
+                <div class="wf-notif-meta">Fakturering · 1 time siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Send purring</span>
+                <span class="wf-rep-filter">Utsatt</span>
+              </div>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-icon wf-notif-booking">B</div>
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Booking kansellert: Flex 20 — Lars Berg</div>
+                <div class="wf-notif-desc">Onsdag 16. april 10:00 · årsak: sykdom</div>
+                <div class="wf-notif-meta">Booking · 3 timer siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Se</span>
+              </div>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-icon wf-notif-alert">!</div>
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Simulator 1 krever kalibrering</div>
+                <div class="wf-notif-desc">TrackMan-data avviker >5% fra referanse. Planlegg vedlikehold.</div>
+                <div class="wf-notif-meta">Drift · 5 timer siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Planlegg</span>
+                <span class="wf-rep-filter">Utsatt</span>
+              </div>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-icon wf-notif-info">i</div>
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Månedsrapport april er klar</div>
+                <div class="wf-notif-desc">Inntekt: 187.400 kr · 156 bookinger · 34 aktive abonnenter</div>
+                <div class="wf-notif-meta">Rapporter · 8 timer siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Se rapport</span>
+              </div>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-icon wf-notif-info">i</div>
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Markus R. har oppdatert timeplanen</div>
+                <div class="wf-notif-desc">3 flyttinger godkjent. Ingen konflikter.</div>
+                <div class="wf-notif-meta">Timeplan · 12 timer siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Se endringer</span>
+              </div>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-icon wf-notif-pay">P</div>
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Ny innbetaling: 1.600 kr — Nora Torp</div>
+                <div class="wf-notif-desc">Performance 1600 · abonnement fornyet</div>
+                <div class="wf-notif-meta">Fakturering · 1 dag siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Se</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Innboks:</strong> Klassisk innboks — kjent mønster fra e-post og meldinger.</li>
+        <li><strong>2 — Uleste varsler:</strong> Får visuell markering (fet tekst, ikon, venstrekant).</li>
+        <li>Håndter/Se/Utsatt-knapper gir umiddelbar handling.</li>
+        <li>Kategori-ikoner (alert/booking/pay/info) gir rask scanning.</li>
+        <li>Trygg default — alle forstår innboks.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: PRIORITY FILTER ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Alternativ 2: <span class="opt-name">Prioritet</span></h2>
+    <p class="option-description">Varsler gruppert etter hastegrad — Haster, Viktig, Info — med fargekoding og tellere.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/notifications</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Varsler</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Varsler etter prioritet</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Alle ▾</span>
+              <span class="wf-rep-filter">Marker alle som lest</span>
+            </div>
+          </div>
+          <div class="wf-prio-section">
+            <div class="wf-prio-header">
+              <span class="wf-prio-badge wf-prio-urgent">2</span>
+              <span class="wf-prio-title">Haster</span>
+              <span class="wf-prio-sub">Krever handling innen 24 timer</span>
+            </div>
+            <div class="wf-notif wf-notif-unread">
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">No-show rate steget til 3,2%</div>
+                <div class="wf-notif-desc">Opp fra 2,8% forrige uke. 4 av 12 no-shows fra nye elever.</div>
+                <div class="wf-notif-meta">Analytics · 12 min siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter wf-rep-filter-primary">Håndter</span>
+                <span class="wf-rep-filter">Utsatt</span>
+              </div>
+            </div>
+            <div class="wf-notif wf-notif-unread">
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Betalingsforsinkelse: Sofie Lund — 1.800 kr</div>
+                <div class="wf-notif-desc">18 dager forsinket. Forrige purring sendt 5. april.</div>
+                <div class="wf-notif-meta">Fakturering · 1 time siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter wf-rep-filter-primary">Send purring</span>
+                <span class="wf-rep-filter">Utsatt</span>
+              </div>
+            </div>
+          </div>
+          <div class="wf-prio-section">
+            <div class="wf-prio-header">
+              <span class="wf-prio-badge">3</span>
+              <span class="wf-prio-title">Viktig</span>
+              <span class="wf-prio-sub">Håndter innen denne uken</span>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Simulator 1 krever kalibrering</div>
+                <div class="wf-notif-desc">TrackMan-data avviker >5% fra referanse.</div>
+                <div class="wf-notif-meta">Drift · 5 timer siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Planlegg</span>
+                <span class="wf-rep-filter">Utsatt</span>
+              </div>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Månedsrapport april er klar</div>
+                <div class="wf-notif-desc">Inntekt: 187.400 kr · 156 bookinger · 34 aktive abonnenter</div>
+                <div class="wf-notif-meta">Rapporter · 8 timer siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Se rapport</span>
+              </div>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Markus R. har oppdatert timeplanen</div>
+                <div class="wf-notif-desc">3 flyttinger godkjent. Ingen konflikter.</div>
+                <div class="wf-notif-meta">Timeplan · 12 timer siden</div>
+              </div>
+              <div class="wf-notif-actions">
+                <span class="wf-rep-filter">Se endringer</span>
+              </div>
+            </div>
+          </div>
+          <div class="wf-prio-section">
+            <div class="wf-prio-header">
+              <span class="wf-prio-badge">3</span>
+              <span class="wf-prio-title">Info</span>
+              <span class="wf-prio-sub">Til orientering</span>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Ny booking: Performance 1600 — Erik Hansen</div>
+                <div class="wf-notif-desc">Torsdag 18. april 14:00 · Anders K.</div>
+                <div class="wf-notif-meta">Booking · 25 min siden</div>
+              </div>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Booking kansellert: Flex 20 — Lars Berg</div>
+                <div class="wf-notif-desc">Onsdag 16. april 10:00 · årsak: sykdom</div>
+                <div class="wf-notif-meta">Booking · 3 timer siden</div>
+              </div>
+            </div>
+            <div class="wf-notif">
+              <div class="wf-notif-body">
+                <div class="wf-notif-title">Ny innbetaling: 1.600 kr — Nora Torp</div>
+                <div class="wf-notif-desc">Performance 1600 · abonnement fornyet</div>
+                <div class="wf-notif-meta">Fakturering · 1 dag siden</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Prioritetsinndeling:</strong> Tvinger brukeren til å håndtere haster-først.</li>
+        <li><strong>2 — Tellere per prioritet:</strong> Gir umiddelbar oversikt over arbeidsmengde.</li>
+        <li>Utsatt-knapp finnes kun på Haster og Viktig — Info krever ikke handling.</li>
+        <li>Fargekoding på badge er standard i operasjonssentre.</li>
+        <li>Bra for høy-volum-brukere som mottar mange varsler daglig.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: RULE BUILDER ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Alternativ 3: <span class="opt-name">Regelbygger</span></h2>
+    <p class="option-description">Bygg egne varsleregler — når X skjer, send varsel til Y via Z, med betingelser.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/notifications</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Varsler</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Varselsregler — 6 aktive · 2 på pause</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">+ Ny regel</span>
+              <span class="wf-rep-filter">Alle ▾</span>
+            </div>
+          </div>
+          <div class="wf-rep-card wf-span-12">
+            <div class="wf-card-head"><span>Aktive regler</span></div>
+            <table class="wf-table">
+              <tr><th>Navn</th><th>Trigger</th><th>Betingelse</th><th>Kanal</th><th>Mottaker</th><th>Status</th></tr>
+              <tr>
+                <td><strong>No-show varsel</strong></td>
+                <td>No-show rate > 3%</td>
+                <td>2 dager på rad</td>
+                <td>E-post + SMS</td>
+                <td>Anders</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+              </tr>
+              <tr>
+                <td><strong>Ny booking</strong></td>
+                <td>Booking opprettet</td>
+                <td>Beløp > 1.000 kr</td>
+                <td>E-post</td>
+                <td>Anders, Markus</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+              </tr>
+              <tr>
+                <td><strong>Betalingsforsinkelse</strong></td>
+                <td>Betaling > 14 dager</td>
+                <td>—</td>
+                <td>E-post</td>
+                <td>Anders</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+              </tr>
+              <tr>
+                <td><strong>Simulator vedlikehold</strong></td>
+                <td>Kalibrering avvik > 5%</td>
+                <td>—</td>
+                <td>E-post + Slack</td>
+                <td>Anders</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+              </tr>
+              <tr>
+                <td><strong>Månedsrapport</strong></td>
+                <td>1. hver måned</td>
+                <td>—</td>
+                <td>E-post</td>
+                <td>Anders, regnskap</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+              </tr>
+              <tr>
+                <td><strong>Inaktiv elev</strong></td>
+                <td>Ingen booking > 21 dager</td>
+                <td>Abonnement = aktivt</td>
+                <td>E-post</td>
+                <td>Anders</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+              </tr>
+            </table>
+          </div>
+          <div class="wf-rep-card wf-span-12" style="margin-top:10px;">
+            <div class="wf-card-head"><span>Regel: No-show varsel · rediger</span></div>
+            <div class="wf-rule-builder">
+              <div class="wf-rule-row">
+                <span class="wf-rule-label">NÅR</span>
+                <span class="wf-query-pill">No-show rate > 3%</span>
+                <span class="wf-query-pill">2 dager på rad</span>
+              </div>
+              <div class="wf-rule-row">
+                <span class="wf-rule-label">SÅ SEND</span>
+                <span class="wf-query-pill">E-post til Anders</span>
+                <span class="wf-query-pill">+ SMS til Anders</span>
+              </div>
+              <div class="wf-rule-row">
+                <span class="wf-rule-label">MELDING</span>
+                <span style="flex:1;font-size:11px;color:#555;background:#fff;border:1px solid #eee;border-radius:3px;padding:6px 8px;">No-show rate er nå {{rate}}%. Siste 7 dager: {{count}} av {{total}} elever. Vurder oppfølging.</span>
+              </div>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:6px;">
+              <span class="wf-rep-filter wf-rep-filter-primary">Lagre regel</span>
+              <span class="wf-rep-filter">Kjør test</span>
+              <span class="wf-rep-filter">Slett</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Regelbygger:</strong> Gir full kontroll over hva som trigges og hvordan.</li>
+        <li><strong>2 — "Når + så send + melding":</strong> Intuitivt format som er lett å forstå.</li>
+        <li>Test-knapp lar brukeren verifisere regelen før den aktiveres.</li>
+        <li>Tabell med alle regler gir oversikt og rask redigering.</li>
+        <li>Bra for avanserte brukere — krever forståelse av data og logikk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: SNOOZE QUEUE ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Alternativ 4: <span class="opt-name">Utsatt-kø</span></h2>
+    <p class="option-description">Varsler du har utsatt — kommer tilbake når du har tid. Planlegg når du vil håndtere.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/notifications</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Varsler</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Utsatt-kø — 4 varsler</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Alle ▾</span>
+              <span class="wf-rep-filter">Håndter alle</span>
+            </div>
+          </div>
+          <div class="wf-rep-grid">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Kommer i dag</span></div>
+              <div class="wf-snooze-item">
+                <div class="wf-snooze-title">Simulator 1 krever kalibrering</div>
+                <div class="wf-snooze-meta">Utsatt til 14:00 i dag · Drift</div>
+                <div class="wf-snooze-actions">
+                  <span class="wf-rep-filter wf-rep-filter-primary">Håndter nå</span>
+                  <span class="wf-rep-filter">Utsatt 1 time</span>
+                </div>
+              </div>
+              <div class="wf-snooze-item">
+                <div class="wf-snooze-title">Månedsrapport april er klar</div>
+                <div class="wf-snooze-meta">Utsatt til 16:00 i dag · Rapporter</div>
+                <div class="wf-snooze-actions">
+                  <span class="wf-rep-filter wf-rep-filter-primary">Se nå</span>
+                  <span class="wf-rep-filter">Utsatt 1 dag</span>
+                </div>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Kommer senere</span></div>
+              <div class="wf-snooze-item">
+                <div class="wf-snooze-title">Oppdater priser på nettsiden</div>
+                <div class="wf-snooze-meta">Utsatt til mandag · Nettside</div>
+                <div class="wf-snooze-actions">
+                  <span class="wf-rep-filter wf-rep-filter-primary">Håndter nå</span>
+                  <span class="wf-rep-filter">Utsatt 1 uke</span>
+                </div>
+              </div>
+              <div class="wf-snooze-item">
+                <div class="wf-snooze-title">Se gjennom ansatt-tilbakemeldinger</div>
+                <div class="wf-snooze-meta">Utsatt til neste uke · HR</div>
+                <div class="wf-snooze-actions">
+                  <span class="wf-rep-filter wf-rep-filter-primary">Håndter nå</span>
+                  <span class="wf-rep-filter">Utsatt 1 uke</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wf-rep-card wf-span-12" style="margin-top:10px;">
+            <div class="wf-card-head"><span>Utsatt-historikk</span></div>
+            <table class="wf-table">
+              <tr><th>Varsel</th><th>Utsatt fra</th><th>Til</th><th>Status</th></tr>
+              <tr><td>Betalingsforsinkelse — Erik H.</td><td>15. apr 09:00</td><td>15. apr 14:00</td><td>Håndtert</td></tr>
+              <tr><td>Timeplan-endring Markus</td><td>14. apr 10:00</td><td>14. apr 12:00</td><td>Håndtert</td></tr>
+              <tr><td>Ny elev-registrering</td><td>12. apr 16:00</td><td>13. apr 09:00</td><td>Håndtert</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Utsatt-kø:</strong> Gir brukeren kontroll over når de vil håndtere varsler.</li>
+        <li><strong>2 — Tidskontekst:</strong> "Kommer i dag" vs "Kommer senere" gir struktur.</li>
+        <li>Utsatt-historikk viser at utsatt ikke betyr glemt.</li>
+        <li>Håndter nå / Utsatt-knapper gir fleksibilitet.</li>
+        <li>Bra for brukere med mange avbrytelser — utsatt = fokusbevaring.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: DIGEST MODE ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Alternativ 5: <span class="opt-name">Oppsummering</span></h2>
+    <p class="option-description">Samlede oppsummeringer — morgen, uke, måned — i stedet for enkeltvarsler.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">akgolf.no/portal/admin/notifications</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Varsler</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Dagens oppsummering — 17. april</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Daglig ▾</span>
+              <span class="wf-rep-filter">Ukentlig</span>
+              <span class="wf-rep-filter">Månedlig</span>
+            </div>
+          </div>
+          <div class="wf-digest">
+            <div class="wf-digest-section">
+              <div class="wf-digest-label">Bookinger</div>
+              <div class="wf-digest-row"><span>3 nye bookinger</span><span>Erik H., Nora T., Lars B.</span></div>
+              <div class="wf-digest-row"><span>1 kansellering</span><span>Lars B. · sykdom</span></div>
+              <div class="wf-digest-row"><span>2 endringer</span><span>Markus flyttet 3 timer</span></div>
+            </div>
+            <div class="wf-digest-section">
+              <div class="wf-digest-label">Økonomi</div>
+              <div class="wf-digest-row"><span>Inntekt hittil</span><span>12.400 kr · 4 betalinger</span></div>
+              <div class="wf-digest-row"><span>1 forsinket betaling</span><span>Sofie Lund · 1.800 kr</span></div>
+            </div>
+            <div class="wf-digest-section">
+              <div class="wf-digest-label">Drift</div>
+              <div class="wf-digest-row"><span>No-show rate</span><span>3,2% · 1 av 31 i dag</span></div>
+              <div class="wf-digest-row"><span>Simulator-status</span><span>Sim 1 krever kalibrering</span></div>
+            </div>
+            <div class="wf-digest-section">
+              <div class="wf-digest-label">Elevaktivitet</div>
+              <div class="wf-digest-row"><span>1 ny registrering</span><span>Kari Nordmann · Junior 12+</span></div>
+              <div class="wf-digest-row"><span>2 inaktive elever</span><span>Erik H., Nora T. · 21+ dager</span></div>
+            </div>
+          </div>
+          <div class="wf-rep-card wf-span-12" style="margin-top:10px;">
+            <div class="wf-card-head"><span>Oppsummeringsinnstillinger</span></div>
+            <div class="wf-config-row"><span>Daglig oppsummering</span><span class="wf-config-toggle wf-config-on"></span></div>
+            <div class="wf-config-row"><span>Ukentlig oppsummering</span><span class="wf-config-toggle wf-config-on"></span></div>
+            <div class="wf-config-row"><span>Månedlig oppsummering</span><span class="wf-config-toggle"></span></div>
+            <div class="wf-config-row"><span>Tidspunkt</span><span class="wf-config-val">08:00 ▾</span></div>
+            <div class="wf-config-row"><span>Kanal</span><span class="wf-config-val">E-post ▾</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Oppsummering:</strong> Reduserer varsel-overveldelse dramatisk.</li>
+        <li><strong>2 — Kategori-seksjoner:</strong> Bookinger/Økonomi/Drift/Elev gir struktur.</li>
+        <li>Enkeltvarsler erstattes med "3 nye bookinger" i stedet for 3 separate.</li>
+        <li>Innstillinger for frekvens og kanal gir brukerkontroll.</li>
+        <li>Bra for brukere som hater varsling-støy — alt på en gang.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering & anbefaling</h2>
+    <p class="option-description">Fem retninger for MC Varsler — valget avhenger av om brukeren vil se alt, prioritere, kontrollere, utsette eller oppsummere.</p>
+    <table class="wf-summary-table">
+      <thead><tr><th>Alternativ</th><th>Filosofi</th><th>Hurtighet</th><th>Skalerbarhet</th><th>Kompleksitet</th><th>Score</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Innboks</strong></td><td>Kronologisk, alt på ett sted</td><td>Høy</td><td>Middels</td><td>Lav</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Prioritet</strong></td><td>Hastegrad først</td><td>Høy</td><td>Høy</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Regelbygger</strong></td><td>Tilpassede varsleregler</td><td>Middels</td><td>Høy</td><td>Høy</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>4. Utsatt-kø</strong></td><td>Planlegg når du håndterer</td><td>Høy</td><td>Middels</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>5. Oppsummering</strong></td><td>Samlede sammendrag</td><td>Høy</td><td>Høy</td><td>Lav</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Alternativ 1 — Innboks</h3>
+      <p>Innboksen er den trygge standarden fordi alle forstår den. Den gir kronologisk oversikt, støtter handlinger per varsel, og er lett å utvide med kategorier. Den kombineres godt med Alternativ 2 (Prioritet for høy-volum-brukere) og Alternativ 5 (Oppsummering for de som vil ha alt på en gang).</p>
+    </div>
+  </div>
+</div>
+
+<footer class="skill-footer">This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) { if (getComputedStyle(b).display !== 'none') anyVisible = true; });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) { banner.style.display = 'block'; setTimeout(function() { banner.style.display = 'none'; }, 8000); }
+    }
+  });
+})();
+</script>
+</body>
+</html>

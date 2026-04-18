@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Agenter — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visuelle design fullfort — alle alternativer har Clean + Polished varianter
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">MC Agenter</span> — <span id="project-name">AK Golf Platform · Admin</span></span>
+    <span class="rec">★ Anbefalt: Alternativ <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Dashboard</button>
+    <button class="tab-btn" data-tab="option-2">2: Arbeidsflyt</button>
+    <button class="tab-btn" data-tab="option-3">3: Verktoy</button>
+    <button class="tab-btn" data-tab="option-4">4: Kjoringer</button>
+    <button class="tab-btn" data-tab="option-5">5: Konfigurasjon</button>
+    <button class="tab-btn" data-tab="summary">Sammendrag</button>
+  </nav>
+
+  <!-- ===== OPTION 1: AGENT DASHBOARD ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Alternativ 1: <span class="opt-name">Dashboard</span></h2>
+    <p class="option-description">Oversikt over alle agenter — status, kjoringer, feilrate og ytelse i ett blikk.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/agenter</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Agenter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Agenter — oversikt</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">+ Ny agent</span>
+              <span class="wf-rep-filter">Alle ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-kpi-row">
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">AKTIVE AGENTER</div>
+              <div class="wf-kpi-value">6</div>
+              <div class="wf-kpi-delta">4 system · 2 egendefinert</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">KJORINGER I DAG</div>
+              <div class="wf-kpi-value">142</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">98,6% vellykket</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">GJENNOMSNITTSVAR</div>
+              <div class="wf-kpi-value">0,8s</div>
+              <div class="wf-kpi-delta">siste 24 timer</div>
+            </div>
+            <div class="wf-kpi">
+              <div class="wf-kpi-label">FEIL SISTE 7 DAGER</div>
+              <div class="wf-kpi-value">3</div>
+              <div class="wf-kpi-delta wf-kpi-delta-pos">0,3% feilrate</div>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12">
+            <div class="wf-card-head">
+              <span>Alle agenter</span>
+            </div>
+            <table class="wf-table">
+              <tr><th>Agent</th><th>Type</th><th>Status</th><th>Kjoringer (24t)</th><th>Feil</th><th>Gj.snitt (s)</th><th>Sist aktiv</th></tr>
+              <tr>
+                <td><strong>Booking-assistent</strong></td>
+                <td>System</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+                <td class="wf-num">48</td>
+                <td class="wf-num">0</td>
+                <td class="wf-num">0,4</td>
+                <td>2 min siden</td>
+              </tr>
+              <tr>
+                <td><strong>Inntektsrapport</strong></td>
+                <td>System</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+                <td class="wf-num">12</td>
+                <td class="wf-num">0</td>
+                <td class="wf-num">1,2</td>
+                <td>1 time siden</td>
+              </tr>
+              <tr>
+                <td><strong>Elev-opplaring</strong></td>
+                <td>Egendefinert</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+                <td class="wf-num">24</td>
+                <td class="wf-num">1</td>
+                <td class="wf-num">2,1</td>
+                <td>15 min siden</td>
+              </tr>
+              <tr>
+                <td><strong>Paminnelse-sender</strong></td>
+                <td>System</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+                <td class="wf-num">36</td>
+                <td class="wf-num">0</td>
+                <td class="wf-num">0,3</td>
+                <td>5 min siden</td>
+              </tr>
+              <tr>
+                <td><strong>Win-back-kampanje</strong></td>
+                <td>Egendefinert</td>
+                <td><span class="wf-tag">Pause</span></td>
+                <td class="wf-num">0</td>
+                <td class="wf-num">0</td>
+                <td class="wf-num">—</td>
+                <td>3 dager siden</td>
+              </tr>
+              <tr>
+                <td><strong>Kalender-sync</strong></td>
+                <td>System</td>
+                <td><span class="wf-tag wf-tag-live">Aktiv</span></td>
+                <td class="wf-num">22</td>
+                <td class="wf-num">2</td>
+                <td class="wf-num">0,6</td>
+                <td>8 min siden</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="wf-rep-grid" style="margin-top:10px;">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Kjoringer per time (24t)</span></div>
+              <div class="wf-chart">[ linjediagram · 24 timer · alle agenter ]</div>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Feil-logg siste 7 dager</span></div>
+              <ul class="wf-list">
+                <li><span>Elev-opplaring: API-timeout</span><span>15. apr</span></li>
+                <li><span>Kalender-sync: Google 403</span><span>14. apr</span></li>
+                <li><span>Kalender-sync: Google 403</span><span>12. apr</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Agent-dashboard gir systemadministrator oversikt pa ett blikk.</li>
+        <li>Feil-logg synlig pa samme side — rask feilsoking.</li>
+        <li>KPI-rad viser total helse: aktivitet, suksessrate, fart, stabilitet.</li>
+        <li>Tabell med status, kjoringer og feil gir rask scanning.</li>
+        <li>Trygg default for driftoversikt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: WORKFLOW BUILDER ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Alternativ 2: <span class="opt-name">Arbeidsflyt</span></h2>
+    <p class="option-description">Visuell node-basert bygger for agent-arbeidsflyter — drag, connect, konfigurer.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/agenter</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Agenter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Arbeidsflyt: Paminnelse-sender</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Lagre</span>
+              <span class="wf-rep-filter">Kjor test</span>
+              <span class="wf-rep-filter">Versjoner ▾</span>
+            </div>
+          </div>
+
+          <div class="wf-workflow-canvas">
+            <div class="wf-wf-node wf-wf-start">
+              <div class="wf-wf-title">Start</div>
+              <div class="wf-wf-desc">Hver dag 18:00</div>
+            </div>
+            <div class="wf-wf-arrow">→</div>
+            <div class="wf-wf-node">
+              <div class="wf-wf-title">Hent bookinger</div>
+              <div class="wf-wf-desc">imorgen · status = bekreftet</div>
+            </div>
+            <div class="wf-wf-arrow">→</div>
+            <div class="wf-wf-node wf-wf-branch">
+              <div class="wf-wf-title">For hver elev</div>
+            </div>
+            <div class="wf-wf-branch-line">
+              <div class="wf-wf-node wf-wf-small">
+                <div class="wf-wf-title">Sjekk preferanse</div>
+                <div class="wf-wf-desc">SMS vs e-post</div>
+              </div>
+              <div class="wf-wf-arrow">→</div>
+              <div class="wf-wf-node wf-wf-small">
+                <div class="wf-wf-title">Generer melding</div>
+                <div class="wf-wf-desc">personlig tekst</div>
+              </div>
+              <div class="wf-wf-arrow">→</div>
+              <div class="wf-wf-node wf-wf-small">
+                <div class="wf-wf-title">Send</div>
+                <div class="wf-wf-desc">via valgt kanal</div>
+              </div>
+              <div class="wf-wf-arrow">→</div>
+              <div class="wf-wf-node wf-wf-small">
+                <div class="wf-wf-title">Logg</div>
+                <div class="wf-wf-desc">status + tid</div>
+              </div>
+            </div>
+            <div class="wf-wf-arrow">↓</div>
+            <div class="wf-wf-node wf-wf-end">
+              <div class="wf-wf-title">Fullfor</div>
+              <div class="wf-wf-desc">rapport sendt</div>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12" style="margin-top:10px;">
+            <div class="wf-card-head"><span>Tilgjengelige noder</span></div>
+            <div class="wf-wf-palette">
+              <span class="wf-wf-pill">Trigger</span>
+              <span class="wf-wf-pill">Database</span>
+              <span class="wf-wf-pill">Betingelse</span>
+              <span class="wf-wf-pill">Lokke</span>
+              <span class="wf-wf-pill">E-post</span>
+              <span class="wf-wf-pill">SMS</span>
+              <span class="wf-wf-pill">API-kall</span>
+              <span class="wf-wf-pill">Vent</span>
+              <span class="wf-wf-pill">Logg</span>
+              <span class="wf-wf-pill">Feilhandtering</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Node-basert bygger er standard for arbeidsflyt — lett a forsta flyt.</li>
+        <li>Lokke-gren (for hver elev) viser iterativ logikk visuelt.</li>
+        <li>Node-palett nederst tillater drag-and-drop.</li>
+        <li>Lagre / Kjor test / Versjoner gir trygghet og kontroll.</li>
+        <li>Bra for avanserte brukere — krever logisk tenkning.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: TOOL INVENTORY ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Alternativ 3: <span class="opt-name">Verktoy</span></h2>
+    <p class="option-description">Oversikt over alle tilgjengelige verktoy — aktiver, konfigurer og overvak integrasjoner.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/agenter</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Agenter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Verktoy — 12 tilgjengelige · 8 aktive</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Alle ▾</span>
+              <span class="wf-rep-filter">+ Legg til tilpasset</span>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid">
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>Database</span>
+                <span class="wf-tag wf-tag-live">Aktiv</span>
+              </div>
+              <div class="wf-card-meta">Les/skriv elevdata, bookinger, inntekt</div>
+              <div class="wf-tool-stats">
+                <span>142 kjoringer</span>
+                <span>0,2s snitt</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>E-post</span>
+                <span class="wf-tag wf-tag-live">Aktiv</span>
+              </div>
+              <div class="wf-card-meta">Send og motta e-post via SMTP</div>
+              <div class="wf-tool-stats">
+                <span>68 kjoringer</span>
+                <span>0,8s snitt</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>SMS</span>
+                <span class="wf-tag wf-tag-live">Aktiv</span>
+              </div>
+              <div class="wf-card-meta">Send SMS via Twilio</div>
+              <div class="wf-tool-stats">
+                <span>36 kjoringer</span>
+                <span>0,5s snitt</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>Google Kalender</span>
+                <span class="wf-tag wf-tag-live">Aktiv</span>
+              </div>
+              <div class="wf-card-meta">Synkroniser bookinger med kalender</div>
+              <div class="wf-tool-stats">
+                <span>22 kjoringer</span>
+                <span>1,1s snitt</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>Stripe</span>
+                <span class="wf-tag wf-tag-live">Aktiv</span>
+              </div>
+              <div class="wf-card-meta">Betalinger, refund, faktura</div>
+              <div class="wf-tool-stats">
+                <span>48 kjoringer</span>
+                <span>0,6s snitt</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>Slack</span>
+                <span class="wf-tag">Inaktiv</span>
+              </div>
+              <div class="wf-card-meta">Send varsler til Slack-kanal</div>
+              <div class="wf-tool-stats">
+                <span>0 kjoringer</span>
+                <span>—</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>Notion</span>
+                <span class="wf-tag">Inaktiv</span>
+              </div>
+              <div class="wf-card-meta">Synkroniser med Notion-database</div>
+              <div class="wf-tool-stats">
+                <span>0 kjoringer</span>
+                <span>—</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-4">
+              <div class="wf-card-head">
+                <span>Web-sok</span>
+                <span class="wf-tag wf-tag-live">Aktiv</span>
+              </div>
+              <div class="wf-card-meta">Sok og hent data fra nettsider</div>
+              <div class="wf-tool-stats">
+                <span>12 kjoringer</span>
+                <span>3,2s snitt</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kort-basert layout gir rask scanning av mange verktoy.</li>
+        <li>Aktiv/Inaktiv-status synlig pa hvert kort.</li>
+        <li>Kjoringer + snitt-var gir ytelsesinnsikt per integrasjon.</li>
+        <li>"+ Legg til tilpasset" apner for egne MCP-verktoy.</li>
+        <li>Bra for administratorer som handterer integrasjoner.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: RUN HISTORY ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Alternativ 4: <span class="opt-name">Kjoringer</span></h2>
+    <p class="option-description">Detaljert logg over alle agent-kjoringer — tidsstempel, inndata, utdata og feil.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/agenter</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Agenter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Kjoringslogg — siste 100</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Alle agenter ▾</span>
+              <span class="wf-rep-filter">Vellykket</span>
+              <span class="wf-rep-filter">Feil</span>
+              <span class="wf-rep-filter">Eksporter</span>
+            </div>
+          </div>
+
+          <div class="wf-rep-card wf-span-12">
+            <table class="wf-table">
+              <tr><th>Tid</th><th>Agent</th><th>Trigger</th><th>Varighet</th><th>Status</th><th></th></tr>
+              <tr>
+                <td>17. apr 18:05:12</td>
+                <td>Paminnelse-sender</td>
+                <td>Planlagt</td>
+                <td class="wf-num">0,4s</td>
+                <td><span class="wf-tag wf-tag-live">OK</span></td>
+                <td>→</td>
+              </tr>
+              <tr>
+                <td>17. apr 18:05:10</td>
+                <td>Paminnelse-sender</td>
+                <td>Planlagt</td>
+                <td class="wf-num">0,3s</td>
+                <td><span class="wf-tag wf-tag-live">OK</span></td>
+                <td>→</td>
+              </tr>
+              <tr>
+                <td>17. apr 17:32:04</td>
+                <td>Booking-assistent</td>
+                <td>API-kall</td>
+                <td class="wf-num">0,2s</td>
+                <td><span class="wf-tag wf-tag-live">OK</span></td>
+                <td>→</td>
+              </tr>
+              <tr>
+                <td>17. apr 16:15:00</td>
+                <td>Elev-opplaring</td>
+                <td>Bruker</td>
+                <td class="wf-num">2,1s</td>
+                <td><span class="wf-tag">Advarsel</span></td>
+                <td>→</td>
+              </tr>
+              <tr>
+                <td>17. apr 15:00:00</td>
+                <td>Inntektsrapport</td>
+                <td>Planlagt</td>
+                <td class="wf-num">1,2s</td>
+                <td><span class="wf-tag wf-tag-live">OK</span></td>
+                <td>→</td>
+              </tr>
+              <tr>
+                <td>17. apr 14:45:22</td>
+                <td>Kalender-sync</td>
+                <td>Webhook</td>
+                <td class="wf-num">0,6s</td>
+                <td><span class="wf-tag wf-tag-live">OK</span></td>
+                <td>→</td>
+              </tr>
+              <tr>
+                <td>17. apr 12:30:00</td>
+                <td>Booking-assistent</td>
+                <td>API-kall</td>
+                <td class="wf-num">0,5s</td>
+                <td><span class="wf-tag wf-tag-live">OK</span></td>
+                <td>→</td>
+              </tr>
+              <tr>
+                <td>17. apr 10:00:00</td>
+                <td>Stripe</td>
+                <td>Webhook</td>
+                <td class="wf-num">0,3s</td>
+                <td><span class="wf-tag wf-tag-live">OK</span></td>
+                <td>→</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="wf-rep-card wf-span-12" style="margin-top:10px;">
+            <div class="wf-card-head">
+              <span>Kjoring: Elev-opplaring · 17. apr 16:15</span>
+              <span class="wf-card-meta">Advarsel · API-timeout etter 2s</span>
+            </div>
+            <div class="wf-run-detail">
+              <div><strong>Inndata:</strong> elev_id = 42, modul = "rapporter"</div>
+              <div><strong>Steg:</strong> Hent data → Generer svar → <span style="color:#b84233">Timeout ved API-kall</span></div>
+              <div><strong>Utdata:</strong> Delvis svar — rapporter vist, men ikke graf</div>
+              <div><strong>Handtering:</strong> Retry etter 5s → OK</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kjoringslogg er kritisk for feilsoking og audit.</li>
+        <li>Inndata/utdata/steg/utdata gir full sporbarhet.</li>
+        <li>Retry-logikk synlig — trygghet for at systemet handterer feil.</li>
+        <li>Filter pa vellykket/feil gir rask feilsoking.</li>
+        <li>Bra for utviklere og administratorer.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: CONFIG MODE ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Alternativ 5: <span class="opt-name">Konfigurasjon</span></h2>
+    <p class="option-description">Avansert konfigurasjon — prompts, modeller, tillatelser og grenser per agent.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">yourapp.com/portal/admin/agenter</div>
+        <div class="browser-controls">— □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-topbar">
+          <div class="wf-mc-logo">AK · Mission Control</div>
+          <div class="wf-mc-tabs">
+            <span class="wf-mc-tab">Oversikt</span>
+            <span class="wf-mc-tab">Elever</span>
+            <span class="wf-mc-tab">Bookinger</span>
+            <span class="wf-mc-tab">Kalender</span>
+            <span class="wf-mc-tab wf-mc-tab-active">Agenter</span>
+          </div>
+          <div class="wf-mc-profile">AK</div>
+        </div>
+        <div class="wf-mc-body">
+          <div class="wf-rep-head">
+            <div class="wf-rep-title">Konfigurer: Booking-assistent</div>
+            <div class="wf-rep-filters">
+              <span class="wf-rep-filter wf-rep-filter-primary">Lagre</span>
+              <span class="wf-rep-filter">Tilbakestill</span>
+              <span class="wf-rep-filter">Dupliser</span>
+            </div>
+          </div>
+
+          <div class="wf-rep-grid">
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Generelt</span></div>
+              <div class="wf-config-row">
+                <span>Navn</span>
+                <span class="wf-config-val">Booking-assistent</span>
+              </div>
+              <div class="wf-config-row">
+                <span>Beskrivelse</span>
+                <span class="wf-config-val">Hjelper med a finne og booke timer</span>
+              </div>
+              <div class="wf-config-row">
+                <span>Modell</span>
+                <span class="wf-config-val">GPT-4o ▾</span>
+              </div>
+              <div class="wf-config-row">
+                <span>Sprak</span>
+                <span class="wf-config-val">Norsk bokmal ▾</span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Grenser</span></div>
+              <div class="wf-config-row">
+                <span>Maks tokens</span>
+                <span class="wf-config-val">4.000 ▾</span>
+              </div>
+              <div class="wf-config-row">
+                <span>Temperatur</span>
+                <span class="wf-config-val">0,3 ▾</span>
+              </div>
+              <div class="wf-config-row">
+                <span>Timeout</span>
+                <span class="wf-config-val">10 sek ▾</span>
+              </div>
+              <div class="wf-config-row">
+                <span>Maks kjoringer/time</span>
+                <span class="wf-config-val">100 ▾</span>
+              </div>
+            </div>
+
+            <div class="wf-rep-card wf-span-12">
+              <div class="wf-card-head"><span>Systemprompt</span></div>
+              <div class="wf-config-prompt">
+Du er en booking-assistent for AK Golf Academy. Hjelper elever med a finne og booke coaching-timer. Du har tilgang til timeplan, tjenester og priser. Svar alltid pa norsk. Hvis en tid er opptatt, foreslar du alternativer. Nevn aldri andre elevers navn.
+              </div>
+            </div>
+
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Tillatelser</span></div>
+              <div class="wf-config-row">
+                <span>Lese timeplan</span>
+                <span class="wf-config-toggle wf-config-on"></span>
+              </div>
+              <div class="wf-config-row">
+                <span>Opprette booking</span>
+                <span class="wf-config-toggle wf-config-on"></span>
+              </div>
+              <div class="wf-config-row">
+                <span>Endre booking</span>
+                <span class="wf-config-toggle wf-config-on"></span>
+              </div>
+              <div class="wf-config-row">
+                <span>Kansellere booking</span>
+                <span class="wf-config-toggle"></span>
+              </div>
+              <div class="wf-config-row">
+                <span>Se inntekt</span>
+                <span class="wf-config-toggle"></span>
+              </div>
+            </div>
+            <div class="wf-rep-card wf-span-6">
+              <div class="wf-card-head"><span>Tilkoblede verktoy</span></div>
+              <div class="wf-config-row">
+                <span>Database</span>
+                <span class="wf-config-toggle wf-config-on"></span>
+              </div>
+              <div class="wf-config-row">
+                <span>E-post</span>
+                <span class="wf-config-toggle wf-config-on"></span>
+              </div>
+              <div class="wf-config-row">
+                <span>Kalender</span>
+                <span class="wf-config-toggle wf-config-on"></span>
+              </div>
+              <div class="wf-config-row">
+                <span>Stripe</span>
+                <span class="wf-config-toggle"></span>
+              </div>
+              <div class="wf-config-row">
+                <span>Slack</span>
+                <span class="wf-config-toggle"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Konfigurasjon er avansert — krever teknisk forstaelse.</li>
+        <li>Systemprompt synlig og redigerbar — kjerne i agent-adferd.</li>
+        <li>Tillatelser som toggles gir granulart sikkerhetsniva.</li>
+        <li>Grenser (tokens, timeout, rate) beskytter mot misbruk og kostnader.</li>
+        <li>Bra for administratorer og utviklere — ikke for sluttbrukere.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for MC Agenter — valget avhenger av om brukeren vil overvake, bygge, integrere, feilsoke eller konfigurere.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Dashboard</th><th>2: Flyt</th><th>3: Verktoy</th><th>4: Kjoringer</th><th>5: Konfig</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig overvakning</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Bygge nye agenter</td><td>Svak</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Integrasjonsstyring</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Feilsoking</td><td>Middels</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Sikkerhet/kontroll</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Larbarhet</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Svak</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Alternativ 1 — Dashboard</h3>
+    <p>Dashboard er den trygge standarden fordi det gir systemhelse pa ett blikk. For de fleste brukere er "er det oppe?" det viktigste sporsmalet. Dashboardet kombineres godt med Alternativ 4 (Kjoringer for feilsoking) og Alternativ 5 (Konfigurasjon for avanserte brukere).</p>
+
+    <h3>Nar velge hvilket</h3>
+    <ul>
+      <li><strong>Alternativ 1 (Dashboard):</strong> Default. Daglig overvakning av alle agenter.</li>
+      <li><strong>Alternativ 2 (Flyt):</strong> Nar du skal bygge eller endre agent-arbeidsflyter.</li>
+      <li><strong>Alternativ 3 (Verktoy):</strong> For a administrere integrasjoner og tilkoblinger.</li>
+      <li><strong>Alternativ 4 (Kjoringer):</strong> Ved feilsoking eller audit-behov.</li>
+      <li><strong>Alternativ 5 (Konfig):</strong> For avanserte brukere som vil justere oppforsel.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
