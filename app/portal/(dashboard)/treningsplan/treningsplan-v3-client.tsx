@@ -185,9 +185,8 @@ export function TrainingPlannerV3({
   );
 
   // Håndter duplisering
-  const handleDuplicate = useCallback((session: TrainingSession) => {
-    // TODO: Implementer duplisering
-    console.log("Dupliser:", session);
+  const handleDuplicate = useCallback((_session: TrainingSession) => {
+    // TODO: Implementer duplisering via server action
   }, []);
 
   // Håndter klikk på session (åpner detail modal)
@@ -242,11 +241,7 @@ export function TrainingPlannerV3({
 
   // Håndter legg til fra template
   const handleAddFromTemplate = useCallback(async (template: StandardTemplate, dayOfWeek: number) => {
-    // TODO: Implementere opprettelse av ny session fra template
-    // Dette krever en ny server action for å opprette session
-    console.log("Legg til template:", template, "på dag", dayOfWeek);
-    
-    // For nå, viser vi bare en melding - implementasjon krever ny server action
+    // TODO: Implementere opprettelse av ny session fra template via server action
     alert(`Økt "${template.title}" vil bli lagt til på ${DAY_NAMES[dayOfWeek].full}. Denne funksjonen krever backend-implementasjon.`);
   }, []);
 

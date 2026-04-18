@@ -1,18 +1,25 @@
 # Backlog — Prioritert gjenstående arbeid
 
-Sist oppdatert: 2026-04-15
+Sist oppdatert: 2026-04-18
 
 ## P1 — Kritisk (blokkerer produksjonskvalitet)
 
-*Ingen åpne P1-punkter.*
+- **Build-feil ved static export**: `/landing/contact` og `/admin/treningsplan/ny` feiler med "Cannot read properties of null (reading 'useContext')" under `npm run build`. Blokkerer go-live. Trolig React 19 / Next.js 16 SSG-issue med klient-komponenter. Se `docs/status/GO_LIVE_CHECKLIST.md` B1.
 
 ## P2 — Viktig (funksjonalitet mangler)
 
-*Ingen åpne P2-punkter.*
+- **Go-live (#39)**: Vercel-env-vars må settes, `prisma migrate deploy` må kjøres mot prod, DNS må verifiseres. Alt annet er klart. Se `docs/status/GO_LIVE_CHECKLIST.md`.
+- **`app/setup-admin/page.tsx`**: Eksponerer admin-opprettelse med hardkodet passord "anders". Må slettes eller guardes før produksjon.
 
 ## P3 — Forbedringer (kode-kvalitet)
 
-*Ingen åpne P3-punkter.*
+- **10 ESLint-errors pre-eksisterende** i:
+  - `app/portal/(dashboard)/dagbok/page.tsx` (impure function, `any`-typer)
+  - `components/portal/dagbok/weekly-stats.tsx` (create components during render x3)
+  - `components/portal/trackman/trackman-analytics-card.tsx` (impure function)
+  - `components/admin/analytics/revenue-chart.tsx` (prefer-const)
+- **86 lint-warnings** (ubrukte imports/vars) — kjør `npx eslint . --fix` hvor mulig.
+- **Notion-import (#41)**: Manuell import av `docs/notion-import-master-todo.json` til Notion-database.
 
 ## Nye ideer / neste kvartal
 
@@ -22,6 +29,13 @@ Sist oppdatert: 2026-04-15
 - Admin: Real-time Mission Board med WebSocket/SSE
 
 ## Fullfort
+
+### 2026-04-18
+- **E2E-dekning booking (#30):** 3 nye Playwright-spec-filer med totalt 28 nye test-cases (e2e/booking-cancel.spec.ts, e2e/portal-booking-auth.spec.ts, e2e/booking-errors.spec.ts). test:e2e-scripts lagt til i package.json.
+- **Go-live-sjekkliste:** `docs/status/GO_LIVE_CHECKLIST.md` opprettet med komplett env-vars-liste, CRON-verifisering, DNS, Stripe-webhook, smoke-test, rollback-plan.
+- **Notion-import JSON:** `docs/notion-import-master-todo.json` + `docs/notion-import-howto.md` (API- og CSV-import-metoder).
+- **Console.log ryddet opp** i 3 klient-filer (live-round-client, treningsplan-v3-client, setup-admin).
+- **Kvalitetssikring:** npx tsc --noEmit ren for alle nye spec-filer. pre-deploy-check passerer nå console.log-sjekken.
 
 ### 2026-04-15
 - **TrackMan analytics:** shot dispersion chart, session analytics card, real carry data

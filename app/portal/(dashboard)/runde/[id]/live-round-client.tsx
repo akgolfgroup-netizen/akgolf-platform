@@ -431,8 +431,7 @@ export function LiveRoundClient({
       <AnimatePresence>
         {showPreShot && (
           <PreShotRoutine
-            onComplete={(data) => {
-              console.log("Pre-shot routine completed:", data);
+            onComplete={() => {
               setShowPreShot(false);
             }}
             onClose={() => setShowPreShot(false)}

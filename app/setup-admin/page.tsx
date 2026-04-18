@@ -14,7 +14,6 @@ export default function SetupAdminPage() {
 
   const addLog = (msg: string) => {
     setLogs(prev => [...prev, msg]);
-    console.log(msg);
   };
 
   const createAdminUser = async () => {

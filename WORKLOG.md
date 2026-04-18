@@ -8,6 +8,45 @@
 
 ---
 
+## 2026-04-18 — E2E-dekning + Go-live-sjekkliste + Notion-import (autonom økt)
+
+**Jobbet med:**
+- **Fase 1 — E2E-dekning (Task 30 → Done):** 3 nye Playwright-spec-filer:
+  - `e2e/booking-cancel.spec.ts` — 6 tester (401-auth, 400-invalid, 404-not-found, idempotent cancel, UI cancel, refund-policy)
+  - `e2e/portal-booking-auth.spec.ts` — 14 tester (7 protected routes redirect, 3 API 401, logged-in flow, cross-user isolation)
+  - `e2e/booking-errors.spec.ts` — 8 tester (declined card, invalid serviceType, past startTime, rate limiting, validation errors)
+  - Totalt 44 test-cases (88 med chromium+firefox). `npx playwright test --list` passerer. TypeScript-ren.
+  - Lagt til `test:e2e`, `test:e2e:ui`, `test:e2e:headed` scripts i `package.json`.
+- **Fase 2 — Pre-deploy-fiks:** Kjørt `npm run pre-deploy`. Fjernet 3 `console.log`-kall fra klient-kode (`live-round-client.tsx`, `treningsplan-v3-client.tsx`, `setup-admin/page.tsx`). Console.log-sjekken er nå grønn.
+- **Fase 3 — GO_LIVE_CHECKLIST:** `docs/status/GO_LIVE_CHECKLIST.md` (12 seksjoner, ~400 linjer) — kjente blockers, pre-deploy, Vercel env-vars (40+ variabler kategorisert), DB-migrering, RLS-verifisering, 19 CRON-jobber, DNS, Stripe-webhook, monitoring, smoke-test, rollback, tids-estimat.
+- **Fase 4 — Notion-import (Task 41 forberedt):** `docs/notion-import-master-todo.json` (41 oppgaver, valid JSON) + `docs/notion-import-howto.md` med API- og CSV-import-metoder.
+- **Fase 5 — Status-oppdatering:** `MASTER_TODO_2026.csv` #30 flyttet til Done. `BACKLOG.md` oppdatert med P1 build-blocker (pre-eksisterende React 19/Next.js 16 useContext-feil på `/landing/contact` og `/admin/treningsplan/ny`) og P2 go-live-status.
+
+**Nøkkelfiler:**
+- `e2e/booking-cancel.spec.ts` (ny)
+- `e2e/portal-booking-auth.spec.ts` (ny)
+- `e2e/booking-errors.spec.ts` (ny)
+- `package.json` (test:e2e-scripts)
+- `app/portal/(dashboard)/runde/[id]/live-round-client.tsx` (console.log fjernet)
+- `app/portal/(dashboard)/treningsplan/treningsplan-v3-client.tsx` (console.log fjernet)
+- `app/setup-admin/page.tsx` (console.log fjernet)
+- `docs/status/GO_LIVE_CHECKLIST.md` (ny)
+- `docs/notion-import-master-todo.json` (ny)
+- `docs/notion-import-howto.md` (ny)
+- `docs/MASTER_TODO_2026.csv` (status-oppdatering)
+- `docs/status/BACKLOG.md` (P1 blocker lagt til)
+
+**Neste steg (Anders må utføre):**
+1. **P1 blocker:** Fiks `npm run build`-feilen — `/landing/contact` og `/admin/treningsplan/ny` feiler under static export med useContext null. Løsning: wrap klient-sider i server-komponent eller legg `dynamic = "force-dynamic"` i parent layout.
+2. **Slett eller guard** `app/setup-admin/page.tsx` (hardkodet admin-passord).
+3. **Kjør full e2e-suite** med dev-server + seedet DB: `npm run dev` i ett terminal, `npm run test:e2e` i et annet.
+4. **Sett Vercel env-vars** per `docs/status/GO_LIVE_CHECKLIST.md` seksjon 2.
+5. **Kjør database-migrering** mot produksjon: `npx prisma migrate deploy`.
+6. **Deploy** via `git push origin main` eller `vercel --prod`.
+7. **Notion-import** (valgfritt): Følg `docs/notion-import-howto.md`.
+
+---
+
 ## 2026-04-17 ~22:45 — Coaching Forecast Phase 2 steg 8–10 (UI + CRON)
 
 **Jobbet med:**

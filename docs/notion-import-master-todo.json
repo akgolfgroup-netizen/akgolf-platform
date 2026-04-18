@@ -1,0 +1,412 @@
+[
+  {
+    "ID": 1,
+    "Task": "Samle all design-dokumentasjon og tokens",
+    "Category": "Research",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 2,
+    "Notes": "Farger #ECF0EF/#D1F843/#005840, typografi, spacing, bento-grid prinsipper"
+  },
+  {
+    "ID": 2,
+    "Task": "Definer redesign-mål og data-visualiseringsstrategi",
+    "Category": "Research",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 3,
+    "Notes": "Hvilke data har vi? TrackMan, SG, coaching, runder, treningslogg"
+  },
+  {
+    "ID": 3,
+    "Task": "Redesign Dashboard v2 (ferdig)",
+    "Category": "Design",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 8,
+    "Notes": "Bento-grid, AI-insikt, ukens plan, neste booking"
+  },
+  {
+    "ID": 4,
+    "Task": "Redesign Treningsplan-siden",
+    "Category": "Design",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 10,
+    "Notes": "WeekDaySelector, DailySessionCard, WeekFocusCard, CoachingCard"
+  },
+  {
+    "ID": 5,
+    "Task": "Redesign Mine Bookinger-siden",
+    "Category": "Design",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 6,
+    "Notes": "Hero-kort neste booking, timeline, historikk, CTA #D1F843"
+  },
+  {
+    "ID": 6,
+    "Task": "Redesign Statistikk-siden",
+    "Category": "Design",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 8,
+    "Notes": "KPI-rad, SG-barer, AI-anbefaling, konsolidering"
+  },
+  {
+    "ID": 7,
+    "Task": "Redesign Kalender-siden",
+    "Category": "Design",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 5,
+    "Notes": "Apple Calendar-inspirert, fargekodede events, Google Calendar sync"
+  },
+  {
+    "ID": 8,
+    "Task": "Redesign Dagbok / Treningslogg",
+    "Category": "Design",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 8,
+    "Notes": "Streak-badges, aktivitetsheatmap, logging av økter"
+  },
+  {
+    "ID": 9,
+    "Task": "Redesign Coaching-historikk",
+    "Category": "Design",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 4,
+    "Notes": "Sesjonsliste, AI-oppsummering, notater fra trener"
+  },
+  {
+    "ID": 10,
+    "Task": "Redesign AI Coach-chat",
+    "Category": "Design",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 4,
+    "Notes": "Streaming-svar, hurtigspørsmål, kontekst fra brukerdata"
+  },
+  {
+    "ID": 11,
+    "Task": "Redesign Runde-tracking (scorecard)",
+    "Category": "Design",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 8,
+    "Notes": "Hull-for-hull, FW/GIR/putts, post-runde AI-analyse"
+  },
+  {
+    "ID": 12,
+    "Task": "Redesign TrackMan Data-siden",
+    "Category": "Design",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 6,
+    "Notes": "Klubbe-for-klubbe, trenddiagrammer, CSV-opplasting"
+  },
+  {
+    "ID": 13,
+    "Task": "Redesign Sammenligning / Benchmark",
+    "Category": "Design",
+    "Priority": "Low",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 4,
+    "Notes": "Peer SG-sammenligning, radar-diagram vs tour-snitt"
+  },
+  {
+    "ID": 14,
+    "Task": "Redesign Sosialt / Turneringer / Bag",
+    "Category": "Design",
+    "Priority": "Low",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 8,
+    "Notes": "Utfordringer, leaderboards, turneringsplan, utstyr"
+  },
+  {
+    "ID": 15,
+    "Task": "Design system-komponenter (kort, knapper, grafer)",
+    "Category": "Design",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "1",
+    "EstimatedHours": 10,
+    "Notes": "Hero-kort, stat-kort, AI-kort, plan-kort, data-kort"
+  },
+  {
+    "ID": 16,
+    "Task": "Treningsplanlegger — Notion Calendar-lignende UI",
+    "Category": "Feature",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "4,15",
+    "EstimatedHours": 16,
+    "Notes": "Drag & drop (dnd-kit), uke-/måned-visning, treningspyramide — treningsplan-v3-client.tsx"
+  },
+  {
+    "ID": 17,
+    "Task": "Treningsplanlegger — Øvelsesbank med filtrering",
+    "Category": "Feature",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "16",
+    "EstimatedHours": 8,
+    "Notes": "Favoritter, standardøkter, hurtigfilter, pyramide-filtrering — tester/øvelser med kategori-filter"
+  },
+  {
+    "ID": 18,
+    "Task": "Treningsplanlegger — L-M-PR logging per øvelse",
+    "Category": "Feature",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "16",
+    "EstimatedHours": 6,
+    "Notes": "Læringsfase, miljø, prestasjonsregistrering — SessionDetailModal.tsx har L-M-PR UI"
+  },
+  {
+    "ID": 19,
+    "Task": "Bygg MCP-agent: Treningsøvelse-generator",
+    "Category": "AI/MCP",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "2",
+    "EstimatedHours": 12,
+    "Notes": "Generer øvelser basert på svakhetsanalyse og coaching-notater — .claude/skills/training-exercise-generator/"
+  },
+  {
+    "ID": 20,
+    "Task": "Bygg MCP-agent: Drill-generator",
+    "Category": "AI/MCP",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "19",
+    "EstimatedHours": 8,
+    "Notes": "Spesifikke driller for putting, chipping, driving, jern — .claude/skills/drill-generator/"
+  },
+  {
+    "ID": 21,
+    "Task": "Bygg MCP-agent: Test-generator",
+    "Category": "AI/MCP",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "19",
+    "EstimatedHours": 8,
+    "Notes": "Skills-assessment tester (50-100-150, 9 hull challenge, etc.) — .claude/skills/test-generator/"
+  },
+  {
+    "ID": 22,
+    "Task": "Bygg MCP-agent: Treningsplan-generator",
+    "Category": "AI/MCP",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "19,20,21",
+    "EstimatedHours": 16,
+    "Notes": "12-ukers plan basert på AK-formelen, data, og mål — .claude/skills/training-plan-generator/"
+  },
+  {
+    "ID": 23,
+    "Task": "Bygg MCP-agent: Coaching-oppsummering",
+    "Category": "AI/MCP",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "19",
+    "EstimatedHours": 6,
+    "Notes": "AI-oppsummering av hver coaching-sesjon — .claude/skills/coaching-summary/"
+  },
+  {
+    "ID": 24,
+    "Task": "Bygg MCP-agent: Post-runde-analyse",
+    "Category": "AI/MCP",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "19",
+    "EstimatedHours": 6,
+    "Notes": "Anbefalinger etter runde basert på statistikk — .claude/skills/post-round-analysis/ (2026-04-17)"
+  },
+  {
+    "ID": 25,
+    "Task": "Forbedre dataviz: Dashboard grafer og trender",
+    "Category": "DataViz",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "3,12",
+    "EstimatedHours": 8,
+    "Notes": "Recharts AreaChart (handicap-trend), donut chart (økt-fordeling), radar chart (SG) — 2026-04-17"
+  },
+  {
+    "ID": 26,
+    "Task": "Forbedre dataviz: Statistikk SG-breakdown",
+    "Category": "DataViz",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "6",
+    "EstimatedHours": 6,
+    "Notes": "Horisontale barer, radar-diagram, fargekoding"
+  },
+  {
+    "ID": 27,
+    "Task": "Forbedre dataviz: TrackMan-trender",
+    "Category": "DataViz",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "12",
+    "EstimatedHours": 6,
+    "Notes": "Waveforms, klubbe-sammenligning, carry-trender"
+  },
+  {
+    "ID": 28,
+    "Task": "Booking — dynamisk slot-telling fra smart-slots",
+    "Category": "Booking",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 4,
+    "Notes": "Fikset: availableSlotsThisWeek er nå optional"
+  },
+  {
+    "ID": 29,
+    "Task": "Booking — idempotency keys på refusjoner",
+    "Category": "Booking",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 2,
+    "Notes": "Stripe webhook deduplisering — lib/portal/booking/refund.ts"
+  },
+  {
+    "ID": 30,
+    "Task": "Booking — staging-test og verifisering",
+    "Category": "Booking",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "28,29",
+    "EstimatedHours": 4,
+    "Notes": "Playwright: booking.spec.ts + booking-cancel.spec.ts + portal-booking-auth.spec.ts + booking-errors.spec.ts (44 test-cases) — 2026-04-18"
+  },
+  {
+    "ID": 31,
+    "Task": "Auth-sider — visuell Synex-finish",
+    "Category": "Auth",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 4,
+    "Notes": "Login, register, forgot-password med #ECF0EF og #005840"
+  },
+  {
+    "ID": 32,
+    "Task": "Academy-siden — aktiver abonnementsknapper",
+    "Category": "Marketing",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 3,
+    "Notes": "Preselected service/pakke til booking"
+  },
+  {
+    "ID": 33,
+    "Task": "Priser-siden — dynamisk prising fra Stripe",
+    "Category": "Marketing",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 4,
+    "Notes": "Henter fra stripe/products.ts og website-constants"
+  },
+  {
+    "ID": 34,
+    "Task": "Lanseringskampanje — plattform-lansering",
+    "Category": "Marketing",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 6,
+    "Notes": "6 poster, e-postmal, LinkedIn, Instagram/Facebook"
+  },
+  {
+    "ID": 35,
+    "Task": "SEO og meta-tagger for alle landingssider",
+    "Category": "Marketing",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 4,
+    "Notes": "Meta-titler, beskrivelser, Open Graph, Twitter cards — 10 sider oppdatert 2026-04-17"
+  },
+  {
+    "ID": 36,
+    "Task": "Admin Mission Control — ferdigstille dashboard",
+    "Category": "Admin",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 8,
+    "Notes": "Mørk sidebar, hub, forbered/gjennomfør/følg opp"
+  },
+  {
+    "ID": 37,
+    "Task": "Admin — kalender og tilgjengelighet",
+    "Category": "Admin",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "36",
+    "EstimatedHours": 6,
+    "Notes": "Coach-kalender (uke-/måned-visning), kapasitet, tilgjengelighetsstyring, heatmap — 9 komponenter 2026-04-17"
+  },
+  {
+    "ID": 38,
+    "Task": "Admin — elever og analytics",
+    "Category": "Admin",
+    "Priority": "Normal",
+    "Status": "Done",
+    "DependsOn": "36",
+    "EstimatedHours": 8,
+    "Notes": "Elevliste, progresjon, rapporter, forecast-tab"
+  },
+  {
+    "ID": 39,
+    "Task": "Deploy og go-live",
+    "Category": "DevOps",
+    "Priority": "High",
+    "Status": "Pending",
+    "DependsOn": "30,31,32,33",
+    "EstimatedHours": 4,
+    "Notes": "Vercel-prosjekt konfigurert (prj_1m2Bfcs0S0omd0OfPLMoBRSmf3J9). Sjekkliste klar: docs/status/GO_LIVE_CHECKLIST.md. Kritisk blocker: build feiler på /landing/contact og /admin/treningsplan/ny."
+  },
+  {
+    "ID": 40,
+    "Task": "Coaching Forecast — motor + API + UI",
+    "Category": "Analytics",
+    "Priority": "High",
+    "Status": "Done",
+    "DependsOn": "",
+    "EstimatedHours": 20,
+    "Notes": "SG-beregning, Monte-Carlo, MC UI, portal UI, CRON backtest — fullført 2026-04-17"
+  },
+  {
+    "ID": 41,
+    "Task": "Notion-database for master-todo",
+    "Category": "Operations",
+    "Priority": "Low",
+    "Status": "Pending",
+    "DependsOn": "",
+    "EstimatedHours": 2,
+    "Notes": "JSON-eksport klar: docs/notion-import-master-todo.json. Import via Notion UI — se docs/notion-import-howto.md"
+  }
+]
