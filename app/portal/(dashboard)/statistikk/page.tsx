@@ -6,6 +6,7 @@ import {
   getWeeklyTrainingVolume,
   getLatestHandicap,
   getGolfProfileSummary,
+  getHcpForecast,
 } from "./actions";
 import { StatistikkClient } from "./statistikk-client";
 import type { PeriodKey } from "./actions";
@@ -44,7 +45,7 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
     ? (params.period as PeriodKey)
     : "30d";
 
-  const [rounds, aggregates, weeklyTraining, handicap, profile, usiData, prescription] = await Promise.all([
+  const [rounds, aggregates, weeklyTraining, handicap, profile, usiData, prescription, hcpForecast] = await Promise.all([
     getFilteredRoundStats(period),
     getFilteredAggregates(period),
     getWeeklyTrainingVolume(period),
@@ -52,6 +53,7 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
     getGolfProfileSummary(),
     getPlayerUSI(true, true),
     getLatestTrainingPrescription(),
+    getHcpForecast(),
   ]);
 
   return (
@@ -64,6 +66,7 @@ export default async function StatistikkPage({ searchParams }: StatistikkPagePro
       profile={profile}
       usi={usiData?.usi ?? null}
       prescription={prescription}
+      hcpForecast={hcpForecast}
     />
   );
 }

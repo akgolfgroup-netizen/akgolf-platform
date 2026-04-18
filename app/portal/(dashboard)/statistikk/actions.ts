@@ -340,6 +340,103 @@ export async function getLatestHandicap() {
   return entry || null;
 }
 
+export interface HcpHistoryPoint {
+  date: string; // ISO date
+  hcp: number;
+}
+
+export interface HcpForecastData {
+  history: HcpHistoryPoint[];
+  currentHcp: number | null;
+  predicted30d: number | null;
+  predicted90d: number | null;
+  ci30d: { lower: number; upper: number } | null;
+  ci90d: { lower: number; upper: number } | null;
+  trainingMinutes30d: number;
+  trainingSessions30d: number;
+  trendSlopePerWeek: number; // HCP change per week (negative = improving)
+}
+
+export async function getHcpForecast(): Promise<HcpForecastData> {
+  const user = await requirePortalUser();
+  const since = subDays(new Date(), 180);
+
+  const [snapshots, handicapEntries, trainingLogs] = await Promise.all([
+    prisma.unifiedSkillSnapshot.findMany({
+      where: { userId: user.id, createdAt: { gte: since } },
+      orderBy: { createdAt: "asc" },
+      select: { estimatedHandicap: true, createdAt: true },
+    }),
+    prisma.handicapEntry.findMany({
+      where: { userId: user.id, date: { gte: since } },
+      orderBy: { date: "asc" },
+      select: { handicapIndex: true, date: true },
+    }),
+    prisma.trainingLog.findMany({
+      where: { userId: user.id, date: { gte: subDays(new Date(), 30) } },
+      select: { durationMinutes: true },
+    }),
+  ]);
+
+  // Prefer snapshots when available, else handicap-entries
+  const historySource: HcpHistoryPoint[] =
+    snapshots.length >= 3
+      ? snapshots.map((s) => ({
+          date: s.createdAt.toISOString(),
+          hcp: s.estimatedHandicap,
+        }))
+      : handicapEntries.map((e) => ({
+          date: e.date.toISOString(),
+          hcp: e.handicapIndex,
+        }));
+
+  const currentHcp = historySource.length > 0 ? historySource[historySource.length - 1].hcp : null;
+
+  // Forecast via Kalman (reuse logic)
+  const { forecastHcpFromSnapshots } = await import("@/lib/portal/usi/kalman-filter");
+  const forecast = forecastHcpFromSnapshots(
+    historySource.map((p) => ({
+      estimatedHandicap: p.hcp,
+      createdAt: new Date(p.date),
+    }))
+  );
+
+  // CI: approximate ±1 SD growing with sqrt(days). Base SD = 0.5 HCP.
+  const baseSd = 0.5;
+  const ci30d =
+    forecast.predictedHcp30d != null
+      ? {
+          lower: Math.max(0, forecast.predictedHcp30d - baseSd * Math.sqrt(30 / 30)),
+          upper: forecast.predictedHcp30d + baseSd * Math.sqrt(30 / 30),
+        }
+      : null;
+  const ci90d =
+    forecast.predictedHcp90d != null
+      ? {
+          lower: Math.max(0, forecast.predictedHcp90d - baseSd * Math.sqrt(90 / 30)),
+          upper: forecast.predictedHcp90d + baseSd * Math.sqrt(90 / 30),
+        }
+      : null;
+
+  const trainingMinutes30d = trainingLogs.reduce((sum, l) => sum + (l.durationMinutes ?? 0), 0);
+  const trainingSessions30d = trainingLogs.length;
+
+  // trendSlope is per-snapshot interval (~1 day) → convert to per-week
+  const trendSlopePerWeek = forecast.trendSlope * 7;
+
+  return {
+    history: historySource,
+    currentHcp,
+    predicted30d: forecast.predictedHcp30d,
+    predicted90d: forecast.predictedHcp90d,
+    ci30d,
+    ci90d,
+    trainingMinutes30d,
+    trainingSessions30d,
+    trendSlopePerWeek,
+  };
+}
+
 export type GolfProfileSummary = {
   roundCount30d: number;
   avgScore30d: number | null;

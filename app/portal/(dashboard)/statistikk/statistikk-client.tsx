@@ -14,10 +14,12 @@ import { Card } from "@/components/ui/card";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import type { RoundStats } from "@prisma/client";
-import type { PeriodKey, WeeklyTrainingData, GolfProfileSummary } from "./actions";
+import type { PeriodKey, WeeklyTrainingData, GolfProfileSummary, HcpForecastData } from "./actions";
 import type { USIResult } from "@/lib/portal/usi/compute-usi";
 import type { TrainingPrescriptionResult } from "@/lib/portal/usi/generate-prescription";
 import { colors } from "@/lib/design-tokens";
+import { HcpForecastChart } from "@/components/portal/statistikk/hcp-forecast-chart";
+import { HcpForecastInsight } from "@/components/portal/statistikk/hcp-forecast-insight";
 
 /* ─── Types ─── */
 
@@ -47,6 +49,7 @@ interface StatistikkClientProps {
   profile: GolfProfileSummary;
   usi: USIResult | null;
   prescription: TrainingPrescriptionResult | null;
+  hcpForecast: HcpForecastData;
 }
 
 /* ─── Constants ─── */
@@ -373,6 +376,7 @@ export function StatistikkClient({
   profile,
   usi,
   prescription,
+  hcpForecast,
 }: StatistikkClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -575,6 +579,33 @@ export function StatistikkClient({
           <TrainingBarChart data={weeklyTraining} />
         </PremiumCard>
       </div>
+
+      {/* HCP-prognose — fullbredde */}
+      <PremiumCard delay={0.22}>
+        <div className="mb-5 flex items-start justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
+              HCP-prognose
+            </p>
+            <p className="mt-0.5 text-xs text-text">
+              Kalman-filter + treningsvolum
+            </p>
+          </div>
+          {hcpForecast.currentHcp != null && (
+            <span className="rounded-full border border-grey-200 bg-grey-50 px-3 py-1 text-[11px] font-bold tabular-nums text-black">
+              HCP nå: {hcpForecast.currentHcp.toFixed(1)}
+            </span>
+          )}
+        </div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+          <div className="lg:col-span-3">
+            <HcpForecastChart data={hcpForecast} />
+          </div>
+          <div className="lg:col-span-2">
+            <HcpForecastInsight data={hcpForecast} />
+          </div>
+        </div>
+      </PremiumCard>
 
       {/* Score-trend — fullbredde */}
       <PremiumCard delay={0.25}>
