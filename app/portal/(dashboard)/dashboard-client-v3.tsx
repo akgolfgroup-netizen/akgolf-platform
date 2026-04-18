@@ -1,228 +1,97 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { WelcomeSection } from "@/components/portal/dashboard/welcome-section";
-import { NextBookingCard } from "@/components/portal/dashboard/next-booking-card";
-import { WeekCalendar } from "@/components/portal/dashboard/week-calendar";
-import { KpiCard } from "@/components/portal/dashboard/kpi-card";
-import { CoachInsightCard } from "@/components/portal/dashboard/coach-insight-card";
-import { PlayerProfileCard } from "@/components/portal/dashboard/player-profile-card";
-import { TrainingActivityCard } from "@/components/portal/dashboard/training-activity-card";
-import { ShortcutPills } from "@/components/portal/dashboard/shortcut-pills";
-import { TrackManWidget } from "@/components/portal/dashboard/trackman-widget";
-import { SocialWidget } from "@/components/portal/dashboard/social-widget";
-import { AiInsightsV2 } from "@/components/portal/dashboard/ai-insights-v2";
-import { AchievementsWidget } from "@/components/portal/dashboard/achievements-widget";
-import { HandicapTrendChart } from "@/components/portal/dashboard/handicap-trend-chart";
-import { SessionsDonut } from "@/components/portal/dashboard/sessions-donut";
-import { SGRadarCard } from "@/components/portal/dashboard/sg-radar-card";
-import { EmptyKpiCard } from "@/components/portal/dashboard/empty-kpi-card";
-import { colors } from "@/lib/design-tokens";
-
+import { ViewSwitcher } from "@/components/portal/view-switcher";
+import { getDefaultView } from "@/lib/portal/preferences/actions";
+import type { ViewId } from "@/lib/portal/views/registry";
+import { AthleticGridView } from "./dashboard-views/athletic-grid-view";
+import { FocusTodayView } from "./dashboard-views/focus-today-view";
+import { DataRichView } from "./dashboard-views/data-rich-view";
+import { ProgressStoryView } from "./dashboard-views/progress-story-view";
+import { CommandCenterView } from "./dashboard-views/command-center-view";
 import type { DashboardV3Props } from "./dashboard-types";
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.05 },
-  },
-};
-
 const item = {
-  hidden: { opacity: 0, y: 12 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] as const },
-  },
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] as const } },
 };
 
-function generateFallbackSparkline(baseValue: number, points: number): number[] {
-  return Array.from({ length: points }, (_, i) =>
-    Math.max(0, baseValue + Math.sin(i) * 2)
-  );
-}
+export function DashboardClientV3(props: DashboardV3Props) {
+  const [activeView, setActiveView] = useState<ViewId>("opt1");
+  const [isLoading, setIsLoading] = useState(true);
 
-export function DashboardClientV3({
-  userName,
-  tier,
-  memberSince,
-  stats,
-  handicap,
-  handicapHistory,
-  nextBooking,
-  weekRings,
-  coachInsight,
-  aiInsight,
-  trackManData,
-  socialData,
-  achievements,
-  totalAchievements,
-  playerLevel,
-}: DashboardV3Props) {
-  const handicapSparkline =
-    handicapHistory.length > 0
-      ? handicapHistory
-      : generateFallbackSparkline(handicap.current ?? 14, 10);
+  // Hent lagret view-preferanse ved mount
+  useEffect(() => {
+    getDefaultView("portal-dashboard")
+      .then((view) => {
+        setActiveView(view);
+      })
+      .catch(() => {
+        // Fallback: behold opt1
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
-  const roundsSparkline =
-    stats.roundsCount > 0 ? generateFallbackSparkline(stats.roundsCount, 6) : [];
+  const renderView = () => {
+    switch (activeView) {
+      case "opt1":
+        return <AthleticGridView {...props} />;
+      case "opt2":
+        return <FocusTodayView {...props} />;
+      case "opt3":
+        return <DataRichView {...props} />;
+      case "opt4":
+        return <ProgressStoryView {...props} />;
+      case "opt5":
+        return <CommandCenterView {...props} />;
+      default:
+        return <AthleticGridView {...props} />;
+    }
+  };
 
-  const sessionsSparkline =
-    stats.sessionsCount > 0
-      ? generateFallbackSparkline(stats.sessionsCount, 8)
-      : [];
-
-  // Personalization: Show different widgets based on player level
-  const showTrackMan = playerLevel !== "beginner";
-  const showSocial = stats.roundsCount > 5 || stats.sessionsCount > 10;
-  const showAdvancedAI = playerLevel === "advanced" || playerLevel === "pro";
-
-  return (
-    <motion.div
-      className="mx-auto w-full max-w-[1400px] space-y-6 pb-12 pt-2"
-      variants={container}
-      initial="hidden"
-      animate="show"
-    >
-      {/* RAD 1: Velkomst + Neste booking + Profil */}
-      <motion.div
-        variants={item}
-        className="grid grid-cols-1 gap-5 lg:grid-cols-12"
-      >
-        <div className="space-y-5 lg:col-span-8">
-          <WelcomeSection
-            userName={userName}
-            tier={tier}
-            memberSince={memberSince}
-          />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <NextBookingCard booking={nextBooking} />
-            {showAdvancedAI && aiInsight ? (
-              <AiInsightsV2 insights={aiInsight} />
-            ) : (
-              <TrainingActivityCard
-                sessionsCount={stats.sessionsCount}
-                streak={12}
-              />
-            )}
+  if (isLoading) {
+    return (
+      <div className="mx-auto w-full max-w-[1400px] pt-8 pb-12">
+        <div className="h-8 w-48 bg-grey-100 rounded animate-pulse mb-6" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <div className="lg:col-span-8 space-y-5">
+            <div className="h-32 bg-grey-100 rounded-2xl animate-pulse" />
+            <div className="grid grid-cols-2 gap-5">
+              <div className="h-40 bg-grey-100 rounded-2xl animate-pulse" />
+              <div className="h-40 bg-grey-100 rounded-2xl animate-pulse" />
+            </div>
+          </div>
+          <div className="lg:col-span-4">
+            <div className="h-64 bg-grey-100 rounded-2xl animate-pulse" />
           </div>
         </div>
-        <div className="lg:col-span-4">
-          <PlayerProfileCard
-            userName={userName}
-            tier={tier}
-            memberSince={memberSince}
-            handicap={handicap.current}
-            roundsCount={stats.roundsCount}
-          />
-        </div>
-      </motion.div>
+      </div>
+    );
+  }
 
-      {/* RAD 2: Ukekalender */}
-      <motion.div variants={item}>
-        <WeekCalendar days={weekRings.days} />
-      </motion.div>
-
-      {/* RAD 3: KPI-kort + TrackMan + Sosialt */}
+  return (
+    <div className="mx-auto w-full max-w-[1400px]">
+      {/* View-switcher topbar */}
       <motion.div
         variants={item}
-        className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
+        initial="hidden"
+        animate="show"
+        className="sticky top-0 z-30 pt-2 pb-3 bg-grey-50/80 backdrop-blur-sm"
       >
-        <KpiCard
-          label="Handicap"
-          value={handicap.current ?? 0}
-          decimalPlaces={1}
-          sparklineData={handicapSparkline}
-          change={handicap.trend}
-          changeLabel="siste måned"
-          accentColor={colors.primary.main}
+        <ViewSwitcher
+          screenId="portal-dashboard"
+          currentView={activeView}
+          onViewChange={setActiveView}
         />
-
-        <div className="flex flex-col gap-5">
-          {stats.roundsCount > 0 ? (
-            <KpiCard
-              label="Runder"
-              value={stats.roundsCount}
-              sparklineData={roundsSparkline}
-              accentColor={colors.data.coral}
-            />
-          ) : (
-            <EmptyKpiCard
-              label="Runder"
-              message="Registrer din første runde"
-              href="/portal/runde/ny"
-            />
-          )}
-
-          {stats.sessionsCount > 0 ? (
-            <KpiCard
-              label="Treningsøkter"
-              value={stats.sessionsCount}
-              sparklineData={sessionsSparkline}
-              accentColor={colors.primary.main}
-            />
-          ) : (
-            <EmptyKpiCard
-              label="Treningsøkter"
-              message="Logg din første økt"
-              href="/portal/dagbok"
-            />
-          )}
-        </div>
-
-        {showTrackMan && <TrackManWidget data={trackManData} />}
-        {showSocial && <SocialWidget data={socialData} />}
-        {!showTrackMan && !showSocial && (
-          <>
-            <AchievementsWidget
-              achievements={achievements}
-              totalAchievements={totalAchievements}
-            />
-            {!showAdvancedAI && aiInsight && (
-              <AiInsightsV2 insights={aiInsight} />
-            )}
-          </>
-        )}
       </motion.div>
 
-      {/* RAD 3.5: Diagrammer */}
-      <motion.div
-        variants={item}
-        className="grid grid-cols-1 gap-5 lg:grid-cols-12"
-      >
-        <div className="lg:col-span-7">
-          <HandicapTrendChart data={handicapHistory} />
-        </div>
-        <div className="lg:col-span-5">
-          <SessionsDonut />
-        </div>
-      </motion.div>
-
-      {/* RAD 4: SG Radar + Coach Insight + Achievements + Snarveier */}
-      <motion.div
-        variants={item}
-        className="grid grid-cols-1 gap-5 lg:grid-cols-12"
-      >
-        <div className="lg:col-span-4">
-          <SGRadarCard />
-        </div>
-        <div className="lg:col-span-5">
-          <CoachInsightCard coachInsight={coachInsight} />
-        </div>
-        <div className="lg:col-span-3">
-          {(showTrackMan || showSocial) && (
-            <AchievementsWidget
-              achievements={achievements}
-              totalAchievements={totalAchievements}
-            />
-          )}
-          <ShortcutPills />
-        </div>
-      </motion.div>
-    </motion.div>
+      {/* Aktivt view */}
+      <div key={activeView} className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+        {renderView()}
+      </div>
+    </div>
   );
 }
-
-

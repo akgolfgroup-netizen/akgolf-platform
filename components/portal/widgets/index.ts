@@ -1,0 +1,9 @@
+export { WidgetBase } from "./widget-base";
+export { WidgetGrid } from "./widget-grid";
+export { WidgetRenderer } from "./widget-renderer";
+export { PlanProgressWidget } from "./plan-progress-widget";
+export { NextCompetitionWidget } from "./next-competition-widget";
+export { TrainingVolumeWidget } from "./training-volume-widget";
+export { SeasonPlanWidget } from "./season-plan-widget";
+export { LeaderboardWidget } from "./leaderboard-widget";
+export { CoachingFeedbackWidget } from "./coaching-feedback-widget";

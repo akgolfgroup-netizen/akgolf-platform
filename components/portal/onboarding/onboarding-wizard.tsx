@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Target, Calendar, PenLine, ChevronRight, Check } from "lucide-react";
+import { ViewPickerStep } from "./view-picker-step";
+import type { ViewId } from "@/lib/portal/views/registry";
 
 interface OnboardingWizardProps {
   onComplete: (data: OnboardingData) => void;
@@ -11,6 +13,7 @@ interface OnboardingWizardProps {
 export interface OnboardingData {
   goals: string[];
   trainingFrequency: string;
+  defaultView: ViewId;
 }
 
 const GOALS = [
@@ -32,6 +35,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
   const [step, setStep] = useState(1);
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
   const [frequency, setFrequency] = useState<string>("");
+  const [defaultView, setDefaultView] = useState<ViewId>("opt1");
 
   const toggleGoal = (goalId: string) => {
     setSelectedGoals((prev) =>
@@ -48,6 +52,8 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
       setStep(2);
     } else if (step === 2 && frequency) {
       setStep(3);
+    } else if (step === 3 && defaultView) {
+      setStep(4);
     }
   };
 
@@ -55,6 +61,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
     onComplete({
       goals: selectedGoals,
       trainingFrequency: frequency,
+      defaultView,
     });
   };
 
@@ -63,7 +70,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
       <div className="w-full max-w-lg">
         {/* Progress indicator */}
         <div className="flex items-center justify-center gap-2 mb-8">
-          {[1, 2, 3].map((s) => (
+          {[1, 2, 3, 4].map((s) => (
             <div
               key={s}
               className={`h-1.5 rounded-full transition-[width,background-color] duration-300 ${
@@ -248,8 +255,16 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
           </div>
         )}
 
-        {/* Step 3: Ready to log */}
+        {/* Step 3: View picker */}
         {step === 3 && (
+          <ViewPickerStep
+            onSelect={setDefaultView}
+            onNext={handleNext}
+          />
+        )}
+
+        {/* Step 4: Ready to log */}
+        {step === 4 && (
           <div className="animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="text-center mb-8">
               <div
