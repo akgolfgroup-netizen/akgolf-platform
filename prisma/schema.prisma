@@ -1881,6 +1881,18 @@ model User {
   WaitlistEntry                               WaitlistEntry[]
   Conversation                                Conversation[]             @relation("ConversationParticipants")
   AdminTaskCreated                            AdminTask[]                @relation("AdminTaskCreator")
+  UserPreferences                             UserPreferences?
+}
+
+model UserPreferences {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  defaultViewPerScreen  Json     @default("{}")
+  dashboardWidgetLayout Json     @default("{}")
+  hiddenWidgets         Json     @default("[]")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  User                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
