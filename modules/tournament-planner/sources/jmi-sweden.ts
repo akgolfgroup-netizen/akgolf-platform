@@ -33,10 +33,19 @@ function parseSwedishDate(text: string, year: number): { start: Date; end?: Date
 export async function fetchJmiSchedule(
   year: number
 ): Promise<ImportableTournament[]> {
-  const url = `https://www.jmi-sweden.se/web/kvaltavlingar-${year}/`;
-  const res = await fetch(url, {
+  let url = `https://www.jmi-sweden.se/web/kvaltavlingar-${year}/`;
+  let res = await fetch(url, {
     headers: { "User-Agent": "AKGolf-Portal/1.0" },
   });
+
+  // Fallback: JMI website currently has hardcoded 2025 in URL
+  // despite showing current-year content
+  if (!res.ok && year >= 2026) {
+    url = `https://www.jmi-sweden.se/web/kvaltavlingar-2025/`;
+    res = await fetch(url, {
+      headers: { "User-Agent": "AKGolf-Portal/1.0" },
+    });
+  }
 
   if (!res.ok) {
     throw new Error(`JMI Sweden fetch error: ${res.status}`);
