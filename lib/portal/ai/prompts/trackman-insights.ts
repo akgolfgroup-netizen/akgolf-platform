@@ -3,16 +3,32 @@
 
 import type { TrackManAnalyticsSummary } from "@/app/portal/(dashboard)/trackman/actions";
 
+export interface TrackManTrainingContext {
+  sessionsLast14d: number;
+  hoursLast14d: number;
+  weeklyHours: number; // approx
+  topFocusAreas: string[]; // top 3 from TrainingLog.focusArea
+  activePeriodType: "grunnperiode" | "spesialiseringsperiode" | "turneringsperiode" | null;
+  planFocus: string | null; // TrainingPlanWeek.focus for current week
+}
+
 const COACHING_CONTEXT = `
 Du er en erfaren golftrener som analyserer TrackMan-data for å gi personlige, konkrete råd til en spiller.
 
 SPRÅK: Skriv ALLTID på norsk bokmål. Bruk en motiverende, profesjonell tone.
+
+AK GOLF METODIKK (viktig kontekst når periodiseringsinfo er tilgjengelig):
+- Grunnperiode: Høyt volum, teknisk grunnarbeid, korte slag og putting. Tåler mye teknisk endring.
+- Spesialiseringsperiode: Redusert volum, økt intensitet, situasjonstrening og spesifikke forbedringer.
+- Turneringsperiode: Lavt volum, vedlikehold, mental forberedelse. Unngå tekniske endringer.
+- L-M-PR: Læringsfase (L1-L4), Miljø (M1-M5), Press (PR1-PR5). Innsikter skal støtte progresjon, ikke overvelde.
 
 VIKTIGE REGELER:
 - Referer ALDRI til "AK Portal", "AK Coaching", "AK-formelen" eller "AI-drevet".
 - Bruk "Portalen", "Personlig coaching", "AK Golf sin coaching-filosofi" eller "AI-veiledning" (nedtonet).
 - Innsiktene skal være basert på FAKTISKE tall — ikke generiske golf-tips.
 - Gi actionable råd spilleren kan ta med på neste økt.
+- Når treningsvolum og periode er kjent: tilpass rådene til hva spilleren realistisk kan jobbe med i den fasen.
 `;
 
 function formatStats(stats: Record<string, unknown> | null): string {
@@ -33,13 +49,34 @@ function formatDistribution(dist: Record<string, unknown> | null, label: string)
   return `\n${label}:\n${entries}`;
 }
 
+function formatTrainingContext(ctx?: TrackManTrainingContext): string {
+  if (!ctx) return "";
+  const lines: string[] = ["", "Treningskontekst siste 14 dager:"];
+  lines.push(
+    `- Øktvolum: ${ctx.sessionsLast14d} økter (${ctx.hoursLast14d.toFixed(1)} t, snitt ${ctx.weeklyHours.toFixed(1)} t/uke)`
+  );
+  if (ctx.topFocusAreas.length > 0) {
+    lines.push(`- Fokusområder i treningsdagbok: ${ctx.topFocusAreas.join(", ")}`);
+  }
+  if (ctx.activePeriodType) {
+    lines.push(`- AK-metodikk-periode: ${ctx.activePeriodType}`);
+  }
+  if (ctx.planFocus) {
+    lines.push(`- Aktuelt plan-fokus denne uken: ${ctx.planFocus}`);
+  }
+  return lines.join("\n");
+}
+
 export function buildTrackManInsightsPrompt(
   analytics: TrackManAnalyticsSummary,
-  playerName?: string
+  playerName?: string,
+  trainingContext?: TrackManTrainingContext
 ): { system: string; user: string } {
   const system = COACHING_CONTEXT.trim();
 
   const playerGreeting = playerName ? ` for ${playerName}` : "";
+
+  const contextSection = formatTrainingContext(trainingContext);
 
   const user = `Analyser denne TrackMan-sesjonen${playerGreeting} og gi personlige coaching-innsikter.
 
@@ -69,6 +106,7 @@ Trender (sammenlignet med tidligere sesjoner):
 - Ballfart-trend: ${analytics.trendBallSpeed ?? "ingen data"}
 - Distanse-trend: ${analytics.trendDistance ?? "ingen data"}
 - Konsistens-trend: ${analytics.trendConsistency ?? "ingen data"}
+${contextSection}
 
 === OUTPUT-KRAV ===
 Returner KUN gyldig JSON i dette formatet:
@@ -99,7 +137,11 @@ KRAV TIL FOKUSOMRÅDER:
 VIKTIG:
 - Ikke bruk engelske fagtermer uten forklaring
 - Ikke gi generiske tips som ikke er støttet av dataene
-- Ikke overstyr spilleren — bruk oppfordrende formuleringer`;
+- Ikke overstyr spilleren — bruk oppfordrende formuleringer${
+    trainingContext
+      ? `\n- Tilpass fokusområdene til ${trainingContext.activePeriodType ?? "nåværende"} periode og realistisk treningsvolum (${trainingContext.weeklyHours.toFixed(1)} t/uke).`
+      : ""
+  }`;
 
   return { system, user };
 }

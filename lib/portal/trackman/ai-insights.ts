@@ -2,9 +2,84 @@
 // Kan kalles fra både server actions og import-pipeline
 
 import Anthropic from "@anthropic-ai/sdk";
+import { subDays } from "date-fns";
 import { prisma } from "@/lib/portal/prisma";
-import { buildTrackManInsightsPrompt } from "@/lib/portal/ai/prompts/trackman-insights";
+import {
+  buildTrackManInsightsPrompt,
+  type TrackManTrainingContext,
+} from "@/lib/portal/ai/prompts/trackman-insights";
 import type { TrackManAnalyticsSummary } from "@/app/portal/(dashboard)/trackman/actions";
+
+async function buildTrainingContext(userId: string): Promise<TrackManTrainingContext | undefined> {
+  const since = subDays(new Date(), 14);
+
+  const [logs, activePlan] = await Promise.all([
+    prisma.trainingLog.findMany({
+      where: { userId, date: { gte: since } },
+      select: { durationMinutes: true, focusArea: true },
+    }),
+    prisma.trainingPlan.findFirst({
+      where: { studentId: userId, isActive: true },
+      orderBy: { createdAt: "desc" },
+      include: {
+        TrainingPlanWeek: {
+          orderBy: { weekNumber: "asc" },
+          take: 20,
+        },
+      },
+    }),
+  ]);
+
+  if (logs.length === 0 && !activePlan) return undefined;
+
+  const totalMinutes = logs.reduce((sum, l) => sum + (l.durationMinutes ?? 0), 0);
+  const hoursLast14d = totalMinutes / 60;
+  const weeklyHours = hoursLast14d / 2;
+
+  const focusCount = new Map<string, number>();
+  for (const l of logs) {
+    if (!l.focusArea) continue;
+    focusCount.set(l.focusArea, (focusCount.get(l.focusArea) ?? 0) + 1);
+  }
+  const topFocusAreas = Array.from(focusCount.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([k]) => k);
+
+  const periodType = activePlan?.periodType as
+    | "grunnperiode"
+    | "spesialiseringsperiode"
+    | "turneringsperiode"
+    | undefined;
+
+  const validPeriod =
+    periodType === "grunnperiode" ||
+    periodType === "spesialiseringsperiode" ||
+    periodType === "turneringsperiode"
+      ? periodType
+      : null;
+
+  let planFocus: string | null = null;
+  if (activePlan) {
+    const today = new Date();
+    const weekIdx = Math.floor(
+      (today.getTime() - new Date(activePlan.startDate).getTime()) / (7 * 24 * 60 * 60 * 1000)
+    );
+    const currentWeek =
+      activePlan.TrainingPlanWeek.find((w) => w.weekNumber === weekIdx + 1) ??
+      activePlan.TrainingPlanWeek[0];
+    planFocus = currentWeek?.focus ?? null;
+  }
+
+  return {
+    sessionsLast14d: logs.length,
+    hoursLast14d,
+    weeklyHours,
+    topFocusAreas,
+    activePeriodType: validPeriod,
+    planFocus,
+  };
+}
 
 const ANTHROPIC_MODEL = "claude-haiku-4-5-20251001";
 const INSIGHT_CACHE_HOURS = 24;
@@ -110,9 +185,12 @@ export async function generateTrackManInsightsCore(
     updatedAt: analytics.updatedAt,
   };
 
+  const trainingContext = await buildTrainingContext(userId);
+
   const { system, user: userPrompt } = buildTrackManInsightsPrompt(
     summary,
-    playerName ?? undefined
+    playerName ?? undefined,
+    trainingContext
   );
 
   // Kall Anthropic
