@@ -8,6 +8,33 @@
 
 ---
 
+## 2026-04-18 — Backlog-sprint: HCP-prognose + auto-plan CRON + TrackMan metodikk-kontekst
+
+**Jobbet med:**
+- **Blokk 1 — Prediktiv HCP-trend:** Ny `getHcpForecast()` i statistikk/actions.ts som bygger historikk fra `UnifiedSkillSnapshot` (fallback `HandicapEntry`), kjører `forecastHcpFromSnapshots()` og returnerer 30d/90d-prognose + CI-bånd + treningsvolum. Nye komponenter `hcp-forecast-chart.tsx` (SVG-graf: historisk linje + stiplet prognose + CI-bånd + "I dag"-divider) og `hcp-forecast-insight.tsx` (regelbasert tekst som knytter timer/uke til forventet HCP-endring). Integrert i `statistikk-client.tsx` som full-bredde seksjon mellom HCP-kort og Score-trend.
+- **Blokk 2 — Auto-justering av treningsplan (CRON):** `/api/portal/cron/auto-adjust-training-plans` med schedule `30 3 * * *`. Analyserer siste 14d TrainingLog per aktiv student, aggregerer per fokusområde: `rating ≥4.3` eller `successRate ≥0.75` + 3+ økter → "improved" (flytt fokus til neste svakhet fra `TrainingPrescription.gapAnalysisJson`). `rating ≤2.6` eller `successRate ≤0.35` → "simplify" (behold fokus, regenerer med enklere variant). Cooldown 10 dager. Ved regenerering: transaksjon som deaktiverer gammel plan og oppretter ny via `generateTrainingPlan()` + `TrainingPlanWeek` + `TrainingPlanSession`. Notifiserer med `PLAN_GENERATED`-notification.
+- **Blokk 3 — TrackMan AI-metodikk:** `buildTrackManInsightsPrompt()` tar nå `TrackManTrainingContext` med `sessionsLast14d`, `hoursLast14d`, `weeklyHours`, `topFocusAreas`, `activePeriodType` (grunn/spesialisering/turnering) og `planFocus`. Systempromptet forklarer periode-prinsippene til modellen. `generateTrackManInsightsCore()` henter konteksten automatisk fra `TrainingLog` + aktiv `TrainingPlan`. Backward-kompatibelt.
+- **Kvalitetssikring:** TypeScript rent i alle mine filer. ESLint rent. Tre separate commits (`1152b44`, `9250059`, `f1f1986`) pushet til main. Build-feil er pre-eksisterende (React 19 `useContext`-problem på 3 sider).
+
+**Nøkkelfiler:**
+- `app/portal/(dashboard)/statistikk/actions.ts` (ny `getHcpForecast`)
+- `app/portal/(dashboard)/statistikk/page.tsx`
+- `app/portal/(dashboard)/statistikk/statistikk-client.tsx`
+- `components/portal/statistikk/hcp-forecast-chart.tsx` (ny)
+- `components/portal/statistikk/hcp-forecast-insight.tsx` (ny)
+- `app/api/portal/cron/auto-adjust-training-plans/route.ts` (ny)
+- `lib/portal/ai/training-plan-adjustment.ts` (ny)
+- `lib/portal/ai/prompts/trackman-insights.ts`
+- `lib/portal/trackman/ai-insights.ts`
+- `vercel.json`
+
+**Neste steg:**
+- Real-time Mission Board (Supabase Realtime) — egen 3-timers sprint som ble utsatt
+- Kalibrere terskler i `training-plan-adjustment.ts` etter første CRON-kjøringer
+- Pre-eksisterende build-blockere P1 (React 19 `useContext` på forgot-password, _global-error, landing/contact)
+
+---
+
 ## 2026-04-18 — E2E-dekning + Go-live-sjekkliste + Notion-import (autonom økt)
 
 **Jobbet med:**

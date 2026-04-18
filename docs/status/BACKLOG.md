@@ -23,10 +23,13 @@ Sist oppdatert: 2026-04-18
 
 ## Nye ideer / neste kvartal
 
-- TrackMan: AI-genererte innsikter fra `TrackManSessionAnalytics`
-- Statistikk: Prediktiv HCP-trend basert på treningsvolum + runder
-- Dagbok: Automatisk treningsplan-justering basert på logget progresjon
-- Admin: Real-time Mission Board med WebSocket/SSE
+- Admin: Real-time Mission Board med WebSocket/SSE (Supabase Realtime — 2-3 t sprint)
+- Kalibrering av auto-plan-terskler i `training-plan-adjustment.ts` etter første CRON-kjøringer
+
+### Fullført 2026-04-18
+- ~~TrackMan: AI-genererte innsikter fra `TrackManSessionAnalytics`~~ — utvidet med treningsvolum + AK-metodikk-kontekst (f1f1986)
+- ~~Statistikk: Prediktiv HCP-trend basert på treningsvolum + runder~~ — Kalman-prognose + CI + regelbasert innsikt (1152b44)
+- ~~Dagbok: Automatisk treningsplan-justering basert på logget progresjon~~ — CRON analyserer 14d logg, flytt/forenkle-logikk (9250059)
 
 ## Fullfort
 
