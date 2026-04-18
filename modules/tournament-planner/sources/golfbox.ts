@@ -22,7 +22,13 @@ const DEFAULT_SCHEDULES: GolfBoxScheduleSpec[] = [
   { customerId: 18, scheduleId: 9896, level: "nasjonal" }, // Norgesmesterskap
   // Regionalt
   { customerId: 895, scheduleId: 3863, level: "regional" }, // Østlandstour
-  { customerId: 877, scheduleId: 16139, level: "regional" }, // Olyo Juniortour
+  { customerId: 877, scheduleId: 16139, level: "regional" }, // Olyo Juniortour (Viken Vest)
+  { customerId: 873, scheduleId: 16616, level: "regional" }, // Region Midt – Olyo Juniortour
+  { customerId: 874, scheduleId: 4589, level: "regional" }, // Region Vestland – Junior Tour
+  { customerId: 875, scheduleId: 1492, level: "regional" }, // Region Rogaland – Regional Junior Tour
+  { customerId: 876, scheduleId: 16155, level: "regional" }, // Region Sør – Olyo Juniortour
+  { customerId: 876, scheduleId: 15199, level: "regional" }, // Region Sør – Region Tour
+  { customerId: 878, scheduleId: 16078, level: "regional" }, // Region Øst – Olyo Junior Tour
 ];
 
 function parseGolfBoxDate(raw: string): Date {

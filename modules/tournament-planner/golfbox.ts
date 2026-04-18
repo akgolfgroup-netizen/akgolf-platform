@@ -171,6 +171,12 @@ export const GOLFBOX_CATEGORIES: Record<number, string> = {
   9897: "Lag-NM",
   3863: "Østlandstour",
   16139: "Olyo Juniortour",
+  16616: "Region Midt – Olyo Juniortour",
+  4589: "Region Vestland – Junior Tour",
+  1492: "Region Rogaland – Regional Junior Tour",
+  16155: "Region Sør – Olyo Juniortour",
+  15199: "Region Sør – Region Tour",
+  16078: "Region Øst – Olyo Junior Tour",
 };
 
 /**
