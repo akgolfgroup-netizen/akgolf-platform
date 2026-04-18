@@ -1,0 +1,244 @@
+/* === Option 5: Recovery Tracker === */
+
+.rec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+.rec-head-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #333;
+}
+.rec-head-meta {
+  font-size: 11px;
+  color: #666;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Swim-lane status */
+.rec-lanes {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.rec-lane {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.rec-lane-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 8px;
+}
+.rec-lane-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #555;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.rec-lane-dot {
+  width: 8px; height: 8px;
+  border-radius: 999px;
+  background: #000;
+}
+.rec-lane-dot.progress { background: #666; }
+.rec-lane-dot.recovered { background: #ccc; }
+.rec-lane-count {
+  font-size: 10px;
+  font-weight: 700;
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #333;
+  border-radius: 10px;
+  padding: 1px 7px;
+}
+
+/* Recovery rows */
+.rec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rec-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 180px 110px;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #eee;
+  border-left: 3px solid #000;
+  border-radius: 4px;
+  padding: 12px 14px;
+}
+.rec-row.progress { border-left-color: #666; }
+.rec-row.recovered { border-left-color: #ccc; background: #fafafa; }
+.rec-row:hover { border-color: #000; }
+
+.rec-person {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.rec-avatar {
+  width: 32px; height: 32px;
+  border-radius: 999px;
+  background: #eee;
+  border: 1px solid #ddd;
+  color: #333;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.rec-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1.2;
+}
+.rec-meta {
+  font-size: 10px;
+  color: #888;
+}
+
+.rec-issue {
+  font-size: 11px;
+  color: #333;
+}
+.rec-issue-title {
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 3px;
+}
+.rec-issue-metric {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 10px;
+  padding: 2px 6px;
+  background: #f4f4f4;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  color: #444;
+  font-variant-numeric: tabular-nums;
+  margin-right: 4px;
+}
+.rec-issue-metric strong { color: #000; }
+
+/* Progress bar with milestones */
+.rec-progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.rec-progress {
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.rec-progress-fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  background: #000;
+  border-radius: 4px;
+}
+.rec-progress-label {
+  font-size: 10px;
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+  font-variant-numeric: tabular-nums;
+}
+.rec-progress-label strong { color: #000; font-weight: 700; }
+
+.rec-next {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 10px;
+}
+.rec-next-label {
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+.rec-next-text {
+  color: #000;
+  font-weight: 600;
+}
+.rec-next-cta {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 8px;
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+/* Recovery chart placeholder */
+.rec-chart {
+  margin-top: 14px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+.rec-chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.rec-chart-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #999;
+}
+.rec-chart-meta { font-size: 11px; color: #666; }
+.rec-chart-area {
+  height: 110px;
+  background: repeating-linear-gradient(90deg, #f0f0f0, #f0f0f0 1px, transparent 1px, transparent 30px),
+              repeating-linear-gradient(0deg, #f0f0f0, #f0f0f0 1px, transparent 1px, transparent 22px);
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+  position: relative;
+  font-size: 10px;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rec-chart-area::before {
+  content: "";
+  position: absolute;
+  inset: 15px 30px 30px 30px;
+  background: linear-gradient(70deg, #999 0 20%, transparent 20%);
+  clip-path: polygon(0 80%, 20% 100%, 50% 50%, 80% 30%, 100% 20%, 100% 100%, 0 100%);
+  background: #333;
+  opacity: 0.25;
+}

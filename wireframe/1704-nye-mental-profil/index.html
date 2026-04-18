@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Performance Profile — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Mental Performance Profile</span> — <span id="project-name">AK Golf Platform · Portal · N22 · /portal/mental/profil</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: AI Profile</button>
+    <button class="tab-btn" data-tab="option-2">2: Strengths &amp; Weaknesses</button>
+    <button class="tab-btn" data-tab="option-3">3: Situation-Based</button>
+    <button class="tab-btn" data-tab="option-4">4: Compare With Pros</button>
+    <button class="tab-btn" data-tab="option-5">5: Program Generator</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: AI Profile (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">AI Profile</span></h2>
+    <p class="option-description">AI-generert tekst-profil &oslash;verst som hero (arketype + narrativ). 4 mentale dimensjoner med deep-dive kort (score + AI-tolkning + personaliserte &oslash;velser). Spilleren f&aring;r en helhetlig psykologisk profil, ikke bare tall. Forskjellig fra Mental-skjerm (data) og Mental-trender (N16).</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental</a>
+              <div class="wf-sb-sub">
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Oversikt</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Trender</a>
+                <a class="wf-sb-subitem wf-active"><span class="wf-sb-subitem-dot"></span>AI-profil</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Dagbok</a>
+              </div>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">AI-profil oppdatert<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">Basert p&aring; siste 14 runder · neste oppdatering om 3 dager</div>
+              <button class="wf-sb-cta-btn">Regenerer profil</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mental &middot; AI Profile &middot; versjon 4.2</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-active">Siste 14</span><span class="wf-mtopbar-chip">30 dager</span><span class="wf-mtopbar-chip">Sesong</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow"><span class="wf-page-head-sparkle"></span>AI Deep Profile</div>
+                <h1 class="wf-page-head-h">Din mentale performance-profil</h1>
+                <p class="wf-page-head-sub">AI analyserer dine siste 14 runder mot 4 psykologiske kjerne-dimensjoner. Tolket av Miller Mental AI.</p>
+                <div class="wf-page-head-meta">Sist generert: 16. april kl. 07:42 &middot; Confidence: 94%</div>
+              </div>
+              <span class="wf-ai-badge"><span class="wf-ai-badge-dot"></span>AI v4.2</span>
+            </section>
+
+            <!-- AI Hero - tekst-profil -->
+            <div class="wf-ai-hero">
+              <div class="wf-ai-hero-head">
+                <div class="wf-ai-hero-icon">MM</div>
+                <div>
+                  <div class="wf-ai-hero-author">Miller Mental AI<span class="wf-marker">2</span></div>
+                  <div class="wf-ai-hero-stamp">Generert 16. april &middot; 14 runder analysert &middot; 2 847 datapunkter</div>
+                </div>
+                <span class="wf-ai-hero-version">v4.2</span>
+              </div>
+              <div class="wf-ai-hero-archetype">Arketype &middot; Den Kontrollerte Fighter</div>
+              <h2 class="wf-ai-hero-title">"Anders har h&oslash;y emosjonskontroll, men stress i pressituasjoner p&aring;virker selvtilliten hans."</h2>
+              <p class="wf-ai-hero-body">Du er en spiller som holder fasaden n&aring;r det g&aring;r galt &mdash; emosjonskontrollen p&aring; <strong>8.1/10</strong> er blant de h&oslash;yeste vi m&aring;ler p&aring; pro-niv&aring;. Du utviser ro etter bogey og klarer &aring; g&aring; videre teknisk. Men under overflaten bygges stress opp &mdash; s&aelig;rlig i pressituasjoner som hull 16&ndash;18 og etter tre p&aring; rad uten birdie.</p>
+              <p class="wf-ai-hero-body">Din stress-score p&aring; <strong>6.5/10</strong> forteller at kroppen reagerer selv om hodet holder tilbake. N&aring;r stress akkumulerer, faller selvtilliten (<strong>7.2/10</strong>) raskere enn fokus (<strong>7.8/10</strong>). Dette forklarer hvorfor du ofte spiller solid gjennom 15 hull, for s&aring; &aring; bogey p&aring; 17 og 18.</p>
+              <p class="wf-ai-hero-body"><strong>Prim&aelig;rt utviklingsomr&aring;de:</strong> Bryte stress-akkumulasjon f&oslash;r den rammer selvtilliten. Pusteintervaller p&aring; hull 7, 13 og 16 kan senke stress-score med 1&ndash;1.5 poeng &mdash; basert p&aring; korrelasjonsdata fra lignende profiler.</p>
+              <div class="wf-ai-hero-tags">
+                <span class="wf-ai-hero-tag">Introvert competitor</span>
+                <span class="wf-ai-hero-tag">Stress-akkumulering</span>
+                <span class="wf-ai-hero-tag">Sterk emosjonskontroll</span>
+                <span class="wf-ai-hero-tag">Press-sensitiv</span>
+              </div>
+              <div class="wf-ai-hero-actions">
+                <button class="wf-btn wf-btn-primary">Se full analyse</button>
+                <button class="wf-btn wf-btn-ghost">Last ned PDF</button>
+                <button class="wf-btn wf-btn-ghost">Del med coach</button>
+              </div>
+            </div>
+
+            <!-- 4 Mental Dimensions Deep-Dive -->
+            <div class="wf-dim-grid">
+              <div class="wf-dim">
+                <div class="wf-dim-head">
+                  <div>
+                    <h3 class="wf-dim-name">Fokus<span class="wf-marker">3</span></h3>
+                    <div class="wf-dim-desc">Evne til &aring; v&aelig;re mentalt til stede p&aring; hvert slag</div>
+                  </div>
+                  <div class="wf-dim-score">7.8<span class="wf-dim-score-unit">/10</span></div>
+                </div>
+                <div class="wf-dim-bar"><div class="wf-dim-fill" style="width:78%"></div></div>
+                <div class="wf-dim-trend">+0.4 siste 10 runder &middot; over gjennomsnittet for pro-niv&aring;</div>
+                <div class="wf-dim-insight">
+                  <div class="wf-dim-insight-author">AI-tolkning</div>
+                  Fokuset ditt er sterkest p&aring; forsida (snitt 8.3) og svekkes p&aring; bakre 9 (snitt 7.2). Mulig energi-relatert &mdash; ikke teknisk.
+                </div>
+                <div class="wf-dim-exercises">
+                  <div class="wf-dim-exercise">
+                    <span class="wf-dim-exercise-icon"></span>
+                    <div class="wf-dim-exercise-body">
+                      <div class="wf-dim-exercise-title">Pre-shot routine med visuell anker</div>
+                      <div class="wf-dim-exercise-meta">Daglig &middot; 10 min</div>
+                    </div>
+                    <button class="wf-dim-exercise-btn">Start</button>
+                  </div>
+                  <div class="wf-dim-exercise">
+                    <span class="wf-dim-exercise-icon"></span>
+                    <div class="wf-dim-exercise-body">
+                      <div class="wf-dim-exercise-title">Energi-reset hull 10</div>
+                      <div class="wf-dim-exercise-meta">Rundeprotokoll &middot; 90 sek</div>
+                    </div>
+                    <button class="wf-dim-exercise-btn">Start</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-dim">
+                <div class="wf-dim-head">
+                  <div>
+                    <h3 class="wf-dim-name">Selvtillit</h3>
+                    <div class="wf-dim-desc">Tiltro til egne evner og neste slag</div>
+                  </div>
+                  <div class="wf-dim-score">7.2<span class="wf-dim-score-unit">/10</span></div>
+                </div>
+                <div class="wf-dim-bar"><div class="wf-dim-fill" style="width:72%"></div></div>
+                <div class="wf-dim-trend">&minus;0.3 siste 10 runder &middot; volatilt &mdash; varierer med resultat</div>
+                <div class="wf-dim-insight">
+                  <div class="wf-dim-insight-author">AI-tolkning</div>
+                  Selvtilliten er korrelert med start p&aring; runde (r=0.72). Start med bogey gir gjennomsnitt 6.4, mens birdie-start gir 8.1.
+                </div>
+                <div class="wf-dim-exercises">
+                  <div class="wf-dim-exercise">
+                    <span class="wf-dim-exercise-icon"></span>
+                    <div class="wf-dim-exercise-body">
+                      <div class="wf-dim-exercise-title">Visualisering f&oslash;r runde</div>
+                      <div class="wf-dim-exercise-meta">Daglig &middot; 5 min</div>
+                    </div>
+                    <button class="wf-dim-exercise-btn">Start</button>
+                  </div>
+                  <div class="wf-dim-exercise">
+                    <span class="wf-dim-exercise-icon"></span>
+                    <div class="wf-dim-exercise-body">
+                      <div class="wf-dim-exercise-title">Success-journal (3 gode slag)</div>
+                      <div class="wf-dim-exercise-meta">Etter runde &middot; 3 min</div>
+                    </div>
+                    <button class="wf-dim-exercise-btn">Start</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-dim">
+                <div class="wf-dim-head">
+                  <div>
+                    <h3 class="wf-dim-name">Stress<span class="wf-marker">4</span></h3>
+                    <div class="wf-dim-desc">Kroppens respons p&aring; press og motgang</div>
+                  </div>
+                  <div class="wf-dim-score">6.5<span class="wf-dim-score-unit">/10</span></div>
+                </div>
+                <div class="wf-dim-bar"><div class="wf-dim-fill" style="width:65%"></div></div>
+                <div class="wf-dim-trend">Svakeste dimensjon &middot; prim&aelig;rt utviklingsomr&aring;de</div>
+                <div class="wf-dim-insight">
+                  <div class="wf-dim-insight-author">AI-tolkning</div>
+                  Stress-score faller mest mellom hull 15 og 18 (&minus;1.8). Pusteintervaller p&aring; hull 7 og 13 kan bryte akkumulasjonen.
+                </div>
+                <div class="wf-dim-exercises">
+                  <div class="wf-dim-exercise">
+                    <span class="wf-dim-exercise-icon"></span>
+                    <div class="wf-dim-exercise-body">
+                      <div class="wf-dim-exercise-title">4-7-8 pusteteknikk</div>
+                      <div class="wf-dim-exercise-meta">Daglig + under runde &middot; 2 min</div>
+                    </div>
+                    <button class="wf-dim-exercise-btn">Start</button>
+                  </div>
+                  <div class="wf-dim-exercise">
+                    <span class="wf-dim-exercise-icon"></span>
+                    <div class="wf-dim-exercise-body">
+                      <div class="wf-dim-exercise-title">HRV-tr&oslash;kk 10 min</div>
+                      <div class="wf-dim-exercise-meta">Morgen &middot; m&aring;les via Whoop</div>
+                    </div>
+                    <button class="wf-dim-exercise-btn">Start</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-dim">
+                <div class="wf-dim-head">
+                  <div>
+                    <h3 class="wf-dim-name">Emosjonskontroll</h3>
+                    <div class="wf-dim-desc">Regulere reaksjon p&aring; feilslag og motgang</div>
+                  </div>
+                  <div class="wf-dim-score">8.1<span class="wf-dim-score-unit">/10</span></div>
+                </div>
+                <div class="wf-dim-bar"><div class="wf-dim-fill" style="width:81%"></div></div>
+                <div class="wf-dim-trend">+0.2 siste 10 runder &middot; din sterkeste dimensjon</div>
+                <div class="wf-dim-insight">
+                  <div class="wf-dim-insight-author">AI-tolkning</div>
+                  Du holder ytre fasade men indre stress akkumuleres. Paradoks: h&oslash;y score her kan maskere svakhet p&aring; stress-dimensjonen.
+                </div>
+                <div class="wf-dim-exercises">
+                  <div class="wf-dim-exercise">
+                    <span class="wf-dim-exercise-icon"></span>
+                    <div class="wf-dim-exercise-body">
+                      <div class="wf-dim-exercise-title">Body scan mellom hull</div>
+                      <div class="wf-dim-exercise-meta">Under runde &middot; 30 sek</div>
+                    </div>
+                    <button class="wf-dim-exercise-btn">Start</button>
+                  </div>
+                  <div class="wf-dim-exercise">
+                    <span class="wf-dim-exercise-icon"></span>
+                    <div class="wf-dim-exercise-body">
+                      <div class="wf-dim-exercise-title">Journaling post-runde</div>
+                      <div class="wf-dim-exercise-meta">Etter runde &middot; 5 min</div>
+                    </div>
+                    <button class="wf-dim-exercise-btn">Start</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">AI-anbefalte fokusomr&aring;der denne m&aring;neden<span class="wf-marker">5</span></div>
+                  <span class="wf-ai-badge"><span class="wf-ai-badge-dot"></span>Prioritert</span>
+                </div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI</div>
+                  <p class="wf-insight-body">"Jobb med stress-management p&aring; hull 15&ndash;18. Din emosjonskontroll maskerer ubehaget &mdash; men kroppen reagerer. Legg inn 4-7-8 pusteteknikk p&aring; tee-7 og tee-13 som fast rutine. Forventet effekt: 2&ndash;3 slag ned p&aring; bakre 9 innen 4 uker."</p>
+                </div>
+                <button class="wf-btn wf-btn-primary" style="margin-top:auto; width: fit-content;">Generer 4-ukers program</button>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Profil-stabilitet</div>
+                <div class="wf-c-value">94%</div>
+                <div class="wf-c-sub">Profil-m&oslash;nsteret er stabilt over 4+ runder &mdash; AI er h&oslash;y-konfidens</div>
+                <div class="wf-dim-bar" style="margin-top:auto"><div class="wf-dim-fill" style="width:94%"></div></div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 &mdash; Sidebar-CTA:</strong> "Regenerer profil" &mdash; AI-profilen oppdateres etter nye runder, ikke kontinuerlig. Gir spilleren kontroll og eierskap.</li>
+        <li><strong>2 &mdash; AI Hero &oslash;verst:</strong> Arketype-navn + direkte sitat fra AI + 3 avsnitt narrativ. Dette er forskjellen fra N14 (r&aring;data) og N16 (trender) &mdash; her tolker AI som en psykolog.</li>
+        <li><strong>3 &mdash; Dimensjons-kort med deep-dive:</strong> Hver dimensjon har score, tolkning OG konkrete &oslash;velser. Fra data til handling i samme kort.</li>
+        <li><strong>4 &mdash; Stress er prim&aelig;rt omr&aring;de:</strong> AI peker eksplisitt p&aring; svakeste ledd og kobler til konkret adferd (pusteintervaller).</li>
+        <li><strong>5 &mdash; Program-generator kobling:</strong> Fra AI-analyse til 4-ukers program. Lenker til Opt 5 i samme flyt.</li>
+        <li>&mdash; Styrke: Spillere f&aring;r personlighetsforst&aring;else, ikke bare tall. Svakhet: AI-narrativ krever 14+ runder for h&oslash;y-konfidens.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Strengths & Weaknesses ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Strengths &amp; Weaknesses</span></h2>
+    <p class="option-description">To-kolonne-layout som tvinger selvinnsikt: Styrker (hva du er god p&aring;) vs Utviklingsomr&aring;der (hva du b&oslash;r jobbe med). AI-coach notater per punkt. Passer spillere som trenger tydelige prioriteringer fremfor helhet.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental</a>
+              <div class="wf-sb-sub">
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Oversikt</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Trender</a>
+                <a class="wf-sb-subitem wf-active"><span class="wf-sb-subitem-dot"></span>AI-profil</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Dagbok</a>
+              </div>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">2 styrker &middot; 2 omr&aring;der</div>
+              <div class="wf-sb-cta-desc">Sist oppdatert i dag &middot; 14 runder analysert</div>
+              <button class="wf-sb-cta-btn">Se full rapport</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mental &middot; Styrker &amp; utviklingsomr&aring;der</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-active">Siste 14</span><span class="wf-mtopbar-chip">Sesong</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow"><span class="wf-page-head-sparkle"></span>AI Profile &middot; Balansert syn<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">Det du er god p&aring;, og det som holder deg tilbake</h1>
+                <p class="wf-page-head-sub">AI sorterer dine 4 mentale dimensjoner i styrker vs utviklingsomr&aring;der &mdash; med konkrete coach-notater p&aring; hvert punkt.</p>
+              </div>
+              <span class="wf-ai-badge"><span class="wf-ai-badge-dot"></span>AI v4.2</span>
+            </section>
+
+            <div class="wf-sw-grid">
+              <!-- Styrker-kolonne -->
+              <div class="wf-sw-col">
+                <div class="wf-sw-col-head">
+                  <div class="wf-sw-col-icon wf-sw-col-icon-strong">+</div>
+                  <div>
+                    <h3 class="wf-sw-col-title">Styrker<span class="wf-marker">2</span></h3>
+                    <div class="wf-sw-col-sub">Hva du gj&oslash;r best &mdash; beskytt og bygg videre</div>
+                  </div>
+                </div>
+
+                <div class="wf-sw-item">
+                  <div class="wf-sw-item-head">
+                    <h4 class="wf-sw-item-title">Emosjonskontroll</h4>
+                    <span class="wf-sw-item-score">8.1 / 10</span>
+                  </div>
+                  <p class="wf-sw-item-body">Du holder fasaden n&aring;r det g&aring;r galt. Etter dobbel bogey faller ikke ytelsen &mdash; du spiller n&aelig;r snittet ditt de neste 3 hullene. Score blant topp 15% av pro-spillere vi m&aring;ler.</p>
+                  <div class="wf-sw-item-coach">
+                    <div class="wf-sw-item-coach-author">Miller Mental AI</div>
+                    "Dette er din st&oslash;rste konkurransefordel. P&aring; pro-niv&aring; betyr dette at du kan h&aring;ndtere mesterskaps-press uten &aring; raskt kollapse. Bygg videre p&aring; dette med journaling etter vanskelige runder."
+                  </div>
+                </div>
+
+                <div class="wf-sw-item">
+                  <div class="wf-sw-item-head">
+                    <h4 class="wf-sw-item-title">Fokus</h4>
+                    <span class="wf-sw-item-score">7.8 / 10</span>
+                  </div>
+                  <p class="wf-sw-item-body">Pre-shot routine er konsistent p&aring; forsida (snitt 8.3). Du klarer &aring; blokkere omgivelsene n&aring;r du st&aring;r over ballen. Over pro-gjennomsnitt.</p>
+                  <div class="wf-sw-item-coach">
+                    <div class="wf-sw-item-coach-author">Miller Mental AI</div>
+                    "Fokuset ditt er sterkt men energiavhengig &mdash; det svekkes mot slutten av runde (7.2 p&aring; bakre 9). Ern&aelig;ring og hydrering mellom hull 9 og 10 kan hjelpe."
+                  </div>
+                </div>
+              </div>
+
+              <!-- Utviklingsomr&aring;der-kolonne -->
+              <div class="wf-sw-col">
+                <div class="wf-sw-col-head">
+                  <div class="wf-sw-col-icon">!</div>
+                  <div>
+                    <h3 class="wf-sw-col-title">Utviklingsomr&aring;der<span class="wf-marker">3</span></h3>
+                    <div class="wf-sw-col-sub">Hvor innsats gir st&oslash;rst effekt &mdash; prioriter her</div>
+                  </div>
+                </div>
+
+                <div class="wf-sw-item">
+                  <div class="wf-sw-item-head">
+                    <h4 class="wf-sw-item-title">Stress-management</h4>
+                    <span class="wf-sw-item-score">6.5 / 10</span>
+                  </div>
+                  <p class="wf-sw-item-body">Din svakeste dimensjon. Stress akkumulerer gjennom runden og bryter ut p&aring; hull 15&ndash;18 (snitt score der: 5.2). Kroppen reagerer selv om emosjonskontrollen holder tilbake reaksjonen utad.</p>
+                  <div class="wf-sw-item-coach">
+                    <div class="wf-sw-item-coach-author">Miller Mental AI<span class="wf-marker">4</span></div>
+                    "Dette er #1 prioritet. Stress-akkumulasjon er det som stj&aring;l mest slag fra deg p&aring; bakre 9. Pusteintervaller p&aring; hull 7 og 13 kan bryte m&oslash;nsteret. Forventet effekt: 1.5&ndash;2.5 slag ned p&aring; bakre 9 innen 4 uker."
+                  </div>
+                </div>
+
+                <div class="wf-sw-item">
+                  <div class="wf-sw-item-head">
+                    <h4 class="wf-sw-item-title">Selvtillit-volatilitet</h4>
+                    <span class="wf-sw-item-score">7.2 / 10</span>
+                  </div>
+                  <p class="wf-sw-item-body">Selvtilliten svinger mye &mdash; sterkt korrelert med start p&aring; runde (r=0.72). Bogey p&aring; hull 1&ndash;3 gir snitt 6.4 resten av runden. Birdie-start gir 8.1. Du er ikke robust mot d&aring;rlig start.</p>
+                  <div class="wf-sw-item-coach">
+                    <div class="wf-sw-item-coach-author">Miller Mental AI</div>
+                    "Bygg en pre-round rutine som holder selvtilliten stabil uavhengig av hull 1. Success-journaling kvelden f&oslash;r + visualisering 10 min pre-runde gir 8&ndash;12% stabilitetsforbedring i v&aring;re data."
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Samlet AI-anbefaling<span class="wf-marker">5</span></div>
+                  <button class="wf-btn wf-btn-primary wf-btn-sm">Generer program</button>
+                </div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI &middot; handlingsplan</div>
+                  <p class="wf-insight-body">"Ikke jobb med alle 4 dimensjoner samtidig. <strong>Prioritet 1 (uke 1&ndash;2):</strong> Stress-management via pusteintervaller. <strong>Prioritet 2 (uke 3&ndash;4):</strong> Pre-round rutine for selvtillit-stabilitet. Fokus og emosjonskontroll er dine styrker &mdash; beskytt dem, ikke forbedre n&aring;."</p>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 &mdash; "Balansert syn"-eyebrow:</strong> Tydelig signaliserer at dette ikke er en kritikk-side &mdash; det er like mye om det du er god p&aring;.</li>
+        <li><strong>2 &mdash; Styrker f&oslash;rst (venstre):</strong> Psykologi &mdash; start med det positive. Venstre-til-h&oslash;yre lesemønster gj&oslash;r styrker dominante.</li>
+        <li><strong>3 &mdash; Utviklingsomr&aring;der (h&oslash;yre):</strong> Ikke "svakheter". Sprakbruken "hvor innsats gir st&oslash;rst effekt" reframer til motivasjon, ikke skam.</li>
+        <li><strong>4 &mdash; AI-coach notater per punkt:</strong> Hver styrke/omr&aring;de f&aring;r en konkret, handlingsrettet kommentar. Ikke bare data &mdash; tolkning.</li>
+        <li><strong>5 &mdash; Prioriteringsanbefaling nederst:</strong> AI sier eksplisitt: jobb med dette f&oslash;rst. Reduserer analysis-paralysis.</li>
+        <li>&mdash; Styrke: Tvinger selvinnsikt uten &aring; v&aelig;re overveldende. Svakhet: 4 dimensjoner kan bli for lite nyansert for avanserte spillere.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Situation-Based ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Situation-Based</span></h2>
+    <p class="option-description">Per situasjon &mdash; press-putt, vannhindet, siste hull. Din respons-m&oslash;nster + AI-forbedring i hver situasjon. Passer spillere som tenker i konkrete scenarier fremfor abstrakte dimensjoner.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental</a>
+              <div class="wf-sb-sub">
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Oversikt</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Trender</a>
+                <a class="wf-sb-subitem wf-active"><span class="wf-sb-subitem-dot"></span>AI-profil</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Dagbok</a>
+              </div>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">12 situasjoner logget</div>
+              <div class="wf-sb-cta-desc">AI har identifisert 4 gjentakende m&oslash;nstre</div>
+              <button class="wf-sb-cta-btn">Legg til scenario</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mental &middot; Situasjonsanalyse</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-active">Alle</span><span class="wf-mtopbar-chip">Press</span><span class="wf-mtopbar-chip">Motgang</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow"><span class="wf-page-head-sparkle"></span>AI Profile &middot; Situasjonsbasert<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">Din mentale respons i 4 n&oslash;kkelsituasjoner</h1>
+                <p class="wf-page-head-sub">AI har identifisert dine mest kritiske scenarier basert p&aring; siste 14 runder. Hver har et gjenkjennelig m&oslash;nster &mdash; og en konkret vei ut.</p>
+              </div>
+              <span class="wf-ai-badge"><span class="wf-ai-badge-dot"></span>4 m&oslash;nstre funnet</span>
+            </section>
+
+            <div class="wf-sit-filter">
+              <button class="wf-sit-filter-btn wf-active">Alle 4</button>
+              <button class="wf-sit-filter-btn">Press (tee-shots)</button>
+              <button class="wf-sit-filter-btn">Motgang (etter bogey)</button>
+              <button class="wf-sit-filter-btn">Avslutning (hull 16&ndash;18)</button>
+              <button class="wf-sit-filter-btn">Hindre (vann/bunker)</button>
+            </div>
+
+            <div class="wf-sit-list">
+              <!-- Situasjon 1 -->
+              <div class="wf-sit">
+                <div class="wf-sit-left">
+                  <div class="wf-sit-icon">P</div>
+                  <div class="wf-sit-name">Press-putt p&aring; tee<span class="wf-marker">2</span></div>
+                  <div class="wf-sit-meta">N&aring;r du trenger par eller birdie p&aring; siste hull for &aring; holde m&aring;l-score</div>
+                  <div class="wf-sit-freq">Opptrer 3.2 / runde</div>
+                </div>
+                <div class="wf-sit-right">
+                  <div class="wf-sit-section">
+                    <div class="wf-sit-section-label">Din respons-m&oslash;nster</div>
+                    <p class="wf-sit-pattern">"Pre-shot routine blir kortere enn normalt (snitt 6 sek vs 12 sek). Du griper k&oslash;llen strammere &mdash; grip-press-sensor viser +28%. Pusten blir grunn. Resultat: driver g&aring;r 14m kortere og 3m mer h&oslash;yre p&aring; disperser-chart."</p>
+                  </div>
+                  <div class="wf-sit-fix">
+                    <div class="wf-sit-fix-author">AI-forbedring<span class="wf-marker">3</span></div>
+                    "Forleng pre-shot routine bevisst til 15 sek n&aring;r du kjenner press. 2 dype pust f&oslash;r swing-trigger. Test i turnering: snitt 4 slag bedre p&aring; avg. press-hull i Meister-serien 2025."
+                  </div>
+                  <div class="wf-sit-stats">
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Historisk score</div>
+                      <div class="wf-sit-stat-value">5.2/10</div>
+                    </div>
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Pro-snitt</div>
+                      <div class="wf-sit-stat-value">7.4/10</div>
+                    </div>
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Gap</div>
+                      <div class="wf-sit-stat-value">&minus;2.2</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Situasjon 2 -->
+              <div class="wf-sit">
+                <div class="wf-sit-left">
+                  <div class="wf-sit-icon">V</div>
+                  <div class="wf-sit-name">Vannhindet (tee-shot)</div>
+                  <div class="wf-sit-meta">N&aring;r du st&aring;r med vann til h&oslash;yre eller p&aring; venstre side og m&aring; ta linjen trygt</div>
+                  <div class="wf-sit-freq">Opptrer 1.8 / runde</div>
+                </div>
+                <div class="wf-sit-right">
+                  <div class="wf-sit-section">
+                    <div class="wf-sit-section-label">Din respons-m&oslash;nster</div>
+                    <p class="wf-sit-pattern">"Du tenker &aring;penlyst p&aring; vannet &mdash; &oslash;yebevegelse-tracking viser 3.2 blikk mot hindret vs 0.4 mot target. Hjernen l&aring;ser p&aring; det du vil unng&aring;. Resultat: 43% rate av pulled shots mot fare-omr&aring;de."</p>
+                  </div>
+                  <div class="wf-sit-fix">
+                    <div class="wf-sit-fix-author">AI-forbedring</div>
+                    "Bruk "commit-point" teknikk: velg m&aring;l, visualiser ballflukten 3 ganger, eliminer vannet fra visuelt felt. Commit &mdash; s&aring; swing. Aldri se p&aring; vannet under pre-shot."
+                  </div>
+                  <div class="wf-sit-stats">
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Historisk score</div>
+                      <div class="wf-sit-stat-value">6.1/10</div>
+                    </div>
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Pro-snitt</div>
+                      <div class="wf-sit-stat-value">7.8/10</div>
+                    </div>
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Gap</div>
+                      <div class="wf-sit-stat-value">&minus;1.7</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Situasjon 3 -->
+              <div class="wf-sit">
+                <div class="wf-sit-left">
+                  <div class="wf-sit-icon">M</div>
+                  <div class="wf-sit-name">Motgang etter bogey<span class="wf-marker">4</span></div>
+                  <div class="wf-sit-meta">Hvordan du spiller hullet etter en double eller bogey &mdash; momentum-kritisk</div>
+                  <div class="wf-sit-freq">Opptrer 4.1 / runde</div>
+                </div>
+                <div class="wf-sit-right">
+                  <div class="wf-sit-section">
+                    <div class="wf-sit-section-label">Din respons-m&oslash;nster</div>
+                    <p class="wf-sit-pattern">"Du holder ytre ro (emosjonskontroll 8.1) men griper aggressivt. 58% rate av over-swung tee-shots p&aring; hull etter bogey. Prim&aelig;r tanke er 'ta det tilbake n&aring;' &mdash; som ofte leder til ny feil."</p>
+                  </div>
+                  <div class="wf-sit-fix">
+                    <div class="wf-sit-fix-author">AI-forbedring</div>
+                    "Reset-rutine p&aring; neste tee: 3 dype pust + frase 'next shot is the only shot'. Aksepter bogey f&oslash;r neste slag. AK-spillere som mestrer dette har 40% lavere sannsynlighet for 'double bogey-kjede'."
+                  </div>
+                  <div class="wf-sit-stats">
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Historisk score</div>
+                      <div class="wf-sit-stat-value">6.8/10</div>
+                    </div>
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Pro-snitt</div>
+                      <div class="wf-sit-stat-value">7.9/10</div>
+                    </div>
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Gap</div>
+                      <div class="wf-sit-stat-value">&minus;1.1</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Situasjon 4 -->
+              <div class="wf-sit">
+                <div class="wf-sit-left">
+                  <div class="wf-sit-icon">A</div>
+                  <div class="wf-sit-name">Avslutning (hull 16&ndash;18)</div>
+                  <div class="wf-sit-meta">De siste 3 hullene &mdash; der stress-akkumulasjon rammer hardest</div>
+                  <div class="wf-sit-freq">Opptrer hver runde</div>
+                </div>
+                <div class="wf-sit-right">
+                  <div class="wf-sit-section">
+                    <div class="wf-sit-section-label">Din respons-m&oslash;nster</div>
+                    <p class="wf-sit-pattern">"Snittscore p&aring; hull 16&ndash;18 er 2.3 slag over resten av runden. Stress-score dropper fra 7.2 (hull 1&ndash;15) til 5.2 (hull 16&ndash;18). Dette er der profilen din svikter mest."</p>
+                  </div>
+                  <div class="wf-sit-fix">
+                    <div class="wf-sit-fix-author">AI-forbedring</div>
+                    "Pusteintervaller p&aring; tee-13 og tee-16 bryter stress-akkumulasjonen f&oslash;r den rammer. Kombiner med mental &quot;reset&quot;-frase. Forventet effekt: 1.5&ndash;2 slag ned p&aring; bakre 9."
+                  </div>
+                  <div class="wf-sit-stats">
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Historisk score</div>
+                      <div class="wf-sit-stat-value">5.2/10</div>
+                    </div>
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Pro-snitt</div>
+                      <div class="wf-sit-stat-value">7.1/10</div>
+                    </div>
+                    <div class="wf-sit-stat">
+                      <div class="wf-sit-stat-label">Gap</div>
+                      <div class="wf-sit-stat-value">&minus;1.9</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">AI-m&oslash;nsterfunn<span class="wf-marker">5</span></div>
+                  <span class="wf-ai-badge"><span class="wf-ai-badge-dot"></span>Kritisk innsikt</span>
+                </div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI</div>
+                  <p class="wf-insight-body">"Alle fire situasjoner har samme rot-&aring;rsak: <strong>kropps-stress som ikke kommer til uttrykk ytre</strong>. Du er en 'stille kokende' spiller &mdash; emosjonskontrollen maskerer fysisk anspenthet. Start med pusteintervaller som fellesnevner &mdash; det adresserer alle 4 situasjoner samtidig."</p>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 &mdash; Situasjonsbasert er konkret:</strong> Spillere husker situasjoner ("siste hull p&aring; Losby") bedre enn abstrakte dimensjoner. Reduserer abstraksjon.</li>
+        <li><strong>2 &mdash; Frekvens per runde:</strong> "Opptrer 3.2/runde" gir spilleren forst&aring;else av hvor ofte de m&oslash;ter scenariet &mdash; ikke bare at det skjer.</li>
+        <li><strong>3 &mdash; AI-forbedring spesifikk:</strong> Ikke generelle r&aring;d &mdash; konkrete aksjoner ("forleng pre-shot til 15 sek") med tall ("4 slag bedre").</li>
+        <li><strong>4 &mdash; Gap vs pro-snitt:</strong> Benchmarking &mdash; viser hvor stor forbedringspotensial hver situasjon har. Hjelper prioritering.</li>
+        <li><strong>5 &mdash; M&oslash;nsterfunn nederst:</strong> AI finner fellesnevner p&aring; tvers av situasjoner. Dette er "bare AI kan gj&oslash;re dette"-innsikten som g&oslash;r profilen verdifull.</li>
+        <li>&mdash; Styrke: Handlingsrettet &mdash; spilleren vet eksakt hva de skal &oslash;ve p&aring;. Svakhet: Krever mye data (14+ runder med detalj-logging) for &aring; v&aelig;re meningsfull.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Compare With Pros ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Compare With Pros</span></h2>
+    <p class="option-description">Sammenlign din mentale profil med pro-arketyper (Viktor Hovland, Tiger Woods, Jon Rahm, Scottie Scheffler). Inspirasjonsdrevet &mdash; spilleren ser hvem de ligner p&aring; og hvor gapet er st&oslash;rst. Passer spillere som motiveres av idol/rollemodell.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental</a>
+              <div class="wf-sb-sub">
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Oversikt</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Trender</a>
+                <a class="wf-sb-subitem wf-active"><span class="wf-sb-subitem-dot"></span>AI-profil</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Dagbok</a>
+              </div>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Beste match: Hovland</div>
+              <div class="wf-sb-cta-desc">78% mental-likhet &middot; lignende arketype</div>
+              <button class="wf-sb-cta-btn">Se Hovlands rutiner</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mental &middot; Pro-sammenligning</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-active">Mental</span><span class="wf-mtopbar-chip">Spillestil</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow"><span class="wf-page-head-sparkle"></span>AI Profile &middot; Pro-arketyper<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">Hvilken pro-profil ligner din?</h1>
+                <p class="wf-page-head-sub">Sammenlign din mentale profil med 4 pro-arketyper. AI finner n&aelig;rmeste match og viser hvor gapet er st&oslash;rst.</p>
+              </div>
+              <span class="wf-ai-badge"><span class="wf-ai-badge-dot"></span>Inspirasjon</span>
+            </section>
+
+            <div class="wf-pro-select">
+              <span class="wf-pro-select-label">Velg pro:</span>
+              <button class="wf-pro-chip wf-active"><span class="wf-pro-chip-avatar"></span>Viktor Hovland</button>
+              <button class="wf-pro-chip"><span class="wf-pro-chip-avatar"></span>Tiger Woods</button>
+              <button class="wf-pro-chip"><span class="wf-pro-chip-avatar"></span>Jon Rahm</button>
+              <button class="wf-pro-chip"><span class="wf-pro-chip-avatar"></span>Scottie Scheffler</button>
+            </div>
+
+            <div class="wf-pro-compare">
+              <!-- Din profil (venstre) -->
+              <div class="wf-pro-side">
+                <div class="wf-pro-side-head">
+                  <div class="wf-pro-side-avatar">AK</div>
+                  <div>
+                    <h3 class="wf-pro-side-name">Anders Kristiansen</h3>
+                    <div class="wf-pro-side-role">Pro &middot; AK Golf Academy &middot; "Kontrollert Fighter"</div>
+                  </div>
+                </div>
+
+                <div class="wf-pro-row">
+                  <div class="wf-pro-row-head">
+                    <span class="wf-pro-row-label">Fokus<span class="wf-marker">2</span></span>
+                    <span class="wf-pro-row-value">7.8</span>
+                  </div>
+                  <div class="wf-pro-row-bar"><div class="wf-pro-row-fill" style="width:78%"></div></div>
+                </div>
+                <div class="wf-pro-row">
+                  <div class="wf-pro-row-head">
+                    <span class="wf-pro-row-label">Selvtillit</span>
+                    <span class="wf-pro-row-value">7.2</span>
+                  </div>
+                  <div class="wf-pro-row-bar"><div class="wf-pro-row-fill" style="width:72%"></div></div>
+                </div>
+                <div class="wf-pro-row">
+                  <div class="wf-pro-row-head">
+                    <span class="wf-pro-row-label">Stress-management</span>
+                    <span class="wf-pro-row-value">6.5</span>
+                  </div>
+                  <div class="wf-pro-row-bar"><div class="wf-pro-row-fill" style="width:65%"></div></div>
+                </div>
+                <div class="wf-pro-row">
+                  <div class="wf-pro-row-head">
+                    <span class="wf-pro-row-label">Emosjonskontroll</span>
+                    <span class="wf-pro-row-value">8.1</span>
+                  </div>
+                  <div class="wf-pro-row-bar"><div class="wf-pro-row-fill" style="width:81%"></div></div>
+                </div>
+
+                <div class="wf-pro-match">
+                  <div class="wf-pro-match-score">
+                    <span class="wf-pro-match-score-value">78%</span>
+                    <span class="wf-pro-match-score-label">Total match</span>
+                  </div>
+                  Din profil er mest lik Hovlands. St&oslash;rste forskjell: stress-management (gap: &minus;2.6).
+                </div>
+              </div>
+
+              <!-- Hovland (h&oslash;yre) -->
+              <div class="wf-pro-side">
+                <div class="wf-pro-side-head">
+                  <div class="wf-pro-side-avatar">VH</div>
+                  <div>
+                    <h3 class="wf-pro-side-name">Viktor Hovland<span class="wf-marker">3</span></h3>
+                    <div class="wf-pro-side-role">PGA Tour &middot; "Joyful Grinder"</div>
+                  </div>
+                </div>
+
+                <div class="wf-pro-row">
+                  <div class="wf-pro-row-head">
+                    <span class="wf-pro-row-label">Fokus</span>
+                    <span class="wf-pro-row-value">8.4</span>
+                  </div>
+                  <div class="wf-pro-row-bar"><div class="wf-pro-row-fill" style="width:84%"></div></div>
+                </div>
+                <div class="wf-pro-row">
+                  <div class="wf-pro-row-head">
+                    <span class="wf-pro-row-label">Selvtillit</span>
+                    <span class="wf-pro-row-value">8.6</span>
+                  </div>
+                  <div class="wf-pro-row-bar"><div class="wf-pro-row-fill" style="width:86%"></div></div>
+                </div>
+                <div class="wf-pro-row">
+                  <div class="wf-pro-row-head">
+                    <span class="wf-pro-row-label">Stress-management</span>
+                    <span class="wf-pro-row-value">9.1</span>
+                  </div>
+                  <div class="wf-pro-row-bar"><div class="wf-pro-row-fill" style="width:91%"></div></div>
+                </div>
+                <div class="wf-pro-row">
+                  <div class="wf-pro-row-head">
+                    <span class="wf-pro-row-label">Emosjonskontroll</span>
+                    <span class="wf-pro-row-value">8.8</span>
+                  </div>
+                  <div class="wf-pro-row-bar"><div class="wf-pro-row-fill" style="width:88%"></div></div>
+                </div>
+
+                <div class="wf-pro-match">
+                  <div class="wf-pro-match-score">
+                    <span class="wf-pro-match-score-value">88%</span>
+                    <span class="wf-pro-match-score-label">Snitt mental-score</span>
+                  </div>
+                  Hovland h&aring;ndterer press gjennom humor og &aring;penhet &mdash; motsatt av "stille kokende". L&aelig;ring: uttrykk stresset, ikke undertrykk det.
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-label">Hovlands rutine som kan hjelpe deg<span class="wf-marker">4</span></div>
+                <div class="wf-pro-quote">
+                  <div class="wf-pro-quote-body">
+                    Jeg snakker meg gjennom d&aring;rlige slag. "Okay, det var ikke bra. N&aring; er det borte. Neste." Jeg lager ikke et drama av det internt.
+                  </div>
+                  <div class="wf-pro-quote-author">&mdash; Viktor Hovland, No Laying Up podcast 2024</div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-label">Tiger om stress-akkumulering</div>
+                <div class="wf-pro-quote">
+                  <div class="wf-pro-quote-body">
+                    Jeg har 10 sekunder p&aring; meg til &aring; v&aelig;re sint etter et d&aring;rlig slag. S&aring; er det over. Hvis du drar det med deg, mister du fire hull til.
+                  </div>
+                  <div class="wf-pro-quote-author">&mdash; Tiger Woods, Masters press conference 2019</div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">AI-anbefaling basert p&aring; sammenligning<span class="wf-marker">5</span></div>
+                  <span class="wf-ai-badge"><span class="wf-ai-badge-dot"></span>Inspirasjon &rarr; handling</span>
+                </div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI</div>
+                  <p class="wf-insight-body">"Din arketype ('Kontrollert Fighter') ligner Hovlands, men mangler hans stress-release-ventil. Hovland uttrykker frustrasjon verbalt i &oslash;yeblikket &mdash; som hindrer akkumulasjon. <strong>Forslag:</strong> Test 'talk it out'-teknikk der du verbaliserer d&aring;rlige slag hoyt for deg selv etter skudd. AI-spillere vi har trent med dette har redusert stress-akkumulering med 22%."</p>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 &mdash; Pro-arketyper er motivasjonsdrivere:</strong> Spillere relaterer sterkt til pros de beundrer. Sammenligning gir energi og retning.</li>
+        <li><strong>2 &mdash; Side-by-side layout:</strong> Venstre = deg, h&oslash;yre = pro. &Oslash;yet sammenligner linjevis automatisk &mdash; sterke og svake sider blir &aring;penbare.</li>
+        <li><strong>3 &mdash; Arketype-navn p&aring; pro:</strong> "Joyful Grinder" vs "Kontrollert Fighter" &mdash; gir spilleren mental modell, ikke bare tall.</li>
+        <li><strong>4 &mdash; Pro-sitater:</strong> Ekte ord fra pros som adresserer din svake side. Mer overbevisende enn AI-tekst &mdash; "Tiger sa dette om stress".</li>
+        <li><strong>5 &mdash; Inspirasjon &rarr; handling:</strong> AI kobler pro-observasjon til konkret teknikk spilleren kan teste n&aring;. Ikke bare beundring &mdash; imitasjon.</li>
+        <li>&mdash; Styrke: Emosjonelt engasjerende, unik funksjon. Svakhet: Krever kurert pro-data &mdash; utopisk uten content-pipeline.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Program Generator ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Program Generator</span></h2>
+    <p class="option-description">"Basert p&aring; din profil, her er et 4-ukers mentalt program." AI genererer komplett plan med ukentlig fokus, daglige &oslash;velser og progresjonsbarer. Spilleren f&aring;r en konkret "gj&oslash;r dette i 4 uker"-plan som adresserer AI-profilens svake ledd.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/profil</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP +1.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental</a>
+              <div class="wf-sb-sub">
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Oversikt</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Trender</a>
+                <a class="wf-sb-subitem wf-active"><span class="wf-sb-subitem-dot"></span>AI-profil</a>
+                <a class="wf-sb-subitem"><span class="wf-sb-subitem-dot"></span>Dagbok</a>
+              </div>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Program starter 22. apr<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">4 uker &middot; 28 daglige &oslash;velser &middot; generert av AI</div>
+              <button class="wf-sb-cta-btn">Aktiver programmet</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mental &middot; AI Program Generator</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-active">4 uker</span><span class="wf-mtopbar-chip">8 uker</span><span class="wf-mtopbar-chip">12 uker</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow"><span class="wf-page-head-sparkle"></span>AI Profile &middot; Program Generator</div>
+                <h1 class="wf-page-head-h">Ditt personlige 4-ukers mentale program</h1>
+                <p class="wf-page-head-sub">AI har designet programmet basert p&aring; din profil (stress 6.5 som prim&aelig;rt fokus). Progresjon fra stress-basis til full integrering.</p>
+              </div>
+              <span class="wf-ai-badge"><span class="wf-ai-badge-dot"></span>Generert n&aring;</span>
+            </section>
+
+            <!-- Generator hero -->
+            <div class="wf-gen-hero">
+              <div class="wf-gen-hero-visual">
+                <div class="wf-gen-hero-visual-icon"></div>
+                <div>4 UKER</div>
+                <div>28 &Oslash;VELSER</div>
+              </div>
+              <div class="wf-gen-hero-body">
+                <div class="wf-gen-hero-eyebrow"><span class="wf-page-head-sparkle"></span>Miller Mental AI &middot; personlig tilpasset</div>
+                <h2 class="wf-gen-hero-title">"Fra stress-akkumulering til integrert ro &mdash; i 4 uker."<span class="wf-marker">2</span></h2>
+                <p class="wf-gen-hero-sub">Programmet adresserer prim&aelig;rsvakheten din (stress-management, 6.5/10) gjennom gradvis progresjon. Uke 1&ndash;3 bygger byggesteiner, uke 4 tester under press. Forventet effekt: stress-score +1.5 og 1&ndash;2 slag ned p&aring; bakre 9.</p>
+                <div class="wf-gen-hero-actions">
+                  <button class="wf-btn wf-btn-primary">Aktiver programmet</button>
+                  <button class="wf-btn wf-btn-ghost">Se dag-for-dag</button>
+                  <button class="wf-btn wf-btn-ghost">Tilpass</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 uker -->
+            <div class="wf-gen-weeks">
+              <div class="wf-gen-week">
+                <div class="wf-gen-week-num">Uke 1<span class="wf-marker">3</span></div>
+                <h4 class="wf-gen-week-focus">Pusteteknikk-grunnlag</h4>
+                <div class="wf-gen-week-sub">Etablere 4-7-8 pusteteknikk som daglig rutine</div>
+                <div class="wf-gen-week-list">
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>4-7-8 pust &middot; morgen + kveld</div>
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>HRV-tr&oslash;kk &middot; Whoop</div>
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Body scan &middot; kveld</div>
+                </div>
+                <div class="wf-gen-week-bar">
+                  <div class="wf-gen-week-bar-cell wf-filled"></div>
+                  <div class="wf-gen-week-bar-cell wf-filled"></div>
+                  <div class="wf-gen-week-bar-cell wf-filled"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                </div>
+              </div>
+
+              <div class="wf-gen-week">
+                <div class="wf-gen-week-num">Uke 2</div>
+                <h4 class="wf-gen-week-focus">Integrering i runder</h4>
+                <div class="wf-gen-week-sub">Pusteintervaller p&aring; tee-7 og tee-13 &middot; aktivt under runde</div>
+                <div class="wf-gen-week-list">
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Tee-7 pust &middot; 3 intervaller</div>
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Tee-13 pust &middot; 3 intervaller</div>
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Post-runde journal &middot; 5 min</div>
+                </div>
+                <div class="wf-gen-week-bar">
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                </div>
+              </div>
+
+              <div class="wf-gen-week">
+                <div class="wf-gen-week-num">Uke 3</div>
+                <h4 class="wf-gen-week-focus">Press-eksponering</h4>
+                <div class="wf-gen-week-sub">&Oslash;velser under simulert press &middot; matchplay med venner</div>
+                <div class="wf-gen-week-list">
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Nassau matchplay &middot; 1/uke</div>
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Press-putts p&aring; r&aring;k &middot; 30 repetisjoner</div>
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Visualisering mesterskap</div>
+                </div>
+                <div class="wf-gen-week-bar">
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                </div>
+              </div>
+
+              <div class="wf-gen-week">
+                <div class="wf-gen-week-num">Uke 4</div>
+                <h4 class="wf-gen-week-focus">Turnering-test</h4>
+                <div class="wf-gen-week-sub">Full integrering under Meister-serien &middot; m&aring;ling av stress-score</div>
+                <div class="wf-gen-week-list">
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Turnering-runde &middot; full protokoll</div>
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Post-turnering debrief &middot; 15 min</div>
+                  <div class="wf-gen-week-item"><span class="wf-gen-week-item-dot"></span>Re-m&aring;ling stress-score</div>
+                </div>
+                <div class="wf-gen-week-bar">
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                  <div class="wf-gen-week-bar-cell"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Denne uke - dag for dag -->
+            <div class="wf-gen-daily">
+              <div class="wf-c-row">
+                <div class="wf-c-label">Uke 1 &middot; dag-for-dag<span class="wf-marker">4</span></div>
+                <span class="wf-ai-badge"><span class="wf-ai-badge-dot"></span>Aktiv uke</span>
+              </div>
+
+              <div class="wf-gen-daily-day">
+                <div class="wf-gen-daily-date">
+                  <div class="wf-gen-daily-date-day">Man</div>
+                  <div class="wf-gen-daily-date-num">22</div>
+                </div>
+                <div class="wf-gen-daily-body">
+                  <div class="wf-gen-daily-title">4-7-8 pust &middot; morgen</div>
+                  <div class="wf-gen-daily-desc">5 sykluser pust innunder 4 sek, hold 7, ut 8. Sittende, &oslash;yne lukket. Bygger parasympatisk respons.</div>
+                </div>
+                <div class="wf-gen-daily-duration">8 min</div>
+              </div>
+
+              <div class="wf-gen-daily-day">
+                <div class="wf-gen-daily-date">
+                  <div class="wf-gen-daily-date-day">Tir</div>
+                  <div class="wf-gen-daily-date-num">23</div>
+                </div>
+                <div class="wf-gen-daily-body">
+                  <div class="wf-gen-daily-title">HRV-tr&oslash;kk p&aring; Whoop</div>
+                  <div class="wf-gen-daily-desc">10 min coherence breathing &middot; m&aring;l HRV &oslash;kning p&aring; 15%+. Baseline-m&aring;ling f&oslash;r &amp; etter.</div>
+                </div>
+                <div class="wf-gen-daily-duration">12 min</div>
+              </div>
+
+              <div class="wf-gen-daily-day">
+                <div class="wf-gen-daily-date">
+                  <div class="wf-gen-daily-date-day">Ons</div>
+                  <div class="wf-gen-daily-date-num">24</div>
+                </div>
+                <div class="wf-gen-daily-body">
+                  <div class="wf-gen-daily-title">Body scan &middot; kveld</div>
+                  <div class="wf-gen-daily-desc">Guided body scan via Calm-app &middot; fokus p&aring; skuldre, kjeve, grepsmuskler. Identifiser spenning du ikke merker til daglig.</div>
+                </div>
+                <div class="wf-gen-daily-duration">15 min</div>
+              </div>
+
+              <div class="wf-gen-daily-day">
+                <div class="wf-gen-daily-date">
+                  <div class="wf-gen-daily-date-day">Tor</div>
+                  <div class="wf-gen-daily-date-num">25</div>
+                </div>
+                <div class="wf-gen-daily-body">
+                  <div class="wf-gen-daily-title">4-7-8 pust &middot; f&oslash;r trening</div>
+                  <div class="wf-gen-daily-desc">3 sykluser rett f&oslash;r range-trening. Overf&oslash;ring fra passiv til aktiv-setting. F&oslash;rste gang integrert med golf.</div>
+                </div>
+                <div class="wf-gen-daily-duration">5 min</div>
+              </div>
+
+              <div class="wf-gen-daily-day">
+                <div class="wf-gen-daily-date">
+                  <div class="wf-gen-daily-date-day">Fre</div>
+                  <div class="wf-gen-daily-date-num">26</div>
+                </div>
+                <div class="wf-gen-daily-body">
+                  <div class="wf-gen-daily-title">Journaling &middot; stressor-mapping</div>
+                  <div class="wf-gen-daily-desc">Skriv ned 3 situasjoner siste uka som trigget stress. Kategoriser: ytre (vann), indre (selvkritikk), sosial (medspiller).</div>
+                </div>
+                <div class="wf-gen-daily-duration">10 min</div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-label">AI-prognose<span class="wf-marker">5</span></div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI &middot; forventet utvikling</div>
+                  <p class="wf-insight-body">"Basert p&aring; 247 lignende profiler i AK Golf-databasen som har gjennomf&oslash;rt dette programmet: <strong>84% oppn&aring;r stress-score 7.5+ etter 4 uker</strong> (fra 6.5 baseline). <strong>Snitt: 1.8 slag ned p&aring; bakre 9</strong>. 12% opplever platau uke 3 &mdash; hold ut, uke 4 bryter gjennom. Programmet kan tilpasses l&oslash;pende basert p&aring; dine daglige logger."</p>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 &mdash; Sidebar CTA "Aktiver":</strong> Programmet er foresl&aring;tt, ikke p&aring;lagt. Spilleren aktiverer &mdash; det gir eierskap og forplikt.</li>
+        <li><strong>2 &mdash; Hero-sitat:</strong> "Fra stress-akkumulering til integrert ro" &mdash; beskriver reisen, ikke bare destinasjonen. Narrativ over metrikk.</li>
+        <li><strong>3 &mdash; 4 uker med tydelig progresjon:</strong> Uke 1 = grunnlag, Uke 2 = integrering, Uke 3 = press, Uke 4 = test. Tydelig logikk &mdash; ikke tilfeldige &oslash;velser.</li>
+        <li><strong>4 &mdash; Dag-for-dag for aktiv uke:</strong> Man&ndash;Fre med konkrete &oslash;velser, varighet og begrunnelse. Reduserer beslutningsfriksjon.</li>
+        <li><strong>5 &mdash; AI-prognose med basis-statistikk:</strong> "84% oppn&aring;r..." &mdash; tillit fra faktiske brukerdata. Dette er verdien AK Golf-platformen tilf&oslash;rer: aggregert l&aelig;ring p&aring; tvers av spillere.</li>
+        <li>&mdash; Styrke: Omgj&oslash;r profil til aksjon. Svakhet: Krever engasjement &mdash; 28 &oslash;velser p&aring; 4 uker er ambisi&oslash;st.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner for Mental Performance Profile (N22) rangert mot m&aring;let: <strong>gi spilleren en helhetlig AI-drevet psykologisk profil som oversetter data til selvinnsikt og handling &mdash; forskjellig fra r&aring;data (Mental-skjerm) og trender (N16).</strong></p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Selvinnsikt</th><th>Handlingsorientert</th><th>AI-verdi (lilla)</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. AI Profile</strong></td><td>Narrativ arketype + 4 dimensjoner deep-dive + &oslash;velser</td><td>H&oslash;y (narrativ + tall)</td><td>H&oslash;y (&oslash;velser per dim)</td><td>Dominant &middot; AI tolker</td><td>&#9733;&#9733;&#9733;&#9733;&#9733;</td></tr>
+        <tr><td><strong>2. Strengths &amp; Weaknesses</strong></td><td>Tvinger prioritering: 2 styrker vs 2 omr&aring;der</td><td>Medium (bin&aelig;r)</td><td>Medium (coach-notater)</td><td>H&oslash;y &middot; AI coacher</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td></tr>
+        <tr><td><strong>3. Situation-Based</strong></td><td>Per scenario: respons-m&oslash;nster + forbedring</td><td>H&oslash;y (konkret)</td><td>Svart-h&oslash;y</td><td>H&oslash;y &middot; AI finner m&oslash;nstre</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td></tr>
+        <tr><td><strong>4. Compare With Pros</strong></td><td>Arketype-match med pros + sitater</td><td>Medium (inspirasjon)</td><td>Lav (imitasjon)</td><td>Medium &middot; AI matcher</td><td>&#9733;&#9733;&#9733;&#9734;&#9734;</td></tr>
+        <tr><td><strong>5. Program Generator</strong></td><td>4-ukers konkret plan generert av profil</td><td>Lav (leser ikke profil)</td><td>Ekstremt h&oslash;y</td><td>Dominant &middot; AI genererer</td><td>&#9733;&#9733;&#9733;&#9733;&#9734;</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 &mdash; AI Profile (SAFE)</h3>
+      <p>Option 1 leverer kjerneverdien &mdash; <strong>AI-drevet dyp profilforst&aring;else</strong> &mdash; p&aring; &eacute;n skjerm. Hero-narrative &oslash;verst ("Anders har h&oslash;y emosjonskontroll men stress i pressituasjoner p&aring;virker selvtilliten") gir umiddelbar psykologisk innsikt. 4 dimensjoner (Fokus 7.8, Selvtillit 7.2, Stress 6.5, Emosjonskontroll 8.1) med deep-dive-kort kombinerer score, AI-tolkning og personaliserte &oslash;velser. AI-lilla (#AF52DE) er dominant farge &mdash; dette er AI-territoriet.</p>
+      <p><strong>Strategisk flyt:</strong> Option 1 = standard AI-profil-skjerm (/portal/mental/profil). Option 2 (Strengths &amp; Weaknesses) = sub-tab "Prioritering" for spillere som trenger &oslash;kt fokus. Option 3 (Situation-Based) = sub-tab "Situasjoner" for avanserte spillere med 14+ runder. Option 4 (Compare With Pros) = sub-tab "Inspirasjon" for motivasjon. Option 5 (Program Generator) = modal "Generer program" som spilleren trigger fra Opt 1. Alle 5 bygger p&aring; samme MentalProfile-data.</p>
+      <p><strong>Forskjell fra Mental-skjerm (N14) og Mental-trender (N16):</strong> N14 viser r&aring;data og scorecard-entries. N16 viser trendgrafer over tid. N22 (denne) er AI-tolkning &mdash; narrativ, arketype, personlighet. Alle tre er n&oslash;dvendige; profilen er destinasjonen der data blir mening.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  Designed with the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> &middot; AK Golf Platform
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

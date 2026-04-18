@@ -1,0 +1,61 @@
+/* ============ OPT1: INBOX CLASSIC ============ */
+/* E-post-stil inbox — liste venstre, detalj hoyre, lest/ulest, filtre */
+
+.wf-ic-split { display: grid; grid-template-columns: 340px 1fr; min-height: 700px; }
+
+/* Liste venstre */
+.wf-ic-list { background: #fff; border-right: 1px solid #eee; display: flex; flex-direction: column; }
+.wf-ic-search { padding: 14px 16px; border-bottom: 1px solid #eee; }
+.wf-ic-search-input { width: 100%; padding: 8px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #999; background: #f5f5f5; }
+.wf-ic-filters { display: flex; gap: 6px; padding: 10px 16px; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+.wf-ic-filter { padding: 5px 11px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 11px; color: #666; cursor: pointer; }
+.wf-ic-filter.wf-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+
+.wf-ic-items { flex: 1; overflow: hidden; }
+.wf-ic-item { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #eee; cursor: pointer; align-items: flex-start; }
+.wf-ic-item.wf-active { background: #f5f5f5; border-left: 3px solid #000; padding-left: 13px; }
+.wf-ic-item-dot { width: 8px; height: 8px; border-radius: 50%; background: transparent; margin-top: 7px; border: 1px solid transparent; }
+.wf-ic-item-unread .wf-ic-item-dot { background: #000; }
+.wf-ic-item-main { min-width: 0; }
+.wf-ic-item-top { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+.wf-ic-item-from { font-size: 12px; color: #666; font-weight: 600; }
+.wf-ic-item-time { font-size: 10px; color: #999; margin-left: auto; font-variant-numeric: tabular-nums; }
+.wf-ic-item-subject { font-size: 13px; color: #000; font-weight: 600; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wf-ic-item-unread .wf-ic-item-subject { font-weight: 700; }
+.wf-ic-item-preview { font-size: 11px; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wf-ic-item-tags { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+.wf-ic-item-tags .wf-tag { font-size: 9px; padding: 1px 6px; }
+.wf-ic-item-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+
+/* Detalj hoyre */
+.wf-ic-detail { display: flex; flex-direction: column; background: #fff; }
+.wf-ic-detail-head { padding: 16px 22px; border-bottom: 1px solid #eee; }
+.wf-ic-detail-subject { font-size: 16px; font-weight: 800; color: #000; margin: 0 0 6px; letter-spacing: -0.01em; }
+.wf-ic-detail-meta-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 11px; color: #666; }
+.wf-ic-detail-from { display: flex; align-items: center; gap: 8px; }
+.wf-ic-detail-avatar { width: 28px; height: 28px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #333; }
+.wf-ic-detail-from-name { font-size: 12px; color: #000; font-weight: 600; }
+
+.wf-ic-detail-actions { display: flex; gap: 6px; margin-top: 10px; }
+.wf-ic-action-btn { padding: 5px 11px; border: 1px solid #ccc; border-radius: 8px; background: #fff; font-size: 11px; color: #333; cursor: pointer; font-weight: 500; }
+
+.wf-ic-detail-body { flex: 1; padding: 20px 22px; overflow-y: hidden; }
+
+/* Feedback-seksjoner */
+.wf-ic-section { margin-bottom: 18px; }
+.wf-ic-section-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 6px; }
+.wf-ic-section-body { font-size: 13px; color: #333; line-height: 1.55; }
+.wf-ic-tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+
+.wf-ic-drills { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.wf-ic-drill { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; padding: 8px 10px; border: 1px solid #eee; border-radius: 8px; background: #fff; align-items: center; }
+.wf-ic-drill-icon { width: 28px; height: 28px; border: 1px solid #ccc; border-radius: 6px; background: #f5f5f5; }
+.wf-ic-drill-title { font-size: 12px; font-weight: 600; color: #000; }
+.wf-ic-drill-meta { font-size: 10px; color: #666; margin-top: 1px; }
+.wf-ic-drill-link { font-size: 11px; color: #000; text-decoration: underline; font-weight: 500; }
+
+.wf-ic-attachments { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+.wf-ic-attach { width: 90px; height: 66px; border: 1px solid #ccc; border-radius: 8px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #666; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* Tom-tilstand */
+.wf-ic-empty { padding: 60px 24px; text-align: center; color: #999; font-size: 13px; }

@@ -1,0 +1,53 @@
+/* ============ OPT2: TIMELINE FEED ============ */
+/* Kronologisk feed fra nyeste, per-okt-kort, inline-visning */
+
+.wf-tf-wrap { padding: 20px 24px 28px; display: flex; flex-direction: column; gap: 14px; background: #f5f5f5; min-height: 700px; }
+.wf-tf-filters { display: flex; gap: 8px; align-items: center; padding: 10px 16px; background: #fff; border: 1px solid #eee; border-radius: 999px; }
+.wf-tf-filters-label { font-size: 11px; color: #666; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-right: 4px; }
+.wf-tf-chip { padding: 5px 11px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 11px; color: #666; cursor: pointer; }
+.wf-tf-chip.wf-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-tf-chip-spacer { flex: 1; }
+.wf-tf-sort { font-size: 11px; color: #666; font-weight: 500; padding: 5px 10px; border: 1px solid #ccc; border-radius: 999px; background: #fff; }
+
+/* Timeline */
+.wf-tf-timeline { display: flex; flex-direction: column; gap: 14px; position: relative; }
+.wf-tf-timeline::before { content: ''; position: absolute; left: 17px; top: 22px; bottom: 10px; width: 1px; background: #ccc; }
+
+.wf-tf-entry { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: flex-start; }
+.wf-tf-dot { width: 36px; height: 36px; border-radius: 50%; background: #fff; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; font-weight: 700; z-index: 1; }
+.wf-tf-entry.wf-unread .wf-tf-dot { background: #000; color: #fff; border-color: #000; }
+
+.wf-tf-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+.wf-tf-entry.wf-unread .wf-tf-card { border-color: #000; }
+
+.wf-tf-card-head { display: flex; align-items: flex-start; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+.wf-tf-avatar { width: 32px; height: 32px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #333; }
+.wf-tf-head-main { flex: 1; min-width: 0; }
+.wf-tf-head-title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.wf-tf-instructor { font-size: 13px; font-weight: 700; color: #000; }
+.wf-tf-session-date { font-size: 11px; color: #666; font-weight: 500; }
+.wf-tf-focus { font-size: 12px; color: #333; margin-top: 2px; font-weight: 500; }
+.wf-tf-head-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.wf-tf-time { font-size: 10px; color: #999; font-variant-numeric: tabular-nums; }
+
+/* Feedback-seksjoner inline */
+.wf-tf-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.wf-tf-section { padding: 10px 12px; background: #f5f5f5; border-radius: 8px; border: 1px solid #eee; }
+.wf-tf-section-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 5px; }
+.wf-tf-section-text { font-size: 12px; color: #333; line-height: 1.5; }
+.wf-tf-section-tags { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* Drills + fokuspunkter */
+.wf-tf-list { display: flex; flex-direction: column; gap: 5px; margin-top: 4px; }
+.wf-tf-list-item { font-size: 12px; color: #333; padding-left: 14px; position: relative; line-height: 1.5; }
+.wf-tf-list-item::before { content: '›'; position: absolute; left: 2px; color: #000; font-weight: 700; }
+
+/* Vedlegg */
+.wf-tf-attach-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.wf-tf-attach { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; font-size: 11px; color: #333; font-weight: 500; }
+.wf-tf-attach-icon { width: 14px; height: 14px; border: 1px solid #ccc; border-radius: 3px; background: #f5f5f5; }
+
+/* Actions */
+.wf-tf-actions { display: flex; gap: 6px; padding-top: 8px; border-top: 1px solid #eee; }
+.wf-tf-action-btn { padding: 5px 11px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 11px; color: #333; cursor: pointer; font-weight: 500; }
+.wf-tf-action-primary { background: #000; color: #fff; border-color: #000; font-weight: 600; }

@@ -1,0 +1,7 @@
+/* === Option 1: Content Library (SAFE) === */
+/* Phase 2 (Clean + Polished) vil legges til her senere. */
+
+#frame-opt1-tabs .sub-tab-btn[data-variant="clean"] { color: #999; }
+#frame-opt1-tabs .sub-tab-btn[data-variant="polished"] { color: #999; }
+
+/* Wireframe-only for nå — B&W shell defineres i styles.css */

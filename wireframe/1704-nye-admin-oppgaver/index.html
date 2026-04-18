@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin task-board — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Admin task-board</span> — <span id="project-name">AK Golf Platform · Mission Control · N12</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Kanban Board</button>
+    <button class="tab-btn" data-tab="option-2">2: Prioritized List</button>
+    <button class="tab-btn" data-tab="option-3">3: Calendar Schedule</button>
+    <button class="tab-btn" data-tab="option-4">4: Today Focus</button>
+    <button class="tab-btn" data-tab="option-5">5: Client-Grouped</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: KANBAN BOARD (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Kanban Board</span></h2>
+    <p class="option-description">SAFE — Tre kolonner (To Do / In Progress / Done). Kort med prioritet, due date, relaterte entities og assignee. Drag-to-reorder.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/oppgaver</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <!-- SIDEBAR -->
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#" class="active">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <a href="#">Økonomi</a>
+              <div class="mc-nav-label">Innhold</div>
+              <a href="#">Treningsplaner</a>
+              <a href="#">Turneringer</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <!-- MAIN -->
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Oppgaver</span>
+                <span class="mc-topbar-sub">Intern task-board · fredag 17. april</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Søk oppgave, elev, domene...</span>
+                <button class="mc-topbar-btn">Eksporter</button>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">+ Ny oppgave</button>
+              </div>
+            </div>
+            <div class="mc-body">
+              <div class="mc-page-head">
+                <div>
+                  <h1 class="mc-page-title">Admin task-board</h1>
+                  <div class="mc-page-sub">12 åpne oppgaver · 4 i dag · 2 forsinket · 18 fullført denne uken</div>
+                </div>
+                <div class="mc-page-actions">
+                  <button class="mc-btn">Filter</button>
+                  <button class="mc-btn">Sortér: prioritet</button>
+                  <button class="mc-btn">Gruppér: status</button>
+                </div>
+              </div>
+
+              <div class="mc-kpi-row">
+                <div class="mc-kpi"><div class="mc-kpi-label">Åpne oppgaver</div><div class="mc-kpi-value">12</div><div class="mc-kpi-sub">4 med høy prio</div></div>
+                <div class="mc-kpi"><div class="mc-kpi-label">Due i dag</div><div class="mc-kpi-value">4</div><div class="mc-kpi-sub">3 ikke påbegynt</div></div>
+                <div class="mc-kpi"><div class="mc-kpi-label">Forsinket</div><div class="mc-kpi-value">2</div><div class="mc-kpi-sub">eldste: 2 dager</div></div>
+                <div class="mc-kpi"><div class="mc-kpi-label">Fullført uke</div><div class="mc-kpi-value">18</div><div class="mc-kpi-sub">snitt: 14 / uke</div></div>
+              </div>
+
+              <div class="mc-filters">
+                <button class="mc-pill active">Alle<span class="mc-pill-count">20</span></button>
+                <button class="mc-pill">Mine<span class="mc-pill-count">12</span></button>
+                <button class="mc-pill">Coaching<span class="mc-pill-count">7</span></button>
+                <button class="mc-pill">Fakturering<span class="mc-pill-count">3</span></button>
+                <button class="mc-pill">Leads<span class="mc-pill-count">4</span></button>
+                <button class="mc-pill">Innhold<span class="mc-pill-count">6</span></button>
+              </div>
+
+              <div class="kanban">
+                <!-- TO DO -->
+                <div class="kanban-col">
+                  <div class="kanban-col-head">
+                    <div class="kanban-col-title"><span class="kanban-col-dot kanban-col-dot-todo"></span>To Do</div>
+                    <span class="kanban-col-count">7</span>
+                  </div>
+                  <button class="kanban-add">+ Legg til oppgave</button>
+                  <div class="kanban-cards">
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Ring Markus ang. ekstra time</div>
+                        <span class="prio-tag prio-hoy">Høy</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="kanban-card-entity">Markus Pedersen</span>
+                        <span class="domain-tag">Coaching</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due kanban-due-today">I dag 15:00</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Send faktura oktober — 8 elever</div>
+                        <span class="prio-tag prio-hoy">Høy</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Fakturering</span>
+                        <span class="kanban-card-entity">8 elever</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">Om 3 dager</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Follow-up lead: Sofie Lund</div>
+                        <span class="prio-tag prio-medium">Medium</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Lead</span>
+                        <span class="kanban-card-entity">Junior</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">I morgen</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Book simulator til bedriftsevent</div>
+                        <span class="prio-tag prio-lav">Lav</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Drift</span>
+                        <span class="kanban-card-entity">Mulligan</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">Neste uke</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Forbered foreldremøte GFGK</div>
+                        <span class="prio-tag prio-medium">Medium</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Coaching</span>
+                        <span class="kanban-card-entity">GFGK Junior</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">Om 5 dager</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Bestill nye golfballer</div>
+                        <span class="prio-tag prio-lav">Lav</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Drift</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">Ingen frist</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Svar e-post fra Skarpnord revisor</div>
+                        <span class="prio-tag prio-medium">Medium</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Admin</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">Om 2 dager</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- IN PROGRESS -->
+                <div class="kanban-col">
+                  <div class="kanban-col-head">
+                    <div class="kanban-col-title"><span class="kanban-col-dot kanban-col-dot-progress"></span>In Progress</div>
+                    <span class="kanban-col-count">5</span>
+                  </div>
+                  <div class="kanban-cards">
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Oppdater sportsplan GFGK</div>
+                        <span class="prio-tag prio-medium">Medium</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Innhold</span>
+                        <span class="kanban-card-entity">GFGK</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due kanban-due-today">I morgen</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Oppdater TrackMan-dashboard</div>
+                        <span class="prio-tag prio-medium">Medium</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Innhold</span>
+                        <span class="kanban-card-entity">Mulligan</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">Denne uka</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Oppdater treningsplan — Erik Hansen</div>
+                        <span class="prio-tag prio-hoy">Høy</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="kanban-card-entity">Erik Hansen</span>
+                        <span class="domain-tag">Coaching</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due kanban-due-overdue">2 dager forsinket</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Skriv nyhetsbrev — mai</div>
+                        <span class="prio-tag prio-medium">Medium</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Markedsføring</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">Om 6 dager</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title">Ringerunde: 4 inaktive elever</div>
+                        <span class="prio-tag prio-medium">Medium</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Coaching</span>
+                        <span class="kanban-card-entity">4 elever</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">I morgen</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- DONE -->
+                <div class="kanban-col">
+                  <div class="kanban-col-head">
+                    <div class="kanban-col-title"><span class="kanban-col-dot kanban-col-dot-done"></span>Done</div>
+                    <span class="kanban-col-count">8</span>
+                  </div>
+                  <div class="kanban-cards">
+                    <div class="kanban-card" style="opacity:0.7">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title" style="text-decoration:line-through">Send velkomst-e-post til Nora T.</div>
+                        <span class="status-tag status-done">Done</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="kanban-card-entity">Nora Torp</span>
+                        <span class="domain-tag">Lead</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">Fullført i dag</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card" style="opacity:0.7">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title" style="text-decoration:line-through">Bekreft Stripe-faktura mars</div>
+                        <span class="status-tag status-done">Done</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Fakturering</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">I går</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card" style="opacity:0.7">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title" style="text-decoration:line-through">Publisér Instagram-post</div>
+                        <span class="status-tag status-done">Done</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Markedsføring</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">I går</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card" style="opacity:0.7">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title" style="text-decoration:line-through">Ring foreldre: Isak Lie</div>
+                        <span class="status-tag status-done">Done</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="kanban-card-entity">Isak Lie</span>
+                        <span class="domain-tag">Coaching</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">for 2 dager</span>
+                      </div>
+                    </div>
+
+                    <div class="kanban-card" style="opacity:0.7">
+                      <div class="kanban-card-top">
+                        <div class="kanban-card-title" style="text-decoration:line-through">Reserver GFGK-turnering</div>
+                        <span class="status-tag status-done">Done</span>
+                      </div>
+                      <div class="kanban-card-meta">
+                        <span class="domain-tag">Turnering</span>
+                      </div>
+                      <div class="kanban-card-foot">
+                        <span class="kanban-card-assignee"><span class="kanban-avatar">AK</span> Anders</span>
+                        <span class="kanban-due">for 3 dager</span>
+                      </div>
+                    </div>
+                    <div class="kanban-card" style="opacity:0.45; text-align:center; font-size:11px; color:#999; font-style:italic;">
+                      + 3 eldre fullførte oppgaver — vis alle →
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Klassisk Trello/Linear-kanban — tre kolonner (To Do / In Progress / Done) er det mest gjenkjennelige og lavt læringspåslag.</li>
+        <li>Hvert kort viser prio-tag, relatert entity (elev eller gruppe), domene-tag (coaching, fakturering, lead, innhold), assignee og due date.</li>
+        <li>Forsinket-kort har sterk kontrast på due-date for tydelig varsel.</li>
+        <li>KPI-strip øverst gir dagens status på ett blikk før man dykker ned i kort.</li>
+        <li>Filter-pills filtrerer alle tre kolonner samtidig (Mine / Coaching / Fakturering / Leads / Innhold).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: PRIORITIZED LIST ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Prioritized List</span></h2>
+    <p class="option-description">Flat liste sortert etter prioritet + due date. Filter-pills øverst (Mine / I dag / Denne uka / Alle). Høy informasjonstetthet.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/oppgaver</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#" class="active">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <a href="#">Økonomi</a>
+              <div class="mc-nav-label">Innhold</div>
+              <a href="#">Treningsplaner</a>
+              <a href="#">Turneringer</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Oppgaver</span>
+                <span class="mc-topbar-sub">Prioritert liste</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Søk oppgave...</span>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">+ Ny oppgave</button>
+              </div>
+            </div>
+            <div class="mc-body">
+              <div class="mc-page-head">
+                <div>
+                  <h1 class="mc-page-title">Oppgaver</h1>
+                  <div class="mc-page-sub">Sortert etter prioritet og deretter due date</div>
+                </div>
+                <div class="mc-page-actions">
+                  <button class="mc-btn">Visning: liste</button>
+                  <button class="mc-btn">Sortér: prio ↓</button>
+                </div>
+              </div>
+
+              <div class="mc-filters">
+                <button class="mc-pill active">Mine<span class="mc-pill-count">12</span></button>
+                <button class="mc-pill">I dag<span class="mc-pill-count">4</span></button>
+                <button class="mc-pill">Denne uka<span class="mc-pill-count">9</span></button>
+                <button class="mc-pill">Forsinket<span class="mc-pill-count">2</span></button>
+                <button class="mc-pill">Alle<span class="mc-pill-count">20</span></button>
+                <input class="mc-search-input" type="text" placeholder="Filtrer: elev, domene, tag...">
+              </div>
+
+              <div class="plist">
+                <div class="plist-head">
+                  <div>Prio</div>
+                  <div>Oppgave</div>
+                  <div>Relatert</div>
+                  <div>Due</div>
+                  <div>Status</div>
+                  <div style="text-align:right;">Actions</div>
+                </div>
+
+                <div class="plist-section-head">
+                  <span>Forsinket (2)</span>
+                  <span>Må tas først</span>
+                </div>
+                <div class="plist-row is-overdue">
+                  <div class="plist-prio"><span class="prio-tag prio-hoy">Høy</span></div>
+                  <div>
+                    <div class="plist-title">Oppdater treningsplan — Erik Hansen</div>
+                    <div class="plist-sub">Skulle vært levert 15. april</div>
+                  </div>
+                  <div class="plist-entity">Erik Hansen · <span class="domain-tag">Coaching</span></div>
+                  <div class="plist-due plist-due-overdue">−2 dager</div>
+                  <div><span class="status-tag status-progress">I gang</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row is-overdue">
+                  <div class="plist-prio"><span class="prio-tag prio-medium">Med</span></div>
+                  <div>
+                    <div class="plist-title">Svar e-post fra Skarpnord revisor</div>
+                    <div class="plist-sub">Spørsmål om årsregnskap 2025</div>
+                  </div>
+                  <div class="plist-entity"><span class="domain-tag">Admin</span></div>
+                  <div class="plist-due plist-due-overdue">−1 dag</div>
+                  <div><span class="status-tag status-todo">Åpen</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+
+                <div class="plist-section-head">
+                  <span>I dag (4)</span>
+                  <span>Fredag 17. april</span>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-hoy">Høy</span></div>
+                  <div>
+                    <div class="plist-title">Ring Markus ang. ekstra time</div>
+                    <div class="plist-sub">Følge opp tilbud om ekstra coaching</div>
+                  </div>
+                  <div class="plist-entity">Markus Pedersen · <span class="domain-tag">Coaching</span></div>
+                  <div class="plist-due plist-due-today">I dag 15:00</div>
+                  <div><span class="status-tag status-todo">Åpen</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-hoy">Høy</span></div>
+                  <div>
+                    <div class="plist-title">Bekreft 3 ventende bookinger</div>
+                    <div class="plist-sub">Erik · Nora · Lars</div>
+                  </div>
+                  <div class="plist-entity">3 elever · <span class="domain-tag">Booking</span></div>
+                  <div class="plist-due plist-due-today">I dag</div>
+                  <div><span class="status-tag status-todo">Åpen</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-medium">Med</span></div>
+                  <div>
+                    <div class="plist-title">Bekreft dagens SMS-påminnelser</div>
+                    <div class="plist-sub">5 elever — auto-send kl 17:00</div>
+                  </div>
+                  <div class="plist-entity"><span class="domain-tag">Drift</span></div>
+                  <div class="plist-due plist-due-today">I dag 17:00</div>
+                  <div><span class="status-tag status-todo">Åpen</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-lav">Lav</span></div>
+                  <div>
+                    <div class="plist-title">Loggfør dagens økter i Notion</div>
+                    <div class="plist-sub">5 coaching-økter</div>
+                  </div>
+                  <div class="plist-entity"><span class="domain-tag">Admin</span></div>
+                  <div class="plist-due plist-due-today">I dag</div>
+                  <div><span class="status-tag status-todo">Åpen</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+
+                <div class="plist-section-head">
+                  <span>Denne uka (5)</span>
+                  <span>Frist innen søndag 19. april</span>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-hoy">Høy</span></div>
+                  <div>
+                    <div class="plist-title">Send faktura oktober — 8 elever</div>
+                    <div class="plist-sub">Manuell godkjenning før Stripe-utsendelse</div>
+                  </div>
+                  <div class="plist-entity">8 elever · <span class="domain-tag">Fakturering</span></div>
+                  <div class="plist-due">Om 3 dager</div>
+                  <div><span class="status-tag status-todo">Åpen</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-medium">Med</span></div>
+                  <div>
+                    <div class="plist-title">Oppdater sportsplan GFGK</div>
+                    <div class="plist-sub">Legg inn periodisering for april–juni</div>
+                  </div>
+                  <div class="plist-entity">GFGK Junior · <span class="domain-tag">Innhold</span></div>
+                  <div class="plist-due">I morgen</div>
+                  <div><span class="status-tag status-progress">I gang</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-medium">Med</span></div>
+                  <div>
+                    <div class="plist-title">Oppdater TrackMan-dashboard</div>
+                    <div class="plist-sub">Legg inn Mulligan-rapport for uke 15</div>
+                  </div>
+                  <div class="plist-entity">Mulligan · <span class="domain-tag">Innhold</span></div>
+                  <div class="plist-due">Denne uka</div>
+                  <div><span class="status-tag status-progress">I gang</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-medium">Med</span></div>
+                  <div>
+                    <div class="plist-title">Follow-up lead: Sofie Lund</div>
+                    <div class="plist-sub">Interessert i Junior Academy — ring tilbake</div>
+                  </div>
+                  <div class="plist-entity">Sofie Lund · <span class="domain-tag">Lead</span></div>
+                  <div class="plist-due">I morgen</div>
+                  <div><span class="status-tag status-todo">Åpen</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-medium">Med</span></div>
+                  <div>
+                    <div class="plist-title">Ringerunde: 4 inaktive elever</div>
+                    <div class="plist-sub">Winback-samtale</div>
+                  </div>
+                  <div class="plist-entity">4 elever · <span class="domain-tag">Coaching</span></div>
+                  <div class="plist-due">I morgen</div>
+                  <div><span class="status-tag status-progress">I gang</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+
+                <div class="plist-section-head">
+                  <span>Neste uke og senere (3)</span>
+                  <span>Lengre horisont</span>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-lav">Lav</span></div>
+                  <div>
+                    <div class="plist-title">Book simulator til bedriftsevent</div>
+                    <div class="plist-sub">Aker Brygge-firma — 8 personer</div>
+                  </div>
+                  <div class="plist-entity">Mulligan · <span class="domain-tag">Drift</span></div>
+                  <div class="plist-due">Neste uke</div>
+                  <div><span class="status-tag status-todo">Åpen</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-medium">Med</span></div>
+                  <div>
+                    <div class="plist-title">Forbered foreldremøte GFGK</div>
+                    <div class="plist-sub">Presentasjon + agenda</div>
+                  </div>
+                  <div class="plist-entity">GFGK Junior · <span class="domain-tag">Coaching</span></div>
+                  <div class="plist-due">Om 5 dager</div>
+                  <div><span class="status-tag status-todo">Åpen</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+                <div class="plist-row">
+                  <div class="plist-prio"><span class="prio-tag prio-medium">Med</span></div>
+                  <div>
+                    <div class="plist-title">Skriv nyhetsbrev — mai</div>
+                    <div class="plist-sub">Sesongstart, turneringer, nye medlemmer</div>
+                  </div>
+                  <div class="plist-entity"><span class="domain-tag">Markedsføring</span></div>
+                  <div class="plist-due">Om 6 dager</div>
+                  <div><span class="status-tag status-progress">I gang</span></div>
+                  <div class="plist-actions"><button class="plist-action-btn">Ferdig</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Seksjonsgrupperinger (Forsinket / I dag / Denne uka / Senere) gjør listen scrollbar på en logisk måte.</li>
+        <li>Filter-pills øverst er primær-navigasjon — Mine / I dag / Denne uka / Forsinket / Alle.</li>
+        <li>Tett informasjon — 13+ oppgaver synlige uten scroll. Passer godt for Anders som har ADHD og trenger å se «alt» raskt.</li>
+        <li>Prio + relatert + due + status + action i én rad gir keyboard-first arbeidsflyt.</li>
+        <li>Svakere for visuell oversikt enn kanban — men sterkere for «jeg MÅ finne den oppgaven nå».</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: CALENDAR SCHEDULE ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Calendar Schedule</span></h2>
+    <p class="option-description">Månedskalender med due-dates som chips. Klikk dato for å se alle tasks den dagen i sidepanel.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/oppgaver</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#" class="active">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <a href="#">Økonomi</a>
+              <div class="mc-nav-label">Innhold</div>
+              <a href="#">Treningsplaner</a>
+              <a href="#">Turneringer</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Oppgaver</span>
+                <span class="mc-topbar-sub">Kalendervisning · april 2026</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Søk oppgave...</span>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">+ Ny oppgave</button>
+              </div>
+            </div>
+            <div class="mc-body">
+              <div class="mc-page-head">
+                <div>
+                  <h1 class="mc-page-title">Oppgaver — kalender</h1>
+                  <div class="mc-page-sub">20 oppgaver fordelt over april · klikk en dato for å se detaljer</div>
+                </div>
+                <div class="mc-page-actions">
+                  <button class="mc-btn">Måned</button>
+                  <button class="mc-btn">Uke</button>
+                  <button class="mc-btn">Liste</button>
+                </div>
+              </div>
+
+              <div class="mc-filters">
+                <button class="mc-pill active">Alle<span class="mc-pill-count">20</span></button>
+                <button class="mc-pill">Høy prio<span class="mc-pill-count">4</span></button>
+                <button class="mc-pill">Coaching<span class="mc-pill-count">7</span></button>
+                <button class="mc-pill">Fakturering<span class="mc-pill-count">3</span></button>
+                <button class="mc-pill">Leads<span class="mc-pill-count">4</span></button>
+                <button class="mc-pill">Innhold<span class="mc-pill-count">6</span></button>
+              </div>
+
+              <div class="cal-layout">
+                <div class="cal-wrap">
+                  <div class="cal-head">
+                    <div class="cal-month">April 2026</div>
+                    <div class="cal-nav">
+                      <button class="cal-nav-btn">◀ Mars</button>
+                      <button class="cal-nav-btn">I dag</button>
+                      <button class="cal-nav-btn">Mai ▶</button>
+                    </div>
+                  </div>
+                  <div class="cal-weekdays">
+                    <div>Man</div><div>Tir</div><div>Ons</div><div>Tor</div><div>Fre</div><div>Lør</div><div>Søn</div>
+                  </div>
+                  <div class="cal-grid">
+                    <!-- Uke 14 (mars-tail) -->
+                    <div class="cal-day muted"><span class="cal-day-num">30</span></div>
+                    <div class="cal-day muted"><span class="cal-day-num">31</span></div>
+                    <div class="cal-day"><span class="cal-day-num">1</span></div>
+                    <div class="cal-day"><span class="cal-day-num">2</span></div>
+                    <div class="cal-day"><span class="cal-day-num">3</span>
+                      <div class="cal-task-chip prio-medium">Sportsplan draft</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">4</span></div>
+                    <div class="cal-day"><span class="cal-day-num">5</span></div>
+
+                    <!-- Uke 15 -->
+                    <div class="cal-day"><span class="cal-day-num">6</span></div>
+                    <div class="cal-day"><span class="cal-day-num">7</span>
+                      <div class="cal-task-chip">Notion-logg</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">8</span></div>
+                    <div class="cal-day"><span class="cal-day-num">9</span>
+                      <div class="cal-task-chip">Lead Sofie</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">10</span>
+                      <div class="cal-task-chip prio-medium">Nyhetsbrev-utkast</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">11</span></div>
+                    <div class="cal-day"><span class="cal-day-num">12</span></div>
+
+                    <!-- Uke 16 -->
+                    <div class="cal-day"><span class="cal-day-num">13</span>
+                      <div class="cal-task-chip">Sportsplan rev.</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">14</span>
+                      <div class="cal-task-chip prio-medium">Skarpnord e-post</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">15</span>
+                      <div class="cal-task-chip prio-hoy">Treningsplan Erik</div>
+                      <div class="cal-task-count">+1 til</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">16</span>
+                      <div class="cal-task-chip">Stripe mars</div>
+                    </div>
+                    <div class="cal-day today selected"><span class="cal-day-num">17</span>
+                      <div class="cal-task-chip prio-hoy">Markus-samtale</div>
+                      <div class="cal-task-chip prio-hoy">Bekreft 3 book.</div>
+                      <div class="cal-task-count">+2 til</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">18</span>
+                      <div class="cal-task-chip prio-medium">Sportsplan GFGK</div>
+                      <div class="cal-task-chip">Lead Sofie</div>
+                      <div class="cal-task-count">+2 til</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">19</span>
+                      <div class="cal-task-chip prio-medium">TrackMan dash.</div>
+                    </div>
+
+                    <!-- Uke 17 -->
+                    <div class="cal-day"><span class="cal-day-num">20</span>
+                      <div class="cal-task-chip prio-hoy">Faktura oktober</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">21</span>
+                      <div class="cal-task-chip">Book sim. event</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">22</span>
+                      <div class="cal-task-chip prio-medium">Foreldremøte</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">23</span>
+                      <div class="cal-task-chip prio-medium">Nyhetsbrev mai</div>
+                    </div>
+                    <div class="cal-day"><span class="cal-day-num">24</span></div>
+                    <div class="cal-day"><span class="cal-day-num">25</span></div>
+                    <div class="cal-day"><span class="cal-day-num">26</span></div>
+
+                    <!-- Uke 18 -->
+                    <div class="cal-day"><span class="cal-day-num">27</span></div>
+                    <div class="cal-day"><span class="cal-day-num">28</span></div>
+                    <div class="cal-day"><span class="cal-day-num">29</span></div>
+                    <div class="cal-day"><span class="cal-day-num">30</span></div>
+                    <div class="cal-day muted"><span class="cal-day-num">1</span></div>
+                    <div class="cal-day muted"><span class="cal-day-num">2</span></div>
+                    <div class="cal-day muted"><span class="cal-day-num">3</span></div>
+                  </div>
+                </div>
+
+                <div class="cal-side">
+                  <div class="cal-side-head">
+                    <div class="cal-side-date">Fre 17. apr</div>
+                    <div class="cal-side-count">4 oppgaver</div>
+                  </div>
+                  <div class="cal-side-list">
+                    <div class="cal-side-task">
+                      <div class="cal-side-task-top">
+                        <div class="cal-side-task-title">Ring Markus ang. ekstra time</div>
+                        <span class="prio-tag prio-hoy">Høy</span>
+                      </div>
+                      <div class="cal-side-task-meta">
+                        <span class="cal-side-task-entity">Markus Pedersen</span>
+                        <span class="domain-tag">Coaching</span>
+                        <span>15:00</span>
+                      </div>
+                    </div>
+                    <div class="cal-side-task">
+                      <div class="cal-side-task-top">
+                        <div class="cal-side-task-title">Bekreft 3 ventende bookinger</div>
+                        <span class="prio-tag prio-hoy">Høy</span>
+                      </div>
+                      <div class="cal-side-task-meta">
+                        <span class="cal-side-task-entity">Erik · Nora · Lars</span>
+                        <span class="domain-tag">Booking</span>
+                      </div>
+                    </div>
+                    <div class="cal-side-task">
+                      <div class="cal-side-task-top">
+                        <div class="cal-side-task-title">Dagens SMS-påminnelser</div>
+                        <span class="prio-tag prio-medium">Med</span>
+                      </div>
+                      <div class="cal-side-task-meta">
+                        <span class="domain-tag">Drift</span>
+                        <span>17:00</span>
+                      </div>
+                    </div>
+                    <div class="cal-side-task">
+                      <div class="cal-side-task-top">
+                        <div class="cal-side-task-title">Loggfør dagens økter i Notion</div>
+                        <span class="prio-tag prio-lav">Lav</span>
+                      </div>
+                      <div class="cal-side-task-meta">
+                        <span class="domain-tag">Admin</span>
+                        <span>Innen kveld</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Månedskalender gir visuell oversikt over hvor i måneden det er travelt — nyttig for langsiktig planlegging.</li>
+        <li>Task-chips farges etter prio (høy = svart, medium = grå). Flere oppgaver per dag stables med «+2 til» -lenke.</li>
+        <li>Klikk på en dag åpner sidepanel med alle oppgaver den dagen, sortert etter prio.</li>
+        <li>Best for Anders når han skal planlegge en uke / måned, ikke for daglig arbeidsflyt.</li>
+        <li>Svakere for «hva må jeg gjøre nå» — du må klikke for å se detaljer.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: TODAY FOCUS ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Today Focus</span></h2>
+    <p class="option-description">Dagens oppgaver i hero, neste 7 dager under, alle andre nederst. En-oppgave-om-gangen-mentalitet.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/oppgaver</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#" class="active">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <a href="#">Økonomi</a>
+              <div class="mc-nav-label">Innhold</div>
+              <a href="#">Treningsplaner</a>
+              <a href="#">Turneringer</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Oppgaver</span>
+                <span class="mc-topbar-sub">Today focus</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Søk oppgave...</span>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">+ Ny oppgave</button>
+              </div>
+            </div>
+            <div class="mc-body">
+              <div class="today-hero">
+                <div class="today-hero-left">
+                  <div class="today-hero-label">Fredag 17. april · Uke 16</div>
+                  <h2 class="today-hero-title">God morgen, Anders. 4 oppgaver i dag.</h2>
+                  <div class="today-hero-sub">2 forsinket fra tidligere · 9 kommer neste 7 dager</div>
+                </div>
+                <div class="today-hero-stats">
+                  <div class="today-hero-stat">
+                    <span class="today-hero-stat-val">4</span>
+                    <span class="today-hero-stat-label">I dag</span>
+                  </div>
+                  <div class="today-hero-stat">
+                    <span class="today-hero-stat-val">2</span>
+                    <span class="today-hero-stat-label">Forsinket</span>
+                  </div>
+                  <div class="today-hero-stat">
+                    <span class="today-hero-stat-val">18</span>
+                    <span class="today-hero-stat-label">Uke fullført</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DAGENS -->
+              <div class="today-section">
+                <div class="today-section-head">
+                  <span class="today-section-title">Dagens oppgaver — 4</span>
+                  <span class="today-section-meta">Forsinkede vises øverst</span>
+                </div>
+                <div class="today-section-body">
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Oppdater treningsplan — Erik Hansen</div>
+                      <div class="today-task-sub"><span class="today-task-entity">Erik Hansen</span><span class="domain-tag">Coaching</span></div>
+                    </div>
+                    <div class="today-task-due today-task-due-now">2 dager forsinket</div>
+                    <div><span class="prio-tag prio-hoy">Høy</span></div>
+                    <div><span class="status-tag status-progress">I gang</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Svar e-post fra Skarpnord revisor</div>
+                      <div class="today-task-sub"><span class="domain-tag">Admin</span><span>Spørsmål om årsregnskap</span></div>
+                    </div>
+                    <div class="today-task-due today-task-due-now">1 dag forsinket</div>
+                    <div><span class="prio-tag prio-medium">Med</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Ring Markus ang. ekstra time</div>
+                      <div class="today-task-sub"><span class="today-task-entity">Markus Pedersen</span><span class="domain-tag">Coaching</span></div>
+                    </div>
+                    <div class="today-task-due today-task-due-now">I dag 15:00</div>
+                    <div><span class="prio-tag prio-hoy">Høy</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Bekreft 3 ventende bookinger</div>
+                      <div class="today-task-sub"><span class="today-task-entity">3 elever</span><span class="domain-tag">Booking</span></div>
+                    </div>
+                    <div class="today-task-due today-task-due-now">I dag</div>
+                    <div><span class="prio-tag prio-hoy">Høy</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Bekreft dagens SMS-påminnelser</div>
+                      <div class="today-task-sub"><span class="domain-tag">Drift</span><span>5 elever · auto 17:00</span></div>
+                    </div>
+                    <div class="today-task-due today-task-due-now">I dag 17:00</div>
+                    <div><span class="prio-tag prio-medium">Med</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Loggfør dagens økter i Notion</div>
+                      <div class="today-task-sub"><span class="domain-tag">Admin</span><span>5 coaching-økter</span></div>
+                    </div>
+                    <div class="today-task-due">I dag</div>
+                    <div><span class="prio-tag prio-lav">Lav</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- NESTE 7 DAGER -->
+              <div class="today-section">
+                <div class="today-section-head">
+                  <span class="today-section-title">Neste 7 dager — 9</span>
+                  <span class="today-section-meta">Lørdag 18. april – fredag 24. april</span>
+                </div>
+                <div class="today-section-body">
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Oppdater sportsplan GFGK</div>
+                      <div class="today-task-sub"><span class="today-task-entity">GFGK Junior</span><span class="domain-tag">Innhold</span></div>
+                    </div>
+                    <div class="today-task-due">Lør 18. apr</div>
+                    <div><span class="prio-tag prio-medium">Med</span></div>
+                    <div><span class="status-tag status-progress">I gang</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Follow-up lead: Sofie Lund</div>
+                      <div class="today-task-sub"><span class="today-task-entity">Sofie Lund</span><span class="domain-tag">Lead</span></div>
+                    </div>
+                    <div class="today-task-due">Lør 18. apr</div>
+                    <div><span class="prio-tag prio-medium">Med</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Ringerunde: 4 inaktive elever</div>
+                      <div class="today-task-sub"><span class="today-task-entity">4 elever</span><span class="domain-tag">Coaching</span></div>
+                    </div>
+                    <div class="today-task-due">Lør 18. apr</div>
+                    <div><span class="prio-tag prio-medium">Med</span></div>
+                    <div><span class="status-tag status-progress">I gang</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Oppdater TrackMan-dashboard</div>
+                      <div class="today-task-sub"><span class="today-task-entity">Mulligan</span><span class="domain-tag">Innhold</span></div>
+                    </div>
+                    <div class="today-task-due">Søn 19. apr</div>
+                    <div><span class="prio-tag prio-medium">Med</span></div>
+                    <div><span class="status-tag status-progress">I gang</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Send faktura oktober — 8 elever</div>
+                      <div class="today-task-sub"><span class="today-task-entity">8 elever</span><span class="domain-tag">Fakturering</span></div>
+                    </div>
+                    <div class="today-task-due">Man 20. apr</div>
+                    <div><span class="prio-tag prio-hoy">Høy</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Book simulator til bedriftsevent</div>
+                      <div class="today-task-sub"><span class="today-task-entity">Mulligan</span><span class="domain-tag">Drift</span></div>
+                    </div>
+                    <div class="today-task-due">Tir 21. apr</div>
+                    <div><span class="prio-tag prio-lav">Lav</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Forbered foreldremøte GFGK</div>
+                      <div class="today-task-sub"><span class="today-task-entity">GFGK Junior</span><span class="domain-tag">Coaching</span></div>
+                    </div>
+                    <div class="today-task-due">Ons 22. apr</div>
+                    <div><span class="prio-tag prio-medium">Med</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Skriv nyhetsbrev — mai</div>
+                      <div class="today-task-sub"><span class="domain-tag">Markedsføring</span></div>
+                    </div>
+                    <div class="today-task-due">Tor 23. apr</div>
+                    <div><span class="prio-tag prio-medium">Med</span></div>
+                    <div><span class="status-tag status-progress">I gang</span></div>
+                  </div>
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Publiser ukesoversikt til elever</div>
+                      <div class="today-task-sub"><span class="domain-tag">Markedsføring</span></div>
+                    </div>
+                    <div class="today-task-due">Fre 24. apr</div>
+                    <div><span class="prio-tag prio-lav">Lav</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SENERE -->
+              <div class="today-section">
+                <div class="today-section-head">
+                  <span class="today-section-title">Alle andre — 5</span>
+                  <span class="today-section-meta">Uten frist eller senere enn 7 dager</span>
+                </div>
+                <div class="today-section-body">
+                  <div class="today-task">
+                    <div class="today-check"></div>
+                    <div class="today-task-body">
+                      <div class="today-task-title">Bestill nye golfballer</div>
+                      <div class="today-task-sub"><span class="domain-tag">Drift</span></div>
+                    </div>
+                    <div class="today-task-due">Ingen frist</div>
+                    <div><span class="prio-tag prio-lav">Lav</span></div>
+                    <div><span class="status-tag status-todo">Åpen</span></div>
+                  </div>
+                  <div class="today-empty">+ 4 andre oppgaver uten fast frist — vis alle</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Hero-banner med «4 oppgaver i dag» er dagens første sanity-sjekk — matcher ADHD-vennlig «én ting om gangen»-filosofi.</li>
+        <li>Forsinket-oppgaver flettes inn øverst i dagens liste — ingen separate tabs, bare tydelig due-tekst.</li>
+        <li>Neste 7 dager er synlig, men sekundær — du scroller ned for å se.</li>
+        <li>«Alle andre»-seksjon krymper senere-oppgaver til bakgrunnen — reduserer visuell støy.</li>
+        <li>Sterk for Anders som daglig driver — svakere for teammedlemmer som må se hele bildet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: CLIENT-GROUPED ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Client-Grouped</span></h2>
+    <p class="option-description">Gruppert per elev eller per domene (fakturering, coaching, lead, innhold, drift). Toggle mellom grupperinger.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/oppgaver</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#" class="active">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <a href="#">Økonomi</a>
+              <div class="mc-nav-label">Innhold</div>
+              <a href="#">Treningsplaner</a>
+              <a href="#">Turneringer</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Oppgaver</span>
+                <span class="mc-topbar-sub">Gruppert visning</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Søk oppgave...</span>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">+ Ny oppgave</button>
+              </div>
+            </div>
+            <div class="mc-body">
+              <div class="mc-page-head">
+                <div>
+                  <h1 class="mc-page-title">Oppgaver — gruppert</h1>
+                  <div class="mc-page-sub">20 oppgaver fordelt på 5 domener og 7 kontekster</div>
+                </div>
+                <div class="mc-page-actions">
+                  <button class="mc-btn">Utvid alle</button>
+                  <button class="mc-btn">Skjul fullførte</button>
+                </div>
+              </div>
+
+              <div class="group-toggle">
+                <span class="group-toggle-label">Gruppér etter:</span>
+                <button class="group-toggle-btn active">Domene</button>
+                <button class="group-toggle-btn">Elev</button>
+                <button class="group-toggle-btn">Prosjekt</button>
+                <button class="group-toggle-btn">Prioritet</button>
+              </div>
+
+              <div class="mc-filters">
+                <button class="mc-pill active">Alle<span class="mc-pill-count">20</span></button>
+                <button class="mc-pill">Mine<span class="mc-pill-count">12</span></button>
+                <button class="mc-pill">Åpne<span class="mc-pill-count">12</span></button>
+                <button class="mc-pill">I gang<span class="mc-pill-count">5</span></button>
+                <input class="mc-search-input" type="text" placeholder="Filtrer innad i gruppe...">
+              </div>
+
+              <div class="groups">
+                <!-- COACHING -->
+                <div class="group">
+                  <div class="group-head">
+                    <div class="group-head-left">
+                      <span class="group-icon">C</span>
+                      <div>
+                        <div class="group-title">Coaching</div>
+                        <div class="group-sub">Elev-oppfølging, treningsplaner, samtaler</div>
+                      </div>
+                    </div>
+                    <div class="group-counts">
+                      <span class="group-count group-count-overdue">1 forsinket</span>
+                      <span class="group-count">7 oppgaver</span>
+                      <button class="group-collapse">▾</button>
+                    </div>
+                  </div>
+                  <div class="group-tasks">
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Oppdater treningsplan — Erik Hansen</div>
+                        <div class="group-task-sub">Erik Hansen · i gang siden 13. april</div>
+                      </div>
+                      <div class="group-task-due group-task-due-overdue">−2 dager</div>
+                      <div class="group-task-status"><span class="prio-tag prio-hoy">Høy</span><span class="status-tag status-progress">I gang</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Ring Markus ang. ekstra time</div>
+                        <div class="group-task-sub">Markus Pedersen · 15:00</div>
+                      </div>
+                      <div class="group-task-due">I dag</div>
+                      <div class="group-task-status"><span class="prio-tag prio-hoy">Høy</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Ringerunde: 4 inaktive elever</div>
+                        <div class="group-task-sub">Nora T., Lars B., Sofie V., Jonas R.</div>
+                      </div>
+                      <div class="group-task-due">I morgen</div>
+                      <div class="group-task-status"><span class="prio-tag prio-medium">Med</span><span class="status-tag status-progress">I gang</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Forbered foreldremøte GFGK</div>
+                        <div class="group-task-sub">GFGK Junior · agenda + presentasjon</div>
+                      </div>
+                      <div class="group-task-due">22. apr</div>
+                      <div class="group-task-status"><span class="prio-tag prio-medium">Med</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Oppdater sportsplan GFGK</div>
+                        <div class="group-task-sub">Periodisering april–juni</div>
+                      </div>
+                      <div class="group-task-due">I morgen</div>
+                      <div class="group-task-status"><span class="prio-tag prio-medium">Med</span><span class="status-tag status-progress">I gang</span></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAKTURERING -->
+                <div class="group">
+                  <div class="group-head">
+                    <div class="group-head-left">
+                      <span class="group-icon">F</span>
+                      <div>
+                        <div class="group-title">Fakturering</div>
+                        <div class="group-sub">Stripe, faktura-utsending, betalingsoppfølging</div>
+                      </div>
+                    </div>
+                    <div class="group-counts">
+                      <span class="group-count">3 oppgaver</span>
+                      <button class="group-collapse">▾</button>
+                    </div>
+                  </div>
+                  <div class="group-tasks">
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Send faktura oktober — 8 elever</div>
+                        <div class="group-task-sub">Manuell godkjenning før Stripe-utsendelse</div>
+                      </div>
+                      <div class="group-task-due">Om 3 dager</div>
+                      <div class="group-task-status"><span class="prio-tag prio-hoy">Høy</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Følg opp sen betaling: Lars Berg</div>
+                        <div class="group-task-sub">Forfalt 12. apr</div>
+                      </div>
+                      <div class="group-task-due">Denne uka</div>
+                      <div class="group-task-status"><span class="prio-tag prio-medium">Med</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Kreditnota: Isak Lie (avlyst)</div>
+                        <div class="group-task-sub">Refundér 450 kr</div>
+                      </div>
+                      <div class="group-task-due">Denne uka</div>
+                      <div class="group-task-status"><span class="prio-tag prio-lav">Lav</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- LEAD -->
+                <div class="group">
+                  <div class="group-head">
+                    <div class="group-head-left">
+                      <span class="group-icon">L</span>
+                      <div>
+                        <div class="group-title">Lead / Salg</div>
+                        <div class="group-sub">Nye potensielle kunder, merkevare-pipeline, winback</div>
+                      </div>
+                    </div>
+                    <div class="group-counts">
+                      <span class="group-count">4 oppgaver</span>
+                      <button class="group-collapse">▾</button>
+                    </div>
+                  </div>
+                  <div class="group-tasks">
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Follow-up lead: Sofie Lund</div>
+                        <div class="group-task-sub">Junior-interesse, ring tilbake</div>
+                      </div>
+                      <div class="group-task-due">I morgen</div>
+                      <div class="group-task-status"><span class="prio-tag prio-medium">Med</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Send brand guide til Nord Klubb</div>
+                        <div class="group-task-sub">Merkevare-lead fra 10. april</div>
+                      </div>
+                      <div class="group-task-due">Denne uka</div>
+                      <div class="group-task-status"><span class="prio-tag prio-medium">Med</span><span class="status-tag status-progress">I gang</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Svar skjemaforespørsel: Aker Brygge bedrift</div>
+                        <div class="group-task-sub">Bedriftsevent, 8 personer</div>
+                      </div>
+                      <div class="group-task-due">I morgen</div>
+                      <div class="group-task-status"><span class="prio-tag prio-medium">Med</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Winback-sekvens: inaktive 2024</div>
+                        <div class="group-task-sub">12 elever · auto-epost</div>
+                      </div>
+                      <div class="group-task-due">Neste uke</div>
+                      <div class="group-task-status"><span class="prio-tag prio-lav">Lav</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INNHOLD -->
+                <div class="group">
+                  <div class="group-head">
+                    <div class="group-head-left">
+                      <span class="group-icon">I</span>
+                      <div>
+                        <div class="group-title">Innhold / Treningsmateriell</div>
+                        <div class="group-sub">Treningsplaner, rapporter, dashboards, nyhetsbrev</div>
+                      </div>
+                    </div>
+                    <div class="group-counts">
+                      <span class="group-count">4 oppgaver</span>
+                      <button class="group-collapse">▾</button>
+                    </div>
+                  </div>
+                  <div class="group-tasks">
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Oppdater TrackMan-dashboard</div>
+                        <div class="group-task-sub">Mulligan · uke 15-rapport</div>
+                      </div>
+                      <div class="group-task-due">Denne uka</div>
+                      <div class="group-task-status"><span class="prio-tag prio-medium">Med</span><span class="status-tag status-progress">I gang</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Skriv nyhetsbrev — mai</div>
+                        <div class="group-task-sub">Sesongstart + turneringer</div>
+                      </div>
+                      <div class="group-task-due">Om 6 dager</div>
+                      <div class="group-task-status"><span class="prio-tag prio-medium">Med</span><span class="status-tag status-progress">I gang</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Publiser ukesoversikt til elever</div>
+                        <div class="group-task-sub">Auto-mal · 24 mottakere</div>
+                      </div>
+                      <div class="group-task-due">Fre 24. apr</div>
+                      <div class="group-task-status"><span class="prio-tag prio-lav">Lav</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Oppdater øvelsebibliotek (Portal)</div>
+                        <div class="group-task-sub">3 nye chip-øvelser fra camp</div>
+                      </div>
+                      <div class="group-task-due">Neste uke</div>
+                      <div class="group-task-status"><span class="prio-tag prio-lav">Lav</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- DRIFT -->
+                <div class="group">
+                  <div class="group-head">
+                    <div class="group-head-left">
+                      <span class="group-icon">D</span>
+                      <div>
+                        <div class="group-title">Drift / Mulligan</div>
+                        <div class="group-sub">Fasiliteter, utstyr, bedriftsevents, administrasjon</div>
+                      </div>
+                    </div>
+                    <div class="group-counts">
+                      <span class="group-count">2 oppgaver</span>
+                      <button class="group-collapse">▾</button>
+                    </div>
+                  </div>
+                  <div class="group-tasks">
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Book simulator til bedriftsevent</div>
+                        <div class="group-task-sub">Aker Brygge-firma · 8 personer</div>
+                      </div>
+                      <div class="group-task-due">Neste uke</div>
+                      <div class="group-task-status"><span class="prio-tag prio-lav">Lav</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                    <div class="group-task">
+                      <div class="group-task-check"></div>
+                      <div class="group-task-body">
+                        <div class="group-task-title">Bestill nye golfballer</div>
+                        <div class="group-task-sub">Mulligan lager lavt</div>
+                      </div>
+                      <div class="group-task-due">Ingen frist</div>
+                      <div class="group-task-status"><span class="prio-tag prio-lav">Lav</span><span class="status-tag status-todo">Åpen</span></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Gruppering etter domene (Coaching / Fakturering / Lead / Innhold / Drift) speiler hvordan Anders allerede tenker — bytter «modus» per blokk.</li>
+        <li>Toggle lar deg bytte gruppering (Domene / Elev / Prosjekt / Prioritet) uten å miste data — bare reorganiserer.</li>
+        <li>Hver gruppe har egen «forsinket»-badge og teller, så man vet hvilken domene som brenner mest.</li>
+        <li>Passer best når Anders vil jobbe fokusert i ett domene om gangen (f.eks. «i dag fokuserer jeg på fakturering»).</li>
+        <li>Svakere for rent daglig drift — krever mer scrolling sammenlignet med Today Focus eller Kanban.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Admin task-board — valget avhenger av om primærbrukeren er Anders alene, eller et større team som trenger å tracke drift på tvers.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Kanban</th><th>2: Prio List</th><th>3: Calendar</th><th>4: Today Focus</th><th>5: Grupper</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Visuell status-oversikt</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Høy informasjonstetthet</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Daglig drift (ADHD-vennlig)</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Langsiktig planlegging</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Drag-to-status (workflow)</td><td>Sterk</td><td>Svak</td><td>Svak</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Multi-bruker / team</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Lærbarhet / kjent mønster</td><td>Sterk (Trello)</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Middels</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Option 1 — Kanban Board</h3>
+    <p>Kanban er det mest gjenkjennelige mønsteret (Trello, Linear, Jira) og gir tydelig visuell status-oversikt med lav læringskurve. De tre kolonnene (To Do / In Progress / Done) passer AdminTask-modellen direkte, og kort med prio, due, relaterte entities, domene-tag og assignee dekker alle kjernefeltene. Drag-to-status-workflow er intuitiv og støtter både enkeltbruker (Anders) og fremtidig multi-bruker (hvis flere coacher får admin-tilgang). Option 4 (Today Focus) er en sterk toer for daglig arbeidsflyt — vurder å legge den til som en sekundær visning (toggle) senere. Option 5 (Client-Grouped) er nyttig som alternativ visning når Anders vil jobbe fokusert i ett domene om gangen.</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Kanban):</strong> Default. Best for blanding av enkeltbruker og fremtidig team.</li>
+      <li><strong>Option 2 (Prio List):</strong> Hvis informasjonstetthet og keyboard-hastighet er viktigst.</li>
+      <li><strong>Option 3 (Calendar):</strong> Hvis hovedbruken er langsiktig planlegging (måned-visning).</li>
+      <li><strong>Option 4 (Today Focus):</strong> Hvis Anders er eneste bruker og daglig rutine er kritisk.</li>
+      <li><strong>Option 5 (Client-Grouped):</strong> Hvis domene-bryter-flyt dominerer (f.eks. «fakturering-dag»).</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

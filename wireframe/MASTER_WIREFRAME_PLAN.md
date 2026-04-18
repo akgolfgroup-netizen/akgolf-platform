@@ -1,21 +1,26 @@
 # Master Wireframe Plan — AK Golf Platform
 
-> **Versjon:** 1.0.0
-> **Dato:** 2026-04-17
-> **Kontekst:** Omfattende wireframe-plan for alle skjermer, inkl. flere views-per-skjerm for admin board.
-> **Status:** Batch 1 pågår (pausert 19:00 av API-usage-grense, reset 20:00 Oslo).
+> **Versjon:** 2.0.0
+> **Dato:** 2026-04-18 (oppdatert)
+> **Kontekst:** Wireframe-leveranse komplett. Alle 58 skjermer har HTML + 5 UX-opsjoner + 5 fargevarianter + compare.html.
+> **Status:** Wireframing 100% ferdig. Neste steg: godkjenningsrunde (Fase C) → designfase (Fase D).
 
 ---
 
 ## 1. Oversikt
 
-Totalt antall potensielle skjermer i MASTER_FEATURE_SPEC: **49**
-Totalt antall planlagte wireframes (strategiske): **22 skjermer + 14 admin views = 36 wireframes**
+**Endelig leveranse: 58 wireframes** (22 strategiske + 36 bonus)
 
 **Fordeling:**
-- **Markedsside:** 6 skjermer (5 ruter + pricing)
-- **Portal:** 8 strategiske skjermer (fra 27 totalt — droppe 19 som er stabile i prod)
-- **Mission Control:** 8 skjermer + 14 ekstra views (flere views per admin-skjerm)
+- **Markedsside:** 6 wireframes (alle P0)
+- **Portal:** 29 wireframes (8 strategiske + 21 bonus)
+- **Mission Control:** 23 wireframes (8 strategiske + 15 bonus)
+
+**Per wireframe:**
+- `index.html` med 5 UX-opsjoner + Summary
+- `base.css` + `styles.css` (B&W framework)
+- `styles-opt1.css` til `styles-opt5.css` (Clean + Polished fargevarianter)
+- `compare.html` (side-by-side sammenligning)
 
 ---
 
@@ -54,62 +59,103 @@ Hvert alternativ presenterer én view-variant — brukeren får all 5 views på 
 
 ## 3. Komplett wireframe-liste
 
-### 3A. Markedsside (6 skjermer)
+### 3A. Markedsside (6 skjermer — alle komplett)
 
-| ID | Skjerm | Rute | Prioritet | Status | Batch |
-|----|--------|------|-----------|--------|-------|
-| M1 | Forside | `/` | P0 | ✅ **Komplett** (Mercury Flow valgt) | 1 |
-| M2 | Pricing | `/priser` (eller seksjon) | P0 | ⚠ Fase 1 + 2/5 farger | 1 |
-| M3 | Academy | `/academy` | P0 | ⚠ Fase 1 + 0/5 farger | 1 |
-| M4 | Junior Academy | `/junior-academy` | P0 | ⚠ Fase 1 + 2/5 farger | 1 |
-| M5 | Utvikling | `/utvikling` | P0 | ⚠ Fase 1 + 0/5 farger | 1 |
-| M6 | Booking (offentlig) | `/booking` | P1 | Ikke startet | 2 |
+| ID | Skjerm | Mappe | Rute |
+|----|--------|-------|------|
+| M1 | Forside | `1704-markedsside-forside` | `/` |
+| M2 | Pricing | `1704-markedsside-pricing` | `/priser` |
+| M3 | Academy | `1704-markedsside-academy` | `/academy` |
+| M4 | Junior Academy | `1704-markedsside-junior` | `/junior-academy` |
+| M5 | Utvikling | `1704-markedsside-utvikling` | `/utvikling` |
+| M6 | Booking (offentlig) | `1704-markedsside-booking` | `/booking` |
 
-**Fullfør batch 1** etter API-reset (20:00): completer fargevariantene for M2–M5.
+### 3B. Portal — strategiske (8 skjermer)
 
-### 3B. Portal (8 strategiske skjermer)
+| ID | Skjerm | Mappe | Rute |
+|----|--------|-------|------|
+| P1 | Dashboard | `1704-portal-dashboard-v2` | `/portal` |
+| P2 | Treningsplanlegger 2.0 | `1704-portal-planlegger-v2` | `/portal/treningsplan/ny` |
+| P3 | Kalender | `1704-portal-kalender` | `/portal/kalender` |
+| P4 | Runde-tracking (live) | `1704-portal-runde-live` | `/portal/runde/[id]` |
+| P5 | Runde-oppsummering | `1704-portal-runde-oppsummering` | `/portal/runde/[id]/oppsummering` |
+| P6 | Statistikk | `1704-portal-statistikk` | `/portal/statistikk` |
+| P7 | Mental game | `1704-portal-mental` | `/portal/mental` |
+| P8 | Onboarding | `1704-portal-onboarding` | `/portal/onboarding` |
 
-| ID | Skjerm | Rute | Prioritet | Status | Batch |
-|----|--------|------|-----------|--------|-------|
-| P1 | Dashboard | `/portal` | P1 | ⚠ Fase 1 + 1/5 farger | 1 |
-| P2 | Treningsplanlegger 2.0 | `/portal/treningsplan/ny` | P0 | ✅ **Komplett** | 1 |
-| P3 | Kalender | `/portal/kalender` | P0 | ⚠ Fase 1 + 2/5 farger | 1 |
-| P4 | Runde-tracking (live) | `/portal/runde/[id]` | P2 | Ikke startet | 3 |
-| P5 | Runde-oppsummering | `/portal/runde/[id]/oppsummering` | P2 | Ikke startet | 3 |
-| P6 | Statistikk | `/portal/statistikk` | P2 | Ikke startet | 3 |
-| P7 | Mental game | `/portal/mental` | P2 | Ikke startet | 3 |
-| P8 | Onboarding | `/portal/onboarding` | P1 | Ikke startet | 2 |
+### 3C. Mission Control — strategiske (8 skjermer)
 
-**Droppet fra listen (stabile i prod):** Dagbok, Øvelsesbank, TrackMan-tester, Bookinger, AI-coach, TrackMan, Benchmark, Sammenligning, Coaching-historikk, Turneringer, Turneringsplan, Spill, Bag, Strategi, Analyse, Tester DECADE, Profil, Meldinger, Sosialt, Apper, Abonnement.
+| ID | Skjerm | Mappe | Rute |
+|----|--------|-------|------|
+| A1 | Dashboard | `1704-mc-dashboard` | `/portal/admin` |
+| A2 | Kalender | `1704-mc-kalender` | `/portal/admin/kalender` |
+| A3 | Bookinger | `1704-mc-bookinger` | `/portal/admin/bookinger` |
+| A4 | Elever | `1704-mc-elever` | `/portal/admin/elever` |
+| A5 | Elev-detalj | `1704-mc-elev-detalj` | `/portal/admin/elever/[id]` |
+| A6 | Rapporter | `1704-mc-rapporter` | `/portal/admin/rapporter` |
+| A7 | Fasiliteter | `1704-mc-fasiliteter` | `/portal/admin/fasiliteter` |
+| A8 | Tilgjengelighet | `1704-mc-tilgjengelighet` | `/portal/admin/tilgjengelighet` |
 
-### 3C. Mission Control (8 skjermer med views)
+### 3D. Bonus-wireframes (utover opprinnelig plan — 36 skjermer)
 
-| ID | Skjerm | Rute | Views | Prioritet | Status | Batch |
-|----|--------|------|-------|-----------|--------|-------|
-| A1 | Dashboard | `/portal/admin` | Oversikt / Fokus / KPI-drilldown | P0 | ⚠ Fase 1 delvis (html 540, ingen styles) | 1 |
-| A2 | Kalender | `/portal/admin/kalender` | Uke / Måned / Dag / Liste | P0 | ⚠ Fase 1 + 0/5 farger | 1 |
-| A3 | Bookinger | `/portal/admin/bookinger` | Liste / Kalender / Kanban | P1 | Ikke startet | 2 |
-| A4 | Elever | `/portal/admin/elever` | Grid / Tabell / Segmenter | P1 | Ikke startet | 2 |
-| A5 | Elev-detalj | `/portal/admin/elever/[id]` | Profile tabs | P1 | Ikke startet | 2 |
-| A6 | Rapporter | `/portal/admin/rapporter` | Dashboard / Periode-sammenlign | P2 | Ikke startet | 3 |
-| A7 | Fasiliteter | `/portal/admin/fasiliteter` | Dag / Uke | P2 | Ikke startet | 3 |
-| A8 | Tilgjengelighet | `/portal/admin/tilgjengelighet` | Ukes-grid / Unntak | P2 | Ikke startet | 3 |
+**Portal bonus (21 skjermer):**
+
+| ID | Skjerm | Mappe | Rute |
+|----|--------|-------|------|
+| PB01 | AI-coach | `1704-portal-ai-coach` | `/portal/ai-coach` |
+| PB02 | Analyse | `1704-portal-analyse` | `/portal/analyse` |
+| PB03 | Apper | `1704-portal-apper` | `/portal/apper` |
+| PB04 | Abonnement | `1704-portal-abonnement` | `/portal/abonnement` |
+| PB05 | Bag | `1704-portal-bag` | `/portal/bag` |
+| PB06 | Benchmark | `1704-portal-benchmark` | `/portal/benchmark` |
+| PB07 | Bookinger | `1704-portal-bookinger` | `/portal/bookinger` |
+| PB08 | Coaching-historikk | `1704-portal-coaching-historikk` | `/portal/coaching-historikk` |
+| PB09 | Dagbok | `1704-portal-dagbok` | `/portal/dagbok` |
+| PB10 | Meldinger | `1704-portal-meldinger` | `/portal/meldinger` |
+| PB11 | Øvelser | `1704-portal-ovelser` | `/portal/ovelser` |
+| PB12 | Profil | `1704-portal-profil` | `/portal/profil` |
+| PB13 | Sammenligning | `1704-portal-sammenligning` | `/portal/sammenligning` |
+| PB14 | Sosialt | `1704-portal-sosialt` | `/portal/sosialt` |
+| PB15 | Spill | `1704-portal-spill` | `/portal/spill` |
+| PB16 | Strategi | `1704-portal-strategi` | `/portal/strategi` |
+| PB17 | Tester DECADE | `1704-portal-tester-decade` | `/portal/tester-decade` |
+| PB18 | TrackMan | `1704-portal-trackman` | `/portal/trackman` |
+| PB19 | TrackMan-tester | `1704-portal-trackman-tester` | `/portal/trackman-tester` |
+| PB20 | Turneringer | `1704-portal-turneringer` | `/portal/turneringer` |
+| PB21 | Turneringsplan | `1704-portal-turneringsplan` | `/portal/turneringsplan` |
+
+**Mission Control bonus (15 skjermer):**
+
+| ID | Skjerm | Mappe | Rute |
+|----|--------|-------|------|
+| AB01 | Agenter | `1704-mc-agenter` | `/portal/admin/agenter` |
+| AB02 | AI-assistent | `1704-mc-ai-assistent` | `/portal/admin/ai-assistent` |
+| AB03 | Analytics | `1704-mc-analytics` | `/portal/admin/analytics` |
+| AB04 | Denne uken | `1704-mc-denne-uken` | `/portal/admin/denne-uken` |
+| AB05 | E-postmaler | `1704-mc-epostmaler` | `/portal/admin/epostmaler` |
+| AB06 | Focus | `1704-mc-focus` | `/portal/admin/focus` |
+| AB07 | Godkjenninger | `1704-mc-godkjenninger` | `/portal/admin/godkjenninger` |
+| AB08 | Kapasitet | `1704-mc-kapasitet` | `/portal/admin/kapasitet` |
+| AB09 | Meldinger | `1704-mc-meldinger` | `/portal/admin/meldinger` |
+| AB10 | Mission board | `1704-mc-mission-board` | `/portal/admin/mission-board` |
+| AB11 | Notifikasjoner | `1704-mc-notifications` | `/portal/admin/notifications` |
+| AB12 | Økonomi | `1704-mc-okonomi` | `/portal/admin/okonomi` |
+| AB13 | Økter | `1704-mc-okter` | `/portal/admin/okter` |
+| AB14 | Treningsplan | `1704-mc-treningsplan` | `/portal/admin/treningsplan` |
+| AB15 | Turneringer | `1704-mc-turneringer` | `/portal/admin/turneringer` |
 
 ---
 
-## 4. Batch-strategi
+## 4. Leveranse-status (arkivert)
 
-**Totalt 3 batches = 22 wireframes:**
+Opprinnelig plan hadde 3 batcher à 22 wireframes. Faktisk leveranse ble utvidet til 58 wireframes (alle produsert 17.–18. april). Alle batcher er ferdig.
 
-### Batch 1 (P0 — strategisk, pågår)
-**9 wireframes:** Alle markedsside (M1–M5) + portal (P1–P3) + admin (A1–A2) = 10 – M1 (allerede komplett) = **9 nye**
-**Status:** 2 komplett, 7 trenger fullføring etter API-reset.
-
-### Batch 2 (P1 — neste runde)
-**6 wireframes:** M6 (booking), P8 (onboarding), A3–A5 (bookinger, elever, elev-detalj) = 5 wireframes + 1 (booking) = **6**
-
-### Batch 3 (P2 — nyttige men ikke kritiske)
-**7 wireframes:** P4–P7 (runde-tracking, oppsummering, statistikk, mental) + A6–A8 (rapporter, fasiliteter, tilgjengelighet) = **7**
+| Batch | Plan | Levert |
+|-------|------|--------|
+| 1 (P0) | 9 wireframes | Ferdig |
+| 2 (P1) | 6 wireframes | Ferdig |
+| 3 (P2) | 7 wireframes | Ferdig |
+| Bonus | 0 | 36 ekstra wireframes levert |
 
 ---
 
@@ -232,20 +278,17 @@ Hver wireframe produserer:
 
 ---
 
-## 8. Eksekverings-schedule
+## 8. Eksekverings-historikk
 
-| Fase | Tid | Avhengighet |
-|------|-----|-------------|
-| **Batch 1 fullfør** | 2026-04-17 kl 20:15 | API-reset kl 20:00 |
-| **Batch 2 start** | 2026-04-17 kl 21:00 | Batch 1 verifisert |
-| **Batch 3 start** | 2026-04-18 (ny sesjon) | Batch 2 ferdig |
-| **Alt komplett** | 2026-04-18 | — |
-
-**Estimat:**
-- Batch 1 fullføring: ~30 min (7 gjenstående wireframes × sub-agenter)
-- Batch 2: ~40 min (6 wireframes + compare.html per)
-- Batch 3: ~45 min (7 wireframes)
-- **Totalt gjenstående arbeid:** ~2 timer
+| Milestone | Dato | Status |
+|-----------|------|--------|
+| Plan laget | 2026-04-17 | Ferdig |
+| Alle 58 wireframes levert | 2026-04-17/18 | Ferdig |
+| Compare.html for P2, A1 | 2026-04-17 | Ferdig |
+| Compare.html for 56 øvrige | 2026-04-18 | Ferdig (generert via `scripts/generate-compare.mjs`) |
+| MASTER_WIREFRAME_PLAN.md oppdatert | 2026-04-18 | Ferdig |
+| Fase C — Godkjenningsrunde | 2026-04-18+ | **Pågår** |
+| Fase D — Designfase | Etter Fase C | Ventende |
 
 ---
 
@@ -289,22 +332,80 @@ Når batcher fullføres, oppdater INDEX.html med:
 
 ---
 
-## 12. Neste skritt (IMMEDIATE)
+## 11. Nye skjermer — scope (godkjent 2026-04-18)
 
-Etter API-reset kl 20:00:
-1. Re-lans orkestratorer for 7 gjenstående Batch 1-skjermer
-2. Lag compare.html for alle 7 (automatisert)
-3. Oppdater INDEX.html med full status
-4. Rapporter til Anders
+Anders har godkjent **alle 22 nye skjermer** for produksjon (N01-N22).
 
-Deretter:
-- Start Batch 2 (6 wireframes + 6 compare.html)
-- Start Batch 3 (7 wireframes + 7 compare.html)
+### P0 — Kritisk (5 skjermer, N01-N05) — pågår nå
+
+| ID | Skjerm | Rute |
+|----|--------|------|
+| N01 | Utvikling-progresjon | `/portal/utvikling-progress` |
+| N02 | Konkurranseforberedelse | `/portal/konkurranse-prep` |
+| N03 | Onboarding magic-link | `/onboarding/[token]` |
+| N04 | Coaching-meldinger | `/portal/coaching-feedback` |
+| N05 | Foreldre-dashboard | `/portal/forelder` |
+
+### P1 — Viktig (7 skjermer, N06-N12)
+
+| ID | Skjerm | Rute |
+|----|--------|------|
+| N06 | Treningstimer per område | `/portal/trening-volum` |
+| N07 | Sesongplan | `/portal/sesongplan` |
+| N08 | Leaderboards | `/portal/rangering` |
+| N09 | Ferdig-turnering-resultater | `/portal/turneringer/resultater` |
+| N10 | Email-campaign-manager | `/portal/admin/kampanjer` |
+| N11 | Exercise-bank-builder | `/portal/ovelser/min-bank` |
+| N12 | Admin task-board | `/portal/admin/oppgaver` |
+
+### P2 — Nyttig (6 skjermer, N13-N18)
+
+| ID | Skjerm | Rute |
+|----|--------|------|
+| N13 | Skadehistorikk/helse | `/portal/helse` |
+| N14 | Utstyrsinventar | `/portal/bag/administrer` |
+| N15 | Promo/offer-manager | `/portal/admin/tilbud` |
+| N16 | Mental trends | `/portal/mental/trender` |
+| N17 | Skill-degradation-alert | `/portal/admin/varsler-nedgang` |
+| N18 | Golfbox-turnering-integrasjon | `/portal/turneringer/[id]/pameldte` |
+
+### Coverage-driven (4 skjermer, N19-N22)
+
+| ID | Skjerm | Rute | Data |
+|----|--------|------|------|
+| N19 | Periodisering | `/portal/admin/periodisering` | TrainingPhase, PeriodizationPeriod |
+| N20 | Module Add-ons | `/portal/abonnement/moduler` | AppModule, AppBundle |
+| N21 | Content Studio | `/portal/admin/innhold` | ContentItem |
+| N22 | Mental Performance Profile | `/portal/mental/profil` | MentalProfile + AI |
+
+**Total: 22 nye wireframes** som skal produseres i Fase C3.
+
+---
+
+## 12. Neste skritt
+
+### Fase C — Godkjenningsrunde (fullført)
+Gå gjennom alle 58 wireframes gruppe for gruppe. Anders velger én vinner-opsjon (1-5) per skjerm + eventuell kommentar. Tracking i `wireframe/WINNERS.md`.
+
+**Gruppestruktur:**
+1. **Markedsside (6):** M1–M6
+2. **Portal kjerne (9):** P1–P3, P8, PB09 (dagbok), PB11 (ovelser), PB12 (profil), PB07 (bookinger), PB01 (ai-coach)
+3. **Portal utvidet (10):** PB18, PB19, PB17, PB14, PB10, PB03, PB04, PB05, PB02, PB16
+4. **Portal spill/stats (8):** P4–P7, PB13, PB06, PB15, PB08, PB20, PB21
+5. **Mission Control kjerne (8):** A1–A5, AB04 (denne-uken), AB10 (mission-board), AB07 (godkjenninger)
+6. **Mission Control utvidet (17):** A6–A8 + AB01–AB03, AB05, AB06, AB08, AB09, AB11–AB15
+
+Per skjerm: åpne `compare.html`, sammenlign 5 opsjoner i Wireframe/Clean/Polished-modus, velg vinner.
+
+### Fase D — Designfase (etter godkjenning)
+Per godkjent skjerm produseres `DESIGN-SPEC.md` med: fargevalg (map til brand-tokens), bildekurering, typografi, Lucide-ikoner, Framer Motion-presets, komponent-mapping til eksisterende bibliotek, responsivitet.
+
+Sentralt register: `docs/BILDEKATALOG.md` (nytt — lister alle bilder per skjerm + bruksrettigheter).
 
 ---
 
 ## 13. Åpne spørsmål
 
-- Skal alle admin-views ha egne wireframes, eller rom-for-rom i samme (5-opsjoner-per-skjerm)? **Beslutning:** 5-opsjoner-per-skjerm med views som alternative UX-tilnærminger.
-- Booking-flow (offentlig `/booking`) — wizard eller single-page? **Avklaring trengs.**
-- Elev-detalj — tabs vs single-scroll? **Vi utforsker begge i 5-opsjoner.**
+- Booking-flow (offentlig `/booking`) — wizard eller single-page? **Avklares i Fase C ved å velge vinner-opsjon for M6.**
+- Elev-detalj — tabs vs single-scroll? **Avklares i Fase C ved å velge vinner-opsjon for A5.**
+- Skal alle 36 bonus-wireframes tas videre til designfase, eller skal noen parkeres? **Åpent — vurder under Fase C.**

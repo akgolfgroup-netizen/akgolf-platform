@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konkurranseforberedelse N02 — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Konkurranseforberedelse N02</span> — <span id="project-name">AK Golf Platform · Portal · /portal/konkurranse-prep</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Countdown Hub</button>
+    <button class="tab-btn" data-tab="option-2">2: Three Phase</button>
+    <button class="tab-btn" data-tab="option-3">3: Stats-Ready</button>
+    <button class="tab-btn" data-tab="option-4">4: Mental First</button>
+    <button class="tab-btn" data-tab="option-5">5: Course Intel</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: COUNTDOWN HUB ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Countdown Hub</span></h2>
+    <p class="option-description">SAFE. Stor mørk countdown-hero med neste turnering. Under: prep-checklist (uker til start), treningsplan-mappet pyramide, og Miller's Note. Samlet hub som eliminerer spørsmålet "har jeg gjort alt jeg skal før NM?".</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/konkurranse-prep</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div>
+                <div class="wf-sb-profile-name">Anders Kristiansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP +0.8</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Konkurranse-prep</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Påmeldinger<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">3 kommende turneringer i kalender</div>
+              <button class="wf-sb-cta-btn">Se alle</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Lørdag 18. april 2026 · Uke 16</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Bytt turnering</span>
+                <span class="wf-mtopbar-chip">Eksporter</span>
+              </div>
+            </div>
+
+            <section class="wf-cd-hero">
+              <div class="wf-cd-meta">
+                <div class="wf-cd-eyebrow">Neste turnering<span class="wf-marker">2</span></div>
+                <h1 class="wf-cd-title">NM Match Play 2026</h1>
+                <div class="wf-cd-sub">Losby Golfklubb · 30. mai – 1. juni · A-klasse</div>
+                <div class="wf-cd-progress-wrap">
+                  <div class="wf-cd-progress-row"><span>Prep-progresjon</span><span>52%</span></div>
+                  <div class="wf-cd-progress"><div class="wf-cd-progress-fill"></div></div>
+                </div>
+              </div>
+              <div class="wf-cd-numbers">
+                <div class="wf-cd-unit"><div class="wf-cd-num">42</div><div class="wf-cd-label">Dager</div></div>
+                <div class="wf-cd-unit"><div class="wf-cd-num">6</div><div class="wf-cd-label">Uker</div></div>
+                <div class="wf-cd-unit"><div class="wf-cd-num">4</div><div class="wf-cd-label">Runder igjen</div></div>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+
+              <div class="wf-c wf-bc-7">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Prep-sjekkliste · 6 uker<span class="wf-marker">3</span></div>
+                  <span class="wf-ai-badge">8 av 15 ferdig</span>
+                </div>
+                <div class="wf-check-list">
+                  <div class="wf-check-item">
+                    <div class="wf-check-box wf-done"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title wf-done-text">Påmelding sendt via GolfBox</div>
+                      <div class="wf-check-meta">Frist: 5. april · Anders Kristiansen</div>
+                    </div>
+                    <div class="wf-check-due">5. apr</div>
+                  </div>
+                  <div class="wf-check-item">
+                    <div class="wf-check-box wf-done"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title wf-done-text">Treningsplan 6 uker generert</div>
+                      <div class="wf-check-meta">Pyramide: 40% nærspill, 30% lang, 20% putt, 10% bane</div>
+                    </div>
+                    <div class="wf-check-due">10. apr</div>
+                  </div>
+                  <div class="wf-check-item">
+                    <div class="wf-check-box"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title">Baneanalyse Losby · hullstrategi</div>
+                      <div class="wf-check-meta">18 hull · DECADE-tall + egne klubbvalg</div>
+                    </div>
+                    <div class="wf-check-due">25. apr</div>
+                  </div>
+                  <div class="wf-check-item">
+                    <div class="wf-check-box"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title">Testrunde Losby</div>
+                      <div class="wf-check-meta">Book 18 hull med Markus · 2 uker før</div>
+                    </div>
+                    <div class="wf-check-due">15. mai</div>
+                  </div>
+                  <div class="wf-check-item">
+                    <div class="wf-check-box"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title">Mental forberedelse · visualisering</div>
+                      <div class="wf-check-meta">3x økter siste 2 uker · pre-shot routine lock</div>
+                    </div>
+                    <div class="wf-check-due">22. mai</div>
+                  </div>
+                  <div class="wf-check-item">
+                    <div class="wf-check-box"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title">Utstyrs-sjekk · bag + launch monitor</div>
+                      <div class="wf-check-meta">Grip, loft, TrackMan-validering</div>
+                    </div>
+                    <div class="wf-check-due">25. mai</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-5">
+                <div class="wf-c-label">Treningspyramiden NGF<span class="wf-marker">4</span></div>
+                <div class="wf-plan-link-row">
+                  <div>
+                    <div class="wf-plan-link-title">Nærspill · 40%</div>
+                    <div class="wf-plan-link-meta">18 økter planlagt · 14 gjennomført</div>
+                  </div>
+                  <span class="wf-ai-badge">På plan</span>
+                </div>
+                <div class="wf-plan-link-row">
+                  <div>
+                    <div class="wf-plan-link-title">Tee Total (driver + jern) · 30%</div>
+                    <div class="wf-plan-link-meta">12 økter planlagt · 11 gjennomført</div>
+                  </div>
+                  <span class="wf-ai-badge">På plan</span>
+                </div>
+                <div class="wf-plan-link-row">
+                  <div>
+                    <div class="wf-plan-link-title">Putting · 20%</div>
+                    <div class="wf-plan-link-meta">8 økter planlagt · 5 gjennomført</div>
+                  </div>
+                  <span class="wf-ai-badge">Bak plan</span>
+                </div>
+                <div class="wf-plan-link-row">
+                  <div>
+                    <div class="wf-plan-link-title">Bane / simulator 18h · 10%</div>
+                    <div class="wf-plan-link-meta">4 runder planlagt · 2 gjennomført</div>
+                  </div>
+                  <span class="wf-ai-badge">Bak plan</span>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Handicap-trend</div>
+                <div class="wf-c-value">+0.8</div>
+                <div class="wf-c-sub">−0.4 siden januar · på vei mot scratch</div>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Score-mål NM</div>
+                <div class="wf-c-value">-2</div>
+                <div class="wf-c-sub">Losby par 71 · 2 under par per runde</div>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Match Play-erfaring</div>
+                <div class="wf-c-value">7 / 12</div>
+                <div class="wf-c-sub">Vinst-prosent 58% siste 3 år</div>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Miller's Note<span class="wf-marker">5</span></div>
+                  <span class="wf-ai-badge">2 dager siden</span>
+                </div>
+                <div class="wf-check-item" style="border:none; padding:0;">
+                  <div class="wf-check-box" style="background:#000;border-color:#000;"></div>
+                  <div class="wf-check-body">
+                    <div class="wf-check-title">"Putting er svakheten din inn mot NM. Ta 8 putting-økter de neste 14 dagene — 4 breaking putts 3–6m, 4 lag-putts 10–15m. Losby har raske greener."</div>
+                    <div class="wf-check-meta">Anders Kristiansen · Head Coach</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Påmeldinger i sidebar:</strong> Rask tilgang til andre turneringer. Forhindrer at spilleren glemmer parallelle forberedelser.</li>
+        <li><strong>2 — Mørk countdown-hero:</strong> Dager/uker/runder igjen i store tall. Skaper urgency uten stress. Progress-bar viser prep-status.</li>
+        <li><strong>3 — Sjekkliste er hjertet:</strong> Hver boks har tittel + meta + frist. Ferdig = strike-through. Coachens "gotta-do" før turnering.</li>
+        <li><strong>4 — Pyramide-mapping:</strong> NGF treningspyramide mappet til faktisk gjennomføring. "På plan" / "Bak plan"-badges triggerer tiltak.</li>
+        <li><strong>5 — Coach-note full-bredde:</strong> Narrativ kobling fra data til handling. "Gjør X før NM" — spesifikk og tidsbundet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: THREE PHASE ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Three Phase</span></h2>
+    <p class="option-description">Tre faser som tre kolonner: "4 uker før" (byggefase), "2 uker før" (polish), "Turneringsuke" (taper + mental). Hver fase har sine egne tasks og status. Periodisering-modellen visualisert direkte.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/konkurranse-prep</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div>
+                <div class="wf-sb-profile-name">Anders Kristiansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP +0.8</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Konkurranse-prep</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">NM Match Play</div>
+              <div class="wf-sb-cta-desc">42 dager igjen · Losby</div>
+              <button class="wf-sb-cta-btn">Bytt turnering</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">NM Match Play 2026 · Losby · 30. mai</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Ukesfokus</span><span class="wf-mtopbar-chip">Print plan</span></div>
+            </div>
+
+            <section class="wf-timeline">
+              <div class="wf-tl-point">
+                <div class="wf-tl-dot wf-done"></div>
+                <div class="wf-tl-label">Start prep</div>
+                <div class="wf-tl-date">8. apr</div>
+              </div>
+              <div class="wf-tl-point">
+                <div class="wf-tl-dot wf-active"></div>
+                <div class="wf-tl-label">Byggefase</div>
+                <div class="wf-tl-date">uke 16–19</div>
+              </div>
+              <div class="wf-tl-point">
+                <div class="wf-tl-dot"></div>
+                <div class="wf-tl-label">Polish</div>
+                <div class="wf-tl-date">uke 20–21</div>
+              </div>
+              <div class="wf-tl-point">
+                <div class="wf-tl-dot"></div>
+                <div class="wf-tl-label">Taper</div>
+                <div class="wf-tl-date">uke 22</div>
+              </div>
+              <div class="wf-tl-point">
+                <div class="wf-tl-dot"></div>
+                <div class="wf-tl-label">NM</div>
+                <div class="wf-tl-date">30. mai</div>
+              </div>
+            </section>
+
+            <div class="wf-phase-wrap">
+
+              <div class="wf-phase wf-phase-active">
+                <div class="wf-phase-head">
+                  <span class="wf-phase-num">Fase 1 · aktiv<span class="wf-marker">1</span></span>
+                  <span class="wf-phase-name">4 uker før — byggefase</span>
+                  <span class="wf-phase-meta">18. apr – 15. mai · høyt volum</span>
+                  <div class="wf-phase-progress"><div class="wf-phase-progress-fill" style="width:35%"></div></div>
+                  <span class="wf-phase-status">35% gjennomført · 6 av 17 tasks</span>
+                </div>
+                <div class="wf-task-list">
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic wf-done"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Nærspill-blokk · 8 økter</div><div class="wf-task-meta">40-100m wedge · 240 baller ukentlig</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic wf-done"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Driver-kalibrering TrackMan</div><div class="wf-task-meta">Smash 1.49 stabil · spin 2540</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Putting breaking 3–6m</div><div class="wf-task-meta">200 putts per uke · 6 uker</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Fysisk: hofterotasjon + kjerne</div><div class="wf-task-meta">3x ukentlig · 40 min</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Testrunde 18h Bogstad</div><div class="wf-task-meta">Sjekk approach-spredning under press</div></div>
+                  </div>
+                </div>
+                <div class="wf-phase-footer">Volum: 420 baller / uke · 2 runder · 4 studio-økter</div>
+              </div>
+
+              <div class="wf-phase">
+                <div class="wf-phase-head">
+                  <span class="wf-phase-num">Fase 2</span>
+                  <span class="wf-phase-name">2 uker før — polish</span>
+                  <span class="wf-phase-meta">16.–22. mai · spesifikt</span>
+                  <div class="wf-phase-progress"><div class="wf-phase-progress-fill" style="width:0%"></div></div>
+                  <span class="wf-phase-status">Starter om 27 dager · 12 tasks</span>
+                </div>
+                <div class="wf-task-list">
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Losby testrunde med Markus</div><div class="wf-task-meta">18 hull · notater per hull</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Hull-strategi-dokument</div><div class="wf-task-meta">Klubbvalg + mål-linje per hull</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Approach 100–140m · press-drill</div><div class="wf-task-meta">Miste slag = konsekvens-drill</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Putting fast-green simulator</div><div class="wf-task-meta">Stimp 12+ · 6 økter</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Match Play-simulering</div><div class="wf-task-meta">Spill 9h mot Markus · 2 ganger</div></div>
+                  </div>
+                </div>
+                <div class="wf-phase-footer">Volum: 300 baller / uke · 3 runder · 2 studio-økter</div>
+              </div>
+
+              <div class="wf-phase">
+                <div class="wf-phase-head">
+                  <span class="wf-phase-num">Fase 3</span>
+                  <span class="wf-phase-name">Turneringsuke — taper + mental</span>
+                  <span class="wf-phase-meta">23.–30. mai · lavt volum, høy kvalitet</span>
+                  <div class="wf-phase-progress"><div class="wf-phase-progress-fill" style="width:0%"></div></div>
+                  <span class="wf-phase-status">Starter om 34 dager · 9 tasks</span>
+                </div>
+                <div class="wf-task-list">
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Mental: visualiseringsøkter</div><div class="wf-task-meta">3x 15 min · Losby hullgjennomgang</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Pre-shot routine lock</div><div class="wf-task-meta">Video-opptak · samme sekvens hver gang</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Utstyrs-sjekk · grep + loft</div><div class="wf-task-meta">Bag klargjort torsdag</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Søvn-protokoll 8h</div><div class="wf-task-meta">Siste 4 netter · ingen trening etter kl 18</div></div>
+                  </div>
+                  <div class="wf-task-item">
+                    <div class="wf-task-ic"></div>
+                    <div class="wf-task-body"><div class="wf-task-title">Reise + logistikk Losby</div><div class="wf-task-meta">Ankomst dagen før · range kveld før</div></div>
+                  </div>
+                </div>
+                <div class="wf-phase-footer">Volum: 120 baller / uke · 0 runder · 1 short-game-økt</div>
+              </div>
+
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Aktiv fase i svart:</strong> Mørkt kort dominerer — "dette er hvor du er nå". Spilleren ser ikke tilbake eller for langt fram.</li>
+        <li><strong>— Periodiseringsspråk:</strong> Byggefase → Polish → Taper er etablert idrettsterminologi. Signal om metodisk coaching.</li>
+        <li><strong>— Volum-footer:</strong> Antall baller/uke viser progresjonen fra høyt → lavt volum. Taper-fasen synliggjøres konkret.</li>
+        <li><strong>— Tidslinje øverst:</strong> Horisontal progress med 5 milepæler. Kontekst ett blikk.</li>
+        <li>— Risiko: Rigid struktur passer ikke alle — Elite-spillere som bommer på en uke trenger fleksibilitet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: STATS-READY ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Stats-Ready</span></h2>
+    <p class="option-description">SG-profilen din vs banens krav side-om-side. Gap-analyse viser hvor du må forbedre deg før NM. Under: spesifikke øvelser mappet direkte til svakhet-SG-kategori. Datadrevet prep for Elite.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/konkurranse-prep</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Elite · HCP +0.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Konkurranse-prep</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Sosialt</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">DataGolf koblet<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">Losby-profil lastet · 3 år historikk</div>
+              <button class="wf-sb-cta-btn">Oppdater</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">NM Match Play · Losby · statistisk prep</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Siste 30d</span><span class="wf-mtopbar-chip">Siste 10 runder</span><span class="wf-mtopbar-chip">År</span></div>
+            </div>
+
+            <div class="wf-sg-compare">
+              <div class="wf-sg-col">
+                <div class="wf-sg-col-head">
+                  <div class="wf-sg-col-title">Din SG-profil<span class="wf-marker">2</span></div>
+                  <span class="wf-ai-badge">Siste 10 runder</span>
+                </div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Tee</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:78%"></div></div><div class="wf-sg-val">+1.4</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Approach</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:42%"></div></div><div class="wf-sg-val">+0.3</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Around Green</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:58%"></div></div><div class="wf-sg-val">+0.6</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Putting</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:22%"></div></div><div class="wf-sg-val">−0.4</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Total</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:68%"></div></div><div class="wf-sg-val">+1.9</div></div>
+              </div>
+
+              <div class="wf-sg-col">
+                <div class="wf-sg-col-head">
+                  <div class="wf-sg-col-title">Losby-krav · vinner-profil<span class="wf-marker">3</span></div>
+                  <span class="wf-ai-badge">DECADE</span>
+                </div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Tee</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:60%"></div></div><div class="wf-sg-val">+0.9</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Approach</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:80%"></div></div><div class="wf-sg-val">+1.5</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Around Green</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:55%"></div></div><div class="wf-sg-val">+0.6</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Putting</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:72%"></div></div><div class="wf-sg-val">+1.1</div></div>
+                <div class="wf-sg-row"><div class="wf-sg-label">Total</div><div class="wf-sg-bar"><div class="wf-sg-fill" style="width:85%"></div></div><div class="wf-sg-val">+4.1</div></div>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-label">Gap-analyse · hva mangler før NM<span class="wf-marker">4</span></div>
+              <div class="wf-gap"><strong>Approach:</strong> Du er +0.3 — Losby-vinnerne er +1.5. Gap = 1.2 slag / runde. Tren 100–160m distansekontroll + pin-aksess.</div>
+              <div class="wf-gap"><strong>Putting:</strong> Du er −0.4 — Losby-vinnerne er +1.1. Gap = 1.5 slag / runde. Fokus: 3–6m breaking + lag-putting 10–15m på raske greener.</div>
+              <div class="wf-gap"><strong>Styrke å beholde:</strong> Tee-spillet ditt er 0.5 over vinnerprofilen. Ikke overtrenere — 2 økter per uke holder.</div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-row">
+                <div class="wf-c-label">Spesifikk prep · mappet til svakhet<span class="wf-marker">5</span></div>
+                <span class="wf-ai-badge">18 økter i plan</span>
+              </div>
+              <div class="wf-prep-list">
+                <div class="wf-prep-item">
+                  <div class="wf-prep-tag">Putting</div>
+                  <div class="wf-prep-body">
+                    <div class="wf-prep-title">Breaking 3–6m · gate-drill</div>
+                    <div class="wf-prep-meta">6 økter · 200 putts per økt · måling i SAM PuttLab</div>
+                  </div>
+                  <div class="wf-prep-vol">Mandag + torsdag</div>
+                </div>
+                <div class="wf-prep-item">
+                  <div class="wf-prep-tag">Putting</div>
+                  <div class="wf-prep-body">
+                    <div class="wf-prep-title">Lag-putt 10–15m · distansekontroll</div>
+                    <div class="wf-prep-meta">4 økter · stimp 12+ simulator · ledd hastighet</div>
+                  </div>
+                  <div class="wf-prep-vol">Onsdag</div>
+                </div>
+                <div class="wf-prep-item">
+                  <div class="wf-prep-tag">Approach</div>
+                  <div class="wf-prep-body">
+                    <div class="wf-prep-title">100–140m · pin-aksess høyre / venstre</div>
+                    <div class="wf-prep-meta">4 økter · TrackMan · dispersion mål 8m</div>
+                  </div>
+                  <div class="wf-prep-vol">Tirsdag</div>
+                </div>
+                <div class="wf-prep-item">
+                  <div class="wf-prep-tag">Approach</div>
+                  <div class="wf-prep-body">
+                    <div class="wf-prep-title">140–170m · 7-iron distansevariasjon</div>
+                    <div class="wf-prep-meta">4 økter · tre tempo (70/85/100%) · press-drill</div>
+                  </div>
+                  <div class="wf-prep-vol">Fredag</div>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — DataGolf i sidebar-CTA:</strong> Koblingen er statussymbol. "Vi har 3 års historikk + Losby-profil" = elite-verktøy.</li>
+        <li><strong>2 — Side-om-side SG:</strong> Kognitiv shortcut. "Her er jeg / her må jeg være" — gap er visuelt tydelig.</li>
+        <li><strong>3 — Losby-vinnerprofil:</strong> DECADE-tall for faktiske Losby-vinnere (siste 5 år). Benchmark, ikke generisk norm.</li>
+        <li><strong>4 — Gap-analyse narrative:</strong> Tre setninger erstatter 20 tall. Svakhet + styrke + "ikke overtrenere".</li>
+        <li><strong>5 — Prep mappet til svakhet:</strong> Hvert øvelsesforslag har tag (Putting / Approach) som kobler tilbake til gap-tabell.</li>
+        <li>— Passer Elite + datagolf-entusiaster. For starters er det for mye tall.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: MENTAL FIRST ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Mental First</span></h2>
+    <p class="option-description">Mental prep som hovedfokus. Stress-skala, visualiserings-blokk, pre-shot routine-rutiner og søvn/energi-tracking. Under: teknisk sjekkliste som sekundær. Passer spillere med god teknikk men nervøsitet under press.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/konkurranse-prep</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · mental profil</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Mental</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Konkurranse-prep</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Visualiseringsøkt</div>
+              <div class="wf-sb-cta-desc">Daglig · 10 min før kveld</div>
+              <button class="wf-sb-cta-btn">Start nå</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">NM Match Play · mental readiness</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Mental</span><span class="wf-mtopbar-chip">Teknisk</span><span class="wf-mtopbar-chip">Fysisk</span></div>
+            </div>
+
+            <section class="wf-mental-hero">
+              <div>
+                <div class="wf-mental-eyebrow">Mental readiness · NM Match Play<span class="wf-marker">1</span></div>
+                <h1 class="wf-mental-title">Rolig kropp, tydelig plan, klart mål</h1>
+                <p class="wf-mental-sub">6 uker til start · bygg rutiner nå så de sitter i skuldrene på 1. tee</p>
+              </div>
+              <div class="wf-mental-score">
+                <div class="wf-mental-score-num">7.2</div>
+                <div class="wf-mental-score-label">Mental score · av 10</div>
+              </div>
+            </section>
+
+            <div class="wf-mental-grid">
+
+              <div class="wf-viz-card">
+                <div class="wf-viz-label">Visualisering<span class="wf-marker">2</span></div>
+                <p class="wf-viz-quote">"Jeg ser meg selv stå på 18. green, match all-square. Jeg har allerede spilt dette slaget i hodet mitt 50 ganger."</p>
+                <div class="wf-viz-meta">Daglig øvelse · siste 21 dager: 14 av 21 gjennomført</div>
+              </div>
+
+              <div class="wf-c">
+                <div class="wf-c-label">Pre-shot routine<span class="wf-marker">3</span></div>
+                <div class="wf-routine-steps">
+                  <div class="wf-routine-item">
+                    <div class="wf-routine-num">1</div>
+                    <div class="wf-routine-body">
+                      <div class="wf-routine-title">Se målet · stå bak ballen</div>
+                      <div class="wf-routine-meta">Bildet av ballflukt i hodet</div>
+                    </div>
+                    <div class="wf-routine-time">4 sek</div>
+                  </div>
+                  <div class="wf-routine-item">
+                    <div class="wf-routine-num">2</div>
+                    <div class="wf-routine-body">
+                      <div class="wf-routine-title">To øvesving · finn tempo</div>
+                      <div class="wf-routine-meta">Samme rytme hver gang</div>
+                    </div>
+                    <div class="wf-routine-time">5 sek</div>
+                  </div>
+                  <div class="wf-routine-item">
+                    <div class="wf-routine-num">3</div>
+                    <div class="wf-routine-body">
+                      <div class="wf-routine-title">Innpust · adressér ballen</div>
+                      <div class="wf-routine-meta">Blikket først på mål, så på ball</div>
+                    </div>
+                    <div class="wf-routine-time">3 sek</div>
+                  </div>
+                  <div class="wf-routine-item">
+                    <div class="wf-routine-num">4</div>
+                    <div class="wf-routine-body">
+                      <div class="wf-routine-title">Utpust · treff</div>
+                      <div class="wf-routine-meta">Stol på rutinen</div>
+                    </div>
+                    <div class="wf-routine-time">2 sek</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-c">
+                <div class="wf-c-label">Stress-mønster · siste 30 dager<span class="wf-marker">4</span></div>
+                <div class="wf-stress-row">
+                  <div class="wf-stress-dot"></div>
+                  <div class="wf-stress-label">Tee-slag under press</div>
+                  <div class="wf-stress-val">Høy · 7/10</div>
+                </div>
+                <div class="wf-stress-row">
+                  <div class="wf-stress-dot wf-mid"></div>
+                  <div class="wf-stress-label">Match Play-situasjoner</div>
+                  <div class="wf-stress-val">Medium · 5/10</div>
+                </div>
+                <div class="wf-stress-row">
+                  <div class="wf-stress-dot wf-mid"></div>
+                  <div class="wf-stress-label">3 fot putter</div>
+                  <div class="wf-stress-val">Medium · 4/10</div>
+                </div>
+                <div class="wf-stress-row">
+                  <div class="wf-stress-dot wf-low"></div>
+                  <div class="wf-stress-label">Approach-slag</div>
+                  <div class="wf-stress-val">Lav · 2/10</div>
+                </div>
+                <div class="wf-stress-row">
+                  <div class="wf-stress-dot wf-low"></div>
+                  <div class="wf-stress-label">Chipping rundt green</div>
+                  <div class="wf-stress-val">Lav · 2/10</div>
+                </div>
+              </div>
+
+              <div class="wf-c">
+                <div class="wf-c-label">Mental sjekkliste · turneringsdag<span class="wf-marker">5</span></div>
+                <div class="wf-check-list">
+                  <div class="wf-check-item">
+                    <div class="wf-check-box wf-done"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title wf-done-text">Søvn 8h · ingen skjerm 1h før</div>
+                    </div>
+                  </div>
+                  <div class="wf-check-item">
+                    <div class="wf-check-box"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title">3 nøkkelord definert</div>
+                      <div class="wf-check-meta">"Tempo · mål · stol på"</div>
+                    </div>
+                  </div>
+                  <div class="wf-check-item">
+                    <div class="wf-check-box"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title">Pusteøvelse · 4–7–8 på 1. tee</div>
+                      <div class="wf-check-meta">3 runder før første slag</div>
+                    </div>
+                  </div>
+                  <div class="wf-check-item">
+                    <div class="wf-check-box"></div>
+                    <div class="wf-check-body">
+                      <div class="wf-check-title">Reset-rutine etter bogey</div>
+                      <div class="wf-check-meta">Tell 5 steg · pust · neste slag</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Mental score stor:</strong> Ett tall som sammenfatter hvor klar spilleren er — kombinerer søvn, rutine-etterlevelse, stress-rapporter.</li>
+        <li><strong>2 — Visualisering i svart kort:</strong> Emosjonell tekst løftes fram. Coach + spiller har definert den sammen — brukes daglig.</li>
+        <li><strong>3 — Pre-shot routine som steg:</strong> Tid per steg synliggjør at rutinen skal være 14 sek total — konsistens over kraft.</li>
+        <li><strong>4 — Stress-mønster:</strong> Identifiserer hvor i spillet nervene slår inn. Tee + Match Play er høyest — mental prep fokuserer her.</li>
+        <li><strong>5 — Turneringsdag-sjekkliste:</strong> Det siste sjekkpunktet morgenen før spill. Søvn + rutiner + reset — ingen teknisk øvelse.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: COURSE INTEL ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Course Intel</span></h2>
+    <p class="option-description">Bane-kartet dominerer. 18 hull i grid med kritiske hull uthevet. Under: hull-liste med strategi, klubbvalg og DECADE expected value per hull. For spillere som vil "spille banen før de spiller banen".</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/konkurranse-prep</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP +0.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Konkurranse-prep</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">DECADE koblet<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">Losby-scorecard · 18 hull analysert</div>
+              <button class="wf-sb-cta-btn">Eksporter yardage-kort</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Losby Golfklubb · NM Match Play-oppsett</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">Front 9</span><span class="wf-mtopbar-chip">Back 9</span><span class="wf-mtopbar-chip">Hele</span></div>
+            </div>
+
+            <section class="wf-course-head">
+              <div>
+                <h1 class="wf-course-title">Losby Golfklubb · Championship</h1>
+                <div class="wf-course-meta">Par 71 · 6 412 m · slope 134 · Rating 73.1</div>
+              </div>
+              <div class="wf-course-kpis">
+                <div class="wf-course-kpi"><div class="wf-course-kpi-val">-2</div><div class="wf-course-kpi-label">Ditt mål</div></div>
+                <div class="wf-course-kpi"><div class="wf-course-kpi-val">69.4</div><div class="wf-course-kpi-label">DECADE forventet</div></div>
+                <div class="wf-course-kpi"><div class="wf-course-kpi-val">4</div><div class="wf-course-kpi-label">Kritiske hull</div></div>
+              </div>
+            </section>
+
+            <div class="wf-course-map">
+              <div class="wf-hole-cell"><div class="wf-hole-num">1</div><div class="wf-hole-par">Par 4</div></div>
+              <div class="wf-hole-cell wf-hole-watch"><div class="wf-hole-num">2</div><div class="wf-hole-par">Par 5</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">3</div><div class="wf-hole-par">Par 3</div></div>
+              <div class="wf-hole-cell wf-hole-critical"><div class="wf-hole-num">4</div><div class="wf-hole-par">Par 4</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">5</div><div class="wf-hole-par">Par 4</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">6</div><div class="wf-hole-par">Par 3</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">7</div><div class="wf-hole-par">Par 4</div></div>
+              <div class="wf-hole-cell wf-hole-critical"><div class="wf-hole-num">8</div><div class="wf-hole-par">Par 5</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">9</div><div class="wf-hole-par">Par 4</div></div>
+              <div class="wf-hole-cell wf-hole-watch"><div class="wf-hole-num">10</div><div class="wf-hole-par">Par 4</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">11</div><div class="wf-hole-par">Par 3</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">12</div><div class="wf-hole-par">Par 5</div></div>
+              <div class="wf-hole-cell wf-hole-critical"><div class="wf-hole-num">13</div><div class="wf-hole-par">Par 4</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">14</div><div class="wf-hole-par">Par 4</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">15</div><div class="wf-hole-par">Par 3</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">16</div><div class="wf-hole-par">Par 4</div></div>
+              <div class="wf-hole-cell"><div class="wf-hole-num">17</div><div class="wf-hole-par">Par 5</div></div>
+              <div class="wf-hole-cell wf-hole-critical"><div class="wf-hole-num">18</div><div class="wf-hole-par">Par 4</div></div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-row">
+                <div class="wf-c-label">Kritiske hull · strategi + klubbvalg<span class="wf-marker">2</span></div>
+                <span class="wf-ai-badge">4 av 18</span>
+              </div>
+              <div class="wf-hole-list">
+                <div class="wf-hole-row">
+                  <div class="wf-hole-tag wf-critical">4</div>
+                  <div>
+                    <div class="wf-hole-desc">Par 4 · 378m · dogleg venstre · OB høyre</div>
+                    <div class="wf-hole-strategy">Strategi: 3-jern eller hybrid fra tee · hold venstre side · approach 150m inn</div>
+                  </div>
+                  <div class="wf-hole-club">3-jern</div>
+                  <div class="wf-hole-ev">DECADE: 4.12</div>
+                </div>
+                <div class="wf-hole-row">
+                  <div class="wf-hole-tag wf-critical">8</div>
+                  <div>
+                    <div class="wf-hole-desc">Par 5 · 512m · vann kryss 80m foran green</div>
+                    <div class="wf-hole-strategy">Strategi: legg opp til 90–100m · ikke prøv å nå på 2 · birdie med wedge</div>
+                  </div>
+                  <div class="wf-hole-club">Driver + 6-jern layup</div>
+                  <div class="wf-hole-ev">DECADE: 4.68</div>
+                </div>
+                <div class="wf-hole-row">
+                  <div class="wf-hole-tag wf-critical">13</div>
+                  <div>
+                    <div class="wf-hole-desc">Par 4 · 392m · smal fairway · bunker front-right green</div>
+                    <div class="wf-hole-strategy">Strategi: driver på høyre side fairway · approach til midten av green</div>
+                  </div>
+                  <div class="wf-hole-club">Driver</div>
+                  <div class="wf-hole-ev">DECADE: 4.24</div>
+                </div>
+                <div class="wf-hole-row">
+                  <div class="wf-hole-tag wf-critical">18</div>
+                  <div>
+                    <div class="wf-hole-desc">Par 4 · 401m · signature-hull · vann langs høyre fra tee til green</div>
+                    <div class="wf-hole-strategy">Strategi: 3-wood fra tee · aksepter 180m inn · midten av green uansett pinne</div>
+                  </div>
+                  <div class="wf-hole-club">3-wood</div>
+                  <div class="wf-hole-ev">DECADE: 4.18</div>
+                </div>
+              </div>
+            </div>
+
+            <section class="wf-decade-bar">
+              <div class="wf-decade-text"><strong>DECADE-prediksjon:</strong> Med din profil + Losby-layout: forventet score <strong>69.4</strong> · sannsynlighet for −2 eller bedre: 28%</div>
+              <div class="wf-decade-val">69.4</div>
+            </section>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — DECADE i sidebar:</strong> Signaliserer verktøyets dybde. Eksport av yardage-kort = produktivitets-peak.</li>
+        <li><strong>— Course header med mål + prediksjon:</strong> Ditt mål (−2) vs DECADE forventet (69.4) · kritisk kontekst.</li>
+        <li><strong>— Hull-kart 6x3 grid:</strong> Svart = kritisk, grå = obs, hvit = standard. Ett blikk viser hvor du må være på tå.</li>
+        <li><strong>2 — Hull-liste med strategi:</strong> Klubbvalg + DECADE expected value per kritisk hull. Spilleren bygger internaliseringen uker før spill.</li>
+        <li>— Passer veldig godt for Match Play (må bryte hvert hull) · mindre for strokeplay der totalen er primary.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>spilleren skal føle seg 100% forberedt når hen står på 1. tee — ingen glemte prep-oppgaver, ingen overraskelser, tydelig mental og teknisk plan</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Primær data</th><th>Passer tier</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Countdown Hub</strong></td><td>Samlet hub · countdown + sjekkliste + pyramide</td><td>TournamentPrep + TrainingPlan</td><td>Alle (Starter → Elite)</td><td>Medium</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Three Phase</strong></td><td>Byggefase / Polish / Taper som 3 kolonner</td><td>PlayerTournamentPlan faser</td><td>Pro + Elite</td><td>Medium</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Stats-Ready</strong></td><td>SG-profil vs Losby-krav · gap-analyse</td><td>Round + DECADE + TrackMan</td><td>Elite + datagolf</td><td>Høy</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Mental First</strong></td><td>Mental readiness + rutiner som primær</td><td>MentalProfile + stress-rapport</td><td>Pro + Elite m/ nerver</td><td>Medium</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>5. Course Intel</strong></td><td>Bane-kart + DECADE per hull</td><td>Tournament.course + DECADE</td><td>Pro + Elite + Match Play</td><td>Høy (dataavhengig)</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Countdown Hub</h3>
+      <p>Option 1 er den eneste som dekker hele konkurranseforberedelsen i én visning: countdown (urgency), sjekkliste (konkret handling), pyramide-mapping (metodisk), coach-note (narrativ). Passer alle spillernivåer — Starter ser sjekklisten som "gjør dette", Elite ser den som "har jeg glemt noe". Widget-data (NextCompetitionWidget + PlanProgressWidget) mapper direkte til hero + pyramide-blokk.</p>
+      <p><strong>Strategisk flow:</strong> Implementer Option 1 som default for /portal/konkurranse-prep. Bygg Option 2 (Three Phase) som sub-view "Periodisering" — kalles fra sjekklistens "Se treningsplan". Option 3 (Stats-Ready) blir en sub-view "SG-analyse" — kalles fra pyramiden. Option 5 (Course Intel) blir sub-view "Banestrategi" — kalles fra "Baneanalyse"-sjekkboksen. Option 4 (Mental First) deles mellom /portal/mental og en "Mental"-seksjon i Option 1's pyramide.</p>
+      <p><strong>Data-map:</strong> Tournament → hero. TournamentPrep.checklist → Option 1 sjekkliste. PlayerTournamentPlan.phases → Option 2 faser. Round[] + MentalProfile → Option 3/4 stats-kort. Tournament.course + TournamentPrep.holeStrategy → Option 5 bane-grid.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  AK Golf Platform · Portal · N02 Konkurranseforberedelse · 1704 wireframes
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

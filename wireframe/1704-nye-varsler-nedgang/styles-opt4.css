@@ -1,0 +1,313 @@
+/* === Option 4: Deep-Dive Analytics === */
+
+.dd-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 16px;
+  align-items: start;
+  min-height: 520px;
+}
+
+/* Left: student picker */
+.dd-picker {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 560px;
+  overflow-y: auto;
+}
+.dd-picker-head {
+  padding: 4px 8px 8px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 4px;
+}
+.dd-picker-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999;
+}
+.dd-picker-search {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: 11px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-top: 6px;
+  background: #fff;
+  color: #555;
+}
+.dd-picker-item {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.dd-picker-item:hover { background: #f0f0f0; }
+.dd-picker-item.active { background: #000; color: #fff; }
+.dd-picker-item.active .dd-picker-name { color: #fff; }
+.dd-picker-item.active .dd-picker-sub { color: #bbb; }
+.dd-picker-item.active .dd-picker-flag { background: #fff; color: #000; border-color: #fff; }
+.dd-picker-avatar {
+  width: 24px; height: 24px;
+  border-radius: 999px;
+  background: #eee;
+  border: 1px solid #ddd;
+  color: #333;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.dd-picker-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1.2;
+}
+.dd-picker-sub {
+  font-size: 9px;
+  color: #888;
+}
+.dd-picker-flag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #000;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid #000;
+}
+.dd-picker-flag.medium { background: #666; border-color: #666; }
+.dd-picker-flag.low { background: #fff; color: #555; border-color: #bbb; }
+
+/* Right: deep dive */
+.dd-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dd-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+.dd-header-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.dd-header-avatar {
+  width: 48px; height: 48px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #333;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.dd-header-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #000;
+  margin: 0;
+}
+.dd-header-sub {
+  font-size: 11px;
+  color: #666;
+  margin-top: 2px;
+}
+.dd-header-badges {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+.dd-header-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.dd-panel {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+.dd-panel-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 8px;
+}
+.dd-panel-title small {
+  text-transform: none;
+  letter-spacing: 0;
+  color: #bbb;
+  font-weight: 400;
+  margin-left: 6px;
+}
+
+.dd-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Skill bars */
+.dd-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dd-skill {
+  display: grid;
+  grid-template-columns: 110px 1fr 60px;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+}
+.dd-skill-name {
+  color: #333;
+  font-weight: 600;
+}
+.dd-skill-bar {
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.dd-skill-bar-now {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: #000;
+  border-radius: 4px;
+}
+.dd-skill-bar-before {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-right: 2px dashed #666;
+}
+.dd-skill-delta {
+  text-align: right;
+  font-weight: 800;
+  color: #000;
+  font-variant-numeric: tabular-nums;
+}
+.dd-skill-delta.up { color: #666; font-weight: 600; }
+
+/* Trend placeholder */
+.dd-trend {
+  height: 120px;
+  background: repeating-linear-gradient(90deg, #f5f5f5, #f5f5f5 1px, transparent 1px, transparent 24px),
+              repeating-linear-gradient(0deg, #f5f5f5, #f5f5f5 1px, transparent 1px, transparent 20px);
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+  position: relative;
+  font-size: 10px;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dd-trend::before {
+  content: "";
+  position: absolute;
+  inset: 20px 30px 30px 30px;
+  background: linear-gradient(130deg, transparent 0 20%, #333 20% 22%, transparent 22%);
+}
+
+/* Hypothesis list */
+.dd-hypo {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dd-hypo li {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  gap: 8px;
+  align-items: start;
+  font-size: 12px;
+  color: #333;
+  padding: 8px 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+.dd-hypo-rank {
+  font-size: 10px;
+  font-weight: 800;
+  color: #000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+.dd-hypo-title { font-weight: 700; color: #000; }
+.dd-hypo-meta { font-size: 11px; color: #666; margin-top: 2px; }
+.dd-hypo-score {
+  font-size: 10px;
+  font-weight: 700;
+  color: #555;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 2px 6px;
+}
+
+/* Action plan */
+.dd-actions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dd-actions-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #333;
+  padding: 8px 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-left: 3px solid #000;
+  border-radius: 3px;
+}
+.dd-actions-cta {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 9px;
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+  border-radius: 3px;
+  cursor: pointer;
+}

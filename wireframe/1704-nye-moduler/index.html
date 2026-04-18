@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module Add-ons — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Module Add-ons (N20)</span> — <span id="project-name">AK Golf Platform · Portal</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Module Shop</button>
+    <button class="tab-btn" data-tab="option-2">2: Bundle Comparison</button>
+    <button class="tab-btn" data-tab="option-3">3: Active Stack</button>
+    <button class="tab-btn" data-tab="option-4">4: Use-Case Driven</button>
+    <button class="tab-btn" data-tab="option-5">5: Price Calculator</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Module Shop (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Module Shop</span></h2>
+    <p class="option-description">Grid av alle moduler som kort. Hvert kort viser ikon, navn, beskrivelse og pris per måned med "Legg til"-knapp. Aktive moduler har tydelig border og "Aktiv"-pill. Topp-hero viser nåværende abonnement (Anders Pro, 1600 kr/mnd). Kategori-grupper (Performance, Coaching, Familie). Trygg, gjenkjennelig e-handel-modell.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m1a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m1a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m1b"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m1b)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m1c"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m1c)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement/moduler</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP 2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Abonnement</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">2 moduler aktive<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">+348 kr/mnd · totalt 1948 kr/mnd</div>
+              <button class="wf-sb-cta-btn">Se oversikt</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Abonnement · Moduler &amp; add-ons</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-on">Alle</span><span class="wf-mtopbar-chip">Performance</span><span class="wf-mtopbar-chip">Coaching</span><span class="wf-mtopbar-chip">Familie</span></div>
+            </div>
+
+            <section class="wf-tier-hero">
+              <div class="wf-tier-hero-left">
+                <div class="wf-tier-hero-eyebrow">Nåværende abonnement<span class="wf-marker">2</span></div>
+                <div class="wf-tier-hero-name">AK Golf Pro</div>
+                <div class="wf-tier-hero-meta">
+                  <span>1 600 kr/mnd</span>
+                  <span>·</span>
+                  <span>2 aktive moduler</span>
+                  <span>·</span>
+                  <span>Totalt 1 948 kr/mnd</span>
+                </div>
+                <div class="wf-tier-actions">
+                  <button class="wf-tier-btn wf-tier-btn-primary">Administrer i Stripe →</button>
+                  <button class="wf-tier-btn wf-tier-btn-ghost">Bytt bundle</button>
+                </div>
+              </div>
+              <div class="wf-tier-hero-right">
+                <div class="wf-tier-stat">
+                  <div class="wf-tier-stat-label">Aktive moduler</div>
+                  <div class="wf-tier-stat-value">2 / 7</div>
+                </div>
+                <div class="wf-tier-stat">
+                  <div class="wf-tier-stat-label">Add-on kost</div>
+                  <div class="wf-tier-stat-value">+348 kr</div>
+                </div>
+                <div class="wf-tier-stat">
+                  <div class="wf-tier-stat-label">Neste faktura</div>
+                  <div class="wf-tier-stat-value">1 948 kr</div>
+                </div>
+                <div class="wf-tier-stat">
+                  <div class="wf-tier-stat-label">Fornyes</div>
+                  <div class="wf-tier-stat-value">17. mai</div>
+                </div>
+              </div>
+            </section>
+
+            <div class="wf-mod-category-head">
+              <div class="wf-mod-category-title">Performance<span class="wf-marker">3</span></div>
+              <div class="wf-mod-category-count">3 moduler</div>
+            </div>
+
+            <div class="wf-mod-grid">
+              <div class="wf-mod-card wf-active">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill">Aktiv</span>
+                </div>
+                <div class="wf-mod-name">TrackMan Pro</div>
+                <div class="wf-mod-desc">Full TrackMan-analyse med alle datapunkter: klubbhastighet, carry, smash factor og detaljert rapport per økt.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">199</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-active">Aktiv</button>
+                </div>
+              </div>
+              <div class="wf-mod-card">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill-ghost">Tilgjengelig</span>
+                </div>
+                <div class="wf-mod-name">Video-analyse</div>
+                <div class="wf-mod-desc">Last opp swing-videoer og få strukturert feedback fra AI og coach innen 48 timer. Side-by-side sammenligning.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">249</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-primary">Legg til</button>
+                </div>
+              </div>
+              <div class="wf-mod-card">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill-ghost">Tilgjengelig</span>
+                </div>
+                <div class="wf-mod-name">Turneringshjelp</div>
+                <div class="wf-mod-desc">Prep-guides før turnering, detaljert stats under og evaluering etter. Strategier per bane og hull.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">99</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-primary">Legg til</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-mod-category-head">
+              <div class="wf-mod-category-title">Coaching &amp; mental<span class="wf-marker">4</span></div>
+              <div class="wf-mod-category-count">2 moduler</div>
+            </div>
+
+            <div class="wf-mod-grid">
+              <div class="wf-mod-card wf-active">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill">Aktiv</span>
+                </div>
+                <div class="wf-mod-name">AI-coach Plus</div>
+                <div class="wf-mod-desc">Ubegrenset tilgang til AI-coachen. Still så mange spørsmål du vil, få skreddersydde råd basert på dine data.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">149</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-active">Aktiv</button>
+                </div>
+              </div>
+              <div class="wf-mod-card">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill-ghost">Tilgjengelig</span>
+                </div>
+                <div class="wf-mod-name">Mental Performance</div>
+                <div class="wf-mod-desc">Strukturert mental trening: fokus, pre-shot rutiner, visualisering. Ukesprogram med øvelser og oppfølging.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">199</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-primary">Legg til</button>
+                </div>
+              </div>
+              <div class="wf-mod-card" style="background:#fafafa; border-style: dashed">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                </div>
+                <div class="wf-mod-name" style="color:#999">Kommer snart</div>
+                <div class="wf-mod-desc">Flere moduler under utvikling. Gi tilbakemelding på hva du ønsker deg.</div>
+                <div class="wf-mod-price-row" style="border-top: none">
+                  <div></div>
+                  <button class="wf-mod-btn" style="background: #fff; border-style: dashed">Gi innspill</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-mod-category-head">
+              <div class="wf-mod-category-title">Familie &amp; foreldre<span class="wf-marker">5</span></div>
+              <div class="wf-mod-category-count">2 moduler</div>
+            </div>
+
+            <div class="wf-mod-grid">
+              <div class="wf-mod-card">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill-ghost">Tilgjengelig</span>
+                </div>
+                <div class="wf-mod-name">Forelder-view</div>
+                <div class="wf-mod-desc">Tilgang for foreldre til juniorspillere. Se fremgang, kalender, oppfølging og betalingsstatus.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">49</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-primary">Legg til</button>
+                </div>
+              </div>
+              <div class="wf-mod-card">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill-ghost">Tilgjengelig</span>
+                </div>
+                <div class="wf-mod-name">Familie-pakke</div>
+                <div class="wf-mod-desc">Opptil 4 brukere på ett abonnement. Delt kalender, felles betaling, individuelle data og mål.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">299</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-primary">Legg til</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-stripe-row">
+              <div class="wf-stripe-text"><strong>Stripe Customer Portal</strong> · Administrer betaling, last ned fakturaer, kanseller moduler.</div>
+              <button class="wf-tier-btn wf-tier-btn-ghost" style="color:#000; border-color:#000">Åpne portal →</button>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Sidebar-CTA:</strong> Telle aktive moduler og samlet kostnad. Direkte lenke til oversikt.</li>
+        <li><strong>2 — Tier-hero:</strong> Nåværende abonnement dominerer øverst (Pro, 1 600 kr/mnd). 4 KPI-celler: aktive moduler 2/7, add-on kost +348 kr, neste faktura 1 948 kr, fornyes 17. mai.</li>
+        <li><strong>3 — Performance-kategori:</strong> Moduler som utvider data/analyse. Aktive har tykk border + "Aktiv"-pill + deaktivert knapp.</li>
+        <li><strong>4 — Coaching-kategori:</strong> AI-coach og mental. "Kommer snart"-kort for transparens på roadmap.</li>
+        <li><strong>5 — Familie-kategori:</strong> Skiller sosial bruk fra personlig verktøy. Forelder og familie samlet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Bundle Comparison ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Bundle Comparison</span></h2>
+    <p class="option-description">4 forhåndspakker sidestilt (Academy, Starter, Pro, Elite). Din pakke uthevet. Hver viser pris + hvilke moduler som er inkludert. Full matrise nederst med alle moduler som rader og bundles som kolonner. Klassisk SaaS-pattern for brukere som vurderer oppgradering av hele pakken fremfor enkeltmoduler.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m2a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m2a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m2b"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m2b)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m2c"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m2c)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement/moduler</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP 2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Bundles</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Pro · 1 600 kr</div>
+              <div class="wf-sb-cta-desc">Sammenlign med Elite</div>
+              <button class="wf-sb-cta-btn">Vis matrise</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Bundles &amp; moduler · velg nivå</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-on">Månedlig</span><span class="wf-mtopbar-chip">Årlig −20%</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Sammenlign bundles<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">4 pakker. Bytt når du vil.</h1>
+                <p class="wf-page-head-sub">Din pakke: Pro · 1 600 kr/mnd · 2 add-on moduler aktive (+348 kr)</p>
+              </div>
+              <span class="wf-badge-active">Du er på Pro</span>
+            </section>
+
+            <div class="wf-bundle-grid">
+              <div class="wf-bundle-card">
+                <div class="wf-bundle-name">Academy</div>
+                <div class="wf-bundle-price"><span class="wf-bundle-price-val">550</span><span class="wf-bundle-price-unit">kr/mnd</span></div>
+                <div class="wf-bundle-desc">Kom i gang. For nye golfere og juniorer som skal bygge fundamentet.</div>
+                <ul class="wf-bundle-features">
+                  <li class="wf-bundle-feature wf-on">AI-coach basic</li>
+                  <li class="wf-bundle-feature">TrackMan Pro</li>
+                  <li class="wf-bundle-feature">Video-analyse</li>
+                  <li class="wf-bundle-feature">Turneringshjelp</li>
+                  <li class="wf-bundle-feature">Mental Performance</li>
+                </ul>
+                <button class="wf-bundle-btn">Nedgrader</button>
+              </div>
+              <div class="wf-bundle-card">
+                <div class="wf-bundle-name">Starter</div>
+                <div class="wf-bundle-price"><span class="wf-bundle-price-val">900</span><span class="wf-bundle-price-unit">kr/mnd</span></div>
+                <div class="wf-bundle-desc">For deg som spiller jevnlig og vil ha bedre data og oppfølging.</div>
+                <ul class="wf-bundle-features">
+                  <li class="wf-bundle-feature wf-on">AI-coach basic</li>
+                  <li class="wf-bundle-feature wf-on">Video-analyse</li>
+                  <li class="wf-bundle-feature">TrackMan Pro</li>
+                  <li class="wf-bundle-feature">Turneringshjelp</li>
+                  <li class="wf-bundle-feature">Mental Performance</li>
+                </ul>
+                <button class="wf-bundle-btn">Nedgrader</button>
+              </div>
+              <div class="wf-bundle-card wf-current">
+                <div class="wf-bundle-pill">Din pakke<span class="wf-marker">2</span></div>
+                <div class="wf-bundle-name">Pro</div>
+                <div class="wf-bundle-price"><span class="wf-bundle-price-val">1 600</span><span class="wf-bundle-price-unit">kr/mnd</span></div>
+                <div class="wf-bundle-desc">Den mest populære. Inkluderer de fleste moduler du trenger.</div>
+                <ul class="wf-bundle-features">
+                  <li class="wf-bundle-feature wf-on">AI-coach Plus</li>
+                  <li class="wf-bundle-feature wf-on">TrackMan Pro</li>
+                  <li class="wf-bundle-feature wf-on">Video-analyse</li>
+                  <li class="wf-bundle-feature">Turneringshjelp</li>
+                  <li class="wf-bundle-feature">Mental Performance</li>
+                </ul>
+                <button class="wf-bundle-btn wf-bundle-btn-current">Nåværende</button>
+              </div>
+              <div class="wf-bundle-card wf-recommended">
+                <div class="wf-bundle-pill-ghost">Anbefalt<span class="wf-marker">3</span></div>
+                <div class="wf-bundle-name">Elite</div>
+                <div class="wf-bundle-price"><span class="wf-bundle-price-val">2 490</span><span class="wf-bundle-price-unit">kr/mnd</span></div>
+                <div class="wf-bundle-desc">Alt inkludert. For turnering-spilleren som vil ha maksimalt utbytte.</div>
+                <ul class="wf-bundle-features">
+                  <li class="wf-bundle-feature wf-on">AI-coach Plus</li>
+                  <li class="wf-bundle-feature wf-on">TrackMan Pro</li>
+                  <li class="wf-bundle-feature wf-on">Video-analyse</li>
+                  <li class="wf-bundle-feature wf-on">Turneringshjelp</li>
+                  <li class="wf-bundle-feature wf-on">Mental Performance</li>
+                </ul>
+                <button class="wf-bundle-btn wf-bundle-btn-primary">Oppgrader til Elite</button>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-label">Full modul-matrise<span class="wf-marker">4</span></div>
+              <table class="wf-invoice-table" style="width:100%; border-collapse: collapse; font-size: 12px; margin-top: 8px">
+                <thead>
+                  <tr>
+                    <th style="text-align:left; padding:10px 12px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#666; border-bottom:1px solid #eee">Modul</th>
+                    <th style="padding:10px 12px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#666; border-bottom:1px solid #eee">Academy</th>
+                    <th style="padding:10px 12px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#666; border-bottom:1px solid #eee">Starter</th>
+                    <th style="padding:10px 12px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#000; background:#f5f5f5; border-bottom:1px solid #eee">Pro</th>
+                    <th style="padding:10px 12px; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#666; border-bottom:1px solid #eee">Elite</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td style="padding:11px 12px; border-bottom:1px solid #eee; color:#333">AI-coach (basic)</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center">●</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center">●</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; background:#fafafa">—</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center">—</td></tr>
+                  <tr><td style="padding:11px 12px; border-bottom:1px solid #eee; color:#333">AI-coach Plus (+149)</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; background:#fafafa">●</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center">●</td></tr>
+                  <tr><td style="padding:11px 12px; border-bottom:1px solid #eee; color:#333">TrackMan Pro (+199)</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; background:#fafafa">●</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center">●</td></tr>
+                  <tr><td style="padding:11px 12px; border-bottom:1px solid #eee; color:#333">Video-analyse (+249)</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center">●</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; background:#fafafa">●</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center">●</td></tr>
+                  <tr><td style="padding:11px 12px; border-bottom:1px solid #eee; color:#333">Turneringshjelp (+99)</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; background:#fafafa; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center">●</td></tr>
+                  <tr><td style="padding:11px 12px; border-bottom:1px solid #eee; color:#333">Mental Performance (+199)</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center; background:#fafafa; color:#ccc">○</td><td style="padding:11px 12px; border-bottom:1px solid #eee; text-align:center">●</td></tr>
+                  <tr><td style="padding:11px 12px; color:#333">Pris</td><td style="padding:11px 12px; text-align:center; font-weight:700">550 kr</td><td style="padding:11px 12px; text-align:center; font-weight:700">900 kr</td><td style="padding:11px 12px; text-align:center; background:#fafafa; font-weight:700; color:#000">1 600 kr</td><td style="padding:11px 12px; text-align:center; font-weight:700">2 490 kr</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Bundle-matrise:</strong> 4 kolonner. Pro uthevet med tykk border. Elite-"anbefalt" gir anchoring.</li>
+        <li><strong>2 — Din pakke:</strong> Tydelig pill + deaktivert knapp. Reduserer feilklikk.</li>
+        <li><strong>3 — Elite som anker:</strong> "Anbefalt"-pill gir subtilt press. Bundler alle moduler som ellers koster +895 kr/mnd separat.</li>
+        <li><strong>4 — Modul-matrise:</strong> Hvilke moduler inkludert i hvilken bundle. ● = inkludert, ○ = kan legges til som add-on.</li>
+        <li>— Styrke: Bundle vs add-on-trade-off blir tydelig. Svakhet: Tar mye plass, ikke primær-flyt for enkeltmodul-shopping.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Active Stack ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Active Stack</span></h2>
+    <p class="option-description">"Ditt aktive stack" som svart hero øverst med alle aktive moduler + totalpris. "Legg til i stack" nedenfor med anbefalinger basert på bruksmønster. Anbefalinger forklares med data ("Du brukte video 12x forrige måned — legg til Video-analyse"). Fokus på hva brukeren allerede eier, ikke hva vi selger.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m3a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m3a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m3b"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m3b)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m3c"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m3c)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement/moduler</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP 2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mitt stack</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">3 anbefalinger</div>
+              <div class="wf-sb-cta-desc">Basert på bruk siste 30d</div>
+              <button class="wf-sb-cta-btn">Se alle</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mitt stack · moduler i bruk</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-on">Aktivt</span><span class="wf-mtopbar-chip">Historie</span></div>
+            </div>
+
+            <section class="wf-stack">
+              <div class="wf-stack-head">
+                <div>
+                  <div class="wf-stack-title">Ditt aktive stack<span class="wf-marker">1</span></div>
+                  <h2 class="wf-stack-h">Pro + 2 moduler</h2>
+                  <div class="wf-stack-meta">Fornyes 17. mai · Stripe kort •• 4242</div>
+                </div>
+                <div class="wf-stack-total">
+                  <div class="wf-stack-total-label">Totalt per måned</div>
+                  <div><span class="wf-stack-total-val">1 948</span><span class="wf-stack-total-unit">kr</span></div>
+                </div>
+              </div>
+              <div class="wf-stack-items">
+                <div class="wf-stack-item">
+                  <div class="wf-stack-item-name">AK Golf Pro</div>
+                  <div class="wf-stack-item-meta">Basispakke</div>
+                  <div class="wf-stack-item-price">1 600 kr/mnd</div>
+                </div>
+                <div class="wf-stack-item">
+                  <div class="wf-stack-item-name">TrackMan Pro</div>
+                  <div class="wf-stack-item-meta">Aktivert 12. feb · brukt 14x</div>
+                  <div class="wf-stack-item-price">+199 kr/mnd</div>
+                  <button class="wf-stack-item-remove">Fjern modul</button>
+                </div>
+                <div class="wf-stack-item">
+                  <div class="wf-stack-item-name">AI-coach Plus</div>
+                  <div class="wf-stack-item-meta">Aktivert 3. jan · 47 meldinger</div>
+                  <div class="wf-stack-item-price">+149 kr/mnd</div>
+                  <button class="wf-stack-item-remove">Fjern modul</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Legg til i stack<span class="wf-marker">2</span></div>
+                <h1 class="wf-page-head-h">Anbefalt basert på bruken din</h1>
+                <p class="wf-page-head-sub">Analyse siste 30 dager · 3 moduler som passer ditt spill-mønster</p>
+              </div>
+              <span class="wf-ai-badge">AI-basert</span>
+            </section>
+
+            <div class="wf-mod-grid">
+              <div class="wf-mod-card">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill">Sterk match<span class="wf-marker">3</span></span>
+                </div>
+                <div class="wf-mod-name">Video-analyse</div>
+                <div class="wf-mod-desc">Du har brukt video-opptak 12 ganger siste 30d. Med modulen får du strukturert AI + coach-feedback innen 48 t.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">249</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-primary">Legg til</button>
+                </div>
+              </div>
+              <div class="wf-mod-card">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill-ghost">God match</span>
+                </div>
+                <div class="wf-mod-name">Turneringshjelp</div>
+                <div class="wf-mod-desc">Du har 4 turneringer oppført i kalenderen. Få prep-guides og stats for å prestere bedre på D-day.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">99</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-primary">Legg til</button>
+                </div>
+              </div>
+              <div class="wf-mod-card">
+                <div class="wf-mod-card-head">
+                  <div class="wf-mod-icon"><div class="wf-mod-icon-inner"></div></div>
+                  <span class="wf-mod-pill-ghost">Verdt å prøve</span>
+                </div>
+                <div class="wf-mod-name">Mental Performance</div>
+                <div class="wf-mod-desc">Du scorer 8 slag lavere på hjemmebane vs. bortebane. Mental trening kan utjevne denne gapen.</div>
+                <div class="wf-mod-price-row">
+                  <div><span class="wf-mod-price-val">199</span><span class="wf-mod-price-unit">kr/mnd</span></div>
+                  <button class="wf-mod-btn wf-mod-btn-primary">Legg til</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-c wf-c-dark">
+              <div class="wf-c-row">
+                <div>
+                  <div class="wf-c-label" style="color:#999">Vurder Elite-bundle<span class="wf-marker">4</span></div>
+                  <div class="wf-c-value" style="color:#fff; font-size:18px; letter-spacing:0; line-height:1.3">Legg til alle 3 anbefalinger for 547 kr — eller oppgrader til Elite for 890 kr mer og få alt + 2 moduler til</div>
+                  <div class="wf-c-sub" style="color:#ccc; margin-top:6px">Sammenligning: Pro + 5 moduler = 2 495 kr/mnd vs Elite = 2 490 kr/mnd</div>
+                </div>
+                <button class="wf-tier-btn wf-tier-btn-primary">Se Elite →</button>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Stack-hero øverst:</strong> Eierskaps-følelse. "Ditt stack" = kontroll, ikke kjøp-pres. Totalpris og fornyelsesdato front-and-center. Fjern-lenke per modul.</li>
+        <li><strong>2 — Anbefalinger basert på data:</strong> "AI-basert" badge. Hver anbefaling har konkret begrunnelse (antall ganger brukt, kalenderaktivitet, score-gap).</li>
+        <li><strong>3 — Match-nivå som pill:</strong> "Sterk match" / "God match" / "Verdt å prøve" — rangering gjør prioritering enkel.</li>
+        <li><strong>4 — Bundle-sammenligning smart:</strong> Når du har mange add-ons, viser AI at Elite kan bli billigere enn separat kjøp. Ærlig, ikke manipulativt.</li>
+        <li>— Styrke: Data-drevet relevans reduserer cognitive load. Svakhet: Krever brukshistorikk — tomt for nye brukere.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Use-Case Driven ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Use-Case Driven</span></h2>
+    <p class="option-description">Modul-kombinasjoner pakket per mål. "Jeg vil bli turnering-spiller" → TrackMan Pro + Turneringshjelp + Mental Performance. "Jeg trener juniorens utvikling" → Forelder-view + Video-analyse. Hver use-case er et kort med 2-4 moduler, totalpris og én-klikk aktivering. Fokus på "hva vil jeg oppnå" fremfor "hvilke verktøy finnes".</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m4a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m4a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m4b"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m4b)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m4c"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m4c)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement/moduler</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP 2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mål &amp; moduler</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">4 use-cases</div>
+              <div class="wf-sb-cta-desc">Velg målet ditt</div>
+              <button class="wf-sb-cta-btn">Enkeltmoduler →</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mål &amp; moduler · pakker for ditt nivå</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-on">Alle mål</span><span class="wf-mtopbar-chip">Voksen</span><span class="wf-mtopbar-chip">Junior</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Hva vil du oppnå?<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">Velg et mål. Vi anbefaler modulene.</h1>
+                <p class="wf-page-head-sub">Ferdige kombinasjoner av moduler basert på hva spillere i samme kategori velger.</p>
+              </div>
+              <span class="wf-badge-active">Pro-abonnement</span>
+            </section>
+
+            <div class="wf-usecase-grid">
+              <div class="wf-usecase-card">
+                <div class="wf-usecase-eyebrow">Use-case 1<span class="wf-marker">2</span></div>
+                <h2 class="wf-usecase-h">Jeg vil bli turnering-spiller</h2>
+                <p class="wf-usecase-sub">Rigg deg for konkurranse. Data under spill, forberedelse før runder, analyse etter. Hva toppspillere i AK bruker.</p>
+                <div class="wf-usecase-modules">
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">TrackMan Pro</div>
+                    <div class="wf-usecase-module-meta">+199 kr/mnd</div>
+                  </div>
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">Turneringshjelp</div>
+                    <div class="wf-usecase-module-meta">+99 kr/mnd</div>
+                  </div>
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">Mental Performance</div>
+                    <div class="wf-usecase-module-meta">+199 kr/mnd</div>
+                  </div>
+                </div>
+                <div class="wf-usecase-footer">
+                  <div class="wf-usecase-total">3 moduler · totalt <strong>+497 kr/mnd</strong></div>
+                  <button class="wf-usecase-btn">Aktiver pakke</button>
+                </div>
+              </div>
+
+              <div class="wf-usecase-card">
+                <div class="wf-usecase-eyebrow">Use-case 2<span class="wf-marker">3</span></div>
+                <h2 class="wf-usecase-h">Jeg vil senke handicap</h2>
+                <p class="wf-usecase-sub">Data-drevet forbedring. Swing-feedback og AI-coaching. Fokus på de største slagbesparerne i ditt spill.</p>
+                <div class="wf-usecase-modules">
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">AI-coach Plus</div>
+                    <div class="wf-usecase-module-meta">+149 kr/mnd</div>
+                  </div>
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">Video-analyse</div>
+                    <div class="wf-usecase-module-meta">+249 kr/mnd</div>
+                  </div>
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">TrackMan Pro</div>
+                    <div class="wf-usecase-module-meta">+199 kr/mnd</div>
+                  </div>
+                </div>
+                <div class="wf-usecase-footer">
+                  <div class="wf-usecase-total">3 moduler · totalt <strong>+597 kr/mnd</strong></div>
+                  <button class="wf-usecase-btn">Aktiver pakke</button>
+                </div>
+              </div>
+
+              <div class="wf-usecase-card">
+                <div class="wf-usecase-eyebrow">Use-case 3<span class="wf-marker">4</span></div>
+                <h2 class="wf-usecase-h">Jeg trener juniorens utvikling</h2>
+                <p class="wf-usecase-sub">For foreldre. Følg fremgang, se økter, del kalender. Juniorens data i trygge rammer.</p>
+                <div class="wf-usecase-modules">
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">Forelder-view</div>
+                    <div class="wf-usecase-module-meta">+49 kr/mnd</div>
+                  </div>
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">Video-analyse</div>
+                    <div class="wf-usecase-module-meta">+249 kr/mnd</div>
+                  </div>
+                </div>
+                <div class="wf-usecase-footer">
+                  <div class="wf-usecase-total">2 moduler · totalt <strong>+298 kr/mnd</strong></div>
+                  <button class="wf-usecase-btn">Aktiver pakke</button>
+                </div>
+              </div>
+
+              <div class="wf-usecase-card">
+                <div class="wf-usecase-eyebrow">Use-case 4<span class="wf-marker">5</span></div>
+                <h2 class="wf-usecase-h">Hele familien spiller</h2>
+                <p class="wf-usecase-sub">4 brukere på ett abonnement. Delt kalender, individuelle mål. Pappa og barn trener sammen.</p>
+                <div class="wf-usecase-modules">
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">Familie-pakke</div>
+                    <div class="wf-usecase-module-meta">+299 kr/mnd</div>
+                  </div>
+                  <div class="wf-usecase-module">
+                    <div class="wf-usecase-module-icon"></div>
+                    <div class="wf-usecase-module-name">Forelder-view</div>
+                    <div class="wf-usecase-module-meta">+49 kr/mnd</div>
+                  </div>
+                </div>
+                <div class="wf-usecase-footer">
+                  <div class="wf-usecase-total">2 moduler · totalt <strong>+348 kr/mnd</strong></div>
+                  <button class="wf-usecase-btn">Aktiver pakke</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-stripe-row">
+              <div class="wf-stripe-text"><strong>Ingen av pakkene passet?</strong> Sett sammen dine egne moduler manuelt eller snakk med coachen din.</div>
+              <button class="wf-tier-btn wf-tier-btn-ghost" style="color:#000; border-color:#000">Bygg selv →</button>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Mål-først:</strong> Spørsmålet "hva vil du oppnå" fjerner paradox of choice. Brukeren velger intensjon, ikke verktøy.</li>
+        <li><strong>2 — Turnering-spiller:</strong> Power-profilen. 3 moduler samlet, tydelig totalpris. Én klikk for hele pakken.</li>
+        <li><strong>3 — Senke HCP:</strong> Utviklings-profilen. Den typiske Pro-brukeren som Anders selv representerer.</li>
+        <li><strong>4 — Forelder:</strong> Junior-profilen. Viktig salgsvinkel mot foreldregruppen — totalt 298 kr er lav terskel.</li>
+        <li><strong>5 — Familie:</strong> 4-bruker-pakken. Gir høyest LTV per betaler.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Price Calculator ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Price Calculator</span></h2>
+    <p class="option-description">Interaktiv. Liste av alle moduler til venstre med checkboxes. Til høyre: sticky summary-panel som ruller oppover når moduler legges til. Viser basispris + valgte moduler + total. Sammenligner kontinuerlig mot Elite-bundle: "Du er 200 kr under Elite — bytt?". Full kostnads-transparens.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m5a"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m5a)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m5b"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m5b)"/></svg><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="m5c"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#m5c)"/></svg><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/abonnement/moduler</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders Kristiansen</div><div class="wf-sb-profile-meta">Pro · HCP 2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Profil</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Kalkulator</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">4 av 7 valgt</div>
+              <div class="wf-sb-cta-desc">2 245 kr/mnd · 245 under Elite</div>
+              <button class="wf-sb-cta-btn">Bytt til Elite</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Kalkulator · bygg ditt stack</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip wf-on">Månedlig</span><span class="wf-mtopbar-chip">Årlig −20%</span></div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Pris-kalkulator<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-head-h">Huk av moduler. Se prisen ruller.</h1>
+                <p class="wf-page-head-sub">Full kostnadstransparens. Sammenlign med bundles i sanntid.</p>
+              </div>
+              <span class="wf-ai-badge">4 av 7 valgt</span>
+            </section>
+
+            <div class="wf-calc-grid">
+              <div class="wf-calc-list">
+                <div class="wf-calc-item wf-on">
+                  <div class="wf-calc-check wf-on"></div>
+                  <div class="wf-calc-icon"></div>
+                  <div class="wf-calc-name">
+                    <div class="wf-calc-name-title">TrackMan Pro<span class="wf-marker">2</span></div>
+                    <div class="wf-calc-name-desc">Full TrackMan-analyse · alle data</div>
+                  </div>
+                  <div class="wf-calc-price">199<span class="wf-calc-price-unit">kr/mnd</span></div>
+                </div>
+                <div class="wf-calc-item wf-on">
+                  <div class="wf-calc-check wf-on"></div>
+                  <div class="wf-calc-icon"></div>
+                  <div class="wf-calc-name">
+                    <div class="wf-calc-name-title">AI-coach Plus</div>
+                    <div class="wf-calc-name-desc">Ubegrenset AI-chat og råd</div>
+                  </div>
+                  <div class="wf-calc-price">149<span class="wf-calc-price-unit">kr/mnd</span></div>
+                </div>
+                <div class="wf-calc-item wf-on">
+                  <div class="wf-calc-check wf-on"></div>
+                  <div class="wf-calc-icon"></div>
+                  <div class="wf-calc-name">
+                    <div class="wf-calc-name-title">Video-analyse</div>
+                    <div class="wf-calc-name-desc">Swing-opptak · AI + coach-feedback</div>
+                  </div>
+                  <div class="wf-calc-price">249<span class="wf-calc-price-unit">kr/mnd</span></div>
+                </div>
+                <div class="wf-calc-item wf-on">
+                  <div class="wf-calc-check wf-on"></div>
+                  <div class="wf-calc-icon"></div>
+                  <div class="wf-calc-name">
+                    <div class="wf-calc-name-title">Turneringshjelp</div>
+                    <div class="wf-calc-name-desc">Prep-guides · stats · evaluering</div>
+                  </div>
+                  <div class="wf-calc-price">99<span class="wf-calc-price-unit">kr/mnd</span></div>
+                </div>
+                <div class="wf-calc-item">
+                  <div class="wf-calc-check"></div>
+                  <div class="wf-calc-icon"></div>
+                  <div class="wf-calc-name">
+                    <div class="wf-calc-name-title">Mental Performance</div>
+                    <div class="wf-calc-name-desc">Mental trenings-modul · ukesprogram</div>
+                  </div>
+                  <div class="wf-calc-price">199<span class="wf-calc-price-unit">kr/mnd</span></div>
+                </div>
+                <div class="wf-calc-item">
+                  <div class="wf-calc-check"></div>
+                  <div class="wf-calc-icon"></div>
+                  <div class="wf-calc-name">
+                    <div class="wf-calc-name-title">Forelder-view</div>
+                    <div class="wf-calc-name-desc">Tilgang for foreldre til juniorer</div>
+                  </div>
+                  <div class="wf-calc-price">49<span class="wf-calc-price-unit">kr/mnd</span></div>
+                </div>
+                <div class="wf-calc-item">
+                  <div class="wf-calc-check"></div>
+                  <div class="wf-calc-icon"></div>
+                  <div class="wf-calc-name">
+                    <div class="wf-calc-name-title">Familie-pakke</div>
+                    <div class="wf-calc-name-desc">Opptil 4 brukere · delt kalender</div>
+                  </div>
+                  <div class="wf-calc-price">299<span class="wf-calc-price-unit">kr/mnd</span></div>
+                </div>
+              </div>
+
+              <div class="wf-calc-summary">
+                <div class="wf-calc-summary-label">Ditt stack<span class="wf-marker">3</span></div>
+                <div class="wf-calc-summary-line"><span>AK Golf Pro (base)</span><strong>1 600 kr</strong></div>
+                <div class="wf-calc-summary-line"><span>TrackMan Pro</span><strong>+199 kr</strong></div>
+                <div class="wf-calc-summary-line"><span>AI-coach Plus</span><strong>+149 kr</strong></div>
+                <div class="wf-calc-summary-line"><span>Video-analyse</span><strong>+249 kr</strong></div>
+                <div class="wf-calc-summary-line"><span>Turneringshjelp</span><strong>+99 kr</strong></div>
+                <div class="wf-calc-summary-divider"></div>
+                <div class="wf-calc-summary-total">
+                  <div class="wf-calc-summary-total-label">Totalt / mnd</div>
+                  <div><span class="wf-calc-summary-total-val">2 296</span><span class="wf-calc-summary-total-unit">kr</span></div>
+                </div>
+                <div class="wf-calc-compare">
+                  <div class="wf-calc-compare-label">Sammenligning<span class="wf-marker">4</span></div>
+                  <div class="wf-calc-compare-text">Du er <strong>194 kr under Elite</strong> (2 490 kr). Legg til <strong>Mental Performance</strong> og du er 5 kr over. Elite inkluderer alle 5 moduler — mer verdi per krone.</div>
+                </div>
+                <button class="wf-calc-cta">Aktiver 4 moduler →</button>
+                <button class="wf-tier-btn wf-tier-btn-ghost" style="border-color:#666">Bytt til Elite i stedet</button>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kalkulator-narrativ:</strong> "Se prisen ruller" — bruker styrer, vi informerer. Ingen salgstrykk.</li>
+        <li><strong>2 — Modul-liste:</strong> Hver rad er en checkbox. Aktiv rad = svart border + lys bakgrunn. Ikon, navn, kort beskrivelse, pris til høyre.</li>
+        <li><strong>3 — Sticky summary-panel:</strong> Svart hero-panel som ruller seg selv oppover i bildet. Viser basispris + hvert enkelt add-on + totalt. Tabular-nums for alignment.</li>
+        <li><strong>4 — Bundle-sammenligning i sanntid:</strong> Under kalkulator vises alltid differanse mot Elite. Hvis brukeren velger nok add-ons blir Elite ærligere rådet — bygger tillit.</li>
+        <li>— Styrke: Full transparens, ingen triks. Svakhet: Krever at brukeren vet hva modulene gjør (kan kombineres med Opt 4 use-cases).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>spilleren forstår hvilke moduler som er tilgjengelige, hvor mye de koster, hvilke som allerede er aktive, og kan legge til / fjerne moduler på under 15 sekunder — samtidig som vi selger add-ons subtilt</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Oppdagbarhet</th><th>Konverterings-signal</th><th>Data-avhengighet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Module Shop</strong></td><td>E-handels-grid, alle moduler som kort</td><td>Svært høy</td><td>Subtilt per kort</td><td>Ingen</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Bundle Comparison</strong></td><td>4 bundles sidestilt med modul-matrise</td><td>Medium (mye info)</td><td>Sterkt (anchoring)</td><td>Ingen</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>3. Active Stack</strong></td><td>Eierskap først, anbefalinger etter</td><td>Høy (kjent data først)</td><td>Sterkt (data-drevet)</td><td>Krever brukshistorikk</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Use-Case Driven</strong></td><td>Intensjon før verktøy</td><td>Høy (hvis match)</td><td>Medium (pakke-push)</td><td>Ingen</td><td>★★★★☆</td></tr>
+        <tr><td><strong>5. Price Calculator</strong></td><td>Transparens, bruker styrer</td><td>Høy</td><td>Subtilt (via sammenligning)</td><td>Ingen</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Module Shop</h3>
+      <p>Matcher portalens etablerte bento-stil direkte. Nåværende Pro-abonnement som svart hero (1 600 kr/mnd, +348 kr add-ons, totalt 1 948 kr, fornyes 17. mai). Kategori-grupperte modul-kort i 3-kolonne grid: Performance (TrackMan, Video, Turnering), Coaching &amp; mental (AI Plus, Mental), Familie &amp; foreldre (Forelder-view, Familie). Aktive moduler har tykk border og "Aktiv"-pill. Ett blikk viser: tilgjengelige moduler, priser, hva som er aktivt — og én klikk for å legge til/fjerne. Stripe Customer Portal som fallback for avanserte operasjoner.</p>
+      <p><strong>Strategisk flow:</strong> Option 1 = default på /portal/abonnement/moduler. Option 2 (Bundle Comparison) åpnes som modal ved "Bytt bundle"-knapp. Option 3 (Active Stack) egner seg som widget på abonnement-oversikten (/portal/abonnement). Option 4 (Use-Case Driven) egen side /moduler/mal — lenke fra onboarding og sidebar. Option 5 (Price Calculator) egen side /moduler/kalkulator — for power-brukere som bygger store stacks. Alle fem mønstre er komplementære; Shop er entrypoint.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

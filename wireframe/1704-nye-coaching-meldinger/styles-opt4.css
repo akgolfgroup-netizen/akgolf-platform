@@ -1,0 +1,69 @@
+/* ============ OPT4: CHAT THREAD ============ */
+/* Samtale-stil, instruktor-meldinger med reply-mulighet for spiller */
+
+.wf-ct-split { display: grid; grid-template-columns: 280px 1fr; min-height: 700px; }
+
+/* Sesjon-liste venstre */
+.wf-ct-list { background: #fff; border-right: 1px solid #eee; display: flex; flex-direction: column; }
+.wf-ct-list-head { padding: 14px 16px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.wf-ct-list-head-title { font-size: 12px; font-weight: 700; color: #000; letter-spacing: -0.01em; }
+.wf-ct-list-head-count { font-size: 10px; color: #666; }
+.wf-ct-items { flex: 1; overflow: hidden; }
+.wf-ct-item { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #eee; cursor: pointer; align-items: center; }
+.wf-ct-item.wf-active { background: #f5f5f5; border-left: 3px solid #000; padding-left: 13px; }
+.wf-ct-item-avatar { width: 32px; height: 32px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #333; }
+.wf-ct-item-main { min-width: 0; }
+.wf-ct-item-title { font-size: 12px; font-weight: 600; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wf-ct-item-unread .wf-ct-item-title { font-weight: 700; }
+.wf-ct-item-date { font-size: 10px; color: #666; margin-top: 2px; }
+.wf-ct-item-badge { background: #000; color: #fff; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 999px; }
+
+/* Thread-panel */
+.wf-ct-thread { display: flex; flex-direction: column; background: #fff; }
+.wf-ct-thread-head { padding: 14px 22px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 12px; }
+.wf-ct-thread-avatar { width: 40px; height: 40px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-ct-thread-title { font-size: 14px; font-weight: 800; color: #000; letter-spacing: -0.01em; }
+.wf-ct-thread-meta { font-size: 11px; color: #666; margin-top: 2px; }
+.wf-ct-thread-icons { margin-left: auto; display: flex; gap: 6px; }
+.wf-ct-thread-icon { width: 30px; height: 30px; border: 1px solid #ccc; border-radius: 8px; background: #fff; }
+
+.wf-ct-body { flex: 1; padding: 22px 24px 12px; background: #f5f5f5; display: flex; flex-direction: column; gap: 14px; overflow-y: hidden; min-height: 460px; }
+.wf-ct-day { text-align: center; font-size: 10px; color: #999; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
+
+/* Instruktor-melding (strukturert feedback-blokk) */
+.wf-ct-msg { display: flex; flex-direction: column; gap: 6px; max-width: 82%; }
+.wf-ct-msg-them { align-self: flex-start; }
+.wf-ct-msg-me { align-self: flex-end; align-items: flex-end; }
+
+.wf-ct-feedback { background: #fff; border: 1px solid #eee; border-radius: 14px; border-bottom-left-radius: 4px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.wf-ct-feedback-head { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+.wf-ct-feedback-type { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-ct-feedback-date { font-size: 10px; color: #999; margin-left: auto; font-variant-numeric: tabular-nums; }
+.wf-ct-feedback-focus { font-size: 13px; font-weight: 700; color: #000; letter-spacing: -0.01em; }
+
+.wf-ct-feedback-section { display: flex; flex-direction: column; gap: 4px; }
+.wf-ct-feedback-section-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-ct-feedback-section-text { font-size: 12px; color: #333; line-height: 1.5; }
+.wf-ct-feedback-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px; }
+
+.wf-ct-feedback-attach { display: flex; gap: 6px; flex-wrap: wrap; padding-top: 8px; border-top: 1px solid #eee; }
+.wf-ct-attach-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border: 1px solid #ccc; border-radius: 999px; font-size: 10px; color: #333; background: #fff; font-weight: 500; }
+.wf-ct-attach-icon { width: 10px; height: 10px; border: 1px solid #ccc; border-radius: 2px; background: #f5f5f5; }
+
+.wf-ct-msg-time { font-size: 10px; color: #999; }
+.wf-ct-msg-me .wf-ct-msg-time { text-align: right; }
+
+/* Spiller-svar (tekst) */
+.wf-ct-reply { background: #000; color: #fff; padding: 10px 14px; border-radius: 14px; border-bottom-right-radius: 4px; font-size: 13px; line-height: 1.5; max-width: 100%; }
+
+/* Quick replies */
+.wf-ct-quick-replies { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 24px 6px; background: #f5f5f5; }
+.wf-ct-quick-label { font-size: 10px; color: #666; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-right: 4px; align-self: center; }
+.wf-ct-quick { padding: 6px 11px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 11px; color: #333; cursor: pointer; font-weight: 500; }
+
+/* Compose */
+.wf-ct-compose { padding: 12px 20px 14px; border-top: 1px solid #eee; background: #fff; display: flex; gap: 10px; align-items: center; }
+.wf-ct-compose-icons { display: flex; gap: 6px; }
+.wf-ct-compose-icon { width: 30px; height: 30px; border: 1px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; }
+.wf-ct-compose-input { flex: 1; padding: 10px 14px; border: 1px solid #ccc; border-radius: 999px; font-size: 13px; color: #999; background: #fff; }
+.wf-ct-send { padding: 10px 18px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }

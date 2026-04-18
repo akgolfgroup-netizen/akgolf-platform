@@ -1,0 +1,67 @@
+/* === Wireframe Content CSS (B&W only) — Coaching-meldinger (N04) === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL ============ */
+.wf-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 780px; background: #f5f5f5; }
+
+/* ============ SIDEBAR ============ */
+.wf-sidebar { background: #fff; border-right: 1px solid #eee; padding: 20px 14px; display: flex; flex-direction: column; gap: 18px; }
+.wf-sb-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: #000; padding: 4px 6px; }
+.wf-sb-profile { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #eee; border-radius: 12px; background: #fff; }
+.wf-sb-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-sb-profile-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-sb-profile-meta { font-size: 11px; color: #999; }
+.wf-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-sb-nav-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; padding: 8px 6px 4px; font-weight: 600; }
+.wf-sb-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; color: #333; font-size: 13px; text-decoration: none; position: relative; }
+.wf-sb-item-icon { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+.wf-sb-item.wf-active { background: #f5f5f5; color: #000; font-weight: 600; }
+.wf-sb-item.wf-active .wf-sb-item-icon { background: #000; border-color: #000; }
+.wf-sb-item-badge { margin-left: auto; background: #000; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; min-width: 18px; text-align: center; }
+
+/* ============ MAIN ============ */
+.wf-main { padding: 0; display: flex; flex-direction: column; min-height: 780px; }
+
+/* Page head */
+.wf-phead { display: flex; justify-content: space-between; align-items: flex-end; padding: 20px 24px 12px; border-bottom: 1px solid #eee; background: #fff; }
+.wf-phead-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 6px; }
+.wf-phead-h { font-size: 22px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.02em; }
+.wf-phead-sub { font-size: 12px; color: #666; margin-top: 2px; }
+.wf-phead-actions { display: flex; gap: 8px; }
+.wf-btn { padding: 8px 14px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 12px; color: #333; cursor: pointer; font-weight: 500; }
+.wf-btn-primary { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+
+/* ============ SHARED CHIPS / TAGS ============ */
+.wf-tag { display: inline-flex; align-items: center; padding: 2px 8px; border: 1px solid #ccc; border-radius: 999px; font-size: 10px; color: #333; background: #fff; font-weight: 600; letter-spacing: 0.02em; }
+.wf-tag-pos { border-color: #000; color: #000; background: #f5f5f5; }
+.wf-tag-work { border-color: #666; color: #333; background: #fff; border-style: dashed; }
+.wf-tag-type { border-color: #ccc; color: #666; }
+
+/* Status badges */
+.wf-badge-new { background: #000; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; }
+.wf-badge-read { background: #eee; color: #666; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 999px; }
+.wf-badge-draft { background: #fff; border: 1px dashed #999; color: #666; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 999px; }
+
+/* Markers */
+.wf-marker { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: #000; color: #fff; font-size: 10px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+
+/* ============ ANNOTATIONS ============ */
+.wf-annotations { margin-top: 16px; padding: 20px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-annotations h3 { font-size: 14px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-annotations ul { margin: 0; padding-left: 20px; font-size: 13px; color: #333; }
+.wf-annotations li { margin-bottom: 6px; line-height: 1.5; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }
+
+/* ============ SESSION META (delt) ============ */
+.wf-session-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.wf-session-meta .wf-tag { font-size: 10px; }

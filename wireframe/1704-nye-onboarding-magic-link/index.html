@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding magic-link — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Onboarding magic-link (N03)</span> — <span id="project-name">AK Golf Platform · /onboarding/[token]</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">4</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Linear Welcome</button>
+    <button class="tab-btn" data-tab="option-2">2: Single Form</button>
+    <button class="tab-btn" data-tab="option-3">3: Conversational</button>
+    <button class="tab-btn" data-tab="option-4">4: Picker First</button>
+    <button class="tab-btn" data-tab="option-5">5: Minimalist</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- ===== OPTION 1: Linear Welcome (SAFE) ======================= -->
+  <!-- ============================================================ -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Linear Welcome</span></h2>
+    <p class="option-description">Klassisk 5-stegs magic-link onboarding: Velkomst → Handicap → Mål → Klubb → Dashboard-stil. Ett steg om gangen, progress-dots øverst, Neste/Forrige. Trygg og forutsigbar — matcher mønsteret fra portal-wizards.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/onboarding/mlk_7f3a9b2c</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mlink-shell">
+          <header class="wf-mlink-topbar">
+            <div class="wf-topbar-logo">
+              <div class="wf-topbar-logo-mark">AK</div>
+              AK GOLF PORTAL
+            </div>
+            <div class="wf-topbar-meta">Magic-link verifisert · <strong>anders@example.no</strong></div>
+          </header>
+
+          <main class="wf-mlink-main">
+            <span class="wf-mlink-verified">
+              <span class="wf-mlink-verified-dot"></span>
+              Lenke verifisert — din profil opprettes etter oppsett
+            </span>
+
+            <div class="wf-mlink-header">
+              <div class="wf-crumbs">Onboarding · Steg 5 av 5</div>
+              <h1 class="wf-mlink-title">Velg din dashboard-stil<span class="wf-marker">1</span></h1>
+              <p class="wf-mlink-sub">Anders, dette er siste steg. Velg hvordan du vil se dashboardet — du kan alltid bytte senere under Innstillinger.</p>
+            </div>
+
+            <div class="wf-linear-progress-row">
+              <div class="wf-linear-dot wf-done">1</div>
+              <div class="wf-linear-bar wf-done"></div>
+              <div class="wf-linear-dot wf-done">2</div>
+              <div class="wf-linear-bar wf-done"></div>
+              <div class="wf-linear-dot wf-done">3</div>
+              <div class="wf-linear-bar wf-done"></div>
+              <div class="wf-linear-dot wf-done">4</div>
+              <div class="wf-linear-bar wf-done"></div>
+              <div class="wf-linear-dot wf-active">5</div>
+            </div>
+            <div class="wf-linear-labels">
+              <span>Velkomst</span><span>Handicap</span><span>Mål</span><span>Klubb</span><span class="wf-active">Dashboard</span>
+            </div>
+
+            <section class="wf-step-card">
+              <div class="wf-step-label">STEG 5 AV 5 · VIEW-DEFAULT-PICKER</div>
+              <h2 class="wf-step-title">Hvordan vil du se dashboardet?<span class="wf-marker">2</span></h2>
+              <p class="wf-step-desc">Vi har fem stiler basert på hvordan ulike spillere jobber. Klikk for å se større forhåndsvisning.</p>
+
+              <div class="wf-dash-grid">
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-athletic">
+                    <div class="wf-tb wf-tb-big"></div>
+                    <div class="wf-tb"></div>
+                    <div class="wf-tb wf-tb-mid"></div>
+                    <div class="wf-tb"></div>
+                  </div>
+                  <div class="wf-dash-title">Athletic Grid</div>
+                  <div class="wf-dash-desc">Ytelse i fokus. Store tall, rangering, PR.</div>
+                </div>
+
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-focus">
+                    <div class="wf-tb-hero">I DAG</div>
+                    <div class="wf-tb-row">
+                      <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                    </div>
+                  </div>
+                  <div class="wf-dash-title">Focus Today</div>
+                  <div class="wf-dash-desc">Kun dagens plan — ro og klarhet.</div>
+                </div>
+
+                <div class="wf-dash-card wf-dash-selected">
+                  <span class="wf-dash-badge">Valgt</span>
+                  <div class="wf-dash-thumb wf-thumb-data">
+                    <div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div>
+                    <div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div>
+                    <div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div>
+                    <div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div>
+                  </div>
+                  <div class="wf-dash-title">Data Rich</div>
+                  <div class="wf-dash-desc">Alle tall, grafer og statistikk synlig.</div>
+                </div>
+
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-progress">
+                    <div class="wf-tb-chart"></div>
+                    <div class="wf-tb-strip">
+                      <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                    </div>
+                  </div>
+                  <div class="wf-dash-title">Progress Story</div>
+                  <div class="wf-dash-desc">Utvikling over tid — fortellende.</div>
+                </div>
+
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-command">
+                    <div class="wf-tb wf-tb-tall"></div>
+                    <div class="wf-tb"></div>
+                    <div class="wf-tb wf-tb-mid"></div>
+                    <div class="wf-tb"></div>
+                  </div>
+                  <div class="wf-dash-title">Command Center</div>
+                  <div class="wf-dash-desc">Alt på én side — kontroll og oversikt.</div>
+                </div>
+              </div>
+
+              <div class="wf-ai-box">
+                <div class="wf-ai-label">AI-VEILEDNING</div>
+                <p>Basert på HCP 18 og målet "Bli bedre totalt" foreslår vi <strong>Data Rich</strong> — gir deg alt du trenger for å se fremgang.<span class="wf-marker">3</span></p>
+              </div>
+            </section>
+
+            <footer class="wf-step-nav">
+              <button class="wf-btn wf-btn-secondary">← Forrige</button>
+              <div class="wf-step-count">5 / 5</div>
+              <button class="wf-btn wf-btn-cta">Opprett kontoen min →<span class="wf-marker">4</span></button>
+            </footer>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kontekst i topp:</strong> Magic-link-badge + e-postadresse viser at token er verifisert. Ingen tvil om identitet.</li>
+        <li><strong>2 — Dashboard-picker som siste steg:</strong> Belønningen på slutten — bruker har svart på data-spørsmål og får velge "hvordan det ser ut".</li>
+        <li><strong>3 — AI foreslår basert på tidligere svar:</strong> Ikke autoselect — kun hint. Brukeren bestemmer.</li>
+        <li><strong>4 — "Opprett kontoen min" som CTA:</strong> Ikke "Fullfør" — gjør det tydelig at klikket konverterer dem til full konto.</li>
+        <li>— Trygg løsning. Kjent mønster fra booking-wizard. Minst risiko for frafall.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== OPTION 2: Single Form ================================ -->
+  <!-- ============================================================ -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Single Form</span></h2>
+    <p class="option-description">Alt på én side. Bruker scroller fra topp til bunn og fyller ut alle felt samlet. Autosave-indikator i topp. Rask for erfarne brukere som vet hva de vil.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/onboarding/mlk_7f3a9b2c</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mlink-shell">
+          <header class="wf-mlink-topbar">
+            <div class="wf-topbar-logo">
+              <div class="wf-topbar-logo-mark">AK</div>
+              AK GOLF PORTAL
+            </div>
+            <div class="wf-topbar-meta">Magic-link verifisert · <strong>anders@example.no</strong></div>
+          </header>
+
+          <main class="wf-mlink-main">
+            <span class="wf-mlink-verified">
+              <span class="wf-mlink-verified-dot"></span>
+              Lenke verifisert — din profil opprettes etter oppsett
+            </span>
+
+            <div class="wf-mlink-header">
+              <div class="wf-crumbs">Onboarding · Én side</div>
+              <h1 class="wf-mlink-title">Sett opp profilen din, Anders<span class="wf-marker">1</span></h1>
+              <p class="wf-mlink-sub">Fyll ut alt i én sekvens. Vi lagrer automatisk. Trenger ca. 2 minutter.</p>
+            </div>
+
+            <div class="wf-form-autosave">
+              <span><span class="wf-form-autosave-dot"></span> Lagret automatisk · sist: for 3 sekunder siden<span class="wf-marker">2</span></span>
+              <span>3 av 5 felt fylt</span>
+            </div>
+
+            <div class="wf-form-stack">
+
+              <section class="wf-form-section">
+                <h3 class="wf-form-section-title">1 · Handicap (HCP)</h3>
+                <p class="wf-form-section-hint">Brukes til å kalibrere trening og spillforslag.</p>
+                <label class="wf-field-label">DITT HCP</label>
+                <input type="text" class="wf-input" value="18.4">
+              </section>
+
+              <section class="wf-form-section">
+                <h3 class="wf-form-section-title">2 · Mål med Portalen</h3>
+                <p class="wf-form-section-hint">Velg det som passer best — du kan endre senere.</p>
+                <div class="wf-chip-row">
+                  <span class="wf-chip wf-chip-active">Senke HCP</span>
+                  <span class="wf-chip">Bli bedre totalt</span>
+                  <span class="wf-chip">Konkurrere mer</span>
+                  <span class="wf-chip">Bare spille mer</span>
+                </div>
+              </section>
+
+              <section class="wf-form-section">
+                <h3 class="wf-form-section-title">3 · Hjemmeklubb</h3>
+                <p class="wf-form-section-hint">Vi henter banedata automatisk fra GolfBox.</p>
+                <input type="text" class="wf-input" value="Gamle Fredrikstad Golfklubb">
+              </section>
+
+              <section class="wf-form-section">
+                <h3 class="wf-form-section-title">4 · Fokusområder (Treningspyramiden NGF)</h3>
+                <p class="wf-form-section-hint">Velg inntil 3 lag du vil jobbe mest med.</p>
+                <div class="wf-chip-row">
+                  <span class="wf-chip">FYS</span>
+                  <span class="wf-chip wf-chip-active">TEK</span>
+                  <span class="wf-chip wf-chip-active">SLAG</span>
+                  <span class="wf-chip">SPILL</span>
+                  <span class="wf-chip">TURN</span>
+                </div>
+              </section>
+
+              <section class="wf-form-section">
+                <h3 class="wf-form-section-title">5 · Dashboard-stil<span class="wf-marker">3</span></h3>
+                <p class="wf-form-section-hint">Hvordan du ser Portalen når du logger inn. Du kan bytte senere.</p>
+                <div class="wf-dash-grid wf-dash-grid-compact">
+                  <div class="wf-dash-card">
+                    <div class="wf-dash-thumb wf-thumb-athletic">
+                      <div class="wf-tb wf-tb-big"></div>
+                      <div class="wf-tb"></div>
+                      <div class="wf-tb wf-tb-mid"></div>
+                      <div class="wf-tb"></div>
+                    </div>
+                    <div class="wf-dash-title">Athletic</div>
+                  </div>
+                  <div class="wf-dash-card wf-dash-selected">
+                    <span class="wf-dash-badge">Valgt</span>
+                    <div class="wf-dash-thumb wf-thumb-focus">
+                      <div class="wf-tb-hero">I DAG</div>
+                      <div class="wf-tb-row">
+                        <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                      </div>
+                    </div>
+                    <div class="wf-dash-title">Focus Today</div>
+                  </div>
+                  <div class="wf-dash-card">
+                    <div class="wf-dash-thumb wf-thumb-data">
+                      <div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div>
+                      <div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div>
+                      <div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div>
+                      <div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div>
+                    </div>
+                    <div class="wf-dash-title">Data Rich</div>
+                  </div>
+                  <div class="wf-dash-card">
+                    <div class="wf-dash-thumb wf-thumb-progress">
+                      <div class="wf-tb-chart"></div>
+                      <div class="wf-tb-strip">
+                        <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                      </div>
+                    </div>
+                    <div class="wf-dash-title">Progress</div>
+                  </div>
+                  <div class="wf-dash-card">
+                    <div class="wf-dash-thumb wf-thumb-command">
+                      <div class="wf-tb wf-tb-tall"></div>
+                      <div class="wf-tb"></div>
+                      <div class="wf-tb wf-tb-mid"></div>
+                      <div class="wf-tb"></div>
+                    </div>
+                    <div class="wf-dash-title">Command</div>
+                  </div>
+                </div>
+              </section>
+
+            </div>
+
+            <footer class="wf-form-footer">
+              <button class="wf-btn wf-btn-ghost">Hopp over og gjør senere</button>
+              <button class="wf-btn wf-btn-cta wf-btn-wide">Opprett kontoen min →<span class="wf-marker">4</span></button>
+            </footer>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Personlig hilsen:</strong> "Sett opp profilen din, Anders" — magic-link har allerede e-post, så vi bruker navnet.</li>
+        <li><strong>2 — Autosave-indikator:</strong> Sticky i toppen. Trygghet — brukeren kan stenge fanen uten å miste arbeid.</li>
+        <li><strong>3 — Dashboard-picker som femte seksjon:</strong> Kompakt grid med alle fem stiler. Bruker velger før konvertering.</li>
+        <li><strong>4 — CTA "Opprett kontoen min":</strong> Tydelig at knappen lager full konto. "Hopp over" tillater minimal onboarding.</li>
+        <li>— Rask for erfarne. Risiko: føles tungt for førstegangsbrukere som ser alt samtidig.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== OPTION 3: Conversational ============================= -->
+  <!-- ============================================================ -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Conversational</span></h2>
+    <p class="option-description">Chat-lignende opplevelse. En "boble" om gangen — coachen stiller spørsmål, bruker svarer via chips eller input. Føles som samtale med en coach, ikke skjema.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/onboarding/mlk_7f3a9b2c</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mlink-shell">
+          <header class="wf-mlink-topbar">
+            <div class="wf-topbar-logo">
+              <div class="wf-topbar-logo-mark">AK</div>
+              AK GOLF PORTAL
+            </div>
+            <div class="wf-topbar-meta">Magic-link verifisert · <strong>anders@example.no</strong></div>
+          </header>
+
+          <main class="wf-mlink-main">
+            <span class="wf-mlink-verified">
+              <span class="wf-mlink-verified-dot"></span>
+              Samtale med AK-coach — kontoen opprettes når vi er ferdige
+            </span>
+
+            <div class="wf-conv-stage">
+              <div class="wf-conv-progress">
+                <span>Spørsmål 5 av 5<span class="wf-marker">1</span></span>
+                <div class="wf-conv-progress-bar"><div class="wf-conv-progress-fill" style="width:100%"></div></div>
+              </div>
+
+              <div class="wf-conv-msg">
+                <div class="wf-conv-avatar">AK</div>
+                <div class="wf-conv-bubble"><p>Hei Anders. Hyggelig å se deg. Jeg stiller noen korte spørsmål så lager vi profilen din sammen.</p></div>
+              </div>
+
+              <div class="wf-conv-msg">
+                <div class="wf-conv-avatar">AK</div>
+                <div class="wf-conv-bubble"><p>Du sa HCP 18, mål er å senke HCP, klubb er Gamle Fredrikstad. Siste spørsmål — hvordan liker du at dashboardet ser ut?<span class="wf-marker">2</span></p></div>
+              </div>
+
+              <div class="wf-dash-grid wf-dash-grid-compact">
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-athletic">
+                    <div class="wf-tb wf-tb-big"></div>
+                    <div class="wf-tb"></div>
+                    <div class="wf-tb wf-tb-mid"></div>
+                    <div class="wf-tb"></div>
+                  </div>
+                  <div class="wf-dash-title">Athletic</div>
+                </div>
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-focus">
+                    <div class="wf-tb-hero">I DAG</div>
+                    <div class="wf-tb-row">
+                      <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                    </div>
+                  </div>
+                  <div class="wf-dash-title">Focus</div>
+                </div>
+                <div class="wf-dash-card wf-dash-selected">
+                  <span class="wf-dash-badge">Valgt</span>
+                  <div class="wf-dash-thumb wf-thumb-data">
+                    <div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div>
+                    <div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div>
+                    <div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div>
+                    <div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div>
+                  </div>
+                  <div class="wf-dash-title">Data Rich</div>
+                </div>
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-progress">
+                    <div class="wf-tb-chart"></div>
+                    <div class="wf-tb-strip">
+                      <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                    </div>
+                  </div>
+                  <div class="wf-dash-title">Progress</div>
+                </div>
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-command">
+                    <div class="wf-tb wf-tb-tall"></div>
+                    <div class="wf-tb"></div>
+                    <div class="wf-tb wf-tb-mid"></div>
+                    <div class="wf-tb"></div>
+                  </div>
+                  <div class="wf-dash-title">Command</div>
+                </div>
+              </div>
+
+              <div class="wf-conv-msg wf-conv-msg-user">
+                <div class="wf-conv-bubble wf-conv-bubble-user">Data Rich — liker å se tall.</div>
+              </div>
+
+              <div class="wf-conv-msg">
+                <div class="wf-conv-avatar">AK</div>
+                <div class="wf-conv-bubble"><p>Perfekt. Da er profilen klar. Jeg oppretter kontoen din og tar deg rett til dashboardet.<span class="wf-marker">3</span></p></div>
+              </div>
+
+              <div class="wf-conv-preview">
+                <div class="wf-conv-preview-cell">HCP<strong>18.4</strong></div>
+                <div class="wf-conv-preview-cell">MÅL<strong>Senke HCP</strong></div>
+                <div class="wf-conv-preview-cell">KLUBB<strong>GFGK</strong></div>
+                <div class="wf-conv-preview-cell">STIL<strong>Data Rich</strong></div>
+              </div>
+
+              <div class="wf-conv-input-field">
+                <button class="wf-btn wf-btn-cta wf-btn-wide">Opprett kontoen min og start →<span class="wf-marker">4</span></button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Progress som "spørsmål 5 av 5":</strong> Ingen progress-dots — samtale har sin egen rytme. Bare antallet.</li>
+        <li><strong>2 — Coachen oppsummerer tidligere svar:</strong> Bygger tillit, viser at systemet hører etter.</li>
+        <li><strong>3 — Mini-preview i bunn:</strong> Profilen som skapes synlig — konkret fremgang.</li>
+        <li><strong>4 — Tydelig konverterings-CTA:</strong> "Opprett kontoen min og start" — ingen tvil om hva som skjer.</li>
+        <li>— Personlig. Passer førstegangsbrukere. Risiko: litt treg for travle brukere som bare vil være ferdige.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== OPTION 4: Dashboard Picker First (RECOMMENDED) ======= -->
+  <!-- ============================================================ -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Dashboard Picker First</span></h2>
+    <p class="option-description">Start med det visuelle valget — "velg hvordan du vil se Portalen". Bruker klikker favoritt-thumbnail, preferanse lagres, deretter 3 raske steg (HCP, mål, klubb). Conversion-boost fordi første klikk er lett og visuelt.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/onboarding/mlk_7f3a9b2c</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mlink-shell">
+          <header class="wf-mlink-topbar">
+            <div class="wf-topbar-logo">
+              <div class="wf-topbar-logo-mark">AK</div>
+              AK GOLF PORTAL
+            </div>
+            <div class="wf-topbar-meta">Magic-link verifisert · <strong>anders@example.no</strong></div>
+          </header>
+
+          <main class="wf-mlink-main">
+            <span class="wf-mlink-verified">
+              <span class="wf-mlink-verified-dot"></span>
+              Lenke verifisert — velg stil, så lager vi kontoen
+            </span>
+
+            <div class="wf-picker-hero">
+              <div class="wf-picker-hero-label">STEG 1 AV 4 · BEGYN MED DET VISUELLE<span class="wf-marker">1</span></div>
+              <h1 class="wf-picker-hero-title">Hei Anders. Hvordan vil du se Portalen?</h1>
+              <p class="wf-picker-hero-sub">Klikk på favoritten. Du kan bytte stil senere når som helst.</p>
+            </div>
+
+            <div class="wf-dash-grid">
+              <div class="wf-dash-card">
+                <div class="wf-dash-thumb wf-thumb-athletic">
+                  <div class="wf-tb wf-tb-big"></div>
+                  <div class="wf-tb"></div>
+                  <div class="wf-tb wf-tb-mid"></div>
+                  <div class="wf-tb"></div>
+                </div>
+                <div class="wf-dash-title">Athletic Grid<span class="wf-marker">2</span></div>
+                <div class="wf-dash-desc">Ytelse i fokus. PR, rangering.</div>
+              </div>
+
+              <div class="wf-dash-card">
+                <div class="wf-dash-thumb wf-thumb-focus">
+                  <div class="wf-tb-hero">I DAG</div>
+                  <div class="wf-tb-row">
+                    <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                  </div>
+                </div>
+                <div class="wf-dash-title">Focus Today</div>
+                <div class="wf-dash-desc">Kun dagens plan. Ro og klarhet.</div>
+              </div>
+
+              <div class="wf-dash-card wf-dash-selected">
+                <span class="wf-dash-badge">Valgt</span>
+                <div class="wf-dash-thumb wf-thumb-data">
+                  <div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div>
+                  <div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div>
+                  <div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div>
+                  <div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div>
+                </div>
+                <div class="wf-dash-title">Data Rich</div>
+                <div class="wf-dash-desc">Alle tall og grafer synlig.</div>
+              </div>
+
+              <div class="wf-dash-card">
+                <div class="wf-dash-thumb wf-thumb-progress">
+                  <div class="wf-tb-chart"></div>
+                  <div class="wf-tb-strip">
+                    <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                  </div>
+                </div>
+                <div class="wf-dash-title">Progress Story</div>
+                <div class="wf-dash-desc">Utvikling over tid.</div>
+              </div>
+
+              <div class="wf-dash-card">
+                <div class="wf-dash-thumb wf-thumb-command">
+                  <div class="wf-tb wf-tb-tall"></div>
+                  <div class="wf-tb"></div>
+                  <div class="wf-tb wf-tb-mid"></div>
+                  <div class="wf-tb"></div>
+                </div>
+                <div class="wf-dash-title">Command Center</div>
+                <div class="wf-dash-desc">Full kontroll, alt synlig.</div>
+              </div>
+            </div>
+
+            <div class="wf-picker-mini-steps">
+              <div class="wf-mini-step wf-active">
+                <div class="wf-mini-step-num">1</div>
+                Stil valgt
+              </div>
+              <div class="wf-mini-step">
+                <div class="wf-mini-step-num">2</div>
+                Handicap
+              </div>
+              <div class="wf-mini-step">
+                <div class="wf-mini-step-num">3</div>
+                Mål
+              </div>
+              <div class="wf-mini-step">
+                <div class="wf-mini-step-num">4</div>
+                Klubb
+              </div>
+            </div>
+
+            <div class="wf-ai-box">
+              <div class="wf-ai-label">AI-VEILEDNING</div>
+              <p>Data Rich er mest populært blant spillere som vil senke HCP. Du kan bytte hvis det ikke passer.<span class="wf-marker">3</span></p>
+            </div>
+
+            <div class="wf-picker-cta-row">
+              <button class="wf-btn wf-btn-secondary">Hopp over — bruk standard</button>
+              <button class="wf-btn wf-btn-cta wf-btn-wide">Neste: Handicap →<span class="wf-marker">4</span></button>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Snur onboarding-rekkefølgen:</strong> Start med det visuelle, ikke med HCP. Første klikk er lett og umiddelbart.</li>
+        <li><strong>2 — Fem store dashboard-kort:</strong> Thumbnails dominerer canvasen. Brukeren får eierskap fra klikk #1.</li>
+        <li><strong>3 — AI-forklaring er kontekstuell:</strong> Ikke invaderende — gir bare trygghet om at valget er reversibelt.</li>
+        <li><strong>4 — "Neste: Handicap" som CTA:</strong> Brukeren vet hva som kommer. Mini-steps viser progresjon i bunn.</li>
+        <li>— ANBEFALT: Kombinerer visuell onboarding med rask konvertering. Passer en målgruppe som blir sluppet inn via e-post.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== OPTION 5: Minimalist ================================= -->
+  <!-- ============================================================ -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Minimalist</span></h2>
+    <p class="option-description">Én enkelt "Start nå"-CTA først. Progressive reveal — for hvert klikk avdekkes neste felt. Minimalt visuelt — absolutt fokus på neste handling. Apple-aktig eleganse.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/onboarding/mlk_7f3a9b2c</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mlink-shell">
+          <header class="wf-mlink-topbar">
+            <div class="wf-topbar-logo">
+              <div class="wf-topbar-logo-mark">AK</div>
+              AK GOLF
+            </div>
+            <div class="wf-topbar-meta"><strong>anders@example.no</strong></div>
+          </header>
+
+          <main class="wf-mlink-main">
+            <span class="wf-mlink-verified">
+              <span class="wf-mlink-verified-dot"></span>
+              Verifisert
+            </span>
+
+            <section class="wf-minimal-stage">
+              <div class="wf-minimal-eyebrow">STEG 5 AV 5 · DASHBOARD-STIL<span class="wf-marker">1</span></div>
+              <h1 class="wf-minimal-title">Velg din favoritt.</h1>
+              <p class="wf-minimal-sub">Klikk stilen du liker best. Klart om 3 sekunder.<span class="wf-marker">2</span></p>
+
+              <div class="wf-minimal-step-indicator">
+                <span class="wf-done"></span>
+                <span class="wf-done"></span>
+                <span class="wf-done"></span>
+                <span class="wf-done"></span>
+                <span class="wf-active"></span>
+              </div>
+
+              <div class="wf-minimal-reveal">
+                <div class="wf-minimal-revealed">
+                  <span>HCP</span><strong>18.4</strong>
+                </div>
+                <div class="wf-minimal-revealed">
+                  <span>MÅL</span><strong>Senke HCP</strong>
+                </div>
+                <div class="wf-minimal-revealed">
+                  <span>KLUBB</span><strong>Gamle Fredrikstad GK</strong>
+                </div>
+              </div>
+
+              <div class="wf-minimal-picker-row">
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-athletic">
+                    <div class="wf-tb wf-tb-big"></div>
+                    <div class="wf-tb"></div>
+                    <div class="wf-tb wf-tb-mid"></div>
+                    <div class="wf-tb"></div>
+                  </div>
+                  <div class="wf-dash-title">Athletic</div>
+                </div>
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-focus">
+                    <div class="wf-tb-hero">I DAG</div>
+                    <div class="wf-tb-row">
+                      <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                    </div>
+                  </div>
+                  <div class="wf-dash-title">Focus</div>
+                </div>
+                <div class="wf-dash-card wf-dash-selected">
+                  <div class="wf-dash-thumb wf-thumb-data">
+                    <div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div>
+                    <div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div>
+                    <div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div><div class="wf-tb"></div>
+                    <div class="wf-tb"></div><div class="wf-tb wf-tb-mid"></div><div class="wf-tb"></div><div class="wf-tb wf-tb-dark"></div>
+                  </div>
+                  <div class="wf-dash-title">Data</div>
+                </div>
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-progress">
+                    <div class="wf-tb-chart"></div>
+                    <div class="wf-tb-strip">
+                      <div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div><div class="wf-tb"></div>
+                    </div>
+                  </div>
+                  <div class="wf-dash-title">Progress</div>
+                </div>
+                <div class="wf-dash-card">
+                  <div class="wf-dash-thumb wf-thumb-command">
+                    <div class="wf-tb wf-tb-tall"></div>
+                    <div class="wf-tb"></div>
+                    <div class="wf-tb wf-tb-mid"></div>
+                    <div class="wf-tb"></div>
+                  </div>
+                  <div class="wf-dash-title">Command</div>
+                </div>
+              </div>
+
+              <div class="wf-minimal-cta-row">
+                <button class="wf-btn wf-btn-jumbo">Start nå<span class="wf-marker">3</span></button>
+              </div>
+
+              <div class="wf-minimal-cta-row">
+                <button class="wf-btn wf-btn-ghost wf-btn-small">Hopp over — bruk standard</button>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Radikal minimalisme:</strong> Én stor tittel, små indikatorer, kun neste handling. Apple-inspirert ro.</li>
+        <li><strong>2 — Progressive reveal:</strong> For hvert klikk "låses opp" neste felt. Her vises de tre tidligere svarene som små pille-kort.</li>
+        <li><strong>3 — Jumbo CTA:</strong> Én massiv knapp — "Start nå". Nåværende steg er valgt stil, og klikket lager kontoen.</li>
+        <li>— Elegant, men risikabelt. Risiko: for lite kontekst — brukeren vet ikke alltid hva som venter.</li>
+        <li>— Passer godt for re-engagement av tidligere interesserte som kjenner merket.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ===== SUMMARY ============================================== -->
+  <!-- ============================================================ -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering og anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner vurdert mot målet: <strong>Konvertere interessert e-post-mottaker til aktiv spiller med ferdig konfigurert konto på under 3 minutter.</strong> Magic-link gir pre-verifisert token, så brukeren trenger ikke opprette passord før etter onboarding.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Tid til konvert.</th><th>Læringskurve</th><th>Beste bruk</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Linear Welcome</strong></td>
+          <td>Klassisk 5-stegs wizard, progress-dots</td>
+          <td>2-3 min</td>
+          <td>Null — kjent mønster</td>
+          <td>Trygg MVP-onboarding, alle målgrupper</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>2. Single Form</strong></td>
+          <td>Alt på én side, autosave</td>
+          <td>1-2 min</td>
+          <td>Lav</td>
+          <td>Erfarne brukere, re-onboarding</td>
+          <td>★★★☆☆</td>
+        </tr>
+        <tr>
+          <td><strong>3. Conversational</strong></td>
+          <td>Chat med AK-coach, boble for boble</td>
+          <td>3-4 min</td>
+          <td>Null — alle kan chatte</td>
+          <td>Nybegynnere, relasjonsbygging</td>
+          <td>★★★★☆</td>
+        </tr>
+        <tr>
+          <td><strong>4. Picker First</strong></td>
+          <td>Dashboard-valg først, deretter 3 steg</td>
+          <td>2 min</td>
+          <td>Lav</td>
+          <td>Magic-link fra markedsmateriell — høyest konvertering</td>
+          <td>★★★★★</td>
+        </tr>
+        <tr>
+          <td><strong>5. Minimalist</strong></td>
+          <td>Progressive reveal, én CTA av gangen</td>
+          <td>2-3 min</td>
+          <td>Null</td>
+          <td>Re-engagement av varme leads</td>
+          <td>★★★☆☆</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 4 — Dashboard Picker First</h3>
+      <p>Magic-link kommer fra en e-post der brukeren allerede har vist interesse. De trenger ikke overbevises om verdien — de trenger et <strong>lett første klikk</strong>. Å starte med visuelt valg ("hvordan liker du at det ser ut?") gir umiddelbar eierskapsfølelse og reduserer risikoen for frafall sammenlignet med "skriv inn handicapet ditt" som første spørsmål.</p>
+      <p><strong>Hvorfor ikke Option 1?</strong> Trygt, men første steg er informasjonskrevende. Anders må vite HCP før han kommer videre. Picker First snur det: visuelt valg først, data etter eierskap er etablert.</p>
+      <p><strong>Strategisk flow:</strong> Launch med Option 4. A/B-test mot Option 1 etter 2 uker — mål er 7-dagers retention og completion rate. Option 3 (Conversational) kan tilbys som "Snakk med AK-coach" alternativ for usikre brukere. Option 2 er god som return-flow for brukere som hopper av halvveis.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

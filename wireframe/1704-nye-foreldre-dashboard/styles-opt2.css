@@ -1,0 +1,156 @@
+/* ===== Option 2: Multi-Child Tabs — Clean + Polished =====
+   AK Golf Foreldre-portal — store tabs + mini-dashboard per barn + felles-stripe
+   Selectors: #frame-opt2.clean / #frame-opt2.polished */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+#frame-opt2.clean .browser-dots span:nth-child(1), #frame-opt2.polished .browser-dots span:nth-child(1) { background: #ff5f57; }
+#frame-opt2.clean .browser-dots span:nth-child(2), #frame-opt2.polished .browser-dots span:nth-child(2) { background: #febc2e; }
+#frame-opt2.clean .browser-dots span:nth-child(3), #frame-opt2.polished .browser-dots span:nth-child(3) { background: #28c840; }
+
+/* ===== CLEAN ===== */
+#frame-opt2.clean .browser-content { background: #F5F8F7; color: #324D45; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+#frame-opt2.clean .wf-shell { background: #F5F8F7; }
+
+#frame-opt2.clean .wf-sidebar { background: #FFFFFF; border-right: 1px solid rgba(0,88,64,0.08); }
+#frame-opt2.clean .wf-sb-logo { color: #0A1F18; }
+#frame-opt2.clean .wf-sb-profile { background: #F5F8F7; border: 1px solid rgba(0,88,64,0.08); }
+#frame-opt2.clean .wf-sb-avatar { background: #005840; color: #D1F843; border: none; }
+#frame-opt2.clean .wf-sb-profile-name { color: #0A1F18; }
+#frame-opt2.clean .wf-sb-profile-meta { color: #7A8C85; }
+#frame-opt2.clean .wf-sb-item { color: #5A6E66; }
+#frame-opt2.clean .wf-sb-item .wf-sb-item-icon { border: 1px solid rgba(0,88,64,0.15); }
+#frame-opt2.clean .wf-sb-item.wf-active { background: #0A1F18; color: #ffffff; }
+#frame-opt2.clean .wf-sb-item.wf-active .wf-sb-item-icon { background: #D1F843; border-color: #D1F843; }
+#frame-opt2.clean .wf-sb-cta { background: #E6F3F1; border: 1px solid rgba(0,88,64,0.12); }
+#frame-opt2.clean .wf-sb-cta-title { color: #0A1F18; }
+#frame-opt2.clean .wf-sb-cta-desc { color: #5A6E66; }
+#frame-opt2.clean .wf-sb-cta-btn { background: #D1F843; color: #0A1F18; font-weight: 700; }
+
+#frame-opt2.clean .wf-mtopbar-left { color: #7A8C85; }
+#frame-opt2.clean .wf-mtopbar-chip { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.08); color: #5A6E66; }
+
+#frame-opt2.clean .wf-big-tab { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.06); }
+#frame-opt2.clean .wf-big-tab.wf-active { background: linear-gradient(135deg, #E6F3F1 0%, #FFFFFF 100%); border: 1px solid #005840; box-shadow: 0 0 0 1px rgba(0,88,64,0.2), 0 4px 12px rgba(0,88,64,0.08); }
+#frame-opt2.clean .wf-big-tab-avatar { background: #E6F3F1; color: #005840; border: 1px solid rgba(0,88,64,0.1); }
+#frame-opt2.clean .wf-big-tab.wf-active .wf-big-tab-avatar { background: #005840; color: #D1F843; border-color: #005840; }
+#frame-opt2.clean .wf-big-tab-name { color: #0A1F18; }
+#frame-opt2.clean .wf-big-tab-meta { color: #5A6E66; }
+#frame-opt2.clean .wf-big-tab-stat-val { color: #005840; }
+#frame-opt2.clean .wf-big-tab-stat-lbl { color: #A5B2AD; }
+
+#frame-opt2.clean .wf-child-panel { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.06); }
+#frame-opt2.clean .wf-child-panel-sub { color: #7A8C85; }
+
+#frame-opt2.clean .wf-c, #frame-opt2.clean .wf-booking-hero { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.06); }
+#frame-opt2.clean .wf-c-label { color: #A5B2AD; }
+#frame-opt2.clean .wf-c-value { color: #0A1F18; }
+#frame-opt2.clean .wf-c-sub { color: #7A8C85; }
+
+#frame-opt2.clean .wf-booking-hero { background: linear-gradient(135deg, #E6F3F1 0%, #FFFFFF 70%); border-left: 3px solid #005840; }
+#frame-opt2.clean .wf-booking-title { color: #0A1F18; }
+#frame-opt2.clean .wf-booking-meta { color: #5A6E66; }
+
+#frame-opt2.clean .wf-plan-progress { background: #F5F8F7; border: 1px solid rgba(0,88,64,0.06); }
+#frame-opt2.clean .wf-plan-progress-title { color: #0A1F18; }
+#frame-opt2.clean .wf-plan-progress-value { color: #005840; }
+#frame-opt2.clean .wf-plan-progress-bar { background: rgba(0,88,64,0.1); }
+#frame-opt2.clean .wf-plan-progress-fill { background: #005840; }
+
+#frame-opt2.clean .wf-lock-chip { background: #FDF4E4; color: #7A5520; border: 1px solid rgba(196,138,50,0.25); }
+
+#frame-opt2.clean .wf-kpi-label { color: #A5B2AD; }
+#frame-opt2.clean .wf-kpi-value { color: #0A1F18; }
+#frame-opt2.clean .wf-kpi-sub { color: #7A8C85; }
+
+#frame-opt2.clean .wf-coach-note { border-left: 3px solid #005840; }
+#frame-opt2.clean .wf-coach-note-author { color: #005840; }
+#frame-opt2.clean .wf-coach-note-body { color: #324D45; }
+#frame-opt2.clean .wf-ai-badge { background: #D1F843; color: #0A1F18; border: none; font-weight: 700; }
+
+#frame-opt2.clean .wf-quick-btn { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.12); color: #0A1F18; }
+#frame-opt2.clean .wf-quick-btn-primary { background: #0A1F18; color: #ffffff; border: none; }
+#frame-opt2.clean .wf-quick-btn-primary .wf-quick-arrow { color: #D1F843; }
+
+#frame-opt2.clean .wf-shared-strip { background: linear-gradient(135deg, #0A1F18 0%, #1A3529 100%); border: none; color: #ffffff; }
+#frame-opt2.clean .wf-shared-title { color: #D1F843; }
+#frame-opt2.clean .wf-shared-cell { border-right: 1px solid rgba(255,255,255,0.1); }
+#frame-opt2.clean .wf-shared-strip .wf-c-label { color: rgba(255,255,255,0.6); }
+#frame-opt2.clean .wf-shared-strip .wf-c-value { color: #ffffff; }
+#frame-opt2.clean .wf-shared-strip .wf-c-sub { color: rgba(255,255,255,0.55); }
+
+#frame-opt2.clean .wf-pro-hcp-badge { background: #005840; color: #D1F843; border: 1px solid #005840; }
+
+/* ===== POLISHED ===== */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes opt2Rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  #frame-opt2.polished .wf-big-tab, #frame-opt2.polished .wf-child-panel,
+  #frame-opt2.polished .wf-shared-strip { animation: opt2Rise 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+  #frame-opt2.polished .wf-big-tab:nth-child(1) { animation-delay: 0.05s; }
+  #frame-opt2.polished .wf-big-tab:nth-child(2) { animation-delay: 0.10s; }
+  #frame-opt2.polished .wf-child-panel { animation-delay: 0.15s; }
+  #frame-opt2.polished .wf-shared-strip { animation-delay: 0.25s; }
+}
+
+#frame-opt2.polished .browser-content { background: #F5F8F7; color: #324D45; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+#frame-opt2.polished .wf-shell { background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,88,64,0.03) 0%, transparent 60%), #F5F8F7; }
+
+#frame-opt2.polished .wf-sidebar { background: #FFFFFF; border-right: 1px solid rgba(0,88,64,0.06); }
+#frame-opt2.polished .wf-sb-profile { background: linear-gradient(180deg, #F5F8F7 0%, #FFFFFF 100%); border: 1px solid rgba(0,88,64,0.06); }
+#frame-opt2.polished .wf-sb-avatar { background: linear-gradient(135deg, #005840, #00594C); color: #D1F843; }
+#frame-opt2.polished .wf-sb-item { color: #5A6E66; transition: all 200ms ease; }
+#frame-opt2.polished .wf-sb-item.wf-active { background: linear-gradient(135deg, #0A1F18 0%, #1A3529 100%); color: #ffffff; box-shadow: 0 2px 8px rgba(10,31,24,0.25); }
+#frame-opt2.polished .wf-sb-item.wf-active .wf-sb-item-icon { background: #D1F843; border-color: #D1F843; box-shadow: 0 0 8px rgba(209,248,67,0.5); }
+#frame-opt2.polished .wf-sb-cta { background: linear-gradient(135deg, #E6F3F1 0%, #FFFFFF 100%); border: 1px solid rgba(0,88,64,0.08); box-shadow: 0 1px 3px rgba(0,88,64,0.04), 0 4px 12px rgba(0,88,64,0.06); }
+#frame-opt2.polished .wf-sb-cta-btn { background: #D1F843; color: #0A1F18; font-weight: 700; box-shadow: 0 2px 8px rgba(209,248,67,0.4); }
+
+#frame-opt2.polished .wf-big-tab { background: linear-gradient(180deg, #FFFFFF 0%, #F5F8F7 100%); border: 1px solid rgba(0,88,64,0.06); box-shadow: 0 1px 3px rgba(0,88,64,0.04), 0 4px 10px rgba(0,88,64,0.04); transition: all 300ms ease; }
+#frame-opt2.polished .wf-big-tab:hover { transform: translateY(-1px); }
+#frame-opt2.polished .wf-big-tab.wf-active { background: linear-gradient(135deg, #E6F3F1 0%, #FFFFFF 100%); border: 1px solid #005840; box-shadow: 0 0 0 2px rgba(0,88,64,0.15), 0 4px 16px rgba(0,88,64,0.12); }
+#frame-opt2.polished .wf-big-tab-avatar { background: linear-gradient(135deg, #E6F3F1 0%, #FFFFFF 100%); color: #005840; border: 1px solid rgba(0,88,64,0.1); }
+#frame-opt2.polished .wf-big-tab.wf-active .wf-big-tab-avatar { background: linear-gradient(135deg, #005840 0%, #00594C 100%); color: #D1F843; border: none; box-shadow: 0 0 10px rgba(0,88,64,0.25); }
+#frame-opt2.polished .wf-big-tab-stat-val { color: #005840; font-variant-numeric: tabular-nums; }
+
+#frame-opt2.polished .wf-child-panel { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.06); box-shadow: 0 1px 3px rgba(0,88,64,0.04), 0 4px 14px rgba(0,88,64,0.05); }
+#frame-opt2.polished .wf-child-panel-sub { color: #7A8C85; }
+
+#frame-opt2.polished .wf-c { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.06); box-shadow: 0 1px 3px rgba(0,88,64,0.04); transition: all 300ms ease; }
+#frame-opt2.polished .wf-c:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,88,64,0.08); }
+#frame-opt2.polished .wf-c-label { color: #A5B2AD; }
+
+#frame-opt2.polished .wf-booking-hero { background: linear-gradient(135deg, #E6F3F1 0%, #FFFFFF 65%); border: 1px solid rgba(0,88,64,0.12); border-left: 3px solid #005840; box-shadow: 0 1px 3px rgba(0,88,64,0.06), 0 8px 24px rgba(0,88,64,0.05); }
+#frame-opt2.polished .wf-booking-title { color: #0A1F18; letter-spacing: -0.01em; }
+#frame-opt2.polished .wf-booking-meta { color: #5A6E66; }
+
+#frame-opt2.polished .wf-plan-progress { background: linear-gradient(180deg, #F5F8F7 0%, #FFFFFF 100%); border: 1px solid rgba(0,88,64,0.06); }
+#frame-opt2.polished .wf-plan-progress-fill { background: linear-gradient(90deg, #005840 0%, #D1F843 120%); box-shadow: 0 0 8px rgba(0,88,64,0.3); }
+#frame-opt2.polished .wf-lock-chip { background: #FDF4E4; color: #7A5520; border: 1px solid rgba(196,138,50,0.25); }
+
+#frame-opt2.polished .wf-kpi-value { color: #0A1F18; font-variant-numeric: tabular-nums; letter-spacing: -0.025em; }
+
+#frame-opt2.polished .wf-coach-note { border-left: 3px solid #005840; }
+#frame-opt2.polished .wf-coach-note-author { color: #005840; font-weight: 700; }
+#frame-opt2.polished .wf-coach-note-body { color: #324D45; }
+#frame-opt2.polished .wf-ai-badge { background: #D1F843; color: #0A1F18; border: none; font-weight: 800; box-shadow: 0 2px 6px rgba(209,248,67,0.35); }
+
+#frame-opt2.polished .wf-quick-btn { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.1); color: #0A1F18; transition: all 200ms ease; }
+#frame-opt2.polished .wf-quick-btn:hover { background: #F5F8F7; transform: translateY(-1px); }
+#frame-opt2.polished .wf-quick-btn-primary { background: linear-gradient(135deg, #0A1F18 0%, #1A3529 100%); color: #ffffff; border: none; box-shadow: 0 2px 8px rgba(10,31,24,0.2); }
+#frame-opt2.polished .wf-quick-btn-primary .wf-quick-arrow { color: #D1F843; }
+
+#frame-opt2.polished .wf-shared-strip { background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(0,88,64,0.4) 0%, transparent 60%), linear-gradient(160deg, #0A1F18 0%, #1A3529 100%); color: #ffffff; border: none; box-shadow: 0 2px 10px rgba(10,31,24,0.15), 0 12px 32px rgba(10,31,24,0.2); position: relative; overflow: hidden; }
+#frame-opt2.polished .wf-shared-strip::after { content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, rgba(209,248,67,0.4), transparent); }
+#frame-opt2.polished .wf-shared-title { color: #D1F843; letter-spacing: 0.16em; }
+#frame-opt2.polished .wf-shared-cell { border-right: 1px solid rgba(255,255,255,0.1); }
+#frame-opt2.polished .wf-shared-strip .wf-c-label { color: rgba(255,255,255,0.55); font-weight: 700; }
+#frame-opt2.polished .wf-shared-strip .wf-c-value { color: #ffffff; font-variant-numeric: tabular-nums; }
+#frame-opt2.polished .wf-shared-strip .wf-c-sub { color: rgba(255,255,255,0.5); }
+
+#frame-opt2.polished .wf-pro-hcp-badge { background: #005840; color: #D1F843; border: 1px solid #005840; font-weight: 800; box-shadow: 0 2px 6px rgba(0,88,64,0.25); }
+
+/* Self-reveal */
+#frame-opt2-tabs .sub-tab-badge { display: none; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"] { color: #64B5F6; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="clean"].active { color: #1565C0; border-bottom-color: #1565C0; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"] { color: #81C784; }
+#frame-opt2-tabs .sub-tab-btn[data-variant="polished"].active { color: #2E7D32; border-bottom-color: #2E7D32; }

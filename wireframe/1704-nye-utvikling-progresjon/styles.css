@@ -1,0 +1,240 @@
+/* === Wireframe B&W styling — Utvikling · Progresjon (N01) === */
+/* Alle opsjoner bruker grånyanser. Fargede varianter ligger i styles-optN.css */
+
+/* ---------- Shared ---------- */
+.wireframe .opt-tag { font-size: 11px; color: #888; margin-left: 8px; font-weight: 500; }
+
+.wireframe .wf-marker {
+  background: #eee;
+}
+
+/* Summary-tabell */
+.wf-summary-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; }
+.wf-summary-table th, .wf-summary-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
+.wf-summary-table th { background: #fafafa; font-weight: 600; color: #333; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+.wf-summary-table td { color: #444; }
+.wf-summary-table tbody tr:hover { background: #fafafa; }
+.wf-recommendation { padding: 16px; border: 1px solid #ddd; background: #fafafa; border-radius: 8px; }
+.wf-recommendation h3 { margin: 0 0 8px; font-size: 15px; color: #111; }
+.wf-recommendation p { margin: 0 0 8px; font-size: 13px; color: #555; line-height: 1.5; }
+
+/* ============================================
+   OPTION 1 — Five Rings (B&W)
+   ============================================ */
+.wireframe .opt1-shell { display: flex; flex-direction: column; gap: 20px; background: #fff; }
+.wireframe .opt1-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px dashed #ccc; padding-bottom: 12px; }
+.wireframe .opt1-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #888; margin-bottom: 4px; }
+.wireframe .opt1-title { font-size: 20px; font-weight: 700; margin: 0 0 4px; color: #111; }
+.wireframe .opt1-sub { font-size: 12px; color: #666; margin: 0; }
+.wireframe .opt1-range { display: flex; gap: 4px; }
+.wireframe .opt1-chip { font-size: 11px; padding: 4px 10px; border: 1px solid #ccc; border-radius: 12px; color: #666; }
+.wireframe .opt1-chip.opt1-active { background: #222; color: #fff; border-color: #222; }
+
+.wireframe .opt1-rings { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.wireframe .opt1-ring-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 8px; border: 1px dashed #ccc; border-radius: 8px; }
+.wireframe .opt1-ring { width: 80px; height: 80px; border-radius: 50%; border: 8px solid #e6e6e6; position: relative; display: flex; align-items: center; justify-content: center; background: conic-gradient(#333 0% var(--p,72%), #eee var(--p,72%) 100%); }
+.wireframe .opt1-ring-inner { background: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.wireframe .opt1-ring-val { font-size: 14px; font-weight: 700; color: #111; }
+.wireframe .opt1-ring-delta { font-size: 10px; color: #666; }
+.wireframe .opt1-ring-name { font-size: 12px; font-weight: 600; color: #333; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.wireframe .opt1-summary-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.wireframe .opt1-sum-card { padding: 12px 16px; border: 1px dashed #ccc; border-radius: 8px; background: #fafafa; }
+.wireframe .opt1-sum-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 6px; }
+.wireframe .opt1-sum-val { font-size: 22px; font-weight: 700; color: #111; }
+.wireframe .opt1-sum-sub { font-size: 11px; color: #666; margin-top: 2px; }
+
+.wireframe .opt1-list { border: 1px dashed #ccc; border-radius: 8px; padding: 12px; }
+.wireframe .opt1-list-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 4px 10px; border-bottom: 1px dashed #ddd; margin-bottom: 8px; }
+.wireframe .opt1-list-title { font-size: 12px; font-weight: 600; color: #333; text-transform: uppercase; letter-spacing: 0.06em; }
+.wireframe .opt1-link { background: none; border: none; color: #333; text-decoration: underline; font-size: 11px; cursor: pointer; }
+.wireframe .opt1-row { display: grid; grid-template-columns: 1.8fr 1.4fr 50px 40px 1.5fr; gap: 10px; align-items: center; padding: 10px 4px; border-bottom: 1px dotted #eee; }
+.wireframe .opt1-row:last-child { border-bottom: none; }
+.wireframe .opt1-row-name { display: flex; align-items: center; gap: 10px; }
+.wireframe .opt1-row-dot { width: 10px; height: 10px; border-radius: 50%; background: #333; flex-shrink: 0; }
+.wireframe .opt1-row-title { font-size: 13px; font-weight: 600; color: #111; }
+.wireframe .opt1-row-meta { font-size: 11px; color: #777; }
+.wireframe .opt1-row-bar { height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
+.wireframe .opt1-row-fill { height: 100%; background: #444; }
+.wireframe .opt1-row-val { font-size: 13px; font-weight: 700; color: #111; text-align: right; }
+.wireframe .opt1-row-trend { font-size: 11px; color: #444; font-weight: 600; text-align: center; }
+.wireframe .opt1-row-trend.opt1-down { color: #999; }
+.wireframe .opt1-row-next { font-size: 11px; color: #666; }
+
+.wireframe .opt1-footer .opt1-note { border: 1px dashed #ccc; border-radius: 8px; padding: 14px 16px; background: #fafafa; }
+.wireframe .opt1-note-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 6px; }
+.wireframe .opt1-note-body { font-size: 13px; color: #333; font-style: italic; margin: 0 0 8px; }
+.wireframe .opt1-note-meta { font-size: 11px; color: #888; }
+
+/* ============================================
+   OPTION 2 — Pyramid Climb (B&W)
+   ============================================ */
+.wireframe .opt2-shell { display: flex; flex-direction: column; gap: 18px; background: #fff; }
+.wireframe .opt2-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px dashed #ccc; padding-bottom: 12px; }
+.wireframe .opt2-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #888; margin-bottom: 4px; }
+.wireframe .opt2-title { font-size: 20px; font-weight: 700; margin: 0 0 4px; color: #111; }
+.wireframe .opt2-sub { font-size: 12px; color: #666; margin: 0; max-width: 480px; }
+.wireframe .opt2-hcp { text-align: right; padding: 10px 14px; border: 1px dashed #ccc; border-radius: 8px; background: #fafafa; }
+.wireframe .opt2-hcp-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #888; }
+.wireframe .opt2-hcp-val { font-size: 24px; font-weight: 700; color: #111; }
+
+.wireframe .opt2-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+.wireframe .opt2-pyramid { display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px dashed #ccc; border-radius: 8px; background: #fafafa; }
+.wireframe .opt2-level { position: relative; height: 56px; display: flex; align-items: center; }
+.wireframe .opt2-lvl-5 { width: 45%; margin: 0 auto; }
+.wireframe .opt2-lvl-4 { width: 60%; margin: 0 auto; }
+.wireframe .opt2-lvl-3 { width: 72%; margin: 0 auto; }
+.wireframe .opt2-lvl-2 { width: 86%; margin: 0 auto; }
+.wireframe .opt2-lvl-1 { width: 100%; margin: 0 auto; }
+.wireframe .opt2-level-bg { position: absolute; inset: 0; background: #eee; border-radius: 6px; border: 1px solid #ddd; z-index: 0; }
+.wireframe .opt2-level-inner { position: relative; z-index: 1; background: #333; color: #fff; height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; }
+.wireframe .opt2-level-name { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.wireframe .opt2-level-pct { font-size: 15px; font-weight: 700; }
+.wireframe .opt2-base { text-align: center; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: #888; padding-top: 6px; border-top: 1px dashed #ccc; margin-top: 4px; }
+
+.wireframe .opt2-side { display: flex; flex-direction: column; gap: 12px; }
+.wireframe .opt2-card { border: 1px dashed #ccc; border-radius: 8px; padding: 12px 14px; background: #fff; }
+.wireframe .opt2-card-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 4px; }
+.wireframe .opt2-card-val { font-size: 24px; font-weight: 700; color: #111; }
+.wireframe .opt2-card-title { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 4px; }
+.wireframe .opt2-card-body { font-size: 12px; color: #555; margin: 0 0 10px; line-height: 1.5; }
+.wireframe .opt2-card-sub { font-size: 11px; color: #666; margin-bottom: 6px; }
+.wireframe .opt2-card-bar { height: 5px; background: #eee; border-radius: 3px; }
+.wireframe .opt2-card-fill { height: 100%; background: #333; border-radius: 3px; }
+.wireframe .opt2-card-meta { font-size: 11px; color: #666; font-style: italic; }
+.wireframe .opt2-btn { background: #222; color: #fff; border: none; border-radius: 6px; padding: 7px 14px; font-size: 12px; cursor: pointer; }
+
+.wireframe .opt2-legend { display: flex; padding: 10px; border: 1px dashed #ddd; border-radius: 6px; background: #fafafa; }
+.wireframe .opt2-legend-row { display: flex; gap: 10px; align-items: flex-start; }
+.wireframe .opt2-legend-dot { width: 10px; height: 10px; background: #333; flex-shrink: 0; margin-top: 3px; }
+.wireframe .opt2-legend-text { font-size: 11px; color: #666; }
+
+/* ============================================
+   OPTION 3 — Data Grid (B&W)
+   ============================================ */
+.wireframe .opt3-shell { display: flex; flex-direction: column; gap: 16px; background: #fff; }
+.wireframe .opt3-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px dashed #ccc; padding-bottom: 12px; }
+.wireframe .opt3-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #888; margin-bottom: 4px; }
+.wireframe .opt3-title { font-size: 20px; font-weight: 700; margin: 0; color: #111; }
+.wireframe .opt3-filters { display: flex; gap: 8px; align-items: center; }
+.wireframe .opt3-filter { font-size: 11px; padding: 4px 10px; border: 1px solid #ccc; border-radius: 4px; color: #666; cursor: pointer; }
+.wireframe .opt3-filter.opt3-active { background: #222; color: #fff; border-color: #222; }
+.wireframe .opt3-filter-sep { width: 1px; height: 18px; background: #ddd; }
+
+.wireframe .opt3-kpis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.wireframe .opt3-kpi { padding: 10px 12px; border: 1px dashed #ccc; border-radius: 6px; background: #fafafa; }
+.wireframe .opt3-kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; }
+.wireframe .opt3-kpi-val { font-size: 18px; font-weight: 700; color: #111; margin-top: 2px; }
+.wireframe .opt3-kpi-sub { font-size: 10px; color: #666; margin-top: 2px; }
+
+.wireframe .opt3-table-wrap { border: 1px dashed #ccc; border-radius: 6px; overflow: hidden; }
+.wireframe .opt3-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.wireframe .opt3-table thead { background: #f5f5f5; }
+.wireframe .opt3-table th { padding: 10px 12px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #666; border-bottom: 1px solid #ddd; font-weight: 600; }
+.wireframe .opt3-table td { padding: 12px; border-bottom: 1px dotted #eee; color: #333; vertical-align: middle; }
+.wireframe .opt3-table tbody tr:last-child td { border-bottom: none; }
+.wireframe .opt3-area { display: flex; align-items: center; gap: 8px; font-weight: 600; color: #111; }
+.wireframe .opt3-area-dot { width: 8px; height: 8px; background: #333; border-radius: 50%; }
+.wireframe .opt3-bar { display: inline-block; width: 70px; height: 5px; background: #eee; border-radius: 3px; margin-right: 8px; vertical-align: middle; }
+.wireframe .opt3-bar-fill { height: 100%; background: #444; border-radius: 3px; }
+.wireframe .opt3-bar-val { font-weight: 600; color: #111; font-size: 12px; }
+.wireframe .opt3-spark { width: 60px; height: 20px; vertical-align: middle; margin-right: 6px; }
+.wireframe .opt3-spark polyline { fill: none; stroke: #444; stroke-width: 1.5; }
+.wireframe .opt3-trend-up { color: #333; font-weight: 600; font-size: 11px; }
+.wireframe .opt3-trend-down { color: #999; font-weight: 600; font-size: 11px; }
+
+.wireframe .opt3-below { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.wireframe .opt3-widget { border: 1px dashed #ccc; border-radius: 6px; padding: 12px 14px; background: #fafafa; }
+.wireframe .opt3-widget-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 10px; }
+.wireframe .opt3-widget-sub { font-size: 11px; color: #666; margin-top: 8px; }
+.wireframe .opt3-volume-chart { display: flex; gap: 4px; align-items: flex-end; height: 80px; }
+.wireframe .opt3-vol-bar { flex: 1; background: #555; border-radius: 2px 2px 0 0; }
+.wireframe .opt3-plan-list { display: flex; flex-direction: column; gap: 4px; }
+.wireframe .opt3-plan-item { display: grid; grid-template-columns: 60px 1fr 70px; gap: 8px; padding: 6px 0; font-size: 11px; color: #444; border-bottom: 1px dotted #e0e0e0; }
+.wireframe .opt3-plan-item:last-child { border-bottom: none; }
+
+/* ============================================
+   OPTION 4 — Timeline Story (B&W)
+   ============================================ */
+.wireframe .opt4-shell { display: flex; flex-direction: column; gap: 18px; background: #fff; }
+.wireframe .opt4-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px dashed #ccc; padding-bottom: 12px; }
+.wireframe .opt4-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #888; margin-bottom: 4px; }
+.wireframe .opt4-title { font-size: 22px; font-weight: 700; margin: 0 0 4px; color: #111; }
+.wireframe .opt4-sub { font-size: 12px; color: #666; margin: 0; }
+.wireframe .opt4-top-stats { display: flex; gap: 16px; }
+.wireframe .opt4-top-stat { text-align: center; padding: 8px 14px; border: 1px dashed #ccc; border-radius: 6px; background: #fafafa; }
+.wireframe .opt4-top-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; }
+.wireframe .opt4-top-val { font-size: 18px; font-weight: 700; color: #111; margin-top: 2px; }
+
+.wireframe .opt4-timeline { position: relative; padding-left: 26px; }
+.wireframe .opt4-timeline::before { content: ''; position: absolute; left: 6px; top: 24px; bottom: 24px; width: 2px; background: #ddd; }
+.wireframe .opt4-now { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #444; font-weight: 700; margin-bottom: 10px; }
+.wireframe .opt4-item { position: relative; margin-bottom: 14px; }
+.wireframe .opt4-dot { position: absolute; left: -26px; top: 14px; width: 14px; height: 14px; background: #fff; border: 2px solid #444; border-radius: 50%; }
+.wireframe .opt4-dot-now { background: #222; border-color: #222; box-shadow: 0 0 0 4px rgba(0,0,0,0.08); }
+.wireframe .opt4-dot-start { background: #fff; border: 2px dashed #888; }
+.wireframe .opt4-card { border: 1px dashed #ccc; border-radius: 8px; padding: 12px 14px; background: #fafafa; }
+.wireframe .opt4-current .opt4-card { background: #fff; border-style: solid; border-color: #333; }
+.wireframe .opt4-faded .opt4-card { opacity: 0.7; }
+.wireframe .opt4-card-date { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 4px; }
+.wireframe .opt4-card-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 6px; }
+.wireframe .opt4-card-body { font-size: 12px; color: #555; margin: 0 0 8px; line-height: 1.5; }
+.wireframe .opt4-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.wireframe .opt4-tag { font-size: 10px; padding: 2px 8px; border: 1px solid #ccc; border-radius: 10px; color: #555; background: #fff; }
+.wireframe .opt4-tag-pr { background: #222; color: #fff; border-color: #222; }
+.wireframe .opt4-start { position: relative; margin-top: 20px; padding: 8px 0; }
+.wireframe .opt4-start-text { font-size: 11px; color: #888; font-style: italic; }
+
+.wireframe .opt4-next { border: 1px dashed #ccc; border-radius: 8px; padding: 14px 16px; background: #fafafa; }
+.wireframe .opt4-next-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 6px; }
+.wireframe .opt4-next-card { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.wireframe .opt4-next-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 4px; }
+.wireframe .opt4-next-body { font-size: 12px; color: #666; margin: 0; }
+.wireframe .opt4-next-btn { background: #222; color: #fff; border: none; border-radius: 6px; padding: 8px 14px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+
+/* ============================================
+   OPTION 5 — Gamified Checkpoints (B&W)
+   ============================================ */
+.wireframe .opt5-shell { display: flex; flex-direction: column; gap: 16px; background: #fff; }
+.wireframe .opt5-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px dashed #ccc; padding-bottom: 12px; }
+.wireframe .opt5-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #888; margin-bottom: 4px; }
+.wireframe .opt5-title { font-size: 20px; font-weight: 700; margin: 0 0 4px; color: #111; }
+.wireframe .opt5-sub { font-size: 12px; color: #666; margin: 0; }
+.wireframe .opt5-xp { text-align: right; padding: 8px 14px; border: 1px dashed #ccc; border-radius: 6px; background: #fafafa; min-width: 120px; }
+.wireframe .opt5-xp-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; }
+.wireframe .opt5-xp-val { font-size: 20px; font-weight: 700; color: #111; }
+.wireframe .opt5-xp-next { font-size: 10px; color: #666; }
+
+.wireframe .opt5-tracks { display: flex; flex-direction: column; gap: 8px; }
+.wireframe .opt5-track { padding: 10px 12px; border: 1px dashed #ccc; border-radius: 6px; background: #fafafa; }
+.wireframe .opt5-track-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.wireframe .opt5-track-name { font-size: 12px; font-weight: 700; color: #333; text-transform: uppercase; letter-spacing: 0.06em; }
+.wireframe .opt5-track-pct { font-size: 12px; font-weight: 700; color: #111; }
+.wireframe .opt5-lane { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; }
+.wireframe .opt5-lane-line { position: absolute; left: 8px; right: 8px; top: 50%; height: 2px; background: #ddd; z-index: 0; }
+.wireframe .opt5-cp { position: relative; z-index: 1; width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 2px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #888; font-weight: 700; }
+.wireframe .opt5-cp-done { background: #333; color: #fff; border-color: #333; }
+.wireframe .opt5-cp-now { background: #fff; border-color: #111; border-width: 3px; color: #111; box-shadow: 0 0 0 3px rgba(0,0,0,0.08); }
+.wireframe .opt5-cp-locked { background: #f0f0f0; border-color: #ddd; border-style: dashed; }
+
+.wireframe .opt5-row { display: grid; grid-template-columns: 1fr 1.6fr; gap: 12px; }
+.wireframe .opt5-next-card { border: 1px dashed #ccc; border-radius: 8px; padding: 16px; background: #fafafa; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.wireframe .opt5-next-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #888; }
+.wireframe .opt5-badge-big { width: 70px; height: 70px; border: 2px dashed #999; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #fff; margin: 4px 0; }
+.wireframe .opt5-badge-shape { width: 40px; height: 40px; background: #ddd; transform: rotate(45deg); }
+.wireframe .opt5-next-title { font-size: 14px; font-weight: 700; color: #111; }
+.wireframe .opt5-next-body { font-size: 12px; color: #666; margin: 0; line-height: 1.4; }
+.wireframe .opt5-next-progress { width: 100%; }
+.wireframe .opt5-next-bar { height: 6px; background: #eee; border-radius: 3px; }
+.wireframe .opt5-next-fill { height: 100%; background: #333; border-radius: 3px; }
+.wireframe .opt5-next-meta { font-size: 11px; color: #666; margin-top: 4px; }
+.wireframe .opt5-btn { background: #222; color: #fff; border: none; border-radius: 6px; padding: 8px 14px; font-size: 12px; cursor: pointer; margin-top: 4px; }
+
+.wireframe .opt5-badges-card { border: 1px dashed #ccc; border-radius: 8px; padding: 16px; background: #fafafa; }
+.wireframe .opt5-badges-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 12px; }
+.wireframe .opt5-badges-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.wireframe .opt5-badge { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px; }
+.wireframe .opt5-badge-ic { width: 36px; height: 36px; border-radius: 50%; background: #333; border: 2px solid #111; }
+.wireframe .opt5-badge-name { font-size: 10px; color: #444; text-align: center; }
+.wireframe .opt5-badge-locked .opt5-badge-ic { background: #eee; border: 2px dashed #bbb; }
+.wireframe .opt5-badge-locked .opt5-badge-name { color: #999; }

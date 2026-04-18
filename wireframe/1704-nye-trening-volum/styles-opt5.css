@@ -1,0 +1,143 @@
+/* ===== Option 5: Time Journal — Clean + Polished ===== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+#frame-opt5.clean .browser-dots span:nth-child(1), #frame-opt5.polished .browser-dots span:nth-child(1) { background: #ff5f57; }
+#frame-opt5.clean .browser-dots span:nth-child(2), #frame-opt5.polished .browser-dots span:nth-child(2) { background: #febc2e; }
+#frame-opt5.clean .browser-dots span:nth-child(3), #frame-opt5.polished .browser-dots span:nth-child(3) { background: #28c840; }
+
+/* ===== CLEAN ===== */
+#frame-opt5.clean .browser-content { background: #ECF0EF; color: #324D45; font-family: 'Inter', sans-serif; }
+#frame-opt5.clean .wf-shell { background: #ECF0EF; }
+
+#frame-opt5.clean .wf-sidebar { background: #FFFFFF; border-right: 1px solid rgba(0,88,64,0.08); }
+#frame-opt5.clean .wf-sb-logo { color: #0A1F18; }
+#frame-opt5.clean .wf-sb-profile { background: #ECF0EF; border: 1px solid rgba(0,88,64,0.08); }
+#frame-opt5.clean .wf-sb-avatar { background: #005840; color: #D1F843; border: none; }
+#frame-opt5.clean .wf-sb-profile-name { color: #0A1F18; }
+#frame-opt5.clean .wf-sb-profile-meta { color: #A5B2AD; }
+#frame-opt5.clean .wf-sb-item { color: #324D45; }
+#frame-opt5.clean .wf-sb-item .wf-sb-item-icon { border: 1px solid rgba(0,88,64,0.15); background: transparent; }
+#frame-opt5.clean .wf-sb-item:hover { background: #ECF0EF; color: #005840; }
+#frame-opt5.clean .wf-sb-item.wf-active { background: #0A1F18; color: #FFFFFF; }
+#frame-opt5.clean .wf-sb-item.wf-active .wf-sb-item-icon { background: #D1F843; border-color: #D1F843; }
+#frame-opt5.clean .wf-sb-cta { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.12); }
+#frame-opt5.clean .wf-sb-cta-title { color: #0A1F18; }
+#frame-opt5.clean .wf-sb-cta-desc { color: #324D45; }
+#frame-opt5.clean .wf-sb-cta-btn { background: #005840; color: #FFFFFF; }
+
+#frame-opt5.clean .wf-mtopbar-left { color: #324D45; }
+#frame-opt5.clean .wf-mtopbar-chip { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.1); color: #324D45; }
+
+#frame-opt5.clean .wf-greet { background: #FFFFFF; border: 1px solid rgba(0,88,64,0.08); }
+#frame-opt5.clean .wf-greet-eyebrow { color: #005840; }
+#frame-opt5.clean .wf-greet-h { color: #0A1F18; }
+#frame-opt5.clean .wf-greet-sub { color: #324D45; }
+#frame-opt5.clean .wf-greet-badge { background: #D1F843; color: #0A1F18; border: none; }
+
+/* Journal CLEAN */
+#frame-opt5.clean .wf-journal {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,88,64,0.08);
+}
+#frame-opt5.clean .wf-journal-week { border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt5.clean .wf-journal-weeklabel { color: #005840; }
+#frame-opt5.clean .wf-journal-weeksum { color: #0A1F18; }
+#frame-opt5.clean .wf-journal-row { border-top: 1px solid rgba(0,88,64,0.04); }
+#frame-opt5.clean .wf-journal-day { color: #A5B2AD; }
+#frame-opt5.clean .wf-journal-num { color: #0A1F18; }
+#frame-opt5.clean .wf-journal-title { color: #0A1F18; }
+#frame-opt5.clean .wf-journal-tag[data-zone="teknikk"] { background: #A5B2AD; color: #FFFFFF; }
+#frame-opt5.clean .wf-journal-tag[data-zone="fysikk"] { background: #324D45; color: #FFFFFF; }
+#frame-opt5.clean .wf-journal-tag[data-zone="slag"] { background: #005840; color: #FFFFFF; }
+#frame-opt5.clean .wf-journal-tag[data-zone="spill"] { background: #D1F843; color: #0A1F18; border: none; }
+#frame-opt5.clean .wf-journal-tag[data-zone="turnering"] { background: #0A1F18; color: #D1F843; border: none; }
+#frame-opt5.clean .wf-journal-tag-plain { background: #ECF0EF; color: #324D45; border: 1px solid rgba(0,88,64,0.08); }
+#frame-opt5.clean .wf-journal-time { color: #0A1F18; }
+
+/* ===== POLISHED ===== */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes opt5Rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  #frame-opt5.polished .wf-journal-row { animation: opt5Rise 0.4s cubic-bezier(0.16,1,0.3,1) both; }
+  #frame-opt5.polished .wf-journal-week:nth-child(1) .wf-journal-row:nth-child(2) { animation-delay: 0.05s; }
+  #frame-opt5.polished .wf-journal-week:nth-child(1) .wf-journal-row:nth-child(3) { animation-delay: 0.1s; }
+  #frame-opt5.polished .wf-journal-week:nth-child(1) .wf-journal-row:nth-child(4) { animation-delay: 0.15s; }
+  #frame-opt5.polished .wf-journal-week:nth-child(1) .wf-journal-row:nth-child(5) { animation-delay: 0.2s; }
+}
+
+#frame-opt5.polished .browser-content { background: #ECF0EF; color: #324D45; font-family: 'Inter', sans-serif; }
+#frame-opt5.polished .wf-shell {
+  background: radial-gradient(ellipse 60% 40% at 50% 10%, rgba(0,88,64,0.04), transparent 60%), #ECF0EF;
+}
+
+#frame-opt5.polished .wf-sidebar { background: #FFFFFF; border-right: 1px solid rgba(0,88,64,0.06); }
+#frame-opt5.polished .wf-sb-logo { color: #0A1F18; }
+#frame-opt5.polished .wf-sb-profile { background: linear-gradient(180deg, #ECF0EF, #FFFFFF); border: 1px solid rgba(0,88,64,0.06); }
+#frame-opt5.polished .wf-sb-avatar { background: linear-gradient(135deg, #005840, #00594C); color: #D1F843; }
+#frame-opt5.polished .wf-sb-profile-name { color: #0A1F18; }
+#frame-opt5.polished .wf-sb-profile-meta { color: #A5B2AD; }
+#frame-opt5.polished .wf-sb-item { color: #324D45; transition: all 200ms cubic-bezier(0.4,0,0.2,1); }
+#frame-opt5.polished .wf-sb-item:hover { background: #ECF0EF; color: #005840; }
+#frame-opt5.polished .wf-sb-item.wf-active { background: linear-gradient(135deg, #0A1F18, #1A3529); color: #FFFFFF; box-shadow: 0 2px 8px rgba(10,31,24,0.2); }
+#frame-opt5.polished .wf-sb-item.wf-active .wf-sb-item-icon { background: #D1F843; border-color: #D1F843; box-shadow: 0 0 8px rgba(209,248,67,0.45); }
+#frame-opt5.polished .wf-sb-cta {
+  background: linear-gradient(135deg, #FFFFFF, #ECF0EF);
+  border: 1px solid rgba(0,88,64,0.08);
+  box-shadow: 0 1px 3px rgba(0,88,64,0.04), 0 4px 12px rgba(0,88,64,0.06);
+}
+#frame-opt5.polished .wf-sb-cta-title { color: #0A1F18; }
+#frame-opt5.polished .wf-sb-cta-desc { color: #324D45; }
+#frame-opt5.polished .wf-sb-cta-btn { background: linear-gradient(135deg, #005840, #00594C); color: #FFFFFF; box-shadow: 0 2px 6px rgba(0,88,64,0.25); }
+
+#frame-opt5.polished .wf-mtopbar-chip { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(0,88,64,0.08); color: #324D45; }
+
+#frame-opt5.polished .wf-greet {
+  background: linear-gradient(135deg, #FFFFFF, #ECF0EF);
+  border: 1px solid rgba(0,88,64,0.06);
+  box-shadow: 0 1px 3px rgba(0,88,64,0.04), 0 4px 12px rgba(0,88,64,0.04);
+}
+#frame-opt5.polished .wf-greet-eyebrow { color: #005840; }
+#frame-opt5.polished .wf-greet-h { color: #0A1F18; letter-spacing: -0.015em; }
+#frame-opt5.polished .wf-greet-badge { background: #D1F843; color: #0A1F18; border: none; box-shadow: 0 2px 6px rgba(209,248,67,0.35); }
+
+/* Journal POLISHED */
+#frame-opt5.polished .wf-journal {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,88,64,0.06);
+  box-shadow: 0 1px 3px rgba(0,88,64,0.04), 0 4px 12px rgba(0,88,64,0.04);
+}
+#frame-opt5.polished .wf-journal-week { border-bottom: 1px solid rgba(0,88,64,0.08); }
+#frame-opt5.polished .wf-journal-weekhead {
+  position: sticky; top: 0; z-index: 2;
+  background: linear-gradient(180deg, #FFFFFF 60%, rgba(255,255,255,0.9));
+  backdrop-filter: blur(8px);
+}
+#frame-opt5.polished .wf-journal-weeklabel { color: #005840; font-weight: 700; letter-spacing: 0.12em; }
+#frame-opt5.polished .wf-journal-weeksum { color: #0A1F18; font-variant-numeric: tabular-nums; }
+
+#frame-opt5.polished .wf-journal-row {
+  border-top: 1px solid rgba(0,88,64,0.04);
+  transition: background 200ms ease-out;
+}
+#frame-opt5.polished .wf-journal-row:hover { background: rgba(0,88,64,0.02); }
+#frame-opt5.polished .wf-journal-day { color: #A5B2AD; font-weight: 700; letter-spacing: 0.12em; }
+#frame-opt5.polished .wf-journal-num { color: #0A1F18; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+#frame-opt5.polished .wf-journal-title { color: #0A1F18; font-weight: 600; }
+
+#frame-opt5.polished .wf-journal-tag[data-zone="teknikk"] { background: linear-gradient(135deg, #A5B2AD, #C0CAC5); color: #0A1F18; }
+#frame-opt5.polished .wf-journal-tag[data-zone="fysikk"] { background: linear-gradient(135deg, #324D45, #4A6B60); color: #FFFFFF; }
+#frame-opt5.polished .wf-journal-tag[data-zone="slag"] { background: linear-gradient(135deg, #005840, #00594C); color: #FFFFFF; box-shadow: 0 1px 3px rgba(0,88,64,0.25); }
+#frame-opt5.polished .wf-journal-tag[data-zone="spill"] { background: #D1F843; color: #0A1F18; box-shadow: 0 1px 3px rgba(209,248,67,0.35); }
+#frame-opt5.polished .wf-journal-tag[data-zone="turnering"] { background: linear-gradient(135deg, #0A1F18, #1A3529); color: #D1F843; }
+#frame-opt5.polished .wf-journal-tag-plain { background: #ECF0EF; color: #324D45; border: 1px solid rgba(0,88,64,0.08); }
+#frame-opt5.polished .wf-journal-time { color: #0A1F18; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Self-reveal */
+#frame-opt5-tabs .sub-tab-badge { display: none; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"] { color: #64B5F6; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="clean"].active { color: #1565C0; border-bottom-color: #1565C0; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"] { color: #81C784; }
+#frame-opt5-tabs .sub-tab-btn[data-variant="polished"].active { color: #2E7D32; border-bottom-color: #2E7D32; }

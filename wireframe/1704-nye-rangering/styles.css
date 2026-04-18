@@ -1,0 +1,297 @@
+/* === Wireframe Content CSS (B&W only) — Leaderboards / Rangering N08 === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL (sidebar + main) ============ */
+.wf-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 820px; background: #f5f5f5; }
+
+/* ============ SIDEBAR ============ */
+.wf-sidebar {
+  background: #fff; border-right: 1px solid #eee;
+  padding: 20px 14px; display: flex; flex-direction: column; gap: 18px;
+}
+.wf-sb-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: #000; padding: 4px 6px; }
+.wf-sb-profile {
+  display: flex; align-items: center; gap: 10px; padding: 10px;
+  border: 1px solid #eee; border-radius: 12px; background: #fff;
+}
+.wf-sb-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-sb-profile-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-sb-profile-meta { font-size: 11px; color: #999; }
+
+.wf-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-sb-nav-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; padding: 8px 6px 4px; font-weight: 600; }
+.wf-sb-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px 10px;
+  border-radius: 10px; color: #333; font-size: 13px; text-decoration: none;
+}
+.wf-sb-item-icon { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+.wf-sb-item.wf-active { background: #f5f5f5; color: #000; font-weight: 600; }
+.wf-sb-item.wf-active .wf-sb-item-icon { background: #000; border-color: #000; }
+.wf-sb-item:hover { background: #f5f5f5; color: #000; }
+
+.wf-sb-cta {
+  margin-top: auto; padding: 16px 14px; border: 1px solid #ccc; border-radius: 12px;
+  background: #fff; text-align: center;
+}
+.wf-sb-cta-title { font-size: 12px; font-weight: 700; color: #000; margin-bottom: 6px; }
+.wf-sb-cta-desc { font-size: 11px; color: #666; margin-bottom: 10px; line-height: 1.4; }
+.wf-sb-cta-btn { width: 100%; padding: 9px 12px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+/* ============ MAIN ============ */
+.wf-main { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+
+.wf-mtopbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 8px;
+}
+.wf-mtopbar-left { font-size: 12px; color: #666; }
+.wf-mtopbar-right { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #666; }
+.wf-mtopbar-chip { padding: 6px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #333; }
+
+/* ============ PAGE HEADER ============ */
+.wf-page-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.wf-page-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 4px; }
+.wf-page-title { font-size: 28px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.02em; }
+.wf-page-sub { font-size: 13px; color: #666; margin-top: 4px; }
+
+/* ============ SCOPE TABS ============ */
+.wf-scope-bar {
+  display: flex; gap: 6px; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 6px;
+}
+.wf-scope-btn {
+  flex: 1; padding: 9px 14px; font-size: 12px; font-weight: 600; color: #666;
+  background: transparent; border: none; border-radius: 8px; cursor: pointer; text-align: center;
+}
+.wf-scope-btn.wf-active { background: #000; color: #fff; }
+.wf-scope-meta { font-size: 11px; color: #999; display: block; margin-top: 2px; font-weight: 500; }
+.wf-scope-btn.wf-active .wf-scope-meta { color: #ccc; }
+
+/* ============ CARD PRIMITIVES ============ */
+.wf-c {
+  background: #fff; border: 1px solid #eee; border-radius: 14px;
+  padding: 18px; display: flex; flex-direction: column; gap: 12px;
+}
+.wf-c-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-c-title { font-size: 13px; font-weight: 600; color: #000; margin: 0; }
+.wf-c-sub { font-size: 12px; color: #666; }
+.wf-c-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.wf-c-link { font-size: 12px; color: #000; font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; }
+
+/* ============ LEADERBOARD TABLE ============ */
+.wf-lb { display: flex; flex-direction: column; gap: 0; }
+.wf-lb-head {
+  display: grid; grid-template-columns: 48px 1fr 120px 80px 70px 70px;
+  gap: 12px; align-items: center; padding: 10px 14px;
+  background: #f5f5f5; border: 1px solid #eee; border-radius: 10px;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; font-weight: 700;
+}
+.wf-lb-row {
+  display: grid; grid-template-columns: 48px 1fr 120px 80px 70px 70px;
+  gap: 12px; align-items: center; padding: 12px 14px;
+  border-bottom: 1px solid #eee;
+}
+.wf-lb-row.wf-me { background: #000; color: #fff; border: 1px solid #000; border-radius: 10px; margin: 4px 0; }
+.wf-lb-row.wf-me .wf-lb-name { color: #fff; }
+.wf-lb-row.wf-me .wf-lb-club { color: #ccc; }
+.wf-lb-row.wf-me .wf-lb-score { color: #fff; }
+.wf-lb-row.wf-me .wf-lb-rank { background: #fff; color: #000; }
+.wf-lb-row:last-child { border-bottom: none; }
+
+.wf-lb-rank {
+  width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: #333;
+}
+.wf-lb-rank-1 { background: #000; color: #fff; border-color: #000; }
+.wf-lb-rank-2 { background: #333; color: #fff; border-color: #333; }
+.wf-lb-rank-3 { background: #666; color: #fff; border-color: #666; }
+
+.wf-lb-player { display: flex; align-items: center; gap: 10px; }
+.wf-lb-avatar { width: 32px; height: 32px; border-radius: 50%; background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #333; flex-shrink: 0; }
+.wf-lb-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-lb-club { font-size: 11px; color: #999; }
+.wf-lb-score { font-size: 15px; font-weight: 800; color: #000; text-align: right; }
+.wf-lb-hcp { font-size: 12px; color: #333; font-weight: 600; text-align: right; }
+.wf-lb-change { font-size: 11px; color: #666; font-weight: 600; text-align: right; }
+.wf-lb-change-up::before { content: '▲ '; }
+.wf-lb-change-down::before { content: '▼ '; }
+.wf-lb-change-flat::before { content: '— '; }
+
+/* Filter/sort chips */
+.wf-filter-row {
+  display: flex; gap: 8px; flex-wrap: wrap; padding: 0 0 4px;
+}
+.wf-filter-chip { padding: 6px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #333; background: #fff; cursor: pointer; }
+.wf-filter-chip.wf-active { background: #000; color: #fff; border-color: #000; }
+
+/* ============ PODIUM (opt 2) ============ */
+.wf-podium-wrap {
+  background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 28px 20px 20px;
+}
+.wf-podium {
+  display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 12px; align-items: end;
+  max-width: 600px; margin: 0 auto;
+}
+.wf-podium-col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.wf-podium-avatar {
+  width: 64px; height: 64px; border-radius: 50%; background: #eee; border: 2px solid #ccc;
+  display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #333;
+}
+.wf-podium-col-1 .wf-podium-avatar { width: 80px; height: 80px; border: 3px solid #000; background: #000; color: #fff; font-size: 22px; }
+.wf-podium-name { font-size: 13px; font-weight: 700; color: #000; text-align: center; }
+.wf-podium-meta { font-size: 11px; color: #666; text-align: center; }
+.wf-podium-score { font-size: 18px; font-weight: 800; color: #000; }
+.wf-podium-block {
+  width: 100%; background: #f5f5f5; border: 1px solid #ccc; border-radius: 10px 10px 0 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: 900; color: #333;
+}
+.wf-podium-col-1 .wf-podium-block { height: 120px; background: #000; color: #fff; border-color: #000; }
+.wf-podium-col-2 .wf-podium-block { height: 88px; background: #333; color: #fff; border-color: #333; }
+.wf-podium-col-3 .wf-podium-block { height: 64px; background: #666; color: #fff; border-color: #666; }
+
+.wf-near-you {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 14px 18px;
+  margin-top: 14px;
+}
+.wf-near-you-head { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 10px; }
+
+/* ============ MULTI-CATEGORY TABS (opt 3) ============ */
+.wf-catbar {
+  display: flex; gap: 4px; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 4px;
+  overflow-x: auto;
+}
+.wf-catbar-btn {
+  padding: 10px 16px; font-size: 13px; font-weight: 600; color: #666;
+  background: transparent; border: none; border-radius: 8px; cursor: pointer; white-space: nowrap;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+}
+.wf-catbar-btn.wf-active { background: #000; color: #fff; }
+.wf-catbar-btn-sub { font-size: 10px; color: #999; font-weight: 500; }
+.wf-catbar-btn.wf-active .wf-catbar-btn-sub { color: #ccc; }
+
+/* ============ GEOGRAPHIC MAP (opt 4) ============ */
+.wf-map-wrap {
+  display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px;
+}
+.wf-map {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px;
+  min-height: 420px; display: flex; flex-direction: column; gap: 10px; position: relative;
+}
+.wf-map-canvas {
+  flex: 1; background: repeating-linear-gradient(45deg, #f5f5f5 0, #f5f5f5 10px, #fff 10px, #fff 20px);
+  border: 1px dashed #ccc; border-radius: 10px; position: relative; min-height: 340px;
+  display: flex; align-items: center; justify-content: center;
+}
+.wf-map-outline {
+  position: relative; width: 200px; height: 320px;
+  background: linear-gradient(180deg, #eee 0%, #ccc 100%);
+  border: 2px solid #999; border-radius: 50% 40% 30% 20% / 20% 30% 40% 60%;
+  clip-path: polygon(30% 0%, 60% 5%, 55% 25%, 70% 40%, 90% 60%, 70% 85%, 50% 100%, 20% 95%, 5% 70%, 15% 40%, 25% 20%);
+}
+.wf-map-pin {
+  position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #000; border: 2px solid #fff;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.15);
+}
+.wf-map-pin-large { width: 22px; height: 22px; background: #000; box-shadow: 0 0 0 6px rgba(0,0,0,0.18); }
+.wf-map-pin-med { width: 16px; height: 16px; background: #333; box-shadow: 0 0 0 4px rgba(0,0,0,0.12); }
+
+.wf-map-legend { display: flex; gap: 16px; font-size: 11px; color: #666; padding-top: 8px; border-top: 1px solid #eee; }
+.wf-map-legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #000; margin-right: 6px; vertical-align: middle; }
+.wf-map-legend-dot.med { background: #666; }
+.wf-map-legend-dot.low { background: #ccc; }
+
+.wf-clubs-list { display: flex; flex-direction: column; gap: 8px; }
+.wf-club-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 12px 14px; background: #fff; border: 1px solid #eee; border-radius: 10px;
+}
+.wf-club-row.wf-active { border-color: #000; background: #f5f5f5; }
+.wf-club-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-club-meta { font-size: 11px; color: #666; }
+.wf-club-count { font-size: 15px; font-weight: 800; color: #000; }
+
+/* ============ CHALLENGE CARDS (opt 5) ============ */
+.wf-challenge-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.wf-challenge {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 16px;
+  display: flex; flex-direction: column; gap: 10px; position: relative;
+}
+.wf-challenge.wf-featured { background: #000; color: #fff; border-color: #000; grid-column: span 2; }
+.wf-challenge.wf-featured .wf-challenge-title { color: #fff; }
+.wf-challenge.wf-featured .wf-challenge-desc { color: #ccc; }
+.wf-challenge.wf-featured .wf-challenge-meta { color: #999; }
+.wf-challenge-eyebrow { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-challenge.wf-featured .wf-challenge-eyebrow { color: #999; }
+.wf-challenge-title { font-size: 16px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.01em; }
+.wf-challenge-desc { font-size: 12px; color: #666; line-height: 1.4; }
+.wf-challenge-meta { font-size: 11px; color: #999; display: flex; gap: 10px; }
+.wf-challenge-badge {
+  position: absolute; top: 14px; right: 14px;
+  padding: 3px 9px; border-radius: 999px;
+  background: #fff; color: #000; border: 1px solid #000;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+}
+.wf-challenge.wf-featured .wf-challenge-badge { background: #fff; color: #000; border-color: #fff; }
+.wf-challenge-progress { height: 6px; background: #eee; border-radius: 999px; overflow: hidden; margin-top: 4px; }
+.wf-challenge-progress-fill { height: 100%; background: #000; border-radius: 999px; }
+.wf-challenge.wf-featured .wf-challenge-progress { background: #333; }
+.wf-challenge.wf-featured .wf-challenge-progress-fill { background: #fff; }
+
+.wf-challenge-leaders { display: flex; gap: 6px; margin-top: 6px; }
+.wf-challenge-leader {
+  width: 28px; height: 28px; border-radius: 50%; background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #333;
+}
+.wf-challenge.wf-featured .wf-challenge-leader { background: #333; color: #fff; border-color: #666; }
+
+.wf-challenge-rank {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: #666; font-weight: 600;
+  padding-top: 8px; border-top: 1px solid #eee;
+}
+.wf-challenge.wf-featured .wf-challenge-rank { border-top: 1px solid #333; color: #ccc; }
+.wf-challenge-rank strong { color: #000; font-weight: 800; font-size: 13px; }
+.wf-challenge.wf-featured .wf-challenge-rank strong { color: #fff; }
+
+/* ============ STAT STRIP ============ */
+.wf-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 16px 0;
+}
+.wf-strip-cell { padding: 0 16px; border-right: 1px solid #eee; display: flex; flex-direction: column; gap: 4px; }
+.wf-strip-cell:last-child { border-right: none; }
+.wf-strip-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-strip-value { font-size: 24px; font-weight: 800; color: #000; line-height: 1; }
+.wf-strip-sub { font-size: 11px; color: #666; }
+
+/* ============ MARKERS ============ */
+.wf-marker {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%; background: #000; color: #fff;
+  font-size: 10px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+}
+
+/* ============ ANNOTATIONS ============ */
+.wf-annotations { margin-top: 16px; padding: 20px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-annotations h3 { font-size: 14px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-annotations ul { margin: 0; padding-left: 20px; font-size: 13px; color: #333; }
+.wf-annotations li { margin-bottom: 6px; line-height: 1.5; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

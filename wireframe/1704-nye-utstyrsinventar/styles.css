@@ -1,0 +1,212 @@
+/* === Wireframe Content CSS (B&W only) — Utstyrsinventar (N14) === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL (sidebar + main) ============ */
+.wf-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 820px; background: #f5f5f5; }
+
+/* ============ SIDEBAR ============ */
+.wf-sidebar { background: #fff; border-right: 1px solid #eee; padding: 20px 14px; display: flex; flex-direction: column; gap: 18px; }
+.wf-sb-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: #000; padding: 4px 6px; }
+.wf-sb-profile { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #eee; border-radius: 12px; background: #fff; }
+.wf-sb-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-sb-profile-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-sb-profile-meta { font-size: 11px; color: #999; }
+.wf-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-sb-nav-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; padding: 8px 6px 4px; font-weight: 600; }
+.wf-sb-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; color: #333; font-size: 13px; text-decoration: none; }
+.wf-sb-item-icon { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+.wf-sb-item.wf-active { background: #f5f5f5; color: #000; font-weight: 600; }
+.wf-sb-item.wf-active .wf-sb-item-icon { background: #000; border-color: #000; }
+.wf-sb-subitem { display: flex; align-items: center; gap: 8px; padding: 7px 10px 7px 28px; border-radius: 8px; color: #666; font-size: 12px; text-decoration: none; }
+.wf-sb-subitem.wf-active { background: #000; color: #fff; font-weight: 600; }
+.wf-sb-cta { margin-top: auto; padding: 16px 14px; border: 1px solid #ccc; border-radius: 12px; background: #fff; text-align: center; }
+.wf-sb-cta-title { font-size: 12px; font-weight: 700; color: #000; margin-bottom: 6px; }
+.wf-sb-cta-desc { font-size: 11px; color: #666; margin-bottom: 10px; line-height: 1.4; }
+.wf-sb-cta-btn { width: 100%; padding: 9px 12px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+/* ============ MAIN ============ */
+.wf-main { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+.wf-mtopbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; }
+.wf-mtopbar-left { font-size: 12px; color: #666; }
+.wf-mtopbar-right { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #666; }
+.wf-mtopbar-chip { padding: 6px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #333; cursor: pointer; }
+.wf-mtopbar-chip.wf-active { background: #000; color: #fff; border-color: #000; }
+
+/* ============ PAGE HEADER ============ */
+.wf-page-head { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px 22px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.wf-page-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 6px; font-weight: 600; }
+.wf-page-h { font-size: 24px; font-weight: 700; color: #000; margin: 0 0 4px; letter-spacing: -0.01em; }
+.wf-page-sub { font-size: 13px; color: #666; margin: 0; }
+.wf-page-meta { display: flex; gap: 14px; font-size: 12px; color: #666; }
+.wf-page-meta strong { color: #000; font-weight: 700; font-size: 15px; display: block; }
+
+/* ============ CARD PRIMITIVES ============ */
+.wf-c { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.wf-c-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.wf-c-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-c-title { font-size: 13px; font-weight: 600; color: #000; margin: 0; }
+.wf-c-value { font-size: 32px; font-weight: 800; color: #000; line-height: 1; letter-spacing: -0.02em; }
+.wf-c-sub { font-size: 12px; color: #666; }
+.wf-c-link { font-size: 12px; color: #000; font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; }
+.wf-ai-badge { display: inline-block; padding: 3px 8px; border: 1px solid #666; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #333; background: #eee; }
+
+/* ============ BENTO GRID ============ */
+.wf-bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+.wf-bc-3 { grid-column: span 3; }
+.wf-bc-4 { grid-column: span 4; }
+.wf-bc-5 { grid-column: span 5; }
+.wf-bc-6 { grid-column: span 6; }
+.wf-bc-7 { grid-column: span 7; }
+.wf-bc-8 { grid-column: span 8; }
+.wf-bc-9 { grid-column: span 9; }
+.wf-bc-12 { grid-column: span 12; }
+
+/* ============ OPT 1: FULL BAG EDITOR ============ */
+.wf-edit-toolbar { display: flex; gap: 10px; align-items: center; padding: 10px 14px; background: #fff; border: 1px solid #eee; border-radius: 12px; }
+.wf-edit-toolbar-left { display: flex; gap: 8px; align-items: center; font-size: 12px; color: #666; }
+.wf-edit-toolbar-right { margin-left: auto; display: flex; gap: 8px; }
+.wf-btn { padding: 7px 12px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #000; font-size: 12px; font-weight: 600; cursor: pointer; }
+.wf-btn-primary { background: #000; color: #fff; border-color: #000; }
+.wf-btn-ghost { background: transparent; border-color: #eee; color: #666; }
+
+.wf-edit-table { display: flex; flex-direction: column; gap: 0; }
+.wf-edit-row { display: grid; grid-template-columns: 36px 1.2fr 1.6fr 90px 70px 70px 80px 32px; gap: 10px; align-items: center; padding: 10px 8px; border-bottom: 1px solid #eee; }
+.wf-edit-row:last-child { border-bottom: none; }
+.wf-edit-row.wf-active { background: #f5f5f5; border-left: 3px solid #000; padding-left: 5px; }
+.wf-edit-row-head { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #999; font-weight: 700; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+.wf-edit-ic { width: 28px; height: 28px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #333; }
+.wf-edit-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-edit-model { font-size: 12px; color: #666; padding: 6px 8px; border: 1px solid #eee; border-radius: 6px; background: #fafafa; }
+.wf-edit-carry { font-size: 14px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; padding: 6px 8px; border: 1px solid #eee; border-radius: 6px; background: #fff; }
+.wf-edit-loft { font-size: 12px; color: #333; font-variant-numeric: tabular-nums; padding: 6px 8px; border: 1px solid #eee; border-radius: 6px; background: #fff; text-align: center; }
+.wf-edit-gap { font-size: 12px; color: #666; font-variant-numeric: tabular-nums; }
+.wf-edit-gap-warn { color: #000; font-weight: 700; }
+.wf-edit-status { width: 10px; height: 10px; border-radius: 50%; background: #ccc; margin: 0 auto; }
+.wf-edit-status.wf-ok { background: #000; }
+.wf-edit-status.wf-warn { background: #000; border: 2px solid #999; box-sizing: border-box; }
+.wf-edit-action { font-size: 16px; color: #999; cursor: pointer; text-align: center; }
+
+.wf-detail-panel { padding: 16px; background: #fafafa; border: 1px solid #eee; border-radius: 10px; }
+.wf-detail-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.wf-detail-name { font-size: 20px; font-weight: 800; color: #000; margin: 0 0 2px; }
+.wf-detail-meta { font-size: 12px; color: #666; }
+.wf-detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.wf-detail-row { display: flex; justify-content: space-between; padding: 8px 10px; background: #fff; border: 1px solid #eee; border-radius: 8px; font-size: 12px; }
+.wf-detail-row-label { color: #666; }
+.wf-detail-row-value { color: #000; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ============ OPT 2: DISTANCE CHART ============ */
+.wf-dist-chart { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px 24px; }
+.wf-dist-scale { position: relative; height: 30px; margin: 0 0 8px 100px; border-bottom: 1px dashed #ccc; }
+.wf-dist-scale-tick { position: absolute; top: 0; bottom: 0; width: 1px; background: #eee; }
+.wf-dist-scale-label { position: absolute; top: 2px; transform: translateX(-50%); font-size: 10px; color: #999; font-variant-numeric: tabular-nums; }
+.wf-dist-rows { display: flex; flex-direction: column; gap: 6px; padding-top: 8px; }
+.wf-dist-row { display: grid; grid-template-columns: 90px 1fr 70px; gap: 10px; align-items: center; }
+.wf-dist-label { font-size: 12px; color: #000; font-weight: 600; }
+.wf-dist-label-sub { font-size: 10px; color: #999; font-weight: 400; margin-left: 4px; }
+.wf-dist-bar-track { position: relative; height: 22px; background: #fafafa; border: 1px solid #eee; border-radius: 6px; overflow: hidden; }
+.wf-dist-bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: #333; border-radius: 5px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; font-size: 10px; color: #fff; font-weight: 700; font-variant-numeric: tabular-nums; }
+.wf-dist-bar-fill.wf-warn { background: #000; }
+.wf-dist-bar-disp { position: absolute; top: 50%; transform: translateY(-50%); height: 10px; background: rgba(0,0,0,0.1); border-left: 1px solid #999; border-right: 1px solid #999; }
+.wf-dist-carry { font-size: 13px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; text-align: right; }
+.wf-dist-gap-marker { position: absolute; top: 50%; transform: translateY(-50%); height: 16px; border-left: 2px dashed #000; display: flex; align-items: center; padding-left: 4px; }
+.wf-dist-gap-marker-label { font-size: 9px; color: #000; font-weight: 800; background: #fff; padding: 1px 4px; border: 1px solid #000; border-radius: 3px; }
+.wf-dist-empty-zone { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(45deg, rgba(0,0,0,0.05) 0 4px, transparent 4px 8px); border-left: 1px dashed #999; border-right: 1px dashed #999; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #333; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* ============ OPT 3: SHOP INTEGRATIONS ============ */
+.wf-shop-col-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #eee; margin-bottom: 12px; }
+.wf-shop-bag-list { display: flex; flex-direction: column; gap: 6px; }
+.wf-shop-bag-item { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; padding: 10px; border: 1px solid #eee; border-radius: 10px; background: #fff; cursor: pointer; }
+.wf-shop-bag-item.wf-active { border-color: #000; background: #f5f5f5; }
+.wf-shop-bag-ic { width: 28px; height: 28px; border-radius: 50%; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+.wf-shop-bag-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-shop-bag-model { font-size: 11px; color: #999; }
+.wf-shop-bag-carry { font-size: 13px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; }
+
+.wf-shop-brands { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.wf-shop-brand { padding: 6px 10px; border: 1px solid #ccc; border-radius: 999px; font-size: 11px; color: #666; cursor: pointer; background: #fff; }
+.wf-shop-brand.wf-active { background: #000; color: #fff; border-color: #000; }
+
+.wf-shop-products { display: flex; flex-direction: column; gap: 10px; }
+.wf-shop-product { display: grid; grid-template-columns: 60px 1fr auto; gap: 12px; padding: 12px; border: 1px solid #eee; border-radius: 10px; background: #fff; }
+.wf-shop-product-img { width: 60px; height: 60px; background: #f5f5f5; border: 1px solid #eee; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #999; text-align: center; }
+.wf-shop-product-info { display: flex; flex-direction: column; gap: 4px; }
+.wf-shop-product-brand { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #999; font-weight: 700; }
+.wf-shop-product-name { font-size: 13px; font-weight: 700; color: #000; }
+.wf-shop-product-specs { font-size: 11px; color: #666; }
+.wf-shop-product-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.wf-shop-product-price { font-size: 14px; font-weight: 800; color: #000; font-variant-numeric: tabular-nums; }
+.wf-shop-product-fit { font-size: 10px; padding: 2px 6px; border: 1px solid #000; border-radius: 999px; color: #000; font-weight: 700; background: #eee; }
+.wf-shop-product-btn { padding: 6px 10px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 11px; font-weight: 600; cursor: pointer; }
+
+/* ============ OPT 4: GAP ANALYSIS ============ */
+.wf-gap-hero { background: #000; color: #fff; border-radius: 16px; padding: 24px; }
+.wf-gap-hero-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #ccc; font-weight: 700; margin-bottom: 10px; }
+.wf-gap-hero-title { font-size: 24px; font-weight: 800; color: #fff; margin: 0 0 10px; letter-spacing: -0.02em; }
+.wf-gap-hero-body { font-size: 13px; color: #ccc; line-height: 1.5; margin: 0 0 16px; max-width: 620px; }
+.wf-gap-hero-scorecard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding-top: 14px; border-top: 1px solid #333; }
+.wf-gap-hero-score { }
+.wf-gap-hero-score-label { font-size: 10px; color: #999; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+.wf-gap-hero-score-value { font-size: 22px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+
+.wf-gap-issue { display: flex; gap: 14px; padding: 16px; border: 1px solid #eee; border-radius: 12px; background: #fff; }
+.wf-gap-issue-severity { width: 4px; border-radius: 2px; background: #000; flex-shrink: 0; }
+.wf-gap-issue-severity.wf-low { background: #ccc; }
+.wf-gap-issue-severity.wf-med { background: #666; }
+.wf-gap-issue-body { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.wf-gap-issue-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.wf-gap-issue-title { font-size: 14px; font-weight: 800; color: #000; margin: 0; }
+.wf-gap-issue-tag { font-size: 10px; padding: 2px 8px; border: 1px solid #000; border-radius: 999px; color: #000; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.wf-gap-issue-tag.wf-low { border-color: #666; color: #666; }
+.wf-gap-issue-desc { font-size: 12px; color: #666; line-height: 1.5; margin: 0; }
+.wf-gap-issue-ladder { display: flex; align-items: center; gap: 8px; margin-top: 6px; padding: 8px 10px; background: #f5f5f5; border-radius: 8px; font-size: 11px; color: #333; font-variant-numeric: tabular-nums; }
+.wf-gap-issue-ladder-arrow { color: #999; }
+.wf-gap-issue-ladder-gap { font-weight: 800; color: #000; padding: 2px 6px; background: #fff; border: 1px solid #000; border-radius: 4px; }
+.wf-gap-issue-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+/* ============ OPT 5: WEAR TRACKER ============ */
+.wf-wear-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.wf-wear-summary-card { padding: 14px; background: #fff; border: 1px solid #eee; border-radius: 12px; }
+.wf-wear-summary-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #999; font-weight: 700; margin-bottom: 6px; }
+.wf-wear-summary-value { font-size: 24px; font-weight: 800; color: #000; line-height: 1; font-variant-numeric: tabular-nums; }
+.wf-wear-summary-sub { font-size: 11px; color: #666; margin-top: 4px; }
+
+.wf-wear-list { display: flex; flex-direction: column; gap: 8px; }
+.wf-wear-row { display: grid; grid-template-columns: 36px 140px 1fr 80px 100px 90px; gap: 12px; align-items: center; padding: 10px 12px; background: #fff; border: 1px solid #eee; border-radius: 10px; }
+.wf-wear-row.wf-urgent { border-color: #000; background: #fafafa; }
+.wf-wear-ic { width: 28px; height: 28px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #333; }
+.wf-wear-ic.wf-urgent { background: #000; color: #fff; border-color: #000; }
+.wf-wear-club-name { font-size: 13px; font-weight: 700; color: #000; }
+.wf-wear-club-model { font-size: 11px; color: #999; margin-top: 2px; }
+.wf-wear-bar-wrap { display: flex; flex-direction: column; gap: 4px; }
+.wf-wear-bar-label { font-size: 10px; color: #666; display: flex; justify-content: space-between; }
+.wf-wear-bar { height: 6px; background: #eee; border-radius: 999px; overflow: hidden; }
+.wf-wear-bar-fill { height: 100%; background: #333; border-radius: 999px; }
+.wf-wear-bar-fill.wf-warn { background: #000; }
+.wf-wear-bar-fill.wf-ok { background: #999; }
+.wf-wear-age { font-size: 12px; color: #333; font-variant-numeric: tabular-nums; text-align: center; }
+.wf-wear-age-sub { font-size: 10px; color: #999; display: block; margin-top: 2px; }
+.wf-wear-status { font-size: 11px; color: #666; text-align: center; }
+.wf-wear-status-tag { display: inline-block; padding: 3px 8px; border: 1px solid #ccc; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #666; }
+.wf-wear-status-tag.wf-urgent { border-color: #000; color: #000; background: #eee; }
+.wf-wear-status-tag.wf-ok { border-color: #999; color: #333; }
+.wf-wear-action-btn { padding: 7px 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #333; font-size: 11px; font-weight: 600; cursor: pointer; text-align: center; }
+.wf-wear-action-btn.wf-urgent { background: #000; color: #fff; border-color: #000; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }
+
+/* ============ ANNOTATIONS override ============ */
+.wf-annotations { margin-top: 16px; padding: 20px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-annotations h3 { font-size: 14px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-annotations ul { margin: 0; padding-left: 20px; font-size: 13px; color: #333; }
+.wf-annotations li { margin-bottom: 6px; line-height: 1.5; }
+.wf-marker { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: #000; color: #fff; font-size: 10px; font-weight: 700; margin-left: 6px; vertical-align: middle; }

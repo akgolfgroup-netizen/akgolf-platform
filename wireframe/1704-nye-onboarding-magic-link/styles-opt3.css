@@ -1,0 +1,174 @@
+/* ========================================================================
+   OPTION 3 — CONVERSATIONAL · Clean + Polished visual variants
+   Screen N03 · Magic-link onboarding (chat-basert)
+   AK tokens: primary #005840 · accent #D1F843 · surface #ECF0EF · ai #AF52DE
+   ======================================================================== */
+
+#frame-opt3-tabs .sub-tab-badge { display: none; }
+
+.clean #frame-opt3,
+.polished #frame-opt3 { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+.clean #frame-opt3 .browser-content,
+.polished #frame-opt3 .browser-content { background: #F5F8F7; }
+.clean #frame-opt3 .wf-mlink-shell,
+.polished #frame-opt3 .wf-mlink-shell { background: #F5F8F7; }
+
+/* Topbar */
+.clean #frame-opt3 .wf-mlink-topbar,
+.polished #frame-opt3 .wf-mlink-topbar { background: #fff; border-bottom-color: rgba(0,0,0,0.06); }
+.clean #frame-opt3 .wf-topbar-logo,
+.polished #frame-opt3 .wf-topbar-logo { color: #005840; }
+.clean #frame-opt3 .wf-topbar-logo-mark,
+.polished #frame-opt3 .wf-topbar-logo-mark { background: #005840; color: #D1F843; }
+.clean #frame-opt3 .wf-topbar-meta,
+.polished #frame-opt3 .wf-topbar-meta { color: #A5B2AD; }
+.clean #frame-opt3 .wf-topbar-meta strong,
+.polished #frame-opt3 .wf-topbar-meta strong { color: #005840; }
+
+/* Verified */
+.clean #frame-opt3 .wf-mlink-verified,
+.polished #frame-opt3 .wf-mlink-verified {
+  background: rgba(209,248,67,0.12);
+  border-color: rgba(209,248,67,0.35);
+  color: #005840;
+}
+.clean #frame-opt3 .wf-mlink-verified-dot,
+.polished #frame-opt3 .wf-mlink-verified-dot { background: #005840; }
+
+/* Header */
+.clean #frame-opt3 .wf-crumbs,
+.polished #frame-opt3 .wf-crumbs { color: #A5B2AD; }
+.clean #frame-opt3 .wf-mlink-title,
+.polished #frame-opt3 .wf-mlink-title { color: #0A1F18; }
+.clean #frame-opt3 .wf-mlink-sub,
+.polished #frame-opt3 .wf-mlink-sub { color: #5A6E66; }
+
+/* Stage */
+.clean #frame-opt3 .wf-conv-stage,
+.polished #frame-opt3 .wf-conv-stage {
+  background: #fff;
+  border-color: rgba(0,0,0,0.06);
+  border-radius: 16px;
+}
+.clean #frame-opt3 .wf-conv-progress,
+.polished #frame-opt3 .wf-conv-progress { border-bottom-color: #ECF0EF; color: #7A8C85; }
+.clean #frame-opt3 .wf-conv-progress-bar,
+.polished #frame-opt3 .wf-conv-progress-bar { background: #ECF0EF; }
+.clean #frame-opt3 .wf-conv-progress-fill,
+.polished #frame-opt3 .wf-conv-progress-fill { background: #005840; }
+
+/* Chat avatar = AK coach */
+.clean #frame-opt3 .wf-conv-avatar,
+.polished #frame-opt3 .wf-conv-avatar { background: #005840; color: #D1F843; }
+
+/* Bubbles */
+.clean #frame-opt3 .wf-conv-bubble,
+.polished #frame-opt3 .wf-conv-bubble {
+  background: #F5F8F7;
+  border-color: rgba(0,0,0,0.04);
+  color: #324D45;
+}
+.clean #frame-opt3 .wf-conv-bubble-user,
+.polished #frame-opt3 .wf-conv-bubble-user {
+  background: #005840;
+  color: #fff;
+  border-color: #005840;
+}
+
+/* Chips */
+.clean #frame-opt3 .wf-chip,
+.polished #frame-opt3 .wf-chip {
+  border-color: #D5DFDB;
+  color: #324D45;
+  border-radius: 20px;
+  background: #fff;
+}
+.clean #frame-opt3 .wf-chip:hover,
+.polished #frame-opt3 .wf-chip:hover { border-color: #005840; }
+.clean #frame-opt3 .wf-chip-active,
+.polished #frame-opt3 .wf-chip-active {
+  background: #D1F843;
+  color: #0A1F18;
+  border-color: #D1F843;
+  font-weight: 600;
+}
+
+/* Input */
+.clean #frame-opt3 .wf-input,
+.polished #frame-opt3 .wf-input {
+  border-color: #D5DFDB;
+  color: #0A1F18;
+  background: #F5F8F7;
+  border-radius: 10px;
+}
+.clean #frame-opt3 .wf-input:focus,
+.polished #frame-opt3 .wf-input:focus { border-color: #005840; }
+
+/* Preview (profil som bygges) */
+.clean #frame-opt3 .wf-conv-preview,
+.polished #frame-opt3 .wf-conv-preview {
+  background: #F5F8F7;
+  border-color: rgba(0,0,0,0.04);
+  border-radius: 12px;
+}
+.clean #frame-opt3 .wf-conv-preview-cell,
+.polished #frame-opt3 .wf-conv-preview-cell { color: #A5B2AD; }
+.clean #frame-opt3 .wf-conv-preview-cell strong,
+.polished #frame-opt3 .wf-conv-preview-cell strong { color: #005840; }
+
+/* Dashboard thumbnails — liten variant i chat */
+.clean #frame-opt3 .wf-dash-card,
+.polished #frame-opt3 .wf-dash-card { background: #fff; border-color: rgba(0,0,0,0.06); }
+.clean #frame-opt3 .wf-dash-card:hover,
+.polished #frame-opt3 .wf-dash-card:hover { border-color: #005840; }
+.clean #frame-opt3 .wf-dash-card.wf-dash-selected,
+.polished #frame-opt3 .wf-dash-card.wf-dash-selected { border-color: #005840; }
+.clean #frame-opt3 .wf-dash-thumb,
+.polished #frame-opt3 .wf-dash-thumb { background: #F5F8F7; border-color: rgba(0,0,0,0.04); }
+.clean #frame-opt3 .wf-dash-title,
+.polished #frame-opt3 .wf-dash-title { color: #0A1F18; }
+.clean #frame-opt3 .wf-dash-desc,
+.polished #frame-opt3 .wf-dash-desc { color: #7A8C85; }
+.clean #frame-opt3 .wf-dash-badge,
+.polished #frame-opt3 .wf-dash-badge { background: #D1F843; color: #0A1F18; }
+
+.clean #frame-opt3 .wf-thumb-athletic .wf-tb-big,
+.polished #frame-opt3 .wf-thumb-athletic .wf-tb-big { background: #005840; }
+.clean #frame-opt3 .wf-thumb-athletic .wf-tb-mid,
+.polished #frame-opt3 .wf-thumb-athletic .wf-tb-mid { background: #7A8C85; }
+.clean #frame-opt3 .wf-thumb-focus .wf-tb-hero,
+.polished #frame-opt3 .wf-thumb-focus .wf-tb-hero { background: #005840; color: #D1F843; }
+.clean #frame-opt3 .wf-thumb-data .wf-tb-dark,
+.polished #frame-opt3 .wf-thumb-data .wf-tb-dark { background: #005840; }
+.clean #frame-opt3 .wf-thumb-data .wf-tb-mid,
+.polished #frame-opt3 .wf-thumb-data .wf-tb-mid { background: #7A8C85; }
+.clean #frame-opt3 .wf-thumb-progress .wf-tb-chart::before,
+.polished #frame-opt3 .wf-thumb-progress .wf-tb-chart::before { background: #005840; height: 2px; }
+.clean #frame-opt3 .wf-thumb-command .wf-tb-tall,
+.polished #frame-opt3 .wf-thumb-command .wf-tb-tall { background: #005840; }
+.clean #frame-opt3 .wf-thumb-command .wf-tb-mid,
+.polished #frame-opt3 .wf-thumb-command .wf-tb-mid { background: #7A8C85; }
+
+/* Buttons */
+.clean #frame-opt3 .wf-btn,
+.polished #frame-opt3 .wf-btn { border-radius: 20px; }
+.clean #frame-opt3 .wf-btn-cta,
+.polished #frame-opt3 .wf-btn-cta {
+  background: #D1F843;
+  color: #0A1F18;
+  border-color: #D1F843;
+  font-weight: 700;
+}
+.clean #frame-opt3 .wf-btn-cta:hover,
+.polished #frame-opt3 .wf-btn-cta:hover { background: #b9dd34; border-color: #b9dd34; }
+
+/* ========== POLISHED ========== */
+.polished #frame-opt3 .wf-conv-stage {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04);
+}
+.polished #frame-opt3 .wf-conv-bubble-user {
+  box-shadow: 0 2px 8px rgba(0,88,64,0.15);
+}
+.polished #frame-opt3 .wf-btn-cta {
+  box-shadow: 0 4px 14px rgba(209,248,67,0.4);
+}

@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Påmeldte — Turnering · AK Golf Platform</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Påmeldte (N18)</span> — <span id="project-name">AK Golf Platform · Portal · Turneringer · [id]</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Field List</button>
+    <button class="tab-btn" data-tab="option-2">2: Tee Time Grid</button>
+    <button class="tab-btn" data-tab="option-3">3: Match Play Bracket</button>
+    <button class="tab-btn" data-tab="option-4">4: Leaderboard Live</button>
+    <button class="tab-btn" data-tab="option-5">5: Player Cards</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Field List (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Field List</span></h2>
+    <p class="option-description">Klassisk påmeldingsliste hentet direkte fra GolfBox-API. Alle 64 spillere i én tabell med navn, klubb, HCP, flight og tee-tid. AK-elever markeres med accent-stripe, "Meg" uthevet i sort/grønn. SAFE-valget — dekker 90% av bruksmønstre og er rask å implementere.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer/ncup-bogstad-2026/pameldte</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">AK</span><span>Anders K.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-breadcrumb">
+              <a href="#">Turneringer</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <a href="#">Norges Cup Bogstad</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <span class="wf-breadcrumb-current">Påmeldte</span>
+            </div>
+
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Norges Cup Bogstad 2026<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Bogstad Golfklubb · 22.–23. juni · 36 hull slag · Synkronisert fra GolfBox 14:32</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Eksporter CSV</button>
+                <button class="wf-btn">Del startliste</button>
+                <button class="wf-btn wf-btn-cta">+ Følg spiller</button>
+              </div>
+            </div>
+
+            <div class="wf-tourn-strip"><span class="wf-marker">2</span>
+              <div class="wf-tourn-strip-item">
+                <span class="wf-tourn-strip-label">Påmeldte</span>
+                <span class="wf-tourn-strip-value">64 / 72</span>
+              </div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item">
+                <span class="wf-tourn-strip-label">HCP-krav</span>
+                <span class="wf-tourn-strip-value">≤ 18.4</span>
+              </div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item">
+                <span class="wf-tourn-strip-label">Første tee-tid</span>
+                <span class="wf-tourn-strip-value">07:30</span>
+              </div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item">
+                <span class="wf-tourn-strip-label">Min tee-tid</span>
+                <span class="wf-tourn-strip-value">09:42 · Flight 6</span>
+              </div>
+              <span class="wf-tourn-strip-sep"></span>
+              <span class="wf-tourn-badge"><span class="wf-tourn-badge-dot"></span>Startliste klar</span>
+            </div>
+
+            <div class="wf-view-tabs">
+              <button class="wf-view-tab wf-active">Liste</button>
+              <button class="wf-view-tab">Tee-tider</button>
+              <button class="wf-view-tab">Bracket</button>
+              <button class="wf-view-tab">Leaderboard</button>
+            </div>
+
+            <div class="wf-stat-row"><span class="wf-marker">3</span>
+              <div class="wf-stat-card">
+                <div class="wf-stat-label">AK-elever i felt</div>
+                <div class="wf-stat-value">7</div>
+                <div class="wf-stat-sub">av 64 påmeldte</div>
+              </div>
+              <div class="wf-stat-card">
+                <div class="wf-stat-label">Snitt HCP</div>
+                <div class="wf-stat-value">8.6</div>
+                <div class="wf-stat-sub">Laveste: +2.1</div>
+              </div>
+              <div class="wf-stat-card">
+                <div class="wf-stat-label">Klubber</div>
+                <div class="wf-stat-value">18</div>
+                <div class="wf-stat-sub">mest: Bogstad (12)</div>
+              </div>
+              <div class="wf-stat-card">
+                <div class="wf-stat-label">Flights</div>
+                <div class="wf-stat-value">16</div>
+                <div class="wf-stat-sub">3–4 spillere per</div>
+              </div>
+            </div>
+
+            <div class="wf-toolbar">
+              <div class="wf-search"><span class="wf-search-ico"></span><span class="wf-search-input">Søk navn, klubb eller HCP …</span></div>
+              <span class="wf-chip wf-active">Alle<span class="wf-chip-count">64</span></span>
+              <span class="wf-chip">AK-elever<span class="wf-chip-count">7</span></span>
+              <span class="wf-chip">Min flight<span class="wf-chip-count">3</span></span>
+              <span class="wf-chip">Fra Oslo-området</span>
+            </div>
+
+            <div class="wf-section-head">
+              <span class="wf-section-title">Felt · Runde 1</span>
+              <span class="wf-section-meta">Sortert: tee-tid</span>
+            </div>
+
+            <table class="wf-table"><span class="wf-marker">4</span>
+              <thead>
+                <tr>
+                  <th>Pos</th>
+                  <th>Spiller</th>
+                  <th>Klubb</th>
+                  <th>HCP</th>
+                  <th>Flight</th>
+                  <th>Tee-tid</th>
+                  <th>Tee</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="wf-cell-pos">1</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">MH</span><div><div class="wf-player-name">Magnus Halvorsen</div><div class="wf-player-sub">Seniorgolf</div></div></div></td>
+                  <td>Bogstad GK</td>
+                  <td class="wf-cell-hcp">+2.1</td>
+                  <td><span class="wf-cell-flight">1</span></td>
+                  <td class="wf-cell-tee">07:30</td>
+                  <td>1</td>
+                  <td><span class="wf-tag">Bekreftet</span></td>
+                </tr>
+                <tr>
+                  <td class="wf-cell-pos">2</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">IB</span><div><div class="wf-player-name">Ingrid Berge</div><div class="wf-player-sub">Dame</div></div></div></td>
+                  <td>Oslo GK</td>
+                  <td class="wf-cell-hcp">0.4</td>
+                  <td><span class="wf-cell-flight">1</span></td>
+                  <td class="wf-cell-tee">07:30</td>
+                  <td>1</td>
+                  <td><span class="wf-tag">Bekreftet</span></td>
+                </tr>
+                <tr>
+                  <td class="wf-cell-pos">3</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">KL</span><div><div class="wf-player-name">Kristoffer Larsen</div><div class="wf-player-sub">Senior</div></div></div></td>
+                  <td>Miklagard GK</td>
+                  <td class="wf-cell-hcp">1.2</td>
+                  <td><span class="wf-cell-flight">1</span></td>
+                  <td class="wf-cell-tee">07:30</td>
+                  <td>1</td>
+                  <td><span class="wf-tag">Bekreftet</span></td>
+                </tr>
+                <tr class="wf-row-ak">
+                  <td class="wf-cell-pos">4</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">EH</span><div><div class="wf-player-name">Erik Hansen</div><div class="wf-player-sub">AK Academy</div></div></div></td>
+                  <td>Oslo GK</td>
+                  <td class="wf-cell-hcp">2.8</td>
+                  <td><span class="wf-cell-flight">2</span></td>
+                  <td class="wf-cell-tee">07:40</td>
+                  <td>1</td>
+                  <td><span class="wf-tag wf-tag-ak">AK-elev</span></td>
+                </tr>
+                <tr>
+                  <td class="wf-cell-pos">5</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">SØ</span><div><div class="wf-player-name">Sara Østby</div><div class="wf-player-sub">Dame</div></div></div></td>
+                  <td>Losby GK</td>
+                  <td class="wf-cell-hcp">3.6</td>
+                  <td><span class="wf-cell-flight">2</span></td>
+                  <td class="wf-cell-tee">07:40</td>
+                  <td>1</td>
+                  <td><span class="wf-tag">Bekreftet</span></td>
+                </tr>
+                <tr>
+                  <td class="wf-cell-pos">6</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">JH</span><div><div class="wf-player-name">Jonas Haugen</div><div class="wf-player-sub">Senior</div></div></div></td>
+                  <td>Drøbak GK</td>
+                  <td class="wf-cell-hcp">4.1</td>
+                  <td><span class="wf-cell-flight">2</span></td>
+                  <td class="wf-cell-tee">07:40</td>
+                  <td>1</td>
+                  <td><span class="wf-tag">Bekreftet</span></td>
+                </tr>
+                <tr>
+                  <td class="wf-cell-pos">7</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">TN</span><div><div class="wf-player-name">Thea Nilsen</div><div class="wf-player-sub">Dame</div></div></div></td>
+                  <td>Bogstad GK</td>
+                  <td class="wf-cell-hcp">4.5</td>
+                  <td><span class="wf-cell-flight">3</span></td>
+                  <td class="wf-cell-tee">07:50</td>
+                  <td>1</td>
+                  <td><span class="wf-tag">Bekreftet</span></td>
+                </tr>
+                <tr class="wf-row-ak">
+                  <td class="wf-cell-pos">8</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">HB</span><div><div class="wf-player-name">Henrik Bergersen</div><div class="wf-player-sub">AK Academy Junior</div></div></div></td>
+                  <td>GFGK</td>
+                  <td class="wf-cell-hcp">5.2</td>
+                  <td><span class="wf-cell-flight">3</span></td>
+                  <td class="wf-cell-tee">07:50</td>
+                  <td>1</td>
+                  <td><span class="wf-tag wf-tag-ak">AK-elev</span></td>
+                </tr>
+                <tr>
+                  <td class="wf-cell-pos">9</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">OA</span><div><div class="wf-player-name">Ole-Andreas Moen</div><div class="wf-player-sub">Senior</div></div></div></td>
+                  <td>Kongsberg GK</td>
+                  <td class="wf-cell-hcp">5.8</td>
+                  <td><span class="wf-cell-flight">3</span></td>
+                  <td class="wf-cell-tee">07:50</td>
+                  <td>1</td>
+                  <td><span class="wf-tag">Bekreftet</span></td>
+                </tr>
+                <tr class="wf-row-me">
+                  <td class="wf-cell-pos">23</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">AK</span><div><div class="wf-player-name">Anders Kristiansen</div><div class="wf-player-sub">Meg · AK Academy</div></div></div></td>
+                  <td>Bogstad GK</td>
+                  <td class="wf-cell-hcp">7.4</td>
+                  <td><span class="wf-cell-flight">6</span></td>
+                  <td class="wf-cell-tee">09:42</td>
+                  <td>10</td>
+                  <td><span class="wf-tag wf-tag-me">Meg</span></td>
+                </tr>
+                <tr>
+                  <td class="wf-cell-pos">24</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">LM</span><div><div class="wf-player-name">Lars Martinsen</div><div class="wf-player-sub">Senior</div></div></div></td>
+                  <td>Tyrifjord GK</td>
+                  <td class="wf-cell-hcp">7.9</td>
+                  <td><span class="wf-cell-flight">6</span></td>
+                  <td class="wf-cell-tee">09:42</td>
+                  <td>10</td>
+                  <td><span class="wf-tag">Bekreftet</span></td>
+                </tr>
+                <tr>
+                  <td class="wf-cell-pos">25</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">MR</span><div><div class="wf-player-name">Mari Rønning</div><div class="wf-player-sub">Dame</div></div></div></td>
+                  <td>Grini GK</td>
+                  <td class="wf-cell-hcp">8.3</td>
+                  <td><span class="wf-cell-flight">6</span></td>
+                  <td class="wf-cell-tee">09:42</td>
+                  <td>10</td>
+                  <td><span class="wf-tag">Bekreftet</span></td>
+                </tr>
+                <tr class="wf-row-ak">
+                  <td class="wf-cell-pos">31</td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">SJ</span><div><div class="wf-player-name">Sigurd Johansen</div><div class="wf-player-sub">AK Academy</div></div></div></td>
+                  <td>Bogstad GK</td>
+                  <td class="wf-cell-hcp">9.1</td>
+                  <td><span class="wf-cell-flight">8</span></td>
+                  <td class="wf-cell-tee">10:02</td>
+                  <td>10</td>
+                  <td><span class="wf-tag wf-tag-ak">AK-elev</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul>
+      <li>1 — Breadcrumb + sidetittel med turneringsnavn, klubb og dato. Sist-synket-tid viser GolfBox-integrasjonens ferskhet.</li>
+      <li>2 — Meta-stripe med nøkkeltall: påmeldte, HCP-krav, første og min egen tee-tid. "Startliste klar"-badge endres ved livestatus.</li>
+      <li>3 — Fire stat-kort: AK-elever, snitt HCP, klubber, flights. Gir rask kontekst før brukeren skanner lista.</li>
+      <li>4 — Tabell med norske navn, klubber, HCP (tabular-nums), flight-boks, tee-tid og tag. Accent-stripe på AK-elever, sort/grønn rad på "Meg".</li>
+      <li>5 — View-tabs øverst bytter mellom liste, tee-grid, bracket og leaderboard — samme URL-hierarki, forskjellige visninger av samme datasett.</li>
+    </ul></div>
+  </div>
+
+  <!-- ===== OPTION 2: Tee Time Grid ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Tee Time Grid</span></h2>
+    <p class="option-description">Gruppert per tee-tid med flights som kort (3–4 spillere). Tee-tidene er store, monospace-timestamps. Egen flight med "Meg" uthevet. Ideelt når spilleren skal forberede seg på hvem de spiller med, og trenere vil planlegge runde-support.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer/ncup-bogstad-2026/pameldte?view=tee</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">AK</span><span>Anders K.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-breadcrumb">
+              <a href="#">Turneringer</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <a href="#">Norges Cup Bogstad</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <span class="wf-breadcrumb-current">Påmeldte · Tee-tider</span>
+            </div>
+
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Startliste — Tee-tider<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">16 flights · 07:30 til 10:32 · Shotgun start · Oppdatert fra GolfBox</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Last ned scorekort</button>
+                <button class="wf-btn wf-btn-cta">Hopp til min flight</button>
+              </div>
+            </div>
+
+            <div class="wf-tourn-strip">
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">Min flight</span><span class="wf-tourn-strip-value">09:42 · Hull 10</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">Spillere i min flight</span><span class="wf-tourn-strip-value">Anders · Lars · Mari</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">Intervall</span><span class="wf-tourn-strip-value">10 min</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <span class="wf-tourn-badge"><span class="wf-tourn-badge-dot"></span>Shotgun 07:30</span>
+            </div>
+
+            <div class="wf-view-tabs">
+              <button class="wf-view-tab">Liste</button>
+              <button class="wf-view-tab wf-active">Tee-tider</button>
+              <button class="wf-view-tab">Bracket</button>
+              <button class="wf-view-tab">Leaderboard</button>
+            </div>
+
+            <!-- 07:30 gruppe -->
+            <div class="wf-tee-group"><span class="wf-marker">2</span>
+              <div class="wf-tee-group-head">
+                <span class="wf-tee-group-label">07:30 – 07:50</span>
+                <span class="wf-tee-group-rule"></span>
+                <span class="wf-tee-group-count">3 flights · 12 spillere</span>
+              </div>
+              <div class="wf-tee-grid">
+                <div class="wf-tee-card">
+                  <div class="wf-tee-head">
+                    <span class="wf-tee-time">07:30</span>
+                    <span class="wf-tee-hole">Hull 1</span>
+                  </div>
+                  <div class="wf-tee-players">
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">MH</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Magnus Halvorsen</div><div class="wf-tee-player-meta">Bogstad GK</div></div><span class="wf-tee-player-hcp">+2.1</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">IB</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Ingrid Berge</div><div class="wf-tee-player-meta">Oslo GK</div></div><span class="wf-tee-player-hcp">0.4</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">KL</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Kristoffer Larsen</div><div class="wf-tee-player-meta">Miklagard GK</div></div><span class="wf-tee-player-hcp">1.2</span></div>
+                  </div>
+                </div>
+                <div class="wf-tee-card">
+                  <div class="wf-tee-head"><span class="wf-tee-time">07:40</span><span class="wf-tee-hole">Hull 1</span></div>
+                  <div class="wf-tee-players">
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">EH</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Erik Hansen <span class="wf-tag wf-tag-ak" style="margin-left:4px;">AK</span></div><div class="wf-tee-player-meta">Oslo GK</div></div><span class="wf-tee-player-hcp">2.8</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">SØ</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Sara Østby</div><div class="wf-tee-player-meta">Losby GK</div></div><span class="wf-tee-player-hcp">3.6</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">JH</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Jonas Haugen</div><div class="wf-tee-player-meta">Drøbak GK</div></div><span class="wf-tee-player-hcp">4.1</span></div>
+                  </div>
+                </div>
+                <div class="wf-tee-card">
+                  <div class="wf-tee-head"><span class="wf-tee-time">07:50</span><span class="wf-tee-hole">Hull 1</span></div>
+                  <div class="wf-tee-players">
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">TN</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Thea Nilsen</div><div class="wf-tee-player-meta">Bogstad GK</div></div><span class="wf-tee-player-hcp">4.5</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">HB</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Henrik Bergersen <span class="wf-tag wf-tag-ak" style="margin-left:4px;">AK</span></div><div class="wf-tee-player-meta">GFGK</div></div><span class="wf-tee-player-hcp">5.2</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">OM</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Ole-Andreas Moen</div><div class="wf-tee-player-meta">Kongsberg GK</div></div><span class="wf-tee-player-hcp">5.8</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 09:30 gruppe - inkl min flight -->
+            <div class="wf-tee-group"><span class="wf-marker">3</span>
+              <div class="wf-tee-group-head">
+                <span class="wf-tee-group-label">09:30 – 09:52 · Min gruppe</span>
+                <span class="wf-tee-group-rule"></span>
+                <span class="wf-tee-group-count">3 flights · 9 spillere</span>
+              </div>
+              <div class="wf-tee-grid">
+                <div class="wf-tee-card">
+                  <div class="wf-tee-head"><span class="wf-tee-time">09:32</span><span class="wf-tee-hole">Hull 10</span></div>
+                  <div class="wf-tee-players">
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">BE</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Bjørn Eriksen</div><div class="wf-tee-player-meta">Grini GK</div></div><span class="wf-tee-player-hcp">6.7</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">CA</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Camilla Andersen</div><div class="wf-tee-player-meta">Oslo GK</div></div><span class="wf-tee-player-hcp">6.9</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">FS</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Fredrik Solberg</div><div class="wf-tee-player-meta">Losby GK</div></div><span class="wf-tee-player-hcp">7.1</span></div>
+                  </div>
+                </div>
+                <div class="wf-tee-card wf-tee-card-me">
+                  <div class="wf-tee-head"><span class="wf-tee-time">09:42</span><span class="wf-tee-hole">Hull 10</span></div>
+                  <div class="wf-tee-players">
+                    <div class="wf-tee-player wf-tee-me"><span class="wf-tee-player-avatar">AK</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Anders Kristiansen <span class="wf-tag wf-tag-me" style="margin-left:4px;">MEG</span></div><div class="wf-tee-player-meta">Bogstad GK · AK Academy</div></div><span class="wf-tee-player-hcp">7.4</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">LM</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Lars Martinsen</div><div class="wf-tee-player-meta">Tyrifjord GK</div></div><span class="wf-tee-player-hcp">7.9</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">MR</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Mari Rønning</div><div class="wf-tee-player-meta">Grini GK</div></div><span class="wf-tee-player-hcp">8.3</span></div>
+                  </div>
+                </div>
+                <div class="wf-tee-card">
+                  <div class="wf-tee-head"><span class="wf-tee-time">09:52</span><span class="wf-tee-hole">Hull 10</span></div>
+                  <div class="wf-tee-players">
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">VS</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Vetle Strand</div><div class="wf-tee-player-meta">Bogstad GK</div></div><span class="wf-tee-player-hcp">8.6</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">AL</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Astrid Lund</div><div class="wf-tee-player-meta">Oslo GK</div></div><span class="wf-tee-player-hcp">8.7</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">PS</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Petter Svendsen</div><div class="wf-tee-player-meta">Kongsberg GK</div></div><span class="wf-tee-player-hcp">8.9</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 10:00 gruppe -->
+            <div class="wf-tee-group">
+              <div class="wf-tee-group-head">
+                <span class="wf-tee-group-label">10:00 – 10:32</span>
+                <span class="wf-tee-group-rule"></span>
+                <span class="wf-tee-group-count">4 flights · 13 spillere</span>
+              </div>
+              <div class="wf-tee-grid">
+                <div class="wf-tee-card">
+                  <div class="wf-tee-head"><span class="wf-tee-time">10:02</span><span class="wf-tee-hole">Hull 10</span></div>
+                  <div class="wf-tee-players">
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">SJ</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Sigurd Johansen <span class="wf-tag wf-tag-ak" style="margin-left:4px;">AK</span></div><div class="wf-tee-player-meta">Bogstad GK</div></div><span class="wf-tee-player-hcp">9.1</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">EH</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Elias Holm</div><div class="wf-tee-player-meta">Drøbak GK</div></div><span class="wf-tee-player-hcp">9.4</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">IH</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Ida Haugland</div><div class="wf-tee-player-meta">Grini GK</div></div><span class="wf-tee-player-hcp">9.7</span></div>
+                  </div>
+                </div>
+                <div class="wf-tee-card">
+                  <div class="wf-tee-head"><span class="wf-tee-time">10:12</span><span class="wf-tee-hole">Hull 10</span></div>
+                  <div class="wf-tee-players">
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">NB</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Nikolai Bøe</div><div class="wf-tee-player-meta">Bogstad GK</div></div><span class="wf-tee-player-hcp">10.2</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">RK</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Rikke Kvam</div><div class="wf-tee-player-meta">Oslo GK</div></div><span class="wf-tee-player-hcp">10.6</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">TK</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Tobias Kleven</div><div class="wf-tee-player-meta">Losby GK</div></div><span class="wf-tee-player-hcp">11.1</span></div>
+                  </div>
+                </div>
+                <div class="wf-tee-card">
+                  <div class="wf-tee-head"><span class="wf-tee-time">10:22</span><span class="wf-tee-hole">Hull 10</span></div>
+                  <div class="wf-tee-players">
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">MF</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Martine Fredriksen <span class="wf-tag wf-tag-ak" style="margin-left:4px;">AK</span></div><div class="wf-tee-player-meta">Bogstad GK</div></div><span class="wf-tee-player-hcp">12.4</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">SH</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Sindre Helland</div><div class="wf-tee-player-meta">Miklagard GK</div></div><span class="wf-tee-player-hcp">13.0</span></div>
+                    <div class="wf-tee-player"><span class="wf-tee-player-avatar">EL</span><div class="wf-tee-player-info"><div class="wf-tee-player-name">Emilie Lunde</div><div class="wf-tee-player-meta">Grini GK</div></div><span class="wf-tee-player-hcp">14.6</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul>
+      <li>1 — Tittel viser antall flights, tidsspenn og start-format (shotgun eller rangert).</li>
+      <li>2 — Tee-tider gruppert per 20-minutters bolker med rule-line for visuell separasjon. Antall flights og spillere i bolken vises til høyre.</li>
+      <li>3 — "Min gruppe" framhevet som eget segment, med egen flight (09:42) som sort kort. AK-tags på elever i andre flights (hover = link til profil).</li>
+    </ul></div>
+  </div>
+
+  <!-- ===== OPTION 3: Match Play Bracket ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Match Play Bracket</span></h2>
+    <p class="option-description">Bracket-tre for NM Match Play 2026 med 5 runder (R32 → R16 → KF → SF → Finale). Matcher som pairing-bokser, vinnere markert, tapere overstreket. Min egen kamp fremhevet som sort mini-kort. Dekker "hvem møter jeg neste runde"-mønsteret.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer/nm-match-play-2026/pameldte?view=bracket</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">AK</span><span>Anders K.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-breadcrumb">
+              <a href="#">Turneringer</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <a href="#">NM Match Play 2026</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <span class="wf-breadcrumb-current">Bracket</span>
+            </div>
+
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">NM Match Play 2026<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Losby Golf Club · 15.–18. august · 64-spillers K.O. · Runde 2 spilles nå</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Print bracket</button>
+                <button class="wf-btn">Deling</button>
+              </div>
+            </div>
+
+            <div class="wf-tourn-strip">
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">Påmeldte</span><span class="wf-tourn-strip-value">64 seeded</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">Min seed</span><span class="wf-tourn-strip-value">#23</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">Min status</span><span class="wf-tourn-strip-value">Runde 2 · i gang</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">Neste motstander</span><span class="wf-tourn-strip-value">Venter R2-resultat</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <span class="wf-tourn-badge"><span class="wf-tourn-badge-dot"></span>Runde 2 pågår</span>
+            </div>
+
+            <div class="wf-view-tabs">
+              <button class="wf-view-tab">Liste</button>
+              <button class="wf-view-tab">Tee-tider</button>
+              <button class="wf-view-tab wf-active">Bracket</button>
+              <button class="wf-view-tab">Leaderboard</button>
+            </div>
+
+            <div class="wf-bracket-split">
+              <div class="wf-bracket"><span class="wf-marker">2</span>
+                <!-- Round of 32 -->
+                <div class="wf-bracket-round">
+                  <div class="wf-bracket-round-title">R32</div>
+                  <div class="wf-bracket-match wf-match-done">
+                    <div class="wf-bracket-player wf-winner"><span class="wf-bracket-player-name">M. Halvorsen</span><span class="wf-bracket-player-score">4&amp;3</span></div>
+                    <div class="wf-bracket-player wf-loser"><span class="wf-bracket-player-name">T. Fossum</span><span class="wf-bracket-player-score">—</span></div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-done">
+                    <div class="wf-bracket-player wf-winner"><span class="wf-bracket-player-name">I. Berge</span><span class="wf-bracket-player-score">2&amp;1</span></div>
+                    <div class="wf-bracket-player wf-loser"><span class="wf-bracket-player-name">E. Dahl</span><span class="wf-bracket-player-score">—</span></div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-done">
+                    <div class="wf-bracket-player wf-winner"><span class="wf-bracket-player-name">E. Hansen</span><span class="wf-bracket-player-score">1 up</span></div>
+                    <div class="wf-bracket-player wf-loser"><span class="wf-bracket-player-name">V. Strand</span><span class="wf-bracket-player-score">—</span></div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-done">
+                    <div class="wf-bracket-player wf-winner"><span class="wf-bracket-player-name">K. Larsen</span><span class="wf-bracket-player-score">3&amp;2</span></div>
+                    <div class="wf-bracket-player wf-loser"><span class="wf-bracket-player-name">N. Bøe</span><span class="wf-bracket-player-score">—</span></div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-me">
+                    <div class="wf-bracket-player wf-winner"><span class="wf-bracket-player-name">A. Kristiansen</span><span class="wf-bracket-player-score">2 up</span></div>
+                    <div class="wf-bracket-player wf-loser"><span class="wf-bracket-player-name">P. Svendsen</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-match-meta">Seed 23 · 19. aug</div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-done">
+                    <div class="wf-bracket-player wf-winner"><span class="wf-bracket-player-name">S. Østby</span><span class="wf-bracket-player-score">5&amp;4</span></div>
+                    <div class="wf-bracket-player wf-loser"><span class="wf-bracket-player-name">R. Kvam</span><span class="wf-bracket-player-score">—</span></div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-done">
+                    <div class="wf-bracket-player wf-winner"><span class="wf-bracket-player-name">J. Haugen</span><span class="wf-bracket-player-score">2&amp;1</span></div>
+                    <div class="wf-bracket-player wf-loser"><span class="wf-bracket-player-name">T. Kleven</span><span class="wf-bracket-player-score">—</span></div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-done">
+                    <div class="wf-bracket-player wf-winner"><span class="wf-bracket-player-name">H. Bergersen</span><span class="wf-bracket-player-score">3&amp;1</span></div>
+                    <div class="wf-bracket-player wf-loser"><span class="wf-bracket-player-name">A. Lund</span><span class="wf-bracket-player-score">—</span></div>
+                  </div>
+                </div>
+
+                <!-- Round of 16 -->
+                <div class="wf-bracket-round">
+                  <div class="wf-bracket-round-title">R16</div>
+                  <div class="wf-bracket-match">
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">M. Halvorsen</span><span class="wf-bracket-player-score">3 opp</span></div>
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">I. Berge</span><span class="wf-bracket-player-score">2 ned</span></div>
+                    <div class="wf-bracket-match-meta">Hull 14 · Pågår</div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-me">
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">E. Hansen</span><span class="wf-bracket-player-score">1 opp</span></div>
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">A. Kristiansen</span><span class="wf-bracket-player-score">1 ned</span></div>
+                    <div class="wf-bracket-match-meta">Hull 12 · Pågår</div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-tbd">
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">S. Østby / J. H.</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">K. Larsen</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-match-meta">Tee: 13:30</div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-tbd">
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">H. Bergersen</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">TBD</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-match-meta">Tee: 14:00</div>
+                  </div>
+                </div>
+
+                <!-- Quarter-finals -->
+                <div class="wf-bracket-round">
+                  <div class="wf-bracket-round-title">Kvartfinale</div>
+                  <div class="wf-bracket-match wf-match-tbd">
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">TBD</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">TBD</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-match-meta">20. aug</div>
+                  </div>
+                  <div class="wf-bracket-match wf-match-tbd">
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">TBD</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">TBD</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-match-meta">20. aug</div>
+                  </div>
+                </div>
+
+                <!-- Semifinal -->
+                <div class="wf-bracket-round">
+                  <div class="wf-bracket-round-title">Semi</div>
+                  <div class="wf-bracket-match wf-match-tbd">
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">TBD</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">TBD</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-match-meta">21. aug</div>
+                  </div>
+                </div>
+
+                <!-- Final -->
+                <div class="wf-bracket-round">
+                  <div class="wf-bracket-round-title">Finale</div>
+                  <div class="wf-bracket-match wf-match-tbd">
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">TBD</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-player"><span class="wf-bracket-player-name">TBD</span><span class="wf-bracket-player-score">—</span></div>
+                    <div class="wf-bracket-match-meta">22. aug</div>
+                  </div>
+                </div>
+              </div>
+
+              <aside>
+                <div class="wf-my-match"><span class="wf-marker">3</span>
+                  <div class="wf-my-match-label">Min kamp · R16</div>
+                  <div class="wf-my-match-round">Pågår — hull 12</div>
+                  <div class="wf-my-match-vs">
+                    <div class="wf-my-match-player">
+                      <div class="wf-my-match-player-avatar">EH</div>
+                      <div class="wf-my-match-player-name">E. Hansen</div>
+                      <div class="wf-my-match-player-hcp">HCP 2.8 · 1 opp</div>
+                    </div>
+                    <div class="wf-my-match-vs-text">VS</div>
+                    <div class="wf-my-match-player">
+                      <div class="wf-my-match-player-avatar">AK</div>
+                      <div class="wf-my-match-player-name">A. Kristiansen</div>
+                      <div class="wf-my-match-player-hcp">HCP 7.4 · 1 ned</div>
+                    </div>
+                  </div>
+                  <div class="wf-my-match-meta">6 hull igjen. Head-to-head: 1–2 i dine disfavør siste 3 år. Forrige møte: Bogstad Open 2025 (tapt 3&amp;2).</div>
+                </div>
+              </aside>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul>
+      <li>1 — Tittel + status-strip viser hvilken runde som spilles, min seed og neste motstander (auto-oppdatert).</li>
+      <li>2 — Bracket-tre med 5 kolonner (R32 → Finale). Ferdige kamper har winner fremhevet + score (&amp;-notasjon), TBD-kamper er stiplet.</li>
+      <li>3 — "Min kamp"-panel høyre side: stor VS-visning, HCP, nåværende stilling, head-to-head-historikk. Oppdateres live når skår registreres.</li>
+    </ul></div>
+  </div>
+
+  <!-- ===== OPTION 4: Leaderboard Live ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Leaderboard Live</span></h2>
+    <p class="option-description">Live-leaderboard etter at runden har startet — position changes (↑/↓), gjeldende skår (-/+), thru-status, today-skår. Meg uthevet i grønt med accent, AK-elever subtilt markert. Oppdateres hvert 30. sekund fra GolfBox-scoring.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer/ncup-bogstad-2026/pameldte?view=leaderboard</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">AK</span><span>Anders K.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-breadcrumb">
+              <a href="#">Turneringer</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <a href="#">Norges Cup Bogstad</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <span class="wf-breadcrumb-current">Leaderboard</span>
+            </div>
+
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Leaderboard<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Runde 1 av 2 · 42 av 64 spillere på banen · Beste skår så langt: -5</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Filtrer: AK-elever</button>
+                <button class="wf-btn">Historikk</button>
+                <button class="wf-btn wf-btn-cta">Del leaderboard</button>
+              </div>
+            </div>
+
+            <div class="wf-lb-strip"><span class="wf-marker">2</span>
+              <span class="wf-lb-live"><span class="wf-lb-live-dot"></span>Live</span>
+              <span class="wf-lb-round">Runde <strong>1</strong> · Gjennom hull <strong>14</strong> (snitt)</span>
+              <span class="wf-lb-update">Sist oppdatert 14:47 · neste om 00:23</span>
+            </div>
+
+            <div class="wf-view-tabs">
+              <button class="wf-view-tab">Liste</button>
+              <button class="wf-view-tab">Tee-tider</button>
+              <button class="wf-view-tab">Bracket</button>
+              <button class="wf-view-tab wf-active">Leaderboard</button>
+            </div>
+
+            <table class="wf-lb-table"><span class="wf-marker">3</span>
+              <thead>
+                <tr>
+                  <th>Pos</th>
+                  <th>Spiller</th>
+                  <th>Klubb</th>
+                  <th class="wf-th-right">Total</th>
+                  <th class="wf-th-right">Thru</th>
+                  <th class="wf-th-right">I dag</th>
+                  <th class="wf-th-right">Runde 1</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="wf-lb-pos">1 <span class="wf-lb-move wf-lb-move-up">↑ 2</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">MH</span><div><div class="wf-player-name">Magnus Halvorsen</div><div class="wf-player-sub">HCP +2.1</div></div></div></td>
+                  <td>Bogstad GK</td>
+                  <td class="wf-td-right wf-lb-score wf-score-under">-5</td>
+                  <td class="wf-td-right wf-lb-thru">16</td>
+                  <td class="wf-td-right wf-lb-today">-5</td>
+                  <td class="wf-td-right wf-lb-today">67</td>
+                </tr>
+                <tr>
+                  <td class="wf-lb-pos">2 <span class="wf-lb-move">–</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">IB</span><div><div class="wf-player-name">Ingrid Berge</div><div class="wf-player-sub">HCP 0.4</div></div></div></td>
+                  <td>Oslo GK</td>
+                  <td class="wf-td-right wf-lb-score wf-score-under">-4</td>
+                  <td class="wf-td-right wf-lb-thru">F</td>
+                  <td class="wf-td-right wf-lb-today">-4</td>
+                  <td class="wf-td-right wf-lb-today">68</td>
+                </tr>
+                <tr>
+                  <td class="wf-lb-pos">T3 <span class="wf-lb-move wf-lb-move-up">↑ 1</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">KL</span><div><div class="wf-player-name">Kristoffer Larsen</div><div class="wf-player-sub">HCP 1.2</div></div></div></td>
+                  <td>Miklagard GK</td>
+                  <td class="wf-td-right wf-lb-score wf-score-under">-3</td>
+                  <td class="wf-td-right wf-lb-thru">15</td>
+                  <td class="wf-td-right wf-lb-today">-3</td>
+                  <td class="wf-td-right wf-lb-today">69</td>
+                </tr>
+                <tr class="wf-lb-ak">
+                  <td class="wf-lb-pos">T3 <span class="wf-lb-move wf-lb-move-up">↑ 4</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">EH</span><div><div class="wf-player-name">Erik Hansen <span class="wf-tag wf-tag-ak" style="margin-left:4px;">AK</span></div><div class="wf-player-sub">HCP 2.8 · AK Academy</div></div></div></td>
+                  <td>Oslo GK</td>
+                  <td class="wf-td-right wf-lb-score wf-score-under">-3</td>
+                  <td class="wf-td-right wf-lb-thru">14</td>
+                  <td class="wf-td-right wf-lb-today">-3</td>
+                  <td class="wf-td-right wf-lb-today">—</td>
+                </tr>
+                <tr>
+                  <td class="wf-lb-pos">5 <span class="wf-lb-move wf-lb-move-down">↓ 1</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">SØ</span><div><div class="wf-player-name">Sara Østby</div><div class="wf-player-sub">HCP 3.6</div></div></div></td>
+                  <td>Losby GK</td>
+                  <td class="wf-td-right wf-lb-score wf-score-under">-2</td>
+                  <td class="wf-td-right wf-lb-thru">15</td>
+                  <td class="wf-td-right wf-lb-today">-2</td>
+                  <td class="wf-td-right wf-lb-today">70</td>
+                </tr>
+                <tr>
+                  <td class="wf-lb-pos">T6 <span class="wf-lb-move">–</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">JH</span><div><div class="wf-player-name">Jonas Haugen</div><div class="wf-player-sub">HCP 4.1</div></div></div></td>
+                  <td>Drøbak GK</td>
+                  <td class="wf-td-right wf-lb-score">E</td>
+                  <td class="wf-td-right wf-lb-thru">F</td>
+                  <td class="wf-td-right wf-lb-today">E</td>
+                  <td class="wf-td-right wf-lb-today">72</td>
+                </tr>
+                <tr class="wf-lb-ak">
+                  <td class="wf-lb-pos">T6 <span class="wf-lb-move wf-lb-move-up">↑ 3</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">HB</span><div><div class="wf-player-name">Henrik Bergersen <span class="wf-tag wf-tag-ak" style="margin-left:4px;">AK</span></div><div class="wf-player-sub">HCP 5.2 · AK Junior</div></div></div></td>
+                  <td>GFGK</td>
+                  <td class="wf-td-right wf-lb-score">E</td>
+                  <td class="wf-td-right wf-lb-thru">13</td>
+                  <td class="wf-td-right wf-lb-today">E</td>
+                  <td class="wf-td-right wf-lb-today">—</td>
+                </tr>
+                <tr>
+                  <td class="wf-lb-pos">8 <span class="wf-lb-move wf-lb-move-up">↑ 1</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">TN</span><div><div class="wf-player-name">Thea Nilsen</div><div class="wf-player-sub">HCP 4.5</div></div></div></td>
+                  <td>Bogstad GK</td>
+                  <td class="wf-td-right wf-lb-score wf-score-over">+1</td>
+                  <td class="wf-td-right wf-lb-thru">14</td>
+                  <td class="wf-td-right wf-lb-today">+1</td>
+                  <td class="wf-td-right wf-lb-today">—</td>
+                </tr>
+                <tr class="wf-lb-me">
+                  <td class="wf-lb-pos">9 <span class="wf-lb-move wf-lb-move-up">↑ 5</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">AK</span><div><div class="wf-player-name">Anders Kristiansen</div><div class="wf-player-sub">Meg · HCP 7.4</div></div></div></td>
+                  <td>Bogstad GK</td>
+                  <td class="wf-td-right wf-lb-score">+2</td>
+                  <td class="wf-td-right wf-lb-thru">12</td>
+                  <td class="wf-td-right wf-lb-today">+2</td>
+                  <td class="wf-td-right wf-lb-today">—</td>
+                </tr>
+                <tr>
+                  <td class="wf-lb-pos">T10 <span class="wf-lb-move wf-lb-move-down">↓ 2</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">LM</span><div><div class="wf-player-name">Lars Martinsen</div><div class="wf-player-sub">HCP 7.9</div></div></div></td>
+                  <td>Tyrifjord GK</td>
+                  <td class="wf-td-right wf-lb-score wf-score-over">+3</td>
+                  <td class="wf-td-right wf-lb-thru">12</td>
+                  <td class="wf-td-right wf-lb-today">+3</td>
+                  <td class="wf-td-right wf-lb-today">—</td>
+                </tr>
+                <tr>
+                  <td class="wf-lb-pos">T10 <span class="wf-lb-move wf-lb-move-down">↓ 1</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">MR</span><div><div class="wf-player-name">Mari Rønning</div><div class="wf-player-sub">HCP 8.3</div></div></div></td>
+                  <td>Grini GK</td>
+                  <td class="wf-td-right wf-lb-score wf-score-over">+3</td>
+                  <td class="wf-td-right wf-lb-thru">12</td>
+                  <td class="wf-td-right wf-lb-today">+3</td>
+                  <td class="wf-td-right wf-lb-today">—</td>
+                </tr>
+                <tr class="wf-lb-ak">
+                  <td class="wf-lb-pos">15 <span class="wf-lb-move wf-lb-move-down">↓ 3</span></td>
+                  <td><div class="wf-cell-player"><span class="wf-player-avatar">SJ</span><div><div class="wf-player-name">Sigurd Johansen <span class="wf-tag wf-tag-ak" style="margin-left:4px;">AK</span></div><div class="wf-player-sub">HCP 9.1 · AK Academy</div></div></div></td>
+                  <td>Bogstad GK</td>
+                  <td class="wf-td-right wf-lb-score wf-score-over">+5</td>
+                  <td class="wf-td-right wf-lb-thru">10</td>
+                  <td class="wf-td-right wf-lb-today">+5</td>
+                  <td class="wf-td-right wf-lb-today">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul>
+      <li>1 — Overskrift viser live-status: runde X av Y, hvor mange som er på banen, beste skår hittil.</li>
+      <li>2 — Live-strip: blinkende punkt, gjennomsnittlig hull spilt, nedtelling til neste oppdatering (30s-intervall).</li>
+      <li>3 — Tabell med Pos (inkl. bevegelse), Total, Thru (hull), I dag, Runde 1. "Meg" er mørkegrønn rad med accent-tall. AK-elever subtilt markert.</li>
+    </ul></div>
+  </div>
+
+  <!-- ===== OPTION 5: Player Cards ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Player Cards</span></h2>
+    <p class="option-description">Grid av spillerkort med navn, klubb, HCP, tidligere resultater og head-to-head-sammenligning mot deg. For utforskning og scouting — hvem er dette, har jeg spilt mot dem før, hva er deres beste resultat. AK-elever har accent-ramme, "Meg" er grønt kort.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">portal.akgolf.no/turneringer/ncup-bogstad-2026/pameldte?view=cards</div><div class="browser-controls">─ □ ✕</div></div>
+      <div class="browser-content">
+        <div class="wf-app">
+          <aside class="wf-sidebar">
+            <div class="wf-sidebar-logo">AK GOLF</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Oversikt</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Planlegg</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Tren</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Spill</div>
+            <div class="wf-nav-item"><span class="wf-nav-ico"></span>Analyser</div>
+            <div class="wf-nav-item wf-active"><span class="wf-nav-ico"></span>Turneringer</div>
+            <div class="wf-sidebar-foot"><div class="wf-sidebar-user"><span class="wf-sidebar-avatar">AK</span><span>Anders K.</span></div></div>
+          </aside>
+          <main class="wf-main">
+            <div class="wf-breadcrumb">
+              <a href="#">Turneringer</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <a href="#">Norges Cup Bogstad</a>
+              <span class="wf-breadcrumb-sep">›</span>
+              <span class="wf-breadcrumb-current">Spillerkort</span>
+            </div>
+
+            <div class="wf-page-head">
+              <div>
+                <h1 class="wf-page-title">Spillerkort<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">64 spillere · Klikk for full profil, historikk og head-to-head</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Sorter: HCP</button>
+                <button class="wf-btn">Sorter: historie</button>
+              </div>
+            </div>
+
+            <div class="wf-tourn-strip">
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">Turnering</span><span class="wf-tourn-strip-value">Norges Cup Bogstad</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">Møtt før</span><span class="wf-tourn-strip-value">14 av 64</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <div class="wf-tourn-strip-item"><span class="wf-tourn-strip-label">AK-elever</span><span class="wf-tourn-strip-value">7</span></div>
+              <span class="wf-tourn-strip-sep"></span>
+              <span class="wf-tourn-badge"><span class="wf-tourn-badge-dot"></span>Startliste klar</span>
+            </div>
+
+            <div class="wf-view-tabs">
+              <button class="wf-view-tab">Liste</button>
+              <button class="wf-view-tab">Tee-tider</button>
+              <button class="wf-view-tab">Bracket</button>
+              <button class="wf-view-tab">Leaderboard</button>
+              <button class="wf-view-tab wf-active">Kort</button>
+            </div>
+
+            <div class="wf-toolbar">
+              <div class="wf-search"><span class="wf-search-ico"></span><span class="wf-search-input">Søk spiller, klubb eller historikk …</span></div>
+              <span class="wf-chip wf-active">Alle<span class="wf-chip-count">64</span></span>
+              <span class="wf-chip">AK-elever<span class="wf-chip-count">7</span></span>
+              <span class="wf-chip">Møtt før<span class="wf-chip-count">14</span></span>
+              <span class="wf-chip">Topp 10 seeds</span>
+            </div>
+
+            <div class="wf-pc-grid"><span class="wf-marker">2</span>
+              <article class="wf-pc-card wf-pc-me">
+                <div class="wf-pc-head">
+                  <span class="wf-pc-avatar">AK</span>
+                  <div class="wf-pc-id">
+                    <div class="wf-pc-name">Anders Kristiansen</div>
+                    <div class="wf-pc-club">Bogstad GK · AK Academy</div>
+                  </div>
+                </div>
+                <div class="wf-pc-stats">
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">HCP</div><div class="wf-pc-stat-value">7.4</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Runder i år</div><div class="wf-pc-stat-value">18</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Beste '26</div><div class="wf-pc-stat-value">74</div></div>
+                </div>
+                <div class="wf-pc-foot">
+                  <span class="wf-pc-last">Ndst: Bogstad Open · T12</span>
+                  <span class="wf-pc-compare">MEG</span>
+                </div>
+              </article>
+
+              <article class="wf-pc-card wf-pc-ak">
+                <div class="wf-pc-head">
+                  <span class="wf-pc-avatar">EH</span>
+                  <div class="wf-pc-id">
+                    <div class="wf-pc-name">Erik Hansen</div>
+                    <div class="wf-pc-club">Oslo GK · AK Academy</div>
+                  </div>
+                </div>
+                <div class="wf-pc-stats">
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">HCP</div><div class="wf-pc-stat-value">2.8</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Runder i år</div><div class="wf-pc-stat-value">32</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Beste '26</div><div class="wf-pc-stat-value">68</div></div>
+                </div>
+                <div class="wf-pc-foot">
+                  <span class="wf-pc-last">Møtt 4 ganger · 1–3</span>
+                  <span class="wf-pc-compare">H2H ↗</span>
+                </div>
+              </article>
+
+              <article class="wf-pc-card">
+                <div class="wf-pc-head">
+                  <span class="wf-pc-avatar">MH</span>
+                  <div class="wf-pc-id">
+                    <div class="wf-pc-name">Magnus Halvorsen</div>
+                    <div class="wf-pc-club">Bogstad GK</div>
+                  </div>
+                </div>
+                <div class="wf-pc-stats">
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">HCP</div><div class="wf-pc-stat-value">+2.1</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Runder i år</div><div class="wf-pc-stat-value">45</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Beste '26</div><div class="wf-pc-stat-value">65</div></div>
+                </div>
+                <div class="wf-pc-foot">
+                  <span class="wf-pc-last">Møtt 2 ganger · 0–2</span>
+                  <span class="wf-pc-compare">H2H ↗</span>
+                </div>
+              </article>
+
+              <article class="wf-pc-card">
+                <div class="wf-pc-head">
+                  <span class="wf-pc-avatar">IB</span>
+                  <div class="wf-pc-id">
+                    <div class="wf-pc-name">Ingrid Berge</div>
+                    <div class="wf-pc-club">Oslo GK</div>
+                  </div>
+                </div>
+                <div class="wf-pc-stats">
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">HCP</div><div class="wf-pc-stat-value">0.4</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Runder i år</div><div class="wf-pc-stat-value">28</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Beste '26</div><div class="wf-pc-stat-value">66</div></div>
+                </div>
+                <div class="wf-pc-foot">
+                  <span class="wf-pc-last">Ikke møtt før</span>
+                  <span class="wf-pc-compare">Profil ↗</span>
+                </div>
+              </article>
+
+              <article class="wf-pc-card">
+                <div class="wf-pc-head">
+                  <span class="wf-pc-avatar">KL</span>
+                  <div class="wf-pc-id">
+                    <div class="wf-pc-name">Kristoffer Larsen</div>
+                    <div class="wf-pc-club">Miklagard GK</div>
+                  </div>
+                </div>
+                <div class="wf-pc-stats">
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">HCP</div><div class="wf-pc-stat-value">1.2</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Runder i år</div><div class="wf-pc-stat-value">24</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Beste '26</div><div class="wf-pc-stat-value">67</div></div>
+                </div>
+                <div class="wf-pc-foot">
+                  <span class="wf-pc-last">Møtt 1 gang · 1–0</span>
+                  <span class="wf-pc-compare">H2H ↗</span>
+                </div>
+              </article>
+
+              <article class="wf-pc-card wf-pc-ak">
+                <div class="wf-pc-head">
+                  <span class="wf-pc-avatar">HB</span>
+                  <div class="wf-pc-id">
+                    <div class="wf-pc-name">Henrik Bergersen</div>
+                    <div class="wf-pc-club">GFGK · AK Junior</div>
+                  </div>
+                </div>
+                <div class="wf-pc-stats">
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">HCP</div><div class="wf-pc-stat-value">5.2</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Runder i år</div><div class="wf-pc-stat-value">21</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Beste '26</div><div class="wf-pc-stat-value">71</div></div>
+                </div>
+                <div class="wf-pc-foot">
+                  <span class="wf-pc-last">Møtt 3 ganger · 2–1</span>
+                  <span class="wf-pc-compare">H2H ↗</span>
+                </div>
+              </article>
+
+              <article class="wf-pc-card">
+                <div class="wf-pc-head">
+                  <span class="wf-pc-avatar">SØ</span>
+                  <div class="wf-pc-id">
+                    <div class="wf-pc-name">Sara Østby</div>
+                    <div class="wf-pc-club">Losby GK</div>
+                  </div>
+                </div>
+                <div class="wf-pc-stats">
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">HCP</div><div class="wf-pc-stat-value">3.6</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Runder i år</div><div class="wf-pc-stat-value">19</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Beste '26</div><div class="wf-pc-stat-value">70</div></div>
+                </div>
+                <div class="wf-pc-foot">
+                  <span class="wf-pc-last">Ikke møtt før</span>
+                  <span class="wf-pc-compare">Profil ↗</span>
+                </div>
+              </article>
+
+              <article class="wf-pc-card wf-pc-ak">
+                <div class="wf-pc-head">
+                  <span class="wf-pc-avatar">SJ</span>
+                  <div class="wf-pc-id">
+                    <div class="wf-pc-name">Sigurd Johansen</div>
+                    <div class="wf-pc-club">Bogstad GK · AK Academy</div>
+                  </div>
+                </div>
+                <div class="wf-pc-stats">
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">HCP</div><div class="wf-pc-stat-value">9.1</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Runder i år</div><div class="wf-pc-stat-value">15</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Beste '26</div><div class="wf-pc-stat-value">76</div></div>
+                </div>
+                <div class="wf-pc-foot">
+                  <span class="wf-pc-last">Møtt 6 ganger · 4–2</span>
+                  <span class="wf-pc-compare">H2H ↗</span>
+                </div>
+              </article>
+
+              <article class="wf-pc-card">
+                <div class="wf-pc-head">
+                  <span class="wf-pc-avatar">LM</span>
+                  <div class="wf-pc-id">
+                    <div class="wf-pc-name">Lars Martinsen</div>
+                    <div class="wf-pc-club">Tyrifjord GK</div>
+                  </div>
+                </div>
+                <div class="wf-pc-stats">
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">HCP</div><div class="wf-pc-stat-value">7.9</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Runder i år</div><div class="wf-pc-stat-value">22</div></div>
+                  <div class="wf-pc-stat"><div class="wf-pc-stat-label">Beste '26</div><div class="wf-pc-stat-value">74</div></div>
+                </div>
+                <div class="wf-pc-foot">
+                  <span class="wf-pc-last">Møtt 2 ganger · 1–1</span>
+                  <span class="wf-pc-compare">H2H ↗</span>
+                </div>
+              </article>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations"><h3>Annotations</h3><ul>
+      <li>1 — Stripe viser totalt antall, hvor mange du har møtt før, antall AK-elever i felt.</li>
+      <li>2 — Kort-grid 3-kolonner. "MEG"-kort er sort/grønt først. AK-elever har accent-ramme. Hvert kort: avatar, navn, klubb, HCP, runder-i-år, beste skår, og footer med siste møte eller H2H-record.</li>
+    </ul></div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning av alternativer</h2>
+    <p class="option-description">Vurdering av hvert alternativ mot målgruppe, kompleksitet og teknisk risiko. Utgangspunkt: GolfBox-API leverer Registration-liste, StartList og Score-events. Brackets/leaderboard krever ekstra mapping.</p>
+
+    <table class="wf-rec-table">
+      <thead><tr><th>Alternativ</th><th>Styrke</th><th>Primær bruker</th><th>Kompleksitet</th><th>Teknisk risiko</th><th>Score</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Field List</strong></td><td>Dekker alle spillere, AK-elever markert, primær-format alle kjenner</td><td>Alle spillere og coaches</td><td>Lav</td><td>Lav (GolfBox Registration)</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Tee Time Grid</strong></td><td>Kontekst før runden — hvem er i min flight?</td><td>Aktive turneringsspillere</td><td>Lav–Middels</td><td>Lav (GolfBox StartList)</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Match Play Bracket</strong></td><td>Visualiserer K.O.-format, neste motstander</td><td>Match Play-spillere</td><td>Høy (bracket-logikk)</td><td>Middels (ikke alle turneringer har MP-format)</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>4. Leaderboard Live</strong></td><td>Live score, engasjerende, oppdateres</td><td>Følgere, coaches, spillere</td><td>Middels (live-polling)</td><td>Middels (GolfBox Scoring-feed)</td><td>★★★★☆</td></tr>
+        <tr><td><strong>5. Player Cards</strong></td><td>Scouting, H2H-historikk, dybde</td><td>Ambitiøse spillere, coaches</td><td>Middels (krever vår egen H2H-historikk)</td><td>Høy (krever joins på våre tidligere runder)</td><td>★★★☆☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Field List som primær, med Options 2 og 4 som view-toggle</h3>
+      <p>Field List er den eneste visningen som dekker ALLE turneringstyper (slag, MP, stableford) og er det formatet 100% av spillere allerede kjenner fra GolfBox. Den løser grunnbehovet ("hvem er påmeldt") og gir klar struktur for AK-elev-markering som er en nøkkelforretningsmekanisme (trenere ser raskt egne elever, spillere ser "folk fra min gjeng").</p>
+      <p><strong>Implementasjonsflyt:</strong></p>
+      <ul>
+        <li>Fase 1: Lever Option 1 Field List som default på <code>/portal/turneringer/[id]/pameldte</code>.</li>
+        <li>Fase 1: Legg view-tabs "Liste / Tee-tider / Leaderboard" med Option 2 og 4 i samme side — samme URL, querystring-styrt (<code>?view=tee</code>).</li>
+        <li>Fase 2: Bracket (Option 3) kun synlig for Match Play-turneringer (filter på <code>Tournament.format = MATCH_PLAY</code>).</li>
+        <li>Fase 2: Player Cards (Option 5) som hover-utvidelse på rad — reduserer kompleksitet, behold data-krav.</li>
+      </ul>
+      <p><strong>Teknisk:</strong> GolfBox API → Registration (field), StartList (flights/tee-tider), Scoring (live leaderboard). Cache Registration 5 min, StartList 1 min ved aktiv turnering, Scoring 30s når "Live"-state er aktiv. AK-elev-markering gjøres via join <code>Registration.email → User.email → StudentRelation</code>.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  Wireframes for N18 Turnering Påmeldte — AK Golf Platform
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

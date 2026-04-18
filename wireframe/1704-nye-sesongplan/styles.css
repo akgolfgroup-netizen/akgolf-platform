@@ -1,0 +1,330 @@
+/* === Wireframe Content CSS (B&W only) — Portal Sesongplan === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL (sidebar + main) ============ */
+.wf-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 820px; background: #f5f5f5; }
+
+/* ============ SIDEBAR ============ */
+.wf-sidebar {
+  background: #fff; border-right: 1px solid #eee;
+  padding: 20px 14px; display: flex; flex-direction: column; gap: 18px;
+}
+.wf-sb-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: #000; padding: 4px 6px; }
+.wf-sb-profile {
+  display: flex; align-items: center; gap: 10px; padding: 10px;
+  border: 1px solid #eee; border-radius: 12px; background: #fff;
+}
+.wf-sb-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-sb-profile-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-sb-profile-meta { font-size: 11px; color: #999; }
+
+.wf-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-sb-nav-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; padding: 8px 6px 4px; font-weight: 600; }
+.wf-sb-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px 10px;
+  border-radius: 10px; color: #333; font-size: 13px; text-decoration: none;
+}
+.wf-sb-item-icon { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+.wf-sb-item.wf-active { background: #f5f5f5; color: #000; font-weight: 600; }
+.wf-sb-item.wf-active .wf-sb-item-icon { background: #000; border-color: #000; }
+.wf-sb-item:hover { background: #f5f5f5; color: #000; }
+
+.wf-sb-cta {
+  margin-top: auto; padding: 16px 14px; border: 1px solid #ccc; border-radius: 12px;
+  background: #fff; text-align: center;
+}
+.wf-sb-cta-title { font-size: 12px; font-weight: 700; color: #000; margin-bottom: 6px; }
+.wf-sb-cta-desc { font-size: 11px; color: #666; margin-bottom: 10px; line-height: 1.4; }
+.wf-sb-cta-btn { width: 100%; padding: 9px 12px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+/* ============ MAIN ============ */
+.wf-main { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+
+/* Topbar inside main */
+.wf-mtopbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 8px;
+}
+.wf-mtopbar-left { font-size: 12px; color: #666; }
+.wf-mtopbar-right { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #666; }
+.wf-mtopbar-chip { padding: 6px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #333; }
+.wf-mtopbar-chip.wf-active { background: #000; color: #fff; border-color: #000; }
+
+/* Page header */
+.wf-page-head {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 22px 24px;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+}
+.wf-page-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 6px; font-weight: 600; }
+.wf-page-title { font-size: 26px; font-weight: 800; color: #000; margin: 0 0 4px; letter-spacing: -0.02em; }
+.wf-page-sub { font-size: 13px; color: #666; margin: 0; max-width: 480px; }
+.wf-page-badge {
+  padding: 6px 12px; border: 1px solid #000; border-radius: 999px; background: #000; color: #fff;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+}
+
+/* ============ CARD PRIMITIVES ============ */
+.wf-c {
+  background: #fff; border: 1px solid #eee; border-radius: 14px;
+  padding: 18px; display: flex; flex-direction: column; gap: 10px;
+}
+.wf-c-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-c-title { font-size: 13px; font-weight: 600; color: #000; margin: 0; }
+.wf-c-value { font-size: 28px; font-weight: 800; color: #000; line-height: 1; letter-spacing: -0.02em; }
+.wf-c-sub { font-size: 12px; color: #666; }
+.wf-c-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.wf-c-link { font-size: 12px; color: #000; font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; }
+
+/* ============ KPI row ============ */
+.wf-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.wf-kpi { display: flex; flex-direction: column; gap: 6px; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; }
+.wf-kpi-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-kpi-value { font-size: 24px; font-weight: 800; color: #000; line-height: 1; }
+.wf-kpi-sub { font-size: 11px; color: #666; }
+
+/* ============ LEGEND ============ */
+.wf-legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 12px 16px; background: #fff; border: 1px solid #eee; border-radius: 12px; }
+.wf-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #333; font-weight: 500; }
+.wf-legend-sw { width: 14px; height: 14px; border-radius: 4px; border: 1px solid #ccc; flex-shrink: 0; }
+.wf-sw-forb { background: #ddd; }
+.wf-sw-konk { background: #000; }
+.wf-sw-rest { background: #fff; border: 1px dashed #999; }
+.wf-sw-grunn { background: repeating-linear-gradient(45deg, #333, #333 3px, #fff 3px, #fff 6px); }
+.wf-sw-turn { background: #fff; border: 2px solid #000; }
+
+/* ============ OPTION 1: 12-Month Gantt ============ */
+.wf-gantt {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px;
+}
+.wf-gantt-head {
+  display: grid; grid-template-columns: 140px repeat(12, 1fr); gap: 4px;
+  margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #eee;
+}
+.wf-gantt-month {
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #666; font-weight: 700;
+  text-align: center; padding: 4px 0;
+}
+.wf-gantt-month.wf-active { color: #000; background: #eee; border-radius: 4px; }
+.wf-gantt-row {
+  display: grid; grid-template-columns: 140px repeat(12, 1fr); gap: 4px;
+  align-items: center; padding: 8px 0; border-bottom: 1px solid #f5f5f5;
+}
+.wf-gantt-row:last-child { border-bottom: none; }
+.wf-gantt-label {
+  font-size: 12px; font-weight: 600; color: #000; padding-right: 10px;
+}
+.wf-gantt-label-sub { font-size: 10px; color: #999; font-weight: 400; display: block; margin-top: 2px; }
+.wf-gantt-track { position: relative; grid-column: 2 / span 12; height: 28px; }
+.wf-gantt-bar {
+  position: absolute; top: 0; bottom: 0;
+  background: #000; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #fff; letter-spacing: 0.04em;
+  padding: 0 8px; overflow: hidden; white-space: nowrap;
+}
+.wf-gantt-bar.wf-bar-forb { background: #ddd; color: #333; }
+.wf-gantt-bar.wf-bar-konk { background: #000; color: #fff; }
+.wf-gantt-bar.wf-bar-rest { background: #fff; border: 1px dashed #999; color: #666; }
+.wf-gantt-bar.wf-bar-grunn { background: repeating-linear-gradient(45deg, #333, #333 3px, #fff 3px, #fff 6px); color: #000; border: 1px solid #333; }
+.wf-gantt-bar.wf-bar-empty { background: #f5f5f5; border: 1px dashed #ccc; color: #999; font-weight: 500; }
+
+/* Tournament pins row */
+.wf-gantt-pins {
+  display: grid; grid-template-columns: 140px repeat(12, 1fr); gap: 4px;
+  padding: 10px 0 6px; align-items: center;
+}
+.wf-gantt-pins-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-gantt-pins-track { position: relative; grid-column: 2 / span 12; height: 26px; }
+.wf-gantt-pin {
+  position: absolute; top: 0;
+  width: 10px; height: 10px; background: #fff; border: 2px solid #000; border-radius: 50%;
+  transform: translateX(-50%);
+}
+.wf-gantt-pin-label {
+  position: absolute; top: 14px; font-size: 9px; color: #333; font-weight: 600;
+  white-space: nowrap; transform: translateX(-50%);
+}
+
+/* ============ OPTION 2: Calendar Year ============ */
+.wf-cal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.wf-cal-month {
+  background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px;
+  display: flex; flex-direction: column; gap: 8px;
+  min-height: 170px;
+}
+.wf-cal-month.wf-phase-forb { background: #f5f5f5; border-color: #ddd; }
+.wf-cal-month.wf-phase-konk { background: #000; color: #fff; border-color: #000; }
+.wf-cal-month.wf-phase-konk .wf-cal-h, .wf-cal-month.wf-phase-konk .wf-cal-phase-l, .wf-cal-month.wf-phase-konk .wf-cal-meta { color: #fff; }
+.wf-cal-month.wf-phase-konk .wf-cal-sub { color: #ccc; }
+.wf-cal-month.wf-phase-rest { background: #fff; border: 1px dashed #999; }
+.wf-cal-month.wf-phase-grunn { background: repeating-linear-gradient(45deg, #f5f5f5, #f5f5f5 4px, #fff 4px, #fff 8px); }
+.wf-cal-month.wf-active { box-shadow: 0 0 0 2px #000; }
+
+.wf-cal-head { display: flex; justify-content: space-between; align-items: baseline; }
+.wf-cal-h { font-size: 16px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.01em; }
+.wf-cal-num { font-size: 10px; color: #999; font-weight: 700; }
+.wf-cal-phase-l { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: #000; font-weight: 700; }
+.wf-cal-sub { font-size: 11px; color: #666; line-height: 1.4; margin: 0; }
+.wf-cal-meta { font-size: 10px; color: #333; margin-top: auto; font-weight: 500; }
+.wf-cal-tourns { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; }
+.wf-cal-tourn { font-size: 10px; color: #000; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+.wf-cal-tourn::before { content: ""; width: 6px; height: 6px; background: #fff; border: 1.5px solid #000; border-radius: 50%; flex-shrink: 0; }
+.wf-phase-konk .wf-cal-tourn { color: #fff; }
+.wf-phase-konk .wf-cal-tourn::before { background: #fff; border-color: #fff; }
+
+/* ============ OPTION 3: Phase Timeline (vertikal) ============ */
+.wf-timeline {
+  position: relative; padding-left: 28px;
+}
+.wf-timeline::before {
+  content: ""; position: absolute; left: 9px; top: 6px; bottom: 6px;
+  width: 2px; background: #ccc;
+}
+.wf-tl-item {
+  position: relative; margin-bottom: 16px;
+}
+.wf-tl-item::before {
+  content: ""; position: absolute; left: -24px; top: 14px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #fff; border: 2px solid #000;
+}
+.wf-tl-item.wf-tl-active::before { background: #000; }
+.wf-tl-card {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.wf-tl-card.wf-phase-konk { background: #000; color: #fff; border-color: #000; }
+.wf-tl-card.wf-phase-konk .wf-tl-title, .wf-tl-card.wf-phase-konk .wf-tl-period { color: #fff; }
+.wf-tl-card.wf-phase-konk .wf-tl-narr, .wf-tl-card.wf-phase-konk .wf-tl-meta { color: #ccc; }
+.wf-tl-card.wf-phase-rest { background: #fff; border: 1px dashed #999; }
+.wf-tl-card.wf-phase-grunn { background: #f5f5f5; border-color: #ddd; }
+
+.wf-tl-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.wf-tl-title { font-size: 17px; font-weight: 700; color: #000; margin: 0; letter-spacing: -0.01em; }
+.wf-tl-period { font-size: 12px; color: #666; font-weight: 500; }
+.wf-tl-phase-badge {
+  padding: 4px 10px; border: 1px solid #000; border-radius: 999px; font-size: 10px;
+  font-weight: 700; letter-spacing: 0.1em; color: #000; background: #fff; white-space: nowrap;
+}
+.wf-phase-konk .wf-tl-phase-badge { background: #fff; color: #000; border-color: #fff; }
+.wf-tl-narr { font-size: 13px; color: #333; line-height: 1.5; margin: 4px 0 0; }
+.wf-tl-meta { display: flex; gap: 14px; font-size: 11px; color: #666; margin-top: 4px; padding-top: 8px; border-top: 1px solid #eee; }
+.wf-phase-konk .wf-tl-meta { border-top-color: rgba(255,255,255,0.15); }
+.wf-tl-meta-item { display: flex; flex-direction: column; gap: 2px; }
+.wf-tl-meta-item strong { color: #000; font-size: 12px; font-weight: 700; }
+.wf-phase-konk .wf-tl-meta-item strong { color: #fff; }
+
+/* ============ OPTION 4: Competition-Driven ============ */
+.wf-comp-top {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px;
+}
+.wf-comp-top-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.wf-comp-timeline {
+  position: relative; height: 72px; padding: 0 8px;
+}
+.wf-comp-axis {
+  position: absolute; left: 8px; right: 8px; top: 36px; height: 2px; background: #ccc;
+}
+.wf-comp-month-mark {
+  position: absolute; top: 30px; width: 1px; height: 14px; background: #ccc;
+}
+.wf-comp-month-label {
+  position: absolute; top: 50px; font-size: 10px; color: #666; font-weight: 600;
+  transform: translateX(-50%); text-transform: uppercase; letter-spacing: 0.04em;
+}
+.wf-comp-tourn {
+  position: absolute; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  max-width: 120px;
+}
+.wf-comp-tourn-dot {
+  width: 14px; height: 14px; border-radius: 50%; background: #000; border: 3px solid #fff;
+  box-shadow: 0 0 0 1px #000; margin-top: 30px;
+}
+.wf-comp-tourn.wf-comp-major .wf-comp-tourn-dot { width: 18px; height: 18px; background: #000; box-shadow: 0 0 0 2px #000; margin-top: 28px; }
+.wf-comp-tourn-label {
+  position: absolute; top: -6px; font-size: 10px; font-weight: 700; color: #000;
+  white-space: nowrap; text-align: center;
+}
+.wf-comp-tourn-date {
+  position: absolute; top: 8px; font-size: 9px; color: #666;
+  white-space: nowrap; text-align: center;
+}
+
+.wf-comp-prep { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.wf-comp-prep-card {
+  background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.wf-comp-prep-card.wf-prep-active { background: #000; color: #fff; border-color: #000; }
+.wf-comp-prep-card.wf-prep-active .wf-comp-prep-title, .wf-comp-prep-card.wf-prep-active .wf-comp-prep-tourn { color: #fff; }
+.wf-comp-prep-card.wf-prep-active .wf-comp-prep-phase, .wf-comp-prep-card.wf-prep-active .wf-comp-prep-focus { color: #ccc; }
+.wf-comp-prep-phase { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-comp-prep-title { font-size: 13px; font-weight: 700; color: #000; margin: 0; }
+.wf-comp-prep-tourn { font-size: 12px; color: #000; font-weight: 600; }
+.wf-comp-prep-focus { font-size: 11px; color: #666; line-height: 1.4; }
+.wf-comp-prep-meta { display: flex; gap: 10px; font-size: 10px; color: #666; margin-top: 6px; padding-top: 6px; border-top: 1px solid #eee; }
+.wf-prep-active .wf-comp-prep-meta { border-top-color: rgba(255,255,255,0.15); color: #ccc; }
+
+/* ============ OPTION 5: Monthly Cards ============ */
+.wf-months-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.wf-month-card {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 16px;
+  display: flex; flex-direction: column; gap: 10px; min-height: 220px;
+}
+.wf-month-card.wf-phase-konk { background: #000; color: #fff; border-color: #000; }
+.wf-month-card.wf-phase-konk .wf-mc-name, .wf-month-card.wf-phase-konk .wf-mc-phase { color: #fff; }
+.wf-month-card.wf-phase-konk .wf-mc-meta, .wf-month-card.wf-phase-konk .wf-mc-focus { color: #ccc; }
+.wf-month-card.wf-phase-konk .wf-mc-weeks li { color: #ccc; border-bottom-color: rgba(255,255,255,0.1); }
+.wf-month-card.wf-phase-konk .wf-mc-weeks strong { color: #fff; }
+.wf-month-card.wf-phase-rest { background: #fff; border: 1px dashed #999; }
+.wf-month-card.wf-phase-grunn { background: #f5f5f5; }
+.wf-month-card.wf-active { box-shadow: 0 0 0 2px #000; }
+
+.wf-mc-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.wf-mc-name { font-size: 17px; font-weight: 800; color: #000; margin: 0; letter-spacing: -0.01em; }
+.wf-mc-meta { font-size: 10px; color: #999; font-weight: 600; }
+.wf-mc-phase {
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: #000; font-weight: 700;
+  padding: 3px 8px; border: 1px solid #000; border-radius: 999px; align-self: flex-start;
+}
+.wf-phase-konk .wf-mc-phase { border-color: #fff; color: #fff; }
+.wf-mc-focus { font-size: 12px; color: #333; line-height: 1.4; margin: 0; }
+.wf-mc-weeks { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.wf-mc-weeks li {
+  font-size: 11px; color: #666; padding: 4px 0; border-bottom: 1px solid #f5f5f5;
+  display: flex; justify-content: space-between; gap: 8px;
+}
+.wf-mc-weeks li:last-child { border-bottom: none; }
+.wf-mc-weeks strong { color: #000; font-weight: 600; font-size: 11px; }
+.wf-mc-tourn {
+  margin-top: auto; padding: 6px 10px; background: #fff; border: 1px solid #ccc; border-radius: 8px;
+  font-size: 10px; color: #000; font-weight: 600; display: flex; align-items: center; gap: 6px;
+}
+.wf-mc-tourn::before { content: ""; width: 6px; height: 6px; border: 1.5px solid #000; border-radius: 50%; flex-shrink: 0; }
+.wf-phase-konk .wf-mc-tourn { background: #fff; color: #000; border-color: #fff; }
+
+/* ============ MARKERS ============ */
+.wf-marker {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%; background: #000; color: #fff;
+  font-size: 10px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+}
+
+/* ============ ANNOTATIONS ============ */
+.wf-annotations { margin-top: 16px; padding: 20px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-annotations h3 { font-size: 14px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-annotations ul { margin: 0; padding-left: 20px; font-size: 13px; color: #333; }
+.wf-annotations li { margin-bottom: 6px; line-height: 1.5; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

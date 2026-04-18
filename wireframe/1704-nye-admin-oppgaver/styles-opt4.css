@@ -1,0 +1,132 @@
+/* === Option 4: Today Focus === */
+
+.today-hero {
+  background: #000;
+  color: #fff;
+  border-radius: 6px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.today-hero-left { display: flex; flex-direction: column; gap: 4px; }
+.today-hero-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #bbb;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.today-hero-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0;
+}
+.today-hero-sub {
+  font-size: 12px;
+  color: #ccc;
+}
+.today-hero-stats {
+  display: flex;
+  gap: 20px;
+}
+.today-hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.today-hero-stat-val {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.today-hero-stat-label {
+  font-size: 10px;
+  color: #bbb;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 3px;
+}
+
+/* Task-section blocks */
+.today-section {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.today-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+.today-section-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000;
+}
+.today-section-meta {
+  font-size: 10px;
+  color: #666;
+}
+.today-section-body { padding: 6px 0; }
+
+.today-task {
+  display: grid;
+  grid-template-columns: 20px 1fr 120px 80px 70px;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 14px;
+  border-bottom: 1px solid #f2f2f2;
+  font-size: 12px;
+}
+.today-task:last-child { border-bottom: none; }
+.today-task:hover { background: #fafafa; }
+.today-check {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+}
+.today-task-body { display: flex; flex-direction: column; gap: 2px; }
+.today-task-title { font-weight: 600; color: #000; }
+.today-task-sub { font-size: 10px; color: #777; display: flex; gap: 6px; flex-wrap: wrap; }
+.today-task-entity {
+  font-size: 10px;
+  color: #333;
+  background: #f0f0f0;
+  border-radius: 3px;
+  padding: 1px 5px;
+  border: 1px solid #e0e0e0;
+}
+.today-task-due {
+  font-size: 11px;
+  color: #555;
+  font-weight: 600;
+}
+.today-task-due-now { color: #000; font-weight: 800; }
+
+.today-secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Empty state hint */
+.today-empty {
+  padding: 14px;
+  font-size: 11px;
+  color: #999;
+  text-align: center;
+}

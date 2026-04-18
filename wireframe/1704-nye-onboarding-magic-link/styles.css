@@ -1,0 +1,646 @@
+/* === Wireframe Content CSS (B&W only) === */
+/* Screen N03 — Onboarding Magic-Link — /onboarding/[token] */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL (ingen sidebar — bruker har ikke konto) ============ */
+.wf-mlink-shell {
+  min-height: 720px;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+.wf-mlink-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+.wf-topbar-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; font-weight: 800; color: #000;
+  letter-spacing: 0.04em;
+}
+.wf-topbar-logo-mark {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: #000; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+}
+.wf-topbar-meta {
+  font-size: 11px; color: #999; letter-spacing: 0.08em;
+  text-transform: uppercase; font-weight: 600;
+}
+.wf-topbar-meta strong { color: #000; font-weight: 700; }
+
+.wf-mlink-main {
+  flex: 1;
+  padding: 28px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* ============ MAGIC-LINK BADGE (verified token) ============ */
+.wf-mlink-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: 0.04em;
+  align-self: flex-start;
+}
+.wf-mlink-verified-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #000;
+}
+
+/* ============ HEADERS ============ */
+.wf-mlink-header {
+  text-align: left;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+  padding-bottom: 12px;
+}
+.wf-crumbs { font-size: 11px; color: #999; letter-spacing: 0.08em; margin-bottom: 6px; text-transform: uppercase; font-weight: 600; }
+.wf-mlink-title { font-size: 28px; font-weight: 800; color: #000; margin: 0 0 6px; letter-spacing: -0.02em; }
+.wf-mlink-sub { font-size: 14px; color: #666; margin: 0; line-height: 1.6; }
+
+/* ============ BUTTONS ============ */
+.wf-btn {
+  padding: 9px 18px;
+  border: 1px solid #000;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-secondary { background: #fff; color: #333; border-color: #ccc; }
+.wf-btn-secondary:hover { background: #f5f5f5; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #666; }
+.wf-btn-ghost:hover { background: #eee; color: #000; }
+.wf-btn-small { padding: 6px 12px; font-size: 11px; }
+.wf-btn-block { width: 100%; }
+.wf-btn-wide { padding: 12px 28px; font-size: 14px; }
+.wf-btn-jumbo { padding: 18px 40px; font-size: 16px; font-weight: 700; }
+.wf-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ============ INPUTS ============ */
+.wf-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font-size: 13px;
+  font-family: inherit;
+}
+.wf-input:focus { outline: none; border-color: #000; }
+.wf-field-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ============ CHIPS ============ */
+.wf-chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.wf-chip {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.wf-chip:hover { border-color: #666; }
+.wf-chip-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+
+/* ============ AI BOX ============ */
+.wf-ai-box {
+  margin: 20px 0 0;
+  padding: 14px 16px;
+  background: #f5f5f5;
+  border: 1px dashed #999;
+  border-radius: 10px;
+}
+.wf-ai-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.wf-ai-box p { font-size: 13px; color: #333; line-height: 1.5; margin: 0; }
+
+/* ============ DASHBOARD THUMBNAILS (felles for alle opsjoner) ============ */
+.wf-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-dash-grid.wf-dash-grid-compact {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.wf-dash-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wf-dash-card:hover { border-color: #666; transform: translateY(-1px); }
+.wf-dash-card.wf-dash-selected { border-color: #000; border-width: 2px; padding: 9px; }
+.wf-dash-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 8px;
+  display: grid;
+  gap: 4px;
+  overflow: hidden;
+}
+.wf-dash-title { font-size: 12px; font-weight: 700; color: #000; letter-spacing: -0.01em; }
+.wf-dash-desc { font-size: 10px; color: #666; line-height: 1.45; }
+.wf-dash-badge {
+  position: absolute;
+  top: 6px; right: 6px;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  padding: 2px 6px;
+  background: #000;
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Thumbnail layouts — små mini-previews */
+.wf-thumb-athletic { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); }
+.wf-thumb-athletic .wf-tb { background: #ccc; border-radius: 2px; }
+.wf-thumb-athletic .wf-tb-big { grid-column: span 2; grid-row: span 2; background: #000; }
+.wf-thumb-athletic .wf-tb-mid { background: #666; }
+
+.wf-thumb-focus { grid-template-rows: auto 1fr; }
+.wf-thumb-focus .wf-tb-hero {
+  background: #000; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 9px; font-weight: 700; padding: 6px;
+}
+.wf-thumb-focus .wf-tb-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.wf-thumb-focus .wf-tb-row .wf-tb { background: #ccc; border-radius: 2px; height: 16px; }
+
+.wf-thumb-data { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); }
+.wf-thumb-data .wf-tb { background: #ddd; border-radius: 1px; }
+.wf-thumb-data .wf-tb-dark { background: #333; }
+.wf-thumb-data .wf-tb-mid { background: #888; }
+
+.wf-thumb-progress { grid-template-rows: 1fr auto; }
+.wf-thumb-progress .wf-tb-chart {
+  background: linear-gradient(135deg, #eee 0%, #ccc 100%);
+  border-radius: 3px;
+  position: relative;
+}
+.wf-thumb-progress .wf-tb-chart::before {
+  content: '';
+  position: absolute;
+  left: 10%; right: 10%;
+  bottom: 25%;
+  height: 1px;
+  background: #000;
+  transform: rotate(-8deg);
+}
+.wf-thumb-progress .wf-tb-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+.wf-thumb-progress .wf-tb-strip .wf-tb { background: #999; height: 10px; border-radius: 1px; }
+
+.wf-thumb-command { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 1fr); }
+.wf-thumb-command .wf-tb { background: #ccc; border-radius: 2px; }
+.wf-thumb-command .wf-tb-tall { grid-row: span 3; background: #000; }
+.wf-thumb-command .wf-tb-mid { background: #666; }
+
+/* ============ OPTION 1 — LINEAR WELCOME (5 steg) ============ */
+.wf-linear-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 16px 0 8px;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-linear-dot {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #999;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+}
+.wf-linear-dot.wf-done { background: #000; color: #fff; border-color: #000; }
+.wf-linear-dot.wf-active { background: #fff; color: #000; border-color: #000; border-width: 2px; }
+.wf-linear-bar { flex: 1; height: 2px; background: #eee; }
+.wf-linear-bar.wf-done { background: #000; }
+.wf-linear-labels {
+  display: flex;
+  justify-content: space-between;
+  max-width: 720px;
+  margin: 0 auto 8px;
+  width: 100%;
+  font-size: 10px;
+  color: #999;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.wf-linear-labels span { flex: 1; text-align: center; }
+.wf-linear-labels .wf-active { color: #000; }
+
+.wf-step-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 32px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-step-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.wf-step-title { font-size: 24px; font-weight: 800; color: #000; margin: 0 0 8px; letter-spacing: -0.01em; }
+.wf-step-desc { font-size: 14px; color: #666; line-height: 1.6; margin: 0 0 24px; }
+.wf-step-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-step-count { font-size: 12px; color: #666; font-weight: 500; }
+
+/* ============ OPTION 2 — SINGLE FORM (all-in-one) ============ */
+.wf-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+.wf-form-section {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+.wf-form-section-title {
+  font-size: 14px; font-weight: 700; color: #000;
+  margin: 0 0 4px;
+}
+.wf-form-section-hint {
+  font-size: 12px; color: #666;
+  margin: 0 0 14px;
+}
+.wf-form-autosave {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+  font-size: 11px;
+  color: #666;
+  letter-spacing: 0.04em;
+  z-index: 5;
+}
+.wf-form-autosave-dot {
+  display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #000; margin-right: 6px;
+}
+.wf-form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 720px;
+  margin: 8px auto 0;
+  width: 100%;
+  padding: 14px 4px;
+}
+
+/* ============ OPTION 3 — CONVERSATIONAL (chat) ============ */
+.wf-conv-stage {
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 480px;
+}
+.wf-conv-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 600;
+}
+.wf-conv-progress-bar {
+  width: 160px;
+  height: 4px;
+  background: #eee;
+  border-radius: 999px;
+  position: relative;
+}
+.wf-conv-progress-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: #000;
+  border-radius: 999px;
+}
+.wf-conv-msg { display: flex; gap: 10px; align-items: flex-start; }
+.wf-conv-msg-user { justify-content: flex-end; }
+.wf-conv-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #000; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+  flex-shrink: 0;
+}
+.wf-conv-bubble {
+  max-width: 440px;
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  border-radius: 14px 14px 14px 4px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+}
+.wf-conv-bubble p { margin: 0; }
+.wf-conv-bubble-user {
+  background: #000; color: #fff; border-color: #000;
+  border-radius: 14px 14px 4px 14px; font-weight: 500;
+}
+.wf-conv-chips-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 6px 0 4px 38px;
+}
+.wf-conv-input-field {
+  display: flex;
+  gap: 8px;
+  padding: 10px 0 0 38px;
+  align-items: center;
+}
+.wf-conv-input-field .wf-input { flex: 1; max-width: 360px; }
+.wf-conv-preview {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.wf-conv-preview-cell {
+  font-size: 10px;
+  color: #999;
+  letter-spacing: 0.04em;
+}
+.wf-conv-preview-cell strong {
+  display: block;
+  font-size: 12px;
+  color: #000;
+  font-weight: 700;
+  margin-top: 2px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ============ OPTION 4 — DASHBOARD PICKER FIRST ============ */
+.wf-picker-hero {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 0 0;
+}
+.wf-picker-hero-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.wf-picker-hero-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #000;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+.wf-picker-hero-sub {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+.wf-picker-mini-steps {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  max-width: 720px;
+  margin: 24px auto 0;
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+}
+.wf-mini-step {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  letter-spacing: 0.04em;
+}
+.wf-mini-step .wf-mini-step-num {
+  display: inline-block;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  color: #999;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 20px;
+  margin-bottom: 4px;
+}
+.wf-mini-step.wf-done .wf-mini-step-num { background: #000; color: #fff; border-color: #000; }
+.wf-mini-step.wf-active .wf-mini-step-num { border-color: #000; color: #000; }
+.wf-mini-step.wf-active { color: #000; font-weight: 600; }
+.wf-picker-cta-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px auto 0;
+  max-width: 720px;
+}
+
+/* ============ OPTION 5 — MINIMALIST (progressive reveal) ============ */
+.wf-minimal-stage {
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 56px 48px;
+  text-align: center;
+  min-height: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: center;
+}
+.wf-minimal-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 700;
+}
+.wf-minimal-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #000;
+  margin: 0;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.wf-minimal-sub {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.6;
+}
+.wf-minimal-step-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 18px;
+}
+.wf-minimal-step-indicator span {
+  width: 20px;
+  height: 3px;
+  background: #eee;
+  border-radius: 999px;
+}
+.wf-minimal-step-indicator span.wf-active { background: #000; }
+.wf-minimal-step-indicator span.wf-done { background: #666; }
+.wf-minimal-reveal {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wf-minimal-revealed {
+  padding: 10px 14px;
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  font-size: 11px;
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 0.04em;
+}
+.wf-minimal-revealed strong { color: #000; font-weight: 700; text-transform: none; letter-spacing: 0; }
+.wf-minimal-picker-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 18px;
+}
+.wf-minimal-cta-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

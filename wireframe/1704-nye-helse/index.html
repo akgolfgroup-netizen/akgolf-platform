@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skadehistorikk / Helse — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Skadehistorikk / Helse (N13)</span> — <span id="project-name">AK Golf Platform · Portal · /portal/helse</span></span>
+    <span class="rec">Anbefalt: Option <span id="rec-number">1</span> · Body Map</span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Body Map</button>
+    <button class="tab-btn" data-tab="option-2">2: Journal Timeline</button>
+    <button class="tab-btn" data-tab="option-3">3: Active Restrictions</button>
+    <button class="tab-btn" data-tab="option-4">4: Risk Dashboard</button>
+    <button class="tab-btn" data-tab="option-5">5: Recovery Tracker</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===================================================================== -->
+  <!-- OPTION 1: Body Map (SAFE)                                              -->
+  <!-- ===================================================================== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Body Map</span> <span style="font-size:11px; color:#999; letter-spacing:0.14em;">· SAFE</span></h2>
+    <p class="option-description">Menneskefigur som visuell navigasjon. Anders klikker på kroppsdel og ser relevante skader. Journal nedenfor lister aktive og lukkede skader. Direkte, intuitivt, tett på hvordan fysioterapeuter faktisk jobber.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/helse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div>
+                <div class="wf-sb-profile-name">Anders Kristiansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP +0.8</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Helse</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Registrer skade</div>
+              <div class="wf-sb-cta-desc">Ny plage? Logg den — påvirker treningsplanen.</div>
+              <button class="wf-sb-cta-btn">Ny oppføring</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Helse &amp; skadehistorikk · oppdatert 16. april</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Aktive: 1</span>
+                <span class="wf-mtopbar-chip">Historikk: 4</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Kroppskart</div>
+                <h1 class="wf-page-h">Skader og restriksjoner<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Klikk på en kroppsdel for å se historikk og aktive restriksjoner som påvirker treningsplanen.</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Eksporter</button>
+                <button class="wf-btn wf-btn-primary">Registrer skade</button>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+
+              <!-- Body Map -->
+              <div class="wf-c wf-bc-5">
+                <div class="wf-c-label">Kroppskart<span class="wf-marker">2</span></div>
+                <div class="wf-body-wrap">
+                  <svg class="wf-body-svg" viewBox="0 0 180 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Head -->
+                    <circle class="wf-body-part" cx="90" cy="30" r="22"/>
+                    <!-- Neck -->
+                    <rect class="wf-body-part" x="80" y="52" width="20" height="14"/>
+                    <!-- Torso -->
+                    <rect class="wf-body-part" x="58" y="66" width="64" height="70" rx="8"/>
+                    <!-- Lower back (active injury) -->
+                    <rect class="wf-body-part wf-injury-active" x="58" y="136" width="64" height="32" rx="4"/>
+                    <!-- Hips -->
+                    <rect class="wf-body-part" x="54" y="168" width="72" height="28" rx="6"/>
+                    <!-- Left arm -->
+                    <rect class="wf-body-part" x="34" y="70" width="20" height="60" rx="8"/>
+                    <!-- Left forearm -->
+                    <rect class="wf-body-part" x="34" y="130" width="18" height="55" rx="6"/>
+                    <!-- Right arm (upper) -->
+                    <rect class="wf-body-part" x="126" y="70" width="20" height="60" rx="8"/>
+                    <!-- Right elbow (healed injury) -->
+                    <rect class="wf-body-part wf-injury-mild" x="124" y="128" width="22" height="14" rx="3"/>
+                    <!-- Right forearm -->
+                    <rect class="wf-body-part" x="128" y="142" width="18" height="44" rx="6"/>
+                    <!-- Hands -->
+                    <circle class="wf-body-part" cx="43" cy="192" r="7"/>
+                    <circle class="wf-body-part" cx="137" cy="192" r="7"/>
+                    <!-- Left leg -->
+                    <rect class="wf-body-part" x="62" y="196" width="24" height="90" rx="8"/>
+                    <rect class="wf-body-part" x="64" y="286" width="22" height="80" rx="6"/>
+                    <!-- Right leg -->
+                    <rect class="wf-body-part" x="94" y="196" width="24" height="90" rx="8"/>
+                    <rect class="wf-body-part" x="96" y="286" width="22" height="80" rx="6"/>
+                    <!-- Feet -->
+                    <ellipse class="wf-body-part" cx="75" cy="378" rx="12" ry="8"/>
+                    <ellipse class="wf-body-part" cx="107" cy="378" rx="12" ry="8"/>
+
+                    <!-- Pins -->
+                    <circle class="wf-body-pin" cx="90" cy="152" r="6"/>
+                    <circle class="wf-body-pin wf-body-pin-accent" cx="135" cy="135" r="5"/>
+
+                    <!-- Labels -->
+                    <text class="wf-body-label" x="152" y="155">Nedre rygg</text>
+                    <text class="wf-body-label" x="152" y="138">H. albue</text>
+                  </svg>
+                </div>
+                <div class="wf-body-legend">
+                  <div class="wf-legend-row"><span class="wf-legend-dot wf-injury-active" style="background:#000;"></span>Aktiv skade (1)</div>
+                  <div class="wf-legend-row"><span class="wf-legend-dot wf-injury-mild" style="background:#ccc;"></span>Leget / historikk (4)</div>
+                  <div class="wf-legend-row"><span class="wf-legend-dot" style="background:#fff;"></span>Ingen registrering</div>
+                </div>
+              </div>
+
+              <!-- Injury journal -->
+              <div class="wf-c wf-bc-7">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Journal<span class="wf-marker">3</span></div>
+                  <button class="wf-c-link">Se alle →</button>
+                </div>
+                <div class="wf-injury-list">
+                  <div class="wf-injury-item">
+                    <div class="wf-injury-sev wf-injury-sev-high"></div>
+                    <div class="wf-injury-body">
+                      <div class="wf-injury-title">Nedre rygg · lumbal stivhet</div>
+                      <div class="wf-injury-meta">Siden 02. mars 2025 · 47 dager · fysio: Lars Hagen</div>
+                    </div>
+                    <span class="wf-injury-status">Aktiv</span>
+                  </div>
+                  <div class="wf-injury-item">
+                    <div class="wf-injury-sev wf-injury-sev-mid"></div>
+                    <div class="wf-injury-body">
+                      <div class="wf-injury-title">Høyre albue · golfer's elbow</div>
+                      <div class="wf-injury-meta">Nov. 2025 – jan. 2026 · 68 dager · leget</div>
+                    </div>
+                    <span class="wf-injury-status wf-injury-status-closed">Lukket</span>
+                  </div>
+                  <div class="wf-injury-item">
+                    <div class="wf-injury-sev wf-injury-sev-low"></div>
+                    <div class="wf-injury-body">
+                      <div class="wf-injury-title">Venstre håndledd · overbelastning</div>
+                      <div class="wf-injury-meta">Aug. 2025 – sep. 2025 · 22 dager · leget</div>
+                    </div>
+                    <span class="wf-injury-status wf-injury-status-closed">Lukket</span>
+                  </div>
+                  <div class="wf-injury-item">
+                    <div class="wf-injury-sev wf-injury-sev-mid"></div>
+                    <div class="wf-injury-body">
+                      <div class="wf-injury-title">Høyre skulder · rotator cuff</div>
+                      <div class="wf-injury-meta">Mai 2024 – jul. 2024 · 63 dager · leget</div>
+                    </div>
+                    <span class="wf-injury-status wf-injury-status-closed">Lukket</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Active restrictions -->
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Aktive restriksjoner<span class="wf-marker">4</span></div>
+                  <span class="wf-tag wf-tag-dark">1 aktiv</span>
+                </div>
+                <div class="wf-restr-card">
+                  <div>
+                    <div class="wf-restr-header">
+                      <span class="wf-restr-pill">Rygg</span>
+                      <h3 class="wf-restr-title">Unngå full rotasjon over 80% tempo</h3>
+                    </div>
+                    <p class="wf-restr-desc">Fysio Lars Hagen har anbefalt redusert rotasjonsintensitet frem til kontroll 30. april. Påvirker drivers og lange jern.</p>
+                    <div class="wf-restr-impact">
+                      <div class="wf-restr-impact-row"><span class="wf-restr-impact-ic"></span>Treningsvolum: maks 40 slag/økt med driver</div>
+                      <div class="wf-restr-impact-row"><span class="wf-restr-impact-ic"></span>Kjernestyrke + mobilitet: 3×/uke (erstatter SLAG)</div>
+                    </div>
+                  </div>
+                  <div class="wf-restr-right">
+                    <span class="wf-restr-duration">Gjenstår</span>
+                    <span class="wf-restr-duration-val">13d</span>
+                    <button class="wf-btn">Detaljer</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Body profile -->
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Kroppsprofil<span class="wf-marker">5</span></div>
+                <div class="wf-c-grid2">
+                  <div>
+                    <div class="wf-c-sub">Høyde</div>
+                    <div class="wf-c-title">184 cm</div>
+                  </div>
+                  <div>
+                    <div class="wf-c-sub">Vekt</div>
+                    <div class="wf-c-title">82 kg</div>
+                  </div>
+                  <div>
+                    <div class="wf-c-sub">Dominant hånd</div>
+                    <div class="wf-c-title">Høyre</div>
+                  </div>
+                  <div>
+                    <div class="wf-c-sub">Haltrrekkevidde</div>
+                    <div class="wf-c-title">Normal</div>
+                  </div>
+                </div>
+                <div class="wf-c-row" style="margin-top:auto; padding-top:10px; border-top:1px solid #eee;">
+                  <span class="wf-c-sub">Sist oppdatert</span>
+                  <span class="wf-c-sub">12. mars 2026</span>
+                </div>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Sidehode:</strong> Dirket CTA "Registrer skade" i høyre hjørne. Alltid tilgjengelig, lav friksjon.</li>
+        <li><strong>2 — Body map som navigasjon:</strong> Menneskefigur med klikkbare regioner. Svart = aktiv skade, grå = historikk. Pins med labels viser hva som er hvor.</li>
+        <li><strong>3 — Journal høyre:</strong> Ikke en tabell — liste med sev-prikk + status-pille. Sorterbar etter dato eller alvorlighet.</li>
+        <li><strong>4 — Aktive restriksjoner som eget kort:</strong> Tydelig koblet til treningsplan. Coach + spiller ser eksakt hva som gjelder nå.</li>
+        <li><strong>5 — Kroppsprofil:</strong> Statisk baseline-data. Høyde/vekt/dominant hånd påvirker anbefalinger fra AI-coachen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- OPTION 2: Journal Timeline                                             -->
+  <!-- ===================================================================== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Journal Timeline</span></h2>
+    <p class="option-description">Kronologisk journal. Hver skade og oppfølging er en node på tidslinjen — sorterbar etter dato. Perfekt for den som vil lese historikken som en fortelling, og for coachen som skal etterprøve progresjon.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/helse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div>
+                <div class="wf-sb-profile-name">Anders Kristiansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP +0.8</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Helse</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Legg til notat</div>
+              <div class="wf-sb-cta-desc">Føler du noe? Logg det som notat — det blir del av journalen.</div>
+              <button class="wf-sb-cta-btn">Nytt notat</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Journal · 12 oppføringer siste 12 mnd</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Alt</span>
+                <span class="wf-mtopbar-chip">Skader</span>
+                <span class="wf-mtopbar-chip">Notater</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Kronologisk journal</div>
+                <h1 class="wf-page-h">Helse- og skadehistorikk<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Alle hendelser i én tidslinje — skader, oppfølging, coach-notater.</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Filtrer</button>
+                <button class="wf-btn wf-btn-primary">Ny oppføring</button>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+
+              <div class="wf-c wf-bc-8">
+                <div class="wf-tl-filter">
+                  <button class="wf-tl-filter-btn wf-active">Alle (12)</button>
+                  <button class="wf-tl-filter-btn">Aktive (1)</button>
+                  <button class="wf-tl-filter-btn">Skader (5)</button>
+                  <button class="wf-tl-filter-btn">Fysio-besøk (4)</button>
+                  <button class="wf-tl-filter-btn">Notater (3)</button>
+                </div>
+
+                <div class="wf-timeline">
+
+                  <div class="wf-tl-item wf-tl-active">
+                    <div class="wf-tl-date">16. April 2026 · I dag<span class="wf-marker">2</span></div>
+                    <div class="wf-tl-card">
+                      <div class="wf-tl-title">Kontroll · nedre rygg</div>
+                      <p class="wf-tl-desc">Lars Hagen: merkbar bedring. Kan øke rotasjonsintensitet til 85% fra neste uke, men holder 40-slag-grense.</p>
+                      <div class="wf-tl-tags">
+                        <span class="wf-tag wf-tag-dark">Aktiv skade</span>
+                        <span class="wf-tag">Fysio</span>
+                        <span class="wf-tag">Rygg</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wf-tl-item wf-tl-active">
+                    <div class="wf-tl-date">02. Mars 2026</div>
+                    <div class="wf-tl-card">
+                      <div class="wf-tl-title">Skade registrert · nedre rygg (lumbal stivhet)</div>
+                      <p class="wf-tl-desc">Stivhet etter lang simulator-økt. Fysio anbefaler redusert rotasjonsintensitet og 3× mobilitet/uke.</p>
+                      <div class="wf-tl-tags">
+                        <span class="wf-tag wf-tag-dark">Ny skade</span>
+                        <span class="wf-tag">Rygg</span>
+                        <span class="wf-tag">Restriksjon</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wf-tl-item">
+                    <div class="wf-tl-date">18. Januar 2026</div>
+                    <div class="wf-tl-card">
+                      <div class="wf-tl-title">Albue · tilbake i full tiltak</div>
+                      <p class="wf-tl-desc">Golfer's elbow helt leget. Ingen restriksjoner. Full belastning på høyre side tillatt.</p>
+                      <div class="wf-tl-tags">
+                        <span class="wf-tag">Leget</span>
+                        <span class="wf-tag">Albue</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wf-tl-item wf-tl-note">
+                    <div class="wf-tl-date">12. Desember 2025</div>
+                    <div class="wf-tl-card">
+                      <div class="wf-tl-title">Coach-notat · Markus</div>
+                      <p class="wf-tl-desc">"Anders vises tegn til albue-beskyttelse i svingen. Foreslår kortere tilbaketrekk neste økt."</p>
+                      <div class="wf-tl-tags">
+                        <span class="wf-tag">Notat</span>
+                        <span class="wf-tag">Albue</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wf-tl-item">
+                    <div class="wf-tl-date">07. November 2025</div>
+                    <div class="wf-tl-card">
+                      <div class="wf-tl-title">Skade registrert · høyre albue (golfer's elbow)</div>
+                      <p class="wf-tl-desc">Smerter ved impact. Redusert range-volum til 30% i 6 uker. Terapi: eksentrisk styrking + dyp vevsmassasje.</p>
+                      <div class="wf-tl-tags">
+                        <span class="wf-tag">Skade</span>
+                        <span class="wf-tag">Albue</span>
+                        <span class="wf-tag">Restriksjon</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wf-tl-item">
+                    <div class="wf-tl-date">22. September 2025</div>
+                    <div class="wf-tl-card">
+                      <div class="wf-tl-title">Håndledd · leget</div>
+                      <p class="wf-tl-desc">Overbelastning fra intensiv range-periode. Etter 3 uker pause + mobilitet: ingen symptomer igjen.</p>
+                      <div class="wf-tl-tags">
+                        <span class="wf-tag">Leget</span>
+                        <span class="wf-tag">Håndledd</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Nøkkeltall<span class="wf-marker">3</span></div>
+                <div class="wf-c-grid2">
+                  <div>
+                    <div class="wf-c-value">5</div>
+                    <div class="wf-c-sub">Skader totalt</div>
+                  </div>
+                  <div>
+                    <div class="wf-c-value">1</div>
+                    <div class="wf-c-sub">Aktiv nå</div>
+                  </div>
+                  <div>
+                    <div class="wf-c-value">47d</div>
+                    <div class="wf-c-sub">Snitt rehab</div>
+                  </div>
+                  <div>
+                    <div class="wf-c-value">12</div>
+                    <div class="wf-c-sub">Fysio-besøk</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Tidslinje som narrativ:</strong> Kronologisk rekkefølge forteller historien. Anders (og coach) kan scrolle gjennom for å forstå mønster.</li>
+        <li><strong>2 — Aktive noder har svart fylling:</strong> Historikk er grå, aktive er svarte. Tydelig visuell hierarki.</li>
+        <li><strong>3 — Nøkkeltall sidepanel:</strong> Aggregerte tall holder oversikt uten å dominere. 47 dager snitt = rehab-tempo.</li>
+        <li>— Risiko: Vanskeligere å finne spesifikk skade — trenger god filtrering. Chips øverst løser det.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- OPTION 3: Active Restrictions                                          -->
+  <!-- ===================================================================== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Active Restrictions</span></h2>
+    <p class="option-description">Fokus: hva påvirker treningen min NÅ? Store restriksjonskort dominerer, historikk komprimert nedenfor. Ideelt for dagen-til-dagen-bruk — spilleren vil vite "hva kan jeg gjøre i dag?".</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/helse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div>
+                <div class="wf-sb-profile-name">Anders Kristiansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP +0.8</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Helse</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Klar til trene?</div>
+              <div class="wf-sb-cta-desc">1 restriksjon aktiv — se hva som gjelder nå.</div>
+              <button class="wf-sb-cta-btn">Se treningsplan</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Aktive restriksjoner · påvirker treningsplan</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">1 aktiv</span>
+                <span class="wf-mtopbar-chip">4 historikk</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Hva kan jeg gjøre i dag?</div>
+                <h1 class="wf-page-h">Aktive restriksjoner<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Tilpasningene nedenfor er automatisk synket til treningsplanen din.</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Historikk</button>
+                <button class="wf-btn wf-btn-primary">Registrer ny</button>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Aktive nå · 1 av 1<span class="wf-marker">2</span></div>
+                  <span class="wf-tag wf-tag-dark">Synkronisert med plan</span>
+                </div>
+                <div class="wf-restr-list">
+                  <div class="wf-restr-card">
+                    <div>
+                      <div class="wf-restr-header">
+                        <span class="wf-restr-pill">Nedre rygg</span>
+                        <h3 class="wf-restr-title">Redusert rotasjonsintensitet (80% tempo)</h3>
+                      </div>
+                      <p class="wf-restr-desc">Lumbal stivhet siden 2. mars. Fysio Lars Hagen har satt rotasjonsgrense 80% + maks 40 slag per driver-økt. Neste kontroll: 30. april.</p>
+                      <div class="wf-restr-impact">
+                        <div class="wf-restr-impact-row"><span class="wf-restr-impact-ic"></span>Driver: maks 40 slag/økt (vs normalt 80)</div>
+                        <div class="wf-restr-impact-row"><span class="wf-restr-impact-ic"></span>Lange jern: 60% volum</div>
+                        <div class="wf-restr-impact-row"><span class="wf-restr-impact-ic"></span>Kjernestyrke + mobilitet: 3×/uke obligatorisk</div>
+                        <div class="wf-restr-impact-row"><span class="wf-restr-impact-ic"></span>SLAG-økter: erstattes delvis med TEKN-fokus</div>
+                      </div>
+                    </div>
+                    <div class="wf-restr-right">
+                      <span class="wf-restr-duration">Gjenstår</span>
+                      <span class="wf-restr-duration-val">13d</span>
+                      <button class="wf-btn">Se i plan</button>
+                      <button class="wf-btn wf-btn-primary">Fjern</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-label">Historikk · lukkede restriksjoner<span class="wf-marker">3</span></div>
+                <div class="wf-history-compact">
+                  <div class="wf-history-row">
+                    <span class="wf-history-name">Høyre albue · redusert range-volum 30%</span>
+                    <span class="wf-history-date">Nov. 2025 – jan. 2026 · 68d</span>
+                  </div>
+                  <div class="wf-history-row">
+                    <span class="wf-history-name">V. håndledd · pause fra range</span>
+                    <span class="wf-history-date">Aug. – sep. 2025 · 22d</span>
+                  </div>
+                  <div class="wf-history-row">
+                    <span class="wf-history-name">H. skulder · unngå overhodebevegelser</span>
+                    <span class="wf-history-date">Mai – jul. 2024 · 63d</span>
+                  </div>
+                  <div class="wf-history-row">
+                    <span class="wf-history-name">Nedre rygg · første episode · mobilitet</span>
+                    <span class="wf-history-date">Feb. 2024 · 18d</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Ukas tilpasning<span class="wf-marker">4</span></div>
+                <div class="wf-c-title" style="margin-top:4px;">Mandag – søndag</div>
+                <div class="wf-c-sub" style="margin-top:6px; line-height:1.5;">3 planlagte økter er automatisk justert: driver-volum ned 50%, SLAG redusert til 2×, mobilitet lagt til ons + fre.</div>
+                <button class="wf-btn" style="margin-top:auto;">Åpne treningsplan →</button>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Spørsmålet først:</strong> "Hva kan jeg gjøre i dag?" — ikke "historikk". Påvirkning på plan er hovedgrunnen til å besøke siden.</li>
+        <li><strong>2 — Restriksjonskort med tydelig impact:</strong> Liste over hva som faktisk endres. Spilleren skal aldri lure.</li>
+        <li><strong>3 — Historikk komprimert:</strong> Bare én linje per lukket restriksjon. Full journal tilgjengelig via knapp.</li>
+        <li><strong>4 — Kobling til treningsplan:</strong> "Synkronisert med plan"-chip + direkte link. Ingen gjetting.</li>
+        <li>— Svakhet: Mindre informasjonstett hvis spilleren har mange restriksjoner. Skalerer til 3–4 kort før det blir kaos.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- OPTION 4: Risk Dashboard                                               -->
+  <!-- ===================================================================== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Risk Dashboard</span></h2>
+    <p class="option-description">Forebygging. Hver kroppsregion scoret etter risiko basert på treningsbelastning + tidligere skadehistorikk. Høy risiko = coach og spiller får varsel. Coaching-tool snarere enn journal.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/helse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div>
+                <div class="wf-sb-profile-name">Anders Kristiansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP +0.8</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Helse</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">AI-prognose</div>
+              <div class="wf-sb-cta-desc">Neste uke: høy belastning ventet. Se forebygging.</div>
+              <button class="wf-sb-cta-btn">Åpne AI-coach</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Risikodashboard · oppdatert automatisk</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">7d</span>
+                <span class="wf-mtopbar-chip">30d</span>
+                <span class="wf-mtopbar-chip">90d</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Forebygging</div>
+                <h1 class="wf-page-h">Risikoscore per kroppsdel<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Basert på belastning siste 30 dager + historikk. Over 70 = varsel til coach.</p>
+              </div>
+              <div class="wf-page-actions">
+                <button class="wf-btn">Eksporter</button>
+                <button class="wf-btn wf-btn-primary">Juster volum</button>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-label">Risikomatrise<span class="wf-marker">2</span></div>
+                <div class="wf-risk-grid">
+                  <div class="wf-risk-cell wf-risk-high">
+                    <div class="wf-risk-label">Høy risiko</div>
+                    <div class="wf-risk-part">Nedre rygg</div>
+                    <div class="wf-risk-score">82</div>
+                    <div class="wf-risk-bar"><div class="wf-risk-bar-fill" style="width:82%"></div></div>
+                    <div class="wf-risk-note">Aktiv skade + rotasjonsvolum +18%</div>
+                  </div>
+                  <div class="wf-risk-cell wf-risk-mid">
+                    <div class="wf-risk-label">Moderat</div>
+                    <div class="wf-risk-part">H. albue</div>
+                    <div class="wf-risk-score">54</div>
+                    <div class="wf-risk-bar"><div class="wf-risk-bar-fill" style="width:54%"></div></div>
+                    <div class="wf-risk-note">Tidligere skade, nylig volum-økning</div>
+                  </div>
+                  <div class="wf-risk-cell wf-risk-mid">
+                    <div class="wf-risk-label">Moderat</div>
+                    <div class="wf-risk-part">H. skulder</div>
+                    <div class="wf-risk-score">48</div>
+                    <div class="wf-risk-bar"><div class="wf-risk-bar-fill" style="width:48%"></div></div>
+                    <div class="wf-risk-note">Historikk 2024, normal nå</div>
+                  </div>
+                  <div class="wf-risk-cell wf-risk-low">
+                    <div class="wf-risk-label">Lav</div>
+                    <div class="wf-risk-part">V. håndledd</div>
+                    <div class="wf-risk-score">22</div>
+                    <div class="wf-risk-bar"><div class="wf-risk-bar-fill" style="width:22%"></div></div>
+                    <div class="wf-risk-note">Én hendelse, ingen varsel</div>
+                  </div>
+                  <div class="wf-risk-cell wf-risk-low">
+                    <div class="wf-risk-label">Lav</div>
+                    <div class="wf-risk-part">Kjerne</div>
+                    <div class="wf-risk-score">18</div>
+                    <div class="wf-risk-bar"><div class="wf-risk-bar-fill" style="width:18%"></div></div>
+                    <div class="wf-risk-note">Styrkeregime opprettholdes</div>
+                  </div>
+                  <div class="wf-risk-cell wf-risk-low">
+                    <div class="wf-risk-label">Lav</div>
+                    <div class="wf-risk-part">Ankler / knær</div>
+                    <div class="wf-risk-score">12</div>
+                    <div class="wf-risk-bar"><div class="wf-risk-bar-fill" style="width:12%"></div></div>
+                    <div class="wf-risk-note">Ingen hendelser registrert</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Belastning siste 14 dager<span class="wf-marker">3</span></div>
+                <div class="wf-load-chart">
+                  <div class="wf-load-bar" style="height:30%"></div>
+                  <div class="wf-load-bar" style="height:45%"></div>
+                  <div class="wf-load-bar" style="height:40%"></div>
+                  <div class="wf-load-bar" style="height:55%"></div>
+                  <div class="wf-load-bar" style="height:38%"></div>
+                  <div class="wf-load-bar" style="height:62%"></div>
+                  <div class="wf-load-bar wf-load-warn" style="height:78%"></div>
+                  <div class="wf-load-bar wf-load-warn" style="height:85%"></div>
+                  <div class="wf-load-bar" style="height:50%"></div>
+                  <div class="wf-load-bar" style="height:44%"></div>
+                  <div class="wf-load-bar" style="height:60%"></div>
+                  <div class="wf-load-bar wf-load-warn" style="height:88%"></div>
+                  <div class="wf-load-bar wf-load-warn" style="height:92%"></div>
+                  <div class="wf-load-bar" style="height:52%"></div>
+                </div>
+                <div class="wf-load-labels">
+                  <span>3. apr</span>
+                  <span>10. apr</span>
+                  <span>16. apr</span>
+                </div>
+                <div class="wf-c-sub" style="margin-top:10px;">Spike: 14. apr · 92% ACWR. Drivet volum for høyt &mdash; bidrar til rygg-risiko.</div>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Anbefalt tiltak<span class="wf-marker">4</span></div>
+                  <span class="wf-tag wf-tag-dark">AI-generert</span>
+                </div>
+                <div class="wf-c-grid2">
+                  <div>
+                    <div class="wf-c-title">1. Reduser driver-volum neste 7 dager</div>
+                    <div class="wf-c-sub">Fra 80 til 40 slag/økt. Erstatt med mobilitet + SLAG-fokus.</div>
+                  </div>
+                  <div>
+                    <div class="wf-c-title">2. Legg til mobilitet mandag + torsdag</div>
+                    <div class="wf-c-sub">20 min kjerne- + hofterotasjonsmobilitet. Senker rygg-score med ~15 poeng.</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Forebygging som premiss:</strong> Flytter fokus fra "hva har skjedd" til "hva kan skje". Mer verdi for Pro-segment og unge spillere.</li>
+        <li><strong>2 — Risikomatrise som hovedkomponent:</strong> 6 kroppsregioner scoret 0–100. Visuell heatmap-aktig, med fargebinær (svart = høy) for kontrast.</li>
+        <li><strong>3 — ACWR-basert belastningsgraf:</strong> Acute-to-chronic workload ratio er gullstandard innen idrettsmedisin. Spike = varsel.</li>
+        <li><strong>4 — AI-forslag tiltak:</strong> Kobler direkte inn i Anders' AI-coach. "Her er risikoen — her er løsningen."</li>
+        <li>— Krever at vi har nok data: belastning må tracked per kroppsdel/slagtype. Ikke trivielt å bygge godt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- OPTION 5: Recovery Tracker                                             -->
+  <!-- ===================================================================== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Recovery Tracker</span></h2>
+    <p class="option-description">Rehabilitering som produkt. Dedikert tracker for aktiv skade: milepæler, daglige øvelser, prognose. Når skade er aktiv, blir Helse-siden en rehab-app snarere enn historikk.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/helse</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div>
+                <div class="wf-sb-profile-name">Anders Kristiansen</div>
+                <div class="wf-sb-profile-meta">Pro · HCP +0.8</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Helse</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Dagens øvelser</div>
+              <div class="wf-sb-cta-desc">4 av 5 fullført. 10 min igjen.</div>
+              <button class="wf-sb-cta-btn">Fullfør økta</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Rehab · nedre rygg · dag 47 av ~60</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Journal</span>
+                <span class="wf-mtopbar-chip">Historikk</span>
+              </div>
+            </div>
+
+            <section class="wf-rec-hero">
+              <div>
+                <div class="wf-rec-eyebrow">Aktiv rehabilitering<span class="wf-marker">1</span></div>
+                <h1 class="wf-rec-title">Nedre rygg · lumbal stivhet</h1>
+                <p class="wf-rec-sub">Startet 2. mars 2026 · prognose tilbake i full trening: ca. 30. april (13 dager igjen)</p>
+              </div>
+              <div class="wf-rec-progress-ring">
+                <span class="wf-rec-progress-val">78%</span>
+                <span class="wf-rec-progress-label">Fullført</span>
+              </div>
+            </section>
+
+            <div class="wf-bento">
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-label">Milepæler<span class="wf-marker">2</span></div>
+                <div class="wf-milestones">
+                  <div class="wf-ms wf-ms-done">
+                    <div class="wf-ms-dot">1</div>
+                    <div class="wf-ms-name">Smertefri hvile</div>
+                    <div class="wf-ms-date">10. mars</div>
+                  </div>
+                  <div class="wf-ms wf-ms-done">
+                    <div class="wf-ms-dot">2</div>
+                    <div class="wf-ms-name">Lett mobilitet</div>
+                    <div class="wf-ms-date">18. mars</div>
+                  </div>
+                  <div class="wf-ms wf-ms-done">
+                    <div class="wf-ms-dot">3</div>
+                    <div class="wf-ms-name">Halvtempo swing</div>
+                    <div class="wf-ms-date">2. april</div>
+                  </div>
+                  <div class="wf-ms wf-ms-active">
+                    <div class="wf-ms-dot">4</div>
+                    <div class="wf-ms-name">80% tempo m/ grense</div>
+                    <div class="wf-ms-date">16. april · nå</div>
+                  </div>
+                  <div class="wf-ms">
+                    <div class="wf-ms-dot">5</div>
+                    <div class="wf-ms-name">Full belastning</div>
+                    <div class="wf-ms-date">30. april</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-7">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Dagens øvelser<span class="wf-marker">3</span></div>
+                  <span class="wf-tag wf-tag-dark">4 / 5 fullført</span>
+                </div>
+                <div class="wf-ex-list">
+                  <div class="wf-ex-item">
+                    <div class="wf-ex-check wf-ex-done">✓</div>
+                    <div class="wf-ex-body">
+                      <div class="wf-ex-title">Cat-cow mobilitet</div>
+                      <div class="wf-ex-meta">Morgen · 5 min · lav intensitet</div>
+                    </div>
+                    <div class="wf-ex-sets">3 × 10</div>
+                  </div>
+                  <div class="wf-ex-item">
+                    <div class="wf-ex-check wf-ex-done">✓</div>
+                    <div class="wf-ex-body">
+                      <div class="wf-ex-title">Dead bug (kjernestabilitet)</div>
+                      <div class="wf-ex-meta">Morgen · 6 min</div>
+                    </div>
+                    <div class="wf-ex-sets">3 × 12</div>
+                  </div>
+                  <div class="wf-ex-item">
+                    <div class="wf-ex-check wf-ex-done">✓</div>
+                    <div class="wf-ex-body">
+                      <div class="wf-ex-title">Hofterotasjon m/ strikk</div>
+                      <div class="wf-ex-meta">Ettermiddag · 8 min</div>
+                    </div>
+                    <div class="wf-ex-sets">2 × 15</div>
+                  </div>
+                  <div class="wf-ex-item">
+                    <div class="wf-ex-check wf-ex-done">✓</div>
+                    <div class="wf-ex-body">
+                      <div class="wf-ex-title">Bird-dog</div>
+                      <div class="wf-ex-meta">Ettermiddag · 6 min</div>
+                    </div>
+                    <div class="wf-ex-sets">3 × 10/side</div>
+                  </div>
+                  <div class="wf-ex-item">
+                    <div class="wf-ex-check"></div>
+                    <div class="wf-ex-body">
+                      <div class="wf-ex-title">Planken (progresjon 60s)</div>
+                      <div class="wf-ex-meta">Kveld · 10 min igjen</div>
+                    </div>
+                    <div class="wf-ex-sets">3 × 60s</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-5">
+                <div class="wf-c-label">Prognose + notater<span class="wf-marker">4</span></div>
+                <div>
+                  <div class="wf-c-title">Tilbake i full trening</div>
+                  <div class="wf-c-value" style="font-size:26px; margin-top:6px;">30. apr</div>
+                  <div class="wf-c-sub">13 dager igjen · basert på snitt-responstid</div>
+                </div>
+                <div style="padding-top:12px; border-top:1px solid #eee; margin-top:12px;">
+                  <div class="wf-c-sub" style="font-style:italic; line-height:1.6;">"Anders ligger 5 dager foran forventet kurve. Hvis vi holder dette, kan vi vurdere 90% tempo fra 25. april."</div>
+                  <div class="wf-c-sub" style="margin-top:8px; font-weight:600;">— Lars Hagen, fysio</div>
+                </div>
+                <button class="wf-btn" style="margin-top:auto;">Åpne full journal →</button>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Rehab som hero:</strong> Når det er en aktiv skade, dominerer den. Progressring gir umiddelbar status: "Hvor langt har jeg kommet?"</li>
+        <li><strong>2 — Milepæler som gamification:</strong> 5-trinns reise fra "smertefri" til "full belastning". Prikk + dato + navn. Motivasjon gjennom sekvens.</li>
+        <li><strong>3 — Daglige øvelser sjekkes av:</strong> Praktisk: dag-for-dag gjennomføring. Integrert med treningsplan-motoren.</li>
+        <li><strong>4 — Fysio-notat inkludert:</strong> Direkte stemme fra fysioterapeut. Tillit + kontekst.</li>
+        <li>— Svakhet: Når det ikke er aktive skader, blir siden tom. Må ha fallback "ingen aktiv skade — se historikk i stedet".</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- SUMMARY                                                                -->
+  <!-- ===================================================================== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot målet: <strong>journal over skader + tydelig kobling til treningsplan via restriksjoner</strong>. Siden må fungere både med aktiv skade (som Anders har nå) og uten.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Dekker journal</th><th>Dekker restriksjoner</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Body Map</strong></td><td>Menneskefigur som navigasjon + journal + restriksjoner</td><td>Ja — full liste</td><td>Ja — eget kort</td><td>Medium</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Journal Timeline</strong></td><td>Kronologisk tidslinje, alle hendelser</td><td>Sterk — narrativ</td><td>Svakere — finnes i tidslinjen, ikke isolert</td><td>Lav–medium</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Active Restrictions</strong></td><td>Fokus på hva som påvirker plan nå</td><td>Komprimert historikk</td><td>Svært sterk — hovedfokus</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Risk Dashboard</strong></td><td>Forebygging via risiko-scoring per kroppsdel</td><td>Indirekte</td><td>Indirekte</td><td>Høy (krever belastning-tracking)</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>5. Recovery Tracker</strong></td><td>Aktiv skade som rehab-produkt</td><td>Kun aktiv</td><td>Ja — milepæler + øvelser</td><td>Medium–høy</td><td>★★★☆☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Body Map</h3>
+      <p>Body Map er den eneste opsjonen som dekker <strong>alle tre dataområder</strong> (Health-journal, TrainingRestriction, PlayerBodyProfile) i ett skjermbilde uten å miste fokus. Menneskefiguren er den sterkeste visuelle metaforen for "hvor er skaden" — umiddelbart forståelig for spiller, fysio og coach. Journalen til høyre, aktiv restriksjon som eget kort, og kroppsprofil som baseline gir full kontekst uten scroll-trøtthet.</p>
+      <p><strong>Strategisk flow:</strong> Implementer Option 1 som default. Option 5 (Recovery Tracker) vurderes som <em>conditional layout</em> når det er aktiv rehab — siden bytter til rehab-modus automatisk. Option 3 (Active Restrictions) kan bli en egen <em>"Restriksjoner"-subtab</em> under Helse. Option 4 (Risk Dashboard) er en mulig <em>Pro/Elite-tier</em>-utvidelse når vi har nok belastningsdata. Option 2 (Journal Timeline) tilbys som alternativ visning via "Kronologisk"-knapp i sidehodet.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  AK Golf Platform — Skadehistorikk / Helse (N13) · wireframe
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

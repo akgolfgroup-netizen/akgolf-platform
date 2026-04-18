@@ -1,0 +1,330 @@
+/* === Wireframe Content CSS (B&W only) — Treningstimer per omraade (N06) === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; }
+
+/* ============ SHELL ============ */
+.wf-shell { display: grid; grid-template-columns: 220px 1fr; min-height: 760px; background: #f5f5f5; }
+
+/* ============ SIDEBAR ============ */
+.wf-sidebar {
+  background: #fff; border-right: 1px solid #eee;
+  padding: 20px 14px; display: flex; flex-direction: column; gap: 18px;
+}
+.wf-sb-logo { font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: #000; padding: 4px 6px; }
+.wf-sb-profile {
+  display: flex; align-items: center; gap: 10px; padding: 10px;
+  border: 1px solid #eee; border-radius: 12px; background: #fff;
+}
+.wf-sb-avatar { width: 36px; height: 36px; border-radius: 50%; background: #eee; border: 1px solid #ccc;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #333; }
+.wf-sb-profile-name { font-size: 13px; font-weight: 600; color: #000; }
+.wf-sb-profile-meta { font-size: 11px; color: #999; }
+
+.wf-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-sb-nav-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; padding: 8px 6px 4px; font-weight: 600; }
+.wf-sb-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px 10px;
+  border-radius: 10px; color: #333; font-size: 13px; text-decoration: none;
+}
+.wf-sb-item-icon { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 4px; flex-shrink: 0; }
+.wf-sb-item.wf-active { background: #f5f5f5; color: #000; font-weight: 600; }
+.wf-sb-item.wf-active .wf-sb-item-icon { background: #000; border-color: #000; }
+.wf-sb-item:hover { background: #f5f5f5; color: #000; }
+
+.wf-sb-cta {
+  margin-top: auto; padding: 16px 14px; border: 1px solid #ccc; border-radius: 12px;
+  background: #fff; text-align: center;
+}
+.wf-sb-cta-title { font-size: 12px; font-weight: 700; color: #000; margin-bottom: 6px; }
+.wf-sb-cta-desc { font-size: 11px; color: #666; margin-bottom: 10px; line-height: 1.4; }
+.wf-sb-cta-btn { width: 100%; padding: 9px 12px; background: #000; color: #fff; border: none; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+/* ============ MAIN ============ */
+.wf-main { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+
+.wf-mtopbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 8px;
+}
+.wf-mtopbar-left { font-size: 12px; color: #666; }
+.wf-mtopbar-right { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #666; }
+.wf-mtopbar-chip { padding: 6px 12px; border: 1px solid #ccc; border-radius: 999px; font-size: 12px; color: #333; }
+
+/* ============ GREETING ============ */
+.wf-greet {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 20px 22px;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.wf-greet-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 6px; font-weight: 600; }
+.wf-greet-h { font-size: 22px; font-weight: 700; color: #000; margin: 0 0 4px; letter-spacing: -0.01em; line-height: 1.25; }
+.wf-greet-sub { font-size: 13px; color: #666; margin: 0; }
+.wf-greet-badge {
+  padding: 6px 12px; border: 1px solid #000; border-radius: 999px; background: #000; color: #fff;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+}
+
+/* ============ CARD PRIMITIVES ============ */
+.wf-c {
+  background: #fff; border: 1px solid #eee; border-radius: 14px;
+  padding: 18px; display: flex; flex-direction: column; gap: 12px;
+}
+.wf-c-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-c-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.wf-c-link { font-size: 12px; color: #000; font-weight: 600; text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; }
+
+/* ============ MARKERS ============ */
+.wf-marker {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%; background: #000; color: #fff;
+  font-size: 10px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+}
+
+/* ============ AI BADGE ============ */
+.wf-ai-badge { display: inline-block; padding: 3px 8px; border: 1px solid #666; border-radius: 999px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #333; background: #eee; }
+
+/* ============ KPI ROW (5 zones) ============ */
+.wf-vol-kpi-row {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+}
+.wf-vol-kpi {
+  background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px 14px;
+  display: flex; flex-direction: column; gap: 4px; position: relative;
+}
+.wf-vol-kpi-active {
+  border-color: #000; box-shadow: 0 0 0 1px #000 inset;
+}
+.wf-vol-kpi-sw {
+  width: 14px; height: 4px; border-radius: 2px; background: #333; margin-bottom: 6px;
+}
+.wf-vol-kpi[data-zone="teknikk"] .wf-vol-kpi-sw { background: #999; }
+.wf-vol-kpi[data-zone="fysikk"] .wf-vol-kpi-sw { background: #666; }
+.wf-vol-kpi[data-zone="slag"] .wf-vol-kpi-sw { background: #000; }
+.wf-vol-kpi[data-zone="spill"] .wf-vol-kpi-sw { background: #333; }
+.wf-vol-kpi[data-zone="turnering"] .wf-vol-kpi-sw { background: #ccc; border: 1px solid #666; }
+.wf-vol-kpi-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-vol-kpi-value { font-size: 22px; font-weight: 800; color: #000; line-height: 1; letter-spacing: -0.02em; }
+.wf-vol-kpi-sub { font-size: 11px; color: #666; }
+
+/* ============ STACK CHART (Option 1) ============ */
+.wf-stack-legend {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.wf-stack-lg {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; color: #333; font-weight: 500;
+}
+.wf-stack-lg i {
+  width: 10px; height: 10px; border-radius: 3px; background: #666; display: inline-block;
+}
+.wf-stack-lg[data-zone="teknikk"] i { background: #999; }
+.wf-stack-lg[data-zone="fysikk"] i { background: #666; }
+.wf-stack-lg[data-zone="slag"] i { background: #000; }
+.wf-stack-lg[data-zone="spill"] i { background: #333; }
+.wf-stack-lg[data-zone="turnering"] i { background: #ccc; border: 1px solid #666; }
+
+.wf-stackchart {
+  display: grid; grid-template-columns: 36px 1fr; gap: 10px;
+  height: 220px; padding-top: 6px;
+}
+.wf-stack-yaxis {
+  display: flex; flex-direction: column; justify-content: space-between;
+  font-size: 10px; color: #999; text-align: right; padding-right: 4px;
+  border-right: 1px dashed #eee;
+}
+.wf-stack-bars {
+  display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; align-items: end;
+}
+.wf-stack-col { display: flex; flex-direction: column; gap: 6px; height: 100%; }
+.wf-stack-bar {
+  display: flex; flex-direction: column-reverse; flex: 1; overflow: hidden;
+  border-radius: 4px 4px 0 0; background: #f5f5f5; border: 1px solid #eee; border-bottom: none;
+}
+.wf-stack-seg { width: 100%; }
+.wf-stack-seg[data-zone="teknikk"] { background: #999; }
+.wf-stack-seg[data-zone="fysikk"] { background: #666; }
+.wf-stack-seg[data-zone="slag"] { background: #000; }
+.wf-stack-seg[data-zone="spill"] { background: #333; }
+.wf-stack-seg[data-zone="turnering"] { background: #ccc; border-top: 1px solid #666; }
+.wf-stack-xlabel { font-size: 10px; color: #999; text-align: center; }
+.wf-stack-col-active .wf-stack-xlabel { color: #000; font-weight: 700; }
+.wf-stack-col-active .wf-stack-bar { outline: 1px solid #000; outline-offset: 2px; border-radius: 4px; }
+
+/* ============ OKT-LISTE (Option 1) ============ */
+.wf-vol-list { display: flex; flex-direction: column; gap: 0; }
+.wf-vol-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+.wf-vol-item:last-child { border-bottom: none; }
+.wf-vol-item-dot { width: 10px; height: 10px; border-radius: 50%; background: #333; flex-shrink: 0; }
+.wf-vol-item-dot[data-zone="teknikk"] { background: #999; }
+.wf-vol-item-dot[data-zone="fysikk"] { background: #666; }
+.wf-vol-item-dot[data-zone="slag"] { background: #000; }
+.wf-vol-item-dot[data-zone="spill"] { background: #333; }
+.wf-vol-item-dot[data-zone="turnering"] { background: #ccc; border: 1px solid #666; }
+.wf-vol-item-body { flex: 1; }
+.wf-vol-item-title { font-size: 13px; font-weight: 600; color: #000; margin-bottom: 2px; }
+.wf-vol-item-meta { font-size: 11px; color: #666; }
+.wf-vol-item-zone {
+  padding: 3px 9px; border: 1px solid #ccc; border-radius: 999px;
+  font-size: 10px; font-weight: 700; color: #333; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.wf-vol-item-time { font-size: 12px; color: #333; font-weight: 600; min-width: 52px; text-align: right; }
+
+/* ============ 5 RINGS (Option 2) ============ */
+.wf-rings5 {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 24px 18px;
+}
+.wf-ring5 {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 8px; border-radius: 12px;
+}
+.wf-ring5-active { background: #f5f5f5; outline: 1px solid #000; }
+.wf-ring5-circle {
+  --pct: 75;
+  width: 120px; height: 120px; border-radius: 50%;
+  background:
+    conic-gradient(#000 0%, #000 calc(var(--pct) * 1%), #eee calc(var(--pct) * 1%), #eee 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.wf-ring5-inner {
+  width: 88px; height: 88px; background: #fff; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 1px solid #eee;
+}
+.wf-ring5-value { font-size: 20px; font-weight: 800; color: #000; line-height: 1; letter-spacing: -0.02em; }
+.wf-ring5-max { font-size: 10px; color: #666; margin-top: 3px; }
+.wf-ring5-label { font-size: 12px; font-weight: 700; color: #000; text-transform: uppercase; letter-spacing: 0.08em; }
+.wf-ring5-sub { font-size: 10px; color: #666; }
+
+/* Drill-down bars (Option 2) */
+.wf-drill-grid { display: flex; flex-direction: column; gap: 10px; }
+.wf-drill-item { display: grid; grid-template-columns: 180px 1fr 50px; gap: 12px; align-items: center; }
+.wf-drill-name { font-size: 12px; color: #333; font-weight: 500; }
+.wf-drill-bar { height: 8px; background: #eee; border-radius: 999px; overflow: hidden; position: relative; }
+.wf-drill-fill { height: 100%; background: #000; border-radius: 999px; }
+.wf-drill-time { font-size: 12px; color: #000; font-weight: 700; text-align: right; }
+
+/* ============ HEATMAP (Option 3) ============ */
+.wf-heat-wrap {
+  display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 8px 0;
+}
+.wf-heat-dow {
+  display: grid; grid-template-rows: repeat(7, 1fr); gap: 3px;
+  font-size: 9px; color: #999; text-align: right; align-items: center;
+  padding-top: 2px;
+}
+.wf-heat-grid {
+  display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 1fr);
+  gap: 3px;
+}
+.wf-heat-col {
+  display: grid; grid-template-rows: repeat(7, 1fr); gap: 3px;
+}
+.wf-heat-cell {
+  width: 100%; aspect-ratio: 1; min-height: 14px; border-radius: 3px;
+  background: #eee; border: 1px solid #e0e0e0;
+}
+.wf-heat-cell[data-level="0"] { background: #f5f5f5; }
+.wf-heat-cell[data-level="1"] { background: #ddd; }
+.wf-heat-cell[data-level="2"] { background: #999; }
+.wf-heat-cell[data-level="3"] { background: #555; }
+.wf-heat-cell[data-level="4"] { background: #000; }
+.wf-heat-scale {
+  display: flex; align-items: center; gap: 4px; justify-content: flex-end;
+  font-size: 10px; color: #999; margin-top: 10px;
+}
+.wf-heat-scale .wf-heat-cell { width: 12px; height: 12px; aspect-ratio: auto; min-height: auto; }
+
+/* ============ GOAL TRACKER (Option 4) ============ */
+.wf-goal-list { display: flex; flex-direction: column; gap: 10px; }
+.wf-goal-card {
+  background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.wf-goal-head { display: flex; align-items: center; gap: 12px; }
+.wf-goal-ic { width: 36px; height: 36px; border-radius: 10px; background: #f5f5f5; border: 1px solid #eee; flex-shrink: 0; }
+.wf-goal-card[data-zone="teknikk"] .wf-goal-ic { background: #eee; }
+.wf-goal-card[data-zone="fysikk"] .wf-goal-ic { background: #ddd; }
+.wf-goal-card[data-zone="slag"] .wf-goal-ic { background: #000; }
+.wf-goal-card[data-zone="spill"] .wf-goal-ic { background: #555; }
+.wf-goal-card[data-zone="turnering"] .wf-goal-ic { background: #ccc; border: 1px solid #666; }
+.wf-goal-body { flex: 1; }
+.wf-goal-title { font-size: 14px; font-weight: 700; color: #000; margin-bottom: 2px; }
+.wf-goal-sub { font-size: 12px; color: #666; }
+.wf-goal-status {
+  padding: 4px 10px; border-radius: 999px; font-size: 10px; font-weight: 700;
+  background: #eee; color: #000; border: 1px solid #ccc; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.wf-goal-warn { background: #fff; color: #666; border: 1px dashed #666; }
+.wf-goal-bar {
+  position: relative; height: 10px; background: #eee; border-radius: 999px; overflow: visible;
+}
+.wf-goal-fill { height: 100%; background: #000; border-radius: 999px; }
+.wf-goal-tick {
+  position: absolute; top: -4px; bottom: -4px; width: 2px; background: #333;
+}
+.wf-goal-tick span {
+  position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+  font-size: 9px; color: #666; white-space: nowrap; font-weight: 600;
+}
+.wf-goal-meta { display: flex; justify-content: space-between; font-size: 10px; color: #999; }
+
+/* ============ TIME JOURNAL (Option 5) ============ */
+.wf-journal {
+  background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 8px 18px;
+}
+.wf-journal-week {
+  padding: 12px 0; border-bottom: 1px solid #eee;
+}
+.wf-journal-week:last-child { border-bottom: none; }
+.wf-journal-weekhead {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0 12px;
+}
+.wf-journal-weeklabel { font-size: 11px; color: #666; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.wf-journal-weeksum { font-size: 12px; color: #000; font-weight: 700; }
+
+.wf-journal-row {
+  display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: center;
+  padding: 10px 0; border-top: 1px solid #f5f5f5;
+}
+.wf-journal-date { text-align: center; }
+.wf-journal-day { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
+.wf-journal-num { font-size: 20px; font-weight: 800; color: #000; line-height: 1; letter-spacing: -0.02em; }
+.wf-journal-body { min-width: 0; }
+.wf-journal-title { font-size: 13px; font-weight: 600; color: #000; margin-bottom: 4px; }
+.wf-journal-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.wf-journal-tag {
+  padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700;
+  color: #fff; background: #000; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.wf-journal-tag[data-zone="teknikk"] { background: #999; color: #fff; }
+.wf-journal-tag[data-zone="fysikk"] { background: #666; color: #fff; }
+.wf-journal-tag[data-zone="slag"] { background: #000; color: #fff; }
+.wf-journal-tag[data-zone="spill"] { background: #333; color: #fff; }
+.wf-journal-tag[data-zone="turnering"] { background: #fff; color: #333; border: 1px solid #666; }
+.wf-journal-tag-plain {
+  padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 500;
+  color: #666; background: #f5f5f5; border: 1px solid #eee;
+}
+.wf-journal-time { font-size: 13px; color: #000; font-weight: 700; min-width: 56px; text-align: right; }
+
+/* ============ ANNOTATIONS ============ */
+.wf-annotations { margin-top: 16px; padding: 20px; background: #f5f5f5; border: 1px solid #eee; border-radius: 10px; }
+.wf-annotations h3 { font-size: 14px; font-weight: 700; margin: 0 0 10px; color: #000; }
+.wf-annotations ul { margin: 0; padding-left: 20px; font-size: 13px; color: #333; }
+.wf-annotations li { margin-bottom: 6px; line-height: 1.5; }
+
+/* ============ SUMMARY ============ */
+.wf-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 24px 0; }
+.wf-summary-table th, .wf-summary-table td { padding: 12px 14px; border-bottom: 1px solid #eee; text-align: left; }
+.wf-summary-table th { font-weight: 700; color: #000; background: #f5f5f5; font-size: 12px; letter-spacing: 0.04em; }
+.wf-summary-table td:last-child { font-weight: 700; color: #000; }
+.wf-recommendation { padding: 24px; border: 1px solid #000; border-radius: 12px; background: #f5f5f5; margin-top: 24px; }
+.wf-recommendation h3 { margin: 0 0 12px; font-size: 18px; color: #000; }
+.wf-recommendation p { font-size: 14px; line-height: 1.6; color: #333; margin: 0 0 12px; }

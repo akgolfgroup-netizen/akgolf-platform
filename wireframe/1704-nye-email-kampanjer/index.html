@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-postkampanje-manager — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">E-postkampanje-manager</span> — <span id="project-name">AK Golf Platform · Mission Control · N10</span></span>
+    <span class="rec">Anbefalt: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Campaign List</button>
+    <button class="tab-btn" data-tab="option-2">2: Funnel Viz</button>
+    <button class="tab-btn" data-tab="option-3">3: Builder First</button>
+    <button class="tab-btn" data-tab="option-4">4: Template Library</button>
+    <button class="tab-btn" data-tab="option-5">5: Performance</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===================== OPTION 1 — CAMPAIGN LIST ===================== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Campaign List</span> <small style="font-size:12px;color:#888;font-weight:500;">SAFE</small></h2>
+    <p class="option-description">Tabell med alle kampanjer: navn, status (aktiv/pause), mottakere, open/click-rate, siste kjøring + handlinger.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kampanjer</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <!-- Sidebar -->
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div>
+                <span class="wf-mc-brand-name">AK Golf</span>
+                <span class="wf-mc-brand-sub">Mission Control</span>
+              </div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Denne uken</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Kampanjer<span class="wf-mc-nav-badge">5</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user">
+                <strong>Anders Kristiansen</strong>
+                <span>Admin · Coach</span>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Main -->
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Mission Control</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>E-postkampanjer</strong>
+              </div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Søk kampanjer, maler, mottakere ...</div>
+                <button class="wf-mc-top-btn">Hjelp</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">E-postkampanjer</h2>
+                  <div class="wf-page-sub">5 aktive sekvenser · 2 pauset · siste 30 dager: 12 480 e-poster sendt</div>
+                </div>
+                <div class="wf-page-actions">
+                  <button class="wf-btn">Importer mal</button>
+                  <button class="wf-btn wf-btn-primary">+ Ny kampanje</button>
+                </div>
+              </div>
+
+              <div class="wf-filter-bar">
+                <div class="wf-filter-pill wf-filter-pill-active">Alle (7)</div>
+                <div class="wf-filter-pill">Aktive (5)</div>
+                <div class="wf-filter-pill">Pauset (2)</div>
+                <div class="wf-filter-pill">Utkast (0)</div>
+                <div class="wf-filter-pill">Onboarding</div>
+                <div class="wf-filter-pill">Winback</div>
+                <div class="wf-filter-pill">Repetitiv</div>
+              </div>
+
+              <!-- KPI Row -->
+              <div class="wf-kpi-row">
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">AKTIVE KAMPANJER</div>
+                  <div class="wf-kpi-value">5</div>
+                  <div class="wf-kpi-delta">av 7 totalt</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">SNITT OPEN RATE</div>
+                  <div class="wf-kpi-value">47 %</div>
+                  <div class="wf-kpi-delta">+3 pp siste 30 dager</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">SNITT CLICK RATE</div>
+                  <div class="wf-kpi-value">11 %</div>
+                  <div class="wf-kpi-delta">−1 pp siste 30 dager</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">KONVERTERINGER</div>
+                  <div class="wf-kpi-value">38</div>
+                  <div class="wf-kpi-delta">siste 30 dager</div>
+                </div>
+              </div>
+
+              <!-- Tabell -->
+              <div class="wf-mc-card" style="padding:0;overflow:hidden;">
+                <table class="wf-camp-table">
+                  <thead>
+                    <tr>
+                      <th style="width:28%">Kampanje</th>
+                      <th>Status</th>
+                      <th>Mottakere</th>
+                      <th>Open rate</th>
+                      <th>Click rate</th>
+                      <th>Siste kjøring</th>
+                      <th style="text-align:right;">Handlinger</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="wf-camp-name">Velkommen til AK Golf Academy</div>
+                        <div class="wf-camp-type">Onboarding-drip · 5 steg</div>
+                      </td>
+                      <td><span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span></td>
+                      <td><span class="wf-metric-inline">214</span></td>
+                      <td>
+                        <span class="wf-metric-inline">58 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill" style="width:58%;"></div></div>
+                      </td>
+                      <td>
+                        <span class="wf-metric-inline">15 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill wf-metric-bar-fill-soft" style="width:75%;"></div></div>
+                      </td>
+                      <td>For 2 timer siden</td>
+                      <td>
+                        <div class="wf-row-actions">
+                          <span class="wf-row-action">Rediger</span>
+                          <span class="wf-row-action">Pause</span>
+                          <span class="wf-row-action">...</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="wf-camp-name">Månedlig golf-tips</div>
+                        <div class="wf-camp-type">Repetitiv · hver 1. mandag</div>
+                      </td>
+                      <td><span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span></td>
+                      <td><span class="wf-metric-inline">1 248</span></td>
+                      <td>
+                        <span class="wf-metric-inline">41 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill" style="width:41%;"></div></div>
+                      </td>
+                      <td>
+                        <span class="wf-metric-inline">9 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill wf-metric-bar-fill-soft" style="width:45%;"></div></div>
+                      </td>
+                      <td>For 12 dager siden</td>
+                      <td>
+                        <div class="wf-row-actions">
+                          <span class="wf-row-action">Rediger</span>
+                          <span class="wf-row-action">Pause</span>
+                          <span class="wf-row-action">...</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="wf-camp-name">Winback — ikke booket på 30 dager</div>
+                        <div class="wf-camp-type">Winback · 3 steg · trigger: inaktivitet</div>
+                      </td>
+                      <td><span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span></td>
+                      <td><span class="wf-metric-inline">47</span></td>
+                      <td>
+                        <span class="wf-metric-inline">52 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill" style="width:52%;"></div></div>
+                      </td>
+                      <td>
+                        <span class="wf-metric-inline">13 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill wf-metric-bar-fill-soft" style="width:65%;"></div></div>
+                      </td>
+                      <td>I går kl. 08:00</td>
+                      <td>
+                        <div class="wf-row-actions">
+                          <span class="wf-row-action">Rediger</span>
+                          <span class="wf-row-action">Pause</span>
+                          <span class="wf-row-action">...</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="wf-camp-name">Etter din første coaching-økt</div>
+                        <div class="wf-camp-type">Transaksjonell · 2 steg · trigger: booking fullført</div>
+                      </td>
+                      <td><span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span></td>
+                      <td><span class="wf-metric-inline">38</span></td>
+                      <td>
+                        <span class="wf-metric-inline">54 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill" style="width:54%;"></div></div>
+                      </td>
+                      <td>
+                        <span class="wf-metric-inline">12 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill wf-metric-bar-fill-soft" style="width:60%;"></div></div>
+                      </td>
+                      <td>For 4 timer siden</td>
+                      <td>
+                        <div class="wf-row-actions">
+                          <span class="wf-row-action">Rediger</span>
+                          <span class="wf-row-action">Pause</span>
+                          <span class="wf-row-action">...</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="wf-camp-name">Sesongstart 2026</div>
+                        <div class="wf-camp-type">Engangs-broadcast · 1 steg</div>
+                      </td>
+                      <td><span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span></td>
+                      <td><span class="wf-metric-inline">1 102</span></td>
+                      <td>
+                        <span class="wf-metric-inline">34 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill" style="width:34%;"></div></div>
+                      </td>
+                      <td>
+                        <span class="wf-metric-inline">8 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill wf-metric-bar-fill-soft" style="width:40%;"></div></div>
+                      </td>
+                      <td>For 9 dager siden</td>
+                      <td>
+                        <div class="wf-row-actions">
+                          <span class="wf-row-action">Rediger</span>
+                          <span class="wf-row-action">Pause</span>
+                          <span class="wf-row-action">...</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="wf-camp-name">Junior Academy — foreldreinfo</div>
+                        <div class="wf-camp-type">Repetitiv · hver 4. uke</div>
+                      </td>
+                      <td><span class="wf-status wf-status-paused"><span class="wf-status-dot"></span>Pauset</span></td>
+                      <td><span class="wf-metric-inline">84</span></td>
+                      <td>
+                        <span class="wf-metric-inline">46 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill" style="width:46%;"></div></div>
+                      </td>
+                      <td>
+                        <span class="wf-metric-inline">10 %</span>
+                        <div class="wf-metric-bar"><div class="wf-metric-bar-fill wf-metric-bar-fill-soft" style="width:50%;"></div></div>
+                      </td>
+                      <td>For 3 uker siden</td>
+                      <td>
+                        <div class="wf-row-actions">
+                          <span class="wf-row-action">Rediger</span>
+                          <span class="wf-row-action">Start</span>
+                          <span class="wf-row-action">...</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="wf-camp-name">Bursdagshilsen</div>
+                        <div class="wf-camp-type">Trigger · fødselsdag</div>
+                      </td>
+                      <td><span class="wf-status wf-status-paused"><span class="wf-status-dot"></span>Pauset</span></td>
+                      <td><span class="wf-metric-inline">0</span></td>
+                      <td><span class="wf-metric-inline" style="color:#999">—</span></td>
+                      <td><span class="wf-metric-inline" style="color:#999">—</span></td>
+                      <td>Aldri</td>
+                      <td>
+                        <div class="wf-row-actions">
+                          <span class="wf-row-action">Rediger</span>
+                          <span class="wf-row-action">Start</span>
+                          <span class="wf-row-action">...</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>SAFE-valget: tabell er den mest gjenkjennelige admin-flaten og lar Anders skanne alle kampanjer på 2 sekunder.</li>
+        <li>Open/click-rate vises både som tall og mini-bar — visuell rangering uten å åpne hver enkelt.</li>
+        <li>Status-pills (Aktiv/Pauset/Utkast) bruker kun form og punktfarge — ingen farger kreves for B&W-versjon.</li>
+        <li>Rad-handlinger: Rediger, Pause/Start, og overflow-meny (dupliser, slett, eksporter).</li>
+        <li>Filter-pills øverst: type (onboarding/winback/repetitiv) og status. KPI-row viser total open/click aggregert.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 2 — FUNNEL VIZ ===================== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Funnel Visualization</span></h2>
+    <p class="option-description">Per kampanje visualisert som funnel: sendt → åpnet → klikket → konvertert.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kampanjer</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Denne uken</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Kampanjer<span class="wf-mc-nav-badge">5</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs"><span>Mission Control</span><span class="wf-mc-crumbs-sep">/</span><strong>Kampanje-funnel</strong></div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Søk kampanjer ...</div>
+                <button class="wf-mc-top-btn">Eksport</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Kampanje-funnel</h2>
+                  <div class="wf-page-sub">Velg kampanje for å se fullstendig konverteringsflyt</div>
+                </div>
+                <div class="wf-page-actions">
+                  <button class="wf-btn">Sammenlign 2</button>
+                  <button class="wf-btn wf-btn-primary">+ Ny kampanje</button>
+                </div>
+              </div>
+
+              <div class="wf-funnel-picker" style="margin-bottom:14px;">
+                <div class="wf-funnel-option wf-funnel-option-active">Velkommen til AK Golf Academy</div>
+                <div class="wf-funnel-option">Månedlig golf-tips</div>
+                <div class="wf-funnel-option">Winback — 30 dager</div>
+                <div class="wf-funnel-option">Etter første økt</div>
+                <div class="wf-funnel-option">Sesongstart 2026</div>
+              </div>
+
+              <!-- Hovedfunnel -->
+              <div class="wf-mc-card wf-funnel-card" style="margin-bottom:14px;">
+                <div class="wf-funnel-head">
+                  <div>
+                    <div class="wf-funnel-title">Velkommen til AK Golf Academy</div>
+                    <div class="wf-funnel-meta">Onboarding-drip · 5 steg · startet 1. mars 2026 · eier Anders</div>
+                  </div>
+                  <div class="wf-funnel-meta">214 nye elever siste 60 dager</div>
+                </div>
+
+                <div class="wf-funnel">
+                  <div class="wf-funnel-stage">
+                    <div>
+                      <div class="wf-funnel-label">Sendt</div>
+                      <div class="wf-funnel-sub">steg 1–5 levert</div>
+                    </div>
+                    <div class="wf-funnel-bar wf-funnel-bar-s1">1 048</div>
+                    <div class="wf-funnel-right">100 %<div class="wf-funnel-drop">baseline</div></div>
+                  </div>
+                  <div class="wf-funnel-stage">
+                    <div>
+                      <div class="wf-funnel-label">Åpnet</div>
+                      <div class="wf-funnel-sub">minst én e-post åpnet</div>
+                    </div>
+                    <div class="wf-funnel-bar wf-funnel-bar-s2">651</div>
+                    <div class="wf-funnel-right">62 % / 58 %<div class="wf-funnel-drop">snitt per e-post</div></div>
+                  </div>
+                  <div class="wf-funnel-stage">
+                    <div>
+                      <div class="wf-funnel-label">Klikket</div>
+                      <div class="wf-funnel-sub">CTA-klikk registrert</div>
+                    </div>
+                    <div class="wf-funnel-bar wf-funnel-bar-s3">230</div>
+                    <div class="wf-funnel-right">22 % / 15 %<div class="wf-funnel-drop">snitt per e-post</div></div>
+                  </div>
+                  <div class="wf-funnel-stage">
+                    <div>
+                      <div class="wf-funnel-label">Konvertert</div>
+                      <div class="wf-funnel-sub">booking eller abo</div>
+                    </div>
+                    <div class="wf-funnel-bar wf-funnel-bar-s4">94</div>
+                    <div class="wf-funnel-right">9 %<div class="wf-funnel-drop">av sendt</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Per-steg nedbrytning -->
+              <div class="wf-mc-grid">
+                <div class="wf-mc-card wf-span-7">
+                  <div class="wf-card-head"><span>Per steg — open rate</span><span class="wf-card-meta">5 steg over 14 dager</span></div>
+                  <table class="wf-camp-table">
+                    <thead>
+                      <tr><th>Steg</th><th>Emne</th><th>Sendt</th><th>Open</th><th>Click</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>1</td><td>Velkommen til AK Golf Academy</td><td>214</td><td><strong>58 %</strong></td><td>15 %</td></tr>
+                      <tr><td>2 (+2d)</td><td>Slik får du mest ut av coachingen</td><td>211</td><td><strong>52 %</strong></td><td>13 %</td></tr>
+                      <tr><td>3 (+5d)</td><td>Første øvelse — 10 min hjemme</td><td>208</td><td><strong>49 %</strong></td><td>18 %</td></tr>
+                      <tr><td>4 (+9d)</td><td>Din første runde — hva skal du måle</td><td>205</td><td><strong>44 %</strong></td><td>11 %</td></tr>
+                      <tr><td>5 (+14d)</td><td>Tid for neste booking?</td><td>201</td><td><strong>41 %</strong></td><td>19 %</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="wf-mc-card wf-span-5">
+                  <div class="wf-card-head"><span>Drop-off-analyse</span></div>
+                  <ul class="wf-list">
+                    <li><span>Sendt → Åpnet</span><span class="wf-metric-inline">−38 %</span></li>
+                    <li><span>Åpnet → Klikket</span><span class="wf-metric-inline">−65 %</span></li>
+                    <li><span>Klikket → Konvertert</span><span class="wf-metric-inline">−59 %</span></li>
+                    <li><span>Totalt tap</span><span class="wf-metric-inline">91 %</span></li>
+                  </ul>
+                  <div class="wf-card-foot">Største lekkasje: Åpnet → Klikket. Vurder sterkere CTA i steg 3.</div>
+                </div>
+
+                <div class="wf-mc-card wf-span-12">
+                  <div class="wf-card-head"><span>Konverteringer over tid</span><span class="wf-card-meta">siste 60 dager</span></div>
+                  <div class="wf-chart-area" style="min-height:120px;">[ linjediagram — konverteringer per uke ]</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Funnel som hovedfigur — umiddelbart synlig hvor mottakere forsvinner i sekvensen.</li>
+        <li>Bred-til-smal-barer gir intuitiv visualisering uten å trenge farger.</li>
+        <li>Per-steg-tabell under funnel viser nøyaktig hvilken e-post som svikter.</li>
+        <li>Kampanje-velger øverst (pills) — rask bytting mellom sekvenser.</li>
+        <li>Svakhet: viser kun én kampanje om gangen, krever mer scroll for oversikt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 3 — BUILDER FIRST ===================== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Builder First</span></h2>
+    <p class="option-description">Fokus på drag-drop sequence-builder (opprett/redigere). Liste er sekundær.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kampanjer/velkommen-academy</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Denne uken</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Kampanjer<span class="wf-mc-nav-badge">5</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Kampanjer</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Velkommen til AK Golf Academy</strong>
+              </div>
+              <div class="wf-mc-top-actions">
+                <button class="wf-mc-top-btn">Forhåndsvis</button>
+                <button class="wf-mc-top-btn">Send test</button>
+                <button class="wf-mc-top-btn wf-mc-top-btn-primary">Publiser</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body wf-body-compact">
+              <div class="wf-builder-wrap">
+                <!-- Venstre: blokker -->
+                <div class="wf-builder-rail">
+                  <div class="wf-builder-rail-head">Steg-typer</div>
+                  <div class="wf-builder-block"><span class="wf-builder-block-icon">E</span>E-post</div>
+                  <div class="wf-builder-block"><span class="wf-builder-block-icon">W</span>Vent / forsinkelse</div>
+                  <div class="wf-builder-block"><span class="wf-builder-block-icon">?</span>Hvis/Ellers</div>
+                  <div class="wf-builder-block"><span class="wf-builder-block-icon">T</span>Tag-handling</div>
+                  <div class="wf-builder-block"><span class="wf-builder-block-icon">X</span>Avslutt</div>
+
+                  <div class="wf-builder-rail-head">Maler</div>
+                  <div class="wf-builder-block"><span class="wf-builder-block-icon">M</span>Velkommen</div>
+                  <div class="wf-builder-block"><span class="wf-builder-block-icon">M</span>Booking-påminnelse</div>
+                  <div class="wf-builder-block"><span class="wf-builder-block-icon">M</span>Tips fra coach</div>
+                  <div class="wf-builder-block"><span class="wf-builder-block-icon">M</span>Winback</div>
+                </div>
+
+                <!-- Midten: canvas -->
+                <div class="wf-canvas">
+                  <div class="wf-canvas-head">
+                    <input class="wf-canvas-title" value="Velkommen til AK Golf Academy" />
+                    <span class="wf-card-meta">Utkast · 5 steg · 14 dager varighet</span>
+                  </div>
+
+                  <div class="wf-step">
+                    <div class="wf-step-num">1</div>
+                    <div class="wf-step-body">
+                      <div class="wf-step-title">E-post · Velkommen til AK Golf Academy</div>
+                      <div class="wf-step-meta">Umiddelbart ved signup · fra: Anders Kristiansen</div>
+                    </div>
+                    <div class="wf-step-delay">0 t</div>
+                  </div>
+                  <div class="wf-step-connector"></div>
+
+                  <div class="wf-step">
+                    <div class="wf-step-num">2</div>
+                    <div class="wf-step-body">
+                      <div class="wf-step-title">E-post · Slik får du mest ut av coachingen</div>
+                      <div class="wf-step-meta">Dynamisk: {{fornavn}} · {{pakke}}</div>
+                    </div>
+                    <div class="wf-step-delay">+2 dager</div>
+                  </div>
+                  <div class="wf-step-connector"></div>
+
+                  <div class="wf-step">
+                    <div class="wf-step-num">3</div>
+                    <div class="wf-step-body">
+                      <div class="wf-step-title">E-post · Første øvelse — 10 min hjemme</div>
+                      <div class="wf-step-meta">CTA: videoøvelse · mål: 18 % click rate</div>
+                    </div>
+                    <div class="wf-step-delay">+5 dager</div>
+                  </div>
+                  <div class="wf-step-connector"></div>
+
+                  <div class="wf-step">
+                    <div class="wf-step-num">4</div>
+                    <div class="wf-step-body">
+                      <div class="wf-step-title">Hvis/Ellers · Har booket økt?</div>
+                      <div class="wf-step-meta">Ja → avslutt · Nei → fortsett til steg 5</div>
+                    </div>
+                    <div class="wf-step-delay">+9 dager</div>
+                  </div>
+                  <div class="wf-step-connector"></div>
+
+                  <div class="wf-step">
+                    <div class="wf-step-num">5</div>
+                    <div class="wf-step-body">
+                      <div class="wf-step-title">E-post · Tid for neste booking?</div>
+                      <div class="wf-step-meta">CTA: book.akgolf.no · personlig anbefaling</div>
+                    </div>
+                    <div class="wf-step-delay">+14 dager</div>
+                  </div>
+                  <div class="wf-step-connector"></div>
+
+                  <div class="wf-step-add">+ Dra et nytt steg hit, eller klikk for å legge til</div>
+                </div>
+
+                <!-- Høyre: properties -->
+                <div class="wf-props">
+                  <div class="wf-props-head">Kampanje-innstillinger</div>
+
+                  <div class="wf-props-row">
+                    <div class="wf-props-label">Trigger</div>
+                    <div class="wf-props-value">Ny elev opprettet</div>
+                  </div>
+                  <div class="wf-props-row">
+                    <div class="wf-props-label">Målgruppe</div>
+                    <div class="wf-props-value">Alle med Academy-pakke</div>
+                  </div>
+                  <div class="wf-props-row">
+                    <div class="wf-props-label">Avsender</div>
+                    <div class="wf-props-value">Anders Kristiansen &lt;anders@akgolf.no&gt;</div>
+                  </div>
+                  <div class="wf-props-row">
+                    <div class="wf-props-label">Tidssone</div>
+                    <div class="wf-props-value">Europe/Oslo</div>
+                  </div>
+
+                  <div class="wf-props-toggle">
+                    <span>Aktiv for nye elever</span>
+                    <div class="wf-toggle wf-toggle-on"></div>
+                  </div>
+                  <div class="wf-props-toggle">
+                    <span>A/B-test emnelinje</span>
+                    <div class="wf-toggle"></div>
+                  </div>
+                  <div class="wf-props-toggle">
+                    <span>Ekskluder ved booking</span>
+                    <div class="wf-toggle wf-toggle-on"></div>
+                  </div>
+
+                  <div class="wf-props-head" style="margin-top:6px;">Siste kjøring</div>
+                  <div class="wf-props-row">
+                    <div class="wf-props-label">Status</div>
+                    <div class="wf-props-value">Aktiv · 214 mottakere</div>
+                  </div>
+                  <div class="wf-props-row">
+                    <div class="wf-props-label">Open rate</div>
+                    <div class="wf-props-value">58 %</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Tre-kolonne-layout: blokker/maler · canvas · properties — industristandard fra ActiveCampaign, Customer.io.</li>
+        <li>Drag-and-drop fra venstre rail — steg kan stokkes om, byttes ut, slettes.</li>
+        <li>Vertikal sekvens i canvas med forsinkelse-badge mellom steg — intuitiv tidssekvens.</li>
+        <li>Hvis/Ellers-blokk gir grenlogikk uten å åpne egen editor.</li>
+        <li>Svakhet: liste over alle kampanjer er gjemt — må navigere ut for å bytte kampanje.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 4 — TEMPLATE LIBRARY ===================== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Template Library</span></h2>
+    <p class="option-description">Bibliotek av EmailTemplate-maler øverst (kort per mal). Aktive kampanjer nedenfor.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kampanjer</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Denne uken</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Kampanjer<span class="wf-mc-nav-badge">5</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs"><span>Mission Control</span><span class="wf-mc-crumbs-sep">/</span><strong>Kampanjer · maler</strong></div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Søk maler ...</div>
+                <button class="wf-mc-top-btn">Importer</button>
+                <button class="wf-mc-top-btn wf-mc-top-btn-primary">+ Ny mal</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Mal-bibliotek</h2>
+                  <div class="wf-page-sub">Start nye kampanjer fra en mal — eller bygg fra bunnen av.</div>
+                </div>
+                <div class="wf-page-actions">
+                  <button class="wf-btn">Se alle maler</button>
+                  <button class="wf-btn wf-btn-primary">+ Ny kampanje fra mal</button>
+                </div>
+              </div>
+
+              <!-- Maler -->
+              <div class="wf-tmpl-grid">
+                <div class="wf-tmpl-card">
+                  <div class="wf-tmpl-thumb">
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-md"></div>
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-lg"></div>
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-lg"></div>
+                    <div class="wf-tmpl-thumb-block"></div>
+                    <div class="wf-tmpl-thumb-cta"></div>
+                  </div>
+                  <div class="wf-tmpl-body">
+                    <div class="wf-tmpl-name">Onboarding — Academy</div>
+                    <div class="wf-tmpl-desc">5-stegs velkomstdrip for nye Academy-elever</div>
+                  </div>
+                  <div class="wf-tmpl-foot">
+                    <span>5 steg</span>
+                    <span class="wf-tmpl-stat">Ø 48 %</span>
+                  </div>
+                </div>
+
+                <div class="wf-tmpl-card">
+                  <div class="wf-tmpl-thumb">
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-sm"></div>
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-md"></div>
+                    <div class="wf-tmpl-thumb-block"></div>
+                    <div class="wf-tmpl-thumb-cta"></div>
+                  </div>
+                  <div class="wf-tmpl-body">
+                    <div class="wf-tmpl-name">Månedlig tips</div>
+                    <div class="wf-tmpl-desc">Repetitivt nyhetsbrev — øvelse + innsikt</div>
+                  </div>
+                  <div class="wf-tmpl-foot">
+                    <span>1 steg</span>
+                    <span class="wf-tmpl-stat">Ø 41 %</span>
+                  </div>
+                </div>
+
+                <div class="wf-tmpl-card">
+                  <div class="wf-tmpl-thumb">
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-md"></div>
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-lg"></div>
+                    <div class="wf-tmpl-thumb-block"></div>
+                    <div class="wf-tmpl-thumb-cta"></div>
+                  </div>
+                  <div class="wf-tmpl-body">
+                    <div class="wf-tmpl-name">Winback — 30 dager</div>
+                    <div class="wf-tmpl-desc">Hent tilbake inaktive elever med tilbud</div>
+                  </div>
+                  <div class="wf-tmpl-foot">
+                    <span>3 steg</span>
+                    <span class="wf-tmpl-stat">Ø 52 %</span>
+                  </div>
+                </div>
+
+                <div class="wf-tmpl-card">
+                  <div class="wf-tmpl-thumb">
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-md"></div>
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-lg"></div>
+                    <div class="wf-tmpl-thumb-block"></div>
+                    <div class="wf-tmpl-thumb-cta"></div>
+                  </div>
+                  <div class="wf-tmpl-body">
+                    <div class="wf-tmpl-name">Etter første økt</div>
+                    <div class="wf-tmpl-desc">Takk + oppfølgingsøvelser + neste booking</div>
+                  </div>
+                  <div class="wf-tmpl-foot">
+                    <span>2 steg</span>
+                    <span class="wf-tmpl-stat">Ø 54 %</span>
+                  </div>
+                </div>
+
+                <div class="wf-tmpl-card">
+                  <div class="wf-tmpl-thumb">
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-lg"></div>
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-md"></div>
+                    <div class="wf-tmpl-thumb-block"></div>
+                    <div class="wf-tmpl-thumb-cta"></div>
+                  </div>
+                  <div class="wf-tmpl-body">
+                    <div class="wf-tmpl-name">Sesongstart</div>
+                    <div class="wf-tmpl-desc">Engangs-broadcast ved sesongåpning</div>
+                  </div>
+                  <div class="wf-tmpl-foot">
+                    <span>1 steg</span>
+                    <span class="wf-tmpl-stat">Ø 34 %</span>
+                  </div>
+                </div>
+
+                <div class="wf-tmpl-card">
+                  <div class="wf-tmpl-thumb">
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-sm"></div>
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-md"></div>
+                    <div class="wf-tmpl-thumb-cta"></div>
+                  </div>
+                  <div class="wf-tmpl-body">
+                    <div class="wf-tmpl-name">Booking-påminnelse</div>
+                    <div class="wf-tmpl-desc">Trigger 24 t før neste økt</div>
+                  </div>
+                  <div class="wf-tmpl-foot">
+                    <span>1 steg</span>
+                    <span class="wf-tmpl-stat">Ø 71 %</span>
+                  </div>
+                </div>
+
+                <div class="wf-tmpl-card">
+                  <div class="wf-tmpl-thumb">
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-md"></div>
+                    <div class="wf-tmpl-thumb-bar wf-tmpl-thumb-bar-lg"></div>
+                    <div class="wf-tmpl-thumb-block"></div>
+                  </div>
+                  <div class="wf-tmpl-body">
+                    <div class="wf-tmpl-name">Foreldreinfo junior</div>
+                    <div class="wf-tmpl-desc">Ukentlig status fra Junior Academy</div>
+                  </div>
+                  <div class="wf-tmpl-foot">
+                    <span>1 steg</span>
+                    <span class="wf-tmpl-stat">Ø 46 %</span>
+                  </div>
+                </div>
+
+                <div class="wf-tmpl-card" style="border-style:dashed;">
+                  <div class="wf-tmpl-thumb" style="align-items:center;justify-content:center;background:#fafafa;">
+                    <div style="text-align:center;color:#999;font-size:13px;font-weight:700;">+</div>
+                  </div>
+                  <div class="wf-tmpl-body">
+                    <div class="wf-tmpl-name" style="color:#999;">Tom mal</div>
+                    <div class="wf-tmpl-desc">Start helt fra bunnen av</div>
+                  </div>
+                  <div class="wf-tmpl-foot"><span>—</span><span class="wf-tmpl-stat" style="color:#999;">—</span></div>
+                </div>
+              </div>
+
+              <!-- Aktive kampanjer nedenfor -->
+              <div class="wf-mc-card" style="padding:0;overflow:hidden;">
+                <div class="wf-card-head" style="padding:14px 16px;border-bottom:1px solid #eee;">
+                  <span>Aktive kampanjer</span>
+                  <span class="wf-card-meta">5 kjører nå</span>
+                </div>
+                <table class="wf-camp-table">
+                  <thead>
+                    <tr>
+                      <th>Kampanje</th><th>Basert på mal</th><th>Mottakere</th><th>Open</th><th>Click</th><th>Siste kjøring</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><div class="wf-camp-name">Velkommen til AK Golf Academy</div><div class="wf-camp-type">Onboarding-drip · 5 steg</div></td><td>Onboarding — Academy</td><td>214</td><td><strong>58 %</strong></td><td>15 %</td><td>2 t siden</td></tr>
+                    <tr><td><div class="wf-camp-name">Månedlig golf-tips</div><div class="wf-camp-type">Repetitiv</div></td><td>Månedlig tips</td><td>1 248</td><td><strong>41 %</strong></td><td>9 %</td><td>12 dager</td></tr>
+                    <tr><td><div class="wf-camp-name">Winback — ikke booket på 30 dager</div><div class="wf-camp-type">Winback</div></td><td>Winback — 30 dager</td><td>47</td><td><strong>52 %</strong></td><td>13 %</td><td>i går</td></tr>
+                    <tr><td><div class="wf-camp-name">Etter din første coaching-økt</div><div class="wf-camp-type">Transaksjonell</div></td><td>Etter første økt</td><td>38</td><td><strong>54 %</strong></td><td>12 %</td><td>4 t siden</td></tr>
+                    <tr><td><div class="wf-camp-name">Sesongstart 2026</div><div class="wf-camp-type">Engangs-broadcast</div></td><td>Sesongstart</td><td>1 102</td><td><strong>34 %</strong></td><td>8 %</td><td>9 dager</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Mal-kort øverst med thumbnail — visuell preview senker terskelen for å lage ny kampanje.</li>
+        <li>Hver mal viser snitt open rate på tvers av alle kjøringer — datadrevet utvalg.</li>
+        <li>"Tom mal"-kort (stiplet) som siste element gir rask vei til from-scratch-bygging.</li>
+        <li>Aktive kampanjer nedenfor linker tilbake til malen de er basert på.</li>
+        <li>Svakhet: krever godt malgalleri — tomt først gang.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 5 — PERFORMANCE DASHBOARD ===================== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Performance Dashboard</span></h2>
+    <p class="option-description">KPIs øverst (total open rate trend, best performing kampanje). Kampanjer rangert etter effekt.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/kampanjer</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Denne uken</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Kampanjer<span class="wf-mc-nav-badge">5</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs"><span>Mission Control</span><span class="wf-mc-crumbs-sep">/</span><strong>Kampanje-performance</strong></div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Filter: siste 30 dager ▾</div>
+                <button class="wf-mc-top-btn">Eksporter</button>
+                <button class="wf-mc-top-btn wf-mc-top-btn-primary">+ Ny kampanje</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <!-- Hero med trend -->
+              <div class="wf-perf-hero">
+                <div class="wf-perf-hero-left">
+                  <h3>Snitt open rate · siste 6 mnd</h3>
+                  <div class="wf-perf-hero-val">47 %</div>
+                  <div class="wf-perf-hero-delta">+6 prosentpoeng vs Q4 2025 · 12 480 e-poster sendt</div>
+                </div>
+                <div class="wf-perf-hero-chart"></div>
+              </div>
+
+              <!-- KPI row -->
+              <div class="wf-kpi-row">
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">TOTAL SENDT (30D)</div>
+                  <div class="wf-kpi-value">2 733</div>
+                  <div class="wf-kpi-delta">+12 % vs forrige 30d</div>
+                  <div class="wf-kpi-spark"></div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">SNITT OPEN RATE</div>
+                  <div class="wf-kpi-value">47 %</div>
+                  <div class="wf-kpi-delta">+3 pp</div>
+                  <div class="wf-kpi-spark"></div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">SNITT CLICK RATE</div>
+                  <div class="wf-kpi-value">11 %</div>
+                  <div class="wf-kpi-delta">−1 pp</div>
+                  <div class="wf-kpi-spark"></div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">KONVERTERINGER</div>
+                  <div class="wf-kpi-value">38</div>
+                  <div class="wf-kpi-delta">→ 61 200 kr MRR</div>
+                  <div class="wf-kpi-spark"></div>
+                </div>
+              </div>
+
+              <!-- Top performer -->
+              <div class="wf-perf-top" style="margin-bottom:14px;">
+                <div>
+                  <div class="wf-perf-top-label">Best performing denne måneden</div>
+                  <div class="wf-perf-top-name">Velkommen til AK Golf Academy</div>
+                  <div class="wf-perf-top-stat">Onboarding-drip · 214 mottakere · 94 konverteringer</div>
+                </div>
+                <div class="wf-perf-top-val">58 %</div>
+              </div>
+
+              <!-- Rangerte kampanjer -->
+              <div class="wf-mc-card" style="padding:14px 16px;">
+                <div class="wf-card-head">
+                  <span>Rangering etter open rate</span>
+                  <span class="wf-card-meta">5 aktive kampanjer</span>
+                </div>
+                <div class="wf-perf-ranking">
+                  <div class="wf-perf-row">
+                    <div class="wf-perf-rank">1</div>
+                    <div>
+                      <div class="wf-perf-name">Velkommen til AK Golf Academy</div>
+                      <div class="wf-perf-sub">Onboarding-drip · 214 mottakere</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Open</div>
+                      <div class="wf-perf-metric">58 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Click</div>
+                      <div class="wf-perf-metric">15 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Konv.</div>
+                      <div class="wf-perf-metric">94</div>
+                    </div>
+                  </div>
+                  <div class="wf-perf-row">
+                    <div class="wf-perf-rank">2</div>
+                    <div>
+                      <div class="wf-perf-name">Etter din første coaching-økt</div>
+                      <div class="wf-perf-sub">Transaksjonell · 38 mottakere</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Open</div>
+                      <div class="wf-perf-metric">54 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Click</div>
+                      <div class="wf-perf-metric">12 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Konv.</div>
+                      <div class="wf-perf-metric">11</div>
+                    </div>
+                  </div>
+                  <div class="wf-perf-row">
+                    <div class="wf-perf-rank">3</div>
+                    <div>
+                      <div class="wf-perf-name">Winback — ikke booket på 30 dager</div>
+                      <div class="wf-perf-sub">Winback · 47 mottakere</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Open</div>
+                      <div class="wf-perf-metric">52 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Click</div>
+                      <div class="wf-perf-metric">13 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Konv.</div>
+                      <div class="wf-perf-metric">8</div>
+                    </div>
+                  </div>
+                  <div class="wf-perf-row">
+                    <div class="wf-perf-rank">4</div>
+                    <div>
+                      <div class="wf-perf-name">Månedlig golf-tips</div>
+                      <div class="wf-perf-sub">Repetitiv · 1 248 mottakere</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Open</div>
+                      <div class="wf-perf-metric">41 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Click</div>
+                      <div class="wf-perf-metric">9 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Konv.</div>
+                      <div class="wf-perf-metric">14</div>
+                    </div>
+                  </div>
+                  <div class="wf-perf-row">
+                    <div class="wf-perf-rank">5</div>
+                    <div>
+                      <div class="wf-perf-name">Sesongstart 2026</div>
+                      <div class="wf-perf-sub">Engangs-broadcast · 1 102 mottakere</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Open</div>
+                      <div class="wf-perf-metric">34 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Click</div>
+                      <div class="wf-perf-metric">8 %</div>
+                    </div>
+                    <div>
+                      <div class="wf-perf-metric-label">Konv.</div>
+                      <div class="wf-perf-metric">11</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Innsikt -->
+              <div class="wf-mc-grid" style="margin-top:14px;">
+                <div class="wf-mc-card wf-span-6">
+                  <div class="wf-card-head"><span>Hva fungerer</span></div>
+                  <ul class="wf-list">
+                    <li><span>Onboarding-sekvenser åpnes 17 pp mer enn broadcasts</span></li>
+                    <li><span>Personlig avsender (Anders) slår generisk med +9 pp open</span></li>
+                    <li><span>Emnelinje under 40 tegn gir +4 pp open</span></li>
+                  </ul>
+                </div>
+                <div class="wf-mc-card wf-span-6">
+                  <div class="wf-card-head"><span>Hva bør forbedres</span></div>
+                  <ul class="wf-list">
+                    <li><span>Sesongstart 2026: under 40 % open — test ny emnelinje</span></li>
+                    <li><span>Månedlig tips: click rate fallende 3 mnd på rad</span></li>
+                    <li><span>Click-to-booking ratio: 4 % snitt — mål 8 %</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Trend-hero øverst kommuniserer "systemet virker" på 2 sekunder — ideelt for månedsgjennomgang.</li>
+        <li>Top-performer-kort i sort fremhever beste kampanje — tydelig vinnersignal uten farger.</li>
+        <li>Rangering etter open rate lar Anders skanne 1–5 på høyde og klikke den som trenger fiksing.</li>
+        <li>Innsikt-kortene nederst oppsummerer mønstre på tvers — tilfører læring, ikke bare data.</li>
+        <li>Svakhet: tyngre datafokus — daglig bruk (starte/pause) krever ekstra klikk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for E-postkampanje-manager — valget avhenger av hvilken kampanje-arbeidsdag som skal støttes først.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Kriterium</th><th>1: Campaign List</th><th>2: Funnel Viz</th><th>3: Builder First</th><th>4: Template Lib</th><th>5: Performance</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig drift (start/pause)</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Opprette ny kampanje</td><td>Middels</td><td>Svak</td><td>Sterk</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Analyse / innsikt</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Læringskurve (ny bruker)</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Skalering til 20+ kampanjer</td><td>Sterk</td><td>Svak</td><td>Svak</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Passer MC-designsystem</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Implementeringsinnsats</td><td>Lav</td><td>Middels</td><td>Høy</td><td>Middels</td><td>Middels</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Campaign List</h3>
+      <p>Campaign List er SAFE-valget og beste startpunkt. Den dekker Anders' hyppigste oppgaver — skanne status, pause/starte, sjekke siste kjøring — uten å tvinge ham inn i en spesifikk arbeidsflyt. Tabellformatet skalerer fra 5 til 50 kampanjer uten redesign.</p>
+      <p>Builder (Option 3) implementeres som separat side (<code>/portal/admin/kampanjer/[id]</code>) fra "Rediger"-knappen i listen. Performance-innsikt (Option 5) plasseres i Analytics-modulen. Template Library (Option 4) kan byttes inn når vi har bygget et bibliotek på 15+ maler.</p>
+      <p>Option 2 (Funnel Viz) er sterk for månedlig gjennomgang, men gir svak daglig drift. Reserveres som detaljvisning per kampanje i steg 2.</p>
+    </div>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Campaign List):</strong> Default MVP. Best for daglig drift og enkel læringskurve.</li>
+      <li><strong>Option 2 (Funnel Viz):</strong> Som detaljvisning per kampanje — ikke hovedskjerm.</li>
+      <li><strong>Option 3 (Builder First):</strong> Opprett/rediger-skjerm — nås fra "Ny kampanje" eller "Rediger".</li>
+      <li><strong>Option 4 (Template Library):</strong> Når vi har 15+ maler og nye kampanjer lanseres ukentlig.</li>
+      <li><strong>Option 5 (Performance Dashboard):</strong> Månedsrapport for controller/ledelse — reserveres til Analytics.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

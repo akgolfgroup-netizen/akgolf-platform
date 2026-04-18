@@ -1,0 +1,165 @@
+/* === Option 2: Student Grid with Flags === */
+
+.grid-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.grid-toolbar-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #333;
+}
+.grid-toolbar-meta {
+  font-size: 11px;
+  color: #666;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.grid-legend {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.grid-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: #555;
+}
+.grid-legend-dot {
+  width: 10px; height: 10px; border-radius: 999px;
+  border: 1px solid #999;
+}
+.grid-legend-dot-critical { background: #000; border-color: #000; }
+.grid-legend-dot-medium { background: #666; border-color: #666; }
+.grid-legend-dot-low { background: #ccc; border-color: #aaa; }
+.grid-legend-dot-ok { background: #fff; border-color: #999; }
+
+.student-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.student-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+.student-card:hover { border-color: #000; }
+.student-card.critical {
+  background: #fafafa;
+  border-color: #000;
+  border-left: 3px solid #000;
+}
+.student-card.medium {
+  border-left: 3px solid #666;
+}
+.student-card.low {
+  border-left: 3px solid #bbb;
+}
+.student-card.ok {
+  border-left: 3px solid #ddd;
+  opacity: 0.85;
+}
+
+.student-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.student-avatar {
+  width: 32px; height: 32px;
+  border-radius: 999px;
+  background: #eee;
+  border: 1px solid #ddd;
+  color: #333;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.student-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1.2;
+}
+.student-meta {
+  font-size: 10px;
+  color: #888;
+}
+
+.student-risk-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+  letter-spacing: 0.06em;
+}
+.student-risk-badge.medium { background: #555; border-color: #555; }
+.student-risk-badge.low { background: #fff; color: #555; border-color: #bbb; }
+.student-risk-badge.ok { background: #fff; color: #999; border-color: #ddd; }
+
+.student-flags {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 8px;
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 3px;
+}
+.student-flag-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: #444;
+  font-variant-numeric: tabular-nums;
+}
+.student-flag-row .skill-name {
+  color: #333;
+}
+.student-flag-row .skill-delta {
+  font-weight: 800;
+  color: #000;
+}
+.student-flag-row .skill-delta.up {
+  color: #666;
+  font-weight: 600;
+}
+
+.student-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: #666;
+  margin-top: auto;
+}
+.student-foot-hcp {
+  font-variant-numeric: tabular-nums;
+}
+.student-foot-cta {
+  color: #000;
+  font-weight: 700;
+}

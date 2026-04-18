@@ -1,0 +1,5 @@
+/* === Option 4: Template Library === */
+/* Phase 2 (Clean + Polished) vil legges til her senere. */
+
+#frame-opt4-tabs .sub-tab-btn[data-variant="clean"] { color: #999; }
+#frame-opt4-tabs .sub-tab-btn[data-variant="polished"] { color: #999; }

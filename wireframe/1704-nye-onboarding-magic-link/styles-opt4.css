@@ -1,0 +1,158 @@
+/* ========================================================================
+   OPTION 4 — DASHBOARD PICKER FIRST · Clean + Polished visual variants
+   Screen N03 · Magic-link onboarding — velg stil før 3 steg
+   AK tokens: primary #005840 · accent #D1F843 · surface #ECF0EF · ai #AF52DE
+   ======================================================================== */
+
+#frame-opt4-tabs .sub-tab-badge { display: none; }
+
+.clean #frame-opt4,
+.polished #frame-opt4 { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+.clean #frame-opt4 .browser-content,
+.polished #frame-opt4 .browser-content { background: #ECF0EF; }
+.clean #frame-opt4 .wf-mlink-shell,
+.polished #frame-opt4 .wf-mlink-shell { background: #ECF0EF; }
+
+/* Topbar — primary dominant */
+.clean #frame-opt4 .wf-mlink-topbar,
+.polished #frame-opt4 .wf-mlink-topbar { background: #005840; border-bottom-color: rgba(0,0,0,0); }
+.clean #frame-opt4 .wf-topbar-logo,
+.polished #frame-opt4 .wf-topbar-logo { color: #D1F843; }
+.clean #frame-opt4 .wf-topbar-logo-mark,
+.polished #frame-opt4 .wf-topbar-logo-mark { background: #D1F843; color: #0A1F18; }
+.clean #frame-opt4 .wf-topbar-meta,
+.polished #frame-opt4 .wf-topbar-meta { color: rgba(255,255,255,0.6); }
+.clean #frame-opt4 .wf-topbar-meta strong,
+.polished #frame-opt4 .wf-topbar-meta strong { color: #D1F843; }
+
+/* Verified — white-on-primary style */
+.clean #frame-opt4 .wf-mlink-verified,
+.polished #frame-opt4 .wf-mlink-verified {
+  background: #fff;
+  border-color: rgba(0,0,0,0.06);
+  color: #005840;
+}
+.clean #frame-opt4 .wf-mlink-verified-dot,
+.polished #frame-opt4 .wf-mlink-verified-dot { background: #2A7D5A; }
+
+/* Picker hero */
+.clean #frame-opt4 .wf-picker-hero-label,
+.polished #frame-opt4 .wf-picker-hero-label { color: #7A8C85; }
+.clean #frame-opt4 .wf-picker-hero-title,
+.polished #frame-opt4 .wf-picker-hero-title { color: #0A1F18; letter-spacing: -0.025em; }
+.clean #frame-opt4 .wf-picker-hero-sub,
+.polished #frame-opt4 .wf-picker-hero-sub { color: #5A6E66; }
+
+/* Dashboard cards — STOR og fremtredende */
+.clean #frame-opt4 .wf-dash-card,
+.polished #frame-opt4 .wf-dash-card {
+  background: #fff;
+  border-color: rgba(0,0,0,0.06);
+  padding: 14px;
+  border-radius: 14px;
+}
+.clean #frame-opt4 .wf-dash-card:hover,
+.polished #frame-opt4 .wf-dash-card:hover { border-color: #005840; transform: translateY(-2px); }
+.clean #frame-opt4 .wf-dash-card.wf-dash-selected,
+.polished #frame-opt4 .wf-dash-card.wf-dash-selected {
+  border-color: #005840;
+  background: #fff;
+  padding: 13px;
+}
+.clean #frame-opt4 .wf-dash-thumb,
+.polished #frame-opt4 .wf-dash-thumb { background: #F5F8F7; border-color: rgba(0,0,0,0.04); }
+.clean #frame-opt4 .wf-dash-title,
+.polished #frame-opt4 .wf-dash-title { color: #0A1F18; font-size: 14px; }
+.clean #frame-opt4 .wf-dash-desc,
+.polished #frame-opt4 .wf-dash-desc { color: #7A8C85; font-size: 11px; }
+.clean #frame-opt4 .wf-dash-badge,
+.polished #frame-opt4 .wf-dash-badge { background: #D1F843; color: #0A1F18; }
+
+.clean #frame-opt4 .wf-thumb-athletic .wf-tb-big,
+.polished #frame-opt4 .wf-thumb-athletic .wf-tb-big { background: #005840; }
+.clean #frame-opt4 .wf-thumb-athletic .wf-tb-mid,
+.polished #frame-opt4 .wf-thumb-athletic .wf-tb-mid { background: #7A8C85; }
+.clean #frame-opt4 .wf-thumb-focus .wf-tb-hero,
+.polished #frame-opt4 .wf-thumb-focus .wf-tb-hero { background: #005840; color: #D1F843; }
+.clean #frame-opt4 .wf-thumb-data .wf-tb-dark,
+.polished #frame-opt4 .wf-thumb-data .wf-tb-dark { background: #005840; }
+.clean #frame-opt4 .wf-thumb-data .wf-tb-mid,
+.polished #frame-opt4 .wf-thumb-data .wf-tb-mid { background: #7A8C85; }
+.clean #frame-opt4 .wf-thumb-progress .wf-tb-chart::before,
+.polished #frame-opt4 .wf-thumb-progress .wf-tb-chart::before { background: #005840; height: 2px; }
+.clean #frame-opt4 .wf-thumb-command .wf-tb-tall,
+.polished #frame-opt4 .wf-thumb-command .wf-tb-tall { background: #005840; }
+.clean #frame-opt4 .wf-thumb-command .wf-tb-mid,
+.polished #frame-opt4 .wf-thumb-command .wf-tb-mid { background: #7A8C85; }
+
+/* Mini-steg rad */
+.clean #frame-opt4 .wf-picker-mini-steps,
+.polished #frame-opt4 .wf-picker-mini-steps {
+  background: #fff;
+  border-color: rgba(0,0,0,0.06);
+  border-radius: 14px;
+}
+.clean #frame-opt4 .wf-mini-step,
+.polished #frame-opt4 .wf-mini-step { color: #A5B2AD; }
+.clean #frame-opt4 .wf-mini-step .wf-mini-step-num,
+.polished #frame-opt4 .wf-mini-step .wf-mini-step-num {
+  border-color: #D5DFDB; color: #A5B2AD;
+}
+.clean #frame-opt4 .wf-mini-step.wf-done .wf-mini-step-num,
+.polished #frame-opt4 .wf-mini-step.wf-done .wf-mini-step-num {
+  background: #005840; border-color: #005840; color: #fff;
+}
+.clean #frame-opt4 .wf-mini-step.wf-active .wf-mini-step-num,
+.polished #frame-opt4 .wf-mini-step.wf-active .wf-mini-step-num {
+  border-color: #005840; color: #005840; background: #fff;
+}
+.clean #frame-opt4 .wf-mini-step.wf-active,
+.polished #frame-opt4 .wf-mini-step.wf-active { color: #005840; }
+.clean #frame-opt4 .wf-mini-step.wf-done,
+.polished #frame-opt4 .wf-mini-step.wf-done { color: #5A6E66; }
+
+/* AI box */
+.clean #frame-opt4 .wf-ai-box,
+.polished #frame-opt4 .wf-ai-box {
+  background: #FAF5FF;
+  border: 1px solid rgba(175,82,222,0.15);
+  border-radius: 10px;
+}
+.clean #frame-opt4 .wf-ai-label,
+.polished #frame-opt4 .wf-ai-label { color: #AF52DE; }
+.clean #frame-opt4 .wf-ai-box p,
+.polished #frame-opt4 .wf-ai-box p { color: #6B21A8; }
+
+/* Buttons */
+.clean #frame-opt4 .wf-btn,
+.polished #frame-opt4 .wf-btn { border-radius: 20px; }
+.clean #frame-opt4 .wf-btn-cta,
+.polished #frame-opt4 .wf-btn-cta {
+  background: #D1F843;
+  color: #0A1F18;
+  border-color: #D1F843;
+  font-weight: 700;
+}
+.clean #frame-opt4 .wf-btn-cta:hover,
+.polished #frame-opt4 .wf-btn-cta:hover { background: #b9dd34; border-color: #b9dd34; }
+.clean #frame-opt4 .wf-btn-secondary,
+.polished #frame-opt4 .wf-btn-secondary { border-color: #D5DFDB; color: #324D45; }
+
+/* ========== POLISHED ========== */
+.polished #frame-opt4 .wf-dash-card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s, border-color 0.2s;
+}
+.polished #frame-opt4 .wf-dash-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+}
+.polished #frame-opt4 .wf-dash-card.wf-dash-selected {
+  box-shadow: 0 0 0 2px #005840, 0 8px 28px rgba(0,88,64,0.18);
+}
+.polished #frame-opt4 .wf-picker-mini-steps {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02);
+}
+.polished #frame-opt4 .wf-btn-cta {
+  box-shadow: 0 4px 14px rgba(209,248,67,0.45);
+}

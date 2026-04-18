@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MC Bookinger — sammenligning (5 UX-opsjoner)</title>
+  <style>
+    :root {
+      --primary: #005840;
+      --accent: #D1F843;
+      --text: #324D45;
+      --muted: #A5B2AD;
+      --black: #0A1F18;
+      --bg: #fdf9f0;
+      --grey-50: #F5F8F7;
+      --grey-200: #D5DFDB;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header.compare-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(253, 249, 240, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 88, 64, 0.12);
+      padding: 20px 32px;
+    }
+
+    .compare-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .compare-title { font-size: 20px; font-weight: 800; color: var(--black); margin: 0; letter-spacing: -0.01em; }
+    .compare-sub { color: var(--muted); font-size: 14px; }
+
+    .variant-picker {
+      margin-left: auto;
+      display: flex;
+      gap: 4px;
+      background: rgba(0, 88, 64, 0.06);
+      padding: 4px;
+      border-radius: 999px;
+    }
+
+    .variant-btn {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+
+    .variant-btn.active { background: var(--black); color: #fff; }
+
+    .nav-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .nav-link:hover { text-decoration: underline; }
+
+    main.compare-main { max-width: 1400px; margin: 0 auto; padding: 24px 32px 80px; }
+
+    .option-block {
+      margin-bottom: 48px;
+      background: #fff;
+      border: 1px solid rgba(0, 88, 64, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 88, 64, 0.04), 0 4px 16px rgba(0, 88, 64, 0.04);
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      background: linear-gradient(180deg, #fff 0%, rgba(209, 248, 67, 0.04) 100%);
+      border-bottom: 1px solid rgba(0, 88, 64, 0.08);
+    }
+
+    .option-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .option-title { font-size: 16px; font-weight: 700; color: var(--black); margin: 0; }
+    .option-desc { font-size: 13px; color: var(--muted); margin-left: auto; max-width: 60%; text-align: right; }
+
+    .frame-wrap { width: 100%; overflow: auto; max-height: 900px; background: var(--grey-50); }
+    iframe.option-frame { width: 100%; border: none; display: block; background: #fff; }
+
+    .hint {
+      background: rgba(209, 248, 67, 0.2);
+      border: 1px solid rgba(209, 248, 67, 0.4);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--black);
+      margin-bottom: 24px;
+    }
+    .hint strong { color: var(--primary); }
+
+    @media (max-width: 900px) {
+      .compare-title-row { flex-direction: column; align-items: flex-start; }
+      .variant-picker { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="compare-header">
+  <div class="compare-title-row">
+    <div>
+      <h1 class="compare-title">MC Bookinger — 5 UX-opsjoner side-by-side</h1>
+      <div class="compare-sub">Mission Control · /portal/admin/bookinger</div>
+    </div>
+    <div class="variant-picker" id="variantPicker">
+      <button class="variant-btn active" data-variant="wireframe">Wireframe</button>
+      <button class="variant-btn" data-variant="clean">Clean</button>
+      <button class="variant-btn" data-variant="polished">Polished</button>
+    </div>
+    <a class="nav-link" href="index.html">← Enkelvisning</a>
+    <a class="nav-link" href="../INDEX.html">← Alle wireframes</a>
+  </div>
+</header>
+
+<main class="compare-main">
+
+  <div class="hint">
+    <strong>Tips:</strong> Bytt mellom Wireframe / Clean / Polished med knappene øverst. Alle 5 opsjoner oppdateres samtidig. Hver ramme er scrollbar individuelt.
+  </div>
+
+  <div class="option-block">
+    <div class="option-label">
+      <span class="option-number">1</span>
+      <h2 class="option-title">Smart List</h2>
+      <p class="option-desc">Sorterbar liste med filter-pills (status, dato, instruktør). Radvise actions (godkjenn, avbestill, endre tid, send melding). SAFE — matches portalens eksisterende mønstre for bookinger.</p>
+    </div>
+    <div class="frame-wrap">
+      <iframe class="option-frame" data-opt="1" src="index.html" height="850"></iframe>
+    </div>
+  </div>
+
+  <div class="option-block">
+    <div class="option-label">
+      <span class="option-number">2</span>
+      <h2 class="option-title">Calendar Embed</h2>
+      <p class="option-desc">Split-view: mini-kalender + dag-liste til venstre, detaljpanel til høyre. Klikk dag → se bookinger → velg booking → alle detaljer og handlinger i drawer.</p>
+    </div>
+    <div class="frame-wrap">
+      <iframe class="option-frame" data-opt="2" src="index.html" height="850"></iframe>
+    </div>
+  </div>
+
+  <div class="option-block">
+    <div class="option-label">
+      <span class="option-number">3</span>
+      <h2 class="option-title">Kanban Board</h2>
+      <p class="option-desc">Tre kolonner: Pending → Confirmed → Completed. Dra kort mellom kolonner for å endre status. Cancelled/No-show filtreres som separate visninger.</p>
+    </div>
+    <div class="frame-wrap">
+      <iframe class="option-frame" data-opt="3" src="index.html" height="850"></iframe>
+    </div>
+  </div>
+
+  <div class="option-block">
+    <div class="option-label">
+      <span class="option-number">4</span>
+      <h2 class="option-title">Table Power</h2>
+      <p class="option-desc">Tett data-tabell med kolonnefilters, checkbox-seleksjon og bulk actions. For admin som vil håndtere mange bookinger samtidig — matche mental model fra Excel/Airtable.</p>
+    </div>
+    <div class="frame-wrap">
+      <iframe class="option-frame" data-opt="4" src="index.html" height="850"></iframe>
+    </div>
+  </div>
+
+  <div class="option-block">
+    <div class="option-label">
+      <span class="option-number">5</span>
+      <h2 class="option-title">Timeline Flow</h2>
+      <p class="option-desc">Kronologisk vertikal timeline gruppert per dag. Hver booking er et punkt på linjen med status-prikk. Visuelt mappet — du ser &quot;flyten&quot; av dagen/uken.</p>
+    </div>
+    <div class="frame-wrap">
+      <iframe class="option-frame" data-opt="5" src="index.html" height="850"></iframe>
+    </div>
+  </div>
+
+</main>
+
+<script>
+(function() {
+  const frames = document.querySelectorAll('iframe.option-frame');
+  let currentVariant = 'wireframe';
+
+  frames.forEach(function(iframe) {
+    iframe.addEventListener('load', function() {
+      try {
+        const doc = iframe.contentDocument;
+        const opt = iframe.dataset.opt;
+        const mainBtn = doc.querySelector('[data-tab="option-' + opt + '"]');
+        if (mainBtn) mainBtn.click();
+        applyVariantToFrame(iframe, currentVariant);
+        const titleBar = doc.querySelector('.title-bar');
+        const mainTabs = doc.querySelector('.main-tabs');
+        const footer = doc.querySelector('.skill-footer');
+        if (titleBar) titleBar.style.display = 'none';
+        if (mainTabs) mainTabs.style.display = 'none';
+        if (footer) footer.style.display = 'none';
+        const pw = doc.querySelector('.page-wrapper');
+        if (pw) pw.style.padding = '0';
+        const panel = doc.getElementById('option-' + opt);
+        if (panel) { panel.style.border = 'none'; panel.style.padding = '12px'; }
+      } catch (e) { console.warn('iframe access failed:', e); }
+    });
+  });
+
+  function applyVariantToFrame(iframe, variant) {
+    try {
+      const doc = iframe.contentDocument;
+      const opt = iframe.dataset.opt;
+      const subBtn = doc.querySelector('#frame-opt' + opt + '-tabs [data-variant="' + variant + '"]');
+      if (subBtn) subBtn.click();
+    } catch (e) { /* ignore */ }
+  }
+
+  const picker = document.getElementById('variantPicker');
+  picker.addEventListener('click', function(e) {
+    if (!e.target.matches('.variant-btn')) return;
+    const variant = e.target.dataset.variant;
+    currentVariant = variant;
+    picker.querySelectorAll('.variant-btn').forEach(function(b) { b.classList.remove('active'); });
+    e.target.classList.add('active');
+    frames.forEach(function(iframe) { applyVariantToFrame(iframe, variant); });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Periodisering — AK Golf Mission Control</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Periodisering</span> — <span id="project-name">AK Golf Platform · Mission Control · N19</span></span>
+    <span class="rec">Anbefalt: Opsjon <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Mesocycle Timeline</button>
+    <button class="tab-btn" data-tab="option-2">2: Phase Stack</button>
+    <button class="tab-btn" data-tab="option-3">3: Grid Editor</button>
+    <button class="tab-btn" data-tab="option-4">4: Template Library</button>
+    <button class="tab-btn" data-tab="option-5">5: Athletic Pyramid</button>
+    <button class="tab-btn" data-tab="summary">Sammenligning</button>
+  </nav>
+
+  <!-- ===== OPTION 1 — MESOCYCLE TIMELINE (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Opsjon 1: <span class="opt-name">Mesocycle Timeline</span> <span style="font-size:11px;color:#999;font-weight:500;">SAFE</span></h2>
+    <p class="option-description">Horisontal tidslinje, 22 uker fram til NM Match Play. Drag-to-resize fase, klikk for detalj-panel. Idrettstrener-standard.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/periodisering</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+
+          <!-- SIDEBAR -->
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-sb-logo">AK · MISSION CONTROL</div>
+            <div>
+              <div class="wf-mc-sb-section">Oversikt</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Dashboard</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Denne uken</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Kalender</div>
+              </div>
+            </div>
+            <div>
+              <div class="wf-mc-sb-section">Coaching</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Elever</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Økter</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Treningsplan</div>
+                <div class="wf-mc-sb-item wf-mc-sb-item-active"><span class="wf-mc-sb-icon"></span>Periodisering</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Øvelsesbank</div>
+              </div>
+            </div>
+            <div>
+              <div class="wf-mc-sb-section">Drift</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Bookinger</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Økonomi</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Rapporter</div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- MAIN -->
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Coaching</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Periodisering</strong>
+                <span class="wf-mc-crumbs-sep">·</span>
+                <span>Erik Hansen</span>
+              </div>
+              <div class="wf-mc-actions">
+                <button class="wf-mc-btn">Lagre som mal</button>
+                <button class="wf-mc-btn">Eksporter PDF</button>
+                <button class="wf-mc-btn wf-mc-btn-primary">+ Ny fase</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+
+              <!-- Header / picker -->
+              <div class="wf-ph-head">
+                <div>
+                  <h2 class="wf-ph-title">Periodisering · Sesong 2026</h2>
+                  <div class="wf-ph-sub">22 uker makro-plan fram til hovedmål · Coach: Anders</div>
+                </div>
+                <div class="wf-ph-picker">
+                  <span>Elev:</span>
+                  <strong>Erik Hansen</strong>
+                  <span class="wf-ph-picker-meta">HCP 12 · A-kategori</span>
+                  <span class="wf-ph-picker-change">Bytt ▾</span>
+                </div>
+              </div>
+
+              <!-- KPI strip -->
+              <div class="wf-ph-kpis">
+                <div class="wf-ph-kpi">
+                  <div class="wf-ph-kpi-label">Hovedmål</div>
+                  <div class="wf-ph-kpi-value">NM Match Play</div>
+                  <div class="wf-ph-kpi-meta">30. mai 2026</div>
+                </div>
+                <div class="wf-ph-kpi">
+                  <div class="wf-ph-kpi-label">Varighet</div>
+                  <div class="wf-ph-kpi-value">22 uker</div>
+                  <div class="wf-ph-kpi-meta">6 mesocycler</div>
+                </div>
+                <div class="wf-ph-kpi">
+                  <div class="wf-ph-kpi-label">Nåværende fase</div>
+                  <div class="wf-ph-kpi-value">Base · Uke 3/8</div>
+                  <div class="wf-ph-kpi-meta">Volum: middels</div>
+                </div>
+                <div class="wf-ph-kpi">
+                  <div class="wf-ph-kpi-label">Peak-vindu</div>
+                  <div class="wf-ph-kpi-value">17 uker unna</div>
+                  <div class="wf-ph-kpi-meta">Uker 15–18</div>
+                </div>
+              </div>
+
+              <!-- Timeline card -->
+              <div class="wf-mc-card">
+                <div class="wf-card-head">
+                  <span>Mesocycle-tidslinje · uker 1–22</span>
+                  <span class="wf-card-meta">Dra kanter for å endre varighet · klikk fase for detaljer</span>
+                </div>
+
+                <div class="wf-tl-wrap">
+                  <div class="wf-tl-axis">
+                    <div class="wf-tl-axis-label">UKE</div>
+                    <div class="wf-tl-axis-week wf-tl-month">1<br><small>JAN</small></div>
+                    <div class="wf-tl-axis-week">2</div>
+                    <div class="wf-tl-axis-week">3</div>
+                    <div class="wf-tl-axis-week">4</div>
+                    <div class="wf-tl-axis-week wf-tl-month">5<br><small>FEB</small></div>
+                    <div class="wf-tl-axis-week">6</div>
+                    <div class="wf-tl-axis-week">7</div>
+                    <div class="wf-tl-axis-week">8</div>
+                    <div class="wf-tl-axis-week wf-tl-month">9<br><small>MAR</small></div>
+                    <div class="wf-tl-axis-week">10</div>
+                    <div class="wf-tl-axis-week">11</div>
+                    <div class="wf-tl-axis-week">12</div>
+                    <div class="wf-tl-axis-week wf-tl-month">13<br><small>APR</small></div>
+                    <div class="wf-tl-axis-week">14</div>
+                    <div class="wf-tl-axis-week">15</div>
+                    <div class="wf-tl-axis-week">16</div>
+                    <div class="wf-tl-axis-week wf-tl-month">17<br><small>MAI</small></div>
+                    <div class="wf-tl-axis-week">18</div>
+                    <div class="wf-tl-axis-week">19</div>
+                    <div class="wf-tl-axis-week">20</div>
+                    <div class="wf-tl-axis-week wf-tl-month">21<br><small>JUN</small></div>
+                    <div class="wf-tl-axis-week">22</div>
+                  </div>
+
+                  <!-- Fase-lane (macro) -->
+                  <div class="wf-tl-lane">
+                    <div class="wf-tl-lane-label">Makrofase<small>Mesocycler</small></div>
+                    <div class="wf-tl-track">
+                      <div class="wf-tl-now-label" style="left:13.6%;">UKE 3</div>
+                      <div class="wf-tl-now" style="left:13.6%;"></div>
+                      <div class="wf-tl-bar wf-tl-bar-base" style="left:0%;width:36.4%;">
+                        <span>Base · 8 uker</span>
+                        <span>VOL ↑</span>
+                        <div class="wf-tl-bar-handle"></div>
+                      </div>
+                      <div class="wf-tl-bar wf-tl-bar-build" style="left:36.4%;width:27.3%;">
+                        <span>Build · 6 uker</span>
+                        <span>INT ↑</span>
+                        <div class="wf-tl-bar-handle"></div>
+                      </div>
+                      <div class="wf-tl-bar wf-tl-bar-peak" style="left:63.7%;width:18.2%;">
+                        <span>Peak · 4 uker</span>
+                        <div class="wf-tl-bar-handle"></div>
+                      </div>
+                      <div class="wf-tl-bar wf-tl-bar-taper" style="left:81.9%;width:4.5%;">
+                        <span>Taper</span>
+                      </div>
+                      <div class="wf-tl-bar wf-tl-bar-comp" style="left:86.4%;width:4.5%;">
+                        <span>NM</span>
+                      </div>
+                      <div class="wf-tl-bar wf-tl-bar-rec" style="left:90.9%;width:9.1%;">
+                        <span>Recovery · 2u</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Belastnings-lane -->
+                  <div class="wf-tl-lane">
+                    <div class="wf-tl-lane-label">Volum<small>Timer/uke</small></div>
+                    <div class="wf-tl-track">
+                      <div class="wf-tl-bar wf-tl-bar-base" style="left:0%;width:9.1%;">6t</div>
+                      <div class="wf-tl-bar wf-tl-bar-base" style="left:9.1%;width:9.1%;">8t</div>
+                      <div class="wf-tl-bar wf-tl-bar-base" style="left:18.2%;width:9.1%;">10t</div>
+                      <div class="wf-tl-bar wf-tl-bar-base" style="left:27.3%;width:9.1%;">12t</div>
+                      <div class="wf-tl-bar wf-tl-bar-build" style="left:36.4%;width:13.65%;">11t</div>
+                      <div class="wf-tl-bar wf-tl-bar-build" style="left:50.05%;width:13.65%;">10t</div>
+                      <div class="wf-tl-bar wf-tl-bar-peak" style="left:63.7%;width:18.2%;">8t</div>
+                      <div class="wf-tl-bar wf-tl-bar-taper" style="left:81.9%;width:4.5%;">5t</div>
+                      <div class="wf-tl-bar wf-tl-bar-comp" style="left:86.4%;width:4.5%;">KONK</div>
+                      <div class="wf-tl-bar wf-tl-bar-rec" style="left:90.9%;width:9.1%;">3t</div>
+                    </div>
+                  </div>
+
+                  <!-- Intensitet-lane -->
+                  <div class="wf-tl-lane">
+                    <div class="wf-tl-lane-label">Intensitet<small>1–10 skala</small></div>
+                    <div class="wf-tl-track">
+                      <div class="wf-tl-bar wf-tl-bar-base" style="left:0%;width:36.4%;">4–5 · lav</div>
+                      <div class="wf-tl-bar wf-tl-bar-build" style="left:36.4%;width:27.3%;">6–7 · moderat</div>
+                      <div class="wf-tl-bar wf-tl-bar-peak" style="left:63.7%;width:18.2%;">8–9 · høy</div>
+                      <div class="wf-tl-bar wf-tl-bar-taper" style="left:81.9%;width:4.5%;">6</div>
+                      <div class="wf-tl-bar wf-tl-bar-comp" style="left:86.4%;width:4.5%;">10</div>
+                      <div class="wf-tl-bar wf-tl-bar-rec" style="left:90.9%;width:9.1%;">2</div>
+                    </div>
+                  </div>
+
+                  <!-- Turnering-lane -->
+                  <div class="wf-tl-lane">
+                    <div class="wf-tl-lane-label">Turneringer<small>Test &amp; mål</small></div>
+                    <div class="wf-tl-track">
+                      <div class="wf-tl-marker" style="left:22%;">TEST 1</div>
+                      <div class="wf-tl-bar wf-tl-bar-base" style="left:22%;width:4.5%;">Kval</div>
+                      <div class="wf-tl-marker" style="left:54%;">TEST 2</div>
+                      <div class="wf-tl-bar wf-tl-bar-build" style="left:54%;width:4.5%;">Klubb</div>
+                      <div class="wf-tl-marker" style="left:77%;">PREP</div>
+                      <div class="wf-tl-bar wf-tl-bar-peak" style="left:77%;width:4.5%;">Match-prep</div>
+                      <div class="wf-tl-marker" style="left:86.4%;">★ MÅL</div>
+                      <div class="wf-tl-bar wf-tl-bar-comp" style="left:86.4%;width:4.5%;">NM Match Play</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Valgt fase-detaljer -->
+                <div class="wf-tl-detail">
+                  <div>
+                    <h4>Valgt fase: Base · uker 1–8</h4>
+                    <div class="wf-tl-detail-row"><span>Mesocycle-type</span><strong>Akkumulering</strong></div>
+                    <div class="wf-tl-detail-row"><span>Varighet</span><strong>8 uker</strong></div>
+                    <div class="wf-tl-detail-row"><span>Volum-progresjon</span><strong>6t → 12t/uke</strong></div>
+                    <div class="wf-tl-detail-row"><span>Intensitet</span><strong>Lav (4–5/10)</strong></div>
+                    <div class="wf-tl-detail-row"><span>Mikrosykler</span><strong>3:1 (3 bygg + 1 deload)</strong></div>
+                  </div>
+                  <div>
+                    <h4>Treningsfordeling</h4>
+                    <div class="wf-tl-detail-row"><span>Teknikk (sving)</span><strong>35%</strong></div>
+                    <div class="wf-tl-detail-row"><span>Nærspill</span><strong>25%</strong></div>
+                    <div class="wf-tl-detail-row"><span>Putting</span><strong>15%</strong></div>
+                    <div class="wf-tl-detail-row"><span>Fysisk</span><strong>15%</strong></div>
+                    <div class="wf-tl-detail-row"><span>Mental / taktikk</span><strong>10%</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Horisontal tidslinje er bransjestandard fra idretts-periodisering (Bompa/Issurin) — kjent visuell grammatikk for coacher.</li>
+        <li>Fire paralelle lanes (makrofase, volum, intensitet, turneringer) gir bølge-visualisering uten overload.</li>
+        <li>"Nå"-linje (uke 3) viser hvor Erik er akkurat nå — holder planen forankret i virkeligheten.</li>
+        <li>Drag-handles på høyre kant av hver fase-bar endrer varighet live (ender → justerer neste fase automatisk).</li>
+        <li>Klikk fase → detalj-panel nederst med mikrosykler, fordeling og mål. Hindrer modal/reload.</li>
+        <li>Turnering-lane støtter markører (TEST, MÅL) for å bygge peak mot konkrete datoer.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2 — PHASE STACK ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Opsjon 2: <span class="opt-name">Phase Stack</span></h2>
+    <p class="option-description">Fire faser stablet vertikalt som kort. Hver fase har volum- og intensitets-barer. God oversikt på mobil og mindre skjermer.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/periodisering</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-sb-logo">AK · MISSION CONTROL</div>
+            <div>
+              <div class="wf-mc-sb-section">Oversikt</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Dashboard</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Denne uken</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Kalender</div>
+              </div>
+            </div>
+            <div>
+              <div class="wf-mc-sb-section">Coaching</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Elever</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Økter</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Treningsplan</div>
+                <div class="wf-mc-sb-item wf-mc-sb-item-active"><span class="wf-mc-sb-icon"></span>Periodisering</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Øvelsesbank</div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Coaching</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Periodisering</strong>
+                <span class="wf-mc-crumbs-sep">·</span>
+                <span>Erik Hansen</span>
+              </div>
+              <div class="wf-mc-actions">
+                <button class="wf-mc-btn">Bytt visning</button>
+                <button class="wf-mc-btn wf-mc-btn-primary">+ Ny fase</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+
+              <div class="wf-ph-head">
+                <div>
+                  <h2 class="wf-ph-title">Periodisering · 22-ukers plan</h2>
+                  <div class="wf-ph-sub">Erik Hansen · HCP 12 · Mål: NM Match Play 30. mai 2026</div>
+                </div>
+                <div class="wf-ph-picker">
+                  <span>Elev:</span>
+                  <strong>Erik Hansen</strong>
+                  <span class="wf-ph-picker-meta">A-kategori</span>
+                  <span class="wf-ph-picker-change">Bytt ▾</span>
+                </div>
+              </div>
+
+              <div class="wf-ps-legend">
+                <span><span class="wf-ps-legend-dot"></span>Volum</span>
+                <span><span class="wf-ps-legend-dot wf-ps-bar-fill-light"></span>Intensitet</span>
+                <span><span class="wf-ps-legend-dot wf-ps-bar-fill-dark"></span>Spillspesifikt</span>
+                <span style="margin-left:auto;">6 faser · 22 uker totalt</span>
+              </div>
+
+              <div class="wf-ps-wrap">
+
+                <div class="wf-ps-row">
+                  <div class="wf-ps-label">
+                    <div class="wf-ps-label-tag">Fase 1 · Akkumulering</div>
+                    <div class="wf-ps-label-name">Base</div>
+                    <div class="wf-ps-label-weeks">Uker 1–8 · 8 uker</div>
+                  </div>
+                  <div class="wf-ps-bars">
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Volum</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill" style="width:75%;"></div></div>
+                      <span class="wf-ps-bar-val">Høy</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Intensitet</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-light" style="width:35%;"></div></div>
+                      <span class="wf-ps-bar-val">Lav</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Spill</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-dark" style="width:25%;"></div></div>
+                      <span class="wf-ps-bar-val">Lav</span>
+                    </div>
+                  </div>
+                  <div class="wf-ps-meta">
+                    <strong>12t/uke</strong>
+                    <span>3:1 mikro</span>
+                    <span>Aktiv nå</span>
+                  </div>
+                </div>
+
+                <div class="wf-ps-row">
+                  <div class="wf-ps-label">
+                    <div class="wf-ps-label-tag">Fase 2 · Transmutasjon</div>
+                    <div class="wf-ps-label-name">Build</div>
+                    <div class="wf-ps-label-weeks">Uker 9–14 · 6 uker</div>
+                  </div>
+                  <div class="wf-ps-bars">
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Volum</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill" style="width:60%;"></div></div>
+                      <span class="wf-ps-bar-val">Mid</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Intensitet</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-light" style="width:65%;"></div></div>
+                      <span class="wf-ps-bar-val">Mid</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Spill</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-dark" style="width:55%;"></div></div>
+                      <span class="wf-ps-bar-val">Mid</span>
+                    </div>
+                  </div>
+                  <div class="wf-ps-meta">
+                    <strong>10t/uke</strong>
+                    <span>2:1 mikro</span>
+                    <span>Starter 2. mars</span>
+                  </div>
+                </div>
+
+                <div class="wf-ps-row">
+                  <div class="wf-ps-label">
+                    <div class="wf-ps-label-tag">Fase 3 · Realisering</div>
+                    <div class="wf-ps-label-name">Peak</div>
+                    <div class="wf-ps-label-weeks">Uker 15–18 · 4 uker</div>
+                  </div>
+                  <div class="wf-ps-bars">
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Volum</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill" style="width:45%;"></div></div>
+                      <span class="wf-ps-bar-val">Mid</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Intensitet</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-light" style="width:85%;"></div></div>
+                      <span class="wf-ps-bar-val">Høy</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Spill</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-dark" style="width:90%;"></div></div>
+                      <span class="wf-ps-bar-val">Høy</span>
+                    </div>
+                  </div>
+                  <div class="wf-ps-meta">
+                    <strong>8t/uke</strong>
+                    <span>Match-simul.</span>
+                    <span>Starter 13. apr</span>
+                  </div>
+                </div>
+
+                <div class="wf-ps-row">
+                  <div class="wf-ps-label">
+                    <div class="wf-ps-label-tag">Fase 4 · Nedtrapping</div>
+                    <div class="wf-ps-label-name">Taper</div>
+                    <div class="wf-ps-label-weeks">Uke 19 · 1 uke</div>
+                  </div>
+                  <div class="wf-ps-bars">
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Volum</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill" style="width:25%;"></div></div>
+                      <span class="wf-ps-bar-val">Lav</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Intensitet</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-light" style="width:55%;"></div></div>
+                      <span class="wf-ps-bar-val">Mid</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Spill</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-dark" style="width:75%;"></div></div>
+                      <span class="wf-ps-bar-val">Høy</span>
+                    </div>
+                  </div>
+                  <div class="wf-ps-meta">
+                    <strong>5t/uke</strong>
+                    <span>Freshness</span>
+                    <span>Starter 11. mai</span>
+                  </div>
+                </div>
+
+                <div class="wf-ps-row">
+                  <div class="wf-ps-label">
+                    <div class="wf-ps-label-tag">Fase 5 · Mål</div>
+                    <div class="wf-ps-label-name">Competition</div>
+                    <div class="wf-ps-label-weeks">Uke 20 · 1 uke</div>
+                  </div>
+                  <div class="wf-ps-bars">
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Volum</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill" style="width:20%;"></div></div>
+                      <span class="wf-ps-bar-val">Min</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Intensitet</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-light" style="width:100%;"></div></div>
+                      <span class="wf-ps-bar-val">Maks</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Spill</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-dark" style="width:100%;"></div></div>
+                      <span class="wf-ps-bar-val">Maks</span>
+                    </div>
+                  </div>
+                  <div class="wf-ps-meta">
+                    <strong>NM Match</strong>
+                    <span>Play</span>
+                    <span>30. mai</span>
+                  </div>
+                </div>
+
+                <div class="wf-ps-row">
+                  <div class="wf-ps-label">
+                    <div class="wf-ps-label-tag">Fase 6 · Regenerering</div>
+                    <div class="wf-ps-label-name">Recovery</div>
+                    <div class="wf-ps-label-weeks">Uker 21–22 · 2 uker</div>
+                  </div>
+                  <div class="wf-ps-bars">
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Volum</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill" style="width:15%;"></div></div>
+                      <span class="wf-ps-bar-val">Lav</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Intensitet</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-light" style="width:20%;"></div></div>
+                      <span class="wf-ps-bar-val">Min</span>
+                    </div>
+                    <div class="wf-ps-bar-row">
+                      <span class="wf-ps-bar-label">Spill</span>
+                      <div class="wf-ps-bar-track"><div class="wf-ps-bar-fill wf-ps-bar-fill-dark" style="width:10%;"></div></div>
+                      <span class="wf-ps-bar-val">Min</span>
+                    </div>
+                  </div>
+                  <div class="wf-ps-meta">
+                    <strong>3t/uke</strong>
+                    <span>Aktiv hvile</span>
+                    <span>8.–21. juni</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Hver fase er et selvstendig "kort" — lett å forstå uten å måtte lese tidslinje.</li>
+        <li>Tre barer per fase (volum, intensitet, spill) viser den klassiske periodiserings-bølgen direkte.</li>
+        <li>Fungerer godt på mobil — stack kollapser til én kolonne uten å miste informasjon.</li>
+        <li>Mindre visuelt "kraftig" enn timeline — men enklere å tolke for nye coacher.</li>
+        <li>Klikk på fase ekspanderer til mikrosykler og øvelsesfordeling.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3 — GRID EDITOR ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Opsjon 3: <span class="opt-name">Grid Editor</span></h2>
+    <p class="option-description">22 uker som kolonner, treningskategorier som rader. Heatmap-celler viser belastning (0–5). Spreadsheet-følelse — for dataentusiaster.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/periodisering</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-sb-logo">AK · MISSION CONTROL</div>
+            <div>
+              <div class="wf-mc-sb-section">Oversikt</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Dashboard</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Kalender</div>
+              </div>
+            </div>
+            <div>
+              <div class="wf-mc-sb-section">Coaching</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Elever</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Økter</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Treningsplan</div>
+                <div class="wf-mc-sb-item wf-mc-sb-item-active"><span class="wf-mc-sb-icon"></span>Periodisering</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Øvelsesbank</div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Coaching</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Periodisering</strong>
+                <span class="wf-mc-crumbs-sep">·</span>
+                <span>Erik Hansen · Heatmap</span>
+              </div>
+              <div class="wf-mc-actions">
+                <button class="wf-mc-btn">Bytt visning</button>
+                <button class="wf-mc-btn">Eksporter CSV</button>
+                <button class="wf-mc-btn wf-mc-btn-primary">Lagre</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+
+              <div class="wf-ph-head">
+                <div>
+                  <h2 class="wf-ph-title">Belastnings-heatmap · 22 uker</h2>
+                  <div class="wf-ph-sub">Klikk en celle for å justere belastning (0–5) · AI foreslår fordeling basert på fase</div>
+                </div>
+                <div class="wf-ph-picker">
+                  <span>Elev:</span>
+                  <strong>Erik Hansen</strong>
+                  <span class="wf-ph-picker-meta">HCP 12 · A</span>
+                  <span class="wf-ph-picker-change">Bytt ▾</span>
+                </div>
+              </div>
+
+              <div class="wf-mc-card">
+                <div class="wf-ge-wrap">
+                  <div class="wf-ge-grid">
+                    <!-- Header row -->
+                    <div class="wf-ge-head"></div>
+                    <div class="wf-ge-head-phase wf-ge-head-base" style="grid-column: span 8; display:flex; align-items:center; justify-content:center;">BASE · 8 UKER</div>
+                    <div class="wf-ge-head-phase wf-ge-head-build" style="grid-column: span 6; display:flex; align-items:center; justify-content:center;">BUILD · 6</div>
+                    <div class="wf-ge-head-phase wf-ge-head-peak" style="grid-column: span 4; display:flex; align-items:center; justify-content:center;">PEAK · 4</div>
+                    <div class="wf-ge-head-phase wf-ge-head-taper">T</div>
+                    <div class="wf-ge-head-phase wf-ge-head-comp">★</div>
+                    <div class="wf-ge-head-phase wf-ge-head-rec" style="grid-column: span 2; display:flex; align-items:center; justify-content:center;">REC</div>
+
+                    <!-- Week numbers -->
+                    <div class="wf-ge-head">UKE</div>
+                    <div class="wf-ge-head">1</div>
+                    <div class="wf-ge-head">2</div>
+                    <div class="wf-ge-head">3</div>
+                    <div class="wf-ge-head">4</div>
+                    <div class="wf-ge-head">5</div>
+                    <div class="wf-ge-head">6</div>
+                    <div class="wf-ge-head">7</div>
+                    <div class="wf-ge-head">8</div>
+                    <div class="wf-ge-head">9</div>
+                    <div class="wf-ge-head">10</div>
+                    <div class="wf-ge-head">11</div>
+                    <div class="wf-ge-head">12</div>
+                    <div class="wf-ge-head">13</div>
+                    <div class="wf-ge-head">14</div>
+                    <div class="wf-ge-head">15</div>
+                    <div class="wf-ge-head">16</div>
+                    <div class="wf-ge-head">17</div>
+                    <div class="wf-ge-head">18</div>
+                    <div class="wf-ge-head">19</div>
+                    <div class="wf-ge-head">20</div>
+                    <div class="wf-ge-head">21</div>
+                    <div class="wf-ge-head">22</div>
+
+                    <!-- Teknikk (sving) -->
+                    <div class="wf-ge-row-label">Teknikk <small>sving</small></div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+
+                    <!-- Nærspill -->
+                    <div class="wf-ge-row-label">Nærspill <small>SG:around</small></div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+
+                    <!-- Putting -->
+                    <div class="wf-ge-row-label">Putting <small>SG:putt</small></div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+
+                    <!-- Tee Total -->
+                    <div class="wf-ge-row-label">Tee Total <small>driver</small></div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+
+                    <!-- Spill / runder -->
+                    <div class="wf-ge-row-label">Runder <small>bane/sim</small></div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+
+                    <!-- Fysisk -->
+                    <div class="wf-ge-row-label">Fysisk <small>styrke/utholdenhet</small></div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l0">—</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+
+                    <!-- Mental -->
+                    <div class="wf-ge-row-label">Mental <small>rutiner/press</small></div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l2">2</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l3">3</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l4">4</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l5">5</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                    <div class="wf-ge-cell wf-ge-l1">1</div>
+                  </div>
+                </div>
+
+                <div class="wf-ge-scale">
+                  <span>Belastning:</span>
+                  <div class="wf-ge-scale-swatch">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <span>0 = hvile · 5 = maks</span>
+                  <span style="margin-left:auto;">7 kategorier × 22 uker = 154 celler</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Spreadsheet-modell — kjent for coacher som bruker Excel/Notion i dag.</li>
+        <li>Heatmap-celler gir øyeblikkelig "volum-bølge"-lesbarhet — mørke sekvenser = tunge perioder.</li>
+        <li>Klikk en celle for å endre belastning (0–5) inline uten modal.</li>
+        <li>Fase-headers øverst forankrer hver uke i sin makro-kontekst.</li>
+        <li>AI kan foreslå hele rader basert på mål (NM Match Play → mental øker mot uke 20).</li>
+        <li>Best for data-orienterte coacher. Kan føles "tørr" for visuelle brukere.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4 — TEMPLATE LIBRARY ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Opsjon 4: <span class="opt-name">Template Library</span></h2>
+    <p class="option-description">Bibliotek av fase-maler (f.eks. "4-ukers Match Play-prep"). Start med mal, tilpass. Skalerbar for flere elever.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/periodisering</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-sb-logo">AK · MISSION CONTROL</div>
+            <div>
+              <div class="wf-mc-sb-section">Oversikt</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Dashboard</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Kalender</div>
+              </div>
+            </div>
+            <div>
+              <div class="wf-mc-sb-section">Coaching</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Elever</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Økter</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Treningsplan</div>
+                <div class="wf-mc-sb-item wf-mc-sb-item-active"><span class="wf-mc-sb-icon"></span>Periodisering</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Øvelsesbank</div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Coaching</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Periodisering</strong>
+                <span class="wf-mc-crumbs-sep">·</span>
+                <span>Mal-bibliotek</span>
+              </div>
+              <div class="wf-mc-actions">
+                <button class="wf-mc-btn">Importer</button>
+                <button class="wf-mc-btn wf-mc-btn-primary">+ Ny mal</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+
+              <div class="wf-ph-head">
+                <div>
+                  <h2 class="wf-ph-title">Fasemal-bibliotek</h2>
+                  <div class="wf-ph-sub">Gjenbrukbare periodiserings-maler · Erik Hansen trenger "Match Play-prep" før 30. mai</div>
+                </div>
+                <div class="wf-ph-picker">
+                  <span>Aktiv elev:</span>
+                  <strong>Erik Hansen</strong>
+                  <span class="wf-ph-picker-meta">HCP 12</span>
+                  <span class="wf-ph-picker-change">Bytt ▾</span>
+                </div>
+              </div>
+
+              <div class="wf-lib-wrap">
+
+                <!-- Sidebar filter -->
+                <aside class="wf-lib-side">
+                  <div class="wf-lib-search">Søk maler…</div>
+                  <div>
+                    <div class="wf-ph-kpi-label" style="padding: 0 8px 6px;">FASETYPE</div>
+                    <div class="wf-lib-filters">
+                      <div class="wf-lib-filter wf-lib-filter-active"><span>Alle</span><span class="wf-lib-filter-count">12</span></div>
+                      <div class="wf-lib-filter"><span>Base</span><span class="wf-lib-filter-count">3</span></div>
+                      <div class="wf-lib-filter"><span>Build</span><span class="wf-lib-filter-count">2</span></div>
+                      <div class="wf-lib-filter"><span>Peak</span><span class="wf-lib-filter-count">3</span></div>
+                      <div class="wf-lib-filter"><span>Taper</span><span class="wf-lib-filter-count">2</span></div>
+                      <div class="wf-lib-filter"><span>Recovery</span><span class="wf-lib-filter-count">2</span></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="wf-ph-kpi-label" style="padding: 0 8px 6px;">MÅLGRUPPE</div>
+                    <div class="wf-lib-filters">
+                      <div class="wf-lib-filter"><span>Junior (A–C)</span><span class="wf-lib-filter-count">5</span></div>
+                      <div class="wf-lib-filter"><span>Amatør (D–G)</span><span class="wf-lib-filter-count">4</span></div>
+                      <div class="wf-lib-filter"><span>Elite (H–K)</span><span class="wf-lib-filter-count">3</span></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="wf-ph-kpi-label" style="padding: 0 8px 6px;">KILDE</div>
+                    <div class="wf-lib-filters">
+                      <div class="wf-lib-filter"><span>Mine maler</span><span class="wf-lib-filter-count">7</span></div>
+                      <div class="wf-lib-filter"><span>AK-standard</span><span class="wf-lib-filter-count">5</span></div>
+                    </div>
+                  </div>
+                </aside>
+
+                <!-- Grid -->
+                <div class="wf-lib-grid">
+
+                  <div class="wf-lib-card">
+                    <div class="wf-lib-card-tag">PEAK · 4 UKER</div>
+                    <div class="wf-lib-card-title">Match Play-prep</div>
+                    <div class="wf-lib-card-desc">Intensiv match-simulering, putting under press, mental rutine. Designet for 4 uker før en match play-turnering.</div>
+                    <div class="wf-lib-card-meta">
+                      <span>Brukt: <strong>14×</strong></span>
+                      <span>Varighet: 4u</span>
+                      <span>AK-standard</span>
+                    </div>
+                    <div class="wf-lib-card-actions">
+                      <button class="wf-lib-card-btn">Forhåndsvis</button>
+                      <button class="wf-lib-card-btn wf-lib-card-btn-primary">Bruk på Erik</button>
+                    </div>
+                  </div>
+
+                  <div class="wf-lib-card">
+                    <div class="wf-lib-card-tag">BASE · 8 UKER</div>
+                    <div class="wf-lib-card-title">Vinter-akkumulering</div>
+                    <div class="wf-lib-card-desc">Høy volum i sim, fysisk fokus, teknikk-forankring. Perfekt for desember–februar i Norge.</div>
+                    <div class="wf-lib-card-meta">
+                      <span>Brukt: <strong>8×</strong></span>
+                      <span>Varighet: 8u</span>
+                      <span>AK-standard</span>
+                    </div>
+                    <div class="wf-lib-card-actions">
+                      <button class="wf-lib-card-btn">Forhåndsvis</button>
+                      <button class="wf-lib-card-btn wf-lib-card-btn-primary">Bruk</button>
+                    </div>
+                  </div>
+
+                  <div class="wf-lib-card">
+                    <div class="wf-lib-card-tag">BUILD · 6 UKER</div>
+                    <div class="wf-lib-card-title">Strokeplay-build</div>
+                    <div class="wf-lib-card-desc">Gradvis overgang fra teknikk til scoring. Økende antall runder, SG-monitorering ukentlig.</div>
+                    <div class="wf-lib-card-meta">
+                      <span>Brukt: <strong>6×</strong></span>
+                      <span>Varighet: 6u</span>
+                      <span>Min mal</span>
+                    </div>
+                    <div class="wf-lib-card-actions">
+                      <button class="wf-lib-card-btn">Forhåndsvis</button>
+                      <button class="wf-lib-card-btn wf-lib-card-btn-primary">Bruk</button>
+                    </div>
+                  </div>
+
+                  <div class="wf-lib-card">
+                    <div class="wf-lib-card-tag">TAPER · 1 UKE</div>
+                    <div class="wf-lib-card-title">Freshness Taper</div>
+                    <div class="wf-lib-card-desc">Klassisk 40%-reduksjon i volum, holder intensitet. Brukes siste uke før hovedturnering.</div>
+                    <div class="wf-lib-card-meta">
+                      <span>Brukt: <strong>11×</strong></span>
+                      <span>Varighet: 1u</span>
+                      <span>AK-standard</span>
+                    </div>
+                    <div class="wf-lib-card-actions">
+                      <button class="wf-lib-card-btn">Forhåndsvis</button>
+                      <button class="wf-lib-card-btn wf-lib-card-btn-primary">Bruk</button>
+                    </div>
+                  </div>
+
+                  <div class="wf-lib-card">
+                    <div class="wf-lib-card-tag">RECOVERY · 2 UKER</div>
+                    <div class="wf-lib-card-title">Aktiv restitusjon</div>
+                    <div class="wf-lib-card-desc">Lett spilling, fysisk hvile, mental debrief. Avslutter hvert konkurransevindu.</div>
+                    <div class="wf-lib-card-meta">
+                      <span>Brukt: <strong>9×</strong></span>
+                      <span>Varighet: 2u</span>
+                      <span>AK-standard</span>
+                    </div>
+                    <div class="wf-lib-card-actions">
+                      <button class="wf-lib-card-btn">Forhåndsvis</button>
+                      <button class="wf-lib-card-btn wf-lib-card-btn-primary">Bruk</button>
+                    </div>
+                  </div>
+
+                  <div class="wf-lib-card">
+                    <div class="wf-lib-card-tag">PEAK · 3 UKER</div>
+                    <div class="wf-lib-card-title">Junior NM-prep</div>
+                    <div class="wf-lib-card-desc">Tilpasset A/B-kategori junior. Mer foreldre-dialog, lavere belastning, mentale rutiner.</div>
+                    <div class="wf-lib-card-meta">
+                      <span>Brukt: <strong>4×</strong></span>
+                      <span>Varighet: 3u</span>
+                      <span>Min mal</span>
+                    </div>
+                    <div class="wf-lib-card-actions">
+                      <button class="wf-lib-card-btn">Forhåndsvis</button>
+                      <button class="wf-lib-card-btn wf-lib-card-btn-primary">Bruk</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Skalerer best når du har 20+ elever — gjenbruk av maler sparer timer ukentlig.</li>
+        <li>Maler lagrer hele fase-strukturen: volum, intensitet, øvelsesfordeling, mikrosykler.</li>
+        <li>"Brukt"-teller viser hvilke maler som fungerer — sosialt bevis for nye coacher.</li>
+        <li>Kilde-filter skiller Anders' egne maler fra AK-standard bibliotek.</li>
+        <li>"Bruk på Erik" limer malen inn i aktiv elevs timeline — videre redigering skjer i Opt 1 eller 3.</li>
+        <li>Passer best som sekundær flate — bygges sammen med Opt 1 (bibliotek + redigering).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5 — ATHLETIC PYRAMID ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Opsjon 5: <span class="opt-name">Athletic Pyramid</span></h2>
+    <p class="option-description">Periodisering som pyramide — bred base (volum) opp til smal topp (konkurranse). Visuelt kraftfull, fungerer som elev-delt vy.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/periodisering</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-sb-logo">AK · MISSION CONTROL</div>
+            <div>
+              <div class="wf-mc-sb-section">Oversikt</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Dashboard</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Kalender</div>
+              </div>
+            </div>
+            <div>
+              <div class="wf-mc-sb-section">Coaching</div>
+              <div class="wf-mc-sb-nav">
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Elever</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Økter</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Treningsplan</div>
+                <div class="wf-mc-sb-item wf-mc-sb-item-active"><span class="wf-mc-sb-icon"></span>Periodisering</div>
+                <div class="wf-mc-sb-item"><span class="wf-mc-sb-icon"></span>Øvelsesbank</div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Coaching</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Periodisering</strong>
+                <span class="wf-mc-crumbs-sep">·</span>
+                <span>Sesong-pyramide</span>
+              </div>
+              <div class="wf-mc-actions">
+                <button class="wf-mc-btn">Del med Erik</button>
+                <button class="wf-mc-btn wf-mc-btn-primary">+ Ny fase</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+
+              <div class="wf-ph-head">
+                <div>
+                  <h2 class="wf-ph-title">Sesong-pyramide · NM Match Play 2026</h2>
+                  <div class="wf-ph-sub">Visuell "ascend-to-peak" — målsatt, delbart format for elev-kommunikasjon</div>
+                </div>
+                <div class="wf-ph-picker">
+                  <span>Elev:</span>
+                  <strong>Erik Hansen</strong>
+                  <span class="wf-ph-picker-meta">HCP 12 · A</span>
+                  <span class="wf-ph-picker-change">Bytt ▾</span>
+                </div>
+              </div>
+
+              <div class="wf-py-wrap">
+
+                <!-- Pyramid -->
+                <div class="wf-py-stage">
+                  <div class="wf-py-label-top">↑ Smalere fokus · Høyere intensitet</div>
+
+                  <div class="wf-py-apex-marker">★ 30. MAI 2026 · NM MATCH PLAY</div>
+
+                  <div class="wf-py-tier wf-py-t5">
+                    <div class="wf-py-tier-inner">
+                      <span class="wf-py-tier-name">COMPETITION</span>
+                      <span class="wf-py-tier-weeks">Uke 20 · 1 uke · Peak performance</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-py-tier wf-py-t4">
+                    <div class="wf-py-tier-inner">
+                      <span class="wf-py-tier-name">TAPER</span>
+                      <span class="wf-py-tier-weeks">Uke 19 · 1 uke · Freshness</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-py-tier wf-py-t3">
+                    <div class="wf-py-tier-inner">
+                      <span class="wf-py-tier-name">PEAK</span>
+                      <span class="wf-py-tier-weeks">Uker 15–18 · 4 uker · Match-simulering</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-py-tier wf-py-t2">
+                    <div class="wf-py-tier-inner">
+                      <span class="wf-py-tier-name">BUILD</span>
+                      <span class="wf-py-tier-weeks">Uker 9–14 · 6 uker · Scoring-trening</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-py-tier wf-py-t1">
+                    <div class="wf-py-tier-inner">
+                      <span class="wf-py-tier-name">BASE</span>
+                      <span class="wf-py-tier-weeks">Uker 1–8 · 8 uker · Volum &amp; grunnmur</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-py-label-bot">↑ Bredere base · Høyere volum</div>
+                </div>
+
+                <!-- Side panel -->
+                <div class="wf-py-side">
+
+                  <div class="wf-py-side-card">
+                    <div class="wf-py-side-head">Hvor er Erik nå</div>
+                    <div class="wf-py-side-row"><span>Fase</span><strong>Base (uke 3/8)</strong></div>
+                    <div class="wf-py-side-row"><span>Progresjon</span><strong>14% av plan</strong></div>
+                    <div class="wf-py-side-row"><span>Neste fase</span><strong>Build · 2. mars</strong></div>
+                    <div class="wf-py-side-row"><span>Dager til mål</span><strong>112</strong></div>
+                  </div>
+
+                  <div class="wf-py-side-card">
+                    <div class="wf-py-side-head">Pyramide-prinsipp</div>
+                    <div class="wf-py-side-row"><span>Base gir</span><strong>70% av treningstid</strong></div>
+                    <div class="wf-py-side-row"><span>Build gir</span><strong>20% — mer spill</strong></div>
+                    <div class="wf-py-side-row"><span>Peak gir</span><strong>8% — spissing</strong></div>
+                    <div class="wf-py-side-row"><span>Comp gir</span><strong>2% — mål</strong></div>
+                  </div>
+
+                  <div class="wf-py-side-card">
+                    <div class="wf-py-side-head">Milepæler</div>
+                    <div class="wf-py-side-row"><span>Uke 5</span><strong>Test 1: Kval</strong></div>
+                    <div class="wf-py-side-row"><span>Uke 12</span><strong>Test 2: Klubb</strong></div>
+                    <div class="wf-py-side-row"><span>Uke 17</span><strong>Match-prep</strong></div>
+                    <div class="wf-py-side-row"><span>Uke 20</span><strong>★ NM Match Play</strong></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Pyramide-metafor er umiddelbart forståelig — også for foreldre og elever uten coaching-bakgrunn.</li>
+        <li>"Peak"-markør øverst visualiserer målet som eneste endepunkt — kraftig mental forankring.</li>
+        <li>Side-panel viser "hvor er Erik nå" — koblet til levende data (progresjon, dager til mål).</li>
+        <li>Egner seg godt som delbar vy til eleven via portal (read-only variant).</li>
+        <li>Svakt for detaljert redigering — krever supplement av timeline eller grid for justeringer.</li>
+        <li>Sterk som "intro-skjerm" eller oppsummering, ikke som primær arbeidsflate.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Periodisering — valget avhenger av hvem som redigerer mest, og hvordan planen skal kommuniseres til eleven.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr>
+          <th>Kriterium</th>
+          <th>1: Timeline</th>
+          <th>2: Phase Stack</th>
+          <th>3: Grid Editor</th>
+          <th>4: Template Library</th>
+          <th>5: Pyramid</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Makro-planlegging (22u)</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Mikrosykel-redigering</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Svak</td></tr>
+        <tr><td>Skalering (mange elever)</td><td>Middels</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Svak</td></tr>
+        <tr><td>Lærbarhet (ny coach)</td><td>Middels</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Elev-kommunikasjon</td><td>Middels</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Sterk</td></tr>
+        <tr><td>Mobil-brukbarhet</td><td>Svak</td><td>Sterk</td><td>Svak</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Passer AK-brand &amp; MC</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Opsjon 1 — Mesocycle Timeline</h3>
+    <p>Opsjon 1 er den eneste visningen som kombinerer makro-oversikt (22 uker) med belastnings-bølger (volum, intensitet, turneringer) på én skjerm. Den følger internasjonal standard for periodiserings-visualisering (Bompa/Issurin), som gjør det lett for Anders å samarbeide med andre coacher og referere til litteratur. Drag-to-resize og klikk-for-detalj gir direkte redigering uten modaler. Opsjon 4 (Template Library) bør bygges som komplementær flate fra dag 1 — de to er ikke konkurrenter, men et par som gjenbruker samme datamodell (TrainingPhase + PeriodizationPeriod).</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Opsjon 1 (Timeline):</strong> Default for coachen. Hovedverktøyet for å designe og justere planen.</li>
+      <li><strong>Opsjon 2 (Phase Stack):</strong> Sekundær vy når coach planlegger på mobil eller iPad.</li>
+      <li><strong>Opsjon 3 (Grid Editor):</strong> Power-user-modus for coacher som elsker Excel-presisjon.</li>
+      <li><strong>Opsjon 4 (Template Library):</strong> Starter-flate — velg mal før du går til Opt 1 for å tilpasse.</li>
+      <li><strong>Opsjon 5 (Pyramid):</strong> Delbar "elev-vy" i portalen — read-only, forankrer mål visuelt.</li>
+    </ul>
+
+    <h3>Datamodell</h3>
+    <p>Alle fem opsjoner leser/skriver mot samme datamodell: <strong>TrainingPhase</strong> (navn, type, uker, volum, intensitet, fordeling), <strong>PeriodizationPeriod</strong> (makro/meso/mikrosykel-hierarki), og <strong>TrainingPlan-template</strong> (gjenbrukbare fase-maler). Konkret kan vi implementere Opt 1 først, og deretter Opt 4 + Opt 5 som lese-/valg-flater uten ny datamodell.</p>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

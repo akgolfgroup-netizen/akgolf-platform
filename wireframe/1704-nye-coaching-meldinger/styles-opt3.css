@@ -1,0 +1,46 @@
+/* ============ OPT3: CARDS GRID ============ */
+/* Hver feedback som kort i grid, status-badges, klikk for detalj */
+
+.wf-cg-wrap { padding: 20px 24px 28px; display: flex; flex-direction: column; gap: 14px; background: #f5f5f5; min-height: 700px; }
+
+.wf-cg-toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #fff; padding: 10px 16px; border: 1px solid #eee; border-radius: 999px; }
+.wf-cg-toolbar-label { font-size: 11px; color: #666; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-right: 4px; }
+.wf-cg-chip { padding: 5px 11px; border: 1px solid #ccc; border-radius: 999px; background: #fff; font-size: 11px; color: #666; cursor: pointer; }
+.wf-cg-chip.wf-active { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-cg-spacer { flex: 1; }
+.wf-cg-view-toggle { display: flex; gap: 4px; padding: 2px; border: 1px solid #ccc; border-radius: 999px; background: #fff; }
+.wf-cg-view-btn { padding: 4px 10px; border: none; background: transparent; font-size: 11px; color: #666; cursor: pointer; border-radius: 999px; }
+.wf-cg-view-btn.wf-active { background: #000; color: #fff; font-weight: 600; }
+
+/* Grid */
+.wf-cg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+.wf-cg-card { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; min-height: 220px; }
+.wf-cg-card.wf-unread { border-color: #000; border-width: 1px; box-shadow: 0 0 0 1px #000 inset; }
+
+.wf-cg-card-head { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+.wf-cg-avatar { width: 32px; height: 32px; border-radius: 50%; background: #eee; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #333; flex-shrink: 0; }
+.wf-cg-head-main { flex: 1; min-width: 0; }
+.wf-cg-instructor { font-size: 12px; font-weight: 700; color: #000; }
+.wf-cg-date { font-size: 10px; color: #666; margin-top: 1px; }
+.wf-cg-status { margin-left: auto; }
+
+.wf-cg-focus-row { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; font-weight: 700; }
+.wf-cg-focus-title { font-size: 14px; font-weight: 700; color: #000; margin-top: 2px; line-height: 1.3; letter-spacing: -0.01em; }
+
+.wf-cg-excerpt { font-size: 12px; color: #333; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+.wf-cg-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: auto; }
+
+.wf-cg-foot { display: flex; align-items: center; gap: 8px; padding-top: 10px; border-top: 1px solid #eee; }
+.wf-cg-foot-meta { display: flex; align-items: center; gap: 10px; font-size: 10px; color: #666; }
+.wf-cg-foot-pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 7px; border: 1px solid #ccc; border-radius: 999px; font-size: 10px; color: #666; background: #fff; }
+.wf-cg-foot-pill-icon { width: 10px; height: 10px; border: 1px solid #ccc; border-radius: 2px; background: #f5f5f5; }
+.wf-cg-foot-cta { margin-left: auto; font-size: 11px; font-weight: 600; color: #000; }
+
+/* Stat-rad paa toppen */
+.wf-cg-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.wf-cg-stat { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 12px 14px; }
+.wf-cg-stat-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: #666; font-weight: 700; margin-bottom: 4px; }
+.wf-cg-stat-value { font-size: 22px; font-weight: 800; color: #000; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.wf-cg-stat-delta { font-size: 10px; color: #666; margin-top: 2px; }

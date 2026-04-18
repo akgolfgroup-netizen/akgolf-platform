@@ -1,0 +1,148 @@
+/* ========================================================================
+   OPTION 2 — SINGLE FORM · Clean + Polished visual variants
+   Screen N03 · Magic-link onboarding
+   AK tokens: primary #005840 · accent #D1F843 · surface #ECF0EF · ai #AF52DE
+   ======================================================================== */
+
+#frame-opt2-tabs .sub-tab-badge { display: none; }
+
+/* ========== SHARED BASE ========== */
+.clean #frame-opt2,
+.polished #frame-opt2 { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+.clean #frame-opt2 .browser-content,
+.polished #frame-opt2 .browser-content { background: #F5F8F7; }
+.clean #frame-opt2 .wf-mlink-shell,
+.polished #frame-opt2 .wf-mlink-shell { background: #F5F8F7; }
+
+/* Topbar */
+.clean #frame-opt2 .wf-mlink-topbar,
+.polished #frame-opt2 .wf-mlink-topbar { background: #fff; border-bottom-color: rgba(0,0,0,0.06); }
+.clean #frame-opt2 .wf-topbar-logo,
+.polished #frame-opt2 .wf-topbar-logo { color: #005840; }
+.clean #frame-opt2 .wf-topbar-logo-mark,
+.polished #frame-opt2 .wf-topbar-logo-mark { background: #005840; color: #D1F843; }
+.clean #frame-opt2 .wf-topbar-meta,
+.polished #frame-opt2 .wf-topbar-meta { color: #A5B2AD; }
+.clean #frame-opt2 .wf-topbar-meta strong,
+.polished #frame-opt2 .wf-topbar-meta strong { color: #005840; }
+
+/* Verified */
+.clean #frame-opt2 .wf-mlink-verified,
+.polished #frame-opt2 .wf-mlink-verified {
+  background: rgba(209,248,67,0.12);
+  border-color: rgba(209,248,67,0.35);
+  color: #005840;
+}
+.clean #frame-opt2 .wf-mlink-verified-dot,
+.polished #frame-opt2 .wf-mlink-verified-dot { background: #005840; }
+
+/* Autosave bar — accent stripe */
+.clean #frame-opt2 .wf-form-autosave,
+.polished #frame-opt2 .wf-form-autosave {
+  background: #fff;
+  border-color: rgba(0,0,0,0.06);
+  color: #5A6E66;
+  border-radius: 12px;
+}
+.clean #frame-opt2 .wf-form-autosave-dot,
+.polished #frame-opt2 .wf-form-autosave-dot { background: #2A7D5A; }
+
+/* Header */
+.clean #frame-opt2 .wf-crumbs,
+.polished #frame-opt2 .wf-crumbs { color: #A5B2AD; }
+.clean #frame-opt2 .wf-mlink-title,
+.polished #frame-opt2 .wf-mlink-title { color: #0A1F18; }
+.clean #frame-opt2 .wf-mlink-sub,
+.polished #frame-opt2 .wf-mlink-sub { color: #5A6E66; }
+
+/* Sections */
+.clean #frame-opt2 .wf-form-section,
+.polished #frame-opt2 .wf-form-section {
+  background: #fff;
+  border-color: rgba(0,0,0,0.06);
+  border-radius: 14px;
+}
+.clean #frame-opt2 .wf-form-section-title,
+.polished #frame-opt2 .wf-form-section-title { color: #0A1F18; }
+.clean #frame-opt2 .wf-form-section-hint,
+.polished #frame-opt2 .wf-form-section-hint { color: #7A8C85; }
+
+/* Inputs, chips, labels */
+.clean #frame-opt2 .wf-field-label,
+.polished #frame-opt2 .wf-field-label { color: #5A6E66; }
+.clean #frame-opt2 .wf-input,
+.polished #frame-opt2 .wf-input {
+  border-color: #D5DFDB;
+  color: #0A1F18;
+  background: #F5F8F7;
+  border-radius: 10px;
+}
+.clean #frame-opt2 .wf-input:focus,
+.polished #frame-opt2 .wf-input:focus { border-color: #005840; }
+.clean #frame-opt2 .wf-chip,
+.polished #frame-opt2 .wf-chip { border-color: #D5DFDB; color: #324D45; border-radius: 20px; }
+.clean #frame-opt2 .wf-chip:hover,
+.polished #frame-opt2 .wf-chip:hover { border-color: #005840; }
+.clean #frame-opt2 .wf-chip-active,
+.polished #frame-opt2 .wf-chip-active { background: #005840; color: #fff; border-color: #005840; }
+
+/* Dashboard thumbnails (compact) */
+.clean #frame-opt2 .wf-dash-card,
+.polished #frame-opt2 .wf-dash-card { background: #fff; border-color: rgba(0,0,0,0.06); }
+.clean #frame-opt2 .wf-dash-card:hover,
+.polished #frame-opt2 .wf-dash-card:hover { border-color: #005840; }
+.clean #frame-opt2 .wf-dash-card.wf-dash-selected,
+.polished #frame-opt2 .wf-dash-card.wf-dash-selected { border-color: #005840; background: rgba(0,88,64,0.03); }
+.clean #frame-opt2 .wf-dash-thumb,
+.polished #frame-opt2 .wf-dash-thumb { background: #F5F8F7; border-color: rgba(0,0,0,0.04); }
+.clean #frame-opt2 .wf-dash-title,
+.polished #frame-opt2 .wf-dash-title { color: #0A1F18; }
+.clean #frame-opt2 .wf-dash-desc,
+.polished #frame-opt2 .wf-dash-desc { color: #7A8C85; }
+.clean #frame-opt2 .wf-dash-badge,
+.polished #frame-opt2 .wf-dash-badge { background: #005840; color: #D1F843; }
+
+.clean #frame-opt2 .wf-thumb-athletic .wf-tb-big,
+.polished #frame-opt2 .wf-thumb-athletic .wf-tb-big { background: #005840; }
+.clean #frame-opt2 .wf-thumb-athletic .wf-tb-mid,
+.polished #frame-opt2 .wf-thumb-athletic .wf-tb-mid { background: #7A8C85; }
+.clean #frame-opt2 .wf-thumb-focus .wf-tb-hero,
+.polished #frame-opt2 .wf-thumb-focus .wf-tb-hero { background: #005840; color: #D1F843; }
+.clean #frame-opt2 .wf-thumb-data .wf-tb-dark,
+.polished #frame-opt2 .wf-thumb-data .wf-tb-dark { background: #005840; }
+.clean #frame-opt2 .wf-thumb-data .wf-tb-mid,
+.polished #frame-opt2 .wf-thumb-data .wf-tb-mid { background: #7A8C85; }
+.clean #frame-opt2 .wf-thumb-progress .wf-tb-chart::before,
+.polished #frame-opt2 .wf-thumb-progress .wf-tb-chart::before { background: #005840; height: 2px; }
+.clean #frame-opt2 .wf-thumb-command .wf-tb-tall,
+.polished #frame-opt2 .wf-thumb-command .wf-tb-tall { background: #005840; }
+.clean #frame-opt2 .wf-thumb-command .wf-tb-mid,
+.polished #frame-opt2 .wf-thumb-command .wf-tb-mid { background: #7A8C85; }
+
+/* Buttons */
+.clean #frame-opt2 .wf-btn,
+.polished #frame-opt2 .wf-btn { border-radius: 20px; }
+.clean #frame-opt2 .wf-btn-cta,
+.polished #frame-opt2 .wf-btn-cta { background: #005840; color: #fff; border-color: #005840; font-weight: 600; }
+.clean #frame-opt2 .wf-btn-cta:hover,
+.polished #frame-opt2 .wf-btn-cta:hover { background: #00594C; }
+.clean #frame-opt2 .wf-btn-ghost,
+.polished #frame-opt2 .wf-btn-ghost { color: #7A8C85; }
+
+/* ========== POLISHED — shadows ========== */
+.polished #frame-opt2 .wf-form-section {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02);
+}
+.polished #frame-opt2 .wf-form-autosave {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.polished #frame-opt2 .wf-btn-cta {
+  box-shadow: 0 4px 14px rgba(0,88,64,0.25);
+}
+.polished #frame-opt2 .wf-dash-card {
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s;
+}
+.polished #frame-opt2 .wf-dash-card:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}

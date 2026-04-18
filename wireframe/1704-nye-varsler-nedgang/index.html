@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill-degradation-alert — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Skill-degradation-alert</span> — <span id="project-name">AK Golf Platform · Mission Control · N17</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Alert Feed</button>
+    <button class="tab-btn" data-tab="option-2">2: Student Grid</button>
+    <button class="tab-btn" data-tab="option-3">3: Heatmap</button>
+    <button class="tab-btn" data-tab="option-4">4: Deep-Dive</button>
+    <button class="tab-btn" data-tab="option-5">5: Recovery Tracker</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ============================================================= -->
+  <!-- ===== OPTION 1: ALERT FEED (SAFE) ============================ -->
+  <!-- ============================================================= -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Alert Feed</span></h2>
+    <p class="option-description">SAFE — Kronologisk feed med alerts. Elev, ferdighetsområde, endring og én-klikk CTA for å booke oppfølgingsøkt. Filtrér på alvorlighetsgrad og område.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/varsler-nedgang</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <!-- SIDEBAR -->
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <div class="mc-nav-label">Utvikling</div>
+              <a href="#" class="active">Varsler — nedgang <span class="mc-nav-badge mc-nav-badge-alert">18</span></a>
+              <a href="#">Progresjon</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <!-- MAIN -->
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Skill-degradation-alert</span>
+                <span class="mc-topbar-sub">Proaktiv coaching · fredag 17. april</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Søk elev, ferdighet, periode...</span>
+                <button class="mc-topbar-btn">Eksporter</button>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">Send ukentlig rapport</button>
+              </div>
+            </div>
+            <div class="mc-body">
+
+              <div class="mc-page-head">
+                <div>
+                  <h1 class="mc-page-title">Varsler — nedgang i ferdigheter</h1>
+                  <div class="mc-page-sub">18 aktive alerts · 6 kritiske · 7 nye siste 7 dager · basert på UnifiedSkillIndex</div>
+                </div>
+                <div class="mc-page-actions">
+                  <button class="mc-btn">Terskler</button>
+                  <button class="mc-btn">Sortér: alvorlighet</button>
+                  <button class="mc-btn mc-btn-primary">+ Book oppfølgingsøkt</button>
+                </div>
+              </div>
+
+              <div class="mc-kpi-row">
+                <div class="mc-kpi mc-kpi-alert">
+                  <div class="mc-kpi-label">Kritiske alerts</div>
+                  <div class="mc-kpi-value">6</div>
+                  <div class="mc-kpi-sub">krever handling denne uken</div>
+                </div>
+                <div class="mc-kpi">
+                  <div class="mc-kpi-label">Medium</div>
+                  <div class="mc-kpi-value">8</div>
+                  <div class="mc-kpi-sub">følg opp neste økt</div>
+                </div>
+                <div class="mc-kpi">
+                  <div class="mc-kpi-label">Lav / watch</div>
+                  <div class="mc-kpi-value">4</div>
+                  <div class="mc-kpi-sub">overvåk 14 dager</div>
+                </div>
+                <div class="mc-kpi">
+                  <div class="mc-kpi-label">Elever berørt</div>
+                  <div class="mc-kpi-value">14</div>
+                  <div class="mc-kpi-sub">av 42 aktive (33%)</div>
+                </div>
+                <div class="mc-kpi">
+                  <div class="mc-kpi-label">I recovery</div>
+                  <div class="mc-kpi-value">5</div>
+                  <div class="mc-kpi-sub">plan aktiv · se tab 5</div>
+                </div>
+              </div>
+
+              <div class="mc-filters">
+                <button class="mc-pill active">Alle<span class="mc-pill-count">18</span></button>
+                <button class="mc-pill">Kritisk<span class="mc-pill-count">6</span></button>
+                <button class="mc-pill">Medium<span class="mc-pill-count">8</span></button>
+                <button class="mc-pill">SG Putting<span class="mc-pill-count">5</span></button>
+                <button class="mc-pill">SG Tee<span class="mc-pill-count">4</span></button>
+                <button class="mc-pill">SG Approach<span class="mc-pill-count">3</span></button>
+                <button class="mc-pill">Nærspill<span class="mc-pill-count">3</span></button>
+                <button class="mc-pill">Mental<span class="mc-pill-count">3</span></button>
+                <input class="mc-search-input" placeholder="Filtrér på elev eller ferdighet...">
+              </div>
+
+              <div class="feed-layout">
+
+                <!-- Feed column -->
+                <div class="feed-list">
+
+                  <div class="feed-head">
+                    <div class="feed-head-title">I dag · 17. april</div>
+                    <div class="feed-head-meta">3 nye alerts siste 24 t</div>
+                  </div>
+
+                  <div class="alert-item alert-critical">
+                    <div class="alert-avatar">EH</div>
+                    <div class="alert-body">
+                      <div class="alert-top">
+                        <span class="alert-name">Erik Hansen</span>
+                        <span class="risk-tag risk-kritisk">Kritisk</span>
+                        <span class="domain-tag">SG Putting</span>
+                        <span class="alert-time">I dag 08:42</span>
+                      </div>
+                      <div class="alert-headline">Putting har falt <strong>-1.8 SG</strong> siste 30 dager — 3 runder på rad under baseline. Trend bekreftet av DegradationTracking (7 dagers vindu).</div>
+                      <div class="alert-foot">
+                        <span class="alert-metric">Nå <span class="alert-metric-val">-1.2</span></span>
+                        <span class="alert-metric">Før <span class="alert-metric-val">+0.6</span></span>
+                        <span class="alert-metric">Δ <span class="alert-metric-val trend-down">−1.8</span></span>
+                        <span class="alert-metric">Runder <span class="alert-metric-val">12</span></span>
+                      </div>
+                    </div>
+                    <div class="alert-actions">
+                      <button class="alert-cta">Book oppfølging</button>
+                      <button class="alert-cta alert-cta-secondary">Se historikk</button>
+                      <button class="alert-dismiss">Avvis</button>
+                    </div>
+                  </div>
+
+                  <div class="alert-item alert-critical">
+                    <div class="alert-avatar">KB</div>
+                    <div class="alert-body">
+                      <div class="alert-top">
+                        <span class="alert-name">Kristin Berg</span>
+                        <span class="risk-tag risk-kritisk">Kritisk</span>
+                        <span class="domain-tag">SG Tee</span>
+                        <span class="alert-time">I dag 06:10</span>
+                      </div>
+                      <div class="alert-headline">SG Tee <strong>-2.1</strong> siste måned etter grip-endring. Fairway-treff falt fra 62% til 38%. Notat fra siste økt: "ny nøytral grep".</div>
+                      <div class="alert-foot">
+                        <span class="alert-metric">Nå <span class="alert-metric-val">-0.9</span></span>
+                        <span class="alert-metric">Før <span class="alert-metric-val">+1.2</span></span>
+                        <span class="alert-metric">Δ <span class="alert-metric-val trend-down">−2.1</span></span>
+                        <span class="alert-metric">Årsak <span class="alert-metric-val">Grip</span></span>
+                      </div>
+                    </div>
+                    <div class="alert-actions">
+                      <button class="alert-cta">Book oppfølging</button>
+                      <button class="alert-cta alert-cta-secondary">Se historikk</button>
+                      <button class="alert-dismiss">Avvis</button>
+                    </div>
+                  </div>
+
+                  <div class="alert-item alert-critical">
+                    <div class="alert-avatar">LS</div>
+                    <div class="alert-body">
+                      <div class="alert-top">
+                        <span class="alert-name">Lars Solberg</span>
+                        <span class="risk-tag risk-kritisk">Kritisk</span>
+                        <span class="domain-tag">Mental fokus</span>
+                        <span class="alert-time">I dag 05:55</span>
+                      </div>
+                      <div class="alert-headline">Mental fokus-indeks <strong>-15%</strong> etter turneringstap 12. april. Dagboksinnhold bekrefter prestasjonsangst. Snapshot utløste terskel.</div>
+                      <div class="alert-foot">
+                        <span class="alert-metric">Fokus <span class="alert-metric-val">62</span></span>
+                        <span class="alert-metric">Før <span class="alert-metric-val">77</span></span>
+                        <span class="alert-metric">Δ <span class="alert-metric-val trend-down">−15%</span></span>
+                        <span class="alert-metric">Trigger <span class="alert-metric-val">Turnering</span></span>
+                      </div>
+                    </div>
+                    <div class="alert-actions">
+                      <button class="alert-cta">Book oppfølging</button>
+                      <button class="alert-cta alert-cta-secondary">Send melding</button>
+                      <button class="alert-dismiss">Avvis</button>
+                    </div>
+                  </div>
+
+                  <div class="feed-head">
+                    <div class="feed-head-title">Siste 7 dager</div>
+                    <div class="feed-head-meta">4 alerts</div>
+                  </div>
+
+                  <div class="alert-item alert-medium">
+                    <div class="alert-avatar">NT</div>
+                    <div class="alert-body">
+                      <div class="alert-top">
+                        <span class="alert-name">Nora Torp</span>
+                        <span class="risk-tag risk-medium">Medium</span>
+                        <span class="domain-tag">SG Approach</span>
+                        <span class="alert-time">15. apr</span>
+                      </div>
+                      <div class="alert-headline">Approach 100–150m har falt <strong>-1.2 SG</strong> siste 3 uker. GIR ned fra 48% til 34%. Mulig sammenheng med jerntilpasning.</div>
+                      <div class="alert-foot">
+                        <span class="alert-metric">Nå <span class="alert-metric-val">-0.4</span></span>
+                        <span class="alert-metric">Før <span class="alert-metric-val">+0.8</span></span>
+                        <span class="alert-metric">Δ <span class="alert-metric-val trend-down">−1.2</span></span>
+                      </div>
+                    </div>
+                    <div class="alert-actions">
+                      <button class="alert-cta">Book oppfølging</button>
+                      <button class="alert-cta alert-cta-secondary">Se historikk</button>
+                      <button class="alert-dismiss">Avvis</button>
+                    </div>
+                  </div>
+
+                  <div class="alert-item alert-medium">
+                    <div class="alert-avatar">SL</div>
+                    <div class="alert-body">
+                      <div class="alert-top">
+                        <span class="alert-name">Sofie Lund</span>
+                        <span class="risk-tag risk-medium">Medium</span>
+                        <span class="domain-tag">Nærspill</span>
+                        <span class="alert-time">14. apr</span>
+                      </div>
+                      <div class="alert-headline">Chip &lt;30m scrambler falt fra 68% til 48% siste 4 uker. Junior 14+, nylig flyttet opp til større baller.</div>
+                      <div class="alert-foot">
+                        <span class="alert-metric">Scramble <span class="alert-metric-val">48%</span></span>
+                        <span class="alert-metric">Før <span class="alert-metric-val">68%</span></span>
+                        <span class="alert-metric">Δ <span class="alert-metric-val trend-down">−20%</span></span>
+                      </div>
+                    </div>
+                    <div class="alert-actions">
+                      <button class="alert-cta">Book oppfølging</button>
+                      <button class="alert-cta alert-cta-secondary">Se historikk</button>
+                      <button class="alert-dismiss">Avvis</button>
+                    </div>
+                  </div>
+
+                  <div class="alert-item alert-medium">
+                    <div class="alert-avatar">MR</div>
+                    <div class="alert-body">
+                      <div class="alert-top">
+                        <span class="alert-name">Markus Ruud</span>
+                        <span class="risk-tag risk-medium">Medium</span>
+                        <span class="domain-tag">SG Putting</span>
+                        <span class="alert-time">13. apr</span>
+                      </div>
+                      <div class="alert-headline">Korte putter (1–2m) fra 92% til 78%. Tre-putt-rate opp fra 4% til 11%. Terskel utløst på snapshot 12. april.</div>
+                      <div class="alert-foot">
+                        <span class="alert-metric">1–2m <span class="alert-metric-val">78%</span></span>
+                        <span class="alert-metric">Før <span class="alert-metric-val">92%</span></span>
+                        <span class="alert-metric">Δ <span class="alert-metric-val trend-down">−14%</span></span>
+                      </div>
+                    </div>
+                    <div class="alert-actions">
+                      <button class="alert-cta">Book oppfølging</button>
+                      <button class="alert-cta alert-cta-secondary">Se historikk</button>
+                      <button class="alert-dismiss">Avvis</button>
+                    </div>
+                  </div>
+
+                  <div class="alert-item alert-low">
+                    <div class="alert-avatar">VJ</div>
+                    <div class="alert-body">
+                      <div class="alert-top">
+                        <span class="alert-name">Vilde Johansen</span>
+                        <span class="risk-tag risk-lav">Lav</span>
+                        <span class="domain-tag">SG Tee</span>
+                        <span class="alert-time">12. apr</span>
+                      </div>
+                      <div class="alert-headline">SG Tee -0.6 siste 14 dager. Watch-status — trend ikke bekreftet, under kritisk terskel.</div>
+                      <div class="alert-foot">
+                        <span class="alert-metric">Δ <span class="alert-metric-val trend-down">−0.6</span></span>
+                        <span class="alert-metric">Status <span class="alert-metric-val">Watch</span></span>
+                      </div>
+                    </div>
+                    <div class="alert-actions">
+                      <button class="alert-cta alert-cta-secondary">Overvåk</button>
+                      <button class="alert-dismiss">Avvis</button>
+                    </div>
+                  </div>
+
+                  <div class="feed-head">
+                    <div class="feed-head-title">Eldre · 10–12. april</div>
+                    <div class="feed-head-meta">4 alerts · 3 kvittert</div>
+                  </div>
+
+                  <div class="alert-item alert-medium">
+                    <div class="alert-avatar">JA</div>
+                    <div class="alert-body">
+                      <div class="alert-top">
+                        <span class="alert-name">Julie Andersen</span>
+                        <span class="risk-tag risk-medium">Medium</span>
+                        <span class="domain-tag">SG Approach</span>
+                        <span class="alert-time">11. apr</span>
+                      </div>
+                      <div class="alert-headline">Approach fra ruff -1.4 SG. Spilt mer bane i regn siste 3 uker. Teknisk eller baneforhold?</div>
+                    </div>
+                    <div class="alert-actions">
+                      <button class="alert-cta">Book oppfølging</button>
+                      <button class="alert-dismiss">Avvis</button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Sticky side -->
+                <div class="feed-side">
+                  <div class="feed-side-card">
+                    <div class="feed-side-title">Område — siste 30d</div>
+                    <ul class="feed-side-list">
+                      <li><span>SG Putting</span><span class="feed-side-count">5</span></li>
+                      <li><span>SG Tee</span><span class="feed-side-count">4</span></li>
+                      <li><span>SG Approach</span><span class="feed-side-count">3</span></li>
+                      <li><span>Nærspill</span><span class="feed-side-count">3</span></li>
+                      <li><span>Mental / fokus</span><span class="feed-side-count">3</span></li>
+                    </ul>
+                  </div>
+
+                  <div class="feed-side-card">
+                    <div class="feed-side-title">Terskler</div>
+                    <ul class="feed-side-list">
+                      <li><span>Kritisk Δ</span><span class="feed-side-count">−1.5 SG</span></li>
+                      <li><span>Medium Δ</span><span class="feed-side-count">−0.8 SG</span></li>
+                      <li><span>Vindu</span><span class="feed-side-count">30 dager</span></li>
+                      <li><span>Min runder</span><span class="feed-side-count">5</span></li>
+                    </ul>
+                    <span class="feed-side-bar"><span class="feed-side-bar-fill" style="width:72%"></span></span>
+                  </div>
+
+                  <div class="feed-side-card">
+                    <div class="feed-side-title">Tiltak</div>
+                    <ul class="feed-side-list">
+                      <li><span>Booket denne uken</span><span class="feed-side-count">4</span></li>
+                      <li><span>Recovery-plan</span><span class="feed-side-count">5</span></li>
+                      <li><span>Avvist / falske</span><span class="feed-side-count">2</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Alert-feed er tidsstemplet og gruppert i dag / 7 dager / eldre — coach skanner topp til bunn som en innboks.</li>
+        <li>Hver alert har én primær CTA: "Book oppfølging" — fjerner friksjon mellom innsikt og handling.</li>
+        <li>Alvorlighetsgrad kommuniseres med venstre-stripe og tag (kritisk / medium / lav), ikke farge på hele kortet.</li>
+        <li>Metrikker vist som mini-chips: Nå / Før / Δ — raskt å vurdere om varselet er reelt.</li>
+        <li>Sidebar-summary er sticky og viser område-fordeling og terskler — power-kontekst uten å stjele fokus.</li>
+        <li>Data: DegradationTracking som master, UnifiedSkillIndex for baseline, Snapshot utløser terskel.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- ===== OPTION 2: STUDENT GRID WITH FLAGS ====================== -->
+  <!-- ============================================================= -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Student Grid with Flags</span></h2>
+    <p class="option-description">Grid av alle elever fargekodet etter risikonivå. Kort viser flags per ferdighet med nedgang. Best for coach som vil ha hele porteføljen i én view.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/varsler-nedgang</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <div class="mc-nav-label">Utvikling</div>
+              <a href="#" class="active">Varsler — nedgang <span class="mc-nav-badge mc-nav-badge-alert">18</span></a>
+              <a href="#">Progresjon</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Elevoversikt — risiko</span>
+                <span class="mc-topbar-sub">42 elever · fredag 17. april</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Søk elev...</span>
+                <button class="mc-topbar-btn">Eksporter</button>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">Masse-book oppfølging</button>
+              </div>
+            </div>
+            <div class="mc-body">
+
+              <div class="mc-page-head">
+                <div>
+                  <h1 class="mc-page-title">Varsler — nedgang (grid)</h1>
+                  <div class="mc-page-sub">Alle aktive elever · sortert etter risiko · klikk kort for detaljer</div>
+                </div>
+                <div class="mc-page-actions">
+                  <button class="mc-btn">Sortér: risiko</button>
+                  <button class="mc-btn">Gruppér: kategori</button>
+                  <button class="mc-btn">Vis: alle</button>
+                </div>
+              </div>
+
+              <div class="grid-toolbar">
+                <div class="grid-toolbar-title">Alle elever — 42</div>
+                <div class="grid-toolbar-meta">
+                  <div class="grid-legend">
+                    <span class="grid-legend-item"><span class="grid-legend-dot grid-legend-dot-critical"></span>Kritisk · 6</span>
+                    <span class="grid-legend-item"><span class="grid-legend-dot grid-legend-dot-medium"></span>Medium · 8</span>
+                    <span class="grid-legend-item"><span class="grid-legend-dot grid-legend-dot-low"></span>Lav · 4</span>
+                    <span class="grid-legend-item"><span class="grid-legend-dot grid-legend-dot-ok"></span>OK · 24</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="student-grid">
+
+                <!-- Kritisk -->
+                <div class="student-card critical">
+                  <span class="student-risk-badge">Kritisk</span>
+                  <div class="student-head">
+                    <div class="student-avatar">EH</div>
+                    <div>
+                      <div class="student-name">Erik Hansen</div>
+                      <div class="student-meta">HCP 14.2 · Performance Pro</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Putting</span><span class="skill-delta">−1.8</span></div>
+                    <div class="student-flag-row"><span class="skill-name">SG Short</span><span class="skill-delta">−0.7</span></div>
+                    <div class="student-flag-row"><span class="skill-name">SG Tee</span><span class="skill-delta up">+0.4</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">12 runder · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card critical">
+                  <span class="student-risk-badge">Kritisk</span>
+                  <div class="student-head">
+                    <div class="student-avatar">KB</div>
+                    <div>
+                      <div class="student-name">Kristin Berg</div>
+                      <div class="student-meta">HCP 8.4 · Performance</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Tee</span><span class="skill-delta">−2.1</span></div>
+                    <div class="student-flag-row"><span class="skill-name">Fairway %</span><span class="skill-delta">−24%</span></div>
+                    <div class="student-flag-row"><span class="skill-name">SG Putting</span><span class="skill-delta up">+0.3</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">9 runder · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card critical">
+                  <span class="student-risk-badge">Kritisk</span>
+                  <div class="student-head">
+                    <div class="student-avatar">LS</div>
+                    <div>
+                      <div class="student-name">Lars Solberg</div>
+                      <div class="student-meta">HCP 4.1 · Elite</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">Mental fokus</span><span class="skill-delta">−15%</span></div>
+                    <div class="student-flag-row"><span class="skill-name">SG Approach</span><span class="skill-delta">−0.9</span></div>
+                    <div class="student-flag-row"><span class="skill-name">Scoring</span><span class="skill-delta">−1.3</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">14 runder · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card critical">
+                  <span class="student-risk-badge">Kritisk</span>
+                  <div class="student-head">
+                    <div class="student-avatar">IM</div>
+                    <div>
+                      <div class="student-name">Ingrid Moe</div>
+                      <div class="student-meta">HCP 18.0 · Academy</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Putting</span><span class="skill-delta">−1.6</span></div>
+                    <div class="student-flag-row"><span class="skill-name">3-putt %</span><span class="skill-delta">+9%</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">7 runder · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <!-- Medium -->
+                <div class="student-card medium">
+                  <span class="student-risk-badge medium">Medium</span>
+                  <div class="student-head">
+                    <div class="student-avatar">NT</div>
+                    <div>
+                      <div class="student-name">Nora Torp</div>
+                      <div class="student-meta">HCP 22 · Express</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Approach</span><span class="skill-delta">−1.2</span></div>
+                    <div class="student-flag-row"><span class="skill-name">GIR %</span><span class="skill-delta">−14%</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">6 runder · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card medium">
+                  <span class="student-risk-badge medium">Medium</span>
+                  <div class="student-head">
+                    <div class="student-avatar">SL</div>
+                    <div>
+                      <div class="student-name">Sofie Lund</div>
+                      <div class="student-meta">Junior 14+ · HCP 26</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">Nærspill</span><span class="skill-delta">−20%</span></div>
+                    <div class="student-flag-row"><span class="skill-name">SG Short</span><span class="skill-delta">−0.9</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">5 runder · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card medium">
+                  <span class="student-risk-badge medium">Medium</span>
+                  <div class="student-head">
+                    <div class="student-avatar">MR</div>
+                    <div>
+                      <div class="student-name">Markus Ruud</div>
+                      <div class="student-meta">HCP 11.6 · Performance</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">Putting 1–2m</span><span class="skill-delta">−14%</span></div>
+                    <div class="student-flag-row"><span class="skill-name">3-putt</span><span class="skill-delta">+7%</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">8 runder · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card medium">
+                  <span class="student-risk-badge medium">Medium</span>
+                  <div class="student-head">
+                    <div class="student-avatar">JA</div>
+                    <div>
+                      <div class="student-name">Julie Andersen</div>
+                      <div class="student-meta">HCP 15.2 · Performance</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Approach</span><span class="skill-delta">−1.4</span></div>
+                    <div class="student-flag-row"><span class="skill-name">Fra ruff</span><span class="skill-delta">−18%</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">6 runder · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <!-- Lav -->
+                <div class="student-card low">
+                  <span class="student-risk-badge low">Lav</span>
+                  <div class="student-head">
+                    <div class="student-avatar">VJ</div>
+                    <div>
+                      <div class="student-name">Vilde Johansen</div>
+                      <div class="student-meta">HCP 19.8 · Academy</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Tee</span><span class="skill-delta">−0.6</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">Watch · 14d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card low">
+                  <span class="student-risk-badge low">Lav</span>
+                  <div class="student-head">
+                    <div class="student-avatar">OB</div>
+                    <div>
+                      <div class="student-name">Oskar Brekke</div>
+                      <div class="student-meta">Junior · HCP 30+</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">Mental</span><span class="skill-delta">−6%</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">Watch · 14d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <!-- OK -->
+                <div class="student-card ok">
+                  <span class="student-risk-badge ok">OK</span>
+                  <div class="student-head">
+                    <div class="student-avatar">TH</div>
+                    <div>
+                      <div class="student-name">Tom Hagen</div>
+                      <div class="student-meta">HCP 7.2 · Performance</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Total</span><span class="skill-delta up">+0.8</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">Stabil · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card ok">
+                  <span class="student-risk-badge ok">OK</span>
+                  <div class="student-head">
+                    <div class="student-avatar">AS</div>
+                    <div>
+                      <div class="student-name">Anna Sørensen</div>
+                      <div class="student-meta">HCP 12 · Performance</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Total</span><span class="skill-delta up">+1.1</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">Stabil · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card ok">
+                  <span class="student-risk-badge ok">OK</span>
+                  <div class="student-head">
+                    <div class="student-avatar">PE</div>
+                    <div>
+                      <div class="student-name">Per Eriksen</div>
+                      <div class="student-meta">HCP 5.4 · Elite</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Total</span><span class="skill-delta up">+0.3</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">Stabil · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card ok">
+                  <span class="student-risk-badge ok">OK</span>
+                  <div class="student-head">
+                    <div class="student-avatar">LB</div>
+                    <div>
+                      <div class="student-name">Lars Berg</div>
+                      <div class="student-meta">HCP 16 · Express Pro</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Total</span><span class="skill-delta up">+0.2</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">Stabil · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card ok">
+                  <span class="student-risk-badge ok">OK</span>
+                  <div class="student-head">
+                    <div class="student-avatar">HN</div>
+                    <div>
+                      <div class="student-name">Henrik Nilsen</div>
+                      <div class="student-meta">Junior · HCP 28</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Total</span><span class="skill-delta up">+0.6</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">Stabil · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+                <div class="student-card ok">
+                  <span class="student-risk-badge ok">OK</span>
+                  <div class="student-head">
+                    <div class="student-avatar">MF</div>
+                    <div>
+                      <div class="student-name">Maria Fosse</div>
+                      <div class="student-meta">HCP 9.8 · Performance</div>
+                    </div>
+                  </div>
+                  <div class="student-flags">
+                    <div class="student-flag-row"><span class="skill-name">SG Total</span><span class="skill-delta up">+0.9</span></div>
+                  </div>
+                  <div class="student-foot">
+                    <span class="student-foot-hcp">Stabil · 30d</span>
+                    <span class="student-foot-cta">Åpne →</span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Hele coach-porteføljen i én scroll — kritiske kort øverst, OK-kort dempet nederst.</li>
+        <li>Risikonivå kommuniseres gjennom venstrestripe + badge — skannes på 2 sekunder.</li>
+        <li>Hver elev får toppen 2–3 flaggede ferdigheter direkte på kortet — ingen drill-down nødvendig for overblikk.</li>
+        <li>Kort-klikk åpner detaljpanel (eller opt 4: Deep-Dive). Grid er navigasjonslag.</li>
+        <li>Legende øverst forklarer fargekoding — konsistent med resten av MC.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- ===== OPTION 3: HEATMAP BY AREA ============================= -->
+  <!-- ============================================================= -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Heatmap by Area</span></h2>
+    <p class="option-description">Matrise elever × ferdighetsområder. Mørke celler = kraftig nedgang, skrav = fremgang. Klikk en celle for drill-down.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/varsler-nedgang</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <div class="mc-nav-label">Utvikling</div>
+              <a href="#" class="active">Varsler — nedgang <span class="mc-nav-badge mc-nav-badge-alert">18</span></a>
+              <a href="#">Progresjon</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Ferdighetsmatrise</span>
+                <span class="mc-topbar-sub">Elever × områder · siste 30d</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Søk elev eller område...</span>
+                <button class="mc-topbar-btn">Eksporter</button>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">Book mot valgt celle</button>
+              </div>
+            </div>
+            <div class="mc-body">
+
+              <div class="mc-page-head">
+                <div>
+                  <h1 class="mc-page-title">Heatmap — nedgang per ferdighetsområde</h1>
+                  <div class="mc-page-sub">16 elever · 7 områder · UnifiedSkillIndex delta vs baseline</div>
+                </div>
+                <div class="mc-page-actions">
+                  <button class="mc-btn">Gruppér: kategori</button>
+                  <button class="mc-btn">Sortér: verst først</button>
+                </div>
+              </div>
+
+              <div class="heatmap-head">
+                <div class="heatmap-title">Delta SG per område</div>
+                <div class="heatmap-controls">
+                  <div class="heatmap-range">
+                    <button>7d</button>
+                    <button class="active">30d</button>
+                    <button>90d</button>
+                    <button>Sesong</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="heatmap-legend">
+                <span class="heatmap-legend-label">Nedgang</span>
+                <span class="heatmap-legend-swatch s-big-down"></span><span class="heatmap-legend-val">≤ −1.5</span>
+                <span class="heatmap-legend-swatch s-down"></span><span class="heatmap-legend-val">−0.8 til −1.5</span>
+                <span class="heatmap-legend-swatch s-small-down"></span><span class="heatmap-legend-val">−0.3 til −0.8</span>
+                <span class="heatmap-legend-swatch s-flat"></span><span class="heatmap-legend-val">≈ 0</span>
+                <span class="heatmap-legend-swatch s-up"></span><span class="heatmap-legend-val">Fremgang</span>
+              </div>
+
+              <div class="heatmap-layout">
+                <div>
+                  <table class="heatmap-table">
+                    <thead>
+                      <tr>
+                        <th class="sticky-col">Elev</th>
+                        <th>SG Tee</th>
+                        <th>SG Approach</th>
+                        <th>SG Short</th>
+                        <th>SG Putting</th>
+                        <th>Nærspill</th>
+                        <th>Mental</th>
+                        <th>Tee Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="heatmap-name">Erik Hansen<span class="heatmap-name-meta">HCP 14.2 · Performance Pro</span></td>
+                        <td class="heatmap-cell small-down">−0.4</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell down">−0.9</td>
+                        <td class="heatmap-cell big-down">−1.8</td>
+                        <td class="heatmap-cell small-down">−0.5</td>
+                        <td class="heatmap-cell flat">−0.1</td>
+                        <td class="heatmap-cell up">+0.4</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Kristin Berg<span class="heatmap-name-meta">HCP 8.4 · Performance</span></td>
+                        <td class="heatmap-cell big-down">−2.1</td>
+                        <td class="heatmap-cell down">−0.8</td>
+                        <td class="heatmap-cell flat">−0.2</td>
+                        <td class="heatmap-cell up">+0.3</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">−0.1</td>
+                        <td class="heatmap-cell big-down">−1.7</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Lars Solberg<span class="heatmap-name-meta">HCP 4.1 · Elite</span></td>
+                        <td class="heatmap-cell small-down">−0.5</td>
+                        <td class="heatmap-cell down">−0.9</td>
+                        <td class="heatmap-cell small-down">−0.4</td>
+                        <td class="heatmap-cell small-down">−0.3</td>
+                        <td class="heatmap-cell flat">−0.1</td>
+                        <td class="heatmap-cell big-down">−15%</td>
+                        <td class="heatmap-cell down">−1.3</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Ingrid Moe<span class="heatmap-name-meta">HCP 18.0 · Academy</span></td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell small-down">−0.4</td>
+                        <td class="heatmap-cell small-down">−0.5</td>
+                        <td class="heatmap-cell big-down">−1.6</td>
+                        <td class="heatmap-cell down">−0.9</td>
+                        <td class="heatmap-cell flat">−0.2</td>
+                        <td class="heatmap-cell down">−1.0</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Nora Torp<span class="heatmap-name-meta">HCP 22 · Express</span></td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell down">−1.2</td>
+                        <td class="heatmap-cell small-down">−0.3</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">−0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell small-down">−0.6</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Sofie Lund<span class="heatmap-name-meta">Junior 14+ · HCP 26</span></td>
+                        <td class="heatmap-cell small-down">−0.3</td>
+                        <td class="heatmap-cell flat">−0.2</td>
+                        <td class="heatmap-cell down">−0.9</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell big-down">−20%</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell small-down">−0.4</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Markus Ruud<span class="heatmap-name-meta">HCP 11.6 · Performance</span></td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell small-down">−0.3</td>
+                        <td class="heatmap-cell small-down">−0.4</td>
+                        <td class="heatmap-cell down">−1.0</td>
+                        <td class="heatmap-cell small-down">−0.3</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell small-down">−0.5</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Julie Andersen<span class="heatmap-name-meta">HCP 15.2 · Performance</span></td>
+                        <td class="heatmap-cell small-down">−0.4</td>
+                        <td class="heatmap-cell down">−1.4</td>
+                        <td class="heatmap-cell flat">−0.2</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell small-down">−0.3</td>
+                        <td class="heatmap-cell flat">−0.1</td>
+                        <td class="heatmap-cell small-down">−0.7</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Vilde Johansen<span class="heatmap-name-meta">HCP 19.8 · Academy</span></td>
+                        <td class="heatmap-cell small-down">−0.6</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">−0.1</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">−0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell small-down">−0.4</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Oskar Brekke<span class="heatmap-name-meta">Junior · HCP 30+</span></td>
+                        <td class="heatmap-cell flat">−0.2</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">−0.1</td>
+                        <td class="heatmap-cell small-down">−0.3</td>
+                        <td class="heatmap-cell small-down">−6%</td>
+                        <td class="heatmap-cell flat">−0.2</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Tom Hagen<span class="heatmap-name-meta">HCP 7.2 · Performance</span></td>
+                        <td class="heatmap-cell up">+0.4</td>
+                        <td class="heatmap-cell up">+0.3</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell up">+0.8</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Anna Sørensen<span class="heatmap-name-meta">HCP 12 · Performance</span></td>
+                        <td class="heatmap-cell up">+0.6</td>
+                        <td class="heatmap-cell up">+0.3</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell up">+0.5</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell up">+1.1</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Per Eriksen<span class="heatmap-name-meta">HCP 5.4 · Elite</span></td>
+                        <td class="heatmap-cell up">+0.2</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell up">+0.3</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Lars Berg<span class="heatmap-name-meta">HCP 16 · Express Pro</span></td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell up">+0.2</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Henrik Nilsen<span class="heatmap-name-meta">Junior · HCP 28</span></td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell up">+0.3</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell up">+0.6</td>
+                      </tr>
+                      <tr>
+                        <td class="heatmap-name">Maria Fosse<span class="heatmap-name-meta">HCP 9.8 · Performance</span></td>
+                        <td class="heatmap-cell up">+0.5</td>
+                        <td class="heatmap-cell up">+0.2</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">0.0</td>
+                        <td class="heatmap-cell flat">+0.1</td>
+                        <td class="heatmap-cell up">+0.9</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <aside class="heatmap-drill">
+                  <div class="heatmap-drill-head">Valgt celle</div>
+                  <div class="heatmap-drill-title">Erik Hansen · SG Putting</div>
+                  <div class="heatmap-drill-sub">Siste 30 dager · 12 runder</div>
+
+                  <div class="heatmap-drill-stat">−1.8</div>
+                  <div class="heatmap-drill-stat-label">SG delta vs baseline</div>
+
+                  <ul class="heatmap-drill-list">
+                    <li><span>Nåværende SG</span><strong>−1.2</strong></li>
+                    <li><span>Baseline</span><strong>+0.6</strong></li>
+                    <li><span>3-putt %</span><strong>11%</strong></li>
+                    <li><span>1–2m %</span><strong>78%</strong></li>
+                    <li><span>Siste runde</span><strong>14. apr</strong></li>
+                  </ul>
+
+                  <button class="heatmap-drill-cta">Book oppfølging →</button>
+                </aside>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Matrisen gir coach-helhetlig bilde — mønstre på tvers av elever er åpenbare (f.eks. putting-kluster).</li>
+        <li>Mørk = stort minus, skrav = fremgang — unngår fargekoding som krever semantikk.</li>
+        <li>Celler er klikkbare og åpner drill-panel til høyre — ingen navigasjon bort fra siden.</li>
+        <li>Tidsvindu-velger (7/30/90/sesong) tillater coach å validere om trend er vedvarende.</li>
+        <li>Best for dataanalyse og rapportering — svakere som daglig inbox.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- ===== OPTION 4: DEEP-DIVE ANALYTICS ========================== -->
+  <!-- ============================================================= -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Deep-Dive Analytics</span></h2>
+    <p class="option-description">Velg én elev · se full nedbrytning av ferdigheter, hypoteser om årsak og konkret foreslått action. For grundig forberedelse før økt.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/varsler-nedgang</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <div class="mc-nav-label">Utvikling</div>
+              <a href="#" class="active">Varsler — nedgang <span class="mc-nav-badge mc-nav-badge-alert">18</span></a>
+              <a href="#">Progresjon</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Deep-Dive · Erik Hansen</span>
+                <span class="mc-topbar-sub">SG Putting-analyse · siste 30d</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Bytt elev...</span>
+                <button class="mc-topbar-btn">Del analyse</button>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">Book 30 min oppfølging</button>
+              </div>
+            </div>
+            <div class="mc-body">
+
+              <div class="mc-page-head">
+                <div>
+                  <h1 class="mc-page-title">Varsler — dyp analyse per elev</h1>
+                  <div class="mc-page-sub">Nedgang · mulig årsak · foreslått handling</div>
+                </div>
+                <div class="mc-page-actions">
+                  <button class="mc-btn">Sammenlign baseline</button>
+                  <button class="mc-btn">Se historikk</button>
+                </div>
+              </div>
+
+              <div class="dd-layout">
+
+                <!-- Left picker -->
+                <aside class="dd-picker">
+                  <div class="dd-picker-head">
+                    <div class="dd-picker-title">18 elever med alert</div>
+                    <input class="dd-picker-search" placeholder="Søk elev...">
+                  </div>
+
+                  <div class="dd-picker-item active">
+                    <span class="dd-picker-avatar">EH</span>
+                    <div>
+                      <div class="dd-picker-name">Erik Hansen</div>
+                      <div class="dd-picker-sub">SG Putting −1.8</div>
+                    </div>
+                    <span class="dd-picker-flag">Krit</span>
+                  </div>
+                  <div class="dd-picker-item">
+                    <span class="dd-picker-avatar">KB</span>
+                    <div>
+                      <div class="dd-picker-name">Kristin Berg</div>
+                      <div class="dd-picker-sub">SG Tee −2.1</div>
+                    </div>
+                    <span class="dd-picker-flag">Krit</span>
+                  </div>
+                  <div class="dd-picker-item">
+                    <span class="dd-picker-avatar">LS</span>
+                    <div>
+                      <div class="dd-picker-name">Lars Solberg</div>
+                      <div class="dd-picker-sub">Mental −15%</div>
+                    </div>
+                    <span class="dd-picker-flag">Krit</span>
+                  </div>
+                  <div class="dd-picker-item">
+                    <span class="dd-picker-avatar">IM</span>
+                    <div>
+                      <div class="dd-picker-name">Ingrid Moe</div>
+                      <div class="dd-picker-sub">SG Putting −1.6</div>
+                    </div>
+                    <span class="dd-picker-flag">Krit</span>
+                  </div>
+                  <div class="dd-picker-item">
+                    <span class="dd-picker-avatar">NT</span>
+                    <div>
+                      <div class="dd-picker-name">Nora Torp</div>
+                      <div class="dd-picker-sub">SG Approach −1.2</div>
+                    </div>
+                    <span class="dd-picker-flag medium">Med</span>
+                  </div>
+                  <div class="dd-picker-item">
+                    <span class="dd-picker-avatar">SL</span>
+                    <div>
+                      <div class="dd-picker-name">Sofie Lund</div>
+                      <div class="dd-picker-sub">Nærspill −20%</div>
+                    </div>
+                    <span class="dd-picker-flag medium">Med</span>
+                  </div>
+                  <div class="dd-picker-item">
+                    <span class="dd-picker-avatar">MR</span>
+                    <div>
+                      <div class="dd-picker-name">Markus Ruud</div>
+                      <div class="dd-picker-sub">1–2m putt −14%</div>
+                    </div>
+                    <span class="dd-picker-flag medium">Med</span>
+                  </div>
+                  <div class="dd-picker-item">
+                    <span class="dd-picker-avatar">JA</span>
+                    <div>
+                      <div class="dd-picker-name">Julie Andersen</div>
+                      <div class="dd-picker-sub">Approach ruff −1.4</div>
+                    </div>
+                    <span class="dd-picker-flag medium">Med</span>
+                  </div>
+                  <div class="dd-picker-item">
+                    <span class="dd-picker-avatar">VJ</span>
+                    <div>
+                      <div class="dd-picker-name">Vilde Johansen</div>
+                      <div class="dd-picker-sub">SG Tee −0.6</div>
+                    </div>
+                    <span class="dd-picker-flag low">Lav</span>
+                  </div>
+                  <div class="dd-picker-item">
+                    <span class="dd-picker-avatar">OB</span>
+                    <div>
+                      <div class="dd-picker-name">Oskar Brekke</div>
+                      <div class="dd-picker-sub">Mental −6%</div>
+                    </div>
+                    <span class="dd-picker-flag low">Lav</span>
+                  </div>
+                </aside>
+
+                <!-- Main deep-dive -->
+                <div class="dd-main">
+
+                  <div class="dd-header">
+                    <div class="dd-header-left">
+                      <div class="dd-header-avatar">EH</div>
+                      <div>
+                        <h2 class="dd-header-name">Erik Hansen</h2>
+                        <div class="dd-header-sub">HCP 14.2 · Performance Pro · 12 runder siste 30d · spiller Oslo GK</div>
+                        <div class="dd-header-badges">
+                          <span class="risk-tag risk-kritisk">Kritisk</span>
+                          <span class="domain-tag">SG Putting</span>
+                          <span class="domain-tag">SG Short</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dd-header-actions">
+                      <button class="mc-btn">Send melding</button>
+                      <button class="mc-btn mc-btn-primary">Book oppfølging</button>
+                    </div>
+                  </div>
+
+                  <!-- Skills -->
+                  <div class="dd-panel">
+                    <div class="dd-panel-title">Ferdighetsområder <small>UnifiedSkillIndex · baseline vs nå</small></div>
+                    <div class="dd-skills">
+                      <div class="dd-skill"><span class="dd-skill-name">SG Putting</span><div class="dd-skill-bar"><span class="dd-skill-bar-before" style="left:70%"></span><span class="dd-skill-bar-now" style="width:40%"></span></div><span class="dd-skill-delta">−1.8</span></div>
+                      <div class="dd-skill"><span class="dd-skill-name">SG Short</span><div class="dd-skill-bar"><span class="dd-skill-bar-before" style="left:60%"></span><span class="dd-skill-bar-now" style="width:48%"></span></div><span class="dd-skill-delta">−0.7</span></div>
+                      <div class="dd-skill"><span class="dd-skill-name">SG Approach</span><div class="dd-skill-bar"><span class="dd-skill-bar-before" style="left:55%"></span><span class="dd-skill-bar-now" style="width:55%"></span></div><span class="dd-skill-delta up">0.0</span></div>
+                      <div class="dd-skill"><span class="dd-skill-name">SG Tee</span><div class="dd-skill-bar"><span class="dd-skill-bar-before" style="left:58%"></span><span class="dd-skill-bar-now" style="width:62%"></span></div><span class="dd-skill-delta up">+0.4</span></div>
+                      <div class="dd-skill"><span class="dd-skill-name">Nærspill</span><div class="dd-skill-bar"><span class="dd-skill-bar-before" style="left:65%"></span><span class="dd-skill-bar-now" style="width:55%"></span></div><span class="dd-skill-delta">−0.5</span></div>
+                      <div class="dd-skill"><span class="dd-skill-name">Mental fokus</span><div class="dd-skill-bar"><span class="dd-skill-bar-before" style="left:72%"></span><span class="dd-skill-bar-now" style="width:70%"></span></div><span class="dd-skill-delta">−0.2</span></div>
+                    </div>
+                  </div>
+
+                  <div class="dd-row">
+                    <div class="dd-panel">
+                      <div class="dd-panel-title">Trend · SG Putting <small>12 runder · 30 dager</small></div>
+                      <div class="dd-trend">[ linje-graf · baseline vs faktisk ]</div>
+                    </div>
+
+                    <div class="dd-panel">
+                      <div class="dd-panel-title">Mulige årsaker <small>AI-rangert · DegradationTracking</small></div>
+                      <ul class="dd-hypo">
+                        <li>
+                          <span class="dd-hypo-rank">1</span>
+                          <div>
+                            <div class="dd-hypo-title">Puttelinje — les vs reell</div>
+                            <div class="dd-hypo-meta">Strokes gained på 2–4m falt 50%. Stroke-data stabilt. Indikerer greens-lesing.</div>
+                          </div>
+                          <span class="dd-hypo-score">87%</span>
+                        </li>
+                        <li>
+                          <span class="dd-hypo-rank">2</span>
+                          <div>
+                            <div class="dd-hypo-title">Putter-bytte 9. april</div>
+                            <div class="dd-hypo-meta">Nytt utstyr i dagbok. Første 3 runder etter bytte viser negativ trend.</div>
+                          </div>
+                          <span class="dd-hypo-score">72%</span>
+                        </li>
+                        <li>
+                          <span class="dd-hypo-rank">3</span>
+                          <div>
+                            <div class="dd-hypo-title">Rutine-avvik</div>
+                            <div class="dd-hypo-meta">Pre-shot routine kommentert i 2 runder. Ikke konklusivt.</div>
+                          </div>
+                          <span class="dd-hypo-score">41%</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="dd-panel">
+                    <div class="dd-panel-title">Foreslått handling <small>Basert på årsaksrangering</small></div>
+                    <ul class="dd-actions-list">
+                      <li>
+                        <div><strong>Book 30 min puttekouching</strong> — fokus: greens-lesing, 3 øvelser fra øvelsesbank N21.</div>
+                        <button class="dd-actions-cta">Book →</button>
+                      </li>
+                      <li>
+                        <div><strong>Putter-fitting</strong> — ring inn Mulligan for 45 min Trackman-fitting.</div>
+                        <button class="dd-actions-cta">Opprett oppgave</button>
+                      </li>
+                      <li>
+                        <div><strong>Send puttedrill til portal</strong> — 10 min daglig i 14 dager. Push-notis til Erik.</div>
+                        <button class="dd-actions-cta">Send →</button>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Denne view besvarer spørsmålet "hvorfor går ferdighet ned og hva gjør jeg" — ikke bare "at det gjør det".</li>
+        <li>Baseline-linje i ferdighetsbarer gjør før/etter synlig uten egen graf.</li>
+        <li>AI-rangerte hypoteser kombinerer data (SG, dagbok, utstyrsnotater) til sannsynlighetsscore.</li>
+        <li>Hver action har dedikert CTA — coach kan handle uten å lage noe selv.</li>
+        <li>Best når coach skal forberede seg til én konkret økt. Svak som daglig inbox.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- ===== OPTION 5: RECOVERY TRACKER ============================= -->
+  <!-- ============================================================= -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Recovery Tracker</span></h2>
+    <p class="option-description">Flaggede elever med aktiv recovery-plan. Track fremgang over tid — er planene virksomme? Lukker loopen fra varsel til resultat.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">generating...</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">generating...</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.app/portal/admin/varsler-nedgang</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="mc-shell">
+          <aside class="mc-sidebar">
+            <div class="mc-sidebar-logo">AK · Mission Control</div>
+            <nav class="mc-nav">
+              <a href="#">Oversikt</a>
+              <a href="#">Kalender</a>
+              <a href="#">Bookinger <span class="mc-nav-badge">3</span></a>
+              <a href="#">Elever</a>
+              <a href="#">Coaching-økter</a>
+              <div class="mc-nav-label">Drift</div>
+              <a href="#">Oppgaver <span class="mc-nav-badge">12</span></a>
+              <a href="#">Godkjenninger <span class="mc-nav-badge">7</span></a>
+              <a href="#">Meldinger</a>
+              <div class="mc-nav-label">Utvikling</div>
+              <a href="#" class="active">Varsler — nedgang <span class="mc-nav-badge mc-nav-badge-alert">18</span></a>
+              <a href="#">Progresjon</a>
+              <a href="#">Rapporter</a>
+              <div class="mc-nav-divider"></div>
+              <a href="#">Innstillinger</a>
+            </nav>
+            <div class="mc-sidebar-foot">
+              <span class="mc-sidebar-avatar">AK</span>
+              <span>Anders Kristiansen</span>
+            </div>
+          </aside>
+
+          <div class="mc-main">
+            <div class="mc-topbar">
+              <div class="mc-topbar-left">
+                <span class="mc-topbar-title">Recovery Tracker</span>
+                <span class="mc-topbar-sub">Aktive planer · uke 16</span>
+              </div>
+              <div class="mc-topbar-right">
+                <span class="mc-topbar-search">⌘K  Søk elev eller plan...</span>
+                <button class="mc-topbar-btn">Eksporter</button>
+                <button class="mc-topbar-btn mc-topbar-btn-primary">+ Ny recovery-plan</button>
+              </div>
+            </div>
+            <div class="mc-body">
+
+              <div class="mc-page-head">
+                <div>
+                  <h1 class="mc-page-title">Recovery — fra varsel til løsning</h1>
+                  <div class="mc-page-sub">11 aktive planer · 3 nye denne uken · 7 løst siste 30d · snitt 18 dager til recovery</div>
+                </div>
+                <div class="mc-page-actions">
+                  <button class="mc-btn">Sortér: nylig</button>
+                  <button class="mc-btn">Status: alle</button>
+                </div>
+              </div>
+
+              <div class="rec-lanes">
+                <div class="rec-lane">
+                  <div class="rec-lane-head">
+                    <span class="rec-lane-title"><span class="rec-lane-dot"></span>Flagget · plan ikke startet</span>
+                    <span class="rec-lane-count">3</span>
+                  </div>
+                  <div style="font-size:11px;color:#666;">Nye alerts som venter på at coach lager plan. Mediantid: 2 dager.</div>
+                </div>
+                <div class="rec-lane">
+                  <div class="rec-lane-head">
+                    <span class="rec-lane-title"><span class="rec-lane-dot progress"></span>Plan aktiv</span>
+                    <span class="rec-lane-count">8</span>
+                  </div>
+                  <div style="font-size:11px;color:#666;">Recovery-plan kjører. Måles mot milepæler og baseline.</div>
+                </div>
+                <div class="rec-lane">
+                  <div class="rec-lane-head">
+                    <span class="rec-lane-title"><span class="rec-lane-dot recovered"></span>Recovered · siste 30d</span>
+                    <span class="rec-lane-count">7</span>
+                  </div>
+                  <div style="font-size:11px;color:#666;">SG tilbake på baseline eller bedre i minst 3 runder.</div>
+                </div>
+              </div>
+
+              <div class="rec-head">
+                <div class="rec-head-title">Aktive recovery-planer</div>
+                <div class="rec-head-meta">
+                  <span>Sortert: mest fremgang →</span>
+                  <span>Oppdatert: 17. apr 08:42</span>
+                </div>
+              </div>
+
+              <div class="rec-list">
+
+                <!-- Plan aktiv — god fremgang -->
+                <div class="rec-row progress">
+                  <div class="rec-person">
+                    <div class="rec-avatar">EH</div>
+                    <div>
+                      <div class="rec-name">Erik Hansen</div>
+                      <div class="rec-meta">HCP 14.2 · plan startet 10. apr</div>
+                    </div>
+                  </div>
+                  <div class="rec-issue">
+                    <div class="rec-issue-title">SG Putting — greens-lesing</div>
+                    <span class="rec-issue-metric">Start <strong>−1.8</strong></span>
+                    <span class="rec-issue-metric">Nå <strong>−0.9</strong></span>
+                    <span class="rec-issue-metric">Mål <strong>0.0</strong></span>
+                  </div>
+                  <div class="rec-progress-wrap">
+                    <div class="rec-progress"><span class="rec-progress-fill" style="width:55%"></span></div>
+                    <div class="rec-progress-label"><span>55% mot mål</span><strong>7 dager igjen</strong></div>
+                  </div>
+                  <div class="rec-next">
+                    <span class="rec-next-label">Neste</span>
+                    <span class="rec-next-text">Økt 21. apr</span>
+                    <button class="rec-next-cta">Åpne plan →</button>
+                  </div>
+                </div>
+
+                <!-- Plan aktiv — full fremgang -->
+                <div class="rec-row progress">
+                  <div class="rec-person">
+                    <div class="rec-avatar">KB</div>
+                    <div>
+                      <div class="rec-name">Kristin Berg</div>
+                      <div class="rec-meta">HCP 8.4 · plan startet 8. apr</div>
+                    </div>
+                  </div>
+                  <div class="rec-issue">
+                    <div class="rec-issue-title">SG Tee — grip-tilpasning</div>
+                    <span class="rec-issue-metric">Start <strong>−2.1</strong></span>
+                    <span class="rec-issue-metric">Nå <strong>−0.6</strong></span>
+                    <span class="rec-issue-metric">Mål <strong>+0.5</strong></span>
+                  </div>
+                  <div class="rec-progress-wrap">
+                    <div class="rec-progress"><span class="rec-progress-fill" style="width:72%"></span></div>
+                    <div class="rec-progress-label"><span>72% mot mål</span><strong>3 dager igjen</strong></div>
+                  </div>
+                  <div class="rec-next">
+                    <span class="rec-next-label">Neste</span>
+                    <span class="rec-next-text">Trackman 19. apr</span>
+                    <button class="rec-next-cta">Åpne plan →</button>
+                  </div>
+                </div>
+
+                <!-- Plan aktiv — lite fremgang -->
+                <div class="rec-row">
+                  <div class="rec-person">
+                    <div class="rec-avatar">LS</div>
+                    <div>
+                      <div class="rec-name">Lars Solberg</div>
+                      <div class="rec-meta">HCP 4.1 · plan startet 14. apr</div>
+                    </div>
+                  </div>
+                  <div class="rec-issue">
+                    <div class="rec-issue-title">Mental fokus — post-turnering</div>
+                    <span class="rec-issue-metric">Start <strong>62</strong></span>
+                    <span class="rec-issue-metric">Nå <strong>66</strong></span>
+                    <span class="rec-issue-metric">Mål <strong>77</strong></span>
+                  </div>
+                  <div class="rec-progress-wrap">
+                    <div class="rec-progress"><span class="rec-progress-fill" style="width:24%"></span></div>
+                    <div class="rec-progress-label"><span>24% mot mål</span><strong>14 dager igjen</strong></div>
+                  </div>
+                  <div class="rec-next">
+                    <span class="rec-next-label">Neste</span>
+                    <span class="rec-next-text">Mentalcoach 22. apr</span>
+                    <button class="rec-next-cta">Åpne plan →</button>
+                  </div>
+                </div>
+
+                <div class="rec-row progress">
+                  <div class="rec-person">
+                    <div class="rec-avatar">NT</div>
+                    <div>
+                      <div class="rec-name">Nora Torp</div>
+                      <div class="rec-meta">HCP 22 · plan startet 11. apr</div>
+                    </div>
+                  </div>
+                  <div class="rec-issue">
+                    <div class="rec-issue-title">SG Approach 100–150m</div>
+                    <span class="rec-issue-metric">Start <strong>−1.2</strong></span>
+                    <span class="rec-issue-metric">Nå <strong>−0.5</strong></span>
+                    <span class="rec-issue-metric">Mål <strong>0.0</strong></span>
+                  </div>
+                  <div class="rec-progress-wrap">
+                    <div class="rec-progress"><span class="rec-progress-fill" style="width:58%"></span></div>
+                    <div class="rec-progress-label"><span>58% mot mål</span><strong>8 dager igjen</strong></div>
+                  </div>
+                  <div class="rec-next">
+                    <span class="rec-next-label">Neste</span>
+                    <span class="rec-next-text">Rangeøkt 20. apr</span>
+                    <button class="rec-next-cta">Åpne plan →</button>
+                  </div>
+                </div>
+
+                <div class="rec-row progress">
+                  <div class="rec-person">
+                    <div class="rec-avatar">SL</div>
+                    <div>
+                      <div class="rec-name">Sofie Lund</div>
+                      <div class="rec-meta">Junior · plan startet 9. apr</div>
+                    </div>
+                  </div>
+                  <div class="rec-issue">
+                    <div class="rec-issue-title">Nærspill &lt; 30m — scrambler</div>
+                    <span class="rec-issue-metric">Start <strong>48%</strong></span>
+                    <span class="rec-issue-metric">Nå <strong>58%</strong></span>
+                    <span class="rec-issue-metric">Mål <strong>68%</strong></span>
+                  </div>
+                  <div class="rec-progress-wrap">
+                    <div class="rec-progress"><span class="rec-progress-fill" style="width:50%"></span></div>
+                    <div class="rec-progress-label"><span>50% mot mål</span><strong>10 dager igjen</strong></div>
+                  </div>
+                  <div class="rec-next">
+                    <span class="rec-next-label">Neste</span>
+                    <span class="rec-next-text">Gruppeøkt 19. apr</span>
+                    <button class="rec-next-cta">Åpne plan →</button>
+                  </div>
+                </div>
+
+                <!-- Recovered -->
+                <div class="rec-row recovered">
+                  <div class="rec-person">
+                    <div class="rec-avatar">MR</div>
+                    <div>
+                      <div class="rec-name">Markus Ruud</div>
+                      <div class="rec-meta">Recovered 15. apr</div>
+                    </div>
+                  </div>
+                  <div class="rec-issue">
+                    <div class="rec-issue-title">Putting 1–2m — rutine</div>
+                    <span class="rec-issue-metric">Start <strong>78%</strong></span>
+                    <span class="rec-issue-metric">Nå <strong>91%</strong></span>
+                    <span class="rec-issue-metric">Mål <strong>92%</strong></span>
+                  </div>
+                  <div class="rec-progress-wrap">
+                    <div class="rec-progress"><span class="rec-progress-fill" style="width:100%"></span></div>
+                    <div class="rec-progress-label"><span>100% · tilbake på baseline</span><strong>16 dager</strong></div>
+                  </div>
+                  <div class="rec-next">
+                    <span class="rec-next-label">Status</span>
+                    <span class="rec-next-text">Lukket</span>
+                    <button class="rec-next-cta">Se rapport →</button>
+                  </div>
+                </div>
+
+                <div class="rec-row recovered">
+                  <div class="rec-person">
+                    <div class="rec-avatar">JA</div>
+                    <div>
+                      <div class="rec-name">Julie Andersen</div>
+                      <div class="rec-meta">Recovered 12. apr</div>
+                    </div>
+                  </div>
+                  <div class="rec-issue">
+                    <div class="rec-issue-title">SG Approach fra ruff</div>
+                    <span class="rec-issue-metric">Start <strong>−1.4</strong></span>
+                    <span class="rec-issue-metric">Nå <strong>+0.2</strong></span>
+                    <span class="rec-issue-metric">Mål <strong>0.0</strong></span>
+                  </div>
+                  <div class="rec-progress-wrap">
+                    <div class="rec-progress"><span class="rec-progress-fill" style="width:100%"></span></div>
+                    <div class="rec-progress-label"><span>100% · over baseline</span><strong>21 dager</strong></div>
+                  </div>
+                  <div class="rec-next">
+                    <span class="rec-next-label">Status</span>
+                    <span class="rec-next-text">Lukket</span>
+                    <button class="rec-next-cta">Se rapport →</button>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="rec-chart">
+                <div class="rec-chart-head">
+                  <div class="rec-chart-title">Recovery-tid siste 90 dager</div>
+                  <div class="rec-chart-meta">Snitt 18 dager · median 14 · lengste 42 (mental)</div>
+                </div>
+                <div class="rec-chart-area">[ stolpediagram · dager-til-recovery per plan ]</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Lukker loopen: fra "varsel oppdaget" til "plan aktiv" til "resultatet er tilbake".</li>
+        <li>Tre swim-lanes gir umiddelbar status: flagget / plan kjører / recovered.</li>
+        <li>Hver rad viser start → nå → mål med tydelig progressjonsbar — coach ser om planen virker.</li>
+        <li>Recovered-rader (dempet) gir historikk uten støy. Lukket-rapport bak klikk.</li>
+        <li>Chart-seksjonen gir meta-KPI: hvor raskt løser vi generelt problemer?</li>
+        <li>Best for instruktøransvar og rapportering over tid — svakere som første-klikk-inbox.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- ===== SUMMARY ================================================ -->
+  <!-- ============================================================= -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Skill-degradation-alert (N17). Alle bruker Mission Control-skallet — forskjellen ligger i hvordan coach konsumerer og handler på data.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr>
+          <th>Kriterium</th>
+          <th>1: Alert Feed</th>
+          <th>2: Student Grid</th>
+          <th>3: Heatmap</th>
+          <th>4: Deep-Dive</th>
+          <th>5: Recovery</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Daglig inbox-bruk</td><td>Sterk</td><td>Middels</td><td>Svak</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Oversikt over hele porteføljen</td><td>Middels</td><td>Sterk</td><td>Sterk</td><td>Svak</td><td>Middels</td></tr>
+        <tr><td>Dybde per elev</td><td>Middels</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Forberedelse til økt</td><td>Middels</td><td>Svak</td><td>Middels</td><td>Sterk</td><td>Middels</td></tr>
+        <tr><td>Resultatsporing over tid</td><td>Svak</td><td>Svak</td><td>Middels</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Action-friksjon (klikk til handling)</td><td>Sterk (1 klikk)</td><td>Middels</td><td>Middels</td><td>Sterk</td><td>Sterk</td></tr>
+        <tr><td>Lærbarhet</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Middels</td><td>Sterk</td></tr>
+        <tr><td>Passer AK mental model</td><td>Sterk</td><td>Sterk</td><td>Middels</td><td>Sterk</td><td>Sterk</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Anbefaling: Option 1 — Alert Feed</h3>
+    <p>Alert Feed er den direkte veien fra signal til handling. Coach åpner siden én gang per morgen, ser 3–6 nye alerts i prioritert rekkefølge og klikker "Book oppfølging". Dette matcher driftsmønsteret for N17 og gjenbruker inbox-paradigmet som allerede er etablert i "Venter på handling"-siden (N12/N13). Feed-layouten tåler også skalering: tersklene i sidebar kan strammes eller løsnes etter hvert som data-volumet vokser uten å endre UX.</p>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Alert Feed):</strong> Default. Daglig arbeidsflyt — se varsel, book økt, videre.</li>
+      <li><strong>Option 2 (Student Grid):</strong> Hvis coach ønsker hele porteføljen synlig uten å drille inn. Bra for 1:1-periodiske reviews.</li>
+      <li><strong>Option 3 (Heatmap):</strong> Månedsrapport, dataanalyse, mønstre på tvers. Ikke daglig driftsverktøy.</li>
+      <li><strong>Option 4 (Deep-Dive):</strong> Tung forberedelse før viktig økt — åpne én elev, bruk 10 min på å forstå.</li>
+      <li><strong>Option 5 (Recovery Tracker):</strong> Måneds-/kvartalsvis ansvarlighet. Beviser for elev/klubb at AK-coaching virker.</li>
+    </ul>
+
+    <h3>Arkitektur-anbefaling</h3>
+    <p>Bygg Option 1 som primær view på <code>/portal/admin/varsler-nedgang</code>. Gjør Option 4 (Deep-Dive) tilgjengelig via klikk på elev-navn i feed. Legg Option 5 (Recovery Tracker) som separat tab på samme rute (<code>?view=recovery</code>) for å unngå fragmentering. Option 2 og 3 kan pakkes bak en "Eksporter/rapport"-knapp for månedlig bruk, ikke som primær-UI.</p>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

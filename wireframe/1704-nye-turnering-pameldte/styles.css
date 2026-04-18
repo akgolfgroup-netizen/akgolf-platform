@@ -1,0 +1,229 @@
+/* === Wireframe Content CSS (B&W only) — Nye Turnering Påmeldte === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fafafa, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; min-height: 600px; }
+
+/* ============ APP SHELL ============ */
+.wf-app { display: grid; grid-template-columns: 200px 1fr; min-height: 600px; }
+
+/* Sidebar */
+.wf-sidebar { background: #fff; border-right: 1px solid #eee; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; }
+.wf-sidebar-logo { font-weight: 800; font-size: 12px; letter-spacing: 0.08em; color: #000; padding: 6px 10px 18px; border-bottom: 1px solid #eee; margin-bottom: 10px; }
+.wf-nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; font-size: 13px; color: #666; cursor: pointer; }
+.wf-nav-item:hover { background: #f5f5f5; color: #000; }
+.wf-nav-item.wf-active { background: #000; color: #fff; }
+.wf-nav-ico { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 3px; flex-shrink: 0; }
+.wf-active .wf-nav-ico { border-color: #fff; }
+.wf-sidebar-foot { margin-top: auto; padding-top: 12px; border-top: 1px solid #eee; font-size: 11px; color: #999; }
+.wf-sidebar-user { display: flex; align-items: center; gap: 8px; padding: 8px; }
+.wf-sidebar-avatar { width: 28px; height: 28px; border-radius: 50%; background: #eee; border: 1px solid #ccc; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: center; }
+
+/* Main canvas */
+.wf-main { padding: 20px 24px 28px; background: #f5f5f5; overflow: hidden; }
+
+/* ============ BREADCRUMB ============ */
+.wf-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #999; margin-bottom: 10px; }
+.wf-breadcrumb a { color: #666; text-decoration: none; }
+.wf-breadcrumb-sep { color: #ccc; }
+.wf-breadcrumb-current { color: #000; font-weight: 600; }
+
+/* ============ PAGE HEADER ============ */
+.wf-page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.wf-page-title { font-size: 22px; font-weight: 700; color: #000; margin: 0 0 4px; letter-spacing: -0.01em; }
+.wf-page-sub { font-size: 13px; color: #666; margin: 0; }
+.wf-page-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ============ TOURNAMENT META STRIP ============ */
+.wf-tourn-strip { display: flex; gap: 20px; background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 12px 16px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
+.wf-tourn-strip-item { display: flex; flex-direction: column; gap: 2px; }
+.wf-tourn-strip-label { font-size: 10px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; }
+.wf-tourn-strip-value { font-size: 13px; color: #000; font-weight: 600; }
+.wf-tourn-strip-sep { width: 1px; height: 28px; background: #eee; }
+.wf-tourn-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; background: #000; color: #fff; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; }
+.wf-tourn-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: #fff; }
+
+/* ============ TAB BAR (visning-toggle internt) ============ */
+.wf-view-tabs { display: flex; gap: 4px; background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 4px; margin-bottom: 14px; width: fit-content; }
+.wf-view-tab { padding: 6px 14px; border: none; background: transparent; color: #666; font-size: 12px; font-weight: 500; cursor: pointer; border-radius: 7px; }
+.wf-view-tab.wf-active { background: #000; color: #fff; }
+
+/* ============ BUTTONS ============ */
+.wf-btn { padding: 7px 14px; border: 1px solid #ccc; border-radius: 999px; background: #fff; color: #333; font-size: 12px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #666; padding: 6px 10px; }
+.wf-btn-ghost:hover { color: #000; background: #eee; }
+.wf-btn-icon { width: 28px; height: 28px; padding: 0; display: inline-flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ccc; border-radius: 8px; color: #666; cursor: pointer; font-size: 14px; }
+
+/* ============ SEARCH / FILTER BAR ============ */
+.wf-toolbar { display: flex; gap: 8px; align-items: center; background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 8px 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.wf-search { flex: 1; min-width: 220px; display: flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid #eee; border-radius: 999px; background: #fafafa; }
+.wf-search-ico { width: 14px; height: 14px; border: 1.5px solid #999; border-radius: 50%; flex-shrink: 0; }
+.wf-search-input { flex: 1; font-size: 12px; color: #999; }
+.wf-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border: 1px solid #ccc; border-radius: 999px; background: #fff; color: #666; font-size: 11px; cursor: pointer; }
+.wf-chip.wf-active { background: #000; color: #fff; border-color: #000; }
+.wf-chip-count { font-size: 10px; color: #999; margin-left: 4px; }
+.wf-chip.wf-active .wf-chip-count { color: rgba(255,255,255,0.6); }
+
+/* ============ SECTION HEADER ============ */
+.wf-section-head { display: flex; align-items: baseline; justify-content: space-between; margin: 16px 0 10px; }
+.wf-section-title { font-size: 13px; font-weight: 700; color: #000; letter-spacing: 0.06em; text-transform: uppercase; }
+.wf-section-meta { font-size: 11px; color: #999; }
+
+/* ============ OPT 1: FIELD LIST (table) ============ */
+.wf-table { width: 100%; background: #fff; border: 1px solid #eee; border-radius: 12px; overflow: hidden; border-collapse: separate; border-spacing: 0; }
+.wf-table thead th { background: #fafafa; padding: 10px 14px; text-align: left; font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #eee; white-space: nowrap; }
+.wf-table tbody td { padding: 11px 14px; font-size: 12px; color: #333; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+.wf-table tbody tr:last-child td { border-bottom: none; }
+.wf-table tbody tr:hover { background: #fafafa; }
+.wf-table tbody tr.wf-row-ak { background: #f5f5f5; position: relative; }
+.wf-table tbody tr.wf-row-ak::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #000; }
+.wf-table tbody tr.wf-row-me { background: #f0f0f0; font-weight: 600; }
+.wf-table tbody tr.wf-row-me td { color: #000; }
+.wf-cell-pos { font-weight: 700; color: #000; font-size: 11px; width: 36px; }
+.wf-cell-player { display: flex; align-items: center; gap: 8px; }
+.wf-player-avatar { width: 26px; height: 26px; border-radius: 50%; background: #eee; border: 1px solid #ccc; font-size: 9px; color: #666; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
+.wf-player-name { font-weight: 600; color: #000; }
+.wf-player-sub { font-size: 10px; color: #999; margin-top: 1px; }
+.wf-cell-hcp { font-weight: 700; color: #000; font-variant-numeric: tabular-nums; }
+.wf-cell-tee { font-family: "SF Mono", "Menlo", monospace; font-size: 11px; color: #333; font-variant-numeric: tabular-nums; }
+.wf-cell-flight { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 1px solid #ccc; border-radius: 6px; font-size: 10px; font-weight: 700; color: #666; background: #fafafa; }
+.wf-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border: 1px solid #ccc; border-radius: 999px; font-size: 9px; color: #666; letter-spacing: 0.04em; text-transform: uppercase; background: #fff; }
+.wf-tag-ak { border-color: #000; color: #000; font-weight: 700; background: #fff; }
+.wf-tag-me { background: #000; color: #fff; border-color: #000; font-weight: 700; }
+
+/* Stat strip above table */
+.wf-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+.wf-stat-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 12px 14px; }
+.wf-stat-label { font-size: 10px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+.wf-stat-value { font-size: 22px; font-weight: 800; color: #000; letter-spacing: -0.02em; line-height: 1; }
+.wf-stat-sub { font-size: 10px; color: #666; margin-top: 4px; }
+
+/* ============ OPT 2: TEE TIME GRID ============ */
+.wf-tee-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.wf-tee-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 12px 14px; }
+.wf-tee-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid #eee; margin-bottom: 10px; }
+.wf-tee-time { font-family: "SF Mono", "Menlo", monospace; font-size: 18px; font-weight: 800; color: #000; letter-spacing: -0.02em; }
+.wf-tee-hole { font-size: 10px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 7px; border: 1px solid #eee; border-radius: 6px; background: #fafafa; }
+.wf-tee-players { display: flex; flex-direction: column; gap: 6px; }
+.wf-tee-player { display: flex; align-items: center; gap: 8px; padding: 5px 0; }
+.wf-tee-player-avatar { width: 24px; height: 24px; border-radius: 50%; background: #eee; border: 1px solid #ccc; font-size: 9px; color: #666; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
+.wf-tee-player-info { flex: 1; min-width: 0; }
+.wf-tee-player-name { font-size: 12px; font-weight: 600; color: #000; line-height: 1.2; }
+.wf-tee-player-meta { font-size: 10px; color: #666; margin-top: 1px; }
+.wf-tee-player-hcp { font-size: 11px; font-weight: 700; color: #000; font-variant-numeric: tabular-nums; }
+.wf-tee-card.wf-tee-card-me { border-color: #000; border-width: 2px; }
+.wf-tee-card.wf-tee-card-me .wf-tee-time { color: #000; }
+.wf-tee-player.wf-tee-me { background: #000; color: #fff; border-radius: 6px; padding: 5px 8px; margin: 0 -8px; }
+.wf-tee-player.wf-tee-me .wf-tee-player-name { color: #fff; }
+.wf-tee-player.wf-tee-me .wf-tee-player-meta { color: rgba(255,255,255,0.7); }
+.wf-tee-player.wf-tee-me .wf-tee-player-hcp { color: #fff; }
+.wf-tee-player.wf-tee-me .wf-tee-player-avatar { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff; }
+
+/* Tee time groups (by hour) */
+.wf-tee-group { margin-bottom: 18px; }
+.wf-tee-group-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; padding: 6px 0; }
+.wf-tee-group-label { font-size: 11px; font-weight: 700; color: #000; letter-spacing: 0.08em; text-transform: uppercase; }
+.wf-tee-group-rule { flex: 1; height: 1px; background: #eee; }
+.wf-tee-group-count { font-size: 10px; color: #999; }
+
+/* ============ OPT 3: MATCH PLAY BRACKET ============ */
+.wf-bracket { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px; overflow-x: auto; }
+.wf-bracket-round { display: flex; flex-direction: column; gap: 8px; justify-content: space-around; }
+.wf-bracket-round-title { font-size: 10px; font-weight: 700; color: #000; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+.wf-bracket-match { background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 6px 8px; position: relative; }
+.wf-bracket-match.wf-match-done { background: #fff; }
+.wf-bracket-match.wf-match-me { border-color: #000; border-width: 2px; }
+.wf-bracket-player { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; font-size: 10px; color: #333; }
+.wf-bracket-player + .wf-bracket-player { border-top: 1px dashed #eee; }
+.wf-bracket-player-name { font-weight: 600; color: #000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 95px; }
+.wf-bracket-player-score { font-family: "SF Mono", "Menlo", monospace; font-size: 10px; color: #999; font-weight: 700; }
+.wf-bracket-player.wf-winner .wf-bracket-player-name { color: #000; font-weight: 700; }
+.wf-bracket-player.wf-winner .wf-bracket-player-score { color: #000; }
+.wf-bracket-player.wf-loser .wf-bracket-player-name { color: #999; text-decoration: line-through; }
+.wf-bracket-match-meta { font-size: 9px; color: #999; margin-top: 4px; padding-top: 4px; border-top: 1px solid #eee; letter-spacing: 0.04em; text-transform: uppercase; }
+.wf-bracket-match.wf-match-tbd { background: #fafafa; border-style: dashed; }
+.wf-bracket-match.wf-match-tbd .wf-bracket-player-name { color: #ccc; }
+
+/* Bracket side panel */
+.wf-bracket-split { display: grid; grid-template-columns: 1fr 280px; gap: 12px; }
+.wf-my-match { background: #000; border-radius: 12px; padding: 16px; color: #fff; }
+.wf-my-match-label { font-size: 10px; color: rgba(255,255,255,0.6); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.wf-my-match-round { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.wf-my-match-vs { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.15); border-bottom: 1px solid rgba(255,255,255,0.15); margin-bottom: 10px; }
+.wf-my-match-player { text-align: center; flex: 1; }
+.wf-my-match-player-avatar { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.wf-my-match-player-name { font-size: 12px; font-weight: 700; color: #fff; }
+.wf-my-match-player-hcp { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+.wf-my-match-vs-text { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; }
+.wf-my-match-meta { font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+
+/* ============ OPT 4: LEADERBOARD LIVE ============ */
+.wf-lb-strip { display: flex; gap: 16px; background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; align-items: center; }
+.wf-lb-live { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: #000; color: #fff; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.wf-lb-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: blink 1.5s infinite; }
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0.3; } }
+.wf-lb-round { font-size: 11px; color: #666; }
+.wf-lb-round strong { color: #000; }
+.wf-lb-update { margin-left: auto; font-size: 10px; color: #999; }
+
+.wf-lb-table { width: 100%; background: #fff; border: 1px solid #eee; border-radius: 12px; overflow: hidden; border-collapse: separate; border-spacing: 0; }
+.wf-lb-table thead th { background: #fafafa; padding: 10px 14px; text-align: left; font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid #eee; white-space: nowrap; }
+.wf-lb-table thead th.wf-th-right { text-align: right; }
+.wf-lb-table tbody td { padding: 10px 14px; font-size: 12px; color: #333; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+.wf-lb-table tbody tr:last-child td { border-bottom: none; }
+.wf-lb-table tbody td.wf-td-right { text-align: right; }
+.wf-lb-pos { font-weight: 700; color: #000; width: 44px; font-variant-numeric: tabular-nums; font-size: 13px; }
+.wf-lb-move { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 700; margin-left: 4px; color: #666; }
+.wf-lb-move-up { color: #000; }
+.wf-lb-move-down { color: #999; }
+.wf-lb-score { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 13px; color: #000; }
+.wf-lb-score.wf-score-under { color: #000; }
+.wf-lb-score.wf-score-over { color: #666; }
+.wf-lb-thru { font-size: 11px; color: #666; font-variant-numeric: tabular-nums; }
+.wf-lb-today { font-variant-numeric: tabular-nums; font-weight: 600; color: #333; }
+.wf-lb-table tbody tr.wf-lb-me { background: #000; }
+.wf-lb-table tbody tr.wf-lb-me td { color: #fff; }
+.wf-lb-table tbody tr.wf-lb-me .wf-lb-pos { color: #fff; }
+.wf-lb-table tbody tr.wf-lb-me .wf-lb-score { color: #fff; }
+.wf-lb-table tbody tr.wf-lb-ak { background: #f5f5f5; }
+
+/* ============ OPT 5: PLAYER CARDS ============ */
+.wf-pc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.wf-pc-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: border-color 0.2s; }
+.wf-pc-card:hover { border-color: #999; }
+.wf-pc-card.wf-pc-ak { border-color: #000; border-width: 2px; }
+.wf-pc-card.wf-pc-me { background: #000; color: #fff; border-color: #000; }
+.wf-pc-head { display: flex; align-items: center; gap: 10px; }
+.wf-pc-avatar { width: 44px; height: 44px; border-radius: 50%; background: #eee; border: 1px solid #ccc; font-size: 13px; color: #666; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+.wf-pc-card.wf-pc-me .wf-pc-avatar { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff; }
+.wf-pc-id { flex: 1; min-width: 0; }
+.wf-pc-name { font-size: 13px; font-weight: 700; color: #000; line-height: 1.25; }
+.wf-pc-card.wf-pc-me .wf-pc-name { color: #fff; }
+.wf-pc-club { font-size: 11px; color: #666; margin-top: 2px; }
+.wf-pc-card.wf-pc-me .wf-pc-club { color: rgba(255,255,255,0.7); }
+.wf-pc-tag { position: absolute; top: 10px; right: 10px; }
+.wf-pc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 10px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+.wf-pc-card.wf-pc-me .wf-pc-stats { border-color: rgba(255,255,255,0.15); }
+.wf-pc-stat { text-align: center; }
+.wf-pc-stat-label { font-size: 9px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3px; }
+.wf-pc-card.wf-pc-me .wf-pc-stat-label { color: rgba(255,255,255,0.6); }
+.wf-pc-stat-value { font-size: 14px; font-weight: 700; color: #000; font-variant-numeric: tabular-nums; }
+.wf-pc-card.wf-pc-me .wf-pc-stat-value { color: #fff; }
+.wf-pc-foot { display: flex; justify-content: space-between; align-items: center; }
+.wf-pc-last { font-size: 10px; color: #666; }
+.wf-pc-card.wf-pc-me .wf-pc-last { color: rgba(255,255,255,0.7); }
+.wf-pc-compare { font-size: 10px; color: #999; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; padding: 3px 8px; border: 1px solid #ccc; border-radius: 999px; background: #fff; }
+.wf-pc-card.wf-pc-me .wf-pc-compare { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff; }
+
+/* ============ ANNOTATIONS ============ */
+.wf-annotations h3 { color: #000; }
+.wf-rec-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 12px; }
+.wf-rec-table th, .wf-rec-table td { border: 1px solid #eee; padding: 8px 10px; text-align: left; }
+.wf-rec-table th { background: #fafafa; color: #000; font-weight: 700; }
+.wf-recommendation { margin-top: 16px; padding: 16px; border: 1px solid #eee; border-radius: 10px; background: #fafafa; }
+.wf-recommendation h3 { margin: 0 0 8px; color: #000; font-size: 15px; }
+.wf-recommendation p { font-size: 12px; color: #333; line-height: 1.6; margin: 0 0 8px; }
+.wf-recommendation ul { margin: 0; padding-left: 20px; font-size: 12px; color: #333; }
+.wf-recommendation li { margin-bottom: 4px; line-height: 1.5; }

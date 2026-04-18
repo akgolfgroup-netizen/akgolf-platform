@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utvikling — Progresjon · 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Utvikling — Progresjon</span> — <span id="project-name">AK Golf Platform · Portalen · N01</span></span>
+    <span class="rec">Anbefalt: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Five Rings</button>
+    <button class="tab-btn" data-tab="option-2">2: Pyramid Climb</button>
+    <button class="tab-btn" data-tab="option-3">3: Data Grid</button>
+    <button class="tab-btn" data-tab="option-4">4: Timeline Story</button>
+    <button class="tab-btn" data-tab="option-5">5: Gamified Checkpoints</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Five Rings ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Five Rings</span> <span class="opt-tag">(SAFE)</span></h2>
+    <p class="option-description">Fem store progress-rings (en per NGF-område) øverst — Teknikk, Fysikk, Slag, Spill, Turnering. Under: detalj-liste per område med fullført %, trend siste 30 dager og neste mål. Klar og skannbar på 3 sekunder.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/utvikling-progress</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="opt1-shell">
+
+          <header class="opt1-head">
+            <div>
+              <div class="opt1-eyebrow">Utvikling · Progresjon</div>
+              <h1 class="opt1-title">Fem områder, én spiller<span class="wf-marker">1</span></h1>
+              <p class="opt1-sub">Anders Kristiansen · HCP +1.2 · Periode: siste 90 dager</p>
+            </div>
+            <div class="opt1-range">
+              <span class="opt1-chip opt1-active">30d</span>
+              <span class="opt1-chip">90d</span>
+              <span class="opt1-chip">I år</span>
+            </div>
+          </header>
+
+          <section class="opt1-rings">
+            <div class="opt1-ring-cell">
+              <div class="opt1-ring" data-val="72">
+                <div class="opt1-ring-inner">
+                  <div class="opt1-ring-val">72%</div>
+                  <div class="opt1-ring-delta">+4</div>
+                </div>
+              </div>
+              <div class="opt1-ring-name">Teknikk</div>
+            </div>
+            <div class="opt1-ring-cell">
+              <div class="opt1-ring" data-val="58">
+                <div class="opt1-ring-inner">
+                  <div class="opt1-ring-val">58%</div>
+                  <div class="opt1-ring-delta">+2</div>
+                </div>
+              </div>
+              <div class="opt1-ring-name">Fysikk</div>
+            </div>
+            <div class="opt1-ring-cell">
+              <div class="opt1-ring" data-val="84">
+                <div class="opt1-ring-inner">
+                  <div class="opt1-ring-val">84%</div>
+                  <div class="opt1-ring-delta">+6</div>
+                </div>
+              </div>
+              <div class="opt1-ring-name">Slag</div>
+            </div>
+            <div class="opt1-ring-cell">
+              <div class="opt1-ring" data-val="66">
+                <div class="opt1-ring-inner">
+                  <div class="opt1-ring-val">66%</div>
+                  <div class="opt1-ring-delta">−1</div>
+                </div>
+              </div>
+              <div class="opt1-ring-name">Spill</div>
+            </div>
+            <div class="opt1-ring-cell">
+              <div class="opt1-ring" data-val="41">
+                <div class="opt1-ring-inner">
+                  <div class="opt1-ring-val">41%</div>
+                  <div class="opt1-ring-delta">+3</div>
+                </div>
+              </div>
+              <div class="opt1-ring-name">Turnering</div>
+            </div>
+          </section>
+
+          <section class="opt1-summary-row">
+            <div class="opt1-sum-card">
+              <div class="opt1-sum-label">Samlet fullført</div>
+              <div class="opt1-sum-val">64%</div>
+              <div class="opt1-sum-sub">+3 siste 30 dager</div>
+            </div>
+            <div class="opt1-sum-card">
+              <div class="opt1-sum-label">Treningsøkter</div>
+              <div class="opt1-sum-val">38</div>
+              <div class="opt1-sum-sub">av 42 planlagt</div>
+            </div>
+            <div class="opt1-sum-card">
+              <div class="opt1-sum-label">Svakest område</div>
+              <div class="opt1-sum-val">Turnering</div>
+              <div class="opt1-sum-sub">fokus neste 4 uker</div>
+            </div>
+          </section>
+
+          <section class="opt1-list">
+            <div class="opt1-list-head">
+              <div class="opt1-list-title">Detaljer per område<span class="wf-marker">2</span></div>
+              <button class="opt1-link">Last ned rapport</button>
+            </div>
+
+            <div class="opt1-row">
+              <div class="opt1-row-name">
+                <div class="opt1-row-dot"></div>
+                <div>
+                  <div class="opt1-row-title">Teknikk</div>
+                  <div class="opt1-row-meta">Fullsving, kort spill, putting · 12 av 16 moduler</div>
+                </div>
+              </div>
+              <div class="opt1-row-bar"><div class="opt1-row-fill" style="width:72%"></div></div>
+              <div class="opt1-row-val">72%</div>
+              <div class="opt1-row-trend">+4</div>
+              <div class="opt1-row-next">Neste: Pitching 30–50m</div>
+            </div>
+
+            <div class="opt1-row">
+              <div class="opt1-row-name">
+                <div class="opt1-row-dot"></div>
+                <div>
+                  <div class="opt1-row-title">Fysikk</div>
+                  <div class="opt1-row-meta">Mobilitet, styrke, hurtighet · 7 av 12 moduler</div>
+                </div>
+              </div>
+              <div class="opt1-row-bar"><div class="opt1-row-fill" style="width:58%"></div></div>
+              <div class="opt1-row-val">58%</div>
+              <div class="opt1-row-trend">+2</div>
+              <div class="opt1-row-next">Neste: Hip-mobility flow</div>
+            </div>
+
+            <div class="opt1-row">
+              <div class="opt1-row-name">
+                <div class="opt1-row-dot"></div>
+                <div>
+                  <div class="opt1-row-title">Slag</div>
+                  <div class="opt1-row-meta">Driver, jern, wedges · 17 av 20 moduler</div>
+                </div>
+              </div>
+              <div class="opt1-row-bar"><div class="opt1-row-fill" style="width:84%"></div></div>
+              <div class="opt1-row-val">84%</div>
+              <div class="opt1-row-trend">+6</div>
+              <div class="opt1-row-next">Neste: Approach 140m</div>
+            </div>
+
+            <div class="opt1-row">
+              <div class="opt1-row-name">
+                <div class="opt1-row-dot"></div>
+                <div>
+                  <div class="opt1-row-title">Spill</div>
+                  <div class="opt1-row-meta">Strategi, banehåndtering · 10 av 15 moduler</div>
+                </div>
+              </div>
+              <div class="opt1-row-bar"><div class="opt1-row-fill" style="width:66%"></div></div>
+              <div class="opt1-row-val">66%</div>
+              <div class="opt1-row-trend opt1-down">−1</div>
+              <div class="opt1-row-next">Neste: Course management</div>
+            </div>
+
+            <div class="opt1-row">
+              <div class="opt1-row-name">
+                <div class="opt1-row-dot"></div>
+                <div>
+                  <div class="opt1-row-title">Turnering</div>
+                  <div class="opt1-row-meta">Mental, rutine, prestasjon · 5 av 12 moduler</div>
+                </div>
+              </div>
+              <div class="opt1-row-bar"><div class="opt1-row-fill" style="width:41%"></div></div>
+              <div class="opt1-row-val">41%</div>
+              <div class="opt1-row-trend">+3</div>
+              <div class="opt1-row-next">Neste: Pre-shot rutine</div>
+            </div>
+          </section>
+
+          <section class="opt1-footer">
+            <div class="opt1-note">
+              <div class="opt1-note-label">Coach-innsikt<span class="wf-marker">3</span></div>
+              <p class="opt1-note-body">"Slag-området er sterkt på +84%. Fokuser neste periode på Turnering — rutine og mental er svakest. Vi setter opp to økter før Q2."</p>
+              <div class="opt1-note-meta">Anders Kristiansen · 2 dager siden</div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Fem rings øverst:</strong> Én ring per NGF-område. Identisk visuell vekt, spiller ser balanse og skjevhet umiddelbart.</li>
+        <li><strong>2 — Detalj-liste under:</strong> Navn, bar, %, trend, neste mål. Rad per område. Skannbar som tabell uten å være tabell.</li>
+        <li><strong>3 — Coach-innsikt i bunn:</strong> Kobler progresjon til personlig coaching — tolkning av tallene, ikke bare tallene.</li>
+        <li>— Safe-valg: Rings er etablert mønster (Apple Activity, Whoop). Passer alle tiers.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Pyramid Climb ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Pyramid Climb</span></h2>
+    <p class="option-description">Treningspyramiden (NGF) visualisert som faktisk pyramide. Fem nivåer fylles fra bunn og opp — Fysikk &gt; Teknikk &gt; Slag &gt; Spill &gt; Turnering. Spilleren ser progresjon som en klatring mot toppen. Visuell metafor som matcher norsk golfopplæring.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/utvikling-progress</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="opt2-shell">
+
+          <header class="opt2-head">
+            <div>
+              <div class="opt2-eyebrow">Treningspyramiden · NGF</div>
+              <h1 class="opt2-title">Din klatring mot toppen<span class="wf-marker">1</span></h1>
+              <p class="opt2-sub">Hvert nivå bygger på det forrige. Fyll bunnen først — toppen kommer av seg selv.</p>
+            </div>
+            <div class="opt2-hcp">
+              <div class="opt2-hcp-label">Index</div>
+              <div class="opt2-hcp-val">+1.2</div>
+            </div>
+          </header>
+
+          <div class="opt2-layout">
+
+            <section class="opt2-pyramid">
+              <div class="opt2-level opt2-lvl-5" data-fill="41">
+                <div class="opt2-level-inner" style="width:41%">
+                  <span class="opt2-level-name">Turnering</span>
+                  <span class="opt2-level-pct">41%</span>
+                </div>
+                <div class="opt2-level-bg"></div>
+              </div>
+              <div class="opt2-level opt2-lvl-4" data-fill="66">
+                <div class="opt2-level-inner" style="width:66%">
+                  <span class="opt2-level-name">Spill</span>
+                  <span class="opt2-level-pct">66%</span>
+                </div>
+                <div class="opt2-level-bg"></div>
+              </div>
+              <div class="opt2-level opt2-lvl-3" data-fill="84">
+                <div class="opt2-level-inner" style="width:84%">
+                  <span class="opt2-level-name">Slag</span>
+                  <span class="opt2-level-pct">84%</span>
+                </div>
+                <div class="opt2-level-bg"></div>
+              </div>
+              <div class="opt2-level opt2-lvl-2" data-fill="72">
+                <div class="opt2-level-inner" style="width:72%">
+                  <span class="opt2-level-name">Teknikk</span>
+                  <span class="opt2-level-pct">72%</span>
+                </div>
+                <div class="opt2-level-bg"></div>
+              </div>
+              <div class="opt2-level opt2-lvl-1" data-fill="58">
+                <div class="opt2-level-inner" style="width:58%">
+                  <span class="opt2-level-name">Fysikk</span>
+                  <span class="opt2-level-pct">58%</span>
+                </div>
+                <div class="opt2-level-bg"></div>
+              </div>
+              <div class="opt2-base">FUNDAMENT · mobilitet · styrke · bevegelse</div>
+            </section>
+
+            <aside class="opt2-side">
+              <div class="opt2-card">
+                <div class="opt2-card-label">Samlet fullført<span class="wf-marker">2</span></div>
+                <div class="opt2-card-val">64%</div>
+                <div class="opt2-card-sub">+3 siste 30 dager</div>
+                <div class="opt2-card-bar"><div class="opt2-card-fill" style="width:64%"></div></div>
+              </div>
+
+              <div class="opt2-card">
+                <div class="opt2-card-label">Neste nivå</div>
+                <div class="opt2-card-title">Turnering</div>
+                <p class="opt2-card-body">For å fylle dette nivået: Fullfør mental-modulen og 3 testrunder under press.</p>
+                <button class="opt2-btn">Start modul →</button>
+              </div>
+
+              <div class="opt2-card">
+                <div class="opt2-card-label">Svakt ledd<span class="wf-marker">3</span></div>
+                <div class="opt2-card-title">Fysikk · 58%</div>
+                <p class="opt2-card-body">Fundamentet er lavere enn Teknikk. Dette bremser utviklingen oppover.</p>
+                <div class="opt2-card-meta">Coach anbefaler +2 fysikk-økter/uke</div>
+              </div>
+            </aside>
+          </div>
+
+          <section class="opt2-legend">
+            <div class="opt2-legend-row">
+              <span class="opt2-legend-dot"></span>
+              <span class="opt2-legend-text">Fylt nivå betyr godkjent testbatteri for området. Pyramiden oppdateres etter hver treningsøkt og banerunde.</span>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Pyramide som metafor:</strong> Fysisk formen kommuniserer "fundament først". Norsk Golfforbund bruker samme modell.</li>
+        <li><strong>2 — Side-kort for aksjon:</strong> Pyramiden er statisk; sidepanelet viser "hva gjør jeg nå?"</li>
+        <li><strong>3 — Svakt ledd-varsling:</strong> Hvis et lavere nivå er svakere enn høyere, flagges det som brudd på pyramide-logikken.</li>
+        <li>— Passer spillere som liker visuelle modeller. Mindre skannbar enn Option 1 (krever 2 sek mer).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Data Grid ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Data Grid</span></h2>
+    <p class="option-description">Tabell-basert. Én rad per NGF-område med kolonner: Område · Fullført % · Trend (sparkline) · Moduler · Neste mål · Deadline. Tett info, null visuell fluff. For spillere som vil se tallene og komme seg videre.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/utvikling-progress</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="opt3-shell">
+
+          <header class="opt3-head">
+            <div>
+              <div class="opt3-eyebrow">Utvikling · Progresjon</div>
+              <h1 class="opt3-title">Progresjonstabell<span class="wf-marker">1</span></h1>
+            </div>
+            <div class="opt3-filters">
+              <span class="opt3-filter opt3-active">30d</span>
+              <span class="opt3-filter">90d</span>
+              <span class="opt3-filter">I år</span>
+              <span class="opt3-filter-sep"></span>
+              <span class="opt3-filter">Alle områder</span>
+              <span class="opt3-filter">Eksporter</span>
+            </div>
+          </header>
+
+          <section class="opt3-kpis">
+            <div class="opt3-kpi"><div class="opt3-kpi-label">Samlet</div><div class="opt3-kpi-val">64%</div><div class="opt3-kpi-sub">+3 på 30d</div></div>
+            <div class="opt3-kpi"><div class="opt3-kpi-label">Økter</div><div class="opt3-kpi-val">38</div><div class="opt3-kpi-sub">av 42 plan</div></div>
+            <div class="opt3-kpi"><div class="opt3-kpi-label">Moduler</div><div class="opt3-kpi-val">51/75</div><div class="opt3-kpi-sub">68%</div></div>
+            <div class="opt3-kpi"><div class="opt3-kpi-label">USI</div><div class="opt3-kpi-val">74.3</div><div class="opt3-kpi-sub">+1.8</div></div>
+            <div class="opt3-kpi"><div class="opt3-kpi-label">Streak</div><div class="opt3-kpi-val">11d</div><div class="opt3-kpi-sub">PR: 14d</div></div>
+            <div class="opt3-kpi"><div class="opt3-kpi-label">HCP</div><div class="opt3-kpi-val">+1.2</div><div class="opt3-kpi-sub">−0.4 i år</div></div>
+          </section>
+
+          <section class="opt3-table-wrap">
+            <table class="opt3-table">
+              <thead>
+                <tr>
+                  <th>Område</th>
+                  <th>Fullført %</th>
+                  <th>Trend 30d</th>
+                  <th>Moduler</th>
+                  <th>Volum</th>
+                  <th>Neste mål</th>
+                  <th>Frist</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="opt3-area"><span class="opt3-area-dot"></span>Teknikk</span></td>
+                  <td>
+                    <div class="opt3-bar"><div class="opt3-bar-fill" style="width:72%"></div></div>
+                    <span class="opt3-bar-val">72%</span>
+                  </td>
+                  <td>
+                    <svg class="opt3-spark" viewBox="0 0 80 24"><polyline points="0,18 10,16 20,14 30,15 40,12 50,10 60,9 70,7 80,6"></polyline></svg>
+                    <span class="opt3-trend-up">+4</span>
+                  </td>
+                  <td>12 / 16</td>
+                  <td>14 økter</td>
+                  <td>Pitching 30–50m</td>
+                  <td>28. april</td>
+                </tr>
+                <tr>
+                  <td><span class="opt3-area"><span class="opt3-area-dot"></span>Fysikk</span></td>
+                  <td>
+                    <div class="opt3-bar"><div class="opt3-bar-fill" style="width:58%"></div></div>
+                    <span class="opt3-bar-val">58%</span>
+                  </td>
+                  <td>
+                    <svg class="opt3-spark" viewBox="0 0 80 24"><polyline points="0,16 10,16 20,15 30,14 40,14 50,13 60,13 70,12 80,11"></polyline></svg>
+                    <span class="opt3-trend-up">+2</span>
+                  </td>
+                  <td>7 / 12</td>
+                  <td>8 økter</td>
+                  <td>Hip-mobility flow</td>
+                  <td>21. april</td>
+                </tr>
+                <tr>
+                  <td><span class="opt3-area"><span class="opt3-area-dot"></span>Slag</span></td>
+                  <td>
+                    <div class="opt3-bar"><div class="opt3-bar-fill" style="width:84%"></div></div>
+                    <span class="opt3-bar-val">84%</span>
+                  </td>
+                  <td>
+                    <svg class="opt3-spark" viewBox="0 0 80 24"><polyline points="0,18 10,14 20,12 30,10 40,8 50,7 60,5 70,4 80,3"></polyline></svg>
+                    <span class="opt3-trend-up">+6</span>
+                  </td>
+                  <td>17 / 20</td>
+                  <td>11 økter</td>
+                  <td>Approach 140m</td>
+                  <td>19. april</td>
+                </tr>
+                <tr>
+                  <td><span class="opt3-area"><span class="opt3-area-dot"></span>Spill</span></td>
+                  <td>
+                    <div class="opt3-bar"><div class="opt3-bar-fill" style="width:66%"></div></div>
+                    <span class="opt3-bar-val">66%</span>
+                  </td>
+                  <td>
+                    <svg class="opt3-spark" viewBox="0 0 80 24"><polyline points="0,10 10,11 20,13 30,14 40,13 50,14 60,15 70,14 80,15"></polyline></svg>
+                    <span class="opt3-trend-down">−1</span>
+                  </td>
+                  <td>10 / 15</td>
+                  <td>3 økter</td>
+                  <td>Course management</td>
+                  <td>5. mai</td>
+                </tr>
+                <tr>
+                  <td><span class="opt3-area"><span class="opt3-area-dot"></span>Turnering</span></td>
+                  <td>
+                    <div class="opt3-bar"><div class="opt3-bar-fill" style="width:41%"></div></div>
+                    <span class="opt3-bar-val">41%</span>
+                  </td>
+                  <td>
+                    <svg class="opt3-spark" viewBox="0 0 80 24"><polyline points="0,20 10,19 20,18 30,17 40,16 50,15 60,14 70,13 80,11"></polyline></svg>
+                    <span class="opt3-trend-up">+3</span>
+                  </td>
+                  <td>5 / 12</td>
+                  <td>2 økter</td>
+                  <td>Pre-shot rutine</td>
+                  <td>12. mai</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="opt3-below">
+            <div class="opt3-widget">
+              <div class="opt3-widget-label">Treningsvolum · 30d<span class="wf-marker">2</span></div>
+              <div class="opt3-volume-chart">
+                <div class="opt3-vol-bar" style="height:40%"></div>
+                <div class="opt3-vol-bar" style="height:62%"></div>
+                <div class="opt3-vol-bar" style="height:30%"></div>
+                <div class="opt3-vol-bar" style="height:78%"></div>
+                <div class="opt3-vol-bar" style="height:54%"></div>
+                <div class="opt3-vol-bar" style="height:22%"></div>
+                <div class="opt3-vol-bar" style="height:68%"></div>
+                <div class="opt3-vol-bar" style="height:84%"></div>
+                <div class="opt3-vol-bar" style="height:46%"></div>
+                <div class="opt3-vol-bar" style="height:72%"></div>
+                <div class="opt3-vol-bar" style="height:58%"></div>
+                <div class="opt3-vol-bar" style="height:90%"></div>
+              </div>
+              <div class="opt3-widget-sub">38 økter · snitt 1.3 per dag</div>
+            </div>
+            <div class="opt3-widget">
+              <div class="opt3-widget-label">Plan-progress · kommende 7d<span class="wf-marker">3</span></div>
+              <div class="opt3-plan-list">
+                <div class="opt3-plan-item"><span>Fre 18.</span><span>Teknikk · pitching</span><span>Planlagt</span></div>
+                <div class="opt3-plan-item"><span>Lør 19.</span><span>Slag · runde Losby</span><span>Planlagt</span></div>
+                <div class="opt3-plan-item"><span>Man 21.</span><span>Fysikk · hip flow</span><span>Planlagt</span></div>
+                <div class="opt3-plan-item"><span>Ons 23.</span><span>Turnering · mental</span><span>Planlagt</span></div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Tabell som primær:</strong> Ingen visuelle rings — bare data. Passer analytiske spillere (+coach-rollen).</li>
+        <li><strong>2 — Treningsvolum-widget:</strong> PlanProgressWidget + TrainingVolumeWidget fra brief — inline under tabellen.</li>
+        <li><strong>3 — Kommende 7d:</strong> Bygger bro til treningsplan — neste handling er alltid synlig.</li>
+        <li>— Svakhet: Kan virke "kald". Ingen emosjonell kobling til progresjon.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Timeline Story ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Timeline Story</span></h2>
+    <p class="option-description">Scroll-basert tidslinje: "Dette har du gjort". Milepæler per måned med fullførte moduler, PRs, testresultater. Progresjon som fortelling — uke 16 &rarr; uke 14 &rarr; uke 12 &rarr; januar &rarr; start 2024. Bygger emosjonell eierskap til reisen.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/utvikling-progress</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="opt4-shell">
+
+          <header class="opt4-head">
+            <div>
+              <div class="opt4-eyebrow">Din utviklingsreise</div>
+              <h1 class="opt4-title">Dette har du gjort<span class="wf-marker">1</span></h1>
+              <p class="opt4-sub">Anders Kristiansen · 2024 → 2026 · 14 måneder · 187 økter</p>
+            </div>
+            <div class="opt4-top-stats">
+              <div class="opt4-top-stat"><div class="opt4-top-label">Samlet</div><div class="opt4-top-val">64%</div></div>
+              <div class="opt4-top-stat"><div class="opt4-top-label">HCP-endring</div><div class="opt4-top-val">−4.2</div></div>
+              <div class="opt4-top-stat"><div class="opt4-top-label">PRs</div><div class="opt4-top-val">12</div></div>
+            </div>
+          </header>
+
+          <section class="opt4-timeline">
+
+            <div class="opt4-now">I DAG · torsdag 17. april 2026</div>
+
+            <div class="opt4-item opt4-current">
+              <div class="opt4-dot opt4-dot-now"></div>
+              <div class="opt4-card">
+                <div class="opt4-card-date">Uke 16 · april</div>
+                <div class="opt4-card-title">Pitching 30–50m startet</div>
+                <p class="opt4-card-body">Teknikk-modul åpnet. 4 økter denne uken. Første måling: dispersjon 8.4m.</p>
+                <div class="opt4-tags"><span class="opt4-tag">Teknikk +4%</span><span class="opt4-tag">4 økter</span></div>
+              </div>
+            </div>
+
+            <div class="opt4-item">
+              <div class="opt4-dot"></div>
+              <div class="opt4-card">
+                <div class="opt4-card-date">Uke 14 · april</div>
+                <div class="opt4-card-title">Ny PR · driver carry 258m<span class="wf-marker">2</span></div>
+                <p class="opt4-card-body">Smash 1.49, spin 2640 rpm. Slag-området passerte 80%-milepæl.</p>
+                <div class="opt4-tags"><span class="opt4-tag opt4-tag-pr">PR</span><span class="opt4-tag">Slag +6%</span></div>
+              </div>
+            </div>
+
+            <div class="opt4-item">
+              <div class="opt4-dot"></div>
+              <div class="opt4-card">
+                <div class="opt4-card-date">Uke 12 · mars</div>
+                <div class="opt4-card-title">Fullførte Fundament-testbatteri</div>
+                <p class="opt4-card-body">Mobilitetstester bestått. Fysikk-nivået åpnet Teknikk-moduler over L3.</p>
+                <div class="opt4-tags"><span class="opt4-tag">Fysikk milepæl</span><span class="opt4-tag">6 tester</span></div>
+              </div>
+            </div>
+
+            <div class="opt4-item">
+              <div class="opt4-dot"></div>
+              <div class="opt4-card">
+                <div class="opt4-card-date">Februar 2026</div>
+                <div class="opt4-card-title">HCP +1.5 → +1.3</div>
+                <p class="opt4-card-body">5 tellende runder. Snitt 71.8. Spill-området fikk 4 nye moduler godkjent.</p>
+                <div class="opt4-tags"><span class="opt4-tag">HCP −0.2</span><span class="opt4-tag">Spill +5%</span></div>
+              </div>
+            </div>
+
+            <div class="opt4-item">
+              <div class="opt4-dot"></div>
+              <div class="opt4-card">
+                <div class="opt4-card-date">Januar 2026</div>
+                <div class="opt4-card-title">Sesongstart · årsplan satt</div>
+                <p class="opt4-card-body">Mål 2026: Scratch-index og 2 turneringseieltagelser. Pyramiden kalibrert.</p>
+                <div class="opt4-tags"><span class="opt4-tag">Planlegging</span><span class="opt4-tag">Baseline 60%</span></div>
+              </div>
+            </div>
+
+            <div class="opt4-item opt4-faded">
+              <div class="opt4-dot"></div>
+              <div class="opt4-card">
+                <div class="opt4-card-date">Høst 2025</div>
+                <div class="opt4-card-title">9 PRs · 84 økter</div>
+                <p class="opt4-card-body">Samlet fullført steg fra 38% til 56% i løpet av høstsesongen.</p>
+                <div class="opt4-tags"><span class="opt4-tag">+18% samlet</span></div>
+              </div>
+            </div>
+
+            <div class="opt4-start">
+              <div class="opt4-dot opt4-dot-start"></div>
+              <div class="opt4-start-text">Start februar 2024 · HCP +5.4 · Fullført 0%</div>
+            </div>
+
+          </section>
+
+          <section class="opt4-next">
+            <div class="opt4-next-label">Neste milepæl<span class="wf-marker">3</span></div>
+            <div class="opt4-next-card">
+              <div class="opt4-next-title">Turnering-området over 50%</div>
+              <p class="opt4-next-body">Mental-modul + 3 testrunder under press. Mål: 12. mai 2026.</p>
+              <button class="opt4-next-btn">Se plan →</button>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Dette har du gjort:</strong> Psykologisk anker. Spilleren ser bevis på fremgang før han ser hva som mangler.</li>
+        <li><strong>2 — Milepæler som kort:</strong> Hver hendelse er en historie, ikke bare en tall-endring.</li>
+        <li><strong>3 — Neste milepæl i bunn:</strong> Når spiller har scrollet gjennom reisen, får han ett neste steg.</li>
+        <li>— Svakhet: Krever scroll. Ikke 5-sek skannbar. Passer månedlig review-modus, ikke daglig bruk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Gamified Checkpoints ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Gamified Checkpoints</span></h2>
+    <p class="option-description">Checkpoint-bane som et spill. Fem "baner" (NGF-områder) med checkpoints som representerer moduler. Badges opptjent. Next-achievement-kort viser hva som er nærmest å låses opp. Motivasjon via gamification — passer juniorer og Starter-tier.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/utvikling-progress</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="opt5-shell">
+
+          <header class="opt5-head">
+            <div>
+              <div class="opt5-eyebrow">Utviklingsspill · Level 7</div>
+              <h1 class="opt5-title">Du har låst opp 14 av 30 badges<span class="wf-marker">1</span></h1>
+              <p class="opt5-sub">Fortsett klatringen · 3 badges innen rekkevidde denne uken</p>
+            </div>
+            <div class="opt5-xp">
+              <div class="opt5-xp-label">Samlet XP</div>
+              <div class="opt5-xp-val">2 840</div>
+              <div class="opt5-xp-next">160 til level 8</div>
+            </div>
+          </header>
+
+          <section class="opt5-tracks">
+
+            <div class="opt5-track">
+              <div class="opt5-track-head">
+                <div class="opt5-track-name">Teknikk</div>
+                <div class="opt5-track-pct">72%</div>
+              </div>
+              <div class="opt5-lane">
+                <div class="opt5-lane-line"></div>
+                <div class="opt5-cp opt5-cp-done"><span>01</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>02</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>03</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>04</span></div>
+                <div class="opt5-cp opt5-cp-now"><span>05</span></div>
+                <div class="opt5-cp"><span>06</span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+              </div>
+            </div>
+
+            <div class="opt5-track">
+              <div class="opt5-track-head">
+                <div class="opt5-track-name">Fysikk</div>
+                <div class="opt5-track-pct">58%</div>
+              </div>
+              <div class="opt5-lane">
+                <div class="opt5-lane-line"></div>
+                <div class="opt5-cp opt5-cp-done"><span>01</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>02</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>03</span></div>
+                <div class="opt5-cp opt5-cp-now"><span>04</span></div>
+                <div class="opt5-cp"><span>05</span></div>
+                <div class="opt5-cp"><span>06</span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+              </div>
+            </div>
+
+            <div class="opt5-track">
+              <div class="opt5-track-head">
+                <div class="opt5-track-name">Slag</div>
+                <div class="opt5-track-pct">84%</div>
+              </div>
+              <div class="opt5-lane">
+                <div class="opt5-lane-line"></div>
+                <div class="opt5-cp opt5-cp-done"><span>01</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>02</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>03</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>04</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>05</span></div>
+                <div class="opt5-cp opt5-cp-now"><span>06</span></div>
+                <div class="opt5-cp"><span>07</span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+              </div>
+            </div>
+
+            <div class="opt5-track">
+              <div class="opt5-track-head">
+                <div class="opt5-track-name">Spill</div>
+                <div class="opt5-track-pct">66%</div>
+              </div>
+              <div class="opt5-lane">
+                <div class="opt5-lane-line"></div>
+                <div class="opt5-cp opt5-cp-done"><span>01</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>02</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>03</span></div>
+                <div class="opt5-cp opt5-cp-now"><span>04</span></div>
+                <div class="opt5-cp"><span>05</span></div>
+                <div class="opt5-cp"><span>06</span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+              </div>
+            </div>
+
+            <div class="opt5-track">
+              <div class="opt5-track-head">
+                <div class="opt5-track-name">Turnering</div>
+                <div class="opt5-track-pct">41%</div>
+              </div>
+              <div class="opt5-lane">
+                <div class="opt5-lane-line"></div>
+                <div class="opt5-cp opt5-cp-done"><span>01</span></div>
+                <div class="opt5-cp opt5-cp-done"><span>02</span></div>
+                <div class="opt5-cp opt5-cp-now"><span>03</span></div>
+                <div class="opt5-cp"><span>04</span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+                <div class="opt5-cp opt5-cp-locked"><span></span></div>
+              </div>
+            </div>
+
+          </section>
+
+          <section class="opt5-row">
+
+            <div class="opt5-next-card">
+              <div class="opt5-next-label">Neste badge<span class="wf-marker">2</span></div>
+              <div class="opt5-badge-big">
+                <div class="opt5-badge-shape"></div>
+              </div>
+              <div class="opt5-next-title">Pitching Master</div>
+              <p class="opt5-next-body">Fullfør Pitching 30–50m med dispersion under 6m.</p>
+              <div class="opt5-next-progress">
+                <div class="opt5-next-bar"><div class="opt5-next-fill" style="width:75%"></div></div>
+                <div class="opt5-next-meta">3 av 4 tester bestått · 150 XP</div>
+              </div>
+              <button class="opt5-btn">Fortsett trening</button>
+            </div>
+
+            <div class="opt5-badges-card">
+              <div class="opt5-badges-label">Opptjente badges · 14<span class="wf-marker">3</span></div>
+              <div class="opt5-badges-grid">
+                <div class="opt5-badge"><div class="opt5-badge-ic"></div><div class="opt5-badge-name">First Swing</div></div>
+                <div class="opt5-badge"><div class="opt5-badge-ic"></div><div class="opt5-badge-name">Driver 250m</div></div>
+                <div class="opt5-badge"><div class="opt5-badge-ic"></div><div class="opt5-badge-name">Under par</div></div>
+                <div class="opt5-badge"><div class="opt5-badge-ic"></div><div class="opt5-badge-name">10 runder</div></div>
+                <div class="opt5-badge"><div class="opt5-badge-ic"></div><div class="opt5-badge-name">14-dag streak</div></div>
+                <div class="opt5-badge"><div class="opt5-badge-ic"></div><div class="opt5-badge-name">Approach PR</div></div>
+                <div class="opt5-badge"><div class="opt5-badge-ic"></div><div class="opt5-badge-name">Mobilitet L2</div></div>
+                <div class="opt5-badge opt5-badge-locked"><div class="opt5-badge-ic"></div><div class="opt5-badge-name">Pitching</div></div>
+                <div class="opt5-badge opt5-badge-locked"><div class="opt5-badge-ic"></div><div class="opt5-badge-name">Scratch</div></div>
+              </div>
+            </div>
+
+          </section>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — XP + level som headline:</strong> Duolingo-mønster. Identitet som "spiller på level 7" trigger retention.</li>
+        <li><strong>2 — Neste badge-kort:</strong> Alltid ett konkret mål innen rekkevidde. 75% fullført skaper completion-bias.</li>
+        <li><strong>3 — Badge-grid:</strong> Bevis på reise. Låste badges er tydelige — de forteller "mer venter".</li>
+        <li>— Risiko: For "barnslig" for Elite-tier. Default bør være Starter/Academy, opt-in for Pro.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Fem layouts for N01 Utvikling-Progresjon vurdert mot målet: <strong>spilleren ser fullført % per NGF-område + trend + neste mål på 5 sekunder</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>5-sek oversikt</th><th>Tier-passing</th><th>Emosjonell kobling</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Five Rings</strong></td><td>Fem progress-rings + detalj-liste. Skannbart og balansert</td><td>Svært høy</td><td>Alle tiers</td><td>Medium</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Pyramid Climb</strong></td><td>NGF-pyramiden fylles fra bunn opp. Metafor &gt; dashboard</td><td>Høy (visuell)</td><td>Academy → Pro</td><td>Høy</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Data Grid</strong></td><td>Tabell med sparklines. Tett info for analytiske</td><td>Høy (krever skanning)</td><td>Pro + Elite + coach</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Timeline Story</strong></td><td>Scroll-basert "dette har du gjort". Milepæler</td><td>Lav (krever scroll)</td><td>Langsiktige brukere</td><td>Svært høy</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>5. Gamified Checkpoints</strong></td><td>Checkpoints + badges + XP. Duolingo for golf</td><td>Medium</td><td>Academy + junior + Starter</td><td>Høy</td><td>★★★☆☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Five Rings</h3>
+      <p>Five Rings leverer eksakt det briefen krever: fem NGF-områder synlig på 5 sekunder, med trend og neste mål per rad. Rings som visualisering er etablert mønster (Apple Activity, Whoop) og krever ingen opplæring. Kombinerer raskt overblikk (rings) med detaljert aksjon (rad-liste) i ett skjermbilde. Fungerer for alle tiers uten modus-veksling.</p>
+      <p><strong>Strategisk flow:</strong> Option 1 som default for N01. Option 2 (Pyramid Climb) vurderes som "NGF-visning" toggle for coaches og pedagogisk onboarding. Option 3 (Data Grid) passer som underside "Alle moduler" for power-users. Option 4 (Timeline Story) brukes i månedlig e-post-rapport, ikke som hovedskjerm. Option 5 (Gamified Checkpoints) er naturlig standard for Junior Academy-tier — ikke for Pro/Elite.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

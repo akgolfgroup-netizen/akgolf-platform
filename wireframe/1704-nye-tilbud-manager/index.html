@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promo/offer-manager — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Promo/offer-manager</span> — <span id="project-name">AK Golf Platform · Mission Control · N15</span></span>
+    <span class="rec">Anbefalt: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Code Table</button>
+    <button class="tab-btn" data-tab="option-2">2: Campaign Cards</button>
+    <button class="tab-btn" data-tab="option-3">3: Builder Focus</button>
+    <button class="tab-btn" data-tab="option-4">4: Performance</button>
+    <button class="tab-btn" data-tab="option-5">5: Dynamic Pricing</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===================== OPTION 1 — CODE TABLE (SAFE) ===================== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Code Table</span> <small style="font-size:12px;color:#888;font-weight:500;">SAFE</small></h2>
+    <p class="option-description">Tabell med alle promo-koder: kode, type, rabatt, start/slutt, bruker-antall, status og rad-handlinger.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/tilbud</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Denne uken</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kampanjer</div>
+            </div>
+            <div class="wf-mc-nav-section">Salg</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Tilbud &amp; koder<span class="wf-mc-nav-badge">5</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Prising</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs"><span>Mission Control</span><span class="wf-mc-crumbs-sep">/</span><span>Salg</span><span class="wf-mc-crumbs-sep">/</span><strong>Tilbud &amp; promo-koder</strong></div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Søk kode, kampanje, elev ...</div>
+                <button class="wf-mc-top-btn">Hjelp</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Tilbud &amp; promo-koder</h2>
+                  <div class="wf-page-sub">5 aktive koder · 1 planlagt · siste 30 dager: 127 innløsninger · 34 820 kr rabatt gitt</div>
+                </div>
+                <div class="wf-page-actions">
+                  <button class="wf-btn">Importer</button>
+                  <button class="wf-btn">Prisregler</button>
+                  <button class="wf-btn wf-btn-primary">+ Ny promo-kode</button>
+                </div>
+              </div>
+
+              <div class="wf-filter-bar">
+                <div class="wf-filter-pill wf-filter-pill-active">Alle (8)</div>
+                <div class="wf-filter-pill">Aktive (5)</div>
+                <div class="wf-filter-pill">Planlagte (1)</div>
+                <div class="wf-filter-pill">Utløpte (2)</div>
+                <div class="wf-filter-pill">Sesong</div>
+                <div class="wf-filter-pill">Winback</div>
+                <div class="wf-filter-pill">Junior</div>
+                <div class="wf-filter-pill">Gruppe</div>
+              </div>
+
+              <div class="wf-kpi-row">
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">AKTIVE KODER</div>
+                  <div class="wf-kpi-value">5</div>
+                  <div class="wf-kpi-delta">av 8 totalt</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">INNLØSNINGER 30D</div>
+                  <div class="wf-kpi-value">127</div>
+                  <div class="wf-kpi-delta">+24 vs forrige 30d</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">RABATT GITT</div>
+                  <div class="wf-kpi-value">34 820 kr</div>
+                  <div class="wf-kpi-delta">12 % av brutto</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">KONVERTERINGSRATE</div>
+                  <div class="wf-kpi-value">38 %</div>
+                  <div class="wf-kpi-delta">av sendte tilbud</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">NETTO INNTEKT</div>
+                  <div class="wf-kpi-value">253 140 kr</div>
+                  <div class="wf-kpi-delta">etter rabatt</div>
+                </div>
+              </div>
+
+              <div class="wf-mc-card" style="padding:0;overflow:hidden;">
+                <table class="wf-promo-table">
+                  <thead>
+                    <tr>
+                      <th style="width:22%">Kode &amp; kampanje</th>
+                      <th>Type</th>
+                      <th>Rabatt</th>
+                      <th>Start — slutt</th>
+                      <th>Bruk</th>
+                      <th>Status</th>
+                      <th style="text-align:right;">Handlinger</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <span class="wf-promo-code">SOMMER25</span>
+                        <div class="wf-promo-name">20 % på sommerkurs</div>
+                      </td>
+                      <td><span class="wf-promo-type">Prosent</span></td>
+                      <td><span class="wf-promo-discount">20 %</span></td>
+                      <td>15. juni — 15. aug 2026</td>
+                      <td>
+                        <div class="wf-promo-usage">
+                          <span class="wf-usage-text">47 / 100</span>
+                          <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:47%;"></div></div>
+                        </div>
+                      </td>
+                      <td><span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span></td>
+                      <td><div class="wf-row-actions"><span class="wf-row-action">Rediger</span><span class="wf-row-action">Pause</span><span class="wf-row-action">...</span></div></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span class="wf-promo-code">VINBACK10</span>
+                        <div class="wf-promo-name">Winback — inaktive 60 dager</div>
+                      </td>
+                      <td><span class="wf-promo-type">Beløp</span></td>
+                      <td><span class="wf-promo-discount">100 kr</span></td>
+                      <td>01. apr — 31. mai 2026</td>
+                      <td>
+                        <div class="wf-promo-usage">
+                          <span class="wf-usage-text">12 / 50</span>
+                          <div class="wf-usage-bar"><div class="wf-usage-bar-fill wf-usage-bar-fill-soft" style="width:24%;"></div></div>
+                        </div>
+                      </td>
+                      <td><span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span></td>
+                      <td><div class="wf-row-actions"><span class="wf-row-action">Rediger</span><span class="wf-row-action">Pause</span><span class="wf-row-action">...</span></div></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span class="wf-promo-code">ADVENT2026</span>
+                        <div class="wf-promo-name">Julekampanje — gavekort</div>
+                      </td>
+                      <td><span class="wf-promo-type">Prosent</span></td>
+                      <td><span class="wf-promo-discount">15 %</span></td>
+                      <td>01. des 2026 — 06. jan 2027</td>
+                      <td>
+                        <div class="wf-promo-usage">
+                          <span class="wf-usage-text">0 / 200</span>
+                          <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:0%;"></div></div>
+                        </div>
+                      </td>
+                      <td><span class="wf-status wf-status-scheduled"><span class="wf-status-dot"></span>Planlagt</span></td>
+                      <td><div class="wf-row-actions"><span class="wf-row-action">Rediger</span><span class="wf-row-action">Aktiver</span><span class="wf-row-action">...</span></div></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span class="wf-promo-code">JUNIOR50</span>
+                        <div class="wf-promo-name">50 % junior første måned</div>
+                      </td>
+                      <td><span class="wf-promo-type">Prosent</span></td>
+                      <td><span class="wf-promo-discount">50 %</span></td>
+                      <td>01. jan — løpende</td>
+                      <td>
+                        <div class="wf-promo-usage">
+                          <span class="wf-usage-text">31 / ∞</span>
+                          <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:62%;"></div></div>
+                        </div>
+                      </td>
+                      <td><span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span></td>
+                      <td><div class="wf-row-actions"><span class="wf-row-action">Rediger</span><span class="wf-row-action">Pause</span><span class="wf-row-action">...</span></div></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span class="wf-promo-code">GRUPPE3</span>
+                        <div class="wf-promo-name">3-for-2 gruppetime</div>
+                      </td>
+                      <td><span class="wf-promo-type">3-for-2</span></td>
+                      <td><span class="wf-promo-discount">33 %</span></td>
+                      <td>01. mar — 30. jun 2026</td>
+                      <td>
+                        <div class="wf-promo-usage">
+                          <span class="wf-usage-text">18 / 60</span>
+                          <div class="wf-usage-bar"><div class="wf-usage-bar-fill wf-usage-bar-fill-soft" style="width:30%;"></div></div>
+                        </div>
+                      </td>
+                      <td><span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span></td>
+                      <td><div class="wf-row-actions"><span class="wf-row-action">Rediger</span><span class="wf-row-action">Pause</span><span class="wf-row-action">...</span></div></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span class="wf-promo-code">FIRSTTEE26</span>
+                        <div class="wf-promo-name">First Tee — tidlig påmelding</div>
+                      </td>
+                      <td><span class="wf-promo-type">Beløp</span></td>
+                      <td><span class="wf-promo-discount">200 kr</span></td>
+                      <td>01. feb — 15. mar 2026</td>
+                      <td>
+                        <div class="wf-promo-usage">
+                          <span class="wf-usage-text">19 / 20</span>
+                          <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:95%;"></div></div>
+                        </div>
+                      </td>
+                      <td><span class="wf-status wf-status-paused"><span class="wf-status-dot"></span>Pauset</span></td>
+                      <td><div class="wf-row-actions"><span class="wf-row-action">Rediger</span><span class="wf-row-action">Start</span><span class="wf-row-action">...</span></div></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span class="wf-promo-code">FREDAG20</span>
+                        <div class="wf-promo-name">Fredag simulator — rabatt</div>
+                      </td>
+                      <td><span class="wf-promo-type">Prosent</span></td>
+                      <td><span class="wf-promo-discount">20 %</span></td>
+                      <td>01. nov 2025 — 31. mar 2026</td>
+                      <td>
+                        <div class="wf-promo-usage">
+                          <span class="wf-usage-text">84 / 150</span>
+                          <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:56%;"></div></div>
+                        </div>
+                      </td>
+                      <td><span class="wf-status wf-status-expired"><span class="wf-status-dot"></span>Utløpt</span></td>
+                      <td><div class="wf-row-actions"><span class="wf-row-action">Dupliser</span><span class="wf-row-action">Arkiver</span><span class="wf-row-action">...</span></div></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span class="wf-promo-code">PAASKE25</span>
+                        <div class="wf-promo-name">Påsketilbud 2025</div>
+                      </td>
+                      <td><span class="wf-promo-type">Prosent</span></td>
+                      <td><span class="wf-promo-discount">25 %</span></td>
+                      <td>20. mar — 07. apr 2025</td>
+                      <td>
+                        <div class="wf-promo-usage">
+                          <span class="wf-usage-text">42 / 50</span>
+                          <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:84%;"></div></div>
+                        </div>
+                      </td>
+                      <td><span class="wf-status wf-status-expired"><span class="wf-status-dot"></span>Utløpt</span></td>
+                      <td><div class="wf-row-actions"><span class="wf-row-action">Dupliser</span><span class="wf-row-action">Arkiver</span><span class="wf-row-action">...</span></div></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>SAFE-valget: tabellen gir Anders full oversikt på 5 sekunder og lar ham skanne alle koder i ett blikk.</li>
+        <li>Kode-kolonnen viser både monospace-kode og kampanjenavn — kopier kode direkte til kunde uten ekstra klikk.</li>
+        <li>Bruk-kolonnen kombinerer tall og mini-bar (47 / 100) — visuell rangering av hvor mye igjen før kvoten er nådd.</li>
+        <li>Status-pill: Aktiv, Planlagt (stiplet), Pauset, Utløpt — kun form og punkt i B&amp;W, farger legges til i Polished.</li>
+        <li>Rad-handlinger: Rediger, Pause/Start/Aktiver avhengig av status + overflow-meny (dupliser, slett, eksporter, send).</li>
+        <li>KPI-row: 5 kjernetall inkludert netto inntekt etter rabatt — svarer direkte på "lønner kampanjen seg?".</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 2 — CAMPAIGN CARDS ===================== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Campaign Cards</span></h2>
+    <p class="option-description">Kort-grid med aktive kampanjer: stort rabatt-tall, nedtelling, bruker-teller og usage-graf.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/tilbud</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kampanjer</div>
+            </div>
+            <div class="wf-mc-nav-section">Salg</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Tilbud &amp; koder<span class="wf-mc-nav-badge">5</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Prising</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs"><span>Mission Control</span><span class="wf-mc-crumbs-sep">/</span><strong>Aktive kampanjer</strong></div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Søk kampanjer ...</div>
+                <button class="wf-mc-top-btn">Tabellvisning</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Aktive kampanjer</h2>
+                  <div class="wf-page-sub">5 tilbud kjører akkurat nå · 2 utløper innen 7 dager · klikk et kort for full statistikk</div>
+                </div>
+                <div class="wf-page-actions">
+                  <button class="wf-btn">Arkiv</button>
+                  <button class="wf-btn wf-btn-primary">+ Ny kampanje</button>
+                </div>
+              </div>
+
+              <div class="wf-filter-bar">
+                <div class="wf-filter-pill wf-filter-pill-active">Aktive (5)</div>
+                <div class="wf-filter-pill">Planlagte (1)</div>
+                <div class="wf-filter-pill">Utløpte</div>
+                <div class="wf-filter-pill">Sesong</div>
+                <div class="wf-filter-pill">Winback</div>
+                <div class="wf-filter-pill">Junior</div>
+              </div>
+
+              <div class="wf-camp-grid">
+
+                <div class="wf-camp-card">
+                  <div class="wf-camp-card-head">
+                    <div>
+                      <h3 class="wf-camp-card-name">Sommerkurs 2026</h3>
+                      <div class="wf-camp-card-sub">Sesong · Prosentrabatt</div>
+                    </div>
+                    <span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span>
+                  </div>
+                  <div>
+                    <span class="wf-camp-discount-big">20 %</span>
+                    <span class="wf-camp-discount-unit">rabatt</span>
+                  </div>
+                  <span class="wf-camp-code-inline">SOMMER25</span>
+                  <div class="wf-camp-timer">
+                    <span>Utløper om</span>
+                    <span class="wf-camp-timer-val">47 dager</span>
+                  </div>
+                  <div class="wf-camp-usage-row">
+                    <span>Brukt</span>
+                    <span><strong>47 / 100</strong> (47 %)</span>
+                  </div>
+                  <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:47%;"></div></div>
+                  <div class="wf-camp-mini-chart"></div>
+                  <div class="wf-camp-card-foot">
+                    <span class="wf-row-action">Se detaljer</span>
+                    <span class="wf-row-action">Rediger</span>
+                  </div>
+                </div>
+
+                <div class="wf-camp-card">
+                  <div class="wf-camp-card-head">
+                    <div>
+                      <h3 class="wf-camp-card-name">Winback — 60 dager inaktiv</h3>
+                      <div class="wf-camp-card-sub">Winback · Beløpsrabatt</div>
+                    </div>
+                    <span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span>
+                  </div>
+                  <div>
+                    <span class="wf-camp-discount-big">100 kr</span>
+                    <span class="wf-camp-discount-unit">avslag</span>
+                  </div>
+                  <span class="wf-camp-code-inline">VINBACK10</span>
+                  <div class="wf-camp-timer">
+                    <span>Utløper om</span>
+                    <span class="wf-camp-timer-val">6 dager</span>
+                  </div>
+                  <div class="wf-camp-usage-row">
+                    <span>Brukt</span>
+                    <span><strong>12 / 50</strong> (24 %)</span>
+                  </div>
+                  <div class="wf-usage-bar"><div class="wf-usage-bar-fill wf-usage-bar-fill-soft" style="width:24%;"></div></div>
+                  <div class="wf-camp-mini-chart"></div>
+                  <div class="wf-camp-card-foot">
+                    <span class="wf-row-action">Se detaljer</span>
+                    <span class="wf-row-action">Rediger</span>
+                  </div>
+                </div>
+
+                <div class="wf-camp-card">
+                  <div class="wf-camp-card-head">
+                    <div>
+                      <h3 class="wf-camp-card-name">Julekampanje — gavekort</h3>
+                      <div class="wf-camp-card-sub">Sesong · Prosentrabatt</div>
+                    </div>
+                    <span class="wf-status wf-status-scheduled"><span class="wf-status-dot"></span>Planlagt</span>
+                  </div>
+                  <div>
+                    <span class="wf-camp-discount-big">15 %</span>
+                    <span class="wf-camp-discount-unit">rabatt</span>
+                  </div>
+                  <span class="wf-camp-code-inline">ADVENT2026</span>
+                  <div class="wf-camp-timer">
+                    <span>Starter om</span>
+                    <span class="wf-camp-timer-val">227 dager</span>
+                  </div>
+                  <div class="wf-camp-usage-row">
+                    <span>Forhåndsbestilt</span>
+                    <span><strong>0 / 200</strong></span>
+                  </div>
+                  <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:0%;"></div></div>
+                  <div class="wf-camp-mini-chart"></div>
+                  <div class="wf-camp-card-foot">
+                    <span class="wf-row-action">Aktiver tidlig</span>
+                    <span class="wf-row-action">Rediger</span>
+                  </div>
+                </div>
+
+                <div class="wf-camp-card">
+                  <div class="wf-camp-card-head">
+                    <div>
+                      <h3 class="wf-camp-card-name">Junior første måned</h3>
+                      <div class="wf-camp-card-sub">Junior · Halvmåned</div>
+                    </div>
+                    <span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span>
+                  </div>
+                  <div>
+                    <span class="wf-camp-discount-big">50 %</span>
+                    <span class="wf-camp-discount-unit">første måned</span>
+                  </div>
+                  <span class="wf-camp-code-inline">JUNIOR50</span>
+                  <div class="wf-camp-timer">
+                    <span>Løpende</span>
+                    <span class="wf-camp-timer-val">∞</span>
+                  </div>
+                  <div class="wf-camp-usage-row">
+                    <span>Brukt</span>
+                    <span><strong>31 innløsninger</strong></span>
+                  </div>
+                  <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:62%;"></div></div>
+                  <div class="wf-camp-mini-chart"></div>
+                  <div class="wf-camp-card-foot">
+                    <span class="wf-row-action">Se detaljer</span>
+                    <span class="wf-row-action">Rediger</span>
+                  </div>
+                </div>
+
+                <div class="wf-camp-card">
+                  <div class="wf-camp-card-head">
+                    <div>
+                      <h3 class="wf-camp-card-name">3-for-2 gruppetime</h3>
+                      <div class="wf-camp-card-sub">Gruppe · Volum-tilbud</div>
+                    </div>
+                    <span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span>
+                  </div>
+                  <div>
+                    <span class="wf-camp-discount-big">3 for 2</span>
+                  </div>
+                  <span class="wf-camp-code-inline">GRUPPE3</span>
+                  <div class="wf-camp-timer">
+                    <span>Utløper om</span>
+                    <span class="wf-camp-timer-val">73 dager</span>
+                  </div>
+                  <div class="wf-camp-usage-row">
+                    <span>Brukt</span>
+                    <span><strong>18 / 60</strong> (30 %)</span>
+                  </div>
+                  <div class="wf-usage-bar"><div class="wf-usage-bar-fill wf-usage-bar-fill-soft" style="width:30%;"></div></div>
+                  <div class="wf-camp-mini-chart"></div>
+                  <div class="wf-camp-card-foot">
+                    <span class="wf-row-action">Se detaljer</span>
+                    <span class="wf-row-action">Rediger</span>
+                  </div>
+                </div>
+
+                <div class="wf-camp-card">
+                  <div class="wf-camp-card-head">
+                    <div>
+                      <h3 class="wf-camp-card-name">First Tee — tidlig påmelding</h3>
+                      <div class="wf-camp-card-sub">Junior · Beløpsrabatt</div>
+                    </div>
+                    <span class="wf-status wf-status-paused"><span class="wf-status-dot"></span>Pauset</span>
+                  </div>
+                  <div>
+                    <span class="wf-camp-discount-big">200 kr</span>
+                    <span class="wf-camp-discount-unit">avslag</span>
+                  </div>
+                  <span class="wf-camp-code-inline">FIRSTTEE26</span>
+                  <div class="wf-camp-timer">
+                    <span>Neste start</span>
+                    <span class="wf-camp-timer-val">01. feb</span>
+                  </div>
+                  <div class="wf-camp-usage-row">
+                    <span>Forrige runde</span>
+                    <span><strong>19 / 20</strong> (95 %)</span>
+                  </div>
+                  <div class="wf-usage-bar"><div class="wf-usage-bar-fill" style="width:95%;"></div></div>
+                  <div class="wf-camp-mini-chart"></div>
+                  <div class="wf-camp-card-foot">
+                    <span class="wf-row-action">Start igjen</span>
+                    <span class="wf-row-action">Rediger</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Kort-grid (3-kolonne) gir umiddelbar visuell oversikt — Anders ser alle kampanjer uten å scrolle gjennom tabellrader.</li>
+        <li>Stort rabatt-tall dominerer hvert kort (20 %, 100 kr, 3-for-2) — kjernen i hvert tilbud er umiddelbart synlig.</li>
+        <li>Nedtelling "Utløper om 47 dager" og usage-bar gir levende feedback — kampanjer som nærmer seg ferdig blir visuelt prioritert.</li>
+        <li>Mini-spark viser bruksmønster siste 7 dager — identifiser akselerasjon eller stillstand på ett blikk.</li>
+        <li>Svakhet: kan bli trangt med 15+ kampanjer. Fungerer best for 4–12 samtidige kampanjer.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 3 — BUILDER FOCUS ===================== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Builder Focus</span></h2>
+    <p class="option-description">Skaper-flyt i sentrum: wizard med mål-setting (Winback, Nye kunder, Sesong). Eksisterende koder er sekundære.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/tilbud/ny</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kampanjer</div>
+            </div>
+            <div class="wf-mc-nav-section">Salg</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Tilbud &amp; koder</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Prising</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs"><span>Mission Control</span><span class="wf-mc-crumbs-sep">/</span><span>Tilbud &amp; koder</span><span class="wf-mc-crumbs-sep">/</span><strong>Ny kampanje</strong></div>
+              <div class="wf-mc-top-actions">
+                <button class="wf-mc-top-btn">Avbryt</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Ny kampanje — hva er målet?</h2>
+                  <div class="wf-page-sub">Start med målet, så foreslår vi kode-struktur, rabatt-nivå og målgruppe automatisk.</div>
+                </div>
+              </div>
+
+              <div class="wf-builder-wrap">
+
+                <div class="wf-goal-rail">
+                  <div class="wf-goal-rail-head">Velg mål</div>
+
+                  <div class="wf-goal-card wf-goal-card-active">
+                    <div class="wf-goal-card-name">Winback — inaktive kunder</div>
+                    <div class="wf-goal-card-desc">Send beløpsrabatt til elever som ikke har booket på 30/60/90 dager.</div>
+                  </div>
+                  <div class="wf-goal-card">
+                    <div class="wf-goal-card-name">Nye kunder — første økt</div>
+                    <div class="wf-goal-card-desc">Prosent-rabatt på første booking, typisk 20–50 %.</div>
+                  </div>
+                  <div class="wf-goal-card">
+                    <div class="wf-goal-card-name">Sesongkampanje</div>
+                    <div class="wf-goal-card-desc">Tidsbegrenset tilbud — sommer, vinter, jul, påske.</div>
+                  </div>
+                  <div class="wf-goal-card">
+                    <div class="wf-goal-card-name">Gruppe / volum</div>
+                    <div class="wf-goal-card-desc">3-for-2, 5-kort med bonus, familierabatt.</div>
+                  </div>
+                  <div class="wf-goal-card">
+                    <div class="wf-goal-card-name">Henvisning / referral</div>
+                    <div class="wf-goal-card-desc">Personlig kode per elev, rabatt for både giver og mottaker.</div>
+                  </div>
+                  <div class="wf-goal-card">
+                    <div class="wf-goal-card-name">Egendefinert</div>
+                    <div class="wf-goal-card-desc">Bygg fra bunn uten mal.</div>
+                  </div>
+                </div>
+
+                <div class="wf-wizard">
+                  <div class="wf-wizard-steps">
+                    <div class="wf-wizard-step wf-wizard-step-done">
+                      <span class="wf-wizard-step-num">1</span>
+                      <span>Mål</span>
+                    </div>
+                    <span class="wf-wizard-arrow">›</span>
+                    <div class="wf-wizard-step wf-wizard-step-active">
+                      <span class="wf-wizard-step-num">2</span>
+                      <span>Detaljer</span>
+                    </div>
+                    <span class="wf-wizard-arrow">›</span>
+                    <div class="wf-wizard-step">
+                      <span class="wf-wizard-step-num">3</span>
+                      <span>Målgruppe</span>
+                    </div>
+                    <span class="wf-wizard-arrow">›</span>
+                    <div class="wf-wizard-step">
+                      <span class="wf-wizard-step-num">4</span>
+                      <span>Tidsrom</span>
+                    </div>
+                    <span class="wf-wizard-arrow">›</span>
+                    <div class="wf-wizard-step">
+                      <span class="wf-wizard-step-num">5</span>
+                      <span>Forhåndsvis</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-wizard-body">
+                    <h3 class="wf-wizard-title">Winback — inaktive kunder</h3>
+                    <div class="wf-wizard-sub">Vi foreslår en 100 kr rabatt basert på typisk winback-ROI. Endre hvis du vil.</div>
+
+                    <div class="wf-goal-meta">
+                      <span class="wf-goal-meta-label">AK-anbefaling for Winback</span>
+                      <span class="wf-goal-meta-val">• Beløpsrabatt føles mer verdifull enn prosent for inaktive. <br>• 100 kr på Flex 20 gir 22 % opplevd rabatt. <br>• Historisk konverterer 31 % av winback-mottakere.</span>
+                    </div>
+
+                    <div class="wf-field-row">
+                      <div class="wf-field">
+                        <span class="wf-field-label">Kampanjenavn</span>
+                        <span class="wf-field-input">Winback — ikke booket på 60 dager</span>
+                        <span class="wf-field-hint">Kun synlig internt</span>
+                      </div>
+                      <div class="wf-field">
+                        <span class="wf-field-label">Kode</span>
+                        <span class="wf-field-input" style="font-family:ui-monospace,monospace;">VINBACK10</span>
+                        <span class="wf-field-hint">6–12 tegn, store bokstaver</span>
+                      </div>
+                    </div>
+
+                    <div class="wf-field-row-3">
+                      <div class="wf-field">
+                        <span class="wf-field-label">Rabatt-type</span>
+                        <span class="wf-field-input">Beløp (kr)</span>
+                      </div>
+                      <div class="wf-field">
+                        <span class="wf-field-label">Rabatt-verdi</span>
+                        <span class="wf-field-input">100 kr</span>
+                      </div>
+                      <div class="wf-field">
+                        <span class="wf-field-label">Min. ordreverdi</span>
+                        <span class="wf-field-input">450 kr</span>
+                      </div>
+                    </div>
+
+                    <div class="wf-field-row-3">
+                      <div class="wf-field">
+                        <span class="wf-field-label">Maks innløsninger</span>
+                        <span class="wf-field-input">50 totalt</span>
+                      </div>
+                      <div class="wf-field">
+                        <span class="wf-field-label">Per elev</span>
+                        <span class="wf-field-input">1</span>
+                      </div>
+                      <div class="wf-field">
+                        <span class="wf-field-label">Kan kombineres med</span>
+                        <span class="wf-field-input">Ingen andre koder</span>
+                      </div>
+                    </div>
+
+                    <div class="wf-preview">
+                      <span class="wf-preview-head">Forhåndsvisning</span>
+                      <span class="wf-preview-line">Kode <strong>VINBACK10</strong> gir <strong>100 kr</strong> avslag på alle Flex-tjenester over 450 kr.</span>
+                      <span class="wf-preview-line">Målgruppe: 38 elever som ikke har booket på 60+ dager.</span>
+                      <span class="wf-preview-line">Forventet ROI: 31 % konvertering · 12 bookinger · 4 740 kr brutto · 3 540 kr netto.</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-wizard-foot">
+                    <button class="wf-btn">← Tilbake</button>
+                    <button class="wf-btn wf-btn-primary">Neste: Målgruppe →</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Mål-først flyt: Anders velger "hva" (Winback, Nye kunder, Sesong) før "hvordan" — reduserer beslutnings-tretthet.</li>
+        <li>AK-anbefaling-boks gir datadrevne forslag (100 kr er typisk winback-nivå) og historisk konverteringsrate.</li>
+        <li>Wizard-steg (1 Mål → 5 Forhåndsvis) viser tydelig progresjon og lar brukeren hoppe tilbake.</li>
+        <li>Forhåndsvisning-boks lest som "Kode X gir Y på Z" — eliminerer tvetydighet før publisering.</li>
+        <li>Best for admin som lager 2–5 nye kampanjer i måneden. Svakere for daglig overvåking av aktive koder.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 4 — PERFORMANCE DASHBOARD ===================== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Performance Dashboard</span></h2>
+    <p class="option-description">Analytics-fokus: topp-koder, ROI per kampanje, konverteringsrate og funnel.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/tilbud</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kampanjer</div>
+            </div>
+            <div class="wf-mc-nav-section">Salg</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Tilbud &amp; koder</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Prising</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs"><span>Mission Control</span><span class="wf-mc-crumbs-sep">/</span><strong>Kampanje-ytelse</strong></div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Siste 90 dager ▾</div>
+                <button class="wf-mc-top-btn">Eksport</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Kampanje-ytelse</h2>
+                  <div class="wf-page-sub">Hvilke koder konverterer best? Hvor mye rabatt har vi gitt vs. inntekt skapt?</div>
+                </div>
+                <div class="wf-page-actions">
+                  <button class="wf-btn">Sammenlign 2 koder</button>
+                  <button class="wf-btn wf-btn-primary">+ Ny kampanje</button>
+                </div>
+              </div>
+
+              <div class="wf-perf-hero">
+                <div class="wf-perf-hero-col">
+                  <span class="wf-perf-hero-label">Netto inntekt fra kampanjer</span>
+                  <span class="wf-perf-hero-val">253 140 kr</span>
+                  <span class="wf-perf-hero-delta">+18 % vs forrige 90 dager</span>
+                </div>
+                <div class="wf-perf-hero-col">
+                  <span class="wf-perf-hero-label">Rabatt gitt</span>
+                  <span class="wf-perf-hero-val">34 820 kr</span>
+                  <span class="wf-perf-hero-delta">12 % av brutto inntekt</span>
+                </div>
+                <div class="wf-perf-hero-col">
+                  <span class="wf-perf-hero-label">Snitt ROI</span>
+                  <span class="wf-perf-hero-val">7,3×</span>
+                  <span class="wf-perf-hero-delta">Beste: 12,1× · Dårligste: 2,4×</span>
+                </div>
+              </div>
+
+              <div class="wf-mc-grid">
+
+                <div class="wf-mc-card wf-span-7">
+                  <div class="wf-card-head"><span>Topp 5 koder — inntekt skapt</span><span class="wf-card-meta">siste 90 dager</span></div>
+                  <div class="wf-top-codes">
+                    <div class="wf-top-row">
+                      <span class="wf-top-rank">1</span>
+                      <div>
+                        <div class="wf-top-name">Junior første måned</div>
+                        <div class="wf-top-sub">JUNIOR50 · 50 %</div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">94 700 kr</div>
+                        <div class="wf-top-metric-label">netto</div>
+                        <div class="wf-top-bar" style="margin-top:4px;"><div class="wf-top-bar-fill" style="width:100%;"></div></div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">12,1×</div>
+                        <div class="wf-top-metric-label">ROI</div>
+                      </div>
+                    </div>
+                    <div class="wf-top-row">
+                      <span class="wf-top-rank">2</span>
+                      <div>
+                        <div class="wf-top-name">Sommerkurs 2026</div>
+                        <div class="wf-top-sub">SOMMER25 · 20 %</div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">62 140 kr</div>
+                        <div class="wf-top-metric-label">netto</div>
+                        <div class="wf-top-bar" style="margin-top:4px;"><div class="wf-top-bar-fill" style="width:66%;"></div></div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">8,4×</div>
+                        <div class="wf-top-metric-label">ROI</div>
+                      </div>
+                    </div>
+                    <div class="wf-top-row">
+                      <span class="wf-top-rank">3</span>
+                      <div>
+                        <div class="wf-top-name">3-for-2 gruppetime</div>
+                        <div class="wf-top-sub">GRUPPE3 · 33 %</div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">48 200 kr</div>
+                        <div class="wf-top-metric-label">netto</div>
+                        <div class="wf-top-bar" style="margin-top:4px;"><div class="wf-top-bar-fill" style="width:51%;"></div></div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">6,7×</div>
+                        <div class="wf-top-metric-label">ROI</div>
+                      </div>
+                    </div>
+                    <div class="wf-top-row">
+                      <span class="wf-top-rank">4</span>
+                      <div>
+                        <div class="wf-top-name">Winback 60 dager</div>
+                        <div class="wf-top-sub">VINBACK10 · 100 kr</div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">24 900 kr</div>
+                        <div class="wf-top-metric-label">netto</div>
+                        <div class="wf-top-bar" style="margin-top:4px;"><div class="wf-top-bar-fill" style="width:26%;"></div></div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">5,1×</div>
+                        <div class="wf-top-metric-label">ROI</div>
+                      </div>
+                    </div>
+                    <div class="wf-top-row">
+                      <span class="wf-top-rank">5</span>
+                      <div>
+                        <div class="wf-top-name">First Tee tidlig påm.</div>
+                        <div class="wf-top-sub">FIRSTTEE26 · 200 kr</div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">23 200 kr</div>
+                        <div class="wf-top-metric-label">netto</div>
+                        <div class="wf-top-bar" style="margin-top:4px;"><div class="wf-top-bar-fill" style="width:24%;"></div></div>
+                      </div>
+                      <div>
+                        <div class="wf-top-metric">2,4×</div>
+                        <div class="wf-top-metric-label">ROI</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wf-mc-card wf-span-5">
+                  <div class="wf-card-head"><span>Konverterings-funnel</span><span class="wf-card-meta">alle aktive koder</span></div>
+                  <div class="wf-funnel">
+                    <div class="wf-funnel-stage">
+                      <div>
+                        <div class="wf-funnel-label">Vist kode</div>
+                        <div class="wf-funnel-sub">pop-up / e-post / side</div>
+                      </div>
+                      <div class="wf-funnel-bar wf-funnel-bar-s1">1 840</div>
+                      <div class="wf-funnel-right">100 %</div>
+                    </div>
+                    <div class="wf-funnel-stage">
+                      <div>
+                        <div class="wf-funnel-label">Kopiert</div>
+                        <div class="wf-funnel-sub">klikket på kode</div>
+                      </div>
+                      <div class="wf-funnel-bar wf-funnel-bar-s2">1 067</div>
+                      <div class="wf-funnel-right">58 %</div>
+                    </div>
+                    <div class="wf-funnel-stage">
+                      <div>
+                        <div class="wf-funnel-label">Lagt i kurv</div>
+                        <div class="wf-funnel-sub">booking startet</div>
+                      </div>
+                      <div class="wf-funnel-bar wf-funnel-bar-s3">442</div>
+                      <div class="wf-funnel-right">24 %</div>
+                    </div>
+                    <div class="wf-funnel-stage">
+                      <div>
+                        <div class="wf-funnel-label">Innløst</div>
+                        <div class="wf-funnel-sub">betalt og bekreftet</div>
+                      </div>
+                      <div class="wf-funnel-bar wf-funnel-bar-s4">202</div>
+                      <div class="wf-funnel-right">11 %</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wf-mc-card wf-span-12">
+                  <div class="wf-card-head"><span>ROI per kampanje — detaljtabell</span><span class="wf-card-meta">siste 90 dager</span></div>
+                  <div class="wf-roi-card">
+                    <div class="wf-roi-row wf-roi-row-head">
+                      <div>Kampanje</div>
+                      <div style="text-align:right;">Rabatt gitt</div>
+                      <div style="text-align:right;">Netto inntekt</div>
+                      <div style="text-align:right;">ROI</div>
+                    </div>
+                    <div class="wf-roi-row">
+                      <div><div class="wf-roi-name">Junior første måned (JUNIOR50)</div></div>
+                      <div class="wf-roi-val">7 800 kr</div>
+                      <div class="wf-roi-val wf-roi-pos">94 700 kr</div>
+                      <div class="wf-roi-val wf-roi-pos">12,1×</div>
+                    </div>
+                    <div class="wf-roi-row">
+                      <div><div class="wf-roi-name">Sommerkurs (SOMMER25)</div></div>
+                      <div class="wf-roi-val">7 420 kr</div>
+                      <div class="wf-roi-val wf-roi-pos">62 140 kr</div>
+                      <div class="wf-roi-val wf-roi-pos">8,4×</div>
+                    </div>
+                    <div class="wf-roi-row">
+                      <div><div class="wf-roi-name">3-for-2 gruppe (GRUPPE3)</div></div>
+                      <div class="wf-roi-val">7 200 kr</div>
+                      <div class="wf-roi-val wf-roi-pos">48 200 kr</div>
+                      <div class="wf-roi-val wf-roi-pos">6,7×</div>
+                    </div>
+                    <div class="wf-roi-row">
+                      <div><div class="wf-roi-name">Winback (VINBACK10)</div></div>
+                      <div class="wf-roi-val">4 900 kr</div>
+                      <div class="wf-roi-val">24 900 kr</div>
+                      <div class="wf-roi-val">5,1×</div>
+                    </div>
+                    <div class="wf-roi-row">
+                      <div><div class="wf-roi-name">First Tee tidlig (FIRSTTEE26)</div></div>
+                      <div class="wf-roi-val">9 500 kr</div>
+                      <div class="wf-roi-val">23 200 kr</div>
+                      <div class="wf-roi-val wf-roi-neg">2,4×</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Hero-band øverst: netto inntekt, rabatt gitt og snitt ROI — gir svar på "lønner kampanjene seg totalt?" på 3 sekunder.</li>
+        <li>Topp 5-liste kombinerer rangering, navn, inntekt-bar og ROI-tall — visuell ranking uten å sortere tabell.</li>
+        <li>Funnel viser hvor tap skjer (kopiert → lagt i kurv er verste steg) — handlingsbart for CTA-optimalisering.</li>
+        <li>ROI-detaljtabell har bold tall for høy ROI og dempede (grå) tall for lav ROI — rask skanning.</li>
+        <li>Best for månedlig/kvartalsvis gjennomgang. Svakere for daglig drift — bruk Option 1 eller 2 for det.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 5 — DYNAMIC PRICING ===================== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Dynamic Pricing Rules</span></h2>
+    <p class="option-description">PricingRule-fokus: regler for sesong, tidspunkt, volum. "Hvis X, da Y"-logikk med prismatrise.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/tilbud/regler</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kampanjer</div>
+            </div>
+            <div class="wf-mc-nav-section">Salg</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Tilbud &amp; koder</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Prising<span class="wf-mc-nav-badge">4</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Økonomi</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs"><span>Mission Control</span><span class="wf-mc-crumbs-sep">/</span><span>Tilbud &amp; koder</span><span class="wf-mc-crumbs-sep">/</span><strong>Dynamiske prisregler</strong></div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Søk regel ...</div>
+                <button class="wf-mc-top-btn">Importer</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Dynamiske prisregler</h2>
+                  <div class="wf-page-sub">Regler overstyrer standardpris automatisk — sesong, ukedag, tidspunkt, volum. Koder er engangsrabatter; regler er løpende logikk.</div>
+                </div>
+                <div class="wf-page-actions">
+                  <button class="wf-btn">Test regel</button>
+                  <button class="wf-btn wf-btn-primary">+ Ny prisregel</button>
+                </div>
+              </div>
+
+              <div class="wf-filter-bar">
+                <div class="wf-filter-pill wf-filter-pill-active">Aktive (4)</div>
+                <div class="wf-filter-pill">Alle (6)</div>
+                <div class="wf-filter-pill">Sesong</div>
+                <div class="wf-filter-pill">Ukedag</div>
+                <div class="wf-filter-pill">Tidspunkt</div>
+                <div class="wf-filter-pill">Volum</div>
+              </div>
+
+              <div class="wf-rules-wrap">
+
+                <div class="wf-rules-main">
+                  <div class="wf-rules-head">
+                    <h3 class="wf-rules-title">Aktive regler — anvendes i rekkefølge</h3>
+                    <span class="wf-card-meta">Drag for å endre prioritet</span>
+                  </div>
+
+                  <div class="wf-rule-card wf-rule-card-active">
+                    <div class="wf-rule-head">
+                      <div>
+                        <h4 class="wf-rule-name">Lavsesong simulator — 15 % rabatt</h4>
+                        <div class="wf-rule-meta">Sesong · Prioritet 1</div>
+                      </div>
+                      <span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span>
+                    </div>
+                    <div class="wf-rule-logic">
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword">Hvis</span>
+                        <span class="wf-rule-cond">måned in [nov, des, jan, feb]</span>
+                      </div>
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword">Og</span>
+                        <span class="wf-rule-cond">tjeneste = Mulligan simulator</span>
+                      </div>
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword wf-rule-keyword-then">Da</span>
+                        <span class="wf-rule-cond">pris × 0.85 (−15 %)</span>
+                      </div>
+                    </div>
+                    <div class="wf-rule-foot">
+                      <span>Brukt 142 ganger · 18 900 kr rabatt gitt</span>
+                      <div class="wf-rule-toggle">
+                        <span>Aktiv</span>
+                        <div class="wf-toggle wf-toggle-on"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wf-rule-card">
+                    <div class="wf-rule-head">
+                      <div>
+                        <h4 class="wf-rule-name">Ettermiddag-rabatt hverdager</h4>
+                        <div class="wf-rule-meta">Tidspunkt · Prioritet 2</div>
+                      </div>
+                      <span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span>
+                    </div>
+                    <div class="wf-rule-logic">
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword">Hvis</span>
+                        <span class="wf-rule-cond">ukedag in [man, tir, ons, tor]</span>
+                      </div>
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword">Og</span>
+                        <span class="wf-rule-cond">starttid mellom 13:00 og 16:00</span>
+                      </div>
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword wf-rule-keyword-then">Da</span>
+                        <span class="wf-rule-cond">pris − 75 kr</span>
+                      </div>
+                    </div>
+                    <div class="wf-rule-foot">
+                      <span>Brukt 67 ganger · 5 025 kr rabatt gitt</span>
+                      <div class="wf-rule-toggle">
+                        <span>Aktiv</span>
+                        <div class="wf-toggle wf-toggle-on"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wf-rule-card">
+                    <div class="wf-rule-head">
+                      <div>
+                        <h4 class="wf-rule-name">Volum — 5 økter i samme måned</h4>
+                        <div class="wf-rule-meta">Volum · Prioritet 3</div>
+                      </div>
+                      <span class="wf-status wf-status-active"><span class="wf-status-dot"></span>Aktiv</span>
+                    </div>
+                    <div class="wf-rule-logic">
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword">Hvis</span>
+                        <span class="wf-rule-cond">bookinger_denne_måned &gt;= 5</span>
+                      </div>
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword">Og</span>
+                        <span class="wf-rule-cond">kunde.abonnement = null</span>
+                      </div>
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword wf-rule-keyword-then">Da</span>
+                        <span class="wf-rule-cond">pris × 0.9 (−10 %)</span>
+                      </div>
+                    </div>
+                    <div class="wf-rule-foot">
+                      <span>Brukt 24 ganger · 6 840 kr rabatt gitt</span>
+                      <div class="wf-rule-toggle">
+                        <span>Aktiv</span>
+                        <div class="wf-toggle wf-toggle-on"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="wf-rule-card">
+                    <div class="wf-rule-head">
+                      <div>
+                        <h4 class="wf-rule-name">Helg-prispåslag</h4>
+                        <div class="wf-rule-meta">Ukedag · Prioritet 4</div>
+                      </div>
+                      <span class="wf-status wf-status-paused"><span class="wf-status-dot"></span>Pauset</span>
+                    </div>
+                    <div class="wf-rule-logic">
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword">Hvis</span>
+                        <span class="wf-rule-cond">ukedag in [lør, søn]</span>
+                      </div>
+                      <div class="wf-rule-clause">
+                        <span class="wf-rule-keyword wf-rule-keyword-then">Da</span>
+                        <span class="wf-rule-cond">pris + 100 kr</span>
+                      </div>
+                    </div>
+                    <div class="wf-rule-foot">
+                      <span>Deaktivert — vurder igjen før høysesong</span>
+                      <div class="wf-rule-toggle">
+                        <span>Pauset</span>
+                        <div class="wf-toggle"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="wf-rules-aside">
+
+                  <div class="wf-rules-new">
+                    <div class="wf-rules-new-head">Hurtig-regel</div>
+                    <div class="wf-rules-new-row">
+                      <span class="wf-rule-keyword">Hvis</span>
+                      <span style="font-family:ui-monospace,monospace;font-size:11px;">[velg betingelse]</span>
+                    </div>
+                    <div class="wf-rules-new-row">
+                      <span class="wf-rule-keyword wf-rule-keyword-then">Da</span>
+                      <span style="font-family:ui-monospace,monospace;font-size:11px;">[velg handling]</span>
+                    </div>
+                    <button class="wf-btn wf-btn-primary" style="margin-top:4px;">Opprett regel</button>
+                  </div>
+
+                  <div class="wf-matrix">
+                    <div class="wf-matrix-head">Prismatrise — Flex 20 (450 kr)</div>
+                    <div class="wf-matrix-grid">
+                      <div class="wf-matrix-head-cell">Klokke</div>
+                      <div class="wf-matrix-head-cell">Man–Tor</div>
+                      <div class="wf-matrix-head-cell">Fre</div>
+                      <div class="wf-matrix-head-cell">Lør</div>
+                      <div class="wf-matrix-head-cell">Søn</div>
+
+                      <div class="wf-matrix-head-cell">08–12</div>
+                      <div class="wf-matrix-cell-md">450</div>
+                      <div class="wf-matrix-cell-md">450</div>
+                      <div class="wf-matrix-cell-hi">550</div>
+                      <div class="wf-matrix-cell-hi">550</div>
+
+                      <div class="wf-matrix-head-cell">12–16</div>
+                      <div class="wf-matrix-cell-lo">375</div>
+                      <div class="wf-matrix-cell-lo">375</div>
+                      <div class="wf-matrix-cell-md">450</div>
+                      <div class="wf-matrix-cell-md">450</div>
+
+                      <div class="wf-matrix-head-cell">16–20</div>
+                      <div class="wf-matrix-cell-hi">550</div>
+                      <div class="wf-matrix-cell-hi">550</div>
+                      <div class="wf-matrix-cell-hi">550</div>
+                      <div class="wf-matrix-cell-md">450</div>
+
+                      <div class="wf-matrix-head-cell">20–22</div>
+                      <div class="wf-matrix-cell-md">450</div>
+                      <div class="wf-matrix-cell-md">450</div>
+                      <div class="wf-matrix-cell-lo">375</div>
+                      <div class="wf-matrix-cell-lo">375</div>
+                    </div>
+                    <div class="wf-card-meta" style="margin-top:10px;">Livepris etter alle regler anvendt. Oppdateres automatisk når regler endres.</div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>PricingRule er strukturell logikk — ikke engangskoder. Denne flaten skiller tydelig mellom promo-koder (Opt 1) og løpende prisregler.</li>
+        <li>"Hvis X, da Y"-mønster med keyword-pills (Hvis/Og/Da) gjør logikken leselig uten kode-kunnskap.</li>
+        <li>Prioritet-drag (regel 1 vinner over regel 2) gir forutsigbar rekkefølge når flere regler matcher samme booking.</li>
+        <li>Prismatrise-widget viser sluttresultat etter alle regler — svarer på "hva koster Flex 20 fredag 14:00?" på 1 sekund.</li>
+        <li>Hurtig-regel-sidebar lar Anders opprette enkle regler uten å forlate siden. Kompleks regler åpnes i egen modal.</li>
+        <li>Brukstelling (142 ganger · 18 900 kr) per regel gir innsikt i hvor mye hver regel faktisk påvirker.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Promo/offer-manager. Velg basert på hvilket arbeid som skal støttes mest.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr>
+          <th>Kriterium</th>
+          <th>1: Code Table</th>
+          <th>2: Campaign Cards</th>
+          <th>3: Builder Focus</th>
+          <th>4: Performance</th>
+          <th>5: Dynamic Pricing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Daglig oversikt over koder</td>
+          <td>Sterk</td>
+          <td>Sterk</td>
+          <td>Svak</td>
+          <td>Middels</td>
+          <td>Svak</td>
+        </tr>
+        <tr>
+          <td>Opprette ny kampanje</td>
+          <td>Middels</td>
+          <td>Middels</td>
+          <td>Sterk</td>
+          <td>Svak</td>
+          <td>Middels</td>
+        </tr>
+        <tr>
+          <td>Målgruppe-tenking</td>
+          <td>Svak</td>
+          <td>Middels</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+          <td>Svak</td>
+        </tr>
+        <tr>
+          <td>ROI / rapportering</td>
+          <td>Middels</td>
+          <td>Svak</td>
+          <td>Svak</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+        </tr>
+        <tr>
+          <td>Dynamisk prissetting</td>
+          <td>Svak</td>
+          <td>Svak</td>
+          <td>Svak</td>
+          <td>Svak</td>
+          <td>Sterk</td>
+        </tr>
+        <tr>
+          <td>Skalerer over 20 kampanjer</td>
+          <td>Sterk</td>
+          <td>Svak</td>
+          <td>Middels</td>
+          <td>Sterk</td>
+          <td>Sterk</td>
+        </tr>
+        <tr>
+          <td>Lærbarhet (ny admin)</td>
+          <td>Sterk</td>
+          <td>Sterk</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+          <td>Svak</td>
+        </tr>
+        <tr>
+          <td>Passer AK-brand og MC-mønster</td>
+          <td>Sterk</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Code Table (SAFE)</h3>
+      <p>Option 1 er default fordi Anders primært trenger daglig oversikt over hvilke promo-koder som er i bruk og hvor mye igjen det er på hver. Tabellen skalerer til 50+ koder, er enkel for nye admins, og matcher samme mønster som Epostkampanjer (N10) og Bookinger (N2). Rad-handlinger (Rediger, Pause, Dupliser) dekker 95 % av hverdags-arbeidet.</p>
+      <p>Option 5 (Dynamic Pricing) bør bygges som <strong>separat undermeny</strong> under "Prising" fordi det løser en helt annen oppgave — løpende prislogikk, ikke enkeltkoder. Ikke forsøk å kombinere koder og regler i samme tabell.</p>
+      <p>Option 3 (Builder Focus) bør bli <strong>ny-kampanje-modal</strong> som åpnes fra Option 1 sin "+ Ny promo-kode"-knapp. Mål-først-wizard er best som dedikert flyt, ikke daglig dashboard.</p>
+      <p>Option 4 (Performance) kan bli egen fane (Tilbud → Ytelse) for månedlig rapportering.</p>
+    </div>
+
+    <h3 style="margin-top:20px;font-size:14px;">Når velge hvilket</h3>
+    <ul style="font-size:12px;color:#333;line-height:1.7;">
+      <li><strong>Option 1 (Code Table):</strong> Default daglig arbeidsflate. Best for å skanne alle aktive koder.</li>
+      <li><strong>Option 2 (Campaign Cards):</strong> Hvis vi vil fremheve 5–10 samtidige kampanjer visuelt, f.eks. på mobil eller sekundært dashboard.</li>
+      <li><strong>Option 3 (Builder Focus):</strong> Som modal fra "+ Ny promo-kode". Fokus på mål, ikke felter.</li>
+      <li><strong>Option 4 (Performance):</strong> Egen fane for månedsrapport — ROI, funnel, topp 5.</li>
+      <li><strong>Option 5 (Dynamic Pricing):</strong> Egen undermeny under Prising — regelbasert prissetting, ikke engangskoder.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

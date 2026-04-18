@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Studio — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Content Studio</span> — <span id="project-name">AK Golf Platform · Mission Control · N21</span></span>
+    <span class="rec">Anbefalt: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Content Library</button>
+    <button class="tab-btn" data-tab="option-2">2: Editor First</button>
+    <button class="tab-btn" data-tab="option-3">3: Media Grid</button>
+    <button class="tab-btn" data-tab="option-4">4: Performance</button>
+    <button class="tab-btn" data-tab="option-5">5: Workflow Kanban</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===================== OPTION 1 — CONTENT LIBRARY (SAFE) ===================== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Content Library</span> <small style="font-size:12px;color:#888;font-weight:500;">SAFE</small></h2>
+    <p class="option-description">Grid av alle content-items med thumbnail, type, status, kategori og publisert-dato. Enkel skanning og rask filtrering.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/innhold</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <!-- Sidebar -->
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div>
+                <span class="wf-mc-brand-name">AK Golf</span>
+                <span class="wf-mc-brand-sub">Mission Control</span>
+              </div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Denne uken</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kampanjer</div>
+            </div>
+            <div class="wf-mc-nav-section">Innhold</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Content Studio<span class="wf-mc-nav-badge">24</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Øvelsesbank</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-nav-section">Innsikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Analytics</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Rapporter</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user">
+                <strong>Anders Kristiansen</strong>
+                <span>Admin · Coach</span>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Main -->
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Mission Control</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Content Studio</strong>
+              </div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Søk innhold, tags, forfatter ...</div>
+                <button class="wf-mc-top-btn">Importer</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Content Studio</h2>
+                  <div class="wf-page-sub">24 innholdselementer · 18 publisert · 4 utkast · 2 til review · siste 30 dager: 3 nye</div>
+                </div>
+                <div class="wf-page-actions">
+                  <button class="wf-btn">Importer mal</button>
+                  <button class="wf-btn wf-btn-primary">+ Nytt innhold</button>
+                </div>
+              </div>
+
+              <div class="wf-filter-bar">
+                <div class="wf-filter-pill wf-filter-pill-active">Alle (24)</div>
+                <div class="wf-filter-pill">Publisert (18)</div>
+                <div class="wf-filter-pill">Utkast (4)</div>
+                <div class="wf-filter-pill">Review (2)</div>
+                <div class="wf-filter-pill">Artikkel (9)</div>
+                <div class="wf-filter-pill">Video (10)</div>
+                <div class="wf-filter-pill">Guide (3)</div>
+                <div class="wf-filter-pill">Serie (2)</div>
+              </div>
+
+              <!-- KPI Row -->
+              <div class="wf-kpi-row">
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">TOTALT INNHOLD</div>
+                  <div class="wf-kpi-value">24</div>
+                  <div class="wf-kpi-delta">+3 siste 30 dager</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">PUBLISERT</div>
+                  <div class="wf-kpi-value">18</div>
+                  <div class="wf-kpi-delta">75 % av katalogen</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">TOTALE VISNINGER</div>
+                  <div class="wf-kpi-value">8 420</div>
+                  <div class="wf-kpi-delta">+640 siste 30 dager</div>
+                </div>
+                <div class="wf-kpi">
+                  <div class="wf-kpi-label">GJENNOMSNITT WATCH-TIME</div>
+                  <div class="wf-kpi-value">2:14</div>
+                  <div class="wf-kpi-delta">per video</div>
+                </div>
+              </div>
+
+              <!-- Library Grid -->
+              <div class="wf-lib-grid">
+                <!-- Card 1 -->
+                <div class="wf-lib-card">
+                  <div class="wf-lib-thumb">
+                    <div class="wf-lib-thumb-art"></div>
+                    <div class="wf-lib-thumb-label"><span class="wf-type wf-type-article">Artikkel</span></div>
+                  </div>
+                  <div class="wf-lib-body">
+                    <div class="wf-lib-name">5 teknikker for bedre putting</div>
+                    <div class="wf-lib-meta">Putting<span class="wf-lib-meta-dot">·</span>Anders<span class="wf-lib-meta-dot">·</span>4 min lesing</div>
+                  </div>
+                  <div class="wf-lib-foot">
+                    <span class="wf-status-pill wf-status-published"><span class="wf-status-dot"></span>Publisert</span>
+                    <span class="wf-lib-foot-stat">1 240 visn.</span>
+                  </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="wf-lib-card">
+                  <div class="wf-lib-thumb">
+                    <div class="wf-lib-thumb-art wf-lib-thumb-art-dark"></div>
+                    <div class="wf-lib-thumb-play">▶</div>
+                    <div class="wf-lib-thumb-label"><span class="wf-type wf-type-video">Video</span></div>
+                    <div class="wf-lib-thumb-duration">3:02</div>
+                  </div>
+                  <div class="wf-lib-body">
+                    <div class="wf-lib-name">Swing-video: Tempo-øvelse</div>
+                    <div class="wf-lib-meta">Teknikk<span class="wf-lib-meta-dot">·</span>Anders<span class="wf-lib-meta-dot">·</span>3 min</div>
+                  </div>
+                  <div class="wf-lib-foot">
+                    <span class="wf-status-pill wf-status-published"><span class="wf-status-dot"></span>Publisert</span>
+                    <span class="wf-lib-foot-stat">2 180 visn.</span>
+                  </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="wf-lib-card">
+                  <div class="wf-lib-thumb">
+                    <div class="wf-lib-thumb-art wf-lib-thumb-art-gradient"></div>
+                    <div class="wf-lib-thumb-label"><span class="wf-type wf-type-guide">Guide</span></div>
+                  </div>
+                  <div class="wf-lib-body">
+                    <div class="wf-lib-name">Mental forberedelse før turnering</div>
+                    <div class="wf-lib-meta">Mental<span class="wf-lib-meta-dot">·</span>Anders<span class="wf-lib-meta-dot">·</span>12 min lesing</div>
+                  </div>
+                  <div class="wf-lib-foot">
+                    <span class="wf-status-pill wf-status-published"><span class="wf-status-dot"></span>Publisert</span>
+                    <span class="wf-lib-foot-stat">880 visn.</span>
+                  </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="wf-lib-card">
+                  <div class="wf-lib-thumb">
+                    <div class="wf-lib-thumb-art wf-lib-thumb-art-dark"></div>
+                    <div class="wf-lib-thumb-play">▶</div>
+                    <div class="wf-lib-thumb-label"><span class="wf-type wf-type-series">Serie · 8</span></div>
+                  </div>
+                  <div class="wf-lib-body">
+                    <div class="wf-lib-name">Pitching 30–60 m — drill-samling</div>
+                    <div class="wf-lib-meta">Nærspill<span class="wf-lib-meta-dot">·</span>Anders<span class="wf-lib-meta-dot">·</span>8 klipp</div>
+                  </div>
+                  <div class="wf-lib-foot">
+                    <span class="wf-status-pill wf-status-published"><span class="wf-status-dot"></span>Publisert</span>
+                    <span class="wf-lib-foot-stat">1 620 visn.</span>
+                  </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="wf-lib-card">
+                  <div class="wf-lib-thumb">
+                    <div class="wf-lib-thumb-art"></div>
+                    <div class="wf-lib-thumb-label"><span class="wf-type wf-type-article">Artikkel</span></div>
+                  </div>
+                  <div class="wf-lib-body">
+                    <div class="wf-lib-name">Bane-strategi Losby Hull 17</div>
+                    <div class="wf-lib-meta">Strategi<span class="wf-lib-meta-dot">·</span>Anders<span class="wf-lib-meta-dot">·</span>6 min lesing</div>
+                  </div>
+                  <div class="wf-lib-foot">
+                    <span class="wf-status-pill wf-status-published"><span class="wf-status-dot"></span>Publisert</span>
+                    <span class="wf-lib-foot-stat">420 visn.</span>
+                  </div>
+                </div>
+
+                <!-- Card 6 — Draft -->
+                <div class="wf-lib-card">
+                  <div class="wf-lib-thumb">
+                    <div class="wf-lib-thumb-art wf-lib-thumb-art-gradient"></div>
+                    <div class="wf-lib-thumb-label"><span class="wf-type wf-type-guide">Guide</span></div>
+                  </div>
+                  <div class="wf-lib-body">
+                    <div class="wf-lib-name">Vintertrening — hold formen innendørs</div>
+                    <div class="wf-lib-meta">Trening<span class="wf-lib-meta-dot">·</span>Anders<span class="wf-lib-meta-dot">·</span>under arbeid</div>
+                  </div>
+                  <div class="wf-lib-foot">
+                    <span class="wf-status-pill wf-status-draft"><span class="wf-status-dot"></span>Utkast</span>
+                    <span class="wf-lib-foot-stat">—</span>
+                  </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="wf-lib-card">
+                  <div class="wf-lib-thumb">
+                    <div class="wf-lib-thumb-art wf-lib-thumb-art-dark"></div>
+                    <div class="wf-lib-thumb-play">▶</div>
+                    <div class="wf-lib-thumb-label"><span class="wf-type wf-type-video">Video</span></div>
+                    <div class="wf-lib-thumb-duration">5:48</div>
+                  </div>
+                  <div class="wf-lib-body">
+                    <div class="wf-lib-name">Bunker-slag: grunnleggende teknikk</div>
+                    <div class="wf-lib-meta">Nærspill<span class="wf-lib-meta-dot">·</span>Anders<span class="wf-lib-meta-dot">·</span>5 min</div>
+                  </div>
+                  <div class="wf-lib-foot">
+                    <span class="wf-status-pill wf-status-published"><span class="wf-status-dot"></span>Publisert</span>
+                    <span class="wf-lib-foot-stat">960 visn.</span>
+                  </div>
+                </div>
+
+                <!-- Card 8 — Review -->
+                <div class="wf-lib-card">
+                  <div class="wf-lib-thumb">
+                    <div class="wf-lib-thumb-art"></div>
+                    <div class="wf-lib-thumb-label"><span class="wf-type wf-type-article">Artikkel</span></div>
+                  </div>
+                  <div class="wf-lib-body">
+                    <div class="wf-lib-name">Pre-shot rutine: 5 steg som virker</div>
+                    <div class="wf-lib-meta">Mental<span class="wf-lib-meta-dot">·</span>Anders<span class="wf-lib-meta-dot">·</span>8 min lesing</div>
+                  </div>
+                  <div class="wf-lib-foot">
+                    <span class="wf-status-pill wf-status-review"><span class="wf-status-dot"></span>Review</span>
+                    <span class="wf-lib-foot-stat">—</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>SAFE-valget: thumbnail-grid er den mest gjenkjennelige CMS-visningen (YouTube Studio, Notion, Webflow).</li>
+        <li>Hvert kort viser type-tag øverst venstre, varighet for video nederst høyre, og status-pill i footer.</li>
+        <li>Filter-pills øverst dekker både status (publisert/utkast/review) og type (artikkel/video/guide/serie).</li>
+        <li>KPI-row aggregerer totalt, publisert, visninger og watch-time — gir raskt overblikk før detaljskanning.</li>
+        <li>Klikk på kort = åpner editor (Opt 2). Hover viser kanten for å signalisere interaktivitet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 2 — EDITOR FIRST ===================== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Editor First</span></h2>
+    <p class="option-description">Stor rik-tekst-editor øverst (Notion-lignende) med sidebar for meta-info — kategori, tags, målgruppe og publiseringsregler.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/innhold/ny</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+            </div>
+            <div class="wf-mc-nav-section">Innhold</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Content Studio<span class="wf-mc-nav-badge">24</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Øvelsesbank</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Content Studio</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>5 teknikker for bedre putting</strong>
+                <span class="wf-mc-crumbs-sep">·</span>
+                <span style="color:#888;">Utkast · sist lagret for 2 min siden</span>
+              </div>
+              <div class="wf-mc-top-actions">
+                <button class="wf-mc-top-btn">Forhåndsvis</button>
+                <button class="wf-mc-top-btn">Lagre utkast</button>
+                <button class="wf-mc-top-btn wf-mc-top-btn-primary">Publiser</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-editor-wrap">
+                <!-- Editor Canvas -->
+                <div class="wf-editor-canvas">
+                  <div class="wf-editor-toolbar">
+                    <button class="wf-editor-tool wf-editor-tool-active">¶</button>
+                    <button class="wf-editor-tool">H1</button>
+                    <button class="wf-editor-tool">H2</button>
+                    <div class="wf-editor-sep"></div>
+                    <button class="wf-editor-tool"><strong>B</strong></button>
+                    <button class="wf-editor-tool"><em>I</em></button>
+                    <button class="wf-editor-tool"><u>U</u></button>
+                    <div class="wf-editor-sep"></div>
+                    <button class="wf-editor-tool">· Liste</button>
+                    <button class="wf-editor-tool">1. Liste</button>
+                    <button class="wf-editor-tool">" Sitat</button>
+                    <div class="wf-editor-sep"></div>
+                    <button class="wf-editor-tool">🔗 Lenke</button>
+                    <button class="wf-editor-tool">Bilde</button>
+                    <button class="wf-editor-tool">Video</button>
+                    <button class="wf-editor-tool">Innfelt</button>
+                    <div class="wf-editor-sep"></div>
+                    <button class="wf-editor-tool">Undo</button>
+                    <button class="wf-editor-tool">Redo</button>
+                  </div>
+
+                  <div class="wf-editor-body">
+                    <div class="wf-editor-title">5 teknikker for bedre putting</div>
+                    <div class="wf-editor-meta-row">
+                      <span>Artikkel</span>
+                      <span>·</span>
+                      <span>Skrevet av Anders</span>
+                      <span>·</span>
+                      <span>4 min lesing</span>
+                      <span>·</span>
+                      <span>Opprettet 14. apr 2026</span>
+                    </div>
+
+                    <div class="wf-editor-block">
+                      Putting er det området hvor flest slag forsvinner — og hvor de enkleste forbedringene finnes. Her er fem teknikker som umiddelbart gir bedre resultater på greenene.
+                    </div>
+
+                    <div class="wf-editor-h2">1. Start med øynene over ballen</div>
+                    <div class="wf-editor-block">
+                      Den vanligste feilen er å stå for langt fra ballen. Plasser øynene direkte over — dette gir deg et riktig siktebilde og gjør det lettere å lese break korrekt.
+                    </div>
+
+                    <div class="wf-editor-image">
+                      [Bilde: Riktig øye-posisjon over ballen]
+                    </div>
+
+                    <div class="wf-editor-h2">2. Lengde før linje</div>
+                    <div class="wf-editor-block">
+                      Over 80 % av three-putts skyldes dårlig lengdekontroll, ikke feil linje. Bruk 70 % av treningstiden på å treffe lengden — linjen kommer som en bonus.
+                    </div>
+
+                    <div class="wf-editor-callout">
+                      <strong>Pro-tips:</strong> Tren alltid med tre baller i rekke — lengde, lengde, lengde.
+                    </div>
+
+                    <div class="wf-editor-add">
+                      <span class="wf-editor-add-btn">+</span>
+                      <span>Klikk for å legge til ny blokk — tekst, bilde, video eller innfelt øvelse</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="wf-editor-side">
+                  <div class="wf-side-card">
+                    <div class="wf-side-head">Status</div>
+                    <div class="wf-side-row">
+                      <span class="wf-status-pill wf-status-draft" style="align-self:flex-start;"><span class="wf-status-dot"></span>Utkast</span>
+                    </div>
+                    <div class="wf-side-row">
+                      <span class="wf-side-label">Sist lagret</span>
+                      <span class="wf-side-value">For 2 min siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-side-card">
+                    <div class="wf-side-head">Metadata</div>
+                    <div class="wf-side-row">
+                      <span class="wf-side-label">Type</span>
+                      <span class="wf-side-value">Artikkel ▾</span>
+                    </div>
+                    <div class="wf-side-row">
+                      <span class="wf-side-label">Kategori</span>
+                      <span class="wf-side-value">Putting ▾</span>
+                    </div>
+                    <div class="wf-side-row">
+                      <span class="wf-side-label">Målgruppe</span>
+                      <span class="wf-side-value">Alle spillere ▾</span>
+                    </div>
+                    <div class="wf-side-row">
+                      <span class="wf-side-label">Lesetid</span>
+                      <span class="wf-side-value">4 min (auto)</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-side-card">
+                    <div class="wf-side-head">Tags</div>
+                    <div class="wf-side-tags">
+                      <span class="wf-side-tag">putting</span>
+                      <span class="wf-side-tag">teknikk</span>
+                      <span class="wf-side-tag">nybegynner</span>
+                      <span class="wf-side-tag-add">+ Ny tag</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-side-card">
+                    <div class="wf-side-head">Publisering</div>
+                    <div class="wf-side-toggle">
+                      <span>Synlig i portal</span>
+                      <span class="wf-toggle wf-toggle-on"></span>
+                    </div>
+                    <div class="wf-side-toggle">
+                      <span>Send varsel</span>
+                      <span class="wf-toggle"></span>
+                    </div>
+                    <div class="wf-side-toggle">
+                      <span>Kun premium</span>
+                      <span class="wf-toggle"></span>
+                    </div>
+                    <div class="wf-side-row" style="margin-top:6px;">
+                      <span class="wf-side-label">Publiser</span>
+                      <span class="wf-side-value">Umiddelbart ▾</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-side-card">
+                    <div class="wf-side-head">SEO</div>
+                    <div class="wf-side-row">
+                      <span class="wf-side-label">Slug</span>
+                      <span class="wf-side-value">/putting-teknikker</span>
+                    </div>
+                    <div class="wf-side-row">
+                      <span class="wf-side-label">Meta-beskrivelse</span>
+                      <span class="wf-side-value" style="font-size:11px;">Fem enkle teknikker som umiddelbart forbedrer putting ...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Editor dominerer (Notion-stil) — blokk-basert med inline toolbar øverst. Klikk for å redigere tittel, skriv direkte.</li>
+        <li>Høyre sidebar holder all meta: status, kategori, tags, målgruppe, publiseringsregler og SEO. Kan kollapse.</li>
+        <li>Topbar viser tittel på innholdet som breadcrumb + autosave-status + tre handlinger (forhåndsvis, lagre, publiser).</li>
+        <li>Støtter innfelt bilde, video og øvelses-blokker — som knytter innhold til øvelsesbanken.</li>
+        <li>Best når fokus er å skrive/redigere enkeltelementer. Svakere for oversikt over hele katalogen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 3 — MEDIA GRID (MASONRY) ===================== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Media Grid</span></h2>
+    <p class="option-description">Masonry-grid med fokus på video/bilde-content. Thumbnails i varierende høyde, filter per format og visuell overlegenhet.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/innhold</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+            </div>
+            <div class="wf-mc-nav-section">Innhold</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Content Studio<span class="wf-mc-nav-badge">24</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Øvelsesbank</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Content Studio</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Media-bibliotek</strong>
+              </div>
+              <div class="wf-mc-top-actions">
+                <div class="wf-mc-search">Søk video, bilde, serie ...</div>
+                <button class="wf-mc-top-btn wf-mc-top-btn-primary">+ Last opp</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Media-bibliotek</h2>
+                  <div class="wf-page-sub">10 videoer · 9 artikler · 3 guider · 2 serier · total: 3 t 42 min video-innhold</div>
+                </div>
+              </div>
+
+              <div class="wf-media-toolbar">
+                <div class="wf-media-filters">
+                  <div class="wf-filter-pill wf-filter-pill-active">Alle formater</div>
+                  <div class="wf-filter-pill">Video (10)</div>
+                  <div class="wf-filter-pill">Artikkel (9)</div>
+                  <div class="wf-filter-pill">Guide (3)</div>
+                  <div class="wf-filter-pill">Serie (2)</div>
+                  <div class="wf-filter-pill">Kort (&lt; 3 min)</div>
+                  <div class="wf-filter-pill">Lang (&gt; 5 min)</div>
+                </div>
+                <div class="wf-media-view">
+                  <button class="wf-media-view-btn wf-media-view-btn-active">Grid</button>
+                  <button class="wf-media-view-btn">Liste</button>
+                </div>
+              </div>
+
+              <!-- Masonry Grid -->
+              <div class="wf-masonry">
+                <!-- Item 1 — Large video -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-lg">
+                    <div class="wf-masonry-thumb-art wf-masonry-thumb-art-video"></div>
+                    <div class="wf-masonry-thumb-play">▶</div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-series">Serie · 8</span></div>
+                    <div class="wf-masonry-duration">24:18 total</div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Pitching 30–60 m — drill-samling</div>
+                    <div class="wf-masonry-meta">
+                      <span>Nærspill</span>
+                      <span>1 620 visn.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 2 — Medium article -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-sm">
+                    <div class="wf-masonry-thumb-art"></div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-article">Artikkel</span></div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">5 teknikker for bedre putting</div>
+                    <div class="wf-masonry-meta">
+                      <span>Putting · 4 min</span>
+                      <span>1 240</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 3 — Medium video -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-md">
+                    <div class="wf-masonry-thumb-art wf-masonry-thumb-art-video"></div>
+                    <div class="wf-masonry-thumb-play">▶</div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-video">Video</span></div>
+                    <div class="wf-masonry-duration">3:02</div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Swing-video: Tempo-øvelse</div>
+                    <div class="wf-masonry-meta">
+                      <span>Teknikk</span>
+                      <span>2 180</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 4 — Guide -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-md">
+                    <div class="wf-masonry-thumb-art"></div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-guide">Guide</span></div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Mental forberedelse før turnering</div>
+                    <div class="wf-masonry-meta">
+                      <span>Mental · 12 min</span>
+                      <span>880</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-md">
+                    <div class="wf-masonry-thumb-art wf-masonry-thumb-art-video"></div>
+                    <div class="wf-masonry-thumb-play">▶</div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-video">Video</span></div>
+                    <div class="wf-masonry-duration">5:48</div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Bunker-slag: grunnleggende teknikk</div>
+                    <div class="wf-masonry-meta">
+                      <span>Nærspill</span>
+                      <span>960</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 6 — Article -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-sm">
+                    <div class="wf-masonry-thumb-art"></div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-article">Artikkel</span></div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Bane-strategi Losby Hull 17</div>
+                    <div class="wf-masonry-meta">
+                      <span>Strategi · 6 min</span>
+                      <span>420</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 7 — Large video -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-lg">
+                    <div class="wf-masonry-thumb-art wf-masonry-thumb-art-video"></div>
+                    <div class="wf-masonry-thumb-play">▶</div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-video">Video</span></div>
+                    <div class="wf-masonry-duration">8:14</div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Driving: kraft uten spenning</div>
+                    <div class="wf-masonry-meta">
+                      <span>Teknikk</span>
+                      <span>1 840</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 8 -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-sm">
+                    <div class="wf-masonry-thumb-art wf-masonry-thumb-art-video"></div>
+                    <div class="wf-masonry-thumb-play">▶</div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-video">Video</span></div>
+                    <div class="wf-masonry-duration">1:48</div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Grip-sjekk: 3 ting å unngå</div>
+                    <div class="wf-masonry-meta">
+                      <span>Teknikk</span>
+                      <span>680</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 9 -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-md">
+                    <div class="wf-masonry-thumb-art"></div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-article">Artikkel</span></div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Pre-shot rutine: 5 steg som virker</div>
+                    <div class="wf-masonry-meta">
+                      <span>Mental · 8 min</span>
+                      <span>—</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 10 -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-md">
+                    <div class="wf-masonry-thumb-art wf-masonry-thumb-art-video"></div>
+                    <div class="wf-masonry-thumb-play">▶</div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-video">Video</span></div>
+                    <div class="wf-masonry-duration">4:22</div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Chipping: landingspunkt-metoden</div>
+                    <div class="wf-masonry-meta">
+                      <span>Nærspill</span>
+                      <span>1 120</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 11 -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-sm">
+                    <div class="wf-masonry-thumb-art"></div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-guide">Guide</span></div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Vintertrening — innendørs</div>
+                    <div class="wf-masonry-meta">
+                      <span>Trening</span>
+                      <span>—</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 12 -->
+                <div class="wf-masonry-item">
+                  <div class="wf-masonry-thumb wf-masonry-thumb-md">
+                    <div class="wf-masonry-thumb-art wf-masonry-thumb-art-video"></div>
+                    <div class="wf-masonry-thumb-play">▶</div>
+                    <div class="wf-masonry-type"><span class="wf-type wf-type-video">Video</span></div>
+                    <div class="wf-masonry-duration">2:38</div>
+                  </div>
+                  <div class="wf-masonry-body">
+                    <div class="wf-masonry-name">Lesning av green — 3-stegs metode</div>
+                    <div class="wf-masonry-meta">
+                      <span>Putting</span>
+                      <span>540</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Pinterest/YouTube Studio-estetikk — masonry-kolonner lar thumbnails stå i fokus, liten tekst.</li>
+        <li>Tydelig skille mellom video (mørk thumb, play-ikon, varighet) og tekst-innhold (lys thumb, type-tag).</li>
+        <li>Filter på format og lengde (kort/lang) gjør det enkelt å finne rett innhold for rett bruk.</li>
+        <li>Grid/Liste-toggle for brukere som foretrekker tabellvisning.</li>
+        <li>Best for team som produserer mye video — svakere for workflow-styring (trenger kombinasjon med Opt 5).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 4 — PERFORMANCE DASHBOARD ===================== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Performance Dashboard</span></h2>
+    <p class="option-description">Content-analytics: visninger, watch-time, kommentarer og delinger. Sortér etter effekt — hva som fungerer, hva som ikke gjør det.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/innhold/analytics</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+            </div>
+            <div class="wf-mc-nav-section">Innhold</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Content Studio<span class="wf-mc-nav-badge">24</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Øvelsesbank</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Content Studio</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Performance</strong>
+              </div>
+              <div class="wf-mc-top-actions">
+                <button class="wf-mc-top-btn">Eksporter</button>
+                <button class="wf-mc-top-btn">30 dager ▾</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Innholds-performance</h2>
+                  <div class="wf-page-sub">Siste 30 dager · 18 publiserte elementer · 8 420 totale visninger</div>
+                </div>
+              </div>
+
+              <!-- Performance hero -->
+              <div class="wf-perf-hero">
+                <div class="wf-perf-hero-block">
+                  <div class="wf-perf-hero-label">TOTALE VISNINGER</div>
+                  <div class="wf-perf-hero-val">8 420</div>
+                  <div class="wf-perf-hero-delta">+640 vs forrige periode</div>
+                </div>
+                <div class="wf-perf-hero-block">
+                  <div class="wf-perf-hero-label">SNITT WATCH-TIME</div>
+                  <div class="wf-perf-hero-val">2:14</div>
+                  <div class="wf-perf-hero-delta">+0:18 vs forrige periode</div>
+                </div>
+                <div class="wf-perf-hero-block">
+                  <div class="wf-perf-hero-label">KOMMENTARER</div>
+                  <div class="wf-perf-hero-val">142</div>
+                  <div class="wf-perf-hero-delta">+38 vs forrige periode</div>
+                </div>
+                <div class="wf-perf-hero-block">
+                  <div class="wf-perf-hero-label">DELINGER</div>
+                  <div class="wf-perf-hero-val">86</div>
+                  <div class="wf-perf-hero-delta">+12 vs forrige periode</div>
+                </div>
+              </div>
+
+              <!-- Sort toolbar -->
+              <div class="wf-perf-toolbar">
+                <div class="wf-perf-sort">
+                  <span>Sortér:</span>
+                  <button class="wf-perf-sort-pill wf-perf-sort-pill-active">Visninger</button>
+                  <button class="wf-perf-sort-pill">Watch-time</button>
+                  <button class="wf-perf-sort-pill">Engasjement</button>
+                  <button class="wf-perf-sort-pill">Delinger</button>
+                </div>
+                <div class="wf-perf-sort">
+                  <span>Filter:</span>
+                  <button class="wf-perf-sort-pill wf-perf-sort-pill-active">Alle</button>
+                  <button class="wf-perf-sort-pill">Video</button>
+                  <button class="wf-perf-sort-pill">Artikkel</button>
+                </div>
+              </div>
+
+              <!-- Performance table -->
+              <table class="wf-perf-table">
+                <thead>
+                  <tr>
+                    <th style="width:28px">#</th>
+                    <th style="width:36%">Innhold</th>
+                    <th>Trend</th>
+                    <th style="text-align:right;">Visninger</th>
+                    <th style="text-align:right;">Watch-time</th>
+                    <th style="text-align:right;">Engasjement</th>
+                    <th style="text-align:right;">Delinger</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="wf-perf-rank">1</span></td>
+                    <td>
+                      <div class="wf-perf-title">Swing-video: Tempo-øvelse</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-video">Video</span>Teknikk · 3:02</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">2 180</div></td>
+                    <td><div class="wf-perf-metric">2:48</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill" style="width:92%;"></div></div></td>
+                    <td><div class="wf-perf-metric">11,4 %</div></td>
+                    <td><div class="wf-perf-metric">24</div></td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-perf-rank">2</span></td>
+                    <td>
+                      <div class="wf-perf-title">Driving: kraft uten spenning</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-video">Video</span>Teknikk · 8:14</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">1 840</div></td>
+                    <td><div class="wf-perf-metric">5:42</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill" style="width:70%;"></div></div></td>
+                    <td><div class="wf-perf-metric">9,2 %</div></td>
+                    <td><div class="wf-perf-metric">18</div></td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-perf-rank">3</span></td>
+                    <td>
+                      <div class="wf-perf-title">Pitching 30–60 m — drill-samling</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-series">Serie · 8</span>Nærspill · 24:18 total</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">1 620</div></td>
+                    <td><div class="wf-perf-metric">14:20</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill" style="width:59%;"></div></div></td>
+                    <td><div class="wf-perf-metric">13,8 %</div></td>
+                    <td><div class="wf-perf-metric">22</div></td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-perf-rank">4</span></td>
+                    <td>
+                      <div class="wf-perf-title">5 teknikker for bedre putting</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-article">Artikkel</span>Putting · 4 min lesing</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">1 240</div></td>
+                    <td><div class="wf-perf-metric">3:10</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill wf-perf-bar-fill-soft" style="width:78%;"></div></div></td>
+                    <td><div class="wf-perf-metric">8,6 %</div></td>
+                    <td><div class="wf-perf-metric">9</div></td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-perf-rank">5</span></td>
+                    <td>
+                      <div class="wf-perf-title">Chipping: landingspunkt-metoden</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-video">Video</span>Nærspill · 4:22</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">1 120</div></td>
+                    <td><div class="wf-perf-metric">3:28</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill" style="width:79%;"></div></div></td>
+                    <td><div class="wf-perf-metric">10,2 %</div></td>
+                    <td><div class="wf-perf-metric">7</div></td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-perf-rank">6</span></td>
+                    <td>
+                      <div class="wf-perf-title">Bunker-slag: grunnleggende teknikk</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-video">Video</span>Nærspill · 5:48</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">960</div></td>
+                    <td><div class="wf-perf-metric">4:02</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill" style="width:69%;"></div></div></td>
+                    <td><div class="wf-perf-metric">7,4 %</div></td>
+                    <td><div class="wf-perf-metric">5</div></td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-perf-rank">7</span></td>
+                    <td>
+                      <div class="wf-perf-title">Mental forberedelse før turnering</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-guide">Guide</span>Mental · 12 min lesing</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">880</div></td>
+                    <td><div class="wf-perf-metric">8:42</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill wf-perf-bar-fill-soft" style="width:72%;"></div></div></td>
+                    <td><div class="wf-perf-metric">14,2 %</div></td>
+                    <td><div class="wf-perf-metric">16</div></td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-perf-rank">8</span></td>
+                    <td>
+                      <div class="wf-perf-title">Grip-sjekk: 3 ting å unngå</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-video">Video</span>Teknikk · 1:48</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">680</div></td>
+                    <td><div class="wf-perf-metric">1:32</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill" style="width:85%;"></div></div></td>
+                    <td><div class="wf-perf-metric">6,8 %</div></td>
+                    <td><div class="wf-perf-metric">4</div></td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-perf-rank">9</span></td>
+                    <td>
+                      <div class="wf-perf-title">Lesning av green — 3-stegs metode</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-video">Video</span>Putting · 2:38</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">540</div></td>
+                    <td><div class="wf-perf-metric">2:02</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill" style="width:77%;"></div></div></td>
+                    <td><div class="wf-perf-metric">5,4 %</div></td>
+                    <td><div class="wf-perf-metric">3</div></td>
+                  </tr>
+                  <tr>
+                    <td><span class="wf-perf-rank">10</span></td>
+                    <td>
+                      <div class="wf-perf-title">Bane-strategi Losby Hull 17</div>
+                      <div class="wf-perf-sub"><span class="wf-type wf-type-article">Artikkel</span>Strategi · 6 min lesing</div>
+                    </td>
+                    <td><div class="wf-perf-spark"></div></td>
+                    <td><div class="wf-perf-metric">420</div></td>
+                    <td><div class="wf-perf-metric">4:24</div><div class="wf-perf-bar"><div class="wf-perf-bar-fill wf-perf-bar-fill-soft" style="width:74%;"></div></div></td>
+                    <td><div class="wf-perf-metric">9,8 %</div></td>
+                    <td><div class="wf-perf-metric">6</div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Hero-blokk med 4 KPI-er: visninger, watch-time, kommentarer, delinger — alle med +/- vs forrige periode.</li>
+        <li>Rank-tabell sortert etter valgt metrikk — viser umiddelbart hva som fungerer best.</li>
+        <li>Watch-time som % av total varighet (bar) er et sterkere signal enn absolutt tid — viser fullførings-rate.</li>
+        <li>Trend-sparkline per rad gir umiddelbar intuisjon om momentum (stigende/fallende).</li>
+        <li>Best for månedsrapport og strategiske beslutninger om hvilket innhold som skal produseres neste.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== OPTION 5 — WORKFLOW KANBAN ===================== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Workflow Kanban</span></h2>
+    <p class="option-description">Kanban-brett med 4 kolonner — Idé / Utkast / Review / Publisert. Dra kort mellom kolonner for å flytte innhold gjennom workflow.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><span class="sub-tab-label">Clean</span><span class="sub-tab-badge">venter</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><span class="sub-tab-label">Polished</span><span class="sub-tab-badge">venter</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/admin/innhold</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-mc-shell">
+          <aside class="wf-mc-sidebar">
+            <div class="wf-mc-brand">
+              <div class="wf-mc-brand-mark">AK</div>
+              <div><span class="wf-mc-brand-name">AK Golf</span><span class="wf-mc-brand-sub">Mission Control</span></div>
+            </div>
+            <div class="wf-mc-nav-section">Oversikt</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Dashboard</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Kalender</div>
+            </div>
+            <div class="wf-mc-nav-section">Drift</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Elever<span class="wf-mc-nav-badge">42</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Bookinger<span class="wf-mc-nav-badge">3</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Meldinger</div>
+            </div>
+            <div class="wf-mc-nav-section">Innhold</div>
+            <div class="wf-mc-nav">
+              <div class="wf-mc-nav-item wf-mc-nav-item-active"><span class="wf-mc-nav-dot"></span>Content Studio<span class="wf-mc-nav-badge">24</span></div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>Øvelsesbank</div>
+              <div class="wf-mc-nav-item"><span class="wf-mc-nav-dot"></span>E-postmaler</div>
+            </div>
+            <div class="wf-mc-sidebar-foot">
+              <div class="wf-mc-sidebar-avatar">AK</div>
+              <div class="wf-mc-sidebar-user"><strong>Anders Kristiansen</strong><span>Admin · Coach</span></div>
+            </div>
+          </aside>
+
+          <div class="wf-mc-main">
+            <div class="wf-mc-topbar">
+              <div class="wf-mc-crumbs">
+                <span>Content Studio</span>
+                <span class="wf-mc-crumbs-sep">/</span>
+                <strong>Workflow</strong>
+              </div>
+              <div class="wf-mc-top-actions">
+                <button class="wf-mc-top-btn">Grid</button>
+                <button class="wf-mc-top-btn wf-mc-top-btn-primary">Kanban</button>
+                <button class="wf-mc-top-btn">+ Ny idé</button>
+                <div class="wf-mc-profile">AK</div>
+              </div>
+            </div>
+
+            <div class="wf-mc-body">
+              <div class="wf-page-head">
+                <div>
+                  <h2 class="wf-page-title">Innholds-workflow</h2>
+                  <div class="wf-page-sub">6 ideer · 4 utkast · 2 til review · 12 publisert denne måneden</div>
+                </div>
+                <div class="wf-page-actions">
+                  <div class="wf-filter-pill wf-filter-pill-active">Alle forfattere</div>
+                  <div class="wf-filter-pill">Alle typer</div>
+                </div>
+              </div>
+
+              <!-- Kanban -->
+              <div class="wf-kanban">
+                <!-- Column 1: Ideas -->
+                <div class="wf-kanban-col wf-kanban-col-idea">
+                  <div class="wf-kanban-col-head">
+                    <div class="wf-kanban-col-title"><span class="wf-kanban-col-dot"></span>Idé</div>
+                    <span class="wf-kanban-col-count">6</span>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-article">Artikkel</span>
+                    </div>
+                    <div class="wf-kanban-card-title">Hvordan lese wind på Losby</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Lagt til for 3 dager siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-video">Video</span>
+                    </div>
+                    <div class="wf-kanban-card-title">Drill: 3-ball putting-rute</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Lagt til for 5 dager siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-guide">Guide</span>
+                    </div>
+                    <div class="wf-kanban-card-title">Mål-setting for sesongen</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Lagt til for 1 uke siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-video">Video</span>
+                    </div>
+                    <div class="wf-kanban-card-title">Wedge-bounce forklart</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Lagt til for 2 uker siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-article">Artikkel</span>
+                    </div>
+                    <div class="wf-kanban-card-title">Par-tegning: hvordan tenke</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Lagt til for 3 uker siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-series">Serie</span>
+                    </div>
+                    <div class="wf-kanban-card-title">Kortspill 0–30 m (10 klipp)</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Lagt til for 1 måned siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-col-add">+ Legg til idé</div>
+                </div>
+
+                <!-- Column 2: Draft -->
+                <div class="wf-kanban-col wf-kanban-col-draft">
+                  <div class="wf-kanban-col-head">
+                    <div class="wf-kanban-col-title"><span class="wf-kanban-col-dot"></span>Utkast</div>
+                    <span class="wf-kanban-col-count">4</span>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-guide">Guide</span>
+                      <span style="font-size:10px;color:#888;">62 %</span>
+                    </div>
+                    <div class="wf-kanban-card-thumb wf-kanban-card-thumb-art"></div>
+                    <div class="wf-kanban-card-title">Vintertrening — hold formen innendørs</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Sist endret for 2 min siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-video">Video</span>
+                      <span style="font-size:10px;color:#888;">opptak</span>
+                    </div>
+                    <div class="wf-kanban-card-thumb wf-kanban-card-thumb-video"></div>
+                    <div class="wf-kanban-card-title">Stance-bredde: test og feedback</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Sist endret i går</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-article">Artikkel</span>
+                      <span style="font-size:10px;color:#888;">40 %</span>
+                    </div>
+                    <div class="wf-kanban-card-title">Approach-strategi fra 120–150 m</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Sist endret for 3 dager siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-video">Video</span>
+                      <span style="font-size:10px;color:#888;">klipping</span>
+                    </div>
+                    <div class="wf-kanban-card-thumb wf-kanban-card-thumb-video"></div>
+                    <div class="wf-kanban-card-title">Bunker: plugged lie-redning</div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Sist endret for 5 dager siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-col-add">+ Flytt fra Idé</div>
+                </div>
+
+                <!-- Column 3: Review -->
+                <div class="wf-kanban-col wf-kanban-col-review">
+                  <div class="wf-kanban-col-head">
+                    <div class="wf-kanban-col-title"><span class="wf-kanban-col-dot"></span>Review</div>
+                    <span class="wf-kanban-col-count">2</span>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-article">Artikkel</span>
+                      <span style="font-size:10px;color:#555;font-weight:700;">klar</span>
+                    </div>
+                    <div class="wf-kanban-card-title">Pre-shot rutine: 5 steg som virker</div>
+                    <div class="wf-kanban-card-meta">
+                      <span>Mental · 8 min</span>
+                      <span>3 kommentarer</span>
+                    </div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Sendt for review i går</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-video">Video</span>
+                      <span style="font-size:10px;color:#555;font-weight:700;">klar</span>
+                    </div>
+                    <div class="wf-kanban-card-thumb wf-kanban-card-thumb-video"></div>
+                    <div class="wf-kanban-card-title">Trackman-data: hva er viktig for deg?</div>
+                    <div class="wf-kanban-card-meta">
+                      <span>Data · 6:12</span>
+                      <span>0 kommentarer</span>
+                    </div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Sendt for review for 3 dager siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-col-add">Ingen flere i kø</div>
+                </div>
+
+                <!-- Column 4: Published -->
+                <div class="wf-kanban-col wf-kanban-col-published">
+                  <div class="wf-kanban-col-head">
+                    <div class="wf-kanban-col-title"><span class="wf-kanban-col-dot"></span>Publisert</div>
+                    <span class="wf-kanban-col-count">12</span>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-article">Artikkel</span>
+                    </div>
+                    <div class="wf-kanban-card-title">5 teknikker for bedre putting</div>
+                    <div class="wf-kanban-card-meta">
+                      <span>1 240 visn.</span>
+                      <span>+12 % 7d</span>
+                    </div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Publisert for 2 dager siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-video">Video</span>
+                    </div>
+                    <div class="wf-kanban-card-thumb wf-kanban-card-thumb-video"></div>
+                    <div class="wf-kanban-card-title">Swing-video: Tempo-øvelse</div>
+                    <div class="wf-kanban-card-meta">
+                      <span>2 180 visn.</span>
+                      <span>+28 % 7d</span>
+                    </div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Publisert for 6 dager siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-guide">Guide</span>
+                    </div>
+                    <div class="wf-kanban-card-title">Mental forberedelse før turnering</div>
+                    <div class="wf-kanban-card-meta">
+                      <span>880 visn.</span>
+                      <span>+6 % 7d</span>
+                    </div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Publisert for 12 dager siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-card">
+                    <div class="wf-kanban-card-top">
+                      <span class="wf-type wf-type-series">Serie · 8</span>
+                    </div>
+                    <div class="wf-kanban-card-thumb wf-kanban-card-thumb-video"></div>
+                    <div class="wf-kanban-card-title">Pitching 30–60 m — drill-samling</div>
+                    <div class="wf-kanban-card-meta">
+                      <span>1 620 visn.</span>
+                      <span>+18 % 7d</span>
+                    </div>
+                    <div class="wf-kanban-card-foot">
+                      <div class="wf-kanban-card-avatar">AK</div>
+                      <span>Publisert for 18 dager siden</span>
+                    </div>
+                  </div>
+
+                  <div class="wf-kanban-col-add">Vis alle 12 →</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li>Trello/Notion-stil kanban — 4 kolonner matcher content workflow: Idé → Utkast → Review → Publisert.</li>
+        <li>Kort i "Idé" har kun type + tittel. Kort utvides med thumbnail og progresjons-% etter hvert som det skrider frem.</li>
+        <li>Publisert-kolonnen viser vanitetsdata (visninger, 7-dagers trend) — motiverer produksjon.</li>
+        <li>Dra og slipp mellom kolonner oppdaterer status automatisk. Review sender push-varsel.</li>
+        <li>Best for team-samarbeid og redaksjonell styring. Svakere som bla-opplevelse for katalogen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <div class="option-panel" id="summary">
+    <h2>Sammenligning</h2>
+    <p class="option-description">Fem retninger for Content Studio — valget avhenger av om prioriteten er katalog-oversikt, redaksjonell flyt, produksjonsvolum eller analyse.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr>
+          <th>Kriterium</th>
+          <th>1: Content Library</th>
+          <th>2: Editor First</th>
+          <th>3: Media Grid</th>
+          <th>4: Performance</th>
+          <th>5: Workflow Kanban</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Katalog-oversikt</td>
+          <td>Sterk</td>
+          <td>Svak</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+          <td>Middels</td>
+        </tr>
+        <tr>
+          <td>Rask publisering</td>
+          <td>Middels</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+          <td>Svak</td>
+          <td>Sterk</td>
+        </tr>
+        <tr>
+          <td>Redaksjonell flyt</td>
+          <td>Svak</td>
+          <td>Middels</td>
+          <td>Svak</td>
+          <td>Svak</td>
+          <td>Sterk</td>
+        </tr>
+        <tr>
+          <td>Analyse / beslutninger</td>
+          <td>Svak</td>
+          <td>Svak</td>
+          <td>Svak</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+        </tr>
+        <tr>
+          <td>Video-tunge team</td>
+          <td>Middels</td>
+          <td>Middels</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+          <td>Middels</td>
+        </tr>
+        <tr>
+          <td>Læringskurve (ny bruker)</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+          <td>Sterk</td>
+        </tr>
+        <tr>
+          <td>Passer én-coach-bruk</td>
+          <td>Sterk</td>
+          <td>Sterk</td>
+          <td>Middels</td>
+          <td>Middels</td>
+          <td>Middels</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Content Library</h3>
+      <p>Default-visning av Content Studio bør være grid-katalogen: den kombinerer visuell skannbarhet (thumbnails), status-overblikk og enkel filtrering. Det matcher forventningene fra YouTube Studio, Webflow og Notion — og har lavest læringskurve for Anders som eneste forfatter i dag.</p>
+      <p><strong>Hvorfor ikke de andre som default:</strong> Editor First (Opt 2) er detaljvisning som nås via «Nytt innhold» eller ved å klikke et kort. Media Grid (Opt 3) er et sekundært «Media-bibliotek»-underview. Performance (Opt 4) bør ligge under Analytics-fanen i sidebar. Workflow Kanban (Opt 5) er verdifullt når innholdsproduksjonen skalerer til team — da bør den kunne slås av/på som alternativ visning via toggle (Grid | Kanban) øverst.</p>
+    </div>
+
+    <h3>Når velge hvilket</h3>
+    <ul>
+      <li><strong>Option 1 (Content Library):</strong> Default MVP. Enkel å forstå, skanne og handle.</li>
+      <li><strong>Option 2 (Editor First):</strong> Redigerings-flate — nås fra «Nytt innhold» eller klikk på kort.</li>
+      <li><strong>Option 3 (Media Grid):</strong> Som underfane for media-tunge team når video-volumet passerer 20+ klipp.</li>
+      <li><strong>Option 4 (Performance):</strong> Egen Analytics-fane — ikke hovedinngang. Månedsrapport-bruk.</li>
+      <li><strong>Option 5 (Workflow Kanban):</strong> Toggle på hovedviewet når produksjonen involverer flere forfattere/reviewere.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

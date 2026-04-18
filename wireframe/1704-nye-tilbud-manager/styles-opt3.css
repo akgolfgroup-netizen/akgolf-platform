@@ -1,0 +1,5 @@
+/* === Option 3: Builder Focus === */
+/* Phase 2 (Clean + Polished) vil legges til her senere. */
+
+#frame-opt3-tabs .sub-tab-btn[data-variant="clean"] { color: #999; }
+#frame-opt3-tabs .sub-tab-btn[data-variant="polished"] { color: #999; }

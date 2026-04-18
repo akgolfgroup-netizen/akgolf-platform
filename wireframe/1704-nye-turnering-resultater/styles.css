@@ -1,0 +1,222 @@
+/* === Wireframe Content CSS (B&W only) — Ferdige turneringsresultater === */
+/* Tokens: #000, #333, #666, #999, #ccc, #eee, #f5f5f5, #fff */
+
+.browser-content { padding: 0; background: #f5f5f5; min-height: 680px; }
+
+/* ============ APP SHELL ============ */
+.wf-app { display: grid; grid-template-columns: 200px 1fr; min-height: 680px; }
+
+/* Sidebar */
+.wf-sidebar { background: #fff; border-right: 1px solid #eee; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; }
+.wf-sidebar-logo { font-weight: 800; font-size: 12px; letter-spacing: 0.08em; color: #000; padding: 6px 10px 18px; border-bottom: 1px solid #eee; margin-bottom: 10px; }
+.wf-nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; font-size: 13px; color: #666; cursor: pointer; }
+.wf-nav-item:hover { background: #f5f5f5; color: #000; }
+.wf-nav-item.wf-active { background: #000; color: #fff; }
+.wf-nav-ico { width: 16px; height: 16px; border: 1px solid #ccc; border-radius: 3px; flex-shrink: 0; }
+.wf-active .wf-nav-ico { border-color: #fff; }
+.wf-sidebar-foot { margin-top: auto; padding-top: 12px; border-top: 1px solid #eee; font-size: 11px; color: #999; }
+.wf-sidebar-user { display: flex; align-items: center; gap: 8px; padding: 8px; }
+.wf-sidebar-avatar { width: 28px; height: 28px; border-radius: 50%; background: #eee; border: 1px solid #ccc; font-size: 10px; color: #666; display: flex; align-items: center; justify-content: center; }
+
+/* Main canvas */
+.wf-main { padding: 20px 24px 28px; background: #f5f5f5; overflow: hidden; }
+
+/* Sub-tabs (Ferdige/Aktive/Påmeldt) */
+.wf-sub-tabs { display: flex; gap: 2px; background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 3px; margin-bottom: 14px; width: fit-content; }
+.wf-sub-tab { padding: 6px 14px; border: none; background: transparent; color: #666; font-size: 12px; font-weight: 500; border-radius: 7px; cursor: pointer; }
+.wf-sub-tab.wf-active { background: #000; color: #fff; }
+
+/* ============ PAGE HEADER ============ */
+.wf-page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.wf-page-title { font-size: 22px; font-weight: 700; color: #000; margin: 0 0 4px; letter-spacing: -0.01em; }
+.wf-page-sub { font-size: 13px; color: #666; margin: 0; }
+.wf-page-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ============ BUTTONS ============ */
+.wf-btn { padding: 7px 14px; border: 1px solid #ccc; border-radius: 999px; background: #fff; color: #333; font-size: 12px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.wf-btn:hover { background: #eee; }
+.wf-btn-cta { background: #000; color: #fff; border-color: #000; font-weight: 600; }
+.wf-btn-cta:hover { background: #333; }
+.wf-btn-ghost { background: transparent; border-color: transparent; color: #666; padding: 6px 10px; }
+.wf-btn-ghost:hover { color: #000; background: #eee; }
+.wf-btn-icon { width: 28px; height: 28px; padding: 0; display: inline-flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ccc; border-radius: 8px; color: #666; cursor: pointer; font-size: 14px; }
+
+/* ============ SECTION HEADER ============ */
+.wf-section-head { display: flex; align-items: baseline; justify-content: space-between; margin: 18px 0 10px; }
+.wf-section-title { font-size: 12px; font-weight: 700; color: #000; letter-spacing: 0.06em; text-transform: uppercase; }
+.wf-section-meta { font-size: 11px; color: #999; }
+
+/* ============ OPT 1: SCORECARD HERO ============ */
+.wf-hero { background: #fff; border: 1px solid #eee; border-radius: 14px; padding: 18px 20px; margin-bottom: 14px; }
+.wf-hero-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+.wf-hero-tourn { font-size: 11px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; }
+.wf-hero-title { font-size: 20px; font-weight: 800; color: #000; margin: 4px 0 2px; letter-spacing: -0.01em; }
+.wf-hero-meta { font-size: 12px; color: #666; }
+.wf-hero-badge { font-size: 10px; padding: 3px 9px; border: 1px solid #000; border-radius: 999px; color: #000; letter-spacing: 0.06em; text-transform: uppercase; background: #fff; }
+
+.wf-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+.wf-kpi { background: #fafafa; border: 1px solid #eee; border-radius: 10px; padding: 10px 12px; }
+.wf-kpi-label { font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+.wf-kpi-value { font-size: 22px; font-weight: 800; color: #000; letter-spacing: -0.02em; line-height: 1; }
+.wf-kpi-sub { font-size: 10px; color: #666; margin-top: 4px; }
+
+/* Round switcher */
+.wf-round-pills { display: flex; gap: 6px; margin-bottom: 12px; }
+.wf-round-pill { padding: 5px 12px; border: 1px solid #ccc; border-radius: 999px; background: #fff; color: #666; font-size: 11px; cursor: pointer; }
+.wf-round-pill.wf-active { background: #000; color: #fff; border-color: #000; }
+.wf-round-pill-score { font-size: 10px; color: #999; margin-left: 4px; }
+.wf-round-pill.wf-active .wf-round-pill-score { color: rgba(255,255,255,0.7); }
+
+/* Scorecard */
+.wf-scorecard { background: #fafafa; border: 1px solid #eee; border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+.wf-sc-grid { display: grid; grid-template-columns: 80px repeat(9, 1fr) 40px; font-size: 11px; }
+.wf-sc-row { display: contents; }
+.wf-sc-cell { padding: 6px 4px; text-align: center; border-right: 1px solid #eee; border-bottom: 1px solid #eee; background: #fff; color: #333; }
+.wf-sc-cell:last-child { border-right: none; }
+.wf-sc-label { text-align: left; padding-left: 10px; color: #999; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; background: #fafafa; }
+.wf-sc-head { background: #f0f0f0; font-weight: 700; color: #000; }
+.wf-sc-total { background: #f0f0f0; font-weight: 700; color: #000; }
+.wf-sc-score { font-weight: 700; color: #000; font-size: 12px; }
+.wf-sc-eagle { background: #000; color: #fff; border-radius: 50%; display: inline-block; width: 18px; height: 18px; line-height: 18px; text-align: center; font-size: 10px; font-weight: 700; }
+.wf-sc-birdie { border: 1.5px solid #000; border-radius: 50%; display: inline-block; width: 18px; height: 18px; line-height: 16px; text-align: center; font-size: 10px; font-weight: 700; }
+.wf-sc-bogey { border: 1.5px solid #999; width: 16px; height: 16px; display: inline-block; line-height: 14px; text-align: center; font-size: 10px; font-weight: 600; }
+.wf-sc-double { border: 1.5px solid #999; outline: 2px solid #999; outline-offset: 1px; width: 14px; height: 14px; display: inline-block; line-height: 12px; text-align: center; font-size: 10px; font-weight: 600; }
+
+/* SG breakdown */
+.wf-sg-row { display: grid; grid-template-columns: 110px 1fr 60px; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px dashed #eee; }
+.wf-sg-row:last-child { border-bottom: none; }
+.wf-sg-label { font-size: 12px; color: #333; }
+.wf-sg-bar-wrap { position: relative; height: 8px; background: #eee; border-radius: 999px; }
+.wf-sg-bar-center { position: absolute; top: -2px; bottom: -2px; left: 50%; width: 1px; background: #ccc; }
+.wf-sg-bar-fill { position: absolute; top: 0; bottom: 0; background: #000; border-radius: 999px; }
+.wf-sg-bar-fill.wf-neg { background: #999; }
+.wf-sg-value { font-size: 12px; font-weight: 700; color: #000; text-align: right; font-variant-numeric: tabular-nums; }
+.wf-sg-value.wf-neg { color: #666; }
+
+/* Field compare mini */
+.wf-field-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.wf-field-row { background: #fafafa; border: 1px solid #eee; border-radius: 10px; padding: 10px 12px; }
+.wf-field-label { font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+.wf-field-value-pair { display: flex; align-items: baseline; gap: 10px; }
+.wf-field-you { font-size: 18px; font-weight: 800; color: #000; letter-spacing: -0.02em; }
+.wf-field-avg { font-size: 11px; color: #666; }
+
+/* ============ OPT 2: TIMELINE HISTORY ============ */
+.wf-timeline { display: flex; flex-direction: column; gap: 10px; }
+.wf-timeline-year { font-size: 11px; font-weight: 700; color: #000; letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 0 4px; border-top: 1px solid #eee; margin-top: 6px; }
+.wf-timeline-year:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+.wf-tl-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; display: grid; grid-template-columns: 80px 1fr 200px; gap: 14px; align-items: center; }
+.wf-tl-date { font-size: 11px; color: #666; }
+.wf-tl-date-day { font-size: 22px; font-weight: 800; color: #000; letter-spacing: -0.02em; line-height: 1; }
+.wf-tl-date-mo { font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+.wf-tl-main { }
+.wf-tl-tourn { font-size: 14px; font-weight: 700; color: #000; margin-bottom: 2px; }
+.wf-tl-host { font-size: 11px; color: #666; }
+.wf-tl-tag { display: inline-block; font-size: 9px; padding: 2px 8px; border: 1px solid #ccc; border-radius: 999px; color: #666; letter-spacing: 0.04em; text-transform: uppercase; margin-right: 4px; margin-top: 6px; background: #fafafa; }
+.wf-tl-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 11px; }
+.wf-tl-stat-label { font-size: 9px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; }
+.wf-tl-stat-val { font-size: 15px; font-weight: 800; color: #000; letter-spacing: -0.02em; line-height: 1.1; }
+.wf-tl-highlight { border-left: 3px solid #000; }
+
+/* ============ OPT 3: ROUND-BY-ROUND ============ */
+.wf-rbr-head { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; }
+.wf-rbr-title { font-size: 16px; font-weight: 800; color: #000; letter-spacing: -0.01em; }
+.wf-rbr-sub { font-size: 12px; color: #666; margin-top: 2px; }
+.wf-rbr-rows { display: flex; flex-direction: column; gap: 6px; }
+.wf-rbr-row { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 12px 16px; display: grid; grid-template-columns: 60px 1fr 80px 80px 80px 80px 40px; gap: 12px; align-items: center; cursor: pointer; }
+.wf-rbr-row:hover { background: #fafafa; }
+.wf-rbr-row.wf-best { border-color: #000; }
+.wf-rbr-label { font-size: 10px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; }
+.wf-rbr-num { font-size: 18px; font-weight: 800; color: #000; letter-spacing: -0.02em; }
+.wf-rbr-day-label { font-size: 11px; color: #666; margin-top: 2px; }
+.wf-rbr-stat-lbl { font-size: 9px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2px; }
+.wf-rbr-stat-val { font-size: 13px; font-weight: 700; color: #000; font-variant-numeric: tabular-nums; }
+.wf-rbr-stat-val.wf-pos { color: #000; }
+.wf-rbr-stat-val.wf-neg { color: #666; }
+.wf-rbr-chev { font-size: 16px; color: #999; text-align: right; }
+.wf-rbr-head-row { display: grid; grid-template-columns: 60px 1fr 80px 80px 80px 80px 40px; gap: 12px; padding: 4px 16px 8px; font-size: 9px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ============ OPT 4: FIELD COMPARISON ============ */
+.wf-fc-top { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px; }
+.wf-fc-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px 18px; }
+.wf-fc-place { font-size: 48px; font-weight: 800; color: #000; letter-spacing: -0.04em; line-height: 1; }
+.wf-fc-place-sub { font-size: 11px; color: #666; margin-top: 4px; }
+.wf-fc-place-meta { display: flex; gap: 18px; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #eee; }
+.wf-fc-place-meta-item { font-size: 11px; color: #666; }
+.wf-fc-place-meta-item strong { display: block; font-size: 14px; color: #000; margin-top: 2px; }
+
+.wf-cut-card { background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; }
+.wf-cut-line { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: #666; margin-bottom: 6px; }
+.wf-cut-bar { position: relative; height: 28px; background: #eee; border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
+.wf-cut-bar-cut { position: absolute; top: 0; bottom: 0; width: 2px; background: #000; left: 55%; }
+.wf-cut-bar-you { position: absolute; top: 50%; left: 22%; width: 12px; height: 12px; border-radius: 50%; background: #000; transform: translate(-50%, -50%); border: 2px solid #fff; }
+.wf-cut-bar-label { position: absolute; top: 4px; left: 56%; font-size: 9px; color: #666; letter-spacing: 0.06em; text-transform: uppercase; }
+.wf-cut-foot { font-size: 10px; color: #999; display: flex; justify-content: space-between; }
+
+/* Field distribution */
+.wf-fc-dist { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
+.wf-fc-dist-title { font-size: 12px; font-weight: 700; color: #000; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+.wf-fc-hist { display: flex; align-items: flex-end; gap: 3px; height: 80px; padding-bottom: 2px; border-bottom: 1px solid #eee; }
+.wf-fc-hist-bar { flex: 1; background: #eee; border-radius: 3px 3px 0 0; position: relative; }
+.wf-fc-hist-bar.wf-you { background: #000; }
+.wf-fc-hist-bar::after { content: attr(data-count); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font-size: 8px; color: #999; margin-bottom: 2px; }
+.wf-fc-hist-axis { display: flex; justify-content: space-between; font-size: 9px; color: #999; margin-top: 4px; padding: 0 2px; }
+
+/* Field stats comparison */
+.wf-fc-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.wf-fc-stat { background: #fafafa; border: 1px solid #eee; border-radius: 10px; padding: 10px 12px; }
+.wf-fc-stat-lbl { font-size: 9px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+.wf-fc-stat-vals { display: flex; align-items: baseline; gap: 8px; }
+.wf-fc-stat-you { font-size: 18px; font-weight: 800; color: #000; letter-spacing: -0.02em; }
+.wf-fc-stat-field { font-size: 10px; color: #666; }
+.wf-fc-stat-delta { font-size: 10px; color: #000; font-weight: 600; margin-top: 2px; }
+.wf-fc-stat-delta.wf-down { color: #666; }
+
+/* ============ OPT 5: LESSONS LEARNED ============ */
+.wf-ll-head { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+.wf-ll-head-main { font-size: 14px; font-weight: 700; color: #000; }
+.wf-ll-head-sub { font-size: 11px; color: #666; margin-top: 2px; }
+.wf-ll-head-res { text-align: right; }
+.wf-ll-head-res-place { font-size: 20px; font-weight: 800; color: #000; letter-spacing: -0.02em; line-height: 1; }
+.wf-ll-head-res-sub { font-size: 10px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+
+.wf-ll-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.wf-ll-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 14px 16px; }
+.wf-ll-card.wf-good { border-top: 3px solid #000; }
+.wf-ll-card.wf-bad { border-top: 3px solid #999; }
+.wf-ll-card-title { font-size: 11px; font-weight: 700; color: #000; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+.wf-ll-list { display: flex; flex-direction: column; gap: 8px; }
+.wf-ll-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; background: #fafafa; border-radius: 8px; }
+.wf-ll-item-ico { width: 16px; height: 16px; border-radius: 4px; background: #000; flex-shrink: 0; margin-top: 1px; color: #fff; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.wf-ll-item.wf-bad .wf-ll-item-ico { background: #fff; border: 1.5px solid #999; color: #999; }
+.wf-ll-item-body { flex: 1; }
+.wf-ll-item-title { font-size: 12px; font-weight: 600; color: #000; line-height: 1.3; }
+.wf-ll-item-meta { font-size: 10px; color: #666; margin-top: 2px; line-height: 1.4; }
+
+/* AI Insights */
+.wf-ai-card { background: #fafafa; border: 1px dashed #ccc; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+.wf-ai-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.wf-ai-ico { width: 22px; height: 22px; border-radius: 6px; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+.wf-ai-title { font-size: 11px; font-weight: 700; color: #000; letter-spacing: 0.08em; text-transform: uppercase; }
+.wf-ai-quote { font-size: 13px; color: #333; line-height: 1.5; font-style: italic; }
+.wf-ai-tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.wf-ai-tag { font-size: 10px; padding: 3px 9px; border: 1px solid #ccc; border-radius: 999px; background: #fff; color: #666; letter-spacing: 0.04em; }
+
+/* Focus items */
+.wf-focus-list { display: flex; flex-direction: column; gap: 8px; }
+.wf-focus-item { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 12px 14px; display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; }
+.wf-focus-num { width: 28px; height: 28px; border-radius: 50%; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; }
+.wf-focus-body-title { font-size: 12px; font-weight: 600; color: #000; }
+.wf-focus-body-meta { font-size: 10px; color: #666; margin-top: 2px; }
+.wf-focus-link { font-size: 11px; color: #000; text-decoration: underline; cursor: pointer; }
+
+/* ============ ANNOTATIONS ============ */
+.wf-annotations h3 { color: #000; }
+.wf-rec-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 12px; }
+.wf-rec-table th, .wf-rec-table td { border: 1px solid #eee; padding: 8px 10px; text-align: left; }
+.wf-rec-table th { background: #fafafa; color: #000; font-weight: 700; }
+.wf-recommendation { margin-top: 16px; padding: 16px; border: 1px solid #eee; border-radius: 10px; background: #fafafa; }
+.wf-recommendation h3 { margin: 0 0 8px; color: #000; font-size: 15px; }
+.wf-recommendation p { font-size: 12px; color: #333; line-height: 1.6; margin: 0 0 8px; }
+.wf-recommendation ul { margin: 0; padding-left: 20px; font-size: 12px; color: #333; }
+.wf-recommendation li { margin-bottom: 4px; line-height: 1.5; }

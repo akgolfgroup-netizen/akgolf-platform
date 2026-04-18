@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foreldre-dashboard — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Foreldre-dashboard (N05)</span> — <span id="project-name">AK Golf Platform · /portal/forelder</span></span>
+    <span class="rec">Anbefalt: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Single Child Focus</button>
+    <button class="tab-btn" data-tab="option-2">2: Multi-Child Tabs</button>
+    <button class="tab-btn" data-tab="option-3">3: Overview Grid</button>
+    <button class="tab-btn" data-tab="option-4">4: Timeline Feed</button>
+    <button class="tab-btn" data-tab="option-5">5: Admin-Style</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Single Child Focus ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Single Child Focus</span> (SAFE)</h2>
+    <p class="option-description">Tilpasser seg antall barn. Har forelderen ett barn vises dashboardet direkte for det barnet. Ved flere barn velges aktivt barn via kompakt child-picker i toppen. Hero-kort med barnets navn, HCP, neste booking og plan-progresjon. Trygg start — speiler spillerportalen, men i forelder-kontekst (read-only plan, full booking og betaling).</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/forelder</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">HH</div>
+              <div>
+                <div class="wf-sb-profile-name">Heidi Hansen</div>
+                <div class="wf-sb-profile-meta">Forelder · 2 barn</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Foreldre-portal</div>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Barna mine</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Fakturaer</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Meldinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Kalender</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Ubetalt faktura<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">Kr 2 400 · forfaller 25. apr</div>
+              <button class="wf-sb-cta-btn">Betal nå</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Torsdag 17. april · Uke 16</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Varsler · 2</span>
+                <span class="wf-mtopbar-chip">Profil</span>
+              </div>
+            </div>
+
+            <section class="wf-greet">
+              <div>
+                <div class="wf-greet-eyebrow">God morgen</div>
+                <h1 class="wf-greet-h">Hei Heidi — her er oversikten for Erik og Marte<span class="wf-marker">2</span></h1>
+                <p class="wf-greet-sub">2 bookinger denne uka · 1 ny melding fra coach · ingen forfalte fakturaer</p>
+              </div>
+              <div class="wf-greet-badge">FORELDER</div>
+            </section>
+
+            <div class="wf-child-switcher">
+              <div class="wf-child-switcher-label">Velg barn</div>
+              <div class="wf-child-tabs">
+                <button class="wf-child-tab wf-active">
+                  <span class="wf-child-avatar">EH</span>
+                  <div class="wf-child-tab-info">
+                    <div class="wf-child-tab-name">Erik (14)</div>
+                    <div class="wf-child-tab-meta">HCP 18,4 · Junior</div>
+                  </div>
+                </button>
+                <button class="wf-child-tab">
+                  <span class="wf-child-avatar">MH</span>
+                  <div class="wf-child-tab-info">
+                    <div class="wf-child-tab-name">Marte (12)</div>
+                    <div class="wf-child-tab-meta">HCP 28,6 · Junior</div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+
+              <div class="wf-booking-hero wf-bc-8">
+                <div class="wf-c-label">Neste trening for Erik<span class="wf-marker">3</span></div>
+                <div class="wf-booking-title">Junior gruppe · Oslo Golfklubb</div>
+                <div class="wf-booking-meta">I dag kl. 16:00 · 60 min · coach Anders Kristiansen</div>
+                <div class="wf-booking-row">
+                  <div class="wf-c-sub">Tema: putting 3–8 meter · møt 10 min før</div>
+                  <div class="wf-booking-actions">
+                    <button class="wf-quick-btn-primary wf-quick-btn">Se detaljer →</button>
+                    <button class="wf-quick-btn">Avbestill</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-pro wf-bc-4">
+                <div class="wf-pro-eyebrow">Spillerkort<span class="wf-marker">4</span></div>
+                <div class="wf-pro-user">
+                  <div class="wf-pro-avatar">EH</div>
+                  <div>
+                    <div class="wf-pro-name">Erik Hansen</div>
+                    <div class="wf-pro-meta">14 år · Junior Pro-pakke</div>
+                  </div>
+                </div>
+                <div class="wf-pro-hcp">
+                  <div>
+                    <div class="wf-pro-hcp-label">Handicap</div>
+                    <div class="wf-pro-hcp-value">18,4</div>
+                  </div>
+                  <span class="wf-pro-hcp-badge">−3,1 i år</span>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Treningsplan Erik · uke 16<span class="wf-marker">5</span></div>
+                  <span class="wf-lock-chip">Kun lesing</span>
+                </div>
+                <div class="wf-plan-progress">
+                  <div class="wf-plan-progress-head">
+                    <div class="wf-plan-progress-title">Putting-fokus 100–140 cm</div>
+                    <div class="wf-plan-progress-value">3 av 5 økter fullført</div>
+                  </div>
+                  <div class="wf-plan-progress-bar">
+                    <div class="wf-plan-progress-fill" style="width:60%"></div>
+                  </div>
+                  <div class="wf-plan-progress-meta">60% gjennomført · 2 økter igjen før lørdag</div>
+                </div>
+                <div class="wf-week">
+                  <div class="wf-wday"><div class="wf-wday-name">Man</div><div class="wf-wday-num">14</div><div class="wf-wday-dot"></div></div>
+                  <div class="wf-wday"><div class="wf-wday-name">Tir</div><div class="wf-wday-num">15</div><div class="wf-wday-dot"></div></div>
+                  <div class="wf-wday"><div class="wf-wday-name">Ons</div><div class="wf-wday-num">16</div></div>
+                  <div class="wf-wday wf-active"><div class="wf-wday-name">Tor</div><div class="wf-wday-num">17</div><div class="wf-wday-dot"></div></div>
+                  <div class="wf-wday"><div class="wf-wday-name">Fre</div><div class="wf-wday-num">18</div></div>
+                  <div class="wf-wday"><div class="wf-wday-name">Lør</div><div class="wf-wday-num">19</div><div class="wf-wday-dot"></div></div>
+                  <div class="wf-wday"><div class="wf-wday-name">Søn</div><div class="wf-wday-num">20</div></div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Coach-melding<span class="wf-marker">6</span></div>
+                <div class="wf-coach-note">
+                  <div class="wf-coach-note-author">Anders · coach</div>
+                  <p class="wf-coach-note-body">"Erik jobber bra med puttingen. Ta gjerne med ham til putting-greenen før helgeturnering."</p>
+                </div>
+                <button class="wf-quick-btn">Svar til coach →</button>
+              </div>
+
+              <div class="wf-c wf-bc-3"><div class="wf-kpi"><div class="wf-kpi-label">Handicap</div><div class="wf-kpi-value">18,4</div><div class="wf-kpi-sub">−3,1 i år</div></div></div>
+              <div class="wf-c wf-bc-3"><div class="wf-kpi"><div class="wf-kpi-label">Økter i mnd</div><div class="wf-kpi-value">7</div><div class="wf-kpi-sub">av 8 planlagt</div></div></div>
+              <div class="wf-c wf-bc-3"><div class="wf-kpi"><div class="wf-kpi-label">Fremmøte</div><div class="wf-kpi-value">92%</div><div class="wf-kpi-sub">siste 3 mnd</div></div></div>
+              <div class="wf-c wf-bc-3"><div class="wf-kpi"><div class="wf-kpi-label">Plan-progresjon</div><div class="wf-kpi-value">60%</div><div class="wf-kpi-sub">uke 16</div></div></div>
+
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Faktura-status<span class="wf-marker">7</span></div>
+                  <button class="wf-c-link">Se alle →</button>
+                </div>
+                <div class="wf-invoice-row">
+                  <div class="wf-invoice-main">
+                    <div class="wf-invoice-title">Junior Pro · april 2026</div>
+                    <div class="wf-invoice-meta">Erik · månedlig abonnement</div>
+                  </div>
+                  <span class="wf-status wf-status-ok">Betalt</span>
+                </div>
+                <div class="wf-invoice-row">
+                  <div class="wf-invoice-main">
+                    <div class="wf-invoice-title">Junior Start · april 2026</div>
+                    <div class="wf-invoice-meta">Marte · månedlig abonnement</div>
+                  </div>
+                  <span class="wf-status wf-status-warn">Forfaller 25. apr</span>
+                </div>
+                <div class="wf-invoice-row">
+                  <div class="wf-invoice-main">
+                    <div class="wf-invoice-title">Sommer-camp 2026</div>
+                    <div class="wf-invoice-meta">Begge barn · tilbud sendt</div>
+                  </div>
+                  <span class="wf-status wf-status-info">Venter</span>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-label">Hurtighandlinger<span class="wf-marker">8</span></div>
+                <div class="wf-quick">
+                  <button class="wf-quick-btn wf-quick-btn-primary">Book ny time for Erik <span class="wf-quick-arrow">→</span></button>
+                  <button class="wf-quick-btn">Oppgrader abonnement <span class="wf-quick-arrow">→</span></button>
+                  <button class="wf-quick-btn">Kjøp flex-pakke <span class="wf-quick-arrow">→</span></button>
+                  <button class="wf-quick-btn">Send melding til coach <span class="wf-quick-arrow">→</span></button>
+                </div>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Sidebar-varsel (ubetalt faktura):</strong> Viktigst handling for forelder = betaling. Plasseres synlig som CTA i bunn av sidebar.</li>
+        <li><strong>2 — Navngitt hilsen:</strong> "Hei Heidi" + begge barnenavn skaper umiddelbar forelderkontekst. Viktig for å skille fra spillerportalen.</li>
+        <li><strong>3 — Neste booking:</strong> Forelder skal kunne se tid/sted og avbestille ved behov. Forelderen har full booking-rettighet.</li>
+        <li><strong>4 — Spillerkort:</strong> Komprimert elev-info. Read-only. Viser abonnementstype så forelderen vet hva de betaler for.</li>
+        <li><strong>5 — Read-only treningsplan:</strong> "Kun lesing"-chip gjør det tydelig at forelder ikke kan endre planen. Planen er coach + barn sitt ansvar.</li>
+        <li><strong>6 — Coach-melding:</strong> Direkte kommunikasjonskanal forelder ↔ coach. Viktig differensiator fra spillerportalen.</li>
+        <li><strong>7 — Fakturastatus pr. barn:</strong> Stripe-koblet. Tydelig status-badge (Betalt / Forfaller / Venter). Separat per barn — aldri bland.</li>
+        <li><strong>8 — Hurtighandlinger:</strong> Book, oppgrader, kjøp flex, meld coach — de 4 viktigste foreldrehandlingene samlet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Multi-Child Tabs ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Multi-Child Tabs</span></h2>
+    <p class="option-description">Barn som store tabs på toppen. Bytt raskt mellom Erik og Marte — hvert barn får sin egen mini-dashboard under. Felles faktura- og meldingsstripe er permanent synlig nederst, fordi det gjelder forelderen uansett valgt barn.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/forelder</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">HH</div>
+              <div>
+                <div class="wf-sb-profile-name">Heidi Hansen</div>
+                <div class="wf-sb-profile-meta">Forelder</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Fakturaer</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Meldinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Kalender</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Abonnement</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Book time</div>
+              <div class="wf-sb-cta-desc">5 ledige tider denne uka</div>
+              <button class="wf-sb-cta-btn">Se kalender</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Foreldre-oversikt · uke 16</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">I dag</span><span class="wf-mtopbar-chip">Uke</span><span class="wf-mtopbar-chip">Mnd</span></div>
+            </div>
+
+            <div class="wf-child-big-tabs">
+              <button class="wf-big-tab wf-active">
+                <div class="wf-big-tab-avatar">EH</div>
+                <div class="wf-big-tab-body">
+                  <div class="wf-big-tab-name">Erik<span class="wf-marker">1</span></div>
+                  <div class="wf-big-tab-meta">14 år · HCP 18,4 · Junior Pro</div>
+                </div>
+                <div class="wf-big-tab-stat">
+                  <div class="wf-big-tab-stat-val">60%</div>
+                  <div class="wf-big-tab-stat-lbl">plan uke 16</div>
+                </div>
+              </button>
+              <button class="wf-big-tab">
+                <div class="wf-big-tab-avatar">MH</div>
+                <div class="wf-big-tab-body">
+                  <div class="wf-big-tab-name">Marte</div>
+                  <div class="wf-big-tab-meta">12 år · HCP 28,6 · Junior Start</div>
+                </div>
+                <div class="wf-big-tab-stat">
+                  <div class="wf-big-tab-stat-val">40%</div>
+                  <div class="wf-big-tab-stat-lbl">plan uke 16</div>
+                </div>
+              </button>
+            </div>
+
+            <div class="wf-child-panel">
+              <div class="wf-child-panel-head">
+                <div>
+                  <div class="wf-c-label">Erik Hansen · mini-dashboard<span class="wf-marker">2</span></div>
+                  <div class="wf-child-panel-sub">Junior Pro-abonnement · startet sept 2025</div>
+                </div>
+                <button class="wf-quick-btn wf-quick-btn-primary">Book time for Erik →</button>
+              </div>
+
+              <div class="wf-bento">
+
+                <div class="wf-booking-hero wf-bc-6">
+                  <div class="wf-c-label">Neste trening</div>
+                  <div class="wf-booking-title">Junior gruppe · i dag 16:00</div>
+                  <div class="wf-booking-meta">Oslo Golfklubb · 60 min · Anders</div>
+                  <div class="wf-booking-actions" style="margin-top:12px;">
+                    <button class="wf-quick-btn-primary wf-quick-btn">Se økt</button>
+                    <button class="wf-quick-btn">Avbestill</button>
+                  </div>
+                </div>
+
+                <div class="wf-c wf-bc-6">
+                  <div class="wf-c-row">
+                    <div class="wf-c-label">Treningsplan<span class="wf-marker">3</span></div>
+                    <span class="wf-lock-chip">Kun lesing</span>
+                  </div>
+                  <div class="wf-plan-progress">
+                    <div class="wf-plan-progress-head">
+                      <div class="wf-plan-progress-title">Putting 100–140 cm</div>
+                      <div class="wf-plan-progress-value">3 / 5 økter</div>
+                    </div>
+                    <div class="wf-plan-progress-bar">
+                      <div class="wf-plan-progress-fill" style="width:60%"></div>
+                    </div>
+                  </div>
+                  <div class="wf-c-sub">Coach: Anders · oppdatert for 2 dager siden</div>
+                </div>
+
+                <div class="wf-c wf-bc-3"><div class="wf-kpi"><div class="wf-kpi-label">HCP</div><div class="wf-kpi-value">18,4</div><div class="wf-kpi-sub">−3,1 i år</div></div></div>
+                <div class="wf-c wf-bc-3"><div class="wf-kpi"><div class="wf-kpi-label">Økter mnd</div><div class="wf-kpi-value">7</div><div class="wf-kpi-sub">av 8 plan</div></div></div>
+                <div class="wf-c wf-bc-3"><div class="wf-kpi"><div class="wf-kpi-label">Fremmøte</div><div class="wf-kpi-value">92%</div><div class="wf-kpi-sub">3 mnd</div></div></div>
+                <div class="wf-c wf-bc-3"><div class="wf-kpi"><div class="wf-kpi-label">Neste</div><div class="wf-kpi-value">16:00</div><div class="wf-kpi-sub">i dag</div></div></div>
+
+                <div class="wf-c wf-bc-12">
+                  <div class="wf-c-row">
+                    <div class="wf-c-label">Siste coach-melding</div>
+                    <span class="wf-ai-badge">Ny</span>
+                  </div>
+                  <div class="wf-coach-note">
+                    <div class="wf-coach-note-author">Anders · coach</div>
+                    <p class="wf-coach-note-body">"Erik jobber bra med puttingen. Ta gjerne med ham til putting-greenen før helgeturnering — 15 min holder."</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="wf-shared-strip">
+              <div class="wf-shared-title">Felles (forelder-nivå)<span class="wf-marker">4</span></div>
+              <div class="wf-shared-grid">
+                <div class="wf-shared-cell">
+                  <div class="wf-c-label">Fakturaer</div>
+                  <div class="wf-c-value" style="font-size:22px">1</div>
+                  <div class="wf-c-sub">forfaller 25. apr · kr 2 400</div>
+                </div>
+                <div class="wf-shared-cell">
+                  <div class="wf-c-label">Meldinger</div>
+                  <div class="wf-c-value" style="font-size:22px">2</div>
+                  <div class="wf-c-sub">uleste fra coach</div>
+                </div>
+                <div class="wf-shared-cell">
+                  <div class="wf-c-label">Bookinger uke</div>
+                  <div class="wf-c-value" style="font-size:22px">3</div>
+                  <div class="wf-c-sub">Erik 2 · Marte 1</div>
+                </div>
+                <div class="wf-shared-cell">
+                  <div class="wf-c-label">Abonnement</div>
+                  <div class="wf-c-value" style="font-size:22px">2</div>
+                  <div class="wf-c-sub">aktive · se vilkår</div>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Store barn-tabs:</strong> Hvert barn får avatar, navn, pakke og plan-%. Bytt mellom barna uten å miste kontekst.</li>
+        <li><strong>2 — Mini-dashboard per barn:</strong> Strukturen er lik for hvert barn — forelder lærer én gang, bruker det på alle barna.</li>
+        <li><strong>3 — Read-only treningsplan:</strong> Samme «kun lesing»-chip som Option 1 — konsistent signal.</li>
+        <li><strong>4 — Felles-stripe:</strong> Fakturaer, meldinger, bookinger og abonnement gjelder forelderen — ikke barnet. Vises alltid nederst, uansett valgt barn.</li>
+        <li>— Risiko: Med 1 barn blir tab-raden unødvendig. Løsning: skjul tab-bar og vis mini-dashboard direkte.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Overview Grid ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Overview Grid</span></h2>
+    <p class="option-description">Alle barn side-by-side som store kort i et grid. Forelderen ser hele familien på én skjerm — klikk på et kort åpner detalj-drawer. Best for foreldre med 2–4 barn som vil ha helikopter-perspektiv.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/forelder</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">HH</div>
+              <div><div class="wf-sb-profile-name">Heidi Hansen</div><div class="wf-sb-profile-meta">Forelder · 2 barn</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Barna mine</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Fakturaer</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Meldinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Kalender</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Abonnement</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Sommer-camp 2026</div>
+              <div class="wf-sb-cta-desc">Rabatt for 2+ barn</div>
+              <button class="wf-sb-cta-btn">Se tilbud</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Barna mine · torsdag 17. april</div>
+              <div class="wf-mtopbar-right"><span class="wf-mtopbar-chip">+ Legg til barn</span><span class="wf-mtopbar-chip">Varsler · 2</span></div>
+            </div>
+
+            <div class="wf-summary-strip">
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Barn totalt</div><div class="wf-kpi-value">2</div></div>
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Bookinger uke</div><div class="wf-kpi-value">3</div></div>
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Ubetalt</div><div class="wf-kpi-value">1</div></div>
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Meldinger</div><div class="wf-kpi-value">2</div></div>
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Abonnement</div><div class="wf-kpi-value">2</div></div>
+            </div>
+
+            <div class="wf-children-grid">
+              <div class="wf-child-card">
+                <div class="wf-child-card-head">
+                  <div class="wf-child-card-avatar">EH</div>
+                  <div>
+                    <div class="wf-child-card-name">Erik Hansen<span class="wf-marker">1</span></div>
+                    <div class="wf-child-card-meta">14 år · Junior Pro</div>
+                  </div>
+                  <span class="wf-pro-hcp-badge" style="margin-left:auto;">HCP 18,4</span>
+                </div>
+
+                <div class="wf-child-card-next">
+                  <div class="wf-c-label">Neste trening</div>
+                  <div class="wf-child-card-next-title">I dag 16:00 · Junior gruppe</div>
+                  <div class="wf-c-sub">Oslo GK · coach Anders</div>
+                </div>
+
+                <div class="wf-child-card-plan">
+                  <div class="wf-plan-progress-head">
+                    <div class="wf-plan-progress-title">Plan uke 16</div>
+                    <div class="wf-plan-progress-value">60%</div>
+                  </div>
+                  <div class="wf-plan-progress-bar"><div class="wf-plan-progress-fill" style="width:60%"></div></div>
+                </div>
+
+                <div class="wf-child-card-kpis">
+                  <div><div class="wf-kpi-label">Mnd-økter</div><div class="wf-kpi-value" style="font-size:18px">7/8</div></div>
+                  <div><div class="wf-kpi-label">Fremmøte</div><div class="wf-kpi-value" style="font-size:18px">92%</div></div>
+                  <div><div class="wf-kpi-label">HCP-trend</div><div class="wf-kpi-value" style="font-size:18px">−3,1</div></div>
+                </div>
+
+                <div class="wf-child-card-foot">
+                  <span class="wf-status wf-status-ok">Faktura betalt</span>
+                  <button class="wf-quick-btn wf-quick-btn-primary">Åpne detaljer →</button>
+                </div>
+              </div>
+
+              <div class="wf-child-card">
+                <div class="wf-child-card-head">
+                  <div class="wf-child-card-avatar">MH</div>
+                  <div>
+                    <div class="wf-child-card-name">Marte Hansen</div>
+                    <div class="wf-child-card-meta">12 år · Junior Start</div>
+                  </div>
+                  <span class="wf-pro-hcp-badge" style="margin-left:auto;">HCP 28,6</span>
+                </div>
+
+                <div class="wf-child-card-next">
+                  <div class="wf-c-label">Neste trening</div>
+                  <div class="wf-child-card-next-title">Fredag 17:30 · Nybegynner</div>
+                  <div class="wf-c-sub">Oslo GK · coach Markus</div>
+                </div>
+
+                <div class="wf-child-card-plan">
+                  <div class="wf-plan-progress-head">
+                    <div class="wf-plan-progress-title">Plan uke 16</div>
+                    <div class="wf-plan-progress-value">40%</div>
+                  </div>
+                  <div class="wf-plan-progress-bar"><div class="wf-plan-progress-fill" style="width:40%"></div></div>
+                </div>
+
+                <div class="wf-child-card-kpis">
+                  <div><div class="wf-kpi-label">Mnd-økter</div><div class="wf-kpi-value" style="font-size:18px">5/6</div></div>
+                  <div><div class="wf-kpi-label">Fremmøte</div><div class="wf-kpi-value" style="font-size:18px">88%</div></div>
+                  <div><div class="wf-kpi-label">HCP-trend</div><div class="wf-kpi-value" style="font-size:18px">−5,4</div></div>
+                </div>
+
+                <div class="wf-child-card-foot">
+                  <span class="wf-status wf-status-warn">Forfaller 25. apr</span>
+                  <button class="wf-quick-btn wf-quick-btn-primary">Åpne detaljer →</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-label">Meldinger fra coach<span class="wf-marker">2</span></div>
+                <div class="wf-coach-note">
+                  <div class="wf-coach-note-author">Anders · om Erik · 2d</div>
+                  <p class="wf-coach-note-body">"Erik jobber bra med puttingen. Ta gjerne med ham til greenen før helgen."</p>
+                </div>
+                <div class="wf-coach-note" style="margin-top:8px;">
+                  <div class="wf-coach-note-author">Markus · om Marte · 4d</div>
+                  <p class="wf-coach-note-body">"Marte trenger mer tid på chip — vi legger 15 min ekstra neste fredag."</p>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-6">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Fakturaer<span class="wf-marker">3</span></div>
+                  <button class="wf-c-link">Betal alt →</button>
+                </div>
+                <div class="wf-invoice-row">
+                  <div class="wf-invoice-main">
+                    <div class="wf-invoice-title">Junior Pro · Erik · april</div>
+                    <div class="wf-invoice-meta">kr 1 295 · betalt 1. apr</div>
+                  </div>
+                  <span class="wf-status wf-status-ok">Betalt</span>
+                </div>
+                <div class="wf-invoice-row">
+                  <div class="wf-invoice-main">
+                    <div class="wf-invoice-title">Junior Start · Marte · april</div>
+                    <div class="wf-invoice-meta">kr 2 400 · forfall 25. apr</div>
+                  </div>
+                  <span class="wf-status wf-status-warn">Forfaller</span>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Barn-kort side-by-side:</strong> Hele familien synlig uten scroll. Ideelt for foreldre med 2+ barn som vil sammenligne fremdrift.</li>
+        <li><strong>2 — Samlede meldinger:</strong> Begge coachers meldinger i samme panel — forelderen slipper å bytte barn for å lese.</li>
+        <li><strong>3 — Samlet faktura-oversikt:</strong> «Betal alt» som sekundær CTA reduserer friksjon for forelder med flere barn.</li>
+        <li>— Styrke: God «situational awareness». Svakhet: Med 3+ barn blir kortene for trange — må kollapse til rader.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Timeline Feed ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Timeline Feed</span></h2>
+    <p class="option-description">Kronologisk feed av hendelser for alle barn. Som en Instagram-feed, men for golf-familien: trening fullført, ny melding fra coach, faktura betalt, HCP oppdatert. Minimum kognitiv belastning — bla, oppdater, skjønn alt.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/forelder</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">HH</div>
+              <div><div class="wf-sb-profile-name">Heidi Hansen</div><div class="wf-sb-profile-meta">Forelder · 2 barn</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Aktivitet</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Barna mine</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Fakturaer</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Meldinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Kalender</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Filtrer aktivitet</div>
+              <div class="wf-sb-cta-desc">Begrens til ett barn</div>
+              <button class="wf-sb-cta-btn">Alle barn</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Aktivitetsfeed · torsdag 17. april</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Alle barn</span>
+                <span class="wf-mtopbar-chip">Alle typer</span>
+                <span class="wf-mtopbar-chip">7 dager</span>
+              </div>
+            </div>
+
+            <div class="wf-feed-header">
+              <div>
+                <div class="wf-greet-eyebrow">Aktivitetsfeed<span class="wf-marker">1</span></div>
+                <h1 class="wf-greet-h" style="margin-top:4px">Hva har skjedd i familien?</h1>
+              </div>
+              <button class="wf-quick-btn wf-quick-btn-primary">Book ny time →</button>
+            </div>
+
+            <div class="wf-feed">
+
+              <div class="wf-feed-day">I dag · torsdag 17. april</div>
+
+              <div class="wf-feed-item wf-feed-booking">
+                <div class="wf-feed-time">kl. 16:00</div>
+                <div class="wf-feed-dot"></div>
+                <div class="wf-feed-body">
+                  <div class="wf-feed-meta"><span class="wf-feed-kid">Erik</span><span class="wf-feed-tag">Kommende trening</span></div>
+                  <div class="wf-feed-title">Junior gruppe · Oslo Golfklubb<span class="wf-marker">2</span></div>
+                  <div class="wf-feed-desc">Tema: putting 3–8 meter · coach Anders · møt 10 min før</div>
+                  <div class="wf-feed-actions">
+                    <button class="wf-quick-btn">Se detaljer</button>
+                    <button class="wf-quick-btn">Avbestill</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-feed-item">
+                <div class="wf-feed-time">kl. 09:14</div>
+                <div class="wf-feed-dot"></div>
+                <div class="wf-feed-body">
+                  <div class="wf-feed-meta"><span class="wf-feed-kid">Marte</span><span class="wf-feed-tag">Coach-melding</span></div>
+                  <div class="wf-feed-title">"Marte trenger mer tid på chip"</div>
+                  <div class="wf-feed-desc">Markus har sendt deg en melding om Marte sin treningsplan</div>
+                  <div class="wf-feed-actions">
+                    <button class="wf-quick-btn wf-quick-btn-primary">Les og svar →</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-feed-day">I går · onsdag 16. april</div>
+
+              <div class="wf-feed-item">
+                <div class="wf-feed-time">kl. 17:45</div>
+                <div class="wf-feed-dot wf-feed-dot-success"></div>
+                <div class="wf-feed-body">
+                  <div class="wf-feed-meta"><span class="wf-feed-kid">Erik</span><span class="wf-feed-tag">Plan-progresjon</span></div>
+                  <div class="wf-feed-title">Økt fullført — 3 av 5 i uke 16<span class="wf-marker">3</span></div>
+                  <div class="wf-feed-desc">Putting 100–140 cm · 60 min · egentrening registrert av coach</div>
+                </div>
+              </div>
+
+              <div class="wf-feed-item">
+                <div class="wf-feed-time">kl. 10:02</div>
+                <div class="wf-feed-dot"></div>
+                <div class="wf-feed-body">
+                  <div class="wf-feed-meta"><span class="wf-feed-kid">Forelder</span><span class="wf-feed-tag">Faktura</span></div>
+                  <div class="wf-feed-title">Junior Start · Marte · april</div>
+                  <div class="wf-feed-desc">kr 2 400 · forfaller 25. april · ikke betalt ennå</div>
+                  <div class="wf-feed-actions">
+                    <button class="wf-quick-btn wf-quick-btn-primary">Betal nå →</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-feed-day">Mandag 14. april</div>
+
+              <div class="wf-feed-item">
+                <div class="wf-feed-time">kl. 18:00</div>
+                <div class="wf-feed-dot wf-feed-dot-success"></div>
+                <div class="wf-feed-body">
+                  <div class="wf-feed-meta"><span class="wf-feed-kid">Erik</span><span class="wf-feed-tag">Handicap</span></div>
+                  <div class="wf-feed-title">Nytt handicap: 18,4 (−0,3)<span class="wf-marker">4</span></div>
+                  <div class="wf-feed-desc">Oppdatert fra GolfBox etter runde på Losby lørdag 12. april</div>
+                </div>
+              </div>
+
+              <div class="wf-feed-item">
+                <div class="wf-feed-time">kl. 12:30</div>
+                <div class="wf-feed-dot"></div>
+                <div class="wf-feed-body">
+                  <div class="wf-feed-meta"><span class="wf-feed-kid">Forelder</span><span class="wf-feed-tag">Abonnement</span></div>
+                  <div class="wf-feed-title">Junior Pro · fornyet for Erik</div>
+                  <div class="wf-feed-desc">kr 1 295/mnd · neste trekk 1. mai · Stripe-kortet på fil</div>
+                </div>
+              </div>
+
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Feed-format:</strong> Naturlig «Hva har skjedd?»-tankegang. Forelderen sjekker appen som en mail-innboks.</li>
+        <li><strong>2 — Fargekodede tagger:</strong> Booking, coach-melding, faktura, handicap — hver type har egen tag for rask skanning.</li>
+        <li><strong>3 — Fullført-tilstand med success-dot:</strong> Grønn prikk for «ferdig»-events — emosjonell feedback på barnets fremgang.</li>
+        <li><strong>4 — Handicap-endring som event:</strong> GolfBox-sync vises som feed-item. Gir forelderen eierskap til barnets utvikling uten å måtte lete.</li>
+        <li>— Risiko: Kritiske handlinger (ubetalt faktura) kan forsvinne nedover i feed. Må alltid pinne ubetalt til toppen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Admin-Style ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Admin-Style</span></h2>
+    <p class="option-description">Tabell-basert dashboard som et lite admin-system. Alle barn, bookinger, fakturaer, meldinger i flate tabeller — klikk åpner detalj-drawer. For foreldre som liker kontroll, data, og rask navigering. Mindre varmt, mer effektivt.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/forelder</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">HH</div>
+              <div><div class="wf-sb-profile-name">Heidi Hansen</div><div class="wf-sb-profile-meta">Forelder-admin</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Barn</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Bookinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Fakturaer</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Meldinger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Abonnement</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Kontakt coach</div>
+              <div class="wf-sb-cta-desc">Anders · Markus tilgjengelig</div>
+              <button class="wf-sb-cta-btn">Send melding</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Foreldre-admin · alle data</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Søk</span>
+                <span class="wf-mtopbar-chip">Filter</span>
+                <span class="wf-mtopbar-chip">Eksporter</span>
+              </div>
+            </div>
+
+            <div class="wf-summary-strip">
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Barn</div><div class="wf-kpi-value">2</div><div class="wf-kpi-sub">Erik · Marte</div></div>
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Bookinger uke</div><div class="wf-kpi-value">3</div><div class="wf-kpi-sub">2 ven · 1 avlyst</div></div>
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Ubetalt</div><div class="wf-kpi-value">1</div><div class="wf-kpi-sub">kr 2 400</div></div>
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Meldinger</div><div class="wf-kpi-value">2</div><div class="wf-kpi-sub">uleste</div></div>
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Abonnement</div><div class="wf-kpi-value">2</div><div class="wf-kpi-sub">aktive</div></div>
+              <div class="wf-summary-cell"><div class="wf-kpi-label">Fremmøte</div><div class="wf-kpi-value">90%</div><div class="wf-kpi-sub">snitt</div></div>
+            </div>
+
+            <div class="wf-table-card">
+              <div class="wf-table-head">
+                <div class="wf-c-label">Barn<span class="wf-marker">1</span></div>
+                <div class="wf-table-actions">
+                  <span class="wf-mtopbar-chip">+ Legg til</span>
+                </div>
+              </div>
+              <table class="wf-table">
+                <thead>
+                  <tr>
+                    <th>Navn</th>
+                    <th>Alder</th>
+                    <th>HCP</th>
+                    <th>Abonnement</th>
+                    <th>Plan uke</th>
+                    <th>Neste</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="wf-table-kid"><span class="wf-child-avatar">EH</span>Erik Hansen</div></td>
+                    <td>14</td>
+                    <td>18,4</td>
+                    <td>Junior Pro</td>
+                    <td>60%</td>
+                    <td>I dag 16:00</td>
+                    <td><span class="wf-status wf-status-ok">Betalt</span></td>
+                    <td><button class="wf-c-link">Åpne →</button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="wf-table-kid"><span class="wf-child-avatar">MH</span>Marte Hansen</div></td>
+                    <td>12</td>
+                    <td>28,6</td>
+                    <td>Junior Start</td>
+                    <td>40%</td>
+                    <td>Fre 17:30</td>
+                    <td><span class="wf-status wf-status-warn">Forfaller</span></td>
+                    <td><button class="wf-c-link">Åpne →</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wf-table-card">
+              <div class="wf-table-head">
+                <div class="wf-c-label">Kommende bookinger<span class="wf-marker">2</span></div>
+                <div class="wf-table-actions">
+                  <span class="wf-mtopbar-chip">Denne uken</span>
+                  <span class="wf-mtopbar-chip">+ Book ny</span>
+                </div>
+              </div>
+              <table class="wf-table">
+                <thead>
+                  <tr>
+                    <th>Dato</th>
+                    <th>Barn</th>
+                    <th>Tjeneste</th>
+                    <th>Coach</th>
+                    <th>Varighet</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Tor 17.4 · 16:00</td><td>Erik</td><td>Junior gruppe</td><td>Anders</td><td>60 min</td>
+                    <td><span class="wf-status wf-status-info">Bekreftet</span></td>
+                    <td><button class="wf-c-link">Avbestill</button></td>
+                  </tr>
+                  <tr>
+                    <td>Fre 18.4 · 17:30</td><td>Marte</td><td>Nybegynner</td><td>Markus</td><td>45 min</td>
+                    <td><span class="wf-status wf-status-info">Bekreftet</span></td>
+                    <td><button class="wf-c-link">Avbestill</button></td>
+                  </tr>
+                  <tr>
+                    <td>Lør 19.4 · 10:00</td><td>Erik</td><td>Banecoaching 9 hull</td><td>Anders</td><td>2 t</td>
+                    <td><span class="wf-status wf-status-info">Bekreftet</span></td>
+                    <td><button class="wf-c-link">Avbestill</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-table-card wf-bc-7" style="grid-column: span 7;">
+                <div class="wf-table-head">
+                  <div class="wf-c-label">Fakturaer<span class="wf-marker">3</span></div>
+                  <div class="wf-table-actions">
+                    <span class="wf-mtopbar-chip">Betal alle</span>
+                  </div>
+                </div>
+                <table class="wf-table">
+                  <thead>
+                    <tr><th>Periode</th><th>Barn</th><th>Beløp</th><th>Forfall</th><th>Status</th><th></th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Apr 2026</td><td>Erik</td><td>kr 1 295</td><td>1. apr</td><td><span class="wf-status wf-status-ok">Betalt</span></td><td><button class="wf-c-link">Kvittering →</button></td></tr>
+                    <tr><td>Apr 2026</td><td>Marte</td><td>kr 2 400</td><td>25. apr</td><td><span class="wf-status wf-status-warn">Forfaller</span></td><td><button class="wf-c-link">Betal nå →</button></td></tr>
+                    <tr><td>Mar 2026</td><td>Erik</td><td>kr 1 295</td><td>1. mar</td><td><span class="wf-status wf-status-ok">Betalt</span></td><td><button class="wf-c-link">Kvittering →</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="wf-c" style="grid-column: span 5;">
+                <div class="wf-c-label">Siste meldinger<span class="wf-marker">4</span></div>
+                <div class="wf-coach-note">
+                  <div class="wf-coach-note-author">Anders · om Erik · 2d</div>
+                  <p class="wf-coach-note-body">"Erik jobber bra med puttingen. Putting-greenen før helgen anbefales."</p>
+                </div>
+                <div class="wf-coach-note" style="margin-top:10px;">
+                  <div class="wf-coach-note-author">Markus · om Marte · 4d</div>
+                  <p class="wf-coach-note-body">"Marte trenger mer tid på chip — 15 min ekstra neste fredag."</p>
+                </div>
+                <button class="wf-quick-btn" style="margin-top:10px;">Åpne innboks →</button>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Barn som tabell:</strong> Én rad per barn. Rask skanning av HCP, pakke, plan-% og betalingsstatus. Passer foreldre med 3+ barn.</li>
+        <li><strong>2 — Booking-tabell:</strong> Dato, barn, tjeneste, coach — alt på én linje. Klikk for detalj-drawer eller avbestill.</li>
+        <li><strong>3 — Faktura-tabell med historikk:</strong> Både ubetalte og betalte i samme tabell — forelderen får full kontroll over regnskap.</li>
+        <li><strong>4 — Meldings-panel sidestilt:</strong> Tabeller + kompakt coach-feed — admin-estetikk møter menneskelig innhold.</li>
+        <li>— Styrke: Data-tett, effektivt. Svakhet: Kaldt. Passer ikke foreldre som vil føle tilknytning til barnets utvikling — de bør få Option 1 eller 4.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot det primære foreldre-målet: <strong>rask oversikt over barnas trening + tydelig betalingsstatus + enkel kommunikasjon med coach</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Antall barn</th><th>Kald / varm</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Single Child Focus</strong></td><td>Ett aktivt barn + kompakt child-picker. Speiler spillerportal-strukturen</td><td>1–3 barn</td><td>Varm</td><td>Lav</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Multi-Child Tabs</strong></td><td>Store tabs øverst, mini-dashboard per barn, felles-stripe under</td><td>2–3 barn (optimal)</td><td>Varm</td><td>Medium</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Overview Grid</strong></td><td>Alle barn side-by-side som store kort, klikk for drawer</td><td>2–4 barn</td><td>Medium</td><td>Medium</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Timeline Feed</strong></td><td>Kronologisk aktivitetsfeed — Instagram for golffamilien</td><td>Alle</td><td>Varm</td><td>Medium</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>5. Admin-Style</strong></td><td>Tabell-basert. Maksimal kontroll og data-tetthet</td><td>3+ barn</td><td>Kald</td><td>Høy</td><td>★★★☆☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — Single Child Focus</h3>
+      <p>Trygt valg for MVP av foreldre-portalen. Speiler den eksisterende spillerportalen (Athletic Grid-strukturen) så foreldre som allerede kjenner akgolf.no føler seg hjemme — bare at innholdet er justert til forelder-rolle (read-only treningsplan, full kontroll over booking og betaling, coach-meldinger). Kompakt child-picker håndterer Erik + Marte uten å overvelde. 80% av foreldre har 1–2 barn, og layouten fungerer optimalt der.</p>
+      <p><strong>Strategisk flow:</strong> Lever Option 1 som default. Ved 3+ barn: foreslå automatisk Option 3 (Overview Grid) som alternativ layout via innstilling «Vis alle barn samtidig». Option 4 (Timeline Feed) kan tilbys som separat «Aktivitet»-tab under /portal/forelder/aktivitet for de som vil ha hendelses-orientert visning. Option 5 (Admin-Style) bør ikke leveres — for kald for rollen. Option 2 (Multi-Child Tabs) er naturlig neste iterasjon dersom brukerdata viser at foreldre bytter mye mellom barn.</p>
+      <p><strong>Kjernekontrakt forelder-rolle:</strong> Forelder kan IKKE endre treningsplan (tydelig "Kun lesing"-chip). Forelder KAN booke, avbestille, betale, oppgradere og sende meldinger. Barn-data separert — ingen blanding av Erik og Martes plan, økter eller fakturaer i samme visning (kun i aggregerte forelder-metrikker som «Ubetalt totalt»).</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  Foreldre-dashboard N05 — AK Golf Platform · /portal/forelder
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

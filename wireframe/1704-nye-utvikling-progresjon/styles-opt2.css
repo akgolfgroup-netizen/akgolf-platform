@@ -1,0 +1,162 @@
+/* === Option 2: Pyramid Climb — Clean + Polished === */
+
+/* ---------- CLEAN ---------- */
+.clean .opt2-shell { background: #fff; font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif; gap: 22px; color: #324D45; }
+.clean .opt2-head { border-bottom: 1px solid #ECF0EF; padding-bottom: 16px; }
+.clean .opt2-eyebrow { color: #A5B2AD; font-weight: 600; }
+.clean .opt2-title { color: #0A1F18; letter-spacing: -0.01em; }
+.clean .opt2-sub { color: #A5B2AD; }
+.clean .opt2-hcp { border: 1px solid #ECF0EF; background: #fff; border-radius: 12px; }
+.clean .opt2-hcp-label { color: #A5B2AD; }
+.clean .opt2-hcp-val { color: #005840; }
+
+.clean .opt2-pyramid { border: 1px solid #ECF0EF; background: #F5F8F7; border-radius: 16px; padding: 20px; gap: 8px; }
+.clean .opt2-level-bg { background: #ECF0EF; border: 1px solid #D5DFDB; border-radius: 8px; }
+.clean .opt2-level-inner { background: #005840; color: #fff; border-radius: 8px; }
+.clean .opt2-lvl-5 .opt2-level-inner { background: #D1F843; color: #0A1F18; }
+.clean .opt2-lvl-4 .opt2-level-inner { background: #00594C; }
+.clean .opt2-lvl-3 .opt2-level-inner { background: #005840; }
+.clean .opt2-lvl-2 .opt2-level-inner { background: #005840; }
+.clean .opt2-lvl-1 .opt2-level-inner { background: #324D45; }
+.clean .opt2-base { color: #A5B2AD; border-top: 1px dashed #ECF0EF; font-weight: 700; }
+
+.clean .opt2-card { border: 1px solid #ECF0EF; background: #fff; border-radius: 12px; padding: 14px 16px; }
+.clean .opt2-card-label { color: #A5B2AD; font-weight: 600; }
+.clean .opt2-card-val { color: #0A1F18; }
+.clean .opt2-card-title { color: #0A1F18; }
+.clean .opt2-card-body { color: #324D45; }
+.clean .opt2-card-sub { color: #005840; font-weight: 500; }
+.clean .opt2-card-bar { background: #ECF0EF; }
+.clean .opt2-card-fill { background: #005840; }
+.clean .opt2-card-meta { color: #A5B2AD; }
+.clean .opt2-btn { background: #005840; color: #fff; border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+.clean .opt2-legend { border: 1px solid #ECF0EF; background: #F5F8F7; border-radius: 8px; }
+.clean .opt2-legend-dot { background: #005840; border-radius: 50%; }
+.clean .opt2-legend-text { color: #324D45; }
+
+/* ---------- POLISHED ---------- */
+.polished .opt2-shell {
+  background: linear-gradient(180deg, #fff 0%, #F5F8F7 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  gap: 24px;
+  color: #324D45;
+  padding: 8px;
+  border-radius: 16px;
+}
+.polished .opt2-head { border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: 18px; }
+.polished .opt2-eyebrow { color: #005840; font-weight: 700; letter-spacing: 0.14em; }
+.polished .opt2-title { color: #0A1F18; font-weight: 800; letter-spacing: -0.02em; }
+.polished .opt2-sub { color: #A5B2AD; }
+.polished .opt2-hcp {
+  border: 1px solid rgba(0,0,0,0.06);
+  background: linear-gradient(135deg, #0A1F18, #005840);
+  border-radius: 16px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 12px rgba(0,88,64,0.2);
+}
+.polished .opt2-hcp-label { color: rgba(255,255,255,0.7); font-weight: 600; letter-spacing: 0.1em; }
+.polished .opt2-hcp-val { color: #D1F843; font-weight: 800; font-size: 28px; }
+
+.polished .opt2-pyramid {
+  border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  gap: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,88,64,0.04);
+}
+.polished .opt2-level { height: 60px; }
+.polished .opt2-level-bg {
+  background: #ECF0EF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 10px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+}
+.polished .opt2-level-inner {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,88,64,0.2);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.polished .opt2-lvl-5 .opt2-level-inner {
+  background: linear-gradient(135deg, #D1F843, #c5ee38);
+  color: #0A1F18;
+  box-shadow: 0 4px 16px rgba(209,248,67,0.5);
+}
+.polished .opt2-lvl-4 .opt2-level-inner { background: linear-gradient(135deg, #00594C, #005840); color: #fff; }
+.polished .opt2-lvl-3 .opt2-level-inner { background: linear-gradient(135deg, #005840, #004e38); color: #fff; }
+.polished .opt2-lvl-2 .opt2-level-inner { background: linear-gradient(135deg, #005840, #004630); color: #fff; }
+.polished .opt2-lvl-1 .opt2-level-inner { background: linear-gradient(135deg, #324D45, #1A3529); color: #fff; }
+.polished .opt2-level-name { font-weight: 700; font-size: 14px; }
+.polished .opt2-level-pct { font-weight: 800; font-size: 16px; }
+.polished .opt2-base {
+  color: #A5B2AD;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding-top: 10px;
+  margin-top: 8px;
+}
+
+.polished .opt2-card {
+  border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.polished .opt2-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.polished .opt2-card-label { color: #A5B2AD; font-weight: 700; letter-spacing: 0.1em; }
+.polished .opt2-card-val { color: #0A1F18; font-weight: 800; font-size: 28px; letter-spacing: -0.02em; }
+.polished .opt2-card-title { color: #0A1F18; font-weight: 700; }
+.polished .opt2-card-body { color: #324D45; line-height: 1.6; }
+.polished .opt2-card-sub { color: #005840; font-weight: 600; }
+.polished .opt2-card-bar { background: #ECF0EF; height: 6px; border-radius: 3px; }
+.polished .opt2-card-fill { background: linear-gradient(90deg, #005840, #00594C); box-shadow: 0 0 8px rgba(0,88,64,0.3); }
+.polished .opt2-card-meta { color: #005840; font-weight: 600; font-style: normal; }
+.polished .opt2-btn {
+  background: #D1F843;
+  color: #0A1F18;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(209,248,67,0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.polished .opt2-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(209,248,67,0.5); }
+
+.polished .opt2-legend {
+  border: 1px solid rgba(0,88,64,0.15);
+  background: linear-gradient(135deg, #fff 0%, #E6F3F1 100%);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+.polished .opt2-legend-dot { background: #005840; border-radius: 50%; box-shadow: 0 0 0 3px rgba(0,88,64,0.15); }
+.polished .opt2-legend-text { color: #324D45; font-weight: 500; }
+
+/* Polished — subtil dekor-gradient bak pyramiden for dybde */
+.polished .opt2-pyramid {
+  position: relative;
+  overflow: hidden;
+}
+.polished .opt2-pyramid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(0,88,64,0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+.polished .opt2-pyramid > * { position: relative; z-index: 1; }
+
+/* Polished — lett glow rundt toppnivået for "du er nesten der" */
+.polished .opt2-lvl-5 .opt2-level-inner::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(209,248,67,0.3), transparent);
+  filter: blur(8px);
+  z-index: -1;
+}

@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sesongplan — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Sesongplan (N07)</span> — <span id="project-name">AK Golf Platform · Portal · /portal/sesongplan</span></span>
+    <span class="rec">Recommended: Option <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: 12-Month Gantt</button>
+    <button class="tab-btn" data-tab="option-2">2: Calendar Year</button>
+    <button class="tab-btn" data-tab="option-3">3: Phase Timeline</button>
+    <button class="tab-btn" data-tab="option-4">4: Competition-Driven</button>
+    <button class="tab-btn" data-tab="option-5">5: Monthly Cards</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1: 12-Month Gantt ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">12-Month Gantt</span> <em style="font-size:12px; color:#666; font-weight:400;">(SAFE)</em></h2>
+    <p class="option-description">Horisontal Gantt-visning med 12 måneder langs x-aksen. Hver rad er en dimensjon (periodiseringsfase, treningstype, turneringer). Faser som blokker — Forberedelse, Konkurranse, Restitusjon, Grunnleggende. Gir umiddelbar 12-måneders oversikt på én skjerm.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sesongplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div>
+                <div class="wf-sb-profile-name">Anders K.</div>
+                <div class="wf-sb-profile-meta">Pro · HCP +1.8</div>
+              </div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sesongplan</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Turneringer</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Ned til ukesplan<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">Se detaljer for uke 16</div>
+              <button class="wf-sb-cta-btn">Åpne Planlegger</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Sesongplan 2026 · 12 måneder</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip wf-active">År</span>
+                <span class="wf-mtopbar-chip">Halvår</span>
+                <span class="wf-mtopbar-chip">Kvartal</span>
+                <span class="wf-mtopbar-chip">Eksporter</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Periodiseringsplan</div>
+                <h1 class="wf-page-title">Sesongen 2026 — Veien mot NM og høysesong<span class="wf-marker">2</span></h1>
+                <p class="wf-page-sub">Januar—desember. Fire faser koordinert med turneringskalender og NGF-treningspyramide.</p>
+              </div>
+              <div class="wf-page-badge">PRO</div>
+            </section>
+
+            <div class="wf-kpi-row">
+              <div class="wf-kpi"><div class="wf-kpi-label">Aktiv fase</div><div class="wf-kpi-value">Konk-prep</div><div class="wf-kpi-sub">Uke 16 av 13-25</div></div>
+              <div class="wf-kpi"><div class="wf-kpi-label">Neste turnering</div><div class="wf-kpi-value">NM MP</div><div class="wf-kpi-sub">27 dager</div></div>
+              <div class="wf-kpi"><div class="wf-kpi-label">Ukers trening</div><div class="wf-kpi-value">36</div><div class="wf-kpi-sub">av 52 planlagt</div></div>
+              <div class="wf-kpi"><div class="wf-kpi-label">HCP mål</div><div class="wf-kpi-value">+0.5</div><div class="wf-kpi-sub">nå +1.8</div></div>
+            </div>
+
+            <div class="wf-legend">
+              <div class="wf-legend-item"><span class="wf-legend-sw wf-sw-grunn"></span>Grunnleggende teknikk</div>
+              <div class="wf-legend-item"><span class="wf-legend-sw wf-sw-forb"></span>Konkurranseforberedelse</div>
+              <div class="wf-legend-item"><span class="wf-legend-sw wf-sw-konk"></span>Konkurranse / høysesong</div>
+              <div class="wf-legend-item"><span class="wf-legend-sw wf-sw-rest"></span>Restitusjon / overgang</div>
+              <div class="wf-legend-item"><span class="wf-legend-sw wf-sw-turn"></span>Turnering</div>
+            </div>
+
+            <div class="wf-gantt">
+              <div class="wf-gantt-head">
+                <div></div>
+                <div class="wf-gantt-month">Jan</div>
+                <div class="wf-gantt-month">Feb</div>
+                <div class="wf-gantt-month">Mar</div>
+                <div class="wf-gantt-month">Apr</div>
+                <div class="wf-gantt-month wf-active">Apr</div>
+                <div class="wf-gantt-month">Mai</div>
+                <div class="wf-gantt-month">Jun</div>
+                <div class="wf-gantt-month">Jul</div>
+                <div class="wf-gantt-month">Aug</div>
+                <div class="wf-gantt-month">Sep</div>
+                <div class="wf-gantt-month">Okt</div>
+                <div class="wf-gantt-month">Des</div>
+              </div>
+
+              <div class="wf-gantt-row">
+                <div class="wf-gantt-label">Periodiseringsfase<span class="wf-gantt-label-sub">Makro-syklus</span></div>
+                <div class="wf-gantt-track">
+                  <div class="wf-gantt-bar wf-bar-grunn" style="left:0%; width:25%">GRUNNLEGGENDE</div>
+                  <div class="wf-gantt-bar wf-bar-forb" style="left:25%; width:25%">KONK-FORBEREDELSE</div>
+                  <div class="wf-gantt-bar wf-bar-konk" style="left:50%; width:25%">KONKURRANSE</div>
+                  <div class="wf-gantt-bar wf-bar-rest" style="left:75%; width:25%">RESTITUSJON + TEKNIKK</div>
+                </div>
+              </div>
+
+              <div class="wf-gantt-row">
+                <div class="wf-gantt-label">Teknikk<span class="wf-gantt-label-sub">Sving, tempo, biomekanikk</span></div>
+                <div class="wf-gantt-track">
+                  <div class="wf-gantt-bar wf-bar-konk" style="left:0%; width:25%">HØY</div>
+                  <div class="wf-gantt-bar wf-bar-forb" style="left:25%; width:25%">MED</div>
+                  <div class="wf-gantt-bar wf-bar-empty" style="left:50%; width:25%">VEDLIKEHOLD</div>
+                  <div class="wf-gantt-bar wf-bar-konk" style="left:75%; width:25%">HØY</div>
+                </div>
+              </div>
+
+              <div class="wf-gantt-row">
+                <div class="wf-gantt-label">Fysikk<span class="wf-gantt-label-sub">Styrke, mobilitet</span></div>
+                <div class="wf-gantt-track">
+                  <div class="wf-gantt-bar wf-bar-konk" style="left:0%; width:25%">STYRKE</div>
+                  <div class="wf-gantt-bar wf-bar-forb" style="left:25%; width:25%">EKSPLOSIVITET</div>
+                  <div class="wf-gantt-bar wf-bar-empty" style="left:50%; width:25%">VEDLIKEHOLD</div>
+                  <div class="wf-gantt-bar wf-bar-konk" style="left:75%; width:25%">REBUILD</div>
+                </div>
+              </div>
+
+              <div class="wf-gantt-row">
+                <div class="wf-gantt-label">Mental<span class="wf-gantt-label-sub">Rutine, fokus, prestasjon</span></div>
+                <div class="wf-gantt-track">
+                  <div class="wf-gantt-bar wf-bar-empty" style="left:0%; width:25%">RUTINER</div>
+                  <div class="wf-gantt-bar wf-bar-forb" style="left:25%; width:25%">TURN-SIM</div>
+                  <div class="wf-gantt-bar wf-bar-konk" style="left:50%; width:25%">PRESTASJON</div>
+                  <div class="wf-gantt-bar wf-bar-empty" style="left:75%; width:25%">REFLEKSJON</div>
+                </div>
+              </div>
+
+              <div class="wf-gantt-row">
+                <div class="wf-gantt-label">Spill / bane<span class="wf-gantt-label-sub">Runder, scoring-fokus</span></div>
+                <div class="wf-gantt-track">
+                  <div class="wf-gantt-bar wf-bar-empty" style="left:0%; width:17%">SIMULATOR</div>
+                  <div class="wf-gantt-bar wf-bar-forb" style="left:17%; width:33%">BANE + RUNDER</div>
+                  <div class="wf-gantt-bar wf-bar-konk" style="left:50%; width:25%">KONK-RUNDER</div>
+                  <div class="wf-gantt-bar wf-bar-empty" style="left:75%; width:25%">FRI / SIM</div>
+                </div>
+              </div>
+
+              <div class="wf-gantt-pins">
+                <div class="wf-gantt-pins-label">Turneringer<span class="wf-marker">3</span></div>
+                <div class="wf-gantt-pins-track">
+                  <div class="wf-gantt-pin" style="left:36%"><div class="wf-gantt-pin-label">NM MP</div></div>
+                  <div class="wf-gantt-pin" style="left:46%"><div class="wf-gantt-pin-label">Norges Cup</div></div>
+                  <div class="wf-gantt-pin" style="left:55%"><div class="wf-gantt-pin-label">Hovedses.</div></div>
+                  <div class="wf-gantt-pin" style="left:63%"><div class="wf-gantt-pin-label">NM Slag</div></div>
+                  <div class="wf-gantt-pin" style="left:71%"><div class="wf-gantt-pin-label">Klubbmester.</div></div>
+                </div>
+              </div>
+
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kobling til Planlegger:</strong> Sidebar-CTA lar spiller zoome fra 12-måneders makro til 1-uke-detalj uten å miste konteksten.</li>
+        <li><strong>2 — Aktiv måned uthevet:</strong> "Apr" har mørk bakgrunn i header. Gir umiddelbar "her er jeg nå"-orientering.</li>
+        <li><strong>3 — Turneringer som pins:</strong> Separat rad nederst. Viser samsvar mellom fase og turnering — f.eks. NM MP midt i konk-forberedelsen.</li>
+        <li>— Styrke: Ett skjermbilde, all informasjon. Klassisk sportsvitenskaplig periodiseringsvisning.</li>
+        <li>— Svakhet: Høy informasjonstetthet kan føles overveldende for Academy-tier spillere. Vurder enklere variant for Starter.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Calendar Year ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Calendar Year</span></h2>
+    <p class="option-description">Kalender-grid med 12 måneder, hver som en celle. Fargekodet bakgrunn for periodiseringsfase + turneringer som små pins i cellen. Klassisk vegg-kalender-følelse, kjent mentalmodell for alle.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sesongplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders K.</div><div class="wf-sb-profile-meta">Pro · HCP +1.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sesongplan</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Turneringer</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Filtrer</div>
+              <div class="wf-sb-cta-desc">Kun måneder med turneringer</div>
+              <button class="wf-sb-cta-btn">Bruk filter</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Kalenderår 2026</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip wf-active">2026</span>
+                <span class="wf-mtopbar-chip">2027</span>
+                <span class="wf-mtopbar-chip">Eksporter</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Sesongkalender<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-title">2026 — Fase-fargede måneder</h1>
+                <p class="wf-page-sub">Hele året som kalender-grid. Hver måned har fase-bakgrunn, fokus og turneringer.</p>
+              </div>
+              <div class="wf-page-badge">PRO</div>
+            </section>
+
+            <div class="wf-legend">
+              <div class="wf-legend-item"><span class="wf-legend-sw wf-sw-grunn"></span>Grunnleggende teknikk</div>
+              <div class="wf-legend-item"><span class="wf-legend-sw wf-sw-forb"></span>Konkurranseforberedelse</div>
+              <div class="wf-legend-item"><span class="wf-legend-sw wf-sw-konk"></span>Konkurranse / høysesong</div>
+              <div class="wf-legend-item"><span class="wf-legend-sw wf-sw-rest"></span>Restitusjon / overgang</div>
+            </div>
+
+            <div class="wf-cal-grid">
+              <div class="wf-cal-month wf-phase-grunn">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">Januar</h3><span class="wf-cal-num">01</span></div>
+                <span class="wf-cal-phase-l">Grunnleggende</span>
+                <p class="wf-cal-sub">Teknikk-rebuild. Simulator + fysikk-blokk.</p>
+                <div class="wf-cal-meta">18 økter · 0 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-grunn">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">Februar</h3><span class="wf-cal-num">02</span></div>
+                <span class="wf-cal-phase-l">Grunnleggende</span>
+                <p class="wf-cal-sub">Sving-volum. Biomekanikk-tester i Trackman.</p>
+                <div class="wf-cal-meta">20 økter · 0 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-grunn">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">Mars</h3><span class="wf-cal-num">03</span></div>
+                <span class="wf-cal-phase-l">Grunnleggende</span>
+                <p class="wf-cal-sub">Overgang til bane. Første simulator-test-runder.</p>
+                <div class="wf-cal-meta">22 økter · 2 test</div>
+              </div>
+              <div class="wf-cal-month wf-phase-forb wf-active">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">April<span class="wf-marker">2</span></h3><span class="wf-cal-num">04 · nå</span></div>
+                <span class="wf-cal-phase-l">Konk-forberedelse</span>
+                <p class="wf-cal-sub">Bane-rutiner. Tune scoring, kortspill-fokus.</p>
+                <div class="wf-cal-tourns">
+                  <div class="wf-cal-tourn">Oslo Åpen · 27.04</div>
+                </div>
+                <div class="wf-cal-meta">24 økter · 6 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-forb">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">Mai</h3><span class="wf-cal-num">05</span></div>
+                <span class="wf-cal-phase-l">Konk-forberedelse</span>
+                <p class="wf-cal-sub">Turneringssimulering. Mental forberedelse.</p>
+                <div class="wf-cal-tourns">
+                  <div class="wf-cal-tourn">NM Match Play · 15.05</div>
+                </div>
+                <div class="wf-cal-meta">22 økter · 9 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-forb">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">Juni</h3><span class="wf-cal-num">06</span></div>
+                <span class="wf-cal-phase-l">Konk-forberedelse</span>
+                <p class="wf-cal-sub">Intensitet opp. Taktikk mot hovedsesong.</p>
+                <div class="wf-cal-tourns">
+                  <div class="wf-cal-tourn">Norges Cup · 08.06</div>
+                  <div class="wf-cal-tourn">Norges Cup · 22.06</div>
+                </div>
+                <div class="wf-cal-meta">18 økter · 12 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-konk">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">Juli<span class="wf-marker">3</span></h3><span class="wf-cal-num">07</span></div>
+                <span class="wf-cal-phase-l">Høysesong</span>
+                <p class="wf-cal-sub">Intensiv turnering-prep. Peaking for NM.</p>
+                <div class="wf-cal-tourns">
+                  <div class="wf-cal-tourn">Hovedsesong start</div>
+                  <div class="wf-cal-tourn">NM Slag · 19.07</div>
+                </div>
+                <div class="wf-cal-meta">12 økter · 16 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-konk">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">August</h3><span class="wf-cal-num">08</span></div>
+                <span class="wf-cal-phase-l">Høysesong</span>
+                <p class="wf-cal-sub">Toppform. Grunnleggende holdt ved like.</p>
+                <div class="wf-cal-tourns">
+                  <div class="wf-cal-tourn">Klubbmesterskap · 11.08</div>
+                </div>
+                <div class="wf-cal-meta">10 økter · 18 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-konk">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">September</h3><span class="wf-cal-num">09</span></div>
+                <span class="wf-cal-phase-l">Høysesong</span>
+                <p class="wf-cal-sub">Sesongavslutning. Siste turneringer.</p>
+                <div class="wf-cal-tourns">
+                  <div class="wf-cal-tourn">Losby Open · 13.09</div>
+                </div>
+                <div class="wf-cal-meta">12 økter · 14 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-rest">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">Oktober</h3><span class="wf-cal-num">10</span></div>
+                <span class="wf-cal-phase-l">Restitusjon</span>
+                <p class="wf-cal-sub">Aktiv hvile. Evaluering. Sesongrapport.</p>
+                <div class="wf-cal-meta">8 økter · 4 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-rest">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">November</h3><span class="wf-cal-num">11</span></div>
+                <span class="wf-cal-phase-l">Teknikk + mental</span>
+                <p class="wf-cal-sub">Inn til simulator. Fysikk-blokk starter.</p>
+                <div class="wf-cal-meta">16 økter · 0 runder</div>
+              </div>
+              <div class="wf-cal-month wf-phase-rest">
+                <div class="wf-cal-head"><h3 class="wf-cal-h">Desember</h3><span class="wf-cal-num">12</span></div>
+                <span class="wf-cal-phase-l">Teknikk + mental</span>
+                <p class="wf-cal-sub">Oppbygging mot ny sesong. Mål 2027 settes.</p>
+                <div class="wf-cal-meta">14 økter · 0 runder</div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kjent mentalmodell:</strong> Alle forstår et kalender-grid. Ingen opplæring nødvendig.</li>
+        <li><strong>2 — Nå-måned uthevet:</strong> April har ring rundt og "nå"-markør. Umiddelbar orientering.</li>
+        <li><strong>3 — Turneringer inline:</strong> Pins i cellen med dato. Gir umiddelbart "når er hva?" uten separat liste.</li>
+        <li>— Styrke: Varm, kjent form. Passer både Pro og Academy — leselig for alle nivåer.</li>
+        <li>— Svakhet: Mindre kompakt enn Gantt. Vanskelig å sammenligne flere dimensjoner (teknikk vs fysikk) samtidig.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Phase Timeline ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Phase Timeline</span></h2>
+    <p class="option-description">Vertikal tidslinje fra januar til desember. Hver fase som et narrativt kort — tittel, periode, fortelling, nøkkeltall. Bygger emosjonell kobling til sesongreisen, ikke bare data.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sesongplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders K.</div><div class="wf-sb-profile-meta">Pro · HCP +1.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sesongreise</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Turneringer</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Sesongmål</div>
+              <div class="wf-sb-cta-desc">Topp 20 på Norges Cup · HCP +0.5</div>
+              <button class="wf-sb-cta-btn">Se fremdrift</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Sesongreisen 2026</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip wf-active">Alle faser</span>
+                <span class="wf-mtopbar-chip">Aktiv</span>
+                <span class="wf-mtopbar-chip">Eksporter</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Narrativ tidslinje<span class="wf-marker">1</span></div>
+                <h1 class="wf-page-title">Fire faser. Én sesong. Én spiller.</h1>
+                <p class="wf-page-sub">Fra januar-grunnmur til desember-refleksjon. Hver fase med sin historie, mål og rytme.</p>
+              </div>
+              <div class="wf-page-badge">PRO</div>
+            </section>
+
+            <div class="wf-timeline">
+
+              <div class="wf-tl-item">
+                <div class="wf-tl-card wf-phase-grunn">
+                  <div class="wf-tl-head">
+                    <div>
+                      <h3 class="wf-tl-title">Grunnmur</h3>
+                      <div class="wf-tl-period">Januar — mars · 12 uker</div>
+                    </div>
+                    <span class="wf-tl-phase-badge">Grunnleggende</span>
+                  </div>
+                  <p class="wf-tl-narr">Vi bygger fra bunnen. Sving, tempo og fysikk prioriteres. Ingen runder — fokus på inn-arbeid i simulator og gym. Dette er fundamentet resten av året hviler på.</p>
+                  <div class="wf-tl-meta">
+                    <div class="wf-tl-meta-item"><strong>60</strong>Økter planlagt</div>
+                    <div class="wf-tl-meta-item"><strong>2</strong>Test-runder</div>
+                    <div class="wf-tl-meta-item"><strong>12</strong>Treningspyramide-blokker</div>
+                    <div class="wf-tl-meta-item"><strong>0</strong>Turneringer</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-tl-item wf-tl-active">
+                <div class="wf-tl-card">
+                  <div class="wf-tl-head">
+                    <div>
+                      <h3 class="wf-tl-title">Oppladning til sesong<span class="wf-marker">2</span></h3>
+                      <div class="wf-tl-period">April — juni · 13 uker · aktiv nå</div>
+                    </div>
+                    <span class="wf-tl-phase-badge">Konk-forberedelse</span>
+                  </div>
+                  <p class="wf-tl-narr">Fra studio til bane. Vi oversetter teknisk arbeid til scoring. Første turneringer brukes som test — NM Match Play i mai er hovedmilestone. Fysikk skifter fra styrke til eksplosivitet.</p>
+                  <div class="wf-tl-meta">
+                    <div class="wf-tl-meta-item"><strong>64</strong>Økter planlagt</div>
+                    <div class="wf-tl-meta-item"><strong>27</strong>Runder</div>
+                    <div class="wf-tl-meta-item"><strong>3</strong>Turneringer</div>
+                    <div class="wf-tl-meta-item"><strong>NM MP</strong>Hovedmål</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-tl-item">
+                <div class="wf-tl-card wf-phase-konk">
+                  <div class="wf-tl-head">
+                    <div>
+                      <h3 class="wf-tl-title">Høysesong<span class="wf-marker">3</span></h3>
+                      <div class="wf-tl-period">Juli — september · 13 uker</div>
+                    </div>
+                    <span class="wf-tl-phase-badge">Konkurranse</span>
+                  </div>
+                  <p class="wf-tl-narr">Her skal vi prestere. Treningsvolum ned, kvalitet og rutiner opp. Peaking for NM Slagspill i juli. Mental prestasjon, ikke ny teknikk. Vedlikehold av fysikk og teknikk.</p>
+                  <div class="wf-tl-meta">
+                    <div class="wf-tl-meta-item"><strong>34</strong>Økter</div>
+                    <div class="wf-tl-meta-item"><strong>48</strong>Runder</div>
+                    <div class="wf-tl-meta-item"><strong>4</strong>Turneringer</div>
+                    <div class="wf-tl-meta-item"><strong>NM Slag</strong>Hovedmål</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wf-tl-item">
+                <div class="wf-tl-card wf-phase-rest">
+                  <div class="wf-tl-head">
+                    <div>
+                      <h3 class="wf-tl-title">Evaluering og rebuild</h3>
+                      <div class="wf-tl-period">Oktober — desember · 13 uker</div>
+                    </div>
+                    <span class="wf-tl-phase-badge">Restitusjon + teknikk</span>
+                  </div>
+                  <p class="wf-tl-narr">Sesongen evalueres. Hva funket? Hva må endres? Aktiv hvile første måned, så inn til simulator for teknikkarbeid. Fysikk-grunnmur re-bygges. Mål for 2027 settes sammen med coach.</p>
+                  <div class="wf-tl-meta">
+                    <div class="wf-tl-meta-item"><strong>38</strong>Økter</div>
+                    <div class="wf-tl-meta-item"><strong>4</strong>Avslutningsrunder</div>
+                    <div class="wf-tl-meta-item"><strong>0</strong>Turneringer</div>
+                    <div class="wf-tl-meta-item"><strong>Reset</strong>Fase-modus</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Narrativ fremfor data:</strong> Hver fase får en fortelling, ikke bare tall. Bygger emosjonell forståelse av "hvorfor nå".</li>
+        <li><strong>2 — Aktiv fase fremhevet (hvit):</strong> Eneste kort i vanlig hvit bakgrunn — kontrast mot grå/mørke faser. Auto-orientering.</li>
+        <li><strong>3 — Mørkt kort for høysesongen:</strong> Visuell spenning — dette er sesongens toppunkt. Mørkt kort signaliserer "intensivt".</li>
+        <li>— Styrke: Selger coaching-tanken. Passer The Foundation Method-filosofien godt.</li>
+        <li>— Svakhet: Tar vertikal plass. Krever scroll. Ingen parallell visning av måneder — må hoppe mellom kort.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Competition-Driven ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Competition-Driven</span></h2>
+    <p class="option-description">Turneringer øverst som milepæler på horisontal tidslinje. Treningsperioder nedenfor som forberedelsesblokker — hver koblet til "neste turnering". Setter konkurransen i sentrum.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sesongplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders K.</div><div class="wf-sb-profile-meta">Pro · HCP +1.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sesongplan</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Turneringer</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Neste milepæl<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">NM Match Play · 15. mai</div>
+              <button class="wf-sb-cta-btn">Se turnerings-prep</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Konkurranseplan 2026</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip wf-active">Alle turn.</span>
+                <span class="wf-mtopbar-chip">Majors</span>
+                <span class="wf-mtopbar-chip">Klubb</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Konkurransefokus</div>
+                <h1 class="wf-page-title">Turneringer driver planen</h1>
+                <p class="wf-page-sub">Alt arbeid pekes mot konkrete milepæler. Hver treningsblokk er navngitt etter neste turnering.</p>
+              </div>
+              <div class="wf-page-badge">PRO</div>
+            </section>
+
+            <div class="wf-comp-top">
+              <div class="wf-comp-top-head">
+                <div class="wf-c-label">Turnerings-milepæler 2026<span class="wf-marker">2</span></div>
+                <div class="wf-c-sub">5 turneringer · 3 majors</div>
+              </div>
+              <div class="wf-comp-timeline">
+                <div class="wf-comp-axis"></div>
+
+                <div class="wf-comp-month-mark" style="left:4%"></div>
+                <div class="wf-comp-month-label" style="left:4%">Jan</div>
+                <div class="wf-comp-month-mark" style="left:13%"></div>
+                <div class="wf-comp-month-label" style="left:13%">Feb</div>
+                <div class="wf-comp-month-mark" style="left:21%"></div>
+                <div class="wf-comp-month-label" style="left:21%">Mar</div>
+                <div class="wf-comp-month-mark" style="left:30%"></div>
+                <div class="wf-comp-month-label" style="left:30%">Apr</div>
+                <div class="wf-comp-month-mark" style="left:38%"></div>
+                <div class="wf-comp-month-label" style="left:38%">Mai</div>
+                <div class="wf-comp-month-mark" style="left:46%"></div>
+                <div class="wf-comp-month-label" style="left:46%">Jun</div>
+                <div class="wf-comp-month-mark" style="left:55%"></div>
+                <div class="wf-comp-month-label" style="left:55%">Jul</div>
+                <div class="wf-comp-month-mark" style="left:63%"></div>
+                <div class="wf-comp-month-label" style="left:63%">Aug</div>
+                <div class="wf-comp-month-mark" style="left:71%"></div>
+                <div class="wf-comp-month-label" style="left:71%">Sep</div>
+                <div class="wf-comp-month-mark" style="left:80%"></div>
+                <div class="wf-comp-month-label" style="left:80%">Okt</div>
+                <div class="wf-comp-month-mark" style="left:88%"></div>
+                <div class="wf-comp-month-label" style="left:88%">Nov</div>
+                <div class="wf-comp-month-mark" style="left:96%"></div>
+                <div class="wf-comp-month-label" style="left:96%">Des</div>
+
+                <div class="wf-comp-tourn" style="left:34%">
+                  <div class="wf-comp-tourn-label">Oslo Åpen</div>
+                  <div class="wf-comp-tourn-dot"></div>
+                  <div class="wf-comp-tourn-date">27.04</div>
+                </div>
+                <div class="wf-comp-tourn wf-comp-major" style="left:41%">
+                  <div class="wf-comp-tourn-label">NM Match Play</div>
+                  <div class="wf-comp-tourn-dot"></div>
+                  <div class="wf-comp-tourn-date">15.05</div>
+                </div>
+                <div class="wf-comp-tourn wf-comp-major" style="left:49%">
+                  <div class="wf-comp-tourn-label">Norges Cup</div>
+                  <div class="wf-comp-tourn-dot"></div>
+                  <div class="wf-comp-tourn-date">08.06</div>
+                </div>
+                <div class="wf-comp-tourn wf-comp-major" style="left:59%">
+                  <div class="wf-comp-tourn-label">NM Slagspill</div>
+                  <div class="wf-comp-tourn-dot"></div>
+                  <div class="wf-comp-tourn-date">19.07</div>
+                </div>
+                <div class="wf-comp-tourn" style="left:66%">
+                  <div class="wf-comp-tourn-label">Klubbmester.</div>
+                  <div class="wf-comp-tourn-dot"></div>
+                  <div class="wf-comp-tourn-date">11.08</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-c-label">Forberedelsesblokker<span class="wf-marker">3</span></div>
+              <div class="wf-c-sub">Hver blokk bygger mot neste turnering. Aktiv blokk fremhevet.</div>
+            </div>
+
+            <div class="wf-comp-prep">
+              <div class="wf-comp-prep-card">
+                <div class="wf-comp-prep-phase">Blokk 1 · Jan-Mar</div>
+                <h3 class="wf-comp-prep-title">Grunnmur</h3>
+                <div class="wf-comp-prep-tourn">→ Ingen turn.</div>
+                <p class="wf-comp-prep-focus">Teknikk-rebuild. Fysikk og mentale rutiner. Forbereder hele året.</p>
+                <div class="wf-comp-prep-meta"><span>60 økter</span><span>12 uker</span></div>
+              </div>
+
+              <div class="wf-comp-prep-card wf-prep-active">
+                <div class="wf-comp-prep-phase">Blokk 2 · Apr-Mai</div>
+                <h3 class="wf-comp-prep-title">NM-prep</h3>
+                <div class="wf-comp-prep-tourn">→ NM Match Play · 15.05</div>
+                <p class="wf-comp-prep-focus">Taktikk for match play. Mental simulering, pressdrill. Bane + rutiner.</p>
+                <div class="wf-comp-prep-meta"><span>44 økter</span><span>7 uker</span></div>
+              </div>
+
+              <div class="wf-comp-prep-card">
+                <div class="wf-comp-prep-phase">Blokk 3 · Jun-Jul</div>
+                <h3 class="wf-comp-prep-title">Peaking</h3>
+                <div class="wf-comp-prep-tourn">→ NM Slagspill · 19.07</div>
+                <p class="wf-comp-prep-focus">Taper før peak. Scoring-rutiner. 72-hullers simulering.</p>
+                <div class="wf-comp-prep-meta"><span>32 økter</span><span>7 uker</span></div>
+              </div>
+
+              <div class="wf-comp-prep-card">
+                <div class="wf-comp-prep-phase">Blokk 4 · Aug-Sep</div>
+                <h3 class="wf-comp-prep-title">Høysesong</h3>
+                <div class="wf-comp-prep-tourn">→ Klubbmester. + Losby</div>
+                <p class="wf-comp-prep-focus">Vedlikehold. Rytme og rutine. Siste turneringer.</p>
+                <div class="wf-comp-prep-meta"><span>22 økter</span><span>8 uker</span></div>
+              </div>
+
+              <div class="wf-comp-prep-card">
+                <div class="wf-comp-prep-phase">Blokk 5 · Okt</div>
+                <h3 class="wf-comp-prep-title">Reset</h3>
+                <div class="wf-comp-prep-tourn">→ Ingen turn.</div>
+                <p class="wf-comp-prep-focus">Aktiv hvile. Sesongevaluering med coach. Forbered grunnmur.</p>
+                <div class="wf-comp-prep-meta"><span>8 økter</span><span>4 uker</span></div>
+              </div>
+
+              <div class="wf-comp-prep-card">
+                <div class="wf-comp-prep-phase">Blokk 6 · Nov-Des</div>
+                <h3 class="wf-comp-prep-title">Neste sesong</h3>
+                <div class="wf-comp-prep-tourn">→ Planlegging 2027</div>
+                <p class="wf-comp-prep-focus">Teknikk + fysikk-oppbygging. Mål 2027 settes. Simulator inn.</p>
+                <div class="wf-comp-prep-meta"><span>30 økter</span><span>9 uker</span></div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Konkurransen som dreiepunkt:</strong> Sidebar viser nærmeste turnering. Alt i UI pekes mot prestasjon.</li>
+        <li><strong>2 — Milepæl-timeline:</strong> Majors (3) er større dots enn sekundære. Visuelt hierarki matcher reell viktighet.</li>
+        <li><strong>3 — Navngitte blokker:</strong> "NM-prep" sier mer enn "blokk 2". Gir handlings-orientert mentalmodell.</li>
+        <li>— Styrke: Passer Pro/Elite som har klare konkurransemål. Motiverer.</li>
+        <li>— Svakhet: Spillere uten turneringer (Academy-tier) får lite å forholde seg til. Må ha tom-tilstand "Legg til første turnering".</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Monthly Cards ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Monthly Cards</span></h2>
+    <p class="option-description">12 fulle kort — ett per måned — som nettside-seksjoner. Hvert kort har fase, ukentlig fokus, fysikk/teknikk-splitt og kobling til turneringer. Maksimal detalj per måned.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/sesongplan</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders K.</div><div class="wf-sb-profile-meta">Pro · HCP +1.8</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Sesongplan</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegger</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Turneringer</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Hopp til måned</div>
+              <div class="wf-sb-cta-desc">Naviger direkte</div>
+              <button class="wf-sb-cta-btn">Gå til april</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Månedsplan 2026</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip wf-active">12 mnd</span>
+                <span class="wf-mtopbar-chip">Q1</span>
+                <span class="wf-mtopbar-chip">Q2</span>
+                <span class="wf-mtopbar-chip">Q3</span>
+                <span class="wf-mtopbar-chip">Q4</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-eyebrow">Per måned</div>
+                <h1 class="wf-page-title">12 kort. 12 måneder.<span class="wf-marker">1</span></h1>
+                <p class="wf-page-sub">Hvert kort er en mini-plan: fase, ukentlig fokus, turneringer.</p>
+              </div>
+              <div class="wf-page-badge">PRO</div>
+            </section>
+
+            <div class="wf-months-grid">
+
+              <div class="wf-month-card wf-phase-grunn">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">Januar</h3>
+                  <span class="wf-mc-meta">01 · Uke 1-5</span>
+                </div>
+                <span class="wf-mc-phase">Grunnleggende</span>
+                <p class="wf-mc-focus">Teknikk-rebuild, styrke-blokk</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U1-2</strong><span>Sving-diagnose</span></li>
+                  <li><strong>U3</strong><span>Fysikk-testing</span></li>
+                  <li><strong>U4-5</strong><span>Teknikk-inn</span></li>
+                </ul>
+              </div>
+
+              <div class="wf-month-card wf-phase-grunn">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">Februar</h3>
+                  <span class="wf-mc-meta">02 · Uke 5-9</span>
+                </div>
+                <span class="wf-mc-phase">Grunnleggende</span>
+                <p class="wf-mc-focus">Sving-volum + Trackman-måling</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U5-7</strong><span>Sving-variasjoner</span></li>
+                  <li><strong>U8-9</strong><span>Kort-spill blokk</span></li>
+                </ul>
+              </div>
+
+              <div class="wf-month-card wf-phase-grunn">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">Mars</h3>
+                  <span class="wf-mc-meta">03 · Uke 10-13</span>
+                </div>
+                <span class="wf-mc-phase">Grunnleggende</span>
+                <p class="wf-mc-focus">Overgang til bane, test-runder</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U10</strong><span>Simulator-runder</span></li>
+                  <li><strong>U11-12</strong><span>Første baneslag</span></li>
+                  <li><strong>U13</strong><span>Test-runde Losby</span></li>
+                </ul>
+              </div>
+
+              <div class="wf-month-card wf-active">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">April<span class="wf-marker">2</span></h3>
+                  <span class="wf-mc-meta">04 · Uke 14-17 · nå</span>
+                </div>
+                <span class="wf-mc-phase">Konk-forberedelse</span>
+                <p class="wf-mc-focus">Bane-rutiner, scoring-fokus</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U14</strong><span>Kortspill-drill</span></li>
+                  <li><strong>U15</strong><span>Approach 100-140m</span></li>
+                  <li><strong>U16</strong><span>Putting + rutiner</span></li>
+                  <li><strong>U17</strong><span>Oslo Åpen-prep</span></li>
+                </ul>
+                <div class="wf-mc-tourn">Oslo Åpen · 27.04</div>
+              </div>
+
+              <div class="wf-month-card">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">Mai</h3>
+                  <span class="wf-mc-meta">05 · Uke 18-22</span>
+                </div>
+                <span class="wf-mc-phase">Konk-forberedelse</span>
+                <p class="wf-mc-focus">NM Match Play-prep</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U18-19</strong><span>Match play-sim</span></li>
+                  <li><strong>U20</strong><span>Mental rutine</span></li>
+                  <li><strong>U21</strong><span>NM MP</span></li>
+                  <li><strong>U22</strong><span>Recovery + eval</span></li>
+                </ul>
+                <div class="wf-mc-tourn">NM Match Play · 15.05</div>
+              </div>
+
+              <div class="wf-month-card">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">Juni</h3>
+                  <span class="wf-mc-meta">06 · Uke 22-26</span>
+                </div>
+                <span class="wf-mc-phase">Konk-forberedelse</span>
+                <p class="wf-mc-focus">Norges Cup + peaking</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U23</strong><span>Norges Cup #1</span></li>
+                  <li><strong>U24-25</strong><span>Taktikk-drill</span></li>
+                  <li><strong>U26</strong><span>Norges Cup #2</span></li>
+                </ul>
+                <div class="wf-mc-tourn">Norges Cup · 08 + 22.06</div>
+              </div>
+
+              <div class="wf-month-card wf-phase-konk">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">Juli<span class="wf-marker">3</span></h3>
+                  <span class="wf-mc-meta">07 · Uke 27-30</span>
+                </div>
+                <span class="wf-mc-phase">Høysesong</span>
+                <p class="wf-mc-focus">Intensiv turnering-prep</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U27</strong><span>Scoring-rutine</span></li>
+                  <li><strong>U28</strong><span>72-hulls sim</span></li>
+                  <li><strong>U29</strong><span>NM Slag</span></li>
+                  <li><strong>U30</strong><span>Recovery</span></li>
+                </ul>
+                <div class="wf-mc-tourn">NM Slagspill · 19.07</div>
+              </div>
+
+              <div class="wf-month-card wf-phase-konk">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">August</h3>
+                  <span class="wf-mc-meta">08 · Uke 31-35</span>
+                </div>
+                <span class="wf-mc-phase">Høysesong</span>
+                <p class="wf-mc-focus">Grunnleggende teknikk holdes</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U31-32</strong><span>Vedlikehold</span></li>
+                  <li><strong>U33</strong><span>Klubbmester.</span></li>
+                  <li><strong>U34-35</strong><span>Fri-runder</span></li>
+                </ul>
+                <div class="wf-mc-tourn">Klubbmester. · 11.08</div>
+              </div>
+
+              <div class="wf-month-card wf-phase-konk">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">September</h3>
+                  <span class="wf-mc-meta">09 · Uke 36-39</span>
+                </div>
+                <span class="wf-mc-phase">Høysesong</span>
+                <p class="wf-mc-focus">Avslutning + siste turn.</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U36</strong><span>Losby Open-prep</span></li>
+                  <li><strong>U37</strong><span>Losby Open</span></li>
+                  <li><strong>U38-39</strong><span>Sesongavslutning</span></li>
+                </ul>
+                <div class="wf-mc-tourn">Losby Open · 13.09</div>
+              </div>
+
+              <div class="wf-month-card wf-phase-rest">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">Oktober</h3>
+                  <span class="wf-mc-meta">10 · Uke 40-44</span>
+                </div>
+                <span class="wf-mc-phase">Restitusjon</span>
+                <p class="wf-mc-focus">Aktiv hvile, sesongrapport</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U40-41</strong><span>Fri / hvile</span></li>
+                  <li><strong>U42</strong><span>Coach-eval</span></li>
+                  <li><strong>U43-44</strong><span>Sesongrapport</span></li>
+                </ul>
+              </div>
+
+              <div class="wf-month-card wf-phase-rest">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">November</h3>
+                  <span class="wf-mc-meta">11 · Uke 45-48</span>
+                </div>
+                <span class="wf-mc-phase">Teknikk + mental</span>
+                <p class="wf-mc-focus">Simulator inn, fysikk starter</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U45</strong><span>Fysikk-test</span></li>
+                  <li><strong>U46-47</strong><span>Teknikk-inn</span></li>
+                  <li><strong>U48</strong><span>Mental plan</span></li>
+                </ul>
+              </div>
+
+              <div class="wf-month-card wf-phase-rest">
+                <div class="wf-mc-top">
+                  <h3 class="wf-mc-name">Desember</h3>
+                  <span class="wf-mc-meta">12 · Uke 49-52</span>
+                </div>
+                <span class="wf-mc-phase">Teknikk + mental</span>
+                <p class="wf-mc-focus">Oppbygging mot 2027</p>
+                <ul class="wf-mc-weeks">
+                  <li><strong>U49-50</strong><span>Sving-volum</span></li>
+                  <li><strong>U51</strong><span>Julepause</span></li>
+                  <li><strong>U52</strong><span>2027-mål settes</span></li>
+                </ul>
+              </div>
+
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — 12 kort = mental mapping:</strong> Hver måned er en selvstendig enhet med klart innhold. God scanbarhet.</li>
+        <li><strong>2 — Aktiv måned fremhevet:</strong> April har svart ramme og mer innhold (4 uker synlige). Orienteringspunkt.</li>
+        <li><strong>3 — Mørke høysesong-kort:</strong> Jul-Aug-Sep er svarte — signaliserer "dette er primetime".</li>
+        <li>— Styrke: Mobile-first. 3-kolonne desktop, 1-kolonne mobil. Hvert kort selvstendig.</li>
+        <li>— Svakhet: Vertikal scroll-tung. Mister 12-måneders oversikt. Ingen cross-måned sammenligning.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Fem opsjoner rangert mot målet: <strong>12-måneders periodiseringsoversikt som er umiddelbart forståelig, tett koblet til turneringskalender og inviterer til drill-down til Planlegger 2.0.</strong></p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>12-mnd oversikt</th><th>Tier-passing</th><th>Kompleksitet</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. 12-Month Gantt</strong></td><td>Horisontal gantt med faser per dimensjon</td><td>Ekstrem (alle dimensjoner)</td><td>Pro + Elite</td><td>Medium</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Calendar Year</strong></td><td>Kalender-grid, fargekodede måneder</td><td>Høy (kjent form)</td><td>Alle tiers</td><td>Lav</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Phase Timeline</strong></td><td>Vertikal narrativ per fase</td><td>Medium (fase-nivå)</td><td>Starter + Pro</td><td>Lav</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>4. Competition-Driven</strong></td><td>Turneringer som milepæler, trening i blokker</td><td>Høy (konkurranse-akse)</td><td>Pro/Elite med turn.</td><td>Medium</td><td>★★★★☆</td></tr>
+        <tr><td><strong>5. Monthly Cards</strong></td><td>12 fulle kort med ukes-fokus</td><td>Lav (krever scroll)</td><td>Alle tiers</td><td>Lav</td><td>★★★☆☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Option 1 — 12-Month Gantt</h3>
+      <p>Gantt-visningen er den eneste opsjonen som viser alle fem dimensjoner (fase, teknikk, fysikk, mental, spill) pluss turneringer på ett og samme bilde. Det er den sportsvitenskaplige periodiseringsvisningen i sin mest klassiske form — og matcher direkte hvordan Anders jobber med årsplan i The Foundation Method. Medium kompleksitet å bygge, men komponentene finnes delvis (tidslinje fra Kalender-view kan gjenbrukes).</p>
+      <p><strong>Strategisk flow:</strong> Option 1 som default for Pro/Elite. Option 2 (Calendar Year) som "forenklet modus" for Academy og Starter — samme data, færre dimensjoner. Option 4 (Competition-Driven) kan bli en underfane "Konkurranser" innenfor Sesongplan. Option 5 kan fungere som mobil-fallback siden 12-månederskolonner blir for trange på telefonen.</p>
+      <p><strong>Kobling til Planlegger 2.0:</strong> Sidebar-CTA "Ned til ukesplan" + klikk på en måned i Gantt = drill-in til Planlegger for den måneden. Dette gir makro → mikro-navigering som matcher coaching-tankegangen.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  Sesongplan wireframe · AK Golf Platform · 1704 iteration
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+/* === Option 5: Client-Grouped / Domain-Grouped === */
+
+.group-toggle {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  align-items: center;
+  font-size: 11px;
+  color: #666;
+}
+.group-toggle-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999;
+  margin-right: 6px;
+}
+.group-toggle-btn {
+  padding: 4px 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 3px;
+  color: #333;
+}
+.group-toggle-btn.active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+  font-weight: 600;
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.group {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+.group-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+.group-head-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.group-icon {
+  width: 28px; height: 28px;
+  border-radius: 4px;
+  background: #eee;
+  border: 1px solid #ddd;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #333;
+}
+.group-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #000;
+}
+.group-sub {
+  font-size: 11px;
+  color: #666;
+  margin-top: 2px;
+}
+.group-counts {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.group-count {
+  font-size: 10px;
+  color: #666;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-weight: 700;
+}
+.group-count-overdue { background: #000; color: #fff; border-color: #000; }
+.group-collapse {
+  font-size: 11px;
+  color: #888;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.group-tasks {
+  display: flex;
+  flex-direction: column;
+}
+.group-task {
+  display: grid;
+  grid-template-columns: 18px 1fr 120px 100px 60px;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 14px;
+  border-bottom: 1px solid #f2f2f2;
+  font-size: 12px;
+}
+.group-task:last-child { border-bottom: none; }
+.group-task:hover { background: #fafafa; }
+.group-task-check {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+}
+.group-task-body { display: flex; flex-direction: column; gap: 2px; }
+.group-task-title { font-weight: 600; color: #000; }
+.group-task-sub { font-size: 10px; color: #777; }
+.group-task-due {
+  font-size: 11px;
+  color: #444;
+  font-weight: 600;
+}
+.group-task-due-overdue { color: #000; font-weight: 800; }
+.group-task-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

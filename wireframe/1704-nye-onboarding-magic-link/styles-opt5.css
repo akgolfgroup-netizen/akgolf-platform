@@ -1,0 +1,181 @@
+/* ========================================================================
+   OPTION 5 — MINIMALIST · Clean + Polished visual variants
+   Screen N03 · Magic-link onboarding (progressive reveal)
+   AK tokens: primary #005840 · accent #D1F843 · surface #ECF0EF · ai #AF52DE
+   ======================================================================== */
+
+#frame-opt5-tabs .sub-tab-badge { display: none; }
+
+.clean #frame-opt5,
+.polished #frame-opt5 { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+.clean #frame-opt5 .browser-content,
+.polished #frame-opt5 .browser-content { background: #F5F8F7; }
+.clean #frame-opt5 .wf-mlink-shell,
+.polished #frame-opt5 .wf-mlink-shell { background: #F5F8F7; }
+
+/* Topbar — minimalistisk */
+.clean #frame-opt5 .wf-mlink-topbar,
+.polished #frame-opt5 .wf-mlink-topbar {
+  background: #fff;
+  border-bottom-color: rgba(0,0,0,0.04);
+  padding: 18px 32px;
+}
+.clean #frame-opt5 .wf-topbar-logo,
+.polished #frame-opt5 .wf-topbar-logo { color: #005840; }
+.clean #frame-opt5 .wf-topbar-logo-mark,
+.polished #frame-opt5 .wf-topbar-logo-mark { background: transparent; color: #005840; border: 1.5px solid #005840; }
+.clean #frame-opt5 .wf-topbar-meta,
+.polished #frame-opt5 .wf-topbar-meta { color: #A5B2AD; }
+.clean #frame-opt5 .wf-topbar-meta strong,
+.polished #frame-opt5 .wf-topbar-meta strong { color: #005840; }
+
+/* Verified */
+.clean #frame-opt5 .wf-mlink-verified,
+.polished #frame-opt5 .wf-mlink-verified {
+  background: transparent;
+  border-color: #D5DFDB;
+  color: #7A8C85;
+}
+.clean #frame-opt5 .wf-mlink-verified-dot,
+.polished #frame-opt5 .wf-mlink-verified-dot { background: #2A7D5A; }
+
+/* Stage */
+.clean #frame-opt5 .wf-minimal-stage,
+.polished #frame-opt5 .wf-minimal-stage {
+  background: #fff;
+  border-color: rgba(0,0,0,0.04);
+  border-radius: 20px;
+}
+.clean #frame-opt5 .wf-minimal-eyebrow,
+.polished #frame-opt5 .wf-minimal-eyebrow { color: #A5B2AD; }
+.clean #frame-opt5 .wf-minimal-title,
+.polished #frame-opt5 .wf-minimal-title { color: #0A1F18; letter-spacing: -0.025em; }
+.clean #frame-opt5 .wf-minimal-sub,
+.polished #frame-opt5 .wf-minimal-sub { color: #5A6E66; }
+
+/* Step indicator */
+.clean #frame-opt5 .wf-minimal-step-indicator span,
+.polished #frame-opt5 .wf-minimal-step-indicator span { background: #ECF0EF; }
+.clean #frame-opt5 .wf-minimal-step-indicator span.wf-active,
+.polished #frame-opt5 .wf-minimal-step-indicator span.wf-active { background: #005840; width: 32px; }
+.clean #frame-opt5 .wf-minimal-step-indicator span.wf-done,
+.polished #frame-opt5 .wf-minimal-step-indicator span.wf-done { background: #7A8C85; }
+
+/* Reveal — allerede svart */
+.clean #frame-opt5 .wf-minimal-revealed,
+.polished #frame-opt5 .wf-minimal-revealed {
+  background: #F5F8F7;
+  border-color: rgba(0,0,0,0.04);
+  color: #7A8C85;
+  border-radius: 12px;
+}
+.clean #frame-opt5 .wf-minimal-revealed strong,
+.polished #frame-opt5 .wf-minimal-revealed strong { color: #005840; }
+
+/* Dashboard thumbnails (mini-rad inne i stage) */
+.clean #frame-opt5 .wf-dash-card,
+.polished #frame-opt5 .wf-dash-card {
+  background: #F5F8F7;
+  border-color: rgba(0,0,0,0.04);
+  padding: 6px;
+  border-radius: 10px;
+  gap: 4px;
+}
+.clean #frame-opt5 .wf-dash-card:hover,
+.polished #frame-opt5 .wf-dash-card:hover { border-color: #005840; }
+.clean #frame-opt5 .wf-dash-card.wf-dash-selected,
+.polished #frame-opt5 .wf-dash-card.wf-dash-selected {
+  border-color: #005840;
+  background: #fff;
+  padding: 5px;
+}
+.clean #frame-opt5 .wf-dash-thumb,
+.polished #frame-opt5 .wf-dash-thumb { background: #fff; border-color: rgba(0,0,0,0.04); padding: 4px; }
+.clean #frame-opt5 .wf-dash-title,
+.polished #frame-opt5 .wf-dash-title { color: #0A1F18; font-size: 10px; }
+.clean #frame-opt5 .wf-dash-desc,
+.polished #frame-opt5 .wf-dash-desc { display: none; }
+.clean #frame-opt5 .wf-dash-badge,
+.polished #frame-opt5 .wf-dash-badge { display: none; }
+
+.clean #frame-opt5 .wf-thumb-athletic .wf-tb-big,
+.polished #frame-opt5 .wf-thumb-athletic .wf-tb-big { background: #005840; }
+.clean #frame-opt5 .wf-thumb-athletic .wf-tb-mid,
+.polished #frame-opt5 .wf-thumb-athletic .wf-tb-mid { background: #A5B2AD; }
+.clean #frame-opt5 .wf-thumb-focus .wf-tb-hero,
+.polished #frame-opt5 .wf-thumb-focus .wf-tb-hero { background: #005840; color: #D1F843; font-size: 7px; padding: 2px; }
+.clean #frame-opt5 .wf-thumb-data .wf-tb-dark,
+.polished #frame-opt5 .wf-thumb-data .wf-tb-dark { background: #005840; }
+.clean #frame-opt5 .wf-thumb-data .wf-tb-mid,
+.polished #frame-opt5 .wf-thumb-data .wf-tb-mid { background: #A5B2AD; }
+.clean #frame-opt5 .wf-thumb-progress .wf-tb-chart::before,
+.polished #frame-opt5 .wf-thumb-progress .wf-tb-chart::before { background: #005840; height: 2px; }
+.clean #frame-opt5 .wf-thumb-command .wf-tb-tall,
+.polished #frame-opt5 .wf-thumb-command .wf-tb-tall { background: #005840; }
+.clean #frame-opt5 .wf-thumb-command .wf-tb-mid,
+.polished #frame-opt5 .wf-thumb-command .wf-tb-mid { background: #A5B2AD; }
+
+/* Chips (for HCP/mål) */
+.clean #frame-opt5 .wf-chip,
+.polished #frame-opt5 .wf-chip {
+  border-color: #D5DFDB;
+  color: #324D45;
+  border-radius: 20px;
+}
+.clean #frame-opt5 .wf-chip-active,
+.polished #frame-opt5 .wf-chip-active {
+  background: #005840;
+  color: #fff;
+  border-color: #005840;
+}
+
+/* Input */
+.clean #frame-opt5 .wf-input,
+.polished #frame-opt5 .wf-input {
+  border-color: #D5DFDB;
+  color: #0A1F18;
+  background: #F5F8F7;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* Buttons — stor primær CTA */
+.clean #frame-opt5 .wf-btn,
+.polished #frame-opt5 .wf-btn { border-radius: 20px; }
+.clean #frame-opt5 .wf-btn-cta,
+.polished #frame-opt5 .wf-btn-cta {
+  background: #005840;
+  color: #fff;
+  border-color: #005840;
+  font-weight: 600;
+  padding: 14px 32px;
+  font-size: 14px;
+}
+.clean #frame-opt5 .wf-btn-cta:hover,
+.polished #frame-opt5 .wf-btn-cta:hover { background: #00594C; }
+.clean #frame-opt5 .wf-btn-jumbo,
+.polished #frame-opt5 .wf-btn-jumbo {
+  background: #D1F843;
+  color: #0A1F18;
+  border-color: #D1F843;
+  font-weight: 700;
+  padding: 18px 44px;
+}
+.clean #frame-opt5 .wf-btn-ghost,
+.polished #frame-opt5 .wf-btn-ghost { color: #A5B2AD; }
+
+/* ========== POLISHED ========== */
+.polished #frame-opt5 .wf-minimal-stage {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.04);
+}
+.polished #frame-opt5 .wf-btn-jumbo {
+  box-shadow: 0 8px 28px rgba(209,248,67,0.45);
+}
+.polished #frame-opt5 .wf-btn-cta {
+  box-shadow: 0 4px 14px rgba(0,88,64,0.2);
+}
+.polished #frame-opt5 .wf-dash-card {
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), border-color 0.2s;
+}
+.polished #frame-opt5 .wf-dash-card:hover { transform: translateY(-1px); }

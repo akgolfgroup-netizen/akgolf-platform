@@ -1,0 +1,161 @@
+/* === Option 1: Five Rings — Clean + Polished === */
+/* Brand: Primary #005840, Accent #D1F843, Surface #ECF0EF, Muted #A5B2AD, Text #324D45, Black #0A1F18 */
+
+/* ---------- CLEAN ---------- */
+.clean .opt1-shell { background: #fff; color: #324D45; font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif; gap: 24px; }
+.clean .opt1-head { border-bottom: 1px solid #ECF0EF; padding-bottom: 16px; }
+.clean .opt1-eyebrow { color: #A5B2AD; font-weight: 600; }
+.clean .opt1-title { color: #0A1F18; letter-spacing: -0.01em; }
+.clean .opt1-sub { color: #A5B2AD; }
+.clean .opt1-chip { border: 1px solid #ECF0EF; background: #fff; color: #324D45; border-radius: 999px; padding: 5px 12px; }
+.clean .opt1-chip.opt1-active { background: #005840; color: #fff; border-color: #005840; }
+
+.clean .opt1-rings { gap: 16px; }
+.clean .opt1-ring-cell { border: 1px solid #ECF0EF; border-radius: 16px; background: #fff; padding: 18px 10px; transition: all 0.2s; }
+.clean .opt1-ring { border: 10px solid #ECF0EF; background: conic-gradient(#005840 0% var(--p, 72%), #ECF0EF var(--p, 72%) 100%); }
+.clean .opt1-ring-cell:nth-child(1) .opt1-ring { background: conic-gradient(#005840 0% 72%, #ECF0EF 72% 100%); }
+.clean .opt1-ring-cell:nth-child(2) .opt1-ring { background: conic-gradient(#005840 0% 58%, #ECF0EF 58% 100%); }
+.clean .opt1-ring-cell:nth-child(3) .opt1-ring { background: conic-gradient(#005840 0% 84%, #ECF0EF 84% 100%); }
+.clean .opt1-ring-cell:nth-child(4) .opt1-ring { background: conic-gradient(#005840 0% 66%, #ECF0EF 66% 100%); }
+.clean .opt1-ring-cell:nth-child(5) .opt1-ring { background: conic-gradient(#005840 0% 41%, #ECF0EF 41% 100%); }
+.clean .opt1-ring-inner { background: #fff; }
+.clean .opt1-ring-val { color: #0A1F18; font-size: 15px; }
+.clean .opt1-ring-delta { color: #005840; font-weight: 600; }
+.clean .opt1-ring-name { color: #324D45; }
+
+.clean .opt1-sum-card { border: 1px solid #ECF0EF; background: #fff; border-radius: 12px; }
+.clean .opt1-sum-label { color: #A5B2AD; }
+.clean .opt1-sum-val { color: #0A1F18; }
+.clean .opt1-sum-sub { color: #005840; font-weight: 500; }
+
+.clean .opt1-list { border: 1px solid #ECF0EF; background: #fff; border-radius: 16px; padding: 16px; }
+.clean .opt1-list-head { border-bottom: 1px solid #ECF0EF; }
+.clean .opt1-list-title { color: #0A1F18; }
+.clean .opt1-link { color: #005840; }
+.clean .opt1-row { border-bottom: 1px solid #ECF0EF; }
+.clean .opt1-row-dot { background: #005840; }
+.clean .opt1-row-title { color: #0A1F18; }
+.clean .opt1-row-meta { color: #A5B2AD; }
+.clean .opt1-row-bar { background: #ECF0EF; }
+.clean .opt1-row-fill { background: #005840; }
+.clean .opt1-row-val { color: #0A1F18; }
+.clean .opt1-row-trend { color: #005840; }
+.clean .opt1-row-trend.opt1-down { color: #B84233; }
+.clean .opt1-row-next { color: #324D45; }
+
+.clean .opt1-footer .opt1-note { border: 1px solid #ECF0EF; background: #fff; border-radius: 16px; }
+.clean .opt1-note-body { color: #324D45; }
+
+/* ---------- POLISHED ---------- */
+.polished .opt1-shell {
+  background: linear-gradient(180deg, #fff 0%, #F5F8F7 100%);
+  color: #324D45;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  padding: 8px;
+  border-radius: 16px;
+  gap: 24px;
+}
+.polished .opt1-head { border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: 18px; }
+.polished .opt1-eyebrow { color: #A5B2AD; font-weight: 700; letter-spacing: 0.14em; }
+.polished .opt1-title { color: #0A1F18; font-weight: 800; letter-spacing: -0.02em; }
+.polished .opt1-sub { color: #A5B2AD; }
+.polished .opt1-chip {
+  border: 1px solid rgba(0,0,0,0.06);
+  background: rgba(255,255,255,0.9);
+  color: #324D45;
+  border-radius: 999px;
+  padding: 6px 14px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.polished .opt1-chip.opt1-active {
+  background: #0A1F18;
+  color: #D1F843;
+  border-color: #0A1F18;
+  box-shadow: 0 2px 8px rgba(10,31,24,0.25);
+}
+
+.polished .opt1-ring-cell {
+  border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,88,64,0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.polished .opt1-ring-cell:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,88,64,0.08); }
+.polished .opt1-ring-cell:nth-child(1) .opt1-ring { background: conic-gradient(#005840 0% 72%, #ECF0EF 72% 100%); }
+.polished .opt1-ring-cell:nth-child(2) .opt1-ring { background: conic-gradient(#005840 0% 58%, #ECF0EF 58% 100%); }
+.polished .opt1-ring-cell:nth-child(3) .opt1-ring { background: conic-gradient(#005840 0% 84%, #ECF0EF 84% 100%); }
+.polished .opt1-ring-cell:nth-child(4) .opt1-ring { background: conic-gradient(#005840 0% 66%, #ECF0EF 66% 100%); }
+.polished .opt1-ring-cell:nth-child(5) .opt1-ring { background: conic-gradient(#005840 0% 41%, #ECF0EF 41% 100%); }
+.polished .opt1-ring { border: 0; box-shadow: inset 0 0 0 10px #ECF0EF; filter: drop-shadow(0 2px 4px rgba(0,88,64,0.1)); }
+.polished .opt1-ring-inner { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.polished .opt1-ring-val { color: #0A1F18; font-size: 16px; font-weight: 800; }
+.polished .opt1-ring-delta { color: #005840; font-weight: 700; }
+.polished .opt1-ring-name { color: #0A1F18; font-weight: 700; }
+
+.polished .opt1-sum-card {
+  border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.polished .opt1-sum-label { color: #A5B2AD; font-weight: 700; letter-spacing: 0.1em; }
+.polished .opt1-sum-val { color: #0A1F18; font-weight: 800; font-size: 28px; letter-spacing: -0.02em; }
+.polished .opt1-sum-sub { color: #005840; font-weight: 600; }
+
+.polished .opt1-list {
+  border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.polished .opt1-list-head { border-bottom: 1px solid rgba(0,0,0,0.06); }
+.polished .opt1-list-title { color: #0A1F18; font-weight: 700; }
+.polished .opt1-link { color: #005840; font-weight: 600; }
+.polished .opt1-row { border-bottom: 1px solid rgba(0,0,0,0.04); padding: 14px 4px; transition: background 0.2s; }
+.polished .opt1-row:hover { background: #F5F8F7; border-radius: 8px; }
+.polished .opt1-row-dot { background: #005840; box-shadow: 0 0 0 3px rgba(0,88,64,0.1); }
+.polished .opt1-row-title { color: #0A1F18; font-weight: 700; }
+.polished .opt1-row-meta { color: #A5B2AD; }
+.polished .opt1-row-bar { background: #ECF0EF; height: 7px; border-radius: 4px; }
+.polished .opt1-row-fill { background: linear-gradient(90deg, #005840, #00594C); box-shadow: 0 0 8px rgba(0,88,64,0.3); }
+.polished .opt1-row-val { color: #0A1F18; font-weight: 800; }
+.polished .opt1-row-trend { color: #005840; font-weight: 700; background: rgba(0,88,64,0.08); padding: 2px 8px; border-radius: 6px; }
+.polished .opt1-row-trend.opt1-down { color: #B84233; background: rgba(184,66,51,0.08); }
+.polished .opt1-row-next { color: #324D45; font-weight: 500; }
+
+.polished .opt1-footer .opt1-note {
+  border: 1px solid rgba(0,88,64,0.15);
+  background: linear-gradient(135deg, #fff 0%, #E6F3F1 100%);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.polished .opt1-note-label { color: #005840; font-weight: 700; letter-spacing: 0.12em; }
+.polished .opt1-note-body { color: #0A1F18; font-size: 14px; line-height: 1.6; font-style: italic; }
+.polished .opt1-note-meta { color: #005840; font-weight: 600; }
+
+/* Polished — subtil radial gradient-bakgrunn for dybde */
+.polished .opt1-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,88,64,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 90%, rgba(209,248,67,0.08) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+.polished .opt1-shell > * { position: relative; z-index: 1; }
+
+/* Micro-animasjoner for polished */
+@keyframes opt1-ring-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.92; }
+}
+.polished .opt1-ring { animation: opt1-ring-pulse 3s ease-in-out infinite; }

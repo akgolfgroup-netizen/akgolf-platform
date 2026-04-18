@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental trender — 1704 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Mental trender</span> — <span id="project-name">AK Golf Platform · Portal · N16</span></span>
+    <span class="rec">★ Anbefalt: Opsjon <span id="rec-number">1</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Trend Lines</button>
+    <button class="tab-btn" data-tab="option-2">2: Radar Evolution</button>
+    <button class="tab-btn" data-tab="option-3">3: Correlation Scatter</button>
+    <button class="tab-btn" data-tab="option-4">4: Journal-Driven</button>
+    <button class="tab-btn" data-tab="option-5">5: Scorecard Heatmap</button>
+    <button class="tab-btn" data-tab="summary">Oppsummering</button>
+  </nav>
+
+  <!-- ===== OPTION 1: Trend Lines (SAFE) ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Opsjon 1: <span class="opt-name">Trend Lines</span></h2>
+    <p class="option-description">Overlappende linjegrafer for fire mentale dimensjoner (Fokus, Selvtillit, Stress, Emosjonskontroll) over 12 måneder. Stat-kort øverst med delta siste periode. AI-innsikt kobler mønster til tiltak. Trygg utvidelse av portalens "stat-kort + bento"-språk.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/trender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders K.</div><div class="wf-sb-profile-meta">Pro · HCP +2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <div class="wf-sb-nav-label">Portal</div>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental · Trender</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Logg mental<span class="wf-marker">1</span></div>
+              <div class="wf-sb-cta-desc">Én mental scorecard per runde gir deg trend-data</div>
+              <button class="wf-sb-cta-btn">Ny scorecard</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Mental trend · 12 måneder · 41 scorecards</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">3 mnd</span>
+                <span class="wf-mtopbar-chip">6 mnd</span>
+                <span class="wf-mtopbar-chip wf-chip-active">12 mnd</span>
+                <span class="wf-mtopbar-chip">Alt</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Mental · Trender</div>
+                <h1 class="wf-page-head-h">Hvordan har det mentale spillet utviklet seg?</h1>
+                <p class="wf-page-head-sub">Snitt fire dimensjoner · 7.4/10 · stigende trend · +0.8 fra for 6 mnd siden</p>
+              </div>
+              <span class="wf-ai-badge">Stigende</span>
+            </section>
+
+            <div class="wf-mscore-grid">
+              <div class="wf-mscore">
+                <div class="wf-mscore-head"><span class="wf-mscore-label">Fokus<span class="wf-marker">2</span></span><span class="wf-mscore-dot wf-mscore-dot-hi"></span></div>
+                <div class="wf-mscore-value">7.8<span class="wf-mscore-value-unit">/10</span></div>
+                <div class="wf-mscore-bar"><div class="wf-mscore-fill" style="width:78%"></div></div>
+                <div class="wf-mscore-trend">+0.9 fra 6 mnd · beste mnd mars</div>
+              </div>
+              <div class="wf-mscore">
+                <div class="wf-mscore-head"><span class="wf-mscore-label">Selvtillit</span><span class="wf-mscore-dot wf-mscore-dot-hi"></span></div>
+                <div class="wf-mscore-value">7.2<span class="wf-mscore-value-unit">/10</span></div>
+                <div class="wf-mscore-bar"><div class="wf-mscore-fill" style="width:72%"></div></div>
+                <div class="wf-mscore-trend">+1.1 fra 12 mnd · sterk trend</div>
+              </div>
+              <div class="wf-mscore">
+                <div class="wf-mscore-head"><span class="wf-mscore-label">Stress</span><span class="wf-mscore-dot wf-mscore-dot-md"></span></div>
+                <div class="wf-mscore-value">6.9<span class="wf-mscore-value-unit">/10</span></div>
+                <div class="wf-mscore-bar"><div class="wf-mscore-fill" style="width:69%"></div></div>
+                <div class="wf-mscore-trend">+0.4 fra 6 mnd · turneringsfall juni</div>
+              </div>
+              <div class="wf-mscore">
+                <div class="wf-mscore-head"><span class="wf-mscore-label">Emosjonskontroll</span><span class="wf-mscore-dot wf-mscore-dot-lo"></span></div>
+                <div class="wf-mscore-value">6.6<span class="wf-mscore-value-unit">/10</span></div>
+                <div class="wf-mscore-bar"><div class="wf-mscore-fill" style="width:66%"></div></div>
+                <div class="wf-mscore-trend">+0.2 fra 6 mnd · fokusområde</div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-row">
+                  <div class="wf-c-label">Trendlinjer · 12 måneder<span class="wf-marker">3</span></div>
+                  <span class="wf-ai-badge">4 dimensjoner</span>
+                </div>
+                <div class="wf-linechart">
+                  <svg class="wf-linechart-svg" viewBox="0 0 600 240" preserveAspectRatio="none">
+                    <!-- Grid horizontal -->
+                    <line class="wf-linechart-grid" x1="0" y1="0" x2="600" y2="0"/>
+                    <line class="wf-linechart-grid" x1="0" y1="60" x2="600" y2="60"/>
+                    <line class="wf-linechart-grid" x1="0" y1="120" x2="600" y2="120"/>
+                    <line class="wf-linechart-grid" x1="0" y1="180" x2="600" y2="180"/>
+                    <line class="wf-linechart-grid" x1="0" y1="240" x2="600" y2="240"/>
+                    <!-- Y-axis labels (score) -->
+                    <text class="wf-linechart-axis-label" x="-36" y="4">10</text>
+                    <text class="wf-linechart-axis-label" x="-30" y="64">8.5</text>
+                    <text class="wf-linechart-axis-label" x="-36" y="124">7</text>
+                    <text class="wf-linechart-axis-label" x="-30" y="184">5.5</text>
+                    <text class="wf-linechart-axis-label" x="-36" y="244">4</text>
+
+                    <!-- Fokus (solid) — starter 6.8 stiger til 7.8 -->
+                    <polyline class="wf-line-focus" points="0,128 50,132 100,120 150,108 200,96 250,100 300,92 350,80 400,72 450,76 500,68 550,64 600,60"/>
+                    <!-- Selvtillit (dashed) — fra 6.1 til 7.2 -->
+                    <polyline class="wf-line-selvtillit" points="0,156 50,148 100,144 150,140 200,136 250,128 300,120 350,112 400,108 450,104 500,96 550,92 600,88"/>
+                    <!-- Stress (dotted) — svinger, høyt i juni, fall -->
+                    <polyline class="wf-line-stress" points="0,140 50,136 100,132 150,124 200,116 250,132 300,148 350,140 400,128 450,116 500,108 550,104 600,100"/>
+                    <!-- Emosjonskontroll (dash-dot) — flatest -->
+                    <polyline class="wf-line-emo" points="0,160 50,156 100,160 150,152 200,144 250,148 300,156 350,148 400,136 450,132 500,128 550,120 600,116"/>
+
+                    <!-- Endpoint dots -->
+                    <circle class="wf-line-dot" cx="600" cy="60" r="4" stroke="#000"/>
+                    <circle class="wf-line-dot" cx="600" cy="88" r="4" stroke="#666"/>
+                    <circle class="wf-line-dot" cx="600" cy="100" r="4" stroke="#333"/>
+                    <circle class="wf-line-dot" cx="600" cy="116" r="4" stroke="#999"/>
+
+                    <!-- X-axis month labels -->
+                    <text class="wf-linechart-axis-label" x="0" y="260">MAI</text>
+                    <text class="wf-linechart-axis-label" x="100" y="260">JUL</text>
+                    <text class="wf-linechart-axis-label" x="200" y="260">SEP</text>
+                    <text class="wf-linechart-axis-label" x="300" y="260">NOV</text>
+                    <text class="wf-linechart-axis-label" x="400" y="260">JAN</text>
+                    <text class="wf-linechart-axis-label" x="500" y="260">MAR</text>
+                    <text class="wf-linechart-axis-label" x="580" y="260">APR</text>
+                  </svg>
+                </div>
+                <div class="wf-linechart-legend">
+                  <div class="wf-legend-item"><span class="wf-legend-swatch"></span>Fokus · 7.8</div>
+                  <div class="wf-legend-item"><span class="wf-legend-swatch wf-legend-swatch-selvtillit"></span>Selvtillit · 7.2</div>
+                  <div class="wf-legend-item"><span class="wf-legend-swatch wf-legend-swatch-stress"></span>Stress (høy = bra) · 6.9</div>
+                  <div class="wf-legend-item"><span class="wf-legend-swatch wf-legend-swatch-emo"></span>Emosjonskontroll · 6.6</div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-label">AI-innsikt · mønster<span class="wf-marker">4</span></div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI · basert på 41 scorecards</div>
+                  <p class="wf-insight-body">"Selvtillit har den sterkeste trenden (+1.1). Emosjonskontroll har stagnert — scoren faller 0.8 poeng dagen etter en dårlig runde. Trigger: bogey-streak på 3+. Tiltak: reset-rutine mellom hull."</p>
+                </div>
+                <button class="wf-sb-cta-btn" style="align-self:flex-start; margin-top:4px; width:auto; padding: 9px 18px;">Se analyse</button>
+              </div>
+
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Korrelasjon · score<span class="wf-marker">5</span></div>
+                <div class="wf-c-value">-0.62</div>
+                <div class="wf-c-sub">Sterk negativ: høyere Fokus → lavere score</div>
+                <div class="wf-correlation-badge" style="align-self:flex-start">
+                  <span>Signifikant</span>
+                  <div class="wf-correlation-strength"><span class="wf-filled"></span><span class="wf-filled"></span><span class="wf-filled"></span><span class="wf-filled"></span><span></span></div>
+                </div>
+              </div>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Sidebar-CTA:</strong> "Ny scorecard" peker til scorecard-input. Trender krever data — CTA holder streaken i gang.</li>
+        <li><strong>2 — 4 dimensjoner øverst:</strong> Fokus, Selvtillit, Stress, Emosjonskontroll. Delta siste 6/12 mnd under tallet — svarer "er jeg bedre nå?".</li>
+        <li><strong>3 — Linjegraf 12 mnd:</strong> Alle fire linjer overlappet. Solid = Fokus (viktigst), dashed/dotted varianter for de tre andre. Y-akse 4–10, X-akse månedsetiketter. Leses som historie, ikke tabell.</li>
+        <li><strong>4 — AI-innsikt:</strong> Kobler trend til trigger (bogey-streak) og konkret tiltak. AI-lilla signal.</li>
+        <li><strong>5 — Korrelasjon:</strong> Én tall, klikkbar for å gå til scatter-view (opsjon 3 som sub-view).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2: Radar Evolution ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Opsjon 2: <span class="opt-name">Radar Evolution</span></h2>
+    <p class="option-description">Radar-diagram med tre lag: Nå vs 6 mnd siden vs 12 mnd siden. Umiddelbar visuell forståelse av hvor utviklingen har skjedd. Mørkest lag = nåværende profil. Passer spillere som leser form, ikke tabeller.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/trender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders K.</div><div class="wf-sb-profile-meta">Pro · HCP +2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental · Trender</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Sammenlign</div>
+              <div class="wf-sb-cta-desc">Velg to tidspunkt for dypere sammenligning</div>
+              <button class="wf-sb-cta-btn">Tilpass</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Radar-evolusjon · tre snitt-perioder</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Runde-snitt</span>
+                <span class="wf-mtopbar-chip wf-chip-active">Måneds-snitt</span>
+                <span class="wf-mtopbar-chip">Kvartal</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Mental · Trender</div>
+                <h1 class="wf-page-head-h">Hvor har utviklingen skjedd?<span class="wf-marker">1</span></h1>
+                <p class="wf-page-head-sub">Tre lag: Nå · 6 mnd siden · 12 mnd siden. Mørkest = nåværende profil.</p>
+              </div>
+              <span class="wf-ai-badge">+0.8 snitt</span>
+            </section>
+
+            <div class="wf-c">
+              <div class="wf-radar-wrap">
+                <div class="wf-radar">
+                  <svg class="wf-radar-svg" viewBox="0 0 360 360">
+                    <!-- Grid rings -->
+                    <polygon class="wf-radar-grid" points="180,60 300,130 300,250 180,320 60,250 60,130"/>
+                    <polygon class="wf-radar-grid" points="180,90 270,142 270,238 180,290 90,238 90,142"/>
+                    <polygon class="wf-radar-grid" points="180,120 240,155 240,225 180,260 120,225 120,155"/>
+                    <polygon class="wf-radar-grid" points="180,150 210,168 210,212 180,230 150,212 150,168"/>
+                    <!-- Axis lines (4 dimensjoner: Fokus top, Selvtillit right, Stress bottom, Emosjonskontroll left) -->
+                    <line class="wf-radar-axis" x1="180" y1="180" x2="180" y2="60"/>
+                    <line class="wf-radar-axis" x1="180" y1="180" x2="300" y2="180"/>
+                    <line class="wf-radar-axis" x1="180" y1="180" x2="180" y2="300"/>
+                    <line class="wf-radar-axis" x1="180" y1="180" x2="60" y2="180"/>
+
+                    <!-- 12 mnd siden: Fokus 6.8, Selvtillit 6.1, Stress 6.5, Emosjonskontroll 6.4 (lowest) -->
+                    <polygon class="wf-radar-shape wf-radar-shape-12m" points="180,98 253,180 180,258 109,180"/>
+                    <!-- 6 mnd siden: Fokus 7.2, Selvtillit 6.7, Stress 6.5, Emosjonskontroll 6.5 -->
+                    <polygon class="wf-radar-shape wf-radar-shape-6m" points="180,90 261,180 180,258 101,180"/>
+                    <!-- Nå: Fokus 7.8, Selvtillit 7.2, Stress 6.9, Emosjonskontroll 6.6 -->
+                    <polygon class="wf-radar-shape wf-radar-shape-now" points="180,76 274,180 180,250 94,180"/>
+
+                    <!-- Dots on "Now" shape -->
+                    <circle class="wf-radar-dot" cx="180" cy="76" stroke="#000" fill="#fff"/>
+                    <circle class="wf-radar-dot" cx="274" cy="180" stroke="#000" fill="#fff"/>
+                    <circle class="wf-radar-dot" cx="180" cy="250" stroke="#000" fill="#fff"/>
+                    <circle class="wf-radar-dot" cx="94" cy="180" stroke="#000" fill="#fff"/>
+
+                    <!-- Axis labels -->
+                    <text class="wf-radar-label" x="180" y="48" text-anchor="middle">Fokus</text>
+                    <text class="wf-radar-label" x="310" y="184" text-anchor="start">Selvtillit</text>
+                    <text class="wf-radar-label" x="180" y="338" text-anchor="middle">Stress</text>
+                    <text class="wf-radar-label" x="50" y="184" text-anchor="end">Emosjon</text>
+
+                    <!-- Corner scale labels -->
+                    <text class="wf-radar-label" x="180" y="62" text-anchor="middle" style="font-size:9px">10</text>
+                    <text class="wf-radar-label" x="180" y="152" text-anchor="middle" style="font-size:9px">6</text>
+                  </svg>
+                </div>
+                <div class="wf-radar-sidelegend">
+                  <div class="wf-radar-timeblock">
+                    <div class="wf-radar-timeblock-label"><span class="wf-radar-timeblock-swatch"></span>Nå · april</div>
+                    <div class="wf-radar-timeblock-value">7.4<span class="wf-mscore-value-unit">/10</span></div>
+                    <div class="wf-radar-timeblock-sub">Fokus 7.8 · Selvtillit 7.2 · Stress 6.9 · Emo 6.6</div>
+                  </div>
+                  <div class="wf-radar-timeblock">
+                    <div class="wf-radar-timeblock-label"><span class="wf-radar-timeblock-swatch wf-radar-timeblock-swatch-6m"></span>6 mnd siden</div>
+                    <div class="wf-radar-timeblock-value">6.7<span class="wf-mscore-value-unit">/10</span></div>
+                    <div class="wf-radar-timeblock-sub">Fokus 7.2 · Selvtillit 6.7 · Stress 6.5 · Emo 6.5</div>
+                  </div>
+                  <div class="wf-radar-timeblock">
+                    <div class="wf-radar-timeblock-label"><span class="wf-radar-timeblock-swatch wf-radar-timeblock-swatch-12m"></span>12 mnd siden</div>
+                    <div class="wf-radar-timeblock-value">6.5<span class="wf-mscore-value-unit">/10</span></div>
+                    <div class="wf-radar-timeblock-sub">Fokus 6.8 · Selvtillit 6.1 · Stress 6.5 · Emo 6.4</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Størst endring<span class="wf-marker">2</span></div>
+                <div class="wf-c-value">+1.1</div>
+                <div class="wf-c-sub">Selvtillit · 6.1 → 7.2 (12 mnd)</div>
+              </div>
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Minst endring</div>
+                <div class="wf-c-value">+0.2</div>
+                <div class="wf-c-sub">Emosjonskontroll · 6.4 → 6.6</div>
+              </div>
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Bredde-indeks</div>
+                <div class="wf-c-value">1.2</div>
+                <div class="wf-c-sub">Spenn mellom topp og bunn — lavere = jevnere</div>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-label">AI-tolkning<span class="wf-marker">3</span></div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI · sammenligning Nå vs 12 mnd siden</div>
+                  <p class="wf-insight-body">"Formen har utvidet seg asymmetrisk — Fokus og Selvtillit har vokst, men Emosjonskontroll har flatet ut. For å få en jevn firkant, prioriter tiltak etter dårlige slag: reset-rutine, aksept-mantra og konkrete "slipp"-triggere mellom hull."</p>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Tre lag overlappet:</strong> Nå (mørkest) utenpå 6 mnd (medium) utenpå 12 mnd (lysest). Visuell "utvidelse" forteller historien uten tall.</li>
+        <li><strong>2 — Delta-kort:</strong> Størst endring + minst endring viser hva som har fungert og hva som har stagnert.</li>
+        <li><strong>3 — AI-tolkning:</strong> "Asymmetrisk vekst" er en mental modell spilleren kan huske. Kobler form til tiltak.</li>
+        <li>— Styrke: Umiddelbar helhet på ett blikk. Svakhet: Mindre presis enn linjegraf for tidsmønstre.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3: Correlation Scatter ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Opsjon 3: <span class="opt-name">Correlation Scatter</span></h2>
+    <p class="option-description">Scatter-plot: X-akse = mental score (valgt dimensjon), Y-akse = score i runde vs par. Hver prikk = én runde. Trendlinje viser korrelasjon. Velg dimensjon og se hvilken som faktisk driver score.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/trender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders K.</div><div class="wf-sb-profile-meta">Pro · HCP +2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental · Trender</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Eksporter</div>
+              <div class="wf-sb-cta-desc">Del korrelasjonsanalyse med coach</div>
+              <button class="wf-sb-cta-btn">Del med coach</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Korrelasjon mental score ↔ runderesultat · 41 runder</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">6 mnd</span>
+                <span class="wf-mtopbar-chip wf-chip-active">12 mnd</span>
+                <span class="wf-mtopbar-chip">Alt</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Mental · Korrelasjon</div>
+                <h1 class="wf-page-head-h">Hvilken dimensjon påvirker scoren mest?<span class="wf-marker">1</span></h1>
+                <p class="wf-page-head-sub">Scatter-plot · 41 runder · negativ koeffisient = høy mental gir lavere (bedre) score</p>
+              </div>
+              <span class="wf-ai-badge">r = -0.62</span>
+            </section>
+
+            <div class="wf-c">
+              <div class="wf-c-row">
+                <div class="wf-scatter-controls">
+                  <span class="wf-c-label" style="margin-right:6px">Dimensjon<span class="wf-marker">2</span></span>
+                  <button class="wf-journal-filter wf-active">Fokus</button>
+                  <button class="wf-journal-filter">Selvtillit</button>
+                  <button class="wf-journal-filter">Stress</button>
+                  <button class="wf-journal-filter">Emosjonskontroll</button>
+                </div>
+                <div class="wf-correlation-badge">
+                  <span>r = -0.62 · sterk</span>
+                  <div class="wf-correlation-strength"><span class="wf-filled"></span><span class="wf-filled"></span><span class="wf-filled"></span><span class="wf-filled"></span><span></span></div>
+                </div>
+              </div>
+
+              <div class="wf-scatter">
+                <svg class="wf-scatter-svg" viewBox="0 0 600 300" preserveAspectRatio="none">
+                  <!-- Grid -->
+                  <line class="wf-scatter-grid" x1="0" y1="60" x2="600" y2="60"/>
+                  <line class="wf-scatter-grid" x1="0" y1="120" x2="600" y2="120"/>
+                  <line class="wf-scatter-grid" x1="0" y1="180" x2="600" y2="180"/>
+                  <line class="wf-scatter-grid" x1="0" y1="240" x2="600" y2="240"/>
+                  <line class="wf-scatter-grid" x1="100" y1="0" x2="100" y2="300"/>
+                  <line class="wf-scatter-grid" x1="200" y1="0" x2="200" y2="300"/>
+                  <line class="wf-scatter-grid" x1="300" y1="0" x2="300" y2="300"/>
+                  <line class="wf-scatter-grid" x1="400" y1="0" x2="400" y2="300"/>
+                  <line class="wf-scatter-grid" x1="500" y1="0" x2="500" y2="300"/>
+
+                  <!-- Axes -->
+                  <line class="wf-scatter-axis" x1="0" y1="300" x2="600" y2="300"/>
+                  <line class="wf-scatter-axis" x1="0" y1="0" x2="0" y2="300"/>
+
+                  <!-- Trendline: from (60, 40) to (560, 260) — negative slope -->
+                  <line class="wf-scatter-trendline" x1="40" y1="50" x2="580" y2="260"/>
+
+                  <!-- Dots: 41 runder, clustered along trendline with variance -->
+                  <!-- Low Fokus (left) → high score vs par (top, bad) -->
+                  <circle class="wf-scatter-dot wf-scatter-dot-lo" cx="50" cy="40" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-lo" cx="70" cy="70" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-lo" cx="90" cy="55" r="5"/>
+                  <circle class="wf-scatter-dot" cx="110" cy="90" r="5"/>
+                  <circle class="wf-scatter-dot" cx="130" cy="75" r="5"/>
+                  <circle class="wf-scatter-dot" cx="150" cy="110" r="5"/>
+                  <circle class="wf-scatter-dot" cx="170" cy="85" r="5"/>
+                  <circle class="wf-scatter-dot" cx="190" cy="130" r="5"/>
+                  <circle class="wf-scatter-dot" cx="210" cy="100" r="5"/>
+                  <circle class="wf-scatter-dot" cx="220" cy="145" r="5"/>
+                  <circle class="wf-scatter-dot" cx="240" cy="120" r="5"/>
+                  <circle class="wf-scatter-dot" cx="260" cy="155" r="5"/>
+                  <circle class="wf-scatter-dot" cx="270" cy="130" r="5"/>
+                  <circle class="wf-scatter-dot" cx="290" cy="165" r="5"/>
+                  <circle class="wf-scatter-dot" cx="300" cy="140" r="5"/>
+                  <circle class="wf-scatter-dot" cx="310" cy="175" r="5"/>
+                  <circle class="wf-scatter-dot" cx="325" cy="150" r="5"/>
+                  <circle class="wf-scatter-dot" cx="340" cy="185" r="5"/>
+                  <circle class="wf-scatter-dot" cx="355" cy="160" r="5"/>
+                  <circle class="wf-scatter-dot" cx="370" cy="195" r="5"/>
+                  <circle class="wf-scatter-dot" cx="380" cy="170" r="5"/>
+                  <circle class="wf-scatter-dot" cx="395" cy="200" r="5"/>
+                  <circle class="wf-scatter-dot" cx="410" cy="180" r="5"/>
+                  <circle class="wf-scatter-dot" cx="425" cy="210" r="5"/>
+                  <circle class="wf-scatter-dot" cx="440" cy="190" r="5"/>
+                  <circle class="wf-scatter-dot" cx="455" cy="220" r="5"/>
+                  <circle class="wf-scatter-dot" cx="465" cy="200" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-hi" cx="480" cy="225" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-hi" cx="495" cy="215" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-hi" cx="510" cy="240" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-hi" cx="520" cy="225" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-hi" cx="535" cy="250" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-hi" cx="545" cy="235" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-hi" cx="555" cy="255" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-hi" cx="565" cy="240" r="5"/>
+                  <circle class="wf-scatter-dot wf-scatter-dot-hi" cx="575" cy="260" r="5"/>
+                  <circle class="wf-scatter-dot" cx="180" cy="70" r="5"/>
+                  <circle class="wf-scatter-dot" cx="250" cy="90" r="5"/>
+                  <circle class="wf-scatter-dot" cx="320" cy="115" r="5"/>
+                  <circle class="wf-scatter-dot" cx="460" cy="165" r="5"/>
+
+                  <!-- Y-axis labels (score vs par) -->
+                  <text class="wf-scatter-axis-label" x="-30" y="4">+12</text>
+                  <text class="wf-scatter-axis-label" x="-24" y="64">+9</text>
+                  <text class="wf-scatter-axis-label" x="-24" y="124">+6</text>
+                  <text class="wf-scatter-axis-label" x="-24" y="184">+3</text>
+                  <text class="wf-scatter-axis-label" x="-18" y="244">0</text>
+                  <text class="wf-scatter-axis-label" x="-24" y="296">-3</text>
+
+                  <!-- X-axis labels (Fokus score) -->
+                  <text class="wf-scatter-axis-label" x="0" y="316">4</text>
+                  <text class="wf-scatter-axis-label" x="100" y="316">5</text>
+                  <text class="wf-scatter-axis-label" x="200" y="316">6</text>
+                  <text class="wf-scatter-axis-label" x="300" y="316">7</text>
+                  <text class="wf-scatter-axis-label" x="400" y="316">8</text>
+                  <text class="wf-scatter-axis-label" x="500" y="316">9</text>
+                  <text class="wf-scatter-axis-label" x="590" y="316">10</text>
+
+                  <!-- Axis titles -->
+                  <text class="wf-scatter-axis-title" x="300" y="340" text-anchor="middle">Fokus-score (mental)</text>
+                  <text class="wf-scatter-axis-title" x="-36" y="-14" transform="rotate(-90) translate(-160, -30)">Score vs par</text>
+                </svg>
+              </div>
+
+              <div class="wf-linechart-legend">
+                <div class="wf-legend-item"><span class="wf-legend-swatch" style="background:#000; height:10px; width:10px; border-radius:50%"></span>Runde · siste 3 mnd</div>
+                <div class="wf-legend-item"><span class="wf-legend-swatch" style="background:#333; height:10px; width:10px; border-radius:50%"></span>Runde · 3–9 mnd siden</div>
+                <div class="wf-legend-item"><span class="wf-legend-swatch" style="background:#999; height:10px; width:10px; border-radius:50%"></span>Runde · 9–12 mnd siden</div>
+                <div class="wf-legend-item"><span class="wf-legend-swatch" style="height:2px; width:16px; background:repeating-linear-gradient(to right,#000,#000 4px,transparent 4px,transparent 8px)"></span>Trendlinje</div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-3">
+                <div class="wf-c-label">Fokus · r<span class="wf-marker">3</span></div>
+                <div class="wf-c-value">-0.62</div>
+                <div class="wf-c-sub">Sterk negativ</div>
+              </div>
+              <div class="wf-c wf-bc-3">
+                <div class="wf-c-label">Selvtillit · r</div>
+                <div class="wf-c-value">-0.48</div>
+                <div class="wf-c-sub">Moderat</div>
+              </div>
+              <div class="wf-c wf-bc-3">
+                <div class="wf-c-label">Stress · r</div>
+                <div class="wf-c-value">-0.41</div>
+                <div class="wf-c-sub">Moderat</div>
+              </div>
+              <div class="wf-c wf-bc-3">
+                <div class="wf-c-label">Emosjon · r</div>
+                <div class="wf-c-value">-0.29</div>
+                <div class="wf-c-sub">Svak</div>
+              </div>
+
+              <div class="wf-c wf-bc-12">
+                <div class="wf-c-label">AI-tolkning<span class="wf-marker">4</span></div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI · regresjonsanalyse</div>
+                  <p class="wf-insight-body">"Fokus har den sterkeste koblingen til resultat. Gjennom 41 runder skiller Fokus 8+ seg tydelig: snitt +2.1 slag bedre enn ved Fokus 5–6. Anbefaling: invester i pre-shot routine og mental sjekkliste. Potensial: 1.8 slag lavere snitt."</p>
+                </div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Spørsmål som tittel:</strong> "Hvilken dimensjon påvirker scoren mest?" — peker direkte på beslutningen spilleren gjør.</li>
+        <li><strong>2 — Dimensjon-velger:</strong> Filter-pills. Graf oppdateres live. Pedagogisk for å se at Fokus dominerer.</li>
+        <li><strong>3 — Alle fire korrelasjoner synlig:</strong> Rangert på én rad. Ingen mystikk om hvilken dimensjon som faktisk betyr mest.</li>
+        <li><strong>4 — AI kvantifiserer:</strong> "1.8 slag lavere snitt" oversetter tall til konkret gevinst.</li>
+        <li>— Styrke: Koble mental til resultat. Svakhet: Krever 20+ runder for meningsfull trendlinje.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4: Journal-Driven ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Opsjon 4: <span class="opt-name">Journal-Driven</span></h2>
+    <p class="option-description">Journal-entries kronologisk som tidslinje. Filter per dimensjon og stemning. Hver entry har en prikk fargekodet etter mood. Tag-system binder notat til dimensjon. Trend utledes av volumet og fordelingen av tagger over tid.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/trender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders K.</div><div class="wf-sb-profile-meta">Pro · HCP +2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental · Trender</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">86 notater</div>
+              <div class="wf-sb-cta-desc">12 siste mnd · snitt 1.8 per uke</div>
+              <button class="wf-sb-cta-btn">Nytt notat</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Journal-tidslinje · mental utvikling gjennom egne ord</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Siste mnd</span>
+                <span class="wf-mtopbar-chip">3 mnd</span>
+                <span class="wf-mtopbar-chip wf-chip-active">12 mnd</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Mental · Journal</div>
+                <h1 class="wf-page-head-h">Mental utvikling i egne ord<span class="wf-marker">1</span></h1>
+                <p class="wf-page-head-sub">86 notater siste 12 mnd · 38% høy mood · 47% nøytral · 15% lav</p>
+              </div>
+              <span class="wf-ai-badge">Stigende</span>
+            </section>
+
+            <div class="wf-c">
+              <div class="wf-c-row">
+                <div class="wf-journal-filters">
+                  <span class="wf-c-label" style="margin-right:6px">Filter<span class="wf-marker">2</span></span>
+                  <button class="wf-journal-filter wf-active">Alle</button>
+                  <button class="wf-journal-filter">Fokus</button>
+                  <button class="wf-journal-filter">Selvtillit</button>
+                  <button class="wf-journal-filter">Stress</button>
+                  <button class="wf-journal-filter">Emosjon</button>
+                </div>
+                <div class="wf-journal-filters">
+                  <button class="wf-journal-filter">Høy</button>
+                  <button class="wf-journal-filter">Nøytral</button>
+                  <button class="wf-journal-filter">Lav</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-c">
+              <div class="wf-journal-timeline">
+                <div class="wf-timeline-entry wf-mood-hi">
+                  <div class="wf-timeline-head">
+                    <span class="wf-timeline-date">APR 14</span>
+                    <span class="wf-timeline-round">Losby GK · 72 slag (-2)</span>
+                    <span class="wf-timeline-mood">Høy</span>
+                  </div>
+                  <p class="wf-timeline-body">"Flow-følelse på bakre 9. Pre-shot routine satt som spikret, aldri i tvil. Selvtillit etter birdien på 11 bar resten av runden. Dette er nivået jeg må bygge videre på."</p>
+                  <div class="wf-timeline-tags">
+                    <span class="wf-timeline-tag wf-tag-dim">Fokus 8.5</span>
+                    <span class="wf-timeline-tag wf-tag-dim">Selvtillit 8.0</span>
+                    <span class="wf-timeline-tag">Flow</span>
+                    <span class="wf-timeline-tag">Routine</span>
+                  </div>
+                </div>
+
+                <div class="wf-timeline-entry wf-mood-md">
+                  <div class="wf-timeline-head">
+                    <span class="wf-timeline-date">APR 09</span>
+                    <span class="wf-timeline-round">Oslo GK · 75 slag (+1)</span>
+                    <span class="wf-timeline-mood">Nøytral</span>
+                  </div>
+                  <p class="wf-timeline-body">"Jevn runde uten topp eller bunn. Stresset litt på tee 8 etter dårlig drive, men brukte 4-breath og slapp det. Emosjonskontroll fungerer — men bare så vidt."</p>
+                  <div class="wf-timeline-tags">
+                    <span class="wf-timeline-tag wf-tag-dim">Emosjon 6.5</span>
+                    <span class="wf-timeline-tag wf-tag-dim">Stress 7.0</span>
+                    <span class="wf-timeline-tag">Reset</span>
+                  </div>
+                </div>
+
+                <div class="wf-timeline-entry wf-mood-lo">
+                  <div class="wf-timeline-head">
+                    <span class="wf-timeline-date">APR 02</span>
+                    <span class="wf-timeline-round">Losby GK · 79 slag (+5)</span>
+                    <span class="wf-timeline-mood">Lav</span>
+                  </div>
+                  <p class="wf-timeline-body">"Dbl på hull 4, bogey 5, triple på 6. Klarte ikke slippe det. Hodet i helvete hele frem til hull 12. Etter 12 roet det seg, men runden var over."</p>
+                  <div class="wf-timeline-tags">
+                    <span class="wf-timeline-tag wf-tag-dim">Emosjon 4.5</span>
+                    <span class="wf-timeline-tag wf-tag-dim">Fokus 5.0</span>
+                    <span class="wf-timeline-tag">Bogey-streak</span>
+                    <span class="wf-timeline-tag">Trigger</span>
+                  </div>
+                </div>
+
+                <div class="wf-timeline-entry wf-mood-hi">
+                  <div class="wf-timeline-head">
+                    <span class="wf-timeline-date">MAR 28</span>
+                    <span class="wf-timeline-round">Oslo GK · 71 slag (-3)</span>
+                    <span class="wf-timeline-mood">Høy</span>
+                  </div>
+                  <p class="wf-timeline-body">"Personal best! Fokuset var glassklart hele runden. Visualisering på morgenen funket. Selvtilliten bygget seg fra hull 1 — fire birdies på forsiden satte tonen."</p>
+                  <div class="wf-timeline-tags">
+                    <span class="wf-timeline-tag wf-tag-dim">Fokus 9.0</span>
+                    <span class="wf-timeline-tag wf-tag-dim">Selvtillit 8.5</span>
+                    <span class="wf-timeline-tag">PB</span>
+                    <span class="wf-timeline-tag">Visualisering</span>
+                  </div>
+                </div>
+
+                <div class="wf-timeline-entry wf-mood-md">
+                  <div class="wf-timeline-head">
+                    <span class="wf-timeline-date">MAR 21</span>
+                    <span class="wf-timeline-round">Losby GK · 74 slag</span>
+                    <span class="wf-timeline-mood">Nøytral</span>
+                  </div>
+                  <p class="wf-timeline-body">"Vind i 8 m/s gjorde beslutninger tyngre. Stresset opp for klubbvalg. Trenger mentalt manus for vindrunde: "én klubb mer, svingen kortere"."</p>
+                  <div class="wf-timeline-tags">
+                    <span class="wf-timeline-tag wf-tag-dim">Stress 6.0</span>
+                    <span class="wf-timeline-tag">Vind</span>
+                    <span class="wf-timeline-tag">Manus</span>
+                  </div>
+                </div>
+
+                <div class="wf-timeline-entry wf-mood-lo">
+                  <div class="wf-timeline-head">
+                    <span class="wf-timeline-date">MAR 12</span>
+                    <span class="wf-timeline-round">Simulator · treningsrunde</span>
+                    <span class="wf-timeline-mood">Lav</span>
+                  </div>
+                  <p class="wf-timeline-body">"Følte meg frakoblet fra starten. Tanker om jobb kjørte i bakgrunnen. Klarte aldri å være på puttinggreenen mentalt. Dårlig dag — ikke data, bare markering."</p>
+                  <div class="wf-timeline-tags">
+                    <span class="wf-timeline-tag wf-tag-dim">Fokus 4.5</span>
+                    <span class="wf-timeline-tag">Distraksjon</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-8">
+                <div class="wf-c-label">Mønstre i ord<span class="wf-marker">3</span></div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI · tekstanalyse 86 notater</div>
+                  <p class="wf-insight-body">"Tre tilbakevendende triggere: "bogey-streak" (11 ganger), "vind" (7 ganger), "jobb/distraksjon" (6 ganger). Høy-mood-notater inneholder ofte "routine", "visualisering" og "flow". Lavt-mood ord: "frakoblet", "hodet i helvete", "trigger"."</p>
+                </div>
+              </div>
+              <div class="wf-c wf-bc-4">
+                <div class="wf-c-label">Mest brukt tag</div>
+                <div class="wf-c-value">Fokus</div>
+                <div class="wf-c-sub">34 av 86 notater · 40%</div>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Kronologisk, ikke statistisk:</strong> Ord før tall. Trender utledes av språkmønstre, ikke grafer. Passer reflekterende spillere.</li>
+        <li><strong>2 — Dobbelt filter:</strong> Dimensjon + mood. Gir rask tilgang til "vis meg alle lav-mood runder med Emosjon-tag".</li>
+        <li><strong>3 — AI-tekstanalyse:</strong> Systemet leser journalene og finner triggere. Mønstergjenkjenning utover tall.</li>
+        <li>— Styrke: Narrativt, menneskelig. Svakhet: Krever konsekvent skriving for verdi — ikke noe for minimalister.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5: Scorecard Heatmap ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Opsjon 5: <span class="opt-name">Scorecard Heatmap</span></h2>
+    <p class="option-description">Heatmap per dimensjon per måned. Fire rader (Fokus, Selvtillit, Stress, Emosjonskontroll), tolv kolonner (måned). Mørkere = bedre. Klikk celle for detaljpanel med månedssnitt og scorecards. Identifiserer sesongmønstre.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg><span class="sub-tab-label">Wireframe</span></button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg><span class="sub-tab-label">Clean</span></button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg><span class="sub-tab-label">Polished</span></button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">akgolf.no/portal/mental/trender</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="wf-shell">
+
+          <aside class="wf-sidebar">
+            <div class="wf-sb-logo">AK GOLF</div>
+            <div class="wf-sb-profile">
+              <div class="wf-sb-avatar">AK</div>
+              <div><div class="wf-sb-profile-name">Anders K.</div><div class="wf-sb-profile-meta">Pro · HCP +2.4</div></div>
+            </div>
+            <div class="wf-sb-nav">
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Oversikt</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Planlegg</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Tren</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Spill</a>
+              <a class="wf-sb-item"><span class="wf-sb-item-icon"></span>Analyser</a>
+              <a class="wf-sb-item wf-active"><span class="wf-sb-item-icon"></span>Mental · Trender</a>
+            </div>
+            <div class="wf-sb-cta">
+              <div class="wf-sb-cta-title">Valgt: Mars</div>
+              <div class="wf-sb-cta-desc">Snitt 7.6 · 5 scorecards · beste mnd</div>
+              <button class="wf-sb-cta-btn">Se mars-runder</button>
+            </div>
+          </aside>
+
+          <main class="wf-main">
+            <div class="wf-mtopbar">
+              <div class="wf-mtopbar-left">Sesong-heatmap · mental per måned</div>
+              <div class="wf-mtopbar-right">
+                <span class="wf-mtopbar-chip">Snitt</span>
+                <span class="wf-mtopbar-chip wf-chip-active">Per dim.</span>
+                <span class="wf-mtopbar-chip">Runde-nivå</span>
+              </div>
+            </div>
+
+            <section class="wf-page-head">
+              <div>
+                <div class="wf-page-head-eyebrow">Mental · Sesongmønster</div>
+                <h1 class="wf-page-head-h">Hvilke måneder mentalt sterkest?<span class="wf-marker">1</span></h1>
+                <p class="wf-page-head-sub">12 måneder · 4 dimensjoner · mørkere celle = høyere snitt</p>
+              </div>
+              <span class="wf-ai-badge">Mars best</span>
+            </section>
+
+            <div class="wf-c">
+              <div class="wf-c-row">
+                <div class="wf-c-label">Heatmap · 4 × 12<span class="wf-marker">2</span></div>
+                <span class="wf-c-sub">Klikk celle for detalj</span>
+              </div>
+
+              <div class="wf-dim-heatmap-head">
+                <div></div>
+                <div class="wf-dim-heatmap-months">
+                  <div class="wf-dim-heatmap-month">MAI</div>
+                  <div class="wf-dim-heatmap-month">JUN</div>
+                  <div class="wf-dim-heatmap-month">JUL</div>
+                  <div class="wf-dim-heatmap-month">AUG</div>
+                  <div class="wf-dim-heatmap-month">SEP</div>
+                  <div class="wf-dim-heatmap-month">OKT</div>
+                  <div class="wf-dim-heatmap-month">NOV</div>
+                  <div class="wf-dim-heatmap-month">DES</div>
+                  <div class="wf-dim-heatmap-month">JAN</div>
+                  <div class="wf-dim-heatmap-month">FEB</div>
+                  <div class="wf-dim-heatmap-month">MAR</div>
+                  <div class="wf-dim-heatmap-month">APR</div>
+                </div>
+              </div>
+
+              <!-- Fokus -->
+              <div class="wf-dim-heatmap-row">
+                <div class="wf-dim-heatmap-row-label">Fokus<small>snitt 7.3</small></div>
+                <div class="wf-dim-heatmap-cells">
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Mai: 6.8"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Jun: 6.4"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Jul: 7.0"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Aug: 7.5"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Sep: 7.4"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Okt: 7.0"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Nov: 6.6"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-0" title="Des: ingen data"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Jan: 7.1"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Feb: 7.6"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-4 wf-heat-selected" title="Mar: 8.2"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Apr: 7.8"></div>
+                </div>
+              </div>
+
+              <!-- Selvtillit -->
+              <div class="wf-dim-heatmap-row">
+                <div class="wf-dim-heatmap-row-label">Selvtillit<small>snitt 6.8</small></div>
+                <div class="wf-dim-heatmap-cells">
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Mai: 6.1"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Jun: 6.0"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Jul: 6.7"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Aug: 7.1"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Sep: 7.3"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Okt: 6.8"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Nov: 6.2"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-0" title="Des: ingen data"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Jan: 6.9"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Feb: 7.2"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-4 wf-heat-selected" title="Mar: 7.8"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Apr: 7.2"></div>
+                </div>
+              </div>
+
+              <!-- Stress -->
+              <div class="wf-dim-heatmap-row">
+                <div class="wf-dim-heatmap-row-label">Stress<small>snitt 6.7 (høy = bra)</small></div>
+                <div class="wf-dim-heatmap-cells">
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Mai: 7.5"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Jun: 5.9 — turnering"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Jul: 6.6"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Aug: 6.8"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Sep: 6.5"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Okt: 6.2"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Nov: 6.0"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-0" title="Des: ingen data"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Jan: 6.8"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Feb: 7.2"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3 wf-heat-selected" title="Mar: 7.4"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Apr: 6.9"></div>
+                </div>
+              </div>
+
+              <!-- Emosjonskontroll -->
+              <div class="wf-dim-heatmap-row">
+                <div class="wf-dim-heatmap-row-label">Emosjon<small>snitt 6.4</small></div>
+                <div class="wf-dim-heatmap-cells">
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Mai: 6.5"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Jun: 5.8"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Jul: 6.4"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Aug: 6.6"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Sep: 6.7"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Okt: 6.5"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-1" title="Nov: 6.1"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-0" title="Des: ingen data"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Jan: 6.4"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3" title="Feb: 7.0"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-3 wf-heat-selected" title="Mar: 7.1"></div>
+                  <div class="wf-dim-heatmap-cell wf-heat-2" title="Apr: 6.6"></div>
+                </div>
+              </div>
+
+              <div class="wf-dim-heatmap-legend">
+                <span>Ingen data</span>
+                <span class="wf-dim-heatmap-legend-box wf-heat-0"></span>
+                <span class="wf-dim-heatmap-legend-box wf-heat-1"></span>
+                <span class="wf-dim-heatmap-legend-box wf-heat-2"></span>
+                <span class="wf-dim-heatmap-legend-box wf-heat-3"></span>
+                <span class="wf-dim-heatmap-legend-box wf-heat-4"></span>
+                <span>8+/10</span>
+              </div>
+            </div>
+
+            <div class="wf-bento">
+              <div class="wf-c wf-bc-5">
+                <div class="wf-c-label">Detalj · valgt celle<span class="wf-marker">3</span></div>
+                <div class="wf-detail-panel">
+                  <div class="wf-detail-panel-head">
+                    <div class="wf-detail-panel-title">Mars · Fokus</div>
+                    <div class="wf-detail-panel-score">8.2<span class="wf-mscore-value-unit">/10</span></div>
+                  </div>
+                  <div class="wf-detail-panel-row"><span>Scorecards</span><span>5</span></div>
+                  <div class="wf-detail-panel-row"><span>Høyeste runde</span><span>9.0 · 28. mar (-3)</span></div>
+                  <div class="wf-detail-panel-row"><span>Laveste runde</span><span>7.2 · 12. mar</span></div>
+                  <div class="wf-detail-panel-row"><span>Korr. med score</span><span>r = -0.71</span></div>
+                  <div class="wf-detail-panel-row"><span>Vs 12-mnd snitt</span><span>+0.9</span></div>
+                </div>
+              </div>
+
+              <div class="wf-c wf-bc-7">
+                <div class="wf-c-label">Sesong-mønster<span class="wf-marker">4</span></div>
+                <div class="wf-insight-note">
+                  <div class="wf-insight-author">Miller Mental AI · 12 mnd heatmap-analyse</div>
+                  <p class="wf-insight-body">"Februar–mars er din mentale toppsesong (snitt 7.6). Juni er svakeste måned på tvers av alle fire dimensjoner — samsvarer med turneringsperioden. Anbefaling: forbered juni-turneringer med ekstra stress-trening i mai. Sesong-mønster repeterer seg — bygg tiltak rundt kalenderen."</p>
+                </div>
+                <button class="wf-sb-cta-btn" style="align-self:flex-start; margin-top:4px; width:auto; padding: 9px 18px;">Lag juni-plan</button>
+              </div>
+            </div>
+
+          </main>
+
+        </div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>UX-notater</h3>
+      <ul>
+        <li><strong>1 — Sesongmønster først:</strong> Tittel spør "når er jeg sterkest?". Kalenderen blir svaret — mønstre som repeterer seg år for år.</li>
+        <li><strong>2 — 4×12 matrise:</strong> Rader = dimensjoner, kolonner = måneder. Visuelt tettere enn linjegraf. Svake soner (juni) springer fram.</li>
+        <li><strong>3 — Detalj på klikk:</strong> Valgt celle gir månedsstatistikk, beste/verste runde og korrelasjon. Ingen bytte av side.</li>
+        <li><strong>4 — AI peker på sesongkobling:</strong> "Juni = turneringsperiode = svakeste mnd" gir konkret forberedelsesplan.</li>
+        <li>— Styrke: Sesongblikk på ett skjermbilde. Svakhet: Fungerer først etter 6+ mnd data.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    <h2>Oppsummering &amp; anbefaling</h2>
+    <p class="option-description">Alle fem opsjoner rangert mot optimaliseringsmålet: <strong>spilleren forstår mental utvikling over tid og kan handle (tiltak, trening, forberedelse) basert på mønsteret på under 15 sekunder</strong>.</p>
+
+    <table class="wf-summary-table">
+      <thead>
+        <tr><th>Opsjon</th><th>Filosofi</th><th>Tid-oppløsning</th><th>Kobling til handling</th><th>Læringskurve</th><th>Score</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Trend Lines</strong></td><td>4 dimensjoner som linjer over 12 mnd</td><td>Høy (månedlig)</td><td>Sterk (AI-innsikt + delta-kort)</td><td>Lav — kjent format</td><td>★★★★★</td></tr>
+        <tr><td><strong>2. Radar Evolution</strong></td><td>Tre lag: Nå vs 6 mnd vs 12 mnd</td><td>Medium (3 tidspunkt)</td><td>Medium (form forteller historien)</td><td>Lav — visuelt umiddelbart</td><td>★★★★☆</td></tr>
+        <tr><td><strong>3. Correlation Scatter</strong></td><td>Mental ↔ runderesultat-kobling</td><td>Per-runde</td><td>Ekstremt sterk (kvantifisert gevinst)</td><td>Høy — scatter krever tolkning</td><td>★★★★☆</td></tr>
+        <tr><td><strong>4. Journal-Driven</strong></td><td>Kronologisk tidslinje av notater</td><td>Per-notat</td><td>Sterk (triggere identifiseres)</td><td>Lav — kjent journal-format</td><td>★★★☆☆</td></tr>
+        <tr><td><strong>5. Scorecard Heatmap</strong></td><td>4×12 matrise · sesongmønster</td><td>Medium (månedlig)</td><td>Sterk (sesongplanlegging)</td><td>Medium — må lære fargeskala</td><td>★★★★☆</td></tr>
+      </tbody>
+    </table>
+
+    <div class="wf-recommendation">
+      <h3>Anbefaling: Opsjon 1 — Trend Lines</h3>
+      <p>Matcher portalens etablerte "stat-kort + bento"-språk direkte. Spilleren ser 4 dimensjonskort øverst med delta, én stor linjegraf i midten som viser 12-mnd-utvikling, og AI-innsikt som kobler mønster til konkret tiltak. Primær inngang for "Mental trender".</p>
+      <p><strong>Strategisk flow:</strong> Opt 1 = default / hovedsiden N16. Opt 2 (Radar) = sub-tab "Sammenlign". Opt 3 (Scatter) = sub-tab "Korrelasjon". Opt 4 (Journal) = sub-tab "Tidslinje" eller innhold i eksisterende dagbok-side. Opt 5 (Heatmap) = sub-tab "Sesong". Alle 5 er deler av samme mental-trender-opplevelse — Opt 1 er inngangen, de andre gir dypere kutt.</p>
+      <p><strong>Designvalg:</strong> Primary #005840 for aktive dimensjoner, AI-lilla #AF52DE for AI-innsikt, accent-cta #D1F843 for CTA-knapper ("Ny scorecard", "Se analyse"). Ingen emojier. Alle graflinjer bruker tokens fra Brand Guide V2.0.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

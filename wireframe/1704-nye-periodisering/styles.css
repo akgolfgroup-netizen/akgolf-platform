@@ -1,0 +1,423 @@
+/* === Periodisering — Wireframe Content CSS (B&W only) === */
+
+.browser-content { padding: 0; }
+.browser-frame { max-width: 1180px; }
+
+/* ============ MC SHELL (sidebar + topbar) ============ */
+.wf-mc-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 640px;
+  background: #fafafa;
+}
+
+/* --- Sidebar (dark 220px) --- */
+.wf-mc-sidebar {
+  background: #111;
+  color: #fff;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-right: 1px solid #000;
+}
+.wf-mc-sb-logo {
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: #fff;
+  padding: 6px 10px 10px;
+  border-bottom: 1px solid #222;
+}
+.wf-mc-sb-section {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #666;
+  padding: 6px 10px 4px;
+  text-transform: uppercase;
+}
+.wf-mc-sb-nav { display: flex; flex-direction: column; gap: 2px; }
+.wf-mc-sb-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; border-radius: 6px;
+  font-size: 12px; color: #aaa; cursor: pointer;
+  border-left: 3px solid transparent;
+}
+.wf-mc-sb-item:hover { color: #fff; background: #1a1a1a; }
+.wf-mc-sb-item-active {
+  color: #fff; background: #1a1a1a; font-weight: 600;
+  border-left-color: #fff;
+}
+.wf-mc-sb-icon {
+  width: 14px; height: 14px; border-radius: 3px;
+  background: #333; flex-shrink: 0; display: inline-block;
+}
+.wf-mc-sb-item-active .wf-mc-sb-icon { background: #fff; }
+
+/* --- Main column (topbar + body) --- */
+.wf-mc-main { display: flex; flex-direction: column; min-width: 0; }
+.wf-mc-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 20px; background: #111; color: #fff;
+  height: 56px; border-bottom: 1px solid #222;
+}
+.wf-mc-crumbs { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #888; }
+.wf-mc-crumbs strong { color: #fff; font-weight: 600; }
+.wf-mc-crumbs-sep { color: #444; }
+.wf-mc-actions { display: flex; gap: 8px; align-items: center; }
+.wf-mc-btn {
+  font-size: 12px; padding: 6px 12px; border-radius: 6px;
+  border: 1px solid #333; background: #1a1a1a; color: #fff; cursor: pointer;
+}
+.wf-mc-btn-primary { background: #fff; color: #000; border-color: #fff; font-weight: 600; }
+.wf-mc-profile {
+  width: 28px; height: 28px; border-radius: 999px;
+  background: #fff; color: #000; font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.wf-mc-body { background: #fafafa; padding: 16px 20px; min-height: 500px; }
+
+/* ============ HEADER / PLAYER PICKER ============ */
+.wf-ph-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 16px; gap: 16px;
+}
+.wf-ph-title { font-size: 18px; font-weight: 800; color: #000; margin: 0 0 4px; }
+.wf-ph-sub { font-size: 12px; color: #666; }
+.wf-ph-picker {
+  display: flex; align-items: center; gap: 10px;
+  background: #fff; border: 1px solid #eee; border-radius: 8px;
+  padding: 8px 12px; font-size: 12px;
+}
+.wf-ph-picker strong { color: #000; font-weight: 700; }
+.wf-ph-picker-meta { color: #666; }
+.wf-ph-picker-change { color: #000; text-decoration: underline; cursor: pointer; font-weight: 600; }
+
+/* ============ KPI STRIP ============ */
+.wf-ph-kpis {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  margin-bottom: 16px;
+}
+.wf-ph-kpi {
+  background: #fff; border: 1px solid #eee; border-radius: 8px;
+  padding: 10px 12px;
+}
+.wf-ph-kpi-label { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: #999; text-transform: uppercase; }
+.wf-ph-kpi-value { font-size: 18px; font-weight: 800; color: #000; margin-top: 4px; }
+.wf-ph-kpi-meta { font-size: 10px; color: #666; margin-top: 2px; }
+
+/* ============ GENERIC CARD ============ */
+.wf-mc-card {
+  background: #fff; border: 1px solid #eee; border-radius: 8px;
+  padding: 14px; display: flex; flex-direction: column; gap: 10px;
+}
+.wf-card-head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; font-weight: 700; color: #000;
+}
+.wf-card-meta { font-size: 11px; color: #999; font-weight: 400; }
+.wf-card-sub { font-size: 11px; color: #666; }
+
+/* ============ GRID ============ */
+.wf-ph-grid {
+  display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px;
+}
+.wf-span-3 { grid-column: span 3; }
+.wf-span-4 { grid-column: span 4; }
+.wf-span-6 { grid-column: span 6; }
+.wf-span-8 { grid-column: span 8; }
+.wf-span-9 { grid-column: span 9; }
+.wf-span-12 { grid-column: span 12; }
+
+/* ============ OPT 1 — MESOCYCLE TIMELINE ============ */
+.wf-tl-wrap { display: flex; flex-direction: column; gap: 10px; }
+.wf-tl-axis {
+  display: grid;
+  grid-template-columns: 100px repeat(22, 1fr);
+  gap: 1px;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+}
+.wf-tl-axis-label { font-size: 9px; color: #999; font-weight: 700; letter-spacing: 0.08em; }
+.wf-tl-axis-week {
+  font-size: 9px; color: #999; text-align: center;
+  border-left: 1px dashed #eee; padding: 2px 0;
+}
+.wf-tl-axis-week.wf-tl-month {
+  color: #000; font-weight: 700;
+}
+.wf-tl-lane {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px dashed #eee;
+}
+.wf-tl-lane-label {
+  font-size: 11px; font-weight: 700; color: #000;
+}
+.wf-tl-lane-label small { display: block; font-size: 10px; color: #999; font-weight: 400; margin-top: 2px; }
+.wf-tl-track {
+  position: relative; height: 34px;
+  background: repeating-linear-gradient(90deg, #f5f5f5 0 1px, transparent 1px calc(100%/22));
+  border-radius: 4px;
+}
+.wf-tl-bar {
+  position: absolute; top: 4px; bottom: 4px;
+  border-radius: 4px; padding: 4px 8px;
+  font-size: 10px; font-weight: 700; color: #000;
+  background: #e8e8e8; border: 1px solid #999;
+  display: flex; align-items: center; justify-content: space-between;
+  overflow: hidden; white-space: nowrap; cursor: grab;
+}
+.wf-tl-bar-base { background: #f0f0f0; border-color: #888; }
+.wf-tl-bar-build { background: #e0e0e0; border-color: #666; }
+.wf-tl-bar-peak { background: #ccc; border-color: #333; color: #000; }
+.wf-tl-bar-taper { background: #bdbdbd; border-color: #444; color: #000; }
+.wf-tl-bar-comp { background: #1a1a1a; border-color: #000; color: #fff; }
+.wf-tl-bar-rec { background: #fafafa; border-color: #aaa; border-style: dashed; color: #666; }
+.wf-tl-bar-handle {
+  position: absolute; right: -3px; top: 0; bottom: 0; width: 6px;
+  cursor: ew-resize;
+}
+.wf-tl-marker {
+  position: absolute; top: -18px; font-size: 10px; font-weight: 700; color: #000;
+  background: #fff; border: 1px solid #000; padding: 1px 6px; border-radius: 3px;
+}
+.wf-tl-now { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #000; z-index: 2; }
+.wf-tl-now-label {
+  position: absolute; top: -20px; transform: translateX(-50%);
+  font-size: 9px; font-weight: 700; background: #000; color: #fff;
+  padding: 2px 6px; border-radius: 3px;
+}
+
+.wf-tl-detail {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  padding: 12px; background: #fafafa; border: 1px solid #eee;
+  border-radius: 8px; margin-top: 8px;
+}
+.wf-tl-detail h4 {
+  margin: 0 0 6px; font-size: 12px; font-weight: 700; color: #000;
+}
+.wf-tl-detail-row {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: #333; padding: 4px 0;
+  border-bottom: 1px dashed #eee;
+}
+.wf-tl-detail-row:last-child { border-bottom: none; }
+.wf-tl-detail-row strong { color: #000; }
+
+/* ============ OPT 2 — PHASE STACK ============ */
+.wf-ps-wrap { display: flex; flex-direction: column; gap: 8px; }
+.wf-ps-row {
+  display: grid; grid-template-columns: 180px 1fr 120px; gap: 12px;
+  align-items: stretch;
+  background: #fff; border: 1px solid #eee; border-radius: 8px;
+  padding: 12px;
+}
+.wf-ps-label { display: flex; flex-direction: column; gap: 2px; }
+.wf-ps-label-tag {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  color: #999; text-transform: uppercase;
+}
+.wf-ps-label-name { font-size: 14px; font-weight: 800; color: #000; }
+.wf-ps-label-weeks { font-size: 10px; color: #666; }
+.wf-ps-bars { display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+.wf-ps-bar-row {
+  display: grid; grid-template-columns: 70px 1fr 40px;
+  gap: 8px; align-items: center; font-size: 10px;
+}
+.wf-ps-bar-label { color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 9px; }
+.wf-ps-bar-track { background: #f0f0f0; height: 8px; border-radius: 4px; overflow: hidden; }
+.wf-ps-bar-fill { height: 100%; background: #333; border-radius: 4px; }
+.wf-ps-bar-fill-light { background: #bbb; }
+.wf-ps-bar-fill-mid { background: #888; }
+.wf-ps-bar-fill-dark { background: #000; }
+.wf-ps-bar-val { font-size: 10px; font-weight: 700; color: #000; text-align: right; }
+.wf-ps-meta {
+  display: flex; flex-direction: column; gap: 4px; justify-content: center;
+  align-items: flex-end; font-size: 10px; color: #666;
+}
+.wf-ps-meta strong { color: #000; font-size: 11px; }
+
+.wf-ps-legend { display: flex; gap: 12px; font-size: 10px; color: #666; padding: 8px 0; }
+.wf-ps-legend-dot {
+  display: inline-block; width: 10px; height: 6px; border-radius: 2px;
+  background: #333; margin-right: 4px; vertical-align: middle;
+}
+
+/* ============ OPT 3 — GRID EDITOR (heatmap) ============ */
+.wf-ge-wrap { overflow-x: auto; }
+.wf-ge-grid {
+  display: grid;
+  grid-template-columns: 160px repeat(22, minmax(24px, 1fr));
+  gap: 1px;
+  background: #eee;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  min-width: 780px;
+}
+.wf-ge-head, .wf-ge-cell, .wf-ge-row-label {
+  background: #fff; padding: 6px 4px; font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.wf-ge-head { font-weight: 700; color: #333; font-size: 9px; }
+.wf-ge-head-phase { font-weight: 700; color: #fff; background: #333; font-size: 9px; letter-spacing: 0.06em; }
+.wf-ge-head-phase.wf-ge-head-base { background: #888; }
+.wf-ge-head-phase.wf-ge-head-build { background: #555; }
+.wf-ge-head-phase.wf-ge-head-peak { background: #222; }
+.wf-ge-head-phase.wf-ge-head-taper { background: #444; }
+.wf-ge-head-phase.wf-ge-head-comp { background: #000; }
+.wf-ge-head-phase.wf-ge-head-rec { background: #bbb; color: #000; }
+
+.wf-ge-row-label {
+  font-size: 10px; font-weight: 700; color: #000;
+  justify-content: flex-start; padding-left: 10px;
+  background: #fafafa;
+}
+.wf-ge-row-label small { font-weight: 400; color: #999; margin-left: 4px; }
+
+.wf-ge-cell { cursor: pointer; font-weight: 700; font-size: 9px; color: #fff; }
+.wf-ge-l0 { background: #fff; color: #ccc; }
+.wf-ge-l1 { background: #ebebeb; color: #333; }
+.wf-ge-l2 { background: #c9c9c9; color: #000; }
+.wf-ge-l3 { background: #8a8a8a; color: #fff; }
+.wf-ge-l4 { background: #555; color: #fff; }
+.wf-ge-l5 { background: #000; color: #fff; }
+
+.wf-ge-scale { display: flex; gap: 10px; align-items: center; font-size: 10px; color: #666; padding: 10px 0; }
+.wf-ge-scale-swatch { display: inline-flex; gap: 2px; }
+.wf-ge-scale-swatch span { width: 18px; height: 12px; border: 1px solid #eee; }
+
+/* ============ OPT 4 — TEMPLATE LIBRARY ============ */
+.wf-lib-wrap {
+  display: grid; grid-template-columns: 240px 1fr; gap: 12px; min-height: 440px;
+}
+.wf-lib-side {
+  background: #fff; border: 1px solid #eee; border-radius: 8px;
+  padding: 12px; display: flex; flex-direction: column; gap: 12px;
+}
+.wf-lib-search {
+  background: #fafafa; border: 1px solid #eee; border-radius: 6px;
+  padding: 8px 10px; font-size: 12px; color: #999;
+}
+.wf-lib-filters { display: flex; flex-direction: column; gap: 4px; }
+.wf-lib-filter {
+  display: flex; justify-content: space-between;
+  font-size: 11px; padding: 6px 8px; border-radius: 4px;
+  color: #333; cursor: pointer;
+}
+.wf-lib-filter:hover { background: #fafafa; }
+.wf-lib-filter-active { background: #f0f0f0; color: #000; font-weight: 700; }
+.wf-lib-filter-count { font-size: 10px; color: #999; }
+
+.wf-lib-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  align-content: start;
+}
+.wf-lib-card {
+  background: #fff; border: 1px solid #eee; border-radius: 8px;
+  padding: 12px; display: flex; flex-direction: column; gap: 8px;
+  cursor: pointer;
+}
+.wf-lib-card:hover { border-color: #000; }
+.wf-lib-card-tag {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #666;
+}
+.wf-lib-card-title { font-size: 13px; font-weight: 800; color: #000; }
+.wf-lib-card-desc { font-size: 11px; color: #666; line-height: 1.4; }
+.wf-lib-card-meta {
+  display: flex; gap: 8px; flex-wrap: wrap; font-size: 10px; color: #999;
+  padding-top: 6px; border-top: 1px dashed #eee; margin-top: auto;
+}
+.wf-lib-card-meta strong { color: #000; font-weight: 700; }
+.wf-lib-card-actions { display: flex; gap: 6px; }
+.wf-lib-card-btn {
+  flex: 1; font-size: 10px; padding: 5px 8px; border-radius: 4px;
+  border: 1px solid #ccc; background: #fff; cursor: pointer; text-align: center;
+}
+.wf-lib-card-btn-primary { background: #000; color: #fff; border-color: #000; font-weight: 700; }
+
+/* ============ OPT 5 — ATHLETIC PYRAMID ============ */
+.wf-py-wrap {
+  display: grid; grid-template-columns: 1fr 280px; gap: 16px;
+}
+.wf-py-stage {
+  background: #fff; border: 1px solid #eee; border-radius: 8px;
+  padding: 20px; display: flex; flex-direction: column; gap: 4px;
+  align-items: center; min-height: 380px;
+}
+.wf-py-label-top, .wf-py-label-bot {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+  color: #999; text-transform: uppercase; margin-bottom: 4px;
+}
+.wf-py-label-bot { margin-top: 4px; margin-bottom: 0; }
+
+.wf-py-tier {
+  display: flex; align-items: center; justify-content: center;
+  position: relative; width: 100%; padding: 10px 16px;
+  font-size: 11px; font-weight: 700; color: #000;
+  clip-path: polygon(var(--clip-l, 0%) 0%, var(--clip-r, 100%) 0%, 100% 100%, 0% 100%);
+}
+.wf-py-tier-inner {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.wf-py-tier-name { font-weight: 800; font-size: 13px; letter-spacing: 0.04em; }
+.wf-py-tier-weeks { font-size: 10px; color: inherit; opacity: 0.75; font-weight: 500; }
+
+.wf-py-t1 { background: #f5f5f5; border: 1px solid #ccc; --clip-l: 0%; --clip-r: 100%; min-height: 54px; }
+.wf-py-t2 { background: #e0e0e0; border: 1px solid #aaa; --clip-l: 8%; --clip-r: 92%; min-height: 54px; }
+.wf-py-t3 { background: #bbb; border: 1px solid #888; color: #000; --clip-l: 16%; --clip-r: 84%; min-height: 54px; }
+.wf-py-t4 { background: #666; border: 1px solid #333; color: #fff; --clip-l: 24%; --clip-r: 76%; min-height: 54px; }
+.wf-py-t5 { background: #000; border: 1px solid #000; color: #fff; --clip-l: 32%; --clip-r: 68%; min-height: 48px; }
+
+.wf-py-apex-marker {
+  font-size: 10px; font-weight: 700; color: #000;
+  background: #fff; border: 1px solid #000; border-radius: 4px;
+  padding: 4px 8px; margin-top: 8px;
+}
+
+.wf-py-side {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.wf-py-side-card {
+  background: #fff; border: 1px solid #eee; border-radius: 8px;
+  padding: 12px;
+}
+.wf-py-side-head {
+  font-size: 11px; font-weight: 700; color: #000; margin-bottom: 6px;
+}
+.wf-py-side-row {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: #333; padding: 4px 0;
+  border-bottom: 1px dashed #eee;
+}
+.wf-py-side-row:last-child { border-bottom: none; }
+.wf-py-side-row strong { color: #000; font-weight: 700; }
+
+/* ============ SHARED: LIST / BADGES ============ */
+.wf-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.wf-list li {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: #333; padding-bottom: 8px; border-bottom: 1px solid #eee;
+}
+.wf-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.wf-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+  padding: 3px 8px; border-radius: 4px; border: 1px solid #ccc;
+  background: #fff; color: #333; text-transform: uppercase;
+}
+.wf-badge-dark { background: #000; color: #fff; border-color: #000; }
+
+/* ============ SUMMARY TABLE ============ */
+.wf-summary-table {
+  width: 100%; border-collapse: collapse; font-size: 12px; color: #333; margin-top: 12px;
+}
+.wf-summary-table th, .wf-summary-table td {
+  padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; vertical-align: top;
+}
+.wf-summary-table th { background: #fafafa; font-size: 11px; color: #666; font-weight: 700; }
