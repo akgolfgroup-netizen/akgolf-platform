@@ -350,6 +350,58 @@
 
 ---
 
+## 2026-04-18 19:15 — Turneringsplanlegger: alle kilder sync-klare
+
+**Jobbet med:**
+- P1: Fikset Global Junior Tour scraper (Cheerio-initiering + rewrite for The Events Calendar + 403 User-Agent-fix). 32 turneringer importert.
+- P2: Fikset JMI Sweden 404 (URL har hardkodet 2025, lagt fallback-logikk). 38 turneringer importert.
+- P3: La til 5 nye NGF-junior-regioner i GolfBox-source (Midt, Vestland, Rogaland, Sør, Øst). Identifiserte scheduleIds via list-golfbox-schedules.ts. Fjernet redundant scheduleId 8363 (delmengde av 16616). 120 GolfBox-turneringer totalt.
+
+**Nøkkelfiler:**
+- `modules/tournament-planner/sources/global-junior-tour.ts`
+- `modules/tournament-planner/sources/jmi-sweden.ts`
+- `modules/tournament-planner/sources/golfbox.ts`
+- `modules/tournament-planner/golfbox.ts`
+
+**Neste steg:**
+- Anders godkjenner commits og pusher til main
+- Oppdatere docs/MASTER_TODO_2026.csv (#42)
+
+
+## 2026-04-18 19:45 — Fase C4: View-system infrastruktur komplett
+
+**Jobbet med:**
+- **Steg 1 — Prisma UserPreferences-modell:** Opprettet `UserPreferences` med `defaultViewPerScreen`, `dashboardWidgetLayout`, `hiddenWidgets`. Kjørte migration mot prod (løste historisk drift i `20260417_add_coaching_forecast` først). Prisma generate OK.
+- **Steg 2 — View-switcher infrastruktur:** `lib/portal/views/registry.ts` med type-safe mapping for 58 skjermer (portal + MC), hver med 5 views. `lib/portal/preferences/actions.ts` med server actions for hent/sett preferanser via Prisma. `components/portal/view-switcher.tsx` — pill-tabs med Lucide-ikoner og lagring i bakgrunnen.
+- **Steg 3 — Widget-bibliotek:** `WidgetBase` (Brand Guide V2.0-wrapper), `WidgetGrid` (dnd-kit drag-drop med redigeringsmodus), `WidgetRenderer`, og 6 widgets: PlanProgress, NextCompetition, TrainingVolume, SeasonPlan, Leaderboard, CoachingFeedback (med placeholder-data).
+- **Steg 4 — Dashboard-refactor:** 5 nye view-komponenter (AthleticGrid, FocusToday, DataRich, ProgressStory, CommandCenter). `dashboard-client-v3.tsx` oppdatert med `ViewSwitcher` og view-routing. Athletic Grid bruker WidgetGrid.
+- **Steg 5 — Onboarding view-picker:** Nytt steg i `OnboardingWizard` (steg 3 av 4). `ViewPickerStep` med 5 klikkbare valg. Lagrer default view til `UserPreferences` via `saveOnboardingData`.
+- **Kvalitetssikring:** TypeScript rent i alle nye filer. ESLint rent. 2 commits (`20e0641` + `c2f28ca`).
+
+**Nøkkelfiler:**
+- `prisma/schema.prisma` (UserPreferences-modell)
+- `prisma/migrations/20260418_add_user_preferences/migration.sql`
+- `lib/portal/views/registry.ts`
+- `lib/portal/preferences/actions.ts`
+- `components/portal/view-switcher.tsx`
+- `lib/portal/widgets/registry.ts`
+- `components/portal/widgets/widget-base.tsx`
+- `components/portal/widgets/widget-grid.tsx`
+- `components/portal/widgets/widget-renderer.tsx`
+- `app/portal/(dashboard)/dashboard-client-v3.tsx`
+- `app/portal/(dashboard)/dashboard-views/` (5 view-komponenter)
+- `components/portal/onboarding/view-picker-step.tsx`
+- `components/portal/onboarding/onboarding-wizard.tsx`
+- `app/portal/(dashboard)/onboarding/actions.ts`
+
+**Neste steg:**
+- Koble widgets til reelle data (server actions per widget)
+- Persistere widget-layout (drag-drop) til `UserPreferences.dashboardWidgetLayout`
+- Implementere view-switcher på øvrige portal-/MC-skjermer
+- Bygge ut onboarding magic-link (N03)
+
+---
+
 ## Mal for nye oppføringer
 
 ```markdown
