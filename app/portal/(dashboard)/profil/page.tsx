@@ -1,6 +1,26 @@
+import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getMyProfile, getPlayerStats } from "./actions";
 import { ProfilePageClient } from "@/components/portal/profil/profile-page-client";
+
+export const metadata: Metadata = {
+  title: "Profil | AK Golf Portal",
+  description:
+    "Din spillerprofil. Oppdater innstillinger, se abonnement og personlig informasjon.",
+  openGraph: {
+    title: "Profil | AK Golf Portal",
+    description:
+      "Din spillerprofil. Oppdater innstillinger, se abonnement og personlig informasjon.",
+    type: "website",
+    locale: "nb_NO",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Profil | AK Golf Portal",
+    description:
+      "Din spillerprofil. Oppdater innstillinger, se abonnement og personlig informasjon.",
+  },
+};
 
 export default async function ProfilPage() {
   await requirePortalUser();

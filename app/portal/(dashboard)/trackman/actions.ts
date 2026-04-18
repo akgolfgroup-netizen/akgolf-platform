@@ -2,6 +2,10 @@
 
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
+import {
+  generateTrackManInsightsCore,
+  type TrackManInsightResult,
+} from "@/lib/portal/trackman/ai-insights";
 
 // ── Typer ────────────────────────────────────────────────
 
@@ -256,4 +260,19 @@ export async function getTrackManOverview(): Promise<TrackManOverview> {
     avgCarry: avgCarryTotal,
     recentAnalytics,
   };
+}
+
+// ── AI-genererte innsikter ───────────────────────────────
+
+export { type TrackManInsightResult };
+
+/**
+ * Generer (eller hent cached) AI-innsikter for en TrackMan-sesjon.
+ * Cache-tid: 24 timer. Responstid < 3 sek ved cache-treff.
+ */
+export async function generateTrackManInsights(
+  sessionId: string
+): Promise<TrackManInsightResult> {
+  const user = await requirePortalUser();
+  return generateTrackManInsightsCore(sessionId, user.id, user.name);
 }

@@ -10,6 +10,10 @@ import { PlayerProfileCard } from "@/components/portal/dashboard/player-profile-
 import { TrainingActivityCard } from "@/components/portal/dashboard/training-activity-card";
 import { AiInsightCard } from "@/components/portal/dashboard/ai-insight-card";
 import { ShortcutPills } from "@/components/portal/dashboard/shortcut-pills";
+import { HandicapTrendChart } from "@/components/portal/dashboard/handicap-trend-chart";
+import { SessionsDonut } from "@/components/portal/dashboard/sessions-donut";
+import { SGRadarCard } from "@/components/portal/dashboard/sg-radar-card";
+import { EmptyKpiCard } from "@/components/portal/dashboard/empty-kpi-card";
 import { colors } from "@/lib/design-tokens";
 
 interface WeekDay {
@@ -207,43 +211,36 @@ export function DashboardClient({
         </div>
       </motion.div>
 
-      {/* RAD 4: Coach Insight + Snarveier */}
+      {/* RAD 3.5: Diagrammer */}
       <motion.div
         variants={item}
-        className="grid grid-cols-1 gap-5 lg:grid-cols-2"
+        className="grid grid-cols-1 gap-5 lg:grid-cols-12"
       >
-        <CoachInsightCard coachInsight={coachInsight} />
-        <ShortcutPills />
+        <div className="lg:col-span-7">
+          <HandicapTrendChart data={handicapHistory} />
+        </div>
+        <div className="lg:col-span-5">
+          <SessionsDonut />
+        </div>
+      </motion.div>
+
+      {/* RAD 4: SG Radar + Coach Insight + Snarveier */}
+      <motion.div
+        variants={item}
+        className="grid grid-cols-1 gap-5 lg:grid-cols-12"
+      >
+        <div className="lg:col-span-4">
+          <SGRadarCard />
+        </div>
+        <div className="lg:col-span-5">
+          <CoachInsightCard coachInsight={coachInsight} />
+        </div>
+        <div className="lg:col-span-3">
+          <ShortcutPills />
+        </div>
       </motion.div>
     </motion.div>
   );
 }
 
-function EmptyKpiCard({
-  label,
-  message,
-  href,
-}: {
-  label: string;
-  message: string;
-  href: string;
-}) {
-  return (
-    <div className="flex flex-col justify-between rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-grey-200 hover:shadow-md">
-      <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-grey-400">
-          {label}
-        </p>
-        <p className="mt-2 text-sm text-grey-400">{message}</p>
-        <a
-          href={href}
-          className="mt-3 inline-flex items-center gap-1 text-xs font-semibold hover:underline"
-          style={{ color: colors.primary.main }}
-        >
-          Kom i gang
-          <span>→</span>
-        </a>
-      </div>
-    </div>
-  );
-}
+

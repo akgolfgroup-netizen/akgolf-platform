@@ -1,10 +1,13 @@
 "use client";
 
-import { Target, Zap, TrendingUp, Activity, Crosshair, Lightbulb, Focus } from "lucide-react";
+import { useState, useTransition } from "react";
+import { Target, Zap, TrendingUp, Activity, Crosshair, Lightbulb, Focus, RefreshCw, Sparkles } from "lucide-react";
 import type { TrackManAnalyticsSummary } from "@/app/portal/(dashboard)/trackman/actions";
+import { generateTrackManInsights } from "@/app/portal/(dashboard)/trackman/actions";
 
 interface TrackManAnalyticsCardProps {
   analytics: TrackManAnalyticsSummary;
+  showRegenerate?: boolean;
 }
 
 function formatPercent(value: number | null | undefined): string {
@@ -84,7 +87,36 @@ function ClubStatsBars({ stats, title }: { stats: Record<string, unknown> | null
   );
 }
 
-export function TrackManAnalyticsCard({ analytics }: TrackManAnalyticsCardProps) {
+export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegenerate = true }: TrackManAnalyticsCardProps) {
+  const [analytics, setAnalytics] = useState(initialAnalytics);
+  const [isPending, startTransition] = useTransition();
+  const [lastGenerated, setLastGenerated] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const hasInsights = analytics.generatedInsights.length > 0 || analytics.recommendedFocus.length > 0;
+
+  // Sjekk om cache er frisk (innen 24t)
+  const isCacheFresh = lastGenerated
+    ? Date.now() - new Date(lastGenerated).getTime() < 24 * 60 * 60 * 1000
+    : hasInsights; // Antar eksisterende data i DB er frisk
+
+  const handleRegenerate = () => {
+    setError(null);
+    startTransition(async () => {
+      try {
+        const result = await generateTrackManInsights(analytics.sessionId);
+        setAnalytics((prev) => ({
+          ...prev,
+          generatedInsights: result.insights,
+          recommendedFocus: result.focusAreas,
+        }));
+        setLastGenerated(result.metadata.generatedAt);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Noe gikk galt");
+      }
+    });
+  };
+
   return (
     <div className="bg-white rounded-xl border border-grey-200/50 p-5 space-y-6">
       {/* KPI-rad */}
@@ -179,6 +211,33 @@ export function TrackManAnalyticsCard({ analytics }: TrackManAnalyticsCardProps)
           )}
         </div>
       </div>
+
+      {/* AI-innsikter-header med regenerer-knapp */}
+      {(showRegenerate || hasInsights) && (
+        <div className="flex items-center justify-between">
+          <h4 className="text-sm font-semibold text-grey-800 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-accent-cta" />
+            Coaching-innsikter
+          </h4>
+          {showRegenerate && (
+            <button
+              onClick={handleRegenerate}
+              disabled={isPending || isCacheFresh}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed bg-primary/5 text-primary hover:bg-primary/10"
+              title={isCacheFresh ? "Innsikter er oppdatert (24t cooldown)" : "Generer nye innsikter"}
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isPending ? "animate-spin" : ""}`} />
+              {isPending ? "Genererer..." : isCacheFresh ? "Oppdatert" : "Generer innsikter"}
+            </button>
+          )}
+        </div>
+      )}
+
+      {error && (
+        <div className="rounded-lg bg-error-light px-3 py-2 text-xs text-error-text">
+          {error}
+        </div>
+      )}
 
       {/* Innsikter */}
       {analytics.generatedInsights.length > 0 && (

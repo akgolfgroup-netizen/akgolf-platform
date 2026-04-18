@@ -11,6 +11,7 @@ import {
   convertToMetric,
   type TrackManShotMetric,
 } from "@/lib/portal/golf/trackman-parser";
+import { generateTrackManInsightsCore } from "./ai-insights";
 
 export type ImportContext = "TRAINING" | "CASUAL" | "COMPETITION";
 
@@ -174,6 +175,13 @@ export async function importTrackManSession(options: ImportTrackManOptions) {
 
   // Compute session analytics
   await computeSessionAnalytics(sessionId, userId, metricShots);
+
+  // Generer AI-innsikter (fire-and-forget, feiler ikke import)
+  try {
+    await generateTrackManInsightsCore(sessionId, userId);
+  } catch {
+    // Innsikter kan genereres manuelt fra UI senere
+  }
 
   // Update player metrics
   await updatePlayerMetrics(userId);

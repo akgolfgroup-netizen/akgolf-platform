@@ -2,20 +2,22 @@ import type { Metadata } from "next";
 import { ACADEMY_FAQ } from "@/lib/website-constants";
 
 export const metadata: Metadata = {
-  title: "Academy",
+  title: "Academy | AK Golf",
   description:
-    "Individuell coaching og skreddersydde utviklingsplaner for voksne golfere. Evidensbasert metode med dokumenterte resultater.",
+    "Bli en bedre golfer med AK Golf Academy. Personlig coaching, TrackMan-analyse og strukturerte treningsprogrammer for alle nivåer.",
   openGraph: {
-    title: "AK Golf Academy — Individuell coaching for voksne golfere",
+    title: "Academy | AK Golf",
     description:
-      "1:1 coaching, videoanalyse, IUP-plan og mental trening. Skreddersydd for ambisiøse spillere.",
+      "Bli en bedre golfer med AK Golf Academy. Personlig coaching, TrackMan-analyse og strukturerte treningsprogrammer for alle nivåer.",
+    type: "website",
+    locale: "nb_NO",
     url: "https://akgolf.no/academy",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AK Golf Academy — Individuell coaching for voksne golfere",
+    title: "Academy | AK Golf",
     description:
-      "1:1 coaching, videoanalyse, IUP-plan og mental trening. Skreddersydd for deg.",
+      "Bli en bedre golfer med AK Golf Academy. Personlig coaching, TrackMan-analyse og strukturerte treningsprogrammer for alle nivåer.",
   },
 };
 

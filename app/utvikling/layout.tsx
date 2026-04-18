@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Utvikling & Teknologi",
+  title: "Utvikling | AK Golf",
   description:
-    "Digitale treningsverktøy og sportslig rådgiving for golfklubber, forbund og trenere. QR-treningsskilt, IUP-plattform og sportsplaner.",
+    "Golfutvikling og performance coaching for ambisiøse spillere. Data-drevet trening med AK Golf.",
   openGraph: {
-    title: "Utvikling & Teknologi — Digitale verktøy for golf",
+    title: "Utvikling | AK Golf",
     description:
-      "QR-treningsskilt, IUP-plattform, analyseverktøy og sportsplaner for golfklubber og trenere.",
+      "Golfutvikling og performance coaching for ambisiøse spillere. Data-drevet trening med AK Golf.",
+    type: "website",
+    locale: "nb_NO",
     url: "https://akgolf.no/utvikling",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Utvikling & Teknologi — Digitale verktøy for golf",
+    title: "Utvikling | AK Golf",
     description:
-      "QR-treningsskilt, IUP-plattform, analyseverktøy og sportsplaner for golfklubber og trenere.",
+      "Golfutvikling og performance coaching for ambisiøse spillere. Data-drevet trening med AK Golf.",
   },
 };
 

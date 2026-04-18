@@ -1,6 +1,26 @@
+import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { redirect } from "next/navigation";
 import { createServerSupabase } from "@/lib/supabase/server";
+
+export const metadata: Metadata = {
+  title: "Dashboard | AK Golf Portal",
+  description:
+    "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
+  openGraph: {
+    title: "Dashboard | AK Golf Portal",
+    description:
+      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
+    type: "website",
+    locale: "nb_NO",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dashboard | AK Golf Portal",
+    description:
+      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
+  },
+};
 import {
   getDashboardStats,
   getHandicapData,

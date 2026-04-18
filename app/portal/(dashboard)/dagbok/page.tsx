@@ -1,8 +1,28 @@
+import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getTrainingLogs, getLoggedSessionIds, getLastSession } from "./actions";
 import { getActivePlan } from "@/app/portal/(dashboard)/treningsplan/actions";
 import { TrainingDiaryClient } from "./training-diary-client";
 import { isWithinInterval, endOfISOWeek, startOfISOWeek } from "date-fns";
+
+export const metadata: Metadata = {
+  title: "Dagbok | AK Golf Portal",
+  description:
+    "Din treningsdagbok. Logg økter, følg planen og se utvikling over tid.",
+  openGraph: {
+    title: "Dagbok | AK Golf Portal",
+    description:
+      "Din treningsdagbok. Logg økter, følg planen og se utvikling over tid.",
+    type: "website",
+    locale: "nb_NO",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dagbok | AK Golf Portal",
+    description:
+      "Din treningsdagbok. Logg økter, følg planen og se utvikling over tid.",
+  },
+};
 
 export const dynamic = "force-dynamic";
 

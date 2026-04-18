@@ -2,6 +2,10 @@
 export { HCPTrendChart } from "./hcp-trend-chart";
 export { Sparkline, SparklineCompact } from "./sparkline";
 export { TrainingDistribution } from "./training-distribution";
+export { HandicapTrendChart } from "./handicap-trend-chart";
+export { SessionsDonut } from "./sessions-donut";
+export { SGRadarCard } from "./sg-radar-card";
+export { EmptyKpiCard } from "./empty-kpi-card";
 
 // Dashboard v3 - Nye widgets
 export { TrackManWidget } from "./trackman-widget";

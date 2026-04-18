@@ -13,108 +13,13 @@ import { TrackManWidget } from "@/components/portal/dashboard/trackman-widget";
 import { SocialWidget } from "@/components/portal/dashboard/social-widget";
 import { AiInsightsV2 } from "@/components/portal/dashboard/ai-insights-v2";
 import { AchievementsWidget } from "@/components/portal/dashboard/achievements-widget";
+import { HandicapTrendChart } from "@/components/portal/dashboard/handicap-trend-chart";
+import { SessionsDonut } from "@/components/portal/dashboard/sessions-donut";
+import { SGRadarCard } from "@/components/portal/dashboard/sg-radar-card";
+import { EmptyKpiCard } from "@/components/portal/dashboard/empty-kpi-card";
 import { colors } from "@/lib/design-tokens";
 
-// Types
-interface WeekDay {
-  dayLabel: string;
-  dateNumber: number;
-  trained: boolean;
-  hasCoaching: boolean;
-  isToday: boolean;
-  isRest: boolean;
-  completionPercent: number;
-}
-
-interface NextBooking {
-  id: string;
-  instructorName: string;
-  serviceName: string;
-  duration: number;
-  startTime: Date | string;
-}
-
-interface CoachInsight {
-  focusAreas: string[] | null;
-  primaryFocus: string | null;
-  summary: string | null;
-  date: Date | string;
-}
-
-interface AiInsight {
-  summary: string;
-  strengths: string[];
-  weaknesses: string[];
-  recommendations: string[];
-  goalProgress: {
-    target: string;
-    current: number;
-    target_value: number;
-    unit: string;
-  };
-  patternAnalysis: string;
-}
-
-interface TrackManData {
-  lastSession: {
-    date: string;
-    club: string;
-    metric: string;
-    value: number;
-    unit: string;
-  } | null;
-  trends: {
-    clubSpeed: number[];
-    ballSpeed: number[];
-    carry: number[];
-  };
-  improvements: {
-    metric: string;
-    change: number;
-    period: string;
-  }[];
-}
-
-interface SocialData {
-  rank: number;
-  totalPlayers: number;
-  challenges: {
-    id: string;
-    name: string;
-    progress: number;
-    endDate: string;
-  }[];
-  streak: number;
-  friendsOnline: number;
-}
-
-interface Achievement {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  rarity: "common" | "rare" | "epic" | "legendary";
-  unlockedAt?: string;
-  progress?: number;
-}
-
-interface DashboardV3Props {
-  userName: string | null;
-  tier: string;
-  memberSince: string | null;
-  stats: { sessionsCount: number; roundsCount: number };
-  handicap: { current: number | null; trend: number | null };
-  handicapHistory: number[];
-  nextBooking: NextBooking | null;
-  weekRings: { days: WeekDay[]; weekStart: string };
-  coachInsight: CoachInsight | null;
-  aiInsight: AiInsight | null;
-  trackManData?: TrackManData;
-  socialData?: SocialData;
-  achievements: Achievement[];
-  totalAchievements: number;
-  playerLevel: "beginner" | "intermediate" | "advanced" | "pro";
-}
+import type { DashboardV3Props } from "./dashboard-types";
 
 const container = {
   hidden: { opacity: 0 },
@@ -282,49 +187,42 @@ export function DashboardClientV3({
         )}
       </motion.div>
 
-      {/* RAD 4: Coach Insight + Achievements + Snarveier */}
+      {/* RAD 3.5: Diagrammer */}
       <motion.div
         variants={item}
-        className="grid grid-cols-1 gap-5 lg:grid-cols-3"
+        className="grid grid-cols-1 gap-5 lg:grid-cols-12"
       >
-        <CoachInsightCard coachInsight={coachInsight} />
-        {(showTrackMan || showSocial) && (
-          <AchievementsWidget
-            achievements={achievements}
-            totalAchievements={totalAchievements}
-          />
-        )}
-        <ShortcutPills />
+        <div className="lg:col-span-7">
+          <HandicapTrendChart data={handicapHistory} />
+        </div>
+        <div className="lg:col-span-5">
+          <SessionsDonut />
+        </div>
+      </motion.div>
+
+      {/* RAD 4: SG Radar + Coach Insight + Achievements + Snarveier */}
+      <motion.div
+        variants={item}
+        className="grid grid-cols-1 gap-5 lg:grid-cols-12"
+      >
+        <div className="lg:col-span-4">
+          <SGRadarCard />
+        </div>
+        <div className="lg:col-span-5">
+          <CoachInsightCard coachInsight={coachInsight} />
+        </div>
+        <div className="lg:col-span-3">
+          {(showTrackMan || showSocial) && (
+            <AchievementsWidget
+              achievements={achievements}
+              totalAchievements={totalAchievements}
+            />
+          )}
+          <ShortcutPills />
+        </div>
       </motion.div>
     </motion.div>
   );
 }
 
-function EmptyKpiCard({
-  label,
-  message,
-  href,
-}: {
-  label: string;
-  message: string;
-  href: string;
-}) {
-  return (
-    <div className="flex flex-col justify-between rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-grey-200 hover:shadow-md">
-      <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-grey-400">
-          {label}
-        </p>
-        <p className="mt-2 text-sm text-grey-400">{message}</p>
-        <a
-          href={href}
-          className="mt-3 inline-flex items-center gap-1 text-xs font-semibold hover:underline"
-          style={{ color: colors.primary.main }}
-        >
-          Kom i gang
-          <span>→</span>
-        </a>
-      </div>
-    </div>
-  );
-}
+

@@ -1,25 +1,28 @@
 ---
 name: post-round-analysis
 description: |
-  Analyserer runde-data og gir anbefalinger for trening.
-  Identifiserer mønstre, svakheter og styrker basert på statistikk.
+  Analyserer runde-data med Strokes Gained og gir treningsanbefalinger via AK-metodikken.
+  Sammenligner SG per kategori mot A–K-benchmarks, identifiserer svakheter,
+  og genererer spesifikke anbefalinger med Tek/Tak/Mental/Fys-fordeling.
 argument-hint: |
-  Bruk etter fullført runde for å analysere prestasjon og gi treningsanbefalinger.
-  Sammenligner med tidligere runder for å identifisere trender.
+  Bruk etter fullført runde med SG-data for å analysere prestasjon og gi målrettede treningsanbefalinger.
+  Sammenligner med spillerens kategori-benchmark og foreslår rotårsak-basert trening.
 allowed-tools: [ReadFile, WriteFile, SearchWeb]
 user-invocable: true
 ---
 
 # Post-Round Analysis
 
-Analyserer runde-data og gir anbefalinger for trening basert på statistisk analyse og trend-identifikasjon.
+Analyserer runde-data med Strokes Gained (SG) og genererer treningsanbefalinger
+basert på AK Golf Academys A–K-benchmarks og Tek/Tak/Mental/Fys-rammeverk.
 
 ## Når å bruke
 
-- Umiddelbart etter fullført runde
-- For å identifisere mønstre over tid
-- For å prioritere treningsfokus
-- For å målrette mot HCP-forbedring
+- Umiddelbart etter fullført runde med SG-data
+- For å identifisere kategorispesifikke svakheter (OTT/APP/ARG/PUTT)
+- For å prioritere treningsfokus basert på benchmark-sammenligning
+- For å generere rotårsak-baserte anbefalinger (Tek/Tak/Mental/Fys)
+- For å estimere tidsinvestering per forbedringsområde
 
 ## Input
 
@@ -27,30 +30,38 @@ Analyserer runde-data og gir anbefalinger for trening basert på statistisk anal
 {
   roundId: string;
   playerId: string;
+  playerName: string;
   date: Date;
   course: string;
   score: number;
   par: number;
+  handicap?: number;            // Spillerens nåværende HCP
+  category?: string;            // A–K (utledes fra HCP eller SG hvis ikke oppgitt)
   stats: {
+    totalScore: number;
+    sgTotal: number;            // Strokes Gained total
+    sgOffTheTee: number;        // SG fra tee (driver/wood)
+    sgApproach: number;         // SG approach (jern)
+    sgAroundTheGreen: number;   // SG rundt green (chip/pitch/bunker)
+    sgPutting: number;          // SG putting
     fairwaysHit: number;
     fairwaysTotal: number;
-    gir: number;                 // Greens in regulation
+    gir: number;                // Greens in regulation
     girTotal: number;
     putts: number;
-    threePutts: number;
-    upAndDowns: number;
-    sandSaves: number;
-    penalties: number;
+    threePutts?: number;
+    upAndDowns?: number;
+    penalties?: number;
   };
-  holeByHole: Array<{
-    hole: number;
+  previousRounds?: Array<{      // For trend-baseline
+    date: Date;
+    sgTotal: number;
+    sgOffTheTee: number;
+    sgApproach: number;
+    sgAroundTheGreen: number;
+    sgPutting: number;
     score: number;
-    par: number;
-    fairway: boolean | null;     // null for par 3
-    gir: boolean;
-    putts: number;
   }>;
-  previousRounds?: RoundData[];  // For trend analysis
 }
 ```
 
@@ -59,65 +70,121 @@ Analyserer runde-data og gir anbefalinger for trening basert på statistisk anal
 ```typescript
 {
   analysis: {
-    scoreVsHandicap: 'better' | 'expected' | 'worse';
-    highlights: string[];
-    lowlights: string[];
-    patterns: string[];       // F.eks. "struggles on par 3s"
+    overview: string;           // 2–3 setninger med hovedinntrykk
+    scoreVsBenchmark: 'better' | 'expected' | 'worse';
+    category: string;           // A–K-kategori utledet
+    strongestCategory: { name: string; sg: number; vsBenchmark: number };
+    weakestCategory: { name: string; sg: number; vsBenchmark: number };
+    patterns: string[];         // Identifiserte mønstre
   };
-  statsBreakdown: {
-    driving: { rating: 'strong' | 'average' | 'weak', comment: string };
-    approach: { rating: 'strong' | 'average' | 'weak', comment: string };
-    shortGame: { rating: 'strong' | 'average' | 'weak', comment: string };
-    putting: { rating: 'strong' | 'average' | 'weak', comment: string };
+  sgBreakdown: {
+    offTheTee: { sg: number; benchmark: number; delta: number; rating: 'strong' | 'average' | 'weak' };
+    approach: { sg: number; benchmark: number; delta: number; rating: 'strong' | 'average' | 'weak' };
+    aroundTheGreen: { sg: number; benchmark: number; delta: number; rating: 'strong' | 'average' | 'weak' };
+    putting: { sg: number; benchmark: number; delta: number; rating: 'strong' | 'average' | 'weak' };
+    total: { sg: number; benchmark: number; delta: number };
   };
   recommendations: {
-    immediate: string[];      // Til neste runde
-    practiceFocus: string[];  // Treningsprioriteringer
-    suggestedDrills: string[];
+    primaryFocus: string;       // Hvilken kategori først
+    practicePlan: Array<{
+      category: 'OTT' | 'APP' | 'ARG' | 'PUTT';
+      type: 'TEK' | 'TAK' | 'MENTAL' | 'FYS';
+      description: string;      // Hva som skal gjøres
+      drills: string[];         // Konkrete drill-forslag
+      durationMinutes: number;  // Per økt
+      sessionsPerWeek: number;
+      rationale: string;        // Hvorfor dette fokuset
+    }>;
+    estimatedTimeToImprove: string;  // F.eks. "4–6 uker med 2 økter/uke"
   };
-  goalProgress: {
-    currentHandicap: number;
-    trend: 'improving' | 'stable' | 'declining';
-    projectedHandicap: number;
+  trend?: {
+    direction: 'improving' | 'stable' | 'declining';
+    biggestChange: { category: string; delta: number };
+    consistencyScore: number;   // 0–100
   };
 }
 ```
 
-## Beregningslogikk
+## Analyse-prosess
 
-### Kategori-rating
+### 1. Kategori-utledning
 
-**Driving Rating:**
-- Strong: Fairway-hit > 50% OG ingen OB/penalties
-- Average: Fairway-hit 35-50% ELLER 1-2 penalties
-- Weak: Fairway-hit < 35% ELLER 3+ penalties
+Hvis `category` ikke er oppgitt:
+1. Bruk `handicap` → `handicapToCategory()` fra `lib/portal/golf/sg-to-handicap.ts`
+2. Alternativt: `sgTotal` → `sgToCategory()` fra samme modul
 
-**Approach Rating:**
-- Strong: GIR > 40% (hcp < 10) eller > 25% (hcp 10-20)
-- Average: GIR innenfor ±10% av hcp-snitt
-- Weak: GIR betydelig under hcp-snitt
+Hent benchmark-verdier fra `SG_BENCHMARKS` i `lib/portal/golf/sg-benchmarks.ts`.
 
-**Short Game Rating:**
-- Strong: Up-and-down > 50% ELLER sand saves > 40%
-- Average: Up-and-down 30-50%
-- Weak: Up-and-down < 30%
+### 2. SG-sammenligning per kategori
 
-**Putting Rating:**
-- Strong: < 30 putts OG 0-1 three-putts
-- Average: 30-34 putts ELLER 1-2 three-putts
-- Weak: > 34 putts ELLER 3+ three-putts
+For hver kategori `c ∈ {offTheTee, approach, aroundTheGreen, putting}`:
 
-### Mønster-gjenkjenning
+```
+benchmark_c = SG_BENCHMARKS[category].sg[c]
+delta_c     = stats.sg_c − benchmark_c   // Negativ = under benchmark, positiv = over
+```
 
-**Hull-type mønstre:**
-- "Struggles on par 3s": Score par 3 > +0.5 vs par
-- "Strong par 5s": Score par 5 < -0.3 vs par
-- "Back nine fade": Score hul 10-18 > hul 1-9
+**Rating-logikk:**
+| Delta | Rating | Betydning |
+|-------|--------|-----------|
+| ≥ +0.2 | strong | Over kategori-snitt |
+| −0.2 til +0.2 | average | Omtrentlig kategori-snitt |
+| < −0.2 | weak | Under kategori-snitt |
 
-**Feil-mønstre:**
-- "Early mistakes": 3+ dobbel-bogeys på første 6 hull
-- "Finish strong": Score siste 3 hull bedre enn snitt
-- "Pressure issues": Dobbelt-bogeys etter birdies
+### 3. Sterkest / Svakest kategori
+
+Sorter kategorier etter `delta_c` (synkende). Sterkest = høyest delta, svakest = lavest delta.
+
+Hvis spilleren har `previousRounds`, beregn også trend: `delta_now − delta_baseline`.
+
+### 4. Rotårsak-analyse (Tek/Tak/Mental/Fys)
+
+For den svakeste kategorien, kjør diagnostisk vurdering:
+
+```
+Kategori c har delta_c < −0.2 (svak)
+
+Hent tilgjengelig data:
+  ├─ Høy varians mellom runder (> 0.5 SG std dev)? → MENTAL (konsistens)
+  ├─ SG_c(konkurranse) − SG_c(trening) < −0.5? → MENTAL (press)
+  ├─ Normal teknikk, men dårlige scorer? → TAKTISK (strategi/valg)
+  ├─ Lav ballfart / dårlig kontakt? → FYSISK eller TEKNISK
+  └─ Ingen tydelig mønster → BLANDET
+```
+
+**Fordelingsmatrise for anbefalinger:**
+
+| Primær rot-årsak | Tek | Tak | Mental | Fys |
+|------------------|-----|-----|--------|-----|
+| Teknisk | 65% | 10% | 10% | 15% |
+| Fysisk | 30% | 5% | 10% | 55% |
+| Mental (press) | 25% | 20% | 50% | 5% |
+| Taktisk (valg) | 15% | 60% | 15% | 10% |
+| Blandet | 40% | 20% | 25% | 15% |
+
+### 5. Treningsanbefaling — struktur
+
+For hver anbefaling, angi:
+- **Kategori**: OTT / APP / ARG / PUTT
+- **Type**: TEK / TAK / MENTAL / FYS
+- **Beskrivelse**: Konkret hva spilleren skal fokusere på
+- **Driller**: 1–3 konkrete drill-forslag (referer `drill-generator`)
+- **Varighet**: Minutter per økt
+- **Frekvens**: Økter per uke
+- **Begrunnelse**: Kort forklaring på hvorfor dette fokuset
+
+### 6. Tids-estimat
+
+Bruk `hours-per-SG`-tabellen fra Coaching Forecast-metodikken:
+
+| Kategori | Nivå K–G | Nivå F–D | Nivå C–B | Nivå A |
+|----------|----------|----------|----------|--------|
+| OTT | 50 t | 70 t | 100 t | 150 t |
+| APP | 70 t | 100 t | 140 t | 200 t |
+| ARG | 40 t | 60 t | 90 t | 140 t |
+| PUTT | 25 t | 40 t | 65 t | 110 t |
+
+**Timer per +0.1 SG-forbedring** (deliberate practice). Juster med overlap-factor 0.55 for blandet trening.
 
 ## Eksempel
 
@@ -126,11 +193,20 @@ Analyserer runde-data og gir anbefalinger for trening basert på statistisk anal
 {
   "roundId": "rnd_789",
   "playerId": "user_456",
+  "playerName": "Emil",
   "date": "2026-04-15",
   "course": "Losby GK",
   "score": 82,
   "par": 72,
+  "handicap": 12.5,
+  "category": "E",
   "stats": {
+    "totalScore": 82,
+    "sgTotal": -2.4,
+    "sgOffTheTee": -0.4,
+    "sgApproach": -1.2,
+    "sgAroundTheGreen": -0.5,
+    "sgPutting": -0.3,
     "fairwaysHit": 6,
     "fairwaysTotal": 14,
     "gir": 7,
@@ -138,13 +214,11 @@ Analyserer runde-data og gir anbefalinger for trening basert på statistisk anal
     "putts": 33,
     "threePutts": 2,
     "upAndDowns": 3,
-    "sandSaves": 0,
     "penalties": 2
   },
-  "holeByHole": [
-    { "hole": 1, "score": 5, "par": 4, "fairway": false, "gir": false, "putts": 2 },
-    { "hole": 2, "score": 4, "par": 4, "fairway": true, "gir": true, "putts": 2 },
-    { "hole": 3, "score": 5, "par": 3, "fairway": null, "gir": false, "putts": 2 }
+  "previousRounds": [
+    { "date": "2026-04-08", "sgTotal": -2.1, "sgOffTheTee": -0.3, "sgApproach": -1.0, "sgAroundTheGreen": -0.4, "sgPutting": -0.4, "score": 81 },
+    { "date": "2026-04-01", "sgTotal": -2.5, "sgOffTheTee": -0.5, "sgApproach": -1.1, "sgAroundTheGreen": -0.6, "sgPutting": -0.3, "score": 83 }
   ]
 }
 ```
@@ -153,107 +227,127 @@ Analyserer runde-data og gir anbefalinger for trening basert på statistisk anal
 ```json
 {
   "analysis": {
-    "scoreVsHandicap": "expected",
-    "highlights": [
-      "Ingen tre-putts på back nine",
-      "2 birdie-muligheter (GIR + 2 putts)",
-      "Bra recovery på hull 12 etter missed fairway"
-    ],
-    "lowlights": [
-      "2 straffer (OB på hull 4 og 15)",
-      "3 three-putts totalt",
-      "0/2 sand saves"
-    ],
+    "overview": "Emil spilte en 82-runde med SG total på −2.4, noe som er 0.4 under kategori E-benchmark. Approach er tydelig svakest punkt med −1.2 SG (0.3 under benchmark).",
+    "scoreVsBenchmark": "worse",
+    "category": "E",
+    "strongestCategory": { "name": "putting", "sg": -0.3, "vsBenchmark": 0.2 },
+    "weakestCategory": { "name": "approach", "sg": -1.2, "vsBenchmark": -0.3 },
     "patterns": [
-      "Struggles early: +4 på første 3 hull",
-      "Driver accuracy under 50%"
+      "Approach-forverring fra −1.0 til −1.2 over siste 3 runder",
+      "Konsistent svak off-the-tee (−0.4 til −0.5)",
+      "Putting er relativt stabil og sterk"
     ]
   },
-  "statsBreakdown": {
-    "driving": {
-      "rating": "weak",
-      "comment": "43% fairway-hit med 2 straffer. Driver er tydeligvis utfordrende i dag."
-    },
-    "approach": {
-      "rating": "average",
-      "comment": "39% GIR er akseptabelt for ditt nivå, men kan forbedres."
-    },
-    "shortGame": {
-      "rating": "average",
-      "comment": "Up-and-down rate på 38% er middels. Sand-spill trenger oppmerksomhet."
-    },
-    "putting": {
-      "rating": "weak",
-      "comment": "33 putts med 3 three-putts tyder på avstandskontroll-problemer."
-    }
+  "sgBreakdown": {
+    "offTheTee": { "sg": -0.4, "benchmark": -0.6, "delta": 0.2, "rating": "average" },
+    "approach": { "sg": -1.2, "benchmark": -0.9, "delta": -0.3, "rating": "weak" },
+    "aroundTheGreen": { "sg": -0.5, "benchmark": -0.4, "delta": -0.1, "rating": "average" },
+    "putting": { "sg": -0.3, "benchmark": -0.1, "delta": 0.2, "rating": "strong" },
+    "total": { "sg": -2.4, "benchmark": -2.0, "delta": -0.4 }
   },
   "recommendations": {
-    "immediate": [
-      "Fokus på putting-warmup før neste runde",
-      "Legg ekstra tid på driving range",
-      "Øv på 30-50 meter chipper før runde"
+    "primaryFocus": "approach",
+    "practicePlan": [
+      {
+        "category": "APP",
+        "type": "TEK",
+        "description": "Forbedre kontakt-konsistens på approach-slag. Fokus på face angle-stabilitet og sentertreff.",
+        "drills": ["50-100-150 Challenge", "Landing Zone Drill"],
+        "durationMinutes": 45,
+        "sessionsPerWeek": 2,
+        "rationale": "Approach er 0.3 SG under benchmark. Med HCP 12 er dette det største forbedringspotensialet. Teknisk fokus gir raskest avkastning."
+      },
+      {
+        "category": "APP",
+        "type": "TAK",
+        "description": "Avstandsestimering og klubbvalg. Øv på å treffe spesifikke avstander under press.",
+        "drills": [ "Target Practice med 3 klubber", "Course Management Simulation" ],
+        "durationMinutes": 30,
+        "sessionsPerWeek": 1,
+        "rationale": "Dårlig avstandskontroll fører til lange putter og missed GIR. 20% av approach-tiden bør være taktisk."
+      },
+      {
+        "category": "OTT",
+        "type": "TEK",
+        "description": "Driver-konsistens. Fokus på fairway-treff og eliminere straffer.",
+        "drills": ["Fairway Finder", "Gate Drill Driver"],
+        "durationMinutes": 30,
+        "sessionsPerWeek": 1,
+        "rationale": "To straffer i runden tyder på at driver-stabilitet bør vedlikeholdes. Nivået er OK men ikke sterk."
+      }
     ],
-    "practiceFocus": [
-      "Driver accuracy - gate drill",
-      "Putting distance control - ladder drill",
-      "Bunkerspill - basic technique"
-    ],
-    "suggestedDrills": [
-      "fairway-finder-challenge",
-      "ladder-putting-drill",
-      "bunker-save-progression"
-    ]
+    "estimatedTimeToImprove": "Med 3 økter/uke (2x approach, 1x driver) er +0.3 SG i approach realistisk på 8–12 uker."
   },
-  "goalProgress": {
-    "currentHandicap": 12.5,
-    "trend": "stable",
-    "projectedHandicap": 12.2
+  "trend": {
+    "direction": "declining",
+    "biggestChange": { "category": "approach", "delta": -0.2 },
+    "consistencyScore": 62
   }
 }
 ```
 
-## Trend-analyse (med previousRounds)
+## Kategori-spesifikke anbefalinger
 
-Når previousRounds er inkludert:
+### Off-the-Tee (OTT)
+**Typiske svakheter:**
+- Fairway-hit < 35% → Tek (svingbane, face control)
+- Høy strafferate → Tak (klubbvalg, strategi) eller Tek (konsistens)
+- Lav carry-distance → Fys (speed-training) eller Tek (smash factor)
 
-1. **Sammenlign over 5 siste runder:**
-   - Score-trend: stigende/synkende/stabil
-   - Kategori-trender: hvilke områder forbedres/ikke
+**Standard drill-referanser:**
+- Fairway Finder (driving)
+- Dispersion Circle (driving)
 
-2. **Konsistens-score:**
-   - Varians i score
-   - Varians i kategori-statistikk
+### Approach (APP)
+**Typiske svakheter:**
+- GIR < 25% (hcp 10–20) → Tek (kontakt, avstand)
+- Høy varians i avstand → Tak (klubbvalg) eller Tek (konsistens)
+- Bra trening, dårlig bane → Mental (press)
 
-3. **Sesong-tilpasning:**
-   - Tid på året vs ytelse
-   - Bane-typer vs ytelse
+**Standard drill-referanser:**
+- 50-100-150 (jern)
+- Landing Zone (chipping)
 
-## HCP-projeksjon
+### Around-the-Green (ARG)
+**Typiske svakheter:**
+- Up-and-down < 30% → Tek (teknikk chip/pitch/bunker)
+- Bra teknikk, dårlig resultat → Tak (klubbvalg rundt green) eller Mental (konsentrasjon)
 
-Basert på:
-- Siste 5 runders snitt vs HCP
-- Trend-retning
-- Kategori-balansering
+**Standard drill-referanser:**
+- Up-and-Down Challenge (chipping)
+- Bunker Save Progression (bunker)
 
-Formel:
-```
-projectedHCP = currentHCP + (trendFactor * consistencyBonus)
+### Putting (PUTT)
+**Typiske svakheter:**
+- > 34 putts → Tek (avstandskontroll) eller Tek (startlinje)
+- 3+ three-putts → Tak (lag putting / avstand) eller Tek (speed control)
+- Bra på trening, dårlig i runde → Mental (rutine, press)
 
-trendFactor = (avgLast5 - currentHCP) * 0.3
-consistencyBonus = 1 - (scoreVariance / 10)
-```
+**Standard drill-referanser:**
+- Gate Drill (putting)
+- Clock Drill (putting)
+- Ladder Drill (putting)
 
-## Integrasjon med andre skills
+## Integrasjon med plattformen
 
-1. Bruk **drill-generator** for spesifikke driller
-2. Bruk **training-plan-generator** for å justere plan
-3. Bruk **coaching-summary** hvis runde var med coach
+### Datakilder
+- `lib/portal/golf/sg-benchmarks.ts` — A–K-benchmarks for SG per kategori
+- `lib/portal/golf/sg-to-handicap.ts` — Konvertering mellom SG, HCP og A–K-kategori
+- `lib/portal/golf/expected-strokes.ts` — Broadie-benchmark for shot-level SG (ved behov)
+
+### Andre skills
+1. **drill-generator** — for konkrete driller med scoring og target-nivåer
+2. **training-exercise-generator** — for øvelser med L-M-PR-parametere
+3. **training-plan-generator** — for å integrere anbefalinger i større 12-ukers plan
+4. **coaching-summary** — hvis runden var del av en coaching-sesjon
 
 ## Kvalitetssjekk
 
-- [ ] Alle ratings er begrunnet med data
-- [ ] Patterns er identifisert fra holeByHole-data
-- [ ] Recommendations er spesifikke og handlingsbare
-- [ ] Immediate tips kan implementeres før neste runde
-- [ ] HCP-projeksjon er realistisk
-- [ ] Språk er støttende, ikke kritisk
+- [ ] SG-verdier er sammenlignet mot riktig A–K-benchmark
+- [ ] Sterkest/svakest kategori er korrekt identifisert fra data
+- [ ] Rotårsak-analysen er begrunnet (ikke gjettet)
+- [ ] Tek/Tak/Mental/Fys-fordelingen reflekterer faktisk svakhet
+- [ ] Driller er relevante for identifisert kategori og type
+- [ ] Tids-estimat er realistisk basert på HCP/nivå
+- [ ] Språk er støttende og konstruktivt (ikke kritisk)
+- [ ] Anbefalinger er spesifikke nok til at spilleren kan handle på dem

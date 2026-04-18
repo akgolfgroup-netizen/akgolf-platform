@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import {
   getFilteredRoundStats,
@@ -9,6 +10,25 @@ import {
 import { StatistikkClient } from "./statistikk-client";
 import type { PeriodKey } from "./actions";
 import { getPlayerUSI, getLatestTrainingPrescription } from "@/lib/portal/usi/actions";
+
+export const metadata: Metadata = {
+  title: "Statistikk | AK Golf Portal",
+  description:
+    "Din golfstatistikk og progresjon. Strokes Gained, handicap-trend og benchmarks.",
+  openGraph: {
+    title: "Statistikk | AK Golf Portal",
+    description:
+      "Din golfstatistikk og progresjon. Strokes Gained, handicap-trend og benchmarks.",
+    type: "website",
+    locale: "nb_NO",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Statistikk | AK Golf Portal",
+    description:
+      "Din golfstatistikk og progresjon. Strokes Gained, handicap-trend og benchmarks.",
+  },
+};
 
 const VALID_PERIODS: PeriodKey[] = ["30d", "90d", "season", "1y"];
 
