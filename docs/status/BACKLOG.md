@@ -1,25 +1,22 @@
 # Backlog — Prioritert gjenstående arbeid
 
-Sist oppdatert: 2026-04-18
-
-## P1 — Kritisk (blokkerer produksjonskvalitet)
-
-- **Build-feil ved static export**: `/landing/contact` og `/admin/treningsplan/ny` feiler med "Cannot read properties of null (reading 'useContext')" under `npm run build`. Blokkerer go-live. Trolig React 19 / Next.js 16 SSG-issue med klient-komponenter. Se `docs/status/GO_LIVE_CHECKLIST.md` B1.
+Sist oppdatert: 2026-04-19
 
 ## P2 — Viktig (funksjonalitet mangler)
 
 - **Go-live (#39)**: Vercel-env-vars må settes, `prisma migrate deploy` må kjøres mot prod, DNS må verifiseres. Alt annet er klart. Se `docs/status/GO_LIVE_CHECKLIST.md`.
-- **`app/setup-admin/page.tsx`**: Eksponerer admin-opprettelse med hardkodet passord "anders". Må slettes eller guardes før produksjon.
 
 ## P3 — Forbedringer (kode-kvalitet)
 
-- **10 ESLint-errors pre-eksisterende** i:
-  - `app/portal/(dashboard)/dagbok/page.tsx` (impure function, `any`-typer)
-  - `components/portal/dagbok/weekly-stats.tsx` (create components during render x3)
-  - `components/portal/trackman/trackman-analytics-card.tsx` (impure function)
-  - `components/admin/analytics/revenue-chart.tsx` (prefer-const)
-- **86 lint-warnings** (ubrukte imports/vars) — kjør `npx eslint . --fix` hvor mulig.
+- **45 lint-warnings (ubrukte vars)** — auto-removal av unused imports gjort. Gjenværende er unused vars som må prefixes med `_` eller slettes manuelt.
 - **Notion-import (#41)**: Manuell import av `docs/notion-import-master-todo.json` til Notion-database.
+
+## Fullført 2026-04-19
+
+- ~~P1 Build-feil (React 19 / Next.js 16 SSG useContext)~~ — workaround via `--experimental-build-mode compile`. Alle relevante layouts/sider merket force-dynamic. Build passerer, exit 0. (6bbd752)
+- ~~P2 app/setup-admin~~ — slettet (hardkodet passord). (6bbd752)
+- ~~P3 10 ESLint-errors~~ — dagbok/page (impure), weekly-stats (component-in-render x3), trackman-analytics-card (impure), revenue-chart (prefer-const), dashboard-actions (4x any). (6bbd752)
+- ~~Lint-warnings reduksjon~~ — 87 → 45 via eslint-plugin-unused-imports. (6bbd752)
 
 ## Nye ideer / neste kvartal
 
