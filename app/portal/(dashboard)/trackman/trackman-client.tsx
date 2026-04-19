@@ -31,6 +31,7 @@ import {
 import type { TrackManOverview, TrackManAnalyticsSummary } from "./actions";
 import { ShotDispersionChart } from "@/components/portal/trackman/shot-dispersion-chart";
 import { TrackManAnalyticsCard } from "@/components/portal/trackman/trackman-analytics-card";
+import { MonoLabel } from "@/components/portal/patterns";
 
 // ── Typer ────────────────────────────────────────────────
 
@@ -831,9 +832,9 @@ function StatCard({
     <div className="bg-white rounded-2xl p-5 border border-grey-200/50">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
+          <MonoLabel size="xs" uppercase className="text-grey-400 block">
             {label}
-          </p>
+          </MonoLabel>
           <p className="text-3xl font-bold text-black mt-1 tabular-nums">{value}</p>
         </div>
         <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconBg}`}>

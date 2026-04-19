@@ -8,12 +8,27 @@ import {
   AKPyramide,
   AIAttribution,
   VerticalTimeline,
+  CourseHero,
+  GlassPanel,
+  GlassPanelRow,
+  GlassButton,
+  HeroLabel,
+  HeroLabelSeparator,
+  FloatingCrumbs,
+  FloatingSegmented,
+  BentoCard,
+  BentoGrid,
+  BentoEyebrow,
   type PyramideLevel,
 } from "@/components/portal/patterns";
+import { Calendar, MapPin, Play, Target, Zap } from "lucide-react";
 
 export function DesignPreviewClient() {
   const [activePyramideLevel, setActivePyramideLevel] =
     useState<PyramideLevel | null>("TEK");
+  const [activeSegment, setActiveSegment] = useState<"today" | "week" | "all">(
+    "today"
+  );
 
   return (
     <div className="mx-auto w-full max-w-[1400px] px-6 py-10 space-y-16">
@@ -166,6 +181,203 @@ export function DesignPreviewClient() {
             ]}
           />
         </div>
+      </PatternSection>
+
+      {/* P-07 Course Hero */}
+      <PatternSection
+        id="p-07"
+        code="P-07"
+        title="Course Hero"
+        description="Foto-bakgrunn + dark canvas + gradient overlay for hero-skjermer."
+      >
+        <CourseHero
+          bgImage="/images/course-hero/hero-golf-divot.jpg"
+          bgAlt="Golf divot close-up"
+          overlay="dashboard"
+          className="h-[500px]"
+        >
+          <div className="absolute top-6 left-6 right-6 z-20 flex items-start justify-between">
+            <HeroLabel>
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-cta" />
+              <strong className="text-white font-semibold">Miklagard GK</strong>
+              <HeroLabelSeparator />
+              <span>23. april · uke 17</span>
+            </HeroLabel>
+            <FloatingSegmented
+              items={[
+                { id: "today", label: "I dag" },
+                { id: "week", label: "Uke" },
+                { id: "all", label: "Alle" },
+              ]}
+              activeId={activeSegment}
+              onChange={setActiveSegment}
+            />
+          </div>
+          <div className="absolute bottom-8 left-8 right-8">
+            <BentoEyebrow>
+              Neste booking · 14:30
+            </BentoEyebrow>
+            <h2 className="text-[48px] font-bold tracking-tight mt-3 leading-none">
+              Coach Thomas
+              <br />
+              <span className="text-accent-cta">· impact drill</span>
+            </h2>
+          </div>
+        </CourseHero>
+      </PatternSection>
+
+      {/* P-08 Glass Panel */}
+      <PatternSection
+        id="p-08"
+        code="P-08"
+        title="Glass Panel"
+        description="Glassmorph-panel med dark/light varianter for floating overlay-innhold."
+      >
+        <div className="grid grid-cols-2 gap-6">
+          <NightSurface variant="ambient" className="rounded-2xl p-8">
+            <GlassPanel variant="dark" padding="none">
+              <div className="p-5 border-b border-white/10">
+                <BentoEyebrow>Shot tracking</BentoEyebrow>
+                <h3 className="text-2xl font-bold mt-2 leading-tight">
+                  Hull 8 · Par 4
+                </h3>
+              </div>
+              <GlassPanelRow label="Fairway" value="Hit" unit="←" />
+              <GlassPanelRow label="GIR" value="Yes" />
+              <GlassPanelRow label="Distance to pin" value="12" unit="m" />
+              <GlassPanelRow label="SG this hole" value="+0.42" last />
+            </GlassPanel>
+          </NightSurface>
+          <div className="bg-grey-100 rounded-2xl p-8 flex items-center justify-center">
+            <GlassPanel variant="light" padding="none" className="w-full">
+              <div className="p-5 border-b border-[rgba(10,31,24,0.06)]">
+                <MonoLabel size="xs" uppercase className="text-grey-400">
+                  Light-variant
+                </MonoLabel>
+                <h3 className="text-2xl font-bold mt-2 leading-tight">
+                  Samme struktur, lys flate
+                </h3>
+              </div>
+              <GlassPanelRow variant="light" label="Klubbspeed" value="142" unit="mph" />
+              <GlassPanelRow variant="light" label="Carry" value="245" unit="m" />
+              <GlassPanelRow variant="light" label="Smash factor" value="1.48" last />
+            </GlassPanel>
+          </div>
+        </div>
+      </PatternSection>
+
+      {/* P-09 Glass Button */}
+      <PatternSection
+        id="p-09"
+        code="P-09"
+        title="Glass Button"
+        description="Pill-knapper med glass / lime / amber / dark varianter."
+      >
+        <NightSurface variant="ambient" className="rounded-2xl p-10">
+          <div className="flex flex-wrap items-center gap-3">
+            <GlassButton variant="glass" icon={<Play className="w-3.5 h-3.5" />}>
+              Start runde
+            </GlassButton>
+            <GlassButton variant="lime" icon={<Zap className="w-3.5 h-3.5" />}>
+              Live tracking
+            </GlassButton>
+            <GlassButton variant="amber">Tee-time</GlassButton>
+            <GlassButton variant="dark">Pause</GlassButton>
+            <GlassButton variant="glass" size="icon" icon={<Target className="w-4 h-4" />} />
+            <GlassButton variant="lime" size="sm">
+              Kompakt
+            </GlassButton>
+          </div>
+        </NightSurface>
+      </PatternSection>
+
+      {/* P-11 Hero Label */}
+      <PatternSection
+        id="p-11"
+        code="P-11"
+        title="Hero Label"
+        description="Flytende glass-pill med kontekst: kurs-navn, dato, meta."
+      >
+        <NightSurface variant="ambient" className="rounded-2xl p-10 flex flex-wrap gap-3">
+          <HeroLabel>
+            <MapPin className="w-3 h-3" />
+            <strong className="text-white font-semibold">Miklagard GK</strong>
+            <HeroLabelSeparator />
+            <span className="text-white/55">Hull 8 · 342m</span>
+          </HeroLabel>
+          <HeroLabel>
+            <Calendar className="w-3 h-3" />
+            <strong className="text-white font-semibold">23. april 2026</strong>
+            <HeroLabelSeparator />
+            <span className="text-white/55">Uke 17</span>
+          </HeroLabel>
+          <HeroLabel variant="lime">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0A1F18]" />
+            <strong>Live</strong>
+          </HeroLabel>
+        </NightSurface>
+      </PatternSection>
+
+      {/* P-12 Floating Crumbs */}
+      <PatternSection
+        id="p-12"
+        code="P-12"
+        title="Floating Crumbs"
+        description="Glass-brødsmule for navigasjon i Course Hero-topbar."
+      >
+        <NightSurface variant="ambient" className="rounded-2xl p-10">
+          <FloatingCrumbs
+            items={[
+              { label: "Portal" },
+              { label: "Runde" },
+              { label: "Hull 8", active: true, meta: "Par 4" },
+            ]}
+          />
+        </NightSurface>
+      </PatternSection>
+
+      {/* P-13 Bento Grid */}
+      <PatternSection
+        id="p-13"
+        code="P-13"
+        title="Bento Grid"
+        description="Glass-bento-kort i grid. Accent-variant bruker lime-bakgrunn."
+      >
+        <NightSurface variant="ambient" className="rounded-2xl p-8">
+          <BentoGrid cols={3} gap="md">
+            <BentoCard variant="glass" interactive>
+              <BentoEyebrow>SG total · 30d</BentoEyebrow>
+              <div className="mt-3">
+                <div className="text-[44px] font-bold tracking-tight leading-none tabular-nums">
+                  +1.42
+                </div>
+                <MonoLabel size="xs" className="text-white/55 mt-2">
+                  vs peer HCP 3
+                </MonoLabel>
+              </div>
+            </BentoCard>
+            <BentoCard variant="accent" interactive>
+              <BentoEyebrow dotColor="#0A1F18">Neste booking · 14:30</BentoEyebrow>
+              <h3 className="text-xl font-bold mt-3 leading-tight">
+                Coach Thomas
+              </h3>
+              <MonoLabel size="xs" className="mt-2 text-[#0A1F18]/55">
+                60 min · impact drill
+              </MonoLabel>
+            </BentoCard>
+            <BentoCard variant="glass" interactive>
+              <BentoEyebrow>Streak</BentoEyebrow>
+              <div className="mt-3">
+                <div className="text-[44px] font-bold tracking-tight leading-none tabular-nums">
+                  41<span className="text-[18px] ml-1 text-accent-cta">dager</span>
+                </div>
+                <MonoLabel size="xs" className="text-white/55 mt-2">
+                  PR · 2026
+                </MonoLabel>
+              </div>
+            </BentoCard>
+          </BentoGrid>
+        </NightSurface>
       </PatternSection>
     </div>
   );

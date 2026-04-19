@@ -28,6 +28,7 @@ import {
   AlertCircle,
   ArrowRight,
 } from "lucide-react";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface Session {
   id: string;
@@ -300,9 +301,9 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">
+                <MonoLabel size="xs" uppercase className="text-grey-400 block">
                   Økter i dag
-                </p>
+                </MonoLabel>
                 <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {data.kpis.sessionsToday}
                 </p>
@@ -317,9 +318,9 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">
+                <MonoLabel size="xs" uppercase className="text-grey-400 block">
                   Aktive elever
-                </p>
+                </MonoLabel>
                 <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {data.kpis.activeStudents}
                 </p>
@@ -339,9 +340,9 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">
+                <MonoLabel size="xs" uppercase className="text-grey-400 block">
                   Ventende bookinger
-                </p>
+                </MonoLabel>
                 <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {data.kpis.pendingBookings}
                 </p>
@@ -361,9 +362,9 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">
+                <MonoLabel size="xs" uppercase className="text-grey-400 block">
                   Omsetning MTD
-                </p>
+                </MonoLabel>
                 <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {formatRevenue(data.kpis.mtdRevenue)}
                 </p>

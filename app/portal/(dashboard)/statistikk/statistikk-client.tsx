@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Plus, BarChart3, Zap, Sparkles } from "lucide-react";
@@ -21,6 +21,10 @@ import { colors } from "@/lib/design-tokens";
 import { HcpForecastChart } from "@/components/portal/statistikk/hcp-forecast-chart";
 import { HcpForecastInsight } from "@/components/portal/statistikk/hcp-forecast-insight";
 import { SGRing, NightSurface, MonoLabel } from "@/components/portal/patterns";
+import { StatistikkCourseHeroView } from "@/components/portal/statistikk/statistikk-course-hero-view";
+import { ViewSwitcher } from "@/components/portal/view-switcher";
+import { getDefaultView } from "@/lib/portal/preferences/actions";
+import type { ViewId } from "@/lib/portal/views/registry";
 
 /* ─── Types ─── */
 
@@ -391,7 +395,50 @@ export function StatistikkClient({
     [router, searchParams],
   );
 
+  // v3.1: View-switcher for Performance Report (opt1) vs Course Hero (opt2)
+  const [activeView, setActiveView] = useState<ViewId>("opt1");
+  useEffect(() => {
+    let mounted = true;
+    getDefaultView("portal-statistikk")
+      .then((v) => {
+        if (mounted) setActiveView(v);
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   if (rounds.length === 0 && !aggregates) return <EmptyState />;
+
+  // Early-render Course Hero view
+  if (activeView === "opt2") {
+    const periodLabel =
+      PERIOD_OPTIONS.find((o) => o.key === currentPeriod)?.label ?? "Periode";
+    return (
+      <div className="space-y-6">
+        <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/statistikk" />
+        <div className="px-0">
+          <ViewSwitcher
+            screenId="portal-statistikk"
+            currentView={activeView}
+            onViewChange={setActiveView}
+          />
+        </div>
+        <StatistikkCourseHeroView
+          handicap={handicap}
+          avgSgTotal={aggregates?.avgSgTotal ?? null}
+          avgSgOffTheTee={aggregates?.avgSgOffTheTee ?? null}
+          avgSgApproach={aggregates?.avgSgApproach ?? null}
+          avgSgAroundTheGreen={aggregates?.avgSgAroundTheGreen ?? null}
+          avgSgPutting={aggregates?.avgSgPutting ?? null}
+          roundCount={aggregates?.roundCount ?? null}
+          avgScore={aggregates?.avgScore ?? null}
+          periodLabel={periodLabel}
+        />
+      </div>
+    );
+  }
 
   const sgTrendValue = trendToNumber(aggregates?.sgTrend);
 
@@ -408,6 +455,13 @@ export function StatistikkClient({
     <div className="space-y-8">
       {/* Sub-nav */}
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/statistikk" />
+
+      {/* View-switcher (v3.1) */}
+      <ViewSwitcher
+        screenId="portal-statistikk"
+        currentView={activeView}
+        onViewChange={setActiveView}
+      />
 
       {/* Hero heading + period selector + CTA */}
       <div className="space-y-3">
