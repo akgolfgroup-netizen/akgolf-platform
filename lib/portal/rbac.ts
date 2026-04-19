@@ -1,4 +1,7 @@
-import { UserRole, SubscriptionTier } from "@prisma/client";
+import { UserRole, SubscriptionTier, Capability } from "@prisma/client";
+// NB: Capability-helpers (hasCapability, etc.) er server-only.
+// Importer dem direkte fra "@/lib/portal/capabilities" i server-komponenter.
+// Fjernet her for å tillate client-komponenter å bruke role-helpers (isStaff osv).
 
 export function isAdmin(role?: string): boolean {
   return role === UserRole.ADMIN;
@@ -91,6 +94,19 @@ const TIER_RANK: Record<SubscriptionTier, number> = {
   [SubscriptionTier.STARTER]: 2,
   [SubscriptionTier.PRO]: 3,
   [SubscriptionTier.ELITE]: 4,
+};
+
+/**
+ * Mapping fra MC-side til kapabilitet som kreves.
+ * Brukes av nye sider; eldre sider faller tilbake til canAccessMCPage().
+ */
+export const MC_PAGE_CAPABILITY: Partial<Record<string, Capability>> = {
+  "mission-board": Capability.MB_VIEW_OWN_PLAYERS,
+  elever: Capability.MB_VIEW_OWN_PLAYERS,
+  bookinger: Capability.BOOKING_VIEW_ALL,
+  turneringer: Capability.TOURNAMENT_VIEW,
+  okonomi: Capability.FINANCE_VIEW,
+  team: Capability.USERS_VIEW,
 };
 
 export function hasTierAccess(

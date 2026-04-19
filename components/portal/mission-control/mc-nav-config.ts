@@ -119,6 +119,12 @@ export const MC_NAV_CONFIG: NavGroup[] = [
       { href: "/admin/fasiliteter", label: "Fasiliteter", iconName: "building-2" },
     ],
   },
+  {
+    label: "System",
+    items: [
+      { href: "/admin/team", label: "Team og tilgang", iconName: "users" },
+    ],
+  },
 ];
 
 // Division configuration

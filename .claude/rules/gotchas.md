@@ -84,5 +84,20 @@ STRIPE_SECRET_KEY=sk_live_xxx npx tsx scripts/diagnose-stripe-webhook.ts
 Systemhelse vises i Mission Control dashboard via `WebhookHealthCard`.
 API-endepunkt: `GET /api/health/stripe`
 
+## Prisma migrate mot Supabase
+- `DATABASE_URL` peker til pooler (port 6543) — dette **fungerer ikke** for `prisma migrate` pga. PgBouncer og prepared statements. Feilmelding: `ERROR: prepared statement "s1" already exists`.
+- Bruk alltid `DIRECT_URL` (port 5432) ved migrasjoner:
+  ```bash
+  DATABASE_URL="$(grep '^DIRECT_URL=' .env | cut -d= -f2- | tr -d '"')" npx prisma migrate deploy
+  ```
+- Ved utvikling: foretrekk manuelt opprettet SQL-migrasjon + `prisma migrate deploy` fremfor `migrate dev` for å unngå interaktive prompts.
+
+## Kapabiliteter og tilgangsstyring (2026-04-19)
+- Nye admin-funksjoner skal gates på kapabilitet fra `@/lib/portal/capabilities`, ikke bare `UserRole`.
+- Bruk `requireCapability(Capability.X)` i server actions og API.
+- Kritiske endringer (USERS_ASSIGN_CAPABILITIES, USERS_ASSIGN_ROLE, USERS_DEACTIVATE, FINANCE_REFUND, SYSTEM_SETTINGS, SYSTEM_RUN_CRON) må i tillegg kalle `requireSensitiveAuth()` — krever passord-bekreftelse siste 15 min.
+- Alle grant/revoke av kapabiliteter audit-logges automatisk i `CapabilityChangeLog` via team-actions. Ikke lag egne queries som omgår dette.
+- `defaultsForRole()` i `lib/portal/capabilities/check.ts` gir rolle-baserte defaults; eksisterende `canAccessMCPage()` er bakoverkompatibel midlertidig.
+
 ## Oppdater dokumentasjon ved strukturelle endringer
 Endre kode + oppdater docs = én atomisk operasjon.

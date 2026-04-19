@@ -1882,6 +1882,63 @@ model User {
   Conversation                                Conversation[]             @relation("ConversationParticipants")
   AdminTaskCreated                            AdminTask[]                @relation("AdminTaskCreator")
   UserPreferences                             UserPreferences?
+  UserCapability                              UserCapability[]
+  CoachRelations                              CoachPlayerRelation[]      @relation("CoachRelations")
+  PlayerRelations                             CoachPlayerRelation[]      @relation("PlayerRelations")
+  dataConsentAt                               DateTime?
+  dataConsentScope                            Json?
+}
+
+model UserCapability {
+  id         String     @id @default(cuid())
+  userId     String
+  capability Capability
+  grantedBy  String
+  grantedAt  DateTime   @default(now())
+  expiresAt  DateTime?
+  note       String?
+  User       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, capability])
+  @@index([userId])
+  @@index([capability])
+}
+
+enum CoachPlayerStatus {
+  ACTIVE
+  PAUSED
+  ENDED
+}
+
+model CoachPlayerRelation {
+  id           String            @id @default(cuid())
+  coachUserId  String
+  playerUserId String
+  status       CoachPlayerStatus @default(ACTIVE)
+  startedAt    DateTime          @default(now())
+  endedAt      DateTime?
+  note         String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  Coach        User              @relation("CoachRelations", fields: [coachUserId], references: [id], onDelete: Cascade)
+  Player       User              @relation("PlayerRelations", fields: [playerUserId], references: [id], onDelete: Cascade)
+
+  @@unique([coachUserId, playerUserId])
+  @@index([coachUserId, status])
+  @@index([playerUserId, status])
+}
+
+model CapabilityChangeLog {
+  id          String                 @id @default(cuid())
+  userId      String
+  capability  Capability
+  action      CapabilityChangeAction
+  performedBy String
+  performedAt DateTime               @default(now())
+  reason      String?
+
+  @@index([userId, performedAt])
+  @@index([performedBy])
 }
 
 model UserPreferences {
@@ -2572,6 +2629,73 @@ enum UserRole {
   INSTRUCTOR
   STUDENT
   INVITED
+}
+
+enum CapabilityChangeAction {
+  GRANT
+  REVOKE
+  EXPIRE
+}
+
+enum Capability {
+  // Mission Board og coaching
+  MB_VIEW_OWN_PLAYERS
+  MB_VIEW_ALL_PLAYERS
+  MB_EDIT_TRAINING_PLAN
+  MB_REGISTER_TEST_RESULT
+  MB_APPROVE_CATEGORY_PROMOTION
+  MB_CREATE_COACHING_SESSION
+  MB_VIEW_COACHING_SIGNALS
+
+  // Intern scouting-pool
+  SCOUTING_VIEW
+  SCOUTING_VIEW_JUNIORS
+  SCOUTING_LINK_TO_USER
+  SCOUTING_EXPORT_AGGREGATED
+
+  // Spillerkartlegging
+  KARTLEGGING_VIEW_OWN_PROFILE
+  KARTLEGGING_VIEW_ANY_AK_PLAYER
+  KARTLEGGING_EDIT_ASSIGNMENTS
+
+  // Turneringer
+  TOURNAMENT_VIEW
+  TOURNAMENT_CREATE
+  TOURNAMENT_MANAGE_PREP
+
+  // Booking og kalender
+  BOOKING_VIEW_OWN
+  BOOKING_VIEW_ALL
+  BOOKING_MANAGE
+  BOOKING_RESCHEDULE_OTHER_COACHES
+
+  // Innhold (markedsside)
+  CONTENT_VIEW
+  CONTENT_EDIT
+  CONTENT_PUBLISH
+
+  // Økonomi
+  FINANCE_VIEW
+  FINANCE_EXPORT
+  FINANCE_REFUND
+
+  // Brukeradministrasjon
+  USERS_VIEW
+  USERS_INVITE
+  USERS_ASSIGN_ROLE
+  USERS_ASSIGN_CAPABILITIES
+  USERS_DEACTIVATE
+
+  // GDPR og compliance
+  GDPR_VIEW_REQUESTS
+  GDPR_HANDLE_REQUESTS
+  GDPR_VIEW_AUDIT_LOG
+  GDPR_EXPORT_USER_DATA
+
+  // System
+  SYSTEM_SETTINGS
+  SYSTEM_VIEW_LOGS
+  SYSTEM_RUN_CRON
 }
 
 enum UnitSystem {
