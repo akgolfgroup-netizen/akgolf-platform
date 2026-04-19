@@ -1,10 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CookieConsent } from "@/components/website/CookieConsent";
 import "./globals.css";
 
+// Heritage Grid — DM Sans er hovedfont for hele appen
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+// Inter beholdes for bakoverkompatibilitet under migrering (fjernes i Steg 7)
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -15,7 +24,7 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -92,7 +101,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nb" className="h-full">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} h-full`}>
+      <head>
+        {/* Material Symbols Outlined — ikoner */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        />
+      </head>
+      <body className={`${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable} h-full`}>
         {/* Skip-to-content link for tilgjengelighet */}
         <a
           href="#main-content"
