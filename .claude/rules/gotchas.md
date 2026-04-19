@@ -99,5 +99,24 @@ API-endepunkt: `GET /api/health/stripe`
 - Alle grant/revoke av kapabiliteter audit-logges automatisk i `CapabilityChangeLog` via team-actions. Ikke lag egne queries som omgår dette.
 - `defaultsForRole()` i `lib/portal/capabilities/check.ts` gir rolle-baserte defaults; eksisterende `canAccessMCPage()` er bakoverkompatibel midlertidig.
 
+## Heritage Grid design-migrering (2026-04-19)
+
+**Kildebilde:** `design-ref/stitch/heritage/` (195 Stitch-skjermer godkjent av bruker). Alle nye komponenter skal kopiere Tailwind-klasser 1:1 fra relevant `code.html`.
+
+- **Font:** DM Sans (body/heading), JetBrains Mono (numerisk). Aldri Inter.
+- **Ikoner:** Material Symbols Outlined via `<Icon name="..." />` fra `components/ui/icon.tsx`. Aldri Lucide.
+- **Primary:** `#154212` (skogsgrønn, varm). `--color-primary`.
+- **Accent:** `#d2f000` (olivengul lime). `--color-secondary-fixed`.
+- **Surface:** `#fdf9f0` (kremhvit). `--color-surface`.
+- **Tekst:** `#1c1c16` (brun-sort). `--color-on-surface`.
+- **MC-sidebar:** `bg-[#022c22]` (emerald-950, veldig mørk grønn).
+- **Portal-sidebar:** `#2d5a27` (primary-container, mellommørk grønn).
+
+**Forbudte tokens:** `bg-portal-*`, `--hg-*`, `shadow-portal-*`, `Inter` font, `Lucide` ikoner. Alle migrert via `scripts/migrate-to-heritage.sh` + `scripts/migrate-lucide-to-material.js`.
+
+**Arkivert:** `_archived/pre-heritage-2026-04-19/` inneholder gamle patterns (CourseHero, GlassPanel, osv.) og dashboard-views (FocusToday, DataRich, etc.).
+
+**Én kilde til sannhet:** `.claude/rules/design-system.md`. Alle andre design-docs (DESIGN_SYSTEM.md, design-system-v3.1.md, stitch-*.md) er droppet.
+
 ## Oppdater dokumentasjon ved strukturelle endringer
 Endre kode + oppdater docs = én atomisk operasjon.
