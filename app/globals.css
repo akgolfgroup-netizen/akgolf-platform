@@ -432,6 +432,17 @@
     color: var(--color-black);
   }
 
+  /* Night Surface-kontekst: overskrifter arver farge fra wrapper */
+  .night-surface,
+  .night-surface h1,
+  .night-surface h2,
+  .night-surface h3,
+  .night-surface h4,
+  .night-surface h5,
+  .night-surface h6 {
+    color: inherit;
+  }
+
   /* Scroll offset for sticky nav */
   [id] {
     scroll-margin-top: 64px;
