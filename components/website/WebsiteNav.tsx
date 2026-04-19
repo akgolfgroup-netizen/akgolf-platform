@@ -45,33 +45,28 @@ export function WebsiteNav() {
             />
           </Link>
 
-          {/* Desktop links */}
+          {/* Desktop links — Heritage-stil: uppercase tracking-wider */}
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative text-[13px] font-medium tracking-wide transition-colors duration-300 py-1 ${
+                className={`relative text-[13px] font-medium uppercase tracking-wider transition-colors duration-300 pb-1 ${
                   pathname === link.href
-                    ? isDarkMode ? "text-white" : "text-black"
+                    ? isDarkMode
+                      ? "text-white border-b-2 border-[#d2f000]"
+                      : "text-[#154212] border-b-2 border-[#d2f000]"
                     : isDarkMode
                       ? "text-white/70 hover:text-white"
-                      : "text-grey-500 hover:text-black"
+                      : "text-[#154212]/70 hover:text-[#154212]"
                 }`}
               >
                 {link.label}
-                {pathname === link.href && (
-                  <motion.span
-                    layoutId="nav-indicator"
-                    className={`absolute -bottom-1 left-0 right-0 h-[2px] rounded-full ${isDarkMode ? "bg-white" : "bg-black"}`}
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
               </Link>
             ))}
             <a
               href={BOOKING_URL}
-              className="text-[13px] font-medium px-5 py-2 rounded-full bg-accent-cta text-accent-cta-text transition-opacity duration-300 hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-cta"
+              className="text-[13px] font-medium uppercase tracking-wider px-5 py-2 rounded-lg bg-[#d2f000] text-[#154212] transition-opacity duration-300 hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d2f000]"
             >
               Book coaching
             </a>
