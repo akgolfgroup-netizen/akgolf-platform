@@ -25,6 +25,10 @@ import {
   ArrowRightLeft,
   PieChart,
   MapPin,
+  Image as ImageIcon,
+  Moon,
+  BookOpen,
+  AlignJustify,
   type LucideIcon,
 } from "lucide-react";
 
@@ -47,6 +51,10 @@ const ICON_MAP: Record<string, LucideIcon> = {
   "arrow-right-left": ArrowRightLeft,
   "pie-chart": PieChart,
   "map-pin": MapPin,
+  image: ImageIcon,
+  moon: Moon,
+  "book-open": BookOpen,
+  "align-justify": AlignJustify,
 };
 
 function getIconComponent(iconName: string): LucideIcon {

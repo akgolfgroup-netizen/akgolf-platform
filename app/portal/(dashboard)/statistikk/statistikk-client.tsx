@@ -20,6 +20,7 @@ import type { TrainingPrescriptionResult } from "@/lib/portal/usi/generate-presc
 import { colors } from "@/lib/design-tokens";
 import { HcpForecastChart } from "@/components/portal/statistikk/hcp-forecast-chart";
 import { HcpForecastInsight } from "@/components/portal/statistikk/hcp-forecast-insight";
+import { SGRing, NightSurface, MonoLabel } from "@/components/portal/patterns";
 
 /* ─── Types ─── */
 
@@ -531,7 +532,7 @@ export function StatistikkClient({
 
       {/* 2-kolonne: Strokes Gained barer + Treningsvolum */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {/* Strokes Gained horisontale barer */}
+        {/* Strokes Gained horisontale barer + SG Ring (v3.1) */}
         <PremiumCard delay={0.15}>
           <div className="mb-5 flex items-center justify-between">
             <div>
@@ -549,6 +550,24 @@ export function StatistikkClient({
               </span>
             )}
           </div>
+
+          {/* SG Ring v3.1 — Night Surface hero */}
+          {aggregates?.avgSgTotal != null &&
+            SG_AREAS.some((a) => (aggregates?.[a.key] ?? null) !== null) && (
+              <NightSurface
+                variant="ambient"
+                className="rounded-xl mb-5 p-6 flex justify-center"
+              >
+                <SGRing
+                  offTee={aggregates?.avgSgOffTheTee ?? 0}
+                  approach={aggregates?.avgSgApproach ?? 0}
+                  short={aggregates?.avgSgAroundTheGreen ?? 0}
+                  putt={aggregates?.avgSgPutting ?? 0}
+                  size="md"
+                />
+              </NightSurface>
+            )}
+
           <div className="space-y-4">
             {SG_AREAS.map((area, i) => (
               <SGBar
@@ -561,7 +580,9 @@ export function StatistikkClient({
           </div>
           {SG_AREAS.every((a) => (aggregates?.[a.key] ?? null) === null) && (
             <div className="flex h-[120px] items-center justify-center text-sm text-grey-400">
-              Ingen SG-data i valgt periode
+              <MonoLabel size="sm" className="text-grey-400">
+                Ingen SG-data i valgt periode
+              </MonoLabel>
             </div>
           )}
         </PremiumCard>

@@ -137,11 +137,24 @@ export const VIEW_REGISTRY: Record<ScreenId, ScreenViews> = {
     views: DEFAULT_VIEWS,
   },
 
-  // Portal — Statistikk
+  // Portal — Statistikk (v3.1 design-canvas: 2 unike views)
   "portal-statistikk": {
     screenId: "portal-statistikk",
     label: "Statistikk",
-    views: DEFAULT_VIEWS,
+    views: [
+      {
+        id: "opt1",
+        label: "Performance Report",
+        icon: "bar-chart-3",
+        description: "SG-radar, horisontale barer, konsistensheatmap, AI-narrativ",
+      },
+      {
+        id: "opt2",
+        label: "Course Hero",
+        icon: "image",
+        description: "Tiltet bane-hero + glass drawer + SG-ring",
+      },
+    ],
   },
 
   // Portal — Mental

@@ -21,6 +21,11 @@ import {
   BookingHoverCardGroup,
   BookingHoverCard,
 } from "@/components/portal/booking/booking-hover-card";
+import {
+  VerticalTimeline,
+  MonoLabel,
+  type TimelineItem,
+} from "@/components/portal/patterns";
 
 // Re-eksporter typer som page.tsx trenger
 export type { BookingViewModel, CancellationRule };
@@ -44,6 +49,36 @@ export function BookingerClient({
   // Splitt: neste booking (hero) + resten
   const nextBooking = upcoming[0] ?? null;
   const restUpcoming = upcoming.slice(1);
+
+  // v3.1: Bygg timeline for kommende 7 dager
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const oneWeekFromNow = new Date(today);
+  oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+
+  const timelineItems: TimelineItem[] = upcoming
+    .filter((b) => {
+      const d = new Date(b.startTime);
+      return d >= today && d <= oneWeekFromNow;
+    })
+    .slice(0, 8)
+    .map((b) => {
+      const d = new Date(b.startTime);
+      const timeStr = `${d.getHours().toString().padStart(2, "0")}:${d
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+      const dayLabel = d.toLocaleDateString("nb-NO", { weekday: "short" });
+      return {
+        id: b.id,
+        time: timeStr,
+        title: b.serviceName,
+        meta: `${dayLabel.toUpperCase()} · ${b.instructorName}`,
+        dotColor: b.id === nextBooking?.id ? "lime" : "sage",
+        active: b.id === nextBooking?.id,
+        href: `/portal/bookinger/${b.id}`,
+      };
+    });
 
   return (
     <div className="space-y-6">
@@ -85,6 +120,26 @@ export function BookingerClient({
 
       {/* ═══ NESTE BOOKING (uthevet) ═══ */}
       {nextBooking && <NextBookingHero booking={nextBooking} />}
+
+      {/* ═══ 7-DAGERS TIDSLINJE (v3.1 — P-06) ═══ */}
+      {timelineItems.length > 0 && (
+        <motion.section
+          variants={fadeInUp}
+          initial="hidden"
+          animate="visible"
+          className="bg-white rounded-xl shadow-card p-6"
+        >
+          <div className="mb-4 flex items-center justify-between">
+            <MonoLabel size="xs" uppercase className="text-grey-400">
+              Neste 7 dager
+            </MonoLabel>
+            <MonoLabel size="xs" className="text-grey-400">
+              {timelineItems.length} planlagt
+            </MonoLabel>
+          </div>
+          <VerticalTimeline items={timelineItems} compact />
+        </motion.section>
+      )}
 
       {/* ═══ AVBESTILLINGSREGLER ═══ */}
       <motion.div variants={fadeInUp} initial="hidden" animate="visible">

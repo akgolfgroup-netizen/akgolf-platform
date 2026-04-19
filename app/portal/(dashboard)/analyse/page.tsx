@@ -17,6 +17,12 @@ import {
 } from "lucide-react";
 import { SubscriptionTier } from "@prisma/client";
 import { hasTierAccess } from "@/lib/portal/rbac";
+import {
+  SGRing,
+  NightSurface,
+  MonoLabel,
+  AIAttribution,
+} from "@/components/portal/patterns";
 
 export default async function AnalysePage() {
   const user = await requirePortalUser();
@@ -205,13 +211,34 @@ export default async function AnalysePage() {
             )}
           </div>
 
-          {/* Strokes Gained Breakdown */}
+          {/* Strokes Gained Breakdown — SG Ring hero (v3.1) */}
           <div className="bg-white rounded-xl shadow-card p-6">
-            <h3 className="mb-5 text-[14px] font-semibold text-portal-text">
-              Strokes Gained
-            </h3>
-            {hasSGData ? (
-              <StrokesGainedBars sgData={sgData} />
+            <div className="mb-5 flex items-center justify-between">
+              <h3 className="text-[14px] font-semibold text-portal-text">
+                Strokes Gained
+              </h3>
+              {hasSGData && (
+                <MonoLabel size="xs" uppercase className="text-portal-muted">
+                  4-ring · Snitt
+                </MonoLabel>
+              )}
+            </div>
+            {hasSGData && sgData ? (
+              <>
+                <NightSurface
+                  variant="ambient"
+                  className="rounded-xl mb-5 p-6 flex justify-center"
+                >
+                  <SGRing
+                    offTee={sgData.sgOffTheTee ?? 0}
+                    approach={sgData.sgApproach ?? 0}
+                    short={sgData.sgAroundTheGreen ?? 0}
+                    putt={sgData.sgPutting ?? 0}
+                    size="md"
+                  />
+                </NightSurface>
+                <StrokesGainedBars sgData={sgData} />
+              </>
             ) : (
               <p className="py-12 text-center text-[13px] text-portal-muted">
                 Ingen Strokes Gained-data ennå. Registrer runder med SG for å se analysen.

@@ -30,12 +30,13 @@ const getActivityLevel = (minutes: number): number => {
   return 4;
 };
 
+// GitHub-style sage palette fra design v3.1 (dagbok.html)
 const ACTIVITY_COLORS = {
-  0: "bg-slate-800",           // Ingen aktivitet
-  1: "bg-[#16A34A]/20",        // 1-30 min
-  2: "bg-[#16A34A]/50",        // 30-60 min
-  3: "bg-[#16A34A]/75",        // 60-90 min
-  4: "bg-[#16A34A]",           // 90+ min
+  0: "bg-[#F0F0EC]",          // Ingen aktivitet
+  1: "bg-[#D5E8DB]",          // 1-30 min
+  2: "bg-[#A5CDB1]",          // 30-60 min
+  3: "bg-[#5B9B72]",          // 60-90 min
+  4: "bg-[#2A7D5A]",          // 90+ min
 };
 
 const ACTIVITY_LABELS = {

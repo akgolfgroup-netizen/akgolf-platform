@@ -1,21 +1,38 @@
 "use client";
 
+/**
+ * PyramidFilter — brukes i treningsplan-v3 SidePanel (dark-theme).
+ *
+ * Design v3.1: Bruker data-viz-farger fra registry (sage, blue, amber, violet, coral)
+ * og JetBrains Mono for nivå-etiketter.
+ *
+ * Merk: Full light-mode-konvertering av hele treningsplan-klienten (matcher plan.html)
+ * er en større refactor som venter på egen fase. Denne komponenten er designet for
+ * å fungere godt i eksisterende dark SidePanel.
+ */
+
 import { PyramidLevel } from "@/lib/portal/golf/ak-formula";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface PyramidFilterProps {
   selectedFilter: string | null;
   onFilterChange: (focus: string | null) => void;
 }
 
-const PYRAMID_CONFIG: { level: PyramidLevel; label: string; color: string }[] = [
-  { level: "FYS", label: "Fysisk", color: "#3B82F6" },
-  { level: "TEK", label: "Teknikk", color: "#16A34A" },
-  { level: "SLAG", label: "Slagtrening", color: "#D4AF37" },
-  { level: "SPILL", label: "Spilltrening", color: "#F97316" },
-  { level: "TURN", label: "Turnering", color: "#EF4444" },
+// Farger matcher AKPyramide-komponenten (v3.1 data-viz)
+const PYRAMID_CONFIG: {
+  level: PyramidLevel;
+  label: string;
+  color: string;
+}[] = [
+  { level: "FYS", label: "Fysisk", color: "var(--color-data-sage)" },
+  { level: "TEK", label: "Teknikk", color: "var(--color-data-blue)" },
+  { level: "SLAG", label: "Slagtrening", color: "var(--color-data-amber)" },
+  { level: "SPILL", label: "Spilltrening", color: "var(--color-data-violet)" },
+  { level: "TURN", label: "Turnering", color: "var(--color-data-coral)" },
 ];
 
-// Hardcoded 60% progress for now
+// TODO: Hent faktisk progress fra server (TrainingLog-aggregering)
 const PROGRESS_PERCENT = 60;
 
 export function PyramidFilter({
@@ -23,18 +40,14 @@ export function PyramidFilter({
   onFilterChange,
 }: PyramidFilterProps) {
   const handleLevelClick = (level: string) => {
-    if (selectedFilter === level) {
-      onFilterChange(null); // Toggle off
-    } else {
-      onFilterChange(level);
-    }
+    onFilterChange(selectedFilter === level ? null : level);
   };
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider">
-        Treningspyramide
-      </h3>
+      <MonoLabel size="xs" uppercase className="text-slate-400 block">
+        ◆ AK-Pyramiden · Uke 17
+      </MonoLabel>
 
       <div className="space-y-2">
         {PYRAMID_CONFIG.map(({ level, label, color }) => {
@@ -49,20 +62,19 @@ export function PyramidFilter({
                 w-full group transition-all duration-200
                 ${isDimmed ? "opacity-40" : "opacity-100"}
               `}
+              aria-pressed={isSelected}
             >
-              {/* Bar container */}
               <div className="relative h-8 rounded-lg overflow-hidden bg-slate-800">
-                {/* Progress bar */}
                 <div
-                  className="absolute inset-y-0 left-0 transition-all duration-300"
+                  className="absolute inset-y-0 left-0 transition-all duration-500"
                   style={{
                     width: `${PROGRESS_PERCENT}%`,
                     backgroundColor: color,
                     opacity: isSelected ? 1 : 0.7,
+                    boxShadow: isSelected ? `0 0 12px ${color}` : "none",
                   }}
                 />
 
-                {/* Hover overlay */}
                 <div
                   className={`
                     absolute inset-0 transition-opacity duration-200
@@ -70,16 +82,15 @@ export function PyramidFilter({
                   `}
                 />
 
-                {/* Label */}
                 <div className="absolute inset-0 flex items-center justify-between px-3">
                   <div className="flex items-center gap-2">
-                    {/* Level badge */}
-                    <span
-                      className="w-6 h-6 rounded flex items-center justify-center text-xs font-bold text-white"
-                      style={{ backgroundColor: color }}
+                    <MonoLabel
+                      size="xs"
+                      className="w-11 text-white font-bold"
+                      uppercase
                     >
                       {level}
-                    </span>
+                    </MonoLabel>
                     <span
                       className={`
                         text-sm font-medium transition-colors
@@ -90,13 +101,11 @@ export function PyramidFilter({
                     </span>
                   </div>
 
-                  {/* Progress indicator */}
-                  <span className="text-xs text-slate-400">
+                  <MonoLabel size="xs" className="text-slate-300">
                     {PROGRESS_PERCENT}%
-                  </span>
+                  </MonoLabel>
                 </div>
 
-                {/* Selection indicator */}
                 {isSelected && (
                   <div
                     className="absolute inset-y-0 right-0 w-1"
@@ -109,7 +118,6 @@ export function PyramidFilter({
         })}
       </div>
 
-      {/* Clear filter button */}
       {selectedFilter && (
         <button
           onClick={() => onFilterChange(null)}

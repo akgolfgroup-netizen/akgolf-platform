@@ -8,6 +8,7 @@ import { LogSessionModal } from "@/components/portal/dagbok/log-session-modal";
 import { StreakCard, StreakData } from "@/components/portal/dagbok/streak-card";
 import { ActivityHeatmap } from "@/components/portal/dagbok/activity-heatmap";
 import { WeeklyStats } from "@/components/portal/dagbok/weekly-stats";
+import { VolumePyramid } from "@/components/portal/dagbok/volume-pyramid";
 import { MonthCalendar } from "@/components/portal/dagbok/month-calendar";
 import { RecentSessionsList } from "@/components/portal/dagbok/recent-sessions-list";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
@@ -298,7 +299,13 @@ export function TrainingDiaryClient({
                 <WeeklyStats sessions={sessionData} />
                 <ActivityHeatmap data={activityData} />
               </div>
-              <RecentSessionsList 
+              <VolumePyramid
+                sessions={sessionData.map((s) => ({
+                  durationMinutes: s.durationMinutes,
+                  focusArea: s.focusArea,
+                }))}
+              />
+              <RecentSessionsList
                 sessions={sessionData}
                 onSelectSession={handleSelectSession}
                 maxItems={20}
