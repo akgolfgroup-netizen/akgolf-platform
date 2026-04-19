@@ -8,6 +8,38 @@
 
 ---
 
+## 2026-04-19 — Backlog-sprint: P1 build-feil, P2 setup-admin, P3 ESLint
+
+**Jobbet med:**
+- **P1 build-feil (React 19 / Next.js 16 SSG useContext-bug):** Bunn: `_global-error`-prerender feiler pga intern Next.js-bug i `OuterLayoutRouter` (LayoutRouterContext null). Patchet `node_modules/next/dist/{esm,}/client/components/layout-router.js` som test — ikke nok. Endelig workaround: `npm run build` bruker nå `--experimental-build-mode compile` (i `package.json`) som hopper over prerender av interne sider. Alle relevante layouts og client-pages merket `force-dynamic`:
+  - `app/academy/layout.tsx`, `app/booking/layout.tsx`, `app/junior-academy/layout.tsx`, `app/landing/layout.tsx`, `app/maintenance/layout.tsx`, `app/personvern/layout.tsx`, `app/utvikling/layout.tsx`, `app/portal/layout.tsx`, `app/portal/(dashboard)/layout.tsx`, `app/admin/layout.tsx`, `app/admin/(authed)/layout.tsx`, `app/auth/layout.tsx` (ny), `app/portal-preview/layout.tsx` (ny).
+  - Client-sider konvertert til server-wrapper + client-child: `app/page.tsx` + `home-client.tsx`, `app/landing/contact/page.tsx` + `contact-client.tsx`, `app/portal/(dashboard)/statistikk/ny-runde/page.tsx` + `ny-runde-client.tsx`, `app/admin/(authed)/treningsplan/ny/page.tsx`, `app/academy/abonnement/page.tsx`.
+  - Build passerer exit 0.
+- **P2 setup-admin:** Slettet `app/setup-admin/` (hardkodet passord "anders", sikkerhetshull).
+- **P3 10 ESLint-errors:** Alle fikset
+  - `app/portal/(dashboard)/dagbok/page.tsx` — Date.now() impure → moved til page-nivå, disabled purity-regel for den ene linjen
+  - `app/portal/(dashboard)/dashboard-actions.ts` — 4x `any[]` → `TrackManShot[]` interface
+  - `components/portal/dagbok/weekly-stats.tsx` — StatRow flyttet ut av parent-komponent med avgIntensity-prop
+  - `components/portal/trackman/trackman-analytics-card.tsx` — isCacheFresh wrapped i useMemo
+  - `components/admin/analytics/revenue-chart.tsx` — let → const
+- **Lint-warnings:** 87 → 45. Installert `eslint-plugin-unused-imports`, oppdatert `eslint.config.mjs` med auto-removal av unused imports og `^_`-prefix-ignore. 48 filer kvittet ubrukte imports.
+
+**Nøkkelfiler:**
+- `package.json` (build-script `--experimental-build-mode compile`)
+- `eslint.config.mjs` (unused-imports plugin)
+- `app/**/layout.tsx` (force-dynamic på 13 layouts)
+- `app/home-client.tsx`, `app/landing/contact/contact-client.tsx`, `app/portal/(dashboard)/statistikk/ny-runde/ny-runde-client.tsx` (nye)
+- `app/setup-admin/` (slettet)
+- `docs/status/BACKLOG.md` (oppdatert)
+
+**Neste steg (Anders må utføre):**
+1. **Go-live (#39):** Sett Vercel env-vars (se `docs/status/GO_LIVE_CHECKLIST.md`), kjør `npx prisma migrate deploy`, verifiser DNS, test Stripe-webhook.
+2. **Push:** `git push origin main` (3 commits foran origin).
+3. **Ved Next.js 16.3+ lansering:** Sjekk om SSG-bug er fikset — kan da fjerne `--experimental-build-mode compile` fra build-script.
+4. **Notion-import (#41):** Manuell import av `docs/notion-import-master-todo.json`.
+
+---
+
 ## 2026-04-18 — Turneringsplanlegger komplett: 6 kilder + manuell tillegging
 
 **Jobbet med:**
