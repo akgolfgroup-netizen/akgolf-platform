@@ -11,6 +11,11 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
 import { AddTournamentModal } from "@/components/portal/turneringer/add-tournament-modal";
 import { registerForTournament, type PortalTournament, type TournamentStats } from "./actions";
+import {
+  VerticalTimeline,
+  MonoLabel,
+  type TimelineItem,
+} from "@/components/portal/patterns";
 
 // ── Helpers ─────────────────────────────────────────────────
 
@@ -69,6 +74,26 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
   const registered = tournaments.filter((t) => t.isRegistered);
 
+  // v3.1 P-06: Timeline for neste 6 turneringer
+  const nextTimelineItems: TimelineItem[] = tournaments
+    .slice(0, 6)
+    .map((t) => {
+      const d = new Date(t.startDate);
+      const isoDate = `${d.getDate().toString().padStart(2, "0")}.${(d.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}`;
+      const isMajor = t.level?.toLowerCase().includes("major") || t.level?.toLowerCase().includes("nasjonal");
+      return {
+        id: t.id,
+        time: isoDate,
+        title: t.name,
+        meta: `${t.level?.toUpperCase() ?? "LOKAL"} · ${t.location ?? t.course ?? "TBD"}`,
+        dotColor: isMajor ? "lime" : t.isRegistered ? "sage" : "muted",
+        active: t.isRegistered,
+        href: t.externalUrl ?? undefined,
+      };
+    });
+
   const tabs: { key: TabKey; label: string; count: number }[] = [
     { key: "kommende", label: "Kommende", count: stats.upcoming },
     { key: "pameldt", label: "Påmeldt", count: stats.registered },
@@ -88,9 +113,9 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {/* ═══ HEADER ═══ */}
       <div className="mb-8 flex items-start justify-between gap-4">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-400">
+          <MonoLabel size="xs" uppercase className="text-grey-400 block">
             Sesong 2026
-          </p>
+          </MonoLabel>
           <h1 className="mt-1 text-[28px] font-bold tracking-tight text-black">
             Turneringsplan
           </h1>
@@ -150,6 +175,21 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
           </div>
         </PremiumCard>
       </div>
+
+      {/* ═══ NESTE TURNERINGER (v3.1 timeline) ═══ */}
+      {nextTimelineItems.length > 0 && (
+        <div className="mb-6 rounded-xl bg-white shadow-card p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <MonoLabel size="xs" uppercase className="text-grey-400">
+              Neste turneringer
+            </MonoLabel>
+            <MonoLabel size="xs" className="text-grey-400">
+              {nextTimelineItems.length} av {tournaments.length}
+            </MonoLabel>
+          </div>
+          <VerticalTimeline items={nextTimelineItems} compact />
+        </div>
+      )}
 
       {/* ═══ TABS ═══ */}
       <div className="mb-5 flex gap-1.5 rounded-[10px] bg-grey-50 p-[3px]">
