@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { format, isSameDay, startOfDay } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
@@ -32,23 +31,19 @@ const TYPE_LABEL: Record<CalendarEventType, string> = {
 };
 
 export function CalendarWeekView({ events, weekStart }: CalendarWeekViewProps) {
-  const days = useMemo(() => {
-    const base = startOfDay(weekStart);
-    return Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(base);
-      d.setDate(base.getDate() + i);
-      return d;
-    });
-  }, [weekStart]);
+  const base = startOfDay(weekStart);
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(base);
+    d.setDate(base.getDate() + i);
+    return d;
+  });
 
   const now = new Date();
 
-  const eventsByDay = useMemo(() => {
-    return days.map((day) => ({
-      day,
-      items: events.filter((e) => isSameDay(e.startDate, day)),
-    }));
-  }, [days, events]);
+  const eventsByDay = days.map((day) => ({
+    day,
+    items: events.filter((e) => isSameDay(e.startDate, day)),
+  }));
 
   const hasAny = eventsByDay.some((g) => g.items.length > 0);
 
