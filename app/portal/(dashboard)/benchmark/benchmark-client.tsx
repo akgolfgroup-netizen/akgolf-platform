@@ -44,6 +44,11 @@ import type {
   ProComparison,
 } from "./actions";
 import { getProPlayers, getProComparison } from "./actions";
+import {
+  MonoLabel,
+  NightSurface,
+  SGRing,
+} from "@/components/portal/patterns";
 
 // ── Design tokens as hex (for Recharts which doesn't støtter CSS vars) ──
 // Verdier speiler brand guide V2.0-tokens i globals.css.
@@ -329,16 +334,38 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
     <div className="space-y-6">
       {/* ── Header ── */}
       <header>
-        <h1 className="text-2xl font-bold text-black">Benchmarking</h1>
+        <MonoLabel size="xs" uppercase className="mb-2 block text-grey-400">
+          Benchmarking
+        </MonoLabel>
+        <h1 className="text-2xl font-bold text-black">Sammenlign deg med touren</h1>
         <p className="text-grey-400 mt-1">
-          Sammenlign deg med PGA Tour og proffspillere
+          PGA Tour og proffspillere
           {profile.roundCount > 0 && (
-            <span className="ml-2 text-grey-400">
-              Basert på {profile.roundCount} runder
-            </span>
+            <MonoLabel size="xs" className="ml-2 text-grey-400">
+              · {profile.roundCount} runder
+            </MonoLabel>
           )}
         </p>
       </header>
+
+      {/* ── SG Ring Hero (v3.1) ── */}
+      <NightSurface variant="ambient" className="rounded-2xl p-8">
+        <div className="mb-6 flex items-center gap-2">
+          <span className="h-px w-6 bg-white/40" />
+          <MonoLabel size="xs" uppercase className="text-white/60">
+            Din SG-profil · siste {profile.roundCount}r
+          </MonoLabel>
+        </div>
+        <div className="flex justify-center">
+          <SGRing
+            size="lg"
+            offTee={profile.sgOffTheTee ?? 0}
+            approach={profile.sgApproach ?? 0}
+            short={profile.sgAroundTheGreen ?? 0}
+            putt={profile.sgPutting ?? 0}
+          />
+        </div>
+      </NightSurface>
 
       {/* ── Row 1: Tour Percentile + A-K Category ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -483,9 +510,9 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                 key={c.label}
                 className="p-3 rounded-xl border border-grey-200 bg-white"
               >
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 mb-1">
+                <MonoLabel size="xs" uppercase className="mb-1 block text-grey-400">
                   {c.label}
-                </p>
+                </MonoLabel>
                 <div className="flex items-baseline gap-2">
                   {c.category ? (
                     <>
@@ -501,14 +528,16 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                   )}
                 </div>
                 {c.userVal !== null && (
-                  <p className="text-xs text-grey-400 mt-1">
-                    SG: {c.userVal.toFixed(2)}
+                  <div className="mt-1 flex items-center gap-1.5">
+                    <MonoLabel size="xs" className="text-grey-500">
+                      SG {c.userVal.toFixed(2)}
+                    </MonoLabel>
                     {c.estimatedHcp !== null && (
-                      <span className="ml-1.5">
+                      <MonoLabel size="xs" className="text-grey-400">
                         · HCP {c.estimatedHcp.toFixed(1)}
-                      </span>
+                      </MonoLabel>
                     )}
-                  </p>
+                  </div>
                 )}
               </div>
             ))}

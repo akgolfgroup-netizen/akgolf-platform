@@ -31,7 +31,7 @@ import {
 import type { TrackManOverview, TrackManAnalyticsSummary } from "./actions";
 import { ShotDispersionChart } from "@/components/portal/trackman/shot-dispersion-chart";
 import { TrackManAnalyticsCard } from "@/components/portal/trackman/trackman-analytics-card";
-import { MonoLabel } from "@/components/portal/patterns";
+import { MonoLabel, NightSurface } from "@/components/portal/patterns";
 
 // ── Typer ────────────────────────────────────────────────
 
@@ -311,6 +311,9 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
+          <MonoLabel size="xs" uppercase className="mb-2 block text-grey-400">
+            TrackMan Lab
+          </MonoLabel>
           <h1 className="text-2xl font-bold text-black">TrackMan Data</h1>
           <p className="text-grey-400 mt-1">
             Spredning, teknikk-profil og klubb-analyse
@@ -344,35 +347,39 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
         />
       )}
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          label="Sesjoner"
-          value={hasData ? (data.totalSessions || sessions.length).toLocaleString("nb-NO") : "0"}
-          icon={<Activity className="w-6 h-6 text-black" />}
-          iconBg="bg-black/10"
-        />
-        <StatCard
-          label="Slag totalt"
-          value={hasData
-            ? (data.totalShots || sessions.reduce((a, s) => a + s.totalShots, 0)).toLocaleString("nb-NO")
-            : "0"}
-          icon={<Target className="w-6 h-6 text-info" />}
-          iconBg="bg-info-light"
-        />
-        <StatCard
-          label="Beste carry"
-          value={hasData ? `${data.bestCarry}m` : "–"}
-          icon={<TrendingUp className="w-6 h-6 text-warning" />}
-          iconBg="bg-warning-light"
-        />
-        <StatCard
-          label="Snitt carry"
-          value={hasData ? `${data.avgCarry}m` : "–"}
-          icon={<Activity className="w-6 h-6 text-success" />}
-          iconBg="bg-success-light"
-        />
-      </div>
+      {/* Hero — NightSurface med nøkkeltall */}
+      <NightSurface variant="ambient" className="rounded-2xl p-8">
+        <div className="mb-6 flex items-center gap-2">
+          <span className="h-px w-6 bg-white/40" />
+          <MonoLabel size="xs" uppercase className="text-white/60">
+            Sesjonsoversikt · siste 30 dager
+          </MonoLabel>
+        </div>
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+          <NightStatCell
+            label="Sesjoner"
+            value={hasData ? (data.totalSessions || sessions.length).toLocaleString("nb-NO") : "0"}
+            icon={<Activity className="h-4 w-4" />}
+          />
+          <NightStatCell
+            label="Slag"
+            value={hasData
+              ? (data.totalShots || sessions.reduce((a, s) => a + s.totalShots, 0)).toLocaleString("nb-NO")
+              : "0"}
+            icon={<Target className="h-4 w-4" />}
+          />
+          <NightStatCell
+            label="Beste carry"
+            value={hasData ? `${data.bestCarry}m` : "–"}
+            icon={<TrendingUp className="h-4 w-4" />}
+          />
+          <NightStatCell
+            label="Snitt carry"
+            value={hasData ? `${data.avgCarry}m` : "–"}
+            icon={<Activity className="h-4 w-4" />}
+          />
+        </div>
+      </NightSurface>
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -473,20 +480,30 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                     className="border-t border-grey-200/30 hover:bg-grey-50/50"
                   >
                     <td className="p-4 font-medium text-black">{club.club}</td>
-                    <td className="p-4 text-right text-black">
-                      {club.avgSpeed ? `${club.avgSpeed} mph` : "\u2013"}
+                    <td className="p-4 text-right">
+                      <MonoLabel size="md" className="text-black">
+                        {club.avgSpeed ? `${club.avgSpeed} mph` : "\u2013"}
+                      </MonoLabel>
                     </td>
-                    <td className="p-4 text-right text-black">
-                      {club.avgBallSpeed ? `${club.avgBallSpeed} mph` : "\u2013"}
+                    <td className="p-4 text-right">
+                      <MonoLabel size="md" className="text-black">
+                        {club.avgBallSpeed ? `${club.avgBallSpeed} mph` : "\u2013"}
+                      </MonoLabel>
                     </td>
-                    <td className="p-4 text-right text-black">
-                      {club.avgSpin ? `${Math.round(club.avgSpin)} rpm` : "\u2013"}
+                    <td className="p-4 text-right">
+                      <MonoLabel size="md" className="text-black">
+                        {club.avgSpin ? `${Math.round(club.avgSpin)} rpm` : "\u2013"}
+                      </MonoLabel>
                     </td>
-                    <td className="p-4 text-right text-black">
-                      {club.avgLaunch ? `${club.avgLaunch}\u00B0` : "\u2013"}
+                    <td className="p-4 text-right">
+                      <MonoLabel size="md" className="text-black">
+                        {club.avgLaunch ? `${club.avgLaunch}\u00B0` : "\u2013"}
+                      </MonoLabel>
                     </td>
-                    <td className="p-4 text-right font-semibold text-black">
-                      {club.avgCarry}m
+                    <td className="p-4 text-right">
+                      <MonoLabel size="md" className="font-semibold text-black">
+                        {club.avgCarry}m
+                      </MonoLabel>
                     </td>
                   </tr>
                 ))}
@@ -815,32 +832,26 @@ function UploadModal({
   );
 }
 
-// ── StatCard ─────────────────────────────────────────────
+// ── NightStatCell ────────────────────────────────────────
 
-function StatCard({
+function NightStatCell({
   label,
   value,
   icon,
-  iconBg,
 }: {
   label: string;
   value: string;
   icon: React.ReactNode;
-  iconBg: string;
 }) {
   return (
-    <div className="bg-white rounded-2xl p-5 border border-grey-200/50">
-      <div className="flex items-center justify-between">
-        <div>
-          <MonoLabel size="xs" uppercase className="text-grey-400 block">
-            {label}
-          </MonoLabel>
-          <p className="text-3xl font-bold text-black mt-1 tabular-nums">{value}</p>
-        </div>
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconBg}`}>
-          {icon}
-        </div>
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-center gap-2 text-white/50">
+        {icon}
+        <MonoLabel size="xs" uppercase>
+          {label}
+        </MonoLabel>
       </div>
+      <p className="text-3xl font-bold tabular-nums tracking-tight text-white">{value}</p>
     </div>
   );
 }
