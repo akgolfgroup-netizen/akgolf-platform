@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, PanelLeftClose, PanelLeft } from "lucide-react";
+import { Menu, PanelLeftClose, PanelLeft } from "lucide-react";
 import { ChatInterface, ContextPanel, ChatHistory, type ChatSession, type Message } from "@/components/portal/ai-coach";
 import type { ChatContext } from "./actions";
 

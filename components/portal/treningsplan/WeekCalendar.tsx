@@ -10,7 +10,6 @@ import {
   DAY_NAMES,
   TIME_CONFIG,
   calculatePositionFromTime,
-  calculateHeightFromDuration,
   groupSessionsByDay,
 } from "./useDragAndDrop";
 

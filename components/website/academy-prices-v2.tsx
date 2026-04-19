@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Check, ArrowRight, Bell } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { COACHING_PACKAGES, FLEX_PACKAGES } from "@/lib/website-constants";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import {

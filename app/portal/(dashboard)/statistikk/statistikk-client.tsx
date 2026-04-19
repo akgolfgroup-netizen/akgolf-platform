@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Plus, Lightbulb, BarChart3, Zap, Sparkles } from "lucide-react";
+import { Plus, BarChart3, Zap, Sparkles } from "lucide-react";
 import {
   PremiumStatCard,
   fadeInUp,

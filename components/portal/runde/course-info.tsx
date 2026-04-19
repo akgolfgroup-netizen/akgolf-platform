@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Flag, Ruler, TrendingUp, Trophy, AlertCircle } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";

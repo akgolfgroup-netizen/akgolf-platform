@@ -487,7 +487,7 @@ export function isValidView(screenId: ScreenId, viewId: string): viewId is ViewI
 /**
  * Henter default view for en skjerm (alltid opt1 som fallback).
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 export function getDefaultViewId(_screenId: ScreenId): ViewId {
   return "opt1";
 }

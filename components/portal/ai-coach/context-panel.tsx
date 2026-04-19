@@ -9,7 +9,6 @@ import {
   Clock,
   MapPin
 } from "lucide-react";
-import { motion } from "framer-motion";
 import type { ChatContext } from "@/app/portal/(dashboard)/ai-coach/actions";
 
 interface ContextPanelProps {

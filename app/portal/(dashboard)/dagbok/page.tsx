@@ -29,6 +29,8 @@ export const dynamic = "force-dynamic";
 export default async function DagbokPage() {
   await requirePortalUser();
 
+  // eslint-disable-next-line react-hooks/purity
+  const nowMs = Date.now();
   const [logs, loggedSessionIds, lastSession, activePlan] = await Promise.all([
     getTrainingLogs(),
     getLoggedSessionIds(),
@@ -40,7 +42,7 @@ export default async function DagbokPage() {
   let planProgress: { weekTitle: string; loggedCount: number; plannedCount: number } | null = null;
   if (activePlan) {
     const weeks = (activePlan.TrainingPlanWeek as unknown as { weekStart: string; focus: string | null; TrainingPlanSession: { id: string }[] }[]) || [];
-    const now = new Date();
+    const now = new Date(nowMs);
     const currentWeek = weeks.find((w) =>
       isWithinInterval(now, {
         start: startOfISOWeek(new Date(w.weekStart)),
@@ -61,15 +63,15 @@ export default async function DagbokPage() {
 
   // Calculate streak data
   const calculateStreak = () => {
-    if (logs.length === 0) return { current: 0, longest: 0, lastDate: new Date(), freezes: 1 };
-    
+    if (logs.length === 0) return { current: 0, longest: 0, lastDate: new Date(nowMs), freezes: 1 };
+
     const logDates = new Set(logs.map(l => new Date(l.date).toISOString().split("T")[0]));
     const sortedDates = Array.from(logDates).sort();
-    
+
     // Calculate current streak
     let currentStreak = 0;
-    const today = new Date().toISOString().split("T")[0];
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+    const today = new Date(nowMs).toISOString().split("T")[0];
+    const yesterday = new Date(nowMs - 86400000).toISOString().split("T")[0];
     
     let checkDate = logDates.has(today) ? today : yesterday;
     if (logDates.has(checkDate)) {

@@ -27,7 +27,6 @@ import {
   applyOverlapFactor,
   regularizeAllocation,
   levelGroupFromCategory,
-  getHoursPerTenthSg,
   getTableVersion,
   type SgCategory,
 } from "./hours-per-sg-table";

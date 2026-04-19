@@ -5,7 +5,6 @@ import {
   ChevronRight,
   Calendar as CalendarIcon,
   Grid3X3,
-  List,
   Filter,
   Plus,
   Loader2,

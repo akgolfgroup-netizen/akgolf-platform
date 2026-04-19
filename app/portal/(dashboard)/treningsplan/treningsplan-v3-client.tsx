@@ -11,9 +11,7 @@ import {
   WeekCalendar,
   WeekCalendarCompact,
   SessionCard,
-  DragOverlayWrapper,
   useDragAndDrop,
-  groupSessionsByDay,
   DAY_NAMES,
   SidePanel,
   SessionDetailModal,
@@ -26,7 +24,6 @@ import {
 import {
   updateSessionTime,
   deleteSession,
-  moveSessionToDay,
 } from "./actions";
 
 // Konvertering fra V2Event til TrainingSession

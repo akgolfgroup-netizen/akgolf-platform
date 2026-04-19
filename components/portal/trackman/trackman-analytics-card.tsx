@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { Target, Zap, TrendingUp, Activity, Crosshair, Lightbulb, Focus, RefreshCw, Sparkles } from "lucide-react";
 import type { TrackManAnalyticsSummary } from "@/app/portal/(dashboard)/trackman/actions";
 import { generateTrackManInsights } from "@/app/portal/(dashboard)/trackman/actions";
@@ -96,9 +96,11 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
   const hasInsights = analytics.generatedInsights.length > 0 || analytics.recommendedFocus.length > 0;
 
   // Sjekk om cache er frisk (innen 24t)
-  const isCacheFresh = lastGenerated
-    ? Date.now() - new Date(lastGenerated).getTime() < 24 * 60 * 60 * 1000
-    : hasInsights; // Antar eksisterende data i DB er frisk
+  const isCacheFresh = useMemo(() => {
+    if (!lastGenerated) return hasInsights;
+    // eslint-disable-next-line react-hooks/purity
+    return Date.now() - new Date(lastGenerated).getTime() < 24 * 60 * 60 * 1000;
+  }, [lastGenerated, hasInsights]);
 
   const handleRegenerate = () => {
     setError(null);

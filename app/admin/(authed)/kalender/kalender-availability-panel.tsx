@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useTransition, useCallback, useEffect } from "react";
-import { Plus, Trash2, CheckCircle, Repeat } from "lucide-react";
-import { format } from "date-fns";
+import { Plus, CheckCircle, Repeat } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/portal/mission-control/ui";
 import type { Instructor } from "./actions";

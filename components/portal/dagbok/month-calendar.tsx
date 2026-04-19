@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";

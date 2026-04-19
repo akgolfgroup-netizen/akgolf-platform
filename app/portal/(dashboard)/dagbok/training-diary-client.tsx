@@ -13,7 +13,6 @@ import { RecentSessionsList } from "@/components/portal/dagbok/recent-sessions-l
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 interface TrainingLogEntry {
   id: string;

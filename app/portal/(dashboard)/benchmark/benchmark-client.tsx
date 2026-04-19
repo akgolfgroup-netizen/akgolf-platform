@@ -36,7 +36,6 @@ import {
 import { SG_BENCHMARKS } from "@/lib/portal/golf/sg-benchmarks";
 import {
   sgToCategory,
-  sgToHandicap,
   sgToHandicapCategory,
 } from "@/lib/portal/golf/sg-to-handicap";
 import type {

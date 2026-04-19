@@ -1,7 +1,6 @@
 "use client";
 
-import { format, isSameMonth, isSameDay, addDays } from "date-fns";
-import { nb } from "date-fns/locale";
+import { format, isSameMonth, isSameDay } from "date-fns";
 import { cn } from "@/lib/portal/utils/cn";
 import type { CalendarBooking } from "./actions";
 import { formatTime, statusCellStyles } from "./kalender-utils";

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { CalendarPlus, Clock, MapPin } from "lucide-react";
+import { CalendarPlus, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { colors } from "@/lib/design-tokens";
 

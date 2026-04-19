@@ -22,6 +22,72 @@ interface WeeklyStatsProps {
 
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
+type StatRowProps = {
+  icon: React.ElementType;
+  label: string;
+  value: string | number;
+  unit?: string;
+  change?: number;
+  color?: "default" | "intensity";
+  avgIntensity: number;
+};
+
+function StatRow({
+  icon: Icon,
+  label,
+  value,
+  unit = "",
+  change,
+  color = "default",
+  avgIntensity,
+}: StatRowProps) {
+  return (
+    <div className="flex items-center justify-between py-3 border-b border-grey-100 last:border-0">
+      <div className="flex items-center gap-3">
+        <div className={cn(
+          "w-10 h-10 rounded-xl flex items-center justify-center",
+          color === "intensity" && avgIntensity >= 7
+            ? "bg-orange-100 text-orange-600"
+            : color === "intensity" && avgIntensity >= 4
+              ? "bg-green-100 text-green-600"
+              : "bg-grey-50 text-grey-400"
+        )}>
+          <Icon className="w-5 h-5" />
+        </div>
+        <div>
+          <p className="text-xs text-grey-400">{label}</p>
+          <p className="text-lg font-semibold text-black tabular-nums">
+            {value}
+            <span className="text-sm font-normal text-grey-400 ml-1">{unit}</span>
+          </p>
+        </div>
+      </div>
+
+      {change !== undefined && (
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          className={cn(
+            "flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full",
+            change > 0
+              ? "bg-green-100 text-green-700"
+              : change < 0
+                ? "bg-red-100 text-red-700"
+                : "bg-grey-100 text-grey-500"
+          )}
+        >
+          {change > 0 ? (
+            <TrendingUp className="w-3 h-3" />
+          ) : change < 0 ? (
+            <TrendingDown className="w-3 h-3" />
+          ) : null}
+          {change > 0 ? "+" : ""}{change}
+        </motion.div>
+      )}
+    </div>
+  );
+}
+
 export function WeeklyStats({ sessions }: WeeklyStatsProps) {
   const stats = useMemo(() => {
     const now = new Date();
@@ -70,66 +136,6 @@ export function WeeklyStats({ sessions }: WeeklyStatsProps) {
     };
   }, [sessions]);
 
-  const StatRow = ({ 
-    icon: Icon, 
-    label, 
-    value, 
-    unit = "", 
-    change, 
-    color = "default" 
-  }: { 
-    icon: React.ElementType;
-    label: string;
-    value: string | number;
-    unit?: string;
-    change?: number;
-    color?: "default" | "intensity";
-  }) => (
-    <div className="flex items-center justify-between py-3 border-b border-grey-100 last:border-0">
-      <div className="flex items-center gap-3">
-        <div className={cn(
-          "w-10 h-10 rounded-xl flex items-center justify-center",
-          color === "intensity" && stats.avgIntensity >= 7 
-            ? "bg-orange-100 text-orange-600"
-            : color === "intensity" && stats.avgIntensity >= 4
-              ? "bg-green-100 text-green-600"
-              : "bg-grey-50 text-grey-400"
-        )}>
-          <Icon className="w-5 h-5" />
-        </div>
-        <div>
-          <p className="text-xs text-grey-400">{label}</p>
-          <p className="text-lg font-semibold text-black tabular-nums">
-            {value}
-            <span className="text-sm font-normal text-grey-400 ml-1">{unit}</span>
-          </p>
-        </div>
-      </div>
-      
-      {change !== undefined && (
-        <motion.div 
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          className={cn(
-            "flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full",
-            change > 0 
-              ? "bg-green-100 text-green-700" 
-              : change < 0 
-                ? "bg-red-100 text-red-700"
-                : "bg-grey-100 text-grey-500"
-          )}
-        >
-          {change > 0 ? (
-            <TrendingUp className="w-3 h-3" />
-          ) : change < 0 ? (
-            <TrendingDown className="w-3 h-3" />
-          ) : null}
-          {change > 0 ? "+" : ""}{change}
-        </motion.div>
-      )}
-    </div>
-  );
-
   return (
     <PremiumCard padding="lg">
       <div className="flex items-start justify-between mb-4">
@@ -150,22 +156,25 @@ export function WeeklyStats({ sessions }: WeeklyStatsProps) {
           label="Antall økter"
           value={stats.count}
           change={stats.countChange}
+          avgIntensity={stats.avgIntensity}
         />
-        
+
         <StatRow
           icon={Clock}
           label="Total tid"
           value={Math.round(stats.totalMinutes / 60 * 10) / 10}
           unit="timer"
           change={Math.round(stats.minutesChange / 60 * 10) / 10}
+          avgIntensity={stats.avgIntensity}
         />
-        
+
         <StatRow
           icon={Target}
           label="Gjennomsnittlig intensitet"
           value={stats.avgIntensity > 0 ? stats.avgIntensity.toFixed(1) : "–"}
           unit="/10"
           color="intensity"
+          avgIntensity={stats.avgIntensity}
         />
       </div>
 

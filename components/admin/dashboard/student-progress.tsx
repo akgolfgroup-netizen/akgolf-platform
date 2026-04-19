@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { TrendingUp, TrendingDown, AlertCircle, ChevronRight, User } from "lucide-react";
+import { TrendingUp, TrendingDown, AlertCircle, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { AdminLineChart } from "@/components/portal/mission-control/ui/charts/AdminLineChart";
 import type { AdminLineChartDatum } from "@/components/portal/mission-control/ui/charts/AdminLineChart";

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Gauge, AlertTriangle, Clock, Users, Settings2 } from "lucide-react";
+import { Gauge, AlertTriangle, Clock, Settings2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";

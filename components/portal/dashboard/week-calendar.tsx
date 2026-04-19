@@ -1,6 +1,5 @@
 "use client";
 
-import { colors } from "@/lib/design-tokens";
 
 interface WeekDay {
   dayLabel: string;

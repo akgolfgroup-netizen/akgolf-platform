@@ -2,7 +2,6 @@
 
 import { useCallback, useState } from "react";
 import {
-  DndContext,
   type DragEndEvent,
   type DragOverEvent,
   type DragStartEvent,

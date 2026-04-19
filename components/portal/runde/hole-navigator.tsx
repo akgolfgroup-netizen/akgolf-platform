@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Flag } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface HoleNavigatorProps {

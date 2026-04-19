@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Loader2, Save, Trash2, Dumbbell, Clock, Target, Star } from "lucide-react";
+import { X, Loader2, Save, Trash2, Dumbbell, Target } from "lucide-react";
 import { logSession, updateTrainingLog, deleteTrainingLog } from "@/app/portal/(dashboard)/dagbok/actions";
 import { cn } from "@/lib/utils";
 

@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { format, subDays, startOfWeek, addDays, isSameDay } from "date-fns";
+import { format, subDays, startOfWeek, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";

@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { Clock, Plus, Trash2, CalendarDays } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 

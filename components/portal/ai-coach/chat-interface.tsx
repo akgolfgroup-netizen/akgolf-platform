@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Send, Loader2, Square, Bot } from "lucide-react";
+import { Send, Square, Bot } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageBubble } from "./message-bubble";
 import { QuickQuestions } from "./quick-questions";

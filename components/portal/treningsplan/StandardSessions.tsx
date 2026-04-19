@@ -7,7 +7,6 @@ import {
   Trophy,
   Club,
   Activity,
-  BarChart3,
   Clock,
   Plus,
   GripVertical,

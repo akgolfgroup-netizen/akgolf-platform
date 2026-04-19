@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
-import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { checkRateLimit, getClientIp } from "@/lib/portal/rate-limit";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;

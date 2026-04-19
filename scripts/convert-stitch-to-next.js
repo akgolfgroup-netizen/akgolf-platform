@@ -9,7 +9,7 @@ import path from 'path';
 const STITCH_DIR = '/Users/anderskristiansen/Downloads/stitch_heritage_grid_design_system';
 const OUTPUT_DIR = '/Users/anderskristiansen/Developer/akgolf/akgolf-platform/app/stitch-screens';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 const ICON_MAPPING = {
   'arrow_forward': 'ArrowRight',
   'arrow_back': 'ArrowLeft',

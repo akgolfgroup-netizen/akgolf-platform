@@ -10,7 +10,7 @@
  * - Webhook-håndtering (inkludert idempotency)
  */
 
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { prisma } from "@/lib/portal/prisma";
 import { nanoid } from "nanoid";
 import { addDays, addHours, subHours } from "date-fns";

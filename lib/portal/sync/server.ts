@@ -103,7 +103,7 @@ export async function emitSyncEvent(options: EmitSyncEventOptions) {
  * Broadcaster et event til alle brukere
  */
 export async function broadcastSyncEvent({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   excludeUserIds: _excludeUserIds = [],
   ...options
 }: BroadcastOptions) {

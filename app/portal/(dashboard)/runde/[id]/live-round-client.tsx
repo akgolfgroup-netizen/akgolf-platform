@@ -3,16 +3,10 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
-  Check,
   Minus,
   Plus,
-  Flag,
-  Target,
   Circle,
   Timer,
-  MapPin,
-  TrendingUp,
-  Trophy,
 } from "lucide-react";
 import { saveHoleResult, completeRound } from "../actions";
 import { HoleNavigator } from "@/components/portal/runde/hole-navigator";

@@ -5,7 +5,7 @@
 
 // SyncEventType and SyncEventStatus are not in Prisma schema — define locally
 type SyncEventType = string;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 type SyncEventStatus = string;
 
 // ════════════════════════════════════════════════════════════

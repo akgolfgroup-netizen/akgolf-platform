@@ -8,7 +8,7 @@
  *   npm run test -- tests/smoke/critical-paths.test.ts
  */
 
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect } from "vitest";
 
 const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3000";
 const isMaintenanceMode = process.env.MAINTENANCE_MODE === "true";

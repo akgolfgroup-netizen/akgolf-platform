@@ -12,6 +12,13 @@ import {
 } from "date-fns";
 import { nb } from "date-fns/locale";
 
+interface TrackManShot {
+  club?: string;
+  clubSpeed?: number;
+  ballSpeed?: number;
+  carry?: number;
+}
+
 export async function getDashboardStats(userId: string) {
   const thirtyDaysAgo = subDays(new Date(), 30);
   const supabase = await createServerSupabase();
@@ -265,7 +272,7 @@ export async function getTrackManData(userId: string): Promise<TrackManData | nu
   }
 
   const lastSession = sessions[0];
-  const shots = (lastSession.shots as any[]) || [];
+  const shots = (lastSession.shots as TrackManShot[]) || [];
   const driverShots = shots.filter((s) => s.club === "Driver");
 
   // Beregn gjennomsnitt for siste sesjon
@@ -276,21 +283,21 @@ export async function getTrackManData(userId: string): Promise<TrackManData | nu
   // Hent trends fra siste 5 sesjoner
   const trends = {
     clubSpeed: sessions.map((s) => {
-      const sShots = (s.shots as any[]) || [];
+      const sShots = (s.shots as TrackManShot[]) || [];
       const drivers = sShots.filter((shot) => shot.club === "Driver");
       return drivers.length > 0
         ? drivers.reduce((sum, shot) => sum + (shot.clubSpeed || 0), 0) / drivers.length
         : 0;
     }).reverse(),
     ballSpeed: sessions.map((s) => {
-      const sShots = (s.shots as any[]) || [];
+      const sShots = (s.shots as TrackManShot[]) || [];
       const drivers = sShots.filter((shot) => shot.club === "Driver");
       return drivers.length > 0
         ? drivers.reduce((sum, shot) => sum + (shot.ballSpeed || 0), 0) / drivers.length
         : 0;
     }).reverse(),
     carry: sessions.map((s) => {
-      const sShots = (s.shots as any[]) || [];
+      const sShots = (s.shots as TrackManShot[]) || [];
       const drivers = sShots.filter((shot) => shot.club === "Driver");
       return drivers.length > 0
         ? drivers.reduce((sum, shot) => sum + (shot.carry || 0), 0) / drivers.length

@@ -6,8 +6,7 @@ import {
   Plus, 
   Clock, 
   ChevronRight,
-  Trash2,
-  MoreHorizontal
+  Trash2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 

@@ -18,7 +18,7 @@ interface RevenueChartProps {
 const generateRevenueData = (months: number = 12): AdminAreaChartDatum[] => {
   const data: AdminAreaChartDatum[] = [];
   const today = new Date();
-  let baseRevenue = 120000;
+  const baseRevenue = 120000;
   
   for (let i = months - 1; i >= 0; i--) {
     const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
