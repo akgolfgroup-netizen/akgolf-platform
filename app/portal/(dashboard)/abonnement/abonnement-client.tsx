@@ -18,7 +18,7 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { UpgradeOptions } from "@/components/portal/subscription/upgrade-options";
 import { getStripePortalUrl } from "./actions";
 import type { SubscriptionData } from "./actions";
-import { MonoLabel } from "@/components/portal/patterns";
+import { MonoLabel, NightSurface } from "@/components/portal/patterns";
 
 const TIER_DISPLAY: Record<string, string> = {
   PRO: "Performance Pro",
@@ -85,62 +85,97 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-black">
-          Abonnement
-        </h1>
-        <p className="text-grey-400 mt-1">
-          Oversikt over ditt abonnement og kvoter
+        <MonoLabel size="xs" uppercase className="mb-2 block text-grey-400">
+          Ditt abonnement
+        </MonoLabel>
+        <h1 className="text-2xl font-bold text-black">Abonnement</h1>
+        <p className="mt-1 text-grey-400">
+          Oversikt over din plan, kvoter og bookinger
         </p>
       </div>
 
       {hasActivePlan ? (
         <>
-          {/* Plan card */}
-          <PremiumCard className="p-0" noHover>
-            {/* Top bar */}
-            <div className="bg-black px-6 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <CreditCard className="w-5 h-5 text-white/80" />
-                <span className="text-white font-semibold">{tierName}</span>
-              </div>
-              <span className="text-white/70 text-sm font-medium tabular-nums">
-                {tierPrice}
-              </span>
+          {/* Hero — NightSurface med tier + pris */}
+          <NightSurface variant="ambient" className="rounded-2xl p-8">
+            <div className="mb-6 flex items-center gap-2">
+              <span className="h-px w-6 bg-white/40" />
+              <MonoLabel size="xs" uppercase className="text-white/60">
+                Aktiv plan
+              </MonoLabel>
             </div>
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1">
+                  <CreditCard className="h-3.5 w-3.5 text-white/70" />
+                  <MonoLabel size="xs" uppercase className="text-white/70">
+                    {user.tier}
+                  </MonoLabel>
+                </div>
+                <h2 className="text-3xl font-bold tracking-tight text-white">
+                  {tierName}
+                </h2>
+                {tierPrice && (
+                  <MonoLabel size="lg" className="mt-2 block text-accent-cta">
+                    {tierPrice}
+                  </MonoLabel>
+                )}
+              </div>
+              {quota && quota.sessionsAllowed > 0 && (
+                <div className="flex flex-col items-start gap-1 md:items-end">
+                  <MonoLabel size="xs" uppercase className="text-white/50">
+                    Brukt denne perioden
+                  </MonoLabel>
+                  <MonoLabel size="lg" className="text-white">
+                    {quota.sessionsUsed} / {quota.sessionsAllowed}
+                  </MonoLabel>
+                  {periodEndFormatted && (
+                    <MonoLabel size="xs" className="text-white/50">
+                      Perioden avsluttes {periodEndFormatted}
+                    </MonoLabel>
+                  )}
+                </div>
+              )}
+            </div>
+          </NightSurface>
 
-            <div className="p-6 space-y-6">
+          {/* Plan detalj-kort */}
+          <PremiumCard>
+            <div className="space-y-6">
               {/* Session quota */}
               {quota ? (
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Zap className="w-4 h-4 text-success" />
+                      <Zap className="h-4 w-4 text-success" />
                       <span className="text-sm font-semibold text-black">
                         Økter denne perioden
                       </span>
                     </div>
-                    <span className="text-sm font-bold text-black tabular-nums">
+                    <MonoLabel size="md" className="font-bold text-black">
                       {quota.sessionsUsed} / {quota.sessionsAllowed}
-                    </span>
+                    </MonoLabel>
                   </div>
 
                   {/* Progress bar */}
-                  <div className="w-full bg-grey-50 rounded-full h-2.5">
+                  <div className="h-2.5 w-full rounded-full bg-grey-50">
                     <div
                       className={cn(
                         "h-2.5 rounded-full transition-all duration-500",
                         sessionPercent >= 90
                           ? "bg-error"
                           : sessionPercent >= 70
-                          ? "bg-warning"
-                          : "bg-success"
+                            ? "bg-warning"
+                            : "bg-success"
                       )}
                       style={{ width: `${sessionPercent}%` }}
                     />
                   </div>
 
                   <div className="flex items-center justify-between text-xs text-grey-400">
-                    <span className="tabular-nums">{quota.sessionsRemaining} gjenværende</span>
+                    <MonoLabel size="xs" className="text-grey-500">
+                      {quota.sessionsRemaining} gjenværende
+                    </MonoLabel>
                     {periodEndFormatted && (
                       <span>Perioden avsluttes {periodEndFormatted}</span>
                     )}
@@ -153,28 +188,28 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
               )}
 
               {/* Info grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-grey-200">
+              <div className="grid grid-cols-1 gap-4 border-t border-grey-200 pt-4 sm:grid-cols-2">
                 <div className="flex items-start gap-3">
-                  <Calendar className="w-4 h-4 text-grey-400 mt-0.5 shrink-0" />
+                  <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-grey-400" />
                   <div>
-                    <MonoLabel size="xs" uppercase className="text-grey-400 block">
+                    <MonoLabel size="xs" uppercase className="block text-grey-400">
                       Kommende bookinger
                     </MonoLabel>
-                    <p className="text-sm font-semibold text-black mt-0.5 tabular-nums">
+                    <MonoLabel size="md" className="mt-0.5 font-semibold text-black">
                       {upcomingBookings}{" "}
                       {upcomingBookings === 1 ? "økt" : "økter"}
-                    </p>
+                    </MonoLabel>
                   </div>
                 </div>
 
                 {expiresAtFormatted && (
                   <div className="flex items-start gap-3">
-                    <Calendar className="w-4 h-4 text-grey-400 mt-0.5 shrink-0" />
+                    <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-grey-400" />
                     <div>
-                      <MonoLabel size="xs" uppercase className="text-grey-400 block">
+                      <MonoLabel size="xs" uppercase className="block text-grey-400">
                         Utløper
                       </MonoLabel>
-                      <p className="text-sm font-semibold text-black mt-0.5">
+                      <p className="mt-0.5 text-sm font-semibold text-black">
                         {expiresAtFormatted}
                       </p>
                     </div>
@@ -183,51 +218,49 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
 
                 {quota?.bookingWindowDays ? (
                   <div className="flex items-start gap-3">
-                    <Zap className="w-4 h-4 text-grey-400 mt-0.5 shrink-0" />
+                    <Zap className="mt-0.5 h-4 w-4 shrink-0 text-grey-400" />
                     <div>
-                      <MonoLabel size="xs" uppercase className="text-grey-400 block">
+                      <MonoLabel size="xs" uppercase className="block text-grey-400">
                         Bookingsvindu
                       </MonoLabel>
-                      <p className="text-sm font-semibold text-black mt-0.5 tabular-nums">
+                      <MonoLabel size="md" className="mt-0.5 font-semibold text-black">
                         {quota.bookingWindowDays} dager fremover
-                      </p>
+                      </MonoLabel>
                     </div>
                   </div>
                 ) : null}
               </div>
 
               {/* Handlinger */}
-              <div className="pt-2 flex flex-wrap gap-3">
-                {/* Oppgrader-knapp (vis kun hvis ikke allerede på PRO/ELITE) */}
+              <div className="flex flex-wrap gap-3 pt-2">
                 {user.tier !== "PRO" && user.tier !== "ELITE" && (
                   <button
                     onClick={handleStripePortal}
                     disabled={isPending}
                     className={cn(
-                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all",
+                      "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all",
                       "bg-accent-cta text-accent-cta-text",
                       "hover:brightness-95 active:scale-[0.98]",
-                      isPending && "opacity-60 cursor-not-allowed"
+                      isPending && "cursor-not-allowed opacity-60"
                     )}
                   >
-                    <ChevronUp className="w-4 h-4" />
+                    <ChevronUp className="h-4 w-4" />
                     {isPending ? "Åpner…" : "Oppgrader abonnement"}
                   </button>
                 )}
 
-                {/* Administrer i Stripe */}
                 {user.hasStripeSubscription && (
                   <button
                     onClick={handleStripePortal}
                     disabled={isPending}
                     className={cn(
-                      "inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all",
+                      "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all",
                       "border border-grey-200 bg-white text-black",
                       "hover:border-grey-300 active:scale-[0.98]",
-                      isPending && "opacity-60 cursor-not-allowed"
+                      isPending && "cursor-not-allowed opacity-60"
                     )}
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="h-4 w-4" />
                     Administrer i Stripe
                   </button>
                 )}
@@ -235,19 +268,19 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
 
               {/* Kansellerings-seksjon */}
               {user.hasStripeSubscription && (
-                <div className="pt-4 mt-2 border-t border-grey-200">
+                <div className="mt-2 border-t border-grey-200 pt-4">
                   {error && (
-                    <p className="text-sm text-[error] mb-3">{error}</p>
+                    <p className="mb-3 text-sm text-error">{error}</p>
                   )}
                   <button
                     onClick={handleStripePortal}
                     disabled={isPending}
-                    className="inline-flex items-center gap-1.5 text-xs text-grey-400 hover:text-black transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs text-grey-400 transition-colors hover:text-black"
                   >
-                    <XCircle className="w-3.5 h-3.5" />
+                    <XCircle className="h-3.5 w-3.5" />
                     Avbryt abonnement
                   </button>
-                  <p className="text-[10px] text-grey-400 mt-1">
+                  <p className="mt-1 text-[10px] text-grey-400">
                     Du sendes til Stripe der du kan endre, pause eller avbryte.
                   </p>
                 </div>
@@ -266,8 +299,8 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
           <PremiumCard>
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center shrink-0">
-                  <Calendar className="w-5 h-5 text-black" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-grey-50">
+                  <Calendar className="h-5 w-5 text-black" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-black">
@@ -280,76 +313,79 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
               </div>
               <Link
                 href="/portal/bookinger/ny"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-black hover:underline shrink-0"
+                className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-black hover:underline"
               >
                 Book nå
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </PremiumCard>
         </>
       ) : (
         /* No subscription — upsell card */
-        <PremiumCard className="p-0" noHover>
-          <div className="bg-grey-50 px-6 py-10 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[accent-cta]/20 flex items-center justify-center mx-auto mb-4">
-              <Zap className="w-7 h-7 text-black" />
+        <>
+          <NightSurface variant="ambient" className="rounded-2xl p-10 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-cta/20">
+              <Zap className="h-7 w-7 text-accent-cta" />
             </div>
-            <h2 className="text-xl font-bold text-black mb-2">
+            <MonoLabel size="xs" uppercase className="mb-2 block text-white/50">
+              Ingen aktiv plan
+            </MonoLabel>
+            <h2 className="mb-2 text-2xl font-bold text-white">
               Du har ikke et aktivt abonnement
             </h2>
-            <p className="text-sm text-grey-400 max-w-sm mx-auto mb-6">
+            <p className="mx-auto mb-6 max-w-sm text-sm text-white/60">
               Med Performance-abonnementet får du regelmessig coaching, personlig
               treningsplan og tilgang til alle verktøy i portalen.
             </p>
             <Link
               href="/booking"
               className={cn(
-                "inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all",
+                "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all",
                 "bg-accent-cta text-accent-cta-text",
                 "hover:brightness-95 active:scale-[0.98]"
               )}
             >
               Oppgrader til Performance
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="h-4 w-4" />
             </Link>
-          </div>
+          </NightSurface>
 
-          <div className="px-6 py-5 grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-grey-200">
-            {[
-              {
-                label: "Performance",
-                price: "1 600 kr/mnd",
-                desc: "2 x 20 min per uke",
-              },
-              {
-                label: "Performance Pro",
-                price: "2 000 kr/mnd",
-                desc: "4 x 20 min per uke",
-              },
-              {
-                label: "Gruppe",
-                price: "900 kr/mnd",
-                desc: "2 x 60 min gruppeøkt",
-              },
-            ].map((plan) => (
-              <div
-                key={plan.label}
-                className="text-center p-4 rounded-xl bg-grey-50"
-              >
-                <p className="text-sm font-semibold text-black">
-                  {plan.label}
-                </p>
-                <p className="text-base font-bold text-black mt-1 tabular-nums">
-                  {plan.price}
-                </p>
-                <p className="text-xs text-grey-400 mt-0.5">
-                  {plan.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </PremiumCard>
+          <PremiumCard>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {[
+                {
+                  label: "Performance",
+                  price: "1 600 kr/mnd",
+                  desc: "2 x 20 min per uke",
+                },
+                {
+                  label: "Performance Pro",
+                  price: "2 000 kr/mnd",
+                  desc: "4 x 20 min per uke",
+                },
+                {
+                  label: "Gruppe",
+                  price: "900 kr/mnd",
+                  desc: "2 x 60 min gruppeøkt",
+                },
+              ].map((plan) => (
+                <div
+                  key={plan.label}
+                  className="rounded-xl border border-black/6 p-4 text-center"
+                >
+                  <MonoLabel size="xs" uppercase className="block text-grey-400">
+                    {plan.label}
+                  </MonoLabel>
+                  <MonoLabel size="lg" className="mt-2 block font-bold text-black">
+                    {plan.price}
+                  </MonoLabel>
+                  <p className="mt-1 text-xs text-grey-400">{plan.desc}</p>
+                </div>
+              ))}
+            </div>
+          </PremiumCard>
+        </>
       )}
     </div>
   );
