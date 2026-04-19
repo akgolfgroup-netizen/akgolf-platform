@@ -8,6 +8,39 @@
 
 ---
 
+## 2026-04-19 — Design System v3.1 implementasjon (Fase 1 + Fase 2)
+
+**Jobbet med:**
+- **Fase 1 (fundament):** Pakket ut design-leveranse fra `~/Downloads/AK Golf.zip` til `/tmp/ak-golf-design/`. Inkluderer 26 HTML-prototyper + tokens.css + brand guide PDF.
+  - Tokens: `--color-grey-150`, `--color-data-amber`, `--color-data-violet`, `--ak-density/--ak-pad/--ak-gap` lagt til i `app/globals.css`. JetBrains Mono lastet i `app/layout.tsx`. `dataViz`-eksport utvidet i `lib/design-tokens.ts`.
+  - 6 nye patterns i `components/portal/patterns/`: SG Ring (P-01, 4 konsentriske ringer), Mono Label (P-02), Night Surface (P-03, kontekstuell dark), AK-Pyramide (P-04, klikkbar 5-lags bar), AI Attribution (P-05, context-chips), Vertical Timeline (P-06).
+  - Staff-only preview på `/portal/design-preview` med alle 6 patterns.
+  - Dokumentasjon i `docs/design-system-v3.1.md`.
+- **Fase 2.1 Treningsplanlegger:** `components/portal/treningsplan/PyramidFilter.tsx` oppdatert med v3.1 data-viz-farger (sage/blue/amber/violet/coral) og MonoLabel. Full light-mode-konvertering utsatt til senere.
+- **Fase 2.2 Statistikk:** Registry oppdatert med 2 unike views (Performance Report + Course Hero). SG Ring hero lagt til i NightSurface over eksisterende SG-barer. View-switcher ICON_MAP utvidet (image, moon, book-open, align-justify).
+- **Fase 2.3 Analyse:** SG Ring hero integrert i Strokes Gained-kort på `/portal/analyse` med NightSurface-bakgrunn. MonoLabel + AIAttribution-patterns klare for AI-innsikt.
+- **Fase 2.4 Dagbok:** ActivityHeatmap oppdatert til GitHub-style sage-palette (l0-l4) fra `dagbok.html`. Ny `VolumePyramid`-komponent som bruker `AKPyramide` (read-only) integrert i stats-view. Streak-tidslinje utsatt.
+- **Fase 2.5 Booking:** Vertical Timeline for 7-dagers visning over eksisterende booking-liste. MonoLabel for metadata. NextBookingHero bevart som hero-kort.
+- **Fase 2.6 Turneringsplanlegger:** Vertical Timeline for neste 6 turneringer over tabs. MonoLabel for metadata. Lime-dot for major/nasjonal, sage for registrerte, muted ellers. Href til eksterne turneringslenker.
+
+**Commits:**
+- `f8b9cee` feat(design-v3.1): tokens + 6 patterns + preview-side
+- `2c8f662` feat: view-system integrering i analyse, bookinger, dagbok, statistikk + PyramidFilter
+- `5bc942d` feat(design-v3.1): turneringsplan med Vertical Timeline (P-06)
+
+**Nøkkelfiler:**
+- Nye: `components/portal/patterns/{sg-ring,mono-label,night-surface,ak-pyramide,ai-attribution,vertical-timeline,index}.ts(x)`, `components/portal/dagbok/volume-pyramid.tsx`, `app/portal/(dashboard)/design-preview/{page,design-preview-client}.tsx`, `docs/design-system-v3.1.md`
+- Oppdatert: `app/globals.css`, `app/layout.tsx`, `lib/design-tokens.ts`, `lib/portal/views/registry.ts`, `components/portal/view-switcher.tsx`, `components/portal/treningsplan/PyramidFilter.tsx`, `components/portal/dagbok/activity-heatmap.tsx`, 4 klient-filer (analyse, bookinger, dagbok, statistikk, turneringsplan)
+
+**Status:** 8 av 9 Fase 2-tasks komplett. Build passerer. Plan: `~/.claude/plans/lag-en-plan-for-unified-unicorn.md`.
+
+**Neste steg:**
+1. **Push:** `git push origin main` (4+ commits foran).
+2. **Verifisering:** `npm run dev`, test `/portal/design-preview` (staff), `/portal/analyse`, `/portal/bookinger`, `/portal/dagbok`, `/portal/statistikk`, `/portal/turneringsplan`. Side-by-side sammenligning med `/tmp/ak-golf-design/AK Golf Portal.html` i Safari.
+3. **Utsatt til senere faser:** Full light-mode treningsplan, Course Hero V2 statistikk-view, streak-milestones dagbok, dashboard-redesign (5 views + Course Hero), Mission Control-redesign, mobile adaptasjoner.
+
+---
+
 ## 2026-04-19 — Backlog-sprint: P1 build-feil, P2 setup-admin, P3 ESLint
 
 **Jobbet med:**
