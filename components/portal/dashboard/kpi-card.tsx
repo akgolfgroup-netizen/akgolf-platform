@@ -4,6 +4,7 @@ import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
 import { Sparkline } from "./sparkline";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { colors } from "@/lib/design-tokens";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface KpiCardProps {
   label: string;
@@ -30,9 +31,7 @@ export function KpiCard({
   return (
     <div className="flex h-full flex-col justify-between rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-grey-200 hover:shadow-md">
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-grey-400">
-          {label}
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{label}</MonoLabel>
         <div className="mt-1">
           <NumberTicker
             value={value}

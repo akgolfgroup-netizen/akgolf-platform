@@ -16,6 +16,7 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { fadeInUp } from "@/components/portal/premium";
 import { StreakMilestone } from "@/components/portal/gamification/streak-milestone";
 import { cn } from "@/lib/portal/utils/cn";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface TrainingLogEntry {
   id: string;
@@ -109,18 +110,14 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
               <h3 className="font-semibold text-portal-text text-sm">
                 Treningsstreak
               </h3>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
-                {streak > 0 ? "Fortsett det gode arbeidet" : "Start i dag"}
-              </p>
+              <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">{streak > 0 ? "Fortsett det gode arbeidet" : "Start i dag"}</MonoLabel>
             </div>
           </div>
           <div className="flex items-baseline gap-3 mb-5">
             <span className="text-4xl font-extrabold tabular-nums tracking-tight text-portal-text">
               {streak}
             </span>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
-              {streak === 1 ? "dag på rad" : "dager på rad"}
-            </span>
+            <MonoLabel size="xs" uppercase className="text-portal-muted">{streak === 1 ? "dag på rad" : "dager på rad"}</MonoLabel>
           </div>
           <div className="flex gap-1.5 mb-4">
             {streakDays.map((d, idx) => (
@@ -164,9 +161,7 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
                     <p className="text-sm font-semibold text-portal-text truncate">
                       {cat.name}
                     </p>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
-                      {cat.count}
-                    </p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">{cat.count}</MonoLabel>
                     <div className="h-1 bg-portal-border rounded-full mt-2 overflow-hidden">
                       <div
                         className="h-full rounded-full bg-primary"

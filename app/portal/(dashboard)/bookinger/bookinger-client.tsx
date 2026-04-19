@@ -84,9 +84,7 @@ export function BookingerClient({
     <div className="space-y-6">
       {/* ═══ HERO ═══ */}
       <div className="space-y-3">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-          Mine bookinger
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Mine bookinger</MonoLabel>
         <h1 className="text-2xl font-bold text-black">
           Dine{" "}
           <span className="font-serif italic text-black font-normal">

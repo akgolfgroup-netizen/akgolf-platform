@@ -6,6 +6,7 @@ import { format, subDays, startOfWeek, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface ActivityData {
   date: Date;
@@ -134,9 +135,7 @@ export function ActivityHeatmap({ data, year = new Date().getFullYear() }: Activ
     <PremiumCard padding="lg" className="overflow-hidden">
       <div className="flex items-start justify-between mb-6">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-            Aktivitet siste år
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Aktivitet siste år</MonoLabel>
           <div className="flex items-baseline gap-3 mt-1">
             <span className="text-2xl font-bold text-black">{totalDays}</span>
             <span className="text-sm text-grey-400">dager med aktivitet</span>

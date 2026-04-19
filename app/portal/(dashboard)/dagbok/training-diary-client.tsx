@@ -14,6 +14,7 @@ import { RecentSessionsList } from "@/components/portal/dagbok/recent-sessions-l
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import { cn } from "@/lib/utils";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface TrainingLogEntry {
   id: string;
@@ -137,9 +138,7 @@ export function TrainingDiaryClient({
         animate={{ opacity: 1, y: 0 }}
         className="space-y-3"
       >
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-          Din treningsdagbok
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Din treningsdagbok</MonoLabel>
         <h1 className="text-2xl font-bold text-black">
           Logg og{" "}
           <span className="font-serif italic text-black font-normal">spor</span>

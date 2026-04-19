@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { colors } from "@/lib/design-tokens";
 import { CircleDashed } from "lucide-react";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface SessionType {
   name: string;
@@ -33,9 +34,7 @@ export function SessionsDonut({ data = MOCK_DATA }: SessionsDonutProps) {
   return (
     <div className="flex h-full flex-col rounded-xl border border-grey-200 bg-white p-5 shadow-card">
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-grey-400">
-          Økt-fordeling
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Økt-fordeling</MonoLabel>
         <CircleDashed className="h-4 w-4 text-grey-300" />
       </div>
 

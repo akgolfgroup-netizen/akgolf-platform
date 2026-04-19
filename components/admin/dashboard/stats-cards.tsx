@@ -5,6 +5,7 @@ import { Calendar, Users, TrendingUp, Activity, ArrowUpRight, ArrowDownRight } f
 import { Card } from "@/components/ui/card";
 import { AdminSparkline } from "@/components/portal/mission-control/ui/charts/AdminSparkline";
 import { cn } from "@/lib/utils";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface StatCardProps {
   title: string;
@@ -35,9 +36,7 @@ function StatCard({
     <Card className={cn("p-5 overflow-hidden", className)}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">
-            {title}
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{title}</MonoLabel>
           <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
             {value}
           </p>

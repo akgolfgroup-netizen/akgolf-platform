@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { MonoLabel } from "@/components/portal/patterns";
 export interface ChatSession {
   id: string;
   title: string;
@@ -62,9 +63,7 @@ export function ChatHistory({
           <div className="p-2 space-y-4">
             {Object.entries(groupedSessions).map(([group, groupSessions]) => (
               <div key={group}>
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-grey-400 px-2 mb-1">
-                  {group}
-                </h4>
+                <MonoLabel as="h3" size="xs" uppercase className="text-grey-400 px-2 mb-1">{group}</MonoLabel>
                 <div className="space-y-0.5">
                   {groupSessions.map((session) => (
                     <SessionItem

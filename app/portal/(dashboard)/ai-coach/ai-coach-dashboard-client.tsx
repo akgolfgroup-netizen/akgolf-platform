@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import type { ChatContext } from "./actions";
 
+import { MonoLabel } from "@/components/portal/patterns";
 interface AiCoachDashboardClientProps {
   context: ChatContext;
   quickInsight: string;
@@ -251,9 +252,7 @@ function KpiCard({
     <PremiumCard delay={delay} padding="md" radius="large" hover="lift">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
-            {label}
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{label}</MonoLabel>
           <p className="text-3xl font-bold text-black mt-1 tabular-nums">
             {typeof value === "number" && value % 1 !== 0
               ? value.toFixed(1)

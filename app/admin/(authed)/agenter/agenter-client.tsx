@@ -19,6 +19,7 @@ import {
 } from "./actions";
 import type { AgentTeam } from "@prisma/client";
 
+import { MonoLabel } from "@/components/portal/patterns";
 const TEAM_LABELS: Record<AgentTeam, string> = {
   LEADERSHIP: "Ledergruppen",
   DEV: "Utviklingsteam",
@@ -126,9 +127,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
         <div className="space-y-6">
           {TEAM_ORDER.filter((team) => agentsByTeam.has(team)).map((team) => (
             <section key={team}>
-              <h2 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
-                {TEAM_LABELS[team]}
-              </h2>
+              <MonoLabel as="h3" size="xs" uppercase className="text-grey-400 mb-3">{TEAM_LABELS[team]}</MonoLabel>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {agentsByTeam.get(team)?.map((agent) => (
                   <div

@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, type TabItem } from "@/components/ui/tabs";
 import { getDashboardData, type DashboardData, type AnalyticsPeriod } from "./actions";
+import { MonoLabel } from "@/components/portal/patterns";
 
 // ── Constants ──────────────────────────────────────────────
 
@@ -310,7 +311,7 @@ function KpiCard({ label, value, icon, change, positive }: {
     <div className="bg-white border border-grey-200 rounded-xl p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-medium text-grey-400 uppercase tracking-wide">{label}</p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{label}</MonoLabel>
           <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
             {value}
           </p>

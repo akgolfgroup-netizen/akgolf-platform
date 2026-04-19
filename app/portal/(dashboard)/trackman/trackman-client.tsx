@@ -584,9 +584,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                                 <div className="bg-grey-50/60 px-4 py-4 space-y-6">
                                   {/* Shot Dispersion Chart */}
                                   <div>
-                                    <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
-                                      Shot-spredning
-                                    </p>
+                                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-3">Shot-spredning</MonoLabel>
                                     <div className="bg-white rounded-xl border border-grey-200/50 p-3">
                                       <ShotDispersionChart shots={shots} />
                                     </div>
@@ -595,18 +593,14 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                                   {/* Session Analytics */}
                                   {analytics && (
                                     <div>
-                                      <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
-                                        Sesjonsanalyse
-                                      </p>
+                                      <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-3">Sesjonsanalyse</MonoLabel>
                                       <TrackManAnalyticsCard analytics={analytics} />
                                     </div>
                                   )}
 
                                   {/* Shot Details Table */}
                                   <div>
-                                    <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3">
-                                      Slagdetaljer
-                                    </p>
+                                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-3">Slagdetaljer</MonoLabel>
                                     <div className="overflow-x-auto">
                                       <table className="w-full text-sm">
                                         <thead>

@@ -14,6 +14,7 @@ import {
 import { Badge } from "@/components/ui";
 import { AdminProgressRing } from "@/components/portal/mission-control/ui";
 
+import { MonoLabel } from "@/components/portal/patterns";
 interface CategoryHours {
   hours: number;
   ci95Low: number;
@@ -186,9 +187,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
         <div className="bg-white border border-grey-200 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-2">
             <Compass className="w-4 h-4 text-primary" />
-            <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
-              Hvor er du nå?
-            </p>
+            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Hvor er du nå?</MonoLabel>
           </div>
           <p className="text-3xl font-bold text-black tabular-nums">
             {round1(forecast.currentScoreAvg)}
@@ -201,9 +200,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
         <div className="bg-white border border-grey-200 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-2">
             <Target className="w-4 h-4 text-primary" />
-            <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
-              Hvor vil du?
-            </p>
+            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Hvor vil du?</MonoLabel>
           </div>
           <p className="text-3xl font-bold text-black tabular-nums">
             {round1(forecast.targetScoreAvg)}
@@ -216,9 +213,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
         <div className="bg-white border border-grey-200 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp className="w-4 h-4 text-primary" />
-            <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
-              Hva kreves?
-            </p>
+            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Hva kreves?</MonoLabel>
           </div>
           <p className="text-3xl font-bold text-black tabular-nums">
             +{round1(forecast.requiredSgDelta)}

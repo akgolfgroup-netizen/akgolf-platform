@@ -86,7 +86,7 @@ export function StatistikkCharts({
     <>
       {/* Score Trend + SG Radar */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
           <span className="h-px w-6 bg-portal-muted" />
           Utvikling
         </p>
@@ -130,7 +130,7 @@ export function StatistikkCharts({
 
       {/* Training Volume + Breakdown */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
           <span className="h-px w-6 bg-portal-muted" />
           Trening
         </p>

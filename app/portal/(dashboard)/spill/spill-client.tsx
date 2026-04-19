@@ -28,6 +28,7 @@ import {
 } from "./actions";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
+import { MonoLabel } from "@/components/portal/patterns";
 
 // ─── Hjelpefunksjoner ───────────────────────────────────
 
@@ -178,7 +179,7 @@ export default function SpillClient({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">Spillerportal</p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Spillerportal</MonoLabel>
           <h1 className="mt-1 text-[28px] font-bold tracking-tight text-black">Spill</h1>
         </div>
         <div className="flex gap-2">
@@ -345,9 +346,7 @@ export default function SpillClient({
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Trophy className="w-5 h-5 text-purple-500" />
-              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-                Utfordringer
-              </p>
+              <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Utfordringer</MonoLabel>
             </div>
             <span className="text-xs text-grey-400">
               {initialChallenges.length} aktive

@@ -21,6 +21,7 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { BookingStatusBadge } from "@/components/portal/booking/booking-status-badge";
 import type { BookingStatusVariant } from "@/components/portal/booking/booking-types";
 import { cancelBooking } from "../actions";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface BookingDetail {
   id: string;
@@ -164,9 +165,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
               <CreditCard className="w-4 h-4 text-grey-400" />
             </div>
             <div className="flex-1">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-                Betaling
-              </p>
+              <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Betaling</MonoLabel>
               <div className="flex items-center gap-2 mt-0.5">
                 <span className="text-[14px] text-black tabular-nums">
                   {booking.amount > 0
@@ -293,9 +292,7 @@ function DetailRow({
         <span className="text-grey-400">{icon}</span>
       </div>
       <div>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-          {label}
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{label}</MonoLabel>
         <p className={`text-[14px] text-black mt-0.5${tabular ? " tabular-nums" : ""}`}>{value}</p>
       </div>
     </div>

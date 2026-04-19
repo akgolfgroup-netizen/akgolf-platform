@@ -26,6 +26,7 @@ import { nb } from "date-fns/locale";
 import { motion } from "framer-motion";
 import type { WeekBooking, WeekStats } from "./actions";
 
+import { MonoLabel } from "@/components/portal/patterns";
 // Status config
 
 const STATUS_CONFIG: Record<
@@ -114,9 +115,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
           <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
-                  Bookinger
-                </p>
+                <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Bookinger</MonoLabel>
                 <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {stats.totalBookings}
                 </p>
@@ -131,9 +130,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
           <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
-                  Unike elever
-                </p>
+                <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Unike elever</MonoLabel>
                 <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {stats.uniqueStudents}
                 </p>
@@ -148,9 +145,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
           <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
-                  Bekreftet
-                </p>
+                <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Bekreftet</MonoLabel>
                 <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {stats.confirmedBookings}
                 </p>
@@ -172,9 +167,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
           <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium uppercase tracking-wide text-grey-400">
-                  Inntekt
-                </p>
+                <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Inntekt</MonoLabel>
                 <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
                   {stats.weeklyRevenue.toLocaleString("nb-NO")} kr
                 </p>

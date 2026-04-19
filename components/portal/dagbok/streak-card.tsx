@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Flame, Trophy, Snowflake } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
+import { MonoLabel } from "@/components/portal/patterns";
 
 export interface StreakData {
   currentStreak: number;
@@ -51,9 +52,7 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
         {/* Header with icon */}
         <div className="flex items-start justify-between mb-4">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-              Treningsstreak
-            </p>
+            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Treningsstreak</MonoLabel>
             <motion.div 
               className="flex items-baseline gap-2 mt-1"
               initial={{ opacity: 0, y: 10 }}

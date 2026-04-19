@@ -5,6 +5,7 @@ import { Target, Zap, TrendingUp, Activity, Crosshair, Lightbulb, Focus, Refresh
 import type { TrackManAnalyticsSummary } from "@/app/portal/(dashboard)/trackman/actions";
 import { generateTrackManInsights } from "@/app/portal/(dashboard)/trackman/actions";
 
+import { MonoLabel } from "@/components/portal/patterns";
 interface TrackManAnalyticsCardProps {
   analytics: TrackManAnalyticsSummary;
   showRegenerate?: boolean;
@@ -126,28 +127,28 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
             <Zap className="w-4 h-4 text-warning" />
-            <span className="text-xs font-medium uppercase tracking-wider text-grey-500">Snitt ballfart</span>
+            <MonoLabel size="xs" uppercase className="text-grey-500">Snitt ballfart</MonoLabel>
           </div>
           <p className="text-xl font-bold text-grey-900">{formatSpeed(analytics.avgBallSpeed)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
             <Zap className="w-4 h-4 text-warning" />
-            <span className="text-xs font-medium uppercase tracking-wider text-grey-500">Max ballfart</span>
+            <MonoLabel size="xs" uppercase className="text-grey-500">Max ballfart</MonoLabel>
           </div>
           <p className="text-xl font-bold text-grey-900">{formatSpeed(analytics.maxBallSpeed)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
             <Activity className="w-4 h-4 text-success" />
-            <span className="text-xs font-medium uppercase tracking-wider text-grey-500">Snitt carry</span>
+            <MonoLabel size="xs" uppercase className="text-grey-500">Snitt carry</MonoLabel>
           </div>
           <p className="text-xl font-bold text-grey-900">{formatDistance(analytics.avgCarryDistance)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
             <Activity className="w-4 h-4 text-success" />
-            <span className="text-xs font-medium uppercase tracking-wider text-grey-500">Max carry</span>
+            <MonoLabel size="xs" uppercase className="text-grey-500">Max carry</MonoLabel>
           </div>
           <p className="text-xl font-bold text-grey-900">{formatDistance(analytics.maxCarryDistance)}</p>
         </div>
@@ -158,21 +159,21 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
             <Target className="w-4 h-4 text-info" />
-            <span className="text-xs font-medium uppercase tracking-wider text-grey-500">Ballfart-konsistens</span>
+            <MonoLabel size="xs" uppercase className="text-grey-500">Ballfart-konsistens</MonoLabel>
           </div>
           <p className="text-lg font-semibold text-grey-900">{formatPercent(analytics.ballSpeedConsistency)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
             <Target className="w-4 h-4 text-info" />
-            <span className="text-xs font-medium uppercase tracking-wider text-grey-500">Distance-konsistens</span>
+            <MonoLabel size="xs" uppercase className="text-grey-500">Distance-konsistens</MonoLabel>
           </div>
           <p className="text-lg font-semibold text-grey-900">{formatPercent(analytics.distanceConsistency)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
             <Crosshair className="w-4 h-4 text-primary" />
-            <span className="text-xs font-medium uppercase tracking-wider text-grey-500">Sweet spot</span>
+            <MonoLabel size="xs" uppercase className="text-grey-500">Sweet spot</MonoLabel>
           </div>
           <p className="text-lg font-semibold text-grey-900">{formatPercent(analytics.sweetSpotPercentage)}</p>
         </div>

@@ -29,6 +29,7 @@ import {
 import { Button, Badge } from "@/components/ui";
 import { type StudentListData, type StudentRow } from "./actions";
 
+import { MonoLabel } from "@/components/portal/patterns";
 // ---------------------------------------------------------------------------
 // Mappings
 // ---------------------------------------------------------------------------
@@ -367,9 +368,7 @@ export function StudentsClient({ initialData }: Props) {
         <div className="bg-white rounded-xl border border-grey-200 p-5">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-grey-400 mr-2">
-                Status
-              </span>
+              <MonoLabel size="xs" uppercase className="text-grey-400 mr-2">Status</MonoLabel>
               {(
                 [
                   { label: "Alle", value: "all" as const },
@@ -393,9 +392,7 @@ export function StudentsClient({ initialData }: Props) {
               ))}
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-grey-400 mr-2">
-                Medlemskap
-              </span>
+              <MonoLabel size="xs" uppercase className="text-grey-400 mr-2">Medlemskap</MonoLabel>
               <button
                 type="button"
                 onClick={() => setTierFilter("all")}

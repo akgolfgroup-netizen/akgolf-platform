@@ -7,6 +7,7 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 import { format, startOfWeek, endOfWeek, isWithinInterval, subWeeks, parseISO } from "date-fns";
 import { nb } from "date-fns/locale";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface SessionData {
   id: string;
@@ -140,9 +141,7 @@ export function WeeklyStats({ sessions }: WeeklyStatsProps) {
     <PremiumCard padding="lg">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-            Denne uken
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Denne uken</MonoLabel>
           <p className="text-xs text-grey-400 mt-1">{stats.weekLabel}</p>
         </div>
         <div className="w-10 h-10 rounded-xl bg-accent-cta/20 flex items-center justify-center">

@@ -8,15 +8,17 @@
  */
 
 import { cn } from "@/lib/utils";
-import type { ReactNode, HTMLAttributes } from "react";
+import type { ReactNode, HTMLAttributes, ElementType } from "react";
 
 type MonoLabelSize = "xs" | "sm" | "md" | "lg";
 
-interface MonoLabelProps extends HTMLAttributes<HTMLSpanElement> {
+interface MonoLabelProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode;
   size?: MonoLabelSize;
   uppercase?: boolean;
   tabular?: boolean;
+  /** HTML-tag (default "span"). Bruk "p" for blokk-elementer. */
+  as?: ElementType;
 }
 
 const SIZE_CLASSES: Record<MonoLabelSize, string> = {
@@ -31,11 +33,12 @@ export function MonoLabel({
   size = "sm",
   uppercase = false,
   tabular = true,
+  as: Component = "span",
   className,
   ...props
 }: MonoLabelProps) {
   return (
-    <span
+    <Component
       className={cn(
         "font-mono",
         SIZE_CLASSES[size],
@@ -46,6 +49,6 @@ export function MonoLabel({
       {...props}
     >
       {children}
-    </span>
+    </Component>
   );
 }

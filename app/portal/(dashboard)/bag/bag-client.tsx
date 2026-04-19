@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type { PlayerClubData, GapAnalysisItem } from "./actions";
+import { MonoLabel } from "@/components/portal/patterns";
 
 const DEFAULT_CLUBS = [
   "Driver",
@@ -193,33 +194,25 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl bg-grey-50">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-                      Carry
-                    </p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Carry</MonoLabel>
                     <p className="text-2xl font-bold text-black tabular-nums tracking-tight">
                       {club.avgCarry != null ? `${club.avgCarry}m` : "--"}
                     </p>
                   </div>
                   <div className="p-4 rounded-xl bg-grey-50">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-                      Total
-                    </p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Total</MonoLabel>
                     <p className="text-2xl font-bold text-black tabular-nums tracking-tight">
                       {club.avgTotal != null ? `${club.avgTotal}m` : "--"}
                     </p>
                   </div>
                   <div className="p-4 rounded-xl bg-grey-50">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-                      Slag
-                    </p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Slag</MonoLabel>
                     <p className="text-2xl font-bold text-black tabular-nums tracking-tight">
                       {club.shotCount}
                     </p>
                   </div>
                   <div className="p-4 rounded-xl bg-grey-50">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-                      Loft
-                    </p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Loft</MonoLabel>
                     <p className="text-2xl font-bold text-black tabular-nums tracking-tight">
                       {club.loft != null ? `${club.loft}` : "--"}
                     </p>

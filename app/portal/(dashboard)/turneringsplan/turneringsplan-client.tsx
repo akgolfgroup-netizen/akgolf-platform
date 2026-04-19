@@ -141,9 +141,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       <div className="mb-6 grid grid-cols-3 gap-4">
         <PremiumCard delay={0} >
           <div className="flex flex-col items-center py-2 text-center">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-              Kommende
-            </span>
+            <MonoLabel size="xs" uppercase className="text-grey-400">Kommende</MonoLabel>
             <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-black tabular-nums">
               <NumberTicker value={stats.upcoming} />
             </span>
@@ -153,9 +151,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
         <PremiumCard delay={0.06}>
           <div className="flex flex-col items-center py-2 text-center">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-              Påmeldt
-            </span>
+            <MonoLabel size="xs" uppercase className="text-grey-400">Påmeldt</MonoLabel>
             <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-black tabular-nums">
               <NumberTicker value={stats.registered} />
             </span>
@@ -165,9 +161,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
         <PremiumCard delay={0.12}>
           <div className="flex flex-col items-center py-2 text-center">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-              Fullført
-            </span>
+            <MonoLabel size="xs" uppercase className="text-grey-400">Fullført</MonoLabel>
             <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-black tabular-nums">
               <NumberTicker value={stats.completed} />
             </span>
@@ -323,18 +317,14 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                   <div className="border-t border-[grey-200] px-5 pb-5 pt-4">
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                       <div>
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-                          Periode
-                        </span>
+                        <MonoLabel size="xs" uppercase className="text-grey-400">Periode</MonoLabel>
                         <p className="mt-0.5 text-sm font-medium text-black">
                           {getPeriodLabel(tournamentDate)}
                         </p>
                       </div>
                       {t.numberOfHoles && (
                         <div>
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-                            Hull
-                          </span>
+                          <MonoLabel size="xs" uppercase className="text-grey-400">Hull</MonoLabel>
                           <p className="mt-0.5 text-sm font-medium text-black">
                             {t.numberOfHoles}
                           </p>
@@ -342,9 +332,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                       )}
                       {t.series && (
                         <div>
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-                            Serie
-                          </span>
+                          <MonoLabel size="xs" uppercase className="text-grey-400">Serie</MonoLabel>
                           <p className="mt-0.5 text-sm font-medium text-black">
                             {t.series}
                           </p>
@@ -352,9 +340,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                       )}
                       {t.planLevel && (
                         <div>
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-                            Prioritet
-                          </span>
+                          <MonoLabel size="xs" uppercase className="text-grey-400">Prioritet</MonoLabel>
                           <p className="mt-0.5 text-sm font-medium text-black">
                             {t.planLevel}
                           </p>
@@ -364,9 +350,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                     {t.goalType && (
                       <div className="mt-3">
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-                          Mål
-                        </span>
+                        <MonoLabel size="xs" uppercase className="text-grey-400">Mål</MonoLabel>
                         <p className="mt-0.5 text-sm text-grey-400">
                           {t.goalType}
                         </p>
@@ -375,9 +359,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                     {t.planNotes && (
                       <div className="mt-3">
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-                          Notater
-                        </span>
+                        <MonoLabel size="xs" uppercase className="text-grey-400">Notater</MonoLabel>
                         <p className="mt-0.5 text-sm italic text-grey-400">
                           {t.planNotes}
                         </p>

@@ -4,6 +4,7 @@ import { Flag, Ruler, TrendingUp, Trophy, AlertCircle } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 
+import { MonoLabel } from "@/components/portal/patterns";
 interface HoleHistory {
   best: number;
   worst: number;
@@ -95,9 +96,7 @@ export function CourseInfo({
         <div className="mt-6 pt-6 border-t border-grey-200">
           <div className="flex items-center gap-2 mb-4">
             <Trophy className="w-4 h-4 text-grey-400" />
-            <p className="text-xs font-semibold uppercase tracking-wide text-grey-400">
-              Din historikk på dette hullet
-            </p>
+            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Din historikk på dette hullet</MonoLabel>
           </div>
 
           <div className="grid grid-cols-3 gap-4">

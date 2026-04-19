@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { colors, shadows } from "@/lib/design-tokens";
 import { TrendingDown } from "lucide-react";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface HandicapTrendChartProps {
   data: number[];
@@ -46,9 +47,7 @@ export function HandicapTrendChart({ data }: HandicapTrendChartProps) {
     <div className="flex h-full flex-col rounded-xl border border-grey-200 bg-white p-5 shadow-card">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-grey-400">
-            Handicap-utvikling
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Handicap-utvikling</MonoLabel>
           <div className="mt-1 flex items-baseline gap-2">
             <span className="text-[32px] font-semibold tracking-tight text-black">
               {currentHcp.toFixed(1)}

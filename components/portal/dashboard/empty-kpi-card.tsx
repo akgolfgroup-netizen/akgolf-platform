@@ -1,6 +1,7 @@
 "use client";
 
 import { colors } from "@/lib/design-tokens";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface EmptyKpiCardProps {
   label: string;
@@ -12,9 +13,7 @@ export function EmptyKpiCard({ label, message, href }: EmptyKpiCardProps) {
   return (
     <div className="flex flex-col justify-between rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-grey-200 hover:shadow-md">
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-grey-400">
-          {label}
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{label}</MonoLabel>
         <p className="mt-2 text-sm text-grey-400">{message}</p>
         <a
           href={href}

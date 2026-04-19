@@ -118,7 +118,7 @@ export default async function AnalysePage() {
       {hasRoundData ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl shadow-card p-5">
-            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">GIR</p>
+            <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">GIR</MonoLabel>
             <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
               {stats.girPercent != null ? Math.round(stats.girPercent) : 0}
               <span className="ml-1 text-[13px] font-normal text-portal-muted">%</span>
@@ -130,7 +130,7 @@ export default async function AnalysePage() {
             )}
           </div>
           <div className="bg-white rounded-xl shadow-card p-5">
-            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">Fairways</p>
+            <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">Fairways</MonoLabel>
             <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
               {stats.fairwayPercent != null ? Math.round(stats.fairwayPercent) : 0}
               <span className="ml-1 text-[13px] font-normal text-portal-muted">%</span>
@@ -142,7 +142,7 @@ export default async function AnalysePage() {
             )}
           </div>
           <div className="bg-white rounded-xl shadow-card p-5">
-            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">Putts/runde</p>
+            <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">Putts/runde</MonoLabel>
             <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
               {stats.puttsPerRound != null ? (Math.round(stats.puttsPerRound * 10) / 10).toFixed(1) : "0"}
             </p>
@@ -153,7 +153,7 @@ export default async function AnalysePage() {
             )}
           </div>
           <div className="bg-white rounded-xl shadow-card p-5">
-            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">Scrambling</p>
+            <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">Scrambling</MonoLabel>
             <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
               {stats.scramblingPercent != null ? Math.round(stats.scramblingPercent) : 0}
               <span className="ml-1 text-[13px] font-normal text-portal-muted">%</span>
@@ -189,7 +189,7 @@ export default async function AnalysePage() {
 
       {/* SECTION LABEL */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
           <span className="h-px w-6 bg-portal-muted" />
           Utvikling
         </p>
@@ -251,7 +251,7 @@ export default async function AnalysePage() {
       {/* TrackMan Data */}
       {isPro && (
         <div>
-          <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+          <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
             <span className="h-px w-6 bg-portal-muted" />
             TrackMan
           </p>
@@ -274,9 +274,7 @@ export default async function AnalysePage() {
                     key={stat.label}
                     className="rounded-xl border border-portal-border bg-white p-4"
                   >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">
-                      {stat.label}
-                    </p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">{stat.label}</MonoLabel>
                     <p className="mt-2 text-[28px] font-[300] leading-none tabular-nums tracking-[-0.02em] text-portal-text">
                       {stat.value}
                       <span className="ml-1 text-[13px] font-normal text-portal-muted">
@@ -306,7 +304,7 @@ export default async function AnalysePage() {
 
       {/* Quick Actions */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted">
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
           <span className="h-px w-6 bg-portal-muted" />
           Handlinger
         </p>

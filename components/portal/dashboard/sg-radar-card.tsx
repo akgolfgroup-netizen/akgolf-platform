@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { colors } from "@/lib/design-tokens";
 import { Target } from "lucide-react";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface SGRadarData {
   category: string;
@@ -33,9 +34,7 @@ export function SGRadarCard({ data = PLACEHOLDER_DATA }: SGRadarCardProps) {
   return (
     <div className="flex h-full flex-col rounded-xl border border-grey-200 bg-white p-5 shadow-card">
       <div className="mb-3 flex items-center justify-between">
-        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-grey-400">
-          Strokes Gained
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Strokes Gained</MonoLabel>
         <Target className="h-4 w-4 text-grey-300" />
       </div>
 

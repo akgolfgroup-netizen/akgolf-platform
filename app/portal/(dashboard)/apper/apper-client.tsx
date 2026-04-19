@@ -26,6 +26,7 @@ import {
 } from "@/components/portal/premium";
 import { cn } from "@/lib/portal/utils/cn";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface AppModule {
   id: string;
@@ -228,9 +229,7 @@ export function ApperClient({
       {/* Pricing Table */}
       <motion.div variants={fadeInUp} className="space-y-5">
         <div className="text-center">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-            Velg plan
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Velg plan</MonoLabel>
           <h2 className="mt-1 text-2xl font-bold tracking-tight text-black lg:text-3xl">
             Velg ditt abonnement
           </h2>

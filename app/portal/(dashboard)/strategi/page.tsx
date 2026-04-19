@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
+import { MonoLabel } from "@/components/portal/patterns";
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 interface Course {
@@ -265,28 +266,20 @@ export default function StrategiPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
-                      Anbefalt klubb
-                    </p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Anbefalt klubb</MonoLabel>
                     <p className="text-lg font-semibold text-black">{strategy?.recommendedClub}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
-                      Aimpoint
-                    </p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Aimpoint</MonoLabel>
                     <p className="text-sm text-black">{strategy?.aimPoint}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-grey-400">
-                      Mål-sone
-                    </p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Mål-sone</MonoLabel>
                     <p className="text-sm text-black">{strategy?.targetZone}</p>
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-2">
-                    Fare-områder
-                  </p>
+                  <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-2">Fare-områder</MonoLabel>
                   <div className="space-y-2">
                     {strategy?.dangerAreas.map((danger, idx) => (
                       <div

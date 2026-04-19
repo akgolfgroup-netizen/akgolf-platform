@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { format, addWeeks, startOfISOWeek, endOfISOWeek, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
 
+import { MonoLabel } from "@/components/portal/patterns";
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 interface V2ExerciseData {
@@ -156,9 +157,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
         <PremiumCard padding="md" radius="large">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1">
-              <p className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1">
-                Fremgang denne uken
-              </p>
+              <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-1">Fremgang denne uken</MonoLabel>
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl font-bold text-black tabular-nums">{completed}</span>
                 <span className="text-lg font-semibold text-grey-400 tabular-nums">/ {planned}</span>

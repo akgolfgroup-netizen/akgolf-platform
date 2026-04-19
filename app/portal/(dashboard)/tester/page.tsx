@@ -2,6 +2,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { getTestsOverview, getTesterStats } from "./actions";
 import { TesterClient } from "./tester-client";
 
+import { MonoLabel } from "@/components/portal/patterns";
 export const metadata = {
   title: "DECADE Tester | AK Golf Portal",
 };
@@ -29,33 +30,25 @@ export default async function TesterPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl shadow-card p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-portal-secondary">
-            Fullførte tester
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-portal-secondary block">Fullførte tester</MonoLabel>
           <p className="text-3xl font-bold text-portal-text mt-1 tabular-nums">
             {stats.completedTests}/{stats.totalTests}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-portal-secondary">
-            Total score
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-portal-secondary block">Total score</MonoLabel>
           <p className="text-3xl font-bold text-portal-text mt-1 tabular-nums">
             {stats.totalScore}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-portal-secondary">
-            Tilgjengelige tester
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-portal-secondary block">Tilgjengelige tester</MonoLabel>
           <p className="text-3xl font-bold text-portal-text mt-1 tabular-nums">
             {stats.totalTests}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-portal-secondary">
-            Beste test
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-portal-secondary block">Beste test</MonoLabel>
           <p className="text-3xl font-bold text-portal-text mt-1">
             {stats.bestTestName ?? "-"}
           </p>

@@ -2,6 +2,7 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { ApperClient } from "./apper-client";
 import { getApperPageData } from "./actions";
 
+import { MonoLabel } from "@/components/portal/patterns";
 export default async function ApperPage() {
   const data = await getApperPageData();
 
@@ -9,9 +10,7 @@ export default async function ApperPage() {
     <div className="space-y-8">
       {/* Neutral header */}
       <div className="space-y-2">
-        <p className="text-xs font-semibold uppercase tracking-wider text-portal-muted">
-          Marketplace
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">Marketplace</MonoLabel>
         <h1 className="text-3xl font-semibold tracking-tight text-portal-text">
           Apper og moduler
         </h1>

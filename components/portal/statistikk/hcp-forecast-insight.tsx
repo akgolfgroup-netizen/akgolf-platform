@@ -2,6 +2,7 @@
 
 import { TrendingDown, TrendingUp, Minus, Target } from "lucide-react";
 import type { HcpForecastData } from "@/app/portal/(dashboard)/statistikk/actions";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface HcpForecastInsightProps {
   data: HcpForecastData;
@@ -77,9 +78,7 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
     <div className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1 space-y-1">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-            Prognose-analyse
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Prognose-analyse</MonoLabel>
           <div className="flex items-baseline gap-3">
             <span className="text-2xl font-bold tabular-nums text-black">
               {currentHcp.toFixed(1)}
@@ -103,9 +102,7 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
 
       <div className="grid grid-cols-2 gap-3">
         <div className="rounded-lg bg-grey-50 p-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-            30 dager
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">30 dager</MonoLabel>
           <p className="mt-1 text-base font-bold tabular-nums text-black">
             {predicted30d.toFixed(1)}{" "}
             <span
@@ -122,9 +119,7 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
           )}
         </div>
         <div className="rounded-lg bg-grey-50 p-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-            90 dager
-          </p>
+          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">90 dager</MonoLabel>
           <p className="mt-1 text-base font-bold tabular-nums text-black">
             {predicted90d.toFixed(1)}{" "}
             <span

@@ -339,9 +339,7 @@ function EmptyState() {
     <div className="space-y-10">
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/statistikk" />
       <div className="space-y-3">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-          Statistikk
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Statistikk</MonoLabel>
         <h1 className="text-2xl font-bold text-black">{HERO_TITLE}</h1>
         <p className="text-[13px] text-grey-400 max-w-xl">
           Folg utviklingen din over tid. Registrer din forste runde for a se trender og analyser.
@@ -465,9 +463,7 @@ export function StatistikkClient({
 
       {/* Hero heading + period selector + CTA */}
       <div className="space-y-3">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
-          Statistikk
-        </p>
+        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Statistikk</MonoLabel>
         <h1 className="text-2xl font-bold text-black">{HERO_TITLE}</h1>
         <p className="text-[13px] text-grey-400 max-w-xl">
           Folg utviklingen din over tid. Analyser trender, Strokes Gained og fokusomrader.
@@ -590,9 +586,7 @@ export function StatistikkClient({
         <PremiumCard delay={0.15}>
           <div className="mb-5 flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-                Strokes Gained
-              </p>
+              <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Strokes Gained</MonoLabel>
               <p className="mt-0.5 text-xs text-text">
                 Per kategori
               </p>
@@ -644,9 +638,7 @@ export function StatistikkClient({
         {/* Treningsvolum stolpediagram */}
         <PremiumCard delay={0.2}>
           <div className="mb-5">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-              Treningsvolum
-            </p>
+            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Treningsvolum</MonoLabel>
             <p className="mt-0.5 text-xs text-text">
               Minutter per uke
             </p>
@@ -659,9 +651,7 @@ export function StatistikkClient({
       <PremiumCard delay={0.22}>
         <div className="mb-5 flex items-start justify-between gap-3">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-              HCP-prognose
-            </p>
+            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">HCP-prognose</MonoLabel>
             <p className="mt-0.5 text-xs text-text">
               Kalman-filter + treningsvolum
             </p>
@@ -686,9 +676,7 @@ export function StatistikkClient({
       <PremiumCard delay={0.25}>
         <div className="mb-5 flex items-start justify-between">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400">
-              Score-trend
-            </p>
+            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Score-trend</MonoLabel>
             <p className="mt-0.5 text-xs text-text">
               Utvikling over tid
             </p>

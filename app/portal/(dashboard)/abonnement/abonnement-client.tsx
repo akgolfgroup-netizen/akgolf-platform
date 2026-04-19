@@ -18,6 +18,7 @@ import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { UpgradeOptions } from "@/components/portal/subscription/upgrade-options";
 import { getStripePortalUrl } from "./actions";
 import type { SubscriptionData } from "./actions";
+import { MonoLabel } from "@/components/portal/patterns";
 
 const TIER_DISPLAY: Record<string, string> = {
   PRO: "Performance Pro",
@@ -156,9 +157,9 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                 <div className="flex items-start gap-3">
                   <Calendar className="w-4 h-4 text-grey-400 mt-0.5 shrink-0" />
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
+                    <MonoLabel size="xs" uppercase className="text-grey-400 block">
                       Kommende bookinger
-                    </p>
+                    </MonoLabel>
                     <p className="text-sm font-semibold text-black mt-0.5 tabular-nums">
                       {upcomingBookings}{" "}
                       {upcomingBookings === 1 ? "økt" : "økter"}
@@ -170,9 +171,9 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                   <div className="flex items-start gap-3">
                     <Calendar className="w-4 h-4 text-grey-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
+                      <MonoLabel size="xs" uppercase className="text-grey-400 block">
                         Utløper
-                      </p>
+                      </MonoLabel>
                       <p className="text-sm font-semibold text-black mt-0.5">
                         {expiresAtFormatted}
                       </p>
@@ -184,9 +185,9 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                   <div className="flex items-start gap-3">
                     <Zap className="w-4 h-4 text-grey-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400">
+                      <MonoLabel size="xs" uppercase className="text-grey-400 block">
                         Bookingsvindu
-                      </p>
+                      </MonoLabel>
                       <p className="text-sm font-semibold text-black mt-0.5 tabular-nums">
                         {quota.bookingWindowDays} dager fremover
                       </p>
