@@ -1,5 +1,7 @@
 import { Providers } from "@/components/portal/providers";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "AK Golf Portal",
   description: "Spillerportal for AK Golf Academy",

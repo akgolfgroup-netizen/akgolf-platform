@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { JUNIOR_FAQ } from "@/lib/website-constants";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Junior Academy",
   description:

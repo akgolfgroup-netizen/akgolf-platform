@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -14,104 +14,14 @@ const inter = Inter({
 
 const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://akgolf.no";
 
-// Viewport konfigurasjon (separert fra metadata i Next.js 15+)
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 5,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
-  ],
-};
-
 export const metadata: Metadata = {
   title: {
     default: "AK Golf Group | Premium golfutvikling",
     template: "%s | AK Golf Group",
   },
-  manifest: "/manifest.json",
-  icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
-    ],
-    apple: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    shortcut: "/favicon.svg",
-  },
   description:
     "Premium golfutvikling for ambisiøse spillere. Individuell coaching, juniorakademi og teknologiløsninger for golfens fremtid.",
   metadataBase: new URL(SITE_URL),
-  alternates: {
-    canonical: "/",
-    languages: {
-      "nb-NO": "/",
-    },
-  },
-  keywords: [
-    "golf",
-    "golf coaching",
-    "golf trener",
-    "golf akademi",
-    "TrackMan",
-    "golf utvikling",
-    "Norge",
-    "Fredrikstad",
-    "Miklagard",
-    "golf instruksjon",
-    "golf undervisning",
-    "golfkurs",
-    "junior golf",
-    "golf trening",
-  ],
-  authors: [{ name: "Anders Kristiansen", url: "https://akgolf.no" }],
-  creator: "AK Golf Group AS",
-  publisher: "AK Golf Group AS",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  openGraph: {
-    type: "website",
-    locale: "nb_NO",
-    siteName: "AK Golf Group",
-    url: SITE_URL,
-    title: "AK Golf Group — Premium golfutvikling",
-    description:
-      "Individuell coaching, juniorakademi og teknologiløsninger for ambisiøse golfere som krever resultater.",
-    images: [
-      {
-        url: `${SITE_URL}/og-image.png`,
-        width: 1200,
-        height: 630,
-        alt: "AK Golf Group — Premium golfutvikling",
-        type: "image/png",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    creator: "@akgolf",
-    site: "@akgolf",
-    title: "AK Golf Group — Premium golfutvikling",
-    description:
-      "Individuell coaching, juniorakademi og teknologiløsninger for ambisiøse golfere.",
-    images: [`${SITE_URL}/og-image.png`],
-  },
-  verification: {
-    // Google Search Console (legg til når du har fått koden)
-    // google: "your-verification-code",
-  },
-  category: "sports",
-  classification: "Sports & Recreation",
 };
 
 export default function RootLayout({
@@ -121,19 +31,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nb" className="h-full">
-      <head>
-        {/* Preconnect til eksterne domener for ytelse */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        
-        {/* DNS prefetch for vanlige eksterne ressurser */}
-        <link rel="dns-prefetch" href="https://analytics.vercel.com" />
-        <link rel="dns-prefetch" href="https://clarity.ms" />
-      </head>
       <body className={`${inter.variable} h-full`}>
         {/* Skip-to-content link for tilgjengelighet */}
         <a

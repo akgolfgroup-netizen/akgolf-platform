@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { getStudents, getDrills } from "../actions";
 import { NyPlanWizard } from "./ny-plan-wizard";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   searchParams: Promise<{ studentId?: string }>;
 }

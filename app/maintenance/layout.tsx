@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Vedlikehold | AK Golf Academy",
   description: "Vi oppgraderer systemene våre for å gi deg en bedre opplevelse.",

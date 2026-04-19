@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ACADEMY_FAQ } from "@/lib/website-constants";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Academy | AK Golf",
   description:

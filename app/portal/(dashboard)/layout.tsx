@@ -8,6 +8,8 @@ import { LenisProvider } from "@/components/portal/layout/lenis-provider";
 import { ServiceWorkerRegistration } from "@/components/portal/layout/service-worker-registration";
 import type { SubscriptionTier, SubscriptionStatus } from "@prisma/client";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardLayout({
   children,
 }: {
