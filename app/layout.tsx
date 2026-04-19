@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -14,14 +14,68 @@ const inter = Inter({
 
 const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://akgolf.no";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#ffffff",
+};
+
 export const metadata: Metadata = {
   title: {
     default: "AK Golf Group | Premium golfutvikling",
     template: "%s | AK Golf Group",
   },
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
   description:
     "Premium golfutvikling for ambisiøse spillere. Individuell coaching, juniorakademi og teknologiløsninger for golfens fremtid.",
   metadataBase: new URL(SITE_URL),
+  keywords: [
+    "golf",
+    "golf coaching",
+    "golf trener",
+    "golf akademi",
+    "TrackMan",
+    "golf utvikling",
+    "Norge",
+    "Fredrikstad",
+    "Miklagard",
+    "golf instruksjon",
+    "golf undervisning",
+    "golfkurs",
+    "junior golf",
+    "golf trening",
+  ],
+  authors: [{ name: "Anders Kristiansen", url: "https://akgolf.no" }],
+  creator: "AK Golf Group AS",
+  publisher: "AK Golf Group AS",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    locale: "nb_NO",
+    siteName: "AK Golf Group",
+    url: SITE_URL,
+    title: "AK Golf Group — Premium golfutvikling",
+    description:
+      "Individuell coaching, juniorakademi og teknologiløsninger for ambisiøse golfere som krever resultater.",
+    images: [`${SITE_URL}/og-image.png`],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AK Golf Group — Premium golfutvikling",
+    description:
+      "Individuell coaching, juniorakademi og teknologiløsninger for ambisiøse golfere.",
+    images: [`${SITE_URL}/og-image.png`],
+  },
+  category: "sports",
 };
 
 export default function RootLayout({

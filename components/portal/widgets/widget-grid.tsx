@@ -177,7 +177,7 @@ export function WidgetGrid({
       {widgets.length === 0 && (
         <div className="text-center py-12 text-muted">
           <p className="text-sm">Ingen widgets aktive.</p>
-          <p className="text-xs mt-1">Klikk "Rediger layout" for å legge til.</p>
+          <p className="text-xs mt-1">Klikk &quot;Rediger layout&quot; for å legge til.</p>
         </div>
       )}
     </div>

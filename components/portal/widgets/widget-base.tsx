@@ -29,8 +29,9 @@ const WIDGET_ICON_MAP: Record<string, LucideIcon> = {
   "layout-grid": LayoutGrid,
 };
 
-function getWidgetIcon(iconName: string): LucideIcon {
-  return WIDGET_ICON_MAP[iconName] ?? LayoutGrid;
+function WidgetIcon({ name, className }: { name: string; className?: string }) {
+  const Icon = WIDGET_ICON_MAP[name] ?? LayoutGrid;
+  return <Icon className={className} />;
 }
 
 // ── Typer ────────────────────────────────────────────────
@@ -62,7 +63,6 @@ export function WidgetBase({
 }: WidgetBaseProps) {
   const [showActions, setShowActions] = useState(false);
   const def = getWidgetDef(widgetId);
-  const Icon = getWidgetIcon(def.icon);
 
   return (
     <motion.div
@@ -93,7 +93,7 @@ export function WidgetBase({
             </div>
           )}
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-soft">
-            <Icon className="w-4 h-4 text-primary" />
+            <WidgetIcon name={def.icon} className="w-4 h-4 text-primary" />
           </div>
           <div>
             <h3 className="text-sm font-semibold text-text">{def.title}</h3>
