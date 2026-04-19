@@ -33,7 +33,6 @@ export function AthleticGridView({
   weekRings,
   stats,
   handicap,
-  playerLevel,
 }: DashboardV3Props) {
   return (
     <motion.div

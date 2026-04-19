@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { HandicapTrendChart } from "@/components/portal/dashboard/handicap-trend-chart";
 import { AchievementsWidget } from "@/components/portal/dashboard/achievements-widget";
 import { SessionsDonut } from "@/components/portal/dashboard/sessions-donut";
-import { TrendingUp, Calendar, Award } from "lucide-react";
+import { Calendar } from "lucide-react";
 import type { DashboardV3Props } from "../dashboard-types";
 
 const item = {
