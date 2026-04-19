@@ -1,16 +1,56 @@
 "use client";
 
+/**
+ * MC Sidebar — Heritage Grid 1:1 (admin-variant).
+ *
+ * Kilde: design-ref/stitch/heritage/admin_player_management/code.html (linjer 1-40 av <aside>)
+ *
+ * Spec:
+ * - Container: h-screen w-64 fixed bg-emerald-950 flex-col py-8 px-4
+ * - Header: mb-10 px-4, h1 text-xl font-bold tracking-widest text-white,
+ *   p text-xs font-medium uppercase text-emerald-100/50
+ * - Nav: flex-1 space-y-2
+ * - Active: bg-lime-400 text-emerald-950 font-bold rounded-lg px-4 py-3 text-sm uppercase tracking-tight
+ * - Inactive: text-emerald-100/70 hover:text-white hover:bg-emerald-900/50
+ * - Bottom: mt-auto pt-6 border-t border-emerald-900/50 px-4
+ * - Bruker beholder grupper (8 i MC_NAV_CONFIG) — Heritage har flat nav men vi må tilpasse
+ * - Gruppe-label: text-[10px] text-emerald-100/40 uppercase tracking-[0.12em]
+ */
 
-import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-
 import { createBrowserClient } from "@supabase/ssr";
 import { AnimatePresence, motion } from "framer-motion";
+import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
-import { MC_NAV_CONFIG, MC_ICON_MAP, type NavGroup, type NavItem } from "./mc-nav-config";
+import { MC_NAV_CONFIG, type NavGroup, type NavItem } from "./mc-nav-config";
 import { canAccessMCPage, isAdmin, isStaff } from "@/lib/portal/rbac";
-import { AKLogo } from "@/components/website/AKLogo";
+
+// Map iconName (lowercase hyphen) → Material Symbol navn (snake_case)
+const ICON_MAP: Record<string, string> = {
+  target: "my_location",
+  zap: "bolt",
+  calendar: "calendar_today",
+  "calendar-days": "calendar_month",
+  "clipboard-list": "assignment",
+  "clipboard-check": "task_alt",
+  "check-circle": "check_circle",
+  clock: "schedule",
+  users: "group",
+  "file-text": "description",
+  "notebook-pen": "edit_note",
+  "message-square": "chat",
+  mail: "mail",
+  bell: "notifications",
+  sparkles: "auto_awesome",
+  bot: "smart_toy",
+  "bar-chart": "bar_chart",
+  "gauge-circle": "speed",
+  wallet: "account_balance_wallet",
+  "layout-dashboard": "dashboard",
+  "building-2": "business",
+  trophy: "emoji_events",
+};
 
 interface MCSidebarProps {
   user: {
@@ -33,34 +73,21 @@ function NavLink({
   isActive: boolean;
   onClick?: () => void;
 }) {
-  const Icon = MC_ICON_MAP[item.iconName];
+  const materialIcon = ICON_MAP[item.iconName] ?? "circle";
 
   return (
     <Link
       href={item.href}
       onClick={onClick}
       className={cn(
-        "relative flex items-center gap-2.5 px-3 py-2.5 mx-2 rounded-lg text-sm font-medium transition-colors",
+        "flex items-center gap-3 px-4 py-3 rounded-lg tracking-tight text-sm uppercase transition-colors",
         isActive
-          ? "bg-black text-white"
-          : "text-black hover:bg-grey-50",
+          ? "bg-lime-400 text-emerald-950 font-bold"
+          : "text-emerald-100/70 hover:text-white hover:bg-emerald-900/50 font-medium",
       )}
       aria-current={isActive ? "page" : undefined}
     >
-      {isActive && (
-        <span
-          className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-r-full bg-accent-cta"
-          aria-hidden="true"
-        />
-      )}
-      {Icon && (
-        <Icon
-          className={cn(
-            "w-[18px] h-[18px] shrink-0",
-            isActive ? "text-white" : "text-grey-400",
-          )}
-        />
-      )}
+      <Icon name={materialIcon} size={20} filled={isActive} />
       <span className="truncate">{item.label}</span>
     </Link>
   );
@@ -85,11 +112,11 @@ function NavGroupComponent({
   if (accessibleItems.length === 0) return null;
 
   return (
-    <div className="mb-5">
-      <div className="px-5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-grey-400">
+    <div className="space-y-1 mb-4">
+      <div className="px-4 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-100/40">
         {group.label}
       </div>
-      <div className="space-y-0.5">
+      <div className="space-y-1">
         {accessibleItems.map((item) => {
           const isActive =
             pathname === item.href ||
@@ -110,21 +137,16 @@ function NavGroupComponent({
 
 function SidebarHeader() {
   return (
-    <div className="px-5 py-4 border-b border-grey-200 flex items-center gap-3">
-      <AKLogo variant="neutral" size={32} />
-      <div className="min-w-0">
-        <span className="block text-sm font-bold text-black truncate">
-          AK Golf
-        </span>
-        <p className="text-[10px] text-primary uppercase tracking-wider font-semibold">
-          Mission Control
-        </p>
-      </div>
+    <div className="mb-8 px-4">
+      <h1 className="text-xl font-bold tracking-widest text-white">AK Golf</h1>
+      <p className="text-xs font-medium uppercase tracking-tight text-emerald-100/50 mt-1">
+        Mission Control
+      </p>
     </div>
   );
 }
 
-function SidebarUserFooter({
+function SidebarBottom({
   user,
   onSignOut,
 }: {
@@ -139,32 +161,43 @@ function SidebarUserFooter({
       : "Invitert";
 
   return (
-    <div className="p-3 border-t border-grey-200">
-      <div className="flex items-center gap-2.5 p-2 rounded-lg">
-        <div className="w-9 h-9 rounded-full bg-grey-50 text-black flex items-center justify-center text-sm font-semibold shrink-0">
+    <div className="mt-auto pt-6 border-t border-emerald-900/50 px-4">
+      {/* User-info + logout */}
+      <div className="flex items-center gap-3 mb-4 px-4">
+        <div className="w-9 h-9 rounded-full bg-emerald-900 text-lime-400 flex items-center justify-center text-sm font-bold shrink-0">
           {initial}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-semibold text-black truncate">
+          <div className="text-sm font-semibold text-white truncate">
             {user.name ?? "Bruker"}
           </div>
-          <div className="text-xs text-grey-400 truncate">
-            {user.email ?? roleLabel}
+          <div className="text-[10px] text-emerald-100/50 uppercase tracking-widest truncate">
+            {roleLabel}
           </div>
         </div>
       </div>
-      <button
-        onClick={onSignOut}
-        className="mt-1 w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-grey-400 hover:text-error hover:bg-error-light transition-colors cursor-pointer"
-      >
-        <Icon name="logout" className="w-4 h-4" />
-        <span>Logg ut</span>
-      </button>
+
+      <div className="space-y-1">
+        <Link
+          href="/portal"
+          className="flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-emerald-100/70 hover:text-white transition-colors"
+        >
+          <Icon name="home" size={18} />
+          <span>Til portal</span>
+        </Link>
+        <button
+          onClick={onSignOut}
+          className="w-full flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-emerald-100/70 hover:text-white transition-colors"
+        >
+          <Icon name="logout" size={18} />
+          <span>Logg ut</span>
+        </button>
+      </div>
     </div>
   );
 }
 
-function SidebarContent({
+function SidebarBody({
   user,
   pathname,
   onSignOut,
@@ -177,7 +210,8 @@ function SidebarContent({
 }) {
   return (
     <>
-      <nav className="flex-1 py-4 overflow-y-auto">
+      <SidebarHeader />
+      <nav className="flex-1 overflow-y-auto">
         {MC_NAV_CONFIG.map((group) => (
           <NavGroupComponent
             key={group.label}
@@ -188,7 +222,7 @@ function SidebarContent({
           />
         ))}
       </nav>
-      <SidebarUserFooter user={user} onSignOut={onSignOut} />
+      <SidebarBottom user={user} onSignOut={onSignOut} />
     </>
   );
 }
@@ -208,15 +242,15 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
 
   return (
     <>
-      <aside className="fixed left-0 top-0 h-full w-[240px] hidden lg:flex flex-col z-20 bg-white border-r border-grey-200">
-        <SidebarHeader />
-        <SidebarContent
-          user={user}
-          pathname={pathname}
-          onSignOut={handleSignOut}
-        />
+      {/* Desktop */}
+      <aside
+        className="h-screen w-64 fixed left-0 top-0 flex-col py-8 px-0 z-20 hidden lg:flex"
+        style={{ background: "#022c22" }}
+      >
+        <SidebarBody user={user} pathname={pathname} onSignOut={handleSignOut} />
       </aside>
 
+      {/* Mobile */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -225,37 +259,24 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={onClose}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
             />
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 h-full w-72 flex flex-col z-50 lg:hidden bg-white border-r border-grey-200"
+              className="fixed left-0 top-0 h-full w-64 flex flex-col py-8 z-50 lg:hidden"
+              style={{ background: "#022c22" }}
             >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-grey-200">
-                <div className="flex items-center gap-3">
-                  <AKLogo variant="neutral" size={32} />
-                  <div className="min-w-0">
-                    <span className="block text-sm font-bold text-black truncate">
-                      AK Golf
-                    </span>
-                    <p className="text-[10px] text-primary uppercase tracking-wider font-semibold">
-                      Mission Control
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={onClose}
-                  className="p-2 rounded-lg text-grey-400 hover:text-black hover:bg-grey-50 transition-colors cursor-pointer"
-                  aria-label="Lukk meny"
-                >
-                  <Icon name="close" className="w-5 h-5" />
-                </button>
-              </div>
-
-              <SidebarContent
+              <button
+                onClick={onClose}
+                className="absolute right-4 top-4 p-2 rounded-lg text-emerald-100/70 hover:text-white hover:bg-emerald-900/50 transition-colors"
+                aria-label="Lukk meny"
+              >
+                <Icon name="close" size={20} />
+              </button>
+              <SidebarBody
                 user={user}
                 pathname={pathname}
                 onSignOut={handleSignOut}
