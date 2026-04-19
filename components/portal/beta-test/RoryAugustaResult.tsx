@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icon";
 'use client';
 
 import { 
@@ -6,13 +7,7 @@ import {
   generateCombinedSummary,
   BENCHMARKS
 } from '@/lib/portal/beta-test/rory-augusta-test';
-import { 
-  Target, 
-  Navigation,
-  Users,
-  Crown,
-  BarChart3
-} from 'lucide-react';
+
 
 interface RoryAugustaResultProps {
   approachResult?: TestResult100m;
@@ -43,13 +38,13 @@ export function RoryAugustaResult({
         </p>
         <div className="flex items-center justify-center gap-6 text-sm">
           <div className="flex items-center gap-2">
-            <Crown className="w-4 h-4 text-amber-500" />
+            <Icon name="workspace_premium" className="w-4 h-4 text-amber-500" />
             <span className="text-slate-600 dark:text-slate-400">
               Rory McIlroy (World #1)
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <Users className="w-4 h-4 text-blue-500" />
+            <Icon name="person"s className="w-4 h-4 text-blue-500" />
             <span className="text-slate-600 dark:text-slate-400">
               PGA Tour Gjennomsnitt
             </span>
@@ -63,7 +58,7 @@ export function RoryAugustaResult({
           {/* vs Rory */}
           <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-white">
             <div className="flex items-center gap-2 mb-4">
-              <Crown className="w-5 h-5" />
+              <Icon name="workspace_premium" className="w-5 h-5" />
               <span className="font-semibold">vs Rory McIlroy</span>
             </div>
             <div className="text-center">
@@ -79,7 +74,7 @@ export function RoryAugustaResult({
           {/* vs Tour Average */}
           <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-white">
             <div className="flex items-center gap-2 mb-4">
-              <Users className="w-5 h-5" />
+              <Icon name="person"s className="w-5 h-5" />
               <span className="font-semibold">vs PGA Tour Snitt</span>
             </div>
             <div className="text-center">
@@ -98,7 +93,7 @@ export function RoryAugustaResult({
       {summary && (
         <div className="bg-slate-900 dark:bg-slate-800 rounded-2xl p-5 text-white">
           <div className="flex items-center gap-3 mb-3">
-            <Target className="w-5 h-5 text-green-400" />
+            <Icon name="my_location" className="w-5 h-5 text-green-400" />
             <h3 className="font-semibold">Denne ukens fokus</h3>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -129,7 +124,7 @@ export function RoryAugustaResult({
         <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-              <Target className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <Icon name="my_location" className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">
@@ -145,7 +140,7 @@ export function RoryAugustaResult({
           <div className="grid md:grid-cols-2 gap-4 mb-6">
             {/* vs Rory */}
             <BenchmarkCard
-              icon={<Crown className="w-4 h-4" />}
+              icon={<Icon name="workspace_premium" className="w-4 h-4" />}
               title="vs Rory McIlroy"
               color="amber"
               playerValue={approachResult.averageProximity}
@@ -162,7 +157,7 @@ export function RoryAugustaResult({
             
             {/* vs Tour Avg */}
             <BenchmarkCard
-              icon={<Users className="w-4 h-4" />}
+              icon={<Icon name="person"s className="w-4 h-4" />}
               title="vs PGA Tour Snitt"
               color="blue"
               playerValue={approachResult.averageProximity}
@@ -211,7 +206,7 @@ export function RoryAugustaResult({
         <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl">
-              <Navigation className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+              <Icon name="navigation" className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
             <div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">
@@ -227,7 +222,7 @@ export function RoryAugustaResult({
           <div className="grid md:grid-cols-2 gap-4 mb-6">
             {/* vs Rory */}
             <BenchmarkCard
-              icon={<Crown className="w-4 h-4" />}
+              icon={<Icon name="workspace_premium" className="w-4 h-4" />}
               title="vs Rory McIlroy"
               color="amber"
               playerValue={driverResult.fairwaysHit}
@@ -244,7 +239,7 @@ export function RoryAugustaResult({
             
             {/* vs Tour Avg */}
             <BenchmarkCard
-              icon={<Users className="w-4 h-4" />}
+              icon={<Icon name="person"s className="w-4 h-4" />}
               title="vs PGA Tour Snitt"
               color="blue"
               playerValue={driverResult.fairwaysHit}
@@ -291,14 +286,14 @@ export function RoryAugustaResult({
       {/* Benchmark Reference Table */}
       <div className="bg-slate-100 dark:bg-slate-800/50 rounded-xl p-5">
         <h4 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-          <BarChart3 className="w-4 h-4" />
+          <Icon name="bar_chart" className="w-4 h-4" />
           Benchmark Referanse
         </h4>
         <div className="grid md:grid-cols-2 gap-6">
           {/* 100m Benchmarks */}
           <div className="space-y-2">
             <h5 className="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
-              <Target className="w-4 h-4" />
+              <Icon name="my_location" className="w-4 h-4" />
               100m Approach
             </h5>
             <table className="w-full text-sm">
@@ -312,7 +307,7 @@ export function RoryAugustaResult({
               <tbody className="text-slate-700 dark:text-slate-300">
                 <tr>
                   <td className="py-1 flex items-center gap-1">
-                    <Crown className="w-3 h-3 text-amber-500" />
+                    <Icon name="workspace_premium" className="w-3 h-3 text-amber-500" />
                     Rory McIlroy
                   </td>
                   <td className="text-right font-medium">{BENCHMARKS.rory.approach100m.averageProximity}m</td>
@@ -320,7 +315,7 @@ export function RoryAugustaResult({
                 </tr>
                 <tr>
                   <td className="py-1 flex items-center gap-1">
-                    <Users className="w-3 h-3 text-blue-500" />
+                    <Icon name="person"s className="w-3 h-3 text-blue-500" />
                     PGA Tour Snitt
                   </td>
                   <td className="text-right font-medium">{BENCHMARKS.tourAverage.approach100m.averageProximity}m</td>
@@ -333,7 +328,7 @@ export function RoryAugustaResult({
           {/* Driver Benchmarks */}
           <div className="space-y-2">
             <h5 className="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
-              <Navigation className="w-4 h-4" />
+              <Icon name="navigation" className="w-4 h-4" />
               Driver (60m fairway)
             </h5>
             <table className="w-full text-sm">
@@ -347,7 +342,7 @@ export function RoryAugustaResult({
               <tbody className="text-slate-700 dark:text-slate-300">
                 <tr>
                   <td className="py-1 flex items-center gap-1">
-                    <Crown className="w-3 h-3 text-amber-500" />
+                    <Icon name="workspace_premium" className="w-3 h-3 text-amber-500" />
                     Rory McIlroy
                   </td>
                   <td className="text-right font-medium">{BENCHMARKS.rory.driver.fairways}/10</td>
@@ -355,7 +350,7 @@ export function RoryAugustaResult({
                 </tr>
                 <tr>
                   <td className="py-1 flex items-center gap-1">
-                    <Users className="w-3 h-3 text-blue-500" />
+                    <Icon name="person"s className="w-3 h-3 text-blue-500" />
                     PGA Tour Snitt
                   </td>
                   <td className="text-right font-medium">{BENCHMARKS.tourAverage.driver.fairways}/10</td>

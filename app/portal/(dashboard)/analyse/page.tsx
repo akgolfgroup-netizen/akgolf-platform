@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { requirePortalUser } from "@/lib/portal/auth";
 import {
@@ -7,14 +8,7 @@ import {
   getTrackManStats,
 } from "./actions";
 
-import {
-  Target,
-  BarChart3,
-  Upload,
-  Lightbulb,
-  Info,
-  ChevronRight,
-} from "lucide-react";
+import { Target, Upload, Lightbulb, Info } from "lucide-react";
 import { SubscriptionTier } from "@prisma/client";
 import { hasTierAccess } from "@/lib/portal/rbac";
 import {
@@ -78,7 +72,7 @@ export default async function AnalysePage() {
           role="alert"
           className="flex items-center gap-3 rounded-xl border border-error/30 bg-error-light p-4"
         >
-          <Info className="h-5 w-5 flex-shrink-0 text-error" />
+          <Icon name="info" className="h-5 w-5 flex-shrink-0 text-error" />
           <p className="text-[13px] font-medium text-error-text">
             Kunne ikke laste handicap-data. Prøv å laste siden på nytt.
           </p>
@@ -90,7 +84,7 @@ export default async function AnalysePage() {
         <div className="bg-white rounded-xl shadow-card p-6">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-warning-light">
-              <Lightbulb className="h-6 w-6 text-warning" strokeWidth={1.75} />
+              <Icon name="lightbulb" className="h-6 w-6 text-warning" strokeWidth={1.75} />
             </div>
             <div className="flex-1">
               <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-outline">
@@ -169,7 +163,7 @@ export default async function AnalysePage() {
         <div className="bg-white rounded-xl shadow-card p-6">
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-surface-container">
-              <BarChart3 className="h-6 w-6 text-outline" strokeWidth={1.75} />
+              <Icon name="bar_chart" className="h-6 w-6 text-outline" strokeWidth={1.75} />
             </div>
             <h3 className="mb-2 text-[14px] font-semibold text-on-surface">
               Ingen rundestatistikk ennå
@@ -334,12 +328,12 @@ export default async function AnalysePage() {
       <details className="group overflow-hidden rounded-xl border border-outline-variant bg-white shadow-card">
         <summary className="flex cursor-pointer list-none items-center gap-3 p-5 transition-colors hover:bg-surface">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft">
-            <Info className="h-5 w-5 text-primary" strokeWidth={1.75} />
+            <Icon name="info" className="h-5 w-5 text-primary" strokeWidth={1.75} />
           </div>
           <span className="text-[14px] font-semibold text-on-surface">
             Om Strokes Gained
           </span>
-          <ChevronRight className="ml-auto h-5 w-5 text-outline transition-transform group-open:rotate-90" />
+          <Icon name="chevron_right" className="ml-auto h-5 w-5 text-outline transition-transform group-open:rotate-90" />
         </summary>
         <div className="border-t border-outline-variant p-5 pt-0">
           <p className="mt-4 text-[13px] leading-relaxed text-outline">
@@ -437,7 +431,7 @@ function AnalyseQuickAction({
         </p>
         <p className="truncate text-[11px] text-outline">{description}</p>
       </div>
-      <ChevronRight className="h-3.5 w-3.5 -translate-x-1 text-outline opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+      <Icon name="chevron_right" className="h-3.5 w-3.5 -translate-x-1 text-outline opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
     </Link>
   );
 }

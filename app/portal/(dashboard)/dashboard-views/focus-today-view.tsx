@@ -1,11 +1,13 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 import { WelcomeSection } from "@/components/portal/dashboard/welcome-section";
 import { NextBookingCard } from "@/components/portal/dashboard/next-booking-card";
 import { CoachInsightCard } from "@/components/portal/dashboard/coach-insight-card";
 import { TrainingActivityCard } from "@/components/portal/dashboard/training-activity-card";
-import { Clock, Target, CheckCircle2 } from "lucide-react";
+
 import type { DashboardV3Props } from "../dashboard-types";
 
 const item = {
@@ -53,18 +55,17 @@ export function FocusTodayView({
         {/* Dagens fokus */}
         <div className="rounded-2xl border border-grey-100 bg-white p-6 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
-            <Target className="w-5 h-5 text-primary" />
+            <Icon name="my_location" className="w-5 h-5 text-primary" />
             <h3 className="text-sm font-semibold text-text">Dagens fokus</h3>
           </div>
           <div className="space-y-3">
             {todaysFocus.map((task, i) => (
               <div key={i} className="flex items-center gap-3">
-                <CheckCircle2
+                <Icon name="check"Circle2
                   className={
                     "w-5 h-5 shrink-0 " +
                     (task.done ? "text-success fill-success" : "text-grey-200")
-                  }
-                />
+                  } />
                 <span
                   className={
                     "text-sm " + (task.done ? "text-muted line-through" : "text-text")
@@ -80,7 +81,7 @@ export function FocusTodayView({
         {/* Neste steg */}
         <div className="rounded-2xl border border-grey-100 bg-white p-6 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
-            <Clock className="w-5 h-5 text-primary" />
+            <Icon name="schedule" className="w-5 h-5 text-primary" />
             <h3 className="text-sm font-semibold text-text">Neste steg</h3>
           </div>
           <div className="space-y-3 text-sm text-text">

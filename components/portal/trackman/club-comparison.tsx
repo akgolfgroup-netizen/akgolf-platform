@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo } from "react";
 import {
   BarChart,
@@ -12,7 +14,7 @@ import {
   Cell,
   ReferenceLine,
 } from "recharts";
-import { AlertTriangle } from "lucide-react";
+
 
 interface ClubData {
   club: string;
@@ -174,7 +176,7 @@ export function ClubComparison({
       {highlightGaps && problemGaps.length > 0 && (
         <div className="mb-4 p-3 rounded-lg bg-[#C48A32]/10 border border-[#C48A32]/30">
           <div className="flex items-center gap-2 mb-2">
-            <AlertTriangle className="w-4 h-4 text-[#C48A32]" />
+            <Icon name="warning" className="w-4 h-4 text-[#C48A32]" />
             <p className="text-sm font-medium text-[#C48A32]">Gap-analyse</p>
           </div>
           <ul className="space-y-1">

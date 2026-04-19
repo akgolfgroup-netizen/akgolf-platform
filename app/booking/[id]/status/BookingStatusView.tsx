@@ -1,28 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  User,
-  CreditCard,
-  CheckCircle2,
-  XCircle,
-  AlertCircle,
-  Hourglass,
-  Loader2,
-  ChevronLeft,
-  FileText,
-  RefreshCw,
-  MessageSquare,
-  ExternalLink,
-  Printer,
-  Share2,
-} from "lucide-react";
+import { Hourglass, Printer, Share2 } from "lucide-react";
 import type { BookingStatus, PaymentStatus, PaymentMethod } from "@prisma/client";
 
 interface BookingData {
@@ -72,7 +56,7 @@ const statusConfig: Record<BookingStatus, {
   CONFIRMED: {
     label: "Bekreftet",
     description: "Din booking er bekreftet og klar",
-    icon: <CheckCircle2 className="w-5 h-5" />,
+    icon: <Icon name="check"Circle2 className="w-5 h-5" />,
     color: "text-[var(--color-success-text)]",
     bgColor: "bg-[var(--color-success-light)]",
     borderColor: "border-[var(--color-success)]/20",
@@ -80,7 +64,7 @@ const statusConfig: Record<BookingStatus, {
   CANCELLED: {
     label: "Avbestilt",
     description: "Booking har blitt avbestilt",
-    icon: <XCircle className="w-5 h-5" />,
+    icon: <Icon name="close"Circle className="w-5 h-5" />,
     color: "text-[var(--color-error-text)]",
     bgColor: "bg-[var(--color-error-light)]",
     borderColor: "border-[var(--color-error)]/20",
@@ -88,7 +72,7 @@ const statusConfig: Record<BookingStatus, {
   NO_SHOW: {
     label: "Ikke møtt",
     description: "Du møtte ikke opp til timen",
-    icon: <AlertCircle className="w-5 h-5" />,
+    icon: <Icon name="error" className="w-5 h-5" />,
     color: "text-[var(--color-grey-600)]",
     bgColor: "bg-[var(--color-grey-100)]",
     borderColor: "border-[var(--color-grey-300)]",
@@ -96,7 +80,7 @@ const statusConfig: Record<BookingStatus, {
   COMPLETED: {
     label: "Gjennomført",
     description: "Timen er fullført",
-    icon: <CheckCircle2 className="w-5 h-5" />,
+    icon: <Icon name="check"Circle2 className="w-5 h-5" />,
     color: "text-[var(--color-brand)]",
     bgColor: "bg-[var(--color-brand-light)]",
     borderColor: "border-[var(--color-brand)]/20",
@@ -213,25 +197,25 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
       label: "Booking registrert",
       date: booking.createdAt,
       completed: true,
-      icon: <FileText className="w-4 h-4" />,
+      icon: <Icon name="description" className="w-4 h-4" />,
     },
     {
       label: booking.amount === 0 ? "Gratis booking" : "Betaling mottatt",
       date: booking.paymentStatus === "PAID" ? booking.createdAt : null,
       completed: booking.paymentStatus === "PAID" || booking.amount === 0,
-      icon: <CreditCard className="w-4 h-4" />,
+      icon: <Icon name="credit_card" className="w-4 h-4" />,
     },
     {
       label: "Booking bekreftet",
       date: booking.status !== "PENDING" ? booking.createdAt : null,
       completed: booking.status === "CONFIRMED" || booking.status === "COMPLETED" || booking.status === "NO_SHOW",
-      icon: <CheckCircle2 className="w-4 h-4" />,
+      icon: <Icon name="check"Circle2 className="w-4 h-4" />,
     },
     {
       label: "Timen gjennomført",
       date: booking.status === "COMPLETED" || booking.status === "NO_SHOW" ? booking.date : null,
       completed: booking.status === "COMPLETED",
-      icon: booking.status === "NO_SHOW" ? <XCircle className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />,
+      icon: booking.status === "NO_SHOW" ? <Icon name="close"Circle className="w-4 h-4" /> : <Icon name="check"Circle2 className="w-4 h-4" />,
       isNoShow: booking.status === "NO_SHOW",
     },
   ];
@@ -241,7 +225,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
       label: "Booking avbestilt",
       date: booking.cancelledAt ?? null,
       completed: true,
-      icon: <XCircle className="w-4 h-4" />,
+      icon: <Icon name="close"Circle className="w-4 h-4" />,
       isCancelled: true,
     };
     timelineSteps.pop();
@@ -257,7 +241,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
               href={isAuthenticated ? "/portal/bookinger" : "/booking"}
               className="inline-flex items-center gap-2 text-sm text-[var(--color-grey-600)] hover:text-[var(--color-black)] transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <Icon name="chevron_left" className="w-4 h-4" />
               {isAuthenticated ? "Tilbake til bookinger" : "Tilbake til booking"}
             </Link>
             <div className="flex items-center gap-2">
@@ -333,7 +317,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 {/* Date & Time */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-5 h-5 text-[var(--color-grey-600)]" />
+                    <Icon name="calendar_today" className="w-5 h-5 text-[var(--color-grey-600)]" />
                   </div>
                   <div>
                     <p className="font-medium text-[var(--color-black)]">{booking.date}</p>
@@ -344,7 +328,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 {/* Duration */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-[var(--color-grey-600)]" />
+                    <Icon name="schedule" className="w-5 h-5 text-[var(--color-grey-600)]" />
                   </div>
                   <div>
                     <p className="font-medium text-[var(--color-black)]">{booking.duration} minutter</p>
@@ -355,7 +339,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 {/* Instructor */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                    <User className="w-5 h-5 text-[var(--color-grey-600)]" />
+                    <Icon name="person" className="w-5 h-5 text-[var(--color-grey-600)]" />
                   </div>
                   <div>
                     <p className="font-medium text-[var(--color-black)]">{booking.instructorName}</p>
@@ -369,7 +353,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 {booking.locationName && (
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-[var(--color-grey-600)]" />
+                      <Icon name="location_on" className="w-5 h-5 text-[var(--color-grey-600)]" />
                     </div>
                     <div>
                       <p className="font-medium text-[var(--color-black)]">{booking.locationName}</p>
@@ -384,7 +368,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 {booking.price && (
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                      <CreditCard className="w-5 h-5 text-[var(--color-grey-600)]" />
+                      <Icon name="credit_card" className="w-5 h-5 text-[var(--color-grey-600)]" />
                     </div>
                     <div>
                       <p className="font-medium text-[var(--color-black)]">{booking.price}</p>
@@ -406,7 +390,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6"
               >
                 <div className="flex items-center gap-2 mb-4">
-                  <MessageSquare className="w-5 h-5 text-[var(--color-grey-600)]" />
+                  <Icon name="chat" className="w-5 h-5 text-[var(--color-grey-600)]" />
                   <h3 className="font-semibold text-[var(--color-black)]">Notater</h3>
                 </div>
                 {booking.studentNotes && (
@@ -439,7 +423,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                       href={`/portal/bookinger/${booking.id}/endre`}
                       className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-black)] text-white rounded-full text-sm font-medium hover:bg-[var(--color-grey-800)] transition-colors"
                     >
-                      <RefreshCw className="w-4 h-4" />
+                      <Icon name="refresh" className="w-4 h-4" />
                       Endre tid
                     </Link>
                   )}
@@ -450,9 +434,9 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                       className="inline-flex items-center gap-2 px-4 py-2 border border-[var(--color-error)] text-[var(--color-error)] rounded-full text-sm font-medium hover:bg-[var(--color-error-light)] transition-colors disabled:opacity-50"
                     >
                       {isCancelling ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                       ) : (
-                        <XCircle className="w-4 h-4" />
+                        <Icon name="close"Circle className="w-4 h-4" />
                       )}
                       Avbestill
                     </button>
@@ -494,7 +478,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                       }`}
                     >
                       {step.completed && !step.isNoShow && !step.isCancelled ? (
-                        <CheckCircle2 className="w-5 h-5" />
+                        <Icon name="check"Circle2 className="w-5 h-5" />
                       ) : (
                         step.icon
                       )}
@@ -532,7 +516,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
               className="text-[var(--color-brand)] hover:underline inline-flex items-center gap-1"
             >
               Kontakt oss
-              <ExternalLink className="w-3 h-3" />
+              <Icon name="open_in_new" className="w-3 h-3" />
             </Link>
           </p>
         </motion.div>
@@ -548,7 +532,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
           >
             <div className="flex items-start gap-4 mb-4">
               <div className="w-12 h-12 rounded-full bg-[var(--color-warning-light)] flex items-center justify-center flex-shrink-0">
-                <AlertCircle className="w-6 h-6 text-[var(--color-warning)]" />
+                <Icon name="error" className="w-6 h-6 text-[var(--color-warning)]" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-[var(--color-black)]">Bekreft avbestilling</h3>
@@ -586,7 +570,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 disabled={isCancelling}
                 className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-[var(--color-error)] rounded-full hover:bg-[var(--color-error)]/85 transition-colors flex items-center justify-center gap-2"
               >
-                {isCancelling && <Loader2 className="w-4 h-4 animate-spin" />}
+                {isCancelling && <Icon name="progress_activity" className="w-4 h-4 animate-spin" />}
                 {isCancelling ? "Avbestiller..." : "Bekreft avbestilling"}
               </button>
             </div>

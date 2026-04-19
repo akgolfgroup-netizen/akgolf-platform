@@ -1,6 +1,8 @@
 "use client";
 
-import { Clock, User, ChevronRight } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type { BookingServiceType } from "./booking-types";
@@ -52,11 +54,11 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
                   )}
                   <div className="flex items-center gap-5 text-sm text-grey-400">
                     <span className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-grey-400" />
+                      <Icon name="schedule" className="w-3.5 h-3.5 text-grey-400" />
                       {svc.duration} min
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <User className="w-3.5 h-3.5 text-grey-400" />
+                      <Icon name="person" className="w-3.5 h-3.5 text-grey-400" />
                       {svc.maxStudents === 1
                         ? "Individuell"
                         : `Gruppe (maks ${svc.maxStudents})`}
@@ -67,7 +69,7 @@ export function ServiceSelector({ services, onSelect }: ServiceSelectorProps) {
                   <span className="text-xl font-semibold text-black tabular-nums">
                     {formatBookingPrice(svc.price)}
                   </span>
-                  <ChevronRight className="w-4 h-4 text-grey-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Icon name="chevron_right" className="w-4 h-4 text-grey-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </div>
             </PremiumCard>

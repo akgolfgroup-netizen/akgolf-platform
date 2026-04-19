@@ -1,18 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import {
- Trophy,
- Calendar,
- Users,
- MapPin,
- Plus,
- ExternalLink,
- CheckCircle,
- Clock,
- Trash2,
-} from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
@@ -252,7 +244,7 @@ export function TurneringerClient({
  variant="accent"
  onClick={() => setShowModal(true)}
  >
- <Plus className="w-4 h-4 mr-2"/>
+ <Icon name="add" className="w-4 h-4 mr-2" />
  Ny turnering
  </Button>
  }
@@ -263,22 +255,22 @@ export function TurneringerClient({
  <AdminStatCard
  label="Kommende"
  value={stats.upcoming}
- icon={<Calendar className="w-5 h-5"/>}
+ icon={<Icon name="calendar_today" className="w-5 h-5" />}
  />
  <AdminStatCard
  label="Pågående"
  value={stats.ongoing}
- icon={<Clock className="w-5 h-5"/>}
+ icon={<Icon name="schedule" className="w-5 h-5" />}
  />
  <AdminStatCard
  label="Fullført"
  value={stats.completed}
- icon={<CheckCircle className="w-5 h-5"/>}
+ icon={<Icon name="check"Circle className="w-5 h-5" />}
  />
  <AdminStatCard
  label="Totale spillere"
  value={stats.totalPlayers}
- icon={<Users className="w-5 h-5"/>}
+ icon={<Icon name="person"s className="w-5 h-5" />}
  />
  </div>
 
@@ -306,7 +298,7 @@ export function TurneringerClient({
  {/* Tournaments List */}
  {filteredTournaments.length === 0 ? (
  <AdminEmptyState
- icon={<Trophy className="w-6 h-6"/>}
+ icon={<Icon name="emoji_events" className="w-6 h-6" />}
  title="Ingen turneringer funnet"
  description="Opprett en ny turnering for å komme i gang."
  action={
@@ -314,7 +306,7 @@ export function TurneringerClient({
  variant="accent"
  onClick={() => setShowModal(true)}
  >
- <Plus className="w-4 h-4 mr-2"/>
+ <Icon name="add" className="w-4 h-4 mr-2" />
  Ny turnering
  </Button>
  }
@@ -334,7 +326,7 @@ export function TurneringerClient({
  config.iconWrapClass,
  )}
  >
- <Trophy className={cn("w-6 h-6", config.iconClass)} />
+ <Icon name="emoji_events" className={cn("w-6 h-6", config.iconClass)} />
  </div>
  <div className="min-w-0">
  <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -352,7 +344,7 @@ export function TurneringerClient({
  </div>
  <div className="flex flex-wrap items-center gap-4 text-sm text-grey-500">
  <span className="flex items-center gap-1">
- <Calendar className="w-3.5 h-3.5"/>
+ <Icon name="calendar_today" className="w-3.5 h-3.5" />
  {format(new Date(tournament.startDate), "d. MMM", {
  locale: nb,
  })}
@@ -370,12 +362,12 @@ export function TurneringerClient({
  </span>
  {tournament.location && (
  <span className="flex items-center gap-1">
- <MapPin className="w-3.5 h-3.5"/>
+ <Icon name="location_on" className="w-3.5 h-3.5" />
  {tournament.location}
  </span>
  )}
  <span className="flex items-center gap-1">
- <Users className="w-3.5 h-3.5"/>
+ <Icon name="person"s className="w-3.5 h-3.5" />
  {tournament.playerCount} spillere
  </span>
  </div>
@@ -393,7 +385,7 @@ export function TurneringerClient({
  className="admin-btn admin-btn-ghost"
  aria-label="Åpne ekstern lenke"
  >
- <ExternalLink className="w-4 h-4"/>
+ <Icon name="open_in_new" className="w-4 h-4" />
  </a>
  )}
  <Button
@@ -404,7 +396,7 @@ export function TurneringerClient({
  disabled={isPending}
  aria-label="Slett turnering"
  >
- <Trash2 className="w-4 h-4"/>
+ <Icon name="delete" className="w-4 h-4" />
  </Button>
  </div>
  </div>

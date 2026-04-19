@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Timer, Check, X } from "lucide-react";
+import { Timer } from "lucide-react";
 import type { PreShotRoutine } from "@/lib/portal/golf/decade-caddy";
 
 interface PreShotGuideProps {
@@ -68,7 +70,7 @@ export function PreShotGuide({ routine, onComplete, onClose }: PreShotGuideProps
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[var(--color-grey-100)]">
           <div className="flex items-center gap-2">
-            <Timer className="h-5 w-5" style={{ color: "var(--color-ai)" }} />
+            <Icon name="timer" className="h-5 w-5" style={{ color: "var(--color-ai)" }} />
             <span className="text-sm font-semibold text-[var(--color-grey-900)]">
               Pre-shot rutine
             </span>
@@ -80,7 +82,7 @@ export function PreShotGuide({ routine, onComplete, onClose }: PreShotGuideProps
             onClick={onClose}
             className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-[var(--color-grey-100)] transition-colors"
           >
-            <X className="h-4 w-4 text-[var(--color-grey-500)]" />
+            <Icon name="close" className="h-4 w-4 text-[var(--color-grey-500)]" />
           </button>
         </div>
 
@@ -138,7 +140,7 @@ export function PreShotGuide({ routine, onComplete, onClose }: PreShotGuideProps
                   }`}
                   style={isActive ? { backgroundColor: "var(--color-ai)" } : undefined}
                 >
-                  {isDone ? <Check className="h-3 w-3" /> : i + 1}
+                  {isDone ? <Icon name="check" className="h-3 w-3" /> : i + 1}
                 </div>
                 <div>
                   <div

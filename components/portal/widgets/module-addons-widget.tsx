@@ -1,7 +1,9 @@
 "use client";
 
-import { Check, ExternalLink } from "lucide-react";
 
+
+
+import { Icon } from "@/components/ui/icon";
 /**
  * ModuleAddonsWidget — viser tilgjengelige moduler og aktive abonnement.
  *
@@ -53,11 +55,11 @@ export function ModuleAddonsWidget() {
           <div className="flex items-center gap-3">
             {mod.active ? (
               <div className="w-6 h-6 rounded-full bg-success/10 flex items-center justify-center">
-                <Check className="w-3.5 h-3.5 text-success" />
+                <Icon name="check" className="w-3.5 h-3.5 text-success" />
               </div>
             ) : (
               <div className="w-6 h-6 rounded-full bg-grey-100 flex items-center justify-center">
-                <ExternalLink className="w-3 h-3 text-grey-400" />
+                <Icon name="open_in_new" className="w-3 h-3 text-grey-400" />
               </div>
             )}
             <div>

@@ -1,22 +1,11 @@
+import { Icon } from "@/components/ui/icon";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  ArrowLeft,
-  Clock,
-  Target,
-  Activity,
-  MessageSquare,
-  CheckCircle2,
-  XCircle,
-  Star,
-  Layers,
-  Gauge,
-  Zap,
-} from "lucide-react";
+import { Layers } from "lucide-react";
 import {
   L_PHASES,
   M_ENVIRONMENTS,
@@ -94,7 +83,7 @@ export default async function SessionDetailPage({ params }: Props) {
           href="/portal/dagbok"
           className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white border border-[var(--color-outline-variant)]/70 text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container)] hover:text-[var(--color-on-surface)] transition-colors"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <Icon name="arrow_back" className="w-5 h-5" />
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-[var(--color-on-surface)]">{sessionTitle}</h1>
@@ -111,7 +100,7 @@ export default async function SessionDetailPage({ params }: Props) {
           {log.durationMinutes && (
             <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-container)] rounded-xl">
               <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                <Clock className="w-5 h-5 text-[var(--color-primary)]" />
+                <Icon name="schedule" className="w-5 h-5 text-[var(--color-primary)]" />
               </div>
               <div>
                 <p className="text-xs text-[var(--color-on-surface-variant)]">Varighet</p>
@@ -123,7 +112,7 @@ export default async function SessionDetailPage({ params }: Props) {
           {log.focusArea && (
             <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-container)] rounded-xl">
               <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                <Target className="w-5 h-5 text-[var(--color-primary)]" />
+                <Icon name="my_location" className="w-5 h-5 text-[var(--color-primary)]" />
               </div>
               <div>
                 <p className="text-xs text-[var(--color-on-surface-variant)]">Fokusområde</p>
@@ -135,7 +124,7 @@ export default async function SessionDetailPage({ params }: Props) {
           {log.rating !== null && (
             <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-container)] rounded-xl">
               <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                <Activity className="w-5 h-5 text-[var(--color-primary)]" />
+                <Icon name="monitoring" className="w-5 h-5 text-[var(--color-primary)]" />
               </div>
               <div>
                 <p className="text-xs text-[var(--color-on-surface-variant)]">Vurdering</p>
@@ -160,19 +149,19 @@ export default async function SessionDetailPage({ params }: Props) {
           <div className="flex flex-wrap gap-2 pt-2">
             {log.primaryLPhase && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-sm font-medium">
-                <Gauge className="w-3.5 h-3.5" />
+                <Icon name="speed" className="w-3.5 h-3.5" />
                 L: {getLPhaseLabel(log.primaryLPhase)}
               </span>
             )}
             {log.primaryEnvironment !== null && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-sm font-medium">
-                <Target className="w-3.5 h-3.5" />
+                <Icon name="my_location" className="w-3.5 h-3.5" />
                 M: {getMEnvironmentLabel(log.primaryEnvironment)}
               </span>
             )}
             {log.primaryPressLevel !== null && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--color-warning)]/10 text-[var(--color-warning)] text-sm font-medium">
-                <Zap className="w-3.5 h-3.5" />
+                <Icon name="bolt" className="w-3.5 h-3.5" />
                 PR: {getPRLevelLabel(log.primaryPressLevel)}
               </span>
             )}
@@ -191,7 +180,7 @@ export default async function SessionDetailPage({ params }: Props) {
         {log.deviatedFromPlan && (
           <div className="pt-2 border-t border-[var(--color-outline-variant)]/50">
             <div className="flex items-center gap-2 text-[var(--color-warning)] mb-1">
-              <XCircle className="w-4 h-4" />
+              <Icon name="close"Circle className="w-4 h-4" />
               <span className="text-sm font-medium">Avvik fra plan</span>
             </div>
             {log.deviationReason && (
@@ -221,7 +210,7 @@ export default async function SessionDetailPage({ params }: Props) {
                   </div>
                   {exercise.score !== null && (
                     <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[var(--color-outline-variant)]/70 text-sm font-medium text-[var(--color-on-surface)]">
-                      <Star className="w-3.5 h-3.5 text-[var(--color-warning)]" />
+                      <Icon name="star" className="w-3.5 h-3.5 text-[var(--color-warning)]" />
                       <span className="tabular-nums tracking-tight">{exercise.score}/10</span>
                     </span>
                   )}
@@ -283,7 +272,7 @@ export default async function SessionDetailPage({ params }: Props) {
                 {exercise.coachFeedback && (
                   <div className="pt-2 border-t border-[var(--color-outline-variant)]/70">
                     <div className="flex items-center gap-2 text-[var(--color-primary)] mb-1">
-                      <MessageSquare className="w-3.5 h-3.5" />
+                      <Icon name="chat" className="w-3.5 h-3.5" />
                       <span className="text-xs font-medium">Coach-feedback</span>
                     </div>
                     <p className="text-sm text-[var(--color-on-surface-variant)]">{exercise.coachFeedback}</p>
@@ -299,7 +288,7 @@ export default async function SessionDetailPage({ params }: Props) {
       {log.coachFeedback && (
         <div className="bg-white rounded-2xl border border-[var(--color-outline-variant)]/70 p-6 space-y-3">
           <div className="flex items-center gap-2">
-            <MessageSquare className="w-5 h-5 text-[var(--color-primary)]" />
+            <Icon name="chat" className="w-5 h-5 text-[var(--color-primary)]" />
             <h2 className="text-lg font-semibold text-[var(--color-on-surface)]">Coach-feedback</h2>
           </div>
           <p className="text-sm text-[var(--color-on-surface-variant)] leading-relaxed">{log.coachFeedback}</p>
@@ -310,7 +299,7 @@ export default async function SessionDetailPage({ params }: Props) {
       {log.TrainingPlanSession && (
         <div className="bg-[var(--color-surface-container)] rounded-2xl p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <CheckCircle2 className="w-5 h-5 text-[var(--color-success)]" />
+            <Icon name="check"Circle2 className="w-5 h-5 text-[var(--color-success)]" />
             <div>
               <p className="text-xs text-[var(--color-on-surface-variant)]">Koblet til treningsplan</p>
               <p className="text-sm font-medium text-[var(--color-on-surface)]">{log.TrainingPlanSession.title}</p>

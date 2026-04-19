@@ -1,16 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import {
-  Check,
-  Clock,
-  Target,
-  Dumbbell,
-  ChevronDown,
-  ChevronUp,
-  Play,
-  MessageSquare,
-} from "lucide-react";
+
 import type { ExerciseInstance } from "@/lib/portal/golf/exercise-types";
 import { SessionIdDisplay, ClubSpeedTag, EnvironmentTag, PressTag } from "./ak-formula-tags";
 
@@ -58,7 +51,7 @@ export function ExerciseCard({
         <div className="flex-shrink-0">
           {exercise.completed ? (
             <div className="w-7 h-7 rounded-full bg-success/20 flex items-center justify-center">
-              <Check className="w-4 h-4 text-success" />
+              <Icon name="check" className="w-4 h-4 text-success" />
             </div>
           ) : (
             <div className="w-7 h-7 rounded-full bg-surface flex items-center justify-center text-sm font-medium text-grey-400">
@@ -79,19 +72,19 @@ export function ExerciseCard({
           <div className="flex flex-wrap items-center gap-2 text-[11px] text-grey-400">
             {exercise.sets && exercise.reps && (
               <span className="flex items-center gap-1">
-                <Dumbbell className="w-3 h-3" />
+                <Icon name="fitness_center" className="w-3 h-3" />
                 {exercise.sets}x{exercise.reps}
               </span>
             )}
             {exercise.distance && (
               <span className="flex items-center gap-1">
-                <Target className="w-3 h-3" />
+                <Icon name="my_location" className="w-3 h-3" />
                 {exercise.distance}{exercise.distanceUnit || "m"}
               </span>
             )}
             {exercise.restSeconds && (
               <span className="flex items-center gap-1">
-                <Clock className="w-3 h-3" />
+                <Icon name="schedule" className="w-3 h-3" />
                 {exercise.restSeconds}s hvile
               </span>
             )}
@@ -108,13 +101,13 @@ export function ExerciseCard({
               }}
               className="p-2 rounded-lg bg-primary text-white hover:bg-primary-alt transition-colors"
             >
-              <Play className="w-4 h-4" />
+              <Icon name="play_arrow" className="w-4 h-4" />
             </button>
           )}
           {isExpanded ? (
-            <ChevronUp className="w-4 h-4 text-grey-400" />
+            <Icon name="expand_less" className="w-4 h-4 text-grey-400" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-grey-400" />
+            <Icon name="expand_more" className="w-4 h-4 text-grey-400" />
           )}
         </div>
       </div>
@@ -133,7 +126,7 @@ export function ExerciseCard({
                   lPhase={exercise.lPhase}
                   compact
                 />
-                <ClubSpeedTag cs={exercise.clubSpeed} />
+                <Icon name="sports_golf"SpeedTag cs={exercise.clubSpeed} />
                 <EnvironmentTag env={exercise.environment} />
                 <PressTag press={exercise.pressLevel} />
               </div>
@@ -167,7 +160,7 @@ export function ExerciseCard({
             {exercise.coachNotes && (
               <div className="p-2 rounded-lg bg-surface border border-grey-200/30">
                 <div className="flex items-center gap-1 mb-1">
-                  <MessageSquare className="w-3 h-3 text-primary" />
+                  <Icon name="chat" className="w-3 h-3 text-primary" />
                   <span className="text-[11px] text-primary uppercase">Coach-notat</span>
                 </div>
                 <p className="text-sm text-text">{exercise.coachNotes}</p>

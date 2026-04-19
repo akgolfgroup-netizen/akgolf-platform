@@ -1,6 +1,8 @@
 "use client";
 
-import { AlertTriangle, TrendingUp, CheckCircle } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 
 interface OverbookingAlertProps {
@@ -31,7 +33,7 @@ export function OverbookingAlert({
         animate={{ opacity: 1, y: 0 }}
         className="flex items-start gap-3 p-4 bg-success/10 rounded-xl border border-success/20"
       >
-        <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+        <Icon name="check"Circle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
         <div>
           <p className="text-sm font-medium text-black">
             God kapasitet
@@ -55,7 +57,7 @@ export function OverbookingAlert({
         animate={{ opacity: 1, y: 0 }}
         className="flex items-start gap-3 p-4 bg-warning/10 rounded-xl border border-warning/20"
       >
-        <TrendingUp className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
+        <Icon name="trending_up" className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
         <div>
           <p className="text-sm font-medium text-black">
             Nesten fullt
@@ -75,7 +77,7 @@ export function OverbookingAlert({
       animate={{ opacity: 1, y: 0 }}
       className="flex items-start gap-3 p-4 bg-error/10 rounded-xl border border-error/20"
     >
-      <AlertTriangle className="w-5 h-5 text-error flex-shrink-0 mt-0.5" />
+      <Icon name="warning" className="w-5 h-5 text-error flex-shrink-0 mt-0.5" />
       <div>
         <p className="text-sm font-medium text-black">
           Overbooking-varsel

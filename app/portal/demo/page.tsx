@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { SubscriptionTier } from "@prisma/client";
 import { TierGate } from "@/components/portal/ui/tier-gate";
@@ -13,12 +15,7 @@ import { ScoreTrendChart } from "@/components/portal/statistikk/score-trend-char
 import { PeerBenchmarkCard } from "@/components/portal/sammenligning/peer-benchmark-card";
 import { OnboardingWizard } from "@/components/portal/onboarding/onboarding-wizard";
 import { addDays, subDays } from "date-fns";
-import {
-  Brain,
-  Trophy,
-  Flame,
-  Mail,
-} from "lucide-react";
+
 
 // Mock data for charts
 const mockRounds = [
@@ -190,7 +187,7 @@ export default function DemoPage() {
               >
                 <div className="p-4 rounded-xl bg-[var(--color-grey-50)] border border-[var(--color-grey-200)]">
                   <div className="flex items-center gap-3">
-                    <Brain className="w-5 h-5 text-[var(--color-ai)]" />
+                    <Icon name="psychology" className="w-5 h-5 text-[var(--color-ai)]" />
                     <span className="font-medium">AI Treningsplan</span>
                   </div>
                 </div>
@@ -222,7 +219,7 @@ export default function DemoPage() {
                     onClick={() => setCurrentAchievement(achievement)}
                     className="px-3 py-2 rounded-lg text-xs font-medium bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors flex items-center gap-2"
                   >
-                    <Trophy className="w-3 h-3" />
+                    <Icon name="emoji_events" className="w-3 h-3" />
                     {achievement.title}
                   </button>
                 ))}
@@ -246,7 +243,7 @@ export default function DemoPage() {
               </h3>
               <div className="flex items-center gap-4">
                 <button className="px-4 py-2 rounded-xl text-sm font-medium bg-[var(--color-grey-100)] text-[var(--color-grey-900)] border border-[var(--color-grey-200)] flex items-center gap-2">
-                  <Flame className="w-4 h-4" />
+                  <Icon name="local_fire_department" className="w-4 h-4" />
                   Gjenta siste
                 </button>
                 <span className="text-sm text-[var(--color-grey-500)]">
@@ -274,7 +271,7 @@ export default function DemoPage() {
                 Ukessammendrag e-post
               </h3>
               <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
-                <Mail className="w-5 h-5 text-blue-600 mb-2" />
+                <Icon name="mail" className="w-5 h-5 text-blue-600 mb-2" />
                 <p className="text-xs font-medium text-blue-900">Sendes sondag kl 18:00</p>
                 <p className="text-xs text-blue-700 mt-1">Okter denne uke, streak-status, CTA</p>
               </div>
@@ -287,7 +284,7 @@ export default function DemoPage() {
                 Win-back Dag 3
               </h3>
               <div className="p-4 rounded-lg bg-amber-50 border border-amber-200">
-                <Mail className="w-5 h-5 text-amber-600 mb-2" />
+                <Icon name="mail" className="w-5 h-5 text-amber-600 mb-2" />
                 <p className="text-xs font-medium text-amber-900">&quot;Vi savner deg&quot;</p>
                 <p className="text-xs text-amber-700 mt-1">Streak-paminelse, motivasjon</p>
               </div>
@@ -300,7 +297,7 @@ export default function DemoPage() {
                 Win-back Dag 7
               </h3>
               <div className="p-4 rounded-lg bg-orange-50 border border-orange-200">
-                <Mail className="w-5 h-5 text-orange-600 mb-2" />
+                <Icon name="mail" className="w-5 h-5 text-orange-600 mb-2" />
                 <p className="text-xs font-medium text-orange-900">&quot;Din streak venter&quot;</p>
                 <p className="text-xs text-orange-700 mt-1">Treningshistorikk, tips</p>
               </div>
@@ -313,7 +310,7 @@ export default function DemoPage() {
                 Win-back Dag 14 (med rabattkode)
               </h3>
               <div className="p-4 rounded-lg bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-brand)]/80 text-white">
-                <Mail className="w-5 h-5 mb-2" />
+                <Icon name="mail" className="w-5 h-5 mb-2" />
                 <p className="text-sm font-bold">20% rabatt pa Pro!</p>
                 <p className="text-xs mt-1 opacity-90">Kode: WINBACK-XXXXXXXX • Gyldig 7 dager</p>
               </div>

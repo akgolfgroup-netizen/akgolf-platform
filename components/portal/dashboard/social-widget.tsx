@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Users, Trophy, Flame, ChevronRight } from "lucide-react";
+
 import Link from "next/link";
 
 interface SocialData {
@@ -28,7 +30,7 @@ export function SocialWidget({ data }: SocialWidgetProps) {
     return (
       <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
         <div className="flex items-center gap-2 mb-4">
-          <Users className="w-5 h-5 text-amber-400" />
+          <Icon name="person"s className="w-5 h-5 text-amber-400" />
           <h3 className="font-semibold text-slate-100">Sosialt</h3>
         </div>
         <p className="text-sm text-slate-400 mb-4">
@@ -38,7 +40,7 @@ export function SocialWidget({ data }: SocialWidgetProps) {
           href="/portal/sosialt"
           className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 text-amber-400 rounded-lg text-sm font-medium hover:bg-amber-500/30 transition-colors"
         >
-          <Trophy className="w-4 h-4" />
+          <Icon name="emoji_events" className="w-4 h-4" />
           Utforsk
         </Link>
       </div>
@@ -53,7 +55,7 @@ export function SocialWidget({ data }: SocialWidgetProps) {
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Users className="w-5 h-5 text-amber-400" />
+          <Icon name="person"s className="w-5 h-5 text-amber-400" />
           <h3 className="font-semibold text-slate-100">Sosialt</h3>
         </div>
         <Link
@@ -72,7 +74,7 @@ export function SocialWidget({ data }: SocialWidgetProps) {
         </div>
         <div className="flex-1 p-3 bg-slate-800/50 rounded-xl text-center">
           <div className="flex items-center justify-center gap-1">
-            <Flame className="w-5 h-5 text-orange-500" />
+            <Icon name="local_fire_department" className="w-5 h-5 text-orange-500" />
             <span className="text-2xl font-bold text-slate-100">{data.streak}</span>
           </div>
           <p className="text-xs text-slate-400">dager streak</p>
@@ -87,7 +89,7 @@ export function SocialWidget({ data }: SocialWidgetProps) {
             <div key={challenge.id} className="p-2 bg-slate-800/30 rounded-lg">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-sm text-slate-200">{challenge.name}</span>
-                <ChevronRight className="w-4 h-4 text-slate-500" />
+                <Icon name="chevron_right" className="w-4 h-4 text-slate-500" />
               </div>
               <div className="w-full bg-slate-700 rounded-full h-1.5">
                 <div

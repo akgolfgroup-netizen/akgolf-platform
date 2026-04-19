@@ -1,17 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import Link from "next/link";
-import {
- Building2,
- Plus,
- Clock,
- Wrench,
- AlertCircle,
- CheckCircle,
- MapPin,
- Settings,
-} from "lucide-react";
+import { Building2, Wrench, AlertCircle, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { format } from "date-fns";
@@ -141,13 +134,13 @@ export default function FasiliteterClient({
  <div className="flex items-center gap-3">
  <Link href="/admin/fasiliteter/innstillinger">
  <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-grey-400 bg-white border border-grey-200 rounded-lg hover:bg-grey-50 transition-colors">
- <Settings className="w-4 h-4"/>
+ <Icon name="settings" className="w-4 h-4" />
  Innstillinger
  </button>
  </Link>
  <Link href="/admin/fasiliteter/ny-aktivitet">
  <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-grey-800 transition-colors">
- <Plus className="w-4 h-4"/>
+ <Icon name="add" className="w-4 h-4" />
  Ny aktivitet
  </button>
  </Link>
@@ -172,7 +165,7 @@ export default function FasiliteterClient({
  <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
  <div className="flex items-center gap-3">
  <div className="p-2 bg-grey-50 rounded-lg">
- <Clock className="w-5 h-5 text-grey-400"/>
+ <Icon name="schedule" className="w-5 h-5 text-grey-400" />
  </div>
  <div>
  <p className="text-2xl font-semibold text-black">
@@ -185,7 +178,7 @@ export default function FasiliteterClient({
  <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
  <div className="flex items-center gap-3">
  <div className="p-2 bg-grey-50 rounded-lg">
- <CheckCircle className="w-5 h-5 text-grey-400"/>
+ <Icon name="check"Circle className="w-5 h-5 text-grey-400" />
  </div>
  <div>
  <p className="text-2xl font-semibold text-black">
@@ -198,7 +191,7 @@ export default function FasiliteterClient({
  <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
  <div className="flex items-center gap-3">
  <div className="p-2 bg-grey-50 rounded-lg">
- <AlertCircle className="w-5 h-5 text-grey-400"/>
+ <Icon name="error" className="w-5 h-5 text-grey-400" />
  </div>
  <div>
  <p className="text-2xl font-semibold text-black">
@@ -273,7 +266,7 @@ export default function FasiliteterClient({
 
  {facility.Location.address &&(
  <div className="flex items-center gap-1 text-xs text-grey-400 mb-3">
- <MapPin className="w-3 h-3"/>
+ <Icon name="location_on" className="w-3 h-3" />
  {facility.Location.address}
  </div>
  )}
@@ -355,7 +348,7 @@ export default function FasiliteterClient({
  ))
  ) : (
  <div className="py-10 text-center">
- <Clock className="w-8 h-8 text-grey-400 mx-auto mb-2 opacity-50"/>
+ <Icon name="schedule" className="w-8 h-8 text-grey-400 mx-auto mb-2 opacity-50" />
  <p className="text-sm text-grey-400">
  Ingen aktiviteter i dag
  </p>

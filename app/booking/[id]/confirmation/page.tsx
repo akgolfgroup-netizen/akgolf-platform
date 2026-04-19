@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icon";
 import { getPortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { format } from "date-fns";
@@ -5,7 +6,7 @@ import { nb } from "date-fns/locale";
 import { ConfirmationView } from "./ConfirmationView";
 import { PublicConfirmationView } from "./PublicConfirmationView";
 import { PaymentPendingPoller } from "./PaymentPendingPoller";
-import { AlertCircle } from "lucide-react";
+
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -43,7 +44,7 @@ export default async function BookingConfirmationPage({ params }: Props) {
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
         <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-surface">
-            <AlertCircle className="w-8 h-8 text-primary" />
+            <Icon name="error" className="w-8 h-8 text-primary" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">
             Booking ikke funnet

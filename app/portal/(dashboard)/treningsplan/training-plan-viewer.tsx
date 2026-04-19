@@ -1,17 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Dumbbell,
-  Play,
-  TrendingUp,
-  Lightbulb,
-} from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { Button } from "@/components/ui/button";
 import { format, addWeeks, startOfISOWeek, endOfISOWeek, addDays } from "date-fns";
@@ -124,7 +118,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
               className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
               aria-label="Forrige uke"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <Icon name="chevron_left" className="w-4 h-4" />
             </Link>
             {weekOffset !== 0 && (
               <Link
@@ -139,7 +133,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
               className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
               aria-label="Neste uke"
             >
-              <ChevronRight className="w-4 h-4" />
+              <Icon name="chevron_right" className="w-4 h-4" />
             </Link>
           </div>
           <Button variant="secondary" size="sm" asChild>
@@ -180,7 +174,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
                 </span>
                 {completed > 0 && (
                   <span className="flex items-center gap-1 text-xs font-medium text-success">
-                    <TrendingUp className="w-3.5 h-3.5" />
+                    <Icon name="trending_up" className="w-3.5 h-3.5" />
                     {percentage}%
                   </span>
                 )}
@@ -234,7 +228,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
                             className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                             style={{ background: cfg.bg }}
                           >
-                            <Dumbbell className="w-5 h-5" style={{ color: cfg.color }} />
+                            <Icon name="fitness_center" className="w-5 h-5" style={{ color: cfg.color }} />
                           </div>
                           <div>
                             <div className="flex items-center gap-2">
@@ -250,7 +244,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
                             </div>
                             <div className="flex items-center gap-3 mt-1 text-xs text-grey-400">
                               <span className="flex items-center gap-1">
-                                <Clock className="w-3 h-3" />
+                                <Icon name="schedule" className="w-3 h-3" />
                                 {String(event.startH).padStart(2, "0")}:
                                 {String(event.startM).padStart(2, "0")} — {event.dur} min
                               </span>
@@ -272,7 +266,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
                         <div className="flex items-center gap-2">
                           <Button variant="secondary" size="sm" asChild>
                             <Link href={`/portal/treningsplan/${event.id}`}>
-                              <Play className="w-3.5 h-3.5 mr-1" />
+                              <Icon name="play_arrow" className="w-3.5 h-3.5 mr-1" />
                               Start
                             </Link>
                           </Button>
@@ -295,7 +289,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
       >
         <PremiumCard variant="accent" padding="md" radius="large">
           <div className="flex items-start gap-3">
-            <Lightbulb className="w-5 h-5 text-black mt-0.5 flex-shrink-0" />
+            <Icon name="lightbulb" className="w-5 h-5 text-black mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-sm font-semibold text-black">Tips fra AI Coach</p>
               <p className="text-sm text-grey-400 mt-0.5">

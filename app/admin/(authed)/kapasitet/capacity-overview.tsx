@@ -1,6 +1,8 @@
 "use client";
 
-import { TrendingUp, TrendingDown, Calendar, Users, Wallet, Clock } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import type { CapacityData } from "./actions";
 
 function formatKr(value: number): string {
@@ -42,8 +44,8 @@ function StatCard({ title, value, subtitle, icon, trend, trendValue }: StatCardP
           trend === "down" ? "text-error" :
           "text-grey-400"
         }`}>
-          {trend === "up" ? <TrendingUp className="w-3 h-3" /> :
-           trend === "down" ? <TrendingDown className="w-3 h-3" /> : null}
+          {trend === "up" ? <Icon name="trending_up" className="w-3 h-3" /> :
+           trend === "down" ? <Icon name="trending_down" className="w-3 h-3" /> : null}
           <span>{trendValue}</span>
         </div>
       )}
@@ -191,33 +193,33 @@ export function CapacityOverview({ data }: { data: CapacityData }) {
           title="Belegg uke"
           value={formatPercent(data.weeklyTotal.occupancy)}
           subtitle={`${data.weeklyTotal.booked} av ${data.weeklyTotal.slots} timer`}
-          icon={<Calendar className="w-5 h-5" />}
+          icon={<Icon name="calendar_today" className="w-5 h-5" />}
           trend={data.weeklyTotal.occupancy >= 0.7 ? "up" : "neutral"}
         />
         <StatCard
           title="Inntekt uke"
           value={formatKr(data.weeklyTotal.revenue)}
           subtitle={`${data.weekRange.from} - ${data.weekRange.to}`}
-          icon={<Wallet className="w-5 h-5" />}
+          icon={<Icon name="account_balance_wallet" className="w-5 h-5" />}
         />
         <StatCard
           title="Inntekt mnd"
           value={formatKr(data.monthlyTotal.revenue)}
           subtitle={`${data.monthlyTotal.bookedCount} bookinger`}
-          icon={<TrendingUp className="w-5 h-5" />}
+          icon={<Icon name="trending_up" className="w-5 h-5" />}
         />
         <StatCard
           title="Potensial uke"
           value={formatKr(data.weeklyTotal.maxRevenue)}
           subtitle="Ved 100% belegg"
-          icon={<Clock className="w-5 h-5" />}
+          icon={<Icon name="schedule" className="w-5 h-5" />}
         />
       </div>
 
       {/* Coach Cards */}
       <div>
         <h2 className="text-lg font-semibold text-black mb-4 flex items-center gap-2">
-          <Users className="w-5 h-5 text-black" />
+          <Icon name="person"s className="w-5 h-5 text-black" />
           Per trener
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

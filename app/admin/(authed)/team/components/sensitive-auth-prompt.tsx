@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { ShieldAlert } from "lucide-react";
+
 import { AdminDialog, AdminInput } from "@/components/portal/mission-control/ui";
 import { Button } from "@/components/ui";
 import { confirmSensitiveAction } from "../actions";
@@ -60,7 +62,7 @@ export function SensitiveAuthPrompt({
     >
       <div className="space-y-4">
         <div className="flex items-start gap-3 rounded-lg bg-warning-light px-4 py-3">
-          <ShieldAlert className="h-4 w-4 mt-0.5 text-warning-text" />
+          <Icon name="shield"Alert className="h-4 w-4 mt-0.5 text-warning-text" />
           <div className="text-xs text-warning-text">
             Kritisk handling. Alle tildelinger og tilbaketrekninger
             audit-logges med bruker-ID og tidspunkt.

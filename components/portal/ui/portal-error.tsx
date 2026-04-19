@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useEffect } from "react";
-import { AlertTriangle, RefreshCw, Home } from "lucide-react";
+
 import Link from "next/link";
 
 interface PortalErrorProps {
@@ -51,7 +53,7 @@ export function PortalError({
     <div className="flex flex-col items-center justify-center min-h-[400px] p-8">
       {/* Icon */}
       <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-100)] flex items-center justify-center mb-6">
-        <AlertTriangle className="w-8 h-8 text-[var(--color-grey-500)]" />
+        <Icon name="warning" className="w-8 h-8 text-[var(--color-grey-500)]" />
       </div>
 
       {/* Title */}
@@ -77,7 +79,7 @@ export function PortalError({
           onClick={reset}
           className="inline-flex items-center gap-2 px-5 py-3 bg-[var(--color-black)] text-white rounded-[980px] font-semibold hover:bg-[var(--color-grey-800)] transition-colors"
         >
-          <RefreshCw className="w-4 h-4" />
+          <Icon name="refresh" className="w-4 h-4" />
           Prøv igjen
         </button>
 
@@ -86,7 +88,7 @@ export function PortalError({
             href="/portal"
             className="inline-flex items-center gap-2 px-5 py-3 bg-[var(--color-grey-100)] text-[var(--color-grey-900)] rounded-[980px] font-semibold hover:bg-[var(--color-grey-200)] transition-colors"
           >
-            <Home className="w-4 h-4" />
+            <Icon name="home" className="w-4 h-4" />
             Til forsiden
           </Link>
         )}

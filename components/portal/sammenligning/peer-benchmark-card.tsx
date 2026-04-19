@@ -1,14 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import {
-  TrendingUp,
-  TrendingDown,
-  Minus,
-  Users,
-  Target,
-  Award,
-} from "lucide-react";
+
 import {
   SG_BENCHMARKS,
   getBenchmarkByHandicap,
@@ -29,10 +24,10 @@ interface PeerBenchmarkCardProps {
 
 function getTrendIcon(diff: number) {
   if (diff > 0.1)
-    return <TrendingUp className="w-4 h-4 text-[var(--color-success)]" />;
+    return <Icon name="trending_up" className="w-4 h-4 text-[var(--color-success)]" />;
   if (diff < -0.1)
-    return <TrendingDown className="w-4 h-4 text-[var(--color-error)]" />;
-  return <Minus className="w-4 h-4 text-[var(--color-muted)]" />;
+    return <Icon name="trending_down" className="w-4 h-4 text-[var(--color-error)]" />;
+  return <Icon name="remove" className="w-4 h-4 text-[var(--color-muted)]" />;
 }
 
 function getProgressToNextCategory(
@@ -133,7 +128,7 @@ export function PeerBenchmarkCard({
         >
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <Target className="w-4 h-4 text-[var(--color-primary)]" />
+              <Icon name="my_location" className="w-4 h-4 text-[var(--color-primary)]" />
               <span className="text-sm font-medium text-[var(--color-text)]">
                 Progresjon mot {nextCategory.label} ({nextCategory.category})
               </span>
@@ -209,7 +204,7 @@ export function PeerBenchmarkCard({
         <div className="flex items-center justify-between rounded-2xl p-4 bg-white border border-black/5">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-primary)]/10">
-              <Award className="h-5 w-5 text-[var(--color-primary)]" />
+              <Icon name="workspace_premium" className="h-5 w-5 text-[var(--color-primary)]" />
             </div>
             <div>
               <p className="text-sm font-semibold text-[var(--color-text)]">
@@ -244,7 +239,7 @@ export function PeerBenchmarkCard({
 
       {/* Peer info */}
       <div className="flex items-center gap-2 text-xs text-[var(--color-muted)]">
-        <Users className="h-4 w-4" />
+        <Icon name="person"s className="h-4 w-4" />
         <span>
           Benchmark basert på {benchmark.label.toLowerCase()}-spillere (HCP{" "}
           {benchmark.handicapRange[0]}–{benchmark.handicapRange[1]})

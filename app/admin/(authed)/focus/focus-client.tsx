@@ -1,10 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import {
-  Calendar, Circle, CheckCircle2, Clock, Plus,
-  Target, Users, TrendingUp, Trash2,
-} from "lucide-react";
+import { Target, Users, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { format } from "date-fns";
@@ -137,7 +136,7 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
                 onClick={() => setShowCreate(true)} 
                 className="p-1.5 rounded-lg hover:bg-grey-50 text-grey-400 hover:text-black transition-colors"
               >
-                <Plus className="w-4 h-4" />
+                <Icon name="add" className="w-4 h-4" />
               </button>
             }
           />
@@ -155,12 +154,12 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
           <div className="bg-white border border-grey-200 rounded-xl overflow-hidden flex flex-col">
             <div className="px-5 py-4 border-b border-grey-200 flex items-center justify-between bg-grey-50">
               <h3 className="text-sm font-semibold text-black">I dag</h3>
-              <Calendar className="w-4 h-4 text-grey-400" />
+              <Icon name="calendar_today" className="w-4 h-4 text-grey-400" />
             </div>
             <div className="p-4 space-y-2 flex-1">
               {divBookings.length === 0 ? (
                 <div className="text-center py-8 text-grey-400">
-                  <Clock className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                  <Icon name="schedule" className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   <p className="text-sm">Ingen økter i dag</p>
                 </div>
               ) : divBookings.map((b) => (
@@ -195,7 +194,7 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
                     key={t.id} 
                     className="flex items-center gap-3 p-2 text-sm text-grey-400 line-through"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-grey-400 shrink-0" />
+                    <Icon name="check"Circle2 className="w-4 h-4 text-grey-400 shrink-0" />
                     {t.title}
                   </div>
                 ))}
@@ -264,9 +263,9 @@ function TaskColumn({ title, tasks, isPending, onToggle, onDelete, headerAction 
                 title={STATUS_CONFIG[task.status].next ? `Flytt til ${STATUS_CONFIG[STATUS_CONFIG[task.status].next!].label}` : "Ferdig"}
               >
                 {task.status === "IN_PROGRESS" ? (
-                  <CheckCircle2 className="w-5 h-5" />
+                  <Icon name="check"Circle2 className="w-5 h-5" />
                 ) : (
-                  <Circle className="w-5 h-5" />
+                  <Icon name="circle" className="w-5 h-5" />
                 )}
               </button>
               <div className="flex-1 min-w-0">
@@ -285,7 +284,7 @@ function TaskColumn({ title, tasks, isPending, onToggle, onDelete, headerAction 
                   onClick={() => onDelete(task.id)}
                   className="p-1 rounded-md opacity-0 group-hover:opacity-100 text-grey-400 hover:text-red-500 transition-all"
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
+                  <Icon name="delete" className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>

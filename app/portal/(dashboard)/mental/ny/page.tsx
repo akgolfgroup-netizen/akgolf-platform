@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Save, ChevronLeft, Calendar, MapPin, Loader2 } from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -76,7 +78,7 @@ export default function NewRoundPage() {
           href="/portal/mental"
           className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white border border-grey-200 text-black hover:bg-grey-50 transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <Icon name="chevron_left" className="w-4 h-4" />
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-black">Ny mental scorecard</h1>
@@ -91,7 +93,7 @@ export default function NewRoundPage() {
               Dato
             </label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+              <Icon name="calendar_today" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
               <input
                 type="date"
                 value={date}
@@ -106,10 +108,10 @@ export default function NewRoundPage() {
               Bane
             </label>
             <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+              <Icon name="location_on" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
               {loadingCourses ? (
                 <div className="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-grey-400 flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                   Laster baner...
                 </div>
               ) : courses.length === 0 ? (
@@ -161,7 +163,7 @@ export default function NewRoundPage() {
             isLoading={saving}
             disabled={!courseId || loadingCourses}
           >
-            <Save className="w-4 h-4 mr-2" />
+            <Icon name="save" className="w-4 h-4 mr-2" />
             Start runde
           </Button>
         </div>

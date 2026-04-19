@@ -1,20 +1,10 @@
+import { Icon } from "@/components/ui/icon";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getRoundDetail } from "../../actions";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
-import { 
-  ArrowLeft, 
-  Flag, 
-  Target, 
-  TrendingUp, 
-  Circle,
-  Trophy,
-  Award,
-  Share2,
-  RotateCcw,
-  BarChart3
-} from "lucide-react";
+import { Flag, Target, Circle, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -99,7 +89,7 @@ export default async function RoundSummaryPage({ params }: Props) {
         href="/portal/runde/ny"
         className="flex items-center gap-2 text-sm text-grey-400 hover:text-black transition-colors"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <Icon name="arrow_back" className="h-4 w-4" />
         Ny runde
       </Link>
 
@@ -174,7 +164,7 @@ export default async function RoundSummaryPage({ params }: Props) {
       <div className="grid grid-cols-2 gap-3">
         <PremiumCard padding="md" className="text-center">
           <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-2">
-            <Target className="w-5 h-5 text-blue-600" />
+            <Icon name="my_location" className="w-5 h-5 text-blue-600" />
           </div>
           <p className="text-2xl font-bold text-black tabular-nums">{fairwayPercentage}%</p>
           <p className="text-xs text-grey-400">Fairway ({fairwaysHit}/{fairwayHoles.length})</p>
@@ -182,7 +172,7 @@ export default async function RoundSummaryPage({ params }: Props) {
         
         <PremiumCard padding="md" className="text-center">
           <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center mx-auto mb-2">
-            <Circle className="w-5 h-5 text-green-600" />
+            <Icon name="circle" className="w-5 h-5 text-green-600" />
           </div>
           <p className="text-2xl font-bold text-black tabular-nums">{girPercentage}%</p>
           <p className="text-xs text-grey-400">GIR ({girCount}/{holes.length})</p>
@@ -190,7 +180,7 @@ export default async function RoundSummaryPage({ params }: Props) {
         
         <PremiumCard padding="md" className="text-center">
           <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center mx-auto mb-2">
-            <Flag className="w-5 h-5 text-orange-600" />
+            <Icon name="flag" className="w-5 h-5 text-orange-600" />
           </div>
           <p className="text-2xl font-bold text-black tabular-nums">{puttsPerHole}</p>
           <p className="text-xs text-grey-400">Putts per hull</p>
@@ -198,7 +188,7 @@ export default async function RoundSummaryPage({ params }: Props) {
         
         <PremiumCard padding="md" className="text-center">
           <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center mx-auto mb-2">
-            <Trophy className="w-5 h-5 text-purple-600" />
+            <Icon name="emoji_events" className="w-5 h-5 text-purple-600" />
           </div>
           <p className="text-2xl font-bold text-black tabular-nums">{scramblePercentage}%</p>
           <p className="text-xs text-grey-400">Scramble ({scrambleSuccess}/{scrambleOpportunities})</p>
@@ -208,7 +198,7 @@ export default async function RoundSummaryPage({ params }: Props) {
       {/* Score Distribution */}
       <PremiumCard padding="lg">
         <h2 className="text-sm font-semibold text-black mb-4 flex items-center gap-2">
-          <BarChart3 className="w-4 h-4" />
+          <Icon name="bar_chart" className="w-4 h-4" />
           Score-fordeling
         </h2>
         
@@ -251,7 +241,7 @@ export default async function RoundSummaryPage({ params }: Props) {
       {(bestHole || worstHole) && (
         <PremiumCard padding="lg">
           <h2 className="text-sm font-semibold text-black mb-4 flex items-center gap-2">
-            <Award className="w-4 h-4" />
+            <Icon name="workspace_premium" className="w-4 h-4" />
             Høydepunkter
           </h2>
           
@@ -301,7 +291,7 @@ export default async function RoundSummaryPage({ params }: Props) {
       {round.sgTotal !== null && (
         <PremiumCard padding="lg">
           <h2 className="text-sm font-semibold text-black mb-1 flex items-center gap-2">
-            <TrendingUp className="w-4 h-4" />
+            <Icon name="trending_up" className="w-4 h-4" />
             Strokes Gained
           </h2>
           <div className="text-3xl font-bold text-black mb-4 tabular-nums tracking-tight">
@@ -364,7 +354,7 @@ export default async function RoundSummaryPage({ params }: Props) {
           href="/portal/statistikk"
           className="flex items-center justify-center gap-2 py-3.5 rounded-2xl border border-grey-200 text-black font-medium hover:bg-grey-50 transition-all"
         >
-          <BarChart3 className="w-4 h-4" />
+          <Icon name="bar_chart" className="w-4 h-4" />
           Se statistikk
         </Link>
         
@@ -372,7 +362,7 @@ export default async function RoundSummaryPage({ params }: Props) {
           href="/portal/runde/ny"
           className="flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-accent-cta text-black font-bold hover:opacity-90 transition-opacity"
         >
-          <RotateCcw className="w-4 h-4" />
+          <Icon name="restart_alt" className="w-4 h-4" />
           Ny runde
         </Link>
       </div>

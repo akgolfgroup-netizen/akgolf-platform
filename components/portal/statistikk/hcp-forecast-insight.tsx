@@ -1,6 +1,8 @@
 "use client";
 
-import { TrendingDown, TrendingUp, Minus, Target } from "lucide-react";
+
+import { Icon } from "@/components/ui/icon";
+import { TrendingDown, TrendingUp, Minus } from "lucide-react";
 import type { HcpForecastData } from "@/app/portal/(dashboard)/statistikk/actions";
 import { MonoLabel } from "@/components/portal/patterns";
 
@@ -140,7 +142,7 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
       <ul className="space-y-2 text-[13px] leading-relaxed text-text">
         {lines.map((line, i) => (
           <li key={i} className="flex gap-2">
-            <Target className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+            <Icon name="my_location" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
             <span>{line}</span>
           </li>
         ))}

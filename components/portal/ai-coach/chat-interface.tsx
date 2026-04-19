@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { Send, Square, Bot } from "lucide-react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageBubble } from "./message-bubble";
 import { QuickQuestions } from "./quick-questions";
@@ -227,7 +229,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
             >
               {/* AI Avatar */}
               <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-ai-light to-white flex items-center justify-center mb-6 shadow-sm">
-                <Bot className="w-10 h-10 text-ai" />
+                <Icon name="smart_toy" className="w-10 h-10 text-ai" />
               </div>
               
               <h2 className="text-xl font-semibold mb-2 text-black">
@@ -312,7 +314,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
               onClick={handleStop}
               className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center bg-error hover:opacity-90 text-white transition-colors"
             >
-              <Square className="w-4 h-4 fill-current" />
+              <Icon name="stop" className="w-4 h-4 fill-current" />
             </button>
           ) : (
             <button
@@ -320,7 +322,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
               disabled={!input.trim()}
               className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-30 text-white bg-ai hover:opacity-90 disabled:hover:bg-grey-400"
             >
-              <Send className="w-4 h-4" />
+              <Icon name="send" className="w-4 h-4" />
             </button>
           )}
         </form>

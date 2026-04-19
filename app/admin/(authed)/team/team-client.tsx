@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo, useState, useTransition } from "react";
-import { UserPlus, Pencil, PowerOff, Power, ClipboardList } from "lucide-react";
+
 import Link from "next/link";
 import { UserRole, type Capability } from "@prisma/client";
 import { AdminPageHeader } from "@/components/portal/mission-control/ui";
@@ -148,11 +150,11 @@ export function TeamClient({
           permissions.canAssignCapabilities && (
             <div className="flex items-center gap-2">
               <Link href="/admin/team/audit" className="text-sm text-[var(--color-primary)] hover:underline inline-flex items-center gap-1.5">
-                <ClipboardList className="h-4 w-4" />
+                <Icon name="assignment" className="h-4 w-4" />
                 Audit-logg
               </Link>
               <Button onClick={() => setInviteOpen(true)}>
-                <UserPlus className="h-4 w-4" />
+                <Icon name="person"Plus className="h-4 w-4" />
                 Inviter bruker
               </Button>
             </div>
@@ -255,7 +257,7 @@ export function TeamClient({
                         onClick={() => setEditing(m)}
                         className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-outline-variant)] px-2.5 py-1 text-xs font-medium text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container)]"
                       >
-                        <Pencil className="h-3.5 w-3.5" />
+                        <Icon name="edit" className="h-3.5 w-3.5" />
                         Rediger
                       </button>
                     )}
@@ -267,12 +269,12 @@ export function TeamClient({
                       >
                         {m.isActive ? (
                           <>
-                            <PowerOff className="h-3.5 w-3.5" />
+                            <Icon name="power"Off className="h-3.5 w-3.5" />
                             Deaktiver
                           </>
                         ) : (
                           <>
-                            <Power className="h-3.5 w-3.5" />
+                            <Icon name="power" className="h-3.5 w-3.5" />
                             Aktiver
                           </>
                         )}

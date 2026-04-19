@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Loader2, AlertCircle, Flag, Target, Circle, TrendingUp } from "lucide-react";
+import { Flag, Target, Circle, TrendingUp } from "lucide-react";
 import { PeerRadarChart } from "./peer-radar-chart";
 import { StatComparisonRow } from "./stat-comparison-row";
 import { PeerSummary } from "./peer-summary";
@@ -166,12 +168,12 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
           <Card variant="elevated" padding="md" className="space-y-3">
             {loadingPlayers ? (
               <div className="flex items-center gap-2 text-sm text-[var(--color-muted)]">
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                 Henter spillere…
               </div>
             ) : playerError ? (
               <div className="flex items-center gap-2 text-sm text-[var(--color-error)]">
-                <AlertCircle className="w-4 h-4" />
+                <Icon name="error" className="w-4 h-4" />
                 {playerError}
               </div>
             ) : (

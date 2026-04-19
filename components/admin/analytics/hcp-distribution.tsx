@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { AdminDonutChart } from "@/components/portal/mission-control/ui/charts/AdminDonutChart";
@@ -32,14 +34,14 @@ export function HcpDistribution({
       <div className="flex items-start justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Target className="w-5 h-5 text-primary" />
+            <Icon name="my_location" className="w-5 h-5 text-primary" />
           </div>
           <div>
             <h3 className="text-sm font-medium text-grey-400">Snitt HCP</h3>
             <div className="flex items-center gap-2">
               <p className="text-2xl font-bold text-black tabular-nums">{averageHcp}</p>
               <span className="inline-flex items-center gap-0.5 text-xs font-medium text-success">
-                <TrendingDown className="w-3.5 h-3.5" />
+                <Icon name="trending_down" className="w-3.5 h-3.5" />
                 -{improvement}
               </span>
             </div>

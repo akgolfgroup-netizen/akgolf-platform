@@ -1,22 +1,13 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  MapPin,
-  User as UserIcon,
-  CreditCard,
-  CalendarClock,
-  XCircle,
-  AlertTriangle,
-  FileText,
-} from "lucide-react";
+import { Clock } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { BookingStatusBadge } from "@/components/portal/booking/booking-status-badge";
 import type { BookingStatusVariant } from "@/components/portal/booking/booking-types";
@@ -102,7 +93,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
         href="/portal/bookinger"
         className="inline-flex items-center gap-1.5 text-[12px] font-medium text-grey-400 hover:text-black transition-colors"
       >
-        <ArrowLeft className="w-3.5 h-3.5" />
+        <Icon name="arrow_back" className="w-3.5 h-3.5" />
         Tilbake til bookinger
       </Link>
 
@@ -127,13 +118,13 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
         <div className="grid gap-5">
           {/* Tidspunkt */}
           <DetailRow
-            icon={<Calendar className="w-4 h-4" />}
+            icon={<Icon name="calendar_today" className="w-4 h-4" />}
             label="Dato"
             value={format(start, "EEEE d. MMMM yyyy", { locale: nb })}
             tabular
           />
           <DetailRow
-            icon={<Clock className="w-4 h-4" />}
+            icon={<Icon name="schedule" className="w-4 h-4" />}
             label="Tidspunkt"
             value={`${format(start, "HH:mm")}–${format(new Date(booking.endTime), "HH:mm")} (${booking.duration} min)`}
             tabular
@@ -141,7 +132,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
 
           {/* Instruktør */}
           <DetailRow
-            icon={<UserIcon className="w-4 h-4" />}
+            icon={<Icon name="person"Icon className="w-4 h-4" />}
             label="Instruktør"
             value={
               booking.instructorTitle
@@ -153,7 +144,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {/* Sted */}
           {booking.location && (
             <DetailRow
-              icon={<MapPin className="w-4 h-4" />}
+              icon={<Icon name="location_on" className="w-4 h-4" />}
               label="Sted"
               value={booking.location}
             />
@@ -162,7 +153,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {/* Betaling */}
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-xl bg-grey-50 flex items-center justify-center shrink-0">
-              <CreditCard className="w-4 h-4 text-grey-400" />
+              <Icon name="credit_card" className="w-4 h-4 text-grey-400" />
             </div>
             <div className="flex-1">
               <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Betaling</MonoLabel>
@@ -186,7 +177,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {/* Notater */}
           {booking.studentNotes && (
             <DetailRow
-              icon={<FileText className="w-4 h-4" />}
+              icon={<Icon name="description" className="w-4 h-4" />}
               label="Dine notater"
               value={booking.studentNotes}
             />
@@ -195,7 +186,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {/* Kanselleringsgrunn */}
           {booking.cancelReason && (
             <DetailRow
-              icon={<XCircle className="w-4 h-4" />}
+              icon={<Icon name="close"Circle className="w-4 h-4" />}
               label="Avbestillingsgrunn"
               value={booking.cancelReason}
             />
@@ -218,7 +209,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
               href={`/portal/bookinger/${booking.id}/endre`}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent-cta text-black text-[12px] font-bold hover:opacity-90 transition-opacity"
             >
-              <CalendarClock className="w-4 h-4" />
+              <Icon name="calendar_today"Clock className="w-4 h-4" />
               Endre tidspunkt
             </Link>
           )}
@@ -228,7 +219,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
               onClick={() => setShowCancelConfirm(true)}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-grey-200 bg-white text-black text-[12px] font-bold hover:border-grey-300 transition-colors cursor-pointer"
             >
-              <XCircle className="w-4 h-4" />
+              <Icon name="close"Circle className="w-4 h-4" />
               Avbestill
             </button>
           )}
@@ -240,7 +231,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
         <PremiumCard>
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-xl bg-grey-50 flex items-center justify-center shrink-0">
-              <AlertTriangle className="w-4 h-4 text-grey-400" />
+              <Icon name="warning" className="w-4 h-4 text-grey-400" />
             </div>
             <div className="flex-1">
               <p className="text-[14px] font-semibold text-black mb-1">

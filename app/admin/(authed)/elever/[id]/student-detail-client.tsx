@@ -1,24 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  Mail,
-  Phone,
-  Calendar,
-  Edit3,
-  TrendingDown,
-  TrendingUp,
-  Target,
-  Award,
-  Clock,
-  FileText,
-  MessageSquare,
-  Plus,
-  CheckCircle2,
-  BookOpen,
-} from "lucide-react";
+import { Edit3 } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminStatCard,
@@ -127,7 +114,7 @@ export function StudentDetailClient({ profile }: Props) {
       title: `${(b.ServiceType as { name?: string })?.name ?? "Booking"} gjennomfort`,
       description: extractInstructorName(b.Instructor),
       date: format(new Date(b.startTime), "d. MMM", { locale: nb }),
-      icon: <CheckCircle2 className="w-3 h-3" />,
+      icon: <Icon name="check"Circle2 className="w-3 h-3" />,
       color: "var(--color-success)",
     })),
     ...profile.CoachingSession.slice(0, 3).map((cs) => ({
@@ -137,7 +124,7 @@ export function StudentDetailClient({ profile }: Props) {
         : "Coaching-okt gjennomfort",
       description: cs.instructorNotes?.slice(0, 80) ?? undefined,
       date: format(new Date(cs.sessionDate), "d. MMM", { locale: nb }),
-      icon: <BookOpen className="w-3 h-3" />,
+      icon: <Icon name="menu_book" className="w-3 h-3" />,
       color: "var(--color-primary)",
     })),
   ]
@@ -181,7 +168,7 @@ export function StudentDetailClient({ profile }: Props) {
             <>
               <Link href="/admin/kalender">
                 <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-black text-white hover:bg-grey-800 transition-colors">
-                  <Calendar className="w-4 h-4" />
+                  <Icon name="calendar_today" className="w-4 h-4" />
                   Book ny time
                 </button>
               </Link>
@@ -190,12 +177,12 @@ export function StudentDetailClient({ profile }: Props) {
                 disabled={isSendingMessage}
                 className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-white border border-grey-200 text-black hover:bg-grey-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <MessageSquare className="w-4 h-4" />
+                <Icon name="chat" className="w-4 h-4" />
                 {isSendingMessage ? "Starter samtale..." : "Send melding"}
               </button>
               <Link href={`/admin/treningsplan?studentId=${profile.id}`}>
                 <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-white border border-grey-200 text-black hover:bg-[var(--color-grey-50)] transition-colors">
-                  <FileText className="w-4 h-4" />
+                  <Icon name="description" className="w-4 h-4" />
                   Treningsplan
                 </button>
               </Link>
@@ -204,7 +191,7 @@ export function StudentDetailClient({ profile }: Props) {
                 title="Kommer snart"
                 className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-grey-400 hover:bg-grey-50 transition-colors cursor-not-allowed"
               >
-                <Edit3 className="w-4 h-4" />
+                <Icon name="edit"3 className="w-4 h-4" />
                 Rediger
               </button>
             </>
@@ -239,7 +226,7 @@ export function StudentDetailClient({ profile }: Props) {
                       href={`mailto:${profile.email}`}
                       className="flex items-center gap-1.5 hover:text-text transition-colors"
                     >
-                      <Mail className="w-4 h-4" />
+                      <Icon name="mail" className="w-4 h-4" />
                       {profile.email}
                     </a>
                   )}
@@ -248,7 +235,7 @@ export function StudentDetailClient({ profile }: Props) {
                       href={`tel:${profile.phone}`}
                       className="flex items-center gap-1.5 hover:text-[var(--color-grey-700)] transition-colors"
                     >
-                      <Phone className="w-4 h-4" />
+                      <Icon name="phone" className="w-4 h-4" />
                       {profile.phone}
                     </a>
                   )}
@@ -273,9 +260,9 @@ export function StudentDetailClient({ profile }: Props) {
                     }`}
                   >
                     {hcpChange < 0 ? (
-                      <TrendingDown className="w-3 h-3" />
+                      <Icon name="trending_down" className="w-3 h-3" />
                     ) : (
-                      <TrendingUp className="w-3 h-3" />
+                      <Icon name="trending_up" className="w-3 h-3" />
                     )}
                     {hcpChange > 0 ? "+" : ""}
                     {hcpChange.toFixed(1)}
@@ -323,7 +310,7 @@ export function StudentDetailClient({ profile }: Props) {
                   })
                 : "—"
             }
-            icon={<Clock className="w-5 h-5" />}
+            icon={<Icon name="schedule" className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Neste okt"
@@ -336,17 +323,17 @@ export function StudentDetailClient({ profile }: Props) {
                   )
                 : "—"
             }
-            icon={<Calendar className="w-5 h-5" />}
+            icon={<Icon name="calendar_today" className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Okter denne maneden"
             value={profile.sessionsThisMonth}
-            icon={<Target className="w-5 h-5" />}
+            icon={<Icon name="my_location" className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Kategori"
             value={profile.category ?? "—"}
-            icon={<Award className="w-5 h-5" />}
+            icon={<Icon name="workspace_premium" className="w-5 h-5" />}
           />
         </div>
 
@@ -428,7 +415,7 @@ export function StudentDetailClient({ profile }: Props) {
                   disabled
                   title="Kommer snart"
                 >
-                  <Plus className="w-4 h-4" />
+                  <Icon name="add" className="w-4 h-4" />
                 </button>
               </div>
               {goals.length > 0 ? (
@@ -525,7 +512,7 @@ export function StudentDetailClient({ profile }: Props) {
                       </div>
                       <div className="flex items-center gap-3 text-xs text-grey-400">
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
+                          <Icon name="schedule" className="w-3 h-3" />
                           {format(new Date(booking.startTime), "HH:mm")}
                         </span>
                         <span>
@@ -555,7 +542,7 @@ export function StudentDetailClient({ profile }: Props) {
                       className="flex items-start gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100"
                     >
                       <div className="p-2 rounded-lg bg-white text-black border border-[var(--color-grey-100)]">
-                        <Calendar className="w-4 h-4" />
+                        <Icon name="calendar_today" className="w-4 h-4" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
@@ -597,7 +584,7 @@ export function StudentDetailClient({ profile }: Props) {
                   </Link>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100">
-                  <FileText className="w-5 h-5 text-black" />
+                  <Icon name="description" className="w-5 h-5 text-black" />
                   <div>
                     <div className="text-sm font-medium text-black">
                       {profile.ActivePlan.title}

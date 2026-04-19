@@ -1,7 +1,9 @@
 "use client";
 
-import { Star, Quote } from "lucide-react";
 
+
+
+import { Icon } from "@/components/ui/icon";
 /**
  * CoachingFeedbackWidget — siste tilbakemelding fra instruktør.
  *
@@ -21,7 +23,7 @@ export function CoachingFeedbackWidget() {
   return (
     <div className="space-y-3">
       <div className="flex items-start gap-2">
-        <Quote className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+        <Icon name="format_quote" className="w-4 h-4 text-primary shrink-0 mt-0.5" />
         <p className="text-xs text-text leading-relaxed line-clamp-4">
           {feedback.text}
         </p>
@@ -30,15 +32,14 @@ export function CoachingFeedbackWidget() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
           {Array.from({ length: 5 }, (_, i) => (
-            <Star
+            <Icon name="star"
               key={i}
               className={
                 "w-3 h-3 " +
                 (i < feedback.rating
                   ? "text-accent-cta fill-accent-cta"
                   : "text-grey-200")
-              }
-            />
+              } />
           ))}
         </div>
         <span className="text-[10px] text-muted bg-grey-50 px-1.5 py-0.5 rounded">

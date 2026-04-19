@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+
 
 export function BookingNav() {
   return (
@@ -11,7 +13,7 @@ export function BookingNav() {
           href="/"
           className="flex items-center gap-1.5 text-muted text-sm hover:text-primary transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <Icon name="chevron_left" className="w-4 h-4" />
           Tilbake
         </Link>
         <div className="font-extrabold text-lg text-primary tracking-tight">

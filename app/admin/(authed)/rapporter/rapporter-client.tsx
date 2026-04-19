@@ -1,17 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import {
-  Users,
-  UserPlus,
-  UserCheck,
-  TrendingDown,
-  CalendarCheck,
-  XCircle,
-  Trophy,
-  BarChart3,
-  Download,
-} from "lucide-react";
+import { UserCheck, CalendarCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
@@ -111,7 +103,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
                 downloadCsv(result.csv, result.filename);
               }}
             >
-              <Download className="w-4 h-4 mr-2" />
+              <Icon name="download" className="w-4 h-4 mr-2" />
               Eksporter rapport
             </Button>
           }
@@ -148,23 +140,23 @@ export function RapporterClient({ data }: RapporterClientProps) {
             <AdminStatCard
               label="Totalt"
               value={data.totalStudents}
-              icon={<Users className="w-5 h-5" />}
+              icon={<Icon name="person"s className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Nye (30d)"
               value={`+${data.newStudents}`}
               change={{ value: 12, positive: true }}
-              icon={<UserPlus className="w-5 h-5" />}
+              icon={<Icon name="person"Plus className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Aktive (30d)"
               value={data.activeStudents}
-              icon={<UserCheck className="w-5 h-5" />}
+              icon={<Icon name="person"Check className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Retensjon"
               value={`${data.retentionRate}%`}
-              icon={<BarChart3 className="w-5 h-5" />}
+              icon={<Icon name="bar_chart" className="w-5 h-5" />}
             />
           </div>
         </div>
@@ -179,24 +171,24 @@ export function RapporterClient({ data }: RapporterClientProps) {
               label="Fullførte"
               value={data.completedSessions}
               change={{ value: 8, positive: true }}
-              icon={<CalendarCheck className="w-5 h-5" />}
+              icon={<Icon name="calendar_today"Check className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Kansellerte"
               value={data.cancelledSessions}
               change={{ value: 5, positive: false }}
-              icon={<XCircle className="w-5 h-5" />}
+              icon={<Icon name="close"Circle className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Kanselleringsrate"
               value={`${data.cancellationRate}%`}
-              icon={<TrendingDown className="w-5 h-5" />}
+              icon={<Icon name="trending_down" className="w-5 h-5" />}
             />
             <AdminStatCard
               label="HCP-forbedring"
               value={data.handicapImprovement}
               change={{ value: 15, positive: true }}
-              icon={<Trophy className="w-5 h-5" />}
+              icon={<Icon name="emoji_events" className="w-5 h-5" />}
             />
           </div>
         </div>
@@ -284,7 +276,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
                 })
               ) : (
                 <AdminEmptyState
-                  icon={<Users className="w-6 h-6" />}
+                  icon={<Icon name="person"s className="w-6 h-6" />}
                   title="Ingen elever funnet"
                   description="Fordeling per tier vil vises når data er tilgjengelig."
                   className="border-0"
@@ -302,7 +294,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 rounded-xl bg-grey-50">
               <div className="flex items-center gap-2 mb-2">
-                <Users className="w-4 h-4 text-grey-500" />
+                <Icon name="person"s className="w-4 h-4 text-grey-500" />
                 <span className="text-sm font-medium text-text">
                   Vekst
                 </span>
@@ -314,7 +306,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
             </div>
             <div className="p-4 rounded-xl bg-grey-50">
               <div className="flex items-center gap-2 mb-2">
-                <CalendarCheck className="w-4 h-4 text-success-text" />
+                <Icon name="calendar_today"Check className="w-4 h-4 text-success-text" />
                 <span className="text-sm font-medium text-text">
                   Oppmøte
                 </span>
@@ -326,7 +318,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
             </div>
             <div className="p-4 rounded-xl bg-grey-50">
               <div className="flex items-center gap-2 mb-2">
-                <Trophy className="w-4 h-4 text-warning" />
+                <Icon name="emoji_events" className="w-4 h-4 text-warning" />
                 <span className="text-sm font-medium text-text">
                   Fremskritt
                 </span>

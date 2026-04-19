@@ -1,16 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import {
-  Target,
-  Dumbbell,
-  Trophy,
-  Club,
-  Activity,
-  Clock,
-  Plus,
-  GripVertical,
-} from "lucide-react";
+
 import { StandardTemplate } from "./types";
 
 interface StandardSessionsProps {
@@ -92,11 +85,11 @@ const FOCUS_COLORS: Record<string, string> = {
 };
 
 const FOCUS_ICONS: Record<string, React.ReactNode> = {
-  FYS: <Dumbbell className="w-4 h-4" />,
-  TEK: <Target className="w-4 h-4" />,
-  SLAG: <Club className="w-4 h-4" />,
-  SPILL: <Activity className="w-4 h-4" />,
-  TURN: <Trophy className="w-4 h-4" />,
+  FYS: <Icon name="fitness_center" className="w-4 h-4" />,
+  TEK: <Icon name="my_location" className="w-4 h-4" />,
+  SLAG: <Icon name="sports_golf" className="w-4 h-4" />,
+  SPILL: <Icon name="monitoring" className="w-4 h-4" />,
+  TURN: <Icon name="emoji_events" className="w-4 h-4" />,
 };
 
 export function StandardSessions({ onAddSession }: StandardSessionsProps) {
@@ -145,7 +138,7 @@ export function StandardSessions({ onAddSession }: StandardSessionsProps) {
             >
               {/* Drag handle */}
               <div className="absolute left-1 top-1/2 -translate-y-1/2 text-slate-600 group-hover:text-slate-400">
-                <GripVertical className="w-4 h-4" />
+                <Icon name="drag_indicator" className="w-4 h-4" />
               </div>
 
               {/* Content */}
@@ -166,7 +159,7 @@ export function StandardSessions({ onAddSession }: StandardSessionsProps) {
                 {/* Meta */}
                 <div className="flex items-center gap-3 text-xs text-slate-400">
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
+                    <Icon name="schedule" className="w-3 h-3" />
                     {template.duration} min
                   </span>
                   <span className="flex items-center gap-1">
@@ -193,7 +186,7 @@ export function StandardSessions({ onAddSession }: StandardSessionsProps) {
                 `}
                 aria-label={`Legg til ${template.title}`}
               >
-                <Plus className="w-4 h-4" />
+                <Icon name="add" className="w-4 h-4" />
               </button>
 
               {/* Focus indicator line */}

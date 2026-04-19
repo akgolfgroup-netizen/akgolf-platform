@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Search, X, Check, Plus } from "lucide-react";
+import { Search } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { AdminInput } from "@/components/portal/mission-control/ui";
 import { Button } from "@/components/ui/button";
@@ -103,14 +105,14 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
             className="p-2 rounded-lg hover:bg-grey-100 transition-colors"
             aria-label="Lukk"
           >
-            <X className="w-5 h-5 text-grey-400" />
+            <Icon name="close" className="w-5 h-5 text-grey-400" />
           </button>
         </div>
 
         {/* Search & filters */}
         <div className="px-5 py-3 border-b border-grey-200 space-y-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none" />
+            <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none" />
             <AdminInput
               type="text"
               placeholder="Søk etter øvelse..."
@@ -196,7 +198,7 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                           : "border-grey-300",
                       )}
                     >
-                      {isSelected && <Check className="w-3 h-3 text-white" />}
+                      {isSelected && <Icon name="check" className="w-3 h-3 text-white" />}
                     </div>
                   </div>
                 </button>
@@ -215,7 +217,7 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
             onClick={handleConfirm}
             disabled={selected.size === 0}
           >
-            <Plus className="w-4 h-4 mr-2" />
+            <Icon name="add" className="w-4 h-4 mr-2" />
             Legg til {selected.size > 0 ? `(${selected.size})` : ""}
           </Button>
         </div>

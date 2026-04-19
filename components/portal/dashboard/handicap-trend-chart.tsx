@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import {
   AreaChart,
   Area,
@@ -10,7 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { colors, shadows } from "@/lib/design-tokens";
-import { TrendingDown } from "lucide-react";
+
 import { MonoLabel } from "@/components/portal/patterns";
 
 interface HandicapTrendChartProps {
@@ -54,7 +56,7 @@ export function HandicapTrendChart({ data }: HandicapTrendChartProps) {
             </span>
             {improvement > 0 && (
               <span className="inline-flex items-center gap-0.5 rounded-full bg-success-light px-2 py-0.5 text-xs font-semibold text-success-text">
-                <TrendingDown className="h-3 w-3" />
+                <Icon name="trending_down" className="h-3 w-3" />
                 -{improvement.toFixed(1)}
               </span>
             )}
@@ -87,12 +89,11 @@ export function HandicapTrendChart({ data }: HandicapTrendChartProps) {
               stroke={colors.grey[100]}
               vertical={false}
             />
-            <XAxis
+            <Icon name="close"Axis
               dataKey="month"
               tick={{ fill: colors.grey[400], fontSize: 11 }}
               tickLine={false}
-              axisLine={false}
-            />
+              axisLine={false} />
             <YAxis
               domain={["dataMin - 1", "dataMax + 1"]}
               tick={{ fill: colors.grey[400], fontSize: 11 }}

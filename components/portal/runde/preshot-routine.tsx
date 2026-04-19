@@ -1,19 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { 
-  CheckCircle2, 
-  Circle, 
-  Brain, 
-  Wind, 
-  Zap,
-  Play,
-  Pause,
-  RotateCcw,
-  Target,
-  Focus
-} from "lucide-react";
+import { Brain, Wind, Zap, Pause, Focus } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 
@@ -112,7 +103,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
-                <Target className="w-5 h-5 text-purple-600" />
+                <Icon name="my_location" className="w-5 h-5 text-purple-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-black">Pre-shot rutine</h3>
@@ -133,7 +124,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
               {isTiming ? (
                 <Pause className="w-3.5 h-3.5" />
               ) : (
-                <Play className="w-3.5 h-3.5" />
+                <Icon name="play_arrow" className="w-3.5 h-3.5" />
               )}
               {formatTime(elapsedTime)}
             </button>
@@ -177,7 +168,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
                     isCompleted ? "bg-purple-500" : "bg-grey-100"
                   )}>
                     {isCompleted ? (
-                      <CheckCircle2 className="w-5 h-5 text-white" />
+                      <Icon name="check"Circle2 className="w-5 h-5 text-white" />
                     ) : (
                       <Icon className="w-5 h-5 text-grey-400" />
                     )}
@@ -191,7 +182,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
                     </p>
                     <p className="text-xs text-grey-400">{s.description}</p>
                   </div>
-                  <Circle className={cn(
+                  <Icon name="circle" className={cn(
                     "w-5 h-5 transition-colors",
                     isCompleted ? "text-purple-500 fill-purple-500" : "text-grey-300"
                   )} />
@@ -206,7 +197,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-medium text-grey-700 flex items-center gap-2">
-                  <Focus className="w-4 h-4" />
+                  <Icon name="center_focus_strong" className="w-4 h-4" />
                   Fokus-nivå
                 </label>
                 <span className="text-sm font-bold text-black">{focusLevel}/10</span>
@@ -225,7 +216,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-medium text-grey-700 flex items-center gap-2">
-                  <Zap className="w-4 h-4" />
+                  <Icon name="bolt" className="w-4 h-4" />
                   Commitment
                 </label>
                 <span className="text-sm font-bold text-black">{commitmentLevel}/10</span>
@@ -251,7 +242,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
               }}
               className="px-4 py-2.5 rounded-xl text-sm font-medium text-grey-600 hover:bg-grey-100 transition-colors flex items-center gap-2"
             >
-              <RotateCcw className="w-4 h-4" />
+              <Icon name="restart_alt" className="w-4 h-4" />
               Nullstill
             </button>
             

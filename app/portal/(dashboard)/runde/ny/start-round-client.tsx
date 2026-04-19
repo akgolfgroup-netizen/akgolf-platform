@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, Search, Play, Cloud, Wind } from "lucide-react";
+import { Cloud, Wind } from "lucide-react";
 import { startRound } from "../actions";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
@@ -58,7 +60,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
         {!selectedCourse ? (
           <div className="space-y-3">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-grey-400" />
+              <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-grey-400" />
               <input
                 type="text"
                 value={search}
@@ -77,7 +79,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                   className="w-full text-left p-4 rounded-xl border border-grey-200 bg-white hover:border-primary hover:bg-grey-50 transition-all"
                 >
                   <div className="flex items-start gap-3">
-                    <MapPin className="h-5 w-5 text-black mt-0.5 shrink-0" />
+                    <Icon name="location_on" className="h-5 w-5 text-black mt-0.5 shrink-0" />
                     <div>
                       <div className="font-semibold text-black">
                         {course.name}
@@ -104,7 +106,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
             <div className="p-4 rounded-xl border border-grey-200 bg-white">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <MapPin className="h-5 w-5 text-black" />
+                  <Icon name="location_on" className="h-5 w-5 text-black" />
                   <div>
                     <div className="font-semibold text-black">
                       {selectedCourse.name}
@@ -191,7 +193,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
               disabled={isPending}
               className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[accent-cta] text-black font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
             >
-              <Play className="h-5 w-5" />
+              <Icon name="play_arrow" className="h-5 w-5" />
               {isPending ? "Starter..." : "Start runde"}
             </button>
           </>

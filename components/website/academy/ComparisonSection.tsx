@@ -1,6 +1,8 @@
 "use client";
 
-import { Check, X } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import { SectionLabel } from "../SectionLabel";
 import { RevealOnScroll } from "../RevealOnScroll";
 import { ABO_VS_FLEX } from "@/lib/website-constants";
@@ -49,16 +51,16 @@ export function ComparisonSection() {
                 </div>
                 <div className="p-4 flex justify-center">
                   {row.abo ? (
-                    <Check className="w-4 h-4 text-primary" />
+                    <Icon name="check" className="w-4 h-4 text-primary" />
                   ) : (
-                    <X className="w-4 h-4 text-grey-300" />
+                    <Icon name="close" className="w-4 h-4 text-grey-300" />
                   )}
                 </div>
                 <div className="p-4 flex justify-center">
                   {row.flex ? (
-                    <Check className="w-4 h-4 text-primary" />
+                    <Icon name="check" className="w-4 h-4 text-primary" />
                   ) : (
-                    <X className="w-4 h-4 text-grey-300" />
+                    <Icon name="close" className="w-4 h-4 text-grey-300" />
                   )}
                 </div>
               </div>

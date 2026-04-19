@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { X } from "lucide-react";
+
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ManualPlanModalProps {
@@ -43,7 +45,7 @@ export function ManualPlanModal({ open, onClose, studentId }: ManualPlanModalPro
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-black">Lag manuell plan</h2>
               <button onClick={onClose} className="p-1 rounded-lg hover:bg-grey-50 transition-colors">
-                <X className="w-5 h-5 text-grey-400" />
+                <Icon name="close" className="w-5 h-5 text-grey-400" />
               </button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">

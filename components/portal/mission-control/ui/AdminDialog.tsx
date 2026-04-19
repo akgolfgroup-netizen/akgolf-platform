@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
-import { X } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 interface AdminDialogProps {
@@ -85,7 +87,7 @@ export function AdminDialog({
                 className="admin-btn admin-btn-ghost"
                 aria-label="Lukk"
               >
-                <X className="w-4 h-4" />
+                <Icon name="close" className="w-4 h-4" />
               </button>
             )}
           </div>

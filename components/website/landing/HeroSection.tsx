@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+
 import { EASE_ENTRANCE } from "@/lib/design-tokens";
 import { HERO } from "@/lib/website-constants";
 
@@ -73,7 +75,7 @@ export function HeroSection() {
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-cta text-accent-cta-text rounded-[20px] text-[15px] font-bold hover:brightness-95 transition-all duration-300"
             >
               Book coaching
-              <ArrowRight className="w-4 h-4" />
+              <Icon name="arrow_forward" className="w-4 h-4" />
             </Link>
           </motion.div>
 

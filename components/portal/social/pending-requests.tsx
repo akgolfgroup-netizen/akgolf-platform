@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, X, Loader2 } from "lucide-react";
+
 
 
 export interface PendingRequest {
@@ -92,7 +94,7 @@ export function PendingRequests({
 
             <div className="flex items-center gap-2 shrink-0">
               {processingId === request.friendshipId ? (
-                <Loader2 className="w-4 h-4 text-muted animate-spin" />
+                <Icon name="progress_activity" className="w-4 h-4 text-muted animate-spin" />
               ) : (
                 <>
                   <button
@@ -101,7 +103,7 @@ export function PendingRequests({
                     }
                     className="p-1.5 rounded-lg bg-success-light text-success hover:bg-success/20 transition-colors"
                   >
-                    <Check className="w-4 h-4" />
+                    <Icon name="check" className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() =>
@@ -109,7 +111,7 @@ export function PendingRequests({
                     }
                     className="p-1.5 rounded-lg bg-error-light text-error hover:bg-error/20 transition-colors"
                   >
-                    <X className="w-4 h-4" />
+                    <Icon name="close" className="w-4 h-4" />
                   </button>
                 </>
               )}

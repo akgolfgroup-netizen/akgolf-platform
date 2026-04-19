@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Brain, ChevronDown, Target, AlertTriangle, Shield } from "lucide-react";
+import { Target, AlertTriangle, Shield } from "lucide-react";
 import type { DecadeHoleStrategy } from "@/lib/portal/golf/decade-caddy";
 
 interface DecadePanelProps {
@@ -52,7 +54,7 @@ export function DecadePanel({ strategy }: DecadePanelProps) {
             className="h-9 w-9 rounded-xl flex items-center justify-center"
             style={{ backgroundColor: "var(--color-ai-light)" }}
           >
-            <Brain className="h-5 w-5" style={{ color: "var(--color-ai)" }} />
+            <Icon name="psychology" className="h-5 w-5" style={{ color: "var(--color-ai)" }} />
           </div>
           <div>
             <div className="text-sm font-semibold text-[var(--color-grey-900)]">
@@ -75,11 +77,10 @@ export function DecadePanel({ strategy }: DecadePanelProps) {
             <RiskIcon className="h-3 w-3 inline mr-1" style={{ color: risk.color }} />
             {risk.label}
           </span>
-          <ChevronDown
+          <Icon name="expand_more"
             className={`h-4 w-4 text-[var(--color-grey-400)] transition-transform duration-200 ${
               isOpen ? "rotate-180" : ""
-            }`}
-          />
+            }`} />
         </div>
       </button>
 

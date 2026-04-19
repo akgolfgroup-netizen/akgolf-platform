@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useCallback, useMemo } from "react";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { ChevronLeft, ChevronRight, Calendar, List, LayoutGrid, Clock } from "lucide-react";
+
 import Link from "next/link";
 
 // Komponenter fra treningsplan-mappen
@@ -310,7 +312,7 @@ export function TrainingPlannerV3({
                 href={`/portal/treningsplan?view=calendar&week=${weekOffset - 1}`}
                 className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-200 transition-colors"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <Icon name="chevron_left" className="w-5 h-5" />
               </Link>
               <Link
                 href="/portal/treningsplan?view=calendar&week=0"
@@ -326,7 +328,7 @@ export function TrainingPlannerV3({
                 href={`/portal/treningsplan?view=calendar&week=${weekOffset + 1}`}
                 className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-200 transition-colors"
               >
-                <ChevronRight className="w-5 h-5" />
+                <Icon name="chevron_right" className="w-5 h-5" />
               </Link>
             </div>
           </div>
@@ -341,7 +343,7 @@ export function TrainingPlannerV3({
                 }`}
                 title="Kalendervisning"
               >
-                <Calendar className="w-4 h-4" />
+                <Icon name="calendar_today" className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setView("compact")}
@@ -350,7 +352,7 @@ export function TrainingPlannerV3({
                 }`}
                 title="Kompakt visning"
               >
-                <LayoutGrid className="w-4 h-4" />
+                <Icon name="grid_view" className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setView("list")}
@@ -359,7 +361,7 @@ export function TrainingPlannerV3({
                 }`}
                 title="Listevisning"
               >
-                <List className="w-4 h-4" />
+                <Icon name="list" className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -368,7 +370,7 @@ export function TrainingPlannerV3({
         {/* Statistikk-bar */}
         <div className="flex items-center gap-6 mb-4 px-4 py-3 bg-slate-800/50 rounded-lg">
           <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-slate-400" />
+            <Icon name="schedule" className="w-4 h-4 text-slate-400" />
             <span className="text-sm text-slate-300">
               <span className="font-semibold text-slate-100">{stats.totalMinutes}</span> min totalt
             </span>

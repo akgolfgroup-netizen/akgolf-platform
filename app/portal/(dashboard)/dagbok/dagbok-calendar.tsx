@@ -1,14 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Star,
-  Target,
-  X,
-} from "lucide-react";
+
 import {
   startOfMonth,
   endOfMonth,
@@ -118,14 +113,14 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
               className="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors"
               aria-label="Forrige maned"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <Icon name="chevron_left" className="w-4 h-4" />
             </button>
             <button
               onClick={() => setCalendarMonth(addMonths(calendarMonth, 1))}
               className="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors"
               aria-label="Neste maned"
             >
-              <ChevronRight className="w-4 h-4" />
+              <Icon name="chevron_right" className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -198,7 +193,7 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
                     onClick={() => setSelectedDay(null)}
                     className="p-1 rounded-lg hover:bg-grey-200/30 transition-colors"
                   >
-                    <X className="w-4 h-4 text-grey-400" />
+                    <Icon name="close" className="w-4 h-4 text-grey-400" />
                   </button>
                 </div>
                 <div className="space-y-3">
@@ -211,7 +206,7 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
                           <p className="text-sm font-medium text-black">{title}</p>
                           {log.rating != null && (
                             <span className="flex items-center gap-1 text-xs text-grey-400">
-                              <Star className="w-3 h-3" />
+                              <Icon name="star" className="w-3 h-3" />
                               {log.rating}/10
                             </span>
                           )}
@@ -219,12 +214,12 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
                         <div className="mt-1 flex flex-wrap gap-3 text-xs text-grey-400">
                           {log.durationMinutes != null && (
                             <span className="flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
+                              <Icon name="schedule" className="w-3 h-3" />
                               {log.durationMinutes} min
                             </span>
                           )}
                           <span className="flex items-center gap-1">
-                            <Target className="w-3 h-3" />
+                            <Icon name="my_location" className="w-3 h-3" />
                             {area}
                           </span>
                         </div>

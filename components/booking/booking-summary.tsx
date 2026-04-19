@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Clock, User, Calendar, Mail, Phone, CreditCard, Loader2 } from "lucide-react";
+import { Clock, User, Calendar, Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type { BookingServiceType, BookingInstructor, BookingMode } from "./booking-types";
@@ -101,12 +103,12 @@ export function BookingSummary({
       >
         {booking ? (
           <>
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
             Behandler...
           </>
         ) : (
           <>
-            <CreditCard className="w-4 h-4" />
+            <Icon name="credit_card" className="w-4 h-4" />
             Betal med kort
           </>
         )}

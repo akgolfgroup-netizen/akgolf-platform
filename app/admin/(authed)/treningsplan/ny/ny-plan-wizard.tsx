@@ -1,14 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  Clock,
-  Plus,
-  Trash2,
-} from "lucide-react";
+
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
@@ -294,7 +289,7 @@ export function NyPlanWizard({
                         : "bg-grey-100 text-grey-400",
                   )}
                 >
-                  {step > s ? <Check className="w-4 h-4" /> : s}
+                  {step > s ? <Icon name="check" className="w-4 h-4" /> : s}
                 </div>
                 <span
                   className={cn(
@@ -453,7 +448,7 @@ export function NyPlanWizard({
                               aria-label="Slett økt"
                               className="!px-2 !py-1"
                             >
-                              <Trash2 className="w-3.5 h-3.5" />
+                              <Icon name="delete" className="w-3.5 h-3.5" />
                             </Button>
                           )}
                         </div>
@@ -493,7 +488,7 @@ export function NyPlanWizard({
                               Varighet (min)
                             </label>
                             <div className="relative">
-                              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-grey-400 pointer-events-none" />
+                              <Icon name="schedule" className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-grey-400 pointer-events-none" />
                               <AdminInput
                                 type="number"
                                 min={10}
@@ -567,7 +562,7 @@ export function NyPlanWizard({
                                     className="p-0.5 rounded text-error hover:bg-error/10"
                                     aria-label="Fjern øvelse"
                                   >
-                                    <Trash2 className="w-3 h-3" />
+                                    <Icon name="delete" className="w-3 h-3" />
                                   </button>
                                 </div>
                               </div>
@@ -582,7 +577,7 @@ export function NyPlanWizard({
                           }
                           className="flex items-center gap-1.5 text-xs text-black font-medium hover:underline"
                         >
-                          <Plus className="w-3.5 h-3.5" />
+                          <Icon name="add" className="w-3.5 h-3.5" />
                           Legg til øvelser
                         </button>
                       </div>
@@ -593,7 +588,7 @@ export function NyPlanWizard({
                       onClick={() => addSession(weekIndex)}
                       className="flex items-center gap-2 w-full justify-center py-2.5 rounded-lg border border-dashed border-grey-300 text-sm text-grey-400 hover:border-black hover:text-black transition-colors"
                     >
-                      <Plus className="w-4 h-4" />
+                      <Icon name="add" className="w-4 h-4" />
                       Legg til økt
                     </button>
                   </div>
@@ -669,7 +664,7 @@ export function NyPlanWizard({
                             {session.focusArea}
                           </Badge>
                           <span className="text-grey-400 flex items-center gap-1 text-xs">
-                            <Clock className="w-3 h-3" />
+                            <Icon name="schedule" className="w-3 h-3" />
                             {session.durationMinutes} min
                           </span>
                           {session.exercises && session.exercises.length > 0 && (
@@ -702,7 +697,7 @@ export function NyPlanWizard({
                 variant="secondary"
                 onClick={() => setStep((s) => (s - 1) as WizardStep)}
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <Icon name="arrow_back" className="w-4 h-4 mr-2" />
                 Tilbake
               </Button>
             ) : (
@@ -710,7 +705,7 @@ export function NyPlanWizard({
                 variant="secondary"
                 onClick={() => router.push("/admin/treningsplan")}
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <Icon name="arrow_back" className="w-4 h-4 mr-2" />
                 Avbryt
               </Button>
             )}
@@ -722,7 +717,7 @@ export function NyPlanWizard({
                 onClick={() => setStep((s) => (s + 1) as WizardStep)}
               >
                 Neste
-                <ArrowRight className="w-4 h-4 ml-2" />
+                <Icon name="arrow_forward" className="w-4 h-4 ml-2" />
               </Button>
             ) : (
               <Button
@@ -730,7 +725,7 @@ export function NyPlanWizard({
                 isLoading={isPending}
                 onClick={handleSubmit}
               >
-                <Check className="w-4 h-4 mr-2" />
+                <Icon name="check" className="w-4 h-4 mr-2" />
                 {isPending ? "Oppretter..." : "Opprett plan"}
               </Button>
             )}

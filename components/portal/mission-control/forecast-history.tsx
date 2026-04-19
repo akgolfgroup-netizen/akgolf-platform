@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { History, CheckCircle2, XCircle } from "lucide-react";
+
 import { Badge } from "@/components/ui";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -25,7 +27,7 @@ export function ForecastHistory({ forecasts }: ForecastHistoryProps) {
         animate="show"
         className="bg-white border border-grey-200 rounded-xl p-6 text-center"
       >
-        <History className="w-8 h-8 text-grey-300 mx-auto mb-2" />
+        <Icon name="history" className="w-8 h-8 text-grey-300 mx-auto mb-2" />
         <p className="text-sm text-grey-400">Ingen forecasts ennå</p>
       </motion.div>
     );
@@ -39,7 +41,7 @@ export function ForecastHistory({ forecasts }: ForecastHistoryProps) {
       className="bg-white border border-grey-200 rounded-xl p-6"
     >
       <div className="flex items-center gap-2 mb-4">
-        <History className="w-4 h-4 text-primary" />
+        <Icon name="history" className="w-4 h-4 text-primary" />
         <p className="text-sm font-semibold text-black">Historikk</p>
         <span className="text-xs text-grey-400 ml-auto">Siste {forecasts.length}</span>
       </div>
@@ -74,12 +76,12 @@ export function ForecastHistory({ forecasts }: ForecastHistoryProps) {
                   <Badge variant={fc.withinCi95 ? "success" : "error"}>
                     {fc.withinCi95 ? (
                       <span className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" />
+                        <Icon name="check"Circle2 className="w-3 h-3" />
                         Traff CI
                       </span>
                     ) : (
                       <span className="flex items-center gap-1">
-                        <XCircle className="w-3 h-3" />
+                        <Icon name="close"Circle className="w-3 h-3" />
                         Utenfor CI
                       </span>
                     )}

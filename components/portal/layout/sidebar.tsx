@@ -1,21 +1,13 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ClipboardList,
-  Flag,
-  LayoutDashboard,
-  LogOut,
-  Plus,
-  ShieldCheck,
-  Target,
-  TrendingUp,
-  X,
-} from "lucide-react";
+import { ClipboardList, Flag, LayoutDashboard, Target, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { isStaff } from "@/lib/portal/rbac";
 import type { PortalUser } from "@/lib/portal/auth";
@@ -130,7 +122,7 @@ function SidebarContent({
             }}
             className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-2 text-[13px] font-medium text-grey-400 transition-colors hover:text-error"
           >
-            <LogOut className="h-4 w-4" />
+            <Icon name="logout" className="h-4 w-4" />
             <span>Logg ut</span>
           </button>
         </div>
@@ -142,7 +134,7 @@ function SidebarContent({
               onClick={onNavClick}
               className="flex items-center gap-2.5 rounded-xl bg-black px-4 py-2.5 text-[13px] font-bold text-white transition-opacity hover:opacity-90"
             >
-              <ShieldCheck className="h-4 w-4" />
+              <Icon name="shield"Check className="h-4 w-4" />
               <span>Mission Control</span>
             </Link>
           </div>
@@ -155,7 +147,7 @@ function SidebarContent({
           onClick={onNavClick}
           className="flex w-full items-center justify-center gap-2 rounded-full bg-accent-cta px-4 py-2.5 text-[13px] font-bold text-accent-cta-text transition-opacity hover:opacity-90"
         >
-          <Plus className="h-4 w-4" />
+          <Icon name="add" className="h-4 w-4" />
           Ny økt
         </Link>
       </div>
@@ -263,7 +255,7 @@ export function Sidebar({ user }: SidebarProps) {
                   className="cursor-pointer rounded-lg p-2 text-grey-400 transition-colors hover:bg-grey-50 hover:text-black"
                   aria-label="Lukk meny"
                 >
-                  <X className="h-5 w-5" />
+                  <Icon name="close" className="h-5 w-5" />
                 </button>
               </div>
 

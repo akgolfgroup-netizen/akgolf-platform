@@ -1,5 +1,6 @@
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { AdminSparkline } from "./charts/AdminSparkline";
 import { MonoLabel } from "@/components/portal/patterns";
@@ -38,15 +39,13 @@ export function AdminStatCard({
           {change && (
             <div className="mt-2 flex items-center gap-1 text-xs font-medium">
               {isPositive ? (
-                <ArrowUpRight
+                <Icon name="arrow_upward"Right
                   className="w-3.5 h-3.5 text-[var(--color-success)]"
-                  aria-hidden="true"
-                />
+                  aria-hidden="true" />
               ) : (
-                <ArrowDownRight
+                <Icon name="arrow_downward"Right
                   className="w-3.5 h-3.5 text-[var(--color-error)]"
-                  aria-hidden="true"
-                />
+                  aria-hidden="true" />
               )}
               <span
                 className={cn(

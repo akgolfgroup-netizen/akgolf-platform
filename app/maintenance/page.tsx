@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 import { AKLogo } from "@/components/website/AKLogo";
-import { Wrench, Clock, Mail, ArrowRight } from "lucide-react";
+
 
 // Heritage Tech Design Tokens
 const heritage = {
@@ -94,10 +96,9 @@ export default function MaintenancePage() {
               className="w-16 h-16 rounded-full flex items-center justify-center relative"
               style={{ backgroundColor: heritage.colors.limeMuted }}
             >
-              <Wrench 
+              <Icon name="build" 
                 className="w-8 h-8 animate-pulse" 
-                style={{ color: heritage.colors.lime }}
-              />
+                style={{ color: heritage.colors.lime }} />
               {/* Pulse ring */}
               <div 
                 className="absolute inset-0 rounded-full animate-ping opacity-20"
@@ -140,7 +141,7 @@ export default function MaintenancePage() {
               className="flex items-center gap-3 px-4 py-3 rounded-xl"
               style={{ backgroundColor: heritage.colors.surfaceRaised }}
             >
-              <Clock className="w-5 h-5 flex-shrink-0" style={{ color: heritage.colors.lime }} />
+              <Icon name="schedule" className="w-5 h-5 flex-shrink-0" style={{ color: heritage.colors.lime }} />
               <span style={{ color: `${heritage.colors.cream}CC` }}>
                 Forventet ferdig: <span className="font-semibold" style={{ color: heritage.colors.cream }}>Snart</span>
               </span>
@@ -179,9 +180,9 @@ export default function MaintenancePage() {
                 color: heritage.colors.ink,
               }}
             >
-              <Mail className="w-4 h-4" />
+              <Icon name="mail" className="w-4 h-4" />
               post@akgolf.no
-              <ArrowRight className="w-4 h-4" />
+              <Icon name="arrow_forward" className="w-4 h-4" />
             </a>
           </motion.div>
         </div>

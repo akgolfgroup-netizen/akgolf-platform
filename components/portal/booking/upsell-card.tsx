@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Check, Sparkles, TrendingUp } from "lucide-react";
+
 import Link from "next/link";
 
 interface BookingUpsellCardProps {
@@ -35,7 +37,7 @@ export function BookingUpsellCard({
     >
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0 w-12 h-12 bg-black rounded-xl flex items-center justify-center">
-          <Sparkles className="h-6 w-6 text-white" />
+          <Icon name="auto_awesome" className="h-6 w-6 text-white" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
@@ -53,19 +55,19 @@ export function BookingUpsellCard({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
             <div className="flex items-center gap-2 text-sm text-grey-600">
-              <Check className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
+              <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>2 x 20 min okter/mnd</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-grey-600">
-              <Check className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
+              <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>TrackMan-analyse hver okt</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-grey-600">
-              <Check className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
+              <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>Personlig treningsplan</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-grey-600">
-              <Check className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
+              <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>Full portal-tilgang</span>
             </div>
           </div>
@@ -85,7 +87,7 @@ export function BookingUpsellCard({
               href={isLoggedIn ? "/portal/apper" : "/portal/login?redirect=/portal/apper"}
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-black text-white font-medium rounded-full hover:bg-grey-800 transition-colors"
             >
-              <TrendingUp className="h-4 w-4" />
+              <Icon name="trending_up" className="h-4 w-4" />
               Oppgrader na
             </Link>
           </div>

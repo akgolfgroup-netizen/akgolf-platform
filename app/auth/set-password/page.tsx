@@ -1,17 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Loader2,
-  Lock,
-  CheckCircle2,
-  AlertTriangle,
-  ArrowRight,
-  Sparkles,
-} from "lucide-react";
+
 import { AKLogo } from "@/components/website/AKLogo";
 import { Card } from "@/components/ui";
 import {
@@ -36,10 +31,9 @@ export default function SetPasswordPage() {
     <Suspense
       fallback={
         <main className="min-h-screen w-full flex items-center justify-center bg-background-beige">
-          <Loader2
+          <Icon name="progress_activity"
             size={28}
-            className="animate-spin text-primary"
-          />
+            className="animate-spin text-primary" />
         </main>
       }
     >
@@ -177,7 +171,7 @@ function SetPasswordContent() {
           >
             <AKLogo variant="white" size={56} />
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-white/5">
-              <Sparkles className="w-3.5 h-3.5 text-accent-cta" />
+              <Icon name="auto_awesome" className="w-3.5 h-3.5 text-accent-cta" />
               <span className="text-[11px] font-medium tracking-wide uppercase text-white/90">
                 Ny konto
               </span>
@@ -250,10 +244,9 @@ function SetPasswordContent() {
                 exit={{ opacity: 0 }}
               >
                 <Card padding="lg" className="text-center">
-                  <Loader2
+                  <Icon name="progress_activity"
                     size={28}
-                    className="animate-spin text-primary mx-auto mb-4"
-                  />
+                    className="animate-spin text-primary mx-auto mb-4" />
                   <p className="text-sm text-muted">
                     Verifiserer invitasjon...
                   </p>
@@ -274,7 +267,7 @@ function SetPasswordContent() {
                   className="text-center shadow-[0_24px_60px_-30px_rgba(184,66,51,0.25)]"
                 >
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-error/10">
-                    <AlertTriangle className="w-7 h-7 text-error" />
+                    <Icon name="warning" className="w-7 h-7 text-error" />
                   </div>
                   <h1 className="text-2xl font-semibold text-text mb-2">
                     Noe gikk galt
@@ -287,7 +280,7 @@ function SetPasswordContent() {
                     className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-alt transition-colors"
                   >
                     Kontakt oss for hjelp
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <Icon name="arrow_forward" className="w-3.5 h-3.5" />
                   </a>
                 </Card>
               </motion.div>
@@ -324,10 +317,9 @@ function SetPasswordContent() {
                           Passord
                         </label>
                         <div className="relative group">
-                          <Lock
+                          <Icon name="lock"
                             className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted transition-colors group-focus-within:text-primary"
-                            aria-hidden="true"
-                          />
+                            aria-hidden="true" />
                           <input
                             id="password"
                             type="password"
@@ -350,10 +342,9 @@ function SetPasswordContent() {
                           Bekreft passord
                         </label>
                         <div className="relative group">
-                          <Lock
+                          <Icon name="lock"
                             className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted transition-colors group-focus-within:text-primary"
-                            aria-hidden="true"
-                          />
+                            aria-hidden="true" />
                           <input
                             id="confirm"
                             type="password"
@@ -390,7 +381,7 @@ function SetPasswordContent() {
                             ? "Lagrer..."
                             : "Sett passord og logg inn"}
                           {!submitting && (
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                            <Icon name="arrow_forward" className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                           )}
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
@@ -423,7 +414,7 @@ function SetPasswordContent() {
                     }}
                     className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-success/10"
                   >
-                    <CheckCircle2 className="w-7 h-7 text-success" />
+                    <Icon name="check"Circle2 className="w-7 h-7 text-success" />
                   </motion.div>
                   <h1 className="text-2xl font-semibold text-text mb-2">
                     Passord satt

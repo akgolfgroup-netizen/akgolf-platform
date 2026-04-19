@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import { Plus, Trash2, Ban } from "lucide-react";
+
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
@@ -63,11 +65,11 @@ export default function AvailabilityBlockedTimes({
     <div className="bg-white rounded-xl border border-grey-200 overflow-hidden">
       <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Ban className="w-4 h-4 text-grey-500" />
+          <Icon name="block" className="w-4 h-4 text-grey-500" />
           <h3 className="text-base font-semibold text-black">Blokkerte tider</h3>
         </div>
         <Button variant="accent" onClick={() => setShowDialog(true)}>
-          <Plus className="w-4 h-4" />
+          <Icon name="add" className="w-4 h-4" />
           Blokker tid
         </Button>
       </div>
@@ -97,7 +99,7 @@ export default function AvailabilityBlockedTimes({
                   className="p-1.5 rounded-md hover:bg-error-light text-grey-400 hover:text-error transition-colors"
                   aria-label="Slett"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Icon name="delete" className="w-4 h-4" />
                 </button>
               </div>
             );

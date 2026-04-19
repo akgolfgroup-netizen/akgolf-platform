@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+
 import { ForecastForm, type ForecastFormData } from "./forecast-form";
 import { ForecastDisplay, type ForecastDisplayData } from "./forecast-display";
 import { ForecastHistory } from "./forecast-history";
@@ -124,7 +126,7 @@ export function StudentForecastTab({ userId }: StudentForecastTabProps) {
   if (loading && history.length === 0) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        <Icon name="progress_activity" className="w-6 h-6 animate-spin text-primary" />
       </div>
     );
   }

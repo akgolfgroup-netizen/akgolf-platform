@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import {
   SGRing,
@@ -21,7 +23,7 @@ import {
   BentoEyebrow,
   type PyramideLevel,
 } from "@/components/portal/patterns";
-import { Calendar, MapPin, Play, Target, Zap } from "lucide-react";
+
 
 export function DesignPreviewClient() {
   const [activePyramideLevel, setActivePyramideLevel] =
@@ -275,15 +277,15 @@ export function DesignPreviewClient() {
       >
         <NightSurface variant="ambient" className="rounded-2xl p-10">
           <div className="flex flex-wrap items-center gap-3">
-            <GlassButton variant="glass" icon={<Play className="w-3.5 h-3.5" />}>
+            <GlassButton variant="glass" icon={<Icon name="play_arrow" className="w-3.5 h-3.5" />}>
               Start runde
             </GlassButton>
-            <GlassButton variant="lime" icon={<Zap className="w-3.5 h-3.5" />}>
+            <GlassButton variant="lime" icon={<Icon name="bolt" className="w-3.5 h-3.5" />}>
               Live tracking
             </GlassButton>
             <GlassButton variant="amber">Tee-time</GlassButton>
             <GlassButton variant="dark">Pause</GlassButton>
-            <GlassButton variant="glass" size="icon" icon={<Target className="w-4 h-4" />} />
+            <GlassButton variant="glass" size="icon" icon={<Icon name="my_location" className="w-4 h-4" />} />
             <GlassButton variant="lime" size="sm">
               Kompakt
             </GlassButton>
@@ -300,13 +302,13 @@ export function DesignPreviewClient() {
       >
         <NightSurface variant="ambient" className="rounded-2xl p-10 flex flex-wrap gap-3">
           <HeroLabel>
-            <MapPin className="w-3 h-3" />
+            <Icon name="location_on" className="w-3 h-3" />
             <strong className="text-white font-semibold">Miklagard GK</strong>
             <HeroLabelSeparator />
             <span className="text-white/55">Hull 8 · 342m</span>
           </HeroLabel>
           <HeroLabel>
-            <Calendar className="w-3 h-3" />
+            <Icon name="calendar_today" className="w-3 h-3" />
             <strong className="text-white font-semibold">23. april 2026</strong>
             <HeroLabelSeparator />
             <span className="text-white/55">Uke 17</span>

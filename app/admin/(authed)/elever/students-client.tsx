@@ -1,21 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import {
-  Download,
-  UserPlus,
-  Mail,
-  Calendar,
-  Users,
-  UserCheck,
-  AlertCircle,
-  Phone,
-  FileText,
-  MessageSquare,
-  CheckCircle,
-  XCircle,
-} from "lucide-react";
+import { UserCheck } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminStatCard,
@@ -270,9 +259,9 @@ export function StudentsClient({ initialData }: Props) {
       align: "center",
       render: (row) =>
         row.hasActivePlan ? (
-          <CheckCircle className="w-4 h-4 text-success-text mx-auto" />
+          <Icon name="check"Circle className="w-4 h-4 text-success-text mx-auto" />
         ) : (
-          <XCircle className="w-4 h-4 text-grey-200 mx-auto" />
+          <Icon name="close"Circle className="w-4 h-4 text-grey-200 mx-auto" />
         ),
     },
   ];
@@ -318,13 +307,13 @@ export function StudentsClient({ initialData }: Props) {
                 {
                   id: "export-all",
                   label: "Eksporter alle",
-                  icon: <Download className="w-4 h-4" />,
+                  icon: <Icon name="download" className="w-4 h-4" />,
                   onSelect: () => handleExport(data.students),
                 },
                 {
                   id: "mail-all",
                   label: "Send e-post til alle aktive",
-                  icon: <Mail className="w-4 h-4" />,
+                  icon: <Icon name="mail" className="w-4 h-4" />,
                   onSelect: () => {
                     const active = data.students
                       .filter((s) => getStatus(s) === "active")
@@ -344,22 +333,22 @@ export function StudentsClient({ initialData }: Props) {
           <AdminStatCard
             label="Totalt"
             value={data.stats.total}
-            icon={<Users className="w-5 h-5" />}
+            icon={<Icon name="person"s className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Aktive"
             value={data.stats.active}
-            icon={<UserCheck className="w-5 h-5" />}
+            icon={<Icon name="person"Check className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Nye denne maneden"
             value={data.stats.newThisMonth}
-            icon={<UserPlus className="w-5 h-5" />}
+            icon={<Icon name="person"Plus className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Trenger oppfolging"
             value={data.stats.atRisk}
-            icon={<AlertCircle className="w-5 h-5" />}
+            icon={<Icon name="error" className="w-5 h-5" />}
             sparklineColor="#C48A32"
           />
         </div>
@@ -448,12 +437,12 @@ export function StudentsClient({ initialData }: Props) {
           previewStudent && (
             <div className="flex items-center justify-end gap-2">
               <Button variant="secondary">
-                <MessageSquare className="w-4 h-4" />
+                <Icon name="chat" className="w-4 h-4" />
                 Send melding
               </Button>
               <Link href={`/admin/elever/${previewStudent.id}`}>
                 <Button variant="accent">
-                  <FileText className="w-4 h-4" />
+                  <Icon name="description" className="w-4 h-4" />
                   Apne profil
                 </Button>
               </Link>
@@ -486,7 +475,7 @@ export function StudentsClient({ initialData }: Props) {
                     href={`mailto:${previewStudent.email}`}
                     className="flex items-center gap-1.5 hover:text-black transition-colors"
                   >
-                    <Mail className="w-3.5 h-3.5" />
+                    <Icon name="mail" className="w-3.5 h-3.5" />
                     {previewStudent.email}
                   </a>
                   {previewStudent.phone && (
@@ -494,7 +483,7 @@ export function StudentsClient({ initialData }: Props) {
                       href={`tel:${previewStudent.phone}`}
                       className="flex items-center gap-1.5 hover:text-black transition-colors"
                     >
-                      <Phone className="w-3.5 h-3.5" />
+                      <Icon name="phone" className="w-3.5 h-3.5" />
                       {previewStudent.phone}
                     </a>
                   )}
@@ -521,7 +510,7 @@ export function StudentsClient({ initialData }: Props) {
               <h4 className="text-sm font-semibold text-black mb-2">Neste booking</h4>
               {previewStudent.nextBookingDate ? (
                 <div className="flex items-center gap-2 text-sm text-text">
-                  <Calendar className="w-4 h-4 text-grey-400" />
+                  <Icon name="calendar_today" className="w-4 h-4 text-grey-400" />
                   {new Date(previewStudent.nextBookingDate).toLocaleDateString(
                     "nb-NO",
                     { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" },
@@ -538,7 +527,7 @@ export function StudentsClient({ initialData }: Props) {
               <h4 className="text-sm font-semibold text-black mb-2">Treningsplan</h4>
               {previewStudent.hasActivePlan ? (
                 <div className="flex items-center gap-2 text-sm text-success-text">
-                  <CheckCircle className="w-4 h-4" />
+                  <Icon name="check"Circle className="w-4 h-4" />
                   Aktiv treningsplan
                 </div>
               ) : (

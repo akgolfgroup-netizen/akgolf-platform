@@ -1,7 +1,9 @@
 "use client";
 
-import { ArrowUpRight, ArrowDownRight, Minus } from "lucide-react";
 
+
+
+import { Icon } from "@/components/ui/icon";
 /**
  * MentalTrendsWidget — viser mental profil og trender over tid.
  *
@@ -56,11 +58,11 @@ export function MentalTrendsWidget() {
                   }`}
                 >
                   {isPositive ? (
-                    <ArrowUpRight className="w-3 h-3" />
+                    <Icon name="arrow_upward"Right className="w-3 h-3" />
                   ) : isNeutral ? (
-                    <Minus className="w-3 h-3" />
+                    <Icon name="remove" className="w-3 h-3" />
                   ) : (
-                    <ArrowDownRight className="w-3 h-3" />
+                    <Icon name="arrow_downward"Right className="w-3 h-3" />
                   )}
                   {Math.abs(m.trend)}
                 </span>

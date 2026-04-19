@@ -1,17 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { useState } from "react";
-import {
-  Flag,
-  Wind,
-  Target,
-  Compass,
-  ChevronLeft,
-  ChevronRight,
-  LayoutGrid,
-  Save,
-} from "lucide-react";
+import { Target, Compass } from "lucide-react";
 import {
   CourseHero,
   GlassPanel,
@@ -101,14 +94,14 @@ export function RundeCourseHeroClient({
                 <GlassButton
                   variant="glass"
                   size="icon"
-                  icon={<LayoutGrid className="w-4 h-4" />}
+                  icon={<Icon name="grid_view" className="w-4 h-4" />}
                   title="Standard visning"
                 />
               </Link>
               <GlassButton
                 variant="lime"
                 size="sm"
-                icon={<Save className="w-3 h-3" />}
+                icon={<Icon name="save" className="w-3 h-3" />}
               >
                 Lagre
               </GlassButton>
@@ -119,7 +112,7 @@ export function RundeCourseHeroClient({
         {/* Hero label — course + hole */}
         <div className="absolute top-24 left-8 z-10 flex items-center gap-3 flex-wrap">
           <HeroLabel>
-            <Flag className="w-3 h-3" />
+            <Icon name="flag" className="w-3 h-3" />
             <strong className="text-white font-semibold">{courseName}</strong>
             <HeroLabelSeparator />
             <span>
@@ -289,7 +282,7 @@ export function RundeCourseHeroClient({
 
             <GlassPanel padding="md">
               <div className="flex items-center gap-3">
-                <Wind className="w-6 h-6 text-accent-cta" />
+                <Icon name="air" className="w-6 h-6 text-accent-cta" />
                 <div className="flex-1">
                   <MonoLabel size="xs" uppercase className="text-white/45 block">
                     Vær nå
@@ -335,16 +328,16 @@ export function RundeCourseHeroClient({
           <GlassButton
             variant="glass"
             size="icon"
-            icon={<ChevronLeft className="w-4 h-4" />}
+            icon={<Icon name="chevron_left" className="w-4 h-4" />}
             disabled={!currentHole || currentHole.holeNumber <= 1}
           />
-          <GlassButton variant="dark" icon={<Target className="w-3.5 h-3.5" />}>
+          <GlassButton variant="dark" icon={<Icon name="my_location" className="w-3.5 h-3.5" />}>
             Hull {currentHole?.holeNumber ?? "-"} av 18
           </GlassButton>
           <GlassButton
             variant="glass"
             size="icon"
-            icon={<ChevronRight className="w-4 h-4" />}
+            icon={<Icon name="chevron_right" className="w-4 h-4" />}
             disabled={!currentHole || currentHole.holeNumber >= 18}
           />
         </div>

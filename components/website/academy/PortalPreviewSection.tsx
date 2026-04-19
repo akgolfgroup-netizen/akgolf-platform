@@ -1,14 +1,8 @@
 "use client";
 
-import {
-  Calendar,
-  BarChart3,
-  Target,
-  BookOpen,
-  TrendingUp,
-  Video,
-  Smartphone,
-} from "lucide-react";
+
+import { Icon } from "@/components/ui/icon";
+import { Calendar, BarChart3, Target, BookOpen, TrendingUp, Video } from "lucide-react";
 import { SectionLabel } from "../SectionLabel";
 import { RevealOnScroll, StaggerContainer, StaggerItem } from "../RevealOnScroll";
 
@@ -67,7 +61,7 @@ export function PortalPreviewSection() {
         <RevealOnScroll>
           <div className="mb-12 rounded-2xl bg-black p-6 text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
-              <Smartphone className="w-5 h-5 text-accent-cta" />
+              <Icon name="smartphone" className="w-5 h-5 text-accent-cta" />
               <h3 className="font-semibold text-white">
                 Spillerportalen er live
               </h3>

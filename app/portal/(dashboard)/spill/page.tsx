@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Target, Disc, Flame, ArrowRight } from "lucide-react";
+import { Target, Disc, Flame } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -69,7 +71,7 @@ export default function SpillModulPage() {
             <Button variant="primary" className="w-full" asChild>
               <Link href={`/portal/spill/${game.id}`}>
                 Start spill
-                <ArrowRight className="w-4 h-4 ml-2" />
+                <Icon name="arrow_forward" className="w-4 h-4 ml-2" />
               </Link>
             </Button>
           </PremiumCard>

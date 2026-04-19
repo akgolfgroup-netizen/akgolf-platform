@@ -1,29 +1,13 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import {
-  Calendar,
-  Users,
-  AlertCircle,
-  Clock,
-  DollarSign,
-  Activity,
-  ArrowRight,
-  Plus,
-  MessageSquare,
-  UserPlus,
-  FileText,
-  Loader2,
-  RefreshCw,
-  Sparkles,
-  Zap,
-  Bell,
-  CheckCircle,
-} from "lucide-react";
+import { DollarSign, MessageSquare, UserPlus, FileText } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminAreaChart,
@@ -173,7 +157,7 @@ export default function MissionBoardPage() {
         />
         <div className="flex items-center justify-center py-32">
           <div className="flex flex-col items-center gap-4">
-            <Loader2 className="w-10 h-10 text-grey-600 animate-spin" />
+            <Icon name="progress_activity" className="w-10 h-10 text-grey-600 animate-spin" />
             <p className="text-grey-500 font-medium">
               Laster Mission Board...
             </p>
@@ -193,11 +177,11 @@ export default function MissionBoardPage() {
         />
         <div className="flex items-center justify-center p-6 py-32">
           <Card padding="lg" className="max-w-md flex flex-col items-center justify-center text-center py-12 px-6">
-            <AlertCircle className="w-12 h-12 text-error mb-4" />
+            <Icon name="error" className="w-12 h-12 text-error mb-4" />
             <h3 className="text-lg font-semibold text-black mb-2">Kunne ikke laste data</h3>
             <p className="text-sm text-grey-500 mb-6">{error}</p>
             <Button variant="accent" onClick={fetchDashboardData} className="gap-2">
-              <RefreshCw className="w-4 h-4" />
+              <Icon name="refresh" className="w-4 h-4" />
               Prøv igjen
             </Button>
           </Card>
@@ -277,9 +261,8 @@ export default function MissionBoardPage() {
               className="ml-2 p-1.5 hover:bg-grey-200 rounded-lg transition-colors disabled:opacity-50"
               aria-label="Oppdater"
             >
-              <RefreshCw
-                className={`w-4 h-4 text-grey-600 ${loading ? "animate-spin" : ""}`}
-              />
+              <Icon name="refresh"
+                className={`w-4 h-4 text-grey-600 ${loading ? "animate-spin" : ""}`} />
             </button>
           </div>
         </div>
@@ -316,7 +299,7 @@ export default function MissionBoardPage() {
                 variant="accent"
                 className="gap-2"
               >
-                <Plus className="w-4 h-4" />
+                <Icon name="add" className="w-4 h-4" />
                 Ny booking
               </Button>
             </Link>
@@ -336,7 +319,7 @@ export default function MissionBoardPage() {
                   </p>
                 </div>
                 <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success">
-                  <Calendar className="w-5 h-5" />
+                  <Icon name="calendar_today" className="w-5 h-5" />
                 </div>
               </div>
               <AdminSparkline data={sparkBookings} width="100%" height={32} />
@@ -351,7 +334,7 @@ export default function MissionBoardPage() {
                   </p>
                 </div>
                 <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success">
-                  <Activity className="w-5 h-5" />
+                  <Icon name="monitoring" className="w-5 h-5" />
                 </div>
               </div>
               <AdminSparkline
@@ -371,7 +354,7 @@ export default function MissionBoardPage() {
                   </p>
                 </div>
                 <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success">
-                  <Users className="w-5 h-5" />
+                  <Icon name="person"s className="w-5 h-5" />
                 </div>
               </div>
               <AdminSparkline
@@ -437,7 +420,7 @@ export default function MissionBoardPage() {
               <Card padding="none" className="overflow-hidden">
                 <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-success" />
+                    <Icon name="schedule" className="w-5 h-5 text-success" />
                     <h2 className="text-base font-semibold text-grey-900">Dagens timeplan</h2>
                   </div>
                   <Link
@@ -445,7 +428,7 @@ export default function MissionBoardPage() {
                     className="text-sm text-success hover:text-success-text font-medium flex items-center gap-1.5 transition-colors"
                   >
                     Se kalender
-                    <ArrowRight className="w-4 h-4" />
+                    <Icon name="arrow_forward" className="w-4 h-4" />
                   </Link>
                 </div>
 
@@ -485,14 +468,14 @@ export default function MissionBoardPage() {
                             </p>
                           </div>
 
-                          <ArrowRight className="w-5 h-5 text-grey-300 group-hover:text-success transition-colors" />
+                          <Icon name="arrow_forward" className="w-5 h-5 text-grey-300 group-hover:text-success transition-colors" />
                         </div>
                       </motion.div>
                     ))}
                   </div>
                 ) : (
                   <div className="px-6 py-12 text-center">
-                    <Calendar className="w-12 h-12 text-grey-400 mx-auto mb-4" />
+                    <Icon name="calendar_today" className="w-12 h-12 text-grey-400 mx-auto mb-4" />
                     <p className="text-grey-500">
                       Ingen bookinger i dag
                     </p>
@@ -507,7 +490,7 @@ export default function MissionBoardPage() {
               <motion.div variants={itemVariants}>
                 <Card padding="sm" className="border-l-4 border-l-ai">
                   <div className="flex items-center gap-2 mb-4">
-                    <Sparkles className="w-5 h-5 text-ai" />
+                    <Icon name="auto_awesome" className="w-5 h-5 text-ai" />
                     <h3 className="text-base font-semibold text-grey-900">AI-innsikt</h3>
                   </div>
 
@@ -532,7 +515,7 @@ export default function MissionBoardPage() {
                 <Card padding="none" className="overflow-hidden">
                   <div className="px-6 py-4 border-b border-grey-200">
                     <div className="flex items-center gap-2">
-                      <Bell className="w-5 h-5 text-success" />
+                      <Icon name="notifications" className="w-5 h-5 text-success" />
                       <h3 className="text-base font-semibold text-grey-900">Varsler</h3>
                       {stats.alerts.length > 0 && (
                         <span className="ml-auto px-2.5 py-0.5 bg-success-light text-success-text text-xs font-bold rounded-full">
@@ -571,7 +554,7 @@ export default function MissionBoardPage() {
                     </div>
                   ) : (
                     <div className="px-6 py-8 text-center">
-                      <CheckCircle className="w-10 h-10 text-success mx-auto mb-3 opacity-50" />
+                      <Icon name="check"Circle className="w-10 h-10 text-success mx-auto mb-3 opacity-50" />
                       <p className="text-sm text-grey-500">
                         Ingen aktive varsler
                       </p>
@@ -585,7 +568,7 @@ export default function MissionBoardPage() {
                 <motion.div variants={itemVariants}>
                   <Card padding="sm" className="p-5">
                     <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-success" />
+                      <Icon name="schedule" className="w-5 h-5 text-success" />
                       Dagens aktivitet
                     </h3>
                     <AdminTimeline items={timelineItems} />
@@ -597,7 +580,7 @@ export default function MissionBoardPage() {
               <motion.div variants={itemVariants}>
                 <Card padding="sm" className="p-5">
                   <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-success" />
+                    <Icon name="bolt" className="w-5 h-5 text-success" />
                     Denne uken
                   </h3>
 

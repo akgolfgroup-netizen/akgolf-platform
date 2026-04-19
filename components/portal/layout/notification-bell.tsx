@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Bell, Check, Loader2, Calendar, FileText, Trophy, Sparkles, Clock, AlertCircle } from "lucide-react";
+import { Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import Link from "next/link";
@@ -142,24 +144,24 @@ export function NotificationBell() {
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case "BOOKING_CONFIRMED":
-        return <Calendar className="w-4 h-4 text-[var(--color-success)]" />;
+        return <Icon name="calendar_today" className="w-4 h-4 text-[var(--color-success)]" />;
       case "BOOKING_CANCELLED":
-        return <AlertCircle className="w-4 h-4 text-[var(--color-error)]" />;
+        return <Icon name="error" className="w-4 h-4 text-[var(--color-error)]" />;
       case "BOOKING_REMINDER":
-        return <Clock className="w-4 h-4 text-[var(--color-brand)]" />;
+        return <Icon name="schedule" className="w-4 h-4 text-[var(--color-brand)]" />;
       case "PLAN_READY":
       case "PLAN_GENERATED":
-        return <FileText className="w-4 h-4 text-[var(--color-info)]" />;
+        return <Icon name="description" className="w-4 h-4 text-[var(--color-info)]" />;
       case "COACHING_SUMMARY":
-        return <FileText className="w-4 h-4 text-[var(--color-brand)]" />;
+        return <Icon name="description" className="w-4 h-4 text-[var(--color-brand)]" />;
       case "ACHIEVEMENT_UNLOCKED":
-        return <Trophy className="w-4 h-4 text-[var(--color-warning)]" />;
+        return <Icon name="emoji_events" className="w-4 h-4 text-[var(--color-warning)]" />;
       case "AI_INSIGHT":
-        return <Sparkles className="w-4 h-4 text-[var(--color-brand)]" />;
+        return <Icon name="auto_awesome" className="w-4 h-4 text-[var(--color-brand)]" />;
       case "TRAINING_REMINDER":
-        return <Clock className="w-4 h-4 text-[var(--color-info)]" />;
+        return <Icon name="schedule" className="w-4 h-4 text-[var(--color-info)]" />;
       default:
-        return <Bell className="w-4 h-4" />;
+        return <Icon name="notifications" className="w-4 h-4" />;
     }
   };
 
@@ -248,9 +250,9 @@ export function NotificationBell() {
             title="Merk som lest"
           >
             {markingRead.includes(notification.id) ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-[var(--color-grey-400)]" />
+              <Icon name="progress_activity" className="w-3.5 h-3.5 animate-spin text-[var(--color-grey-400)]" />
             ) : (
-              <Check className="w-3.5 h-3.5 text-[var(--color-grey-400)]" />
+              <Icon name="check" className="w-3.5 h-3.5 text-[var(--color-grey-400)]" />
             )}
           </button>
         )}
@@ -291,7 +293,7 @@ export function NotificationBell() {
         )}
         aria-label="Notifikasjoner"
       >
-        <Bell className="w-5 h-5" />
+        <Icon name="notifications" className="w-5 h-5" />
         
         {/* Unread badge */}
         <AnimatePresence>
@@ -336,7 +338,7 @@ export function NotificationBell() {
             <div className="max-h-[400px] overflow-y-auto">
               {notifications.length === 0 ? (
                 <div className="py-8 text-center">
-                  <Bell className="w-10 h-10 mx-auto mb-3 text-[var(--color-grey-300)]" />
+                  <Icon name="notifications" className="w-10 h-10 mx-auto mb-3 text-[var(--color-grey-300)]" />
                   <p className="text-sm text-[var(--color-grey-500)]">Ingen notifikasjoner</p>
                 </div>
               ) : (

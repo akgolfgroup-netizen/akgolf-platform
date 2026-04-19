@@ -1,12 +1,14 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 /**
  * DailyAgendaSection — følger mc-alert-list-mønster fra Mission Board wireframe.
  * Alert-rader med ikon + tittel + meta + tidsstempel + handlings-knapp.
  */
 
 import Link from "next/link";
-import { ArrowRight, AlertCircle, AlertTriangle, Info } from "lucide-react";
+
 import { MonoLabel } from "@/components/portal/patterns";
 import type { CoachingSignal, SignalSeverity } from "@/lib/portal/coaching-signals";
 
@@ -19,21 +21,21 @@ const SEVERITY: Record<
   { icon: React.ReactNode; label: string; bg: string; text: string; border: string }
 > = {
   high: {
-    icon: <AlertCircle className="h-4 w-4" />,
+    icon: <Icon name="error" className="h-4 w-4" />,
     label: "Høy",
     bg: "bg-error-light",
     text: "text-error-text",
     border: "border-l-4 border-l-[var(--color-error)]",
   },
   medium: {
-    icon: <AlertTriangle className="h-4 w-4" />,
+    icon: <Icon name="warning" className="h-4 w-4" />,
     label: "Medium",
     bg: "bg-warning-light",
     text: "text-warning-text",
     border: "border-l-4 border-l-[var(--color-warning)]",
   },
   low: {
-    icon: <Info className="h-4 w-4" />,
+    icon: <Icon name="info" className="h-4 w-4" />,
     label: "Lav",
     bg: "bg-grey-100",
     text: "text-grey-500",
@@ -135,7 +137,7 @@ export function DailyAgendaSection({ signals }: DailyAgendaSectionProps) {
                 className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline shrink-0 ml-2 whitespace-nowrap"
               >
                 Åpne
-                <ArrowRight className="h-3.5 w-3.5" />
+                <Icon name="arrow_forward" className="h-3.5 w-3.5" />
               </Link>
             </li>
           );

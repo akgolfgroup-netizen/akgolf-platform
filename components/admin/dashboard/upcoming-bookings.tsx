@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import React from "react";
 import Link from "next/link";
-import { Clock, Calendar, MoreHorizontal, X, Check, AlertCircle } from "lucide-react";
+import { X, Check, AlertCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import {
   DropdownMenu,
@@ -142,7 +144,7 @@ function BookingItem({ booking }: { booking: Booking }) {
             <button
               className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center justify-center rounded-lg text-grey-400 hover:text-black hover:bg-grey-50"
             >
-              <MoreHorizontal className="w-4 h-4" />
+              <Icon name="more_horiz" className="w-4 h-4" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -163,7 +165,7 @@ export function UpcomingBookings({ bookings = defaultBookings, maxItems = 5 }: U
     <Card className="overflow-hidden">
       <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
         <div className="flex items-center gap-3">
-          <Clock className="w-5 h-5 text-grey-400" />
+          <Icon name="schedule" className="w-5 h-5 text-grey-400" />
           <h2 className="text-sm font-semibold text-black">Neste bookinger</h2>
         </div>
         <Link
@@ -181,7 +183,7 @@ export function UpcomingBookings({ bookings = defaultBookings, maxItems = 5 }: U
           ))
         ) : (
           <div className="px-6 py-12 text-center">
-            <Calendar className="w-10 h-10 text-grey-300 mx-auto mb-3 opacity-50" />
+            <Icon name="calendar_today" className="w-10 h-10 text-grey-300 mx-auto mb-3 opacity-50" />
             <p className="text-sm text-grey-400">Ingen kommende bookinger</p>
           </div>
         )}

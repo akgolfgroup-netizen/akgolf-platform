@@ -1,8 +1,9 @@
+import { Icon } from "@/components/ui/icon";
 import { getCoachingSessions } from "./actions";
 import { SessionCard } from "@/components/portal/coaching-historikk/session-card";
 import { isStaff } from "@/lib/portal/rbac";
 import { requirePortalUser } from "@/lib/portal/auth";
-import { BookOpen, Plus } from "lucide-react";
+
 import Link from "next/link";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -84,7 +85,7 @@ export default async function CoachingHistorikkPage() {
           <div className="rounded-xl bg-white p-6 shadow-card">
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
-                <BookOpen className="h-6 w-6" />
+                <Icon name="menu_book" className="h-6 w-6" />
               </div>
               <p className="text-sm text-outline">
                 Ingen coachingsesjoner ennå.
@@ -93,7 +94,7 @@ export default async function CoachingHistorikkPage() {
                 href="/portal/bookinger/ny"
                 className="mt-4 inline-flex items-center gap-2 rounded-[20px] bg-primary px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-primary-alt"
               >
-                <Plus className="h-3.5 w-3.5" />
+                <Icon name="add" className="h-3.5 w-3.5" />
                 Book din første sesjon
               </Link>
             </div>

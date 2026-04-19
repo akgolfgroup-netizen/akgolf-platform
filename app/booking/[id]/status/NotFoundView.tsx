@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
-import { Search, AlertCircle } from "lucide-react";
+
 
 export function NotFoundView() {
   return (
@@ -9,7 +11,7 @@ export function NotFoundView() {
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-8 text-center">
           <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-100)] flex items-center justify-center mx-auto mb-6">
-            <Search className="w-8 h-8 text-[var(--color-grey-500)]" />
+            <Icon name="search" className="w-8 h-8 text-[var(--color-grey-500)]" />
           </div>
           
           <h1 className="text-xl font-semibold text-[var(--color-black)] mb-2">
@@ -23,7 +25,7 @@ export function NotFoundView() {
 
           <div className="bg-[var(--color-warning-light)] border border-[var(--color-warning)]/20 rounded-xl p-4 mb-6">
             <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-[var(--color-warning)] flex-shrink-0 mt-0.5" />
+              <Icon name="error" className="w-5 h-5 text-[var(--color-warning)] flex-shrink-0 mt-0.5" />
               <div className="text-left">
                 <p className="text-sm text-[var(--color-warning-text)]">
                   <strong>Tips:</strong> Hvis du nettopp gjennomførte en booking, 

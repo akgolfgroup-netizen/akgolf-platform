@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { createBrowserClient } from "@supabase/ssr";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Mail, Lock, Shield } from "lucide-react";
+
 import { AKLogo } from "@/components/website/AKLogo";
 import { Button } from "@/components/ui";
 
@@ -57,10 +59,9 @@ export default function AdminLoginPage() {
             <AKLogo variant="academy" size={48} />
           </div>
           <div className="inline-flex items-center gap-2 mb-2">
-            <Shield
+            <Icon name="shield"
               className="w-4 h-4 text-primary"
-              aria-hidden="true"
-            />
+              aria-hidden="true" />
             <h1 className="text-2xl font-bold text-black tracking-tight">Mission Control</h1>
           </div>
           <p className="text-sm text-muted">
@@ -80,10 +81,9 @@ export default function AdminLoginPage() {
                 E-postadresse
               </label>
               <div className="relative">
-                <Mail
+                <Icon name="mail"
                   className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted"
-                  aria-hidden="true"
-                />
+                  aria-hidden="true" />
                 <input
                   id="admin-email"
                   type="email"
@@ -107,10 +107,9 @@ export default function AdminLoginPage() {
                 Passord
               </label>
               <div className="relative">
-                <Lock
+                <Icon name="lock"
                   className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted"
-                  aria-hidden="true"
-                />
+                  aria-hidden="true" />
                 <input
                   id="admin-password"
                   type={showPassword ? "text" : "password"}
@@ -128,9 +127,9 @@ export default function AdminLoginPage() {
                   className="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 cursor-pointer bg-transparent border-none text-muted hover:text-text transition-colors"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-4 h-4" aria-hidden="true" />
+                    <Icon name="visibility"Off className="w-4 h-4" aria-hidden="true" />
                   ) : (
-                    <Eye className="w-4 h-4" aria-hidden="true" />
+                    <Icon name="visibility" className="w-4 h-4" aria-hidden="true" />
                   )}
                 </button>
               </div>

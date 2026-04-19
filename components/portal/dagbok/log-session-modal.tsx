@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Loader2, Save, Trash2, Dumbbell, Target } from "lucide-react";
+import { Dumbbell, Target } from "lucide-react";
 import { logSession, updateTrainingLog, deleteTrainingLog } from "@/app/portal/(dashboard)/dagbok/actions";
 import { cn } from "@/lib/utils";
 
@@ -214,7 +216,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
               onClick={onClose}
               className="p-1 rounded-lg hover:bg-grey-100 transition-colors"
             >
-              <X className="w-5 h-5 text-grey-400" />
+              <Icon name="close" className="w-5 h-5 text-grey-400" />
             </button>
           </div>
 
@@ -425,7 +427,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                   disabled={isPending}
                   className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Icon name="delete" className="w-4 h-4" />
                   Slett
                 </button>
               ) : (
@@ -450,9 +452,9 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                     className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold bg-accent-cta text-black hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
                     {isPending ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                     ) : (
-                      <Save className="w-4 h-4" />
+                      <Icon name="save" className="w-4 h-4" />
                     )}
                     {editLog ? "Oppdater" : "Lagre økt"}
                   </button>

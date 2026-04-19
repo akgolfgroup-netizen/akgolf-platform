@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
-import { Check, ArrowRight } from "lucide-react";
+
 import { COACHING_PACKAGES, FLEX_PACKAGES } from "@/lib/website-constants";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import {
@@ -86,14 +88,13 @@ export function AcademyPricesV2() {
                 <ul className="space-y-3 flex-grow">
                   {pkg.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-3">
-                      <Check
+                      <Icon name="check"
                         size={16}
                         className={`mt-0.5 shrink-0 ${
                           pkg.highlighted
                             ? "text-accent-cta"
                             : "text-success"
-                        }`}
-                      />
+                        }`} />
                       <span
                         className={`text-sm ${
                           pkg.highlighted ? "text-white/80" : "text-text"
@@ -115,7 +116,7 @@ export function AcademyPricesV2() {
                   }`}
                 >
                   Book nå
-                  <ArrowRight size={14} />
+                  <Icon name="arrow_forward" size={14} />
                 </Link>
               </div>
             </StaggerItem>
@@ -136,10 +137,9 @@ export function AcademyPricesV2() {
                 <ul className="space-y-2">
                   {FLEX_PACKAGES[0].includes.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <Check
+                      <Icon name="check"
                         size={15}
-                        className="mt-0.5 shrink-0 text-success"
-                      />
+                        className="mt-0.5 shrink-0 text-success" />
                       <span className="text-sm text-text">{item}</span>
                     </li>
                   ))}
@@ -159,7 +159,7 @@ export function AcademyPricesV2() {
                   className="inline-flex items-center justify-center gap-2 border border-grey-200 text-text font-bold px-6 py-3 rounded-[20px] hover:bg-grey-50 transition-all duration-200 text-sm"
                 >
                   Book Flex-sesjon
-                  <ArrowRight size={16} />
+                  <Icon name="arrow_forward" size={16} />
                 </Link>
               </div>
             </div>

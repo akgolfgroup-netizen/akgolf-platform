@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
 import Link from "next/link";
-import { ChevronRight, Home } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 export interface AdminBreadcrumbItem {
@@ -27,11 +29,10 @@ export function AdminBreadcrumbs({
   className,
 }: AdminBreadcrumbsProps) {
   const sep = separator ?? (
-    <ChevronRight
+    <Icon name="chevron_right"
       className="w-3.5 h-3.5"
       style={{ color: "var(--color-muted)" }}
-      aria-hidden="true"
-    />
+      aria-hidden="true" />
   );
 
   const fullItems: AdminBreadcrumbItem[] = showHome
@@ -39,7 +40,7 @@ export function AdminBreadcrumbs({
         {
           label: "Admin",
           href: homeHref,
-          icon: <Home className="w-3.5 h-3.5" />,
+          icon: <Icon name="home" className="w-3.5 h-3.5" />,
         },
         ...items,
       ]

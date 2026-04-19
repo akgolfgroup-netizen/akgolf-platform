@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { format, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Clock, Check } from "lucide-react";
+
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -102,7 +104,7 @@ export function RescheduleForm({
   if (success) {
     return (
       <div className="bg-[var(--color-success)]/5 border border-[var(--color-success)]/20 rounded-xl p-8 text-center">
-        <Check className="w-8 h-8 text-[var(--color-success)] mx-auto mb-3" />
+        <Icon name="check" className="w-8 h-8 text-[var(--color-success)] mx-auto mb-3" />
         <p className="text-[var(--color-success)] font-semibold">Tidspunktet er endret!</p>
         <p className="text-[var(--color-success)] text-sm mt-1">
           Du sendes tilbake til bookingene dine...
@@ -156,7 +158,7 @@ export function RescheduleForm({
         </h3>
         {loading ? (
           <div className="py-8 text-center text-[var(--color-grey-400)]">
-            <Clock className="w-5 h-5 animate-pulse mx-auto mb-2" />
+            <Icon name="schedule" className="w-5 h-5 animate-pulse mx-auto mb-2" />
             Laster tider...
           </div>
         ) : slots.length === 0 ? (

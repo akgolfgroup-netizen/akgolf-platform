@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useCallback } from "react";
-import { X, Plus, Clock, Target, Copy, Sparkles } from "lucide-react";
+
 import type { StandardTemplate, TrainingSession } from "./types";
 
 interface NewSessionModalProps {
@@ -220,7 +222,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
             onClick={handleClose}
             className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-200 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <Icon name="close" className="w-5 h-5" />
           </button>
         </div>
 
@@ -235,7 +237,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
             }`}
           >
             <span className="flex items-center justify-center gap-2">
-              <Copy className="w-4 h-4" />
+              <Icon name="content_copy" className="w-4 h-4" />
               Fra mal
             </span>
           </button>
@@ -248,7 +250,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
             }`}
           >
             <span className="flex items-center justify-center gap-2">
-              <Sparkles className="w-4 h-4" />
+              <Icon name="auto_awesome" className="w-4 h-4" />
               Egendefinert
             </span>
           </button>
@@ -290,11 +292,11 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                         
                         <div className="flex items-center gap-4 text-sm text-slate-400">
                           <span className="flex items-center gap-1">
-                            <Clock className="w-3.5 h-3.5" />
+                            <Icon name="schedule" className="w-3.5 h-3.5" />
                             {template.duration} min
                           </span>
                           <span className="flex items-center gap-1">
-                            <Target className="w-3.5 h-3.5" />
+                            <Icon name="my_location" className="w-3.5 h-3.5" />
                             {template.exercises.length} øvelse{template.exercises.length !== 1 ? "r" : ""}
                           </span>
                         </div>
@@ -313,7 +315,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                           ? "bg-blue-500 text-white"
                           : "bg-slate-800 text-slate-400 opacity-0 group-hover:opacity-100"
                       }`}>
-                        <Plus className="w-4 h-4" />
+                        <Icon name="add" className="w-4 h-4" />
                       </div>
                     </div>
                   </button>
@@ -392,7 +394,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                 disabled={isAdding || !customTitle.trim()}
                 className="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
               >
-                <Plus className="w-4 h-4" />
+                <Icon name="add" className="w-4 h-4" />
                 {isAdding ? "Legger til..." : "Legg til økt"}
               </button>
             </div>

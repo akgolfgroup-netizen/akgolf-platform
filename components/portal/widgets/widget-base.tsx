@@ -1,25 +1,14 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
-import { X, GripVertical, Settings } from "lucide-react";
+
 import { useState } from "react";
 import type { WidgetId, WidgetSize } from "@/lib/portal/widgets/registry";
 import { getWidgetDef } from "@/lib/portal/widgets/registry";
-import {
-  TrendingUp,
-  Trophy,
-  Timer,
-  CalendarDays,
-  Medal,
-  MessageSquare,
-  LayoutGrid,
-  HeartPulse,
-  AlertTriangle,
-  Puzzle,
-  Repeat,
-  type LucideIcon,
-} from "lucide-react";
+import { TrendingUp, Trophy, Timer, CalendarDays, Medal, MessageSquare, LayoutGrid, HeartPulse, AlertTriangle, Puzzle, Repeat, type LucideIcon } from "lucide-react";
 
 // ── Lucide icon-map for widgets ──────────────────────────
 
@@ -97,7 +86,7 @@ export function WidgetBase({
               className="cursor-grab active:cursor-grabbing text-grey-300 hover:text-grey-500"
               data-drag-handle
             >
-              <GripVertical className="w-4 h-4" />
+              <Icon name="drag_indicator" className="w-4 h-4" />
             </div>
           )}
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-soft">
@@ -120,7 +109,7 @@ export function WidgetBase({
             className="p-1.5 rounded-md text-grey-400 hover:bg-grey-50 hover:text-text transition-colors"
             title="Innstillinger"
           >
-            <Settings className="w-3.5 h-3.5" />
+            <Icon name="settings" className="w-3.5 h-3.5" />
           </button>
           {isEditing && onRemove && (
             <button
@@ -128,7 +117,7 @@ export function WidgetBase({
               className="p-1.5 rounded-md text-grey-400 hover:bg-error-light hover:text-error transition-colors"
               title="Fjern widget"
             >
-              <X className="w-3.5 h-3.5" />
+              <Icon name="close" className="w-3.5 h-3.5" />
             </button>
           )}
         </div>

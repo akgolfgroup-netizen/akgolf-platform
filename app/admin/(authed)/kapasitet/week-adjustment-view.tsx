@@ -1,11 +1,13 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useTransition } from "react";
 import { WeekSelector } from "@/components/portal/admin/week-selector";
 import { CapacityGauge } from "@/components/portal/admin/capacity-gauge";
 import { WeekAdjustmentGrid } from "@/components/portal/admin/week-adjustment-grid";
 import { OverbookingAlert } from "@/components/portal/admin/overbooking-alert";
-import { User } from "lucide-react";
+
 import { AdminSelect } from "@/components/portal/mission-control/ui";
 import { Card } from "@/components/ui/card";
 import {
@@ -126,7 +128,7 @@ export function WeekAdjustmentView() {
 
         <div className="flex-1">
           <label className="admin-label block mb-1.5">
-            <User className="w-3.5 h-3.5 inline-block mr-1" />
+            <Icon name="person" className="w-3.5 h-3.5 inline-block mr-1" />
             Uke
           </label>
           <WeekSelector

@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useEffect, useState } from "react";
-import { ChevronRight, Loader2 } from "lucide-react";
+
 import { Drawer } from "./Drawer";
 import { DateChip } from "./DateChip";
 import { TimeChip } from "./TimeChip";
@@ -92,7 +94,7 @@ export function DateTimeDrawer({
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <Loader2 className="w-6 h-6 text-primary animate-spin" />
+          <Icon name="progress_activity" className="w-6 h-6 text-primary animate-spin" />
         </div>
       ) : days.length === 0 ? (
         <div className="text-center py-8 text-sm text-muted">
@@ -134,7 +136,7 @@ export function DateTimeDrawer({
             className="w-full mt-5 py-4 rounded-[14px] bg-accent-cta text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             Bekreft tid
-            <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
+            <Icon name="chevron_right" className="w-4 h-4" strokeWidth={2.5} />
           </button>
         </>
       )}

@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Zap, Mail, Lock, User, Smartphone, CheckCircle2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { registerUser } from "./actions";
@@ -45,7 +47,7 @@ export default function RegisterPage() {
         >
           <Card className="p-8 bg-white border-black/10 text-center">
             <div className="w-16 h-16 bg-success/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 className="w-8 h-8 text-success" />
+              <Icon name="check"Circle2 className="w-8 h-8 text-success" />
             </div>
             <h1 className="text-2xl font-bold text-black mb-2">
               Sjekk e-posten din
@@ -77,7 +79,7 @@ export default function RegisterPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Zap className="w-8 h-8 text-accent-cta" />
+              <Icon name="bolt" className="w-8 h-8 text-accent-cta" />
             </div>
             <h1 className="text-2xl font-bold text-black">Opprett konto</h1>
             <p className="text-grey-400">Bli med i AK Golf Academy</p>
@@ -90,7 +92,7 @@ export default function RegisterPage() {
                 Navn
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="person" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
                 <input
                   name="name"
                   type="text"
@@ -111,7 +113,7 @@ export default function RegisterPage() {
                 E-post
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
                 <input
                   name="email"
                   type="email"
@@ -131,7 +133,7 @@ export default function RegisterPage() {
                 Telefon <span className="text-grey-400 font-normal">(valgfritt)</span>
               </label>
               <div className="relative">
-                <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="smartphone" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
                 <input
                   name="phone"
                   type="tel"
@@ -148,7 +150,7 @@ export default function RegisterPage() {
                 Passord
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="lock" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
                 <input
                   name="password"
                   type="password"

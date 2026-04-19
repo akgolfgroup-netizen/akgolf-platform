@@ -1,16 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Mail,
-  Plus,
-  Eye,
-  X,
-  Variable,
-  Save,
-  Trash2,
-} from "lucide-react";
+import { Variable } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
@@ -184,7 +178,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                   disabled={isPending}
                   isLoading={isPending}
                 >
-                  {!isPending && <Plus className="w-4 h-4 mr-2" />}
+                  {!isPending && <Icon name="add" className="w-4 h-4 mr-2" />}
                   Ny mal
                 </Button>
               </div>
@@ -227,7 +221,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                     >
                       <div className="flex items-start gap-3">
                         <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center flex-shrink-0">
-                          <Mail className="w-5 h-5 text-text" />
+                          <Icon name="mail" className="w-5 h-5 text-text" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium text-black truncate">
@@ -269,7 +263,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                         className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-grey-50"
                         aria-label="Lukk"
                       >
-                        <X className="w-5 h-5 text-text" />
+                        <Icon name="close" className="w-5 h-5 text-text" />
                       </button>
                       <div>
                         <h3 className="text-base font-semibold text-black">
@@ -286,11 +280,11 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                         onClick={handleDelete}
                         disabled={isPending}
                       >
-                        <Trash2 className="w-4 h-4 mr-2" />
+                        <Icon name="delete" className="w-4 h-4 mr-2" />
                         Slett
                       </Button>
                       <Button variant="secondary">
-                        <Eye className="w-4 h-4 mr-2" />
+                        <Icon name="visibility" className="w-4 h-4 mr-2" />
                         Forhåndsvis
                       </Button>
                       <Button
@@ -299,7 +293,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                         disabled={isPending}
                         isLoading={isPending}
                       >
-                        {!isPending && <Save className="w-4 h-4 mr-2" />}
+                        {!isPending && <Icon name="save" className="w-4 h-4 mr-2" />}
                         Lagre
                       </Button>
                     </div>
@@ -361,7 +355,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               ) : (
                 <div className="flex-1 flex items-center justify-center p-8">
                   <AdminEmptyState
-                    icon={<Mail className="w-6 h-6" />}
+                    icon={<Icon name="mail" className="w-6 h-6" />}
                     title="Velg en mal"
                     description="Klikk på en mal i listen for å redigere, eller opprett en ny"
                     className="border-0 shadow-none bg-transparent"

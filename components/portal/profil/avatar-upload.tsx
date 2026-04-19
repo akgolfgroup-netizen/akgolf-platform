@@ -1,10 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { uploadAvatar } from "@/app/portal/(dashboard)/profil/actions";
 import Image from "next/image";
-import { Camera } from "lucide-react";
+
 
 interface AvatarUploadProps {
   currentImage?: string | null;
@@ -105,13 +107,13 @@ export function AvatarUpload({ currentImage, name }: AvatarUploadProps) {
         {uploading ? (
           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
         ) : (
-          <Camera className="w-5 h-5 text-white" />
+          <Icon name="photo_camera" className="w-5 h-5 text-white" />
         )}
       </div>
 
       {isDragActive && (
         <div className="absolute inset-0 rounded-2xl border-2 border-[var(--color-grey-900)] bg-[var(--color-grey-900)]/10 flex items-center justify-center">
-          <Camera className="w-5 h-5 text-[var(--color-grey-900)]" />
+          <Icon name="photo_camera" className="w-5 h-5 text-[var(--color-grey-900)]" />
         </div>
       )}
 

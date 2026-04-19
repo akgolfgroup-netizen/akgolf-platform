@@ -1,6 +1,8 @@
 "use client";
 
-import { Target, Circle, BarChart3, Calendar, Brain, Dumbbell } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 
 interface QuickQuestion {
@@ -16,42 +18,42 @@ const QUICK_QUESTIONS: QuickQuestion[] = [
     id: "draw",
     text: "Hvordan slår jeg en draw?",
     message: "Hvordan slår jeg en draw? Gi meg konkrete tips basert på mitt nivå.",
-    icon: <Target className="w-4 h-4" />,
+    icon: <Icon name="my_location" className="w-4 h-4" />,
     category: "technique",
   },
   {
     id: "putting",
     text: "Tips for bedre putting",
     message: "Jeg vil ha tips for å forbedre puttingen min. Hvilke driller bør jeg gjøre?",
-    icon: <Circle className="w-4 h-4" />,
+    icon: <Icon name="circle" className="w-4 h-4" />,
     category: "technique",
   },
   {
     id: "analyze",
     text: "Analyser siste runde",
     message: "Kan du analysere min siste runde og fortelle meg hva jeg bør fokusere på?",
-    icon: <BarChart3 className="w-4 h-4" />,
+    icon: <Icon name="bar_chart" className="w-4 h-4" />,
     category: "analysis",
   },
   {
     id: "plan",
     text: "Lag treningsplan for denne uken",
     message: "Lag en treningsplan for denne uken basert på min profil og mål.",
-    icon: <Calendar className="w-4 h-4" />,
+    icon: <Icon name="calendar_today" className="w-4 h-4" />,
     category: "planning",
   },
   {
     id: "mental",
     text: "Håndtere nervøsitet",
     message: "Hvordan kan jeg håndtere nervøsitet før viktige slag?",
-    icon: <Brain className="w-4 h-4" />,
+    icon: <Icon name="psychology" className="w-4 h-4" />,
     category: "mental",
   },
   {
     id: "fitness",
     text: "Øvelser for mer avstand",
     message: "Hvilke fysiske øvelser kan hjelpe meg å få mer avstand?",
-    icon: <Dumbbell className="w-4 h-4" />,
+    icon: <Icon name="fitness_center" className="w-4 h-4" />,
     category: "fitness",
   },
 ];

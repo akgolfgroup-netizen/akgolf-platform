@@ -1,5 +1,6 @@
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
-import { ChevronDown } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 interface AdminSelectProps
@@ -57,10 +58,9 @@ export const AdminSelect = React.forwardRef<
         >
           {children}
         </select>
-        <ChevronDown
+        <Icon name="expand_more"
           className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)]"
-          aria-hidden="true"
-        />
+          aria-hidden="true" />
       </div>
       {error ? (
         <p

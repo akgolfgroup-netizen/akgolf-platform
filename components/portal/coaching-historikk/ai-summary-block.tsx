@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Zap, Target, CheckSquare } from "lucide-react";
+
 import { MonoLabel } from "@/components/portal/patterns";
 
 interface AISummaryBlockProps {
@@ -39,7 +41,7 @@ export function AISummaryBlock({
     >
       <div className="flex items-center gap-2">
         <div className="flex h-6 w-6 items-center justify-center rounded-full bg-ai/20">
-          <Zap className="h-3.5 w-3.5 text-ai-text" />
+          <Icon name="bolt" className="h-3.5 w-3.5 text-ai-text" />
         </div>
         <MonoLabel size="xs" uppercase className="text-ai-text">
           Oppsummering
@@ -81,7 +83,7 @@ export function AISummaryBlock({
                 variants={item}
                 className="flex items-center gap-1.5 rounded-full border border-ai/25 bg-white px-3 py-1.5 text-xs text-ai-text"
               >
-                <Target className="h-3 w-3" />
+                <Icon name="my_location" className="h-3 w-3" />
                 {area}
               </motion.span>
             ))}
@@ -98,7 +100,7 @@ export function AISummaryBlock({
           <motion.ul variants={container} className="space-y-1.5">
             {actionItems.map((action, i) => (
               <motion.li key={i} variants={item} className="flex items-start gap-2">
-                <CheckSquare className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <Icon name="check"Square className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                 <span className="text-sm text-grey-900">{action}</span>
               </motion.li>
             ))}

@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, ArrowLeft, Clock } from "lucide-react";
+
 import { useState, useEffect, useRef } from "react";
 
 // ─── Data ───
@@ -205,7 +207,7 @@ export default function BookingPage() {
               onClick={() => setSelectedTrainer(null)}
               className="flex items-center gap-2 mb-8 text-sm font-medium text-text hover:text-black transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <Icon name="arrow_back" className="w-4 h-4" />
               Tilbake til treneroversikt
             </button>
 
@@ -252,7 +254,7 @@ export default function BookingPage() {
               </div>
             ) : (
               <div className="rounded-2xl border border-grey-200 bg-white p-12 text-center">
-                <Clock className="w-10 h-10 text-text mx-auto mb-4" />
+                <Icon name="schedule" className="w-10 h-10 text-text mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-black mb-2">
                   Kommer snart
                 </h3>
@@ -280,7 +282,7 @@ export default function BookingPage() {
                   {/* Lokasjon-header */}
                   <div className="flex items-center gap-3 mb-8">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-primary" />
+                      <Icon name="location_on" className="w-5 h-5 text-primary" />
                     </div>
                     <div>
                       <h2 className="text-xl font-semibold text-black">
@@ -382,7 +384,7 @@ export default function BookingPage() {
             {/* Info */}
             <div className="mt-16 rounded-2xl bg-grey-50 border border-grey-200 p-8 md:p-10">
               <div className="flex items-start gap-4">
-                <Clock className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+                <Icon name="schedule" className="w-6 h-6 text-primary shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-semibold text-black mb-2">
                     Slik booker du

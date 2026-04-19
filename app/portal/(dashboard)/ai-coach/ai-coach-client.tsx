@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MessageCircle, Sparkles, Send, Bot, User, Loader2 } from "lucide-react";
+
 import type { ChatContext } from "./actions";
 
 interface Message {
@@ -163,9 +165,8 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
           <div
             className="flex items-center justify-center w-10 h-10 rounded-2xl bg-ai-light"
           >
-            <Bot
-              className="w-5 h-5 text-ai"
-            />
+            <Icon name="smart_toy"
+              className="w-5 h-5 text-ai" />
           </div>
           <div>
             <h1
@@ -188,9 +189,8 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
           <div
             className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm bg-ai-light border border-ai/15"
           >
-            <Sparkles
-              className="w-4 h-4 mt-0.5 flex-shrink-0 text-ai"
-            />
+            <Icon name="auto_awesome"
+              className="w-4 h-4 mt-0.5 flex-shrink-0 text-ai" />
             <p className="text-ai-text">{quickInsight}</p>
           </div>
         </div>
@@ -203,9 +203,8 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
             <div
               className="w-16 h-16 rounded-3xl flex items-center justify-center mb-6 bg-ai-light"
             >
-              <MessageCircle
-                className="w-8 h-8 text-ai"
-              />
+              <Icon name="chat_bubble"
+                className="w-8 h-8 text-ai" />
             </div>
             <h2
               className="text-lg font-semibold mb-2 text-black"
@@ -246,9 +245,8 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
               <div
                 className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-ai-light"
               >
-                <Bot
-                  className="w-4 h-4 text-ai"
-                />
+                <Icon name="smart_toy"
+                  className="w-4 h-4 text-ai" />
               </div>
             )}
             <div
@@ -264,9 +262,8 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
                 <div className="whitespace-pre-wrap">{message.content}</div>
               ) : (
                 <div className="flex items-center gap-2">
-                  <Loader2
-                    className="w-4 h-4 animate-spin text-ai"
-                  />
+                  <Icon name="progress_activity"
+                    className="w-4 h-4 animate-spin text-ai" />
                   <span className="text-grey-400">
                     Tenker...
                   </span>
@@ -277,9 +274,8 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
               <div
                 className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-grey-200"
               >
-                <User
-                  className="w-4 h-4 text-grey-400"
-                />
+                <Icon name="person"
+                  className="w-4 h-4 text-grey-400" />
               </div>
             )}
           </div>
@@ -337,9 +333,9 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
             }}
           >
             {isStreaming ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
             ) : (
-              <Send className="w-4 h-4" />
+              <Icon name="send" className="w-4 h-4" />
             )}
           </button>
         </form>

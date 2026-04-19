@@ -1,14 +1,8 @@
 "use client";
 
-import { 
-  TrendingUp, 
-  Target, 
-  Calendar, 
-  FileText, 
-  Trophy,
-  Clock,
-  MapPin
-} from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import type { ChatContext } from "@/app/portal/(dashboard)/ai-coach/actions";
 
 interface ContextPanelProps {
@@ -36,17 +30,17 @@ export function ContextPanel({ context }: ContextPanelProps) {
       {/* Profile Summary */}
       <div>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
-          <Target className="w-3.5 h-3.5" />
+          <Icon name="my_location" className="w-3.5 h-3.5" />
           Din profil
         </h3>
         <div className="space-y-2">
           <ContextItem
-            icon={<Trophy className="w-4 h-4" />}
+            icon={<Icon name="emoji_events" className="w-4 h-4" />}
             label="Handicap"
             value={context.handicap !== null ? `HCP ${context.handicap}` : "Ikke registrert"}
           />
           <ContextItem
-            icon={<TrendingUp className="w-4 h-4" />}
+            icon={<Icon name="trending_up" className="w-4 h-4" />}
             label="Siste runde"
             value={latestRound 
               ? `${latestRound.totalScore ?? "?"} slag${latestRound.courseName ? ` (${latestRound.courseName})` : ""}`
@@ -60,13 +54,13 @@ export function ContextPanel({ context }: ContextPanelProps) {
       {latestRound && (
         <div>
           <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
-            <Clock className="w-3.5 h-3.5" />
+            <Icon name="schedule" className="w-3.5 h-3.5" />
             Siste aktivitet
           </h3>
           <div className="space-y-2">
             <div className="flex items-start gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100">
               <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-grey-200 flex items-center justify-center text-grey-400">
-                <MapPin className="w-4 h-4" />
+                <Icon name="location_on" className="w-4 h-4" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-black truncate">
@@ -90,7 +84,7 @@ export function ContextPanel({ context }: ContextPanelProps) {
       {context.activePlan && (
         <div>
           <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
-            <Calendar className="w-3.5 h-3.5" />
+            <Icon name="calendar_today" className="w-3.5 h-3.5" />
             Aktiv plan
           </h3>
           <div className="p-3 rounded-lg bg-ai-light border border-ai/15">
@@ -111,12 +105,12 @@ export function ContextPanel({ context }: ContextPanelProps) {
       {latestTraining && (
         <div>
           <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
-            <FileText className="w-3.5 h-3.5" />
+            <Icon name="description" className="w-3.5 h-3.5" />
             Siste trening
           </h3>
           <div className="flex items-start gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100">
             <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-grey-200 flex items-center justify-center text-grey-400">
-              <TrendingUp className="w-4 h-4" />
+              <Icon name="trending_up" className="w-4 h-4" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-medium text-black">
@@ -139,7 +133,7 @@ export function ContextPanel({ context }: ContextPanelProps) {
       {context.upcomingTournaments.length > 0 && (
         <div>
           <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
-            <Trophy className="w-3.5 h-3.5" />
+            <Icon name="emoji_events" className="w-3.5 h-3.5" />
             Kommende turneringer
           </h3>
           <div className="space-y-2">
@@ -149,7 +143,7 @@ export function ContextPanel({ context }: ContextPanelProps) {
                 className="flex items-start gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100"
               >
                 <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-grey-200 flex items-center justify-center text-grey-400">
-                  <Calendar className="w-4 h-4" />
+                  <Icon name="calendar_today" className="w-4 h-4" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-black truncate">

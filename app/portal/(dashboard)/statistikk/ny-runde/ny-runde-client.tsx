@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, Loader2, Save } from "lucide-react";
+
 import Link from "next/link";
 import { saveRound } from "./actions";
 
@@ -87,7 +89,7 @@ export function NyRundeClient() {
             href="/portal/statistikk"
             className="inline-flex h-11 items-center gap-2 rounded-[20px] border border-outline-variant bg-white px-5 text-[12px] font-semibold text-on-surface shadow-sm transition-colors hover:bg-surface-container"
           >
-            <ArrowLeft className="h-3.5 w-3.5" />
+            <Icon name="arrow_back" className="h-3.5 w-3.5" />
             Tilbake
           </Link>
         </div>
@@ -259,9 +261,9 @@ export function NyRundeClient() {
             className="relative flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-[20px] bg-accent-cta py-3 text-[12px] font-bold text-accent-cta-text shadow-[0_8px_24px_rgba(209,248,67,0.4)] transition-shadow hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              <Icon name="progress_activity" className="h-3.5 w-3.5 animate-spin" />
             ) : (
-              <Save className="h-3.5 w-3.5" strokeWidth={2.5} />
+              <Icon name="save" className="h-3.5 w-3.5" strokeWidth={2.5} />
             )}
             <span>Lagre runde</span>
           </motion.button>

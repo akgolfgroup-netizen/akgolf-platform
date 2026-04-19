@@ -1,15 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { format, isToday, isTomorrow, differenceInHours } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  Clock,
-  MapPin,
-  User as UserIcon,
-  ArrowRight,
-} from "lucide-react";
+
 import type { BookingViewModel } from "./booking-types";
 import { fadeInUp } from "@/components/portal/premium";
 
@@ -84,17 +81,17 @@ export function NextBookingHero({ booking }: NextBookingHeroProps) {
             {/* Meta-info */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-white/60">
               <span className="flex items-center gap-2">
-                <UserIcon className="w-4 h-4" strokeWidth={1.5} />
+                <Icon name="person"Icon className="w-4 h-4" strokeWidth={1.5} />
                 {booking.instructorName}
               </span>
               {booking.location && (
                 <span className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" strokeWidth={1.5} />
+                  <Icon name="location_on" className="w-4 h-4" strokeWidth={1.5} />
                   {booking.location}
                 </span>
               )}
               <span className="flex items-center gap-2">
-                <Clock className="w-4 h-4" strokeWidth={1.5} />
+                <Icon name="schedule" className="w-4 h-4" strokeWidth={1.5} />
                 <span className="tabular-nums">{booking.duration} min</span>
               </span>
             </div>
@@ -102,7 +99,7 @@ export function NextBookingHero({ booking }: NextBookingHeroProps) {
             {/* Pil-indikator */}
             <div className="mt-6 flex items-center gap-2 text-[12px] text-accent-cta font-semibold opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
               <span>Se detaljer</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <Icon name="arrow_forward" className="w-3.5 h-3.5" />
             </div>
           </div>
         </div>

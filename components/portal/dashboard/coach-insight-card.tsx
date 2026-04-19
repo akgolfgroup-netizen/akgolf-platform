@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { MessageSquare, ArrowRight } from "lucide-react";
+
 import Link from "next/link";
 import { colors } from "@/lib/design-tokens";
 
@@ -32,7 +34,7 @@ export function CoachInsightCard({ coachInsight }: CoachInsightCardProps) {
           className="flex h-8 w-8 items-center justify-center rounded-full"
           style={{ backgroundColor: `${colors.primary.accent}20` }}
         >
-          <MessageSquare className="h-4 w-4" style={{ color: colors.primary.dark }} />
+          <Icon name="chat" className="h-4 w-4" style={{ color: colors.primary.dark }} />
         </div>
         <h3 className="text-sm font-semibold text-black">Fra treneren din</h3>
       </div>
@@ -63,7 +65,7 @@ export function CoachInsightCard({ coachInsight }: CoachInsightCardProps) {
           style={{ color: colors.primary.main }}
         >
           Se historikk
-          <ArrowRight className="h-3 w-3" />
+          <Icon name="arrow_forward" className="h-3 w-3" />
         </Link>
       </div>
     </div>

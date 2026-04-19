@@ -1,6 +1,8 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import { format, addWeeks, subWeeks, startOfWeek, isSameWeek } from "date-fns";
 import { nb } from "date-fns/locale";
 import { motion } from "framer-motion";
@@ -37,13 +39,13 @@ export function WeekSelector({ selectedWeek, onWeekChange }: WeekSelectorProps) 
         whileTap={{ scale: 0.95 }}
         aria-label="Forrige uke"
       >
-        <ChevronLeft className="w-5 h-5 text-grey-400" />
+        <Icon name="chevron_left" className="w-5 h-5 text-grey-400" />
       </motion.button>
 
       {/* Week Display */}
       <div className="flex-1 text-center">
         <div className="flex items-center justify-center gap-2">
-          <CalendarDays className="w-4 h-4 text-grey-400" />
+          <Icon name="calendar_today"Days className="w-4 h-4 text-grey-400" />
           <span className="font-semibold text-black">
             Uke {weekNumber}
           </span>
@@ -79,7 +81,7 @@ export function WeekSelector({ selectedWeek, onWeekChange }: WeekSelectorProps) 
         whileTap={{ scale: 0.95 }}
         aria-label="Neste uke"
       >
-        <ChevronRight className="w-5 h-5 text-grey-400" />
+        <Icon name="chevron_right" className="w-5 h-5 text-grey-400" />
       </motion.button>
     </div>
   );

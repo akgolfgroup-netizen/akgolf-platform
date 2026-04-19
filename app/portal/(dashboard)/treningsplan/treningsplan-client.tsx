@@ -1,22 +1,13 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  Calendar,
-  CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Dumbbell,
-  Loader2,
-  Play,
-  Target,
-  TrendingUp,
-} from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import { PyramidTag } from "@/components/portal/treningsplan/ak-formula-tags";
@@ -144,7 +135,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
       <PremiumCard delay={0.1}>
         <div className="flex flex-col items-center justify-center py-12 text-center">
           <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center mb-4">
-            <Target className="w-6 h-6 text-grey-400" />
+            <Icon name="my_location" className="w-6 h-6 text-grey-400" />
           </div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1">
             {day.dayName} {format(new Date(day.dateISO), "d. MMMM", { locale: nb })}
@@ -182,7 +173,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
               <PyramidTag level={session.pyramidLevel} />
             )}
             <span className="flex items-center gap-1 text-xs text-grey-400">
-              <Clock className="w-3.5 h-3.5" />
+              <Icon name="schedule" className="w-3.5 h-3.5" />
               {session.duration} min
             </span>
           </div>
@@ -194,9 +185,9 @@ function TodaySessionCard({ day }: { day: DayData }) {
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success/10 hover:bg-success/20 transition-colors"
           >
             {isToggling ? (
-              <Loader2 className="w-3.5 h-3.5 text-success animate-spin" />
+              <Icon name="progress_activity" className="w-3.5 h-3.5 text-success animate-spin" />
             ) : (
-              <CheckCircle2 className="w-3.5 h-3.5 text-success" />
+              <Icon name="check"Circle2 className="w-3.5 h-3.5 text-success" />
             )}
             <span className="text-[11px] font-medium text-success">Fullfort</span>
           </button>
@@ -207,9 +198,9 @@ function TodaySessionCard({ day }: { day: DayData }) {
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-grey-200 text-grey-400 hover:bg-success/10 hover:text-success hover:border-success/30 transition-colors"
           >
             {isToggling ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              <Icon name="progress_activity" className="w-3.5 h-3.5 animate-spin" />
             ) : (
-              <CheckCircle2 className="w-3.5 h-3.5" />
+              <Icon name="check"Circle2 className="w-3.5 h-3.5" />
             )}
             <span className="text-[11px] font-medium">Marker fullfort</span>
           </button>
@@ -227,7 +218,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
               }`}
             >
               <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center flex-shrink-0">
-                <Dumbbell className="w-5 h-5 text-grey-400" />
+                <Icon name="fitness_center" className="w-5 h-5 text-grey-400" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-black">
@@ -257,7 +248,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
           className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full bg-accent-cta text-black text-sm font-semibold
             transition-all duration-300 hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] active:opacity-75"
         >
-          <Play className="w-4 h-4" />
+          <Icon name="play_arrow" className="w-4 h-4" />
           Start okt
         </Link>
         <Link
@@ -265,7 +256,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
           className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full border border-grey-200 bg-white text-black text-sm font-semibold
             transition-all duration-300 hover:border-grey-300"
         >
-          <Calendar className="w-4 h-4" />
+          <Icon name="calendar_today" className="w-4 h-4" />
           Book coaching
         </Link>
       </div>
@@ -355,7 +346,7 @@ function ProgressCard({ weekDays }: { weekDays: DayData[] }) {
         </span>
         {completed > 0 && (
           <span className="flex items-center gap-1 text-xs font-medium text-success">
-            <TrendingUp className="w-3.5 h-3.5" />
+            <Icon name="trending_up" className="w-3.5 h-3.5" />
             {percentage}%
           </span>
         )}
@@ -392,7 +383,7 @@ function EmptyState({
       <PremiumCard className="text-center">
         <div className="py-8">
           <div className="w-16 h-16 rounded-2xl bg-grey-50 flex items-center justify-center mx-auto mb-5">
-            <Calendar className="w-8 h-8 text-grey-400" strokeWidth={1.75} />
+            <Icon name="calendar_today" className="w-8 h-8 text-grey-400" strokeWidth={1.75} />
           </div>
           <h2 className="text-xl font-semibold text-black mb-2">
             Din treningsplan er tom
@@ -472,7 +463,7 @@ export function TreningsplanClient({
               className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
               aria-label="Forrige uke"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <Icon name="chevron_left" className="w-4 h-4" />
             </Link>
             {weekOffset !== 0 && (
               <Link
@@ -487,7 +478,7 @@ export function TreningsplanClient({
               className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
               aria-label="Neste uke"
             >
-              <ChevronRight className="w-4 h-4" />
+              <Icon name="chevron_right" className="w-4 h-4" />
             </Link>
           </div>
 

@@ -1,16 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import {
-  Target,
-  TrendingUp,
-  Clock,
-  AlertTriangle,
-  Brain,
-  Dumbbell,
-  Map,
-  Compass,
-} from "lucide-react";
+import { Map, Compass } from "lucide-react";
 import { Badge } from "@/components/ui";
 import { AdminProgressRing } from "@/components/portal/mission-control/ui";
 
@@ -199,7 +192,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
 
         <div className="bg-white border border-grey-200 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-2">
-            <Target className="w-4 h-4 text-primary" />
+            <Icon name="my_location" className="w-4 h-4 text-primary" />
             <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Hvor vil du?</MonoLabel>
           </div>
           <p className="text-3xl font-bold text-black tabular-nums">
@@ -212,7 +205,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
 
         <div className="bg-white border border-grey-200 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-2">
-            <TrendingUp className="w-4 h-4 text-primary" />
+            <Icon name="trending_up" className="w-4 h-4 text-primary" />
             <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Hva kreves?</MonoLabel>
           </div>
           <p className="text-3xl font-bold text-black tabular-nums">
@@ -257,7 +250,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       {/* Timer + CI */}
       <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
-          <Clock className="w-4 h-4 text-primary" />
+          <Icon name="schedule" className="w-4 h-4 text-primary" />
           <p className="text-sm font-semibold text-black">Estimert tidsbruk</p>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-end gap-2 sm:gap-4">
@@ -274,7 +267,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       {/* Kategori-fordeling */}
       <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6 space-y-4">
         <div className="flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 text-primary" />
+          <Icon name="trending_up" className="w-4 h-4 text-primary" />
           <p className="text-sm font-semibold text-black">Fordeling per kategori</p>
         </div>
 
@@ -327,13 +320,13 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       {/* Anbefalinger */}
       <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
-          <Brain className="w-4 h-4 text-primary" />
+          <Icon name="psychology" className="w-4 h-4 text-primary" />
           <p className="text-sm font-semibold text-black">Coach sine anbefalinger</p>
         </div>
         <ul className="space-y-2">
           {forecast.recommendationsJson.map((rec, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-text">
-              <Dumbbell className="w-4 h-4 text-grey-300 mt-0.5 shrink-0" />
+              <Icon name="fitness_center" className="w-4 h-4 text-grey-300 mt-0.5 shrink-0" />
               {rec}
             </li>
           ))}
@@ -358,7 +351,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       {/* Antakelser — alltid synlig */}
       <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
-          <AlertTriangle className="w-4 h-4 text-warning" />
+          <Icon name="warning" className="w-4 h-4 text-warning" />
           <p className="text-sm font-semibold text-black">Viktige antakelser</p>
         </div>
         <ul className="space-y-2">

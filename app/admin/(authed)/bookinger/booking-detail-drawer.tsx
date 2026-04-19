@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { User, Clock, XCircle, CalendarClock, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { User, Clock, XCircle, CheckCircle, AlertCircle } from "lucide-react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Card } from "@/components/ui/card";
@@ -122,11 +124,11 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
             <div className="flex items-center justify-end gap-2">
               <Button variant="secondary" onClick={handleClose}>Lukk</Button>
               <Button variant="secondary" onClick={() => setShowReschedule(!showReschedule)}>
-                <CalendarClock className="w-4 h-4" />
+                <Icon name="calendar_today"Clock className="w-4 h-4" />
                 Endre tid
               </Button>
               <Button variant="accent" onClick={() => setShowCancel(true)}>
-                <XCircle className="w-4 h-4" />
+                <Icon name="close"Circle className="w-4 h-4" />
                 Avbestill
               </Button>
             </div>
@@ -157,7 +159,7 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
             <Card>
               <h4 className="admin-section-title mb-2">Elev</h4>
               <div className="space-y-1 text-sm text-black">
-                <div className="flex items-center gap-2"><User className="w-4 h-4 text-grey-400" />{booking.User?.name ?? "Ukjent"}</div>
+                <div className="flex items-center gap-2"><Icon name="person" className="w-4 h-4 text-grey-400" />{booking.User?.name ?? "Ukjent"}</div>
                 {booking.User?.email && <div className="text-grey-400 ml-6">{booking.User.email}</div>}
                 {booking.User?.phone && <div className="text-grey-400 ml-6">{booking.User.phone}</div>}
               </div>
@@ -166,7 +168,7 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
             <Card>
               <h4 className="admin-section-title mb-2">Instruktør</h4>
               <div className="flex items-center gap-2 text-sm text-black">
-                <Clock className="w-4 h-4 text-grey-400" />
+                <Icon name="schedule" className="w-4 h-4 text-grey-400" />
                 {booking.Instructor?.User?.name ?? "Ukjent"}
               </div>
             </Card>
@@ -210,7 +212,7 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
 
                   {loadingSlots && (
                     <div className="flex items-center gap-2 text-xs text-grey-400">
-                      <Loader2 className="w-4 h-4 animate-spin" />Henter ledige tider...
+                      <Icon name="progress_activity" className="w-4 h-4 animate-spin" />Henter ledige tider...
                     </div>
                   )}
 

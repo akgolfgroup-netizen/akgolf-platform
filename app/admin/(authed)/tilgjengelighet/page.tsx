@@ -1,20 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback, useMemo } from "react";
-import {
-  Calendar,
-  Plus,
-  Trash2,
-  Repeat,
-  CheckCircle,
-  ChevronLeft,
-  ChevronRight,
-  Loader2,
-  RefreshCw,
-  ExternalLink,
-  Clock as ClockIcon,
-  Ban,
-} from "lucide-react";
+import { Calendar } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
@@ -75,17 +64,17 @@ const tabItems: TabItem[] = [
   {
     id: "hours",
     label: "Arbeidstider",
-    icon: <ClockIcon className="w-4 h-4" />,
+    icon: <Icon name="schedule"Icon className="w-4 h-4" />,
   },
   {
     id: "blocked",
     label: "Blokkerte tider",
-    icon: <Ban className="w-4 h-4" />,
+    icon: <Icon name="block" className="w-4 h-4" />,
   },
   {
     id: "google",
     label: "Google Calendar",
-    icon: <ExternalLink className="w-4 h-4" />,
+    icon: <Icon name="open_in_new" className="w-4 h-4" />,
   },
 ];
 
@@ -346,7 +335,7 @@ export default function TilgjengelighetPage() {
             className="p-1.5 rounded-md hover:bg-error-light text-grey-400 hover:text-error transition-colors"
             aria-label="Slett unntak"
           >
-            <Trash2 className="w-4 h-4" />
+            <Icon name="delete" className="w-4 h-4" />
           </button>
         ) : null,
     },
@@ -392,7 +381,7 @@ export default function TilgjengelighetPage() {
                 onClick={() => setShowAddException(true)}
                 disabled={!selectedInstructor}
               >
-                <Plus className="w-4 h-4" />
+                <Icon name="add" className="w-4 h-4" />
                 Legg til unntak
               </Button>
             </div>
@@ -409,7 +398,7 @@ export default function TilgjengelighetPage() {
         {isLoading ? (
           <Card>
             <div className="flex items-center justify-center py-8">
-              <Loader2 className="w-8 h-8 animate-spin text-black" />
+              <Icon name="progress_activity" className="w-8 h-8 animate-spin text-black" />
             </div>
           </Card>
         ) : (
@@ -422,7 +411,7 @@ export default function TilgjengelighetPage() {
                     <h3 className="text-base font-semibold text-black">Faste arbeidstider</h3>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
-                        <Repeat className="w-4 h-4 text-grey-400" />
+                        <Icon name="repeat" className="w-4 h-4 text-grey-400" />
                         <span className="text-xs text-grey-500">
                           Gjentas ukentlig
                         </span>
@@ -432,7 +421,7 @@ export default function TilgjengelighetPage() {
                         onClick={handleSaveAvailability}
                         isLoading={isSaving}
                       >
-                        <CheckCircle className="w-4 h-4" />
+                        <Icon name="check"Circle className="w-4 h-4" />
                         Lagre
                       </Button>
                     </div>
@@ -481,7 +470,7 @@ export default function TilgjengelighetPage() {
                                 onClick={() => handleAddSlot(dayIndex)}
                                 className="text-sm px-3 py-1.5 h-auto"
                               >
-                                <Plus className="w-3.5 h-3.5" />
+                                <Icon name="add" className="w-3.5 h-3.5" />
                                 Legg til slot
                               </Button>
                             </div>
@@ -501,7 +490,7 @@ export default function TilgjengelighetPage() {
                         onClick={() => setCurrentWeek(addDays(currentWeek, -7))}
                         className="p-1.5 rounded-lg hover:bg-grey-50"
                       >
-                        <ChevronLeft className="w-4 h-4 text-grey-500" />
+                        <Icon name="chevron_left" className="w-4 h-4 text-grey-500" />
                       </button>
                       <span className="text-sm text-text">
                         {format(weekStart, "d. MMM", { locale: nb })} -{" "}
@@ -513,7 +502,7 @@ export default function TilgjengelighetPage() {
                         onClick={() => setCurrentWeek(addDays(currentWeek, 7))}
                         className="p-1.5 rounded-lg hover:bg-grey-50"
                       >
-                        <ChevronRight className="w-4 h-4 text-grey-500" />
+                        <Icon name="chevron_right" className="w-4 h-4 text-grey-500" />
                       </button>
                     </div>
                   </div>
@@ -580,7 +569,7 @@ export default function TilgjengelighetPage() {
                     onClick={() => setShowAddException(true)}
                     disabled={!selectedInstructor}
                   >
-                    <Plus className="w-4 h-4" />
+                    <Icon name="add" className="w-4 h-4" />
                     Ny blokkering
                   </Button>
                 </div>
@@ -600,7 +589,7 @@ export default function TilgjengelighetPage() {
               <Card>
                 <div className="flex flex-col items-center text-center py-6">
                   <div className="w-12 h-12 rounded-full bg-grey-100 flex items-center justify-center mb-3">
-                    <Calendar className="w-6 h-6 text-black" />
+                    <Icon name="calendar_today" className="w-6 h-6 text-black" />
                   </div>
                   <h3 className="text-base font-semibold text-black">
                     Google Calendar-synk
@@ -617,7 +606,7 @@ export default function TilgjengelighetPage() {
                       disabled={!selectedInstructor}
                       isLoading={isSyncing}
                     >
-                      <RefreshCw className="w-4 h-4" />
+                      <Icon name="refresh" className="w-4 h-4" />
                       Synkroniser nå
                     </Button>
                   </div>

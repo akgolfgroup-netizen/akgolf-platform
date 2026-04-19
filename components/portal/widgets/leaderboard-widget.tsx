@@ -1,7 +1,9 @@
 "use client";
 
-import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 
+
+
+import { Icon } from "@/components/ui/icon";
 /**
  * LeaderboardWidget — rangering blant AK-elever.
  *
@@ -53,9 +55,9 @@ export function LeaderboardWidget() {
               }
             >
               {p.trend < 0 ? (
-                <ArrowDownRight className="w-3 h-3" />
+                <Icon name="arrow_downward"Right className="w-3 h-3" />
               ) : (
-                <ArrowUpRight className="w-3 h-3" />
+                <Icon name="arrow_upward"Right className="w-3 h-3" />
               )}
               {Math.abs(p.trend)}
             </span>

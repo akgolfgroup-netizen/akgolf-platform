@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LogOut, X } from "lucide-react";
+
 import { createBrowserClient } from "@supabase/ssr";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -155,7 +157,7 @@ function SidebarUserFooter({
         onClick={onSignOut}
         className="mt-1 w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-grey-400 hover:text-error hover:bg-error-light transition-colors cursor-pointer"
       >
-        <LogOut className="w-4 h-4" />
+        <Icon name="logout" className="w-4 h-4" />
         <span>Logg ut</span>
       </button>
     </div>
@@ -249,7 +251,7 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
                   className="p-2 rounded-lg text-grey-400 hover:text-black hover:bg-grey-50 transition-colors cursor-pointer"
                   aria-label="Lukk meny"
                 >
-                  <X className="w-5 h-5" />
+                  <Icon name="close" className="w-5 h-5" />
                 </button>
               </div>
 

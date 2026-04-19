@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { CheckCircle2, Clock, Calendar, User, CreditCard } from "lucide-react";
+
 import Link from "next/link";
 import { BookingUpsellCard } from "@/components/portal/booking/upsell-card";
 
@@ -47,7 +49,7 @@ export function ConfirmationView({
             }}
             className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-6 bg-success/10 border-2 border-success/25"
           >
-            <CheckCircle2 size={48} className="text-success" />
+            <Icon name="check"Circle2 size={48} className="text-success" />
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
@@ -90,7 +92,7 @@ export function ConfirmationView({
               className="flex items-center gap-4"
             >
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-surface">
-                <CreditCard size={20} className="text-primary" />
+                <Icon name="credit_card" size={20} className="text-primary" />
               </div>
               <div>
                 <p className="text-xs uppercase tracking-wide mb-1 text-muted">Tjeneste</p>
@@ -106,7 +108,7 @@ export function ConfirmationView({
               className="flex items-center gap-4"
             >
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-surface">
-                <User size={20} className="text-primary" />
+                <Icon name="person" size={20} className="text-primary" />
               </div>
               <div>
                 <p className="text-xs uppercase tracking-wide mb-1 text-muted">Instruktør</p>
@@ -122,7 +124,7 @@ export function ConfirmationView({
               className="flex items-center gap-4"
             >
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-surface">
-                <Calendar size={20} className="text-primary" />
+                <Icon name="calendar_today" size={20} className="text-primary" />
               </div>
               <div>
                 <p className="text-xs uppercase tracking-wide mb-1 text-muted">Dato og tid</p>
@@ -138,7 +140,7 @@ export function ConfirmationView({
               className="flex items-center gap-4"
             >
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-surface">
-                <Clock size={20} className="text-primary" />
+                <Icon name="schedule" size={20} className="text-primary" />
               </div>
               <div>
                 <p className="text-xs uppercase tracking-wide mb-1 text-muted">Varighet</p>

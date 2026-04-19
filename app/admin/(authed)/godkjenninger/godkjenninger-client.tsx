@@ -1,18 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  Calendar,
-  Check,
-  X,
-  User,
-  Loader2,
-  CheckCircle,
-  MapPin,
-  AlertTriangle,
-} from "lucide-react";
+
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminEmptyState,
@@ -132,9 +125,9 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
             }
           >
             {row.type === "activity" ? (
-              <MapPin className="h-4 w-4 text-text" />
+              <Icon name="location_on" className="h-4 w-4 text-text" />
             ) : (
-              <User className="h-4 w-4 text-grey-400" />
+              <Icon name="person" className="h-4 w-4 text-grey-400" />
             )}
           </div>
           <Badge variant={row.type === "activity" ? "info" : "warning"}>
@@ -166,7 +159,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       sortable: true,
       render: (row) => (
         <div className="text-sm text-black flex items-center gap-1.5">
-          <Calendar className="h-3.5 w-3.5 text-grey-400" />
+          <Icon name="calendar_today" className="h-3.5 w-3.5 text-grey-400" />
           {format(new Date(row.requestedTime), "d. MMM 'kl.' HH:mm", {
             locale: nb,
           })}
@@ -213,9 +206,9 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
             disabled={processingId === row.id}
           >
             {processingId === row.id ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin mr-2" />
+              <Icon name="progress_activity" className="h-3.5 w-3.5 animate-spin mr-2" />
             ) : (
-              <Check className="h-3.5 w-3.5 mr-2" />
+              <Icon name="check" className="h-3.5 w-3.5 mr-2" />
             )}
             Godkjenn
           </Button>
@@ -224,7 +217,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
             onClick={() => setConfirmItem({ item: row, action: "reject" })}
             disabled={processingId === row.id}
           >
-            <X className="h-3.5 w-3.5 mr-2" />
+            <Icon name="close" className="h-3.5 w-3.5 mr-2" />
             Avvis
           </Button>
         </div>
@@ -255,7 +248,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
         />
         <div className="p-6">
           <AdminEmptyState
-            icon={<CheckCircle className="h-6 w-6" />}
+            icon={<Icon name="check"Circle className="h-6 w-6" />}
             title="Alt er godkjent"
             description="Du har ingen ventende godkjenninger"
           />
@@ -280,7 +273,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       <div className="p-6 space-y-6">
         {conflictItems.length > 0 && (
           <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-grey-50 text-warning text-sm border border-grey-200">
-            <AlertTriangle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+            <Icon name="warning" className="h-4 w-4 flex-shrink-0 mt-0.5" />
             <span>
               {conflictItems.length} aktivitet
               {conflictItems.length === 1 ? "" : "er"} har konflikt-varsel. Se
@@ -341,7 +334,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
                 isLoading={processingId === confirmItem.item.id}
                 onClick={() => confirmItem && doApprove(confirmItem.item)}
               >
-                <Check className="h-4 w-4 mr-2" />
+                <Icon name="check" className="h-4 w-4 mr-2" />
                 Ja, godkjenn
               </Button>
             ) : (
@@ -352,7 +345,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
                 }
                 onClick={() => confirmItem && doReject(confirmItem.item)}
               >
-                <X className="h-4 w-4 mr-2" />
+                <Icon name="close" className="h-4 w-4 mr-2" />
                 Ja, avvis
               </Button>
             )}

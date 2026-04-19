@@ -1,14 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import {
- Search,
- CheckCircle,
- XCircle,
- AlertCircle,
- Edit3,
- ClipboardList,
-} from "lucide-react";
+import { Search, CheckCircle, XCircle, AlertCircle, Edit3 } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { format } from "date-fns";
@@ -133,17 +128,17 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  <StatCard
  label="Fullført totalt"
  value={stats.completed}
- icon={<CheckCircle className="w-5 h-5"/>}
+ icon={<Icon name="check"Circle className="w-5 h-5" />}
  />
  <StatCard
  label="Avlyst"
  value={stats.cancelled}
- icon={<XCircle className="w-5 h-5"/>}
+ icon={<Icon name="close"Circle className="w-5 h-5" />}
  />
  <StatCard
  label="No-show"
  value={stats.noShow}
- icon={<AlertCircle className="w-5 h-5"/>}
+ icon={<Icon name="error" className="w-5 h-5" />}
  />
  <StatCard
  label="Oppmøterate"
@@ -155,7 +150,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
  <div className="flex flex-col lg:flex-row gap-3">
  <div className="flex-1 relative">
- <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none"/>
+ <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none" />
  <input
  type="text"
  value={searchQuery}
@@ -188,7 +183,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  {filteredSessions.length === 0 ? (
  <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-12 text-center">
  <div className="w-12 h-12 rounded-full bg-grey-50 flex items-center justify-center mx-auto mb-3">
- <ClipboardList className="w-6 h-6 text-grey-400"/>
+ <Icon name="assignment" className="w-6 h-6 text-grey-400" />
  </div>
  <h3 className="text-base font-medium text-black mb-1">
  Ingen økter funnet
@@ -260,7 +255,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  className="p-1.5 rounded-md hover:bg-grey-50 text-grey-400 transition-colors"
  aria-label="Rediger notater"
  >
- <Edit3 className="w-4 h-4"/>
+ <Icon name="edit"3 className="w-4 h-4" />
  </button>
  </div>
  );
@@ -280,7 +275,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  className="p-1.5 rounded-md hover:bg-grey-50 transition-colors"
  aria-label="Lukk"
  >
- <XCircle className="w-4 h-4 text-grey-400"/>
+ <Icon name="close"Circle className="w-4 h-4 text-grey-400" />
  </button>
  </div>
  <div className="flex items-center gap-3 mb-4">

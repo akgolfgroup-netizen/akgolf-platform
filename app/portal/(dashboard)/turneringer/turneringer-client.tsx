@@ -1,26 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo, useTransition, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { format, parseISO, isAfter, isBefore, startOfMonth, endOfMonth, isSameMonth, isSameDay } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  Calendar,
-  MapPin,
-  Trophy,
-  Target,
-  ExternalLink,
-  List,
-  CalendarDays,
-  Filter,
-  ChevronLeft,
-  ChevronRight,
-  Globe,
-  Check,
-  Clock,
-  X,
-  Loader2,
-} from "lucide-react";
+import { Globe } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { TOURNAMENT_LEVEL_CONFIG, GOAL_TYPE_CONFIG, PLAN_LEVEL_CONFIG } from "@/modules/tournament-planner/constants";
@@ -193,7 +179,7 @@ export function TurneringerClient({
                   : "border-grey-200 text-grey-400 hover:border-grey-300 hover:bg-white"
               )}
             >
-              <Filter className="w-4 h-4" />
+              <Icon name="filter_list" className="w-4 h-4" />
             </button>
             <div className="flex p-1 rounded-full bg-white border border-grey-200">
               <button
@@ -205,7 +191,7 @@ export function TurneringerClient({
                     : "text-grey-400 hover:text-black"
                 )}
               >
-                <List className="w-4 h-4" />
+                <Icon name="list" className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setViewMode("calendar")}
@@ -216,7 +202,7 @@ export function TurneringerClient({
                     : "text-grey-400 hover:text-black"
                 )}
               >
-                <CalendarDays className="w-4 h-4" />
+                <Icon name="calendar_today"Days className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -254,20 +240,18 @@ export function TurneringerClient({
           setProTour={setProTour}
         />
       ) : viewMode === "calendar" ? (
-        <CalendarView
+        <Icon name="calendar_today"View
           calendarMonth={calendarMonth}
           setCalendarMonth={setCalendarMonth}
           calendarDays={calendarDays}
           calendarTournaments={calendarTournaments}
-          onSelect={setSelectedTournament}
-        />
+          onSelect={setSelectedTournament} />
       ) : (
-        <ListView
+        <Icon name="list"View
           upcoming={upcomingTournaments}
           past={pastTournaments}
           showMine={activeTab === "mine"}
-          onSelect={setSelectedTournament}
-        />
+          onSelect={setSelectedTournament} />
       )}
 
       {/* Detail Modal */}
@@ -406,7 +390,7 @@ function TournamentListCard({
             )}
             {plan?.isRegistered && (
               <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-success-light text-success border border-success/20">
-                <Check className="w-3 h-3" />
+                <Icon name="check" className="w-3 h-3" />
                 Påmeldt
               </span>
             )}
@@ -425,7 +409,7 @@ function TournamentListCard({
           {/* Meta */}
           <div className="mt-3 space-y-1.5">
             <div className="flex items-center gap-2 text-xs text-grey-400">
-              <Calendar className="w-3.5 h-3.5 flex-shrink-0 text-black" />
+              <Icon name="calendar_today" className="w-3.5 h-3.5 flex-shrink-0 text-black" />
               <span>
                 {format(new Date(tournament.startDate), "d. MMM yyyy", { locale: nb })}
                 {tournament.endDate &&
@@ -434,7 +418,7 @@ function TournamentListCard({
             </div>
             {(tournament.course || tournament.location) && (
               <div className="flex items-center gap-2 text-xs text-grey-400">
-                <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-black" />
+                <Icon name="location_on" className="w-3.5 h-3.5 flex-shrink-0 text-black" />
                 <span className="truncate">
                   {[tournament.course, tournament.location].filter(Boolean).join(', ')}
                 </span>
@@ -442,7 +426,7 @@ function TournamentListCard({
             )}
             {tournament.registrationDeadline && !deadlinePassed && (
               <div className="flex items-center gap-2 text-xs text-grey-400">
-                <Clock className="w-3.5 h-3.5 flex-shrink-0" />
+                <Icon name="schedule" className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>
                   Påmeldingsfrist:{" "}
                   {format(new Date(tournament.registrationDeadline), "d. MMM", { locale: nb })}
@@ -461,7 +445,7 @@ function TournamentListCard({
           )}
           {tournament.externalUrl && (
             <span className="p-2 rounded-full bg-grey-50 text-grey-400 group-hover:bg-accent-cta group-hover:text-black transition-all duration-300">
-              <ExternalLink className="w-3.5 h-3.5" />
+              <Icon name="open_in_new" className="w-3.5 h-3.5" />
             </span>
           )}
         </div>
@@ -511,7 +495,7 @@ function CalendarView({
           onClick={prevMonth}
           className="p-2 rounded-full hover:bg-grey-50 text-grey-400 transition-colors"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <Icon name="chevron_left" className="w-5 h-5" />
         </button>
         <h3 className="text-sm font-semibold text-black capitalize">
           {format(calendarMonth, "MMMM yyyy", { locale: nb })}
@@ -520,7 +504,7 @@ function CalendarView({
           onClick={nextMonth}
           className="p-2 rounded-full hover:bg-grey-50 text-grey-400 transition-colors"
         >
-          <ChevronRight className="w-5 h-5" />
+          <Icon name="chevron_right" className="w-5 h-5" />
         </button>
       </div>
 
@@ -683,7 +667,7 @@ function ProTournamentCard({ event }: { event: TourScheduleEvent }) {
           <div className="mt-2 space-y-1">
             {startDate && (
               <div className="flex items-center gap-2 text-xs text-grey-400">
-                <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
+                <Icon name="calendar_today" className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>
                   {format(startDate, "d. MMM yyyy", { locale: nb })}
                   {endDate && ` – ${format(endDate, "d. MMM", { locale: nb })}`}
@@ -692,7 +676,7 @@ function ProTournamentCard({ event }: { event: TourScheduleEvent }) {
             )}
             {(event.course || event.location) && (
               <div className="flex items-center gap-2 text-xs text-grey-400">
-                <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                <Icon name="location_on" className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>{[event.course, event.location].filter(Boolean).join(', ')}</span>
               </div>
             )}
@@ -768,7 +752,7 @@ function TournamentDetailModal({
               </span>
               {plan?.isRegistered && (
                 <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-success-light text-success">
-                  <Check className="w-3 h-3" />
+                  <Icon name="check" className="w-3 h-3" />
                   Påmeldt
                 </span>
               )}
@@ -781,7 +765,7 @@ function TournamentDetailModal({
             onClick={onClose}
             className="p-1.5 rounded-lg hover:bg-grey-50 text-grey-400 transition-colors ml-2"
           >
-            <X className="w-4 h-4" />
+            <Icon name="close" className="w-4 h-4" />
           </button>
         </div>
 
@@ -790,7 +774,7 @@ function TournamentDetailModal({
           {/* Info */}
           <div className="space-y-2">
             <div className="flex items-center gap-2.5 text-sm text-grey-400">
-              <Calendar className="w-4 h-4 text-grey-400" />
+              <Icon name="calendar_today" className="w-4 h-4 text-grey-400" />
               <span>
                 {format(new Date(tournament.startDate), "d. MMMM yyyy", { locale: nb })}
                 {tournament.endDate &&
@@ -799,7 +783,7 @@ function TournamentDetailModal({
             </div>
             {(tournament.course || tournament.location) && (
               <div className="flex items-center gap-2.5 text-sm text-grey-400">
-                <MapPin className="w-4 h-4 text-grey-400" />
+                <Icon name="location_on" className="w-4 h-4 text-grey-400" />
                 <span>
                   {[tournament.course, tournament.location].filter(Boolean).join(', ')}
                 </span>
@@ -807,7 +791,7 @@ function TournamentDetailModal({
             )}
             {tournament.registrationDeadline && (
               <div className="flex items-center gap-2.5 text-sm text-grey-400">
-                <Clock className="w-4 h-4 text-grey-400" />
+                <Icon name="schedule" className="w-4 h-4 text-grey-400" />
                 <span>
                   Påmeldingsfrist:{" "}
                   {format(new Date(tournament.registrationDeadline), "d. MMMM yyyy", { locale: nb })}
@@ -816,7 +800,7 @@ function TournamentDetailModal({
             )}
             {tournament.numberOfHoles && (
               <div className="flex items-center gap-2.5 text-sm text-grey-400">
-                <Target className="w-4 h-4 text-grey-400" />
+                <Icon name="my_location" className="w-4 h-4 text-grey-400" />
                 <span>{tournament.numberOfHoles} hull</span>
               </div>
             )}
@@ -830,7 +814,7 @@ function TournamentDetailModal({
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-full border border-grey-200 text-grey-400 hover:border-grey-300 hover:text-black transition-colors"
             >
-              <ExternalLink className="w-4 h-4" />
+              <Icon name="open_in_new" className="w-4 h-4" />
               Se turnering / meld deg på
             </a>
           )}
@@ -934,7 +918,7 @@ function TournamentDetailModal({
             disabled={isPending}
             className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-accent-cta text-black hover:opacity-90 disabled:opacity-50 transition-colors"
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Icon name="progress_activity" className="w-4 h-4 animate-spin" />}
             {plan ? "Oppdater plan" : "Legg til plan"}
           </button>
         </div>
@@ -951,7 +935,7 @@ function EmptyState({ message }: { message: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
       <div className="w-16 h-16 rounded-[24px] bg-grey-50 border border-grey-200 flex items-center justify-center mb-4">
-        <Trophy className="w-7 h-7 text-black" />
+        <Icon name="emoji_events" className="w-7 h-7 text-black" />
       </div>
       <p className="text-sm text-grey-400 max-w-xs">{message}</p>
     </div>

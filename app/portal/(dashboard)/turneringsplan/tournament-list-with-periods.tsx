@@ -1,10 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useRouter } from "next/navigation";
 import type { TournamentWithPlan, GoalType } from "@/modules/tournament-planner";
 import { TournamentCard } from "@/modules/tournament-planner";
 import { findPeriodForDate } from "@/modules/tournament-planner/constants";
-import { Trophy } from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 interface Period {
@@ -31,7 +33,7 @@ export function TournamentListWithPeriods({
       <PremiumCard padding="lg">
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-on-surface">
-            <Trophy className="h-6 w-6" />
+            <Icon name="emoji_events" className="h-6 w-6" />
           </div>
           <p className="text-sm text-outline">
             Ingen turneringer lagt inn ennå.

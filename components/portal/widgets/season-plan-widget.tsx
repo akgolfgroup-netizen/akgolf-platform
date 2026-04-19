@@ -1,7 +1,9 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
 
+
+
+import { Icon } from "@/components/ui/icon";
 /**
  * SeasonPlanWidget — 12-måneders periodiseringsvisning.
  *
@@ -40,7 +42,7 @@ export function SeasonPlanWidget() {
           Spesialisering
         </span>
         <button className="flex items-center gap-0.5 text-xs text-muted hover:text-text transition-colors">
-          Detaljer <ChevronRight className="w-3 h-3" />
+          Detaljer <Icon name="chevron_right" className="w-3 h-3" />
         </button>
       </div>
 

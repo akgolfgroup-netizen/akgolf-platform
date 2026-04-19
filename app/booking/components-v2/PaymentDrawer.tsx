@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { ChevronRight, Lock, Calendar, Mail, Loader2 } from "lucide-react";
+import { Lock, Calendar, Mail } from "lucide-react";
 import { Drawer } from "./Drawer";
 import type { BookingState, TrainerService } from "./types";
 
@@ -101,13 +103,13 @@ export function PaymentDrawer({
       >
         {submitting ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Icon name="progress_activity" className="w-5 h-5 animate-spin" />
             Behandler...
           </>
         ) : (
           <>
             {ctaLabel}
-            <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
+            <Icon name="chevron_right" className="w-4 h-4" strokeWidth={2.5} />
           </>
         )}
       </button>

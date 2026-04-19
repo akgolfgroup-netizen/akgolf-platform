@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 interface HoleNavigatorProps {
@@ -82,7 +84,7 @@ export function HoleNavigator({
           disabled={currentHole === 0}
           className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white border border-grey-200 text-grey-700 font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:border-grey-300 transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <Icon name="chevron_left" className="w-4 h-4" />
           <span className="hidden sm:inline">Forrige</span>
         </motion.button>
 
@@ -101,7 +103,7 @@ export function HoleNavigator({
           className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white border border-grey-200 text-grey-700 font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:border-grey-300 transition-colors"
         >
           <span className="hidden sm:inline">Neste</span>
-          <ChevronRight className="w-4 h-4" />
+          <Icon name="chevron_right" className="w-4 h-4" />
         </motion.button>
       </div>
 

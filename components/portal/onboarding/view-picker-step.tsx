@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { LayoutGrid, Target, BarChart3, TrendingUp, Command, Check } from "lucide-react";
+import { LayoutGrid, Target, BarChart3, TrendingUp, Command } from "lucide-react";
 import type { ViewId } from "@/lib/portal/views/registry";
 
 interface ViewPickerStepProps {
@@ -60,7 +62,7 @@ export function ViewPickerStep({ onSelect, onNext }: ViewPickerStepProps) {
     <div className="animate-in fade-in slide-in-from-right-4 duration-300">
       <div className="text-center mb-8">
         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-grey-100">
-          <LayoutGrid className="w-6 h-6 text-grey-700" />
+          <Icon name="grid_view" className="w-6 h-6 text-grey-700" />
         </div>
         <h1 className="text-2xl font-bold text-grey-900 mb-2">
           Velg dashboard-stil
@@ -105,7 +107,7 @@ export function ViewPickerStep({ onSelect, onNext }: ViewPickerStepProps) {
               </div>
               {isSelected && (
                 <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0">
-                  <Check className="w-3.5 h-3.5 text-white" />
+                  <Icon name="check" className="w-3.5 h-3.5 text-white" />
                 </div>
               )}
             </button>

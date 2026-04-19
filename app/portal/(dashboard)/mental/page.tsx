@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Plus, TrendingUp, Calendar, Target, Brain, Flag } from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { Button } from "@/components/ui/button";
 import { Tabs } from "@/components/ui/tabs";
@@ -82,7 +84,7 @@ export default function MentalPage() {
         </div>
         <Button variant="primary" asChild>
           <Link href="/portal/mental/ny">
-            <Plus className="w-4 h-4 mr-2" />
+            <Icon name="add" className="w-4 h-4 mr-2" />
             Ny runde
           </Link>
         </Button>
@@ -119,7 +121,7 @@ function EmptyRoundsTab() {
   return (
     <PremiumCard padding="lg" radius="large">
       <div className="text-center py-8">
-        <Brain className="w-10 h-10 text-grey-400 mx-auto mb-4" />
+        <Icon name="psychology" className="w-10 h-10 text-grey-400 mx-auto mb-4" />
         <p className="text-sm text-grey-400">Ingen runder registrert ennå.</p>
         <p className="text-xs text-grey-300 mt-1">Start din første mental scorecard-runde.</p>
       </div>
@@ -134,7 +136,7 @@ function TrendsTab({ data, loading }: { data: { date: string; focus: number; con
     <div className="space-y-6">
       <PremiumCard padding="md" radius="large">
         <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="w-5 h-5 text-black" />
+          <Icon name="trending_up" className="w-5 h-5 text-black" />
           <h3 className="text-sm font-semibold text-black">Mentale metrics over tid</h3>
         </div>
         <div className="h-[300px]">
@@ -146,7 +148,7 @@ function TrendsTab({ data, loading }: { data: { date: string; focus: number; con
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" />
-                <XAxis dataKey="date" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
+                <Icon name="close"Axis dataKey="date" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
                 <YAxis domain={[0, 10]} tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
                 <Tooltip
                   contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
@@ -164,10 +166,10 @@ function TrendsTab({ data, loading }: { data: { date: string; focus: number; con
       </PremiumCard>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <MiniStat icon={<Brain className="w-4 h-4 text-purple-500" />} label="Fokus snitt" value={avg(data.map((d) => d.focus))} />
-        <MiniStat icon={<Target className="w-4 h-4 text-blue-500" />} label="Selvtillit snitt" value={avg(data.map((d) => d.confidence))} />
-        <MiniStat icon={<Calendar className="w-4 h-4 text-black" />} label="Engasjement snitt" value={avg(data.map((d) => d.commitment))} />
-        <MiniStat icon={<Flag className="w-4 h-4 text-success" />} label="Aksept snitt" value={avg(data.map((d) => d.acceptance))} />
+        <MiniStat icon={<Icon name="psychology" className="w-4 h-4 text-purple-500" />} label="Fokus snitt" value={avg(data.map((d) => d.focus))} />
+        <MiniStat icon={<Icon name="my_location" className="w-4 h-4 text-blue-500" />} label="Selvtillit snitt" value={avg(data.map((d) => d.confidence))} />
+        <MiniStat icon={<Icon name="calendar_today" className="w-4 h-4 text-black" />} label="Engasjement snitt" value={avg(data.map((d) => d.commitment))} />
+        <MiniStat icon={<Icon name="flag" className="w-4 h-4 text-success" />} label="Aksept snitt" value={avg(data.map((d) => d.acceptance))} />
       </div>
     </div>
   );

@@ -1,14 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Image from "next/image";
-import {
-  Users,
-  Calendar,
-  CheckCircle2,
-  Clock,
-  DollarSign,
-  ArrowUpRight,
-} from "lucide-react";
+import { DollarSign } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminEmptyState,
@@ -121,7 +116,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                 </p>
               </div>
               <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
-                <Calendar className="w-5 h-5" />
+                <Icon name="calendar_today" className="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -136,7 +131,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                 </p>
               </div>
               <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
-                <Users className="w-5 h-5" />
+                <Icon name="person"s className="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -151,14 +146,14 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                 </p>
                 {confirmRate >= 80 && (
                   <div className="mt-2 flex items-center gap-1 text-xs font-medium">
-                    <ArrowUpRight className="w-3.5 h-3.5 text-text" />
+                    <Icon name="arrow_upward"Right className="w-3.5 h-3.5 text-text" />
                     <span className="text-text tabular-nums">+{confirmRate}%</span>
                     <span className="text-grey-400">vs forrige</span>
                   </div>
                 )}
               </div>
               <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
-                <CheckCircle2 className="w-5 h-5" />
+                <Icon name="check"Circle2 className="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -220,7 +215,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
         {/* Bookings by Day */}
         {bookings.length === 0 ? (
           <AdminEmptyState
-            icon={<Calendar className="w-6 h-6" />}
+            icon={<Icon name="calendar_today" className="w-6 h-6" />}
             title="Ingen bookinger denne uken"
             description="Nar elever booker okter vil de dukke opp her."
           />
@@ -245,7 +240,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                     {/* Day Header */}
                     <div className="flex items-center gap-3 mb-4 pb-3 border-b border-grey-200">
                       <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-                        <Calendar className="w-5 h-5 text-text" />
+                        <Icon name="calendar_today" className="w-5 h-5 text-text" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-text truncate capitalize">
@@ -303,7 +298,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                             {/* Time + Status */}
                             <div className="flex items-center gap-2 flex-shrink-0">
                               <span className="text-xs text-grey-400 flex items-center gap-1 tabular-nums">
-                                <Clock className="w-3 h-3" />
+                                <Icon name="schedule" className="w-3 h-3" />
                                 {format(new Date(booking.startTime), "HH:mm")}
                               </span>
                               <Badge variant={statusCfg.variant}>

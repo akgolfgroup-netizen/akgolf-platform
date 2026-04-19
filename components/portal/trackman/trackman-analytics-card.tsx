@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo, useState, useTransition } from "react";
-import { Target, Zap, TrendingUp, Activity, Crosshair, Lightbulb, Focus, RefreshCw, Sparkles } from "lucide-react";
+
 import type { TrackManAnalyticsSummary } from "@/app/portal/(dashboard)/trackman/actions";
 import { generateTrackManInsights } from "@/app/portal/(dashboard)/trackman/actions";
 
@@ -37,7 +39,7 @@ function TrendBadge({ trend }: { trend: string | null }) {
       : "bg-grey-100 text-grey-600";
   return (
     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${colorClass}`}>
-      <TrendingUp className="w-3 h-3" />
+      <Icon name="trending_up" className="w-3 h-3" />
       {trend}
     </span>
   );
@@ -126,28 +128,28 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
-            <Zap className="w-4 h-4 text-warning" />
+            <Icon name="bolt" className="w-4 h-4 text-warning" />
             <MonoLabel size="xs" uppercase className="text-grey-500">Snitt ballfart</MonoLabel>
           </div>
           <p className="text-xl font-bold text-grey-900">{formatSpeed(analytics.avgBallSpeed)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
-            <Zap className="w-4 h-4 text-warning" />
+            <Icon name="bolt" className="w-4 h-4 text-warning" />
             <MonoLabel size="xs" uppercase className="text-grey-500">Max ballfart</MonoLabel>
           </div>
           <p className="text-xl font-bold text-grey-900">{formatSpeed(analytics.maxBallSpeed)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
-            <Activity className="w-4 h-4 text-success" />
+            <Icon name="monitoring" className="w-4 h-4 text-success" />
             <MonoLabel size="xs" uppercase className="text-grey-500">Snitt carry</MonoLabel>
           </div>
           <p className="text-xl font-bold text-grey-900">{formatDistance(analytics.avgCarryDistance)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
-            <Activity className="w-4 h-4 text-success" />
+            <Icon name="monitoring" className="w-4 h-4 text-success" />
             <MonoLabel size="xs" uppercase className="text-grey-500">Max carry</MonoLabel>
           </div>
           <p className="text-xl font-bold text-grey-900">{formatDistance(analytics.maxCarryDistance)}</p>
@@ -158,21 +160,21 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
-            <Target className="w-4 h-4 text-info" />
+            <Icon name="my_location" className="w-4 h-4 text-info" />
             <MonoLabel size="xs" uppercase className="text-grey-500">Ballfart-konsistens</MonoLabel>
           </div>
           <p className="text-lg font-semibold text-grey-900">{formatPercent(analytics.ballSpeedConsistency)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
-            <Target className="w-4 h-4 text-info" />
+            <Icon name="my_location" className="w-4 h-4 text-info" />
             <MonoLabel size="xs" uppercase className="text-grey-500">Distance-konsistens</MonoLabel>
           </div>
           <p className="text-lg font-semibold text-grey-900">{formatPercent(analytics.distanceConsistency)}</p>
         </div>
         <div className="p-3 rounded-lg bg-grey-50">
           <div className="flex items-center gap-2 mb-1">
-            <Crosshair className="w-4 h-4 text-primary" />
+            <Icon name="gps_fixed" className="w-4 h-4 text-primary" />
             <MonoLabel size="xs" uppercase className="text-grey-500">Sweet spot</MonoLabel>
           </div>
           <p className="text-lg font-semibold text-grey-900">{formatPercent(analytics.sweetSpotPercentage)}</p>
@@ -188,23 +190,23 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
 
       {/* Klubb-statistikker */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <ClubStatsBars stats={analytics.driverStats} title="Driver" />
-        <ClubStatsBars stats={analytics.ironStats} title="Jern" />
-        <ClubStatsBars stats={analytics.wedgeStats} title="Wedge" />
+        <Icon name="sports_golf"StatsBars stats={analytics.driverStats} title="Driver" />
+        <Icon name="sports_golf"StatsBars stats={analytics.ironStats} title="Jern" />
+        <Icon name="sports_golf"StatsBars stats={analytics.wedgeStats} title="Wedge" />
       </div>
 
       {/* Shot shape + miss pattern */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="space-y-2">
           <h5 className="text-xs font-semibold uppercase tracking-wider text-grey-400 flex items-center gap-2">
-            <Target className="w-4 h-4" />
+            <Icon name="my_location" className="w-4 h-4" />
             Ballbane-fordeling
           </h5>
           <DistributionBadges distribution={analytics.shotShapeDistribution} />
         </div>
         <div className="space-y-2">
           <h5 className="text-xs font-semibold uppercase tracking-wider text-grey-400 flex items-center gap-2">
-            <Crosshair className="w-4 h-4" />
+            <Icon name="gps_fixed" className="w-4 h-4" />
             Miss-mønster
           </h5>
           {analytics.missPattern && typeof analytics.missPattern === "object" ? (
@@ -219,7 +221,7 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
       {(showRegenerate || hasInsights) && (
         <div className="flex items-center justify-between">
           <h4 className="text-sm font-semibold text-grey-800 flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-accent-cta" />
+            <Icon name="auto_awesome" className="w-4 h-4 text-accent-cta" />
             Coaching-innsikter
           </h4>
           {showRegenerate && (
@@ -229,7 +231,7 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed bg-primary/5 text-primary hover:bg-primary/10"
               title={isCacheFresh ? "Innsikter er oppdatert (24t cooldown)" : "Generer nye innsikter"}
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${isPending ? "animate-spin" : ""}`} />
+              <Icon name="refresh" className={`w-3.5 h-3.5 ${isPending ? "animate-spin" : ""}`} />
               {isPending ? "Genererer..." : isCacheFresh ? "Oppdatert" : "Generer innsikter"}
             </button>
           )}
@@ -246,7 +248,7 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
       {analytics.generatedInsights.length > 0 && (
         <div className="space-y-3">
           <h5 className="text-xs font-semibold uppercase tracking-wider text-grey-400 flex items-center gap-2">
-            <Lightbulb className="w-4 h-4" />
+            <Icon name="lightbulb" className="w-4 h-4" />
             Innsikter
           </h5>
           <ul className="space-y-2">
@@ -264,7 +266,7 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
       {analytics.recommendedFocus.length > 0 && (
         <div className="space-y-3">
           <h5 className="text-xs font-semibold uppercase tracking-wider text-grey-400 flex items-center gap-2">
-            <Focus className="w-4 h-4" />
+            <Icon name="center_focus_strong" className="w-4 h-4" />
             Anbefalt fokus
           </h5>
           <div className="flex flex-wrap gap-2">

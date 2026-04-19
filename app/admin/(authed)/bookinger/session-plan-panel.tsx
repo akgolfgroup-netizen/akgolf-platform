@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Loader2, Sparkles, ChevronDown, ChevronUp, Target, StickyNote, Dumbbell } from "lucide-react";
+
 import type { SessionPlan } from "@/lib/portal/ai/session-planner";
 
 export function SessionPlanPanel({ bookingId }: { bookingId: string }) {
@@ -41,7 +43,7 @@ export function SessionPlanPanel({ bookingId }: { bookingId: string }) {
           disabled={loading}
           className="flex items-center gap-2 text-xs font-medium text-black hover:text-grey-400 transition-colors disabled:opacity-50"
         >
-          {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+          {loading ? <Icon name="progress_activity" className="w-3.5 h-3.5 animate-spin" /> : <Icon name="auto_awesome" className="w-3.5 h-3.5" />}
           {loading ? "Genererer AI-forslag..." : "Generer AI-forslag"}
         </button>
         {error && <p className="mt-1.5 text-xs text-error">{error}</p>}
@@ -55,9 +57,9 @@ export function SessionPlanPanel({ bookingId }: { bookingId: string }) {
         onClick={() => setExpanded((v) => !v)}
         className="flex items-center gap-2 text-xs font-medium text-black hover:text-grey-400 transition-colors w-full text-left"
       >
-        <Sparkles className="w-3.5 h-3.5 shrink-0" />
+        <Icon name="auto_awesome" className="w-3.5 h-3.5 shrink-0" />
         <span className="flex-1">AI-øktplan — {plan.summary}</span>
-        {expanded ? <ChevronUp className="w-3.5 h-3.5 shrink-0" /> : <ChevronDown className="w-3.5 h-3.5 shrink-0" />}
+        {expanded ? <Icon name="expand_less" className="w-3.5 h-3.5 shrink-0" /> : <Icon name="expand_more" className="w-3.5 h-3.5 shrink-0" />}
       </button>
 
       {expanded && (
@@ -77,7 +79,7 @@ export function SessionPlanPanel({ bookingId }: { bookingId: string }) {
               {plan.mainDrills.map((drill, i) => (
                 <div key={i} className="bg-grey-50 border border-grey-200 rounded-lg p-2.5">
                   <div className="flex items-center gap-2 mb-1">
-                    <Dumbbell className="w-3.5 h-3.5 text-black shrink-0" />
+                    <Icon name="fitness_center" className="w-3.5 h-3.5 text-black shrink-0" />
                     <span className="text-xs font-semibold text-black">{drill.name}</span>
                     <span className="ml-auto text-[10px] text-grey-400">{drill.duration} min</span>
                   </div>
@@ -102,7 +104,7 @@ export function SessionPlanPanel({ bookingId }: { bookingId: string }) {
               <ul className="space-y-1">
                 {plan.keyPoints.map((kp, i) => (
                   <li key={i} className="flex items-start gap-1.5 text-xs text-black">
-                    <Target className="w-3 h-3 text-black shrink-0 mt-0.5" />{kp}
+                    <Icon name="my_location" className="w-3 h-3 text-black shrink-0 mt-0.5" />{kp}
                   </li>
                 ))}
               </ul>
@@ -111,7 +113,7 @@ export function SessionPlanPanel({ bookingId }: { bookingId: string }) {
 
           {plan.trainerNotes && (
             <div className="flex items-start gap-2 text-xs text-grey-400 italic">
-              <StickyNote className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+              <Icon name="sticky_note_2" className="w-3.5 h-3.5 shrink-0 mt-0.5" />
               <span>{plan.trainerNotes}</span>
             </div>
           )}
@@ -121,7 +123,7 @@ export function SessionPlanPanel({ bookingId }: { bookingId: string }) {
             disabled={loading}
             className="flex items-center gap-1.5 text-[10px] text-grey-400 hover:text-black transition-colors disabled:opacity-50"
           >
-            {loading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+            {loading ? <Icon name="progress_activity" className="w-3 h-3 animate-spin" /> : <Icon name="auto_awesome" className="w-3 h-3" />}
             Generer på nytt
           </button>
         </div>

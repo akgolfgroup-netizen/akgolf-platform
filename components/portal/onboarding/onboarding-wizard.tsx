@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Target, Calendar, PenLine, ChevronRight, Check } from "lucide-react";
+import { Target } from "lucide-react";
 import { ViewPickerStep } from "./view-picker-step";
 import type { ViewId } from "@/lib/portal/views/registry";
 
@@ -92,7 +94,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{ background: "var(--color-grey-100)" }}
               >
-                <Target className="w-6 h-6 text-[var(--color-grey-700)]" />
+                <Icon name="my_location" className="w-6 h-6 text-[var(--color-grey-700)]" />
               </div>
               <h1 className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
                 Hva vil du oppnå?
@@ -125,7 +127,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                           className="w-5 h-5 rounded-full flex items-center justify-center"
                           style={{ background: "var(--color-brand)" }}
                         >
-                          <Check className="w-3 h-3 text-white" />
+                          <Icon name="check" className="w-3 h-3 text-white" />
                         </div>
                       ) : (
                         <div
@@ -164,7 +166,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
               }}
             >
               Neste
-              <ChevronRight className="w-4 h-4" />
+              <Icon name="chevron_right" className="w-4 h-4" />
             </button>
           </div>
         )}
@@ -177,7 +179,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{ background: "var(--color-grey-100)" }}
               >
-                <Calendar className="w-6 h-6 text-[var(--color-grey-700)]" />
+                <Icon name="calendar_today" className="w-6 h-6 text-[var(--color-grey-700)]" />
               </div>
               <h1 className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
                 Hvor ofte trener du?
@@ -224,7 +226,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                           className="w-5 h-5 rounded-full flex items-center justify-center"
                           style={{ background: "var(--color-brand)" }}
                         >
-                          <Check className="w-3 h-3 text-white" />
+                          <Icon name="check" className="w-3 h-3 text-white" />
                         </div>
                       ) : (
                         <div
@@ -250,7 +252,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
               }}
             >
               Neste
-              <ChevronRight className="w-4 h-4" />
+              <Icon name="chevron_right" className="w-4 h-4" />
             </button>
           </div>
         )}
@@ -271,7 +273,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{ background: "rgba(22, 163, 74, 0.1)" }}
               >
-                <PenLine className="w-6 h-6 text-[var(--color-brand)]" />
+                <Icon name="edit" className="w-6 h-6 text-[var(--color-brand)]" />
               </div>
               <h1 className="text-2xl font-bold text-[var(--color-grey-900)] mb-2">
                 Du er klar!
@@ -339,7 +341,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                 color: "white",
               }}
             >
-              <PenLine className="w-4 h-4" />
+              <Icon name="edit" className="w-4 h-4" />
               Logg din første økt
             </button>
 

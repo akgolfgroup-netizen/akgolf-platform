@@ -1,12 +1,14 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 /**
  * DataConsentDialog — overlay med portal-consent-flyt.
  * Bruker design-system tokens, shadow-card-hover-deep.
  */
 
 import { useState } from "react";
-import { ShieldCheck } from "lucide-react";
+
 import { Button } from "@/components/ui";
 import { MonoLabel } from "@/components/portal/patterns";
 import { recordDataConsent } from "../actions";
@@ -44,7 +46,7 @@ export function DataConsentDialog({ open, onClose }: DataConsentDialogProps) {
       <div className="bg-white rounded-xl shadow-xl max-w-lg w-full p-6">
         <div className="flex items-start gap-3 mb-4">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-success-light text-success-text shrink-0">
-            <ShieldCheck className="w-5 h-5" />
+            <Icon name="shield"Check className="w-5 h-5" />
           </div>
           <div>
             <MonoLabel size="xs" uppercase className="text-primary block">

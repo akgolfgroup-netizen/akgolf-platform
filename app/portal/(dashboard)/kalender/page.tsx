@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icon";
 import { requirePortalUser } from "@/lib/portal/auth";
 
 import { startOfWeek, endOfWeek, format } from "date-fns";
@@ -7,7 +8,7 @@ import { CalendarWeekView } from "@/components/portal/kalender/calendar-week-vie
 import { getCalendarEvents } from "./actions";
 
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
-import { Settings2 } from "lucide-react";
+
 import { MonoLabel } from "@/components/portal/patterns";
 
 export default async function KalenderPage() {
@@ -40,7 +41,7 @@ export default async function KalenderPage() {
             href="#calendar-sync"
             className="inline-flex h-11 items-center gap-2 rounded-full border border-outline-variant bg-white px-6 text-[12px] font-semibold text-on-surface shadow-sm transition-colors hover:bg-surface-container"
           >
-            <Settings2 className="h-3.5 w-3.5" />
+            <Icon name="settings"2 className="h-3.5 w-3.5" />
             Sync-innstillinger
           </a>
         </div>
@@ -55,14 +56,14 @@ export default async function KalenderPage() {
               Denne uka · {format(weekStart, "d", { locale: nb })}–{format(weekEnd, "d. MMM", { locale: nb })}
             </MonoLabel>
           </div>
-          <CalendarWeekView events={events} weekStart={weekStart} />
+          <Icon name="calendar_today"WeekView events={events} weekStart={weekStart} />
         </div>
       </PremiumCard>
 
       {/* Google Calendar Sync */}
       <div id="calendar-sync">
         <PremiumCard>
-          <CalendarSyncSettings />
+          <Icon name="calendar_today"SyncSettings />
         </PremiumCard>
       </div>
     </div>

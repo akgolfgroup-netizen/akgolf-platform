@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
-import { ChevronDown } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 export interface AdminDropdownItem {
@@ -82,7 +84,7 @@ export function AdminDropdown({
           aria-expanded={open}
         >
           {label}
-          <ChevronDown className="w-4 h-4" />
+          <Icon name="expand_more" className="w-4 h-4" />
         </button>
       )}
       {open && (

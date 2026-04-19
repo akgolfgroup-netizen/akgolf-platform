@@ -1,13 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
-import {
-  AlertTriangle,
-  CheckCircle2,
-  Info,
-  X,
-  XCircle,
-} from "lucide-react";
+import { AlertTriangle, CheckCircle2, Info, XCircle } from "lucide-react";
 
 export type AdminToastVariant = "success" | "error" | "warning" | "info";
 
@@ -112,7 +108,7 @@ export function AdminToastProvider({
                 className="shrink-0 p-0.5 rounded hover:bg-black/5"
                 aria-label="Lukk varsel"
               >
-                <X className="w-4 h-4 text-grey-400" />
+                <Icon name="close" className="w-4 h-4 text-grey-400" />
               </button>
             </div>
           );

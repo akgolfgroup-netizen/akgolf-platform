@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { CalendarPlus, Clock } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { colors } from "@/lib/design-tokens";
 
@@ -37,7 +39,7 @@ export function NextBookingCard({ booking }: NextBookingCardProps) {
             className="flex h-12 w-12 items-center justify-center rounded-xl"
             style={{ backgroundColor: `${colors.data.coral}15` }}
           >
-            <CalendarPlus className="h-6 w-6" style={{ color: colors.data.coral }} />
+            <Icon name="calendar_today"Plus className="h-6 w-6" style={{ color: colors.data.coral }} />
           </div>
           <h3 className="mt-4 text-base font-semibold text-black">
             Du har ingen kommende bookinger
@@ -80,13 +82,13 @@ export function NextBookingCard({ booking }: NextBookingCardProps) {
 
       <div className="mt-4 space-y-1.5">
         <div className="flex items-center gap-2 text-sm text-white/90">
-          <CalendarPlus className="h-4 w-4 text-white/70" />
+          <Icon name="calendar_today"Plus className="h-4 w-4 text-white/70" />
           <span>
             {format(start, "EEEE d. MMMM 'kl' HH:mm", { locale: nb })}
           </span>
         </div>
         <div className="flex items-center gap-2 text-sm text-white/90">
-          <Clock className="h-4 w-4 text-white/70" />
+          <Icon name="schedule" className="h-4 w-4 text-white/70" />
           <span>{booking.duration} min</span>
         </div>
       </div>

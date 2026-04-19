@@ -1,20 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback, useRef } from "react";
-import {
-  Bell,
-  Check,
-  Loader2,
-  Calendar,
-  Video,
-  FileText,
-  AlertCircle,
-  Settings,
-  Volume2,
-  VolumeX,
-  X,
-  ChevronRight,
-} from "lucide-react";
+import { Video, Volume2, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import Link from "next/link";
@@ -156,33 +145,33 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
   const getNotificationIcon = (type: string, adminType: string | null) => {
     switch (adminType) {
       case "booking":
-        return <Calendar className="w-4 h-4" />;
+        return <Icon name="calendar_today" className="w-4 h-4" />;
       case "video":
         return <Video className="w-4 h-4" />;
       case "coaching":
-        return <FileText className="w-4 h-4" />;
+        return <Icon name="description" className="w-4 h-4" />;
       case "urgent":
-        return <AlertCircle className="w-4 h-4 text-[var(--color-error)]" />;
+        return <Icon name="error" className="w-4 h-4 text-[var(--color-error)]" />;
       case "system":
       default:
-        return <Bell className="w-4 h-4" />;
+        return <Icon name="notifications" className="w-4 h-4" />;
     }
   };
 
   const getFilterIcon = (filter: FilterType) => {
     switch (filter) {
       case "booking":
-        return <Calendar className="w-3.5 h-3.5" />;
+        return <Icon name="calendar_today" className="w-3.5 h-3.5" />;
       case "coaching":
-        return <FileText className="w-3.5 h-3.5" />;
+        return <Icon name="description" className="w-3.5 h-3.5" />;
       case "video":
         return <Video className="w-3.5 h-3.5" />;
       case "urgent":
-        return <AlertCircle className="w-3.5 h-3.5" />;
+        return <Icon name="error" className="w-3.5 h-3.5" />;
       case "system":
-        return <Settings className="w-3.5 h-3.5" />;
+        return <Icon name="settings" className="w-3.5 h-3.5" />;
       default:
-        return <Bell className="w-3.5 h-3.5" />;
+        return <Icon name="notifications" className="w-3.5 h-3.5" />;
     }
   };
 
@@ -246,7 +235,7 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
                 className="text-[10px] text-[var(--color-on-surface)] hover:underline flex items-center gap-0.5"
               >
                 {notification.linkText || "Se detaljer"}
-                <ChevronRight className="w-3 h-3" />
+                <Icon name="chevron_right" className="w-3 h-3" />
               </Link>
             )}
           </div>
@@ -263,9 +252,9 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
             title="Merk som lest"
           >
             {markingRead.includes(notification.id) ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-[var(--color-outline)]" />
+              <Icon name="progress_activity" className="w-3.5 h-3.5 animate-spin text-[var(--color-outline)]" />
             ) : (
-              <Check className="w-3.5 h-3.5 text-[var(--color-outline)]" />
+              <Icon name="check" className="w-3.5 h-3.5 text-[var(--color-outline)]" />
             )}
           </button>
         )}
@@ -320,7 +309,7 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
             <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--color-outline-variant)]">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <Bell className="w-5 h-5 text-[var(--color-on-surface)]" />
+                  <Icon name="notifications" className="w-5 h-5 text-[var(--color-on-surface)]" />
                   {unreadCount > 0 && (
                     <span className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--color-error)] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                       {unreadCount > 9 ? "9+" : unreadCount}
@@ -356,9 +345,9 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
                     title="Merk alle som lest"
                   >
                     {isLoading ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                     ) : (
-                      <Check className="w-4 h-4" />
+                      <Icon name="check" className="w-4 h-4" />
                     )}
                   </button>
                 )}
@@ -367,29 +356,29 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
                   onClick={onClose}
                   className="p-2 rounded-lg text-[var(--color-outline)] hover:text-[var(--color-on-surface)] hover:bg-[var(--color-surface-container)] transition-colors"
                 >
-                  <X className="w-4 h-4" />
+                  <Icon name="close" className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
             {/* Filters */}
             <div className="flex items-center gap-2 px-4 py-2 border-b border-[var(--color-outline-variant)] overflow-x-auto">
-              <FilterButton filter="all" label="Alle" />
-              <FilterButton filter="booking" label="Bookinger" />
-              <FilterButton filter="coaching" label="Coaching" />
-              <FilterButton filter="video" label="Video" />
-              <FilterButton filter="urgent" label="Haster" />
+              <Icon name="filter_list"Button filter="all" label="Alle" />
+              <Icon name="filter_list"Button filter="booking" label="Bookinger" />
+              <Icon name="filter_list"Button filter="coaching" label="Coaching" />
+              <Icon name="filter_list"Button filter="video" label="Video" />
+              <Icon name="filter_list"Button filter="urgent" label="Haster" />
             </div>
 
             {/* Notification List */}
             <div className="flex-1 overflow-y-auto">
               {isLoading && notifications.length === 0 ? (
                 <div className="flex items-center justify-center h-32">
-                  <Loader2 className="w-6 h-6 animate-spin text-[var(--color-outline)]" />
+                  <Icon name="progress_activity" className="w-6 h-6 animate-spin text-[var(--color-outline)]" />
                 </div>
               ) : notifications.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-64 text-center px-4">
-                  <Bell className="w-12 h-12 text-[var(--color-outline)] mb-3" />
+                  <Icon name="notifications" className="w-12 h-12 text-[var(--color-outline)] mb-3" />
                   <p className="text-sm text-[var(--color-outline)]">Ingen notifikasjoner</p>
                   <p className="text-[11px] text-[var(--color-outline)] mt-1">
                     Du vil se varsler om bookinger, videoer og meldinger her

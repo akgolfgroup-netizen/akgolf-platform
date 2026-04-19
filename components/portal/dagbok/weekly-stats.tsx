@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { Clock, Dumbbell, TrendingUp, TrendingDown, Activity, Target } from "lucide-react";
+import { Clock, Dumbbell, Target } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 import { format, startOfWeek, endOfWeek, isWithinInterval, subWeeks, parseISO } from "date-fns";
@@ -78,9 +80,9 @@ function StatRow({
           )}
         >
           {change > 0 ? (
-            <TrendingUp className="w-3 h-3" />
+            <Icon name="trending_up" className="w-3 h-3" />
           ) : change < 0 ? (
-            <TrendingDown className="w-3 h-3" />
+            <Icon name="trending_down" className="w-3 h-3" />
           ) : null}
           {change > 0 ? "+" : ""}{change}
         </motion.div>
@@ -145,7 +147,7 @@ export function WeeklyStats({ sessions }: WeeklyStatsProps) {
           <p className="text-xs text-grey-400 mt-1">{stats.weekLabel}</p>
         </div>
         <div className="w-10 h-10 rounded-xl bg-accent-cta/20 flex items-center justify-center">
-          <Activity className="w-5 h-5 text-black" />
+          <Icon name="monitoring" className="w-5 h-5 text-black" />
         </div>
       </div>
 

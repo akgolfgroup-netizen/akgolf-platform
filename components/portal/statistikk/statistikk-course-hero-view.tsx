@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 /**
  * StatistikkCourseHeroView — opt2 Course Hero-variant av /portal/statistikk.
  *
@@ -8,7 +10,7 @@
  */
 
 import Link from "next/link";
-import { TrendingUp, Plus } from "lucide-react";
+
 import {
   CourseHero,
   GlassPanel,
@@ -104,7 +106,7 @@ export function StatistikkCourseHeroView({
             </div>
             <div className="flex items-center gap-3 mt-4">
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent-cta/18 text-accent-cta text-[12px] font-semibold">
-                <TrendingUp className="w-3 h-3" />
+                <Icon name="trending_up" className="w-3 h-3" />
                 Snittscore {avgScore != null ? avgScore.toFixed(1) : "—"}
               </span>
               <MonoLabel size="xs" className="text-white/45">
@@ -165,7 +167,7 @@ export function StatistikkCourseHeroView({
                 <GlassButton
                   variant="lime"
                   className="w-full"
-                  icon={<Plus className="w-3.5 h-3.5" />}
+                  icon={<Icon name="add" className="w-3.5 h-3.5" />}
                 >
                   Logg ny runde
                 </GlassButton>

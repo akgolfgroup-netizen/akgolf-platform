@@ -1,7 +1,9 @@
 "use client";
 
-import { Calendar, MapPin, Clock } from "lucide-react";
 
+
+
+import { Icon } from "@/components/ui/icon";
 /**
  * NextCompetitionWidget — nedtelling til neste konkurranse.
  *
@@ -31,15 +33,15 @@ export function NextCompetitionWidget() {
 
       <div className="space-y-1.5">
         <div className="flex items-center gap-1.5 text-xs text-muted">
-          <Calendar className="w-3.5 h-3.5" />
+          <Icon name="calendar_today" className="w-3.5 h-3.5" />
           <span>{date}</span>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-muted">
-          <MapPin className="w-3.5 h-3.5" />
+          <Icon name="location_on" className="w-3.5 h-3.5" />
           <span>{location}</span>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-muted">
-          <Clock className="w-3.5 h-3.5" />
+          <Icon name="schedule" className="w-3.5 h-3.5" />
           <span>Forberedelse 67% fullført</span>
         </div>
       </div>

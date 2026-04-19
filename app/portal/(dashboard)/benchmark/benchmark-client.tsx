@@ -1,16 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useCallback } from "react";
-import {
-  BarChart3,
-  Search,
-  Target,
-  TrendingUp,
-  Layers,
-  Crosshair,
-  Loader2,
-  ArrowRight,
-} from "lucide-react";
+import { Search, Layers } from "lucide-react";
 import {
   RadarChart,
   PolarGrid,
@@ -167,7 +160,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         <PremiumCard>
           <div className="p-6 text-center">
             <div className="mx-auto w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center mb-4">
-              <BarChart3 className="w-6 h-6 text-grey-400" />
+              <Icon name="bar_chart" className="w-6 h-6 text-grey-400" />
             </div>
             <h2 className="text-lg font-semibold text-black mb-2">
               Ingen statistikk ennå
@@ -373,7 +366,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         <PremiumCard>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-black" />
+              <Icon name="bar_chart" className="w-5 h-5 text-black" />
             </div>
             <div>
               <h3 className="text-sm font-semibold text-black">
@@ -549,7 +542,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
       <PremiumCard>
         <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-            <Search className="w-5 h-5 text-black" />
+            <Icon name="search" className="w-5 h-5 text-black" />
           </div>
           <div>
             <h3 className="text-sm font-semibold text-black">
@@ -560,7 +553,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         </div>
         {/* Search bar */}
         <div className="relative mt-4 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+          <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
           <input
             type="text"
             value={searchQuery}
@@ -569,7 +562,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-grey-200 bg-grey-50 text-sm text-black placeholder:text-grey-400 focus:outline-none focus:border-black transition-colors"
           />
           {isSearching && (
-            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 animate-spin" />
+            <Icon name="progress_activity" className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 animate-spin" />
           )}
         </div>
 
@@ -752,7 +745,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         {/* No pro selected placeholder */}
         {!selectedPro && !isPending && (
           <div className="mt-6 py-8 text-center">
-            <Crosshair className="w-8 h-8 text-grey-400 mx-auto mb-3" />
+            <Icon name="gps_fixed" className="w-8 h-8 text-grey-400 mx-auto mb-3" />
             <p className="text-sm text-grey-400">
               Søk etter en spiller for å se sammenligning
             </p>
@@ -761,7 +754,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
 
         {isPending && !isSearching && (
           <div className="mt-6 py-8 text-center">
-            <Loader2 className="w-6 h-6 text-grey-400 mx-auto mb-3 animate-spin" />
+            <Icon name="progress_activity" className="w-6 h-6 text-grey-400 mx-auto mb-3 animate-spin" />
             <p className="text-sm text-grey-400">Henter spillerdata...</p>
           </div>
         )}
@@ -773,7 +766,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         <PremiumCard>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-black" />
+              <Icon name="trending_up" className="w-5 h-5 text-black" />
             </div>
             <div>
               <h3 className="text-sm font-semibold text-black">
@@ -805,7 +798,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                     <span className="tabular-nums tracking-tight">
                       {area.current.toFixed(2)} SG
                     </span>
-                    <ArrowRight className="w-3.5 h-3.5 text-grey-400" />
+                    <Icon name="arrow_forward" className="w-3.5 h-3.5 text-grey-400" />
                     <span className="tabular-nums tracking-tight font-semibold">
                       {newSg.toFixed(2)} SG
                     </span>
@@ -838,7 +831,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         <PremiumCard>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-              <Target className="w-5 h-5 text-black" />
+              <Icon name="my_location" className="w-5 h-5 text-black" />
             </div>
             <div>
               <h3 className="text-sm font-semibold text-black">
@@ -864,7 +857,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                       strokeDasharray="3 3"
                       vertical={false}
                     />
-                    <XAxis
+                    <Icon name="close"Axis
                       dataKey="bucket"
                       tick={{
                         fill: COLORS.grey600,
@@ -872,8 +865,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                         fontWeight: 500,
                       }}
                       axisLine={false}
-                      tickLine={false}
-                    />
+                      tickLine={false} />
                     <YAxis
                       tick={{ fill: COLORS.grey400, fontSize: 11 }}
                       axisLine={false}
@@ -945,7 +937,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             </>
           ) : (
             <div className="py-10 text-center">
-              <Target className="w-8 h-8 text-grey-400 mx-auto mb-3" />
+              <Icon name="my_location" className="w-8 h-8 text-grey-400 mx-auto mb-3" />
               <p className="text-sm text-grey-400">
                 Legg til approach-statistikk per avstand i rundene dine for å se
                 denne analysen.

@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { colors } from "@/lib/design-tokens";
-import { Flame } from "lucide-react";
+
 
 interface TrainingActivityCardProps {
   sessionsCount: number;
@@ -35,7 +37,7 @@ export function TrainingActivityCard({
           className="mb-4 mt-3 inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-bold"
           style={{ backgroundColor: colors.primary.accent, color: colors.primary.dark }}
         >
-          <Flame className="h-3.5 w-3.5" />
+          <Icon name="local_fire_department" className="h-3.5 w-3.5" />
           Du er på en streak! {streak} dager
         </div>
       </div>

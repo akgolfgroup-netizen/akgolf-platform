@@ -1,6 +1,7 @@
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 interface Breadcrumb {
@@ -50,10 +51,9 @@ export function AdminPageHeader({
                   </span>
                 )}
                 {!isLast && (
-                  <ChevronRight
+                  <Icon name="chevron_right"
                     className="w-3.5 h-3.5 text-[var(--color-muted)]"
-                    aria-hidden="true"
-                  />
+                    aria-hidden="true" />
                 )}
               </React.Fragment>
             );

@@ -1,16 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import {
-  CreditCard,
-  Calendar,
-  Zap,
-  ArrowRight,
-  ExternalLink,
-  XCircle,
-  ChevronUp,
-} from "lucide-react";
+
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { cn } from "@/lib/portal/utils/cn";
@@ -107,7 +101,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
             <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div>
                 <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1">
-                  <CreditCard className="h-3.5 w-3.5 text-white/70" />
+                  <Icon name="credit_card" className="h-3.5 w-3.5 text-white/70" />
                   <MonoLabel size="xs" uppercase className="text-white/70">
                     {user.tier}
                   </MonoLabel>
@@ -147,7 +141,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Zap className="h-4 w-4 text-success" />
+                      <Icon name="bolt" className="h-4 w-4 text-success" />
                       <span className="text-sm font-semibold text-black">
                         Økter denne perioden
                       </span>
@@ -190,7 +184,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
               {/* Info grid */}
               <div className="grid grid-cols-1 gap-4 border-t border-grey-200 pt-4 sm:grid-cols-2">
                 <div className="flex items-start gap-3">
-                  <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-grey-400" />
+                  <Icon name="calendar_today" className="mt-0.5 h-4 w-4 shrink-0 text-grey-400" />
                   <div>
                     <MonoLabel size="xs" uppercase className="block text-grey-400">
                       Kommende bookinger
@@ -204,7 +198,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
 
                 {expiresAtFormatted && (
                   <div className="flex items-start gap-3">
-                    <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-grey-400" />
+                    <Icon name="calendar_today" className="mt-0.5 h-4 w-4 shrink-0 text-grey-400" />
                     <div>
                       <MonoLabel size="xs" uppercase className="block text-grey-400">
                         Utløper
@@ -218,7 +212,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
 
                 {quota?.bookingWindowDays ? (
                   <div className="flex items-start gap-3">
-                    <Zap className="mt-0.5 h-4 w-4 shrink-0 text-grey-400" />
+                    <Icon name="bolt" className="mt-0.5 h-4 w-4 shrink-0 text-grey-400" />
                     <div>
                       <MonoLabel size="xs" uppercase className="block text-grey-400">
                         Bookingsvindu
@@ -244,7 +238,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                       isPending && "cursor-not-allowed opacity-60"
                     )}
                   >
-                    <ChevronUp className="h-4 w-4" />
+                    <Icon name="expand_less" className="h-4 w-4" />
                     {isPending ? "Åpner…" : "Oppgrader abonnement"}
                   </button>
                 )}
@@ -260,7 +254,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                       isPending && "cursor-not-allowed opacity-60"
                     )}
                   >
-                    <ExternalLink className="h-4 w-4" />
+                    <Icon name="open_in_new" className="h-4 w-4" />
                     Administrer i Stripe
                   </button>
                 )}
@@ -277,7 +271,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                     disabled={isPending}
                     className="inline-flex items-center gap-1.5 text-xs text-grey-400 transition-colors hover:text-black"
                   >
-                    <XCircle className="h-3.5 w-3.5" />
+                    <Icon name="close"Circle className="h-3.5 w-3.5" />
                     Avbryt abonnement
                   </button>
                   <p className="mt-1 text-[10px] text-grey-400">
@@ -300,7 +294,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-grey-50">
-                  <Calendar className="h-5 w-5 text-black" />
+                  <Icon name="calendar_today" className="h-5 w-5 text-black" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-black">
@@ -316,7 +310,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                 className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-black hover:underline"
               >
                 Book nå
-                <ArrowRight className="h-4 w-4" />
+                <Icon name="arrow_forward" className="h-4 w-4" />
               </Link>
             </div>
           </PremiumCard>
@@ -326,7 +320,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
         <>
           <NightSurface variant="ambient" className="rounded-2xl p-10 text-center">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-cta/20">
-              <Zap className="h-7 w-7 text-accent-cta" />
+              <Icon name="bolt" className="h-7 w-7 text-accent-cta" />
             </div>
             <MonoLabel size="xs" uppercase className="mb-2 block text-white/50">
               Ingen aktiv plan
@@ -347,7 +341,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
               )}
             >
               Oppgrader til Performance
-              <ArrowRight className="h-4 w-4" />
+              <Icon name="arrow_forward" className="h-4 w-4" />
             </Link>
           </NightSurface>
 

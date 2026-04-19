@@ -1,15 +1,8 @@
 "use client";
 
-import {
-  ChevronLeft,
-  ChevronRight,
-  Calendar as CalendarIcon,
-  Grid3X3,
-  Filter,
-  Plus,
-  Loader2,
-  Shield,
-} from "lucide-react";
+
+import { Icon } from "@/components/ui/icon";
+import { Grid3X3, Filter } from "lucide-react";
 import { format, subMonths, addMonths, subWeeks, addWeeks } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
@@ -21,11 +14,11 @@ type ViewMode = "month" | "week" | "availability";
 
 const viewTabs: TabItem[] = [
   { id: "month", label: "Måned", icon: <Grid3X3 className="w-3.5 h-3.5" /> },
-  { id: "week", label: "Uke", icon: <CalendarIcon className="w-3.5 h-3.5" /> },
+  { id: "week", label: "Uke", icon: <Icon name="calendar_today"Icon className="w-3.5 h-3.5" /> },
   {
     id: "availability",
     label: "Tilgjengelighet",
-    icon: <Shield className="w-3.5 h-3.5" />,
+    icon: <Icon name="shield" className="w-3.5 h-3.5" />,
   },
 ];
 
@@ -82,7 +75,7 @@ export default function KalenderControls({
             className="p-2 rounded-lg hover:bg-grey-50 text-grey-500 transition-colors"
             aria-label="Forrige"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <Icon name="chevron_left" className="w-5 h-5" />
           </button>
           <h2 className="text-lg font-semibold text-black min-w-[180px] text-center capitalize">
             {dateLabel}
@@ -92,7 +85,7 @@ export default function KalenderControls({
             className="p-2 rounded-lg hover:bg-grey-50 text-grey-500 transition-colors"
             aria-label="Neste"
           >
-            <ChevronRight className="w-5 h-5" />
+            <Icon name="chevron_right" className="w-5 h-5" />
           </button>
           <Button
             variant="secondary"
@@ -102,7 +95,7 @@ export default function KalenderControls({
             I dag
           </Button>
           {isPending && (
-            <Loader2 className="w-4 h-4 animate-spin text-grey-400" />
+            <Icon name="progress_activity" className="w-4 h-4 animate-spin text-grey-400" />
           )}
         </div>
 
@@ -121,11 +114,11 @@ export default function KalenderControls({
           </AdminSelect>
 
           <Button variant="secondary">
-            <Filter className="w-4 h-4" />
+            <Icon name="filter_list" className="w-4 h-4" />
             <span className="hidden sm:inline">Filter</span>
           </Button>
           <Button variant="accent" onClick={onNewEvent}>
-            <Plus className="w-4 h-4" />
+            <Icon name="add" className="w-4 h-4" />
             <span className="hidden sm:inline">Ny</span>
           </Button>
         </div>

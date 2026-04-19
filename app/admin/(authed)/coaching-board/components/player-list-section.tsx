@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 /**
  * PlayerListSection — følger mc-cards-grid-mønster fra elever-wireframe.
  * Kort-grid istedenfor tabell: avatar + kategori + navn + klubb + stats + sparkline + siste økt.
@@ -7,7 +9,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { TrendingUp, TrendingDown, Minus, AlertCircle } from "lucide-react";
+
 import { getSkillLevelByCode } from "@/lib/portal/golf/skill-levels";
 import { MonoLabel } from "@/components/portal/patterns";
 import type { CoachingBoardPlayerRow } from "../actions";
@@ -60,7 +62,7 @@ function TrendIndicator({ value }: { value: number | null }) {
   if (value === null || Math.abs(value) < 0.05) {
     return (
       <span className="inline-flex items-center gap-1 text-xs text-grey-400">
-        <Minus className="h-3 w-3" />
+        <Icon name="remove" className="h-3 w-3" />
         0.00
       </span>
     );
@@ -73,9 +75,9 @@ function TrendIndicator({ value }: { value: number | null }) {
       }`}
     >
       {positive ? (
-        <TrendingUp className="h-3 w-3" />
+        <Icon name="trending_up" className="h-3 w-3" />
       ) : (
-        <TrendingDown className="h-3 w-3" />
+        <Icon name="trending_down" className="h-3 w-3" />
       )}
       {positive ? "+" : ""}
       {value.toFixed(2)}
@@ -247,7 +249,7 @@ export function PlayerListSection({ players }: PlayerListSectionProps) {
 
               {p.biggestGap && p.biggestGap.value < 0 && (
                 <div className="mt-3 flex items-center gap-1.5 text-[11px] text-grey-500">
-                  <AlertCircle className="h-3 w-3 text-warning-text" />
+                  <Icon name="error" className="h-3 w-3 text-warning-text" />
                   <span>
                     Gap i <span className="font-medium text-grey-700">{p.biggestGap.label}</span>
                     <span className="ml-1 tabular-nums">

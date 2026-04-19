@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Download, RefreshCw, Pencil, Trash2, ChevronDown, ChevronRight, Loader2 } from "lucide-react";
+
 import { ImportTournamentsSheet } from "@/modules/tournament-planner/components/ImportTournamentsSheet";
 import { EditTournamentSheet } from "@/modules/tournament-planner/components/EditTournamentSheet";
 import { TournamentPlayerList } from "@/modules/tournament-planner/components/TournamentPlayerList";
@@ -121,7 +123,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
             variant="dark"
             size="sm"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${syncing ? "animate-spin" : ""}`} />
+            <Icon name="refresh" className={`w-3.5 h-3.5 ${syncing ? "animate-spin" : ""}`} />
             Synkroniser
           </Button>
           <Button
@@ -129,7 +131,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
             variant="secondary"
             size="sm"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Icon name="download" className="w-3.5 h-3.5" />
             GolfBox
           </Button>
         </div>
@@ -183,9 +185,9 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                 >
                   {t._count.playerPlans > 0 ? (
                     isExpanded ? (
-                      <ChevronDown className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
+                      <Icon name="expand_more" className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
                     ) : (
-                      <ChevronRight className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
+                      <Icon name="chevron_right" className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
                     )
                   ) : (
                     <span className="w-3.5 flex-shrink-0" />
@@ -208,7 +210,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                     className="p-1.5 rounded-lg hover:bg-grey-200 transition-colors text-grey-400"
                     title="Rediger"
                   >
-                    <Pencil className="w-3.5 h-3.5" />
+                    <Icon name="edit" className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => handleDelete(t)}
@@ -217,9 +219,9 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                     title="Slett"
                   >
                     {deletingId === t.id ? (
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <Icon name="progress_activity" className="w-3.5 h-3.5 animate-spin" />
                     ) : (
-                      <Trash2 className="w-3.5 h-3.5" />
+                      <Icon name="delete" className="w-3.5 h-3.5" />
                     )}
                   </button>
                 </div>

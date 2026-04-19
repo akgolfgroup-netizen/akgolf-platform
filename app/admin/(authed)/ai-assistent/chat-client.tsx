@@ -1,21 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useRef, useEffect, useCallback } from "react";
-import {
-  Send,
-  Sparkles,
-  User,
-  TrendingUp,
-  Users,
-  Calendar,
-  BarChart3,
-  Lightbulb,
-  Loader2,
-  Copy,
-  ThumbsUp,
-  ThumbsDown,
-  Clock,
-} from "lucide-react";
+import { Send, TrendingUp, Users, Calendar, BarChart3, Lightbulb, ThumbsUp, ThumbsDown, Clock } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 
@@ -198,9 +186,9 @@ export function ChatClient() {
                   )}
                 >
                   {msg.role === "assistant" ? (
-                    <Sparkles className="w-4 h-4" />
+                    <Icon name="auto_awesome" className="w-4 h-4" />
                   ) : (
-                    <User className="w-4 h-4" />
+                    <Icon name="person" className="w-4 h-4" />
                   )}
                 </div>
                 <div
@@ -222,7 +210,7 @@ export function ChatClient() {
                         title="Kopier"
                         aria-label="Kopier svar"
                       >
-                        <Copy className="w-3.5 h-3.5" />
+                        <Icon name="content_copy" className="w-3.5 h-3.5" />
                       </button>
                       <button
                         className="p-1.5 rounded hover:bg-grey-200 text-grey-400 transition-colors"
@@ -250,10 +238,10 @@ export function ChatClient() {
             {isStreaming && (
               <div className="flex gap-3">
                 <div className="w-8 h-8 rounded-lg bg-grey-50 flex items-center justify-center shrink-0">
-                  <Sparkles className="w-4 h-4 text-black" />
+                  <Icon name="auto_awesome" className="w-4 h-4 text-black" />
                 </div>
                 <div className="bg-grey-50 rounded-2xl rounded-tl-sm p-4 flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 text-black animate-spin" />
+                  <Icon name="progress_activity" className="w-4 h-4 text-black animate-spin" />
                   <span className="text-sm text-grey-400">Tenker...</span>
                 </div>
               </div>
@@ -288,7 +276,7 @@ export function ChatClient() {
           <div className="p-4 border-t border-grey-200 bg-grey-50">
             <div className="flex items-end gap-2 bg-white border border-grey-200 rounded-xl p-2 focus-within:border-grey-300 focus-within:ring-2 focus-within:ring-black/10 transition-all">
               <div className="p-2 rounded-lg bg-grey-50">
-                <Sparkles className="w-4 h-4 text-black" />
+                <Icon name="auto_awesome" className="w-4 h-4 text-black" />
               </div>
               <textarea
                 value={input}
@@ -310,7 +298,7 @@ export function ChatClient() {
                 className="p-3 rounded-full bg-black text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
                 aria-label="Send melding"
               >
-                <Send className="w-4 h-4" />
+                <Icon name="send" className="w-4 h-4" />
               </button>
             </div>
             <p className="text-[10px] text-grey-400 mt-2 text-center">

@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo, useRef, useEffect } from "react";
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { Plus } from "lucide-react";
+
 import { SessionCard } from "./SessionCard";
 import type { TrainingSession } from "./types";
 import {
@@ -164,7 +166,7 @@ function DayColumn({
                 className="w-full py-6 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 hover:border-blue-300 hover:text-blue-500 hover:bg-blue-50/50 transition-all"
               >
                 <span className="flex items-center justify-center gap-1 text-sm">
-                  <Plus className="w-4 h-4" />
+                  <Icon name="add" className="w-4 h-4" />
                   Legg til økt
                 </span>
               </button>
@@ -361,7 +363,7 @@ export function WeekCalendarCompact({
                   className="w-full py-6 border-2 border-dashed border-gray-200 rounded-lg text-gray-400 hover:border-blue-300 hover:text-blue-500 hover:bg-blue-50/50 transition-all"
                 >
                   <span className="flex items-center justify-center gap-1 text-sm">
-                    <Plus className="w-4 h-4" />
+                    <Icon name="add" className="w-4 h-4" />
                     Legg til økt
                   </span>
                 </button>

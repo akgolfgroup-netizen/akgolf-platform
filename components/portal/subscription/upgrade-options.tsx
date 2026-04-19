@@ -1,6 +1,8 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/portal/utils/cn";
 
 const UPGRADE_OPTIONS = [
@@ -44,7 +46,7 @@ export function UpgradeOptions({
     <div className="bg-white rounded-2xl border border-primary/10 overflow-hidden">
       <div className="px-6 py-4 border-b border-surface">
         <h3 className="text-sm font-semibold text-text flex items-center gap-2">
-          <ArrowUpRight className="w-4 h-4 text-primary" />
+          <Icon name="arrow_upward"Right className="w-4 h-4 text-primary" />
           Tilgjengelige oppgraderinger
         </h3>
       </div>
@@ -81,7 +83,7 @@ export function UpgradeOptions({
                 )}
               >
                 Velg
-                <ArrowRight className="w-3 h-3" />
+                <Icon name="arrow_forward" className="w-3 h-3" />
               </button>
             </div>
           )

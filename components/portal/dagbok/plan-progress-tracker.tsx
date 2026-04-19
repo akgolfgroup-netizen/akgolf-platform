@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Target, CheckCircle2, Calendar } from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 interface PlanProgressTrackerProps {
@@ -28,7 +30,7 @@ export function PlanProgressTracker({
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-              <Target className="h-5 w-5 text-primary" />
+              <Icon name="my_location" className="h-5 w-5 text-primary" />
             </div>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-wider text-grey-400">
@@ -58,9 +60,9 @@ export function PlanProgressTracker({
               </div>
             </div>
             {progress === 100 ? (
-              <CheckCircle2 className="h-5 w-5 shrink-0 text-success" />
+              <Icon name="check"Circle2 className="h-5 w-5 shrink-0 text-success" />
             ) : (
-              <Calendar className="h-5 w-5 shrink-0 text-grey-300" />
+              <Icon name="calendar_today" className="h-5 w-5 shrink-0 text-grey-300" />
             )}
           </div>
         </div>

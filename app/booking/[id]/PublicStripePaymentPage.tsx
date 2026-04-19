@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -9,7 +11,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { CreditCard, AlertCircle, Loader2, ShieldCheck, Mail, Smartphone } from "lucide-react";
+
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -61,14 +63,14 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Service Reminder */}
       <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border bg-surface border-grey-200">
-        <CreditCard size={20} className="text-primary" />
+        <Icon name="credit_card" size={20} className="text-primary" />
         <p className="font-medium text-primary">{serviceName}</p>
       </div>
 
       {/* Customer Info (read-only) */}
       <div className="rounded-2xl p-5 border bg-surface border-grey-200">
         <div className="flex items-center gap-3">
-          <Mail size={18} className="text-primary" />
+          <Icon name="mail" size={18} className="text-primary" />
           <div>
             <p className="text-xs text-muted">Booking sendes til</p>
             <p className="text-sm font-medium text-primary">{customerEmail}</p>
@@ -92,7 +94,7 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
           animate={{ opacity: 1, y: 0 }}
           className="flex items-start gap-3 px-4 py-4 rounded-xl bg-error/10 border border-error/30"
         >
-          <AlertCircle size={18} className="text-error flex-shrink-0 mt-0.5" />
+          <Icon name="error" size={18} className="text-error flex-shrink-0 mt-0.5" />
           <p className="text-sm text-error">{error}</p>
         </motion.div>
       )}
@@ -107,12 +109,12 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
       >
         {loading ? (
           <>
-            <Loader2 size={20} className="animate-spin" />
+            <Icon name="progress_activity" size={20} className="animate-spin" />
             <span>Behandler betaling...</span>
           </>
         ) : (
           <>
-            <ShieldCheck size={20} />
+            <Icon name="shield"Check size={20} />
             <span>Betal nå</span>
           </>
         )}
@@ -121,12 +123,12 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
       {/* Payment Methods Info */}
       <div className="flex items-center justify-center gap-3 text-xs text-muted">
         <div className="flex items-center gap-1">
-          <Smartphone size={12} />
+          <Icon name="smartphone" size={12} />
           <span>Apple Pay</span>
         </div>
         <span>•</span>
         <div className="flex items-center gap-1">
-          <Smartphone size={12} />
+          <Icon name="smartphone" size={12} />
           <span>Google Pay</span>
         </div>
         <span>•</span>
@@ -179,7 +181,7 @@ export function PublicStripePaymentPage({
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
             className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-surface border-grey-200"
           >
-            <CreditCard size={28} className="text-primary" />
+            <Icon name="credit_card" size={28} className="text-primary" />
           </motion.div>
           <h1 className="text-2xl font-semibold mb-2 text-primary">
             Fullfør betaling
@@ -225,11 +227,10 @@ export function PublicStripePaymentPage({
               },
             }}
           >
-            <CheckoutForm 
+            <Icon name="check"outForm 
               bookingId={bookingId} 
               serviceName={serviceName} 
-              customerEmail={customerEmail}
-            />
+              customerEmail={customerEmail} />
           </Elements>
         </motion.div>
 

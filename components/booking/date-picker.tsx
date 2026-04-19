@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
 import {
   format,
@@ -16,7 +18,7 @@ import {
   startOfDay,
 } from "date-fns";
 import { nb } from "date-fns/locale";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import { motion } from "framer-motion";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
@@ -75,7 +77,7 @@ export function BookingDatePicker({
             className="w-9 h-9 rounded-lg flex items-center justify-center text-grey-400 hover:bg-grey-50 hover:text-black disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             aria-label="Forrige måned"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <Icon name="chevron_left" className="w-4 h-4" />
           </button>
           <h3 className="text-base font-semibold text-black capitalize">
             {format(currentMonth, "MMMM yyyy", { locale: nb })}
@@ -86,7 +88,7 @@ export function BookingDatePicker({
             className="w-9 h-9 rounded-lg flex items-center justify-center text-grey-400 hover:bg-grey-50 hover:text-black disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             aria-label="Neste måned"
           >
-            <ChevronRight className="w-4 h-4" />
+            <Icon name="chevron_right" className="w-4 h-4" />
           </button>
         </div>
 

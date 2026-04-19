@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { updateProfile } from "../actions";
 import { AvatarUpload } from "@/components/portal/profil/avatar-upload";
@@ -55,7 +57,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
         href="/portal/profil"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-grey-400 transition-colors hover:text-black"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <Icon name="arrow_back" className="h-4 w-4" />
         Tilbake til profil
       </Link>
 

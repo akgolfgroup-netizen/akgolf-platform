@@ -1,12 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  Trophy, Calendar, CheckCircle2, MapPin,
-  ExternalLink, Target, Flag, ChevronRight, Plus,
-} from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
 import { AddTournamentModal } from "@/components/portal/turneringer/add-tournament-modal";
@@ -125,7 +124,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
           onClick={() => setAddOpen(true)}
           className="inline-flex items-center gap-2 rounded-[20px] bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-alt"
         >
-          <Plus className="h-4 w-4" />
+          <Icon name="add" className="h-4 w-4" />
           Legg til egen turnering
         </button>
       </div>
@@ -145,7 +144,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
             <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-black tabular-nums">
               <NumberTicker value={stats.upcoming} />
             </span>
-            <Target className="mt-2 h-4 w-4 text-grey-400" />
+            <Icon name="my_location" className="mt-2 h-4 w-4 text-grey-400" />
           </div>
         </PremiumCard>
 
@@ -155,7 +154,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
             <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-black tabular-nums">
               <NumberTicker value={stats.registered} />
             </span>
-            <CheckCircle2 className="mt-2 h-4 w-4 text-grey-400" />
+            <Icon name="check"Circle2 className="mt-2 h-4 w-4 text-grey-400" />
           </div>
         </PremiumCard>
 
@@ -165,7 +164,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
             <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-black tabular-nums">
               <NumberTicker value={stats.completed} />
             </span>
-            <Flag className="mt-2 h-4 w-4 text-grey-400" />
+            <Icon name="flag" className="mt-2 h-4 w-4 text-grey-400" />
           </div>
         </PremiumCard>
       </div>
@@ -207,7 +206,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {activeTab === "resultater" && stats.completed === 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
-            <Trophy className="mb-3 h-8 w-8 text-grey-400 opacity-40" />
+            <Icon name="emoji_events" className="mb-3 h-8 w-8 text-grey-400 opacity-40" />
             <p className="text-sm font-medium text-grey-400">
               Ingen resultater ennå
             </p>
@@ -221,7 +220,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {activeTab === "resultater" && stats.completed > 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
-            <Trophy className="mb-3 h-8 w-8 text-black opacity-60" />
+            <Icon name="emoji_events" className="mb-3 h-8 w-8 text-black opacity-60" />
             <p className="text-sm font-medium text-grey-400">
               {stats.completed} fullførte turneringer
             </p>
@@ -235,7 +234,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {activeTab !== "resultater" && displayList.length === 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
-            <Calendar className="mb-3 h-8 w-8 text-grey-400 opacity-40" />
+            <Icon name="calendar_today" className="mb-3 h-8 w-8 text-grey-400 opacity-40" />
             <p className="text-sm font-medium text-grey-400">
               {activeTab === "pameldt"
                 ? "Du er ikke påmeldt noen turneringer"
@@ -281,7 +280,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                       </h3>
                       {t.isRegistered && (
                         <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full bg-success-light px-2 py-0.5 text-[10px] font-semibold text-success">
-                          <CheckCircle2 className="h-3 w-3" />
+                          <Icon name="check"Circle2 className="h-3 w-3" />
                           Påmeldt
                         </span>
                       )}
@@ -290,12 +289,12 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                     <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-grey-400">
                       {(t.course ?? t.location) && (
                         <span className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
+                          <Icon name="location_on" className="h-3 w-3" />
                           {t.course ?? t.location}
                         </span>
                       )}
                       <span className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
+                        <Icon name="calendar_today" className="h-3 w-3" />
                         {format(tournamentDate, "EEEE d. MMMM", { locale: nb })}
                       </span>
                       <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${getLevelColor(t.level)}`}>
@@ -305,11 +304,10 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                   </div>
 
                   {/* Chevron */}
-                  <ChevronRight
+                  <Icon name="chevron_right"
                     className={`h-4 w-4 flex-shrink-0 text-grey-400 transition-transform duration-200 ${
                       isExpanded ? "rotate-90" : ""
-                    }`}
-                  />
+                    }`} />
                 </button>
 
                 {/* Utvidet detaljer */}
@@ -373,7 +371,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                           disabled={registeringId === t.id}
                           className="inline-flex items-center gap-1.5 rounded-full bg-[accent-cta] px-4 py-2 text-[12px] font-bold text-black transition-opacity hover:opacity-85 disabled:opacity-60"
                         >
-                          <CheckCircle2 className="h-3.5 w-3.5" />
+                          <Icon name="check"Circle2 className="h-3.5 w-3.5" />
                           {registeringId === t.id ? "Melder på..." : "Meld meg på"}
                         </button>
                       )}
@@ -384,7 +382,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1.5 rounded-full border border-[grey-200] bg-white px-4 py-2 text-[12px] font-medium text-grey-400 transition-colors hover:border-[grey-300]"
                         >
-                          <ExternalLink className="h-3.5 w-3.5" />
+                          <Icon name="open_in_new" className="h-3.5 w-3.5" />
                           Se turnering
                         </a>
                       )}

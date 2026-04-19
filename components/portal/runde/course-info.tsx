@@ -1,6 +1,8 @@
 "use client";
 
-import { Flag, Ruler, TrendingUp, Trophy, AlertCircle } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 
@@ -71,21 +73,21 @@ export function CourseInfo({
       <div className="grid grid-cols-3 gap-4">
         {/* Length */}
         <div className="text-center p-3 bg-grey-50 rounded-xl">
-          <Ruler className="w-5 h-5 text-grey-400 mx-auto mb-1" />
+          <Icon name="straighten" className="w-5 h-5 text-grey-400 mx-auto mb-1" />
           <p className="text-lg font-bold text-black">{lengthMeter}</p>
           <p className="text-xs text-grey-400">meter</p>
         </div>
 
         {/* Par indicator */}
         <div className="text-center p-3 bg-grey-50 rounded-xl">
-          <Flag className="w-5 h-5 text-grey-400 mx-auto mb-1" />
+          <Icon name="flag" className="w-5 h-5 text-grey-400 mx-auto mb-1" />
           <p className="text-lg font-bold text-black">{par}</p>
           <p className="text-xs text-grey-400">par</p>
         </div>
 
         {/* Handicap */}
         <div className="text-center p-3 bg-grey-50 rounded-xl">
-          <TrendingUp className="w-5 h-5 text-grey-400 mx-auto mb-1" />
+          <Icon name="trending_up" className="w-5 h-5 text-grey-400 mx-auto mb-1" />
           <p className="text-lg font-bold text-black">{handicapIndex || "–"}</p>
           <p className="text-xs text-grey-400">handicap</p>
         </div>
@@ -95,7 +97,7 @@ export function CourseInfo({
       {history && history.timesPlayed > 0 && (
         <div className="mt-6 pt-6 border-t border-grey-200">
           <div className="flex items-center gap-2 mb-4">
-            <Trophy className="w-4 h-4 text-grey-400" />
+            <Icon name="emoji_events" className="w-4 h-4 text-grey-400" />
             <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Din historikk på dette hullet</MonoLabel>
           </div>
 
@@ -138,7 +140,7 @@ export function CourseInfo({
       {!history && (
         <div className="mt-6 pt-6 border-t border-grey-200">
           <div className="flex items-center gap-2 text-grey-400">
-            <AlertCircle className="w-4 h-4" />
+            <Icon name="error" className="w-4 h-4" />
             <p className="text-xs">Ingen historikk for dette hullet ennå</p>
           </div>
         </div>

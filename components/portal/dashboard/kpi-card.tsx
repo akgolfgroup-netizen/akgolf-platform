@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
 import { Sparkline } from "./sparkline";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+
 import { colors } from "@/lib/design-tokens";
 import { MonoLabel } from "@/components/portal/patterns";
 
@@ -57,9 +59,9 @@ export function KpiCard({
             }`}
           >
             {isPositive ? (
-              <ArrowDownRight className="h-3 w-3" />
+              <Icon name="arrow_downward"Right className="h-3 w-3" />
             ) : isNegative ? (
-              <ArrowUpRight className="h-3 w-3" />
+              <Icon name="arrow_upward"Right className="h-3 w-3" />
             ) : null}
             {Math.abs(change).toFixed(decimalPlaces)}
           </span>

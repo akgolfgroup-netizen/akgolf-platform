@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { ArrowRight, Check } from "lucide-react";
+
 import { SectionLabel } from "../SectionLabel";
 import { RevealOnScroll } from "../RevealOnScroll";
 import { IPhoneMockup } from "@/components/ui/iphone-mockup";
@@ -56,7 +58,7 @@ export function PortalPreviewSection() {
                           key={f}
                           className="flex items-start gap-2 text-xs text-text leading-relaxed"
                         >
-                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0 mt-0.5" />
+                          <Icon name="check" className="w-3.5 h-3.5 text-primary flex-shrink-0 mt-0.5" />
                           {f}
                         </li>
                       ))}
@@ -70,7 +72,7 @@ export function PortalPreviewSection() {
                 className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-primary text-white rounded-[20px] text-sm font-semibold hover:bg-primary-alt transition-colors duration-300"
               >
                 Oppdag portalen
-                <ArrowRight className="w-4 h-4" />
+                <Icon name="arrow_forward" className="w-4 h-4" />
               </Link>
             </div>
 

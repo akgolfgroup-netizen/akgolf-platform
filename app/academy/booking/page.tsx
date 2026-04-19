@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useRouter } from "next/navigation";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
@@ -58,21 +60,18 @@ export default function AcademyBookingPage() {
           <section className="py-12 bg-white border-t border-grey-200">
             <div className="w-container max-w-3xl">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <InfoItem
+                <Icon name="info"Item
                   icon={Mail}
                   title="Bekreftelse på e-post"
-                  text="Du mottar umiddelbar bekreftelse på bookingen"
-                />
-                <InfoItem
+                  text="Du mottar umiddelbar bekreftelse på bookingen" />
+                <Icon name="info"Item
                   icon={User}
                   title="Din profil"
-                  text="Ved første booking opprettes en profil automatisk"
-                />
-                <InfoItem
+                  text="Ved første booking opprettes en profil automatisk" />
+                <Icon name="info"Item
                   icon={Calendar}
                   title="Enkel endring"
-                  text="Endre eller avbestill enkelt via e-postlenken"
-                />
+                  text="Endre eller avbestill enkelt via e-postlenken" />
               </div>
             </div>
           </section>

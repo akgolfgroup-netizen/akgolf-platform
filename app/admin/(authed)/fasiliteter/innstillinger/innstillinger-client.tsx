@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useTransition } from "react";
 import Link from "next/link";
-import { ArrowLeft, MapPin, Check, X, User, Settings, Trash2 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { toggleFacilityActive, deleteInstructorDefault } from "../actions";
@@ -54,7 +56,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
  <MCTopbar title="Fasilitetinnstillinger"subtitle="Administrer fasiliteter og standard innstillinger"onMenuClick={toggle} />
  <div className={cn("p-6 max-w-4xl mx-auto space-y-6", isPending && "opacity-60 pointer-events-none")}>
  <Link href="/admin/fasiliteter"className="inline-flex items-center gap-2 text-sm text-grey-400 hover:text-grey-400 transition-colors">
- <ArrowLeft className="w-4 h-4"/>Tilbake til fasiliteter
+ <Icon name="arrow_back" className="w-4 h-4" />Tilbake til fasiliteter
  </Link>
 
  {/* Page Header */}
@@ -78,7 +80,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
  <div key={f.id} className="px-5 py-4 flex items-center justify-between gap-4">
  <div className="flex items-center gap-3 min-w-0">
  <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center shrink-0">
- <MapPin className="w-5 h-5 text-grey-400"/>
+ <Icon name="location_on" className="w-5 h-5 text-grey-400" />
  </div>
  <div className="min-w-0">
  <p className="font-medium text-black truncate">{f.name}</p>
@@ -95,7 +97,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
  : "text-grey-400 bg-grey-50 hover:bg-grey-50",
  )}
  >
- {f.isActive ? <><Check className="w-3 h-3"/>Aktiv</> : <><X className="w-3 h-3"/>Inaktiv</>}
+ {f.isActive ? <><Icon name="check" className="w-3 h-3" />Aktiv</> : <><Icon name="close" className="w-3 h-3" />Inaktiv</>}
  </button>
  </div>
  ))}
@@ -117,7 +119,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
  <div key={d.id} className="px-5 py-4 flex items-center justify-between gap-4">
  <div className="flex items-center gap-3 min-w-0">
  <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center shrink-0">
- <User className="w-5 h-5 text-grey-400"/>
+ <Icon name="person" className="w-5 h-5 text-grey-400" />
  </div>
  <div className="min-w-0">
  <p className="font-medium text-black truncate">{d.instructorName}</p>
@@ -130,7 +132,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
  </span>
  <button type="button"onClick={() => handleDeleteDefault(d.id)}
  className="p-2 rounded-lg hover:bg-red-50 text-red-600 transition-colors"aria-label={`Slett default for ${d.instructorName}`}>
- <Trash2 className="w-4 h-4"/>
+ <Icon name="delete" className="w-4 h-4" />
  </button>
  </div>
  </div>
@@ -143,7 +145,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
 
  <div className="p-4 rounded-xl bg-grey-50 border border-grey-200">
  <div className="flex items-start gap-3">
- <Settings className="w-5 h-5 text-grey-400 mt-0.5 shrink-0"/>
+ <Icon name="settings" className="w-5 h-5 text-grey-400 mt-0.5 shrink-0" />
  <p className="text-sm text-grey-400">
  <strong>Tips:</strong> Fasilitet-defaults brukes til automatisk å tildele riktig fasilitet når en booking opprettes.
  </p>

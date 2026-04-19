@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import React, { useState } from "react";
-import { Gauge, AlertTriangle, Clock, Settings2 } from "lucide-react";
+
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -111,7 +113,7 @@ export function CapacityManager() {
                 : "bg-success-light text-success"
             )}
           >
-            <Gauge className="w-6 h-6" />
+            <Icon name="speed" className="w-6 h-6" />
           </div>
           <div className="flex-1">
             <h3 className="text-sm font-medium text-black">Dagens kapasitet</h3>
@@ -149,7 +151,7 @@ export function CapacityManager() {
         </div>
         {utilizationPercentage >= 80 && (
           <div className="mt-3 flex items-center gap-2 text-error">
-            <AlertTriangle className="w-4 h-4" />
+            <Icon name="warning" className="w-4 h-4" />
             <span className="text-xs font-medium">Høy etterspørsel - vurder å øke kapasitet</span>
           </div>
         )}
@@ -159,7 +161,7 @@ export function CapacityManager() {
       <Card className="overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
           <div className="flex items-center gap-3">
-            <Settings2 className="w-5 h-5 text-grey-400" />
+            <Icon name="settings"2 className="w-5 h-5 text-grey-400" />
             <h2 className="text-sm font-semibold text-black">Kapasitetsinnstillinger</h2>
           </div>
           {hasChanges && (
@@ -250,7 +252,7 @@ export function CapacityManager() {
       <Card className="p-5 bg-primary/5 border-primary/20">
         <div className="flex items-start gap-3">
           <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-            <Clock className="w-4 h-4 text-primary" />
+            <Icon name="schedule" className="w-4 h-4 text-primary" />
           </div>
           <div>
             <h4 className="text-sm font-medium text-black">Tips</h4>

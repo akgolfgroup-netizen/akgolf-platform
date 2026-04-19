@@ -1,10 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { createBrowserClient } from "@supabase/ssr";
 import { useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Eye, EyeOff, Mail, Lock, Zap } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -86,7 +88,7 @@ export default function LoginPage() {
         >
           <Card className="p-8 bg-white border-black/10 text-center">
             <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Mail className="w-8 h-8 text-accent-cta" />
+              <Icon name="mail" className="w-8 h-8 text-accent-cta" />
             </div>
             <h1 className="text-2xl font-bold text-black mb-2">
               Sjekk e-posten din
@@ -118,7 +120,7 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Zap className="w-8 h-8 text-accent-cta" />
+              <Icon name="bolt" className="w-8 h-8 text-accent-cta" />
             </div>
             <h1 className="text-2xl font-bold text-black">AK Golf Academy</h1>
             <p className="text-grey-400">Logg inn på din konto</p>
@@ -160,7 +162,7 @@ export default function LoginPage() {
                 E-post
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
                 <input
                   type="email"
                   value={email}
@@ -180,7 +182,7 @@ export default function LoginPage() {
                   Passord
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                  <Icon name="lock" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -196,9 +198,9 @@ export default function LoginPage() {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-grey-400 hover:text-black"
                   >
                     {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
+                      <Icon name="visibility"Off className="w-4 h-4" />
                     ) : (
-                      <Eye className="w-4 h-4" />
+                      <Icon name="visibility" className="w-4 h-4" />
                     )}
                   </button>
                 </div>

@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import React from "react";
-import { Calendar, Users, TrendingUp, Activity, ArrowUpRight, ArrowDownRight } from "lucide-react";
+
 import { Card } from "@/components/ui/card";
 import { AdminSparkline } from "@/components/portal/mission-control/ui/charts/AdminSparkline";
 import { cn } from "@/lib/utils";
@@ -50,9 +52,9 @@ function StatCard({
                   )}
                 >
                   {trend.positive ? (
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                    <Icon name="arrow_upward"Right className="w-3.5 h-3.5" />
                   ) : (
-                    <ArrowDownRight className="w-3.5 h-3.5" />
+                    <Icon name="arrow_downward"Right className="w-3.5 h-3.5" />
                   )}
                   {trend.value > 0 && "+"}
                   {trend.value}%
@@ -130,7 +132,7 @@ export function DashboardStats({ data }: DashboardStatsProps) {
         value={stats.sessionsToday}
         subtitle="3 coaching, 2 trackman"
         trend={{ value: stats.sessionsTrend, positive: true, label: "vs snitt" }}
-        icon={<Calendar className="w-5 h-5" />}
+        icon={<Icon name="calendar_today" className="w-5 h-5" />}
         sparklineData={sparklineSessions}
         sparklineColor="var(--color-primary)"
       />
@@ -140,7 +142,7 @@ export function DashboardStats({ data }: DashboardStatsProps) {
         value={stats.activeStudents}
         subtitle={`+${stats.newStudentsThisMonth} denne måneden`}
         trend={{ value: stats.studentsTrend, positive: true, label: "vs forrige måned" }}
-        icon={<Users className="w-5 h-5" />}
+        icon={<Icon name="person"s className="w-5 h-5" />}
         sparklineData={sparklineStudents}
         sparklineColor="var(--color-success)"
       />
@@ -149,7 +151,7 @@ export function DashboardStats({ data }: DashboardStatsProps) {
         title="Inntekt denne måneden"
         value={formatRevenue(stats.mtdRevenue)}
         trend={{ value: stats.revenueTrend, positive: true, label: "vs forrige måned" }}
-        icon={<TrendingUp className="w-5 h-5" />}
+        icon={<Icon name="trending_up" className="w-5 h-5" />}
         sparklineData={sparklineRevenue}
         sparklineColor="var(--color-accent-cta)"
       />
@@ -159,7 +161,7 @@ export function DashboardStats({ data }: DashboardStatsProps) {
         value={`${stats.weeklySessions} økter`}
         subtitle="Denne uken logget"
         trend={{ value: stats.activityTrend, positive: true, label: "vs forrige uke" }}
-        icon={<Activity className="w-5 h-5" />}
+        icon={<Icon name="monitoring" className="w-5 h-5" />}
         sparklineData={sparklineActivity}
         sparklineColor="var(--color-ai)"
       />

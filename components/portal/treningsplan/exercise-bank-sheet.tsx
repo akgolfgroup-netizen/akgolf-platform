@@ -1,15 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo, useEffect, useId } from "react";
-import {
-  X,
-  Search,
-  Plus,
-  Star,
-  Clock,
-  Filter,
-  ChevronDown,
-} from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import type { ExerciseDefinition, ExerciseBankEntry } from "@/lib/portal/golf/exercise-types";
 import { DRILL_LIBRARY, WARMUP_EXERCISES } from "@/lib/portal/golf/exercise-types";
 import {
@@ -151,14 +145,14 @@ export function ExerciseBankSheet({
             aria-label="Lukk øvelsebank"
             className="p-2 rounded-lg hover:bg-[var(--color-grey-100)] text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
           >
-            <X className="w-5 h-5" aria-hidden="true" />
+            <Icon name="close" className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
         {/* Search */}
         <div className="p-4 border-b border-[var(--color-grey-200)]">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-500)]" aria-hidden="true" />
+            <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-grey-500)]" aria-hidden="true" />
             <input
               type="text"
               placeholder="Sok etter ovelser..."
@@ -190,9 +184,9 @@ export function ExerciseBankSheet({
             onClick={() => setShowFilters(!showFilters)}
             className="flex items-center gap-2 mt-3 text-sm text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
           >
-            <Filter className="w-4 h-4" aria-hidden="true" />
+            <Icon name="filter_list" className="w-4 h-4" aria-hidden="true" />
             Filtrer
-            <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? "rotate-180" : ""}`} aria-hidden="true" />
+            <Icon name="expand_more" className={`w-4 h-4 transition-transform ${showFilters ? "rotate-180" : ""}`} aria-hidden="true" />
           </button>
 
           {/* Filters */}
@@ -268,7 +262,7 @@ export function ExerciseBankSheet({
                               {exercise.name}
                             </span>
                             {bankEntry?.isFavorite && (
-                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" aria-hidden="true" />
+                              <Icon name="star" className="w-3 h-3 text-yellow-400 fill-yellow-400" aria-hidden="true" />
                             )}
                           </div>
                           <p className="text-xs text-[var(--color-grey-500)] line-clamp-2 mb-2">
@@ -278,12 +272,12 @@ export function ExerciseBankSheet({
                             <PyramidTag level={exercise.pyramid as PyramidLevel} />
                             <AreaTag area={exercise.area as TrainingArea} />
                             <span className="text-[11px] text-[var(--color-grey-400)] flex items-center gap-1">
-                              <Clock className="w-3 h-3" aria-hidden="true" />
+                              <Icon name="schedule" className="w-3 h-3" aria-hidden="true" />
                               {exercise.minDurationMinutes}-{exercise.maxDurationMinutes} min
                             </span>
                           </div>
                         </div>
-                        <Plus className="w-5 h-5 text-[var(--color-grey-500)] flex-shrink-0" aria-hidden="true" />
+                        <Icon name="add" className="w-5 h-5 text-[var(--color-grey-500)] flex-shrink-0" aria-hidden="true" />
                       </div>
                     </button>
                   );
@@ -306,7 +300,7 @@ export function ExerciseBankSheet({
               onClick={onCreateNew}
               className="w-full py-3 rounded-lg border border-dashed border-[var(--color-grey-200)] text-[var(--color-grey-500)] hover:border-[var(--color-grey-900)] hover:text-[var(--color-grey-900)] transition-colors flex items-center justify-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2"
             >
-              <Plus className="w-4 h-4" aria-hidden="true" />
+              <Icon name="add" className="w-4 h-4" aria-hidden="true" />
               Opprett ny ovelse
             </button>
           </div>

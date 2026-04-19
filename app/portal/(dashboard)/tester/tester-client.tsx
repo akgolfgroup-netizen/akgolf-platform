@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import { Medal } from "lucide-react";
+
 import type { TestOverviewData } from "./actions";
 
 type TestData = TestOverviewData;
@@ -182,7 +184,7 @@ export function TesterClient({ tests }: Props) {
                         }`}
                       >
                         {entry.rank <= 3 ? (
-                          <Medal className="h-5 w-5 inline" />
+                          <Icon name="military_tech" className="h-5 w-5 inline" />
                         ) : (
                           entry.rank
                         )}

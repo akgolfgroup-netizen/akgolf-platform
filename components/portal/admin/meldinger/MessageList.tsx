@@ -1,18 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
 import { cn } from "@/lib/utils";
-import {
-  Mail,
-  Instagram,
-  MessageCircle,
-  Phone,
-  MessageSquare,
-  Bot,
-  Clock,
-  Check,
-} from "lucide-react";
+import { Instagram } from "lucide-react";
 import type { Channel } from "./ChannelFilter";
 
 export type MessageStatus =
@@ -24,11 +17,11 @@ export type MessageStatus =
   | "FAILED";
 
 const channelIcons: Record<Channel, React.ReactNode> = {
-  EMAIL: <Mail className="h-4 w-4" />,
+  EMAIL: <Icon name="mail" className="h-4 w-4" />,
   INSTAGRAM: <Instagram className="h-4 w-4" />,
-  MESSENGER: <MessageCircle className="h-4 w-4" />,
-  WHATSAPP: <Phone className="h-4 w-4" />,
-  IMESSAGE: <MessageSquare className="h-4 w-4" />,
+  MESSENGER: <Icon name="chat_bubble" className="h-4 w-4" />,
+  WHATSAPP: <Icon name="phone" className="h-4 w-4" />,
+  IMESSAGE: <Icon name="chat" className="h-4 w-4" />,
 };
 
 const channelColors: Record<Channel, string> = {
@@ -46,32 +39,32 @@ const statusBadges: Record<
   PENDING: {
     label: "Venter",
     className: "bg-yellow-500/20 text-yellow-600",
-    icon: <Clock className="h-3 w-3" />,
+    icon: <Icon name="schedule" className="h-3 w-3" />,
   },
   AI_PROCESSING: {
     label: "AI jobber",
     className: "bg-blue-500/20 text-blue-600",
-    icon: <Bot className="h-3 w-3 animate-pulse" />,
+    icon: <Icon name="smart_toy" className="h-3 w-3 animate-pulse" />,
   },
   AI_READY: {
     label: "AI klar",
     className: "bg-[var(--color-ai)]/20 text-[var(--color-ai)]",
-    icon: <Bot className="h-3 w-3" />,
+    icon: <Icon name="smart_toy" className="h-3 w-3" />,
   },
   APPROVED: {
     label: "Godkjent",
     className: "bg-purple-500/20 text-purple-600",
-    icon: <Check className="h-3 w-3" />,
+    icon: <Icon name="check" className="h-3 w-3" />,
   },
   SENT: {
     label: "Sendt",
     className: "bg-[var(--color-grey-200)] text-[var(--color-grey-500)]",
-    icon: <Check className="h-3 w-3" />,
+    icon: <Icon name="check" className="h-3 w-3" />,
   },
   FAILED: {
     label: "Feilet",
     className: "bg-[var(--color-error)]/20 text-[var(--color-error)]",
-    icon: <Clock className="h-3 w-3" />,
+    icon: <Icon name="schedule" className="h-3 w-3" />,
   },
 };
 

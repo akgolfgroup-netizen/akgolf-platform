@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Brain, TrendingUp, AlertCircle, Lightbulb, Target } from "lucide-react";
+
 import { useState } from "react";
 
 interface AiInsightV2Props {
@@ -30,7 +32,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
       className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/50 to-slate-800/30 p-6"
     >
       <div className="flex items-center gap-2 mb-4">
-        <Brain className="w-5 h-5 text-purple-400" />
+        <Icon name="psychology" className="w-5 h-5 text-purple-400" />
         <h3 className="font-semibold text-slate-100">AI-Analyse</h3>
         <span className="ml-auto text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded-full">
           Oppdatert i dag
@@ -70,7 +72,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
             <div className="p-3 bg-slate-800/30 rounded-xl">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs text-slate-400 flex items-center gap-1">
-                  <Target className="w-3 h-3" />
+                  <Icon name="my_location" className="w-3 h-3" />
                   {insights.goalProgress.target}
                 </span>
                 <span className="text-xs font-medium text-emerald-400">
@@ -98,7 +100,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
             {/* Strengths */}
             <div>
               <p className="text-xs text-emerald-400 flex items-center gap-1 mb-2">
-                <TrendingUp className="w-3 h-3" />
+                <Icon name="trending_up" className="w-3 h-3" />
                 Dine styrker
               </p>
               <ul className="space-y-1">
@@ -114,7 +116,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
             {/* Weaknesses */}
             <div>
               <p className="text-xs text-amber-400 flex items-center gap-1 mb-2">
-                <AlertCircle className="w-3 h-3" />
+                <Icon name="error" className="w-3 h-3" />
                 Utviklingsområder
               </p>
               <ul className="space-y-1">
@@ -138,7 +140,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
             className="space-y-3"
           >
             <p className="text-xs text-purple-400 flex items-center gap-1 mb-2">
-              <Lightbulb className="w-3 h-3" />
+              <Icon name="lightbulb" className="w-3 h-3" />
               Denne ukens fokus
             </p>
             <ul className="space-y-2">

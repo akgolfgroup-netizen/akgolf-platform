@@ -1,10 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { AdminAreaChart } from "@/components/portal/mission-control/ui/charts/AdminAreaChart";
 import type { AdminAreaChartDatum } from "@/components/portal/mission-control/ui/charts/AdminAreaChart";
-import { TrendingUp, TrendingDown, Wallet } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 interface RevenueChartProps {
@@ -59,7 +61,7 @@ export function RevenueChart({
         <div>
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Wallet className="w-5 h-5 text-primary" />
+              <Icon name="account_balance_wallet" className="w-5 h-5 text-primary" />
             </div>
             <div>
               <h3 className="text-sm font-medium text-grey-400">Totalt ({period === "month" ? "12 måneder" : period})</h3>
@@ -77,9 +79,9 @@ export function RevenueChart({
             )}
           >
             {change.positive ? (
-              <TrendingUp className="w-3.5 h-3.5" />
+              <Icon name="trending_up" className="w-3.5 h-3.5" />
             ) : (
-              <TrendingDown className="w-3.5 h-3.5" />
+              <Icon name="trending_down" className="w-3.5 h-3.5" />
             )}
             {change.positive ? "+" : ""}
             {change.value}%

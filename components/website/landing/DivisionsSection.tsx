@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+
 import { SectionLabel } from "../SectionLabel";
 import {
   RevealOnScroll,
@@ -61,7 +63,7 @@ export function DivisionsSection() {
                 </ul>
                 <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all duration-300">
                   Les mer
-                  <ArrowUpRight className="w-4 h-4" />
+                  <Icon name="arrow_upward"Right className="w-4 h-4" />
                 </span>
               </Link>
             </StaggerItem>

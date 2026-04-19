@@ -1,16 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useCallback, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Search,
-  ChevronLeft,
-  User,
-  Briefcase,
-  Calendar,
-  Check,
-  Loader2,
-} from "lucide-react";
+import { Briefcase } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { Button } from "@/components/ui/button";
@@ -180,7 +174,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
           href="/admin/bookinger"
           className="inline-flex items-center gap-1 text-sm text-grey-400 hover:text-black transition-colors mb-6"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <Icon name="chevron_left" className="w-4 h-4" />
           Tilbake til bookinger
         </Link>
 
@@ -199,7 +193,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                         : "bg-grey-200 text-grey-400",
                   )}
                 >
-                  {s.complete ? <Check className="w-4 h-4" /> : i + 1}
+                  {s.complete ? <Icon name="check" className="w-4 h-4" /> : i + 1}
                 </div>
                 <span
                   className={cn(
@@ -236,7 +230,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
               </h2>
 
               <div className="relative">
-                <Search className="w-4 h-4 text-grey-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Icon name="search" className="w-4 h-4 text-grey-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <AdminInput
                   type="text"
                   value={searchQuery}
@@ -246,7 +240,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                   autoFocus
                 />
                 {searchLoading && (
-                  <Loader2 className="w-4 h-4 text-grey-400 animate-spin absolute right-3 top-1/2 -translate-y-1/2" />
+                  <Icon name="progress_activity" className="w-4 h-4 text-grey-400 animate-spin absolute right-3 top-1/2 -translate-y-1/2" />
                 )}
               </div>
 
@@ -277,7 +271,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                       </div>
                     </div>
                     {selectedStudent?.id === student.id && (
-                      <Check className="w-4 h-4 text-success-text" />
+                      <Icon name="check" className="w-4 h-4 text-success-text" />
                     )}
                   </button>
                 ))}
@@ -388,7 +382,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                       )}
                     </div>
                     {selectedInstructor?.id === instructor.id && (
-                      <Check className="w-4 h-4 text-success-text" />
+                      <Icon name="check" className="w-4 h-4 text-success-text" />
                     )}
                   </button>
                 ))}
@@ -464,7 +458,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
 
                   {slotsLoading ? (
                     <div className="flex items-center gap-2 py-4 text-sm text-grey-400">
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                       Henter ledige tider...
                     </div>
                   ) : slots.length === 0 ? (
@@ -516,7 +510,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
 
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-grey-400" />
+                  <Icon name="person" className="w-4 h-4 text-grey-400" />
                   <span className="text-sm text-black">
                     {selectedStudent.name ?? selectedStudent.email}
                   </span>
@@ -528,13 +522,13 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-grey-400" />
+                  <Icon name="person" className="w-4 h-4 text-grey-400" />
                   <span className="text-sm text-black">
                     {selectedInstructor.name}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-grey-400" />
+                  <Icon name="calendar_today" className="w-4 h-4 text-grey-400" />
                   <span className="text-sm text-black">
                     {format(selectedSlot.date, "d. MMMM", { locale: nb })} kl{" "}
                     {selectedSlot.time}
@@ -556,7 +550,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                   onClick={handleSubmit}
                   isLoading={isPending}
                 >
-                  {!isPending && <Check className="w-4 h-4" />}
+                  {!isPending && <Icon name="check" className="w-4 h-4" />}
                   {isPending ? "Oppretter..." : "Bekreft booking"}
                 </Button>
               </div>

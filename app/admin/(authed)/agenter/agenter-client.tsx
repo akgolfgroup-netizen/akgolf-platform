@@ -1,13 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useTransition } from "react";
-import {
-  Bot,
-  CheckCircle,
-  XCircle,
-  Zap,
-  TrendingUp,
-} from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { formatDistanceToNow } from "date-fns";
@@ -79,7 +75,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
           <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
-                <Bot className="w-5 h-5 text-grey-400" />
+                <Icon name="smart_toy" className="w-5 h-5 text-grey-400" />
               </div>
               <span className="text-sm font-medium text-grey-400">Totalt</span>
             </div>
@@ -89,7 +85,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
           <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-grey-400" />
+                <Icon name="check"Circle className="w-5 h-5 text-grey-400" />
               </div>
               <span className="text-sm font-medium text-grey-400">Aktive</span>
             </div>
@@ -106,7 +102,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
           <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
-                <Zap className="w-5 h-5 text-grey-400" />
+                <Icon name="bolt" className="w-5 h-5 text-grey-400" />
               </div>
               <span className="text-sm font-medium text-grey-400">Handlinger i dag</span>
             </div>
@@ -116,7 +112,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
           <div className="bg-white border border-grey-200 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-grey-400" />
+                <Icon name="trending_up" className="w-5 h-5 text-grey-400" />
               </div>
               <span className="text-sm font-medium text-grey-400">Kostnader MTD</span>
             </div>
@@ -140,7 +136,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center">
-                        <Bot className="w-6 h-6 text-grey-400" />
+                        <Icon name="smart_toy" className="w-6 h-6 text-grey-400" />
                       </div>
                       <button
                         onClick={() => handleToggle(agent.id, agent.isActive)}
@@ -198,12 +194,12 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                       >
                         {agent.isActive ? (
                           <>
-                            <CheckCircle className="w-3 h-3" />
+                            <Icon name="check"Circle className="w-3 h-3" />
                             Aktiv
                           </>
                         ) : (
                           <>
-                            <XCircle className="w-3 h-3" />
+                            <Icon name="close"Circle className="w-3 h-3" />
                             Inaktiv
                           </>
                         )}
@@ -224,7 +220,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
         {agents.length === 0 && (
           <div className="bg-white border border-grey-200 rounded-xl p-12 text-center">
             <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center mx-auto mb-4">
-              <Bot className="w-6 h-6 text-grey-400" />
+              <Icon name="smart_toy" className="w-6 h-6 text-grey-400" />
             </div>
             <h3 className="text-lg font-semibold text-black mb-1">
               Ingen agenter konfigurert

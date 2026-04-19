@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import {
   AreaChart,
@@ -11,7 +13,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { ChevronDown } from "lucide-react";
+
 
 interface ClubSession {
   date: Date | string;
@@ -147,7 +149,7 @@ export function ClubWaveform({ clubData, defaultClub }: ClubWaveformProps) {
               </option>
             ))}
           </select>
-          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94A3B8] pointer-events-none" />
+          <Icon name="expand_more" className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94A3B8] pointer-events-none" />
         </div>
 
         <div className="flex items-center gap-1 bg-[#1E293B] rounded-lg p-1">
@@ -220,13 +222,12 @@ export function ClubWaveform({ clubData, defaultClub }: ClubWaveformProps) {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-            <XAxis
+            <Icon name="close"Axis
               dataKey="index"
               tick={{ fill: "#64748B", fontSize: 10 }}
               tickLine={false}
               axisLine={{ stroke: "#334155" }}
-              label={{ value: "Sessions (90 dager)", position: "insideBottom", offset: -5, fill: "#64748B", fontSize: 10 }}
-            />
+              label={{ value: "Sessions (90 dager)", position: "insideBottom", offset: -5, fill: "#64748B", fontSize: 10 }} />
             <YAxis
               yAxisId="left"
               tick={{ fill: "#64748B", fontSize: 10 }}

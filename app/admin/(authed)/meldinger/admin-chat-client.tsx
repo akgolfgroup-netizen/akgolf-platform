@@ -1,13 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useRef, useTransition } from "react";
-import {
- Search,
- Send,
- ChevronLeft,
- MessageSquare,
- CheckCheck,
-} from "lucide-react";
+import { Send, CheckCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { AdminEmptyState } from "@/components/portal/mission-control/ui";
@@ -146,7 +142,7 @@ export function AdminChatClient({
  <div className="p-3 border-b border-grey-200">
  <div className="flex items-center gap-2">
  <div className="flex-1 flex items-center gap-2 bg-grey-50 border border-grey-200 rounded-lg px-3 py-2 focus-within:border-black focus-within:ring-1 focus-within:ring-black/20 transition-all">
- <Search className="w-4 h-4 text-grey-400"/>
+ <Icon name="search" className="w-4 h-4 text-grey-400" />
  <input
  type="text"
  value={searchQuery}
@@ -240,7 +236,7 @@ export function AdminChatClient({
  className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-grey-100 cursor-pointer"
  aria-label="Tilbake"
  >
- <ChevronLeft className="w-5 h-5 text-text"/>
+ <Icon name="chevron_left" className="w-5 h-5 text-text" />
  </button>
  <div className="w-9 h-9 rounded-full bg-black/10 text-black text-xs font-semibold flex items-center justify-center">
  {getInitials(selectedConversation.participantName)}
@@ -298,7 +294,7 @@ export function AdminChatClient({
  { hour: "2-digit", minute: "2-digit"}
  )}
  {isMe && msg.readAt && (
- <CheckCheck className="w-3 h-3"/>
+ <Icon name="check"Check className="w-3 h-3" />
  )}
  </div>
  </div>
@@ -339,7 +335,7 @@ export function AdminChatClient({
  className="p-2 rounded-lg bg-black text-white hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
  aria-label="Send melding"
  >
- <Send className="w-4 h-4"/>
+ <Icon name="send" className="w-4 h-4" />
  </button>
  </form>
  </div>
@@ -347,7 +343,7 @@ export function AdminChatClient({
  ) : (
  <div className="flex-1 flex items-center justify-center p-8 bg-grey-50">
  <AdminEmptyState
- icon={<MessageSquare className="w-6 h-6"/>}
+ icon={<Icon name="chat" className="w-6 h-6" />}
  title="Velg en samtale"
  description="Klikk pa en samtale i listen for a se meldinger og svare"
  />

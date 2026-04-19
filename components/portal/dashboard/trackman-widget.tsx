@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Activity, TrendingUp, Target } from "lucide-react";
+
 import { Sparkline } from "@/components/portal/dashboard/sparkline";
 import Link from "next/link";
 
@@ -36,7 +38,7 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
     return (
       <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
       <div className="flex items-center gap-2 mb-4">
-          <Activity className="w-5 h-5 text-emerald-400" />
+          <Icon name="monitoring" className="w-5 h-5 text-emerald-400" />
           <h3 className="font-semibold text-slate-100">TrackMan Data</h3>
         </div>
         <p className="text-sm text-slate-400 mb-4">
@@ -46,7 +48,7 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
           href="/portal/booking"
           className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-lg text-sm font-medium hover:bg-emerald-500/30 transition-colors"
         >
-          <Target className="w-4 h-4" />
+          <Icon name="my_location" className="w-4 h-4" />
           Book TrackMan
         </Link>
       </div>
@@ -61,7 +63,7 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Activity className="w-5 h-5 text-emerald-400" />
+          <Icon name="monitoring" className="w-5 h-5 text-emerald-400" />
           <h3 className="font-semibold text-slate-100">TrackMan</h3>
         </div>
         <Link
@@ -120,7 +122,7 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
       {data.improvements.length > 0 && (
         <div className="space-y-2">
           <p className="text-xs font-medium text-slate-400 flex items-center gap-1">
-            <TrendingUp className="w-3 h-3" />
+            <Icon name="trending_up" className="w-3 h-3" />
             Fremgang
           </p>
           {data.improvements.slice(0, 2).map((imp, i) => (

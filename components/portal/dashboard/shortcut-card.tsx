@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
-import { LucideIcon, ArrowUpRight } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 interface ShortcutCardProps {
   href: string;
@@ -25,7 +27,7 @@ export function ShortcutCard({
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
           <Icon className="h-5 w-5 text-primary" />
         </div>
-        <ArrowUpRight className="h-4 w-4 text-grey-300 transition-colors group-hover:text-primary" />
+        <Icon name="arrow_upward"Right className="h-4 w-4 text-grey-300 transition-colors group-hover:text-primary" />
       </div>
       <div>
         <h4 className="text-sm font-semibold text-black">{title}</h4>

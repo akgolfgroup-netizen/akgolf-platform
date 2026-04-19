@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
-import { Dumbbell, Flag, CalendarPlus, Bot, ArrowUpRight, Target } from "lucide-react";
+import { Dumbbell, Flag, CalendarPlus, Bot, Target } from "lucide-react";
 import { colors } from "@/lib/design-tokens";
 
 const shortcuts = [
@@ -28,7 +30,7 @@ export function ShortcutPills() {
             >
               <s.icon className="h-5 w-5" style={{ color: s.color }} />
             </div>
-            <ArrowUpRight className="h-4 w-4 text-grey-300 transition-colors group-hover:text-grey-400" />
+            <Icon name="arrow_upward"Right className="h-4 w-4 text-grey-300 transition-colors group-hover:text-grey-400" />
           </div>
           <div className="mt-3">
             <h4 className="text-sm font-semibold text-black">{s.label}</h4>

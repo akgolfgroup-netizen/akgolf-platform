@@ -1,17 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-  MapPin,
-  Flag,
-  Target,
-  AlertTriangle,
-  Wind,
-  Loader2,
-} from "lucide-react";
+import { Target } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
 import { MonoLabel } from "@/components/portal/patterns";
@@ -134,7 +127,7 @@ export default function StrategiPage() {
           <p className="text-grey-400 mt-1">Hull-for-hull strategi og pre-shot rutine</p>
         </div>
         <div className="relative">
-          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+          <Icon name="location_on" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
           <select
             value={selectedCourseId}
             onChange={(e) => setSelectedCourseId(e.target.value)}
@@ -157,7 +150,7 @@ export default function StrategiPage() {
 
       {loadingCourses || loadingHoles ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 text-black animate-spin" />
+          <Icon name="progress_activity" className="w-8 h-8 text-black animate-spin" />
           <span className="ml-3 text-sm text-grey-400">
             {loadingCourses ? "Laster baner..." : "Laster hull..."}
           </span>
@@ -165,7 +158,7 @@ export default function StrategiPage() {
       ) : courses.length === 0 ? (
         <div className="bg-white rounded-2xl border border-grey-200/50 p-8 text-center">
           <div className="w-12 h-12 rounded-full bg-grey-50 flex items-center justify-center mx-auto mb-4">
-            <MapPin className="w-6 h-6 text-grey-400" />
+            <Icon name="location_on" className="w-6 h-6 text-grey-400" />
           </div>
           <h3 className="text-lg font-semibold text-black mb-2">Ingen baner funnet</h3>
           <p className="text-sm text-grey-400 max-w-md mx-auto mb-6">
@@ -176,7 +169,7 @@ export default function StrategiPage() {
       ) : holes.length === 0 ? (
         <div className="bg-white rounded-2xl border border-grey-200/50 p-8 text-center">
           <div className="w-12 h-12 rounded-full bg-grey-50 flex items-center justify-center mx-auto mb-4">
-            <Flag className="w-6 h-6 text-grey-400" />
+            <Icon name="flag" className="w-6 h-6 text-grey-400" />
           </div>
           <h3 className="text-lg font-semibold text-black mb-2">Ingen hull funnet</h3>
           <p className="text-sm text-grey-400 max-w-md mx-auto">
@@ -192,7 +185,7 @@ export default function StrategiPage() {
                 onClick={() => setSelectedHole((h) => Math.max(1, h - 1))}
                 className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-grey-50 text-sm font-medium text-black hover:bg-grey-50 transition-colors"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <Icon name="chevron_left" className="w-4 h-4" />
                 Forrige
               </button>
               <span className="text-sm font-semibold text-black">
@@ -203,7 +196,7 @@ export default function StrategiPage() {
                 className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-grey-50 text-sm font-medium text-black hover:bg-grey-50 transition-colors"
               >
                 Neste
-                <ChevronRight className="w-4 h-4" />
+                <Icon name="chevron_right" className="w-4 h-4" />
               </button>
             </div>
             <div className="flex gap-2 overflow-x-auto pb-1">
@@ -259,7 +252,7 @@ export default function StrategiPage() {
             <PremiumCard delay={0.1} padding="md" radius="large" className="lg:col-span-2">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
-                  <Target className="w-4 h-4 text-success" />
+                  <Icon name="my_location" className="w-4 h-4 text-success" />
                 </div>
                 <h3 className="text-base font-semibold text-black">DECADE Strategi</h3>
               </div>
@@ -286,7 +279,7 @@ export default function StrategiPage() {
                         key={idx}
                         className="flex items-center gap-2 px-3 py-2 rounded-lg bg-error-light text-error text-sm"
                       >
-                        <AlertTriangle className="w-4 h-4" />
+                        <Icon name="warning" className="w-4 h-4" />
                         {danger}
                       </div>
                     ))}
@@ -301,7 +294,7 @@ export default function StrategiPage() {
             <PremiumCard delay={0.15} padding="md" radius="large">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
-                  <Wind className="w-4 h-4 text-purple-500" />
+                  <Icon name="air" className="w-4 h-4 text-purple-500" />
                 </div>
                 <h3 className="text-base font-semibold text-black">Pre-shot rutine</h3>
               </div>
@@ -336,7 +329,7 @@ export default function StrategiPage() {
             <PremiumCard delay={0.2} padding="md" radius="large">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                  <Flag className="w-4 h-4 text-blue-500" />
+                  <Icon name="flag" className="w-4 h-4 text-blue-500" />
                 </div>
                 <h3 className="text-base font-semibold text-black">Dispersion-visualisering</h3>
               </div>

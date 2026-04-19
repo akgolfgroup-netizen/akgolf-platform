@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useCallback, useEffect } from "react";
-import { Plus, CheckCircle, Repeat } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/portal/mission-control/ui";
 import type { Instructor } from "./actions";
@@ -113,12 +115,12 @@ export default function KalenderAvailabilityPanel({
               Faste arbeidstider
             </h3>
             <div className="flex items-center gap-1 text-xs text-grey-500">
-              <Repeat className="w-3.5 h-3.5" />
+              <Icon name="repeat" className="w-3.5 h-3.5" />
               Gjentas ukentlig
             </div>
           </div>
           <Button variant="accent" onClick={handleSave} isLoading={isSaving}>
-            <CheckCircle className="w-4 h-4" />
+            <Icon name="check"Circle className="w-4 h-4" />
             Lagre
           </Button>
         </div>
@@ -160,7 +162,7 @@ export default function KalenderAvailabilityPanel({
                       onClick={() => handleAddSlot(dayIndex)}
                       className="text-sm px-3 py-1.5 h-auto"
                     >
-                      <Plus className="w-3.5 h-3.5" />
+                      <Icon name="add" className="w-3.5 h-3.5" />
                       Legg til
                     </Button>
                   </div>

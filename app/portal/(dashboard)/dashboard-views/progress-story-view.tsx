@@ -1,10 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 import { HandicapTrendChart } from "@/components/portal/dashboard/handicap-trend-chart";
 import { AchievementsWidget } from "@/components/portal/dashboard/achievements-widget";
 import { SessionsDonut } from "@/components/portal/dashboard/sessions-donut";
-import { Calendar } from "lucide-react";
+
 import type { DashboardV3Props } from "../dashboard-types";
 
 const item = {
@@ -58,7 +60,7 @@ export function ProgressStoryView({
       {/* Tidslinje */}
       <motion.div variants={item} className="rounded-2xl border border-grey-100 bg-white p-6 shadow-sm">
         <div className="flex items-center gap-2 mb-5">
-          <Calendar className="w-5 h-5 text-primary" />
+          <Icon name="calendar_today" className="w-5 h-5 text-primary" />
           <h3 className="text-sm font-semibold text-text">Milepæler</h3>
         </div>
         <div className="relative space-y-6 pl-4">

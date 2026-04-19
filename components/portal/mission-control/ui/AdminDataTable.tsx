@@ -1,14 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
-  ChevronLeft,
-  ChevronRight,
-  Search,
-} from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 export interface AdminDataTableColumn<T> {
@@ -147,10 +142,9 @@ export function AdminDataTable<T extends { id: string | number }>({
         >
           {searchable && (
             <div className="relative flex-1 max-w-xs">
-              <Search
+              <Icon name="search"
                 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
-                style={{ color: "var(--color-muted)" }}
-              />
+                style={{ color: "var(--color-muted)" }} />
               <input
                 type="text"
                 value={query}
@@ -235,12 +229,12 @@ export function AdminDataTable<T extends { id: string | number }>({
                       {col.label}
                       {sortKey === col.key ? (
                         sortDir === "asc" ? (
-                          <ArrowUp className="w-3 h-3" />
+                          <Icon name="arrow_upward" className="w-3 h-3" />
                         ) : (
-                          <ArrowDown className="w-3 h-3" />
+                          <Icon name="arrow_downward" className="w-3 h-3" />
                         )
                       ) : (
-                        <ArrowUpDown className="w-3 h-3 opacity-50" />
+                        <Icon name="arrow_upward"Down className="w-3 h-3 opacity-50" />
                       )}
                     </button>
                   ) : (
@@ -320,7 +314,7 @@ export function AdminDataTable<T extends { id: string | number }>({
               className="admin-btn admin-btn-ghost disabled:opacity-40"
               aria-label="Forrige side"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <Icon name="chevron_left" className="w-4 h-4" />
             </button>
             <button
               type="button"
@@ -329,7 +323,7 @@ export function AdminDataTable<T extends { id: string | number }>({
               className="admin-btn admin-btn-ghost disabled:opacity-40"
               aria-label="Neste side"
             >
-              <ChevronRight className="w-4 h-4" />
+              <Icon name="chevron_right" className="w-4 h-4" />
             </button>
           </div>
         </div>

@@ -1,14 +1,8 @@
 "use client";
 
-import {
-  Target,
-  Clock,
-  Wrench,
-  Zap,
-  Play,
-  CheckCircle,
-  ChevronRight,
-} from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import type { TrainingSessionData } from "@/lib/portal/golf/exercise-types";
 import { TRAINING_AREAS, INTENSITY_LEVELS } from "@/lib/portal/golf/exercise-types";
 import { PyramidStack } from "./pyramid-indicator";
@@ -66,7 +60,7 @@ export function SessionHeader({
             onClick={onStartSession}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent-cta text-primary font-semibold hover:bg-accent-cta/80 transition-colors"
           >
-            <Play className="w-4 h-4" />
+            <Icon name="play_arrow" className="w-4 h-4" />
             Start okt
           </button>
         )}
@@ -81,7 +75,7 @@ export function SessionHeader({
             </div>
             <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center">
               {progress === 100 ? (
-                <CheckCircle className="w-6 h-6 text-success" />
+                <Icon name="check"Circle className="w-6 h-6 text-success" />
               ) : (
                 <span className="text-sm font-semibold text-primary">{Math.round(progress)}%</span>
               )}
@@ -95,7 +89,7 @@ export function SessionHeader({
         {/* Objective */}
         <div className="col-span-2">
           <div className="flex items-center gap-2 mb-2">
-            <Target className="w-4 h-4 text-primary" />
+            <Icon name="my_location" className="w-4 h-4 text-primary" />
             <span className="text-[11px] text-grey-400 uppercase font-medium">Malsetning</span>
           </div>
           <p className="text-sm text-black">{session.objective}</p>
@@ -116,12 +110,12 @@ export function SessionHeader({
         {/* Duration & Intensity */}
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Clock className="w-4 h-4 text-primary" />
+            <Icon name="schedule" className="w-4 h-4 text-primary" />
             <span className="text-[11px] text-grey-400 uppercase font-medium">Varighet</span>
           </div>
           <p className="text-sm text-black">{session.durationMinutes} minutter</p>
           <div className="flex items-center gap-1.5 mt-1">
-            <Zap className="w-3 h-3" style={{ color: intensity.color }} />
+            <Icon name="bolt" className="w-3 h-3" style={{ color: intensity.color }} />
             <span className="text-[11px]" style={{ color: intensity.color }}>
               {intensity.name} intensitet
             </span>
@@ -131,7 +125,7 @@ export function SessionHeader({
         {/* Equipment */}
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Wrench className="w-4 h-4 text-primary" />
+            <Icon name="build" className="w-4 h-4 text-primary" />
             <span className="text-[11px] text-grey-400 uppercase font-medium">Hjelpemidler</span>
           </div>
           <div className="flex flex-wrap gap-1">
@@ -234,14 +228,14 @@ export function SessionCardCompact({
         <div className="flex items-center gap-3">
           {isCompleted ? (
             <div className="w-10 h-10 rounded-xl bg-success/20 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-success" />
+              <Icon name="check"Circle className="w-5 h-5 text-success" />
             </div>
           ) : (
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{ backgroundColor: `${intensity.color}20` }}
             >
-              <Target className="w-5 h-5" style={{ color: intensity.color }} />
+              <Icon name="my_location" className="w-5 h-5" style={{ color: intensity.color }} />
             </div>
           )}
 
@@ -262,7 +256,7 @@ export function SessionCardCompact({
           </div>
         </div>
 
-        <ChevronRight className="w-5 h-5 text-grey-200" />
+        <Icon name="chevron_right" className="w-5 h-5 text-grey-200" />
       </div>
     </button>
   );

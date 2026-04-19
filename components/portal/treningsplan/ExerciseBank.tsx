@@ -1,18 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
-import {
-  Search,
-  Star,
-  GripVertical,
-  Plus,
-  Clock,
-  Target,
-  Dumbbell,
-  Trophy,
-  Activity,
-  Club,
-} from "lucide-react";
+import { Search } from "lucide-react";
 import { StandardTemplate } from "./types";
 import { PyramidLevel } from "@/lib/portal/golf/ak-formula";
 
@@ -77,11 +68,11 @@ const FOCUS_COLORS: Record<string, string> = {
 };
 
 const FOCUS_ICONS: Record<string, React.ReactNode> = {
-  FYS: <Dumbbell className="w-3 h-3" />,
-  TEK: <Target className="w-3 h-3" />,
-  SLAG: <Club className="w-3 h-3" />,
-  SPILL: <Activity className="w-3 h-3" />,
-  TURN: <Trophy className="w-3 h-3" />,
+  FYS: <Icon name="fitness_center" className="w-3 h-3" />,
+  TEK: <Icon name="my_location" className="w-3 h-3" />,
+  SLAG: <Icon name="sports_golf" className="w-3 h-3" />,
+  SPILL: <Icon name="monitoring" className="w-3 h-3" />,
+  TURN: <Icon name="emoji_events" className="w-3 h-3" />,
 };
 
 export function ExerciseBank({
@@ -190,7 +181,7 @@ export function ExerciseBank({
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+        <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
         <input
           type="text"
           placeholder="Søk øvelser..."
@@ -204,7 +195,7 @@ export function ExerciseBank({
       {favoriteExercises.length > 0 && (
         <div className="space-y-2">
           <h4 className="text-xs font-medium text-slate-500 uppercase flex items-center gap-1">
-            <Star className="w-3 h-3 fill-yellow-500 text-yellow-500" />
+            <Icon name="star" className="w-3 h-3 fill-yellow-500 text-yellow-500" />
             Favoritter
           </h4>
           <div className="space-y-1">
@@ -326,7 +317,7 @@ function ExerciseItem({
       `}
     >
       {/* Drag handle */}
-      <GripVertical className="w-3 h-3 text-slate-600 group-hover:text-slate-400 shrink-0" />
+      <Icon name="drag_indicator" className="w-3 h-3 text-slate-600 group-hover:text-slate-400 shrink-0" />
 
       {/* Content */}
       <div className="flex-1 min-w-0">
@@ -338,7 +329,7 @@ function ExerciseItem({
         </div>
         <div className="flex items-center gap-2 text-[10px] text-slate-500">
           <span className="flex items-center gap-0.5">
-            <Clock className="w-3 h-3" />
+            <Icon name="schedule" className="w-3 h-3" />
             {exercise.duration}min
           </span>
           <span>•</span>
@@ -362,7 +353,7 @@ function ExerciseItem({
           `}
           aria-label={isFavorite ? "Fjern fra favoritter" : "Legg til favoritter"}
         >
-          <Star className={`w-3.5 h-3.5 ${isFavorite ? "fill-current" : ""}`} />
+          <Icon name="star" className={`w-3.5 h-3.5 ${isFavorite ? "fill-current" : ""}`} />
         </button>
         <button
           onClick={(e) => {
@@ -372,7 +363,7 @@ function ExerciseItem({
           className="p-1 text-slate-600 hover:text-blue-400 transition-colors"
           aria-label="Legg til økt"
         >
-          <Plus className="w-3.5 h-3.5" />
+          <Icon name="add" className="w-3.5 h-3.5" />
         </button>
       </div>
 

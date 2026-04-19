@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useEffect, useState } from "react";
-import { Activity, CheckCircle2, AlertCircle, XCircle, RefreshCw } from "lucide-react";
+import { CheckCircle2, AlertCircle, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface StripeHealth {
@@ -89,7 +91,7 @@ export function WebhookHealthCard() {
     <div className="admin-card">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Activity className="w-4 h-4 text-[var(--color-primary)]" />
+          <Icon name="monitoring" className="w-4 h-4 text-[var(--color-primary)]" />
           <h3 className="text-sm font-semibold text-[var(--color-text)]">
             Stripe-systemhelse
           </h3>
@@ -100,7 +102,7 @@ export function WebhookHealthCard() {
           className="p-1.5 rounded-md text-[var(--color-muted)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-text)] transition-colors disabled:opacity-50"
           title="Oppdater"
         >
-          <RefreshCw className={cn("w-3.5 h-3.5", loading && "animate-spin")} />
+          <Icon name="refresh" className={cn("w-3.5 h-3.5", loading && "animate-spin")} />
         </button>
       </div>
 
@@ -162,7 +164,7 @@ export function WebhookHealthCard() {
                   key={warning}
                   className="flex items-start gap-2 text-xs text-[var(--color-warning)]"
                 >
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                  <Icon name="error" className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                   <span>{warning}</span>
                 </div>
               ))}
@@ -172,7 +174,7 @@ export function WebhookHealthCard() {
           {/* Feil */}
           {health.stripe.error && (
             <div className="flex items-start gap-2 text-xs text-[var(--color-error)]">
-              <XCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+              <Icon name="close"Circle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
               <span>{health.stripe.error}</span>
             </div>
           )}

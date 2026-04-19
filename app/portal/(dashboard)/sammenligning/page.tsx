@@ -1,3 +1,4 @@
+import { Icon } from "@/components/ui/icon";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { TierGate } from "@/components/portal/ui/tier-gate";
 import { ComparisonSelector } from "@/components/portal/sammenligning/comparison-selector";
@@ -5,7 +6,7 @@ import { PeerBenchmarkCard } from "@/components/portal/sammenligning/peer-benchm
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { getPeerComparisonData } from "./actions";
 import { SubscriptionTier } from "@prisma/client";
-import { Users } from "lucide-react";
+
 
 export default async function SammenligningPage() {
   const user = await requirePortalUser();
@@ -34,7 +35,7 @@ export default async function SammenligningPage() {
             <PremiumCard>
               <div className="flex flex-col items-center justify-center py-16 text-center">
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 mb-4">
-                  <Users className="h-7 w-7 text-on-surface" />
+                  <Icon name="person"s className="h-7 w-7 text-on-surface" />
                 </div>
                 <p className="text-sm font-medium text-on-surface mb-1">
                   Ingen data tilgjengelig

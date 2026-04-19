@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
-import { Send, Edit, X, Bot } from "lucide-react";
+import { Send } from "lucide-react";
 import { useState, useEffect } from "react";
 import type { Channel } from "./ChannelFilter";
 import type { MessageStatus } from "./MessageList";
@@ -115,7 +117,7 @@ export function MessageDetail({
       {message.aiResponse && (
         <div className="flex-1 p-4 overflow-auto">
           <div className="flex items-center gap-2 mb-3">
-            <Bot className="h-5 w-5 text-[var(--color-black)]" />
+            <Icon name="smart_toy" className="h-5 w-5 text-[var(--color-black)]" />
             <span className="text-sm font-medium text-[var(--color-grey-900)]">
               AI-forslag
             </span>
@@ -151,7 +153,7 @@ export function MessageDetail({
       {!message.aiResponse && message.status === "PENDING" && (
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
-            <Bot className="h-12 w-12 text-[var(--color-grey-400)] mx-auto mb-3" />
+            <Icon name="smart_toy" className="h-12 w-12 text-[var(--color-grey-400)] mx-auto mb-3" />
             <p className="text-[var(--color-grey-500)]">
               AI-svar genereres snart...
             </p>
@@ -162,7 +164,7 @@ export function MessageDetail({
       {message.status === "AI_PROCESSING" && (
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
-            <Bot className="h-12 w-12 text-blue-500 mx-auto mb-3 animate-pulse" />
+            <Icon name="smart_toy" className="h-12 w-12 text-blue-500 mx-auto mb-3 animate-pulse" />
             <p className="text-[var(--color-grey-500)]">
               AI analyserer meldingen...
             </p>
@@ -178,7 +180,7 @@ export function MessageDetail({
             onClick={() => setIsEditing(!isEditing)}
             className="text-[var(--color-grey-500)] hover:text-[var(--color-grey-900)]"
           >
-            <Edit className="h-4 w-4 mr-2" />
+            <Icon name="edit" className="h-4 w-4 mr-2" />
             {isEditing ? "Ferdig redigering" : "Rediger"}
           </Button>
           <div className="flex gap-2">
@@ -188,7 +190,7 @@ export function MessageDetail({
               disabled={isSending}
               className="text-[var(--color-error)] hover:text-[var(--color-error)]"
             >
-              <X className="h-4 w-4 mr-2" />
+              <Icon name="close" className="h-4 w-4 mr-2" />
               Forkast
             </Button>
             <Button
@@ -196,7 +198,7 @@ export function MessageDetail({
               disabled={isSending}
               className="bg-[var(--color-black)] hover:bg-[var(--color-grey-900)] text-white"
             >
-              <Send className="h-4 w-4 mr-2" />
+              <Icon name="send" className="h-4 w-4 mr-2" />
               {isSending ? "Sender..." : "Godkjenn & Send"}
             </Button>
           </div>

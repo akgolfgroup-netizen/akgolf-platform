@@ -1,6 +1,8 @@
 "use client";
 
-import { Clock } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import { Card } from "@/components/ui/card";
 import type { CancellationRule } from "./booking-types";
 
@@ -13,7 +15,7 @@ export function CancellationRulesCard({ rules }: CancellationRulesCardProps) {
     <Card variant="elevated" padding="md">
       <div className="mb-4 flex items-center gap-3">
         <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
-          <Clock className="w-4 h-4 text-primary" />
+          <Icon name="schedule" className="w-4 h-4 text-primary" />
         </div>
         <div>
           <h3 className="font-semibold text-[13px] text-grey-900">

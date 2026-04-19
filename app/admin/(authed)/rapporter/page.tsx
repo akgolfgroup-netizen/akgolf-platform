@@ -1,20 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import {
-  FileText,
-  Download,
-  Calendar,
-  Mail,
-  Clock,
-  TrendingUp,
-  Users,
-  DollarSign,
-  Plus,
-  MoreHorizontal,
-  FileSpreadsheet,
-  Loader2,
-} from "lucide-react";
+import { Calendar, TrendingUp, Users, DollarSign, FileSpreadsheet } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
@@ -221,7 +210,7 @@ export default function RapporterPage() {
       render: (row) => (
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-grey-100">
-            <FileText className="w-4 h-4 text-grey-600" />
+            <Icon name="description" className="w-4 h-4 text-grey-600" />
           </div>
           <span className="font-medium text-grey-900">
             {row.name}
@@ -259,7 +248,7 @@ export default function RapporterPage() {
               className="p-1.5 rounded-md hover:bg-grey-100 text-grey-500 transition-colors"
               aria-label={`Handlinger for ${row.name}`}
             >
-              <MoreHorizontal className="w-4 h-4" />
+              <Icon name="more_horiz" className="w-4 h-4" />
             </button>
           }
           items={[
@@ -275,7 +264,7 @@ export default function RapporterPage() {
             {
               id: "csv",
               label: "Last ned som CSV",
-              icon: <FileText className="w-4 h-4" />,
+              icon: <Icon name="description" className="w-4 h-4" />,
               onSelect: () => {
                 const map: Record<string, ReportTypeId> = { "Månedlig": "monthly", "Kvartalsvis": "financial", "Årlig": "financial" };
                 handleExport(map[row.type] ?? "monthly");
@@ -304,7 +293,7 @@ export default function RapporterPage() {
               variant="accent"
               onClick={() => setDialogOpen(true)}
             >
-              <Plus className="w-4 h-4 mr-2" />
+              <Icon name="add" className="w-4 h-4 mr-2" />
               Ny rapport
             </Button>
           }
@@ -353,7 +342,7 @@ export default function RapporterPage() {
                         className="p-1.5 rounded-md hover:bg-grey-100 text-grey-600 transition-colors"
                         aria-label={`Last ned ${report.name}`}
                       >
-                        <Download className="w-4 h-4" />
+                        <Icon name="download" className="w-4 h-4" />
                       </button>
                     }
                     items={[
@@ -366,7 +355,7 @@ export default function RapporterPage() {
                       {
                         id: "csv",
                         label: "CSV",
-                        icon: <FileText className="w-4 h-4" />,
+                        icon: <Icon name="description" className="w-4 h-4" />,
                         onSelect: () => handleExport(report.id),
                       },
                     ]}
@@ -435,7 +424,7 @@ export default function RapporterPage() {
                 onClick={() => generateType && handleExport(generateType as ReportTypeId)}
                 disabled={!generateType || isPending}
               >
-                {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
+                {isPending ? <Icon name="progress_activity" className="w-4 h-4 animate-spin mr-2" /> : <Icon name="description" className="w-4 h-4 mr-2" />}
                 {isPending ? "Genererer..." : "Generer rapport"}
               </Button>
             </div>
@@ -454,7 +443,7 @@ export default function RapporterPage() {
                 aria-label="Legg til automatisk rapport"
                 title="Kommer snart"
               >
-                <Plus className="w-4 h-4" />
+                <Icon name="add" className="w-4 h-4" />
               </button>
             </div>
             <div className="divide-y divide-grey-200">
@@ -481,11 +470,11 @@ export default function RapporterPage() {
                   </div>
                   <div className="flex items-center gap-4 text-xs text-grey-500">
                     <span className="flex items-center gap-1">
-                      <Mail className="w-3 h-3" />
+                      <Icon name="mail" className="w-3 h-3" />
                       {report.recipients}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
+                      <Icon name="schedule" className="w-3 h-3" />
                       Neste: {report.nextRun}
                     </span>
                   </div>
@@ -536,7 +525,7 @@ export default function RapporterPage() {
               onClick={handleGenerate}
               disabled={!generateType || isPending}
             >
-              {isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileText className="w-4 h-4 mr-2" />}
+              {isPending ? <Icon name="progress_activity" className="w-4 h-4 animate-spin mr-2" /> : <Icon name="description" className="w-4 h-4 mr-2" />}
               {isPending ? "Genererer..." : "Generer"}
             </Button>
           </>

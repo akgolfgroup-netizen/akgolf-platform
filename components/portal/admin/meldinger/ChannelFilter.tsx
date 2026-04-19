@@ -1,14 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
-import {
-  Mail,
-  Instagram,
-  MessageCircle,
-  Phone,
-  MessageSquare,
-  Inbox,
-} from "lucide-react";
+import { Instagram } from "lucide-react";
 
 export type Channel =
   | "EMAIL"
@@ -26,13 +21,13 @@ const channels: {
   {
     value: "ALL",
     label: "Alle",
-    icon: <Inbox className="h-4 w-4" />,
+    icon: <Icon name="inbox" className="h-4 w-4" />,
     color: "bg-[var(--color-grey-200)]",
   },
   {
     value: "EMAIL",
     label: "E-post",
-    icon: <Mail className="h-4 w-4" />,
+    icon: <Icon name="mail" className="h-4 w-4" />,
     color: "bg-[var(--color-error)]",
   },
   {
@@ -44,19 +39,19 @@ const channels: {
   {
     value: "MESSENGER",
     label: "Messenger",
-    icon: <MessageCircle className="h-4 w-4" />,
+    icon: <Icon name="chat_bubble" className="h-4 w-4" />,
     color: "bg-blue-500",
   },
   {
     value: "WHATSAPP",
     label: "WhatsApp",
-    icon: <Phone className="h-4 w-4" />,
+    icon: <Icon name="phone" className="h-4 w-4" />,
     color: "bg-[var(--color-brand)]",
   },
   {
     value: "IMESSAGE",
     label: "iMessage",
-    icon: <MessageSquare className="h-4 w-4" />,
+    icon: <Icon name="chat" className="h-4 w-4" />,
     color: "bg-[var(--color-brand)]",
   },
 ];

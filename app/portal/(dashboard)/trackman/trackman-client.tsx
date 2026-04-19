@@ -1,21 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Upload,
-  Activity,
-  Target,
-  TrendingUp,
-  FileSpreadsheet,
-  Image as ImageIcon,
-  Loader2,
-  CheckCircle2,
-  AlertCircle,
-  X,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { Upload, FileSpreadsheet, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   LineChart,
@@ -359,24 +348,24 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
           <NightStatCell
             label="Sesjoner"
             value={hasData ? (data.totalSessions || sessions.length).toLocaleString("nb-NO") : "0"}
-            icon={<Activity className="h-4 w-4" />}
+            icon={<Icon name="monitoring" className="h-4 w-4" />}
           />
           <NightStatCell
             label="Slag"
             value={hasData
               ? (data.totalShots || sessions.reduce((a, s) => a + s.totalShots, 0)).toLocaleString("nb-NO")
               : "0"}
-            icon={<Target className="h-4 w-4" />}
+            icon={<Icon name="my_location" className="h-4 w-4" />}
           />
           <NightStatCell
             label="Beste carry"
             value={hasData ? `${data.bestCarry}m` : "–"}
-            icon={<TrendingUp className="h-4 w-4" />}
+            icon={<Icon name="trending_up" className="h-4 w-4" />}
           />
           <NightStatCell
             label="Snitt carry"
             value={hasData ? `${data.avgCarry}m` : "–"}
-            icon={<Activity className="h-4 w-4" />}
+            icon={<Icon name="monitoring" className="h-4 w-4" />}
           />
         </div>
       </NightSurface>
@@ -392,7 +381,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={ballSpeedTrend}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" />
-                  <XAxis dataKey="date" tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
+                  <Icon name="close"Axis dataKey="date" tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
                   <YAxis tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} domain={[0, 'auto']} />
                   <Tooltip
                     contentStyle={{ borderRadius: 12, border: "1px solid var(--color-grey-200)" }}
@@ -425,7 +414,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={carryByClub}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" vertical={false} />
-                  <XAxis dataKey="club" tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
+                  <Icon name="close"Axis dataKey="club" tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
                   <YAxis tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
                   <Tooltip
                     contentStyle={{ borderRadius: 12, border: "1px solid var(--color-grey-200)" }}
@@ -565,9 +554,9 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                           <td className="p-4">
                             <button className="p-1 rounded-lg hover:bg-grey-200/30 transition-colors">
                               {isOpen ? (
-                                <ChevronUp className="w-4 h-4 text-grey-400" />
+                                <Icon name="expand_less" className="w-4 h-4 text-grey-400" />
                               ) : (
-                                <ChevronDown className="w-4 h-4 text-grey-400" />
+                                <Icon name="expand_more" className="w-4 h-4 text-grey-400" />
                               )}
                             </button>
                           </td>
@@ -685,7 +674,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
           </Button>
           <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
             <a href="/portal/analyse">
-              <TrendingUp className="w-4 h-4" />
+              <Icon name="trending_up" className="w-4 h-4" />
               <div className="text-left">
                 <p className="text-sm font-medium">Se analyse</p>
                 <p className="text-xs text-muted-foreground">Dyp innsikt</p>
@@ -750,7 +739,7 @@ function UploadModal({
               onClick={resetUpload}
               className="p-1 rounded-lg hover:bg-grey-50 transition-colors"
             >
-              <X className="w-5 h-5 text-grey-400" />
+              <Icon name="close" className="w-5 h-5 text-grey-400" />
             </button>
           )}
         </div>
@@ -758,13 +747,13 @@ function UploadModal({
         {/* Feedback */}
         {upload.error && (
           <div className="flex items-start gap-3 p-3 rounded-xl bg-error/10 text-error text-sm mb-4">
-            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <Icon name="error" className="w-5 h-5 flex-shrink-0 mt-0.5" />
             <p>{upload.error}</p>
           </div>
         )}
         {upload.success && (
           <div className="flex items-start gap-3 p-3 rounded-xl bg-success/10 text-success text-sm mb-4">
-            <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <Icon name="check"Circle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
             <p>{upload.success}</p>
           </div>
         )}
@@ -772,7 +761,7 @@ function UploadModal({
         {/* Loading */}
         {upload.loading && (
           <div className="flex flex-col items-center gap-3 py-8">
-            <Loader2 className="w-8 h-8 text-black animate-spin" />
+            <Icon name="progress_activity" className="w-8 h-8 text-black animate-spin" />
             <p className="text-sm text-grey-400">
               {upload.mode === "image"
                 ? "Analyserer bilde med AI..."

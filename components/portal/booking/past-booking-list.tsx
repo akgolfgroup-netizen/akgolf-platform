@@ -1,10 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Calendar, Target, Trophy } from "lucide-react";
+
 import { fadeInUp, staggerContainer } from "@/components/portal/premium";
 import { Card } from "@/components/ui/card";
 import { BookingStatusBadge } from "./booking-status-badge";
@@ -18,11 +20,11 @@ function renderIconForType(
 ) {
   switch (type) {
     case "coaching":
-      return <Target className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="my_location" className={className} strokeWidth={strokeWidth} />;
     case "tournament":
-      return <Trophy className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="emoji_events" className={className} strokeWidth={strokeWidth} />;
     default:
-      return <Calendar className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="calendar_today" className={className} strokeWidth={strokeWidth} />;
   }
 }
 

@@ -1,6 +1,8 @@
 "use client";
 
-import { Lock, Zap } from "lucide-react";
+
+import { Icon } from "@/components/ui/icon";
+import { Lock } from "lucide-react";
 import { SubscriptionTier } from "@prisma/client";
 import { hasTierAccess } from "@/lib/portal/rbac";
 import Link from "next/link";
@@ -59,7 +61,7 @@ export function TierGate({
             className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-3"
             style={{ background: "var(--color-grey-100)" }}
           >
-            <Lock className="w-5 h-5 text-[var(--color-grey-500)]" />
+            <Icon name="lock" className="w-5 h-5 text-[var(--color-grey-500)]" />
           </div>
           <p className="text-sm font-semibold text-[var(--color-grey-900)] mb-1">
             {featureName || "Denne funksjonen"} krever{" "}
@@ -76,7 +78,7 @@ export function TierGate({
               color: "white",
             }}
           >
-            <Zap className="w-4 h-4" />
+            <Icon name="bolt" className="w-4 h-4" />
             Oppgrader til {TIER_LABELS[required]}
           </Link>
         </div>

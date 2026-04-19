@@ -1,7 +1,9 @@
 "use client";
 
-import { AlertCircle, RefreshCw } from "lucide-react";
 
+
+
+import { Icon } from "@/components/ui/icon";
 export default function Error({
   error,
   reset,
@@ -13,7 +15,7 @@ export default function Error({
     <div className="flex items-center justify-center min-h-[50vh]">
       <div className="text-center">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[var(--color-error)]/10 mb-4">
-          <AlertCircle className="w-6 h-6 text-[var(--color-error)]" />
+          <Icon name="error" className="w-6 h-6 text-[var(--color-error)]" />
         </div>
         <h2 className="text-lg font-semibold text-[var(--color-grey-900)] mb-2">
           Noe gikk galt
@@ -25,7 +27,7 @@ export default function Error({
           onClick={reset}
           className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--color-black)] text-white rounded-[980px] text-sm font-semibold hover:bg-[var(--color-grey-800)] transition-colors"
         >
-          <RefreshCw className="w-4 h-4" />
+          <Icon name="refresh" className="w-4 h-4" />
           Prøv igjen
         </button>
       </div>

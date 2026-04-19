@@ -1,17 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { format, isToday, isTomorrow } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  Calendar,
-  Clock,
-  MapPin,
-  Target,
-  Trophy,
-  User as UserIcon,
-  ArrowRight,
-} from "lucide-react";
+
 import { Card } from "@/components/ui/card";
 import { BookingStatusBadge } from "./booking-status-badge";
 import type { BookingViewModel } from "./booking-types";
@@ -24,14 +18,14 @@ function renderIconForType(
 ) {
   switch (type) {
     case "coaching":
-      return <Target className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="my_location" className={className} strokeWidth={strokeWidth} />;
     case "training":
-      return <Calendar className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="calendar_today" className={className} strokeWidth={strokeWidth} />;
     case "tournament":
-      return <Trophy className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="emoji_events" className={className} strokeWidth={strokeWidth} />;
     case "booking":
     default:
-      return <Calendar className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="calendar_today" className={className} strokeWidth={strokeWidth} />;
   }
 }
 
@@ -80,24 +74,24 @@ export function UpcomingBookingCard({ booking }: UpcomingBookingCardProps) {
             </p>
             <div className="flex items-center gap-4 text-[11px] text-muted">
               <span className="flex items-center gap-1.5">
-                <UserIcon className="w-3 h-3" strokeWidth={1.75} />
+                <Icon name="person"Icon className="w-3 h-3" strokeWidth={1.75} />
                 <span className="truncate">{booking.instructorName}</span>
               </span>
               {booking.location && (
                 <span className="flex items-center gap-1.5">
-                  <MapPin className="w-3 h-3" strokeWidth={1.75} />
+                  <Icon name="location_on" className="w-3 h-3" strokeWidth={1.75} />
                   <span className="truncate">{booking.location}</span>
                 </span>
               )}
               <span className="flex items-center gap-1.5">
-                <Clock className="w-3 h-3" strokeWidth={1.75} />
+                <Icon name="schedule" className="w-3 h-3" strokeWidth={1.75} />
                 <span className="tabular-nums">{booking.duration} min</span>
               </span>
             </div>
           </div>
 
           {/* Pil */}
-          <ArrowRight className="w-4 h-4 text-muted opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all shrink-0" />
+          <Icon name="arrow_forward" className="w-4 h-4 text-muted opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all shrink-0" />
         </div>
       </Card>
     </Link>

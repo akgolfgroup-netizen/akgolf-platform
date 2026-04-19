@@ -1,24 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import {
- ArrowLeft,
- Plus,
- Trash2,
- Save,
- X,
- Clock,
- Target,
- ChevronDown,
- ChevronRight,
- Copy,
- CheckCircle,
- Search,
- Calendar,
- User,
- Sparkles,
- ClipboardList,
-} from "lucide-react";
+
 import Link from "next/link";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
@@ -176,7 +161,7 @@ function PlanOverview({
  <Button
  variant="accent"
  >
- <Plus className="w-4 h-4 mr-2"/>
+ <Icon name="add" className="w-4 h-4 mr-2" />
  Ny plan
  </Button>
  </Link>
@@ -188,17 +173,17 @@ function PlanOverview({
  <AdminStatCard
  label="Aktive planer"
  value={activePlans}
- icon={<CheckCircle className="w-5 h-5"/>}
+ icon={<Icon name="check"Circle className="w-5 h-5" />}
  />
  <AdminStatCard
  label="AI-genererte"
  value={aiPlans}
- icon={<Sparkles className="w-5 h-5"/>}
+ icon={<Icon name="auto_awesome" className="w-5 h-5" />}
  />
  <AdminStatCard
  label="Manuelle"
  value={manualPlans}
- icon={<ClipboardList className="w-5 h-5"/>}
+ icon={<Icon name="assignment" className="w-5 h-5" />}
  />
  </div>
 
@@ -206,7 +191,7 @@ function PlanOverview({
  <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
  <div className="flex flex-col sm:flex-row gap-3">
  <div className="relative flex-1">
- <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none"/>
+ <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none" />
  <AdminInput
  type="text"
  placeholder="Søk etter elev eller plantittel..."
@@ -238,7 +223,7 @@ function PlanOverview({
  {/* Plan list */}
  {filteredPlans.length === 0 ? (
  <AdminEmptyState
- icon={<ClipboardList className="w-6 h-6"/>}
+ icon={<Icon name="assignment" className="w-6 h-6" />}
  title="Ingen treningsplaner funnet"
  description={
  searchQuery
@@ -251,7 +236,7 @@ function PlanOverview({
  <Button
  variant="accent"
  >
- <Plus className="w-4 h-4 mr-2"/>
+ <Icon name="add" className="w-4 h-4 mr-2" />
  Ny plan
  </Button>
  </Link>
@@ -283,12 +268,12 @@ function PlanOverview({
  <div className="flex items-center gap-4 text-sm text-grey-500 flex-wrap">
  {plan.student?.name && (
  <span className="flex items-center gap-1">
- <User className="w-3.5 h-3.5"/>
+ <Icon name="person" className="w-3.5 h-3.5" />
  {plan.student.name}
  </span>
  )}
  <span className="flex items-center gap-1">
- <Calendar className="w-3.5 h-3.5"/>
+ <Icon name="calendar_today" className="w-3.5 h-3.5" />
  {format(new Date(plan.startDate), "d. MMM", {
  locale: nb,
  })}
@@ -401,7 +386,7 @@ function StudentPlanEditor({
  href={`/admin/elever/${studentId}`}
  className="inline-flex items-center gap-1 text-sm text-grey-500 hover:text-text transition-colors"
  >
- <ArrowLeft className="w-4 h-4"/>
+ <Icon name="arrow_back" className="w-4 h-4" />
  Tilbake til elevprofil
  </Link>
 
@@ -415,7 +400,7 @@ function StudentPlanEditor({
  : "bg-error/10 text-error border-error/20",
  )}
  >
- <CheckCircle className="w-4 h-4"/>
+ <Icon name="check"Circle className="w-4 h-4" />
  {feedback.message}
  </div>
  )}
@@ -423,13 +408,13 @@ function StudentPlanEditor({
  {/* No plans */}
  {plans.length === 0 && (
  <AdminEmptyState
- icon={<Target className="w-6 h-6"/>}
+ icon={<Icon name="my_location" className="w-6 h-6" />}
  title="Ingen treningsplaner"
  description="Denne eleven har ingen treningsplaner ennå. Generer en via AI-verktøyene eller opprett en manuelt."
  action={
  <Link href={`/admin/treningsplan/ny?studentId=${studentId}`}>
  <Button variant="accent">
- <Plus className="w-4 h-4 mr-2"/>
+ <Icon name="add" className="w-4 h-4 mr-2" />
  Ny plan
  </Button>
  </Link>
@@ -509,7 +494,7 @@ function StudentPlanEditor({
  onClick={handleDuplicatePlan}
  disabled={isPending}
  >
- <Copy className="w-3.5 h-3.5 mr-2"/>
+ <Icon name="content_copy" className="w-3.5 h-3.5 mr-2" />
  {isPending ? "Kopierer...": "Kopier plan"}
  </Button>
  </div>
@@ -613,9 +598,9 @@ function WeekCard({
  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-grey-100 transition-colors"
  >
  {expanded ? (
- <ChevronDown className="w-4 h-4 text-grey-400"/>
+ <Icon name="expand_more" className="w-4 h-4 text-grey-400" />
  ) : (
- <ChevronRight className="w-4 h-4 text-grey-400"/>
+ <Icon name="chevron_right" className="w-4 h-4 text-grey-400" />
  )}
  <div className="flex-1 flex items-center gap-3 flex-wrap">
  <span className="text-sm font-semibold text-black">
@@ -656,7 +641,7 @@ function WeekCard({
  onClick={handleSaveWeekFocus}
  disabled={isPending}
  >
- <Save className="w-3.5 h-3.5 mr-2"/>
+ <Icon name="save" className="w-3.5 h-3.5 mr-2" />
  {isPending ? "Lagrer...": "Lagre"}
  </Button>
  <Button
@@ -664,7 +649,7 @@ function WeekCard({
  onClick={() => onEditWeekFocus(null)}
  aria-label="Avbryt"
  >
- <X className="w-3.5 h-3.5"/>
+ <Icon name="close" className="w-3.5 h-3.5" />
  </Button>
  </div>
  ) : (
@@ -760,7 +745,7 @@ function WeekCard({
  }
  className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] text-grey-500 hover:text-black hover:bg-black/5 rounded transition-colors"
  >
- <Plus className="w-3 h-3"/>
+ <Icon name="add" className="w-3 h-3" />
  Legg til
  </button>
  )}
@@ -866,7 +851,7 @@ function SessionCard({
  disabled={isPending || !title.trim()}
  className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-black text-white rounded hover:opacity-90 disabled:opacity-50"
  >
- <Save className="w-3 h-3"/>
+ <Icon name="save" className="w-3 h-3" />
  {isPending ? "Lagrer...": "Lagre"}
  </button>
  <button
@@ -883,7 +868,7 @@ function SessionCard({
  className="p-1 text-error hover:bg-error/10 rounded"
  aria-label="Slett sesjon"
  >
- <Trash2 className="w-3 h-3"/>
+ <Icon name="delete" className="w-3 h-3" />
  </button>
  </div>
  </div>
@@ -906,7 +891,7 @@ function SessionCard({
  </div>
  {session.durationMinutes && (
  <div className="flex items-center gap-1 mt-1">
- <Clock className="w-2.5 h-2.5 text-grey-500"/>
+ <Icon name="schedule" className="w-2.5 h-2.5 text-grey-500" />
  <span className="text-[10px] text-grey-500">
  {session.durationMinutes} min
  </span>
@@ -982,7 +967,7 @@ function AddSessionForm({ isPending, onSave, onCancel }: AddSessionFormProps) {
  disabled={isPending || !title.trim()}
  className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-black text-white rounded hover:opacity-90 disabled:opacity-50"
  >
- <Plus className="w-3 h-3"/>
+ <Icon name="add" className="w-3 h-3" />
  {isPending ? "Legger til...": "Legg til"}
  </button>
  <button

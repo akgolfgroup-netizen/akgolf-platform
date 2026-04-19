@@ -1,13 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import {
-  Users,
-  UserPlus,
-  Trophy,
-  MessageCircle,
-  Search,
-} from "lucide-react";
+import { Users, Trophy } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { AddFriendDialog } from "@/components/portal/social/add-friend-dialog";
@@ -120,7 +116,7 @@ export default function SosialtClient({
           onClick={() => setShowAddFriend(true)}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-cta text-black text-sm font-medium hover:opacity-90 transition-opacity"
         >
-          <UserPlus className="w-4 h-4" />
+          <Icon name="person"Plus className="w-4 h-4" />
           Legg til venn
         </button>
       </div>
@@ -156,7 +152,7 @@ export default function SosialtClient({
         <PremiumCard noHover className="p-0 overflow-hidden bg-white border border-grey-200 rounded-xl">
           <div className="p-4 border-b border-grey-200">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+              <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
               <input
                 type="text"
                 value={friendFilter}
@@ -168,7 +164,7 @@ export default function SosialtClient({
           </div>
           {filteredFriends.length === 0 ? (
             <div className="p-8 text-center">
-              <Users className="w-10 h-10 text-grey-400 mx-auto mb-3" />
+              <Icon name="person"s className="w-10 h-10 text-grey-400 mx-auto mb-3" />
               <p className="text-grey-400">
                 {friends.length === 0
                   ? "Du har ingen venner ennå. Legg til noen for å komme i gang."
@@ -179,7 +175,7 @@ export default function SosialtClient({
                   onClick={() => setShowAddFriend(true)}
                   className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-black hover:underline"
                 >
-                  <UserPlus className="w-4 h-4" />
+                  <Icon name="person"Plus className="w-4 h-4" />
                   Legg til din første venn
                 </button>
               )}
@@ -218,7 +214,7 @@ export default function SosialtClient({
                       </div>
                     </div>
                     <button className="p-2 rounded-lg hover:bg-grey-50 transition-colors">
-                      <MessageCircle className="w-4 h-4 text-grey-400" />
+                      <Icon name="chat_bubble" className="w-4 h-4 text-grey-400" />
                     </button>
                   </div>
                 );
@@ -238,7 +234,7 @@ export default function SosialtClient({
           </div>
           {leaderboard.length === 0 ? (
             <div className="p-8 text-center">
-              <Trophy className="w-10 h-10 text-grey-400 mx-auto mb-3" />
+              <Icon name="emoji_events" className="w-10 h-10 text-grey-400 mx-auto mb-3" />
               <p className="text-grey-400">
                 Ingen data for topplisten ennå. Legg til venner og registrer
                 handicap.

@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
+import { Filter } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 import { 
@@ -140,7 +142,7 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
             onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
             className="p-2 rounded-full hover:bg-grey-100 transition-colors"
           >
-            <ChevronLeft className="w-5 h-5 text-grey-400" />
+            <Icon name="chevron_left" className="w-5 h-5 text-grey-400" />
           </motion.button>
           
           <h3 className="text-lg font-semibold text-black min-w-[140px] text-center">
@@ -153,7 +155,7 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
             onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
             className="p-2 rounded-full hover:bg-grey-100 transition-colors"
           >
-            <ChevronRight className="w-5 h-5 text-grey-400" />
+            <Icon name="chevron_right" className="w-5 h-5 text-grey-400" />
           </motion.button>
         </div>
 
@@ -168,7 +170,7 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
       {/* Type filters */}
       <div className="flex flex-wrap gap-2 mb-4">
         <div className="flex items-center gap-1.5 text-xs text-grey-400 mr-2">
-          <Filter className="w-3.5 h-3.5" />
+          <Icon name="filter_list" className="w-3.5 h-3.5" />
           Filter:
         </div>
         {ALL_TYPES.map(type => {

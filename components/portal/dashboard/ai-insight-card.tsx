@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { colors } from "@/lib/design-tokens";
-import { Sparkles, Zap } from "lucide-react";
+
 
 interface AiInsightCardProps {
   summary?: string;
@@ -29,14 +31,14 @@ export function AiInsightCard({
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
           style={{ backgroundColor: `${colors.ai.primary}15` }}
         >
-          <Zap className="h-5 w-5" style={{ color: colors.ai.primary }} />
+          <Icon name="bolt" className="h-5 w-5" style={{ color: colors.ai.primary }} />
         </div>
         <div className="min-w-0 flex-1">
           <div
             className="mb-1 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider"
             style={{ color: colors.ai.primary }}
           >
-            <Sparkles className="h-3 w-3" />
+            <Icon name="auto_awesome" className="h-3 w-3" />
             AI-innsikt
           </div>
           <p className="line-clamp-3 text-sm font-semibold" style={{ color: colors.primary.dark }}>

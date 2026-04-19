@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import React from "react";
 import Link from "next/link";
 import {
@@ -17,17 +19,7 @@ import type {
   AdminLineChartDatum,
   AdminDonutChartDatum,
 } from "@/components/portal/mission-control/ui";
-import {
-  Calendar,
-  Users,
-  TrendingUp,
-  Clock,
-  Plus,
-  MessageSquare,
-  UserPlus,
-  AlertCircle,
-  ArrowRight,
-} from "lucide-react";
+import { Plus, MessageSquare, UserPlus } from "lucide-react";
 import { MonoLabel } from "@/components/portal/patterns";
 
 interface Session {
@@ -309,7 +301,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 </p>
               </div>
               <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
-                <Calendar className="w-5 h-5" />
+                <Icon name="calendar_today" className="w-5 h-5" />
               </div>
             </div>
             <AdminSparkline data={sparkSessions} width="100%" height={32} />
@@ -326,7 +318,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 </p>
               </div>
               <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
-                <Users className="w-5 h-5" />
+                <Icon name="person"s className="w-5 h-5" />
               </div>
             </div>
             <AdminSparkline
@@ -348,7 +340,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 </p>
               </div>
               <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
-                <Clock className="w-5 h-5" />
+                <Icon name="schedule" className="w-5 h-5" />
               </div>
             </div>
             <AdminSparkline
@@ -370,7 +362,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 </p>
               </div>
               <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
-                <TrendingUp className="w-5 h-5" />
+                <Icon name="trending_up" className="w-5 h-5" />
               </div>
             </div>
             <AdminSparkline
@@ -427,7 +419,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
             <Card className="overflow-hidden">
               <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
                 <div className="flex items-center gap-3">
-                  <Clock className="w-5 h-5 text-grey-400" />
+                  <Icon name="schedule" className="w-5 h-5 text-grey-400" />
                   <h2 className="text-sm font-semibold text-black">
                     Dagens timeplan
                   </h2>
@@ -437,7 +429,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                   className="text-sm text-grey-400 hover:text-black font-medium inline-flex items-center gap-1.5 transition-colors"
                 >
                   Se kalender
-                  <ArrowRight className="w-4 h-4" />
+                  <Icon name="arrow_forward" className="w-4 h-4" />
                 </Link>
               </div>
 
@@ -474,7 +466,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 </ul>
               ) : (
                 <div className="px-6 py-16 text-center">
-                  <Calendar className="w-10 h-10 text-grey-300 mx-auto mb-3 opacity-50" />
+                  <Icon name="calendar_today" className="w-10 h-10 text-grey-300 mx-auto mb-3 opacity-50" />
                   <p className="text-sm text-grey-400">Ingen økter i dag</p>
                 </div>
               )}
@@ -561,15 +553,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                       key={i}
                       className="flex items-start gap-2 p-3 rounded-lg bg-grey-50"
                     >
-                      <AlertCircle
+                      <Icon name="error"
                         className={`w-4 h-4 shrink-0 mt-0.5 ${
                           item.variant === "error"
                             ? "text-[var(--color-error)]"
                             : item.variant === "warning"
                               ? "text-[var(--color-warning)]"
                               : "text-[var(--color-info)]"
-                        }`}
-                      />
+                        }`} />
                       <span className="text-xs text-grey-400">{item.text}</span>
                     </div>
                   ))}

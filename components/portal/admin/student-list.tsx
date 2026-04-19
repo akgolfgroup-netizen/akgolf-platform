@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import Link from "next/link";
-import { Search, Eye, Edit2, MoreHorizontal, ChevronsUpDown, Check, Mail, Tag, Download, X } from "lucide-react";
+import { Search } from "lucide-react";
 import { searchStudents } from "@/app/admin/(authed)/elever/actions";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -116,7 +118,7 @@ export function StudentList() {
       <div className="flex items-center gap-4 bg-white border border-grey-200 rounded-xl p-4 px-5 transition-shadow duration-300 hover:shadow-sm">
         {/* Search */}
         <div className="flex items-center gap-3 flex-1 px-4 py-3 bg-grey-100 rounded-xl border border-transparent focus-within:bg-white focus-within:border-black focus-within:shadow-[0_0_0_3px_grey-100] transition-[background-color,border-color]">
-          <Search className="w-[18px] h-[18px] text-grey-400" />
+          <Icon name="search" className="w-[18px] h-[18px] text-grey-400" />
           <input
             type="text"
             value={query}
@@ -165,22 +167,22 @@ export function StudentList() {
               <strong>{selectedIds.size}</strong> elever valgt
             </span>
             <button className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 hover:bg-white/25 text-white text-[13px] font-medium rounded-xl transition-colors">
-              <Mail className="w-4 h-4" />
+              <Icon name="mail" className="w-4 h-4" />
               Send e-post
             </button>
             <button className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 hover:bg-white/25 text-white text-[13px] font-medium rounded-xl transition-colors">
-              <Tag className="w-4 h-4" />
+              <Icon name="sell" className="w-4 h-4" />
               Endre medlemskap
             </button>
             <button className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 hover:bg-white/25 text-white text-[13px] font-medium rounded-xl transition-colors">
-              <Download className="w-4 h-4" />
+              <Icon name="download" className="w-4 h-4" />
               Eksporter
             </button>
             <button
               onClick={clearSelection}
               className="ml-auto w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 rounded-xl transition-colors"
             >
-              <X className="w-[18px] h-[18px]" />
+              <Icon name="close" className="w-[18px] h-[18px]" />
             </button>
           </motion.div>
         )}
@@ -204,24 +206,24 @@ export function StudentList() {
               )}
             >
               {selectedIds.size === students.length && students.length > 0 && (
-                <Check className="w-3.5 h-3.5 text-white" />
+                <Icon name="check" className="w-3.5 h-3.5 text-white" />
               )}
             </button>
           </div>
           <span className="flex items-center gap-1 text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em] cursor-pointer hover:text-black">
-            Elev <ChevronsUpDown className="w-3.5 h-3.5" />
+            Elev <Icon name="unfold_more" className="w-3.5 h-3.5" />
           </span>
           <span className="flex items-center gap-1 text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em] cursor-pointer hover:text-black">
-            Medlemskap <ChevronsUpDown className="w-3.5 h-3.5" />
+            Medlemskap <Icon name="unfold_more" className="w-3.5 h-3.5" />
           </span>
           <span className="flex items-center gap-1 text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em] cursor-pointer hover:text-black">
-            Handicap <ChevronsUpDown className="w-3.5 h-3.5" />
+            Handicap <Icon name="unfold_more" className="w-3.5 h-3.5" />
           </span>
           <span className="text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em]">
             Timer (mnd)
           </span>
           <span className="flex items-center gap-1 text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em] cursor-pointer hover:text-black">
-            Sist aktiv <ChevronsUpDown className="w-3.5 h-3.5" />
+            Sist aktiv <Icon name="unfold_more" className="w-3.5 h-3.5" />
           </span>
           <span className="text-[11px] font-semibold text-grey-400 uppercase tracking-[0.06em]">
             Handlinger
@@ -260,7 +262,7 @@ export function StudentList() {
                         : "border-grey-200 hover:border-black"
                     )}
                   >
-                    {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
+                    {isSelected && <Icon name="check" className="w-3.5 h-3.5 text-white" />}
                   </button>
                 </div>
 
@@ -323,13 +325,13 @@ export function StudentList() {
                     href={`/admin/elever/${student.id}`}
                     className="w-8 h-8 rounded-lg border border-grey-200 bg-white flex items-center justify-center hover:border-black hover:bg-grey-100 transition-colors group"
                   >
-                    <Eye className="w-4 h-4 text-grey-400 group-hover:text-black" />
+                    <Icon name="visibility" className="w-4 h-4 text-grey-400 group-hover:text-black" />
                   </Link>
                   <button className="w-8 h-8 rounded-lg border border-grey-200 bg-white flex items-center justify-center hover:border-black hover:bg-grey-100 transition-colors group">
-                    <Edit2 className="w-4 h-4 text-grey-400 group-hover:text-black" />
+                    <Icon name="edit"2 className="w-4 h-4 text-grey-400 group-hover:text-black" />
                   </button>
                   <button className="w-8 h-8 rounded-lg border border-grey-200 bg-white flex items-center justify-center hover:border-black hover:bg-grey-100 transition-colors group">
-                    <MoreHorizontal className="w-4 h-4 text-grey-400 group-hover:text-black" />
+                    <Icon name="more_horiz" className="w-4 h-4 text-grey-400 group-hover:text-black" />
                   </button>
                 </div>
               </div>

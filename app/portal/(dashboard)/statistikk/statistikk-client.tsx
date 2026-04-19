@@ -1,10 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Plus, BarChart3, Zap, Sparkles } from "lucide-react";
+
 import {
   PremiumStatCard,
   fadeInUp,
@@ -348,7 +350,7 @@ function EmptyState() {
       </div>
       <Card variant="elevated" padding="lg" className="text-center">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-grey-50">
-          <BarChart3 className="h-8 w-8 text-grey-400" />
+          <Icon name="bar_chart" className="h-8 w-8 text-grey-400" />
         </div>
         <h2 className="mb-2 text-xl font-semibold text-black">
           Ingen runder registrert
@@ -361,7 +363,7 @@ function EmptyState() {
           href="/portal/statistikk/ny-runde"
           className="inline-flex items-center gap-2 rounded-full bg-accent-cta px-6 py-3 text-[12px] font-bold text-black shadow-lg transition-shadow hover:shadow-xl"
         >
-          <Plus className="h-4 w-4" />
+          <Icon name="add" className="h-4 w-4" />
           Registrer din forste runde
         </Link>
       </Card>
@@ -493,7 +495,7 @@ export function StatistikkClient({
               href="/portal/statistikk/ny-runde"
               className="relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-full bg-accent-cta px-6 text-[12px] font-bold text-black shadow-lg transition-shadow hover:shadow-xl"
             >
-              <Plus className="relative z-10 h-3.5 w-3.5" strokeWidth={2.5} />
+              <Icon name="add" className="relative z-10 h-3.5 w-3.5" strokeWidth={2.5} />
               <span className="relative z-10">Logg runde</span>
             </Link>
           </motion.div>
@@ -704,14 +706,14 @@ export function StatistikkClient({
                 className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
                 style={{ backgroundColor: `${colors.ai.primary}15` }}
               >
-                <Zap className="h-5 w-5" style={{ color: colors.ai.primary }} />
+                <Icon name="bolt" className="h-5 w-5" style={{ color: colors.ai.primary }} />
               </div>
               <div className="min-w-0 flex-1">
                 <div
                   className="mb-1 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider"
                   style={{ color: colors.ai.primary }}
                 >
-                  <Sparkles className="h-3 w-3" />
+                  <Icon name="auto_awesome" className="h-3 w-3" />
                   AI-anbefaling
                 </div>
                 <h3 className="mb-2 text-sm font-semibold" style={{ color: colors.primary.dark }}>

@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Calendar, Plus } from "lucide-react";
+
 import {
   fadeInUp,
   staggerContainer,
@@ -107,10 +109,9 @@ export function BookingerClient({
             href="/portal/bookinger/ny"
             className="relative h-11 px-6 rounded-full bg-accent-cta text-black text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
           >
-            <Plus
+            <Icon name="add"
               className="w-3.5 h-3.5 relative z-10"
-              strokeWidth={2.5}
-            />
+              strokeWidth={2.5} />
             <span className="relative z-10">Ny booking</span>
           </Link>
         </motion.div>
@@ -183,17 +184,16 @@ export function BookingerClient({
           <PremiumCard className="text-center">
             <div className="flex flex-col items-center gap-4 py-6">
               <div className="w-14 h-14 rounded-2xl bg-black/10 flex items-center justify-center">
-                <Calendar
+                <Icon name="calendar_today"
                   className="w-6 h-6 text-black"
-                  strokeWidth={1.75}
-                />
+                  strokeWidth={1.75} />
               </div>
               <p className="text-[13px] text-grey-400 max-w-sm">{emptyMessage}</p>
               <Link
                 href="/portal/bookinger/ny"
                 className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-black hover:gap-2 transition-all"
               >
-                <Plus className="w-3.5 h-3.5" />
+                <Icon name="add" className="w-3.5 h-3.5" />
                 Book din første time
               </Link>
             </div>

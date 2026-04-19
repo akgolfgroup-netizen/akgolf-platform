@@ -1,13 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Minus,
-  Plus,
-  Circle,
-  Timer,
-} from "lucide-react";
+
 import { saveHoleResult, completeRound } from "../actions";
 import { HoleNavigator } from "@/components/portal/runde/hole-navigator";
 import { CourseInfo } from "@/components/portal/runde/course-info";
@@ -241,7 +238,7 @@ export function LiveRoundClient({
             onClick={() => updateResult({ score: Math.max(1, result.score - 1) })}
             className="w-14 h-14 rounded-full bg-grey-100 hover:bg-grey-200 flex items-center justify-center transition-colors"
           >
-            <Minus className="w-6 h-6 text-grey-600" />
+            <Icon name="remove" className="w-6 h-6 text-grey-600" />
           </motion.button>
           
           <div className="flex gap-1">
@@ -266,7 +263,7 @@ export function LiveRoundClient({
             onClick={() => updateResult({ score: result.score + 1 })}
             className="w-14 h-14 rounded-full bg-grey-100 hover:bg-grey-200 flex items-center justify-center transition-colors"
           >
-            <Plus className="w-6 h-6 text-grey-600" />
+            <Icon name="add" className="w-6 h-6 text-grey-600" />
           </motion.button>
         </div>
 
@@ -277,7 +274,7 @@ export function LiveRoundClient({
         <div>
           <div className="flex items-center justify-between mb-3">
             <p className="text-sm font-medium text-grey-700 flex items-center gap-2">
-              <Circle className="w-4 h-4" />
+              <Icon name="circle" className="w-4 h-4" />
               Putts
             </p>
             <span className="text-lg font-bold text-black">{result.putts}</span>
@@ -288,7 +285,7 @@ export function LiveRoundClient({
               onClick={() => updateResult({ putts: Math.max(0, result.putts - 1) })}
               className="w-12 h-12 rounded-full bg-grey-100 hover:bg-grey-200 flex items-center justify-center"
             >
-              <Minus className="w-5 h-5 text-grey-600" />
+              <Icon name="remove" className="w-5 h-5 text-grey-600" />
             </motion.button>
             
             <div className="flex gap-2">
@@ -313,7 +310,7 @@ export function LiveRoundClient({
               onClick={() => updateResult({ putts: result.putts + 1 })}
               className="w-12 h-12 rounded-full bg-grey-100 hover:bg-grey-200 flex items-center justify-center"
             >
-              <Plus className="w-5 h-5 text-grey-600" />
+              <Icon name="add" className="w-5 h-5 text-grey-600" />
             </motion.button>
           </div>
         </div>
@@ -416,7 +413,7 @@ export function LiveRoundClient({
           onClick={() => setShowPreShot(true)}
           className="w-full py-3 rounded-xl border-2 border-purple-200 text-purple-600 font-medium hover:bg-purple-50 transition-colors flex items-center justify-center gap-2"
         >
-          <Timer className="w-4 h-4" />
+          <Icon name="timer" className="w-4 h-4" />
           Start pre-shot rutine
         </button>
       </PremiumCard>

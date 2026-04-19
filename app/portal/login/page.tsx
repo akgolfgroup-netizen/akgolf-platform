@@ -1,19 +1,13 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { createBrowserClient } from "@supabase/ssr";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Eye,
-  EyeOff,
-  Mail,
-  Lock,
-  ArrowRight,
-  CheckCircle2,
-  Sparkles,
-} from "lucide-react";
+
 import { AKLogo } from "@/components/website/AKLogo";
 import {
   EASE,
@@ -179,7 +173,7 @@ export default function LoginPage() {
           >
             <AKLogo variant="white" size={56} />
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-white/5">
-              <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent-cta)]" />
+              <Icon name="auto_awesome" className="w-3.5 h-3.5 text-[var(--color-accent-cta)]" />
               <span className="text-[11px] font-medium tracking-wide uppercase text-white/90">
                 Spillerportal
               </span>
@@ -225,7 +219,7 @@ export default function LoginPage() {
                 "Direkte kontakt med din trener",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--color-accent-cta)] flex-shrink-0" />
+                  <Icon name="check"Circle2 className="w-4 h-4 text-[var(--color-accent-cta)] flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -293,7 +287,7 @@ export default function LoginPage() {
                     }}
                     className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-[var(--color-primary-soft)]"
                   >
-                    <Mail className="w-7 h-7 text-[var(--color-primary)]" />
+                    <Icon name="mail" className="w-7 h-7 text-[var(--color-primary)]" />
                   </motion.div>
                   <h1 className="text-2xl font-semibold text-[var(--color-text)] mb-2">
                     Sjekk e-posten din
@@ -308,7 +302,7 @@ export default function LoginPage() {
                     onClick={() => setSent(false)}
                     className="mt-8 text-sm font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-alt)] transition-colors inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-none"
                   >
-                    <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+                    <Icon name="arrow_forward" className="w-3.5 h-3.5 rotate-180" />
                     Tilbake til innlogging
                   </button>
                 </Card>
@@ -391,10 +385,9 @@ export default function LoginPage() {
                           E-postadresse
                         </label>
                         <div className="relative group">
-                          <Mail
+                          <Icon name="mail"
                             className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] transition-colors group-focus-within:text-[var(--color-primary)]"
-                            aria-hidden="true"
-                          />
+                            aria-hidden="true" />
                           <input
                             id="email"
                             type="email"
@@ -426,10 +419,9 @@ export default function LoginPage() {
                               Passord
                             </label>
                             <div className="relative group">
-                              <Lock
+                              <Icon name="lock"
                                 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted)] transition-colors group-focus-within:text-[var(--color-primary)]"
-                                aria-hidden="true"
-                              />
+                                aria-hidden="true" />
                               <input
                                 id="password"
                                 type={showPassword ? "text" : "password"}
@@ -449,9 +441,9 @@ export default function LoginPage() {
                                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 cursor-pointer bg-transparent border-none text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors"
                               >
                                 {showPassword ? (
-                                  <EyeOff className="w-4 h-4" aria-hidden="true" />
+                                  <Icon name="visibility"Off className="w-4 h-4" aria-hidden="true" />
                                 ) : (
-                                  <Eye className="w-4 h-4" aria-hidden="true" />
+                                  <Icon name="visibility" className="w-4 h-4" aria-hidden="true" />
                                 )}
                               </button>
                             </div>
@@ -492,7 +484,7 @@ export default function LoginPage() {
                               ? "Logg inn"
                               : "Send innloggingslenke"}
                           {!loading && (
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                            <Icon name="arrow_forward" className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                           )}
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />

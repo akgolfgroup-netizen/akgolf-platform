@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useId } from "react";
-import { X, Check, Zap, Crown, Users, TrendingDown } from "lucide-react";
+
 import { SubscriptionTier } from "@prisma/client";
 
 interface UpgradeModalProps {
@@ -137,7 +139,7 @@ export function UpgradeModal({
           aria-label="Lukk dialog"
           className="absolute top-4 right-4 p-2 rounded-full hover:bg-[var(--color-grey-100)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)]"
         >
-          <X className="w-5 h-5 text-[var(--color-grey-500)]" aria-hidden="true" />
+          <Icon name="close" className="w-5 h-5 text-[var(--color-grey-500)]" aria-hidden="true" />
         </button>
 
         {/* Header */}
@@ -192,7 +194,7 @@ export function UpgradeModal({
             style={{ borderColor: "var(--color-grey-200)" }}
           >
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-5 h-5 text-[var(--color-brand)]" aria-hidden="true" />
+              <Icon name="bolt" className="w-5 h-5 text-[var(--color-brand)]" aria-hidden="true" />
               <h3 className="font-semibold text-[var(--color-grey-900)]">Pro</h3>
             </div>
             <div className="mb-4">
@@ -219,7 +221,7 @@ export function UpgradeModal({
                   key={feature}
                   className="flex items-start gap-2 text-sm text-[var(--color-grey-600)]"
                 >
-                  <Check className="w-4 h-4 text-[var(--color-brand)] mt-0.5 shrink-0" aria-hidden="true" />
+                  <Icon name="check" className="w-4 h-4 text-[var(--color-brand)] mt-0.5 shrink-0" aria-hidden="true" />
                   {feature}
                 </li>
               ))}
@@ -249,7 +251,7 @@ export function UpgradeModal({
               Mest populær
             </div>
             <div className="flex items-center gap-2 mb-3">
-              <Crown className="w-5 h-5 text-[var(--color-brand)]" aria-hidden="true" />
+              <Icon name="workspace_premium" className="w-5 h-5 text-[var(--color-brand)]" aria-hidden="true" />
               <h3 className="font-semibold text-[var(--color-grey-900)]">
                 Pro+
               </h3>
@@ -278,7 +280,7 @@ export function UpgradeModal({
                   key={feature}
                   className="flex items-start gap-2 text-sm text-[var(--color-grey-600)]"
                 >
-                  <Check className="w-4 h-4 text-[var(--color-brand)] mt-0.5 shrink-0" aria-hidden="true" />
+                  <Icon name="check" className="w-4 h-4 text-[var(--color-brand)] mt-0.5 shrink-0" aria-hidden="true" />
                   {feature}
                 </li>
               ))}
@@ -300,11 +302,11 @@ export function UpgradeModal({
         {/* Social proof */}
         <div className="flex items-center justify-center gap-6 mt-6 pt-4 border-t border-[var(--color-grey-200)]">
           <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">
-            <Users className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
+            <Icon name="person"s className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
             <span>127 spillere oppgraderte denne maneden</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">
-            <TrendingDown className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
+            <Icon name="trending_down" className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
             <span>Snitt HCP-forbedring: 2.3 slag</span>
           </div>
         </div>

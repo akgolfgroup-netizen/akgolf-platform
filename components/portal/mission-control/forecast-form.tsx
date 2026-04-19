@@ -1,12 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Target,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+
 import { AdminInput } from "@/components/portal/mission-control/ui";
 
 export interface ForecastFormData {
@@ -102,7 +100,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
       className="bg-white border border-grey-200 rounded-xl p-6 space-y-5"
     >
       <div className="flex items-center gap-2 text-sm font-semibold text-black">
-        <Target className="w-4 h-4 text-primary" />
+        <Icon name="my_location" className="w-4 h-4 text-primary" />
         Ny forecast
       </div>
 
@@ -185,7 +183,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
         onClick={() => setShowDiagnostic((s) => !s)}
         className="flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary-alt transition-colors"
       >
-        {showDiagnostic ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+        {showDiagnostic ? <Icon name="expand_less" className="w-3.5 h-3.5" /> : <Icon name="expand_more" className="w-3.5 h-3.5" />}
         Diagnostisk data (valgfritt)
       </button>
 

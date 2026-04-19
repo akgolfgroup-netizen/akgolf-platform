@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import React, { useState } from "react";
-import { Clock, Plus, Trash2, CalendarDays } from "lucide-react";
+
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
@@ -119,7 +121,7 @@ function SpecialDateItem({
   return (
     <div className="flex items-center justify-between py-3 px-4 hover:bg-grey-50 transition-colors group">
       <div className="flex items-center gap-3">
-        <CalendarDays className="w-4 h-4 text-grey-400" />
+        <Icon name="calendar_today"Days className="w-4 h-4 text-grey-400" />
         <div>
           <p className="text-sm font-medium text-black">{date.label}</p>
           <p className="text-xs text-grey-400">
@@ -144,7 +146,7 @@ function SpecialDateItem({
           className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center justify-center rounded-lg text-grey-400 hover:text-error"
           onClick={onDelete}
         >
-          <Trash2 className="w-4 h-4" />
+          <Icon name="delete" className="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -177,7 +179,7 @@ export function AvailabilitySettings() {
       <Card className="overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
           <div className="flex items-center gap-3">
-            <Clock className="w-5 h-5 text-grey-400" />
+            <Icon name="schedule" className="w-5 h-5 text-grey-400" />
             <h2 className="text-sm font-semibold text-black">Standard arbeidstider</h2>
           </div>
         </div>
@@ -197,11 +199,11 @@ export function AvailabilitySettings() {
       <Card className="overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
           <div className="flex items-center gap-3">
-            <CalendarDays className="w-5 h-5 text-grey-400" />
+            <Icon name="calendar_today"Days className="w-5 h-5 text-grey-400" />
             <h2 className="text-sm font-semibold text-black">Spesielle datoer</h2>
           </div>
           <button className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg border border-grey-200 text-grey-700 hover:bg-grey-50 transition-colors">
-            <Plus className="w-4 h-4" />
+            <Icon name="add" className="w-4 h-4" />
             <span className="hidden sm:inline">Legg til</span>
           </button>
         </div>

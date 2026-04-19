@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
-import { Calendar, Copy, Check, RefreshCw, Lock, ExternalLink } from "lucide-react";
+
 import { MonoLabel } from "@/components/portal/patterns";
 
 function toWebcalUrl(httpUrl: string): string {
@@ -59,7 +61,7 @@ export function CalendarSyncSettings() {
   return (
     <div className="rounded-xl border border-black/6 p-5">
       <div className="mb-3 flex items-center gap-2">
-        <Calendar className="h-4 w-4 text-grey-900" />
+        <Icon name="calendar_today" className="h-4 w-4 text-grey-900" />
         <MonoLabel size="sm" uppercase className="text-grey-900">
           Kalendersynk
         </MonoLabel>
@@ -76,13 +78,13 @@ export function CalendarSyncSettings() {
             onClick={openInAppleCalendar}
             className="flex w-full items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
           >
-            <Calendar className="h-3.5 w-3.5" />
+            <Icon name="calendar_today" className="h-3.5 w-3.5" />
             Abonner i Apple Kalender / Outlook
-            <ExternalLink className="ml-auto h-3 w-3" />
+            <Icon name="open_in_new" className="ml-auto h-3 w-3" />
           </button>
 
           <div className="flex items-center gap-2 rounded-lg border border-black/6 bg-grey-50 px-3 py-2">
-            <Lock className="h-3 w-3 shrink-0 text-grey-400" />
+            <Icon name="lock" className="h-3 w-3 shrink-0 text-grey-400" />
             <p className="flex-1 truncate font-mono text-[10px] text-grey-500">
               {feedUrl}
             </p>
@@ -92,9 +94,9 @@ export function CalendarSyncSettings() {
               title="Kopier URL"
             >
               {copied ? (
-                <Check className="h-3.5 w-3.5 text-success" />
+                <Icon name="check" className="h-3.5 w-3.5 text-success" />
               ) : (
-                <Copy className="h-3.5 w-3.5" />
+                <Icon name="content_copy" className="h-3.5 w-3.5" />
               )}
             </button>
           </div>
@@ -122,7 +124,7 @@ export function CalendarSyncSettings() {
             disabled={generating}
             className="flex items-center gap-1.5 text-[10px] text-grey-400 transition-colors hover:text-grey-700"
           >
-            <RefreshCw className={`h-3 w-3 ${generating ? "animate-spin" : ""}`} />
+            <Icon name="refresh" className={`h-3 w-3 ${generating ? "animate-spin" : ""}`} />
             Generer ny URL (invaliderer gammel)
           </button>
         </div>
@@ -132,7 +134,7 @@ export function CalendarSyncSettings() {
           disabled={generating}
           className="flex items-center gap-1.5 rounded-lg bg-black px-4 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-70"
         >
-          <Calendar className="h-3.5 w-3.5" />
+          <Icon name="calendar_today" className="h-3.5 w-3.5" />
           {generating ? "Genererer..." : "Aktiver kalendersynk"}
         </button>
       )}

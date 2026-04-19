@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
-import { Send, Users, Bell, Loader2, CheckCircle } from "lucide-react";
+import { Send } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -72,12 +74,12 @@ export function NotificationManager() {
         <AdminStatCard
           label="Push-abonnementer"
           value={stats?.totalSubscriptions ?? "—"}
-          icon={<Bell className="w-5 h-5" />}
+          icon={<Icon name="notifications" className="w-5 h-5" />}
         />
         <AdminStatCard
           label="Unike brukere"
           value={stats?.uniqueUsers ?? "—"}
-          icon={<Users className="w-5 h-5" />}
+          icon={<Icon name="person"s className="w-5 h-5" />}
         />
       </div>
 
@@ -133,11 +135,11 @@ export function NotificationManager() {
             isLoading={isSending}
           >
             {sent ? (
-              <CheckCircle className="w-4 h-4" />
+              <Icon name="check"Circle className="w-4 h-4" />
             ) : isSending ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
             ) : (
-              <Send className="w-4 h-4" />
+              <Icon name="send" className="w-4 h-4" />
             )}
             {isSending ? "Sender..." : sent ? "Sendt!" : "Send notifikasjon"}
           </Button>

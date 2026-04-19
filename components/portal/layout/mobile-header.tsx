@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+
 import { useSidebar } from "./sidebar-context";
 import { NotificationBell } from "./notification-bell";
 import { AKLogo } from "@/components/website/AKLogo";
@@ -27,7 +29,7 @@ export function MobileHeader() {
           className="p-2 rounded-lg text-[var(--color-grey-400)] hover:text-[var(--color-primary)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
           aria-label="Meny"
         >
-          <Menu className="w-5 h-5" />
+          <Icon name="menu" className="w-5 h-5" />
         </button>
       </div>
     </header>

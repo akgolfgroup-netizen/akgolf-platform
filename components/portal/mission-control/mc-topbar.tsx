@@ -1,6 +1,8 @@
 "use client";
 
-import { Search, Menu, Plus } from "lucide-react";
+
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,7 +45,7 @@ export function MCTopbar({
           className="lg:hidden p-2 -ml-2 rounded-lg text-[var(--color-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
           aria-label="Apne meny"
         >
-          <Menu className="w-5 h-5" />
+          <Icon name="menu" className="w-5 h-5" />
         </button>
 
         <div className="min-w-0">
@@ -66,7 +68,7 @@ export function MCTopbar({
       {showSearch && (
         <div className="hidden md:flex flex-1 max-w-md mx-6">
           <div className="flex items-center gap-2 w-full bg-[var(--color-grey-100)] border border-transparent px-3.5 py-2 rounded-lg focus-within:bg-white focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[var(--color-primary)]/20 transition-all">
-            <Search className="w-4 h-4 text-[var(--color-muted)] shrink-0" />
+            <Icon name="search" className="w-4 h-4 text-[var(--color-muted)] shrink-0" />
             <input
               type="text"
               value={searchQuery}
@@ -85,7 +87,7 @@ export function MCTopbar({
             href="/admin/bookinger/ny"
             className="admin-btn admin-btn-primary hidden md:inline-flex"
           >
-            <Plus className="w-4 h-4" />
+            <Icon name="add" className="w-4 h-4" />
             Ny booking
           </Link>
         )}
@@ -94,7 +96,7 @@ export function MCTopbar({
           className="md:hidden p-2 rounded-lg text-[var(--color-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer"
           aria-label="Sok"
         >
-          <Search className="w-5 h-5" />
+          <Icon name="search" className="w-5 h-5" />
         </button>
 
         <AdminNotificationBell className="relative p-2 rounded-lg text-[var(--color-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-grey-100)] transition-colors cursor-pointer" />

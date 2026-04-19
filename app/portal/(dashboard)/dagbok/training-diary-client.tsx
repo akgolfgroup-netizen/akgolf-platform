@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Plus, RotateCcw, Loader2, Calendar, List, BarChart3 } from "lucide-react";
+import { Calendar, List, BarChart3 } from "lucide-react";
 import { repeatLastSession } from "./actions";
 import { LogSessionModal } from "@/components/portal/dagbok/log-session-modal";
 import { StreakCard, StreakData } from "@/components/portal/dagbok/streak-card";
@@ -159,9 +161,9 @@ export function TrainingDiaryClient({
               className="h-11 px-6 rounded-full bg-white border border-grey-200 text-black text-[12px] font-semibold hover:border-grey-300 transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
             >
               {isPending ? (
-                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                <Icon name="progress_activity" className="w-3.5 h-3.5 animate-spin" />
               ) : (
-                <RotateCcw className="w-3.5 h-3.5" />
+                <Icon name="restart_alt" className="w-3.5 h-3.5" />
               )}
               {isPending ? "Logger…" : "Gjenta siste"}
             </motion.button>
@@ -172,7 +174,7 @@ export function TrainingDiaryClient({
             onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
             className="relative h-11 px-6 rounded-full bg-accent-cta text-black text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow"
           >
-            <Plus className="w-3.5 h-3.5" strokeWidth={2.5} />
+            <Icon name="add" className="w-3.5 h-3.5" strokeWidth={2.5} />
             <span>Logg ny økt</span>
           </motion.button>
         </div>
@@ -205,7 +207,7 @@ export function TrainingDiaryClient({
         <PremiumCard variant="default" padding="lg" className="text-center py-16">
           <div className="flex flex-col items-center justify-center text-center">
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-black/10">
-              <BarChart3 className="w-8 h-8 text-black" strokeWidth={1.75} />
+              <Icon name="bar_chart" className="w-8 h-8 text-black" strokeWidth={1.75} />
             </div>
             <p className="text-[20px] font-semibold text-black mb-2">Din treningsdagbok er tom</p>
             <p className="text-[13px] text-grey-400 mb-6 max-w-md leading-relaxed">
@@ -217,7 +219,7 @@ export function TrainingDiaryClient({
               onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
               className="relative h-11 px-6 rounded-full bg-accent-cta text-black text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)]"
             >
-              <Plus className="w-3.5 h-3.5" strokeWidth={2.5} />
+              <Icon name="add" className="w-3.5 h-3.5" strokeWidth={2.5} />
               <span>Logg ny økt</span>
             </motion.button>
           </div>
@@ -247,7 +249,7 @@ export function TrainingDiaryClient({
               {/* Bento Grid - Middle Row: Heatmap + Recent Sessions */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <motion.div variants={itemVariants} className="lg:col-span-2">
-                  <ActivityHeatmap data={activityData} />
+                  <Icon name="monitoring"Heatmap data={activityData} />
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <RecentSessionsList 
@@ -296,7 +298,7 @@ export function TrainingDiaryClient({
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <WeeklyStats sessions={sessionData} />
-                <ActivityHeatmap data={activityData} />
+                <Icon name="monitoring"Heatmap data={activityData} />
               </div>
               <VolumePyramid
                 sessions={sessionData.map((s) => ({

@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Menu, PanelLeftClose, PanelLeft } from "lucide-react";
+
 import { ChatInterface, ContextPanel, ChatHistory, type ChatSession, type Message } from "@/components/portal/ai-coach";
 import type { ChatContext } from "./actions";
 
@@ -96,7 +98,7 @@ export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientPr
               }`}
               title={showHistory ? "Skjul historikk" : "Vis historikk"}
             >
-              {showHistory ? <PanelLeftClose className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {showHistory ? <Icon name="left_panel_open"Close className="w-5 h-5" /> : <Icon name="menu" className="w-5 h-5" />}
             </button>
             <div>
               <h1 className="text-lg font-semibold text-black">AI Coach</h1>
@@ -111,7 +113,7 @@ export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientPr
             }`}
             title={showContext ? "Skjul kontekst" : "Vis kontekst"}
           >
-            {showContext ? <PanelLeft className="w-5 h-5" /> : <PanelLeft className="w-5 h-5 rotate-180" />}
+            {showContext ? <Icon name="left_panel_open" className="w-5 h-5" /> : <Icon name="left_panel_open" className="w-5 h-5 rotate-180" />}
           </button>
         </header>
 

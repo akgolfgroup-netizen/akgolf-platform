@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import { Sparkles, X, Loader2 } from "lucide-react";
+
 import { useRouter } from "next/navigation";
 
 interface GeneratePlanButtonProps {
@@ -75,7 +77,7 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
   return (
     <>
       <button onClick={() => setShowModal(true)} className={`${buttonClass} ${className ?? ""}`}>
-        <Sparkles className="w-4 h-4" />
+        <Icon name="auto_awesome" className="w-4 h-4" />
         {variant === "primary" ? "Generer ny plan" : "Generer treningsplan"}
       </button>
 
@@ -93,7 +95,7 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
           >
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[var(--color-grey-900)]" />
+                <Icon name="auto_awesome" className="w-4 h-4 text-[var(--color-grey-900)]" />
                 <h2 className="text-sm font-semibold text-[var(--color-grey-900)]">Generer treningsplan</h2>
               </div>
               <button
@@ -101,7 +103,7 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
                 className="text-[var(--color-grey-400)] hover:text-[var(--color-grey-900)] transition-colors"
                 disabled={isPending}
               >
-                <X className="w-4 h-4" />
+                <Icon name="close" className="w-4 h-4" />
               </button>
             </div>
 
@@ -185,12 +187,12 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
               >
                 {isPending ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                     Genererer plan...
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-4 h-4" />
+                    <Icon name="auto_awesome" className="w-4 h-4" />
                     Generer plan
                   </>
                 )}

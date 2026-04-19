@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { ChevronDown, ChevronUp, Zap, Loader2 } from "lucide-react";
+
 import { AISummaryBlock } from "./ai-summary-block";
 import { MonoLabel } from "@/components/portal/patterns";
 import { cn } from "@/lib/utils";
@@ -76,7 +78,7 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
           </h3>
           {hasAI && (
             <span className="inline-flex items-center gap-1 rounded-full bg-ai-light px-2 py-0.5 text-[10px] font-semibold text-ai-text">
-              <Zap className="h-2.5 w-2.5" /> AI-oppsummert
+              <Icon name="bolt" className="h-2.5 w-2.5" /> AI-oppsummert
             </span>
           )}
         </div>
@@ -120,9 +122,9 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
             className="inline-flex items-center gap-1.5 rounded-lg bg-ai-light px-3 py-1.5 text-xs font-semibold text-ai-text transition-opacity hover:opacity-80 disabled:opacity-50"
           >
             {generating ? (
-              <Loader2 className="h-3 w-3 animate-spin" />
+              <Icon name="progress_activity" className="h-3 w-3 animate-spin" />
             ) : (
-              <Zap className="h-3 w-3" />
+              <Icon name="bolt" className="h-3 w-3" />
             )}
             Generer oppsummering
           </button>
@@ -133,9 +135,9 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
           aria-label={expanded ? "Skjul detaljer" : "Vis detaljer"}
         >
           {expanded ? (
-            <ChevronUp className="h-4 w-4" />
+            <Icon name="expand_less" className="h-4 w-4" />
           ) : (
-            <ChevronDown className="h-4 w-4" />
+            <Icon name="expand_more" className="h-4 w-4" />
           )}
         </button>
       </div>

@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo, useState } from "react";
-import { ArrowLeft, Search } from "lucide-react";
+
 import Link from "next/link";
 import { CapabilityChangeAction } from "@prisma/client";
 import {
@@ -76,7 +78,7 @@ export function AuditClient({ initialRows }: AuditClientProps) {
             href="/admin/team"
             className="inline-flex items-center gap-1.5 text-sm text-[var(--color-primary)] hover:underline"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <Icon name="arrow_back" className="h-4 w-4" />
             Tilbake til team
           </Link>
         }

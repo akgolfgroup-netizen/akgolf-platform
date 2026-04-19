@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
-import { X, Sparkles, Clock } from "lucide-react";
+
 import { differenceInDays, differenceInHours } from "date-fns";
 
 interface TrialBannerProps {
@@ -58,9 +60,9 @@ export function TrialBanner({ trialEndsAt, onUpgradeClick }: TrialBannerProps) {
           }`}
         >
           {isUrgent ? (
-            <Clock className="w-5 h-5 text-[var(--color-warning)]" />
+            <Icon name="schedule" className="w-5 h-5 text-[var(--color-warning)]" />
           ) : (
-            <Sparkles className="w-5 h-5 text-[var(--color-accent-cta)]" />
+            <Icon name="auto_awesome" className="w-5 h-5 text-[var(--color-accent-cta)]" />
           )}
         </div>
         <div>
@@ -110,11 +112,10 @@ export function TrialBanner({ trialEndsAt, onUpgradeClick }: TrialBannerProps) {
             }`}
             aria-label="Lukk"
           >
-            <X
+            <Icon name="close"
               className={`w-4 h-4 ${
                 isUrgent ? "text-[var(--color-grey-500)]" : "text-white/80"
-              }`}
-            />
+              }`} />
           </button>
         )}
       </div>

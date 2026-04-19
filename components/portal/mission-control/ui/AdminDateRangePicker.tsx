@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
-import { Calendar, ChevronDown } from "lucide-react";
+
 import {
   endOfMonth,
   endOfToday,
@@ -137,9 +139,9 @@ export function AdminDateRangePicker({
         aria-haspopup="dialog"
         aria-expanded={open}
       >
-        <Calendar className="w-4 h-4" />
+        <Icon name="calendar_today" className="w-4 h-4" />
         {displayLabel}
-        <ChevronDown className="w-4 h-4" />
+        <Icon name="expand_more" className="w-4 h-4" />
       </button>
       {open && (
         <div

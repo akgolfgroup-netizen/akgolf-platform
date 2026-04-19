@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ArrowLeft, Check, Loader2 } from "lucide-react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import type { BookingServiceType, BookingMode, BookingStep } from "./booking-types";
 import { STEP_CONFIG } from "./booking-types";
@@ -85,7 +87,7 @@ function ProgressBar({ steps, currentStep }: { steps: BookingStep[]; currentStep
                     : "bg-[#F5F8F7] text-grey-400 border border-grey-200",
               ].join(" ")}
             >
-              {isCompleted ? <Check className="w-3.5 h-3.5" /> : i + 1}
+              {isCompleted ? <Icon name="check" className="w-3.5 h-3.5" /> : i + 1}
             </div>
             <span
               className={[
@@ -138,7 +140,7 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
   if (loadingServices) {
     return (
       <div className="flex items-center justify-center py-20 gap-3 text-grey-400">
-        <Loader2 className="w-5 h-5 animate-spin" />
+        <Icon name="progress_activity" className="w-5 h-5 animate-spin" />
         <span>Laster tilgjengelige tjenester...</span>
       </div>
     );
@@ -153,7 +155,7 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
           onClick={goBack}
           className="flex items-center gap-1.5 text-sm text-grey-400 hover:text-black transition-colors mb-4"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
+          <Icon name="arrow_back" className="w-3.5 h-3.5" />
           Tilbake
         </button>
       )}

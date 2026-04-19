@@ -1,11 +1,13 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { format, addDays, startOfDay } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Clock, User, Calendar, ChevronRight, Loader2, CreditCard, ArrowLeft, Check } from "lucide-react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 
@@ -158,7 +160,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                     whileHover={!isActive ? { scale: 1.05 } : {}}
                   >
                     {isCompleted && s !== step ? (
-                      <Check className={`w-5 h-5 ${isActive ? "text-white" : "text-on-surface"}`} />
+                      <Icon name="check" className={`w-5 h-5 ${isActive ? "text-white" : "text-on-surface"}`} />
                     ) : (
                       index + 1
                     )}
@@ -234,11 +236,11 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                         )}
                         <div className="flex items-center gap-6">
                           <span className="flex items-center gap-2 text-sm text-on-surface-variant tabular-nums">
-                            <Clock className="w-4 h-4 text-on-surface" />
+                            <Icon name="schedule" className="w-4 h-4 text-on-surface" />
                             {svc.duration} minutter
                           </span>
                           <span className="flex items-center gap-2 text-sm text-on-surface-variant">
-                            <User className="w-4 h-4 text-on-surface" />
+                            <Icon name="person" className="w-4 h-4 text-on-surface" />
                             {svc.maxStudents === 1 ? "Individuell" : `Gruppe (max ${svc.maxStudents})`}
                           </span>
                         </div>
@@ -247,7 +249,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                         <span className="text-2xl font-semibold text-on-surface tabular-nums">
                           {formatPrice(svc.price)}
                         </span>
-                        <ChevronRight className="w-5 h-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-on-surface" />
+                        <Icon name="chevron_right" className="w-5 h-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-on-surface" />
                       </div>
                     </div>
                   </div>
@@ -270,7 +272,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               onClick={() => { setStep("service"); setSelectedService(null); }}
               className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-on-surface-variant"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <Icon name="arrow_back" className="w-4 h-4" />
               Tilbake til tjenester
             </button>
 
@@ -314,7 +316,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                         <p className="text-on-surface-variant">{inst.title}</p>
                       )}
                     </div>
-                    <ChevronRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity text-on-surface" />
+                    <Icon name="chevron_right" className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity text-on-surface" />
                   </div>
                 </motion.button>
               ))}
@@ -344,7 +346,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               }}
               className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-on-surface-variant"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <Icon name="arrow_back" className="w-4 h-4" />
               Tilbake
             </button>
 
@@ -406,12 +408,12 @@ export function BookCoachingForm({ serviceTypes }: Props) {
 
                 {loading ? (
                   <div className="flex items-center gap-3 py-12 text-on-surface-variant">
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Icon name="progress_activity" className="w-5 h-5 animate-spin" />
                     <span>Henter tilgjengelige tider...</span>
                   </div>
                 ) : availableSlots.length === 0 ? (
                   <div className="rounded-[20px] p-8 text-center border bg-surface border-outline-variant">
-                    <Calendar className="w-12 h-12 mx-auto mb-4 text-outline" />
+                    <Icon name="calendar_today" className="w-12 h-12 mx-auto mb-4 text-outline" />
                     <p className="text-on-surface-variant">
                       Ingen ledige tider denne dagen.
                     </p>
@@ -460,7 +462,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               onClick={() => setStep("date")}
               className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-on-surface-variant"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <Icon name="arrow_back" className="w-4 h-4" />
               Tilbake til tidspunkt
             </button>
 
@@ -488,7 +490,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-surface-container">
-                    <User className="w-5 h-5 text-on-surface" />
+                    <Icon name="person" className="w-5 h-5 text-on-surface" />
                   </div>
                   <div>
                     <p className="text-[11px] uppercase tracking-[0.08em] text-outline">Instruktør</p>
@@ -498,7 +500,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
 
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-surface-container">
-                    <Calendar className="w-5 h-5 text-on-surface" />
+                    <Icon name="calendar_today" className="w-5 h-5 text-on-surface" />
                   </div>
                   <div>
                     <p className="text-[11px] uppercase tracking-[0.08em] text-outline">Dato og tid</p>
@@ -510,7 +512,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
 
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-surface-container">
-                    <Clock className="w-5 h-5 text-on-surface" />
+                    <Icon name="schedule" className="w-5 h-5 text-on-surface" />
                   </div>
                   <div>
                     <p className="text-[11px] uppercase tracking-[0.08em] text-outline">Varighet</p>
@@ -543,12 +545,12 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               >
                 {booking ? (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Icon name="progress_activity" className="w-5 h-5 animate-spin" />
                     <span>Behandler...</span>
                   </>
                 ) : (
                   <>
-                    <CreditCard className="w-5 h-5" />
+                    <Icon name="credit_card" className="w-5 h-5" />
                     <span>Betal med kort</span>
                   </>
                 )}

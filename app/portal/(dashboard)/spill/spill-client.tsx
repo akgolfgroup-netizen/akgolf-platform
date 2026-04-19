@@ -1,22 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import {
-  Trophy,
-  MapPin,
-  Users,
-  Play,
-  Plus,
-  Search,
-  ChevronRight,
-  Clock,
-  X,
-  Loader2,
-  Copy,
-  Check,
-} from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import {
   type GameSessionData,
@@ -187,14 +176,14 @@ export default function SpillClient({
             onClick={() => setShowJoinGame(true)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-grey-200 bg-white text-black text-sm font-medium hover:border-grey-300 transition-colors"
           >
-            <Users className="w-4 h-4" />
+            <Icon name="person"s className="w-4 h-4" />
             Bli med
           </button>
           <button
             onClick={() => setShowNewGame(true)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-cta text-black text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            <Plus className="w-4 h-4" />
+            <Icon name="add" className="w-4 h-4" />
             Nytt spill
           </button>
         </div>
@@ -206,19 +195,19 @@ export default function SpillClient({
           <div className="flex items-start justify-between mb-4">
             <div>
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-accent-cta text-black text-xs font-bold">
-                <Clock className="w-3 h-3" />
+                <Icon name="schedule" className="w-3 h-3" />
                 Aktiv
               </span>
               <h2 className="text-xl font-bold mt-3 text-black">
                 {activeSession.name ?? "Aktiv runde"}
               </h2>
               <p className="text-grey-400 flex items-center gap-1 mt-1 text-sm">
-                <MapPin className="w-4 h-4" />
+                <Icon name="location_on" className="w-4 h-4" />
                 {activeSession.Course.name}
               </p>
             </div>
             <div className="w-12 h-12 rounded-xl bg-black/10 flex items-center justify-center">
-              <Trophy className="w-6 h-6 text-black" />
+              <Icon name="emoji_events" className="w-6 h-6 text-black" />
             </div>
           </div>
 
@@ -244,16 +233,16 @@ export default function SpillClient({
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-grey-50 text-sm text-grey-400 hover:text-black transition-colors"
             >
               {copied === activeSession.joinCode ? (
-                <Check className="w-3 h-3 text-success" />
+                <Icon name="check" className="w-3 h-3 text-success" />
               ) : (
-                <Copy className="w-3 h-3" />
+                <Icon name="content_copy" className="w-3 h-3" />
               )}
               Kode: {activeSession.joinCode}
             </button>
           </div>
 
           <button className="w-full py-3 rounded-full bg-accent-cta text-black font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-            <Play className="w-4 h-4" />
+            <Icon name="play_arrow" className="w-4 h-4" />
             Fortsett spill
           </button>
         </PremiumCard>
@@ -262,7 +251,7 @@ export default function SpillClient({
       {/* Ingen spill */}
       {initialSessions.length === 0 && (
         <PremiumCard className="!p-8 text-center bg-white border border-grey-200 rounded-xl">
-          <Trophy className="w-12 h-12 text-grey-400 mx-auto mb-3" />
+          <Icon name="emoji_events" className="w-12 h-12 text-grey-400 mx-auto mb-3" />
           <h2 className="text-lg font-semibold text-black">
             Ingen spill ennå
           </h2>
@@ -288,11 +277,11 @@ export default function SpillClient({
                     </h4>
                     <div className="flex items-center gap-3 mt-1 text-sm text-grey-400">
                       <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
+                        <Icon name="location_on" className="w-3 h-3" />
                         {session.Course.name}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Users className="w-3 h-3" />
+                        <Icon name="person"s className="w-3 h-3" />
                         {session.Players.length} spillere
                       </span>
                       <span className="text-xs">
@@ -304,7 +293,7 @@ export default function SpillClient({
                     <span className="text-xs text-grey-400">
                       {formatDate(session.date)}
                     </span>
-                    <ChevronRight className="w-5 h-5 text-grey-400" />
+                    <Icon name="chevron_right" className="w-5 h-5 text-grey-400" />
                   </div>
                 </div>
               </PremiumCard>
@@ -326,7 +315,7 @@ export default function SpillClient({
                   <div>
                     <h4 className="font-medium text-black">{course.name}</h4>
                     <p className="text-sm text-grey-400 flex items-center gap-1 mt-1">
-                      <MapPin className="w-3 h-3" />
+                      <Icon name="location_on" className="w-3 h-3" />
                       {course.location ?? "Norge"}
                     </p>
                   </div>
@@ -345,7 +334,7 @@ export default function SpillClient({
         <PremiumCard className="!p-6 bg-white border border-grey-200 rounded-xl">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Trophy className="w-5 h-5 text-purple-500" />
+              <Icon name="emoji_events" className="w-5 h-5 text-purple-500" />
               <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Utfordringer</MonoLabel>
             </div>
             <span className="text-xs text-grey-400">
@@ -392,7 +381,7 @@ export default function SpillClient({
           className="flex items-center gap-3 rounded-xl bg-white border border-grey-200 p-4 text-sm font-medium text-black hover:border-grey-300 transition-colors shadow-sm"
         >
           <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center flex-shrink-0">
-            <Search className="w-5 h-5 text-grey-400" />
+            <Icon name="search" className="w-5 h-5 text-grey-400" />
           </div>
           <div>
             <p className="font-semibold text-sm text-black">Finn spillere</p>
@@ -404,7 +393,7 @@ export default function SpillClient({
           className="flex items-center gap-3 rounded-xl bg-white border border-grey-200 p-4 text-sm font-medium text-black hover:border-grey-300 transition-colors shadow-sm"
         >
           <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center flex-shrink-0">
-            <MapPin className="w-5 h-5 text-grey-400" />
+            <Icon name="location_on" className="w-5 h-5 text-grey-400" />
           </div>
           <div>
             <p className="font-semibold text-sm text-black">Banedatabase</p>
@@ -416,7 +405,7 @@ export default function SpillClient({
           className="flex items-center gap-3 rounded-xl bg-white border border-grey-200 p-4 text-sm font-medium text-black hover:border-grey-300 transition-colors shadow-sm"
         >
           <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center flex-shrink-0">
-            <Trophy className="w-5 h-5 text-grey-400" />
+            <Icon name="emoji_events" className="w-5 h-5 text-grey-400" />
           </div>
           <div>
             <p className="font-semibold text-sm text-black">Toppliste</p>
@@ -436,7 +425,7 @@ export default function SpillClient({
             {createdSession ? (
               <div className="text-center">
                 <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4">
-                  <Trophy className="w-8 h-8 text-success" />
+                  <Icon name="emoji_events" className="w-8 h-8 text-success" />
                 </div>
                 <h3 className="text-xl font-bold text-black mb-2">
                   Spill opprettet
@@ -467,7 +456,7 @@ export default function SpillClient({
                     onClick={resetNewGameDialog}
                     className="p-1 rounded-lg hover:bg-grey-50"
                   >
-                    <X className="w-5 h-5 text-grey-400" />
+                    <Icon name="close" className="w-5 h-5 text-grey-400" />
                   </button>
                 </div>
 
@@ -477,7 +466,7 @@ export default function SpillClient({
                     Velg bane
                   </label>
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                    <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
                     <input
                       type="text"
                       placeholder="Søk etter bane..."
@@ -486,12 +475,12 @@ export default function SpillClient({
                       className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-grey-200 bg-white text-sm text-black placeholder:text-grey-400 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-grey-300"
                     />
                     {isSearching && (
-                      <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 animate-spin" />
+                      <Icon name="progress_activity" className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 animate-spin" />
                     )}
                   </div>
                   {selectedCourse && (
                     <div className="mt-2 flex items-center gap-2 bg-grey-50 rounded-lg px-3 py-2">
-                      <MapPin className="w-4 h-4 text-black" />
+                      <Icon name="location_on" className="w-4 h-4 text-black" />
                       <span className="text-sm font-medium text-black">
                         {selectedCourse.name}
                       </span>
@@ -499,7 +488,7 @@ export default function SpillClient({
                         onClick={() => setSelectedCourse(null)}
                         className="ml-auto"
                       >
-                        <X className="w-4 h-4 text-grey-400" />
+                        <Icon name="close" className="w-4 h-4 text-grey-400" />
                       </button>
                     </div>
                   )}
@@ -573,9 +562,9 @@ export default function SpillClient({
                   className="w-full py-3 rounded-full bg-accent-cta text-black font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {isPending ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                   ) : (
-                    <Play className="w-4 h-4" />
+                    <Icon name="play_arrow" className="w-4 h-4" />
                   )}
                   Opprett spill
                 </button>
@@ -609,7 +598,7 @@ export default function SpillClient({
                 }}
                 className="p-1 rounded-lg hover:bg-grey-50"
               >
-                <X className="w-5 h-5 text-grey-400" />
+                <Icon name="close" className="w-5 h-5 text-grey-400" />
               </button>
             </div>
 
@@ -639,9 +628,9 @@ export default function SpillClient({
               className="w-full mt-4 py-3 rounded-full bg-accent-cta text-black font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {isPending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
               ) : (
-                <Users className="w-4 h-4" />
+                <Icon name="person"s className="w-4 h-4" />
               )}
               Bli med
             </button>

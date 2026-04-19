@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Trophy, Target, Dumbbell, Zap } from "lucide-react";
+
 import type { GolfProfileSummary } from "@/app/portal/(dashboard)/statistikk/actions";
 
 interface GolfProfileHeroProps {
@@ -31,7 +33,7 @@ export function GolfProfileHero({ profile }: GolfProfileHeroProps) {
         <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <div className="rounded-xl bg-white/5 p-4 backdrop-blur-sm">
             <div className="flex items-center gap-2 text-grey-300">
-              <Trophy className="h-4 w-4" />
+              <Icon name="emoji_events" className="h-4 w-4" />
               <span className="text-[11px] font-medium uppercase tracking-wider">HCP</span>
             </div>
             <p className="mt-1 text-2xl font-bold text-white tabular-nums">
@@ -41,7 +43,7 @@ export function GolfProfileHero({ profile }: GolfProfileHeroProps) {
 
           <div className="rounded-xl bg-white/5 p-4 backdrop-blur-sm">
             <div className="flex items-center gap-2 text-grey-300">
-              <Target className="h-4 w-4" />
+              <Icon name="my_location" className="h-4 w-4" />
               <span className="text-[11px] font-medium uppercase tracking-wider">Runder</span>
             </div>
             <p className="mt-1 text-2xl font-bold text-white tabular-nums">
@@ -51,7 +53,7 @@ export function GolfProfileHero({ profile }: GolfProfileHeroProps) {
 
           <div className="rounded-xl bg-white/5 p-4 backdrop-blur-sm">
             <div className="flex items-center gap-2 text-grey-300">
-              <Dumbbell className="h-4 w-4" />
+              <Icon name="fitness_center" className="h-4 w-4" />
               <span className="text-[11px] font-medium uppercase tracking-wider">Trening</span>
             </div>
             <p className="mt-1 text-2xl font-bold text-white tabular-nums">
@@ -61,7 +63,7 @@ export function GolfProfileHero({ profile }: GolfProfileHeroProps) {
 
           <div className="rounded-xl bg-white/5 p-4 backdrop-blur-sm">
             <div className="flex items-center gap-2 text-grey-300">
-              <Zap className="h-4 w-4" />
+              <Icon name="bolt" className="h-4 w-4" />
               <span className="text-[11px] font-medium uppercase tracking-wider">Beste carry</span>
             </div>
             <p className="mt-1 text-2xl font-bold text-white tabular-nums">

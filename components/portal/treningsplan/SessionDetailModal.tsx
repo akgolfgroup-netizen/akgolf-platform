@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useCallback } from "react";
-import { X, Clock, Target, Trash2, Save, CheckCircle, Dumbbell } from "lucide-react";
+
 import type { TrainingSession, Exercise } from "./types";
 
 interface SessionDetailModalProps {
@@ -146,7 +148,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
             </h2>
             {editedSession.completed && (
               <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs font-medium">
-                <CheckCircle className="w-3 h-3" />
+                <Icon name="check"Circle className="w-3 h-3" />
                 Fullført
               </span>
             )}
@@ -155,7 +157,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
             onClick={handleClose}
             className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-200 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <Icon name="close" className="w-5 h-5" />
           </button>
         </div>
 
@@ -197,7 +199,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
             <div>
               <label className="block text-sm font-medium text-slate-400 mb-2">
                 <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
+                  <Icon name="schedule" className="w-4 h-4" />
                   Varighet (min)
                 </span>
               </label>
@@ -231,7 +233,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
 
           {/* Exercise Count Badge */}
           <div className="flex items-center gap-2 mb-4">
-            <Dumbbell className="w-4 h-4 text-slate-400" />
+            <Icon name="fitness_center" className="w-4 h-4 text-slate-400" />
             <span className="text-sm text-slate-300">
               {editedSession.exercises.length} øvelse{editedSession.exercises.length !== 1 ? "r" : ""}
             </span>
@@ -326,7 +328,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
 
           {editedSession.exercises.length === 0 && (
             <div className="text-center py-8 bg-slate-800/30 rounded-lg border border-slate-700/50 border-dashed">
-              <Target className="w-8 h-8 text-slate-600 mx-auto mb-2" />
+              <Icon name="my_location" className="w-8 h-8 text-slate-600 mx-auto mb-2" />
               <p className="text-slate-500 text-sm">Ingen øvelser i denne økten</p>
             </div>
           )}
@@ -340,7 +342,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
               disabled={isDeleting}
               className="flex items-center gap-2 px-4 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors disabled:opacity-50"
             >
-              <Trash2 className="w-4 h-4" />
+              <Icon name="delete" className="w-4 h-4" />
               {isDeleting ? "Sletter..." : "Slett"}
             </button>
           ) : (
@@ -359,7 +361,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
               disabled={isSaving}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors disabled:opacity-50"
             >
-              <Save className="w-4 h-4" />
+              <Icon name="save" className="w-4 h-4" />
               {isSaving ? "Lagrer..." : "Lagre"}
             </button>
           </div>

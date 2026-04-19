@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Pencil, RotateCcw, Check, X } from "lucide-react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import type { DayCapacity } from "@/app/admin/(authed)/kapasitet/week-actions";
 import { format } from "date-fns";
@@ -145,13 +147,13 @@ export function WeekAdjustmentGrid({
                         disabled={saving}
                         className="flex-1 p-1.5 bg-black text-white rounded text-xs flex items-center justify-center gap-1 disabled:opacity-50"
                       >
-                        <Check className="w-3 h-3" />
+                        <Icon name="check" className="w-3 h-3" />
                       </button>
                       <button
                         onClick={cancelEditing}
                         className="flex-1 p-1.5 bg-grey-50 rounded text-xs flex items-center justify-center gap-1"
                       >
-                        <X className="w-3 h-3" />
+                        <Icon name="close" className="w-3 h-3" />
                       </button>
                     </div>
                   </motion.div>
@@ -205,7 +207,7 @@ export function WeekAdjustmentGrid({
                         className="p-1.5 rounded hover:bg-grey-50 transition-colors"
                         title="Rediger"
                       >
-                        <Pencil className="w-3.5 h-3.5 text-grey-400" />
+                        <Icon name="edit" className="w-3.5 h-3.5 text-grey-400" />
                       </button>
                       {day.hasOverride && (
                         <button
@@ -214,7 +216,7 @@ export function WeekAdjustmentGrid({
                           className="p-1.5 rounded hover:bg-grey-50 transition-colors disabled:opacity-50"
                           title="Tilbakestill til fast"
                         >
-                          <RotateCcw className="w-3.5 h-3.5 text-grey-400" />
+                          <Icon name="restart_alt" className="w-3.5 h-3.5 text-grey-400" />
                         </button>
                       )}
                     </div>

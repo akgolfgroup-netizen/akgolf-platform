@@ -1,17 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import {
-  Target,
-  TrendingUp,
-  Clock,
-  AlertTriangle,
-  CheckCircle2,
-  Brain,
-  Dumbbell,
-  Crosshair,
-  Map,
-} from "lucide-react";
+import { Map } from "lucide-react";
 import { Badge } from "@/components/ui";
 import { AdminProgressRing } from "@/components/portal/mission-control/ui";
 import { format } from "date-fns";
@@ -130,7 +122,7 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
       <div className="bg-white border border-grey-200 rounded-xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-black flex items-center gap-2">
-            <Target className="w-5 h-5 text-primary" />
+            <Icon name="my_location" className="w-5 h-5 text-primary" />
             Forecast
           </h3>
           <span className="text-xs text-grey-400">
@@ -191,7 +183,7 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
 
         <div className="bg-white border border-grey-200 rounded-xl p-6">
           <div className="flex items-center gap-2 mb-3">
-            <Clock className="w-4 h-4 text-primary" />
+            <Icon name="schedule" className="w-4 h-4 text-primary" />
             <p className="text-sm font-semibold text-black">Estimert tidsbruk</p>
           </div>
           <p className="text-3xl font-bold text-black tabular-nums">
@@ -210,7 +202,7 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
       {/* Kategori-fordeling med Tek/Tak/Mental/Fys */}
       <div className="bg-white border border-grey-200 rounded-xl p-6 space-y-4">
         <div className="flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 text-primary" />
+          <Icon name="trending_up" className="w-4 h-4 text-primary" />
           <p className="text-sm font-semibold text-black">Fordeling per kategori</p>
         </div>
 
@@ -276,13 +268,13 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
       {/* Anbefalinger */}
       <div className="bg-white border border-grey-200 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
-          <Crosshair className="w-4 h-4 text-primary" />
+          <Icon name="gps_fixed" className="w-4 h-4 text-primary" />
           <p className="text-sm font-semibold text-black">Anbefalinger</p>
         </div>
         <ul className="space-y-2">
           {forecast.recommendationsJson.map((rec, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-text">
-              <CheckCircle2 className="w-4 h-4 text-success mt-0.5 shrink-0" />
+              <Icon name="check"Circle2 className="w-4 h-4 text-success mt-0.5 shrink-0" />
               {rec}
             </li>
           ))}
@@ -292,16 +284,16 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
       {/* Antakelser */}
       <div className="bg-white border border-grey-200 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
-          <Brain className="w-4 h-4 text-primary" />
+          <Icon name="psychology" className="w-4 h-4 text-primary" />
           <p className="text-sm font-semibold text-black">Antakelser</p>
         </div>
         <ul className="space-y-2">
           {forecast.assumptionsJson.map((ass, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-text">
               {ass.startsWith("ADVARSEL") ? (
-                <AlertTriangle className="w-4 h-4 text-warning mt-0.5 shrink-0" />
+                <Icon name="warning" className="w-4 h-4 text-warning mt-0.5 shrink-0" />
               ) : (
-                <Dumbbell className="w-4 h-4 text-grey-300 mt-0.5 shrink-0" />
+                <Icon name="fitness_center" className="w-4 h-4 text-grey-300 mt-0.5 shrink-0" />
               )}
               {ass}
             </li>

@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useRouter } from "next/navigation";
-import { Check } from "lucide-react";
+
 import { Drawer } from "./Drawer";
 import type { BookingState, TrainerService } from "./types";
 
@@ -28,7 +30,7 @@ export function SuccessDrawer({ isOpen, state, service, trainerName }: SuccessDr
     <Drawer isOpen={isOpen} onClose={() => router.push("/")}>
       <div className="text-center py-8 px-4">
         <div className="w-16 h-16 rounded-full bg-accent-cta flex items-center justify-center mx-auto mb-4">
-          <Check className="w-7 h-7 text-primary" strokeWidth={3} />
+          <Icon name="check" className="w-7 h-7 text-primary" strokeWidth={3} />
         </div>
         <div className="text-xl font-bold text-black mb-1">Bookingen er bekreftet!</div>
         <div className="text-[13px] text-muted mb-6">Du mottar en bekreftelse pa e-post</div>

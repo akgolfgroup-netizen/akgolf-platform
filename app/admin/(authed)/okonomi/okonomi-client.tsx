@@ -1,14 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo, useState } from "react";
-import {
- DollarSign,
- CreditCard,
- AlertCircle,
- RotateCcw,
- Download,
- FileText,
-} from "lucide-react";
+import { DollarSign } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
  AdminDateRangePicker,
@@ -232,13 +227,13 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <Button
  variant="secondary"
  >
- <Download className="w-4 h-4 mr-2"/>
+ <Icon name="download" className="w-4 h-4 mr-2" />
  Eksporter
  </Button>
  <Button
  variant="accent"
  >
- <FileText className="w-4 h-4 mr-2"/>
+ <Icon name="description" className="w-4 h-4 mr-2" />
  Ny faktura
  </Button>
  </div>
@@ -257,7 +252,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <StatCardSpark
  label="Uke"
  value={formatKr(data.revenue.week)}
- icon={<CreditCard className="w-5 h-5"/>}
+ icon={<Icon name="credit_card" className="w-5 h-5" />}
  sparkData={sparkWeekly}
  sparkColor="success-text"
  change={{ value: 12, positive: true }}
@@ -265,7 +260,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <StatCardSpark
  label="Måned"
  value={formatKr(data.revenue.month)}
- icon={<AlertCircle className="w-5 h-5"/>}
+ icon={<Icon name="error" className="w-5 h-5" />}
  sparkData={sparkMonthly}
  sparkColor="#C48A32"
  change={{ value: 15, positive: true }}
@@ -273,7 +268,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  <StatCardSpark
  label="År"
  value={yearTotal}
- icon={<RotateCcw className="w-5 h-5"/>}
+ icon={<Icon name="restart_alt" className="w-5 h-5" />}
  sparkData={sparkYearly}
  sparkColor="#D1F843"
  change={{ value: 22, positive: true }}

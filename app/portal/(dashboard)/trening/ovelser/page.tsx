@@ -1,12 +1,5 @@
-import {
-  Clock,
-  Target,
-  Dumbbell,
-  Zap,
-  Mountain,
-  Trophy,
-  CircleDot,
-} from "lucide-react";
+import { Icon } from "@/components/ui/icon";
+import { Target, Dumbbell, Zap, Mountain, Trophy, CircleDot } from "lucide-react";
 
 export const metadata = {
   title: "Øvelser | AK Golf Portal",
@@ -172,7 +165,7 @@ export default async function OvelserPage() {
                         </p>
                         <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-outline">
                           <span className="flex items-center gap-1 tabular-nums">
-                            <Clock className="w-3 h-3" />
+                            <Icon name="schedule" className="w-3 h-3" />
                             {drill.duration_minutes} min
                           </span>
                           {drill.training_areas?.length > 0 && (

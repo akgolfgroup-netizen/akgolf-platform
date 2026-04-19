@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import React from "react";
 import Link from "next/link";
-import { TrendingUp, TrendingDown, AlertCircle, ChevronRight } from "lucide-react";
+
 import { Card } from "@/components/ui/card";
 import { AdminLineChart } from "@/components/portal/mission-control/ui/charts/AdminLineChart";
 import type { AdminLineChartDatum } from "@/components/portal/mission-control/ui/charts/AdminLineChart";
@@ -89,7 +91,7 @@ function ImprovementItem({
         <p className="text-xs text-grey-400">HCP: {student.currentHcp}</p>
       </div>
       <div className="flex items-center gap-1 text-success">
-        <TrendingDown className="w-4 h-4" />
+        <Icon name="trending_down" className="w-4 h-4" />
         <span className="text-sm font-semibold tabular-nums">{student.hcpChange}</span>
       </div>
     </div>
@@ -99,7 +101,7 @@ function ImprovementItem({
 function FollowUpItem({ student }: { student: StudentProgressData["needsFollowUp"][0] }) {
   return (
     <div className="flex items-start gap-3 p-3 rounded-lg bg-error-light/50 hover:bg-error-light transition-colors">
-      <AlertCircle className="w-4 h-4 text-error shrink-0 mt-0.5" />
+      <Icon name="error" className="w-4 h-4 text-error shrink-0 mt-0.5" />
       <div className="flex-1 min-w-0">
         <p className="text-sm font-medium text-black">{student.name}</p>
         <p className="text-xs text-grey-400">{student.lastActivity}</p>
@@ -109,7 +111,7 @@ function FollowUpItem({ student }: { student: StudentProgressData["needsFollowUp
         href={`/admin/elever/${student.id}`}
         className="text-grey-400 hover:text-black transition-colors"
       >
-        <ChevronRight className="w-4 h-4" />
+        <Icon name="chevron_right" className="w-4 h-4" />
       </Link>
     </div>
   );
@@ -129,7 +131,7 @@ export function StudentProgress({ data = defaultData }: StudentProgressProps) {
     <Card className="p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <TrendingUp className="w-5 h-5 text-grey-400" />
+          <Icon name="trending_up" className="w-5 h-5 text-grey-400" />
           <h2 className="text-sm font-semibold text-black">Elev-progresjon</h2>
         </div>
         <div className="flex items-center gap-2">
@@ -142,9 +144,9 @@ export function StudentProgress({ data = defaultData }: StudentProgressProps) {
             )}
           >
             {isImproving ? (
-              <TrendingDown className="w-3.5 h-3.5" />
+              <Icon name="trending_down" className="w-3.5 h-3.5" />
             ) : (
-              <TrendingUp className="w-3.5 h-3.5" />
+              <Icon name="trending_up" className="w-3.5 h-3.5" />
             )}
             {hcpChange > 0 ? "+" : ""}
             {hcpChange}

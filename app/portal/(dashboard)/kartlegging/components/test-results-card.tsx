@@ -1,12 +1,14 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 /**
  * TestResultsCard — siste testresultater + manglende-indikator.
  * Bruker design-system tokens + p-list-mønsteret fra portal-profil wireframe.
  */
 
 import Link from "next/link";
-import { ChevronRight, Check, X } from "lucide-react";
+
 import { MonoLabel } from "@/components/portal/patterns";
 import type { TestHistory } from "@/lib/portal/kartlegging";
 
@@ -59,9 +61,9 @@ export function TestResultsCard({ history }: TestResultsCardProps) {
                 }`}
               >
                 {t.passed ? (
-                  <Check className="w-3.5 h-3.5" />
+                  <Icon name="check" className="w-3.5 h-3.5" />
                 ) : (
-                  <X className="w-3.5 h-3.5" />
+                  <Icon name="close" className="w-3.5 h-3.5" />
                 )}
               </div>
               <div className="min-w-0">
@@ -83,7 +85,7 @@ export function TestResultsCard({ history }: TestResultsCardProps) {
         className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:opacity-80 transition-opacity"
       >
         Se alle tester
-        <ChevronRight className="w-4 h-4" />
+        <Icon name="chevron_right" className="w-4 h-4" />
       </Link>
     </div>
   );

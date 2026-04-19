@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Calendar, Clock } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import {
   AdminDialog,
@@ -107,7 +109,7 @@ export function RescheduleDialog({
             isLoading={loading}
             onClick={handleSubmit}
           >
-            {!loading && <Calendar className="w-4 h-4" />}
+            {!loading && <Icon name="calendar_today" className="w-4 h-4" />}
             Flytt booking
           </Button>
         </>
@@ -159,7 +161,7 @@ export function RescheduleDialog({
         {/* Forhåndsvisning */}
         {newEnd && (
           <div className="flex items-center gap-2 text-xs text-grey-400">
-            <Clock className="w-3.5 h-3.5" />
+            <Icon name="schedule" className="w-3.5 h-3.5" />
             <span>
               {time} – {newEnd} ({duration} min)
             </span>

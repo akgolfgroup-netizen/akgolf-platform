@@ -1,12 +1,14 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo } from "react";
 import type { Capability } from "@prisma/client";
 import {
   CAPABILITY_CATALOG,
   CAPABILITY_GROUPS,
 } from "@/lib/portal/capabilities";
-import { ShieldAlert } from "lucide-react";
+
 
 interface CapabilityChecklistProps {
   value: Capability[];
@@ -84,7 +86,7 @@ export function CapabilityChecklist({
                         </span>
                         {item.requiresMfa && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-warning-light px-2 py-0.5 text-[10px] font-medium text-warning-text">
-                            <ShieldAlert className="h-3 w-3" />
+                            <Icon name="shield"Alert className="h-3 w-3" />
                             2FA
                           </span>
                         )}

@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Navigation, MapPinOff } from "lucide-react";
+
 import { haversineDistance, playsAsDistance } from "@/lib/portal/golf/gps/distance-calculator";
 
 interface GPSDistanceProps {
@@ -96,7 +98,7 @@ export function GPSDistance({
         onClick={startWatch}
         className="w-full flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-grey-100)] text-[var(--color-grey-600)] text-sm font-medium hover:bg-[var(--color-grey-200)] transition-colors mt-2"
       >
-        <Navigation className="h-4 w-4" />
+        <Icon name="navigation" className="h-4 w-4" />
         Aktiver GPS-avstand
       </button>
     );
@@ -114,7 +116,7 @@ export function GPSDistance({
   if (state.status === "denied") {
     return (
       <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-error)]/5 text-[var(--color-error)] text-sm mt-2">
-        <MapPinOff className="h-4 w-4" />
+        <Icon name="location_on"Off className="h-4 w-4" />
         GPS-tilgang avslatt. Aktiver i nettleserinnstillinger.
       </div>
     );
@@ -123,7 +125,7 @@ export function GPSDistance({
   if (state.status === "unavailable") {
     return (
       <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-grey-100)] text-[var(--color-grey-500)] text-sm mt-2">
-        <MapPinOff className="h-4 w-4" />
+        <Icon name="location_on"Off className="h-4 w-4" />
         GPS ikke tilgjengelig.
       </div>
     );
@@ -133,7 +135,7 @@ export function GPSDistance({
   return (
     <div className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-[var(--color-grey-100)] mt-2">
       <div className="flex items-center gap-2">
-        <Navigation className="h-4 w-4 text-[var(--color-brand)]" />
+        <Icon name="navigation" className="h-4 w-4 text-[var(--color-brand)]" />
         <span className="text-sm font-bold text-[var(--color-grey-900)] tabular-nums">
           {state.distance}m
         </span>

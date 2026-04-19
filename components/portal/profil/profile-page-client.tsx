@@ -1,20 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 import { createBrowserClient } from "@supabase/ssr";
 import { useRouter } from "next/navigation";
-import {
-  User,
-  Bell,
-  KeyRound,
-  Crown,
-  ChevronRight,
-  LogOut,
-  Activity,
-  BookOpen,
-  Flame,
-  Target,
-} from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { AvatarUpload } from "./avatar-upload";
 import { SkillLevelBadge } from "@/components/portal/statistikk/skill-level-badge";
@@ -108,7 +99,7 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
                 {roleLabelMap[profile.role] ?? profile.role}
               </span>
               <span className="inline-flex items-center gap-1 rounded-full bg-accent-cta/20 px-2.5 py-1 text-xs font-semibold text-accent-cta">
-                <Crown className="h-3 w-3" />
+                <Icon name="workspace_premium" className="h-3 w-3" />
                 {tierLabelMap[profile.subscriptionTier] ?? profile.subscriptionTier}
               </span>
               {stats.currentHandicap !== null && (
@@ -144,21 +135,21 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
           label="Økter"
           value={String(stats.trainingSessions)}
           sublabel="siste 30d"
-          icon={<Activity className="h-3.5 w-3.5" />}
+          icon={<Icon name="monitoring" className="h-3.5 w-3.5" />}
           delay={0.1}
         />
         <StatMini
           label="Coaching"
           value={String(stats.coachingSessions)}
           sublabel="totalt"
-          icon={<BookOpen className="h-3.5 w-3.5" />}
+          icon={<Icon name="menu_book" className="h-3.5 w-3.5" />}
           delay={0.15}
         />
         <StatMini
           label="Streak"
           value={String(stats.streak)}
           sublabel={stats.streak === 1 ? "dag" : "dager"}
-          icon={<Flame className="h-3.5 w-3.5" />}
+          icon={<Icon name="local_fire_department" className="h-3.5 w-3.5" />}
           delay={0.2}
         />
       </div>
@@ -171,7 +162,7 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/8">
-              <Target className="h-5 w-5 text-primary" />
+              <Icon name="my_location" className="h-5 w-5 text-primary" />
             </div>
             <div>
               <p className="text-sm font-semibold text-on-surface">
@@ -199,21 +190,21 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
           Innstillinger
         </MonoLabel>
         <div className="divide-y divide-portal-border">
-          <SettingsRow
+          <Icon name="settings"Row
             href="/portal/profil/innstillinger"
-            icon={<User className="h-4 w-4" />}
+            icon={<Icon name="person" className="h-4 w-4" />}
             label="Konto"
             description="Navn, e-post, telefon"
           />
-          <SettingsRow
+          <Icon name="settings"Row
             href="/portal/profil/varsler"
-            icon={<Bell className="h-4 w-4" />}
+            icon={<Icon name="notifications" className="h-4 w-4" />}
             label="Varsler"
             description="Push og e-postvarsler"
           />
-          <SettingsRow
+          <Icon name="settings"Row
             href="/portal/profil/passord"
-            icon={<KeyRound className="h-4 w-4" />}
+            icon={<Icon name="key" className="h-4 w-4" />}
             label="Passord"
             description="Endre passord"
           />
@@ -230,7 +221,7 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
           onClick={handleSignOut}
           className="flex w-full items-center justify-center gap-2 rounded-2xl bg-surface-container-lowest px-5 py-3.5 text-sm font-medium text-error shadow-card transition-all duration-300 hover:-translate-y-px"
         >
-          <LogOut className="h-4 w-4" />
+          <Icon name="logout" className="h-4 w-4" />
           Logg ut
         </button>
       </motion.div>
@@ -299,7 +290,7 @@ function SettingsRow({
         <p className="text-sm font-medium text-on-surface">{label}</p>
         <p className="text-xs text-on-surface-variant">{description}</p>
       </div>
-      <ChevronRight className="h-4 w-4 text-outline opacity-0 transition-opacity group-hover:opacity-100" />
+      <Icon name="chevron_right" className="h-4 w-4 text-outline opacity-0 transition-opacity group-hover:opacity-100" />
     </Link>
   );
 }

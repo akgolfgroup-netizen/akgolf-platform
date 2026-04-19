@@ -1,14 +1,7 @@
+import { Icon } from "@/components/ui/icon";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  Clock,
-  Target,
-  Dumbbell,
-  CheckCircle2,
-  Lightbulb,
-  Play,
-} from "lucide-react";
+
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -68,7 +61,7 @@ export default async function TestDetailPage({ params }: Props) {
         href="/portal/trening/tester"
         className="inline-flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <Icon name="arrow_back" className="w-4 h-4" />
         Tilbake til tester
       </Link>
 
@@ -97,22 +90,22 @@ export default async function TestDetailPage({ params }: Props) {
         {/* Quick stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
-            <Clock className="w-5 h-5 text-on-surface mb-2" />
+            <Icon name="schedule" className="w-5 h-5 text-on-surface mb-2" />
             <p className="text-xl font-bold text-on-surface tabular-nums">{protocol.duration_minutes} min</p>
             <p className="text-sm text-on-surface-variant">Varighet</p>
           </div>
           <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
-            <Target className="w-5 h-5 text-on-surface mb-2" />
+            <Icon name="my_location" className="w-5 h-5 text-on-surface mb-2" />
             <p className="text-xl font-bold text-on-surface tabular-nums">{protocol.shots_required}</p>
             <p className="text-sm text-on-surface-variant">Slag</p>
           </div>
           <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
-            <Dumbbell className="w-5 h-5 text-on-surface mb-2" />
+            <Icon name="fitness_center" className="w-5 h-5 text-on-surface mb-2" />
             <p className="text-xl font-bold text-on-surface tabular-nums">{protocol.clubs?.length ?? 0}</p>
             <p className="text-sm text-on-surface-variant">Køller</p>
           </div>
           <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
-            <CheckCircle2 className="w-5 h-5 text-on-surface mb-2" />
+            <Icon name="check"Circle2 className="w-5 h-5 text-on-surface mb-2" />
             <p className="text-xl font-bold text-on-surface">
               {protocol.min_category}-{protocol.max_category}
             </p>
@@ -138,7 +131,7 @@ export default async function TestDetailPage({ params }: Props) {
         {/* Tips */}
         <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
           <h2 className="text-lg font-semibold text-on-surface mb-4 flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-warning" />
+            <Icon name="lightbulb" className="w-5 h-5 text-warning" />
             Tips
           </h2>
           <ul className="space-y-2">
@@ -217,7 +210,7 @@ export default async function TestDetailPage({ params }: Props) {
         <button
           className="flex items-center gap-3 px-8 py-4 bg-black text-white font-semibold rounded-[20px] transition-colors hover:opacity-90"
         >
-          <Play className="w-5 h-5" />
+          <Icon name="play_arrow" className="w-5 h-5" />
           Start Test
         </button>
       </div>

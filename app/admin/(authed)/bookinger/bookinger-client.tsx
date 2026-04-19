@@ -1,11 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useCallback } from "react";
 import Link from "next/link";
-import {
-  Search, Download, Plus, Calendar, List, Clock, User,
-  CheckCircle, XCircle, AlertCircle, Loader2, Target,
-} from "lucide-react";
+import { Calendar, List, User, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { Button } from "@/components/ui/button";
@@ -129,14 +128,14 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
         <div className="bg-white border border-grey-200 rounded-xl p-6">
           <div className="flex flex-col lg:flex-row gap-3">
             <div className="flex-1 relative">
-              <Search className="w-4 h-4 text-grey-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Icon name="search" className="w-4 h-4 text-grey-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <AdminInput 
                 value={searchQuery} 
                 onChange={(e) => handleSearchChange(e.target.value)} 
                 placeholder="Søk etter elev, tjeneste..." 
                 className="pl-9" 
               />
-              {isPending && <Loader2 className="w-4 h-4 text-grey-400 animate-spin absolute right-3 top-1/2 -translate-y-1/2" />}
+              {isPending && <Icon name="progress_activity" className="w-4 h-4 text-grey-400 animate-spin absolute right-3 top-1/2 -translate-y-1/2" />}
             </div>
             
             {/* View Mode Toggle */}
@@ -172,13 +171,13 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
               <AdminDropdown 
                 label="Handlinger" 
                 items={[
-                  { id: "export", label: "Eksporter CSV", icon: <Download className="w-4 h-4" />, onSelect: () => exportCsv(bookings) },
+                  { id: "export", label: "Eksporter CSV", icon: <Icon name="download" className="w-4 h-4" />, onSelect: () => exportCsv(bookings) },
                   { id: "remind", label: "Send påminnelse (dagens)", onSelect: () => handleBulkReminder(dayBookings) },
                 ]} 
               />
               <Link href="/admin/bookinger/ny">
                 <Button variant="accent">
-                  <Plus className="w-4 h-4" />
+                  <Icon name="add" className="w-4 h-4" />
                   <span className="hidden sm:inline">Ny booking</span>
                 </Button>
               </Link>
@@ -220,7 +219,7 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
             <div className="divide-y divide-grey-200">
               {dayBookings.length === 0 ? (
                 <AdminEmptyState 
-                  icon={<Calendar className="w-6 h-6" />} 
+                  icon={<Icon name="calendar_today" className="w-6 h-6" />} 
                   title="Ingen bookinger denne dagen" 
                   description="Velg en annen dato eller opprett en ny booking." 
                   className="border-0" 
@@ -298,18 +297,18 @@ function DayBookingRow({ booking, onDetail }: { booking: AdminBooking; onDetail:
             </Badge>
             {focusCfg && (
               <Badge variant={focusCfg.variant}>
-                <Target className="w-3 h-3" />
+                <Icon name="my_location" className="w-3 h-3" />
                 {focusCfg.label}
               </Badge>
             )}
           </div>
           <div className="flex flex-wrap items-center gap-4 text-xs text-grey-400">
             <span className="flex items-center gap-1">
-              <User className="w-3.5 h-3.5" />
+              <Icon name="person" className="w-3.5 h-3.5" />
               {booking.User?.name ?? booking.User?.email ?? "Ukjent"}
             </span>
             <span className="flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" />
+              <Icon name="schedule" className="w-3.5 h-3.5" />
               {booking.Instructor?.User?.name ?? "Ukjent"}
             </span>
           </div>

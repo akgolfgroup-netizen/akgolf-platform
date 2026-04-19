@@ -1,5 +1,7 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import {
   PieChart,
   Pie,
@@ -8,7 +10,7 @@ import {
   Tooltip,
 } from "recharts";
 import { colors } from "@/lib/design-tokens";
-import { CircleDashed } from "lucide-react";
+
 import { MonoLabel } from "@/components/portal/patterns";
 
 interface SessionType {
@@ -35,7 +37,7 @@ export function SessionsDonut({ data = MOCK_DATA }: SessionsDonutProps) {
     <div className="flex h-full flex-col rounded-xl border border-grey-200 bg-white p-5 shadow-card">
       <div className="mb-4 flex items-center justify-between">
         <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Økt-fordeling</MonoLabel>
-        <CircleDashed className="h-4 w-4 text-grey-300" />
+        <Icon name="circle"Dashed className="h-4 w-4 text-grey-300" />
       </div>
 
       <div className="flex flex-1 items-center gap-4">

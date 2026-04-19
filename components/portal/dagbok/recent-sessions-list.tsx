@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Clock, Target, Star, ChevronRight, Dumbbell } from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 import { format, isToday, isSameDay, subDays } from "date-fns";
@@ -60,7 +62,7 @@ export function RecentSessionsList({
     return (
       <PremiumCard padding="lg" className="text-center py-8">
         <div className="w-12 h-12 rounded-full bg-grey-100 flex items-center justify-center mx-auto mb-3">
-          <Dumbbell className="w-6 h-6 text-grey-400" />
+          <Icon name="fitness_center" className="w-6 h-6 text-grey-400" />
         </div>
         <p className="text-sm text-grey-400">Ingen økter logget ennå</p>
         <p className="text-xs text-grey-300 mt-1">Start din første økt i dag!</p>
@@ -113,13 +115,13 @@ export function RecentSessionsList({
                 <div className="flex items-center gap-3 text-xs text-grey-400">
                   {session.durationMinutes && (
                     <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
+                      <Icon name="schedule" className="w-3 h-3" />
                       {session.durationMinutes} min
                     </span>
                   )}
                   {session.focusArea && (
                     <span className="flex items-center gap-1 truncate">
-                      <Target className="w-3 h-3" />
+                      <Icon name="my_location" className="w-3 h-3" />
                       {session.focusArea}
                     </span>
                   )}
@@ -129,13 +131,13 @@ export function RecentSessionsList({
               {/* Intensity/rating indicator */}
               {session.intensity && (
                 <div className="flex items-center gap-1 text-xs">
-                  <Star className="w-3 h-3 text-accent-cta fill-accent-cta" />
+                  <Icon name="star" className="w-3 h-3 text-accent-cta fill-accent-cta" />
                   <span className="font-medium text-black">{session.intensity}</span>
                 </div>
               )}
 
               {/* Chevron */}
-              <ChevronRight className="w-4 h-4 text-grey-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <Icon name="chevron_right" className="w-4 h-4 text-grey-300 opacity-0 group-hover:opacity-100 transition-opacity" />
             </motion.button>
           );
         })}

@@ -1,19 +1,12 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { useState } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  CalendarDays,
-  MapPin,
-  Play,
-  Plus,
-  Target,
-  Zap,
-  TrendingUp,
-  LayoutGrid,
-} from "lucide-react";
+
 import {
   CourseHero,
   BentoCard,
@@ -114,7 +107,7 @@ export function CourseHeroClient({
                 <GlassButton
                   variant="glass"
                   size="icon"
-                  icon={<LayoutGrid className="w-4 h-4" />}
+                  icon={<Icon name="grid_view" className="w-4 h-4" />}
                   title="Bytt til standard dashboard"
                 />
               </Link>
@@ -171,7 +164,7 @@ export function CourseHeroClient({
               </div>
               <div className="flex items-center gap-3 mt-4">
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent-cta/18 text-accent-cta text-[12px] font-semibold">
-                  <TrendingUp className="w-3 h-3" />
+                  <Icon name="trending_up" className="w-3 h-3" />
                   0.8 vs forrige
                 </span>
                 <MonoLabel size="xs" className="text-white/45">
@@ -234,7 +227,7 @@ export function CourseHeroClient({
                       </MonoLabel>
                     </div>
                     <div className="flex items-center gap-1.5 mt-3 text-xs text-white/55">
-                      <CalendarDays className="w-3.5 h-3.5" />
+                      <Icon name="calendar_today"Days className="w-3.5 h-3.5" />
                       <span>{nextBookingDay}</span>
                     </div>
                   </div>
@@ -242,7 +235,7 @@ export function CourseHeroClient({
                     <GlassButton
                       variant="lime"
                       size="sm"
-                      icon={<Play className="w-3 h-3" />}
+                      icon={<Icon name="play_arrow" className="w-3 h-3" />}
                     >
                       Forbered
                     </GlassButton>
@@ -260,7 +253,7 @@ export function CourseHeroClient({
                     <GlassButton
                       variant="lime"
                       size="sm"
-                      icon={<Plus className="w-3.5 h-3.5" />}
+                      icon={<Icon name="add" className="w-3.5 h-3.5" />}
                     >
                       Book time
                     </GlassButton>
@@ -277,7 +270,7 @@ export function CourseHeroClient({
                   <GlassButton
                     variant="glass"
                     size="sm"
-                    icon={<Zap className="w-3 h-3" />}
+                    icon={<Icon name="bolt" className="w-3 h-3" />}
                   >
                     Live runde
                   </GlassButton>
@@ -286,7 +279,7 @@ export function CourseHeroClient({
                   <GlassButton
                     variant="glass"
                     size="sm"
-                    icon={<Target className="w-3 h-3" />}
+                    icon={<Icon name="my_location" className="w-3 h-3" />}
                   >
                     Statistikk
                   </GlassButton>
@@ -295,7 +288,7 @@ export function CourseHeroClient({
                   <GlassButton
                     variant="glass"
                     size="sm"
-                    icon={<MapPin className="w-3 h-3" />}
+                    icon={<Icon name="location_on" className="w-3 h-3" />}
                   >
                     Logg
                   </GlassButton>

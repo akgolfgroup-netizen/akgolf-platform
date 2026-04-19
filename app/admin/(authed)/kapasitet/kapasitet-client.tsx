@@ -1,15 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useMemo } from "react";
-import {
-  Gauge,
-  TrendingUp,
-  Clock,
-  DollarSign,
-  ChevronRight,
-  Sparkles,
-  Info,
-} from "lucide-react";
+import { DollarSign } from "lucide-react";
 import {
   MCTopbar,
   useMCSidebar,
@@ -213,7 +207,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
       <div className="p-6 space-y-6">
         {/* Alert */}
         <div className="flex items-start gap-3 rounded-xl bg-info-light border border-info/20 p-4 text-info-text">
-          <Info className="w-5 h-5 shrink-0 mt-0.5" />
+          <Icon name="info" className="w-5 h-5 shrink-0 mt-0.5" />
           <p className="text-sm">
             <strong>Kapasitetsoversikt:</strong> Basert på tilgjengelighet og
             bookinger for denne uken ({data.weekRange.from} – {data.weekRange.to}
@@ -226,12 +220,12 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
           <AdminStatCard
             label="Denne uken"
             value={`${occupancyPct}%`}
-            icon={<Gauge className="w-5 h-5" />}
+            icon={<Icon name="speed" className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Ledige sloter"
             value={freeSlots}
-            icon={<Clock className="w-5 h-5" />}
+            icon={<Icon name="schedule" className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Potensiell inntekt"
@@ -241,7 +235,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
           <AdminStatCard
             label="Ukentlig inntekt"
             value={formatKr(weeklyTotal.revenue)}
-            icon={<TrendingUp className="w-5 h-5" />}
+            icon={<Icon name="trending_up" className="w-5 h-5" />}
           />
         </div>
 
@@ -401,7 +395,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                     </div>
                   </div>
                   <span className="p-1.5 text-grey-400">
-                    <ChevronRight className="w-4 h-4" />
+                    <Icon name="chevron_right" className="w-4 h-4" />
                   </span>
                 </div>
               ))
@@ -417,7 +411,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
         {/* AI Recommendations (statisk foreløpig) */}
         <div className="bg-white border border-grey-200 rounded-xl p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-5 h-5 text-grey-500" />
+            <Icon name="auto_awesome" className="w-5 h-5 text-grey-500" />
             <h3 className="text-lg font-semibold text-black">
               AI-anbefalinger
             </h3>

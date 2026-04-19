@@ -1,15 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useTransition } from "react";
-import {
-  Calendar,
-  BookOpen,
-  BarChart3,
-  TrendingDown,
-  Target,
-  Zap,
-  MessageCircle,
-} from "lucide-react";
+import { Calendar, BookOpen, BarChart3, TrendingDown, Target, Zap } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import {
   AdminInput,
@@ -329,7 +323,7 @@ function DagbokTab({
 
           {log.coachFeedback && (
             <div className="mt-2 p-2 rounded bg-black/5 text-sm text-black flex items-start gap-1.5">
-              <MessageCircle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+              <Icon name="chat_bubble" className="h-3.5 w-3.5 mt-0.5 shrink-0" />
               <span>{log.coachFeedback}</span>
             </div>
           )}
@@ -665,7 +659,7 @@ function TrackManTab({ data }: { data: unknown }) {
   if (sessions.length === 0) {
     return (
       <AdminEmptyState
-        icon={<Zap className="w-6 h-6" />}
+        icon={<Icon name="bolt" className="w-6 h-6" />}
         title="Ingen TrackMan-data"
         description="Ingen TrackMan-økter registrert for denne eleven."
       />

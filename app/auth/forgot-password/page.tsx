@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Zap, Mail, CheckCircle2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { sendPasswordReset } from "./actions";
@@ -42,7 +44,7 @@ export default function ForgotPasswordPage() {
         >
           <Card className="p-8 bg-white border-black/10 text-center">
             <div className="w-16 h-16 bg-success/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 className="w-8 h-8 text-success" />
+              <Icon name="check"Circle2 className="w-8 h-8 text-success" />
             </div>
             <h1 className="text-2xl font-bold text-black mb-2">
               Sjekk e-posten din
@@ -74,7 +76,7 @@ export default function ForgotPasswordPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Zap className="w-8 h-8 text-accent-cta" />
+              <Icon name="bolt" className="w-8 h-8 text-accent-cta" />
             </div>
             <h1 className="text-2xl font-bold text-black">Glemt passord</h1>
             <p className="text-grey-400">
@@ -89,7 +91,7 @@ export default function ForgotPasswordPage() {
                 E-post
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
                 <input
                   name="email"
                   type="email"

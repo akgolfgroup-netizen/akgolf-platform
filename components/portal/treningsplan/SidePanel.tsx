@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+
 import { StandardSessions } from "./StandardSessions";
 import { PyramidFilter } from "./PyramidFilter";
 import { ExerciseBank } from "./ExerciseBank";
@@ -28,7 +30,7 @@ export function SidePanel({
         className="lg:hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-blue-600 hover:bg-blue-500 text-white rounded-full shadow-lg flex items-center justify-center transition-colors"
         aria-label="Åpne øvelsesbank"
       >
-        <Menu className="w-6 h-6" />
+        <Icon name="menu" className="w-6 h-6" />
       </button>
 
       {/* Mobile overlay */}
@@ -57,7 +59,7 @@ export function SidePanel({
             className="lg:hidden p-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-colors"
             aria-label="Lukk"
           >
-            <X className="w-5 h-5" />
+            <Icon name="close" className="w-5 h-5" />
           </button>
         </div>
 

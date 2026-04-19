@@ -1,15 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  MessageSquare,
-  AlertTriangle,
-  Clock,
-  User,
-  CheckCircle2,
-  MapPin,
-} from "lucide-react";
+
 import {
   AdminTextarea,
   AdminInput,
@@ -200,7 +195,7 @@ export default function KalenderOverlays({
                   onOpenNoteModal(drawerBooking);
                 }}
               >
-                <MessageSquare className="w-4 h-4" />
+                <Icon name="chat" className="w-4 h-4" />
                 Notat
               </Button>
               {drawerBooking.status !== "NO_SHOW" &&
@@ -210,7 +205,7 @@ export default function KalenderOverlays({
                     isLoading={isNoShowPending}
                     onClick={() => onMarkNoShow(drawerBooking.id)}
                   >
-                    <AlertTriangle className="w-4 h-4" />
+                    <Icon name="warning" className="w-4 h-4" />
                     Ikke møtt
                   </Button>
                 )}
@@ -231,7 +226,7 @@ export default function KalenderOverlays({
 
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <Clock className="w-4 h-4 text-grey-400 mt-0.5" />
+                <Icon name="schedule" className="w-4 h-4 text-grey-400 mt-0.5" />
                 <div>
                   <div className="text-xs text-grey-400">Tidspunkt</div>
                   <div className="text-sm text-black font-medium tabular-nums">
@@ -242,7 +237,7 @@ export default function KalenderOverlays({
               </div>
 
               <div className="flex items-start gap-3">
-                <User className="w-4 h-4 text-grey-400 mt-0.5" />
+                <Icon name="person" className="w-4 h-4 text-grey-400 mt-0.5" />
                 <div>
                   <div className="text-xs text-grey-400">Elev</div>
                   <div className="text-sm text-grey-900 font-medium">
@@ -258,7 +253,7 @@ export default function KalenderOverlays({
 
               {drawerBooking.instructor.user.name && (
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-grey-400 mt-0.5" />
+                  <Icon name="check"Circle2 className="w-4 h-4 text-grey-400 mt-0.5" />
                   <div>
                     <div className="text-xs text-grey-400">Instruktør</div>
                     <div className="text-sm text-grey-900 font-medium">
@@ -270,7 +265,7 @@ export default function KalenderOverlays({
 
               {drawerBooking.location && (
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-grey-400 mt-0.5" />
+                  <Icon name="location_on" className="w-4 h-4 text-grey-400 mt-0.5" />
                   <div>
                     <div className="text-xs text-grey-400">Lokasjon</div>
                     <div className="text-sm text-grey-900 font-medium">

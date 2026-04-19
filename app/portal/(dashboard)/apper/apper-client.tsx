@@ -1,24 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
-import {
-  AlertCircle,
-  Check,
-  Loader2,
-  Settings,
-  NotebookPen,
-  Dumbbell,
-  BarChart3,
-  Users,
-  Target,
-  ScanSearch,
-  Trophy,
-  Package,
-  Sparkles,
-  type LucideIcon,
-} from "lucide-react";
+import { NotebookPen, Dumbbell, BarChart3, Users, Target, ScanSearch, Trophy, Package, type LucideIcon } from "lucide-react";
 import { PricingTable } from "@/components/portal/pricing/pricing-table";
 import {
   staggerContainer,
@@ -205,7 +192,7 @@ export function ApperClient({
         <motion.div variants={fadeInUp} role="alert">
           <div className="flex items-center gap-3 rounded-xl p-4 bg-success-light border border-success/25">
             <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-success/15">
-              <Check className="h-5 w-5 text-success" />
+              <Icon name="check" className="h-5 w-5 text-success" />
             </div>
             <p className="text-sm font-medium text-success">
               Abonnementet ditt er aktivert. Din 14-dagers prøveperiode har startet.
@@ -219,7 +206,7 @@ export function ApperClient({
         <motion.div variants={fadeInUp} role="alert">
           <div className="flex items-center gap-3 rounded-xl p-4 bg-error-light border border-error/25">
             <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-error/15">
-              <AlertCircle className="h-5 w-5 text-error" />
+              <Icon name="error" className="h-5 w-5 text-error" />
             </div>
             <p className="text-sm font-medium text-error">{error}</p>
           </div>
@@ -258,7 +245,7 @@ export function ApperClient({
                 disabled={loading === "portal"}
                 className="flex items-center gap-1.5 text-[11px] font-semibold text-black hover:opacity-80 transition-opacity"
               >
-                <Settings className="h-3.5 w-3.5" />
+                <Icon name="settings" className="h-3.5 w-3.5" />
                 {loading === "portal" ? "Åpner…" : "Administrer"}
               </button>
             )}
@@ -279,7 +266,7 @@ export function ApperClient({
                         {isBundle ? (
                           <Package className="h-[18px] w-[18px] text-black" />
                         ) : (
-                          <Sparkles className="h-[18px] w-[18px] text-black" />
+                          <Icon name="auto_awesome" className="h-[18px] w-[18px] text-black" />
                         )}
                       </div>
                       <div>
@@ -293,7 +280,7 @@ export function ApperClient({
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-1 rounded-full bg-success-light border border-success/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-success">
-                      <Check className="h-3 w-3" />
+                      <Icon name="check" className="h-3 w-3" />
                       Aktiv
                     </span>
                   </li>
@@ -351,7 +338,7 @@ export function ApperClient({
                           : "bg-success-light text-success"
                       )}
                     >
-                      <Check className="h-3 w-3" />
+                      <Icon name="check" className="h-3 w-3" />
                       Aktiv
                     </span>
                   )}
@@ -420,7 +407,7 @@ export function ApperClient({
                       )}
                     >
                       {loading === bundle.slug ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <Icon name="progress_activity" className="h-4 w-4 animate-spin" />
                       ) : (
                         "Prøv 7 dager gratis"
                       )}
@@ -469,7 +456,7 @@ export function ApperClient({
                     >
                       {active ? (
                         <>
-                          <Check className="h-3 w-3" />
+                          <Icon name="check" className="h-3 w-3" />
                           Aktiv
                         </>
                       ) : (
@@ -506,7 +493,7 @@ export function ApperClient({
                       className="inline-flex h-8 items-center justify-center rounded-full bg-success-light px-3 text-[11px] font-semibold text-success hover:bg-success/15 transition-colors"
                     >
                       {loading === mod.slug ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        <Icon name="progress_activity" className="h-3.5 w-3.5 animate-spin" />
                       ) : (
                         "Aktiver"
                       )}
@@ -518,7 +505,7 @@ export function ApperClient({
                       className="inline-flex h-8 items-center justify-center rounded-full bg-accent-cta px-3 text-[11px] font-semibold text-accent-cta-text hover:brightness-95 transition-all"
                     >
                       {loading === mod.slug ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        <Icon name="progress_activity" className="h-3.5 w-3.5 animate-spin" />
                       ) : (
                         "Prøv gratis"
                       )}
@@ -539,7 +526,7 @@ export function ApperClient({
             disabled={loading === "portal"}
             className="flex items-center gap-2 text-sm text-grey-400 hover:text-black transition-colors"
           >
-            <Settings className="h-4 w-4" />
+            <Icon name="settings" className="h-4 w-4" />
             {loading === "portal" ? "Åpner…" : "Administrer abonnementer"}
           </button>
         </motion.div>

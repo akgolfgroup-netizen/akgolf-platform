@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+
 
 interface PaymentPendingPollerProps {
   bookingId: string;
@@ -89,7 +91,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
         <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-success/10">
-            <CheckCircle2 className="w-8 h-8 text-success" />
+            <Icon name="check"Circle2 className="w-8 h-8 text-success" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betaling mottatt</h2>
           <p className="text-muted">Laster bekreftelsen din...</p>
@@ -103,7 +105,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
         <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-error/10">
-            <AlertCircle className="w-8 h-8 text-error" />
+            <Icon name="error" className="w-8 h-8 text-error" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betalingen feilet</h2>
           <p className="text-muted mb-6">Vi kunne ikke bekrefte betalingen din. Vennligst prov igjen eller kontakt oss.</p>
@@ -120,7 +122,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
         <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-warning/10">
-            <CheckCircle2 className="w-8 h-8 text-warning" />
+            <Icon name="check"Circle2 className="w-8 h-8 text-warning" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betalingen behandles</h2>
           <p className="text-muted mb-6">Betalingen din er registrert, men bekreftelsen tar litt lenger enn vanlig. Du vil motta en bekreftelse pa e-post.</p>
@@ -136,7 +138,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
     <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
       <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
         <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-surface">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <Icon name="progress_activity" className="w-8 h-8 animate-spin text-primary" />
         </div>
         <h2 className="text-xl font-semibold mb-2 text-primary">Bekrefter betaling</h2>
         <p className="text-muted">Vi verifiserer betalingen din. Dette tar vanligvis noen sekunder...</p>

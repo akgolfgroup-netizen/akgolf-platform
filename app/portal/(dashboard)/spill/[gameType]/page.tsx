@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Save, ChevronLeft, Flame, Target, Disc, Trophy } from "lucide-react";
+import { Flame, Target, Disc } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -99,7 +101,7 @@ export default function GameSessionPage() {
               className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
               style={{ background: meta.bg }}
             >
-              <Trophy className="w-8 h-8" style={{ color: meta.color }} />
+              <Icon name="emoji_events" className="w-8 h-8" style={{ color: meta.color }} />
             </div>
             <h2 className="text-xl font-bold text-black mb-1">Økt fullført</h2>
             <p className="text-sm text-grey-400">{meta.title}</p>
@@ -137,7 +139,7 @@ export default function GameSessionPage() {
           href="/portal/spill"
           className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white border border-grey-200 text-black hover:bg-grey-50 transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <Icon name="chevron_left" className="w-4 h-4" />
         </Link>
         <div className="flex items-center gap-3">
           <div
@@ -254,7 +256,7 @@ export default function GameSessionPage() {
         onClick={handleFinish}
         isLoading={saving}
       >
-        <Save className="w-4 h-4 mr-2" />
+        <Icon name="save" className="w-4 h-4 mr-2" />
         Avslutt økt
       </Button>
     </div>

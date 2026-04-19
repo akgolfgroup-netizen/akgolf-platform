@@ -1,15 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  X,
-  Search,
-  UserPlus,
-  Check,
-  Clock,
-  Loader2,
-} from "lucide-react";
+
 import { cn } from "@/lib/portal/utils/cn";
 
 interface SearchResult {
@@ -117,14 +112,14 @@ export function AddFriendDialog({
                 onClick={onClose}
                 className="p-1.5 rounded-lg hover:bg-grey-50 transition-colors"
               >
-                <X className="w-4 h-4 text-muted" />
+                <Icon name="close" className="w-4 h-4 text-muted" />
               </button>
             </div>
 
             {/* Søkefelt */}
             <div className="px-5 py-3">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+                <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
                 <input
                   type="text"
                   value={query}
@@ -134,7 +129,7 @@ export function AddFriendDialog({
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface border-none text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/20"
                 />
                 {isSearching && (
-                  <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted animate-spin" />
+                  <Icon name="progress_activity" className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted animate-spin" />
                 )}
               </div>
             </div>
@@ -174,14 +169,14 @@ export function AddFriendDialog({
 
                     {state === "accepted" && (
                       <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-success-light text-success-text text-[11px] font-medium">
-                        <Check className="w-3 h-3" />
+                        <Icon name="check" className="w-3 h-3" />
                         Venner
                       </span>
                     )}
 
                     {state === "pending" && (
                       <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warning-light text-warning-text text-[11px] font-medium">
-                        <Clock className="w-3 h-3" />
+                        <Icon name="schedule" className="w-3 h-3" />
                         Sendt
                       </span>
                     )}
@@ -198,9 +193,9 @@ export function AddFriendDialog({
                         )}
                       >
                         {sendingId === result.id ? (
-                          <Loader2 className="w-3 h-3 animate-spin" />
+                          <Icon name="progress_activity" className="w-3 h-3 animate-spin" />
                         ) : (
-                          <UserPlus className="w-3 h-3" />
+                          <Icon name="person"Plus className="w-3 h-3" />
                         )}
                         Legg til
                       </button>

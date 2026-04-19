@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Award, Lock, Star, Flame, Trophy, Target, Zap, Crown, Medal } from "lucide-react";
+import { Award, Star, Flame, Trophy, Target, Zap, Crown, Medal } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Target,
@@ -54,7 +56,7 @@ export function AchievementsWidget({ achievements, totalAchievements }: Achievem
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Trophy className="w-5 h-5 text-amber-400" />
+          <Icon name="emoji_events" className="w-5 h-5 text-amber-400" />
           <h3 className="font-semibold text-slate-100">Prestasjoner</h3>
         </div>
         <span className="text-xs text-slate-400">
@@ -105,7 +107,7 @@ export function AchievementsWidget({ achievements, totalAchievements }: Achievem
               key={achievement.id}
               className="flex items-center gap-3 p-2 bg-slate-800/30 rounded-lg"
             >
-              <Lock className="w-4 h-4 text-slate-500" />
+              <Icon name="lock" className="w-4 h-4 text-slate-500" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-slate-400 truncate">{achievement.name}</p>
                 <div className="flex items-center gap-2 mt-1">

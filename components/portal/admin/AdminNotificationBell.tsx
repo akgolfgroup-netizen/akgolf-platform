@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useRef } from "react";
-import { Bell } from "lucide-react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { NotificationPanel } from "./NotificationPanel";
 
@@ -101,7 +103,7 @@ export function AdminNotificationBell({ className }: AdminNotificationBellProps)
         aria-label="Åpne notifikasjoner"
       >
         <div className="relative">
-          <Bell className="w-4 h-4" />
+          <Icon name="notifications" className="w-4 h-4" />
           
           <AnimatePresence>
             {unreadCount > 0 && (

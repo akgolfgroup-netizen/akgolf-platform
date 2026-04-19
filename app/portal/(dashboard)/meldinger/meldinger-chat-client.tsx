@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useRef, useTransition } from "react";
-import { MessageSquare, Send, ArrowLeft, Inbox } from "lucide-react";
+
 import { cn } from "@/lib/portal/utils/cn";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -108,7 +110,7 @@ export function MeldingerChatClient({
     return (
       <div className="flex items-center justify-center h-full text-grey-400">
         <div className="text-center">
-          <Inbox className="w-12 h-12 mx-auto mb-3 opacity-40" />
+          <Icon name="inbox" className="w-12 h-12 mx-auto mb-3 opacity-40" />
           <p className="text-lg font-medium mb-1 text-black">
             Ingen meldinger ennå
           </p>
@@ -196,7 +198,7 @@ export function MeldingerChatClient({
                 onClick={() => setSelectedId(null)}
                 className="sm:hidden p-1 rounded-lg hover:bg-grey-50 cursor-pointer"
               >
-                <ArrowLeft className="w-5 h-5 text-grey-400" />
+                <Icon name="arrow_back" className="w-5 h-5 text-grey-400" />
               </button>
               <div className="w-8 h-8 rounded-full bg-grey-50 flex items-center justify-center">
                 <span className="text-xs font-semibold text-grey-400">
@@ -284,7 +286,7 @@ export function MeldingerChatClient({
                   disabled={!newMessage.trim() || isSending}
                   className="p-2.5 rounded-full bg-accent-cta text-black disabled:opacity-40 hover:opacity-90 transition-opacity cursor-pointer"
                 >
-                  <Send className="w-4 h-4" />
+                  <Icon name="send" className="w-4 h-4" />
                 </button>
               </form>
             </div>
@@ -292,7 +294,7 @@ export function MeldingerChatClient({
         ) : (
           <div className="flex items-center justify-center h-full text-grey-400">
             <div className="text-center">
-              <MessageSquare className="w-10 h-10 mx-auto mb-2 opacity-30" />
+              <Icon name="chat" className="w-10 h-10 mx-auto mb-2 opacity-30" />
               <p className="text-sm">Velg en samtale for å se meldinger</p>
             </div>
           </div>

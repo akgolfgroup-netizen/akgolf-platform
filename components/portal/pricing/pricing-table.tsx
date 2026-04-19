@@ -1,16 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Check,
-  X,
-  Shield,
-  Loader2,
-  Sparkles,
-  Star,
-  Crown,
-} from "lucide-react";
+
 
 interface PricingTableProps {
   currentTier: "VISITOR" | "PRO" | "ELITE";
@@ -142,7 +136,7 @@ export function PricingTable({
               {tier.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="inline-flex items-center gap-1 px-3 py-1 bg-black text-white text-xs font-semibold rounded-full">
-                    <Star className="h-3 w-3" />
+                    <Icon name="star" className="h-3 w-3" />
                     Mest populaer
                   </span>
                 </div>
@@ -150,7 +144,7 @@ export function PricingTable({
 
               {tierKey === "ELITE" && (
                 <div className="absolute top-4 right-4">
-                  <Crown className="h-5 w-5 text-grey-400" />
+                  <Icon name="workspace_premium" className="h-5 w-5 text-grey-400" />
                 </div>
               )}
 
@@ -191,9 +185,9 @@ export function PricingTable({
                     }`}
                   >
                     {feature.included ? (
-                      <Check className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
+                      <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
                     ) : (
-                      <X className="h-4 w-4 text-grey-300 flex-shrink-0" />
+                      <Icon name="close" className="h-4 w-4 text-grey-300 flex-shrink-0" />
                     )}
                     {feature.name}
                   </li>
@@ -220,10 +214,10 @@ export function PricingTable({
                   }`}
                 >
                   {loading === tierKey ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Icon name="progress_activity" className="h-4 w-4 animate-spin" />
                   ) : (
                     <>
-                      <Sparkles className="h-4 w-4" />
+                      <Icon name="auto_awesome" className="h-4 w-4" />
                       {tier.cta}
                     </>
                   )}
@@ -237,15 +231,15 @@ export function PricingTable({
       {/* Trust Badges */}
       <div className="flex flex-wrap items-center justify-center gap-6 pt-6 border-t border-grey-200">
         <div className="flex items-center gap-2 text-sm text-grey-500">
-          <Shield className="h-4 w-4" />
+          <Icon name="shield" className="h-4 w-4" />
           <span>Sikker betaling med Stripe</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-grey-500">
-          <Check className="h-4 w-4" />
+          <Icon name="check" className="h-4 w-4" />
           <span>14 dagers gratis proveperiode</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-grey-500">
-          <X className="h-4 w-4" />
+          <Icon name="close" className="h-4 w-4" />
           <span>Ingen binding</span>
         </div>
       </div>

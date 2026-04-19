@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Flame, Trophy, Snowflake } from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 import { MonoLabel } from "@/components/portal/patterns";
@@ -84,13 +86,12 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
               ease: "easeInOut"
             }}
           >
-            <Flame 
+            <Icon name="local_fire_department" 
               className={cn(
                 "w-7 h-7",
                 isLongStreak ? "text-black" : "text-grey-400"
               )} 
-              strokeWidth={isLongStreak ? 2.5 : 2}
-            />
+              strokeWidth={isLongStreak ? 2.5 : 2} />
           </motion.div>
         </div>
 
@@ -118,7 +119,7 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
         {/* Stats row */}
         <div className="flex items-center gap-4 pt-4 border-t border-grey-200">
           <div className="flex items-center gap-2">
-            <Trophy className="w-4 h-4 text-grey-400" />
+            <Icon name="emoji_events" className="w-4 h-4 text-grey-400" />
             <div>
               <p className="text-xs text-grey-400">Rekord</p>
               <p className="text-sm font-semibold text-black">{longestStreak} dager</p>
@@ -134,7 +135,7 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-xs font-medium hover:bg-blue-100 transition-colors"
               >
-                <Snowflake className="w-3.5 h-3.5" />
+                <Icon name="ac_unit" className="w-3.5 h-3.5" />
                 {streakFreezesRemaining} freeze{streakFreezesRemaining !== 1 ? "s" : ""}
               </motion.button>
             ) : (

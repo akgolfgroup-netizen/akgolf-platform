@@ -1,18 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  Upload,
-  Brain,
-  Calendar,
-  Gamepad2,
-  TrendingUp,
-  TrendingDown,
-  Target,
-  Activity,
-  Sparkles,
-} from "lucide-react";
+import { Upload, Gamepad2 } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -111,7 +103,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
             href="/portal/ai-coach/chat"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            <Sparkles className="w-4 h-4" />
+            <Icon name="auto_awesome" className="w-4 h-4" />
             Chat med AI Coach
           </Link>
         </div>
@@ -126,7 +118,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
         >
           <PremiumCard variant="accent" padding="md" radius="large">
             <div className="flex items-start gap-3">
-              <Sparkles className="w-5 h-5 text-black mt-0.5 flex-shrink-0" />
+              <Icon name="auto_awesome" className="w-5 h-5 text-black mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-black">Dagens innsikt</p>
                 <p className="text-sm text-grey-400 mt-0.5">{quickInsight}</p>
@@ -143,7 +135,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.driverSpeed.value}
           unit={KPI_DATA.driverSpeed.unit}
           trend={KPI_DATA.driverSpeed.trend}
-          icon={<Activity className="w-5 h-5 text-black" />}
+          icon={<Icon name="monitoring" className="w-5 h-5 text-black" />}
           delay={0.1}
         />
         <KpiCard
@@ -151,7 +143,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.consistency.value}
           unit={KPI_DATA.consistency.unit}
           trend={KPI_DATA.consistency.trend}
-          icon={<Target className="w-5 h-5 text-blue-500" />}
+          icon={<Icon name="my_location" className="w-5 h-5 text-blue-500" />}
           delay={0.15}
         />
         <KpiCard
@@ -159,7 +151,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.mentalTrend.value}
           unit={KPI_DATA.mentalTrend.unit}
           trend={KPI_DATA.mentalTrend.trend}
-          icon={<Brain className="w-5 h-5 text-ai" />}
+          icon={<Icon name="psychology" className="w-5 h-5 text-ai" />}
           delay={0.2}
         />
         <KpiCard
@@ -167,7 +159,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.decadeScore.value}
           unit={KPI_DATA.decadeScore.unit}
           trend={KPI_DATA.decadeScore.trend}
-          icon={<TrendingUp className="w-5 h-5 text-success" />}
+          icon={<Icon name="trending_up" className="w-5 h-5 text-success" />}
           delay={0.25}
         />
       </div>
@@ -188,13 +180,13 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           />
           <QuickActionButton
             href="/portal/mental"
-            icon={<Brain className="w-4 h-4" />}
+            icon={<Icon name="psychology" className="w-4 h-4" />}
             title="Ny mental scorecard"
             subtitle="Logg runde-mentalitet"
           />
           <QuickActionButton
             href="/portal/treningsplan"
-            icon={<Calendar className="w-4 h-4" />}
+            icon={<Icon name="calendar_today" className="w-4 h-4" />}
             title="Se treningsplan"
             subtitle="Ukeplan og økter"
           />
@@ -260,9 +252,9 @@ function KpiCard({
           </p>
           <div className="flex items-center gap-1 mt-2">
             {isPositive ? (
-              <TrendingUp className="w-3.5 h-3.5 text-success" />
+              <Icon name="trending_up" className="w-3.5 h-3.5 text-success" />
             ) : (
-              <TrendingDown className="w-3.5 h-3.5 text-error" />
+              <Icon name="trending_down" className="w-3.5 h-3.5 text-error" />
             )}
             <span
               className={`text-xs font-medium ${

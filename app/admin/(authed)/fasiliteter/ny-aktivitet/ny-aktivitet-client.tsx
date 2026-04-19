@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, CheckCircle2, Calendar, Clock, MapPin, Users, FileText } from "lucide-react";
+import { Calendar, Users, FileText } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
@@ -79,7 +81,7 @@ export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[]
  <div className="p-6">
  <div className="bg-white rounded-xl border border-grey-200 rounded-xl py-16 text-center max-w-md mx-auto">
  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
- <CheckCircle2 className="w-8 h-8 text-green-600"/>
+ <Icon name="check"Circle2 className="w-8 h-8 text-green-600" />
  </div>
  <h2 className="text-xl font-semibold text-black">Aktivitet opprettet!</h2>
  <p className="text-grey-400 mt-2">Aktiviteten er lagt til i kalenderen.</p>
@@ -94,7 +96,7 @@ export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[]
  <MCTopbar title="Ny aktivitet"subtitle="Opprett en ny turnering, kurs eller aktivitet"onMenuClick={toggle} />
  <div className="p-6 max-w-2xl mx-auto space-y-6">
  <Link href="/admin/fasiliteter"className="inline-flex items-center gap-2 text-sm text-grey-400 hover:text-grey-400 transition-colors">
- <ArrowLeft className="w-4 h-4"/>Tilbake til fasiliteter
+ <Icon name="arrow_back" className="w-4 h-4" />Tilbake til fasiliteter
  </Link>
 
  {/* Page Header */}
@@ -160,7 +162,7 @@ export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[]
  <div>
  <label className="block text-sm font-medium text-grey-400 mb-1.5">Fasilitet</label>
  <div className="relative">
- <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none z-10"/>
+ <Icon name="location_on" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none z-10" />
  <select
  value={formData.facilityId}
  onChange={(e) => setFormData({ ...formData, facilityId: e.target.value })}
@@ -180,7 +182,7 @@ export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[]
  <div>
  <label className="block text-sm font-medium text-grey-400 mb-1.5">Dato</label>
  <div className="relative">
- <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none z-10"/>
+ <Icon name="calendar_today" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none z-10" />
  <input
  type="date"
  value={formData.date}
@@ -193,7 +195,7 @@ export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[]
  <div>
  <label className="block text-sm font-medium text-grey-400 mb-1.5">Start</label>
  <div className="relative">
- <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none z-10"/>
+ <Icon name="schedule" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none z-10" />
  <input
  type="time"
  value={formData.startTime}
@@ -206,7 +208,7 @@ export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[]
  <div>
  <label className="block text-sm font-medium text-grey-400 mb-1.5">Slutt</label>
  <div className="relative">
- <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none z-10"/>
+ <Icon name="schedule" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none z-10" />
  <input
  type="time"
  value={formData.endTime}

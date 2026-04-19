@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, FormEvent } from "react";
-import { X, Loader2 } from "lucide-react";
+
 
 interface Props {
   open: boolean;
@@ -99,7 +101,7 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
             className="rounded-lg p-1 text-grey-400 hover:bg-grey-50 hover:text-grey-600"
             aria-label="Lukk"
           >
-            <X className="h-5 w-5" />
+            <Icon name="close" className="h-5 w-5" />
           </button>
         </div>
 
@@ -232,7 +234,7 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
               disabled={submitting}
               className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-alt disabled:opacity-50"
             >
-              {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
+              {submitting && <Icon name="progress_activity" className="h-4 w-4 animate-spin" />}
               Lagre turnering
             </button>
           </div>

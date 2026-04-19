@@ -1,15 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  Calendar as CalendarIcon,
-  Clock,
-  MoreHorizontal,
-  MessageSquare,
-  AlertTriangle,
-  Plus,
-} from "lucide-react";
+
 import { cn } from "@/lib/portal/utils/cn";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -53,19 +48,19 @@ export default function KalenderSidebar({
     {
       id: "view",
       label: "Se detaljer",
-      icon: <CalendarIcon className="w-4 h-4" />,
+      icon: <Icon name="calendar_today"Icon className="w-4 h-4" />,
       onSelect: () => onBookingClick(booking),
     },
     {
       id: "note",
       label: "Legg til notat",
-      icon: <MessageSquare className="w-4 h-4" />,
+      icon: <Icon name="chat" className="w-4 h-4" />,
       onSelect: () => onAddNote(booking),
     },
     {
       id: "no-show",
       label: "Merk som ikke møtt",
-      icon: <AlertTriangle className="w-4 h-4" />,
+      icon: <Icon name="warning" className="w-4 h-4" />,
       variant: "danger",
       disabled: booking.status === "NO_SHOW" || booking.status === "COMPLETED",
       onSelect: () => onMarkNoShow(booking.id),
@@ -83,7 +78,7 @@ export default function KalenderSidebar({
         </h3>
         {selectedDateBookings.length === 0 ? (
           <div className="py-8 text-center">
-            <CalendarIcon className="w-10 h-10 text-grey-300 mx-auto mb-2" />
+            <Icon name="calendar_today"Icon className="w-10 h-10 text-grey-300 mx-auto mb-2" />
             <span className="text-sm text-grey-400">Ingen bookinger</span>
           </div>
         ) : (
@@ -99,7 +94,7 @@ export default function KalenderSidebar({
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-1.5 text-black">
-                      <Clock className="w-3.5 h-3.5 text-grey-400" />
+                      <Icon name="schedule" className="w-3.5 h-3.5 text-grey-400" />
                       <span className="text-xs font-medium tabular-nums">
                         {formatTime(booking.startTime)}–
                         {formatTime(booking.endTime)}
@@ -119,7 +114,7 @@ export default function KalenderSidebar({
                             aria-label="Handlinger"
                             className="p-1 rounded hover:bg-grey-100 text-grey-400"
                           >
-                            <MoreHorizontal className="w-3.5 h-3.5" />
+                            <Icon name="more_horiz" className="w-3.5 h-3.5" />
                           </button>
                         }
                       />
@@ -155,7 +150,7 @@ export default function KalenderSidebar({
           </div>
         )}
         <Button variant="accent" className="w-full mt-3" onClick={onNewEvent}>
-          <Plus className="w-4 h-4" />
+          <Icon name="add" className="w-4 h-4" />
           Legg til hendelse
         </Button>
       </div>

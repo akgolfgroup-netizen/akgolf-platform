@@ -1,8 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Clock, GripVertical, MoreHorizontal, Copy, Trash2, Edit } from "lucide-react";
+
 import type { TrainingSession } from "./types";
 import {
   DropdownMenu,
@@ -112,7 +114,7 @@ export function SessionCard({ session, onEdit, onDelete, onDuplicate, onClick }:
         {...listeners}
         className="absolute left-1 top-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
       >
-        <GripVertical className="w-4 h-4 text-gray-400" />
+        <Icon name="drag_indicator" className="w-4 h-4 text-gray-400" />
       </div>
 
       {/* Card content */}
@@ -120,7 +122,7 @@ export function SessionCard({ session, onEdit, onDelete, onDuplicate, onClick }:
         {/* Header: Time and menu */}
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-1.5 text-xs text-gray-500">
-            <Clock className="w-3 h-3" />
+            <Icon name="schedule" className="w-3 h-3" />
             <span>{startTime} - {endTime}</span>
           </div>
 
@@ -130,19 +132,19 @@ export function SessionCard({ session, onEdit, onDelete, onDuplicate, onClick }:
                 onClick={(e) => e.stopPropagation()}
                 className="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/50"
               >
-                <MoreHorizontal className="w-3.5 h-3.5 text-gray-500" />
+                <Icon name="more_horiz" className="w-3.5 h-3.5 text-gray-500" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-40">
               {onEdit && (
                 <DropdownMenuItem onClick={() => onEdit(session)}>
-                  <Edit className="w-4 h-4 mr-2" />
+                  <Icon name="edit" className="w-4 h-4 mr-2" />
                   Rediger
                 </DropdownMenuItem>
               )}
               {onDuplicate && (
                 <DropdownMenuItem onClick={() => onDuplicate(session)}>
-                  <Copy className="w-4 h-4 mr-2" />
+                  <Icon name="content_copy" className="w-4 h-4 mr-2" />
                   Dupliser
                 </DropdownMenuItem>
               )}
@@ -151,7 +153,7 @@ export function SessionCard({ session, onEdit, onDelete, onDuplicate, onClick }:
                   onClick={() => onDelete(session.id)}
                   className="text-red-600 focus:text-red-600"
                 >
-                  <Trash2 className="w-4 h-4 mr-2" />
+                  <Icon name="delete" className="w-4 h-4 mr-2" />
                   Slett
                 </DropdownMenuItem>
               )}
@@ -211,7 +213,7 @@ export function SessionCardStatic({ session }: { session: TrainingSession }) {
       `}
     >
       <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
-        <Clock className="w-3 h-3" />
+        <Icon name="schedule" className="w-3 h-3" />
         <span>{startTime}</span>
       </div>
       <h4 className={`font-medium text-sm ${colors.text} line-clamp-2`}>

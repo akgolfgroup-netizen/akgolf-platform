@@ -1,10 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import {
-  Users, TrendingUp, RotateCcw, Activity, BarChart3, LineChart,
-  PieChart, AlertCircle, Calendar,
-} from "lucide-react";
+import { LineChart, PieChart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
@@ -28,8 +27,8 @@ const PERIOD_OPTIONS: { value: AnalyticsPeriod; label: string }[] = [
 ];
 
 const TAB_ITEMS: TabItem[] = [
-  { id: "overview", label: "Oversikt", icon: <BarChart3 className="w-4 h-4" /> },
-  { id: "students", label: "Elever", icon: <Users className="w-4 h-4" /> },
+  { id: "overview", label: "Oversikt", icon: <Icon name="bar_chart" className="w-4 h-4" /> },
+  { id: "students", label: "Elever", icon: <Icon name="person"s className="w-4 h-4" /> },
   { id: "bookings", label: "Bookinger", icon: <LineChart className="w-4 h-4" /> },
   { id: "revenue", label: "Inntekt", icon: <PieChart className="w-4 h-4" /> },
 ];
@@ -113,28 +112,28 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
           <KpiCard 
             label="Aktive elever" 
             value={data.activeStudents} 
-            icon={<Users className="w-5 h-5" />} 
+            icon={<Icon name="person"s className="w-5 h-5" />} 
             change={data.newStudents > 0 ? `+${data.newStudents} nye` : undefined} 
             positive 
           />
           <KpiCard 
             label="Bookinger" 
             value={data.totalBookings} 
-            icon={<Activity className="w-5 h-5" />} 
+            icon={<Icon name="monitoring" className="w-5 h-5" />} 
             change={`${data.completedBookings} fullført`} 
             positive 
           />
           <KpiCard 
             label="Churn-rate" 
             value={`${data.churnRate.toFixed(1)}%`} 
-            icon={<RotateCcw className="w-5 h-5" />} 
+            icon={<Icon name="restart_alt" className="w-5 h-5" />} 
             change={`${data.churnedStudents} inaktive`} 
             positive={data.churnRate < 5} 
           />
           <KpiCard 
             label="Inntekt" 
             value={formatKr(data.revenue)} 
-            icon={<TrendingUp className="w-5 h-5" />} 
+            icon={<Icon name="trending_up" className="w-5 h-5" />} 
             change={`${data.revenueGrowth >= 0 ? "+" : ""}${data.revenueGrowth.toFixed(0)}% vs forrige`} 
             positive={data.revenueGrowth >= 0} 
           />
@@ -240,7 +239,7 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium text-black truncate">{s.name}</div>
                       <div className="text-xs text-grey-400 flex items-center gap-1">
-                        <AlertCircle className="w-3 h-3" />
+                        <Icon name="error" className="w-3 h-3" />
                         Sist aktiv: {relativeDate(s.lastSession)}
                       </div>
                     </div>
@@ -249,7 +248,7 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                 ))}
                 {followUp.length === 0 && (
                   <div className="py-10 text-center">
-                    <Calendar className="w-10 h-10 text-success-text mx-auto mb-2" />
+                    <Icon name="calendar_today" className="w-10 h-10 text-success-text mx-auto mb-2" />
                     <span className="text-sm text-grey-400">Alle elever er aktive</span>
                   </div>
                 )}

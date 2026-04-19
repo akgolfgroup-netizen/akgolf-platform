@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { ArrowLeft, Plus, Save, RotateCcw } from "lucide-react";
+
 import type { TrainingSessionData, ExerciseInstance } from "@/lib/portal/golf/exercise-types";
 import { SessionHeader } from "./session-header";
 import { ExerciseCard } from "./exercise-card";
@@ -103,7 +105,7 @@ export function SessionView({
           onClick={onBack}
           className="flex items-center gap-2 text-sm text-grey-400 hover:text-black transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <Icon name="arrow_back" className="w-4 h-4" />
           Tilbake til treningsplan
         </button>
       )}
@@ -172,7 +174,7 @@ export function SessionView({
               onClick={onAddExercise}
               className="mt-3 w-full py-3 rounded-xl border-2 border-dashed border-grey-200/50 text-grey-400 hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2"
             >
-              <Plus className="w-4 h-4" />
+              <Icon name="add" className="w-4 h-4" />
               Legg til ovelse
             </button>
           )}
@@ -211,7 +213,7 @@ export function SessionView({
             onClick={handleResetSession}
             className="flex items-center gap-2 px-4 py-2 rounded-lg text-grey-400 hover:text-black hover:bg-white transition-colors"
           >
-            <RotateCcw className="w-4 h-4" />
+            <Icon name="restart_alt" className="w-4 h-4" />
             Nullstill
           </button>
 
@@ -232,7 +234,7 @@ export function SessionView({
                 disabled={isSaving}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-primary-alt transition-colors disabled:opacity-50"
               >
-                <Save className="w-4 h-4" />
+                <Icon name="save" className="w-4 h-4" />
                 Lagre
               </button>
             )}

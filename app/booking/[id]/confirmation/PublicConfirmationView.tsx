@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
-import { Check, Mail, Calendar, Clock, CreditCard, User, LogIn } from "lucide-react";
+
 import { BookingUpsellCard } from "@/components/portal/booking/upsell-card";
 
 interface Props {
@@ -27,7 +29,7 @@ export function PublicConfirmationView({
         {/* Success Header */}
         <div className="rounded-3xl p-10 mb-8 text-center border bg-white border-grey-200 shadow-card">
           <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-primary">
-            <Check className="w-10 h-10 text-white" />
+            <Icon name="check" className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-3xl font-semibold mb-3 text-primary">
             Booking bekreftet!
@@ -46,7 +48,7 @@ export function PublicConfirmationView({
           <div className="space-y-5">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-surface">
-                <Calendar className="w-6 h-6 text-primary" />
+                <Icon name="calendar_today" className="w-6 h-6 text-primary" />
               </div>
               <div>
                 <p className="text-sm text-muted">Dato og tid</p>
@@ -56,7 +58,7 @@ export function PublicConfirmationView({
 
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-surface">
-                <User className="w-6 h-6 text-primary" />
+                <Icon name="person" className="w-6 h-6 text-primary" />
               </div>
               <div>
                 <p className="text-sm text-muted">Instruktør</p>
@@ -66,7 +68,7 @@ export function PublicConfirmationView({
 
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-surface">
-                <Clock className="w-6 h-6 text-primary" />
+                <Icon name="schedule" className="w-6 h-6 text-primary" />
               </div>
               <div>
                 <p className="text-sm text-muted">Varighet</p>
@@ -76,7 +78,7 @@ export function PublicConfirmationView({
 
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-surface">
-                <CreditCard className="w-6 h-6 text-primary" />
+                <Icon name="credit_card" className="w-6 h-6 text-primary" />
               </div>
               <div>
                 <p className="text-sm text-muted">Pris</p>
@@ -89,7 +91,7 @@ export function PublicConfirmationView({
         {/* Email Notice */}
         <div className="rounded-2xl p-6 mb-6 border bg-surface border-grey-200">
           <div className="flex items-start gap-4">
-            <Mail className="w-6 h-6 shrink-0 mt-0.5 text-primary" />
+            <Icon name="mail" className="w-6 h-6 shrink-0 mt-0.5 text-primary" />
             <div>
               <h3 className="font-semibold mb-1 text-primary">
                 Bekreftelse sendt
@@ -114,7 +116,7 @@ export function PublicConfirmationView({
         {/* Login CTA */}
         <div className="rounded-2xl p-6 border bg-white border-grey-200">
           <div className="flex items-start gap-4">
-            <LogIn className="w-6 h-6 shrink-0 mt-0.5 text-primary" />
+            <Icon name="login" className="w-6 h-6 shrink-0 mt-0.5 text-primary" />
             <div className="flex-1">
               <h3 className="font-semibold mb-1 text-primary">
                 Din spillerportal
@@ -127,7 +129,7 @@ export function PublicConfirmationView({
                 href="/portal/login"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity duration-300 bg-primary text-white"
               >
-                <LogIn className="w-4 h-4" />
+                <Icon name="login" className="w-4 h-4" />
                 Logg inn på portalen
               </Link>
             </div>

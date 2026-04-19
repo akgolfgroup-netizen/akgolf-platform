@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import * as React from "react";
-import { Search } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 export interface AdminCommandItem {
@@ -133,7 +135,7 @@ export function AdminCommandPalette({
       />
       <div className="relative w-full max-w-xl rounded-2xl overflow-hidden shadow-2xl bg-white border border-grey-200">
         <div className="flex items-center gap-3 px-4 py-3 border-b border-grey-200">
-          <Search className="w-4 h-4 text-grey-400" />
+          <Icon name="search" className="w-4 h-4 text-grey-400" />
           <input
             ref={inputRef}
             type="text"

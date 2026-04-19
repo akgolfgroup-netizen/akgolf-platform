@@ -1,6 +1,8 @@
 "use client";
 
-import { Check, Circle, User, TrendingUp, Target, Calendar } from "lucide-react";
+
+import { Icon } from "@/components/ui/icon";
+import { Circle, User, TrendingUp, Target, Calendar } from "lucide-react";
 import { PremiumCard } from "./premium-card";
 
 interface PlanItem {
@@ -120,7 +122,7 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
                   : "border-grey-200"
               }`}
             >
-              {item.done && <Check className="h-2.5 w-2.5" strokeWidth={3} />}
+              {item.done && <Icon name="check" className="h-2.5 w-2.5" strokeWidth={3} />}
             </div>
           </div>
         ))}

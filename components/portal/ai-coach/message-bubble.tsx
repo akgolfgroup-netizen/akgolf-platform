@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Bot, User, Loader2 } from "lucide-react";
+import { User } from "lucide-react";
 import type { Message } from "./chat-interface";
 import {
   AIAttribution,
@@ -28,7 +30,7 @@ export function MessageBubble({ message, isStreaming, sources }: MessageBubblePr
       {/* AI Avatar */}
       {!isUser && (
         <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-ai-light">
-          <Bot className="h-4 w-4 text-ai-text" />
+          <Icon name="smart_toy" className="h-4 w-4 text-ai-text" />
         </div>
       )}
 
@@ -54,7 +56,7 @@ export function MessageBubble({ message, isStreaming, sources }: MessageBubblePr
             </div>
           ) : isStreaming ? (
             <div className="flex items-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin text-ai-text" />
+              <Icon name="progress_activity" className="h-4 w-4 animate-spin text-ai-text" />
               <span className="text-grey-400">AI Coach tenker...</span>
             </div>
           ) : null}
@@ -77,7 +79,7 @@ export function MessageBubble({ message, isStreaming, sources }: MessageBubblePr
       {/* User Avatar */}
       {isUser && (
         <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-grey-200">
-          <User className="h-4 w-4 text-grey-400" />
+          <Icon name="person" className="h-4 w-4 text-grey-400" />
         </div>
       )}
     </motion.div>

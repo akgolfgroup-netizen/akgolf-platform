@@ -1,17 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
-import {
-  Plus,
-  Trash2,
-  Save,
-  X,
-  Edit2,
-  Target,
-  TrendingUp,
-  ChevronRight,
-} from "lucide-react";
+
 import { addClub, deleteClub } from "./actions";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -103,7 +96,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
           onClick={() => setShowAdd(true)}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-sm font-medium hover:bg-grey-800 transition-colors"
         >
-          <Plus className="w-4 h-4" />
+          <Icon name="add" className="w-4 h-4" />
           Legg til klubb
         </button>
       </div>
@@ -112,7 +105,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
       {clubs.length === 0 && !showAdd && (
         <PremiumCard>
           <div className="p-6 text-center">
-            <Target className="w-12 h-12 text-grey-400 mx-auto mb-4" />
+            <Icon name="my_location" className="w-12 h-12 text-grey-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-black mb-2">
               Ingen klubber i bagen
             </h3>
@@ -164,7 +157,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                 <div>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-16 h-16 rounded-2xl bg-grey-50 flex items-center justify-center">
-                      <Target className="w-8 h-8 text-black" />
+                      <Icon name="my_location" className="w-8 h-8 text-black" />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-black">
@@ -178,7 +171,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                   </div>
                   <div className="flex gap-2">
                     <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-grey-50 text-sm text-grey-400 hover:bg-grey-200 transition-colors">
-                      <Edit2 className="w-3 h-3" />
+                      <Icon name="edit"2 className="w-3 h-3" />
                       Rediger
                     </button>
                     <button
@@ -186,7 +179,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                       disabled={isPending}
                       className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[error]/10 text-sm text-[error] hover:bg-[error]/20 transition-colors disabled:opacity-50"
                     >
-                      <Trash2 className="w-3 h-3" />
+                      <Icon name="delete" className="w-3 h-3" />
                       Fjern
                     </button>
                   </div>
@@ -259,7 +252,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
       {gapAnalysis.length > 0 && (
         <div className="bg-accent-cta/10 rounded-2xl p-6 border border-[accent-cta]/40">
           <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="w-5 h-5 text-black" />
+            <Icon name="trending_up" className="w-5 h-5 text-black" />
             <h3 className="font-semibold text-black">Gap-analyse</h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -316,14 +309,14 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                 disabled={!newClub.name || isPending}
                 className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full bg-black text-white font-medium disabled:opacity-50 hover:bg-grey-800 transition-colors"
               >
-                <Save className="h-4 w-4" />
+                <Icon name="save" className="h-4 w-4" />
                 {isPending ? "Lagrer..." : "Legg til"}
               </button>
               <button
                 onClick={() => setShowAdd(false)}
                 className="px-4 py-2.5 rounded-full border border-[grey-200] text-grey-400 hover:bg-grey-50 transition-colors"
               >
-                <X className="h-4 w-4" />
+                <Icon name="close" className="h-4 w-4" />
               </button>
             </div>
           </div>
@@ -345,7 +338,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
           <a href="#">
-            <Target className="w-4 h-4" />
+            <Icon name="my_location" className="w-4 h-4" />
             <div className="text-left">
               <p className="text-sm font-medium">Mal avstander</p>
               <p className="text-xs text-muted-foreground">Kalibrer dine klubber</p>
@@ -354,7 +347,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
         </Button>
         <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
           <a href="#">
-            <TrendingUp className="w-4 h-4" />
+            <Icon name="trending_up" className="w-4 h-4" />
             <div className="text-left">
               <p className="text-sm font-medium">Se trend</p>
               <p className="text-xs text-muted-foreground">Avstandsutvikling</p>
@@ -363,7 +356,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
         </Button>
         <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
           <a href="#">
-            <ChevronRight className="w-4 h-4" />
+            <Icon name="chevron_right" className="w-4 h-4" />
             <div className="text-left">
               <p className="text-sm font-medium">Anbefalinger</p>
               <p className="text-xs text-muted-foreground">Optimaliser bagen</p>

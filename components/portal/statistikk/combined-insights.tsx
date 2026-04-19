@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { Lightbulb, TrendingDown, TrendingUp, Minus } from "lucide-react";
+
 import type { GolfProfileSummary } from "@/app/portal/(dashboard)/statistikk/actions";
 
 interface CombinedInsightsProps {
@@ -18,7 +20,7 @@ export function CombinedInsights({ profile }: CombinedInsightsProps) {
     >
       <div className="mb-4 flex items-center gap-2">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black/10">
-          <Lightbulb className="h-4 w-4 text-black" />
+          <Icon name="lightbulb" className="h-4 w-4 text-black" />
         </div>
         <h3 className="text-sm font-semibold text-black">Dine innsikter</h3>
       </div>
@@ -34,11 +36,11 @@ export function CombinedInsights({ profile }: CombinedInsightsProps) {
           >
             <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-grey-100">
               {idx === 0 ? (
-                <TrendingUp className="h-3 w-3 text-success" />
+                <Icon name="trending_up" className="h-3 w-3 text-success" />
               ) : idx === 1 ? (
-                <TrendingDown className="h-3 w-3 text-info" />
+                <Icon name="trending_down" className="h-3 w-3 text-info" />
               ) : (
-                <Minus className="h-3 w-3 text-grey-400" />
+                <Icon name="remove" className="h-3 w-3 text-grey-400" />
               )}
             </span>
             <p className="text-[13px] leading-relaxed text-text">{insight}</p>

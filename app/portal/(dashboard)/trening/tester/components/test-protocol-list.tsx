@@ -1,23 +1,10 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import Link from "next/link";
-import {
-  Clock,
-  Target,
-  ChevronRight,
-  Search,
-  Zap,
-  Crosshair,
-  Ruler,
-  Wind,
-  RotateCcw,
-  Gauge,
-  CircleDot,
-  Disc,
-  Car,
-  Trophy,
-} from "lucide-react";
+import { Target, Zap, Crosshair, Ruler, Wind, RotateCcw, Gauge, CircleDot, Disc, Car, Trophy } from "lucide-react";
 
 interface TestProtocol {
   id: string;
@@ -110,7 +97,7 @@ export function TestProtocolList({ categories, grouped }: Props) {
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-outline" />
+          <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-outline" />
           <input
             type="text"
             placeholder="Sok etter test..."
@@ -194,11 +181,11 @@ export function TestProtocolList({ categories, grouped }: Props) {
                         </p>
                         <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-outline">
                           <span className="flex items-center gap-1 tabular-nums">
-                            <Clock className="w-3 h-3" />
+                            <Icon name="schedule" className="w-3 h-3" />
                             {protocol.duration_minutes} min
                           </span>
                           <span className="flex items-center gap-1 tabular-nums">
-                            <Target className="w-3 h-3" />
+                            <Icon name="my_location" className="w-3 h-3" />
                             {protocol.shots_required} slag
                           </span>
                           <span>
@@ -215,7 +202,7 @@ export function TestProtocolList({ categories, grouped }: Props) {
                         >
                           {difficultyLabels[protocol.difficulty] ?? protocol.difficulty}
                         </span>
-                        <ChevronRight className="w-5 h-5 text-outline group-hover:text-on-surface-variant transition-colors" />
+                        <Icon name="chevron_right" className="w-5 h-5 text-outline group-hover:text-on-surface-variant transition-colors" />
                       </div>
                     </div>
                   </Link>

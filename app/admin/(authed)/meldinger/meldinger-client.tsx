@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Inbox, AlertCircle, X } from "lucide-react";
+
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
  ChannelFilter,
@@ -87,7 +89,7 @@ export function MeldingerClient({
  <div className="p-6">
  <div className="flex items-center justify-center py-20 text-grey-400">
  <div className="text-center">
- <Inbox className="w-12 h-12 mx-auto mb-3 opacity-40"/>
+ <Icon name="inbox" className="w-12 h-12 mx-auto mb-3 opacity-40" />
  <p className="text-lg font-medium mb-1 text-black">
  Ingen meldinger ennå
  </p>
@@ -115,14 +117,14 @@ export function MeldingerClient({
  {error && (
  <div className="flex items-center justify-between gap-3 px-4 py-3 bg-red-50 border-b border-red-200">
  <div className="flex items-center gap-2 text-red-600">
- <AlertCircle className="h-4 w-4 flex-shrink-0"/>
+ <Icon name="error" className="h-4 w-4 flex-shrink-0" />
  <span className="text-sm">{error}</span>
  </div>
  <button
  onClick={() => setError(null)}
  className="text-red-600 hover:text-red-700 transition-colors"
  >
- <X className="h-4 w-4"/>
+ <Icon name="close" className="h-4 w-4" />
  </button>
  </div>
  )}

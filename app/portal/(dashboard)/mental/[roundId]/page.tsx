@@ -1,9 +1,11 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Save, ChevronLeft, Flag, Loader2 } from "lucide-react";
+
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -159,7 +161,7 @@ export default function RoundDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 text-black animate-spin" />
+        <Icon name="progress_activity" className="w-8 h-8 text-black animate-spin" />
         <span className="ml-3 text-sm text-grey-400">Laster runde...</span>
       </div>
     );
@@ -187,7 +189,7 @@ export default function RoundDetailPage() {
             href="/portal/mental"
             className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white border border-grey-200 text-black hover:bg-grey-50 transition-colors"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <Icon name="chevron_left" className="w-4 h-4" />
           </Link>
           <div>
             <h1 className="text-2xl font-bold text-black">Rundedetaljer</h1>
@@ -195,7 +197,7 @@ export default function RoundDetailPage() {
           </div>
         </div>
         <Button variant="primary" onClick={handleSave} isLoading={saving}>
-          <Save className="w-4 h-4 mr-2" />
+          <Icon name="save" className="w-4 h-4 mr-2" />
           Lagre
         </Button>
       </motion.div>
@@ -232,7 +234,7 @@ export default function RoundDetailPage() {
         </div>
         {loadingHoles && (
           <div className="text-sm text-grey-400 flex items-center gap-2">
-            <Loader2 className="w-3 h-3 animate-spin" />
+            <Icon name="progress_activity" className="w-3 h-3 animate-spin" />
             Laster baneinfo...
           </div>
         )}
@@ -244,7 +246,7 @@ export default function RoundDetailPage() {
         <PremiumCard delay={0.1} padding="md" radius="large">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-              <Flag className="w-4 h-4 text-blue-500" />
+              <Icon name="flag" className="w-4 h-4 text-blue-500" />
             </div>
             <h3 className="text-base font-semibold text-black">Pre-shot</h3>
           </div>
@@ -306,7 +308,7 @@ export default function RoundDetailPage() {
         <PremiumCard delay={0.15} padding="md" radius="large">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
-              <Flag className="w-4 h-4 text-purple-500" />
+              <Icon name="flag" className="w-4 h-4 text-purple-500" />
             </div>
             <h3 className="text-base font-semibold text-black">Post-shot</h3>
           </div>

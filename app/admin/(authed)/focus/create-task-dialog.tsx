@@ -1,7 +1,9 @@
 "use client";
 
+
+import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Plus } from "lucide-react";
+
 import {
   AdminDialog, AdminInput,
 } from "@/components/portal/mission-control/ui";
@@ -58,7 +60,7 @@ export function CreateTaskDialog({ open, division, onClose, onCreated }: Props) 
         <>
           <Button variant="ghost" onClick={onClose}>Avbryt</Button>
           <Button variant="accent" isLoading={loading} onClick={handleSubmit}>
-            <Plus className="w-4 h-4 mr-2" />
+            <Icon name="add" className="w-4 h-4 mr-2" />
             Opprett
           </Button>
         </>
