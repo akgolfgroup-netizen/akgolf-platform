@@ -1,56 +1,70 @@
 "use client";
 
+/**
+ * Portal Sidebar — Heritage Grid 1:1.
+ *
+ * Kilde: design-ref/stitch/heritage/dashboard_mission_control/code.html
+ *        (aside-seksjonen, linje 1-60 av <aside>)
+ *
+ * Eksakte klasser fra Heritage:
+ * - Container: h-screen w-64 bg-primary-container py-8 gap-y-6
+ * - Header: px-8 mb-4, h1 text-white text-lg, p text-[#d2f000] text-[11px] widest
+ * - Active: bg-[#d2f000] text-[#154212] rounded-lg mx-4 px-4 py-3 text-[11px] widest
+ *   + icon FILLED
+ * - Inactive: text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-white
+ * - Subscription: bg-[#154212] border border-[#d2f000]/20 rounded-xl p-4
+ * - Bottom links: px-4 py-2 text-[#fdf9f0]/70 hover:text-white text-[11px]
+ */
 
-import { Icon } from "@/components/ui/icon";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
 import { AnimatePresence, motion } from "framer-motion";
-import { ClipboardList, Flag, LayoutDashboard, Target, TrendingUp } from "lucide-react";
+import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/portal/utils/cn";
-import { isStaff } from "@/lib/portal/rbac";
 import type { PortalUser } from "@/lib/portal/auth";
 import { useSidebar } from "./sidebar-context";
-import { AKLogo } from "@/components/website/AKLogo";
-import { NotificationBell } from "./notification-bell";
 
 interface NavItem {
   href: string;
   label: string;
-  icon: React.ComponentType<{ className?: string }>;
+  iconName: string;
   matchPaths?: string[];
 }
 
 const NAV_ITEMS: NavItem[] = [
-  {
-    href: "/portal",
-    label: "Oversikt",
-    icon: LayoutDashboard,
-  },
+  { href: "/portal", label: "Dashboard", iconName: "dashboard" },
   {
     href: "/portal/treningsplan",
     label: "Planlegg",
-    icon: ClipboardList,
+    iconName: "assignment",
     matchPaths: ["/portal/bookinger", "/portal/kalender", "/portal/periodisering"],
   },
   {
     href: "/portal/dagbok",
     label: "Tren",
-    icon: Target,
+    iconName: "fitness_center",
     matchPaths: ["/portal/trening", "/portal/tester"],
   },
   {
     href: "/portal/runde",
     label: "Spill",
-    icon: Flag,
+    iconName: "flag",
     matchPaths: ["/portal/turneringer", "/portal/spill", "/portal/turneringsplan", "/portal/bag"],
   },
   {
     href: "/portal/statistikk",
     label: "Analyser",
-    icon: TrendingUp,
-    matchPaths: ["/portal/analyse", "/portal/benchmark", "/portal/trackman", "/portal/sammenligning", "/portal/ai-coach", "/portal/coaching-historikk", "/portal/kartlegging"],
+    iconName: "query_stats",
+    matchPaths: [
+      "/portal/analyse",
+      "/portal/benchmark",
+      "/portal/trackman",
+      "/portal/sammenligning",
+      "/portal/ai-coach",
+      "/portal/coaching-historikk",
+      "/portal/kartlegging",
+    ],
   },
 ];
 
@@ -69,32 +83,23 @@ function NavLink({
   const active = isExactHome || isSubMatch || (isExtraMatch ?? false);
 
   return (
-    <li>
-      <Link href={item.href} onClick={onClick} className="group relative block">
-        <div
-          className={cn(
-            "relative mx-2 flex items-center gap-3 rounded-xl px-4 py-[7px] text-[13px] transition-all duration-200",
-            active
-              ? "bg-black font-semibold text-white"
-              : "font-medium text-grey-400 hover:bg-grey-50 hover:text-black",
-          )}
-        >
-          <item.icon
-            className={cn(
-              "h-[18px] w-[18px] shrink-0 transition-colors",
-              active
-                ? "text-white"
-                : "text-grey-300 group-hover:text-black",
-            )}
-          />
-          <span>{item.label}</span>
-        </div>
-      </Link>
-    </li>
+    <Link
+      href={item.href}
+      onClick={onClick}
+      className={cn(
+        "flex items-center gap-3 rounded-lg mx-4 px-4 py-3 uppercase text-[11px] font-medium tracking-widest transition-all",
+        active
+          ? "bg-[#d2f000] text-[#154212]"
+          : "text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-white",
+      )}
+    >
+      <Icon name={item.iconName} size={20} filled={active} />
+      <span>{item.label}</span>
+    </Link>
   );
 }
 
-function SidebarContent({
+function SidebarBody({
   user,
   pathname,
   onSignOut,
@@ -105,78 +110,69 @@ function SidebarContent({
   onSignOut: () => void;
   onNavClick?: () => void;
 }) {
+  void user;
   return (
     <>
-      <nav className="flex-1 py-4">
-        <ul className="space-y-1">
-          {NAV_ITEMS.map((item) => (
-            <NavLink key={item.href} item={item} pathname={pathname} onClick={onNavClick} />
-          ))}
-        </ul>
+      {/* Header */}
+      <div className="px-8 mb-4">
+        <Link
+          href="/portal"
+          onClick={onNavClick}
+          className="flex flex-col"
+        >
+          <h1 className="text-white font-bold text-lg tracking-tight">AK Golf</h1>
+          <p className="uppercase text-[11px] font-medium tracking-widest text-[#d2f000]">
+            Precision Performance
+          </p>
+        </Link>
+      </div>
 
-        <div className="mx-2 mt-6 border-t border-grey-200 pt-4">
+      {/* Navigation */}
+      <nav className="flex-1 space-y-1">
+        {NAV_ITEMS.map((item) => (
+          <NavLink
+            key={item.href}
+            item={item}
+            pathname={pathname}
+            onClick={onNavClick}
+          />
+        ))}
+      </nav>
+
+      {/* Bottom block: Subscription + Support/Sign out */}
+      <div className="px-4 mt-auto space-y-4">
+        <div className="bg-[#154212] border border-[#d2f000]/20 rounded-xl p-4">
+          <p className="text-[10px] text-[#d2f000] font-bold tracking-widest mb-2 uppercase">
+            Subscription
+          </p>
+          <Link
+            href="/portal/abonnement"
+            onClick={onNavClick}
+            className="block w-full bg-[#d2f000] text-[#154212] py-2 rounded-lg text-[11px] font-bold uppercase tracking-wider text-center hover:opacity-90 transition-opacity"
+          >
+            Upgrade Pro
+          </Link>
+        </div>
+
+        <div className="space-y-1">
+          <Link
+            href="/portal/profil"
+            onClick={onNavClick}
+            className="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
+          >
+            <Icon name="help_outline" size={20} />
+            <span>Support</span>
+          </Link>
           <button
             onClick={() => {
               onSignOut();
               onNavClick?.();
             }}
-            className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-4 py-2 text-[13px] font-medium text-grey-400 transition-colors hover:text-error"
+            className="w-full flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
           >
-            <Icon name="logout" className="h-4 w-4" />
-            <span>Logg ut</span>
+            <Icon name="logout" size={20} />
+            <span>Sign out</span>
           </button>
-        </div>
-
-        {isStaff(user.role) && (
-          <div className="mx-2 mt-2">
-            <Link
-              href="/admin"
-              onClick={onNavClick}
-              className="flex items-center gap-2.5 rounded-xl bg-black px-4 py-2.5 text-[13px] font-bold text-white transition-opacity hover:opacity-90"
-            >
-              <Icon name="shield"Check className="h-4 w-4" />
-              <span>Mission Control</span>
-            </Link>
-          </div>
-        )}
-      </nav>
-
-      <div className="px-4 pb-4">
-        <Link
-          href="/portal/bookinger/ny"
-          onClick={onNavClick}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-accent-cta px-4 py-2.5 text-[13px] font-bold text-accent-cta-text transition-opacity hover:opacity-90"
-        >
-          <Icon name="add" className="h-4 w-4" />
-          Ny økt
-        </Link>
-      </div>
-
-      <div className="mx-3 mb-3 rounded-xl border border-grey-200 bg-grey-50 p-3">
-        <div className="flex items-center gap-3">
-          {user.image ? (
-            <Image
-              src={user.image}
-              alt=""
-              width={36}
-              height={36}
-              className="rounded-full object-cover"
-            />
-          ) : (
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black">
-              <span className="text-xs font-semibold text-white">
-                {(user.name ?? "S")[0].toUpperCase()}
-              </span>
-            </div>
-          )}
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-black">
-              {user.name ?? "Spiller"}
-            </p>
-            <p className="truncate text-[11px] font-semibold uppercase tracking-wider text-grey-500">
-              {user.subscriptionTier ?? "Academy"}
-            </p>
-          </div>
         </div>
       </div>
     </>
@@ -203,31 +199,18 @@ export function Sidebar({ user }: SidebarProps) {
 
   return (
     <>
-      <aside className="fixed left-0 top-0 z-20 hidden h-full w-[220px] flex-col border-r border-grey-200 bg-white lg:flex">
-        <div className="border-b border-grey-200 px-5 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/portal" className="group flex items-center gap-3">
-              <AKLogo variant="black" size={32} />
-              <div>
-                <span className="text-[17px] font-bold tracking-[-0.03em] text-black transition-colors group-hover:text-primary">
-                  AK Golf
-                </span>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-grey-400">
-                  Academy
-                </p>
-              </div>
-            </Link>
-            <NotificationBell />
-          </div>
-        </div>
-
-        <SidebarContent
-          user={user}
-          pathname={pathname}
-          onSignOut={handleSignOut}
-        />
+      {/* Desktop sidebar */}
+      <aside
+        className="h-screen w-64 fixed left-0 top-0 flex flex-col py-8 gap-y-6 shadow-2xl z-40 hidden lg:flex"
+        style={{
+          background: "#2d5a27",
+          boxShadow: "0 0 40px rgba(21, 66, 18, 0.2)",
+        }}
+      >
+        <SidebarBody user={user} pathname={pathname} onSignOut={handleSignOut} />
       </aside>
 
+      {/* Mobile sidebar */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -236,30 +219,24 @@ export function Sidebar({ user }: SidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={close}
-              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
             />
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed left-0 top-0 z-50 flex h-full w-72 flex-col border-r border-grey-200 bg-white lg:hidden"
+              className="fixed left-0 top-0 z-50 flex h-screen w-64 flex-col py-8 gap-y-6 lg:hidden"
+              style={{ background: "#2d5a27" }}
             >
-              <div className="flex items-center justify-between border-b border-grey-200 px-5 py-4">
-                <div className="flex items-center gap-3">
-                  <AKLogo variant="black" size={32} />
-                  <span className="text-[14px] font-bold text-black">AK Golf</span>
-                </div>
-                <button
-                  onClick={close}
-                  className="cursor-pointer rounded-lg p-2 text-grey-400 transition-colors hover:bg-grey-50 hover:text-black"
-                  aria-label="Lukk meny"
-                >
-                  <Icon name="close" className="h-5 w-5" />
-                </button>
-              </div>
-
-              <SidebarContent
+              <button
+                onClick={close}
+                className="absolute right-4 top-4 rounded-lg p-2 text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-white transition-colors"
+                aria-label="Lukk meny"
+              >
+                <Icon name="close" size={20} />
+              </button>
+              <SidebarBody
                 user={user}
                 pathname={pathname}
                 onSignOut={handleSignOut}
