@@ -3,8 +3,8 @@ export default function StatistikkLoading() {
     <div className="space-y-6 animate-pulse">
       {/* Header */}
       <div>
-        <div className="h-8 w-48 bg-[var(--color-portal-hover)] rounded" />
-        <div className="h-4 w-32 bg-[var(--color-portal-card)] rounded mt-2" />
+        <div className="h-8 w-48 bg-[var(--color-surface-container)] rounded" />
+        <div className="h-4 w-32 bg-[var(--color-surface-container-lowest)] rounded mt-2" />
       </div>
 
       {/* 4 stat cards */}
@@ -12,25 +12,25 @@ export default function StatistikkLoading() {
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-[20px] border border-[var(--color-portal-hover)] p-5"
+            className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-5"
           >
-            <div className="h-3 w-20 bg-[var(--color-portal-card)] rounded mb-3" />
-            <div className="h-8 w-16 bg-[var(--color-portal-hover)] rounded mb-1" />
-            <div className="h-3 w-12 bg-[var(--color-portal-card)] rounded" />
+            <div className="h-3 w-20 bg-[var(--color-surface-container-lowest)] rounded mb-3" />
+            <div className="h-8 w-16 bg-[var(--color-surface-container)] rounded mb-1" />
+            <div className="h-3 w-12 bg-[var(--color-surface-container-lowest)] rounded" />
           </div>
         ))}
       </div>
 
       {/* Chart area */}
-      <div className="bg-white rounded-[20px] border border-[var(--color-portal-hover)] p-5">
-        <div className="h-4 w-36 bg-[var(--color-portal-hover)] rounded mb-4" />
-        <div className="h-64 bg-[var(--color-portal-card)] rounded-lg" />
+      <div className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-5">
+        <div className="h-4 w-36 bg-[var(--color-surface-container)] rounded mb-4" />
+        <div className="h-64 bg-[var(--color-surface-container-lowest)] rounded-lg" />
       </div>
 
       {/* Secondary chart */}
-      <div className="bg-white rounded-[20px] border border-[var(--color-portal-hover)] p-5">
-        <div className="h-4 w-28 bg-[var(--color-portal-hover)] rounded mb-4" />
-        <div className="h-48 bg-[var(--color-portal-card)] rounded-lg" />
+      <div className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-5">
+        <div className="h-4 w-28 bg-[var(--color-surface-container)] rounded mb-4" />
+        <div className="h-48 bg-[var(--color-surface-container-lowest)] rounded-lg" />
       </div>
     </div>
   );

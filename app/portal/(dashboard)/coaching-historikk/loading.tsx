@@ -3,8 +3,8 @@ export default function CoachingHistorikkLoading() {
     <div className="space-y-6 animate-pulse">
       {/* Header */}
       <div>
-        <div className="h-8 w-48 bg-portal-hover rounded" />
-        <div className="h-4 w-32 bg-portal-hover rounded mt-2" />
+        <div className="h-8 w-48 bg-surface-container rounded" />
+        <div className="h-4 w-32 bg-surface-container rounded mt-2" />
       </div>
 
       {/* Session cards */}
@@ -12,17 +12,17 @@ export default function CoachingHistorikkLoading() {
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-xl border border-portal-border p-5"
+            className="bg-white rounded-xl border border-outline-variant p-5"
           >
             <div className="flex justify-between items-start mb-3">
               <div className="space-y-2">
-                <div className="h-5 w-44 bg-portal-hover rounded" />
-                <div className="h-3 w-28 bg-portal-hover rounded" />
+                <div className="h-5 w-44 bg-surface-container rounded" />
+                <div className="h-3 w-28 bg-surface-container rounded" />
               </div>
-              <div className="h-6 w-16 bg-portal-hover rounded-full" />
+              <div className="h-6 w-16 bg-surface-container rounded-full" />
             </div>
-            <div className="h-3 w-full bg-portal-hover rounded mb-2" />
-            <div className="h-3 w-2/3 bg-portal-hover rounded" />
+            <div className="h-3 w-full bg-surface-container rounded mb-2" />
+            <div className="h-3 w-2/3 bg-surface-container rounded" />
           </div>
         ))}
       </div>

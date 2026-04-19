@@ -109,20 +109,20 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
       <PremiumCard>
         {/* Month navigation */}
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-[16px] font-semibold text-portal-text capitalize">
+          <h3 className="text-[16px] font-semibold text-on-surface capitalize">
             {format(calendarMonth, "MMMM yyyy", { locale: nb })}
           </h3>
-          <div className="flex gap-1 p-1 rounded-full bg-white border border-portal-border shadow-sm">
+          <div className="flex gap-1 p-1 rounded-full bg-white border border-outline-variant shadow-sm">
             <button
               onClick={() => setCalendarMonth(subMonths(calendarMonth, 1))}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-portal-muted hover:text-portal-text hover:bg-portal-hover transition-colors"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors"
               aria-label="Forrige maned"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => setCalendarMonth(addMonths(calendarMonth, 1))}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-portal-muted hover:text-portal-text hover:bg-portal-hover transition-colors"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors"
               aria-label="Neste maned"
             >
               <ChevronRight className="w-4 h-4" />
@@ -135,7 +135,7 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
           {WEEK_DAYS.map((day, i) => (
             <div
               key={`${day}-${i}`}
-              className="text-center text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted py-2"
+              className="text-center text-[10px] font-bold uppercase tracking-[0.15em] text-outline py-2"
             >
               {day}
             </div>
@@ -158,7 +158,7 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
                   "bg-primary/8 hover:bg-primary/15",
                 !day.today &&
                   !day.hasLog &&
-                  "hover:bg-portal-hover"
+                  "hover:bg-surface-container"
               )}
             >
               <span
@@ -166,7 +166,7 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
                   "text-[13px] font-medium tabular-nums",
                   day.today
                     ? "text-primary font-semibold"
-                    : "text-portal-text"
+                    : "text-on-surface"
                 )}
               >
                 {day.day}

@@ -64,28 +64,28 @@ export function NyRundeClient() {
   }
 
   const inputClass =
-    "w-full rounded-xl border border-portal-border bg-white px-4 py-2.5 text-[13px] text-portal-text outline-none transition-colors placeholder:text-portal-muted focus:border-primary/40 focus:ring-2 focus:ring-primary/20";
+    "w-full rounded-xl border border-outline-variant bg-white px-4 py-2.5 text-[13px] text-on-surface outline-none transition-colors placeholder:text-outline focus:border-primary/40 focus:ring-2 focus:ring-primary/20";
 
   const labelClass =
-    "mb-1.5 block text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted";
+    "mb-1.5 block text-[10px] font-bold uppercase tracking-[0.15em] text-outline";
 
   return (
     <div className="space-y-10">
       {/* Header */}
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted mb-2">
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-outline mb-2">
           Statistikk
         </p>
-        <h1 className="text-2xl font-bold tracking-tight text-portal-text">
+        <h1 className="text-2xl font-bold tracking-tight text-on-surface">
           Ny runde
         </h1>
-        <p className="text-portal-secondary mt-1">
+        <p className="text-on-surface-variant mt-1">
           Logg din golfrunde med score, statistikk og notater. Alle tall kan redigeres senere.
         </p>
         <div className="mt-4">
           <Link
             href="/portal/statistikk"
-            className="inline-flex h-11 items-center gap-2 rounded-[20px] border border-portal-border bg-white px-5 text-[12px] font-semibold text-portal-text shadow-sm transition-colors hover:bg-portal-hover"
+            className="inline-flex h-11 items-center gap-2 rounded-[20px] border border-outline-variant bg-white px-5 text-[12px] font-semibold text-on-surface shadow-sm transition-colors hover:bg-surface-container"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             Tilbake
@@ -96,7 +96,7 @@ export function NyRundeClient() {
       <form onSubmit={handleSubmit} className="max-w-2xl space-y-4">
         {/* Grunnleggende info */}
         <div className="bg-white rounded-xl shadow-card p-6">
-          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-portal-text">
+          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-on-surface">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white tabular-nums">
               1
             </span>
@@ -159,7 +159,7 @@ export function NyRundeClient() {
 
         {/* Statistikk */}
         <div className="bg-white rounded-xl shadow-card p-6">
-          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-portal-text">
+          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-on-surface">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white tabular-nums">
               2
             </span>
@@ -179,7 +179,7 @@ export function NyRundeClient() {
                   max="14"
                   className={inputClass}
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] text-portal-muted tabular-nums">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] text-outline tabular-nums">
                   / 14
                 </span>
               </div>
@@ -197,7 +197,7 @@ export function NyRundeClient() {
                   max="18"
                   className={inputClass}
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] text-portal-muted tabular-nums">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] text-outline tabular-nums">
                   / 18
                 </span>
               </div>
@@ -220,7 +220,7 @@ export function NyRundeClient() {
 
         {/* Notater */}
         <div className="bg-white rounded-xl shadow-card p-6">
-          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-portal-text">
+          <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-on-surface">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white tabular-nums">
               3
             </span>
@@ -247,7 +247,7 @@ export function NyRundeClient() {
         <div className="flex gap-3 pt-2">
           <Link
             href="/portal/statistikk"
-            className="flex flex-1 items-center justify-center gap-2 rounded-[20px] border border-portal-border bg-white py-3 text-[12px] font-semibold text-portal-muted transition-colors hover:bg-portal-hover hover:text-portal-text"
+            className="flex flex-1 items-center justify-center gap-2 rounded-[20px] border border-outline-variant bg-white py-3 text-[12px] font-semibold text-outline transition-colors hover:bg-surface-container hover:text-on-surface"
           >
             Avbryt
           </Link>

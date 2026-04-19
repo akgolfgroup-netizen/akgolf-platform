@@ -214,12 +214,12 @@
   --color-portal-hover: #F0F0F2;
 
   /* Portal shadows — tinted with Forest Green for harmony */
-  --shadow-portal-card: 0 0 0 1px rgba(21,66,18,0.06), 0 1px 2px rgba(21,66,18,0.04), 0 4px 16px rgba(21,66,18,0.06);
-  --shadow-portal-card-hover: 0 0 0 1px rgba(21,66,18,0.08), 0 8px 32px rgba(21,66,18,0.12);
-  --shadow-portal-floating: 0 20px 60px rgba(21,66,18,0.1), 0 0 0 1px rgba(21,66,18,0.05);
-  --shadow-portal-glow-green: inset 0 0 30px rgba(21,66,18,0.06), 0 0 0 1px rgba(21,66,18,0.06), 0 4px 16px rgba(21,66,18,0.06);
-  --shadow-portal-glow-lime: inset 0 0 20px rgba(210,240,0,0.15), 0 0 0 1px rgba(210,240,0,0.2);
-  --shadow-portal-glow-ai: inset 0 0 30px rgba(175,82,222,0.08), 0 0 0 1px rgba(175,82,222,0.1), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-card: 0 0 0 1px rgba(21,66,18,0.06), 0 1px 2px rgba(21,66,18,0.04), 0 4px 16px rgba(21,66,18,0.06);
+  --shadow-card-hover: 0 0 0 1px rgba(21,66,18,0.08), 0 8px 32px rgba(21,66,18,0.12);
+  --shadow-card-hover: 0 20px 60px rgba(21,66,18,0.1), 0 0 0 1px rgba(21,66,18,0.05);
+  --shadow-accent-glow: inset 0 0 30px rgba(21,66,18,0.06), 0 0 0 1px rgba(21,66,18,0.06), 0 4px 16px rgba(21,66,18,0.06);
+  --shadow-accent-glow: inset 0 0 20px rgba(210,240,0,0.15), 0 0 0 1px rgba(210,240,0,0.2);
+  --shadow-card: inset 0 0 30px rgba(175,82,222,0.08), 0 0 0 1px rgba(175,82,222,0.1), 0 4px 16px rgba(0,0,0,0.04);
 
   /* ═══════════════════════════════════════════════════════════════════════════ */
   /* TYPOGRAPHY — Inter                                                         */
@@ -511,11 +511,11 @@
   --color-portal-border: var(--color-outline-variant);
   --color-portal-border-subtle: var(--color-outline-variant);
   --color-portal-hover: var(--color-surface-container);
-  --shadow-portal-card: var(--shadow-card);
-  --shadow-portal-card-hover: var(--shadow-card-hover);
-  --shadow-portal-glow-green: var(--shadow-accent-glow);
-  --shadow-portal-glow-lime: var(--shadow-accent-glow);
-  --shadow-portal-glow-ai: var(--shadow-card);
+  --shadow-card: var(--shadow-card);
+  --shadow-card-hover: var(--shadow-card-hover);
+  --shadow-accent-glow: var(--shadow-accent-glow);
+  --shadow-accent-glow: var(--shadow-accent-glow);
+  --shadow-card: var(--shadow-card);
 
   /* Hg-aliaser (fjernes i Steg 7) */
   --hg-bg: var(--color-surface);
@@ -1559,62 +1559,62 @@
 @layer components {
   /* Heritage Grid Base */
   .hg-bg {
-    background-color: var(--hg-bg);
+    background-color: var(--color-surface);
   }
   
   .hg-surface {
-    background-color: var(--hg-surface);
+    background-color: var(--color-surface-container-lowest);
   }
   
   .hg-surface-raised {
-    background-color: var(--hg-surface-raised);
+    background-color: var(--color-surface-container);
   }
   
   .hg-surface-sunken {
-    background-color: var(--hg-surface-sunken);
+    background-color: var(--color-surface-container-high);
   }
   
   /* Heritage Grid Text */
   .hg-text {
-    color: var(--hg-text);
+    color: var(--color-on-surface);
   }
   
   .hg-text-secondary {
-    color: var(--hg-text-secondary);
+    color: var(--color-on-surface-variant);
   }
   
   .hg-text-muted {
-    color: var(--hg-text-muted);
+    color: var(--color-outline);
   }
   
   .hg-primary {
-    color: var(--hg-primary);
+    color: var(--color-on-surface);
   }
   
   /* Heritage Grid Borders */
   .hg-border {
-    border-color: var(--hg-border);
+    border-color: var(--color-outline-variant);
   }
   
   .hg-border-subtle {
-    border-color: var(--hg-border-subtle);
+    border-color: var(--color-outline-variant);
   }
   
   /* Heritage Grid Card */
   .hg-card {
-    background-color: var(--hg-surface);
-    border: 1px solid var(--hg-border);
+    background-color: var(--color-surface-container-lowest);
+    border: 1px solid var(--color-outline-variant);
     border-radius: 12px;
     transition: border-color 200ms ease, box-shadow 200ms ease;
   }
   
   .hg-card:hover {
-    border-color: var(--hg-border-hover);
+    border-color: var(--color-outline);
   }
   
   .hg-card-raised {
-    background-color: var(--hg-surface-raised);
-    border: 1px solid var(--hg-border);
+    background-color: var(--color-surface-container);
+    border: 1px solid var(--color-outline-variant);
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
@@ -1635,43 +1635,43 @@
   }
   
   .hg-btn:focus-visible {
-    outline: 2px solid var(--hg-primary);
+    outline: 2px solid var(--color-on-surface);
     outline-offset: 2px;
   }
   
   .hg-btn-primary {
-    background-color: var(--hg-primary);
+    background-color: var(--color-on-surface);
     color: #0a0a0a;
     padding: 0.625rem 1.25rem;
   }
   
   .hg-btn-primary:hover {
-    background-color: var(--hg-primary-muted);
+    background-color: var(--color-surface-container);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(210, 240, 0, 0.25);
   }
   
   .hg-btn-secondary {
-    background-color: var(--hg-surface-raised);
-    color: var(--hg-text);
+    background-color: var(--color-surface-container);
+    color: var(--color-on-surface);
     padding: 0.625rem 1.25rem;
-    border: 1px solid var(--hg-border);
+    border: 1px solid var(--color-outline-variant);
   }
   
   .hg-btn-secondary:hover {
-    background-color: var(--hg-border);
-    border-color: var(--hg-border-hover);
+    background-color: var(--color-outline-variant);
+    border-color: var(--color-outline);
   }
   
   .hg-btn-ghost {
     background-color: transparent;
-    color: var(--hg-text-secondary);
+    color: var(--color-on-surface-variant);
     padding: 0.625rem 1rem;
   }
   
   .hg-btn-ghost:hover {
-    color: var(--hg-text);
-    background-color: var(--hg-surface-raised);
+    color: var(--color-on-surface);
+    background-color: var(--color-surface-container);
   }
   
   /* Heritage Grid Input */
@@ -1680,21 +1680,21 @@
     width: 100%;
     padding: 0.625rem 0.875rem;
     font-size: 0.875rem;
-    color: var(--hg-text);
-    background-color: var(--hg-surface);
-    border: 1px solid var(--hg-border);
+    color: var(--color-on-surface);
+    background-color: var(--color-surface-container-lowest);
+    border: 1px solid var(--color-outline-variant);
     border-radius: 8px;
     outline: none;
     transition: border-color 200ms ease, box-shadow 200ms ease;
   }
   
   .hg-input::placeholder {
-    color: var(--hg-text-muted);
+    color: var(--color-outline);
   }
   
   .hg-input:focus {
-    border-color: var(--hg-primary);
-    box-shadow: 0 0 0 3px var(--hg-primary-glow);
+    border-color: var(--color-on-surface);
+    box-shadow: 0 0 0 3px var(--shadow-accent-glow);
   }
   
   /* Heritage Grid Label */
@@ -1703,7 +1703,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--hg-text-muted);
+    color: var(--color-outline);
   }
   
   /* Heritage Grid Badge */
@@ -1720,28 +1720,28 @@
   }
   
   .hg-badge-success {
-    background-color: var(--hg-success-bg);
-    color: var(--hg-success);
+    background-color: var(--color-primary-fixed);
+    color: var(--color-on-primary-fixed-variant);
   }
   
   .hg-badge-warning {
-    background-color: var(--hg-warning-bg);
-    color: var(--hg-warning);
+    background-color: #fdf4e4;
+    color: #7a5520;
   }
   
   .hg-badge-error {
-    background-color: var(--hg-error-bg);
-    color: var(--hg-error);
+    background-color: var(--color-error-container);
+    color: var(--color-error);
   }
   
   .hg-badge-info {
-    background-color: var(--hg-info-bg);
-    color: var(--hg-info);
+    background-color: #eff6ff;
+    color: #007aff;
   }
   
   .hg-badge-primary {
-    background-color: var(--hg-primary-glow);
-    color: var(--hg-primary);
+    background-color: var(--shadow-accent-glow);
+    color: var(--color-on-surface);
   }
   
   /* Heritage Grid Scrollbar */
@@ -1751,16 +1751,16 @@
   }
   
   .hg-scrollbar::-webkit-scrollbar-track {
-    background: var(--hg-surface);
+    background: var(--color-surface-container-lowest);
   }
   
   .hg-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--hg-border);
+    background: var(--color-outline-variant);
     border-radius: 3px;
   }
   
   .hg-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--hg-border-hover);
+    background: var(--color-outline);
   }
   
   /* Heritage Grid Layout */
@@ -1821,13 +1821,13 @@
     justify-content: space-between;
     margin-bottom: 1rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--hg-border);
+    border-bottom: 1px solid var(--color-outline-variant);
   }
   
   .hg-section-title {
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--hg-text);
+    color: var(--color-on-surface);
     letter-spacing: -0.01em;
   }
   
@@ -1844,19 +1844,19 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--hg-text-muted);
-    border-bottom: 1px solid var(--hg-border);
+    color: var(--color-outline);
+    border-bottom: 1px solid var(--color-outline-variant);
   }
   
   .hg-table td {
     padding: 0.875rem 1rem;
     font-size: 0.875rem;
-    color: var(--hg-text);
-    border-bottom: 1px solid var(--hg-border-subtle);
+    color: var(--color-on-surface);
+    border-bottom: 1px solid var(--color-outline-variant);
   }
   
   .hg-table tr:hover td {
-    background-color: var(--hg-surface-raised);
+    background-color: var(--color-surface-container);
   }
   
   /* Heritage Grid Status Indicator */
@@ -1892,30 +1892,30 @@
   /* Heritage Grid Capacity Bar */
   .hg-capacity-bar {
     height: 4px;
-    background-color: var(--hg-border);
+    background-color: var(--color-outline-variant);
     border-radius: 2px;
     overflow: hidden;
   }
   
   .hg-capacity-fill {
     height: 100%;
-    background-color: var(--hg-primary);
+    background-color: var(--color-on-surface);
     border-radius: 2px;
     transition: width 300ms ease;
   }
   
   .hg-capacity-fill.warning {
-    background-color: var(--hg-warning);
+    background-color: #7a5520;
   }
   
   .hg-capacity-fill.error {
-    background-color: var(--hg-error);
+    background-color: var(--color-error);
   }
   
   /* Heritage Grid Sidebar */
   .hg-sidebar {
-    background-color: var(--hg-surface);
-    border-right: 1px solid var(--hg-border);
+    background-color: var(--color-surface-container-lowest);
+    border-right: 1px solid var(--color-outline-variant);
   }
   
   .hg-sidebar-link {
@@ -1924,33 +1924,33 @@
     gap: 0.75rem;
     padding: 0.625rem 1rem;
     font-size: 0.8125rem;
-    color: var(--hg-text-secondary);
+    color: var(--color-on-surface-variant);
     border-left: 2px solid transparent;
     transition: all 150ms ease;
     text-decoration: none;
   }
   
   .hg-sidebar-link:hover {
-    color: var(--hg-text);
-    background-color: var(--hg-surface-raised);
+    color: var(--color-on-surface);
+    background-color: var(--color-surface-container);
   }
   
   .hg-sidebar-link.active {
-    color: var(--hg-primary);
-    background-color: var(--hg-primary-glow);
-    border-left-color: var(--hg-primary);
+    color: var(--color-on-surface);
+    background-color: var(--shadow-accent-glow);
+    border-left-color: var(--color-on-surface);
   }
   
   /* Heritage Grid Topbar */
   .hg-topbar {
-    background-color: var(--hg-surface);
-    border-bottom: 1px solid var(--hg-border);
+    background-color: var(--color-surface-container-lowest);
+    border-bottom: 1px solid var(--color-outline-variant);
   }
   
   /* Heritage Grid Divider */
   .hg-divider {
     height: 1px;
-    background-color: var(--hg-border);
+    background-color: var(--color-outline-variant);
     margin: 1rem 0;
   }
   
@@ -1959,14 +1959,14 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: var(--hg-surface-raised);
-    border: 1px solid var(--hg-border);
+    background-color: var(--color-surface-container);
+    border: 1px solid var(--color-outline-variant);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--hg-text);
+    color: var(--color-on-surface);
   }
   
   .hg-avatar-sm {
@@ -1987,12 +1987,12 @@
     align-items: center;
     gap: 0.875rem;
     padding: 0.875rem 1rem;
-    border-bottom: 1px solid var(--hg-border-subtle);
+    border-bottom: 1px solid var(--color-outline-variant);
     transition: background-color 150ms ease;
   }
   
   .hg-list-item:hover {
-    background-color: var(--hg-surface-raised);
+    background-color: var(--color-surface-container);
   }
   
   .hg-list-item:last-child {
@@ -2013,18 +2013,18 @@
     padding: 0.5rem 0.875rem;
     font-size: 0.75rem;
     font-weight: 500;
-    color: var(--hg-text-secondary);
-    background-color: var(--hg-surface-raised);
-    border: 1px solid var(--hg-border);
+    color: var(--color-on-surface-variant);
+    background-color: var(--color-surface-container);
+    border: 1px solid var(--color-outline-variant);
     border-radius: 6px;
     cursor: pointer;
     transition: all 150ms ease;
   }
   
   .hg-quick-action:hover {
-    color: var(--hg-text);
-    border-color: var(--hg-border-hover);
-    background-color: var(--hg-border);
+    color: var(--color-on-surface);
+    border-color: var(--color-outline);
+    background-color: var(--color-outline-variant);
   }
   
   /* Heritage Grid Alert Banner */
@@ -2038,23 +2038,23 @@
   }
   
   .hg-alert-success {
-    background-color: var(--hg-success-bg);
-    color: var(--hg-success);
+    background-color: var(--color-primary-fixed);
+    color: var(--color-on-primary-fixed-variant);
   }
   
   .hg-alert-warning {
-    background-color: var(--hg-warning-bg);
-    color: var(--hg-warning);
+    background-color: #fdf4e4;
+    color: #7a5520;
   }
   
   .hg-alert-error {
-    background-color: var(--hg-error-bg);
-    color: var(--hg-error);
+    background-color: var(--color-error-container);
+    color: var(--color-error);
   }
   
   .hg-alert-info {
-    background-color: var(--hg-info-bg);
-    color: var(--hg-info);
+    background-color: #eff6ff;
+    color: #007aff;
   }
   
   /* Heritage Grid Stats Row */
@@ -2077,7 +2077,7 @@
     top: 0.5rem;
     bottom: 0.5rem;
     width: 2px;
-    background-color: var(--hg-border);
+    background-color: var(--color-outline-variant);
   }
   
   .hg-timeline-item {
@@ -2093,25 +2093,25 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: var(--hg-border);
-    border: 2px solid var(--hg-surface);
+    background-color: var(--color-outline-variant);
+    border: 2px solid var(--color-surface-container-lowest);
   }
   
   .hg-timeline-item.active::before {
-    background-color: var(--hg-primary);
-    box-shadow: 0 0 8px var(--hg-primary-glow);
+    background-color: var(--color-on-surface);
+    box-shadow: 0 0 8px var(--shadow-accent-glow);
   }
   
   .hg-timeline-item.success::before {
-    background-color: var(--hg-success);
+    background-color: var(--color-on-primary-fixed-variant);
   }
   
   .hg-timeline-item.warning::before {
-    background-color: var(--hg-warning);
+    background-color: #7a5520;
   }
   
   .hg-timeline-item.error::before {
-    background-color: var(--hg-error);
+    background-color: var(--color-error);
   }
   
   /* Heritage Grid Tab */
@@ -2119,7 +2119,7 @@
     display: flex;
     gap: 0.25rem;
     padding: 0.25rem;
-    background-color: var(--hg-surface-raised);
+    background-color: var(--color-surface-container);
     border-radius: 8px;
     width: fit-content;
   }
@@ -2128,7 +2128,7 @@
     padding: 0.5rem 1rem;
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--hg-text-muted);
+    color: var(--color-outline);
     border-radius: 6px;
     cursor: pointer;
     transition: all 150ms ease;
@@ -2137,12 +2137,12 @@
   }
   
   .hg-tab:hover {
-    color: var(--hg-text);
+    color: var(--color-on-surface);
   }
   
   .hg-tab.active {
-    color: var(--hg-text);
-    background-color: var(--hg-surface);
+    color: var(--color-on-surface);
+    background-color: var(--color-surface-container-lowest);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
   
@@ -2157,8 +2157,8 @@
     right: 0;
     margin-top: 0.5rem;
     min-width: 180px;
-    background-color: var(--hg-surface-raised);
-    border: 1px solid var(--hg-border);
+    background-color: var(--color-surface-container);
+    border: 1px solid var(--color-outline-variant);
     border-radius: 8px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     z-index: 50;
@@ -2171,18 +2171,18 @@
     gap: 0.625rem;
     padding: 0.625rem 0.875rem;
     font-size: 0.8125rem;
-    color: var(--hg-text);
+    color: var(--color-on-surface);
     cursor: pointer;
     transition: background-color 150ms ease;
   }
   
   .hg-dropdown-item:hover {
-    background-color: var(--hg-border);
+    background-color: var(--color-outline-variant);
   }
   
   .hg-dropdown-divider {
     height: 1px;
-    background-color: var(--hg-border);
+    background-color: var(--color-outline-variant);
     margin: 0.375rem 0;
   }
 

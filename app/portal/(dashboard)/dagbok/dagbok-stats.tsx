@@ -107,17 +107,17 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
               <Flame className="w-5 h-5 text-primary" strokeWidth={1.75} />
             </div>
             <div>
-              <h3 className="font-semibold text-portal-text text-sm">
+              <h3 className="font-semibold text-on-surface text-sm">
                 Treningsstreak
               </h3>
-              <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">{streak > 0 ? "Fortsett det gode arbeidet" : "Start i dag"}</MonoLabel>
+              <MonoLabel as="p" size="xs" uppercase className="text-outline block">{streak > 0 ? "Fortsett det gode arbeidet" : "Start i dag"}</MonoLabel>
             </div>
           </div>
           <div className="flex items-baseline gap-3 mb-5">
-            <span className="text-4xl font-extrabold tabular-nums tracking-tight text-portal-text">
+            <span className="text-4xl font-extrabold tabular-nums tracking-tight text-on-surface">
               {streak}
             </span>
-            <MonoLabel size="xs" uppercase className="text-portal-muted">{streak === 1 ? "dag på rad" : "dager på rad"}</MonoLabel>
+            <MonoLabel size="xs" uppercase className="text-outline">{streak === 1 ? "dag på rad" : "dager på rad"}</MonoLabel>
           </div>
           <div className="flex gap-1.5 mb-4">
             {streakDays.map((d, idx) => (
@@ -129,7 +129,7 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
                   d.today && !d.active &&
                     "bg-white border-2 border-primary text-primary",
                   !d.active && !d.today &&
-                    "bg-portal-hover border border-portal-border text-portal-muted"
+                    "bg-surface-container border border-outline-variant text-outline"
                 )}
               >
                 {d.day}
@@ -143,8 +143,8 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
       {/* Categories breakdown */}
       {categories.length > 0 && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted mb-4 flex items-center gap-2">
-            <span className="w-6 h-px bg-portal-muted" />
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-outline mb-4 flex items-center gap-2">
+            <span className="w-6 h-px bg-surface-container-high" />
             Treningskategorier
           </p>
           <PremiumCard glow="green">
@@ -152,17 +152,17 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
               {categories.map((cat) => (
                 <div
                   key={cat.name}
-                  className="flex items-center gap-3 p-4 rounded-2xl bg-portal-hover border border-portal-border hover:border-primary/20 transition-colors"
+                  className="flex items-center gap-3 p-4 rounded-2xl bg-surface-container border border-outline-variant hover:border-primary/20 transition-colors"
                 >
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-primary/10">
                     <Target className="w-5 h-5 text-primary" strokeWidth={1.75} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-portal-text truncate">
+                    <p className="text-sm font-semibold text-on-surface truncate">
                       {cat.name}
                     </p>
-                    <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">{cat.count}</MonoLabel>
-                    <div className="h-1 bg-portal-border rounded-full mt-2 overflow-hidden">
+                    <MonoLabel as="p" size="xs" uppercase className="text-outline block">{cat.count}</MonoLabel>
+                    <div className="h-1 bg-outline-variant rounded-full mt-2 overflow-hidden">
                       <div
                         className="h-full rounded-full bg-primary"
                         style={{ width: `${cat.progress}%` }}

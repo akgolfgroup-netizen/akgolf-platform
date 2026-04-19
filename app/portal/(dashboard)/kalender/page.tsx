@@ -22,23 +22,23 @@ export default async function KalenderPage() {
   return (
     <div className="space-y-10">
       <div className="space-y-2">
-        <MonoLabel size="xs" uppercase className="block text-portal-muted">
+        <MonoLabel size="xs" uppercase className="block text-outline">
           {format(now, "EEEE d. MMMM yyyy", { locale: nb })}
         </MonoLabel>
-        <h1 className="text-2xl font-bold tracking-tight text-portal-text">
+        <h1 className="text-2xl font-bold tracking-tight text-on-surface">
           Din{" "}
-          <span className="font-serif italic font-normal text-portal-text">
+          <span className="font-serif italic font-normal text-on-surface">
             kalender
           </span>
-          <span className="text-portal-muted">.</span>
+          <span className="text-outline">.</span>
         </h1>
-        <p className="text-portal-secondary">
+        <p className="text-on-surface-variant">
           Oversikt over dine coaching-timer, treninger og turneringer — synkronisert med Google Calendar.
         </p>
         <div className="pt-2">
           <a
             href="#calendar-sync"
-            className="inline-flex h-11 items-center gap-2 rounded-full border border-portal-border bg-white px-6 text-[12px] font-semibold text-portal-text shadow-sm transition-colors hover:bg-portal-hover"
+            className="inline-flex h-11 items-center gap-2 rounded-full border border-outline-variant bg-white px-6 text-[12px] font-semibold text-on-surface shadow-sm transition-colors hover:bg-surface-container"
           >
             <Settings2 className="h-3.5 w-3.5" />
             Sync-innstillinger
@@ -50,8 +50,8 @@ export default async function KalenderPage() {
       <PremiumCard>
         <div className="p-6">
           <div className="mb-5 flex items-center gap-2">
-            <span className="h-px w-6 bg-portal-muted" />
-            <MonoLabel size="xs" uppercase className="text-portal-muted">
+            <span className="h-px w-6 bg-surface-container-high" />
+            <MonoLabel size="xs" uppercase className="text-outline">
               Denne uka · {format(weekStart, "d", { locale: nb })}–{format(weekEnd, "d. MMM", { locale: nb })}
             </MonoLabel>
           </div>

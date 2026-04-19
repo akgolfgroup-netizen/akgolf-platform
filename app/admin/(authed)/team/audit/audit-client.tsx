@@ -91,7 +91,7 @@ export function AuditClient({ initialRows }: AuditClientProps) {
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-        <div className="flex items-center gap-1.5 rounded-[10px] bg-[var(--hg-surface-raised)] p-[3px]">
+        <div className="flex items-center gap-1.5 rounded-[10px] bg-[var(--color-surface-container)] p-[3px]">
           {(
             [
               { id: "all", label: "Alle" },
@@ -106,7 +106,7 @@ export function AuditClient({ initialRows }: AuditClientProps) {
               className={`rounded-[7px] px-3 py-1.5 text-[13px] font-medium transition-colors ${
                 actionFilter === o.id
                   ? "bg-[var(--color-primary)] text-white"
-                  : "text-[var(--hg-text-muted)] hover:text-[var(--hg-text-secondary)]"
+                  : "text-[var(--color-outline)] hover:text-[var(--color-on-surface-variant)]"
               }`}
             >
               {o.label}
@@ -115,26 +115,26 @@ export function AuditClient({ initialRows }: AuditClientProps) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--hg-border-subtle)] bg-[var(--hg-surface)] overflow-hidden">
+      <div className="rounded-xl border border-[var(--color-outline-variant)] bg-[var(--color-surface-container-lowest)] overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[var(--hg-border-subtle)]">
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+            <tr className="border-b border-[var(--color-outline-variant)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Tidspunkt
               </th>
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Bruker
               </th>
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Handling
               </th>
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Kapabilitet
               </th>
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Utført av
               </th>
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Begrunnelse
               </th>
             </tr>
@@ -144,7 +144,7 @@ export function AuditClient({ initialRows }: AuditClientProps) {
               <tr>
                 <td
                   colSpan={6}
-                  className="px-6 py-10 text-center text-sm text-[var(--hg-text-muted)]"
+                  className="px-6 py-10 text-center text-sm text-[var(--color-outline)]"
                 >
                   Ingen rader matcher filteret.
                 </td>
@@ -153,14 +153,14 @@ export function AuditClient({ initialRows }: AuditClientProps) {
             {filtered.map((r) => (
               <tr
                 key={r.id}
-                className="border-b border-[var(--hg-border-subtle)] last:border-0 hover:bg-[var(--hg-surface-raised)]"
+                className="border-b border-[var(--color-outline-variant)] last:border-0 hover:bg-[var(--color-surface-container)]"
               >
-                <td className="px-6 py-3 text-sm tabular-nums text-[var(--hg-text-secondary)] whitespace-nowrap">
+                <td className="px-6 py-3 text-sm tabular-nums text-[var(--color-on-surface-variant)] whitespace-nowrap">
                   {formatDateTime(r.performedAt)}
                 </td>
-                <td className="px-6 py-3 text-sm text-[var(--hg-text)]">
+                <td className="px-6 py-3 text-sm text-[var(--color-on-surface)]">
                   <div className="font-medium">{r.userName ?? "—"}</div>
-                  <div className="text-[11px] text-[var(--hg-text-muted)]">
+                  <div className="text-[11px] text-[var(--color-outline)]">
                     {r.userEmail ?? r.userId}
                   </div>
                 </td>
@@ -169,13 +169,13 @@ export function AuditClient({ initialRows }: AuditClientProps) {
                     {ACTION_LABEL[r.action]}
                   </Badge>
                 </td>
-                <td className="px-6 py-3 text-xs font-mono text-[var(--hg-text-secondary)]">
+                <td className="px-6 py-3 text-xs font-mono text-[var(--color-on-surface-variant)]">
                   {r.capability}
                 </td>
-                <td className="px-6 py-3 text-sm text-[var(--hg-text-secondary)]">
+                <td className="px-6 py-3 text-sm text-[var(--color-on-surface-variant)]">
                   {r.performedByName ?? r.performedBy}
                 </td>
-                <td className="px-6 py-3 text-sm text-[var(--hg-text-muted)]">
+                <td className="px-6 py-3 text-sm text-[var(--color-outline)]">
                   {r.reason ?? "—"}
                 </td>
               </tr>

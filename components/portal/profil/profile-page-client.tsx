@@ -165,7 +165,7 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
 
       {/* ─── 3. Abonnement ─── */}
       <PremiumCard delay={0.25}>
-        <MonoLabel size="xs" uppercase className="mb-3 block text-portal-muted">
+        <MonoLabel size="xs" uppercase className="mb-3 block text-outline">
           Abonnement
         </MonoLabel>
         <div className="flex items-center justify-between">
@@ -174,10 +174,10 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
               <Target className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-portal-text">
+              <p className="text-sm font-semibold text-on-surface">
                 {tierLabelMap[profile.subscriptionTier] ?? profile.subscriptionTier}
               </p>
-              <p className="text-xs text-portal-secondary">
+              <p className="text-xs text-on-surface-variant">
                 {profile.subscriptionTier === "VISITOR"
                   ? "Ingen aktiv pakke"
                   : "Aktiv"}
@@ -195,7 +195,7 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
 
       {/* ─── 4. Innstillinger ─── */}
       <PremiumCard delay={0.3} noHover>
-        <MonoLabel size="xs" uppercase className="mb-3 block text-portal-muted">
+        <MonoLabel size="xs" uppercase className="mb-3 block text-outline">
           Innstillinger
         </MonoLabel>
         <div className="divide-y divide-portal-border">
@@ -228,7 +228,7 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
       >
         <button
           onClick={handleSignOut}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-portal-card px-5 py-3.5 text-sm font-medium text-error shadow-portal-card transition-all duration-300 hover:-translate-y-px"
+          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-surface-container-lowest px-5 py-3.5 text-sm font-medium text-error shadow-card transition-all duration-300 hover:-translate-y-px"
         >
           <LogOut className="h-4 w-4" />
           Logg ut
@@ -259,15 +259,15 @@ function StatMini({
 }) {
   return (
     <PremiumCard delay={delay} className="text-center">
-      <MonoLabel size="xs" uppercase className="mb-1 block text-portal-muted">
+      <MonoLabel size="xs" uppercase className="mb-1 block text-outline">
         {label}
       </MonoLabel>
-      <p className="text-3xl font-extrabold tracking-tight text-portal-text tabular-nums">
+      <p className="text-3xl font-extrabold tracking-tight text-on-surface tabular-nums">
         {value}
       </p>
       {badge && <div className="mt-1.5">{badge}</div>}
       {sublabel && !badge && (
-        <p className="mt-1 flex items-center justify-center gap-1 text-xs text-portal-secondary">
+        <p className="mt-1 flex items-center justify-center gap-1 text-xs text-on-surface-variant">
           {icon}
           {sublabel}
         </p>
@@ -292,14 +292,14 @@ function SettingsRow({
       href={href}
       className="group flex items-center gap-3 py-3 transition-colors duration-200 first:pt-0 last:pb-0"
     >
-      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-portal-hover text-portal-secondary transition-colors group-hover:bg-primary-soft group-hover:text-primary">
+      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface-container text-on-surface-variant transition-colors group-hover:bg-primary-soft group-hover:text-primary">
         {icon}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-portal-text">{label}</p>
-        <p className="text-xs text-portal-secondary">{description}</p>
+        <p className="text-sm font-medium text-on-surface">{label}</p>
+        <p className="text-xs text-on-surface-variant">{description}</p>
       </div>
-      <ChevronRight className="h-4 w-4 text-portal-muted opacity-0 transition-opacity group-hover:opacity-100" />
+      <ChevronRight className="h-4 w-4 text-outline opacity-0 transition-opacity group-hover:opacity-100" />
     </Link>
   );
 }

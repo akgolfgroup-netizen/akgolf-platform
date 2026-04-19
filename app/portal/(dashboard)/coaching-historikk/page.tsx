@@ -53,13 +53,13 @@ export default async function CoachingHistorikkPage() {
     <div className="space-y-10">
       {/* Header */}
       <div>
-        <MonoLabel size="xs" uppercase className="mb-2 block text-portal-muted">
+        <MonoLabel size="xs" uppercase className="mb-2 block text-outline">
           Coaching
         </MonoLabel>
-        <h1 className="text-2xl font-bold tracking-tight text-portal-text">
+        <h1 className="text-2xl font-bold tracking-tight text-on-surface">
           Coaching-historikk
         </h1>
-        <p className="mt-1 text-portal-secondary">
+        <p className="mt-1 text-on-surface-variant">
           Dine coachingsesjoner og oppfølging — komplett oversikt med AI-genererte oppsummeringer.
         </p>
         <div className="mt-4">
@@ -74,8 +74,8 @@ export default async function CoachingHistorikkPage() {
 
       <div className="max-w-3xl">
         <div className="mb-4 flex items-center gap-2">
-          <span className="h-px w-6 bg-portal-muted" />
-          <MonoLabel size="xs" uppercase className="text-portal-muted">
+          <span className="h-px w-6 bg-surface-container-high" />
+          <MonoLabel size="xs" uppercase className="text-outline">
             Alle sesjoner · {sessions.length}
           </MonoLabel>
         </div>
@@ -86,7 +86,7 @@ export default async function CoachingHistorikkPage() {
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <BookOpen className="h-6 w-6" />
               </div>
-              <p className="text-sm text-portal-muted">
+              <p className="text-sm text-outline">
                 Ingen coachingsesjoner ennå.
               </p>
               <Link

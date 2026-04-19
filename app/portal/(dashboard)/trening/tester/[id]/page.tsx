@@ -66,7 +66,7 @@ export default async function TestDetailPage({ params }: Props) {
       {/* Back link */}
       <Link
         href="/portal/trening/tester"
-        className="inline-flex items-center gap-2 text-portal-secondary hover:text-portal-text transition-colors"
+        className="inline-flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Tilbake til tester
@@ -77,10 +77,10 @@ export default async function TestDetailPage({ params }: Props) {
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="px-2 py-1 text-xs bg-portal-hover text-portal-secondary rounded">
+              <span className="px-2 py-1 text-xs bg-surface-container text-on-surface-variant rounded">
                 {categoryLabels[protocol.category] ?? protocol.category}
               </span>
-              <span className="px-2 py-1 text-xs bg-portal-hover text-portal-text rounded">
+              <span className="px-2 py-1 text-xs bg-surface-container text-on-surface rounded">
                 {difficultyLabels[protocol.difficulty] ?? protocol.difficulty}
               </span>
               {protocol.is_official && (
@@ -89,34 +89,34 @@ export default async function TestDetailPage({ params }: Props) {
                 </span>
               )}
             </div>
-            <h1 className="text-2xl font-bold text-portal-text">{protocol.name}</h1>
-            <p className="text-portal-secondary mt-2">{protocol.description}</p>
+            <h1 className="text-2xl font-bold text-on-surface">{protocol.name}</h1>
+            <p className="text-on-surface-variant mt-2">{protocol.description}</p>
           </div>
         </div>
 
         {/* Quick stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl p-4 border border-portal-border shadow-card">
-            <Clock className="w-5 h-5 text-portal-text mb-2" />
-            <p className="text-xl font-bold text-portal-text tabular-nums">{protocol.duration_minutes} min</p>
-            <p className="text-sm text-portal-secondary">Varighet</p>
+          <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+            <Clock className="w-5 h-5 text-on-surface mb-2" />
+            <p className="text-xl font-bold text-on-surface tabular-nums">{protocol.duration_minutes} min</p>
+            <p className="text-sm text-on-surface-variant">Varighet</p>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-portal-border shadow-card">
-            <Target className="w-5 h-5 text-portal-text mb-2" />
-            <p className="text-xl font-bold text-portal-text tabular-nums">{protocol.shots_required}</p>
-            <p className="text-sm text-portal-secondary">Slag</p>
+          <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+            <Target className="w-5 h-5 text-on-surface mb-2" />
+            <p className="text-xl font-bold text-on-surface tabular-nums">{protocol.shots_required}</p>
+            <p className="text-sm text-on-surface-variant">Slag</p>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-portal-border shadow-card">
-            <Dumbbell className="w-5 h-5 text-portal-text mb-2" />
-            <p className="text-xl font-bold text-portal-text tabular-nums">{protocol.clubs?.length ?? 0}</p>
-            <p className="text-sm text-portal-secondary">Køller</p>
+          <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+            <Dumbbell className="w-5 h-5 text-on-surface mb-2" />
+            <p className="text-xl font-bold text-on-surface tabular-nums">{protocol.clubs?.length ?? 0}</p>
+            <p className="text-sm text-on-surface-variant">Køller</p>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-portal-border shadow-card">
-            <CheckCircle2 className="w-5 h-5 text-portal-text mb-2" />
-            <p className="text-xl font-bold text-portal-text">
+          <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+            <CheckCircle2 className="w-5 h-5 text-on-surface mb-2" />
+            <p className="text-xl font-bold text-on-surface">
               {protocol.min_category}-{protocol.max_category}
             </p>
-            <p className="text-sm text-portal-secondary">Kategorier</p>
+            <p className="text-sm text-on-surface-variant">Kategorier</p>
           </div>
         </div>
       </div>
@@ -124,11 +124,11 @@ export default async function TestDetailPage({ params }: Props) {
       {/* Content grid */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Instructions */}
-        <div className="bg-white rounded-xl p-6 border border-portal-border shadow-card">
-          <h2 className="text-lg font-semibold text-portal-text mb-4">Instruksjoner</h2>
+        <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
+          <h2 className="text-lg font-semibold text-on-surface mb-4">Instruksjoner</h2>
           <div className="space-y-3">
             {protocol.instructions?.split("\n").map((line: string, i: number) => (
-              <p key={i} className="text-portal-secondary text-sm">
+              <p key={i} className="text-on-surface-variant text-sm">
                 {line}
               </p>
             ))}
@@ -136,15 +136,15 @@ export default async function TestDetailPage({ params }: Props) {
         </div>
 
         {/* Tips */}
-        <div className="bg-white rounded-xl p-6 border border-portal-border shadow-card">
-          <h2 className="text-lg font-semibold text-portal-text mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
+          <h2 className="text-lg font-semibold text-on-surface mb-4 flex items-center gap-2">
             <Lightbulb className="w-5 h-5 text-warning" />
             Tips
           </h2>
           <ul className="space-y-2">
             {protocol.tips?.map((tip: string, i: number) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-portal-secondary">
-                <span className="text-portal-text">•</span>
+              <li key={i} className="flex items-start gap-2 text-sm text-on-surface-variant">
+                <span className="text-on-surface">•</span>
                 {tip}
               </li>
             ))}
@@ -152,24 +152,24 @@ export default async function TestDetailPage({ params }: Props) {
         </div>
 
         {/* Equipment */}
-        <div className="bg-white rounded-xl p-6 border border-portal-border shadow-card">
-          <h2 className="text-lg font-semibold text-portal-text mb-4">Utstyr</h2>
+        <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
+          <h2 className="text-lg font-semibold text-on-surface mb-4">Utstyr</h2>
           <div className="flex flex-wrap gap-2">
             {protocol.equipment_required?.map((item: string, i: number) => (
               <span
                 key={i}
-                className="px-3 py-1 bg-portal-hover text-portal-secondary rounded-full text-sm"
+                className="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full text-sm"
               >
                 {item}
               </span>
             ))}
           </div>
-          <h3 className="text-sm font-medium text-portal-text mt-4 mb-2">Køller</h3>
+          <h3 className="text-sm font-medium text-on-surface mt-4 mb-2">Køller</h3>
           <div className="flex flex-wrap gap-2">
             {protocol.clubs?.map((club: string, i: number) => (
               <span
                 key={i}
-                className="px-3 py-1 bg-portal-hover text-portal-text rounded-full text-sm"
+                className="px-3 py-1 bg-surface-container text-on-surface rounded-full text-sm"
               >
                 {club}
               </span>
@@ -178,8 +178,8 @@ export default async function TestDetailPage({ params }: Props) {
         </div>
 
         {/* Metrics */}
-        <div className="bg-white rounded-xl p-6 border border-portal-border shadow-card">
-          <h2 className="text-lg font-semibold text-portal-text mb-4">Metrikker som spores</h2>
+        <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
+          <h2 className="text-lg font-semibold text-on-surface mb-4">Metrikker som spores</h2>
           <div className="flex flex-wrap gap-2">
             {protocol.metrics_tracked?.map((metric: string, i: number) => (
               <span
@@ -193,13 +193,13 @@ export default async function TestDetailPage({ params }: Props) {
 
           {protocol.passing_criteria && Object.keys(protocol.passing_criteria).length > 0 && (
             <>
-              <h3 className="text-sm font-medium text-portal-text mt-4 mb-2">Bestått-kriterier</h3>
-              <div className="space-y-1 text-sm text-portal-secondary">
+              <h3 className="text-sm font-medium text-on-surface mt-4 mb-2">Bestått-kriterier</h3>
+              <div className="space-y-1 text-sm text-on-surface-variant">
                 {Object.entries(protocol.passing_criteria).map(([key, value]: [string, unknown]) => {
                   const criteria = value as { min?: number; max?: number; target?: number };
                   return (
                     <p key={key}>
-                      <span className="text-portal-text">{key.replace(/_/g, " ")}:</span>{" "}
+                      <span className="text-on-surface">{key.replace(/_/g, " ")}:</span>{" "}
                       {criteria.min !== undefined && `min ${criteria.min}`}
                       {criteria.max !== undefined && ` max ${criteria.max}`}
                       {criteria.target !== undefined && ` mål ${criteria.target}`}

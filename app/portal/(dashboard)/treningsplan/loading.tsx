@@ -3,15 +3,15 @@ export default function TreningsplanLoading() {
     <div className="space-y-6 animate-pulse">
       {/* Header */}
       <div>
-        <div className="h-8 w-48 bg-[var(--color-portal-hover)] rounded" />
-        <div className="h-4 w-32 bg-[var(--color-portal-card)] rounded mt-2" />
+        <div className="h-8 w-48 bg-[var(--color-surface-container)] rounded" />
+        <div className="h-4 w-32 bg-[var(--color-surface-container-lowest)] rounded mt-2" />
       </div>
 
       {/* Week selector */}
       <div className="flex gap-2">
-        <div className="h-10 w-24 bg-[var(--color-portal-hover)] rounded-full" />
-        <div className="h-10 w-24 bg-[var(--color-portal-card)] rounded-full" />
-        <div className="h-10 w-24 bg-[var(--color-portal-card)] rounded-full" />
+        <div className="h-10 w-24 bg-[var(--color-surface-container)] rounded-full" />
+        <div className="h-10 w-24 bg-[var(--color-surface-container-lowest)] rounded-full" />
+        <div className="h-10 w-24 bg-[var(--color-surface-container-lowest)] rounded-full" />
       </div>
 
       {/* 7 day cards */}
@@ -19,12 +19,12 @@ export default function TreningsplanLoading() {
         {[...Array(7)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-[20px] border border-[var(--color-portal-hover)] p-4"
+            className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-4"
           >
-            <div className="h-3 w-10 bg-[var(--color-portal-hover)] rounded mb-3" />
-            <div className="h-4 w-full bg-[var(--color-portal-card)] rounded mb-2" />
-            <div className="h-4 w-3/4 bg-[var(--color-portal-card)] rounded mb-2" />
-            <div className="h-3 w-16 bg-[var(--color-portal-hover)] rounded mt-3" />
+            <div className="h-3 w-10 bg-[var(--color-surface-container)] rounded mb-3" />
+            <div className="h-4 w-full bg-[var(--color-surface-container-lowest)] rounded mb-2" />
+            <div className="h-4 w-3/4 bg-[var(--color-surface-container-lowest)] rounded mb-2" />
+            <div className="h-3 w-16 bg-[var(--color-surface-container)] rounded mt-3" />
           </div>
         ))}
       </div>

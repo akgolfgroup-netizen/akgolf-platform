@@ -112,7 +112,7 @@ function SGBar({ label, value, delay }: { label: string; value: number | null; d
         {label}
       </span>
       <div className="relative flex h-[5px] flex-1 items-center rounded-full bg-grey-50">
-        <div className="absolute left-1/2 h-full w-px bg-portal-border" />
+        <div className="absolute left-1/2 h-full w-px bg-outline-variant" />
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${widthPct / 2}%` }}
@@ -302,7 +302,7 @@ function TrainingBarChart({ data }: { data: WeeklyTrainingData[] }) {
         return (
           <div key={week.week} className="group relative flex flex-1 flex-col items-center">
             {/* Tooltip on hover */}
-            <div className="pointer-events-none absolute -top-8 z-10 whitespace-nowrap rounded-md bg-portal-text px-2 py-1 text-[10px] font-medium text-portal-bg opacity-0 shadow-md transition-opacity group-hover:opacity-100">
+            <div className="pointer-events-none absolute -top-8 z-10 whitespace-nowrap rounded-md bg-on-surface px-2 py-1 text-[10px] font-medium text-surface opacity-0 shadow-md transition-opacity group-hover:opacity-100">
               <span className="tabular-nums">{week.minutes}</span> min
             </div>
 

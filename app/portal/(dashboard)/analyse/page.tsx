@@ -61,13 +61,13 @@ export default async function AnalysePage() {
     <div className="space-y-10">
       {/* HERO */}
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted mb-2">
+        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-outline mb-2">
           Analyse
         </p>
-        <h1 className="text-2xl font-bold tracking-tight text-portal-text">
+        <h1 className="text-2xl font-bold tracking-tight text-on-surface">
           Din analyse
         </h1>
-        <p className="text-portal-secondary mt-1">
+        <p className="text-on-surface-variant mt-1">
           AI-drevet innsikt i ditt spill. Dyp analyse av handicap, Strokes Gained og TrackMan-data.
         </p>
       </div>
@@ -93,13 +93,13 @@ export default async function AnalysePage() {
               <Lightbulb className="h-6 w-6 text-warning" strokeWidth={1.75} />
             </div>
             <div className="flex-1">
-              <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-portal-muted">
+              <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.15em] text-outline">
                 Pro-funksjon
               </p>
-              <h3 className="mb-2 text-[14px] font-semibold text-portal-text">
+              <h3 className="mb-2 text-[14px] font-semibold text-on-surface">
                 Oppgrader for full analyse
               </h3>
-              <p className="mb-4 text-[13px] leading-relaxed text-portal-muted">
+              <p className="mb-4 text-[13px] leading-relaxed text-outline">
                 Få tilgang til avansert statistikk, TrackMan-data, og AI-drevne
                 anbefalinger med Pro-abonnement.
               </p>
@@ -118,10 +118,10 @@ export default async function AnalysePage() {
       {hasRoundData ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl shadow-card p-5">
-            <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">GIR</MonoLabel>
-            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
+            <MonoLabel as="p" size="xs" uppercase className="text-outline block">GIR</MonoLabel>
+            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-on-surface">
               {stats.girPercent != null ? Math.round(stats.girPercent) : 0}
-              <span className="ml-1 text-[13px] font-normal text-portal-muted">%</span>
+              <span className="ml-1 text-[13px] font-normal text-outline">%</span>
             </p>
             {stats.girTrend != null && (
               <p className={`mt-2 text-[11px] tabular-nums ${stats.girTrend >= 0 ? "text-success" : "text-error"}`}>
@@ -130,10 +130,10 @@ export default async function AnalysePage() {
             )}
           </div>
           <div className="bg-white rounded-xl shadow-card p-5">
-            <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">Fairways</MonoLabel>
-            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
+            <MonoLabel as="p" size="xs" uppercase className="text-outline block">Fairways</MonoLabel>
+            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-on-surface">
               {stats.fairwayPercent != null ? Math.round(stats.fairwayPercent) : 0}
-              <span className="ml-1 text-[13px] font-normal text-portal-muted">%</span>
+              <span className="ml-1 text-[13px] font-normal text-outline">%</span>
             </p>
             {stats.fairwayTrend != null && (
               <p className={`mt-2 text-[11px] tabular-nums ${stats.fairwayTrend >= 0 ? "text-success" : "text-error"}`}>
@@ -142,8 +142,8 @@ export default async function AnalysePage() {
             )}
           </div>
           <div className="bg-white rounded-xl shadow-card p-5">
-            <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">Putts/runde</MonoLabel>
-            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
+            <MonoLabel as="p" size="xs" uppercase className="text-outline block">Putts/runde</MonoLabel>
+            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-on-surface">
               {stats.puttsPerRound != null ? (Math.round(stats.puttsPerRound * 10) / 10).toFixed(1) : "0"}
             </p>
             {stats.puttsTrend != null && (
@@ -153,10 +153,10 @@ export default async function AnalysePage() {
             )}
           </div>
           <div className="bg-white rounded-xl shadow-card p-5">
-            <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">Scrambling</MonoLabel>
-            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-portal-text">
+            <MonoLabel as="p" size="xs" uppercase className="text-outline block">Scrambling</MonoLabel>
+            <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-on-surface">
               {stats.scramblingPercent != null ? Math.round(stats.scramblingPercent) : 0}
-              <span className="ml-1 text-[13px] font-normal text-portal-muted">%</span>
+              <span className="ml-1 text-[13px] font-normal text-outline">%</span>
             </p>
             {stats.scramblingTrend != null && (
               <p className={`mt-2 text-[11px] tabular-nums ${stats.scramblingTrend >= 0 ? "text-success" : "text-error"}`}>
@@ -168,13 +168,13 @@ export default async function AnalysePage() {
       ) : (
         <div className="bg-white rounded-xl shadow-card p-6">
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-portal-hover">
-              <BarChart3 className="h-6 w-6 text-portal-muted" strokeWidth={1.75} />
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-surface-container">
+              <BarChart3 className="h-6 w-6 text-outline" strokeWidth={1.75} />
             </div>
-            <h3 className="mb-2 text-[14px] font-semibold text-portal-text">
+            <h3 className="mb-2 text-[14px] font-semibold text-on-surface">
               Ingen rundestatistikk ennå
             </h3>
-            <p className="mb-4 max-w-sm text-[13px] leading-relaxed text-portal-muted">
+            <p className="mb-4 max-w-sm text-[13px] leading-relaxed text-outline">
               Registrer din første runde for å se GIR, Fairways, Putts og Scrambling her.
             </p>
             <Link
@@ -189,23 +189,23 @@ export default async function AnalysePage() {
 
       {/* SECTION LABEL */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
-          <span className="h-px w-6 bg-portal-muted" />
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-outline font-mono">
+          <span className="h-px w-6 bg-surface-container-high" />
           Utvikling
         </p>
 
         {/* Main Charts */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="bg-white rounded-xl shadow-card p-6">
-            <h3 className="mb-5 text-[14px] font-semibold text-portal-text">
+            <h3 className="mb-5 text-[14px] font-semibold text-on-surface">
               Handicap-trend
             </h3>
             {chartData.length > 0 ? (
-              <div className="h-[220px] flex items-center justify-center rounded-xl bg-portal-hover">
-                <p className="text-[13px] text-portal-muted">Handicap-graf kommer snart.</p>
+              <div className="h-[220px] flex items-center justify-center rounded-xl bg-surface-container">
+                <p className="text-[13px] text-outline">Handicap-graf kommer snart.</p>
               </div>
             ) : (
-              <p className="py-12 text-center text-[13px] text-portal-muted">
+              <p className="py-12 text-center text-[13px] text-outline">
                 Ingen handicap-data registrert ennå.
               </p>
             )}
@@ -214,11 +214,11 @@ export default async function AnalysePage() {
           {/* Strokes Gained Breakdown — SG Ring hero (v3.1) */}
           <div className="bg-white rounded-xl shadow-card p-6">
             <div className="mb-5 flex items-center justify-between">
-              <h3 className="text-[14px] font-semibold text-portal-text">
+              <h3 className="text-[14px] font-semibold text-on-surface">
                 Strokes Gained
               </h3>
               {hasSGData && (
-                <MonoLabel size="xs" uppercase className="text-portal-muted">
+                <MonoLabel size="xs" uppercase className="text-outline">
                   4-ring · Snitt
                 </MonoLabel>
               )}
@@ -240,7 +240,7 @@ export default async function AnalysePage() {
                 <StrokesGainedBars sgData={sgData} />
               </>
             ) : (
-              <p className="py-12 text-center text-[13px] text-portal-muted">
+              <p className="py-12 text-center text-[13px] text-outline">
                 Ingen Strokes Gained-data ennå. Registrer runder med SG for å se analysen.
               </p>
             )}
@@ -251,13 +251,13 @@ export default async function AnalysePage() {
       {/* TrackMan Data */}
       {isPro && (
         <div>
-          <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
-            <span className="h-px w-6 bg-portal-muted" />
+          <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-outline font-mono">
+            <span className="h-px w-6 bg-surface-container-high" />
             TrackMan
           </p>
           <div className="bg-white rounded-xl shadow-card p-6">
             <div className="mb-5 flex items-center justify-between">
-              <h3 className="text-[14px] font-semibold text-portal-text">
+              <h3 className="text-[14px] font-semibold text-on-surface">
                 TrackMan-data
               </h3>
               <Link
@@ -272,22 +272,22 @@ export default async function AnalysePage() {
                 {trackManStats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-xl border border-portal-border bg-white p-4"
+                    className="rounded-xl border border-outline-variant bg-white p-4"
                   >
-                    <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">{stat.label}</MonoLabel>
-                    <p className="mt-2 text-[28px] font-[300] leading-none tabular-nums tracking-[-0.02em] text-portal-text">
+                    <MonoLabel as="p" size="xs" uppercase className="text-outline block">{stat.label}</MonoLabel>
+                    <p className="mt-2 text-[28px] font-[300] leading-none tabular-nums tracking-[-0.02em] text-on-surface">
                       {stat.value}
-                      <span className="ml-1 text-[13px] font-normal text-portal-muted">
+                      <span className="ml-1 text-[13px] font-normal text-outline">
                         {stat.unit}
                       </span>
                     </p>
-                    <p className="mt-2 text-[11px] text-portal-muted">{stat.club}</p>
+                    <p className="mt-2 text-[11px] text-outline">{stat.club}</p>
                   </div>
                 ))}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-8 text-center">
-                <p className="text-[13px] text-portal-muted">
+                <p className="text-[13px] text-outline">
                   Ingen TrackMan-sesjoner registrert ennå.
                 </p>
                 <Link
@@ -304,8 +304,8 @@ export default async function AnalysePage() {
 
       {/* Quick Actions */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
-          <span className="h-px w-6 bg-portal-muted" />
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-outline font-mono">
+          <span className="h-px w-6 bg-surface-container-high" />
           Handlinger
         </p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -331,18 +331,18 @@ export default async function AnalysePage() {
       </div>
 
       {/* Info */}
-      <details className="group overflow-hidden rounded-xl border border-portal-border bg-white shadow-card">
-        <summary className="flex cursor-pointer list-none items-center gap-3 p-5 transition-colors hover:bg-portal-bg">
+      <details className="group overflow-hidden rounded-xl border border-outline-variant bg-white shadow-card">
+        <summary className="flex cursor-pointer list-none items-center gap-3 p-5 transition-colors hover:bg-surface">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft">
             <Info className="h-5 w-5 text-primary" strokeWidth={1.75} />
           </div>
-          <span className="text-[14px] font-semibold text-portal-text">
+          <span className="text-[14px] font-semibold text-on-surface">
             Om Strokes Gained
           </span>
-          <ChevronRight className="ml-auto h-5 w-5 text-portal-muted transition-transform group-open:rotate-90" />
+          <ChevronRight className="ml-auto h-5 w-5 text-outline transition-transform group-open:rotate-90" />
         </summary>
-        <div className="border-t border-portal-border p-5 pt-0">
-          <p className="mt-4 text-[13px] leading-relaxed text-portal-muted">
+        <div className="border-t border-outline-variant p-5 pt-0">
+          <p className="mt-4 text-[13px] leading-relaxed text-outline">
             Strokes Gained er en statistisk metode som måler hvor mange slag du
             sparer eller taper sammenlignet med referansenivået (typisk PGA
             Tour-gjennomsnitt eller ditt handicap-nivå). Positive tall betyr at
@@ -382,7 +382,7 @@ function StrokesGainedBars({
       {items.map((item) => (
         <div key={item.label}>
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-[12px] font-medium text-portal-text">
+            <span className="text-[12px] font-medium text-on-surface">
               {item.label}
             </span>
             <span
@@ -394,7 +394,7 @@ function StrokesGainedBars({
               {item.value.toFixed(1)}
             </span>
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-portal-hover">
+          <div className="h-2 overflow-hidden rounded-full bg-surface-container">
             <div
               className={`h-full rounded-full transition-all duration-500 ${
                 item.value >= 0 ? "bg-success" : "bg-error"
@@ -426,18 +426,18 @@ function AnalyseQuickAction({
   return (
     <Link
       href={href}
-      className="group relative flex items-center gap-3 rounded-xl border border-portal-border bg-white p-4 shadow-card transition-all duration-300 will-change-transform hover:-translate-y-px hover:shadow-card-hover"
+      className="group relative flex items-center gap-3 rounded-xl border border-outline-variant bg-white p-4 shadow-card transition-all duration-300 will-change-transform hover:-translate-y-px hover:shadow-card-hover"
     >
       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft transition-transform group-hover:scale-110">
         <Icon className="h-[18px] w-[18px] text-primary" strokeWidth={1.75} />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[13px] font-semibold text-portal-text">
+        <p className="truncate text-[13px] font-semibold text-on-surface">
           {label}
         </p>
-        <p className="truncate text-[11px] text-portal-muted">{description}</p>
+        <p className="truncate text-[11px] text-outline">{description}</p>
       </div>
-      <ChevronRight className="h-3.5 w-3.5 -translate-x-1 text-portal-muted opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+      <ChevronRight className="h-3.5 w-3.5 -translate-x-1 text-outline opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
     </Link>
   );
 }

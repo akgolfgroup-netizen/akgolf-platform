@@ -53,7 +53,7 @@ export function CalendarWeekView({ events, weekStart }: CalendarWeekViewProps) {
         <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
           <CalendarDays className="h-6 w-6" />
         </div>
-        <p className="text-sm text-portal-muted">Ingen hendelser denne uka.</p>
+        <p className="text-sm text-outline">Ingen hendelser denne uka.</p>
       </div>
     );
   }

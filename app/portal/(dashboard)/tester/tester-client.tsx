@@ -59,37 +59,37 @@ export function TesterClient({ tests }: Props) {
             <button
               key={test.testNumber}
               onClick={() => loadLeaderboard(test.testNumber)}
-              className="w-full text-left bg-white rounded-xl border border-portal-border p-4 hover:border-black/8 transition-all"
+              className="w-full text-left bg-white rounded-xl border border-outline-variant p-4 hover:border-black/8 transition-all"
             >
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-portal-muted tabular-nums">
+                    <span className="text-xs font-mono text-outline tabular-nums">
                       #{test.testNumber}
                     </span>
-                    <span className="font-semibold text-portal-text">
+                    <span className="font-semibold text-on-surface">
                       {test.name}
                     </span>
                   </div>
-                  <p className="text-xs text-portal-secondary mt-1">
+                  <p className="text-xs text-on-surface-variant mt-1">
                     {test.description}
                   </p>
                 </div>
                 <div className="text-right">
                   {test.userBest ? (
                     <div>
-                      <div className="text-lg font-bold text-portal-text tabular-nums">
+                      <div className="text-lg font-bold text-on-surface tabular-nums">
                         {test.userBest.value}
-                        <span className="text-xs text-portal-muted ml-1">
+                        <span className="text-xs text-outline ml-1">
                           {test.unit}
                         </span>
                       </div>
-                      <div className={`text-xs ${test.userBest.passed ? "text-success-text" : "text-portal-muted"}`}>
+                      <div className={`text-xs ${test.userBest.passed ? "text-success-text" : "text-outline"}`}>
                         {test.userBest.passed ? "Bestatt" : "Ikke bestatt"}
                       </div>
                     </div>
                   ) : (
-                    <span className="text-sm text-portal-muted">
+                    <span className="text-sm text-outline">
                       Ingen resultat
                     </span>
                   )}
@@ -99,7 +99,7 @@ export function TesterClient({ tests }: Props) {
           ))}
 
           {tests.length === 0 && (
-            <p className="text-center text-sm text-portal-muted py-8">
+            <p className="text-center text-sm text-outline py-8">
               Ingen tester tilgjengelig
             </p>
           )}
@@ -114,13 +114,13 @@ export function TesterClient({ tests }: Props) {
             Tilbake til alle tester
           </button>
 
-          <div className="bg-white rounded-xl border border-portal-border p-6">
+          <div className="bg-white rounded-xl border border-outline-variant p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-lg font-bold text-portal-text">
+                <h2 className="text-lg font-bold text-on-surface">
                   {selectedTestData?.name}
                 </h2>
-                <p className="text-xs text-portal-secondary">
+                <p className="text-xs text-on-surface-variant">
                   {selectedTestData?.description}
                 </p>
               </div>
@@ -129,13 +129,13 @@ export function TesterClient({ tests }: Props) {
                   <div className="text-2xl font-bold text-primary tabular-nums">
                     #{userRank}
                   </div>
-                  <div className="text-xs text-portal-muted">Din plass</div>
+                  <div className="text-xs text-outline">Din plass</div>
                 </div>
               )}
             </div>
 
             {/* Periode-filter */}
-            <div className="flex gap-1.5 rounded-[10px] bg-portal-hover p-[3px] mb-4">
+            <div className="flex gap-1.5 rounded-[10px] bg-surface-container p-[3px] mb-4">
               {[
                 { id: "all" as const, label: "Alle" },
                 { id: "month" as const, label: "Denne maned" },
@@ -147,7 +147,7 @@ export function TesterClient({ tests }: Props) {
                   className={`flex-1 py-[7px] rounded-[7px] text-[13px] font-medium transition-all ${
                     period === p.id
                       ? "bg-primary text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
-                      : "text-portal-muted hover:text-portal-secondary"
+                      : "text-outline hover:text-on-surface-variant"
                   }`}
                 >
                   {p.label}
@@ -158,7 +158,7 @@ export function TesterClient({ tests }: Props) {
             {/* Leaderboard */}
             {isPending ? (
               <div className="flex justify-center py-8">
-                <div className="h-6 w-6 border-2 border-portal-muted border-t-primary rounded-full animate-spin" />
+                <div className="h-6 w-6 border-2 border-outline border-t-primary rounded-full animate-spin" />
               </div>
             ) : (
               <div className="space-y-1">
@@ -175,10 +175,10 @@ export function TesterClient({ tests }: Props) {
                           entry.rank === 1
                             ? "text-warning"
                             : entry.rank === 2
-                              ? "text-portal-muted"
+                              ? "text-outline"
                               : entry.rank === 3
                                 ? "text-warning"
-                                : "text-portal-muted"
+                                : "text-outline"
                         }`}
                       >
                         {entry.rank <= 3 ? (
@@ -190,15 +190,15 @@ export function TesterClient({ tests }: Props) {
                       <span
                         className={`text-sm ${
                           entry.isCurrentUser
-                            ? "font-bold text-portal-text"
-                            : "text-portal-text"
+                            ? "font-bold text-on-surface"
+                            : "text-on-surface"
                         }`}
                       >
                         {entry.name}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-portal-text tabular-nums">
+                      <span className="text-sm font-semibold text-on-surface tabular-nums">
                         {entry.bestValue} {selectedTestData?.unit}
                       </span>
                       {entry.passed && (
@@ -210,7 +210,7 @@ export function TesterClient({ tests }: Props) {
                   </div>
                 ))}
                 {leaderboard.length === 0 && (
-                  <p className="text-center text-sm text-portal-muted py-8">
+                  <p className="text-center text-sm text-outline py-8">
                     Ingen resultater for denne perioden
                   </p>
                 )}

@@ -160,7 +160,7 @@ export function TeamClient({
         }
       />
 
-      <div className="flex items-center gap-1.5 rounded-[10px] bg-[var(--hg-surface-raised)] p-[3px] w-fit">
+      <div className="flex items-center gap-1.5 rounded-[10px] bg-[var(--color-surface-container)] p-[3px] w-fit">
         {(
           [
             { id: "all", label: "Alle" },
@@ -175,7 +175,7 @@ export function TeamClient({
             className={`rounded-[7px] px-3 py-1.5 text-[13px] font-medium transition-colors ${
               roleFilter === o.id
                 ? "bg-[var(--color-primary)] text-white"
-                : "text-[var(--hg-text-muted)] hover:text-[var(--hg-text-secondary)]"
+                : "text-[var(--color-outline)] hover:text-[var(--color-on-surface-variant)]"
             }`}
           >
             {o.label}
@@ -183,29 +183,29 @@ export function TeamClient({
         ))}
       </div>
 
-      <div className="rounded-xl border border-[var(--hg-border-subtle)] bg-[var(--hg-surface)] overflow-hidden">
+      <div className="rounded-xl border border-[var(--color-outline-variant)] bg-[var(--color-surface-container-lowest)] overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[var(--hg-border-subtle)]">
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+            <tr className="border-b border-[var(--color-outline-variant)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Navn
               </th>
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 E-post
               </th>
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Rolle
               </th>
-              <th className="px-6 py-3 text-right text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-right text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Kapabiliteter
               </th>
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Sist aktiv
               </th>
-              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Status
               </th>
-              <th className="px-6 py-3 text-right text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
+              <th className="px-6 py-3 text-right text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-outline)]">
                 Handlinger
               </th>
             </tr>
@@ -215,7 +215,7 @@ export function TeamClient({
               <tr>
                 <td
                   colSpan={7}
-                  className="px-6 py-10 text-center text-sm text-[var(--hg-text-muted)]"
+                  className="px-6 py-10 text-center text-sm text-[var(--color-outline)]"
                 >
                   Ingen brukere i valgt filter.
                 </td>
@@ -224,12 +224,12 @@ export function TeamClient({
             {filtered.map((m) => (
               <tr
                 key={m.id}
-                className="border-b border-[var(--hg-border-subtle)] last:border-0 hover:bg-[var(--hg-surface-raised)] transition-colors"
+                className="border-b border-[var(--color-outline-variant)] last:border-0 hover:bg-[var(--color-surface-container)] transition-colors"
               >
-                <td className="px-6 py-3 text-sm font-medium text-[var(--hg-text)]">
+                <td className="px-6 py-3 text-sm font-medium text-[var(--color-on-surface)]">
                   {m.name ?? "—"}
                 </td>
-                <td className="px-6 py-3 text-sm text-[var(--hg-text-secondary)]">
+                <td className="px-6 py-3 text-sm text-[var(--color-on-surface-variant)]">
                   {m.email ?? "—"}
                 </td>
                 <td className="px-6 py-3">
@@ -237,10 +237,10 @@ export function TeamClient({
                     {ROLE_LABEL[m.role]}
                   </Badge>
                 </td>
-                <td className="px-6 py-3 text-right text-sm tabular-nums text-[var(--hg-text-secondary)]">
+                <td className="px-6 py-3 text-right text-sm tabular-nums text-[var(--color-on-surface-variant)]">
                   {m.capabilityCount}
                 </td>
-                <td className="px-6 py-3 text-sm text-[var(--hg-text-secondary)]">
+                <td className="px-6 py-3 text-sm text-[var(--color-on-surface-variant)]">
                   {formatDate(m.lastActiveAt)}
                 </td>
                 <td className="px-6 py-3">
@@ -253,7 +253,7 @@ export function TeamClient({
                     {permissions.canAssignCapabilities && (
                       <button
                         onClick={() => setEditing(m)}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--hg-border)] px-2.5 py-1 text-xs font-medium text-[var(--hg-text-secondary)] hover:bg-[var(--hg-surface-raised)]"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-outline-variant)] px-2.5 py-1 text-xs font-medium text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container)]"
                       >
                         <Pencil className="h-3.5 w-3.5" />
                         Rediger
@@ -263,7 +263,7 @@ export function TeamClient({
                       <button
                         onClick={() => toggleActivation(m)}
                         disabled={pending}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--hg-border)] px-2.5 py-1 text-xs font-medium text-[var(--hg-text-secondary)] hover:bg-[var(--hg-surface-raised)] disabled:opacity-50"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-outline-variant)] px-2.5 py-1 text-xs font-medium text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container)] disabled:opacity-50"
                       >
                         {m.isActive ? (
                           <>
@@ -286,20 +286,20 @@ export function TeamClient({
         </table>
       </div>
 
-      <div className="rounded-xl border border-[var(--hg-border-subtle)] bg-[var(--hg-surface)] p-5">
-        <h3 className="text-sm font-semibold text-[var(--hg-text)] mb-3">
+      <div className="rounded-xl border border-[var(--color-outline-variant)] bg-[var(--color-surface-container-lowest)] p-5">
+        <h3 className="text-sm font-semibold text-[var(--color-on-surface)] mb-3">
           Tilgjengelige preset-maler
         </h3>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           {presets.map((p) => (
             <div
               key={p.id}
-              className="rounded-lg border border-[var(--hg-border-subtle)] p-3"
+              className="rounded-lg border border-[var(--color-outline-variant)] p-3"
             >
-              <div className="text-sm font-medium text-[var(--hg-text)]">
+              <div className="text-sm font-medium text-[var(--color-on-surface)]">
                 {p.label}
               </div>
-              <div className="mt-1 text-[11px] text-[var(--hg-text-muted)]">
+              <div className="mt-1 text-[11px] text-[var(--color-outline)]">
                 {p.description}
               </div>
               <div className="mt-2 text-[11px] font-medium tabular-nums text-[var(--color-primary)]">

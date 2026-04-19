@@ -39,23 +39,23 @@ export function CapabilityChecklist({
         return (
           <div
             key={group.id}
-            className="rounded-xl border border-[var(--hg-border-subtle)] bg-[var(--hg-surface)]"
+            className="rounded-xl border border-[var(--color-outline-variant)] bg-[var(--color-surface-container-lowest)]"
           >
-            <div className="px-4 py-3 border-b border-[var(--hg-border-subtle)] flex items-center justify-between">
+            <div className="px-4 py-3 border-b border-[var(--color-outline-variant)] flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-semibold text-[var(--hg-text)] tracking-[-0.01em]">
+                <h4 className="text-sm font-semibold text-[var(--color-on-surface)] tracking-[-0.01em]">
                   {group.label}
                 </h4>
-                <p className="text-[11px] text-[var(--hg-text-muted)] mt-0.5">
+                <p className="text-[11px] text-[var(--color-outline)] mt-0.5">
                   {group.description}
                 </p>
               </div>
-              <span className="text-[11px] tabular-nums font-medium text-[var(--hg-text-muted)]">
+              <span className="text-[11px] tabular-nums font-medium text-[var(--color-outline)]">
                 {groupActive}/{items.length}
               </span>
             </div>
 
-            <div className="divide-y divide-[var(--hg-border-subtle)]">
+            <div className="divide-y divide-[var(--color-outline-variant)]">
               {items.map((item) => {
                 const isChecked = selected.has(item.capability);
                 const missingPrereq = item.requires?.some(
@@ -66,8 +66,8 @@ export function CapabilityChecklist({
                     key={item.capability}
                     className={`flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors ${
                       isChecked
-                        ? "bg-[var(--hg-surface-raised)]"
-                        : "hover:bg-[var(--hg-surface-raised)]"
+                        ? "bg-[var(--color-surface-container)]"
+                        : "hover:bg-[var(--color-surface-container)]"
                     } ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
                   >
                     <input
@@ -79,7 +79,7 @@ export function CapabilityChecklist({
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-medium text-[var(--hg-text)]">
+                        <span className="text-sm font-medium text-[var(--color-on-surface)]">
                           {item.label}
                         </span>
                         {item.requiresMfa && (
@@ -94,11 +94,11 @@ export function CapabilityChecklist({
                           </span>
                         )}
                       </div>
-                      <p className="text-[12px] text-[var(--hg-text-muted)] mt-0.5">
+                      <p className="text-[12px] text-[var(--color-outline)] mt-0.5">
                         {item.description}
                       </p>
                       {item.requires && item.requires.length > 0 && (
-                        <p className="text-[11px] text-[var(--hg-text-muted)] mt-1">
+                        <p className="text-[11px] text-[var(--color-outline)] mt-1">
                           Krever:{" "}
                           <span
                             className={

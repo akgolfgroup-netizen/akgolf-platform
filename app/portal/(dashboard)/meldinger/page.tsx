@@ -14,10 +14,10 @@ export default async function MeldingerPage() {
   return (
     <PremiumCard>
       <div className="mb-4">
-        <h1 className="text-xl font-bold text-portal-text">
+        <h1 className="text-xl font-bold text-on-surface">
           Meldinger
         </h1>
-        <p className="text-sm text-portal-secondary mt-1">
+        <p className="text-sm text-on-surface-variant mt-1">
           Direkte meldinger med treneren din
         </p>
       </div>

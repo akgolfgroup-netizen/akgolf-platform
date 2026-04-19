@@ -19,10 +19,10 @@ export default async function TesterPage() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-portal-text">
+        <h1 className="text-2xl font-bold text-on-surface">
           DECADE Tester
         </h1>
-        <p className="text-portal-secondary mt-1">
+        <p className="text-on-surface-variant mt-1">
           Standardiserte tester for å måle fremgang
         </p>
       </div>
@@ -30,26 +30,26 @@ export default async function TesterPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl shadow-card p-5">
-          <MonoLabel as="p" size="xs" uppercase className="text-portal-secondary block">Fullførte tester</MonoLabel>
-          <p className="text-3xl font-bold text-portal-text mt-1 tabular-nums">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Fullførte tester</MonoLabel>
+          <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
             {stats.completedTests}/{stats.totalTests}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <MonoLabel as="p" size="xs" uppercase className="text-portal-secondary block">Total score</MonoLabel>
-          <p className="text-3xl font-bold text-portal-text mt-1 tabular-nums">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Total score</MonoLabel>
+          <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
             {stats.totalScore}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <MonoLabel as="p" size="xs" uppercase className="text-portal-secondary block">Tilgjengelige tester</MonoLabel>
-          <p className="text-3xl font-bold text-portal-text mt-1 tabular-nums">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Tilgjengelige tester</MonoLabel>
+          <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
             {stats.totalTests}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-card p-5">
-          <MonoLabel as="p" size="xs" uppercase className="text-portal-secondary block">Beste test</MonoLabel>
-          <p className="text-3xl font-bold text-portal-text mt-1">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Beste test</MonoLabel>
+          <p className="text-3xl font-bold text-on-surface mt-1">
             {stats.bestTestName ?? "-"}
           </p>
         </div>

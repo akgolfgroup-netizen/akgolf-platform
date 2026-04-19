@@ -150,22 +150,22 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   <motion.div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-[background-color,border-color,color] duration-300 ${
                       isActive
-                        ? "bg-portal-text text-white border-none"
+                        ? "bg-on-surface text-white border-none"
                         : isCompleted
-                          ? "bg-portal-border text-white border-2 border-portal-text"
-                          : "bg-portal-hover text-portal-secondary border-2 border-portal-border"
+                          ? "bg-outline-variant text-white border-2 border-on-surface"
+                          : "bg-surface-container text-on-surface-variant border-2 border-outline-variant"
                     }`}
                     whileHover={!isActive ? { scale: 1.05 } : {}}
                   >
                     {isCompleted && s !== step ? (
-                      <Check className={`w-5 h-5 ${isActive ? "text-white" : "text-portal-text"}`} />
+                      <Check className={`w-5 h-5 ${isActive ? "text-white" : "text-on-surface"}`} />
                     ) : (
                       index + 1
                     )}
                   </motion.div>
                   <span
                     className={`text-xs mt-2 font-medium ${
-                      isActive ? "text-portal-text" : "text-portal-secondary"
+                      isActive ? "text-on-surface" : "text-on-surface-variant"
                     }`}
                   >
                     {stepLabels[s]}
@@ -174,7 +174,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                 {index < arr.length - 1 && (
                   <div
                     className={`w-16 h-0.5 mx-2 ${
-                      isCompleted ? "bg-portal-text" : "bg-portal-hover"
+                      isCompleted ? "bg-on-surface" : "bg-surface-container"
                     }`}
                   />
                 )}
@@ -195,10 +195,10 @@ export function BookCoachingForm({ serviceTypes }: Props) {
             transition={{ duration: 0.3 }}
           >
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-semibold mb-3 text-portal-text">
+              <h1 className="text-3xl font-semibold mb-3 text-on-surface">
                 Velg din treningsform
               </h1>
-              <p className="text-portal-secondary">
+              <p className="text-on-surface-variant">
                 Alle våre coaching-timer inkluderer TrackMan-analyse og personlig tilpasning
               </p>
             </div>
@@ -215,7 +215,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="rounded-[20px] p-6 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-portal-bg border-portal-border hover:border-portal-text/20 hover:-translate-y-px hover:shadow-lg">
+                  <div className="rounded-[20px] p-6 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-surface border-outline-variant hover:border-on-surface/20 hover:-translate-y-px hover:shadow-lg">
                     <div className="flex items-start justify-between gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
@@ -223,31 +223,31 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                             className="w-4 h-4 rounded-full"
                             style={{ backgroundColor: svc.color ?? "#0A1F18" }}
                           />
-                          <h3 className="text-lg font-semibold transition-colors text-portal-text">
+                          <h3 className="text-lg font-semibold transition-colors text-on-surface">
                             {svc.name}
                           </h3>
                         </div>
                         {svc.description && (
-                          <p className="text-sm leading-relaxed mb-4 text-portal-secondary">
+                          <p className="text-sm leading-relaxed mb-4 text-on-surface-variant">
                             {svc.description}
                           </p>
                         )}
                         <div className="flex items-center gap-6">
-                          <span className="flex items-center gap-2 text-sm text-portal-secondary tabular-nums">
-                            <Clock className="w-4 h-4 text-portal-text" />
+                          <span className="flex items-center gap-2 text-sm text-on-surface-variant tabular-nums">
+                            <Clock className="w-4 h-4 text-on-surface" />
                             {svc.duration} minutter
                           </span>
-                          <span className="flex items-center gap-2 text-sm text-portal-secondary">
-                            <User className="w-4 h-4 text-portal-text" />
+                          <span className="flex items-center gap-2 text-sm text-on-surface-variant">
+                            <User className="w-4 h-4 text-on-surface" />
                             {svc.maxStudents === 1 ? "Individuell" : `Gruppe (max ${svc.maxStudents})`}
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-2xl font-semibold text-portal-text tabular-nums">
+                        <span className="text-2xl font-semibold text-on-surface tabular-nums">
                           {formatPrice(svc.price)}
                         </span>
-                        <ChevronRight className="w-5 h-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-portal-text" />
+                        <ChevronRight className="w-5 h-5 mt-2 ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-on-surface" />
                       </div>
                     </div>
                   </div>
@@ -268,16 +268,16 @@ export function BookCoachingForm({ serviceTypes }: Props) {
           >
             <button
               onClick={() => { setStep("service"); setSelectedService(null); }}
-              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-portal-secondary"
+              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-on-surface-variant"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake til tjenester
             </button>
 
-            <h1 className="text-3xl font-semibold mb-2 text-portal-text">
+            <h1 className="text-3xl font-semibold mb-2 text-on-surface">
               Velg instruktør
             </h1>
-            <p className="mb-8 text-portal-secondary">
+            <p className="mb-8 text-on-surface-variant">
               {selectedService.name}
             </p>
 
@@ -292,29 +292,29 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   className="w-full text-left group"
                   whileHover={{ x: 4 }}
                 >
-                  <div className="rounded-[20px] p-5 flex items-center gap-5 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-portal-bg border-portal-border hover:border-portal-text/20 hover:shadow-lg">
+                  <div className="rounded-[20px] p-5 flex items-center gap-5 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border bg-surface border-outline-variant hover:border-on-surface/20 hover:shadow-lg">
                     {inst.user.image ? (
                       <Image
                         src={inst.user.image}
                         alt=""
                         width={64}
                         height={64}
-                        className="w-16 h-16 rounded-xl object-cover border-2 border-portal-border"
+                        className="w-16 h-16 rounded-xl object-cover border-2 border-outline-variant"
                       />
                     ) : (
-                      <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-bold bg-portal-hover text-portal-text border-2 border-portal-border">
+                      <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-bold bg-surface-container text-on-surface border-2 border-outline-variant">
                         {inst.user.name?.charAt(0) ?? "?"}
                       </div>
                     )}
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold mb-1 text-portal-text">
+                      <h3 className="text-lg font-semibold mb-1 text-on-surface">
                         {inst.user.name}
                       </h3>
                       {inst.title && (
-                        <p className="text-portal-secondary">{inst.title}</p>
+                        <p className="text-on-surface-variant">{inst.title}</p>
                       )}
                     </div>
-                    <ChevronRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity text-portal-text" />
+                    <ChevronRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity text-on-surface" />
                   </div>
                 </motion.button>
               ))}
@@ -342,22 +342,22 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   setSelectedInstructor(null);
                 }
               }}
-              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-portal-secondary"
+              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-on-surface-variant"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake
             </button>
 
-            <h1 className="text-3xl font-semibold mb-2 text-portal-text">
+            <h1 className="text-3xl font-semibold mb-2 text-on-surface">
               Velg dato og tid
             </h1>
-            <p className="mb-8 text-portal-secondary">
+            <p className="mb-8 text-on-surface-variant">
               {selectedService.name} med {selectedInstructor.user.name}
             </p>
 
             {/* Date Pills */}
             <div className="mb-8">
-              <h3 className="text-[11px] font-semibold mb-4 uppercase tracking-[0.08em] text-portal-muted">
+              <h3 className="text-[11px] font-semibold mb-4 uppercase tracking-[0.08em] text-outline">
                 Velg dato
               </h3>
               <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
@@ -372,20 +372,20 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                       disabled={isWeekend}
                       className={`flex-shrink-0 rounded-[20px] p-4 text-center min-w-[80px] transition-all duration-200 ${
                         isSelected
-                          ? "bg-portal-text border-none shadow-lg"
-                          : "bg-portal-bg border border-portal-border hover:border-portal-text/20"
+                          ? "bg-on-surface border-none shadow-lg"
+                          : "bg-surface border border-outline-variant hover:border-on-surface/20"
                       }`}
                       style={{ opacity: isWeekend ? 0.4 : 1 }}
                       whileHover={!isWeekend ? { scale: 1.02 } : {}}
                       whileTap={!isWeekend ? { scale: 0.98 } : {}}
                     >
-                      <p className={`text-xs uppercase tracking-wide mb-1 ${isSelected ? "text-white" : "text-portal-muted"}`}>
+                      <p className={`text-xs uppercase tracking-wide mb-1 ${isSelected ? "text-white" : "text-outline"}`}>
                         {format(date, "EEE", { locale: nb })}
                       </p>
-                      <p className={`text-2xl font-semibold mb-1 tabular-nums ${isSelected ? "text-white" : "text-portal-text"}`}>
+                      <p className={`text-2xl font-semibold mb-1 tabular-nums ${isSelected ? "text-white" : "text-on-surface"}`}>
                         {format(date, "d")}
                       </p>
-                      <p className={`text-xs ${isSelected ? "text-white/80" : "text-portal-secondary"}`}>
+                      <p className={`text-xs ${isSelected ? "text-white/80" : "text-on-surface-variant"}`}>
                         {format(date, "MMM", { locale: nb })}
                       </p>
                     </motion.button>
@@ -400,22 +400,22 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h3 className="text-[11px] font-semibold mb-4 uppercase tracking-[0.08em] text-portal-muted">
+                <h3 className="text-[11px] font-semibold mb-4 uppercase tracking-[0.08em] text-outline">
                   Ledige tider — {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
                 </h3>
 
                 {loading ? (
-                  <div className="flex items-center gap-3 py-12 text-portal-secondary">
+                  <div className="flex items-center gap-3 py-12 text-on-surface-variant">
                     <Loader2 className="w-5 h-5 animate-spin" />
                     <span>Henter tilgjengelige tider...</span>
                   </div>
                 ) : availableSlots.length === 0 ? (
-                  <div className="rounded-[20px] p-8 text-center border bg-portal-bg border-portal-border">
-                    <Calendar className="w-12 h-12 mx-auto mb-4 text-portal-muted" />
-                    <p className="text-portal-secondary">
+                  <div className="rounded-[20px] p-8 text-center border bg-surface border-outline-variant">
+                    <Calendar className="w-12 h-12 mx-auto mb-4 text-outline" />
+                    <p className="text-on-surface-variant">
                       Ingen ledige tider denne dagen.
                     </p>
-                    <p className="text-sm mt-1 text-portal-muted">
+                    <p className="text-sm mt-1 text-outline">
                       Prøv en annen dato.
                     </p>
                   </div>
@@ -432,7 +432,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                             setSelectedSlot(slot);
                             setStep("confirm");
                           }}
-                          className="rounded-[20px] py-4 text-sm font-medium transition-all duration-200 border bg-portal-bg border-portal-border text-portal-text hover:border-portal-text tabular-nums"
+                          className="rounded-[20px] py-4 text-sm font-medium transition-all duration-200 border bg-surface border-outline-variant text-on-surface hover:border-on-surface tabular-nums"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
@@ -458,28 +458,28 @@ export function BookCoachingForm({ serviceTypes }: Props) {
           >
             <button
               onClick={() => setStep("date")}
-              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-portal-secondary"
+              className="flex items-center gap-2 text-sm mb-6 transition-colors hover:opacity-70 text-on-surface-variant"
             >
               <ArrowLeft className="w-4 h-4" />
               Tilbake til tidspunkt
             </button>
 
-            <h1 className="text-3xl font-semibold mb-2 text-portal-text">
+            <h1 className="text-3xl font-semibold mb-2 text-on-surface">
               Bekreft din booking
             </h1>
-            <p className="mb-8 text-portal-secondary">
+            <p className="mb-8 text-on-surface-variant">
               Gjennomgå detaljene før betaling
             </p>
 
             {/* Summary Card */}
-            <div className="rounded-[20px] p-8 mb-8 border bg-portal-bg border-portal-border">
+            <div className="rounded-[20px] p-8 mb-8 border bg-surface border-outline-variant">
               {/* Header */}
-              <div className="flex items-center gap-4 pb-6 mb-6 border-b border-portal-border">
+              <div className="flex items-center gap-4 pb-6 mb-6 border-b border-outline-variant">
                 <div
                   className="w-4 h-4 rounded-full"
                   style={{ backgroundColor: selectedService.color ?? "#0A1F18" }}
                 />
-                <h3 className="text-xl font-semibold text-portal-text">
+                <h3 className="text-xl font-semibold text-on-surface">
                   {selectedService.name}
                 </h3>
               </div>
@@ -487,42 +487,42 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               {/* Details */}
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-portal-hover">
-                    <User className="w-5 h-5 text-portal-text" />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-surface-container">
+                    <User className="w-5 h-5 text-on-surface" />
                   </div>
                   <div>
-                    <p className="text-[11px] uppercase tracking-[0.08em] text-portal-muted">Instruktør</p>
-                    <p className="font-medium text-portal-text">{selectedInstructor.user.name}</p>
+                    <p className="text-[11px] uppercase tracking-[0.08em] text-outline">Instruktør</p>
+                    <p className="font-medium text-on-surface">{selectedInstructor.user.name}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-portal-hover">
-                    <Calendar className="w-5 h-5 text-portal-text" />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-surface-container">
+                    <Calendar className="w-5 h-5 text-on-surface" />
                   </div>
                   <div>
-                    <p className="text-[11px] uppercase tracking-[0.08em] text-portal-muted">Dato og tid</p>
-                    <p className="font-medium text-portal-text tabular-nums">
+                    <p className="text-[11px] uppercase tracking-[0.08em] text-outline">Dato og tid</p>
+                    <p className="font-medium text-on-surface tabular-nums">
                       {format(new Date(selectedSlot), "EEEE d. MMMM yyyy 'kl.' HH:mm", { locale: nb })}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-portal-hover">
-                    <Clock className="w-5 h-5 text-portal-text" />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-surface-container">
+                    <Clock className="w-5 h-5 text-on-surface" />
                   </div>
                   <div>
-                    <p className="text-[11px] uppercase tracking-[0.08em] text-portal-muted">Varighet</p>
-                    <p className="font-medium text-portal-text tabular-nums">{selectedService.duration} minutter</p>
+                    <p className="text-[11px] uppercase tracking-[0.08em] text-outline">Varighet</p>
+                    <p className="font-medium text-on-surface tabular-nums">{selectedService.duration} minutter</p>
                   </div>
                 </div>
               </div>
 
               {/* Price */}
-              <div className="flex items-center justify-between pt-6 border-t border-portal-border">
-                <span className="text-portal-secondary">Totalpris</span>
-                <span className="text-3xl font-semibold text-portal-text tabular-nums">
+              <div className="flex items-center justify-between pt-6 border-t border-outline-variant">
+                <span className="text-on-surface-variant">Totalpris</span>
+                <span className="text-3xl font-semibold text-on-surface tabular-nums">
                   {formatPrice(selectedService.price)}
                 </span>
               </div>
@@ -530,7 +530,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
 
             {/* Payment Buttons */}
             <div className="space-y-4">
-              <p className="text-[11px] text-center uppercase tracking-[0.08em] text-portal-muted">
+              <p className="text-[11px] text-center uppercase tracking-[0.08em] text-outline">
                 Velg betalingsmetode
               </p>
 
@@ -556,7 +556,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
 
             </div>
 
-            <p className="text-xs text-center mt-6 text-portal-muted">
+            <p className="text-xs text-center mt-6 text-outline">
               Alle betalinger er sikre og krypterte. Du møter til timen selv om betalingen ikke er gjennomført ennå.
             </p>
           </motion.div>

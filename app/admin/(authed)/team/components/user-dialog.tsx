@@ -164,7 +164,7 @@ export function UserDialog({
         </div>
 
         <div className="pt-2">
-          <h3 className="text-sm font-semibold text-[var(--hg-text)] mb-3">
+          <h3 className="text-sm font-semibold text-[var(--color-on-surface)] mb-3">
             Kapabiliteter ({capabilities.length} valgt)
           </h3>
           <CapabilityChecklist

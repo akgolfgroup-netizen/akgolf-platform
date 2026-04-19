@@ -1152,7 +1152,7 @@ function AnalyseView() {
                   ) : (
                     <div className="absolute right-1/2 h-full rounded-l-full bg-error" style={{ width: `${p / 2}%` }} />
                   )}
-                  <div className="absolute left-1/2 top-0 w-px h-full bg-portal-muted" />
+                  <div className="absolute left-1/2 top-0 w-px h-full bg-surface-container-high" />
                 </div>
               </div>
             );

@@ -17,13 +17,13 @@ export default async function SammenligningPage() {
     <div className="space-y-8">
       {/* Header */}
       <div className="space-y-2">
-        <p className="text-[10px] font-bold tracking-[0.22em] text-portal-muted uppercase">
+        <p className="text-[10px] font-bold tracking-[0.22em] text-outline uppercase">
           Peer-analyse
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight text-portal-text">
+        <h1 className="text-3xl font-semibold tracking-tight text-on-surface">
           Sammenligning
         </h1>
-        <p className="text-portal-secondary max-w-xl">
+        <p className="text-on-surface-variant max-w-xl">
           Sammenlign deg med spillere på ditt nivå, tour-proffer eller handicap-tier.
         </p>
       </div>
@@ -34,12 +34,12 @@ export default async function SammenligningPage() {
             <PremiumCard>
               <div className="flex flex-col items-center justify-center py-16 text-center">
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 mb-4">
-                  <Users className="h-7 w-7 text-portal-text" />
+                  <Users className="h-7 w-7 text-on-surface" />
                 </div>
-                <p className="text-sm font-medium text-portal-text mb-1">
+                <p className="text-sm font-medium text-on-surface mb-1">
                   Ingen data tilgjengelig
                 </p>
-                <p className="text-sm text-portal-secondary max-w-sm">
+                <p className="text-sm text-on-surface-variant max-w-sm">
                   {data && "error" in data
                     ? data.error
                     : "Registrer handicap og noen runder for å se sammenligning."}
@@ -49,8 +49,8 @@ export default async function SammenligningPage() {
           ) : (
             <div className="space-y-6">
               <PremiumCard>
-                <p className="text-[10px] font-bold tracking-[0.22em] text-portal-muted uppercase mb-5 flex items-center gap-2">
-                  <span className="w-6 h-px bg-portal-border" />
+                <p className="text-[10px] font-bold tracking-[0.22em] text-outline uppercase mb-5 flex items-center gap-2">
+                  <span className="w-6 h-px bg-outline-variant" />
                   Din spillerkategori
                 </p>
                 <PeerBenchmarkCard

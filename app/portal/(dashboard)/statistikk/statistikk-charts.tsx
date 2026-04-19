@@ -86,15 +86,15 @@ export function StatistikkCharts({
     <>
       {/* Score Trend + SG Radar */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
-          <span className="h-px w-6 bg-portal-muted" />
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-outline font-mono">
+          <span className="h-px w-6 bg-surface-container-high" />
           Utvikling
         </p>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <motion.div variants={fadeInUp}>
             <div className="bg-white rounded-xl shadow-card p-6">
-              <h3 className="mb-5 text-[14px] font-semibold text-portal-text">
+              <h3 className="mb-5 text-[14px] font-semibold text-on-surface">
                 Score-utvikling
               </h3>
               <ScoreTrendChart
@@ -107,11 +107,11 @@ export function StatistikkCharts({
           <motion.div variants={fadeInUp}>
             <div className="bg-white rounded-xl shadow-card p-6">
               <div className="mb-5 flex items-center justify-between">
-                <h3 className="text-[14px] font-semibold text-portal-text">
+                <h3 className="text-[14px] font-semibold text-on-surface">
                   Strokes Gained
                 </h3>
                 {aggregates?.avgSgTotal != null && (
-                  <span className="text-[11px] text-portal-muted tabular-nums">
+                  <span className="text-[11px] text-outline tabular-nums">
                     Totalt: {aggregates.avgSgTotal.toFixed(2)}
                   </span>
                 )}
@@ -119,7 +119,7 @@ export function StatistikkCharts({
               {hasSGData ? (
                 <SGRadarChart playerSG={playerSG} showLegend={false} />
               ) : (
-                <div className="flex h-[280px] items-center justify-center text-sm text-portal-muted">
+                <div className="flex h-[280px] items-center justify-center text-sm text-outline">
                   Ingen SG-data i valgt periode
                 </div>
               )}
@@ -130,15 +130,15 @@ export function StatistikkCharts({
 
       {/* Training Volume + Breakdown */}
       <div>
-        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-portal-muted font-mono">
-          <span className="h-px w-6 bg-portal-muted" />
+        <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-outline font-mono">
+          <span className="h-px w-6 bg-surface-container-high" />
           Trening
         </p>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <motion.div variants={fadeInUp}>
             <div className="bg-white rounded-xl shadow-card p-6">
-              <h3 className="mb-5 text-[14px] font-semibold text-portal-text">
+              <h3 className="mb-5 text-[14px] font-semibold text-on-surface">
                 Treningsvolum
               </h3>
               <TrainingVolumeChart data={weeklyTraining} />
@@ -148,21 +148,21 @@ export function StatistikkCharts({
           {focusAreas.length > 0 && (
             <motion.div variants={fadeInUp}>
               <div className="bg-white rounded-xl shadow-card p-6">
-                <h3 className="mb-6 text-[14px] font-semibold text-portal-text">
+                <h3 className="mb-6 text-[14px] font-semibold text-on-surface">
                   Fokusomrade-fordeling
                 </h3>
                 <div className="space-y-4">
                   {focusAreas.map((area) => (
                     <div key={area.name}>
                       <div className="mb-1.5 flex items-center justify-between">
-                        <span className="text-[12px] font-semibold text-portal-text">
+                        <span className="text-[12px] font-semibold text-on-surface">
                           {area.name}
                         </span>
-                        <span className="text-[11px] text-portal-muted tabular-nums">
+                        <span className="text-[11px] text-outline tabular-nums">
                           {area.percent}%
                         </span>
                       </div>
-                      <div className="h-2 overflow-hidden rounded-full bg-portal-hover">
+                      <div className="h-2 overflow-hidden rounded-full bg-surface-container">
                         <div
                           className="h-full rounded-full bg-primary transition-all duration-500"
                           style={{ width: `${area.percent}%` }}

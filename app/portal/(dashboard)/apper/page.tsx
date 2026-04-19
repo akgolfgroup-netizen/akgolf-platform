@@ -10,11 +10,11 @@ export default async function ApperPage() {
     <div className="space-y-8">
       {/* Neutral header */}
       <div className="space-y-2">
-        <MonoLabel as="p" size="xs" uppercase className="text-portal-muted block">Marketplace</MonoLabel>
-        <h1 className="text-3xl font-semibold tracking-tight text-portal-text">
+        <MonoLabel as="p" size="xs" uppercase className="text-outline block">Marketplace</MonoLabel>
+        <h1 className="text-3xl font-semibold tracking-tight text-on-surface">
           Apper og moduler
         </h1>
-        <p className="text-portal-secondary max-w-xl">
+        <p className="text-on-surface-variant max-w-xl">
           Lås opp avanserte moduler og bundles for å forbedre spillet ditt — enkeltmoduler eller komplette pakker.
         </p>
       </div>

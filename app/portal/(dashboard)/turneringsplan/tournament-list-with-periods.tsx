@@ -30,10 +30,10 @@ export function TournamentListWithPeriods({
     return (
       <PremiumCard padding="lg">
         <div className="flex flex-col items-center justify-center py-16 text-center">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-portal-text">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-on-surface">
             <Trophy className="h-6 w-6" />
           </div>
-          <p className="text-sm text-portal-muted">
+          <p className="text-sm text-outline">
             Ingen turneringer lagt inn ennå.
           </p>
         </div>
