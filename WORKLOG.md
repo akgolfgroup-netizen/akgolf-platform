@@ -8,6 +8,38 @@
 
 ---
 
+## 2026-04-19 — Course Hero Strategi C (Fase 3)
+
+**Jobbet med:**
+- **Fase 3.1 — 7 nye primitiver** i `components/portal/patterns/`:
+  - `CourseHero` (P-07): foto-bakgrunn + dark canvas + gradient overlay (dashboard/immersive/subtle varianter)
+  - `GlassPanel` + `GlassPanelRow` (P-08): glassmorph-kort, dark+light varianter
+  - `GlassButton` (P-09): pill-knapp glass/lime/amber/dark
+  - `SlimIconRail` + `SlimIconRailLogo/Avatar` (P-10): 68px ikon-rail
+  - `HeroLabel` + `HeroLabelSeparator` (P-11): flytende glass-pill for kontekst
+  - `FloatingTopbar` + `FloatingCrumbs` + `FloatingSegmented` (P-12): floating topbar over foto-hero
+  - `BentoCard` + `BentoGrid` + `BentoEyebrow` (P-13): glass-bento-kort
+- **Fase 3.2 — Dashboard Course Hero:** Ny rute `/portal/dashboard/hero` med V6 foto-hero + glass bento (4x4 grid). Knapp for å bytte tilbake til standard dashboard. Henter samme data via getDashboardStats/getHandicapData/getNextBooking.
+- **Fase 3.3 — Runde Course Hero:** Ny rute `/portal/runde/[id]/hero` med shot-tracking-layout. 3-kolonne: score+navigator / bane-hero med slag-input / caddie glass-panel + vær + hull-stats. Immersive overlay.
+- **Fase 3.4 — Statistikk Course Hero view:** ViewSwitcher integrert. Opt2 rendrer `StatistikkCourseHeroView` med SG Ring midt-hero + glass drawer bottom (summary / SG per område / handlinger). Opt1 bevart som Performance Report.
+- **Fase 3.5 — TrackMan + MC konsistens:** MonoLabel på KPI-kort i TrackMan og hub-oversikt (Mission Control) for typografisk konsistens med Course Hero.
+- **Assets kopiert:** `hero-golf-divot.jpg` (378KB), `course-aerial.svg`, `hero-aerial.svg` til `public/images/course-hero/`.
+- **Preview:** `/portal/design-preview` viser alle 13 patterns (P-01 til P-13).
+
+**Commits:**
+- `feat(design-v3.1): Course Hero Strategi C — 7 primitiver + hero-ruter`
+
+**Nøkkelfiler:**
+- Nye: `components/portal/patterns/{course-hero,glass-panel,glass-button,slim-icon-rail,hero-label,floating-topbar,bento-card}.tsx`, `app/portal/(dashboard)/dashboard/hero/{page,course-hero-client}.tsx`, `app/portal/(dashboard)/runde/[id]/hero/{page,course-hero-client}.tsx`, `components/portal/statistikk/statistikk-course-hero-view.tsx`
+- Oppdatert: `components/portal/patterns/index.ts`, `app/portal/(dashboard)/design-preview/design-preview-client.tsx`, `app/portal/(dashboard)/statistikk/statistikk-client.tsx`, `app/portal/(dashboard)/trackman/trackman-client.tsx`, `app/admin/(authed)/hub-oversikt-client.tsx`
+
+**Neste steg:**
+1. **Push:** `git push origin main` for å publisere.
+2. **Test:** Naviger til `/portal/dashboard/hero`, `/portal/runde/[id]/hero`, `/portal/statistikk` (velg Course Hero), og `/portal/design-preview`.
+3. **Utsatt:** E1/E2/E3 Editorial Remixer. Treningsplan full light-mode-konvertering. Dagbok streak-milestones. Mobile adaptasjoner.
+
+---
+
 ## 2026-04-19 — Design System v3.1 implementasjon (Fase 1 + Fase 2)
 
 **Jobbet med:**
