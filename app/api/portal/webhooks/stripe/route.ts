@@ -52,6 +52,24 @@ export async function POST(req: Request) {
   // Use service role client for webhooks (no auth context)
   const supabase = createServiceClient();
 
+  try {
+    await handleStripeEvent(event, supabase);
+  } catch (handlerErr) {
+    const msg = handlerErr instanceof Error ? handlerErr.message : "Unknown error";
+    logger.error(
+      `[Stripe Webhook] Unhandled error in ${event.type} (id: ${event.id}): ${msg}`
+    );
+    // Returner 200 for å unngå retry-loops fra Stripe.
+    // Feilen er logget og må følges opp manuelt.
+  }
+
+  return NextResponse.json({ received: true }, { status: 200 });
+}
+
+async function handleStripeEvent(
+  event: Stripe.Event,
+  supabase: ReturnType<typeof createServiceClient>
+) {
   if (event.type === "payment_intent.succeeded") {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
     const paymentIntentId = paymentIntent.id;

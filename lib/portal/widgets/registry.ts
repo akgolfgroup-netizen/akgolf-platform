@@ -11,7 +11,11 @@ export type WidgetId =
   | "training-volume"
   | "season-plan"
   | "leaderboard"
-  | "coaching-feedback";
+  | "coaching-feedback"
+  | "mental-trends"
+  | "degradation-alert"
+  | "module-addons"
+  | "periodisering";
 
 export type WidgetSize = "small" | "medium" | "large";
 
@@ -73,6 +77,38 @@ export const WIDGET_REGISTRY: Record<WidgetId, WidgetDefinition> = {
     size: "medium",
     category: "coaching",
   },
+  "mental-trends": {
+    id: "mental-trends",
+    title: "Mental trender",
+    description: "Fokus, selvtillit og progresjon",
+    icon: "heart-pulse",
+    size: "medium",
+    category: "progress",
+  },
+  "degradation-alert": {
+    id: "degradation-alert",
+    title: "Nedgangsvarsel",
+    description: "Teknikk-nedgang under press",
+    icon: "alert-triangle",
+    size: "medium",
+    category: "training",
+  },
+  "module-addons": {
+    id: "module-addons",
+    title: "Tilleggsmoduler",
+    description: "Tilgjengelige moduler og abonnement",
+    icon: "puzzle",
+    size: "medium",
+    category: "progress",
+  },
+  periodisering: {
+    id: "periodisering",
+    title: "Periodisering",
+    description: "Nåværende treningsfase",
+    icon: "repeat",
+    size: "medium",
+    category: "training",
+  },
 };
 
 /**
@@ -97,6 +133,10 @@ export const DEFAULT_DASHBOARD_LAYOUT: WidgetId[] = [
   "season-plan",
   "leaderboard",
   "coaching-feedback",
+  "mental-trends",
+  "degradation-alert",
+  "module-addons",
+  "periodisering",
 ];
 
 /**

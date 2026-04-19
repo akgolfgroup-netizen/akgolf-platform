@@ -9,3 +9,6 @@ export type { Division, NavGroup, NavItem } from "./mc-nav-config";
 
 // Division
 export { DivisionDot, getDivisionBorderClass } from "./ui/division-dot";
+
+// System Health
+export { WebhookHealthCard } from "./webhook-health-card";

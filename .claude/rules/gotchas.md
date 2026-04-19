@@ -53,5 +53,36 @@ Inter via `next/font/google`. Ikke lokal font-fil.
 ## Git
 - ALDRI bruk `git add -A` eller `git add .` for commit. Bruk `git add <spesifikke filer>` for å unngå utilsiktet inkludering av slettinger eller endringer.
 
+## Stripe Webhooks
+
+### Webhook secret mismatch (mest vanlig)
+Stripe sender webhook events til `https://akgolf.no/api/portal/webhooks/stripe`.
+Hvis secreten i Vercel (`STRIPE_WEBHOOK_SECRET`) ikke matcher den i Stripe Dashboard,
+returnerer endpointet 400 og Stripe markerer endpointet som "failing".
+
+**Løsning:**
+1. Gå til [Stripe Dashboard → Webhooks](https://dashboard.stripe.com/webhooks)
+2. Finn endpoint `https://akgolf.no/api/portal/webhooks/stripe`
+3. Klikk "Reveal" under "Signing secret"
+4. Kopier `whsec_...`-verdien
+5. Oppdater `STRIPE_WEBHOOK_SECRET` i Vercel Dashboard
+6. Deploy på nytt
+
+### Error handling
+Webhook-koden (`app/api/portal/webhooks/stripe/route.ts`) wrapper nå ALL event-håndtering
+i `try/catch` for å aldri returnere 500 til Stripe. Ved feil:
+- Logger event.type + event.id + feilmelding
+- Returnerer fortsatt 200 (for å unngå retry-loops)
+- Feil må følges opp manuelt via logger / Vercel Dashboard
+
+### Diagnose-script
+```bash
+STRIPE_SECRET_KEY=sk_live_xxx npx tsx scripts/diagnose-stripe-webhook.ts
+```
+
+### Health check
+Systemhelse vises i Mission Control dashboard via `WebhookHealthCard`.
+API-endepunkt: `GET /api/health/stripe`
+
 ## Oppdater dokumentasjon ved strukturelle endringer
 Endre kode + oppdater docs = én atomisk operasjon.

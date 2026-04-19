@@ -6,6 +6,7 @@ import {
   MCTopbar,
   useMCSidebar,
 } from "@/components/portal/mission-control";
+import { WebhookHealthCard } from "@/components/portal/mission-control";
 import {
   AdminGauge,
   AdminSparkline,
@@ -543,6 +544,9 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 </div>
               </div>
             </Card>
+
+            {/* System Health */}
+            <WebhookHealthCard />
 
             {/* Pending Actions */}
             {allActionItems.length > 0 && (

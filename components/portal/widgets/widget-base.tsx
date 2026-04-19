@@ -14,6 +14,10 @@ import {
   Medal,
   MessageSquare,
   LayoutGrid,
+  HeartPulse,
+  AlertTriangle,
+  Puzzle,
+  Repeat,
   type LucideIcon,
 } from "lucide-react";
 
@@ -27,6 +31,10 @@ const WIDGET_ICON_MAP: Record<string, LucideIcon> = {
   medal: Medal,
   "message-square": MessageSquare,
   "layout-grid": LayoutGrid,
+  "heart-pulse": HeartPulse,
+  "alert-triangle": AlertTriangle,
+  puzzle: Puzzle,
+  repeat: Repeat,
 };
 
 function WidgetIcon({ name, className }: { name: string; className?: string }) {

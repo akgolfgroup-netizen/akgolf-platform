@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CookieConsent } from "@/components/website/CookieConsent";
@@ -9,6 +9,13 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -85,7 +92,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nb" className="h-full">
-      <body className={`${inter.variable} h-full`}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} h-full`}>
         {/* Skip-to-content link for tilgjengelighet */}
         <a
           href="#main-content"

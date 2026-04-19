@@ -7,3 +7,7 @@ export { TrainingVolumeWidget } from "./training-volume-widget";
 export { SeasonPlanWidget } from "./season-plan-widget";
 export { LeaderboardWidget } from "./leaderboard-widget";
 export { CoachingFeedbackWidget } from "./coaching-feedback-widget";
+export { MentalTrendsWidget } from "./mental-trends-widget";
+export { DegradationAlertWidget } from "./degradation-alert-widget";
+export { ModuleAddonsWidget } from "./module-addons-widget";
+export { PeriodiseringWidget } from "./periodisering-widget";

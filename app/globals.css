@@ -53,6 +53,22 @@
   --color-data-blue-light: #EFF6FF;
   --color-data-lime: #D1F843;
   --color-data-lime-soft: rgba(209, 248, 67, 0.20);
+  --color-data-amber: #E8A94A;
+  --color-data-violet: #AF52DE;
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+   * AK Design System v3.1 — Design Canvas tokens
+   * Matcher /tmp/ak-golf-design/tokens.css
+   * ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Grey scale — mellomnivå fra v3.1 */
+  --color-grey-150: #E1E8E5;
+
+  /* Density tokens (for tetthets-tweaks per skjerm) */
+  --ak-density: 1;
+  --ak-pad: calc(20px * var(--ak-density));
+  --ak-pad-sm: calc(12px * var(--ak-density));
+  --ak-gap: calc(20px * var(--ak-density));
 
   /* Data Card Tokens — rounded-32px + ambient shadow */
   --radius-data-card: 2rem;           /* 32px */
@@ -211,7 +227,8 @@
 
   --font-sans: var(--font-inter), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-display: var(--font-inter), Inter, system-ui, -apple-system, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  /* JetBrains Mono for metadata, IDer, prosenter — v3.1 pattern P-02 */
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
   /* Font weights */
   --font-regular: 400;
