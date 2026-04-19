@@ -90,7 +90,7 @@ export const colors = {
     vipps: '#FF5B24',
   },
 
-  // Data Visualization Palette
+  // Data Visualization Palette (utvidet v3.1)
   data: {
     sage: '#2A7D5A',
     sageLight: '#E8F5EF',
@@ -100,6 +100,8 @@ export const colors = {
     blueLight: '#EFF6FF',
     lime: '#D1F843',
     limeSoft: 'rgba(209, 248, 67, 0.20)',
+    amber: '#E8A94A',
+    violet: '#AF52DE',
   },
 
   // AI accent — purple (beholdt fra etablert portal-design)
