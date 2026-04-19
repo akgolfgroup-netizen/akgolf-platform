@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * TrainingPyramid — bruker AKPyramide pattern (P-04) for §5.1.
+ * Mapper fordeling til FYS/TEK/SLAG/SPILL/TURN.
+ */
+
+import { AKPyramide, type PyramideLevel } from "@/components/portal/patterns";
+import { MonoLabel } from "@/components/portal/patterns";
 import type { TrainingIndex } from "@/lib/portal/kartlegging";
 
 interface TrainingPyramidProps {
@@ -9,99 +16,91 @@ interface TrainingPyramidProps {
 
 export function TrainingPyramid({ index, categoryLabel }: TrainingPyramidProps) {
   const d = index.distribution;
-  const bars = [
+  const weekly = index.weeklyHours;
+
+  // Mapper fordeling til AK-pyramidens 5 lag
+  const data: { level: PyramideLevel; percent: number; value: string }[] = [
     {
-      key: "onCourse",
-      label: "Banegolf (18/9 hull)",
-      value: d.onCourse,
-      color: "var(--color-warning)",
+      level: "FYS",
+      percent: Math.round(d.physicalMental * 100),
+      value: hoursFormat(d.physicalMental * weekly),
     },
     {
-      key: "skillTechnical",
-      label: "Ferdighet (teknikk)",
-      value: d.skillTechnical,
-      color: "var(--color-primary)",
+      level: "TEK",
+      percent: Math.round(d.skillTechnical * 100),
+      value: hoursFormat(d.skillTechnical * weekly),
     },
     {
-      key: "shortGame",
-      label: "Kortspill",
-      value: d.shortGame,
-      color: "var(--color-primary-alt)",
+      level: "SLAG",
+      percent: Math.round(d.shortGame * 100),
+      value: hoursFormat(d.shortGame * weekly),
     },
     {
-      key: "putting",
-      label: "Putting",
-      value: d.putting,
-      color: "var(--color-accent-cta)",
+      level: "SPILL",
+      percent: Math.round(d.putting * 100),
+      value: hoursFormat(d.putting * weekly),
     },
     {
-      key: "physicalMental",
-      label: "Fysisk/mental",
-      value: d.physicalMental,
-      color: "var(--color-ai)",
+      level: "TURN",
+      percent: Math.round(d.onCourse * 100),
+      value: hoursFormat(d.onCourse * weekly),
     },
   ];
 
   const [recMin, recMax] = index.recommendedSummer;
-  const weeklyLabel =
-    index.weeklyHours < recMin
-      ? "Under anbefalt"
-      : index.weeklyHours > recMax
-        ? "Over anbefalt"
-        : "På nivå";
+  const weeklyStatus =
+    weekly < recMin
+      ? { label: "Under anbefalt", tone: "warning" as const }
+      : weekly > recMax
+        ? { label: "Over anbefalt", tone: "warning" as const }
+        : { label: "På nivå", tone: "success" as const };
 
   const insight = buildInsight(d.onCourse, categoryLabel);
 
   return (
-    <div className="bg-portal-card rounded-2xl p-5 shadow-portal-card border border-portal-border-subtle">
-      <div className="flex items-baseline justify-between mb-1">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
-          Din treningsfordeling siste 30 dager
-        </span>
-        <span className="text-[11px] tabular-nums text-portal-muted">
-          {index.weeklyHours.toFixed(1)} t/uke
-        </span>
-      </div>
+    <div className="space-y-4">
+      <AKPyramide
+        data={data}
+        readOnly
+        title="Din treningsfordeling · siste 30 dager"
+        subtitle={`${weekly.toFixed(1)} t/uke · Anbefalt for ${categoryLabel}: ${recMin}–${recMax} t/uke (sommer)`}
+      />
 
-      <div className="mt-4 space-y-2">
-        {bars.map((b) => (
-          <div key={b.key} className="flex items-center gap-3">
-            <span className="w-36 text-xs text-portal-secondary">{b.label}</span>
-            <div className="flex-1 h-[6px] rounded-full bg-portal-hover overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-700"
-                style={{ width: `${b.value * 100}%`, background: b.color }}
-              />
-            </div>
-            <span className="w-12 text-right text-xs tabular-nums font-semibold text-portal-text">
-              {Math.round(b.value * 100)}%
+      <div className="rounded-xl bg-white shadow-card p-4">
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center gap-2">
+            <MonoLabel size="xs" uppercase className="text-grey-400">
+              Status
+            </MonoLabel>
+            <span
+              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium ${
+                weeklyStatus.tone === "success"
+                  ? "bg-success-light text-success-text"
+                  : "bg-warning-light text-warning-text"
+              }`}
+            >
+              {weeklyStatus.label}
             </span>
           </div>
-        ))}
-      </div>
-
-      <div className="mt-5 pt-4 border-t border-portal-border-subtle space-y-2">
-        <div className="flex items-center justify-between text-xs">
-          <span className="text-portal-secondary">
-            Anbefalt for {categoryLabel} (sommer)
-          </span>
-          <span className="tabular-nums text-portal-text font-semibold">
-            {recMin}-{recMax} t/uke
+          <span className="text-grey-500 tabular-nums">
+            {weekly.toFixed(1)}t / {recMin}–{recMax}t
           </span>
         </div>
-        <div className="flex items-center justify-between text-xs">
-          <span className="text-portal-secondary">Du ligger</span>
-          <span className="text-portal-text font-semibold">{weeklyLabel}</span>
-        </div>
-      </div>
 
-      {insight && (
-        <div className="mt-4 rounded-lg bg-success-light px-3 py-2.5 text-xs leading-relaxed text-success-text">
-          {insight}
-        </div>
-      )}
+        {insight && (
+          <p className="mt-3 text-xs leading-relaxed text-grey-600 border-t border-grey-100 pt-3">
+            {insight}
+          </p>
+        )}
+      </div>
     </div>
   );
+}
+
+function hoursFormat(hours: number): string {
+  if (hours < 0.1) return "—";
+  if (hours < 1) return `${Math.round(hours * 60)}m`;
+  return `${hours.toFixed(1)}h`;
 }
 
 function buildInsight(
@@ -111,7 +110,7 @@ function buildInsight(
   if (onCourseRatio < 0.3) return null;
   const pct = Math.round(onCourseRatio * 100);
   if (onCourseRatio > 0.6) {
-    return `Du har brukt ${pct}% av tiden på banen. Spillere i ${categoryLabel} som flyttet seg mot 40/60 (bane/ferdighet) fikk gjennomsnittlig +0.8 SG på 90 dager. Målrettet ferdighetstrening gir mer utvikling enn flere runder.`;
+    return `Du har brukt ${pct}% av tiden på banen. Spillere i ${categoryLabel} som flyttet seg mot 40/60 (bane/ferdighet) fikk i snitt +0.8 SG på 90 dager. Målrettet ferdighetstrening gir mer utvikling enn flere runder.`;
   }
   if (onCourseRatio > 0.45) {
     return `Du har ${pct}% banegolf. Det fungerer, men mer ferdighetstrening gir større utvikling per time.`;

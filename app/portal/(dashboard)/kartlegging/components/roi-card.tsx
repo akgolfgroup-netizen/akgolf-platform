@@ -1,5 +1,15 @@
 "use client";
 
+/**
+ * RoiCard — bruker BentoCard-pattern (glass dark).
+ * Viser SG/time per aktivitet med evidens-insight.
+ */
+
+import {
+  BentoCard,
+  BentoEyebrow,
+  MonoLabel,
+} from "@/components/portal/patterns";
 import type { RoiRow } from "../actions";
 
 interface RoiCardProps {
@@ -9,12 +19,13 @@ interface RoiCardProps {
 export function RoiCard({ rows }: RoiCardProps) {
   if (rows.length === 0) {
     return (
-      <div className="bg-portal-card rounded-2xl p-5 shadow-portal-card border border-portal-border-subtle text-center">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
+      <div className="rounded-xl bg-white shadow-card p-5 text-center">
+        <MonoLabel size="xs" uppercase className="text-grey-400 block">
           Hvor kommer slagene fra?
-        </span>
-        <p className="mt-3 text-sm text-portal-muted">
-          Ikke nok treningslogger til å regne ROI enda. Registrer økter for å se.
+        </MonoLabel>
+        <p className="mt-3 text-sm text-grey-500">
+          Ikke nok treningslogger til å regne ROI enda. Registrer økter for å se
+          hvor du får mest utvikling per time.
         </p>
       </div>
     );
@@ -29,53 +40,48 @@ export function RoiCard({ rows }: RoiCardProps) {
       : null;
 
   return (
-    <div className="bg-portal-card rounded-2xl p-5 shadow-portal-card border border-portal-border-subtle">
-      <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
-        Hvor kommer slagene fra? · Siste 90 dager
-      </span>
+    <BentoCard variant="glass" padding="lg">
+      <BentoEyebrow>Hvor kommer slagene fra · 90 dager</BentoEyebrow>
 
-      <div className="mt-4">
-        <div className="grid grid-cols-[1fr_auto_auto_auto] gap-x-4 gap-y-2 items-center text-xs">
-          <div className="text-portal-muted">Aktivitet</div>
-          <div className="text-portal-muted text-right">Timer</div>
-          <div className="text-portal-muted text-right">SG-delta</div>
-          <div className="text-portal-muted text-right">SG/time</div>
-
-          {rows.map((r) => {
-            const fillPct = Math.min(100, (r.sgPerHour / maxPerHour) * 100);
-            return (
-              <div key={r.label} className="contents">
-                <div className="text-portal-text">
-                  <div className="text-sm font-medium">{r.label}</div>
-                  <div className="mt-1 h-[3px] rounded-full bg-portal-hover overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-primary"
-                      style={{ width: `${fillPct}%` }}
-                    />
-                  </div>
+      <div className="mt-4 space-y-2.5">
+        {rows.map((r) => {
+          const fillPct = Math.min(100, (r.sgPerHour / maxPerHour) * 100);
+          return (
+            <div key={r.label} className="grid grid-cols-[1fr_auto] gap-x-4">
+              <div className="min-w-0">
+                <div className="flex items-baseline justify-between gap-4">
+                  <span className="text-sm font-medium text-white/90 truncate">
+                    {r.label}
+                  </span>
+                  <span className="text-[11px] text-white/50 tabular-nums whitespace-nowrap">
+                    {r.hours}t · {r.sgDelta > 0 ? "+" : ""}
+                    {r.sgDelta.toFixed(2)} SG
+                  </span>
                 </div>
-                <div className="text-right text-sm tabular-nums text-portal-secondary">
-                  {r.hours}
-                </div>
-                <div className="text-right text-sm tabular-nums text-portal-secondary">
-                  {r.sgDelta > 0 ? "+" : ""}
-                  {r.sgDelta.toFixed(2)}
-                </div>
-                <div className="text-right text-sm tabular-nums font-semibold text-portal-text">
-                  {r.sgPerHour.toFixed(3)}
+                <div className="mt-1 h-[3px] rounded-full bg-white/10 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-accent-cta"
+                    style={{ width: `${fillPct}%` }}
+                  />
                 </div>
               </div>
-            );
-          })}
-        </div>
+              <div className="text-right text-sm font-semibold tabular-nums text-white min-w-[72px]">
+                {r.sgPerHour.toFixed(3)}
+                <span className="block text-[10px] font-normal text-white/45 mt-0.5">
+                  SG/time
+                </span>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {ratio !== null && ratio >= 2 && (
-        <div className="mt-4 rounded-lg bg-performance-soft px-3 py-2.5 text-xs leading-relaxed text-primary">
-          1 time målrettet ferdighet gir ~{ratio}x mer utvikling enn 1 time
+        <div className="mt-5 rounded-lg bg-accent-cta/15 border border-accent-cta/25 px-3 py-2.5 text-xs leading-relaxed text-accent-cta">
+          1 time målrettet ferdighet gir ~{ratio}× mer utvikling enn 1 time
           banegolf. Evidens fra din egen trening.
         </div>
       )}
-    </div>
+    </BentoCard>
   );
 }

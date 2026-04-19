@@ -1,34 +1,43 @@
 "use client";
 
+/**
+ * DailyAgendaSection — følger mc-alert-list-mønster fra Mission Board wireframe.
+ * Alert-rader med ikon + tittel + meta + tidsstempel + handlings-knapp.
+ */
+
 import Link from "next/link";
 import { ArrowRight, AlertCircle, AlertTriangle, Info } from "lucide-react";
+import { MonoLabel } from "@/components/portal/patterns";
 import type { CoachingSignal, SignalSeverity } from "@/lib/portal/coaching-signals";
 
 interface DailyAgendaSectionProps {
   signals: CoachingSignal[];
 }
 
-const SEVERITY_STYLES: Record<
+const SEVERITY: Record<
   SignalSeverity,
-  { bg: string; border: string; icon: React.ReactNode; label: string }
+  { icon: React.ReactNode; label: string; bg: string; text: string; border: string }
 > = {
   high: {
-    bg: "bg-error-light",
-    border: "border-l-4 border-l-[var(--color-error)]",
-    icon: <AlertCircle className="h-4 w-4 text-error-text" />,
+    icon: <AlertCircle className="h-4 w-4" />,
     label: "Høy",
+    bg: "bg-error-light",
+    text: "text-error-text",
+    border: "border-l-4 border-l-[var(--color-error)]",
   },
   medium: {
-    bg: "bg-warning-light",
-    border: "border-l-4 border-l-[var(--color-warning)]",
-    icon: <AlertTriangle className="h-4 w-4 text-warning-text" />,
+    icon: <AlertTriangle className="h-4 w-4" />,
     label: "Medium",
+    bg: "bg-warning-light",
+    text: "text-warning-text",
+    border: "border-l-4 border-l-[var(--color-warning)]",
   },
   low: {
-    bg: "bg-[var(--hg-surface-raised)]",
-    border: "border-l-4 border-l-[var(--hg-border)]",
-    icon: <Info className="h-4 w-4 text-[var(--hg-text-muted)]" />,
+    icon: <Info className="h-4 w-4" />,
     label: "Lav",
+    bg: "bg-grey-100",
+    text: "text-grey-500",
+    border: "border-l-4 border-l-grey-300",
   },
 };
 
@@ -39,108 +48,99 @@ export function DailyAgendaSection({ signals }: DailyAgendaSectionProps) {
 
   if (prioritized.length === 0) {
     return (
-      <div className="rounded-xl border border-[var(--hg-border-subtle)] bg-[var(--hg-surface)] p-10 text-center">
-        <div className="text-sm font-medium text-[var(--hg-text)]">
+      <section className="rounded-xl bg-white shadow-card p-10 text-center">
+        <div className="text-sm font-medium text-grey-900">
           Ingen påtrengende varsler akkurat nå
         </div>
-        <div className="text-xs text-[var(--hg-text-muted)] mt-1">
+        <div className="text-xs text-grey-400 mt-1">
           Spillerne dine er på rett vei. Se spillerlisten under for detaljer.
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="space-y-3">
+    <section className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-[var(--hg-text)] tracking-[-0.01em]">
+        <MonoLabel size="xs" uppercase className="text-primary">
           Dagsagenda
-        </h2>
-        <span className="text-[11px] text-[var(--hg-text-muted)] tabular-nums">
+        </MonoLabel>
+        <span className="text-[11px] text-grey-400 tabular-nums">
           {prioritized.length} spillere trenger oppmerksomhet
         </span>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-2">
+      <ul className="rounded-xl bg-white shadow-card divide-y divide-grey-100 overflow-hidden">
         {prioritized.map((signal) => {
-          const style = SEVERITY_STYLES[signal.severity];
+          const s = SEVERITY[signal.severity];
           return (
-            <div
+            <li
               key={signal.userId}
-              className={`rounded-xl bg-[var(--hg-surface)] p-4 ${style.border} shadow-[0_1px_3px_rgba(0,0,0,0.04)]`}
+              className={`flex items-start gap-4 px-5 py-4 hover:bg-grey-50 transition-colors ${s.border}`}
             >
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    {style.icon}
-                    <span className="text-xs font-semibold uppercase tracking-[0.06em] text-[var(--hg-text-muted)]">
-                      {style.label}
-                    </span>
-                    <span className="text-[11px] tabular-nums text-[var(--hg-text-muted)]">
-                      ({signal.priorityScore})
-                    </span>
-                  </div>
-
-                  <div className="text-sm font-semibold text-[var(--hg-text)] truncate">
-                    {signal.playerName ?? "Ukjent"}
-                  </div>
-                  <div className="text-xs text-[var(--hg-text-secondary)] mt-0.5">
-                    {signal.headline}
-                  </div>
-                </div>
-
-                <Link
-                  href={`/admin/elever/${signal.userId}`}
-                  className="inline-flex items-center gap-1 text-xs font-medium text-[var(--color-primary)] hover:underline"
-                >
-                  Åpne
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
+              <div
+                className={`flex items-center justify-center w-9 h-9 rounded-lg shrink-0 ${s.bg} ${s.text}`}
+              >
+                {s.icon}
               </div>
 
-              {signal.evidence.length > 0 && (
-                <div className="mt-3 space-y-1">
-                  {signal.evidence.slice(0, 3).map((e, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center justify-between gap-2 text-[11px]"
-                    >
-                      <span className="text-[var(--hg-text-muted)]">
-                        {e.label}
-                      </span>
-                      {e.value && (
-                        <span className="tabular-nums text-[var(--hg-text-secondary)]">
-                          {e.value}
-                        </span>
-                      )}
-                    </div>
-                  ))}
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-sm font-semibold text-grey-900">
+                    {signal.playerName ?? "Ukjent"}
+                  </span>
+                  <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${s.bg} ${s.text}`}>
+                    {s.label}
+                  </span>
+                  <span className="text-[11px] text-grey-400 tabular-nums">
+                    prioritet {signal.priorityScore}
+                  </span>
                 </div>
-              )}
+                <div className="mt-0.5 text-sm text-grey-500">
+                  {signal.headline}
+                </div>
 
-              {signal.recommendedActions.length > 0 && (
-                <div className="mt-3 pt-3 border-t border-[var(--hg-border-subtle)] space-y-1.5">
-                  {signal.recommendedActions.slice(0, 2).map((rec, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs">
-                      <span className="text-[var(--color-primary)] mt-0.5">
-                        →
-                      </span>
-                      <div className="flex-1">
-                        <div className="text-[var(--hg-text)]">{rec.label}</div>
-                        {rec.detail && (
-                          <div className="text-[11px] text-[var(--hg-text-muted)] mt-0.5">
-                            {rec.detail}
-                          </div>
+                {signal.evidence.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-grey-400">
+                    {signal.evidence.slice(0, 3).map((e, i) => (
+                      <span key={i}>
+                        {e.label}
+                        {e.value && (
+                          <span className="ml-1 tabular-nums text-grey-500">
+                            {e.value}
+                          </span>
                         )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {signal.recommendedActions[0] && (
+                  <div className="mt-2 text-xs text-grey-700">
+                    →{" "}
+                    <span className="font-medium">
+                      {signal.recommendedActions[0].label}
+                    </span>
+                    {signal.recommendedActions[0].detail && (
+                      <span className="text-grey-400 ml-1">
+                        · {signal.recommendedActions[0].detail}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <Link
+                href={`/admin/elever/${signal.userId}`}
+                className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline shrink-0 ml-2 whitespace-nowrap"
+              >
+                Åpne
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </li>
           );
         })}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 }

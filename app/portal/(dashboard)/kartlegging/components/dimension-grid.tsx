@@ -1,6 +1,12 @@
 "use client";
 
+/**
+ * DimensionGrid — bruker SGRing (P-01) + kategori-badges.
+ * Viser total-ring + 4 kort med per-dim kategori fra pattern-biblioteket.
+ */
+
 import { getSkillLevelByCode } from "@/lib/portal/golf/skill-levels";
+import { MonoLabel, NightSurface, SGRing } from "@/components/portal/patterns";
 import type { DimensionBreakdown } from "@/lib/portal/kartlegging";
 
 interface DimensionGridProps {
@@ -9,52 +15,70 @@ interface DimensionGridProps {
 
 const GAP_LABELS = {
   strength: { label: "Styrke", bg: "bg-success-light", text: "text-success-text" },
-  "on-level": { label: "På nivå", bg: "bg-portal-hover", text: "text-portal-secondary" },
+  "on-level": { label: "På nivå", bg: "bg-grey-100", text: "text-grey-500" },
   gap: { label: "Gap", bg: "bg-error-light", text: "text-error-text" },
 } as const;
 
 export function DimensionGrid({ dimensions }: DimensionGridProps) {
+  const map = new Map(dimensions.map((d) => [d.dimension, d]));
+  const offTee = map.get("offTheTee");
+  const approach = map.get("approach");
+  const around = map.get("aroundTheGreen");
+  const putt = map.get("putting");
+
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      {dimensions.map((d) => {
-        const level = getSkillLevelByCode(d.category);
-        const style = GAP_LABELS[d.gap];
-        return (
-          <div
-            key={d.dimension}
-            className="bg-portal-card rounded-2xl p-5 text-center shadow-portal-glow-green border border-portal-border-subtle transition-all duration-300 hover:-translate-y-px hover:shadow-portal-card-hover"
-          >
-            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
-              {d.label}
-            </span>
+    <section className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-4">
+      {/* SG Ring — total visualisering */}
+      <NightSurface className="rounded-xl p-6 flex items-center justify-center">
+        <SGRing
+          offTee={offTee?.sgValue ?? 0}
+          approach={approach?.sgValue ?? 0}
+          short={around?.sgValue ?? 0}
+          putt={putt?.sgValue ?? 0}
+          size="md"
+          showLegend
+        />
+      </NightSurface>
 
+      {/* 4 dimension-kort */}
+      <div className="grid grid-cols-2 gap-4">
+        {dimensions.map((d) => {
+          const level = getSkillLevelByCode(d.category);
+          const style = GAP_LABELS[d.gap];
+          const sign = d.sgValue >= 0 ? "+" : "";
+          return (
             <div
-              className="mt-2 font-extrabold tabular-nums"
-              style={{
-                fontSize: "var(--text-stat-lg, 44px)",
-                lineHeight: 1,
-                letterSpacing: "-0.02em",
-                color: level?.color ?? "var(--color-primary)",
-              }}
+              key={d.dimension}
+              className="rounded-xl bg-white shadow-card p-5 transition-shadow duration-200 hover:shadow-card-hover"
             >
-              {d.category}
-            </div>
+              <MonoLabel size="xs" uppercase className="text-grey-400 block">
+                {d.label}
+              </MonoLabel>
 
-            <p className="mt-1 text-sm tabular-nums text-portal-secondary">
-              {d.sgValue >= 0 ? "+" : ""}
-              {d.sgValue.toFixed(2)} SG
-            </p>
+              <div className="mt-3 flex items-baseline gap-2">
+                <span
+                  className="text-4xl font-bold tabular-nums tracking-tight"
+                  style={{ color: level?.color ?? "#005840" }}
+                >
+                  {d.category}
+                </span>
+                <span className="text-sm text-grey-500 tabular-nums">
+                  {sign}
+                  {d.sgValue.toFixed(2)} SG
+                </span>
+              </div>
 
-            <div className="mt-3">
-              <span
-                className={`inline-flex items-center rounded-full ${style.bg} px-2.5 py-0.5 text-[11px] font-medium ${style.text}`}
-              >
-                {style.label}
-              </span>
+              <div className="mt-3">
+                <span
+                  className={`inline-flex items-center rounded-full ${style.bg} px-2.5 py-0.5 text-[11px] font-medium ${style.text}`}
+                >
+                  {style.label}
+                </span>
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

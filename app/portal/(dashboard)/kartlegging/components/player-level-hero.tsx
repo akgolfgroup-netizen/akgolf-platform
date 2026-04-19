@@ -1,10 +1,27 @@
 "use client";
 
+/**
+ * PlayerLevelHero — følger portal-profil wireframe Option 1 Dashboard.
+ * Profile-header med avatar, navn, kategori-badge, meta + 3 stats-col til høyre.
+ */
+
 import { getSkillLevelByCode } from "@/lib/portal/golf/skill-levels";
+import { MonoLabel } from "@/components/portal/patterns";
 import type { PlayerProfile } from "@/lib/portal/kartlegging";
 
 interface PlayerLevelHeroProps {
   profile: PlayerProfile;
+}
+
+function getInitials(name: string | null): string {
+  if (!name) return "EL";
+  return name
+    .split(" ")
+    .map((p) => p[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 }
 
 export function PlayerLevelHero({ profile }: PlayerLevelHeroProps) {
@@ -12,57 +29,77 @@ export function PlayerLevelHero({ profile }: PlayerLevelHeroProps) {
   const pct = profile.progressToNextPct ?? 0;
 
   return (
-    <div className="bg-portal-card rounded-[2rem] p-8 text-center shadow-portal-card transition-shadow duration-300 hover:shadow-portal-card-hover">
-      <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
-        Din kategori
-      </span>
-
-      <div
-        className="mt-2 font-extrabold tabular-nums"
-        style={{
-          fontSize: "var(--text-stat-xl, 56px)",
-          lineHeight: 1,
-          letterSpacing: "-0.02em",
-          color: level?.color ?? "var(--color-primary)",
-        }}
-      >
-        {profile.category}
-      </div>
-
-      <p className="mt-1">
-        <span
-          className="font-bold text-portal-text tabular-nums"
-          style={{ fontSize: "var(--text-stat-md, 32px)" }}
+    <section className="rounded-xl bg-white shadow-card p-6 md:p-8">
+      <div className="flex flex-col md:flex-row md:items-center gap-6">
+        {/* Avatar */}
+        <div
+          className="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-2xl text-2xl font-bold text-white shrink-0"
+          style={{ background: level?.color ?? "#005840" }}
         >
-          {profile.averageScore !== null
-            ? `Snittscore ${profile.averageScore}`
-            : "Snittscore —"}
-        </span>
-      </p>
-
-      {profile.handicap !== null && (
-        <p className="mt-0.5 text-sm text-portal-muted tabular-nums">
-          HCP {profile.handicap.toFixed(1)}
-        </p>
-      )}
-
-      {profile.nextCategory && (
-        <div className="mt-6 mx-auto max-w-sm">
-          <div className="h-2 rounded-full bg-portal-hover overflow-hidden">
-            <div
-              className="h-full rounded-full bg-primary shadow-portal-glow-green transition-all duration-700"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-          <p className="mt-2 text-xs text-portal-secondary tabular-nums">
-            {pct}% til {profile.nextCategory}
-          </p>
+          {getInitials(profile.userName)}
         </div>
-      )}
 
-      <p className="mt-3 text-sm text-portal-muted">
-        {profile.categoryLabel} · {profile.tournamentContext}
-      </p>
+        {/* Main info */}
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-grey-900 tracking-tight">
+              {profile.userName ?? "Din profil"}
+            </h1>
+            <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-bold tracking-[0.08em] text-primary uppercase">
+              Kategori {profile.category}
+            </span>
+          </div>
+          <div className="mt-1.5 flex flex-wrap gap-3 text-sm text-grey-500">
+            <span>{level?.labelNO ?? profile.categoryLabel}</span>
+            <span>·</span>
+            <span>{profile.tournamentContext}</span>
+          </div>
+
+          {/* Progress to next */}
+          {profile.nextCategory && (
+            <div className="mt-4 max-w-md">
+              <div className="h-1.5 rounded-full bg-grey-100 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-primary transition-all duration-700"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+              <MonoLabel size="xs" className="mt-1.5 text-grey-500 block">
+                {pct}% til {profile.nextCategory}
+              </MonoLabel>
+            </div>
+          )}
+        </div>
+
+        {/* Stats column */}
+        <div className="grid grid-cols-3 gap-6 md:gap-8 md:pl-8 md:border-l md:border-grey-100">
+          <Stat label="Snittscore" value={profile.averageScore?.toString() ?? "—"} sub="siste 10" />
+          <Stat
+            label="HCP"
+            value={profile.handicap !== null ? profile.handicap.toFixed(1) : "—"}
+            sub="indeks"
+          />
+          <Stat
+            label="USI"
+            value={profile.totalUsi.toFixed(2)}
+            sub={`${profile.totalSg >= 0 ? "+" : ""}${profile.totalSg.toFixed(2)} SG`}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Stat({ label, value, sub }: { label: string; value: string; sub: string }) {
+  return (
+    <div>
+      <MonoLabel size="xs" uppercase className="text-grey-400 block">
+        {label}
+      </MonoLabel>
+      <div className="mt-1 text-2xl font-bold text-grey-900 tabular-nums tracking-tight">
+        {value}
+      </div>
+      <div className="text-[11px] text-grey-400 mt-0.5">{sub}</div>
     </div>
   );
 }

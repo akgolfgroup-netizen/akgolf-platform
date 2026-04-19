@@ -1,7 +1,13 @@
 "use client";
 
-import { ChevronRight, CheckCircle2, XCircle } from "lucide-react";
+/**
+ * TestResultsCard — siste testresultater + manglende-indikator.
+ * Bruker design-system tokens + p-list-mønsteret fra portal-profil wireframe.
+ */
+
 import Link from "next/link";
+import { ChevronRight, Check, X } from "lucide-react";
+import { MonoLabel } from "@/components/portal/patterns";
 import type { TestHistory } from "@/lib/portal/kartlegging";
 
 interface TestResultsCardProps {
@@ -19,49 +25,58 @@ export function TestResultsCard({ history }: TestResultsCardProps) {
   const shown = history.recent.slice(0, 5);
 
   return (
-    <div className="bg-portal-card rounded-2xl p-5 shadow-portal-card border border-portal-border-subtle">
-      <div className="flex items-baseline justify-between mb-1">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
+    <div className="rounded-xl bg-white shadow-card p-5">
+      <div className="flex items-baseline justify-between mb-3">
+        <MonoLabel size="xs" uppercase className="text-grey-400">
           Siste testresultater
-        </span>
+        </MonoLabel>
         {history.missingTests.length > 0 && (
-          <span className="text-[11px] text-portal-muted tabular-nums">
+          <span className="text-[11px] text-grey-400 tabular-nums">
             {history.missingTests.length} mangler
           </span>
         )}
       </div>
 
-      <div className="mt-3 divide-y divide-portal-border-subtle">
-        {shown.length === 0 && (
-          <p className="py-4 text-sm text-portal-muted">
-            Ingen tester registrert ennå. Snakk med treneren din om å gjennomføre
-            en testøkt.
-          </p>
-        )}
+      {shown.length === 0 && (
+        <p className="py-4 text-sm text-grey-500">
+          Ingen tester registrert ennå. Snakk med treneren din om å gjennomføre
+          en testøkt.
+        </p>
+      )}
+
+      <ul className="divide-y divide-grey-100">
         {shown.map((t) => (
-          <div
+          <li
             key={`${t.testNumber}-${t.conductedAt}`}
-            className="flex items-center justify-between py-2.5"
+            className="flex items-center justify-between py-3"
           >
-            <div className="flex items-center gap-2">
-              {t.passed ? (
-                <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0" />
-              ) : (
-                <XCircle className="w-4 h-4 text-error flex-shrink-0" />
-              )}
-              <div>
-                <div className="text-sm text-portal-text">{t.testName}</div>
-                <div className="text-[11px] text-portal-muted">
+            <div className="flex items-center gap-3 min-w-0">
+              <div
+                className={`flex items-center justify-center w-7 h-7 rounded-lg shrink-0 ${
+                  t.passed
+                    ? "bg-success-light text-success-text"
+                    : "bg-error-light text-error-text"
+                }`}
+              >
+                {t.passed ? (
+                  <Check className="w-3.5 h-3.5" />
+                ) : (
+                  <X className="w-3.5 h-3.5" />
+                )}
+              </div>
+              <div className="min-w-0">
+                <div className="text-sm text-grey-900 truncate">{t.testName}</div>
+                <div className="text-[11px] text-grey-400">
                   {formatDate(t.conductedAt)}
                 </div>
               </div>
             </div>
-            <span className="text-sm font-semibold tabular-nums text-portal-text">
+            <span className="text-sm font-semibold tabular-nums text-grey-900 shrink-0 ml-3">
               {t.value} {t.unit}
             </span>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
 
       <Link
         href="/portal/tester"

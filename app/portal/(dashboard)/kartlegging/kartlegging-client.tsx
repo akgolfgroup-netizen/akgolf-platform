@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * KartleggingClient — spiller-profil følger portal-profil wireframe (Option 1 Dashboard).
+ * Profile-header → KPI-seksjon → grid med AKPyramide + RoiCard + Forecast + Milepæler + index + tester.
+ */
+
 import { useState } from "react";
 import { SubNavTabs } from "@/components/portal/layout/sub-nav-tabs";
 import { PlayerLevelHero } from "./components/player-level-hero";
@@ -30,17 +35,17 @@ export function KartleggingClient({ data }: KartleggingClientProps) {
 
   if (!data.profile) {
     return (
-      <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 space-y-6">
         <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/kartlegging" />
-        <div className="bg-portal-card rounded-2xl p-8 text-center shadow-portal-card border border-portal-border-subtle">
-          <h1 className="text-2xl font-bold text-portal-text">
+        <section className="rounded-xl bg-white shadow-card p-8 text-center">
+          <h1 className="text-2xl font-bold text-grey-900 tracking-tight">
             Din kartlegging
           </h1>
-          <p className="mt-3 text-sm text-portal-secondary max-w-md mx-auto">
+          <p className="mt-3 text-sm text-grey-500 max-w-md mx-auto">
             Vi trenger mer data for å bygge din profil. Registrer minst én runde
             eller TrackMan-økt, så beregnes USI-score og kategori automatisk.
           </p>
-        </div>
+        </section>
 
         <DataConsentDialog
           open={consentOpen}
@@ -54,16 +59,18 @@ export function KartleggingClient({ data }: KartleggingClientProps) {
     data;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 space-y-6">
+    <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 space-y-6">
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/kartlegging" />
+
       <PlayerLevelHero profile={profile} />
 
       <DimensionGrid dimensions={profile.dimensions} />
 
       {gap && <GapAnalysisCard gap={gap} />}
 
+      {/* Pedagogisk lag: pyramide + ROI side-om-side */}
       {trainingIndex && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <TrainingPyramid
             index={trainingIndex}
             categoryLabel={profile.categoryLabel}
@@ -72,11 +79,13 @@ export function KartleggingClient({ data }: KartleggingClientProps) {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Prognose + milepæler */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-4">
         <ForecastCard points={forecast} />
         <MilestonesCard milestones={milestones} />
       </div>
 
+      {/* Treningsindeks + tester */}
       {(trainingIndex || testHistory) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {trainingIndex && <TrainingIndexCard index={trainingIndex} />}

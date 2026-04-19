@@ -1,5 +1,11 @@
 "use client";
 
+/**
+ * ForecastCard — prognose baseline vs. justert plan.
+ * Bruker BentoCard (light-variant) med SVG-linjer i brand-farger.
+ */
+
+import { BentoCard, BentoEyebrow } from "@/components/portal/patterns";
 import type { ForecastPoint } from "../actions";
 
 interface ForecastCardProps {
@@ -7,9 +13,7 @@ interface ForecastCardProps {
 }
 
 export function ForecastCard({ points }: ForecastCardProps) {
-  if (points.length === 0) {
-    return null;
-  }
+  if (points.length === 0) return null;
 
   const allValues = points.flatMap((p) => [p.baseline, p.adjusted]);
   const min = Math.min(...allValues);
@@ -18,20 +22,16 @@ export function ForecastCard({ points }: ForecastCardProps) {
 
   const width = 480;
   const height = 160;
-  const padX = 24;
-  const padY = 16;
+  const padX = 16;
+  const padY = 12;
   const innerW = width - 2 * padX;
   const innerH = height - 2 * padY;
 
-  function pointsToPath(
-    data: ForecastPoint[],
-    key: "baseline" | "adjusted"
-  ): string {
-    return data
+  function pointsToPath(key: "baseline" | "adjusted"): string {
+    return points
       .map((p, i) => {
-        const x = padX + (i / (data.length - 1)) * innerW;
-        const y =
-          padY + innerH - ((p[key] - min) / span) * innerH;
+        const x = padX + (i / (points.length - 1)) * innerW;
+        const y = padY + innerH - ((p[key] - min) / span) * innerH;
         return `${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
       })
       .join(" ");
@@ -41,56 +41,52 @@ export function ForecastCard({ points }: ForecastCardProps) {
   const gap = last.adjusted - last.baseline;
 
   return (
-    <div className="bg-portal-card rounded-2xl p-5 shadow-portal-card border border-portal-border-subtle">
-      <div className="flex items-baseline justify-between mb-1">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-portal-muted">
-          12-ukers prognose
-        </span>
-        <span className="text-[11px] text-portal-muted">
-          USI-utvikling
-        </span>
+    <BentoCard variant="glass" padding="lg">
+      <div className="flex items-center justify-between mb-3">
+        <BentoEyebrow dotColor="#2A7D5A">12-ukers prognose</BentoEyebrow>
+        <span className="text-[11px] text-white/50">USI-utvikling</span>
       </div>
 
-      <div className="mt-3 flex items-center gap-4 text-[11px]">
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-[2px] bg-portal-muted" />
-          <span className="text-portal-secondary">Fortsett som nå</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-[2px] bg-primary" />
-          <span className="text-portal-secondary">Følg anbefalt plan</span>
-        </div>
+      <div className="flex items-center gap-4 text-[11px] text-white/60 mb-2">
+        <span className="flex items-center gap-1.5">
+          <span className="w-3 h-[2px] bg-white/40" />
+          Fortsett som nå
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="w-3 h-[2px] bg-accent-cta" />
+          Følg anbefalt plan
+        </span>
       </div>
 
       <svg
-        className="mt-2 w-full h-auto"
+        className="w-full h-auto"
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="none"
       >
         <path
-          d={pointsToPath(points, "baseline")}
+          d={pointsToPath("baseline")}
           fill="none"
-          stroke="var(--color-muted)"
+          stroke="rgba(255,255,255,0.45)"
           strokeWidth={2}
           strokeDasharray="4 3"
           strokeLinecap="round"
         />
         <path
-          d={pointsToPath(points, "adjusted")}
+          d={pointsToPath("adjusted")}
           fill="none"
-          stroke="var(--color-primary)"
+          stroke="#D1F843"
           strokeWidth={2.5}
           strokeLinecap="round"
         />
       </svg>
 
-      <div className="mt-3 pt-3 border-t border-portal-border-subtle flex items-center justify-between">
-        <span className="text-xs text-portal-secondary">
+      <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+        <span className="text-xs text-white/70">
           Differanse om 12 uker
         </span>
         <span
           className={`text-sm font-semibold tabular-nums ${
-            gap > 0.1 ? "text-success-text" : "text-portal-text"
+            gap > 0.1 ? "text-accent-cta" : "text-white"
           }`}
         >
           {gap > 0 ? "+" : ""}
@@ -99,11 +95,11 @@ export function ForecastCard({ points }: ForecastCardProps) {
       </div>
 
       {gap > 0.3 && (
-        <p className="mt-3 text-xs text-portal-secondary leading-relaxed">
-          Gapet mellom linjene = hva du potensielt lar ligge på bordet. Å følge
-          anbefalt plan gir {gap.toFixed(2)} USI ekstra på 12 uker.
+        <p className="mt-3 text-xs leading-relaxed text-white/70">
+          Gapet mellom linjene = hva du lar ligge på bordet. Å følge anbefalt
+          plan gir +{gap.toFixed(2)} USI ekstra på 12 uker.
         </p>
       )}
-    </div>
+    </BentoCard>
   );
 }

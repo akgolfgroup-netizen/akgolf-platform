@@ -1,8 +1,14 @@
 "use client";
 
+/**
+ * DataConsentDialog — overlay med portal-consent-flyt.
+ * Bruker design-system tokens, shadow-card-hover-deep.
+ */
+
 import { useState } from "react";
 import { ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui";
+import { MonoLabel } from "@/components/portal/patterns";
 import { recordDataConsent } from "../actions";
 
 interface DataConsentDialogProps {
@@ -34,24 +40,27 @@ export function DataConsentDialog({ open, onClose }: DataConsentDialogProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-70 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-      <div className="bg-portal-card rounded-2xl shadow-portal-card-hover-deep max-w-lg w-full p-6">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="bg-white rounded-xl shadow-xl max-w-lg w-full p-6">
         <div className="flex items-start gap-3 mb-4">
-          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-success-light text-success flex-shrink-0">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-success-light text-success-text shrink-0">
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-portal-text">
+            <MonoLabel size="xs" uppercase className="text-primary block">
+              GDPR
+            </MonoLabel>
+            <h2 className="text-lg font-semibold text-grey-900 mt-1">
               Samtykke til datainnsamling
             </h2>
-            <p className="mt-1 text-sm text-portal-secondary">
+            <p className="mt-1 text-sm text-grey-500">
               For å gi deg bedre coaching samler vi inn og analyserer data fra
               treningen din. Du kan trekke samtykket når som helst.
             </p>
           </div>
         </div>
 
-        <div className="space-y-2 py-4 border-y border-portal-border-subtle">
+        <div className="space-y-1 py-4 border-y border-grey-100">
           <ConsentRow
             checked={tests}
             onChange={setTests}
@@ -68,7 +77,7 @@ export function DataConsentDialog({ open, onClose }: DataConsentDialogProps) {
             checked={level}
             onChange={setLevel}
             label="Beregnet spillernivå"
-            description="A-K-kategori, USI, gap-analyse og prognose."
+            description="A–K-kategori, USI, gap-analyse og prognose."
           />
           <ConsentRow
             checked={coachSharing}
@@ -118,7 +127,7 @@ function ConsentRow({
   description: string;
 }) {
   return (
-    <label className="flex items-start gap-3 py-2 cursor-pointer hover:bg-portal-hover/50 rounded-lg px-2 -mx-2">
+    <label className="flex items-start gap-3 py-2.5 cursor-pointer hover:bg-grey-50 rounded-lg px-2 -mx-2 transition-colors">
       <input
         type="checkbox"
         className="mt-1 h-4 w-4 accent-primary"
@@ -126,8 +135,8 @@ function ConsentRow({
         onChange={(e) => onChange(e.target.checked)}
       />
       <div>
-        <div className="text-sm font-medium text-portal-text">{label}</div>
-        <div className="text-xs text-portal-muted mt-0.5">{description}</div>
+        <div className="text-sm font-medium text-grey-900">{label}</div>
+        <div className="text-xs text-grey-500 mt-0.5">{description}</div>
       </div>
     </label>
   );
