@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Calendar, Copy, Check, RefreshCw, Lock, ExternalLink } from "lucide-react";
+import { MonoLabel } from "@/components/portal/patterns";
 
 function toWebcalUrl(httpUrl: string): string {
   return httpUrl.replace(/^https?:\/\//, "webcal://");
@@ -48,83 +49,70 @@ export function CalendarSyncSettings() {
 
   if (loading) {
     return (
-      <div className="rounded-xl p-4 border animate-pulse" style={{ borderColor: "var(--color-grey-200)", background: "rgba(255,255,255,0.02)" }}>
-        <div className="h-4 bg-[var(--color-grey-200)] rounded w-1/3 mb-2" />
-        <div className="h-3 bg-[var(--color-grey-200)] rounded w-2/3" />
+      <div className="animate-pulse rounded-xl border border-black/6 p-4">
+        <div className="mb-2 h-4 w-1/3 rounded bg-grey-100" />
+        <div className="h-3 w-2/3 rounded bg-grey-100" />
       </div>
     );
   }
 
   return (
-    <div
-      className="rounded-xl p-5 border"
-      style={{
-        background: "rgba(255,255,255,0.02)",
-        borderColor: "var(--color-grey-200)",
-      }}
-    >
-      <div className="flex items-center gap-2 mb-3">
-        <Calendar className="w-4 h-4 text-[var(--color-grey-900)]" />
-        <h3 className="text-sm font-semibold text-[var(--color-grey-900)]">Kalendersynk</h3>
+    <div className="rounded-xl border border-black/6 p-5">
+      <div className="mb-3 flex items-center gap-2">
+        <Calendar className="h-4 w-4 text-grey-900" />
+        <MonoLabel size="sm" uppercase className="text-grey-900">
+          Kalendersynk
+        </MonoLabel>
       </div>
 
-      <p className="text-xs text-[var(--color-grey-500)] mb-4">
+      <p className="mb-4 text-xs text-grey-500">
         Abonner på treningsplanen din direkte i Apple Kalender, Outlook eller Google Kalender.
         Kalenderen oppdateres automatisk.
       </p>
 
       {feedUrl ? (
         <div className="space-y-4">
-          {/* Apple Calendar / Outlook subscribe button */}
           <button
             onClick={openInAppleCalendar}
-            className="flex items-center gap-2 w-full px-4 py-2.5 rounded-lg text-xs font-semibold transition-all hover:opacity-90"
-            style={{
-              background: "var(--color-primary)",
-              color: "#fff",
-            }}
+            className="flex w-full items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
           >
-            <Calendar className="w-3.5 h-3.5" />
+            <Calendar className="h-3.5 w-3.5" />
             Abonner i Apple Kalender / Outlook
-            <ExternalLink className="w-3 h-3 ml-auto" />
+            <ExternalLink className="ml-auto h-3 w-3" />
           </button>
 
-          {/* Feed URL display */}
-          <div
-            className="flex items-center gap-2 px-3 py-2 rounded-lg"
-            style={{ background: "var(--color-grey-200)", border: "1px solid var(--color-grey-200)" }}
-          >
-            <Lock className="w-3 h-3 text-[var(--color-grey-400)]/60 flex-shrink-0" />
-            <p className="text-[10px] text-[var(--color-grey-500)] truncate flex-1 font-mono">
+          <div className="flex items-center gap-2 rounded-lg border border-black/6 bg-grey-50 px-3 py-2">
+            <Lock className="h-3 w-3 shrink-0 text-grey-400" />
+            <p className="flex-1 truncate font-mono text-[10px] text-grey-500">
               {feedUrl}
             </p>
             <button
               onClick={copyUrl}
-              className="flex-shrink-0 p-1 rounded text-[var(--color-grey-400)]/60 hover:text-[var(--color-grey-900)] transition-colors"
+              className="shrink-0 rounded p-1 text-grey-400 transition-colors hover:text-grey-900"
               title="Kopier URL"
             >
               {copied ? (
-                <Check className="w-3.5 h-3.5 text-[var(--color-success)]" />
+                <Check className="h-3.5 w-3.5 text-success" />
               ) : (
-                <Copy className="w-3.5 h-3.5" />
+                <Copy className="h-3.5 w-3.5" />
               )}
             </button>
           </div>
 
           <div className="space-y-1">
-            <p className="text-[10px] font-semibold text-[var(--color-grey-400)] uppercase tracking-wider">
+            <MonoLabel size="xs" uppercase className="block text-grey-400">
               Eller legg til manuelt:
-            </p>
-            <p className="text-[10px] text-[var(--color-grey-500)]">
-              <strong className="text-[var(--color-grey-900)]">Apple Kalender:</strong>{" "}
+            </MonoLabel>
+            <p className="text-[10px] text-grey-500">
+              <strong className="text-grey-900">Apple Kalender:</strong>{" "}
               Fil &rarr; Ny kalenderabonnement &rarr; lim inn URL
             </p>
-            <p className="text-[10px] text-[var(--color-grey-500)]">
-              <strong className="text-[var(--color-grey-900)]">Outlook:</strong>{" "}
+            <p className="text-[10px] text-grey-500">
+              <strong className="text-grey-900">Outlook:</strong>{" "}
               Legg til kalender &rarr; Abonner fra nett &rarr; lim inn URL
             </p>
-            <p className="text-[10px] text-[var(--color-grey-500)]">
-              <strong className="text-[var(--color-grey-900)]">Google Kalender:</strong>{" "}
+            <p className="text-[10px] text-grey-500">
+              <strong className="text-grey-900">Google Kalender:</strong>{" "}
               + &rarr; Andre kalendere &rarr; Fra URL &rarr; lim inn URL
             </p>
           </div>
@@ -132,9 +120,9 @@ export function CalendarSyncSettings() {
           <button
             onClick={generateToken}
             disabled={generating}
-            className="flex items-center gap-1.5 text-[10px] text-[var(--color-grey-400)]/50 hover:text-[var(--color-grey-400)] transition-colors"
+            className="flex items-center gap-1.5 text-[10px] text-grey-400 transition-colors hover:text-grey-700"
           >
-            <RefreshCw className={`w-3 h-3 ${generating ? "animate-spin" : ""}`} />
+            <RefreshCw className={`h-3 w-3 ${generating ? "animate-spin" : ""}`} />
             Generer ny URL (invaliderer gammel)
           </button>
         </div>
@@ -142,14 +130,9 @@ export function CalendarSyncSettings() {
         <button
           onClick={generateToken}
           disabled={generating}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold transition-opacity hover:opacity-90"
-          style={{
-            background: "var(--color-black)",
-            color: "#fff",
-            opacity: generating ? 0.7 : 1,
-          }}
+          className="flex items-center gap-1.5 rounded-lg bg-black px-4 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-70"
         >
-          <Calendar className="w-3.5 h-3.5" />
+          <Calendar className="h-3.5 w-3.5" />
           {generating ? "Genererer..." : "Aktiver kalendersynk"}
         </button>
       )}

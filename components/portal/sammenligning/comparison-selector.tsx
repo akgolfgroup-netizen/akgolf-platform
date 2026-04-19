@@ -14,6 +14,11 @@ import {
 } from "@/components/portal/premium";
 import { PremiumStatCard } from "@/components/portal/premium/premium-stat-card";
 import { Card } from "@/components/ui/card";
+import {
+  MonoLabel,
+  NightSurface,
+  SGRing,
+} from "@/components/portal/patterns";
 
 type SGStats = {
   sgTotal: number | null;
@@ -223,6 +228,53 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
             aboveAverageCount={peerData.aboveAverageCount}
             totalCategories={peerData.totalSGCategories}
           />
+        </motion.div>
+      )}
+
+      {/* SG Ring side-by-side */}
+      {comparisonStats && (
+        <motion.div variants={fadeInUp}>
+          <NightSurface variant="ambient" className="rounded-2xl p-8">
+            <div className="mb-6 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="h-px w-6 bg-white/40" />
+                <MonoLabel size="xs" uppercase className="text-white/60">
+                  SG-ringer · deg vs {comparisonLabel}
+                </MonoLabel>
+              </div>
+              {mode === "peer" && peerData && (
+                <MonoLabel size="xs" className="text-white/50">
+                  {peerData.myRoundCount}r vs {peerData.peerRoundCount}r
+                </MonoLabel>
+              )}
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="flex flex-col items-center gap-3">
+                <MonoLabel size="xs" uppercase className="text-white/70">
+                  Deg
+                </MonoLabel>
+                <SGRing
+                  size="md"
+                  offTee={myStats.sgOffTheTee ?? 0}
+                  approach={myStats.sgApproach ?? 0}
+                  short={myStats.sgAroundTheGreen ?? 0}
+                  putt={myStats.sgPutting ?? 0}
+                />
+              </div>
+              <div className="flex flex-col items-center gap-3">
+                <MonoLabel size="xs" uppercase className="text-white/70">
+                  {comparisonLabel}
+                </MonoLabel>
+                <SGRing
+                  size="md"
+                  offTee={comparisonStats.sgOffTheTee ?? 0}
+                  approach={comparisonStats.sgApproach ?? 0}
+                  short={comparisonStats.sgAroundTheGreen ?? 0}
+                  putt={comparisonStats.sgPutting ?? 0}
+                />
+              </div>
+            </div>
+          </NightSurface>
         </motion.div>
       )}
 

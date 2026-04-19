@@ -3,14 +3,10 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import {
-  ChevronDown,
-  ChevronUp,
-  Zap,
-  Loader2,
-  MessageSquare,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, Zap, Loader2 } from "lucide-react";
 import { AISummaryBlock } from "./ai-summary-block";
+import { MonoLabel } from "@/components/portal/patterns";
+import { cn } from "@/lib/utils";
 
 interface SessionCardProps {
   session: {
@@ -40,6 +36,8 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
   });
 
   const hasAI = aiData.keyPoints.length > 0;
+  const hasPrimaryFocus = Boolean(session.primaryFocus);
+  const dotColor = hasAI ? "bg-ai" : hasPrimaryFocus ? "bg-primary" : "bg-grey-300";
 
   async function handleGenerateAI() {
     setGenerating(true);
@@ -57,87 +55,90 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
   }
 
   return (
-    <article className="group overflow-hidden rounded-[24px] border border-black/5 bg-white transition-all duration-300 hover:border-[var(--color-primary)]/20 hover:shadow-[0_12px_40px_-12px_rgba(0,88,64,0.15)]">
-      {/* Header */}
-      <div className="flex items-start gap-3 p-5">
-        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] transition-transform group-hover:scale-110">
-          <MessageSquare className="h-5 w-5" />
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <div className="mb-1 flex flex-wrap items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
-              {format(new Date(session.sessionDate), "d. MMMM yyyy", {
-                locale: nb,
-              })}
-            </span>
-            {hasAI && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-ai)]/10 px-2 py-0.5 text-[10px] font-semibold text-[var(--color-ai)]">
-                <Zap className="h-2.5 w-2.5" /> AI-oppsummert
-              </span>
-            )}
-          </div>
-          <h3 className="text-base font-semibold leading-tight tracking-tight text-[var(--color-text)]">
-            {session.primaryFocus ?? "Coachingsesjon"}
-          </h3>
-          <p className="mt-1 text-xs text-[var(--color-muted)]">
-            {session.student.name} · Coach: {session.instructor.user.name}
-          </p>
-        </div>
-
-        <div className="flex flex-shrink-0 items-center gap-2">
-          {canGenerateAI && !hasAI && (
-            <button
-              onClick={handleGenerateAI}
-              disabled={generating}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--color-ai)]/10 px-3 py-1.5 text-xs font-semibold text-[var(--color-ai)] transition-colors hover:bg-[var(--color-ai)]/15 disabled:opacity-50"
-            >
-              {generating ? (
-                <Loader2 className="h-3 w-3 animate-spin" />
-              ) : (
-                <Zap className="h-3 w-3" />
-              )}
-              Generer oppsummering
-            </button>
-          )}
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="rounded-lg p-1.5 text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)]"
-            aria-label={expanded ? "Skjul detaljer" : "Vis detaljer"}
-          >
-            {expanded ? (
-              <ChevronUp className="h-4 w-4" />
-            ) : (
-              <ChevronDown className="h-4 w-4" />
-            )}
-          </button>
-        </div>
+    <article className="relative flex items-start gap-4 rounded-xl border border-black/6 bg-white p-5 shadow-card transition-all duration-300 hover:border-black/10 hover:shadow-card-hover">
+      {/* Timeline dot + mono date */}
+      <div className="flex w-[72px] shrink-0 flex-col items-start gap-2 pt-0.5">
+        <MonoLabel size="xs" uppercase className="text-grey-500">
+          {format(new Date(session.sessionDate), "d MMM", { locale: nb })}
+        </MonoLabel>
+        <MonoLabel size="xs" className="text-grey-400">
+          {format(new Date(session.sessionDate), "HH:mm")}
+        </MonoLabel>
       </div>
 
-      {/* Expanded */}
-      {expanded && (
-        <div className="space-y-3 border-t border-black/5 bg-[var(--color-surface)]/30 px-5 py-4">
-          {session.studentNotes && (
-            <div>
-              <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
-                Notater
-              </p>
-              <p className="whitespace-pre-wrap text-sm text-[var(--color-text)]">
-                {session.studentNotes}
-              </p>
-            </div>
-          )}
+      <div className={cn("mt-1 h-2 w-2 shrink-0 rounded-full ring-2 ring-white", dotColor)} />
 
+      {/* Content */}
+      <div className="min-w-0 flex-1">
+        <div className="mb-1 flex flex-wrap items-center gap-2">
+          <h3 className="text-[15px] font-semibold leading-tight tracking-tight text-grey-900">
+            {session.primaryFocus ?? "Coachingsesjon"}
+          </h3>
           {hasAI && (
-            <AISummaryBlock
-              keyPoints={aiData.keyPoints}
-              focusAreas={aiData.focusAreas}
-              actionItems={aiData.actionItems}
-              generatedAt={aiData.generatedAt}
-            />
+            <span className="inline-flex items-center gap-1 rounded-full bg-ai-light px-2 py-0.5 text-[10px] font-semibold text-ai-text">
+              <Zap className="h-2.5 w-2.5" /> AI-oppsummert
+            </span>
           )}
         </div>
-      )}
+        <p className="text-[12px] text-grey-500">
+          {session.student.name} · Coach: {session.instructor.user.name}
+          {session.instructor.title ? ` · ${session.instructor.title}` : ""}
+        </p>
+
+        {/* Expanded */}
+        {expanded && (
+          <div className="mt-4 space-y-3 border-t border-black/6 pt-4">
+            {session.studentNotes && (
+              <div>
+                <MonoLabel size="xs" uppercase className="mb-1 block text-grey-500">
+                  Notater
+                </MonoLabel>
+                <p className="whitespace-pre-wrap text-sm text-text">
+                  {session.studentNotes}
+                </p>
+              </div>
+            )}
+
+            {hasAI && (
+              <AISummaryBlock
+                keyPoints={aiData.keyPoints}
+                focusAreas={aiData.focusAreas}
+                actionItems={aiData.actionItems}
+                generatedAt={aiData.generatedAt}
+              />
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Actions */}
+      <div className="flex shrink-0 items-center gap-2">
+        {canGenerateAI && !hasAI && (
+          <button
+            onClick={handleGenerateAI}
+            disabled={generating}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-ai-light px-3 py-1.5 text-xs font-semibold text-ai-text transition-opacity hover:opacity-80 disabled:opacity-50"
+          >
+            {generating ? (
+              <Loader2 className="h-3 w-3 animate-spin" />
+            ) : (
+              <Zap className="h-3 w-3" />
+            )}
+            Generer oppsummering
+          </button>
+        )}
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="rounded-lg p-1.5 text-grey-400 transition-colors hover:bg-grey-50 hover:text-grey-700"
+          aria-label={expanded ? "Skjul detaljer" : "Vis detaljer"}
+        >
+          {expanded ? (
+            <ChevronUp className="h-4 w-4" />
+          ) : (
+            <ChevronDown className="h-4 w-4" />
+          )}
+        </button>
+      </div>
     </article>
   );
 }

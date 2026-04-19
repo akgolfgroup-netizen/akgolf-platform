@@ -1,5 +1,7 @@
 "use client";
 
+import { MonoLabel } from "@/components/portal/patterns";
+
 interface StatComparisonRowProps {
   label: string;
   myValue: number | null;
@@ -24,32 +26,46 @@ export function StatComparisonRow({
         : myValue < peerValue
       : null;
 
-  const myColor =
+  const myClass =
     isBetter === true
-      ? "var(--color-success)"
+      ? "text-success"
       : isBetter === false
-        ? "var(--color-error)"
-        : "var(--color-text)";
+        ? "text-error"
+        : "text-text";
+
+  const deltaText =
+    myValue !== null && peerValue !== null
+      ? `${myValue - peerValue >= 0 ? "+" : ""}${(myValue - peerValue).toFixed(2)}`
+      : null;
 
   return (
-    <div className="flex items-center gap-3 rounded-xl px-4 py-3 border border-black/5 bg-white/50 hover:bg-white hover:border-[var(--color-primary)]/15 transition-colors">
-      <span className="flex-1 text-sm text-[var(--color-muted)]">{label}</span>
-      <span
-        className="w-16 text-right text-sm font-bold"
-        style={{ color: myColor }}
-      >
+    <div className="flex items-center gap-3 rounded-xl border border-black/6 bg-white/50 px-4 py-3 transition-colors hover:border-primary/15 hover:bg-white">
+      <span className="flex-1 text-sm text-muted">{label}</span>
+      <MonoLabel size="md" className={`w-16 text-right font-semibold ${myClass}`}>
         {myValue !== null ? format(myValue) : "—"}
         {unit && myValue !== null && (
-          <span className="text-[10px] font-normal text-[var(--color-muted)]">
-            {unit}
-          </span>
+          <span className="ml-0.5 text-[10px] font-normal text-muted">{unit}</span>
         )}
-      </span>
+      </MonoLabel>
+      {deltaText && (
+        <MonoLabel
+          size="xs"
+          className={`w-14 text-center ${
+            isBetter === true
+              ? "text-success"
+              : isBetter === false
+                ? "text-error"
+                : "text-grey-400"
+          }`}
+        >
+          {deltaText}
+        </MonoLabel>
+      )}
       <span className="h-4 w-px bg-black/10" />
-      <span className="w-16 text-right text-sm text-[var(--color-muted)]">
+      <MonoLabel size="md" className="w-16 text-right text-muted">
         {peerValue !== null ? format(peerValue) : "—"}
-        {unit && peerValue !== null && <span className="text-[10px]">{unit}</span>}
-      </span>
+        {unit && peerValue !== null && <span className="ml-0.5 text-[10px]">{unit}</span>}
+      </MonoLabel>
     </div>
   );
 }

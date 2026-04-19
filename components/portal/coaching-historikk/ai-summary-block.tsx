@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Zap, Target, CheckSquare } from "lucide-react";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface AISummaryBlockProps {
   keyPoints: string[];
@@ -34,33 +35,33 @@ export function AISummaryBlock({
       initial="hidden"
       animate="show"
       variants={container}
-      className="bg-[var(--color-grey-100)] border border-[var(--color-grey-900)]/20 rounded-xl p-5 space-y-5"
+      className="rounded-xl border border-ai/15 bg-ai-light p-5 space-y-5"
     >
       <div className="flex items-center gap-2">
-        <div className="w-6 h-6 rounded-full bg-[var(--color-grey-900)]/20 flex items-center justify-center">
-          <Zap className="w-3.5 h-3.5 text-[var(--color-grey-900)]" />
+        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-ai/20">
+          <Zap className="h-3.5 w-3.5 text-ai-text" />
         </div>
-        <span className="text-xs font-semibold text-[var(--color-grey-900)] uppercase tracking-wider">
+        <MonoLabel size="xs" uppercase className="text-ai-text">
           Oppsummering
-        </span>
+        </MonoLabel>
         {generatedAt && (
-          <span className="text-xs text-[var(--color-grey-500)]/50 ml-auto">
+          <MonoLabel size="xs" className="ml-auto text-ai-text/60">
             {new Date(generatedAt).toLocaleDateString("nb-NO")}
-          </span>
+          </MonoLabel>
         )}
       </div>
 
       {/* Key Points */}
       {keyPoints.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold text-[var(--color-grey-900)]/60 uppercase tracking-wider mb-2">
+          <MonoLabel size="xs" uppercase className="mb-2 block text-ai-text/70">
             Nøkkelpunkter
-          </h4>
+          </MonoLabel>
           <motion.ul variants={container} className="space-y-1.5">
             {keyPoints.map((point, i) => (
               <motion.li key={i} variants={item} className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-grey-900)] mt-1.5 flex-shrink-0" />
-                <span className="text-sm text-[var(--color-grey-900)]">{point}</span>
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ai" />
+                <span className="text-sm text-grey-900">{point}</span>
               </motion.li>
             ))}
           </motion.ul>
@@ -70,17 +71,17 @@ export function AISummaryBlock({
       {/* Focus Areas */}
       {focusAreas.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold text-[var(--color-grey-900)]/60 uppercase tracking-wider mb-2">
+          <MonoLabel size="xs" uppercase className="mb-2 block text-ai-text/70">
             Fokusområder
-          </h4>
+          </MonoLabel>
           <motion.div variants={container} className="flex flex-wrap gap-2">
             {focusAreas.map((area, i) => (
               <motion.span
                 key={i}
                 variants={item}
-                className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-[var(--color-blue)]/10 border border-[var(--color-blue)]/20 text-[var(--color-blue)]"
+                className="flex items-center gap-1.5 rounded-full border border-ai/25 bg-white px-3 py-1.5 text-xs text-ai-text"
               >
-                <Target className="w-3 h-3" />
+                <Target className="h-3 w-3" />
                 {area}
               </motion.span>
             ))}
@@ -91,14 +92,14 @@ export function AISummaryBlock({
       {/* Action Items */}
       {actionItems.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold text-[var(--color-grey-900)]/60 uppercase tracking-wider mb-2">
+          <MonoLabel size="xs" uppercase className="mb-2 block text-ai-text/70">
             Treningsoppgaver
-          </h4>
+          </MonoLabel>
           <motion.ul variants={container} className="space-y-1.5">
             {actionItems.map((action, i) => (
               <motion.li key={i} variants={item} className="flex items-start gap-2">
-                <CheckSquare className="w-4 h-4 text-[var(--color-green)] mt-0.5 flex-shrink-0" />
-                <span className="text-sm text-[var(--color-grey-900)]">{action}</span>
+                <CheckSquare className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <span className="text-sm text-grey-900">{action}</span>
               </motion.li>
             ))}
           </motion.ul>
