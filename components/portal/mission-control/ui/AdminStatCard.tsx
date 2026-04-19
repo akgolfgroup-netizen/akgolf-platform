@@ -2,6 +2,7 @@ import * as React from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AdminSparkline } from "./charts/AdminSparkline";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface AdminStatCardProps {
   label: string;
@@ -28,8 +29,10 @@ export function AdminStatCard({
     <div className={cn("admin-card", className)}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <p className="admin-label">{label}</p>
-          <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight">
+          <MonoLabel as="p" size="xs" uppercase className="text-[var(--color-muted)] block">
+            {label}
+          </MonoLabel>
+          <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight tabular-nums">
             {value}
           </p>
           {change && (

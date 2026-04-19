@@ -21,6 +21,7 @@ import {
 } from "@/components/portal/mission-control/ui";
 import { Button } from "@/components/ui/button";
 import { exportBookingsCSV } from "./actions";
+import { MonoLabel } from "@/components/portal/patterns";
 
 interface ReportData {
   totalStudents: number;
@@ -140,9 +141,9 @@ export function RapporterClient({ data }: RapporterClientProps) {
 
         {/* Student KPIs */}
         <div>
-          <h2 className="text-xs font-semibold text-grey-400 uppercase tracking-wider mb-3">
+          <MonoLabel as="h2" size="xs" uppercase className="text-grey-400 block mb-3">
             Elever
-          </h2>
+          </MonoLabel>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <AdminStatCard
               label="Totalt"
@@ -170,9 +171,9 @@ export function RapporterClient({ data }: RapporterClientProps) {
 
         {/* Session KPIs */}
         <div>
-          <h2 className="text-xs font-semibold text-grey-400 uppercase tracking-wider mb-3">
+          <MonoLabel as="h2" size="xs" uppercase className="text-grey-400 block mb-3">
             Økter (siste 30 dager)
-          </h2>
+          </MonoLabel>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <AdminStatCard
               label="Fullførte"

@@ -33,6 +33,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { MonoLabel } from "@/components/portal/patterns";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import type {
@@ -693,9 +694,9 @@ function WeekCard({
  return (
  <div key={dayOfWeek} className="min-h-[120px]">
  <div className="px-3 py-2 border-b border-grey-200 bg-white">
- <span className="text-[10px] font-semibold text-grey-500 uppercase tracking-wider">
+ <MonoLabel size="xs" uppercase className="text-grey-500">
  {dayName}
- </span>
+ </MonoLabel>
  </div>
  <div className="p-2 space-y-1.5">
  {daySessions.map((session) => (
