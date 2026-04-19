@@ -84,6 +84,7 @@ export const MC_NAV_CONFIG: NavGroup[] = [
   {
     label: "Elever & Coaching",
     items: [
+      { href: "/admin/coaching-board", label: "Coaching Mission Board", iconName: "layout-dashboard" },
       { href: "/admin/elever", label: "Elever", iconName: "users" },
       { href: "/admin/okter", label: "Coaching-notater", iconName: "file-text" },
       { href: "/admin/treningsplan", label: "Treningsplaner", iconName: "notebook-pen" },

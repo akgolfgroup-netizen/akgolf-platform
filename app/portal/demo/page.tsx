@@ -342,6 +342,7 @@ export default function DemoPage() {
                 benchmark={{
                   category: "F",
                   label: "Kompetent",
+                  scoreRange: [78, 80],
                   handicapRange: [15, 19],
                   averageScore: 93,
                   sg: { total: -2.5, offTheTee: -0.7, approach: -1.1, aroundTheGreen: -0.5, putting: -0.2 },

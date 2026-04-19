@@ -58,7 +58,7 @@ const NAV_ITEMS: NavItem[] = [
     href: "/portal/statistikk",
     label: "Analyser",
     icon: TrendingUp,
-    matchPaths: ["/portal/analyse", "/portal/benchmark", "/portal/trackman", "/portal/sammenligning", "/portal/ai-coach", "/portal/coaching-historikk"],
+    matchPaths: ["/portal/analyse", "/portal/benchmark", "/portal/trackman", "/portal/sammenligning", "/portal/ai-coach", "/portal/coaching-historikk", "/portal/kartlegging"],
   },
 ];
 

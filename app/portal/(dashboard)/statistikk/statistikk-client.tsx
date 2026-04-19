@@ -68,6 +68,7 @@ const PERIOD_OPTIONS: { key: PeriodKey; label: string }[] = [
 
 const SUB_NAV_TABS = [
   { label: "Oversikt", href: "/portal/statistikk" },
+  { label: "Kartlegging", href: "/portal/kartlegging" },
   { label: "Runder", href: "/portal/runde" },
   { label: "Trening", href: "/portal/dagbok" },
 ];
