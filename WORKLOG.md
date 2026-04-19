@@ -8,6 +8,41 @@
 
 ---
 
+## 2026-04-19 — v3.1 konsistens-runde (7 skjermer)
+
+**Jobbet med:** Propagert Fase 2-patterns (SG Ring, MonoLabel, NightSurface, Vertical Timeline, AI Attribution) til 7 gjenstående portal-skjermer slik at resten av portalen matcher visuelt språk fra /analyse, /statistikk, /bookinger osv.
+
+- **Bolk A (quick wins):**
+  - `/coaching-historikk`: MonoLabel-dato + måned-gruppering, SessionCard fikk timeline-prikk + ryddede ai/portal-tokens, AISummaryBlock renset for `var(--color-blue)` / `var(--color-green)` (fantes ikke).
+  - `/kalender`: ny `CalendarWeekView` med `VerticalTimeline` per dag (7 dagers visning basert på `getCalendarEvents`). CalendarSyncSettings ryddet til Tailwind-tokens.
+  - `/sammenligning`: `NightSurface`-hero med side-by-side `SGRing` (du vs peer/tour/tier), `MonoLabel` + delta-verdi i `StatComparisonRow`.
+- **Bolk B (data-tung):**
+  - `/benchmark`: `NightSurface`+`SGRing` (lg) som hero, `MonoLabel` i A-K kategori-breakdown.
+  - `/trackman`: `NightSurface`-hero med `NightStatCell` (mono label + 3xl tall på lys tekst), `MonoLabel` i klubb-statistikk-tabell, fjernet den gamle `StatCard`.
+- **Bolk C (bredest overflate):**
+  - `/ai-coach`: erstattet alle raw `purple-*`/`red-*` Tailwind-farger med `ai-*`/`error`-tokens i 6 filer (ai-coach-client, ai-coach-chat-client, ai-coach-dashboard-client, message-bubble, chat-interface, quick-questions, context-panel, chat-history). `AIAttribution` under hver assistent-melding med kilder avledet fra `ChatContext` (runde, trackman, trening, HCP). `MonoLabel` for timestamp.
+  - `/profil`: `NightSurface` ambient hero med navn/tier/HCP-badge, `MonoLabel` for alle felt-labels i innstillinger, byttet `var(--color-portal-*)`-inline-refs til Tailwind-klasser.
+
+**Commits:**
+- `e943140` feat(portal): v3.1 patterns i coaching-historikk, kalender, sammenligning
+- `adfa1b0` feat(portal): SG Ring + NightSurface i benchmark og trackman
+- `380fb6c` fix(portal): fjern useMemo i CalendarWeekView for React Compiler
+- `9abe793` feat(portal): AI Attribution i ai-coach, NightSurface hero i profil
+
+**Nøkkelfiler:**
+- Nye: `components/portal/kalender/calendar-week-view.tsx`
+- Oppdatert: `app/portal/(dashboard)/{coaching-historikk,kalender,sammenligning,benchmark,trackman,ai-coach,profil}/*`, `components/portal/{coaching-historikk,kalender,sammenligning,ai-coach,profil}/*`
+
+**Status:** 7 skjermer oppgradert. `tsc` klar (kun pre-eksisterende feil i dagbok/statistikk/stripe). `lint` 1 feil igjen (pre-eksisterende `AIAttribution` ubrukt i `analyse/page.tsx`). 4 commits foran origin.
+
+**Neste steg:**
+1. `git push origin main` (4 commits foran).
+2. Dev-test: `npm run dev` + gå gjennom de 7 rutene og sammenlign side-by-side med referanse-skjermer (/analyse, /statistikk, /bookinger).
+3. Hvis tid: fjern ubrukt `AIAttribution`-import i `app/portal/(dashboard)/analyse/page.tsx:24` for å komme til 0 lint-feil.
+4. Utsatt: `/mental`, `/spill`, `/strategi`, `/runde/ny` har raw hex-farger — egen ryddingsrunde.
+
+---
+
 ## 2026-04-19 — Course Hero Strategi C (Fase 3)
 
 **Jobbet med:**
