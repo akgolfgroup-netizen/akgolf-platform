@@ -32,8 +32,8 @@ export default async function ProfilPage() {
 
   if (!profile) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <p className="text-sm text-[var(--color-portal-muted)]">
+      <div className="flex h-64 items-center justify-center">
+        <p className="text-sm text-portal-muted">
           Kunne ikke laste profil. Prøv å laste siden på nytt.
         </p>
       </div>

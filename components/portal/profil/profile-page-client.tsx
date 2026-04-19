@@ -18,6 +18,7 @@ import {
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { AvatarUpload } from "./avatar-upload";
 import { SkillLevelBadge } from "@/components/portal/statistikk/skill-level-badge";
+import { MonoLabel, NightSurface } from "@/components/portal/patterns";
 import Link from "next/link";
 
 /* ------------------------------------------------------------------ */
@@ -74,16 +75,6 @@ const tierLabelMap: Record<string, string> = {
 export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
   const router = useRouter();
 
-   
-  const initials = profile.name
-    ? profile.name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .slice(0, 2)
-        .toUpperCase()
-    : "?";
-
   async function handleSignOut() {
     const supabase = createBrowserClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -95,34 +86,43 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
 
   return (
     <div className="mx-auto w-full max-w-[680px] space-y-6 pb-12">
-      {/* ─── 1. Profil-header ─── */}
-      <PremiumCard delay={0}>
+      {/* ─── 1. Profil-hero (NightSurface) ─── */}
+      <NightSurface variant="ambient" className="rounded-2xl p-8">
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-5">
-          {/* Avatar */}
           <AvatarUpload currentImage={profile.image} name={profile.name} />
 
-          {/* Navn og info */}
           <div className="flex-1 min-w-0 text-center sm:text-left">
-            <h1 className="text-xl font-bold text-[var(--color-portal-text)] leading-tight">
+            <MonoLabel size="xs" uppercase className="mb-2 block text-white/50">
+              Spillerprofil
+            </MonoLabel>
+            <h1 className="text-2xl font-bold leading-tight text-white">
               {profile.name ?? "Ukjent bruker"}
             </h1>
-            <p className="text-sm text-[var(--color-portal-secondary)] mt-0.5">
+            <p className="mt-1 text-sm text-white/60">
               {profile.email ?? ""}
             </p>
 
             {/* Badges */}
-            <div className="mt-3 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
-              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-portal-hover)] px-2.5 py-1 text-xs font-medium text-[var(--color-portal-secondary)]">
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+              <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-white/80">
                 {roleLabelMap[profile.role] ?? profile.role}
               </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-primary)]/10 px-2.5 py-1 text-xs font-semibold text-[var(--color-primary)]">
+              <span className="inline-flex items-center gap-1 rounded-full bg-accent-cta/20 px-2.5 py-1 text-xs font-semibold text-accent-cta">
                 <Crown className="h-3 w-3" />
                 {tierLabelMap[profile.subscriptionTier] ?? profile.subscriptionTier}
               </span>
+              {stats.currentHandicap !== null && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-white/80">
+                  <MonoLabel size="xs" uppercase className="text-white/50">HCP</MonoLabel>
+                  <MonoLabel size="xs" className="text-white">
+                    {stats.currentHandicap.toFixed(1)}
+                  </MonoLabel>
+                </span>
+              )}
             </div>
           </div>
         </div>
-      </PremiumCard>
+      </NightSurface>
 
       {/* ─── 2. Nøkkeltall ─── */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -165,19 +165,19 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
 
       {/* ─── 3. Abonnement ─── */}
       <PremiumCard delay={0.25}>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)] mb-3">
+        <MonoLabel size="xs" uppercase className="mb-3 block text-portal-muted">
           Abonnement
-        </p>
+        </MonoLabel>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-primary)]/8">
-              <Target className="h-5 w-5 text-[var(--color-primary)]" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/8">
+              <Target className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-[var(--color-portal-text)]">
+              <p className="text-sm font-semibold text-portal-text">
                 {tierLabelMap[profile.subscriptionTier] ?? profile.subscriptionTier}
               </p>
-              <p className="text-xs text-[var(--color-portal-secondary)]">
+              <p className="text-xs text-portal-secondary">
                 {profile.subscriptionTier === "VISITOR"
                   ? "Ingen aktiv pakke"
                   : "Aktiv"}
@@ -186,7 +186,7 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
           </div>
           <Link
             href="/portal/profil/abonnement"
-            className="text-xs font-medium text-[var(--color-primary)] hover:underline"
+            className="text-xs font-medium text-primary hover:underline"
           >
             {profile.subscriptionTier === "VISITOR" ? "Oppgrader" : "Administrer"}
           </Link>
@@ -195,10 +195,10 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
 
       {/* ─── 4. Innstillinger ─── */}
       <PremiumCard delay={0.3} noHover>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)] mb-3">
+        <MonoLabel size="xs" uppercase className="mb-3 block text-portal-muted">
           Innstillinger
-        </p>
-        <div className="divide-y divide-[var(--color-portal-border)]">
+        </MonoLabel>
+        <div className="divide-y divide-portal-border">
           <SettingsRow
             href="/portal/profil/innstillinger"
             icon={<User className="h-4 w-4" />}
@@ -228,8 +228,7 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
       >
         <button
           onClick={handleSignOut}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[var(--color-portal-card)] px-5 py-3.5 text-sm font-medium text-[var(--color-error)] transition-all duration-300 hover:-translate-y-px"
-          style={{ boxShadow: "var(--shadow-portal-card)" }}
+          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-portal-card px-5 py-3.5 text-sm font-medium text-error shadow-portal-card transition-all duration-300 hover:-translate-y-px"
         >
           <LogOut className="h-4 w-4" />
           Logg ut
@@ -260,15 +259,15 @@ function StatMini({
 }) {
   return (
     <PremiumCard delay={delay} className="text-center">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--color-portal-muted)] mb-1">
+      <MonoLabel size="xs" uppercase className="mb-1 block text-portal-muted">
         {label}
-      </p>
-      <p className="text-3xl font-extrabold tracking-tight text-[var(--color-portal-text)] tabular-nums">
+      </MonoLabel>
+      <p className="text-3xl font-extrabold tracking-tight text-portal-text tabular-nums">
         {value}
       </p>
       {badge && <div className="mt-1.5">{badge}</div>}
       {sublabel && !badge && (
-        <p className="mt-1 flex items-center justify-center gap-1 text-xs text-[var(--color-portal-secondary)]">
+        <p className="mt-1 flex items-center justify-center gap-1 text-xs text-portal-secondary">
           {icon}
           {sublabel}
         </p>
@@ -291,20 +290,16 @@ function SettingsRow({
   return (
     <Link
       href={href}
-      className="group flex items-center gap-3 py-3 first:pt-0 last:pb-0 transition-colors duration-200"
+      className="group flex items-center gap-3 py-3 transition-colors duration-200 first:pt-0 last:pb-0"
     >
-      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--color-portal-hover)] text-[var(--color-portal-secondary)] transition-colors group-hover:bg-[var(--color-primary-soft)] group-hover:text-[var(--color-primary)]">
+      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-portal-hover text-portal-secondary transition-colors group-hover:bg-primary-soft group-hover:text-primary">
         {icon}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-[var(--color-portal-text)]">
-          {label}
-        </p>
-        <p className="text-xs text-[var(--color-portal-secondary)]">
-          {description}
-        </p>
+        <p className="text-sm font-medium text-portal-text">{label}</p>
+        <p className="text-xs text-portal-secondary">{description}</p>
       </div>
-      <ChevronRight className="h-4 w-4 text-[var(--color-portal-muted)] opacity-0 group-hover:opacity-100 transition-opacity" />
+      <ChevronRight className="h-4 w-4 text-portal-muted opacity-0 transition-opacity group-hover:opacity-100" />
     </Link>
   );
 }

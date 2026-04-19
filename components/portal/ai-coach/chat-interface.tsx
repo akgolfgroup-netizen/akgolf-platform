@@ -1,11 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { Send, Square, Bot } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageBubble } from "./message-bubble";
 import { QuickQuestions } from "./quick-questions";
 import type { ChatContext } from "@/app/portal/(dashboard)/ai-coach/actions";
+import type { AttributionSource } from "@/components/portal/patterns";
+import { format } from "date-fns";
+import { nb } from "date-fns/locale";
 
 export interface Message {
   id: string;
@@ -28,6 +31,42 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  const aiSources = useMemo<AttributionSource[]>(() => {
+    const sources: AttributionSource[] = [];
+    const [round] = context.recentRounds;
+    if (round) {
+      sources.push({
+        type: "runde",
+        id: round.date,
+        label: `${round.courseName ?? "Runde"} · ${format(new Date(round.date), "d. MMM", { locale: nb })}`,
+      });
+    }
+    const [tm] = context.trackmanAverages;
+    if (tm) {
+      sources.push({
+        type: "trackman",
+        id: tm.club,
+        label: tm.club,
+      });
+    }
+    const [log] = context.recentTrainingLogs;
+    if (log && log.focusArea) {
+      sources.push({
+        type: "treningslogg",
+        id: log.date,
+        label: `${log.focusArea} · ${format(new Date(log.date), "d. MMM", { locale: nb })}`,
+      });
+    }
+    if (context.handicap !== null) {
+      sources.push({
+        type: "handicap",
+        id: "hcp",
+        label: context.handicap.toFixed(1),
+      });
+    }
+    return sources;
+  }, [context]);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -187,8 +226,8 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
               className="flex flex-col items-center justify-center h-full pb-8 pt-8"
             >
               {/* AI Avatar */}
-              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center mb-6 shadow-sm">
-                <Bot className="w-10 h-10 text-purple-500" />
+              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-ai-light to-white flex items-center justify-center mb-6 shadow-sm">
+                <Bot className="w-10 h-10 text-ai" />
               </div>
               
               <h2 className="text-xl font-semibold mb-2 text-black">
@@ -206,9 +245,9 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
                   animate={{ opacity: 1, scale: 1 }}
                   className="w-full max-w-lg mb-8"
                 >
-                  <div className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm bg-purple-50 border border-purple-500/15">
-                    <div className="w-2 h-2 rounded-full bg-purple-500 mt-1.5 flex-shrink-0" />
-                    <p className="text-purple-700">{quickInsight}</p>
+                  <div className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm bg-ai-light border border-ai/15">
+                    <div className="w-2 h-2 rounded-full bg-ai mt-1.5 flex-shrink-0" />
+                    <p className="text-ai-text">{quickInsight}</p>
                   </div>
                 </motion.div>
               )}
@@ -228,6 +267,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
                   key={message.id}
                   message={message}
                   isStreaming={message.isStreaming}
+                  sources={message.role === "assistant" ? aiSources : undefined}
                 />
               ))}
               <div ref={messagesEndRef} />
@@ -251,7 +291,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-end gap-2 rounded-2xl p-2 bg-grey-50 border border-grey-200 focus-within:border-grey-300 focus-within:ring-2 focus-within:ring-purple-500/10 transition-all"
+          className="flex items-end gap-2 rounded-2xl p-2 bg-grey-50 border border-grey-200 focus-within:border-grey-300 focus-within:ring-2 focus-within:ring-ai/10 transition-all"
         >
           <textarea
             ref={inputRef}
@@ -270,7 +310,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
             <button
               type="button"
               onClick={handleStop}
-              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center bg-red-500 hover:bg-red-600 text-white transition-colors"
+              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center bg-error hover:opacity-90 text-white transition-colors"
             >
               <Square className="w-4 h-4 fill-current" />
             </button>
@@ -278,7 +318,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
             <button
               type="submit"
               disabled={!input.trim()}
-              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-30 text-white bg-purple-500 hover:bg-purple-600 disabled:hover:bg-grey-400"
+              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-30 text-white bg-ai hover:opacity-90 disabled:hover:bg-grey-400"
             >
               <Send className="w-4 h-4" />
             </button>

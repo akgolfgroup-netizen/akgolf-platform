@@ -91,9 +91,9 @@ export function QuickQuestions({ onSelect, disabled, variant = "grid" }: QuickQu
           transition={{ delay: index * 0.05 }}
           onClick={() => onSelect(q.message)}
           disabled={disabled}
-          className="flex items-center gap-3 text-left px-4 py-3 rounded-xl text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 bg-grey-50 text-grey-600 border border-grey-200 hover:border-purple-200 hover:bg-purple-50/50 group"
+          className="flex items-center gap-3 text-left px-4 py-3 rounded-xl text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 bg-grey-50 text-grey-600 border border-grey-200 hover:border-ai/20 hover:bg-ai-light/50 group"
         >
-          <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-grey-200 flex items-center justify-center text-grey-400 group-hover:text-purple-500 group-hover:border-purple-200 transition-colors">
+          <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-grey-200 flex items-center justify-center text-grey-400 group-hover:text-ai group-hover:border-ai/20 transition-colors">
             {q.icon}
           </span>
           <span className="font-medium">{q.text}</span>

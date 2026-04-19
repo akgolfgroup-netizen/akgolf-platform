@@ -158,7 +158,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.mentalTrend.value}
           unit={KPI_DATA.mentalTrend.unit}
           trend={KPI_DATA.mentalTrend.trend}
-          icon={<Brain className="w-5 h-5 text-purple-500" />}
+          icon={<Brain className="w-5 h-5 text-ai" />}
           delay={0.2}
         />
         <KpiCard

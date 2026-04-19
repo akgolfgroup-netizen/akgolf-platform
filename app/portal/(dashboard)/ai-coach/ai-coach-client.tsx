@@ -161,10 +161,10 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
       <div className="flex-shrink-0 px-4 pt-6 pb-4">
         <div className="flex items-center gap-3 mb-1">
           <div
-            className="flex items-center justify-center w-10 h-10 rounded-2xl bg-purple-50"
+            className="flex items-center justify-center w-10 h-10 rounded-2xl bg-ai-light"
           >
             <Bot
-              className="w-5 h-5 text-purple-500"
+              className="w-5 h-5 text-ai"
             />
           </div>
           <div>
@@ -186,12 +186,12 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
       {quickInsight && !hasMessages && (
         <div className="flex-shrink-0 mx-4 mb-4">
           <div
-            className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm bg-purple-50 border border-purple-500/15"
+            className="flex items-start gap-3 px-4 py-3 rounded-xl text-sm bg-ai-light border border-ai/15"
           >
             <Sparkles
-              className="w-4 h-4 mt-0.5 flex-shrink-0 text-purple-500"
+              className="w-4 h-4 mt-0.5 flex-shrink-0 text-ai"
             />
-            <p className="text-purple-700">{quickInsight}</p>
+            <p className="text-ai-text">{quickInsight}</p>
           </div>
         </div>
       )}
@@ -201,10 +201,10 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
         {!hasMessages && (
           <div className="flex flex-col items-center justify-center h-full pb-8">
             <div
-              className="w-16 h-16 rounded-3xl flex items-center justify-center mb-6 bg-purple-50"
+              className="w-16 h-16 rounded-3xl flex items-center justify-center mb-6 bg-ai-light"
             >
               <MessageCircle
-                className="w-8 h-8 text-purple-500"
+                className="w-8 h-8 text-ai"
               />
             </div>
             <h2
@@ -244,10 +244,10 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
           >
             {message.role === "assistant" && (
               <div
-                className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-purple-50"
+                className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-ai-light"
               >
                 <Bot
-                  className="w-4 h-4 text-purple-500"
+                  className="w-4 h-4 text-ai"
                 />
               </div>
             )}
@@ -265,7 +265,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
               ) : (
                 <div className="flex items-center gap-2">
                   <Loader2
-                    className="w-4 h-4 animate-spin text-purple-500"
+                    className="w-4 h-4 animate-spin text-ai"
                   />
                   <span className="text-grey-400">
                     Tenker...

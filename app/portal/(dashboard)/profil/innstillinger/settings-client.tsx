@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { updateProfile } from "../actions";
 import { AvatarUpload } from "@/components/portal/profil/avatar-upload";
+import { MonoLabel } from "@/components/portal/patterns";
 import Link from "next/link";
 
 interface SettingsClientProps {
@@ -64,9 +65,9 @@ export function SettingsClient({ profile }: SettingsClientProps) {
 
       {/* Profilbilde */}
       <PremiumCard delay={0}>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 mb-4">
+        <MonoLabel size="xs" uppercase className="mb-4 block text-grey-400">
           Profilbilde
-        </p>
+        </MonoLabel>
         <div className="flex items-center gap-4">
           <AvatarUpload currentImage={profile.image} name={profile.name} />
           <p className="text-xs text-grey-400">
@@ -78,16 +79,16 @@ export function SettingsClient({ profile }: SettingsClientProps) {
 
       {/* Redigeringsskjema */}
       <PremiumCard delay={0.1}>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 mb-4">
+        <MonoLabel size="xs" uppercase className="mb-4 block text-grey-400">
           Personlig informasjon
-        </p>
+        </MonoLabel>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Navn */}
           <div>
             <label
               htmlFor="name"
-              className="mb-1.5 block text-sm font-medium text-black"
+              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-500"
             >
               Navn
             </label>
@@ -105,7 +106,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
           <div>
             <label
               htmlFor="email"
-              className="mb-1.5 block text-sm font-medium text-black"
+              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-500"
             >
               E-post
             </label>
@@ -125,7 +126,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
           <div>
             <label
               htmlFor="phone"
-              className="mb-1.5 block text-sm font-medium text-black"
+              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-500"
             >
               Telefon
             </label>

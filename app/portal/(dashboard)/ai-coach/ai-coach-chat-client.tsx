@@ -92,7 +92,7 @@ export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientPr
             <button
               onClick={() => setShowHistory(!showHistory)}
               className={`p-2 rounded-lg transition-colors ${
-                showHistory ? "bg-purple-50 text-purple-600" : "hover:bg-grey-50 text-grey-400"
+                showHistory ? "bg-ai-light text-ai-text" : "hover:bg-grey-50 text-grey-400"
               }`}
               title={showHistory ? "Skjul historikk" : "Vis historikk"}
             >
@@ -107,7 +107,7 @@ export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientPr
           <button
             onClick={() => setShowContext(!showContext)}
             className={`p-2 rounded-lg transition-colors ${
-              showContext ? "bg-purple-50 text-purple-600" : "hover:bg-grey-50 text-grey-400"
+              showContext ? "bg-ai-light text-ai-text" : "hover:bg-grey-50 text-grey-400"
             }`}
             title={showContext ? "Skjul kontekst" : "Vis kontekst"}
           >

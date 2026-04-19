@@ -3,14 +3,21 @@
 import { motion } from "framer-motion";
 import { Bot, User, Loader2 } from "lucide-react";
 import type { Message } from "./chat-interface";
+import {
+  AIAttribution,
+  MonoLabel,
+  type AttributionSource,
+} from "@/components/portal/patterns";
 
 interface MessageBubbleProps {
   message: Message;
   isStreaming?: boolean;
+  sources?: AttributionSource[];
 }
 
-export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
+export function MessageBubble({ message, isStreaming, sources }: MessageBubbleProps) {
   const isUser = message.role === "user";
+  const showAttribution = !isUser && !!sources && sources.length > 0 && !!message.content && !isStreaming;
 
   return (
     <motion.div
@@ -20,42 +27,57 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
     >
       {/* AI Avatar */}
       {!isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-purple-50">
-          <Bot className="w-4 h-4 text-purple-500" />
+        <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-ai-light">
+          <Bot className="h-4 w-4 text-ai-text" />
         </div>
       )}
 
-      {/* Message content */}
-      <div
-        className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-          isUser ? "rounded-br-md" : "rounded-bl-md"
-        } ${
-          isUser
-            ? "bg-black text-white"
-            : "bg-grey-50 text-black border border-grey-100"
-        }`}
-      >
-        {message.content ? (
-          <div className="whitespace-pre-wrap">
-            {message.content}
-            {isStreaming && (
-              <span className="inline-flex items-center ml-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-              </span>
-            )}
+      <div className={`max-w-[80%] space-y-2 ${isUser ? "items-end" : "items-start"}`}>
+        {/* Message content */}
+        <div
+          className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+            isUser ? "rounded-br-md" : "rounded-bl-md"
+          } ${
+            isUser
+              ? "bg-black text-white"
+              : "border border-grey-100 bg-grey-50 text-black"
+          }`}
+        >
+          {message.content ? (
+            <div className="whitespace-pre-wrap">
+              {message.content}
+              {isStreaming && (
+                <span className="ml-1 inline-flex items-center">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ai" />
+                </span>
+              )}
+            </div>
+          ) : isStreaming ? (
+            <div className="flex items-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin text-ai-text" />
+              <span className="text-grey-400">AI Coach tenker...</span>
+            </div>
+          ) : null}
+        </div>
+
+        {/* AI Attribution + timestamp */}
+        {!isUser && message.content && !isStreaming && (
+          <div className="space-y-1.5">
+            {showAttribution && <AIAttribution sources={sources!} />}
+            <MonoLabel size="xs" className="text-grey-400">
+              {new Date(message.timestamp).toLocaleTimeString("nb-NO", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </MonoLabel>
           </div>
-        ) : isStreaming ? (
-          <div className="flex items-center gap-2">
-            <Loader2 className="w-4 h-4 animate-spin text-purple-500" />
-            <span className="text-grey-400">AI Coach tenker...</span>
-          </div>
-        ) : null}
+        )}
       </div>
 
       {/* User Avatar */}
       {isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-grey-200">
-          <User className="w-4 h-4 text-grey-400" />
+        <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-grey-200">
+          <User className="h-4 w-4 text-grey-400" />
         </div>
       )}
     </motion.div>

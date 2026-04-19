@@ -93,14 +93,14 @@ export function ContextPanel({ context }: ContextPanelProps) {
             <Calendar className="w-3.5 h-3.5" />
             Aktiv plan
           </h3>
-          <div className="p-3 rounded-lg bg-purple-50 border border-purple-100">
-            <p className="text-sm font-medium text-purple-900">
+          <div className="p-3 rounded-lg bg-ai-light border border-ai/15">
+            <p className="text-sm font-medium text-ai-text">
               {context.activePlan.title}
             </p>
-            <p className="text-xs text-purple-600 mt-0.5 capitalize">
+            <p className="text-xs text-ai-text mt-0.5 capitalize">
               {context.activePlan.periodType}
             </p>
-            <p className="text-xs text-purple-500 mt-1">
+            <p className="text-xs text-ai mt-1">
               {formatDate(context.activePlan.startDate)} - {formatDate(context.activePlan.endDate)}
             </p>
           </div>

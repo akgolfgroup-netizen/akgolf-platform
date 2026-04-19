@@ -119,19 +119,19 @@ function SessionItem({
       }}
       className={`w-full text-left p-2.5 rounded-xl transition-all duration-200 group relative ${
         isActive 
-          ? "bg-purple-50 border border-purple-200" 
+          ? "bg-ai-light border border-ai/20" 
           : "hover:bg-grey-50 border border-transparent"
       }`}
     >
       <div className="flex items-start gap-2.5">
         <div className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center ${
-          isActive ? "bg-purple-100 text-purple-600" : "bg-grey-100 text-grey-400"
+          isActive ? "bg-ai-light-alt text-ai-text" : "bg-grey-100 text-grey-400"
         }`}>
           <MessageSquare className="w-3.5 h-3.5" />
         </div>
         <div className="flex-1 min-w-0">
           <p className={`text-sm font-medium truncate ${
-            isActive ? "text-purple-900" : "text-black"
+            isActive ? "text-ai-text" : "text-black"
           }`}>
             {session.title}
           </p>
@@ -163,7 +163,7 @@ function SessionItem({
                   e.stopPropagation();
                   onDelete(session.id);
                 }}
-                className="p-1.5 rounded-lg text-grey-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                className="p-1.5 rounded-lg text-grey-400 hover:text-error hover:bg-error-light transition-colors"
               >
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
@@ -172,7 +172,7 @@ function SessionItem({
         </AnimatePresence>
         
         <ChevronRight className={`w-4 h-4 flex-shrink-0 transition-colors ${
-          isActive ? "text-purple-400" : "text-grey-300 group-hover:text-grey-400"
+          isActive ? "text-ai/60" : "text-grey-300 group-hover:text-grey-400"
         }`} />
       </div>
     </motion.button>
