@@ -10,12 +10,12 @@ import { cn } from "@/lib/utils";
 
 // Training types mapped to focus areas
 const TRAINING_TYPES = [
-  { value: "FITNESS", label: "Styrke", icon: Dumbbell, color: "bg-blue-500", description: "Fysisk styrketrening" },
-  { value: "TEE_TOTAL", label: "Teknikk", icon: Target, color: "bg-[#16A34A]", description: "Teknisk trening" },
-  { value: "DRIVING", label: "Slagtrening", icon: Target, color: "bg-[#D4AF37]", description: "Slagtrening på range" },
-  { value: "COURSE_MANAGEMENT", label: "Spill", icon: Target, color: "bg-orange-500", description: "Spill på banen" },
-  { value: "OTHER", label: "Turnering", icon: Target, color: "bg-red-500", description: "Turneringsrunde" },
-  { value: "MENTAL", label: "Mental", icon: Target, color: "bg-purple-500", description: "Mental trening" },
+  { value: "FITNESS", label: "Styrke", icon: Dumbbell, color: "bg-primary-container", description: "Fysisk styrketrening" },
+  { value: "TEE_TOTAL", label: "Teknikk", icon: Target, color: "bg-primary", description: "Teknisk trening" },
+  { value: "DRIVING", label: "Slagtrening", icon: Target, color: "bg-secondary-fixed", description: "Slagtrening på range" },
+  { value: "COURSE_MANAGEMENT", label: "Spill", icon: Target, color: "bg-tertiary-container", description: "Spill på banen" },
+  { value: "OTHER", label: "Turnering", icon: Target, color: "bg-error", description: "Turneringsrunde" },
+  { value: "MENTAL", label: "Mental", icon: Target, color: "bg-primary-container/80", description: "Mental trening" },
 ];
 
 const FOCUS_AREAS = [
@@ -35,10 +35,10 @@ const FOCUS_AREAS = [
 
 // Energy/fatigue levels with emojis
 const ENERGY_LEVELS = [
-  { value: 1, emoji: "😫", label: "Helt utmattet", color: "text-red-500" },
-  { value: 2, emoji: "😴", label: "Sliten", color: "text-orange-500" },
-  { value: 3, emoji: "😐", label: "Gjennomsnittlig", color: "text-yellow-500" },
-  { value: 4, emoji: "🙂", label: "God", color: "text-green-500" },
+  { value: 1, emoji: "😫", label: "Helt utmattet", color: "text-error" },
+  { value: 2, emoji: "😴", label: "Sliten", color: "text-primary" },
+  { value: 3, emoji: "😐", label: "Gjennomsnittlig", color: "text-on-surface-variant" },
+  { value: 4, emoji: "🙂", label: "God", color: "text-primary-container" },
   { value: 5, emoji: "🤩", label: "Super", color: "text-green-600" },
 ];
 

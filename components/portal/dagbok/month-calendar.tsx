@@ -37,41 +37,41 @@ interface MonthCalendarProps {
 
 // Type colors matching the specification
 const TYPE_COLORS: Record<string, { bg: string; text: string; border: string; label: string }> = {
-  FYS: { 
-    bg: "bg-blue-500", 
-    text: "text-surface", 
-    border: "border-blue-500",
-    label: "Fysisk" 
+  FYS: {
+    bg: "bg-primary-container",
+    text: "text-surface",
+    border: "border-primary-container",
+    label: "Fysisk"
   },
-  TEK: { 
-    bg: "bg-[#16A34A]", 
-    text: "text-surface", 
-    border: "border-[#16A34A]",
-    label: "Teknikk" 
+  TEK: {
+    bg: "bg-primary",
+    text: "text-surface",
+    border: "border-primary",
+    label: "Teknikk"
   },
-  SLAG: { 
-    bg: "bg-[#D4AF37]", 
-    text: "text-on-surface", 
-    border: "border-[#D4AF37]",
-    label: "Slagtrening" 
+  SLAG: {
+    bg: "bg-secondary-fixed",
+    text: "text-on-surface",
+    border: "border-secondary-fixed",
+    label: "Slagtrening"
   },
-  SPILL: { 
-    bg: "bg-orange-500", 
-    text: "text-surface", 
-    border: "border-orange-500",
-    label: "Spill" 
+  SPILL: {
+    bg: "bg-tertiary-container",
+    text: "text-surface",
+    border: "border-tertiary-container",
+    label: "Spill"
   },
-  TURN: { 
-    bg: "bg-red-500", 
-    text: "text-surface", 
-    border: "border-red-500",
-    label: "Turnering" 
+  TURN: {
+    bg: "bg-error",
+    text: "text-surface",
+    border: "border-error",
+    label: "Turnering"
   },
   // Fallback mappings
-  STYRKE: { bg: "bg-blue-500", text: "text-surface", border: "border-blue-500", label: "Styrke" },
-  TRENING: { bg: "bg-[#16A34A]", text: "text-surface", border: "border-[#16A34A]", label: "Trening" },
-  COACHING: { bg: "bg-purple-500", text: "text-surface", border: "border-purple-500", label: "Coaching" },
-  OTHER: { bg: "bg-surface-variant", text: "text-surface", border: "border-outline-variant", label: "Annet" },
+  STYRKE: { bg: "bg-primary-container", text: "text-surface", border: "border-primary-container", label: "Styrke" },
+  TRENING: { bg: "bg-primary", text: "text-surface", border: "border-primary", label: "Trening" },
+  COACHING: { bg: "bg-primary-container/80", text: "text-surface", border: "border-primary-container/80", label: "Coaching" },
+  OTHER: { bg: "bg-surface-variant", text: "text-on-surface-variant", border: "border-outline-variant", label: "Annet" },
 };
 
 const getTypeColor = (type: string) => {

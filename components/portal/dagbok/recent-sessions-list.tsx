@@ -27,13 +27,13 @@ interface RecentSessionsListProps {
 }
 
 const TYPE_COLORS: Record<string, { bg: string; icon: string; label: string }> = {
-  STYRKE: { bg: "bg-blue-500", icon: "text-surface", label: "Styrke" },
-  TEKNIKK: { bg: "bg-[#16A34A]", icon: "text-surface", label: "Teknikk" },
-  SLAG: { bg: "bg-[#D4AF37]", icon: "text-on-surface", label: "Slag" },
-  SPILL: { bg: "bg-orange-500", icon: "text-surface", label: "Spill" },
-  TURN: { bg: "bg-red-500", icon: "text-surface", label: "Turnering" },
-  MENTAL: { bg: "bg-purple-500", icon: "text-surface", label: "Mental" },
-  OTHER: { bg: "bg-surface-variant", icon: "text-surface", label: "Annet" },
+  STYRKE: { bg: "bg-primary-container", icon: "text-surface", label: "Styrke" },
+  TEKNIKK: { bg: "bg-primary", icon: "text-surface", label: "Teknikk" },
+  SLAG: { bg: "bg-secondary-fixed", icon: "text-on-surface", label: "Slag" },
+  SPILL: { bg: "bg-tertiary-container", icon: "text-surface", label: "Spill" },
+  TURN: { bg: "bg-error", icon: "text-surface", label: "Turnering" },
+  MENTAL: { bg: "bg-primary-container/80", icon: "text-surface", label: "Mental" },
+  OTHER: { bg: "bg-surface-variant", icon: "text-on-surface-variant", label: "Annet" },
 };
 
 const getTypeInfo = (type: string) => {
