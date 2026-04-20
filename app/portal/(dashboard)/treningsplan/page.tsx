@@ -8,6 +8,7 @@ import {
 } from "./actions";
 import { TrainingPlannerV3 } from "./treningsplan-v3-client";
 import { TrainingPlanViewer } from "./training-plan-viewer";
+import { TreningsplanPlanner } from "./treningsplan-planner";
 
 // ---------------------------------------------------------------------
 // Server component
@@ -20,7 +21,7 @@ interface TreningsplanPageProps {
 export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
   const { week, view } = await searchParams;
   const weekOffset = parseInt(week ?? "0", 10) || 0;
-  const activeView = view ?? "viewer";
+  const activeView = view ?? "planner";
 
   const plan = await getActivePlan();
   const events = await getWeekEvents(weekOffset);
@@ -91,6 +92,21 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     { id: "t5", title: "Spill 9 hull", dur: 120, focus: "SPILL", exercises: [] },
     { id: "t6", title: "Svinganalyse", dur: 40, focus: "TEK", exercises: [] },
   ];
+
+  const sessionCount = events.length;
+  const totalMinutes = events.reduce((sum, e) => sum + (e.dur ?? 0), 0);
+
+  if (activeView === "planner") {
+    return (
+      <TreningsplanPlanner
+        weekOffset={weekOffset}
+        planId={plan?.id ?? null}
+        sessionCount={sessionCount}
+        totalMinutes={totalMinutes}
+        adherencePct={0}
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">
