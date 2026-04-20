@@ -6,6 +6,8 @@ import {
   deleteSession,
   logLiveSession,
   createSessionForWeek,
+  addExerciseToSession,
+  updateSession,
 } from "./actions";
 import { TrainingPlannerV3 } from "./treningsplan-v3-client";
 import { TrainingPlanViewer } from "./training-plan-viewer";
@@ -26,6 +28,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
 
   const plan = await getActivePlan();
   const events = await getWeekEvents(weekOffset);
+  const historyEvents = await getWeekEvents(weekOffset - 1);
 
   // Server action wrappers bound to the user context
   async function handleSaveEvent(event: {
@@ -99,6 +102,34 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     return createSessionForWeek(data);
   }
 
+  async function handleAddExerciseToSession(
+    sessionId: string,
+    exercise: {
+      id: string;
+      name: string;
+      description?: string;
+      pyramid: string;
+      area: string;
+      lPhase?: string;
+    }
+  ) {
+    "use server";
+    return addExerciseToSession(sessionId, exercise);
+  }
+
+  async function handleUpdateSession(
+    sessionId: string,
+    data: {
+      title?: string;
+      description?: string;
+      durationMinutes?: number;
+      focusArea?: string;
+    }
+  ) {
+    "use server";
+    return updateSession(sessionId, data);
+  }
+
   const templates = [
     { id: "t1", title: "Putting-drill", dur: 20, focus: "TEK", exercises: [] },
     { id: "t2", title: "Short game", dur: 30, focus: "SLAG", exercises: [] },
@@ -120,7 +151,10 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         totalMinutes={totalMinutes}
         adherencePct={0}
         events={events}
+        historyEvents={historyEvents}
         onCreateSession={handleCreateSession}
+        onAddExerciseToSession={handleAddExerciseToSession}
+        onUpdateSession={handleUpdateSession}
       />
     );
   }

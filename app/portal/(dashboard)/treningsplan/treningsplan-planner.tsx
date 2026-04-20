@@ -52,6 +52,7 @@ interface TreningsplanPlannerProps {
   totalMinutes?: number;
   adherencePct?: number;
   events: V2Event[];
+  historyEvents: V2Event[];
   onCreateSession: (data: {
     weekOffset: number;
     dayOfWeek: number;
@@ -62,6 +63,26 @@ interface TreningsplanPlannerProps {
     startH?: number;
     startM?: number;
   }) => Promise<{ success: boolean; sessionId?: string } | { error: string }>;
+  onAddExerciseToSession: (
+    sessionId: string,
+    exercise: {
+      id: string;
+      name: string;
+      description?: string;
+      pyramid: string;
+      area: string;
+      lPhase?: string;
+    }
+  ) => Promise<{ success: boolean }>;
+  onUpdateSession: (
+    sessionId: string,
+    data: {
+      title?: string;
+      description?: string;
+      durationMinutes?: number;
+      focusArea?: string;
+    }
+  ) => Promise<{ success: boolean }>;
 }
 
 export function TreningsplanPlanner({
@@ -71,7 +92,9 @@ export function TreningsplanPlanner({
   totalMinutes = 0,
   adherencePct = 0,
   events,
+  historyEvents,
   onCreateSession,
+  onAddExerciseToSession,
 }: TreningsplanPlannerProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -80,6 +103,9 @@ export function TreningsplanPlanner({
   const [modalDay, setModalDay] = useState(0);
   const [modalHour, setModalHour] = useState(9);
   const [isPending, startTransition] = useTransition();
+
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editEvent, setEditEvent] = useState<V2Event | null>(null);
 
   // Uke-navigasjon
   const baseMonday = startOfWeek(new Date(), { weekStartsOn: 1 });
@@ -170,10 +196,19 @@ export function TreningsplanPlanner({
               setModalHour(hour);
               setModalOpen(true);
             }}
+            onEventClick={(ev) => {
+              setEditEvent(ev);
+              setEditModalOpen(true);
+            }}
+            onAddExerciseToSession={onAddExerciseToSession}
           />
         </div>
         <div className="col-span-12 lg:col-span-3">
-          <PlannerSidebar activeTab={activeTab} onTabChange={setActiveTab} />
+          <PlannerSidebar
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            historyEvents={historyEvents}
+          />
         </div>
       </div>
 
@@ -186,6 +221,19 @@ export function TreningsplanPlanner({
           weekDates={weekDates}
           onClose={() => setModalOpen(false)}
           onCreate={onCreateSession}
+          isPending={isPending}
+        />
+      )}
+
+      {/* Modal: Rediger økt */}
+      {editModalOpen && editEvent && (
+        <EditSessionModal
+          event={editEvent}
+          onClose={() => {
+            setEditModalOpen(false);
+            setEditEvent(null);
+          }}
+          onUpdate={onUpdateSession}
           isPending={isPending}
         />
       )}
@@ -222,10 +270,14 @@ function WeekGrid({
   weekDates,
   events,
   onCellClick,
+  onEventClick,
+  onAddExerciseToSession,
 }: {
   weekDates: Date[];
   events: V2Event[];
   onCellClick: (dayIndex: number, hour: number) => void;
+  onEventClick: (event: V2Event) => void;
+  onAddExerciseToSession: TreningsplanPlannerProps["onAddExerciseToSession"];
 }) {
   const today = new Date();
   const todayISO = format(today, "yyyy-MM-dd");
@@ -306,12 +358,30 @@ function WeekGrid({
                     {slotEvents.map((ev) => (
                       <div
                         key={ev.id}
-                        className={`absolute inset-1 rounded-lg px-2 py-1 text-[10px] font-bold leading-tight shadow-sm ${
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onEventClick(ev);
+                        }}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={async (e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          const raw = e.dataTransfer.getData("application/json");
+                          if (!raw) return;
+                          try {
+                            const exercise = JSON.parse(raw);
+                            await onAddExerciseToSession(ev.id, exercise);
+                            window.location.reload();
+                          } catch {
+                            // ignore
+                          }
+                        }}
+                        className={`absolute inset-1 cursor-pointer rounded-lg px-2 py-1 text-[10px] font-bold leading-tight shadow-sm ${
                           ev.done
                             ? "bg-primary/20 text-primary/70 line-through"
                             : eventColorClass(ev.focus)
                         }`}
-                        title={`${ev.title} · ${ev.dur}m · ${ev.focus}`}
+                        title={`${ev.title} · ${ev.dur}m · ${ev.focus} — Klikk for å redigere, dropp øvelse her`}
                       >
                         <span className="block truncate">{ev.title}</span>
                         <span className="font-mono text-[9px] opacity-80">
@@ -557,14 +627,193 @@ function CreateSessionModal({
   );
 }
 
+/* ── Modal: Rediger økt ── */
+
+function EditSessionModal({
+  event,
+  onClose,
+  onUpdate,
+  isPending,
+}: {
+  event: V2Event;
+  onClose: () => void;
+  onUpdate: TreningsplanPlannerProps["onUpdateSession"];
+  isPending: boolean;
+}) {
+  const router = useRouter();
+  const [title, setTitle] = useState(event.title);
+  const [duration, setDuration] = useState(event.dur);
+  const [focus, setFocus] = useState<string>(event.focus);
+  const [notes, setNotes] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    if (!title.trim()) {
+      setError("Tittel er påkrevd");
+      return;
+    }
+
+    const result = await onUpdate(event.id, {
+      title: title.trim(),
+      description: notes.trim() || undefined,
+      durationMinutes: duration,
+      focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
+    });
+
+    if ("error" in result) {
+      setError(result.error);
+      return;
+    }
+
+    router.refresh();
+    onClose();
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/40 backdrop-blur-sm"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="w-full max-w-md rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-6 shadow-card-hover">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-primary">Rediger økt</h2>
+          <button
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-surface-container"
+          >
+            <Icon name="close" size={18} className="text-on-surface-variant" />
+          </button>
+        </div>
+
+        <p className="mt-1 font-mono text-[11px] text-on-surface-variant">
+          {event.date} · kl {String(event.startH).padStart(2, "0")}:
+          {String(event.startM).padStart(2, "0")} · {event.dur}m
+        </p>
+
+        {error && (
+          <div className="mt-3 rounded-lg bg-error-container px-3 py-2 text-xs text-error">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Tittel
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+              autoFocus
+            />
+          </div>
+
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Varighet
+            </label>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {[15, 30, 45, 60, 90, 120].map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setDuration(m)}
+                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                    duration === m
+                      ? "bg-primary text-white"
+                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                  }`}
+                >
+                  {m}m
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Fokus
+            </label>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {PYRAMIDE.map((p) => (
+                <button
+                  key={p.code}
+                  type="button"
+                  onClick={() => setFocus(p.code)}
+                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                    focus === p.code
+                      ? "bg-primary text-white"
+                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                  }`}
+                  title={p.description}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Notater
+            </label>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Valgfrie notater…"
+              rows={3}
+              className="mt-1 w-full resize-none rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+            />
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface-container"
+            >
+              Avbryt
+            </button>
+            <button
+              type="submit"
+              disabled={isPending || !title.trim()}
+              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-white hover:bg-primary-container disabled:opacity-50"
+            >
+              {isPending ? (
+                <>
+                  <Icon name="progress_activity" size={14} className="animate-spin" />
+                  Lagrer…
+                </>
+              ) : (
+                <>
+                  <Icon name="save" size={14} />
+                  Oppdater
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 /* ── Sidebar ── */
 
 function PlannerSidebar({
   activeTab,
   onTabChange,
+  historyEvents,
 }: {
   activeTab: SidebarTab;
   onTabChange: (tab: SidebarTab) => void;
+  historyEvents: V2Event[];
 }) {
   const tabs: { id: SidebarTab; label: string; icon: string }[] = [
     { id: "exercises", label: "Øvelser", icon: "sports_golf" },
@@ -596,7 +845,7 @@ function PlannerSidebar({
       <div className="p-4">
         {activeTab === "exercises" && <ExercisesPlaceholder />}
         {activeTab === "templates" && <TemplatesPlaceholder />}
-        {activeTab === "history" && <HistoryPlaceholder />}
+        {activeTab === "history" && <HistoryList events={historyEvents} />}
       </div>
     </div>
   );
@@ -1049,8 +1298,23 @@ function ExerciseCard({ exercise }: { exercise: ExerciseSearchResult }) {
       : `${exercise.minDurationMinutes}–${exercise.maxDurationMinutes}m`;
   return (
     <div
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData(
+          "application/json",
+          JSON.stringify({
+            id: exercise.id,
+            name: exercise.name,
+            description: exercise.description ?? undefined,
+            pyramid: exercise.pyramid,
+            area: exercise.area,
+            lPhase: exercise.lPhase ?? undefined,
+          })
+        );
+        e.dataTransfer.effectAllowed = "copy";
+      }}
       className="group cursor-grab rounded-lg border border-outline-variant/20 bg-surface p-2.5 transition-all hover:border-primary/30 hover:bg-surface-container active:cursor-grabbing"
-      title="Drag til slot (drag-drop kommer i B-1.4)"
+      title="Drag til økt i grid"
     >
       <div className="flex items-start justify-between gap-2">
         <p className="flex-1 text-xs font-bold text-primary leading-tight">
@@ -1108,13 +1372,66 @@ function TemplatesPlaceholder() {
   );
 }
 
-function HistoryPlaceholder() {
+function HistoryList({ events }: { events: V2Event[] }) {
+  if (events.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-outline-variant/40 p-6 text-center">
+        <Icon name="history" size={28} className="text-primary/20" />
+        <p className="mt-2 text-xs text-on-surface-variant">
+          Ingen økter registrert forrige uke
+        </p>
+      </div>
+    );
+  }
+
+  const totalDur = events.reduce((s, e) => s + e.dur, 0);
+  const completed = events.filter((e) => e.done).length;
+
   return (
-    <div className="rounded-2xl border border-dashed border-outline-variant/40 p-6 text-center">
-      <Icon name="history" size={28} className="text-primary/20" />
-      <p className="mt-2 text-xs text-on-surface-variant">
-        Forrige ukers økter vises i B-1.3
-      </p>
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-primary/50">
+          {events.length} økter · {totalDur}m
+        </p>
+        {completed > 0 && (
+          <span className="rounded-full bg-success/15 px-2 py-0.5 font-mono text-[9px] font-bold text-success">
+            {completed} fullført
+          </span>
+        )}
+      </div>
+      {events.map((ev) => (
+        <div
+          key={ev.id}
+          className={`rounded-xl border p-3 transition-colors ${
+            ev.done
+              ? "border-success/20 bg-success/5"
+              : "border-outline-variant/10 bg-surface-container-lowest"
+          }`}
+        >
+          <div className="flex items-start justify-between gap-2">
+            <div className="min-w-0 flex-1">
+              <p
+                className={`truncate text-xs font-bold ${
+                  ev.done ? "text-success line-through" : "text-primary"
+                }`}
+              >
+                {ev.title}
+              </p>
+              <div className="mt-1 flex items-center gap-2">
+                <span className="rounded bg-surface-container px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-tight text-on-surface-variant">
+                  {ev.focus}
+                </span>
+                <span className="font-mono text-[9px] text-on-surface-variant">
+                  {ev.dur}m
+                </span>
+              </div>
+            </div>
+            {ev.done && (
+              <Icon name="check_circle" size={16} className="shrink-0 text-success" />
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

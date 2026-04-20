@@ -679,6 +679,48 @@ export async function createSessionForWeek(data: {
 }
 
 // -------------------------------------------------------------------
+// Update session details (B-1.5)
+// -------------------------------------------------------------------
+
+export async function updateSession(
+  sessionId: string,
+  data: {
+    title?: string;
+    description?: string;
+    durationMinutes?: number;
+    focusArea?: string;
+  }
+) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const supabase = await createServerSupabase();
+
+  const { data: session } = await supabase
+    .from("TrainingPlanSession")
+    .select("id")
+    .eq("id", sessionId)
+    .single();
+
+  if (!session) throw new Error("Treningsøkten finnes ikke");
+
+  const updateData: Record<string, unknown> = {};
+  if (data.title !== undefined) updateData.title = data.title;
+  if (data.description !== undefined) updateData.description = data.description;
+  if (data.durationMinutes !== undefined)
+    updateData.durationMinutes = data.durationMinutes;
+  if (data.focusArea !== undefined) updateData.focusArea = data.focusArea;
+
+  await supabase
+    .from("TrainingPlanSession")
+    .update(updateData)
+    .eq("id", sessionId);
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true };
+}
+
+// -------------------------------------------------------------------
 // V2: Get all sessions for a week as V2 events
 // -------------------------------------------------------------------
 

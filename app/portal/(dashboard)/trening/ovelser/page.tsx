@@ -1,193 +1,237 @@
 import { Icon } from "@/components/ui/icon";
-import { Target, Dumbbell, Zap, Mountain, Trophy, CircleDot } from "lucide-react";
+import { prisma } from "@/lib/portal/prisma";
+import { requirePortalUser } from "@/lib/portal/auth";
+import { PYRAMIDE } from "@/lib/portal/training/ak-taxonomy";
 
 export const metadata = {
   title: "Øvelser | AK Golf Portal",
 };
 
-// Fetch drills from Supabase
-async function getDrills() {
-  const { createClient } = await import("@supabase/supabase-js");
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+async function getExercises() {
+  const user = await requirePortalUser();
 
-  const { data, error } = await supabase
-    .from("drills")
-    .select("*")
-    .eq("is_approved", true)
-    .order("pyramid_level")
-    .order("name");
+  const exercises = await prisma.exerciseDefinition.findMany({
+    where: {
+      OR: [
+        { isPublic: true },
+        { isSystemDrill: true },
+        { createdById: user.id },
+      ],
+    },
+    orderBy: [{ pyramid: "asc" }, { name: "asc" }],
+  });
 
-  if (error) {
-    return [];
-  }
-
-  return data ?? [];
+  return exercises;
 }
 
-const pyramidLabels: Record<string, { label: string; icon: React.ElementType; color: string }> = {
-  FYS: { label: "Fysisk", icon: Dumbbell, color: "text-error bg-error/20" },
-  TEK: { label: "Teknikk", icon: Target, color: "text-info bg-info/20" },
-  SLAG: { label: "Slag", icon: Zap, color: "text-warning bg-warning/20" },
-  SPILL: { label: "Spill", icon: Mountain, color: "text-primary bg-primary/20" },
-  TURN: { label: "Turnering", icon: Trophy, color: "text-ai bg-ai/20" },
+const pyramidConfig: Record<
+  string,
+  { label: string; icon: string; chip: string; bar: string }
+> = {
+  FYS: {
+    label: "Fysisk",
+    icon: "exercise",
+    chip: "bg-primary/15 text-primary",
+    bar: "bg-primary",
+  },
+  TEK: {
+    label: "Teknikk",
+    icon: "target",
+    chip: "bg-secondary-container/80 text-primary",
+    bar: "bg-secondary-container",
+  },
+  SLAG: {
+    label: "Golfslag",
+    icon: "bolt",
+    chip: "bg-secondary-fixed/40 text-primary",
+    bar: "bg-secondary-fixed",
+  },
+  SPILL: {
+    label: "Spill",
+    icon: "terrain",
+    chip: "bg-tertiary-container/40 text-primary",
+    bar: "bg-tertiary-container",
+  },
+  TURN: {
+    label: "Turnering",
+    icon: "emoji_events",
+    chip: "bg-error-container/40 text-primary",
+    bar: "bg-error-container",
+  },
 };
 
-const difficultyColors: Record<string, string> = {
-  nybegynner: "bg-success/20 text-success",
-  rekrutt: "bg-info/20 text-info",
-  klubb: "bg-warning/20 text-warning",
-  regional: "bg-warning/20 text-warning",
-  nasjonal: "bg-error/20 text-error",
-  elite: "bg-ai/20 text-ai",
+const difficultyLabels: Record<number, string> = {
+  1: "Nybegynner",
+  2: "Rekrutt",
+  3: "Klubb",
+  4: "Regional",
+  5: "Nasjonal",
+};
+
+const difficultyChip: Record<number, string> = {
+  1: "bg-success/15 text-success",
+  2: "bg-info/15 text-info",
+  3: "bg-warning/15 text-warning",
+  4: "bg-error/15 text-error",
+  5: "bg-ai/15 text-ai",
 };
 
 export default async function OvelserPage() {
-  const drills = await getDrills();
+  const exercises = await getExercises();
 
-  interface Drill {
-    id: string;
-    name: string;
-    description: string;
-    goal: string;
-    pyramid_level: string;
-    training_areas: string[];
-    duration_minutes: number;
-    difficulty: string;
-    min_category: string;
-    max_category: string;
-  }
-
-  // Group by pyramid level
-  const grouped = drills.reduce((acc, d) => {
-    const level = d.pyramid_level ?? "OTHER";
+  // Group by pyramid
+  const grouped = exercises.reduce((acc, ex) => {
+    const level = ex.pyramid ?? "OTHER";
     if (!acc[level]) acc[level] = [];
-    acc[level].push(d as Drill);
+    acc[level].push(ex);
     return acc;
-  }, {} as Record<string, Drill[]>);
+  }, {} as Record<string, typeof exercises>);
 
   const pyramidOrder = ["FYS", "TEK", "SLAG", "SPILL", "TURN"];
 
   return (
-    <div className="space-y-8">
+    <section className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-on-surface">Øvelser</h1>
-        <p className="text-on-surface-variant mt-1">
-          Øvelsebibliotek — fra fysisk grunnlag til turneringsmental
+      <header>
+        <p className="font-mono text-[10px] uppercase tracking-widest text-primary/50">
+          Øvelsesbank
         </p>
-      </div>
+        <h1 className="text-2xl font-bold tracking-tight text-primary">
+          Øvelser
+        </h1>
+        <p className="mt-1 text-sm text-on-surface-variant">
+          Fra fysisk grunnlag til turneringsmental — {exercises.length} øvelser
+        </p>
+      </header>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+      {/* Stats-kort */}
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
         {pyramidOrder.map((level) => {
-          const config = pyramidLabels[level];
+          const config = pyramidConfig[level];
           const count = grouped[level]?.length ?? 0;
-          const Icon = config?.icon ?? CircleDot;
-
           return (
             <div
               key={level}
-              className="bg-white rounded-xl p-4 border border-outline-variant shadow-card"
+              className="rounded-2xl border border-outline-variant/10 bg-surface-container-lowest p-4 shadow-card"
             >
-              <div className={`w-8 h-8 rounded-lg ${config?.color.split(" ")[1]} flex items-center justify-center mb-2`}>
-                <Icon className={`w-4 h-4 ${config?.color.split(" ")[0]}`} />
+              <div className="flex items-center gap-2">
+                <Icon
+                  name={config?.icon ?? "help"}
+                  size={16}
+                  className="text-primary/60"
+                />
+                <span className="font-mono text-[9px] font-bold uppercase tracking-widest text-primary/50">
+                  {config?.label ?? level}
+                </span>
               </div>
-              <p className="text-2xl font-bold text-on-surface tabular-nums">{count}</p>
-              <p className="text-sm text-on-surface-variant">{config?.label ?? level}</p>
+              <p className="mt-2 text-2xl font-bold text-primary tabular-nums">
+                {count}
+              </p>
             </div>
           );
         })}
       </div>
 
-      {/* Pyramid visualization */}
-      <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
-        <h2 className="text-lg font-semibold text-on-surface mb-4">Treningspyramiden</h2>
-        <div className="flex flex-col items-center gap-1">
+      {/* Pyramide-visualisering */}
+      <div className="rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-6 shadow-card">
+        <h2 className="text-sm font-bold text-primary">
+          Treningsfordeling
+        </h2>
+        <div className="mt-4 flex flex-col items-center gap-1.5">
           {[...pyramidOrder].reverse().map((level, i) => {
-            const config = pyramidLabels[level];
+            const config = pyramidConfig[level];
             const width = 100 - i * 15;
             const count = grouped[level]?.length ?? 0;
-
             return (
               <div
                 key={level}
-                className={`${config?.color} px-4 py-2 rounded text-center text-sm font-medium`}
+                className={`flex items-center justify-center gap-2 rounded-lg py-2 text-xs font-bold text-primary ${config?.bar ?? "bg-surface-container"}`}
                 style={{ width: `${width}%` }}
               >
-                {config?.label} ({count} øvelser)
+                <Icon name={config?.icon ?? "help"} size={14} />
+                {config?.label} ({count})
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* Drills by pyramid level */}
+      {/* Øvelser gruppert etter pyramide */}
       <div className="space-y-8">
         {pyramidOrder.map((level) => {
-          const levelDrills: Drill[] = grouped[level] ?? [];
-          if (levelDrills.length === 0) return null;
+          const levelExercises = grouped[level] ?? [];
+          if (levelExercises.length === 0) return null;
 
-          const config = pyramidLabels[level];
-          const Icon = config?.icon ?? CircleDot;
+          const config = pyramidConfig[level];
 
           return (
-            <div key={level} className="space-y-4">
-              {/* Level header */}
+            <div key={level} className="space-y-3">
+              {/* Seksjonsheader */}
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl ${config?.color.split(" ")[1]} flex items-center justify-center`}>
-                  <Icon className={`w-5 h-5 ${config?.color.split(" ")[0]}`} />
+                <div
+                  className={`flex h-9 w-9 items-center justify-center rounded-xl ${config?.chip ?? ""}`}
+                >
+                  <Icon name={config?.icon ?? "help"} size={18} />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-on-surface">{config?.label}</h2>
-                  <p className="text-sm text-on-surface-variant">{levelDrills.length} øvelser</p>
+                  <h2 className="text-sm font-bold text-primary">
+                    {config?.label}
+                  </h2>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-primary/40">
+                    {levelExercises.length} øvelser
+                  </p>
                 </div>
               </div>
 
-              {/* Drill cards */}
-              <div className="grid gap-3">
-                {levelDrills.map((drill) => (
+              {/* Kort */}
+              <div className="grid gap-2">
+                {levelExercises.map((ex) => (
                   <div
-                    key={drill.id}
-                    className="group bg-white border border-outline-variant rounded-xl p-4 hover:border-black/8 transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover"
+                    key={ex.id}
+                    className="group rounded-2xl border border-outline-variant/10 bg-surface-container-lowest p-4 shadow-card transition-all hover:-translate-y-px hover:shadow-card-hover"
                   >
                     <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-medium text-on-surface group-hover:text-on-surface-variant transition-colors">
-                            {drill.name}
-                          </h3>
-                        </div>
-                        <p className="text-sm text-on-surface-variant line-clamp-2">
-                          {drill.goal ?? drill.description}
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-sm font-bold text-primary">
+                          {ex.name}
+                        </h3>
+                        <p className="mt-0.5 line-clamp-2 text-xs text-on-surface-variant">
+                          {ex.description ?? ex.instructions ?? "Ingen beskrivelse"}
                         </p>
-                        <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-outline">
-                          <span className="flex items-center gap-1 tabular-nums">
-                            <Icon name="schedule" className="w-3 h-3" />
-                            {drill.duration_minutes} min
+                        <div className="mt-2 flex flex-wrap items-center gap-3">
+                          <span className="flex items-center gap-1 font-mono text-[10px] text-on-surface-variant tabular-nums">
+                            <Icon name="schedule" size={12} />
+                            {ex.minDurationMinutes === ex.maxDurationMinutes
+                              ? `${ex.minDurationMinutes}m`
+                              : `${ex.minDurationMinutes}–${ex.maxDurationMinutes}m`}
                           </span>
-                          {drill.training_areas?.length > 0 && (
-                            <span>
-                              {drill.training_areas.slice(0, 2).join(", ")}
-                              {drill.training_areas.length > 2 && ` +${drill.training_areas.length - 2}`}
+                          {ex.area && (
+                            <span className="rounded bg-surface-container px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-tight text-on-surface-variant">
+                              {ex.area}
                             </span>
                           )}
-                          <span>
-                            Kat. {drill.min_category}-{drill.max_category}
-                          </span>
+                          {ex.lPhase && (
+                            <span className="rounded bg-surface-container px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-tight text-on-surface-variant">
+                              {ex.lPhase}
+                            </span>
+                          )}
+                          {ex.equipment.length > 0 && (
+                            <span className="font-mono text-[9px] text-on-surface-variant/70">
+                              {ex.equipment.slice(0, 2).join(", ")}
+                              {ex.equipment.length > 2 &&
+                                ` +${ex.equipment.length - 2}`}
+                            </span>
+                          )}
                         </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`px-2 py-1 text-xs rounded-full ${
-                            difficultyColors[drill.difficulty] ?? "bg-surface-container text-outline"
-                          }`}
-                        >
-                          {drill.difficulty}
-                        </span>
-                      </div>
+                      <span
+                        className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold ${
+                          difficultyChip[ex.difficulty] ??
+                          "bg-surface-container text-on-surface-variant"
+                        }`}
+                      >
+                        {difficultyLabels[ex.difficulty] ?? "N/A"}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -196,6 +240,6 @@ export default async function OvelserPage() {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }
