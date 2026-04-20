@@ -73,9 +73,9 @@ const statusConfig: Record<BookingStatus, {
     label: "Ikke møtt",
     description: "Du møtte ikke opp til timen",
     icon: <Icon name="error" className="w-5 h-5" />,
-    color: "text-[var(--color-grey-600)]",
-    bgColor: "bg-[var(--color-grey-100)]",
-    borderColor: "border-[var(--color-grey-300)]",
+    color: "text-on-surface-variant",
+    bgColor: "bg-surface-container",
+    borderColor: "border-outline-variant",
   },
   COMPLETED: {
     label: "Gjennomført",
@@ -232,14 +232,14 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-grey-100)]">
+    <div className="min-h-screen bg-surface-container">
       {/* Header */}
-      <header className="bg-surface-container-lowest border-b border-[var(--color-grey-200)]">
+      <header className="bg-surface-container-lowest border-b border-outline-variant">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <Link
               href={isAuthenticated ? "/portal/bookinger" : "/booking"}
-              className="inline-flex items-center gap-2 text-sm text-[var(--color-grey-600)] hover:text-[var(--color-black)] transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors"
             >
               <Icon name="chevron_left" className="w-4 h-4" />
               {isAuthenticated ? "Tilbake til bookinger" : "Tilbake til booking"}
@@ -247,14 +247,14 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
             <div className="flex items-center gap-2">
               <button
                 onClick={handleShare}
-                className="p-2 text-[var(--color-grey-600)] hover:text-[var(--color-black)] hover:bg-[var(--color-grey-100)] rounded-full transition-all"
+                className="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-full transition-all"
                 title="Del"
               >
                 <Share2 className="w-4 h-4" />
               </button>
               <button
                 onClick={handlePrint}
-                className="p-2 text-[var(--color-grey-600)] hover:text-[var(--color-black)] hover:bg-[var(--color-grey-100)] rounded-full transition-all"
+                className="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-full transition-all"
                 title="Skriv ut"
               >
                 <Printer className="w-4 h-4" />
@@ -277,11 +277,11 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
               <h1 className={`text-lg font-semibold ${status.color}`}>
                 {status.label}
               </h1>
-              <p className="text-[var(--color-grey-600)] mt-1">
+              <p className="text-on-surface-variant mt-1">
                 {status.description}
               </p>
               {booking.cancelReason && (
-                <p className="text-sm text-[var(--color-grey-600)] mt-2 italic">
+                <p className="text-sm text-on-surface-variant mt-2 italic">
                   Årsak: {booking.cancelReason}
                 </p>
               )}
@@ -300,14 +300,14 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] overflow-hidden"
+              className="bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden"
             >
-              <div className="p-6 border-b border-[var(--color-grey-200)]">
-                <h2 className="text-lg font-semibold text-[var(--color-black)]">
+              <div className="p-6 border-b border-outline-variant">
+                <h2 className="text-lg font-semibold text-on-surface">
                   {booking.serviceName}
                 </h2>
                 {booking.serviceDescription && (
-                  <p className="text-[var(--color-grey-600)] text-sm mt-1">
+                  <p className="text-on-surface-variant text-sm mt-1">
                     {booking.serviceDescription}
                   </p>
                 )}
@@ -316,34 +316,34 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
               <div className="p-6 space-y-4">
                 {/* Date & Time */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                    <Icon name="calendar_today" className="w-5 h-5 text-[var(--color-grey-600)]" />
+                  <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center flex-shrink-0">
+                    <Icon name="calendar_today" className="w-5 h-5 text-on-surface-variant" />
                   </div>
                   <div>
-                    <p className="font-medium text-[var(--color-black)]">{booking.date}</p>
-                    <p className="text-[var(--color-grey-600)] text-sm">{booking.timeRange}</p>
+                    <p className="font-medium text-on-surface">{booking.date}</p>
+                    <p className="text-on-surface-variant text-sm">{booking.timeRange}</p>
                   </div>
                 </div>
 
                 {/* Duration */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                    <Icon name="schedule" className="w-5 h-5 text-[var(--color-grey-600)]" />
+                  <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center flex-shrink-0">
+                    <Icon name="schedule" className="w-5 h-5 text-on-surface-variant" />
                   </div>
                   <div>
-                    <p className="font-medium text-[var(--color-black)]">{booking.duration} minutter</p>
-                    <p className="text-[var(--color-grey-600)] text-sm">Varighet</p>
+                    <p className="font-medium text-on-surface">{booking.duration} minutter</p>
+                    <p className="text-on-surface-variant text-sm">Varighet</p>
                   </div>
                 </div>
 
                 {/* Instructor */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                    <Icon name="person" className="w-5 h-5 text-[var(--color-grey-600)]" />
+                  <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center flex-shrink-0">
+                    <Icon name="person" className="w-5 h-5 text-on-surface-variant" />
                   </div>
                   <div>
-                    <p className="font-medium text-[var(--color-black)]">{booking.instructorName}</p>
-                    <p className="text-[var(--color-grey-600)] text-sm">
+                    <p className="font-medium text-on-surface">{booking.instructorName}</p>
+                    <p className="text-on-surface-variant text-sm">
                       {booking.instructorTitle ?? "Instruktør"}
                     </p>
                   </div>
@@ -352,13 +352,13 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 {/* Location */}
                 {booking.locationName && (
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                      <Icon name="location_on" className="w-5 h-5 text-[var(--color-grey-600)]" />
+                    <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center flex-shrink-0">
+                      <Icon name="location_on" className="w-5 h-5 text-on-surface-variant" />
                     </div>
                     <div>
-                      <p className="font-medium text-[var(--color-black)]">{booking.locationName}</p>
+                      <p className="font-medium text-on-surface">{booking.locationName}</p>
                       {booking.locationAddress && (
-                        <p className="text-[var(--color-grey-600)] text-sm">{booking.locationAddress}</p>
+                        <p className="text-on-surface-variant text-sm">{booking.locationAddress}</p>
                       )}
                     </div>
                   </div>
@@ -367,12 +367,12 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 {/* Price */}
                 {booking.price && (
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-[var(--color-grey-100)] flex items-center justify-center flex-shrink-0">
-                      <Icon name="credit_card" className="w-5 h-5 text-[var(--color-grey-600)]" />
+                    <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center flex-shrink-0">
+                      <Icon name="credit_card" className="w-5 h-5 text-on-surface-variant" />
                     </div>
                     <div>
-                      <p className="font-medium text-[var(--color-black)]">{booking.price}</p>
-                      <p className="text-[var(--color-grey-600)] text-sm">
+                      <p className="font-medium text-on-surface">{booking.price}</p>
+                      <p className="text-on-surface-variant text-sm">
                         {paymentMethodLabel[booking.paymentMethod]}
                       </p>
                     </div>
@@ -387,22 +387,22 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] p-6"
+                className="bg-surface-container-lowest rounded-2xl border border-outline-variant p-6"
               >
                 <div className="flex items-center gap-2 mb-4">
-                  <Icon name="chat" className="w-5 h-5 text-[var(--color-grey-600)]" />
-                  <h3 className="font-semibold text-[var(--color-black)]">Notater</h3>
+                  <Icon name="chat" className="w-5 h-5 text-on-surface-variant" />
+                  <h3 className="font-semibold text-on-surface">Notater</h3>
                 </div>
                 {booking.studentNotes && (
                   <div className="mb-4">
-                    <p className="text-xs text-[var(--color-grey-600)] uppercase tracking-wide mb-1">Dine notater</p>
-                    <p className="text-[var(--color-black)]">{booking.studentNotes}</p>
+                    <p className="text-xs text-on-surface-variant uppercase tracking-wide mb-1">Dine notater</p>
+                    <p className="text-on-surface">{booking.studentNotes}</p>
                   </div>
                 )}
                 {booking.adminNotes && (
                   <div>
-                    <p className="text-xs text-[var(--color-grey-600)] uppercase tracking-wide mb-1">Fra instruktør</p>
-                    <p className="text-[var(--color-black)]">{booking.adminNotes}</p>
+                    <p className="text-xs text-on-surface-variant uppercase tracking-wide mb-1">Fra instruktør</p>
+                    <p className="text-on-surface">{booking.adminNotes}</p>
                   </div>
                 )}
               </motion.div>
@@ -414,14 +414,14 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] p-6"
+                className="bg-surface-container-lowest rounded-2xl border border-outline-variant p-6"
               >
-                <h3 className="font-semibold text-[var(--color-black)] mb-4">Handlinger</h3>
+                <h3 className="font-semibold text-on-surface mb-4">Handlinger</h3>
                 <div className="flex flex-wrap gap-3">
                   {canReschedule && (
                     <Link
                       href={`/portal/bookinger/${booking.id}/endre`}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-black)] text-surface rounded-full text-sm font-medium hover:bg-[var(--color-grey-800)] transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-on-surface text-surface rounded-full text-sm font-medium hover:bg-on-surface-variant transition-colors"
                     >
                       <Icon name="refresh" className="w-4 h-4" />
                       Endre tid
@@ -451,9 +451,9 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] p-6 h-fit"
+            className="bg-surface-container-lowest rounded-2xl border border-outline-variant p-6 h-fit"
           >
-            <h3 className="font-semibold text-[var(--color-black)] mb-6">Tidslinje</h3>
+            <h3 className="font-semibold text-on-surface mb-6">Tidslinje</h3>
             <div className="space-y-0">
               {timelineSteps.map((step, index) => (
                 <div key={step.label} className="relative">
@@ -461,7 +461,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                   {index < timelineSteps.length - 1 && (
                     <div
                       className={`absolute left-[19px] top-10 w-0.5 h-8 ${
-                        step.completed ? "bg-[var(--color-success)]" : "bg-[var(--color-grey-200)]"
+                        step.completed ? "bg-[var(--color-success)]" : "bg-outline-variant"
                       }`}
                     />
                   )}
@@ -474,7 +474,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                             : step.isCancelled
                               ? "bg-[var(--color-error-light)] text-[var(--color-error)]"
                               : "bg-[var(--color-success)] text-surface"
-                          : "bg-[var(--color-grey-100)] text-[var(--color-grey-400)]"
+                          : "bg-surface-container text-on-surface-variant"
                       }`}
                     >
                       {step.completed && !step.isNoShow && !step.isCancelled ? (
@@ -486,13 +486,13 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                     <div className="flex-1 pt-1">
                       <p
                         className={`font-medium ${
-                          step.completed ? "text-[var(--color-black)]" : "text-[var(--color-grey-500)]"
+                          step.completed ? "text-on-surface" : "text-on-surface-variant"
                         }`}
                       >
                         {step.label}
                       </p>
                       {step.date && (
-                        <p className="text-sm text-[var(--color-grey-600)] mt-0.5">{step.date}</p>
+                        <p className="text-sm text-on-surface-variant mt-0.5">{step.date}</p>
                       )}
                     </div>
                   </div>
@@ -509,7 +509,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
           transition={{ delay: 0.4 }}
           className="mt-8 text-center"
         >
-          <p className="text-[var(--color-grey-600)] text-sm">
+          <p className="text-on-surface-variant text-sm">
             Trenger du hjelp?{" "}
             <Link
               href="/kontakt"
@@ -535,8 +535,8 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 <Icon name="error" className="w-6 h-6 text-[var(--color-warning)]" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-[var(--color-black)]">Bekreft avbestilling</h3>
-                <p className="text-[var(--color-grey-600)] text-sm mt-1">
+                <h3 className="text-lg font-semibold text-on-surface">Bekreft avbestilling</h3>
+                <p className="text-on-surface-variant text-sm mt-1">
                   Er du sikker på at du vil avbestille denne timen?
                 </p>
               </div>
@@ -548,9 +548,9 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
               </div>
             )}
 
-            <div className="bg-[var(--color-grey-100)] rounded-xl p-4 mb-6 text-sm">
-              <p className="font-medium text-[var(--color-black)] mb-2">Avbestillingsregler:</p>
-              <ul className="space-y-1 text-[var(--color-grey-600)]">
+            <div className="bg-surface-container rounded-xl p-4 mb-6 text-sm">
+              <p className="font-medium text-on-surface mb-2">Avbestillingsregler:</p>
+              <ul className="space-y-1 text-on-surface-variant">
                 <li>• Mer enn 24 timer før: Full refusjon</li>
                 <li>• 2-24 timer før: 50% refusjon</li>
                 <li>• Mindre enn 2 timer før: Ingen refusjon</li>
@@ -560,7 +560,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
             <div className="flex gap-3">
               <button
                 onClick={() => setShowCancelConfirm(false)}
-                className="flex-1 px-4 py-2.5 text-sm font-medium text-[var(--color-grey-700)] bg-[var(--color-grey-100)] rounded-full hover:bg-[var(--color-grey-200)] transition-colors"
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-on-surface-variant bg-surface-container rounded-full hover:bg-outline-variant transition-colors"
                 disabled={isCancelling}
               >
                 Avbryt

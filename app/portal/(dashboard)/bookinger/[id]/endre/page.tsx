@@ -36,8 +36,8 @@ export default async function ReschedulePage({ params }: Props) {
   return (
     <div className="max-w-xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--color-grey-900)]">Endre tidspunkt</h1>
-        <p className="text-sm text-[var(--color-grey-500)] mt-1">
+        <h1 className="text-2xl font-bold text-on-surface">Endre tidspunkt</h1>
+        <p className="text-sm text-on-surface-variant mt-1">
           {booking.ServiceType.name} med{" "}
           {booking.Instructor?.User?.name ?? "Instruktor"}
         </p>
