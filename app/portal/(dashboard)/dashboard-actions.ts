@@ -338,12 +338,17 @@ export async function getLatestAiInsight(userId: string): Promise<WeeklyInsight 
       "Øv på innspillsavstander 50-100m",
       "Se over pre-shot rutine",
     ],
-    goalProgress: {
-      target: "Nå HCP 12.0",
-      current: handicapData.data?.[0]?.handicapIndex || 15.0,
-      target_value: 12.0,
-      unit: "HCP",
-    },
+    goalProgress: (() => {
+      const current = avgScore > 0 ? Math.round(avgScore * 10) / 10 : 85;
+      // Mål: 2 slag under dagens snitt, men aldri under 72
+      const target = Math.max(72, Math.round(current - 2));
+      return {
+        target: `Snitt under ${target} slag`,
+        current,
+        target_value: target,
+        unit: "slag",
+      };
+    })(),
     patternAnalysis: rounds.length > 3 
       ? `Din statistikk viser at du presterer best på ${new Date().getDay() === 0 || new Date().getDay() === 6 ? 'helger' : 'ukedager'}. Vurder å planlegge viktige runder da.` 
       : "Fortsett å logge runder for å se mønstre i spillet ditt.",

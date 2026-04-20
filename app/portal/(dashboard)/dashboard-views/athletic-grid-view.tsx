@@ -60,24 +60,21 @@ export function AthleticGridView({
   const trainedDays = weekRings.days.filter((d) => d.trained).length;
   const unlockedAchievements = achievements.filter((a) => a.unlockedAt).length;
   const goal = aiInsight?.goalProgress;
+  // For snittscore: lavere er bedre. Progress = 100% når current ≤ target,
+  // 0% når current er ≥5 slag over target.
   const goalPercent = goal
-    ? Math.max(
-        0,
-        Math.min(
-          100,
-          ((goal.current - goal.target_value) /
-            Math.max(goal.current - goal.target_value, 0.01)) *
-            100
-        )
-      )
+    ? (() => {
+        const diff = Math.max(0, goal.current - goal.target_value);
+        return Math.max(0, Math.min(100, 100 - (diff / 5) * 100));
+      })()
     : 0;
   const todaysFocus =
     coachInsight?.primaryFocus ??
     aiInsight?.recommendations?.[0] ??
     "Logg dagens økt for å få neste anbefaling";
-  const hcpGoalLabel = goal
-    ? `Mål: ${goal.target_value.toFixed(1)} ${goal.unit}`
-    : "Registrer handicap for å se mål";
+  const scoreGoalLabel = goal
+    ? `Mål: ${goal.target_value} ${goal.unit} · nå ${goal.current}`
+    : "Registrer runder for å se mål";
 
   return (
     <section className="space-y-6">
@@ -125,7 +122,7 @@ export function AthleticGridView({
               </p>
               <div className="space-y-4">
                 <div className="flex items-end justify-between text-white/80">
-                  <span className="font-mono text-[11px] uppercase">{hcpGoalLabel}</span>
+                  <span className="font-mono text-[11px] uppercase">{scoreGoalLabel}</span>
                   <span className="font-mono text-[11px] uppercase">
                     {Math.round(goalPercent)}%
                   </span>
