@@ -76,7 +76,7 @@ export default async function OvelserPage() {
       <div>
         <h1 className="text-2xl font-bold text-on-surface">Øvelser</h1>
         <p className="text-on-surface-variant mt-1">
-          Øvelsebibliotek basert på AK Masterdokument — fra fysisk grunnlag til turneringsmental
+          Øvelsebibliotek — fra fysisk grunnlag til turneringsmental
         </p>
       </div>
 
@@ -104,7 +104,7 @@ export default async function OvelserPage() {
 
       {/* Pyramid visualization */}
       <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
-        <h2 className="text-lg font-semibold text-on-surface mb-4">AK Treningspyramiden</h2>
+        <h2 className="text-lg font-semibold text-on-surface mb-4">Treningspyramiden</h2>
         <div className="flex flex-col items-center gap-1">
           {[...pyramidOrder].reverse().map((level, i) => {
             const config = pyramidLabels[level];

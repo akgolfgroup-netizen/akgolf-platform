@@ -78,7 +78,7 @@ export default async function TestDetailPage({ params }: Props) {
               </span>
               {protocol.is_official && (
                 <span className="px-2 py-1 text-xs bg-primary/10 text-primary rounded">
-                  Offisiell AK Test
+                  Offisiell test
                 </span>
               )}
             </div>

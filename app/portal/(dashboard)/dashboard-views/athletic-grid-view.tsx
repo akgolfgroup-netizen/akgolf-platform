@@ -272,7 +272,7 @@ export function AthleticGridView({
           </div>
         </div>
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/30">
-          AK Golf · Portal
+          Portal
         </p>
       </div>
     </section>
@@ -461,7 +461,7 @@ function TrainingHeader() {
         >
           Treningsdata →
         </Link>
-        <h3 className="text-xl font-bold tracking-tight text-primary">AK-pyramide</h3>
+        <h3 className="text-xl font-bold tracking-tight text-primary">Treningsfordeling</h3>
       </div>
       <Icon name="fitness_center" size={20} className="text-primary/40" />
     </div>
@@ -594,7 +594,7 @@ function TestHeader() {
         >
           Testdata →
         </Link>
-        <h3 className="text-xl font-bold tracking-tight text-primary">AK-tester</h3>
+        <h3 className="text-xl font-bold tracking-tight text-primary">Ferdighetstester</h3>
       </div>
       <Icon name="checklist" size={20} className="text-primary/40" />
     </div>
