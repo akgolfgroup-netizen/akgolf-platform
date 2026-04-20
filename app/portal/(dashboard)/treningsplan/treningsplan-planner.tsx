@@ -2,8 +2,12 @@
 
 /**
  * Treningsplan-planlegger (Heritage-stil)
- * Layout-skall: ukesgrid + sidebar med 3 faner.
- * Data-kobling kommer i B-1.2. Drag-drop i B-1.4.
+ *
+ * Autoritativ terminologi: lib/portal/training/ak-taxonomy.ts
+ * (speiler masterdokument v2.0 seksjon 3, 4, 9, 10).
+ *
+ * Layout: ukesgrid + sidebar med 3 faner (Øvelser/Maler/Historikk).
+ * Data-kobling i B-1.2, drag-drop i B-1.4.
  */
 
 import { useState } from "react";
@@ -12,6 +16,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { addWeeks, format, startOfWeek } from "date-fns";
 import { nb } from "date-fns/locale";
+import {
+  PYRAMIDE,
+  TRENINGSOMRADER,
+  OMRADE_GRUPPER,
+  L_FASER,
+  LIFE_KODER,
+} from "@/lib/portal/training/ak-taxonomy";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -268,35 +279,176 @@ function PlannerSidebar({
 }
 
 function ExercisesPlaceholder() {
+  const [pyramide, setPyramide] = useState<string | null>(null);
+  const [omraadeGruppe, setOmraadeGruppe] = useState<string | null>(null);
+  const [lFase, setLFase] = useState<string | null>(null);
+  const [life, setLife] = useState<string | null>(null);
+  const [sok, setSok] = useState("");
+
+  const filteredOmrader = omraadeGruppe
+    ? TRENINGSOMRADER.filter((o) => o.gruppe === omraadeGruppe)
+    : TRENINGSOMRADER;
+
+  const resetFilters = () => {
+    setPyramide(null);
+    setOmraadeGruppe(null);
+    setLFase(null);
+    setLife(null);
+    setSok("");
+  };
+
+  const hasFilters = pyramide || omraadeGruppe || lFase || life || sok;
+
   return (
     <div className="space-y-3">
-      <div className="rounded-lg bg-surface-container p-2">
-        <div className="flex items-center gap-2 rounded-md bg-surface-container-lowest px-2 py-1.5">
-          <Icon name="search" size={14} className="text-on-surface-variant" />
-          <span className="font-mono text-[11px] text-on-surface-variant">
-            Søk øvelse…
-          </span>
-        </div>
-      </div>
-      <div className="space-y-1">
-        {["Pyramide", "Område", "Fase"].map((f) => (
-          <div
-            key={f}
-            className="flex items-center justify-between rounded-md bg-surface px-2 py-1.5"
+      {/* Søk */}
+      <div className="flex items-center gap-2 rounded-lg bg-surface-container px-3 py-2">
+        <Icon name="search" size={14} className="text-on-surface-variant" />
+        <input
+          type="text"
+          value={sok}
+          onChange={(e) => setSok(e.target.value)}
+          placeholder="Søk øvelse…"
+          className="flex-1 bg-transparent font-mono text-[11px] text-on-surface placeholder:text-on-surface-variant focus:outline-none"
+        />
+        {hasFilters && (
+          <button
+            onClick={resetFilters}
+            className="font-mono text-[10px] uppercase tracking-widest text-primary/60 hover:text-primary"
           >
-            <span className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
-              {f}
-            </span>
-            <Icon name="expand_more" size={14} className="text-primary/40" />
-          </div>
-        ))}
+            Nullstill
+          </button>
+        )}
       </div>
+
+      {/* Pyramide */}
+      <FilterSection label="Pyramide">
+        <div className="flex flex-wrap gap-1">
+          {PYRAMIDE.map((p) => {
+            const active = pyramide === p.code;
+            return (
+              <button
+                key={p.code}
+                onClick={() => setPyramide(active ? null : p.code)}
+                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                  active
+                    ? "bg-primary text-white"
+                    : "bg-surface text-on-surface-variant hover:bg-surface-container"
+                }`}
+                title={p.description}
+              >
+                {p.code}
+              </button>
+            );
+          })}
+        </div>
+      </FilterSection>
+
+      {/* Område */}
+      <FilterSection label="Område">
+        <div className="flex flex-wrap gap-1">
+          {OMRADE_GRUPPER.map((g) => {
+            const active = omraadeGruppe === g.code;
+            return (
+              <button
+                key={g.code}
+                onClick={() => setOmraadeGruppe(active ? null : g.code)}
+                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                  active
+                    ? "bg-primary text-white"
+                    : "bg-surface text-on-surface-variant hover:bg-surface-container"
+                }`}
+              >
+                {g.label}
+              </button>
+            );
+          })}
+        </div>
+        {omraadeGruppe && (
+          <div className="mt-2 flex flex-wrap gap-1">
+            {filteredOmrader.map((o) => (
+              <span
+                key={o.code}
+                className="rounded bg-surface-container-low px-2 py-0.5 font-mono text-[9px] uppercase tracking-tight text-on-surface-variant"
+              >
+                {o.code}
+              </span>
+            ))}
+          </div>
+        )}
+      </FilterSection>
+
+      {/* L-fase */}
+      <FilterSection label="L-fase">
+        <div className="flex flex-wrap gap-1">
+          {L_FASER.map((f) => {
+            const active = lFase === f.code;
+            return (
+              <button
+                key={f.code}
+                onClick={() => setLFase(active ? null : f.code)}
+                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                  active
+                    ? "bg-primary text-white"
+                    : "bg-surface text-on-surface-variant hover:bg-surface-container"
+                }`}
+                title={`${f.description} · ${f.csAnbefalt}`}
+              >
+                {f.label}
+              </button>
+            );
+          })}
+        </div>
+      </FilterSection>
+
+      {/* LIFE */}
+      <FilterSection label="LIFE">
+        <div className="flex flex-wrap gap-1">
+          {LIFE_KODER.map((l) => {
+            const active = life === l.code;
+            const short = l.code.replace("LIFE-", "");
+            return (
+              <button
+                key={l.code}
+                onClick={() => setLife(active ? null : l.code)}
+                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                  active
+                    ? "bg-secondary-fixed text-primary"
+                    : "bg-surface text-on-surface-variant hover:bg-surface-container"
+                }`}
+                title={l.description}
+              >
+                {short}
+              </button>
+            );
+          })}
+        </div>
+      </FilterSection>
+
+      {/* Liste-placeholder */}
       <div className="rounded-2xl border border-dashed border-outline-variant/40 p-6 text-center">
         <Icon name="fitness_center" size={28} className="text-primary/20" />
         <p className="mt-2 text-xs text-on-surface-variant">
-          Øvelsesbibliotek vises i B-1.3
+          {hasFilters ? "Filter-resultater" : "Øvelsesbibliotek"} fylles i B-1.3
         </p>
       </div>
+    </div>
+  );
+}
+
+function FilterSection({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-primary/50">
+        {label}
+      </p>
+      {children}
     </div>
   );
 }
