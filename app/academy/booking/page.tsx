@@ -30,14 +30,14 @@ export default function AcademyBookingPage() {
       <main className="min-h-screen bg-surface" id="main-content">
         <PageTransition>
           {/* Hero */}
-          <section className="bg-white py-16 border-b border-grey-200">
+          <section className="bg-surface-container-lowest py-16 border-b border-outline-variant/30">
             <div className="w-container">
               <RevealOnScroll>
                 <div className="text-center">
-                  <span className="inline-block px-4 py-1.5 rounded-full bg-surface text-black text-sm font-medium mb-4 border border-grey-200">
+                  <span className="inline-block px-4 py-1.5 rounded-full bg-surface text-on-surface text-sm font-medium mb-4 border border-outline-variant/30">
                     AK Golf Academy
                   </span>
-                  <h1 className="text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight">
+                  <h1 className="text-4xl md:text-5xl font-bold text-on-surface mb-4 tracking-tight">
                     Book din coaching-time
                   </h1>
                   <p className="text-muted max-w-lg mx-auto">
@@ -57,7 +57,7 @@ export default function AcademyBookingPage() {
           </section>
 
           {/* Info */}
-          <section className="py-12 bg-white border-t border-grey-200">
+          <section className="py-12 bg-surface-container-lowest border-t border-outline-variant/30">
             <div className="w-container max-w-3xl">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <Icon name="info"Item
@@ -95,10 +95,10 @@ function InfoItem({
 }) {
   return (
     <div>
-      <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center mx-auto mb-4">
+      <div className="w-12 h-12 rounded-xl bg-surface flex items-center justify-center mx-auto mb-4">
         <Icon className="w-5 h-5 text-primary" />
       </div>
-      <h3 className="font-semibold text-black mb-2">{title}</h3>
+      <h3 className="font-semibold text-on-surface mb-2">{title}</h3>
       <p className="text-sm text-muted">{text}</p>
     </div>
   );

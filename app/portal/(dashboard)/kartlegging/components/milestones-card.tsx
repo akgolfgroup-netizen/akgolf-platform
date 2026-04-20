@@ -25,12 +25,12 @@ export function MilestonesCard({ milestones }: MilestonesCardProps) {
   }));
 
   return (
-    <div className="rounded-xl bg-white shadow-card p-5">
+    <div className="rounded-xl bg-surface-container-lowest shadow-card p-5">
       <div className="flex items-baseline justify-between mb-4">
         <MonoLabel size="xs" uppercase className="text-primary">
           Milepæler
         </MonoLabel>
-        <span className="text-[11px] tabular-nums text-grey-400">
+        <span className="text-[11px] tabular-nums text-on-surface-variant">
           {achieved}/{milestones.length} oppnådd
         </span>
       </div>

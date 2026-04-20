@@ -71,8 +71,8 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
   }
 
   const buttonClass = variant === "primary"
-    ? "inline-flex items-center gap-2 px-4 py-2.5 rounded-[980px] text-sm font-medium bg-[var(--color-black)] text-white hover:bg-[var(--color-grey-800)] transition-colors"
-    : "inline-flex items-center gap-2 px-6 py-3 rounded-[980px] text-sm font-medium bg-[var(--color-black)] text-white hover:bg-[var(--color-grey-800)] transition-colors";
+    ? "inline-flex items-center gap-2 px-4 py-2.5 rounded-[980px] text-sm font-medium bg-[var(--color-black)] text-surface hover:bg-[var(--color-grey-800)] transition-colors"
+    : "inline-flex items-center gap-2 px-6 py-3 rounded-[980px] text-sm font-medium bg-[var(--color-black)] text-surface hover:bg-[var(--color-grey-800)] transition-colors";
 
   return (
     <>
@@ -85,13 +85,13 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-on-surface/60 backdrop-blur-sm"
             onClick={() => !isPending && setShowModal(false)}
           />
 
           {/* Modal */}
           <div
-            className="relative w-full max-w-md rounded-[20px] p-6 bg-white border border-[var(--color-grey-200)]"
+            className="relative w-full max-w-md rounded-[20px] p-6 bg-surface-container-lowest border border-[var(--color-grey-200)]"
           >
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2">
@@ -182,7 +182,7 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
               <button
                 onClick={handleGenerate}
                 disabled={isPending}
-                className="w-full py-2.5 rounded-[980px] text-sm font-semibold transition-opacity flex items-center justify-center gap-2 bg-[var(--color-black)] text-white"
+                className="w-full py-2.5 rounded-[980px] text-sm font-semibold transition-opacity flex items-center justify-center gap-2 bg-[var(--color-black)] text-surface"
                 style={{ opacity: isPending ? 0.7 : 1 }}
               >
                 {isPending ? (
@@ -198,7 +198,7 @@ export function GeneratePlanButton({ studentId, variant = "primary", className }
                 )}
               </button>
 
-              <p className="text-[10px] text-grey-500 text-center">
+              <p className="text-[10px] text-on-surface-variant/80 text-center">
                 AI genererer en personlig treningsplan basert på dine mål
               </p>
             </div>

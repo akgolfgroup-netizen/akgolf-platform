@@ -39,7 +39,7 @@ export function StatComparisonRow({
       : null;
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-black/6 bg-white/50 px-4 py-3 transition-colors hover:border-primary/15 hover:bg-white">
+    <div className="flex items-center gap-3 rounded-xl border border-black/6 bg-surface-container-lowest/50 px-4 py-3 transition-colors hover:border-primary/15 hover:bg-surface-container-lowest">
       <span className="flex-1 text-sm text-muted">{label}</span>
       <MonoLabel size="md" className={`w-16 text-right font-semibold ${myClass}`}>
         {myValue !== null ? format(myValue) : "—"}
@@ -55,13 +55,13 @@ export function StatComparisonRow({
               ? "text-success"
               : isBetter === false
                 ? "text-error"
-                : "text-grey-400"
+                : "text-on-surface-variant"
           }`}
         >
           {deltaText}
         </MonoLabel>
       )}
-      <span className="h-4 w-px bg-black/10" />
+      <span className="h-4 w-px bg-on-surface/10" />
       <MonoLabel size="md" className="w-16 text-right text-muted">
         {peerValue !== null ? format(peerValue) : "—"}
         {unit && peerValue !== null && <span className="ml-0.5 text-[10px]">{unit}</span>}

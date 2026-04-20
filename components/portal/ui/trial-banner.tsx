@@ -70,7 +70,7 @@ export function TrialBanner({ trialEndsAt, onUpgradeClick }: TrialBannerProps) {
             className={`text-sm font-semibold ${
               isUrgent
                 ? "text-[var(--color-grey-900)]"
-                : "text-white"
+                : "text-surface"
             }`}
           >
             {isExpired
@@ -81,7 +81,7 @@ export function TrialBanner({ trialEndsAt, onUpgradeClick }: TrialBannerProps) {
             className={`text-xs ${
               isUrgent
                 ? "text-[var(--color-grey-600)]"
-                : "text-white/75"
+                : "text-surface/75"
             }`}
           >
             {isExpired
@@ -96,7 +96,7 @@ export function TrialBanner({ trialEndsAt, onUpgradeClick }: TrialBannerProps) {
           onClick={onUpgradeClick}
           className={`px-4 py-2 rounded-full text-sm font-semibold transition-transform hover:scale-[1.02] ${
             isUrgent
-              ? "bg-[var(--color-warning)] text-white hover:brightness-110"
+              ? "bg-[var(--color-warning)] text-surface hover:brightness-110"
               : "bg-[var(--color-accent-cta)] text-[var(--color-accent-cta-text)] hover:brightness-[1.03]"
           }`}
         >
@@ -108,13 +108,13 @@ export function TrialBanner({ trialEndsAt, onUpgradeClick }: TrialBannerProps) {
             className={`p-2 rounded-full transition-colors ${
               isUrgent
                 ? "hover:bg-[color-mix(in_srgb,var(--color-warning)_20%,transparent)]"
-                : "hover:bg-white/10"
+                : "hover:bg-surface-container-lowest/10"
             }`}
             aria-label="Lukk"
           >
             <Icon name="close"
               className={`w-4 h-4 ${
-                isUrgent ? "text-[var(--color-grey-500)]" : "text-white/80"
+                isUrgent ? "text-[var(--color-grey-500)]" : "text-surface/80"
               }`} />
           </button>
         )}

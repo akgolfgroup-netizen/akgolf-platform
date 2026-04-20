@@ -79,8 +79,8 @@ export default function MentalPage() {
         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
         <div>
-          <h1 className="text-2xl font-bold text-black">Mental scorecard</h1>
-          <p className="text-grey-400 mt-1">Spor fokus, selvtillit og rutiner</p>
+          <h1 className="text-2xl font-bold text-on-surface">Mental scorecard</h1>
+          <p className="text-on-surface-variant mt-1">Spor fokus, selvtillit og rutiner</p>
         </div>
         <Button variant="primary" asChild>
           <Link href="/portal/mental/ny">
@@ -121,9 +121,9 @@ function EmptyRoundsTab() {
   return (
     <PremiumCard padding="lg" radius="large">
       <div className="text-center py-8">
-        <Icon name="psychology" className="w-10 h-10 text-grey-400 mx-auto mb-4" />
-        <p className="text-sm text-grey-400">Ingen runder registrert ennå.</p>
-        <p className="text-xs text-grey-300 mt-1">Start din første mental scorecard-runde.</p>
+        <Icon name="psychology" className="w-10 h-10 text-on-surface-variant mx-auto mb-4" />
+        <p className="text-sm text-on-surface-variant">Ingen runder registrert ennå.</p>
+        <p className="text-xs text-on-surface-variant/60 mt-1">Start din første mental scorecard-runde.</p>
       </div>
     </PremiumCard>
   );
@@ -136,14 +136,14 @@ function TrendsTab({ data, loading }: { data: { date: string; focus: number; con
     <div className="space-y-6">
       <PremiumCard padding="md" radius="large">
         <div className="flex items-center gap-2 mb-4">
-          <Icon name="trending_up" className="w-5 h-5 text-black" />
-          <h3 className="text-sm font-semibold text-black">Mentale metrics over tid</h3>
+          <Icon name="trending_up" className="w-5 h-5 text-on-surface" />
+          <h3 className="text-sm font-semibold text-on-surface">Mentale metrics over tid</h3>
         </div>
         <div className="h-[300px]">
           {loading ? (
-            <div className="flex items-center justify-center h-full text-grey-400">Laster...</div>
+            <div className="flex items-center justify-center h-full text-on-surface-variant">Laster...</div>
           ) : data.length === 0 ? (
-            <div className="flex items-center justify-center h-full text-grey-400">Ingen data ennå</div>
+            <div className="flex items-center justify-center h-full text-on-surface-variant">Ingen data ennå</div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data}>
@@ -168,7 +168,7 @@ function TrendsTab({ data, loading }: { data: { date: string; focus: number; con
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MiniStat icon={<Icon name="psychology" className="w-4 h-4 text-purple-500" />} label="Fokus snitt" value={avg(data.map((d) => d.focus))} />
         <MiniStat icon={<Icon name="my_location" className="w-4 h-4 text-blue-500" />} label="Selvtillit snitt" value={avg(data.map((d) => d.confidence))} />
-        <MiniStat icon={<Icon name="calendar_today" className="w-4 h-4 text-black" />} label="Engasjement snitt" value={avg(data.map((d) => d.commitment))} />
+        <MiniStat icon={<Icon name="calendar_today" className="w-4 h-4 text-on-surface" />} label="Engasjement snitt" value={avg(data.map((d) => d.commitment))} />
         <MiniStat icon={<Icon name="flag" className="w-4 h-4 text-success" />} label="Aksept snitt" value={avg(data.map((d) => d.acceptance))} />
       </div>
     </div>
@@ -179,10 +179,10 @@ function MiniStat({ icon, label, value }: { icon: React.ReactNode; label: string
   return (
     <PremiumCard padding="md" radius="large" hover="lift">
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-grey-50 flex items-center justify-center">{icon}</div>
+        <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">{icon}</div>
         <div>
-          <p className="text-xs text-grey-400">{label}</p>
-          <p className="text-lg font-bold text-black tabular-nums">{value}</p>
+          <p className="text-xs text-on-surface-variant">{label}</p>
+          <p className="text-lg font-bold text-on-surface tabular-nums">{value}</p>
         </div>
       </div>
     </PremiumCard>

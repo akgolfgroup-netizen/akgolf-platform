@@ -106,7 +106,7 @@ export function SGRing({
             {totalSign}
             {total.toFixed(2)}
           </div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-grey-400 mt-1">
+          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-on-surface-variant mt-1">
             SG · Total
           </div>
         </div>
@@ -132,7 +132,7 @@ function LegendRow({ color, label, value }: { color: string; label: string; valu
         className="w-2.5 h-2.5 rounded-sm shrink-0"
         style={{ background: color }}
       />
-      <div className="text-[11px] text-grey-300">{label}</div>
+      <div className="text-[11px] text-on-surface-variant/60">{label}</div>
       <div className="font-mono text-[13px] font-semibold tabular-nums ml-auto">
         {sign}
         {value.toFixed(2)}

@@ -37,7 +37,7 @@ export function MCTopbar({
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <header className="h-14 bg-white border-b border-[var(--color-grey-200)] flex items-center justify-between px-4 md:px-6 sticky top-0 z-10">
+    <header className="h-14 bg-surface-container-lowest border-b border-[var(--color-grey-200)] flex items-center justify-between px-4 md:px-6 sticky top-0 z-10">
       {/* Venstre */}
       <div className="flex items-center gap-3 min-w-0">
         <button
@@ -67,7 +67,7 @@ export function MCTopbar({
       {/* Midten – sok */}
       {showSearch && (
         <div className="hidden md:flex flex-1 max-w-md mx-6">
-          <div className="flex items-center gap-2 w-full bg-[var(--color-grey-100)] border border-transparent px-3.5 py-2 rounded-lg focus-within:bg-white focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[var(--color-primary)]/20 transition-all">
+          <div className="flex items-center gap-2 w-full bg-[var(--color-grey-100)] border border-transparent px-3.5 py-2 rounded-lg focus-within:bg-surface-container-lowest focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[var(--color-primary)]/20 transition-all">
             <Icon name="search" className="w-4 h-4 text-[var(--color-muted)] shrink-0" />
             <input
               type="text"
@@ -135,7 +135,7 @@ export function MCModeToggle({ activeMode, onModeChange }: ModeToggleProps) {
         className={cn(
           "px-3.5 py-1.5 text-xs font-semibold rounded-md transition-colors cursor-pointer",
           activeMode === "oversikt"
-            ? "bg-white text-[var(--color-primary)] shadow-sm"
+            ? "bg-surface-container-lowest text-[var(--color-primary)] shadow-sm"
             : "text-[var(--color-muted)] hover:text-[var(--color-text)]",
         )}
       >
@@ -146,7 +146,7 @@ export function MCModeToggle({ activeMode, onModeChange }: ModeToggleProps) {
         className={cn(
           "px-3.5 py-1.5 text-xs font-semibold rounded-md transition-colors cursor-pointer",
           activeMode === "focus"
-            ? "bg-white text-[var(--color-primary)] shadow-sm"
+            ? "bg-surface-container-lowest text-[var(--color-primary)] shadow-sm"
             : "text-[var(--color-muted)] hover:text-[var(--color-text)]",
         )}
       >

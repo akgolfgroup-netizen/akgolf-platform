@@ -37,11 +37,11 @@ export function WelcomeSection({
         {getGreeting()}, <span className="font-extrabold">{firstName}</span>
       </h1>
       <div className="inline-flex flex-wrap items-center gap-3">
-        <span className="rounded-full bg-accent-cta px-3 py-1 text-xs font-bold text-accent-cta-text">
+        <span className="rounded-full bg-secondary-fixed px-3 py-1 text-xs font-bold text-secondary-fixed-text">
           {tierLabel[tier] ?? tier}
         </span>
         {memberSince && (
-          <span className="text-sm text-grey-400">
+          <span className="text-sm text-on-surface-variant">
             Medlem siden {memberSince}
           </span>
         )}

@@ -135,15 +135,15 @@ export function ActivityHeatmap({ data, year = new Date().getFullYear() }: Activ
     <PremiumCard padding="lg" className="overflow-hidden">
       <div className="flex items-start justify-between mb-6">
         <div>
-          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Aktivitet siste år</MonoLabel>
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Aktivitet siste år</MonoLabel>
           <div className="flex items-baseline gap-3 mt-1">
-            <span className="text-2xl font-bold text-black">{totalDays}</span>
-            <span className="text-sm text-grey-400">dager med aktivitet</span>
+            <span className="text-2xl font-bold text-on-surface">{totalDays}</span>
+            <span className="text-sm text-on-surface-variant">dager med aktivitet</span>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-xs text-grey-400">{Math.round(totalMinutes / 60)} timer totalt</p>
-          <p className="text-xs text-grey-400">Lengste streak: {longestStreak} dager</p>
+          <p className="text-xs text-on-surface-variant">{Math.round(totalMinutes / 60)} timer totalt</p>
+          <p className="text-xs text-on-surface-variant">Lengste streak: {longestStreak} dager</p>
         </div>
       </div>
 
@@ -155,7 +155,7 @@ export function ActivityHeatmap({ data, year = new Date().getFullYear() }: Activ
             <div className="w-8" /> {/* Spacer for month labels */}
             <div className="flex-1 grid grid-rows-7 gap-1">
               {DAY_LABELS.map((day, i) => (
-                <div key={day} className="h-3 text-[9px] text-grey-400 flex items-center">
+                <div key={day} className="h-3 text-[9px] text-on-surface-variant flex items-center">
                   {i % 2 === 0 ? day : ""}
                 </div>
               ))}
@@ -192,8 +192,8 @@ export function ActivityHeatmap({ data, year = new Date().getFullYear() }: Activ
       </div>
 
       {/* Legend */}
-      <div className="flex items-center justify-between mt-4 pt-4 border-t border-grey-200">
-        <span className="text-xs text-grey-400">Mindre</span>
+      <div className="flex items-center justify-between mt-4 pt-4 border-t border-outline-variant/30">
+        <span className="text-xs text-on-surface-variant">Mindre</span>
         <div className="flex items-center gap-1">
           {[0, 1, 2, 3, 4].map((level) => (
             <div
@@ -206,7 +206,7 @@ export function ActivityHeatmap({ data, year = new Date().getFullYear() }: Activ
             />
           ))}
         </div>
-        <span className="text-xs text-grey-400">Mer</span>
+        <span className="text-xs text-on-surface-variant">Mer</span>
       </div>
     </PremiumCard>
   );

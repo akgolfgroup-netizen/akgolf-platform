@@ -57,9 +57,9 @@ function TimeInput({
       onChange={(e) => onChange(e.target.value)}
       disabled={disabled}
       className={cn(
-        "px-2 py-1.5 rounded-lg border border-grey-200 text-sm font-medium",
+        "px-2 py-1.5 rounded-lg border border-outline-variant/30 text-sm font-medium",
         "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary",
-        disabled && "bg-grey-50 text-grey-300 cursor-not-allowed"
+        disabled && "bg-surface text-on-surface-variant/60 cursor-not-allowed"
       )}
     />
   );
@@ -75,10 +75,10 @@ function WorkDayRow({
   onTimeChange: (field: "openTime" | "closeTime", value: string) => void;
 }) {
   return (
-    <div className="flex items-center justify-between py-3 px-4 hover:bg-grey-50 transition-colors">
+    <div className="flex items-center justify-between py-3 px-4 hover:bg-surface transition-colors">
       <div className="flex items-center gap-4">
         <Switch checked={hours.isOpen} onCheckedChange={onToggle} />
-        <span className={cn("text-sm font-medium", !hours.isOpen && "text-grey-300")}>
+        <span className={cn("text-sm font-medium", !hours.isOpen && "text-on-surface-variant/60")}>
           {hours.label}
         </span>
       </div>
@@ -88,7 +88,7 @@ function WorkDayRow({
           onChange={(v) => onTimeChange("openTime", v)}
           disabled={!hours.isOpen}
         />
-        <span className="text-grey-300">til</span>
+        <span className="text-on-surface-variant/60">til</span>
         <TimeInput
           value={hours.closeTime}
           onChange={(v) => onTimeChange("closeTime", v)}
@@ -119,12 +119,12 @@ function SpecialDateItem({
   };
 
   return (
-    <div className="flex items-center justify-between py-3 px-4 hover:bg-grey-50 transition-colors group">
+    <div className="flex items-center justify-between py-3 px-4 hover:bg-surface transition-colors group">
       <div className="flex items-center gap-3">
-        <Icon name="calendar_today"Days className="w-4 h-4 text-grey-400" />
+        <Icon name="calendar_today"Days className="w-4 h-4 text-on-surface-variant" />
         <div>
-          <p className="text-sm font-medium text-black">{date.label}</p>
-          <p className="text-xs text-grey-400">
+          <p className="text-sm font-medium text-on-surface">{date.label}</p>
+          <p className="text-xs text-on-surface-variant">
             {new Date(date.date).toLocaleDateString("nb-NO", {
               day: "numeric",
               month: "long",
@@ -138,12 +138,12 @@ function SpecialDateItem({
           {typeLabels[date.type]}
         </span>
         {date.type === "extended" && date.openTime && date.closeTime && (
-          <span className="text-xs text-grey-400">
+          <span className="text-xs text-on-surface-variant">
             {date.openTime} - {date.closeTime}
           </span>
         )}
         <button
-          className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center justify-center rounded-lg text-grey-400 hover:text-error"
+          className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center justify-center rounded-lg text-on-surface-variant hover:text-error"
           onClick={onDelete}
         >
           <Icon name="delete" className="w-4 h-4" />
@@ -177,10 +177,10 @@ export function AvailabilitySettings() {
     <div className="space-y-6">
       {/* Standard Work Hours */}
       <Card className="overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
           <div className="flex items-center gap-3">
-            <Icon name="schedule" className="w-5 h-5 text-grey-400" />
-            <h2 className="text-sm font-semibold text-black">Standard arbeidstider</h2>
+            <Icon name="schedule" className="w-5 h-5 text-on-surface-variant" />
+            <h2 className="text-sm font-semibold text-on-surface">Standard arbeidstider</h2>
           </div>
         </div>
         <div className="divide-y divide-grey-50">
@@ -197,12 +197,12 @@ export function AvailabilitySettings() {
 
       {/* Special Dates */}
       <Card className="overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
           <div className="flex items-center gap-3">
-            <Icon name="calendar_today"Days className="w-5 h-5 text-grey-400" />
-            <h2 className="text-sm font-semibold text-black">Spesielle datoer</h2>
+            <Icon name="calendar_today"Days className="w-5 h-5 text-on-surface-variant" />
+            <h2 className="text-sm font-semibold text-on-surface">Spesielle datoer</h2>
           </div>
-          <button className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg border border-grey-200 text-grey-700 hover:bg-grey-50 transition-colors">
+          <button className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg border border-outline-variant/30 text-on-surface-variant/90 hover:bg-surface transition-colors">
             <Icon name="add" className="w-4 h-4" />
             <span className="hidden sm:inline">Legg til</span>
           </button>
@@ -218,7 +218,7 @@ export function AvailabilitySettings() {
             ))
           ) : (
             <div className="px-6 py-8 text-center">
-              <p className="text-sm text-grey-400">Ingen spesielle datoer</p>
+              <p className="text-sm text-on-surface-variant">Ingen spesielle datoer</p>
             </div>
           )}
         </div>

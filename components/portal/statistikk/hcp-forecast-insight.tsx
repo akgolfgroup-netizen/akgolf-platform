@@ -22,8 +22,8 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
 
   if (currentHcp == null || predicted30d == null || predicted90d == null) {
     return (
-      <div className="space-y-2 rounded-xl bg-grey-50 p-4">
-        <p className="text-sm text-grey-500">
+      <div className="space-y-2 rounded-xl bg-surface p-4">
+        <p className="text-sm text-on-surface-variant/80">
           Vi kan ikke lage en HCP-prognose ennå. Logg flere runder eller treningsøkter
           så utvikler AK Golf en personlig prediksjon basert på Kalman-filtrering.
         </p>
@@ -80,21 +80,21 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
     <div className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1 space-y-1">
-          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Prognose-analyse</MonoLabel>
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Prognose-analyse</MonoLabel>
           <div className="flex items-baseline gap-3">
-            <span className="text-2xl font-bold tabular-nums text-black">
+            <span className="text-2xl font-bold tabular-nums text-on-surface">
               {currentHcp.toFixed(1)}
             </span>
-            <span className="text-xs text-grey-400">nå</span>
-            <span className="text-grey-200">→</span>
+            <span className="text-xs text-on-surface-variant">nå</span>
+            <span className="text-surface-variant">→</span>
             <span className="text-xl font-semibold tabular-nums text-primary">
               {predicted90d.toFixed(1)}
             </span>
-            <span className="text-xs text-grey-400">90d</span>
+            <span className="text-xs text-on-surface-variant">90d</span>
           </div>
         </div>
         <div
-          className="flex shrink-0 items-center gap-1.5 rounded-full border border-grey-200 bg-white px-3 py-1.5"
+          className="flex shrink-0 items-center gap-1.5 rounded-full border border-outline-variant/30 bg-surface-container-lowest px-3 py-1.5"
           style={{ color: trendColor }}
         >
           <TrendIcon className="h-3.5 w-3.5" strokeWidth={2.5} />
@@ -103,9 +103,9 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-lg bg-grey-50 p-3">
-          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">30 dager</MonoLabel>
-          <p className="mt-1 text-base font-bold tabular-nums text-black">
+        <div className="rounded-lg bg-surface p-3">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">30 dager</MonoLabel>
+          <p className="mt-1 text-base font-bold tabular-nums text-on-surface">
             {predicted30d.toFixed(1)}{" "}
             <span
               className="ml-1 text-xs font-semibold"
@@ -115,14 +115,14 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
             </span>
           </p>
           {data.ci30d && (
-            <p className="mt-0.5 text-[10px] text-grey-400 tabular-nums">
+            <p className="mt-0.5 text-[10px] text-on-surface-variant tabular-nums">
               ±{((data.ci30d.upper - data.ci30d.lower) / 2).toFixed(1)}
             </p>
           )}
         </div>
-        <div className="rounded-lg bg-grey-50 p-3">
-          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">90 dager</MonoLabel>
-          <p className="mt-1 text-base font-bold tabular-nums text-black">
+        <div className="rounded-lg bg-surface p-3">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">90 dager</MonoLabel>
+          <p className="mt-1 text-base font-bold tabular-nums text-on-surface">
             {predicted90d.toFixed(1)}{" "}
             <span
               className="ml-1 text-xs font-semibold"
@@ -132,7 +132,7 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
             </span>
           </p>
           {data.ci90d && (
-            <p className="mt-0.5 text-[10px] text-grey-400 tabular-nums">
+            <p className="mt-0.5 text-[10px] text-on-surface-variant tabular-nums">
               ±{((data.ci90d.upper - data.ci90d.lower) / 2).toFixed(1)}
             </p>
           )}

@@ -76,7 +76,7 @@ export function MessageDetail({
         : "text-[var(--color-error)]";
 
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full bg-surface-container-lowest">
       {/* Header */}
       <div className="p-4 border-b border-[var(--color-grey-200)]">
         <div className="flex items-center justify-between">
@@ -174,7 +174,7 @@ export function MessageDetail({
 
       {/* Actions */}
       {message.status === "AI_READY" && message.aiResponse && (
-        <div className="p-4 border-t border-[var(--color-grey-200)] flex items-center justify-between bg-white">
+        <div className="p-4 border-t border-[var(--color-grey-200)] flex items-center justify-between bg-surface-container-lowest">
           <Button
             variant="ghost"
             onClick={() => setIsEditing(!isEditing)}
@@ -196,7 +196,7 @@ export function MessageDetail({
             <Button
               onClick={handleApprove}
               disabled={isSending}
-              className="bg-[var(--color-black)] hover:bg-[var(--color-grey-900)] text-white"
+              className="bg-[var(--color-black)] hover:bg-[var(--color-grey-900)] text-surface"
             >
               <Icon name="send" className="h-4 w-4 mr-2" />
               {isSending ? "Sender..." : "Godkjenn & Send"}

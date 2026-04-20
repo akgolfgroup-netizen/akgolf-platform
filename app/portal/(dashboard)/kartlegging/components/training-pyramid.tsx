@@ -66,10 +66,10 @@ export function TrainingPyramid({ index, categoryLabel }: TrainingPyramidProps) 
         subtitle={`${weekly.toFixed(1)} t/uke · Anbefalt for ${categoryLabel}: ${recMin}–${recMax} t/uke (sommer)`}
       />
 
-      <div className="rounded-xl bg-white shadow-card p-4">
+      <div className="rounded-xl bg-surface-container-lowest shadow-card p-4">
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center gap-2">
-            <MonoLabel size="xs" uppercase className="text-grey-400">
+            <MonoLabel size="xs" uppercase className="text-on-surface-variant">
               Status
             </MonoLabel>
             <span
@@ -82,13 +82,13 @@ export function TrainingPyramid({ index, categoryLabel }: TrainingPyramidProps) 
               {weeklyStatus.label}
             </span>
           </div>
-          <span className="text-grey-500 tabular-nums">
+          <span className="text-on-surface-variant/80 tabular-nums">
             {weekly.toFixed(1)}t / {recMin}–{recMax}t
           </span>
         </div>
 
         {insight && (
-          <p className="mt-3 text-xs leading-relaxed text-grey-600 border-t border-grey-100 pt-3">
+          <p className="mt-3 text-xs leading-relaxed text-on-surface-variant/80 border-t border-outline-variant/20 pt-3">
             {insight}
           </p>
         )}

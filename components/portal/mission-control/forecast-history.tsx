@@ -25,10 +25,10 @@ export function ForecastHistory({ forecasts }: ForecastHistoryProps) {
         variants={item}
         initial="hidden"
         animate="show"
-        className="bg-white border border-grey-200 rounded-xl p-6 text-center"
+        className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 text-center"
       >
-        <Icon name="history" className="w-8 h-8 text-grey-300 mx-auto mb-2" />
-        <p className="text-sm text-grey-400">Ingen forecasts ennå</p>
+        <Icon name="history" className="w-8 h-8 text-on-surface-variant/60 mx-auto mb-2" />
+        <p className="text-sm text-on-surface-variant">Ingen forecasts ennå</p>
       </motion.div>
     );
   }
@@ -38,12 +38,12 @@ export function ForecastHistory({ forecasts }: ForecastHistoryProps) {
       variants={item}
       initial="hidden"
       animate="show"
-      className="bg-white border border-grey-200 rounded-xl p-6"
+      className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6"
     >
       <div className="flex items-center gap-2 mb-4">
         <Icon name="history" className="w-4 h-4 text-primary" />
-        <p className="text-sm font-semibold text-black">Historikk</p>
-        <span className="text-xs text-grey-400 ml-auto">Siste {forecasts.length}</span>
+        <p className="text-sm font-semibold text-on-surface">Historikk</p>
+        <span className="text-xs text-on-surface-variant ml-auto">Siste {forecasts.length}</span>
       </div>
 
       <div className="space-y-3">
@@ -54,13 +54,13 @@ export function ForecastHistory({ forecasts }: ForecastHistoryProps) {
           return (
             <div
               key={fc.id}
-              className="flex items-center justify-between p-3 rounded-lg bg-grey-50 border border-grey-100"
+              className="flex items-center justify-between p-3 rounded-lg bg-surface border border-outline-variant/20"
             >
               <div>
-                <p className="text-sm font-medium text-black">
+                <p className="text-sm font-medium text-on-surface">
                   Mål {fc.targetScoreAvg.toFixed(1)} · {format(new Date(fc.deadline), "d. MMM yyyy", { locale: nb })}
                 </p>
-                <p className="text-xs text-grey-400 mt-0.5">
+                <p className="text-xs text-on-surface-variant mt-0.5">
                   Generert {format(new Date(fc.generatedAt), "d. MMM yyyy", { locale: nb })} · {Math.round(fc.estimatedTotalHours)} t estimert
                 </p>
               </div>
@@ -88,7 +88,7 @@ export function ForecastHistory({ forecasts }: ForecastHistoryProps) {
                   </Badge>
                 )}
                 {fc.predictionErrorSg !== null && fc.predictionErrorSg !== undefined && (
-                  <span className="text-xs text-grey-400 tabular-nums">
+                  <span className="text-xs text-on-surface-variant tabular-nums">
                     Feil {fc.predictionErrorSg > 0 ? "+" : ""}
                     {fc.predictionErrorSg.toFixed(2)} SG
                   </span>

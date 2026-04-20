@@ -50,21 +50,21 @@ export function HeroSection() {
         <div className="w-container">
           <motion.p
             variants={fadeUp}
-            className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white/40 mb-5"
+            className="text-[11px] font-semibold uppercase tracking-[0.15em] text-surface/40 mb-5"
           >
             {HERO.eyebrow}
           </motion.p>
 
           <motion.h1
             variants={fadeUp}
-            className="text-[clamp(2.5rem,7vw,4.5rem)] font-bold tracking-[-0.03em] leading-[1.05] text-white max-w-[720px] mb-6"
+            className="text-[clamp(2.5rem,7vw,4.5rem)] font-bold tracking-[-0.03em] leading-[1.05] text-surface max-w-[720px] mb-6"
           >
             {HERO.heading}
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
-            className="text-base md:text-lg text-white/80 max-w-[540px] leading-relaxed mb-10"
+            className="text-base md:text-lg text-surface/80 max-w-[540px] leading-relaxed mb-10"
           >
             {HERO.subheading}
           </motion.p>
@@ -72,7 +72,7 @@ export function HeroSection() {
           <motion.div variants={fadeUp}>
             <Link
               href="/booking"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-cta text-accent-cta-text rounded-[20px] text-[15px] font-bold hover:brightness-95 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-secondary-fixed text-secondary-fixed-text rounded-[20px] text-[15px] font-bold hover:brightness-95 transition-all duration-300"
             >
               Book coaching
               <Icon name="arrow_forward" className="w-4 h-4" />

@@ -80,17 +80,17 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[70] flex items-center justify-center bg-black/40 p-4"
+      className="fixed inset-0 z-[70] flex items-center justify-center bg-on-surface/40 p-4"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-lg rounded-xl bg-white p-6 shadow-card-hover-deep"
+        className="w-full max-w-lg rounded-xl bg-surface-container-lowest p-6 shadow-card-hover-deep"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-start justify-between">
           <div>
-            <h2 className="text-xl font-bold text-black">Legg til egen turnering</h2>
-            <p className="mt-1 text-sm text-grey-400">
+            <h2 className="text-xl font-bold text-on-surface">Legg til egen turnering</h2>
+            <p className="mt-1 text-sm text-on-surface-variant">
               Legg inn klubbturnering eller en turnering som ikke finnes i listen.
               Kun du ser denne.
             </p>
@@ -98,7 +98,7 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1 text-grey-400 hover:bg-grey-50 hover:text-grey-600"
+            className="rounded-lg p-1 text-on-surface-variant hover:bg-surface hover:text-on-surface-variant/80"
             aria-label="Lukk"
           >
             <Icon name="close" className="h-5 w-5" />
@@ -107,7 +107,7 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="t-name" className="block text-sm font-medium text-grey-700">
+            <label htmlFor="t-name" className="block text-sm font-medium text-on-surface-variant/90">
               Navn *
             </label>
             <input
@@ -118,14 +118,14 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
               maxLength={200}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-grey-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="mt-1 block w-full rounded-lg border border-outline-variant/30 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="F.eks. Klubbmesterskap GFGK 2026"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label htmlFor="t-start" className="block text-sm font-medium text-grey-700">
+              <label htmlFor="t-start" className="block text-sm font-medium text-on-surface-variant/90">
                 Startdato *
               </label>
               <input
@@ -134,11 +134,11 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
                 required
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="mt-1 block w-full rounded-lg border border-grey-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                className="mt-1 block w-full rounded-lg border border-outline-variant/30 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
             <div>
-              <label htmlFor="t-end" className="block text-sm font-medium text-grey-700">
+              <label htmlFor="t-end" className="block text-sm font-medium text-on-surface-variant/90">
                 Sluttdato
               </label>
               <input
@@ -146,13 +146,13 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="mt-1 block w-full rounded-lg border border-grey-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                className="mt-1 block w-full rounded-lg border border-outline-variant/30 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="t-level" className="block text-sm font-medium text-grey-700">
+            <label htmlFor="t-level" className="block text-sm font-medium text-on-surface-variant/90">
               Nivå *
             </label>
             <select
@@ -160,7 +160,7 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
               required
               value={level}
               onChange={(e) => setLevel(e.target.value as Level)}
-              className="mt-1 block w-full rounded-lg border border-grey-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="mt-1 block w-full rounded-lg border border-outline-variant/30 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             >
               {LEVELS.map((l) => (
                 <option key={l.value} value={l.value}>
@@ -171,7 +171,7 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
           </div>
 
           <div>
-            <label htmlFor="t-loc" className="block text-sm font-medium text-grey-700">
+            <label htmlFor="t-loc" className="block text-sm font-medium text-on-surface-variant/90">
               Sted
             </label>
             <input
@@ -180,13 +180,13 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
               maxLength={200}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-grey-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="mt-1 block w-full rounded-lg border border-outline-variant/30 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="F.eks. Oslo Golfklubb"
             />
           </div>
 
           <div>
-            <label htmlFor="t-url" className="block text-sm font-medium text-grey-700">
+            <label htmlFor="t-url" className="block text-sm font-medium text-on-surface-variant/90">
               Lenke (valgfri)
             </label>
             <input
@@ -194,13 +194,13 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
               type="url"
               value={externalUrl}
               onChange={(e) => setExternalUrl(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-grey-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="mt-1 block w-full rounded-lg border border-outline-variant/30 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="https://..."
             />
           </div>
 
           <div>
-            <label htmlFor="t-notes" className="block text-sm font-medium text-grey-700">
+            <label htmlFor="t-notes" className="block text-sm font-medium text-on-surface-variant/90">
               Notater (valgfri)
             </label>
             <textarea
@@ -209,7 +209,7 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
               onChange={(e) => setNotes(e.target.value)}
               rows={2}
               maxLength={500}
-              className="mt-1 block w-full rounded-lg border border-grey-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="mt-1 block w-full rounded-lg border border-outline-variant/30 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="Serienavn, klasse, eller andre detaljer"
             />
           </div>
@@ -225,14 +225,14 @@ export function AddTournamentModal({ open, onClose, onSuccess }: Props) {
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="flex-1 rounded-xl border border-grey-200 px-4 py-2 text-sm font-medium text-grey-700 hover:bg-grey-50 disabled:opacity-50"
+              className="flex-1 rounded-xl border border-outline-variant/30 px-4 py-2 text-sm font-medium text-on-surface-variant/90 hover:bg-surface disabled:opacity-50"
             >
               Avbryt
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-alt disabled:opacity-50"
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-surface hover:bg-primary-alt disabled:opacity-50"
             >
               {submitting && <Icon name="progress_activity" className="h-4 w-4 animate-spin" />}
               Lagre turnering

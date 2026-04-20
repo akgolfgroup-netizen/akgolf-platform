@@ -69,9 +69,9 @@ export function CourseHeroClient({
         : `↑ ${handicapDelta.toFixed(1)} · 30d`;
   const handicapDeltaColor =
     handicapDelta === null
-      ? "text-white/55"
+      ? "text-surface/55"
       : handicapDelta <= 0
-        ? "text-accent-cta"
+        ? "text-secondary-fixed"
         : "text-[#E85D4E]";
 
   return (
@@ -119,8 +119,8 @@ export function CourseHeroClient({
         <div className="absolute top-24 left-8 right-8 z-10">
           <div className="flex items-center gap-3 flex-wrap mb-5">
             <HeroLabel>
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-cta shadow-[0_0_12px_#D1F843]" />
-              <strong className="text-white font-semibold">Miklagard GK</strong>
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed shadow-[0_0_12px_#D1F843]" />
+              <strong className="text-surface font-semibold">Miklagard GK</strong>
               <HeroLabelSeparator />
               <span>
                 {format(new Date(), "d. MMMM", { locale: nb })} · uke{" "}
@@ -137,14 +137,14 @@ export function CourseHeroClient({
           <MonoLabel
             size="xs"
             uppercase
-            className="text-white/45 block mb-3"
+            className="text-surface/45 block mb-3"
           >
             ◆ God morgen, {userName.split(" ")[0]}
           </MonoLabel>
           <h1 className="text-5xl lg:text-[56px] font-bold tracking-tight leading-[1.02] max-w-2xl">
             Dagen er din.
             <br />
-            <span className="text-accent-cta">Hold fokuset skarpt.</span>
+            <span className="text-secondary-fixed">Hold fokuset skarpt.</span>
           </h1>
         </div>
 
@@ -158,16 +158,16 @@ export function CourseHeroClient({
                 <span className="text-[48px] font-bold tracking-tight leading-none tabular-nums">
                   +2.4
                 </span>
-                <MonoLabel size="sm" className="text-white/55">
+                <MonoLabel size="sm" className="text-surface/55">
                   sg/runde
                 </MonoLabel>
               </div>
               <div className="flex items-center gap-3 mt-4">
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent-cta/18 text-accent-cta text-[12px] font-semibold">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed/18 text-secondary-fixed text-[12px] font-semibold">
                   <Icon name="trending_up" className="w-3 h-3" />
                   0.8 vs forrige
                 </span>
-                <MonoLabel size="xs" className="text-white/45">
+                <MonoLabel size="xs" className="text-surface/45">
                   Topp 12% elite
                 </MonoLabel>
               </div>
@@ -219,14 +219,14 @@ export function CourseHeroClient({
                     <h3 className="text-[22px] font-bold tracking-tight mt-3 leading-tight">
                       {nextBooking.serviceName}
                     </h3>
-                    <div className="flex items-center gap-2 mt-2 text-sm text-white/70">
+                    <div className="flex items-center gap-2 mt-2 text-sm text-surface/70">
                       <span>{nextBooking.instructorName}</span>
-                      <span className="w-1 h-1 rounded-full bg-white/30" />
-                      <MonoLabel size="xs" className="text-white/55">
+                      <span className="w-1 h-1 rounded-full bg-surface-container-lowest/30" />
+                      <MonoLabel size="xs" className="text-surface/55">
                         {nextBooking.duration} min
                       </MonoLabel>
                     </div>
-                    <div className="flex items-center gap-1.5 mt-3 text-xs text-white/55">
+                    <div className="flex items-center gap-1.5 mt-3 text-xs text-surface/55">
                       <Icon name="calendar_today"Days className="w-3.5 h-3.5" />
                       <span>{nextBookingDay}</span>
                     </div>
@@ -246,7 +246,7 @@ export function CourseHeroClient({
               <BentoCard variant="glass" className="col-span-2">
                 <BentoEyebrow>Neste booking</BentoEyebrow>
                 <div className="mt-3 flex items-center justify-between">
-                  <p className="text-white/60 text-sm">
+                  <p className="text-surface/60 text-sm">
                     Ingen kommende bookinger.
                   </p>
                   <Link href="/portal/bookinger/ny">

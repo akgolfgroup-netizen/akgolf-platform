@@ -55,24 +55,24 @@ export function SettingsClient({ profile }: SettingsClientProps) {
       {/* Tilbake-lenke */}
       <Link
         href="/portal/profil"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-grey-400 transition-colors hover:text-black"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-on-surface-variant transition-colors hover:text-on-surface"
       >
         <Icon name="arrow_back" className="h-4 w-4" />
         Tilbake til profil
       </Link>
 
-      <h1 className="text-xl font-bold text-black">
+      <h1 className="text-xl font-bold text-on-surface">
         Kontoinnstillinger
       </h1>
 
       {/* Profilbilde */}
       <PremiumCard delay={0}>
-        <MonoLabel size="xs" uppercase className="mb-4 block text-grey-400">
+        <MonoLabel size="xs" uppercase className="mb-4 block text-on-surface-variant">
           Profilbilde
         </MonoLabel>
         <div className="flex items-center gap-4">
           <AvatarUpload currentImage={profile.image} name={profile.name} />
-          <p className="text-xs text-grey-400">
+          <p className="text-xs text-on-surface-variant">
             Klikk eller dra et bilde for a endre profilbildet ditt.
             Maks 5 MB. JPG, PNG eller WebP.
           </p>
@@ -81,7 +81,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
 
       {/* Redigeringsskjema */}
       <PremiumCard delay={0.1}>
-        <MonoLabel size="xs" uppercase className="mb-4 block text-grey-400">
+        <MonoLabel size="xs" uppercase className="mb-4 block text-on-surface-variant">
           Personlig informasjon
         </MonoLabel>
 
@@ -90,7 +90,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
           <div>
             <label
               htmlFor="name"
-              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-500"
+              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant/80"
             >
               Navn
             </label>
@@ -99,7 +99,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-xl border border-grey-200 bg-white px-4 py-3 text-sm text-black outline-none transition-colors focus:border-black placeholder:text-grey-400"
+              className="w-full rounded-xl border border-outline-variant/30 bg-surface-container-lowest px-4 py-3 text-sm text-on-surface outline-none transition-colors focus:border-black placeholder:text-on-surface-variant"
               placeholder="Fullt navn"
             />
           </div>
@@ -108,7 +108,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
           <div>
             <label
               htmlFor="email"
-              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-500"
+              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant/80"
             >
               E-post
             </label>
@@ -117,9 +117,9 @@ export function SettingsClient({ profile }: SettingsClientProps) {
               type="email"
               value={profile.email}
               readOnly
-              className="w-full rounded-xl border border-grey-200 bg-grey-50 px-4 py-3 text-sm text-grey-400 outline-none cursor-not-allowed"
+              className="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface-variant outline-none cursor-not-allowed"
             />
-            <p className="mt-1 text-xs text-grey-400">
+            <p className="mt-1 text-xs text-on-surface-variant">
               E-postadressen kan ikke endres.
             </p>
           </div>
@@ -128,7 +128,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
           <div>
             <label
               htmlFor="phone"
-              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-grey-500"
+              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant/80"
             >
               Telefon
             </label>
@@ -137,7 +137,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full rounded-xl border border-grey-200 bg-white px-4 py-3 text-sm text-black outline-none transition-colors focus:border-black placeholder:text-grey-400"
+              className="w-full rounded-xl border border-outline-variant/30 bg-surface-container-lowest px-4 py-3 text-sm text-on-surface outline-none transition-colors focus:border-black placeholder:text-on-surface-variant"
               placeholder="Telefonnummer"
             />
           </div>
@@ -159,7 +159,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
           <button
             type="submit"
             disabled={saving || !hasChanges}
-            className="w-full rounded-full bg-accent-cta px-6 py-3 text-sm font-semibold text-black transition-all duration-300 hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-40"
+            className="w-full rounded-full bg-secondary-fixed px-6 py-3 text-sm font-semibold text-on-surface transition-all duration-300 hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {saving ? "Lagrer ..." : "Lagre endringer"}
           </button>

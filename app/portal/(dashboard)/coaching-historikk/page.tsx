@@ -66,7 +66,7 @@ export default async function CoachingHistorikkPage() {
         <div className="mt-4">
           <Link
             href="/portal/bookinger/ny"
-            className="inline-flex h-11 items-center gap-2 rounded-[20px] bg-accent-cta px-6 text-[12px] font-bold text-accent-cta-text shadow-sm transition-opacity hover:opacity-90"
+            className="inline-flex h-11 items-center gap-2 rounded-[20px] bg-secondary-fixed px-6 text-[12px] font-bold text-secondary-fixed-text shadow-sm transition-opacity hover:opacity-90"
           >
             Book coaching
           </Link>
@@ -82,7 +82,7 @@ export default async function CoachingHistorikkPage() {
         </div>
 
         {sessions.length === 0 ? (
-          <div className="rounded-xl bg-white p-6 shadow-card">
+          <div className="rounded-xl bg-surface-container-lowest p-6 shadow-card">
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <Icon name="menu_book" className="h-6 w-6" />
@@ -92,7 +92,7 @@ export default async function CoachingHistorikkPage() {
               </p>
               <Link
                 href="/portal/bookinger/ny"
-                className="mt-4 inline-flex items-center gap-2 rounded-[20px] bg-primary px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-primary-alt"
+                className="mt-4 inline-flex items-center gap-2 rounded-[20px] bg-primary px-4 py-2 text-[12px] font-semibold text-surface transition-colors hover:bg-primary-alt"
               >
                 <Icon name="add" className="h-3.5 w-3.5" />
                 Book din første sesjon
@@ -104,11 +104,11 @@ export default async function CoachingHistorikkPage() {
             {groups.map(([key, group]) => (
               <section key={key} className="space-y-3">
                 <div className="flex items-center gap-3">
-                  <MonoLabel size="sm" uppercase className="text-grey-500">
+                  <MonoLabel size="sm" uppercase className="text-on-surface-variant/80">
                     {group.label}
                   </MonoLabel>
-                  <span className="h-px flex-1 bg-grey-100" />
-                  <MonoLabel size="xs" className="text-grey-400">
+                  <span className="h-px flex-1 bg-surface-container" />
+                  <MonoLabel size="xs" className="text-on-surface-variant">
                     {group.sessions.length}
                   </MonoLabel>
                 </div>

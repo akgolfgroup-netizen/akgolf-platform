@@ -61,12 +61,12 @@ export function PendingRequests({
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-grey-200/70 overflow-hidden">
-      <div className="px-5 py-3 border-b border-grey-200/50 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-grey-900">
+    <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30/70 overflow-hidden">
+      <div className="px-5 py-3 border-b border-outline-variant/30/50 flex items-center justify-between">
+        <h3 className="text-sm font-semibold text-on-surface">
           Venneforespørsler
         </h3>
-        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">
+        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-surface text-[10px] font-bold">
           {visible.length}
         </span>
       </div>
@@ -76,14 +76,14 @@ export function PendingRequests({
             key={request.friendshipId}
             layout
             exit={{ opacity: 0, height: 0 }}
-            className="px-5 py-3 flex items-center justify-between border-b border-grey-200/30 last:border-b-0"
+            className="px-5 py-3 flex items-center justify-between border-b border-outline-variant/30/30 last:border-b-0"
           >
             <div className="flex items-center gap-3 min-w-0">
-              <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold shrink-0">
+              <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-surface text-xs font-bold shrink-0">
                 {getInitials(request.name)}
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-medium text-grey-900 truncate">
+                <p className="text-sm font-medium text-on-surface truncate">
                   {request.name}
                 </p>
                 <p className="text-[11px] text-muted">

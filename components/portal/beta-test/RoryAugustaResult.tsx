@@ -30,22 +30,22 @@ export function RoryAugustaResult({
     <div className="max-w-5xl mx-auto space-y-6">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+        <h1 className="text-3xl font-bold text-inverse-on-surface dark:text-surface">
           Beat the Pro 🏆
         </h1>
-        <p className="text-slate-600 dark:text-slate-400">
+        <p className="text-inverse-on-surface/60 dark:text-inverse-on-surface/60">
           {playerName} vs PGA Tour benchmarks
         </p>
         <div className="flex items-center justify-center gap-6 text-sm">
           <div className="flex items-center gap-2">
             <Icon name="workspace_premium" className="w-4 h-4 text-amber-500" />
-            <span className="text-slate-600 dark:text-slate-400">
+            <span className="text-inverse-on-surface/60 dark:text-inverse-on-surface/60">
               Rory McIlroy (World #1)
             </span>
           </div>
           <div className="flex items-center gap-2">
             <Icon name="person"s className="w-4 h-4 text-blue-500" />
-            <span className="text-slate-600 dark:text-slate-400">
+            <span className="text-inverse-on-surface/60 dark:text-inverse-on-surface/60">
               PGA Tour Gjennomsnitt
             </span>
           </div>
@@ -56,7 +56,7 @@ export function RoryAugustaResult({
       {summary && (
         <div className="grid md:grid-cols-2 gap-4">
           {/* vs Rory */}
-          <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-white">
+          <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-surface">
             <div className="flex items-center gap-2 mb-4">
               <Icon name="workspace_premium" className="w-5 h-5" />
               <span className="font-semibold">vs Rory McIlroy</span>
@@ -72,7 +72,7 @@ export function RoryAugustaResult({
           </div>
 
           {/* vs Tour Average */}
-          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-white">
+          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-surface">
             <div className="flex items-center gap-2 mb-4">
               <Icon name="person"s className="w-5 h-5" />
               <span className="font-semibold">vs PGA Tour Snitt</span>
@@ -91,23 +91,23 @@ export function RoryAugustaResult({
 
       {/* Weekly Focus */}
       {summary && (
-        <div className="bg-slate-900 dark:bg-slate-800 rounded-2xl p-5 text-white">
+        <div className="bg-inverse-surface dark:bg-inverse-surface rounded-2xl p-5 text-surface">
           <div className="flex items-center gap-3 mb-3">
             <Icon name="my_location" className="w-5 h-5 text-green-400" />
             <h3 className="font-semibold">Denne ukens fokus</h3>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <p className="text-sm text-slate-400 mb-1">Primært mål</p>
+              <p className="text-sm text-inverse-on-surface/60 mb-1">Primært mål</p>
               <p className="font-medium">{summary.primaryGoal}</p>
             </div>
             <div>
-              <p className="text-sm text-slate-400 mb-1">Strekmål</p>
+              <p className="text-sm text-inverse-on-surface/60 mb-1">Strekmål</p>
               <p className="font-medium">{summary.stretchGoal}</p>
             </div>
           </div>
           {summary.weeklyFocus !== 'both' && (
-            <div className="mt-4 pt-4 border-t border-slate-700">
+            <div className="mt-4 pt-4 border-t border-inverse-on-surface/20">
               <p className="text-sm">
                 <span className="text-green-400 font-medium">Fokuser på:</span>{' '}
                 {summary.weeklyFocus === 'approach' 
@@ -121,16 +121,16 @@ export function RoryAugustaResult({
 
       {/* Approach Test Result */}
       {approachResult && (
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+        <div className="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl p-6 shadow-lg border border-outline-variant/30 dark:border-inverse-on-surface/20">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
               <Icon name="my_location" className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+              <h3 className="text-xl font-bold text-inverse-on-surface dark:text-surface">
                 100m Approach
               </h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
+              <p className="text-sm text-inverse-on-surface/70 dark:text-inverse-on-surface/60">
                 10 slag fra 100m på &quot;Augusta-green&quot;
               </p>
             </div>
@@ -190,11 +190,11 @@ export function RoryAugustaResult({
           </div>
 
           {/* Recommendation */}
-          <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4">
-            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+          <div className="bg-surface dark:bg-inverse-surface/50 rounded-xl p-4">
+            <p className="text-sm font-medium text-inverse-on-surface/70 dark:text-inverse-on-surface/50 mb-1">
               {approachResult.recommendation}
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-inverse-on-surface/70 dark:text-inverse-on-surface/60">
               Neste mål: {approachResult.nextMilestone}
             </p>
           </div>
@@ -203,16 +203,16 @@ export function RoryAugustaResult({
 
       {/* Driver Test Result */}
       {driverResult && (
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+        <div className="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl p-6 shadow-lg border border-outline-variant/30 dark:border-inverse-on-surface/20">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl">
               <Icon name="navigation" className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+              <h3 className="text-xl font-bold text-inverse-on-surface dark:text-surface">
                 Driver Challenge
               </h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
+              <p className="text-sm text-inverse-on-surface/70 dark:text-inverse-on-surface/60">
                 10 drivere til 60m &quot;Augusta fairway&quot;
               </p>
             </div>
@@ -272,11 +272,11 @@ export function RoryAugustaResult({
           </div>
 
           {/* Recommendation */}
-          <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4">
-            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+          <div className="bg-surface dark:bg-inverse-surface/50 rounded-xl p-4">
+            <p className="text-sm font-medium text-inverse-on-surface/70 dark:text-inverse-on-surface/50 mb-1">
               {driverResult.recommendation}
             </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-inverse-on-surface/70 dark:text-inverse-on-surface/60">
               Neste mål: {driverResult.nextMilestone}
             </p>
           </div>
@@ -284,27 +284,27 @@ export function RoryAugustaResult({
       )}
 
       {/* Benchmark Reference Table */}
-      <div className="bg-slate-100 dark:bg-slate-800/50 rounded-xl p-5">
-        <h4 className="font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+      <div className="bg-surface-container dark:bg-inverse-surface/50 rounded-xl p-5">
+        <h4 className="font-semibold text-inverse-on-surface dark:text-surface mb-4 flex items-center gap-2">
           <Icon name="bar_chart" className="w-4 h-4" />
           Benchmark Referanse
         </h4>
         <div className="grid md:grid-cols-2 gap-6">
           {/* 100m Benchmarks */}
           <div className="space-y-2">
-            <h5 className="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
+            <h5 className="text-sm font-medium text-inverse-on-surface/60 dark:text-inverse-on-surface/60 flex items-center gap-2">
               <Icon name="my_location" className="w-4 h-4" />
               100m Approach
             </h5>
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-slate-500 dark:text-slate-400">
+                <tr className="text-inverse-on-surface/70 dark:text-inverse-on-surface/60">
                   <th className="text-left py-1">Benchmark</th>
                   <th className="text-right py-1">Gj.snitt</th>
                   <th className="text-right py-1">Innenfor 6m</th>
                 </tr>
               </thead>
-              <tbody className="text-slate-700 dark:text-slate-300">
+              <tbody className="text-inverse-on-surface/70 dark:text-inverse-on-surface/50">
                 <tr>
                   <td className="py-1 flex items-center gap-1">
                     <Icon name="workspace_premium" className="w-3 h-3 text-amber-500" />
@@ -327,19 +327,19 @@ export function RoryAugustaResult({
 
           {/* Driver Benchmarks */}
           <div className="space-y-2">
-            <h5 className="text-sm font-medium text-slate-600 dark:text-slate-400 flex items-center gap-2">
+            <h5 className="text-sm font-medium text-inverse-on-surface/60 dark:text-inverse-on-surface/60 flex items-center gap-2">
               <Icon name="navigation" className="w-4 h-4" />
               Driver (60m fairway)
             </h5>
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-slate-500 dark:text-slate-400">
+                <tr className="text-inverse-on-surface/70 dark:text-inverse-on-surface/60">
                   <th className="text-left py-1">Benchmark</th>
                   <th className="text-right py-1">Fairways</th>
                   <th className="text-right py-1">Miss-snitt</th>
                 </tr>
               </thead>
-              <tbody className="text-slate-700 dark:text-slate-300">
+              <tbody className="text-inverse-on-surface/70 dark:text-inverse-on-surface/50">
                 <tr>
                   <td className="py-1 flex items-center gap-1">
                     <Icon name="workspace_premium" className="w-3 h-3 text-amber-500" />
@@ -427,23 +427,23 @@ function BenchmarkCard({
       
       <div className="flex items-end justify-between mb-3">
         <div>
-          <div className="text-2xl font-bold text-slate-900 dark:text-white">
+          <div className="text-2xl font-bold text-inverse-on-surface dark:text-surface">
             {playerValue.toFixed(1)}{unit}
           </div>
-          <div className="text-xs text-slate-500 dark:text-slate-400">{playerLabel}</div>
+          <div className="text-xs text-inverse-on-surface/70 dark:text-inverse-on-surface/60">{playerLabel}</div>
         </div>
         <div className="text-right">
           <div className={`text-sm font-medium ${isBetter ? 'text-green-600' : 'text-red-600'}`}>
             {isBetter ? '✓' : ''} {Math.abs(diff).toFixed(1)}{unit} {diffLabel}
           </div>
-          <div className="text-xs text-slate-500 dark:text-slate-400">
+          <div className="text-xs text-inverse-on-surface/70 dark:text-inverse-on-surface/60">
             {benchmarkLabel}: {benchmarkValue}{unit}
           </div>
         </div>
       </div>
       
       {/* Progress bar */}
-      <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mb-3">
+      <div className="h-2 bg-inverse-surface/30 dark:bg-inverse-surface/80 rounded-full overflow-hidden mb-3">
         <div 
           className={`h-full ${c.accent} rounded-full transition-all duration-500`}
           style={{ width: `${Math.min(percentage, 100)}%` }}
@@ -454,11 +454,11 @@ function BenchmarkCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
           <span className="text-lg">{category.emoji}</span>
-          <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+          <span className="text-sm font-medium text-inverse-on-surface/70 dark:text-inverse-on-surface/50">
             {category.label}
           </span>
         </div>
-        <div className="text-lg font-bold text-slate-900 dark:text-white">
+        <div className="text-lg font-bold text-inverse-on-surface dark:text-surface">
           {percentage.toFixed(0)}%
         </div>
       </div>
@@ -479,14 +479,14 @@ function MiniStat({
     <div className={`rounded-lg p-3 text-center ${
       highlight 
         ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' 
-        : 'bg-slate-50 dark:bg-slate-900/50'
+        : 'bg-surface dark:bg-inverse-surface/50'
     }`}>
       <div className={`text-sm font-bold ${
-        highlight ? 'text-green-700 dark:text-green-400' : 'text-slate-900 dark:text-white'
+        highlight ? 'text-green-700 dark:text-green-400' : 'text-inverse-on-surface dark:text-surface'
       }`}>
         {value}
       </div>
-      <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">{label}</div>
+      <div className="text-xs text-inverse-on-surface/70 dark:text-inverse-on-surface/60 mt-1">{label}</div>
     </div>
   );
 }

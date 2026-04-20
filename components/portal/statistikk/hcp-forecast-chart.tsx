@@ -102,7 +102,7 @@ export function HcpForecastChart({ data }: HcpForecastChartProps) {
 
   if (!hasHistory) {
     return (
-      <div className="flex h-[220px] items-center justify-center rounded-xl bg-grey-50 text-sm text-grey-400">
+      <div className="flex h-[220px] items-center justify-center rounded-xl bg-surface text-sm text-on-surface-variant">
         Vi trenger flere HCP-snapshots for å vise trend og prognose.
       </div>
     );
@@ -110,7 +110,7 @@ export function HcpForecastChart({ data }: HcpForecastChartProps) {
 
   if (!chart) {
     return (
-      <div className="flex h-[220px] items-center justify-center rounded-xl bg-grey-50 text-sm text-grey-400">
+      <div className="flex h-[220px] items-center justify-center rounded-xl bg-surface text-sm text-on-surface-variant">
         Ikke nok data til å lage prognose ennå.
       </div>
     );

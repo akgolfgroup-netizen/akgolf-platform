@@ -47,7 +47,7 @@ interface WidgetBaseProps {
 /**
  * WidgetBase — felles wrapper for alle dashboard-widgets.
  *
- * Brand Guide V2.0: rounded-2xl, border-grey-100, bg-white, shadow-sm.
+ * Brand Guide V2.0: rounded-2xl, border-outline-variant/20, bg-surface-container-lowest, shadow-sm.
  * Støtter drag-handle i redigeringsmodus og fjern-knapp.
  */
 export function WidgetBase({
@@ -68,8 +68,8 @@ export function WidgetBase({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
       className={cn(
-        "group relative flex flex-col rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200",
-        "hover:border-grey-200 hover:shadow-md",
+        "group relative flex flex-col rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-5 shadow-sm transition-all duration-200",
+        "hover:border-outline-variant/30 hover:shadow-md",
         size === "large" && "min-h-[320px]",
         size === "medium" && "min-h-[200px]",
         size === "small" && "min-h-[160px]",
@@ -83,7 +83,7 @@ export function WidgetBase({
         <div className="flex items-center gap-2.5">
           {isEditing && (
             <div
-              className="cursor-grab active:cursor-grabbing text-grey-300 hover:text-grey-500"
+              className="cursor-grab active:cursor-grabbing text-on-surface-variant/60 hover:text-on-surface-variant/80"
               data-drag-handle
             >
               <Icon name="drag_indicator" className="w-4 h-4" />
@@ -106,7 +106,7 @@ export function WidgetBase({
           )}
         >
           <button
-            className="p-1.5 rounded-md text-grey-400 hover:bg-grey-50 hover:text-text transition-colors"
+            className="p-1.5 rounded-md text-on-surface-variant hover:bg-surface hover:text-text transition-colors"
             title="Innstillinger"
           >
             <Icon name="settings" className="w-3.5 h-3.5" />
@@ -114,7 +114,7 @@ export function WidgetBase({
           {isEditing && onRemove && (
             <button
               onClick={() => onRemove(widgetId)}
-              className="p-1.5 rounded-md text-grey-400 hover:bg-error-light hover:text-error transition-colors"
+              className="p-1.5 rounded-md text-on-surface-variant hover:bg-error-light hover:text-error transition-colors"
               title="Fjern widget"
             >
               <Icon name="close" className="w-3.5 h-3.5" />

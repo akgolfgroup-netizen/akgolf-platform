@@ -62,17 +62,17 @@ export function ContactClient() {
 
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="relative bg-black overflow-hidden">
+        <section className="relative bg-on-surface overflow-hidden">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-8 py-24 lg:py-32">
             <div className="max-w-3xl">
-              <div className="mb-6 font-mono text-xs uppercase tracking-widest text-accent-cta flex items-center gap-4">
-                <div className="h-px w-12 bg-accent-cta/40"></div>
+              <div className="mb-6 font-mono text-xs uppercase tracking-widest text-secondary-fixed flex items-center gap-4">
+                <div className="h-px w-12 bg-secondary-fixed/40"></div>
                 Kontakt
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-surface tracking-tight mb-6">
                 Ta kontakt
               </h1>
-              <p className="text-xl text-white/70 leading-relaxed">
+              <p className="text-xl text-surface/70 leading-relaxed">
                 Har du spørsmål om våre pakker, ønsker du en gratis konsultasjon, 
                 eller trenger du support? Vi er her for å hjelpe.
               </p>
@@ -87,15 +87,15 @@ export function ContactClient() {
               <a
                 key={item.title}
                 href={item.href}
-                className="bg-white rounded-2xl p-8 border border-black/5 shadow-lg hover:-translate-y-1 transition-transform group"
+                className="bg-surface-container-lowest rounded-2xl p-8 border border-black/5 shadow-lg hover:-translate-y-1 transition-transform group"
               >
-                <div className="w-12 h-12 bg-grey-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-accent-cta transition-colors">
-                  <item.icon className="w-6 h-6 text-black" />
+                <div className="w-12 h-12 bg-surface rounded-xl flex items-center justify-center mb-4 group-hover:bg-secondary-fixed transition-colors">
+                  <item.icon className="w-6 h-6 text-on-surface" />
                 </div>
-                <h3 className="font-mono text-xs uppercase tracking-widest text-black/60 mb-2">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-on-surface/60 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-lg font-semibold text-black">{item.value}</p>
+                <p className="text-lg font-semibold text-on-surface">{item.value}</p>
               </a>
             ))}
           </div>
@@ -104,12 +104,12 @@ export function ContactClient() {
         {/* Locations */}
         <section className="py-16 lg:py-24 px-6 lg:px-8 max-w-[1440px] mx-auto">
           <div className="text-center mb-12">
-            <div className="mb-4 font-mono text-xs uppercase tracking-widest text-black/60 flex items-center justify-center gap-4">
-              <div className="h-px w-12 bg-black/20"></div>
+            <div className="mb-4 font-mono text-xs uppercase tracking-widest text-on-surface/60 flex items-center justify-center gap-4">
+              <div className="h-px w-12 bg-on-surface/20"></div>
               Lokasjoner
-              <div className="h-px w-12 bg-black/20"></div>
+              <div className="h-px w-12 bg-on-surface/20"></div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-black tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-on-surface tracking-tight">
               Hvor du finner oss
             </h2>
           </div>
@@ -118,9 +118,9 @@ export function ContactClient() {
             {locations.map((location) => (
               <div
                 key={location.name}
-                className="bg-white rounded-[32px] overflow-hidden border border-black/5 shadow-lg"
+                className="bg-surface-container-lowest rounded-[32px] overflow-hidden border border-black/5 shadow-lg"
               >
-                <div className="aspect-[16/9] bg-grey-50">
+                <div className="aspect-[16/9] bg-surface">
                   <Image
                     src={`/images/academy/AK-Golf-Academy-${location.name.includes("Fredrikstad") ? "5" : "20"}.jpg`}
                     alt={location.name}
@@ -130,18 +130,18 @@ export function ContactClient() {
                   />
                 </div>
                 <div className="p-8">
-                  <h3 className="text-xl font-bold text-black mb-2">
+                  <h3 className="text-xl font-bold text-on-surface mb-2">
                     {location.name}
                   </h3>
-                  <div className="flex items-center gap-2 text-grey-500 mb-4">
-                    <MapPin className="w-4 h-4 text-accent-cta" />
+                  <div className="flex items-center gap-2 text-on-surface-variant/80 mb-4">
+                    <MapPin className="w-4 h-4 text-secondary-fixed" />
                     <span>{location.address}</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {location.features.map((feature) => (
                       <span
                         key={feature}
-                        className="text-[10px] font-bold uppercase tracking-wider text-black/60 border border-black/10 px-2 py-1 rounded"
+                        className="text-[10px] font-bold uppercase tracking-wider text-on-surface/60 border border-black/10 px-2 py-1 rounded"
                       >
                         {feature}
                       </span>
@@ -154,34 +154,34 @@ export function ContactClient() {
         </section>
 
         {/* Contact Form */}
-        <section className="py-16 lg:py-24 bg-grey-50">
+        <section className="py-16 lg:py-24 bg-surface">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-12">
-                <div className="mb-4 font-mono text-xs uppercase tracking-widest text-black/60 flex items-center justify-center gap-4">
-                  <div className="h-px w-12 bg-black/20"></div>
+                <div className="mb-4 font-mono text-xs uppercase tracking-widest text-on-surface/60 flex items-center justify-center gap-4">
+                  <div className="h-px w-12 bg-on-surface/20"></div>
                   Send melding
-                  <div className="h-px w-12 bg-black/20"></div>
+                  <div className="h-px w-12 bg-on-surface/20"></div>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-black tracking-tight">
+                <h2 className="text-3xl md:text-4xl font-bold text-on-surface tracking-tight">
                   Skriv til oss
                 </h2>
               </div>
 
               {submitted ? (
-                <div className="bg-white rounded-[32px] p-12 text-center border border-black/5">
-                  <div className="w-16 h-16 bg-accent-cta rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Check className="w-8 h-8 text-black" />
+                <div className="bg-surface-container-lowest rounded-[32px] p-12 text-center border border-black/5">
+                  <div className="w-16 h-16 bg-secondary-fixed rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Check className="w-8 h-8 text-on-surface" />
                   </div>
-                  <h3 className="text-2xl font-bold text-black mb-4">
+                  <h3 className="text-2xl font-bold text-on-surface mb-4">
                     Melding sendt!
                   </h3>
-                  <p className="text-grey-500 mb-6">
+                  <p className="text-on-surface-variant/80 mb-6">
                     Takk for din henvendelse. Vi svarer vanligvis innen 24 timer.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="text-black font-semibold hover:text-accent-cta transition-colors"
+                    className="text-on-surface font-semibold hover:text-secondary-fixed transition-colors"
                   >
                     Send ny melding
                   </button>
@@ -189,11 +189,11 @@ export function ContactClient() {
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="bg-white rounded-[32px] p-8 lg:p-12 border border-black/5"
+                  className="bg-surface-container-lowest rounded-[32px] p-8 lg:p-12 border border-black/5"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                      <label className="block font-mono text-[10px] uppercase tracking-widest text-black/60 mb-2">
+                      <label className="block font-mono text-[10px] uppercase tracking-widest text-on-surface/60 mb-2">
                         Navn *
                       </label>
                       <input
@@ -203,12 +203,12 @@ export function ContactClient() {
                         onChange={(e) =>
                           setFormData({ ...formData, name: e.target.value })
                         }
-                        className="w-full bg-grey-50 border-none rounded-xl px-4 py-3 text-black focus:ring-2 focus:ring-accent-cta focus:outline-none"
+                        className="w-full bg-surface border-none rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-accent-cta focus:outline-none"
                         placeholder="Ditt navn"
                       />
                     </div>
                     <div>
-                      <label className="block font-mono text-[10px] uppercase tracking-widest text-black/60 mb-2">
+                      <label className="block font-mono text-[10px] uppercase tracking-widest text-on-surface/60 mb-2">
                         E-post *
                       </label>
                       <input
@@ -218,7 +218,7 @@ export function ContactClient() {
                         onChange={(e) =>
                           setFormData({ ...formData, email: e.target.value })
                         }
-                        className="w-full bg-grey-50 border-none rounded-xl px-4 py-3 text-black focus:ring-2 focus:ring-accent-cta focus:outline-none"
+                        className="w-full bg-surface border-none rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-accent-cta focus:outline-none"
                         placeholder="din@epost.no"
                       />
                     </div>
@@ -226,7 +226,7 @@ export function ContactClient() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                      <label className="block font-mono text-[10px] uppercase tracking-widest text-black/60 mb-2">
+                      <label className="block font-mono text-[10px] uppercase tracking-widest text-on-surface/60 mb-2">
                         Telefon
                       </label>
                       <input
@@ -235,12 +235,12 @@ export function ContactClient() {
                         onChange={(e) =>
                           setFormData({ ...formData, phone: e.target.value })
                         }
-                        className="w-full bg-grey-50 border-none rounded-xl px-4 py-3 text-black focus:ring-2 focus:ring-accent-cta focus:outline-none"
+                        className="w-full bg-surface border-none rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-accent-cta focus:outline-none"
                         placeholder="+47 000 00 000"
                       />
                     </div>
                     <div>
-                      <label className="block font-mono text-[10px] uppercase tracking-widest text-black/60 mb-2">
+                      <label className="block font-mono text-[10px] uppercase tracking-widest text-on-surface/60 mb-2">
                         Emne *
                       </label>
                       <select
@@ -249,7 +249,7 @@ export function ContactClient() {
                         onChange={(e) =>
                           setFormData({ ...formData, subject: e.target.value })
                         }
-                        className="w-full bg-grey-50 border-none rounded-xl px-4 py-3 text-black focus:ring-2 focus:ring-accent-cta focus:outline-none"
+                        className="w-full bg-surface border-none rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-accent-cta focus:outline-none"
                       >
                         <option value="">Velg emne</option>
                         <option value="booking">Spørsmål om booking</option>
@@ -261,7 +261,7 @@ export function ContactClient() {
                   </div>
 
                   <div className="mb-8">
-                    <label className="block font-mono text-[10px] uppercase tracking-widest text-black/60 mb-2">
+                    <label className="block font-mono text-[10px] uppercase tracking-widest text-on-surface/60 mb-2">
                       Melding *
                     </label>
                     <textarea
@@ -271,24 +271,24 @@ export function ContactClient() {
                       onChange={(e) =>
                         setFormData({ ...formData, message: e.target.value })
                       }
-                      className="w-full bg-grey-50 border-none rounded-xl px-4 py-3 text-black focus:ring-2 focus:ring-accent-cta focus:outline-none resize-none"
+                      className="w-full bg-surface border-none rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-accent-cta focus:outline-none resize-none"
                       placeholder="Skriv din melding her..."
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-4 bg-accent-cta text-black font-bold uppercase tracking-widest text-sm rounded-xl hover:shadow-[0_0_20px_rgba(210,240,0,0.4)] transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2"
+                    className="w-full py-4 bg-secondary-fixed text-on-surface font-bold uppercase tracking-widest text-sm rounded-xl hover:shadow-[0_0_20px_rgba(210,240,0,0.4)] transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2"
                   >
                     Send melding
                     <Mail className="w-4 h-4" />
                   </button>
 
-                  <p className="mt-4 text-xs text-grey-500 text-center">
+                  <p className="mt-4 text-xs text-on-surface-variant/80 text-center">
                     Ved å sende dette skjemaet godtar du vår{" "}
                     <Link
                       href="/personvern"
-                      className="text-black underline hover:text-accent-cta"
+                      className="text-on-surface underline hover:text-secondary-fixed"
                     >
                       personvernerklæring
                     </Link>
@@ -302,17 +302,17 @@ export function ContactClient() {
 
         {/* Quick CTA */}
         <section className="py-16 lg:py-24 px-6 lg:px-8 max-w-[1440px] mx-auto">
-          <div className="bg-black rounded-[32px] p-8 lg:p-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
+          <div className="bg-on-surface rounded-[32px] p-8 lg:p-16 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-surface tracking-tight mb-6">
               Vil du komme i gang med en gang?
             </h2>
-            <p className="text-white/70 max-w-xl mx-auto mb-8">
+            <p className="text-surface/70 max-w-xl mx-auto mb-8">
               Book en coaching-sesjon direkte i vår bookingsystem. Ingen ventetid, 
               ingen telefonkø — bare velg tid som passer deg.
             </p>
             <Link
               href="/booking"
-              className="inline-flex items-center gap-2 bg-accent-cta text-black px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform"
+              className="inline-flex items-center gap-2 bg-secondary-fixed text-on-surface px-10 py-4 rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform"
             >
               Book nå
               <ArrowRight className="w-5 h-5" />

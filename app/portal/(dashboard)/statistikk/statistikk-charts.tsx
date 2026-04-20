@@ -93,7 +93,7 @@ export function StatistikkCharts({
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <motion.div variants={fadeInUp}>
-            <div className="bg-white rounded-xl shadow-card p-6">
+            <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
               <h3 className="mb-5 text-[14px] font-semibold text-on-surface">
                 Score-utvikling
               </h3>
@@ -105,7 +105,7 @@ export function StatistikkCharts({
           </motion.div>
 
           <motion.div variants={fadeInUp}>
-            <div className="bg-white rounded-xl shadow-card p-6">
+            <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
               <div className="mb-5 flex items-center justify-between">
                 <h3 className="text-[14px] font-semibold text-on-surface">
                   Strokes Gained
@@ -137,7 +137,7 @@ export function StatistikkCharts({
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <motion.div variants={fadeInUp}>
-            <div className="bg-white rounded-xl shadow-card p-6">
+            <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
               <h3 className="mb-5 text-[14px] font-semibold text-on-surface">
                 Treningsvolum
               </h3>
@@ -147,7 +147,7 @@ export function StatistikkCharts({
 
           {focusAreas.length > 0 && (
             <motion.div variants={fadeInUp}>
-              <div className="bg-white rounded-xl shadow-card p-6">
+              <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
                 <h3 className="mb-6 text-[14px] font-semibold text-on-surface">
                   Fokusomrade-fordeling
                 </h3>

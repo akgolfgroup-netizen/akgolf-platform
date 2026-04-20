@@ -21,8 +21,8 @@ export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: Time
   if (!date) {
     return (
       <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg" hover="none">
-        <Icon name="calendar_today" className="w-10 h-10 text-grey-300 mb-3" />
-        <p className="text-sm text-grey-400">
+        <Icon name="calendar_today" className="w-10 h-10 text-on-surface-variant/60 mb-3" />
+        <p className="text-sm text-on-surface-variant">
           Velg en dato i kalenderen for å se ledige tider
         </p>
       </PremiumCard>
@@ -32,8 +32,8 @@ export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: Time
   if (loading) {
     return (
       <PremiumCard className="flex items-center justify-center gap-2 py-12" padding="lg" hover="none">
-        <Icon name="progress_activity" className="w-4 h-4 animate-spin text-grey-400" />
-        <span className="text-sm text-grey-400">Henter tider...</span>
+        <Icon name="progress_activity" className="w-4 h-4 animate-spin text-on-surface-variant" />
+        <span className="text-sm text-on-surface-variant">Henter tider...</span>
       </PremiumCard>
     );
   }
@@ -41,16 +41,16 @@ export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: Time
   if (slots.length === 0) {
     return (
       <PremiumCard className="flex flex-col items-center justify-center py-12 text-center" padding="lg" hover="none">
-        <Icon name="calendar_today" className="w-10 h-10 text-grey-300 mb-3" />
-        <p className="text-sm text-grey-400">Ingen ledige tider denne dagen</p>
-        <p className="text-xs text-grey-400 mt-1">Prøv en annen dato</p>
+        <Icon name="calendar_today" className="w-10 h-10 text-on-surface-variant/60 mb-3" />
+        <p className="text-sm text-on-surface-variant">Ingen ledige tider denne dagen</p>
+        <p className="text-xs text-on-surface-variant mt-1">Prøv en annen dato</p>
       </PremiumCard>
     );
   }
 
   return (
     <PremiumCard hover="none">
-      <p className="text-xs font-semibold text-grey-400 uppercase tracking-wider mb-3">
+      <p className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-3">
         {format(date, "EEEE d. MMMM", { locale: nb })}
       </p>
       <div className="grid grid-cols-2 gap-2">
@@ -69,8 +69,8 @@ export function TimeSlots({ date, slots, loading, selectedSlot, onSelect }: Time
               className={cn(
                 "py-3 px-4 rounded-full text-sm font-medium transition-all duration-200 border",
                 isSelected
-                  ? "bg-black text-white border-black shadow-sm"
-                  : "bg-white text-black border-grey-200 hover:border-grey-300"
+                  ? "bg-on-surface text-surface border-black shadow-sm"
+                  : "bg-surface-container-lowest text-on-surface border-outline-variant/30 hover:border-outline-variant/50"
               )}
             >
               {timeStr}

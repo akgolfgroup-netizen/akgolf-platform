@@ -39,7 +39,7 @@ export default async function KalenderPage() {
         <div className="pt-2">
           <a
             href="#calendar-sync"
-            className="inline-flex h-11 items-center gap-2 rounded-full border border-outline-variant bg-white px-6 text-[12px] font-semibold text-on-surface shadow-sm transition-colors hover:bg-surface-container"
+            className="inline-flex h-11 items-center gap-2 rounded-full border border-outline-variant bg-surface-container-lowest px-6 text-[12px] font-semibold text-on-surface shadow-sm transition-colors hover:bg-surface-container"
           >
             <Icon name="settings"2 className="h-3.5 w-3.5" />
             Sync-innstillinger

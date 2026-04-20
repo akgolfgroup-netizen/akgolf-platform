@@ -161,15 +161,15 @@ export default function RoundDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Icon name="progress_activity" className="w-8 h-8 text-black animate-spin" />
-        <span className="ml-3 text-sm text-grey-400">Laster runde...</span>
+        <Icon name="progress_activity" className="w-8 h-8 text-on-surface animate-spin" />
+        <span className="ml-3 text-sm text-on-surface-variant">Laster runde...</span>
       </div>
     );
   }
 
   if (!current) {
     return (
-      <div className="text-center py-20 text-sm text-grey-400">
+      <div className="text-center py-20 text-sm text-on-surface-variant">
         Kunne ikke laste rundedata.
       </div>
     );
@@ -187,13 +187,13 @@ export default function RoundDetailPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/portal/mental"
-            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white border border-grey-200 text-black hover:bg-grey-50 transition-colors"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-surface transition-colors"
           >
             <Icon name="chevron_left" className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-black">Rundedetaljer</h1>
-            <p className="text-grey-400 mt-1">Runde-ID: {roundId}</p>
+            <h1 className="text-2xl font-bold text-on-surface">Rundedetaljer</h1>
+            <p className="text-on-surface-variant mt-1">Runde-ID: {roundId}</p>
           </div>
         </div>
         <Button variant="primary" onClick={handleSave} isLoading={saving}>
@@ -213,8 +213,8 @@ export default function RoundDetailPage() {
                 onClick={() => setSelectedHole(h.holeNumber)}
                 className={`flex-shrink-0 w-10 h-10 rounded-lg text-sm font-semibold transition-colors ${
                   isActive
-                    ? "bg-black text-white"
-                    : "bg-grey-50 text-black hover:bg-surface"
+                    ? "bg-on-surface text-surface"
+                    : "bg-surface text-on-surface hover:bg-surface"
                 }`}
               >
                 {h.holeNumber}
@@ -226,14 +226,14 @@ export default function RoundDetailPage() {
 
       {/* Hole info */}
       <div className="flex items-center gap-4">
-        <div className="text-sm text-grey-400">
-          Hull <span className="font-semibold text-black">{selectedHole}</span>
+        <div className="text-sm text-on-surface-variant">
+          Hull <span className="font-semibold text-on-surface">{selectedHole}</span>
         </div>
-        <div className="text-sm text-grey-400">
-          Par <span className="font-semibold text-black">{currentPar}</span>
+        <div className="text-sm text-on-surface-variant">
+          Par <span className="font-semibold text-on-surface">{currentPar}</span>
         </div>
         {loadingHoles && (
-          <div className="text-sm text-grey-400 flex items-center gap-2">
+          <div className="text-sm text-on-surface-variant flex items-center gap-2">
             <Icon name="progress_activity" className="w-3 h-3 animate-spin" />
             Laster baneinfo...
           </div>
@@ -248,7 +248,7 @@ export default function RoundDetailPage() {
             <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
               <Icon name="flag" className="w-4 h-4 text-blue-500" />
             </div>
-            <h3 className="text-base font-semibold text-black">Pre-shot</h3>
+            <h3 className="text-base font-semibold text-on-surface">Pre-shot</h3>
           </div>
           <div className="space-y-4">
             <FormField label="Plan">
@@ -257,7 +257,7 @@ export default function RoundDetailPage() {
                 value={current.plan}
                 onChange={(e) => updateField("plan", e.target.value)}
                 placeholder="F.eks. Treff fairway høyre side"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </FormField>
             <FormField label="Target">
@@ -266,7 +266,7 @@ export default function RoundDetailPage() {
                 value={current.target}
                 onChange={(e) => updateField("target", e.target.value)}
                 placeholder="F.eks. Høyre kant av fairwaybunker"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </FormField>
             <div className="grid grid-cols-2 gap-4">
@@ -297,9 +297,9 @@ export default function RoundDetailPage() {
                 type="checkbox"
                 checked={current.routineDone}
                 onChange={(e) => updateField("routineDone", e.target.checked)}
-                className="w-5 h-5 rounded border-grey-200 text-black focus:ring-black"
+                className="w-5 h-5 rounded border-outline-variant/30 text-on-surface focus:ring-black"
               />
-              <span className="text-sm text-black">Rutine fullført</span>
+              <span className="text-sm text-on-surface">Rutine fullført</span>
             </label>
           </div>
         </PremiumCard>
@@ -310,7 +310,7 @@ export default function RoundDetailPage() {
             <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
               <Icon name="flag" className="w-4 h-4 text-purple-500" />
             </div>
-            <h3 className="text-base font-semibold text-black">Post-shot</h3>
+            <h3 className="text-base font-semibold text-on-surface">Post-shot</h3>
           </div>
           <div className="space-y-4">
             <FormField label="Resultat">
@@ -319,7 +319,7 @@ export default function RoundDetailPage() {
                 value={current.result}
                 onChange={(e) => updateField("result", e.target.value)}
                 placeholder="F.eks. Fairway, 145m til flagg"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </FormField>
             <SliderField
@@ -335,7 +335,7 @@ export default function RoundDetailPage() {
                 value={current.feeling}
                 onChange={(e) => updateField("feeling", e.target.value)}
                 placeholder="F.eks. Rolig og kontrollert"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </FormField>
             <div className="grid grid-cols-2 gap-4">
@@ -344,18 +344,18 @@ export default function RoundDetailPage() {
                   type="checkbox"
                   checked={current.accepted}
                   onChange={(e) => updateField("accepted", e.target.checked)}
-                  className="w-5 h-5 rounded border-grey-200 text-black focus:ring-black"
+                  className="w-5 h-5 rounded border-outline-variant/30 text-on-surface focus:ring-black"
                 />
-                <span className="text-sm text-black">Akseptert</span>
+                <span className="text-sm text-on-surface">Akseptert</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={current.doubt}
                   onChange={(e) => updateField("doubt", e.target.checked)}
-                  className="w-5 h-5 rounded border-grey-200 text-black focus:ring-black"
+                  className="w-5 h-5 rounded border-outline-variant/30 text-on-surface focus:ring-black"
                 />
-                <span className="text-sm text-black">Tvil</span>
+                <span className="text-sm text-on-surface">Tvil</span>
               </label>
             </div>
           </div>
@@ -368,7 +368,7 @@ export default function RoundDetailPage() {
 function FormField({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
+      <label className="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1.5">
         {label}
       </label>
       {children}
@@ -392,10 +392,10 @@ function SliderField({
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <label className="text-xs font-semibold uppercase tracking-wider text-grey-400">
+        <label className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
           {label}
         </label>
-        <span className="text-sm font-semibold text-black tabular-nums">{value}</span>
+        <span className="text-sm font-semibold text-on-surface tabular-nums">{value}</span>
       </div>
       <input
         type="range"

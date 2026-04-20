@@ -72,10 +72,10 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
     <PremiumCard delay={delay} className="h-full" radius="large">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-sm font-semibold tracking-[-0.01em] text-black">
+          <p className="text-sm font-semibold tracking-[-0.01em] text-on-surface">
             Ukens plan
           </p>
-          <p className="text-[11px] text-grey-400">
+          <p className="text-[11px] text-on-surface-variant">
             {doneCount} av {PLAN_ITEMS.length} fullført
           </p>
         </div>
@@ -85,7 +85,7 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
         {PLAN_ITEMS.map((item) => (
           <div
             key={item.name}
-            className="flex items-center gap-2.5 rounded-xl border border-grey-200 bg-grey-50 px-3 py-2.5 transition-colors duration-200 hover:border-grey-300 hover:bg-grey-50"
+            className="flex items-center gap-2.5 rounded-xl border border-outline-variant/30 bg-surface px-3 py-2.5 transition-colors duration-200 hover:border-outline-variant/50 hover:bg-surface"
             style={{ opacity: item.dimmed ? 0.4 : 1 }}
           >
             <div
@@ -110,7 +110,7 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
               >
                 {item.name}
               </p>
-              <p className="text-[11px] text-grey-400">
+              <p className="text-[11px] text-on-surface-variant">
                 {item.meta}
               </p>
             </div>
@@ -118,8 +118,8 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
             <div
               className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 text-[10px] transition-colors ${
                 item.done
-                  ? "border-success bg-success text-white"
-                  : "border-grey-200"
+                  ? "border-success bg-success text-surface"
+                  : "border-outline-variant/30"
               }`}
             >
               {item.done && <Icon name="check" className="h-2.5 w-2.5" strokeWidth={3} />}

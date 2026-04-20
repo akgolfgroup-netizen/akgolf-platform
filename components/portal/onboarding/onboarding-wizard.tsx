@@ -68,7 +68,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-container-lowest">
       <div className="w-full max-w-lg">
         {/* Progress indicator */}
         <div className="flex items-center justify-center gap-2 mb-8">
@@ -127,7 +127,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                           className="w-5 h-5 rounded-full flex items-center justify-center"
                           style={{ background: "var(--color-brand)" }}
                         >
-                          <Icon name="check" className="w-3 h-3 text-white" />
+                          <Icon name="check" className="w-3 h-3 text-surface" />
                         </div>
                       ) : (
                         <div
@@ -226,7 +226,7 @@ export function OnboardingWizard({ onComplete, onSkip }: OnboardingWizardProps) 
                           className="w-5 h-5 rounded-full flex items-center justify-center"
                           style={{ background: "var(--color-brand)" }}
                         >
-                          <Icon name="check" className="w-3 h-3 text-white" />
+                          <Icon name="check" className="w-3 h-3 text-surface" />
                         </div>
                       ) : (
                         <div

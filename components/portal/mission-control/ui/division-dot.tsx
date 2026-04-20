@@ -8,7 +8,7 @@ interface DivisionDotProps {
 }
 
 const divisionColors: Record<DivisionColor, string> = {
-  coaching: "bg-black",
+  coaching: "bg-on-surface",
   junior: "bg-warning",
   gfgk: "bg-success",
 };

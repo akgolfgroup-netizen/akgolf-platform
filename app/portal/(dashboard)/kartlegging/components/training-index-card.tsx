@@ -52,8 +52,8 @@ export function TrainingIndexCard({ index }: TrainingIndexCardProps) {
   ];
 
   return (
-    <div className="rounded-xl bg-white shadow-card p-5">
-      <MonoLabel size="xs" uppercase className="text-grey-400 block">
+    <div className="rounded-xl bg-surface-container-lowest shadow-card p-5">
+      <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
         Treningsindeks
       </MonoLabel>
 
@@ -64,10 +64,10 @@ export function TrainingIndexCard({ index }: TrainingIndexCardProps) {
             className="flex items-center justify-between py-3"
           >
             <div>
-              <div className="text-sm text-grey-700 font-medium">{r.label}</div>
-              <div className="text-[11px] text-grey-400 mt-0.5">{r.sublabel}</div>
+              <div className="text-sm text-on-surface-variant/90 font-medium">{r.label}</div>
+              <div className="text-[11px] text-on-surface-variant mt-0.5">{r.sublabel}</div>
             </div>
-            <span className="text-sm font-semibold tabular-nums text-grey-900">
+            <span className="text-sm font-semibold tabular-nums text-on-surface">
               {r.value}
             </span>
           </div>

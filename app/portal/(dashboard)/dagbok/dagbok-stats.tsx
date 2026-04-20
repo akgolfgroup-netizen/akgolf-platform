@@ -127,9 +127,9 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
                 key={idx}
                 className={cn(
                   "flex-1 h-9 rounded-lg flex items-center justify-center text-[11px] font-bold transition-colors",
-                  d.active && "bg-primary text-white",
+                  d.active && "bg-primary text-surface",
                   d.today && !d.active &&
-                    "bg-white border-2 border-primary text-primary",
+                    "bg-surface-container-lowest border-2 border-primary text-primary",
                   !d.active && !d.today &&
                     "bg-surface-container border border-outline-variant text-outline"
                 )}

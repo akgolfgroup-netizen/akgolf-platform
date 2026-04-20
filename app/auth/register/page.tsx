@@ -39,26 +39,26 @@ export default function RegisterPage() {
 
   if (sent) {
     return (
-      <div className="min-h-screen bg-grey-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-surface flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md"
         >
-          <Card className="p-8 bg-white border-black/10 text-center">
+          <Card className="p-8 bg-surface-container-lowest border-black/10 text-center">
             <div className="w-16 h-16 bg-success/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <Icon name="check"Circle2 className="w-8 h-8 text-success" />
             </div>
-            <h1 className="text-2xl font-bold text-black mb-2">
+            <h1 className="text-2xl font-bold text-on-surface mb-2">
               Sjekk e-posten din
             </h1>
-            <p className="text-grey-400 mb-4">
+            <p className="text-on-surface-variant mb-4">
               Vi har sendt en bekreftelseslenke til din e-postadresse.
               Klikk lenken for å aktivere kontoen din.
             </p>
             <button
               onClick={() => router.push("/auth/login")}
-              className="text-black hover:underline text-sm font-medium"
+              className="text-on-surface hover:underline text-sm font-medium"
             >
               Gå til innlogging →
             </button>
@@ -69,30 +69,30 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-grey-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-surface flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <Card className="p-8 bg-white border-black/10">
+        <Card className="p-8 bg-surface-container-lowest border-black/10">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Icon name="bolt" className="w-8 h-8 text-accent-cta" />
+            <div className="w-16 h-16 bg-on-surface rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Icon name="bolt" className="w-8 h-8 text-secondary-fixed" />
             </div>
-            <h1 className="text-2xl font-bold text-black">Opprett konto</h1>
-            <p className="text-grey-400">Bli med i AK Golf Academy</p>
+            <h1 className="text-2xl font-bold text-on-surface">Opprett konto</h1>
+            <p className="text-on-surface-variant">Bli med i AK Golf Academy</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-black mb-1">
+              <label className="block text-sm font-medium text-on-surface mb-1">
                 Navn
               </label>
               <div className="relative">
-                <Icon name="person" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="person" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
                 <input
                   name="name"
                   type="text"
@@ -100,7 +100,7 @@ export default function RegisterPage() {
                   required
                   minLength={2}
                   autoComplete="name"
-                  className={`w-full pl-10 pr-4 py-3 bg-grey-50 border rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-accent-cta ${
+                  className={`w-full pl-10 pr-4 py-3 bg-surface border rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta ${
                     fieldError === "name" ? "border-red-500" : "border-black/10"
                   }`}
                 />
@@ -109,18 +109,18 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-black mb-1">
+              <label className="block text-sm font-medium text-on-surface mb-1">
                 E-post
               </label>
               <div className="relative">
-                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
                 <input
                   name="email"
                   type="email"
                   placeholder="navn@eksempel.no"
                   required
                   autoComplete="email"
-                  className={`w-full pl-10 pr-4 py-3 bg-grey-50 border rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-accent-cta ${
+                  className={`w-full pl-10 pr-4 py-3 bg-surface border rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta ${
                     fieldError === "email" ? "border-red-500" : "border-black/10"
                   }`}
                 />
@@ -129,28 +129,28 @@ export default function RegisterPage() {
 
             {/* Phone */}
             <div>
-              <label className="block text-sm font-medium text-black mb-1">
-                Telefon <span className="text-grey-400 font-normal">(valgfritt)</span>
+              <label className="block text-sm font-medium text-on-surface mb-1">
+                Telefon <span className="text-on-surface-variant font-normal">(valgfritt)</span>
               </label>
               <div className="relative">
-                <Icon name="smartphone" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="smartphone" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
                 <input
                   name="phone"
                   type="tel"
                   placeholder="+47 000 00 000"
                   autoComplete="tel"
-                  className="w-full pl-10 pr-4 py-3 bg-grey-50 border border-black/10 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-accent-cta"
+                  className="w-full pl-10 pr-4 py-3 bg-surface border border-black/10 rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta"
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-black mb-1">
+              <label className="block text-sm font-medium text-on-surface mb-1">
                 Passord
               </label>
               <div className="relative">
-                <Icon name="lock" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="lock" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
                 <input
                   name="password"
                   type="password"
@@ -158,7 +158,7 @@ export default function RegisterPage() {
                   required
                   minLength={8}
                   autoComplete="new-password"
-                  className={`w-full pl-10 pr-4 py-3 bg-grey-50 border rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-accent-cta ${
+                  className={`w-full pl-10 pr-4 py-3 bg-surface border rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta ${
                     fieldError === "password" ? "border-red-500" : "border-black/10"
                   }`}
                 />
@@ -172,17 +172,17 @@ export default function RegisterPage() {
                 name="acceptTerms"
                 type="checkbox"
                 required
-                className={`mt-1 h-4 w-4 rounded border-grey-300 text-primary focus:ring-accent-cta ${
+                className={`mt-1 h-4 w-4 rounded border-outline-variant/50 text-primary focus:ring-accent-cta ${
                   fieldError === "acceptTerms" ? "border-red-500" : ""
                 }`}
               />
-              <label htmlFor="acceptTerms" className="text-sm text-grey-500 leading-relaxed">
+              <label htmlFor="acceptTerms" className="text-sm text-on-surface-variant/80 leading-relaxed">
                 Jeg aksepterer{" "}
-                <a href="/vilkår" className="text-black hover:underline font-medium">
+                <a href="/vilkår" className="text-on-surface hover:underline font-medium">
                   vilkårene
                 </a>{" "}
                 og{" "}
-                <a href="/personvern" className="text-black hover:underline font-medium">
+                <a href="/personvern" className="text-on-surface hover:underline font-medium">
                   personvernerklæringen
                 </a>
                 .
@@ -198,7 +198,7 @@ export default function RegisterPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-black hover:bg-black/90 text-white font-bold py-3 rounded-xl"
+              className="w-full bg-on-surface hover:bg-on-surface/90 text-surface font-bold py-3 rounded-xl"
             >
               {loading ? "Oppretter konto..." : "Opprett konto"}
             </Button>
@@ -206,9 +206,9 @@ export default function RegisterPage() {
 
           {/* Footer */}
           <div className="mt-6 pt-6 border-t border-black/10 text-center">
-            <p className="text-sm text-grey-400">
+            <p className="text-sm text-on-surface-variant">
               Har du allerede konto?{" "}
-              <a href="/auth/login" className="text-black hover:underline font-medium">
+              <a href="/auth/login" className="text-on-surface hover:underline font-medium">
                 Logg inn
               </a>
             </p>

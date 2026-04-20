@@ -80,26 +80,26 @@ export default function LoginPage() {
 
   if (sent) {
     return (
-      <div className="min-h-screen bg-grey-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-surface flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md"
         >
-          <Card className="p-8 bg-white border-black/10 text-center">
-            <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Icon name="mail" className="w-8 h-8 text-accent-cta" />
+          <Card className="p-8 bg-surface-container-lowest border-black/10 text-center">
+            <div className="w-16 h-16 bg-on-surface rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Icon name="mail" className="w-8 h-8 text-secondary-fixed" />
             </div>
-            <h1 className="text-2xl font-bold text-black mb-2">
+            <h1 className="text-2xl font-bold text-on-surface mb-2">
               Sjekk e-posten din
             </h1>
-            <p className="text-grey-400 mb-4">
+            <p className="text-on-surface-variant mb-4">
               Vi har sendt en innloggingslenke til{" "}
-              <strong className="text-black">{email}</strong>
+              <strong className="text-on-surface">{email}</strong>
             </p>
             <button
               onClick={() => setSent(false)}
-              className="text-black hover:underline text-sm font-medium"
+              className="text-on-surface hover:underline text-sm font-medium"
             >
               ← Tilbake til innlogging
             </button>
@@ -110,31 +110,31 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-grey-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-surface flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <Card className="p-8 bg-white border-black/10">
+        <Card className="p-8 bg-surface-container-lowest border-black/10">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Icon name="bolt" className="w-8 h-8 text-accent-cta" />
+            <div className="w-16 h-16 bg-on-surface rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Icon name="bolt" className="w-8 h-8 text-secondary-fixed" />
             </div>
-            <h1 className="text-2xl font-bold text-black">AK Golf Academy</h1>
-            <p className="text-grey-400">Logg inn på din konto</p>
+            <h1 className="text-2xl font-bold text-on-surface">AK Golf Academy</h1>
+            <p className="text-on-surface-variant">Logg inn på din konto</p>
           </div>
 
           {/* Mode Toggle */}
-          <div className="flex rounded-lg p-1 mb-6 bg-grey-50">
+          <div className="flex rounded-lg p-1 mb-6 bg-surface">
             <button
               type="button"
               onClick={() => setMode("password")}
               className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer ${
                 mode === "password"
-                  ? "bg-white text-black shadow-sm"
-                  : "bg-transparent text-grey-400"
+                  ? "bg-surface-container-lowest text-on-surface shadow-sm"
+                  : "bg-transparent text-on-surface-variant"
               }`}
             >
               Passord
@@ -144,8 +144,8 @@ export default function LoginPage() {
               onClick={() => setMode("magic")}
               className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer ${
                 mode === "magic"
-                  ? "bg-white text-black shadow-sm"
-                  : "bg-transparent text-grey-400"
+                  ? "bg-surface-container-lowest text-on-surface shadow-sm"
+                  : "bg-transparent text-on-surface-variant"
               }`}
             >
               Magic Link
@@ -158,11 +158,11 @@ export default function LoginPage() {
           >
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-black mb-1">
+              <label className="block text-sm font-medium text-on-surface mb-1">
                 E-post
               </label>
               <div className="relative">
-                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
                 <input
                   type="email"
                   value={email}
@@ -170,7 +170,7 @@ export default function LoginPage() {
                   placeholder="navn@eksempel.no"
                   required
                   autoComplete="email"
-                  className="w-full pl-10 pr-4 py-3 bg-grey-50 border border-black/10 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-accent-cta"
+                  className="w-full pl-10 pr-4 py-3 bg-surface border border-black/10 rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta"
                 />
               </div>
             </div>
@@ -178,11 +178,11 @@ export default function LoginPage() {
             {/* Password (only in password mode) */}
             {mode === "password" && (
               <div>
-                <label className="block text-sm font-medium text-black mb-1">
+                <label className="block text-sm font-medium text-on-surface mb-1">
                   Passord
                 </label>
                 <div className="relative">
-                  <Icon name="lock" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                  <Icon name="lock" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -190,12 +190,12 @@ export default function LoginPage() {
                     placeholder="••••••••"
                     required={mode === "password"}
                     autoComplete="current-password"
-                    className="w-full pl-10 pr-10 py-3 bg-grey-50 border border-black/10 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-accent-cta"
+                    className="w-full pl-10 pr-10 py-3 bg-surface border border-black/10 rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-grey-400 hover:text-black"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface"
                   >
                     {showPassword ? (
                       <Icon name="visibility"Off className="w-4 h-4" />
@@ -216,7 +216,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-black hover:bg-black/90 text-white font-bold py-3 rounded-xl"
+              className="w-full bg-on-surface hover:bg-on-surface/90 text-surface font-bold py-3 rounded-xl"
             >
               {loading
                 ? mode === "password"
@@ -233,7 +233,7 @@ export default function LoginPage() {
             <div className="mt-4 text-center">
               <a
                 href="/auth/forgot-password"
-                className="text-black hover:underline text-sm"
+                className="text-on-surface hover:underline text-sm"
               >
                 Glemt passord?
               </a>
@@ -242,9 +242,9 @@ export default function LoginPage() {
 
           {/* Footer */}
           <div className="mt-6 pt-6 border-t border-black/10 text-center">
-            <p className="text-sm text-grey-400">
+            <p className="text-sm text-on-surface-variant">
               Har du ikke konto?{" "}
-              <a href="/auth/register" className="text-black hover:underline font-medium">
+              <a href="/auth/register" className="text-on-surface hover:underline font-medium">
                 Registrer deg
               </a>
             </p>

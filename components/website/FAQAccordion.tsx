@@ -9,8 +9,8 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 
   return (
     <div
-      className={`border-b border-grey-200 transition-[border-color,background-color] duration-300 rounded-xl hover:bg-grey-100/50 ${
-        open ? "border-l-2 border-l-black pl-4 -ml-4 bg-grey-100/50" : "border-l-2 border-l-transparent pl-4 -ml-4"
+      className={`border-b border-outline-variant/30 transition-[border-color,background-color] duration-300 rounded-xl hover:bg-surface-container/50 ${
+        open ? "border-l-2 border-l-black pl-4 -ml-4 bg-surface-container/50" : "border-l-2 border-l-transparent pl-4 -ml-4"
       }`}
     >
       <button
@@ -20,7 +20,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
         aria-controls={answerId}
       >
         <span className={`font-display text-base font-semibold pr-8 transition-colors ${
-          open ? "text-black" : "text-grey-700 group-hover:text-black"
+          open ? "text-on-surface" : "text-on-surface-variant/90 group-hover:text-on-surface"
         }`}>
           {q}
         </span>
@@ -32,7 +32,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className={`transition-[transform,color] duration-300 ${open ? "rotate-45 text-black" : "text-grey-400"}`}
+            className={`transition-[transform,color] duration-300 ${open ? "rotate-45 text-on-surface" : "text-on-surface-variant"}`}
             aria-hidden="true"
           >
             <line x1="12" y1="5" x2="12" y2="19" />
@@ -50,7 +50,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="overflow-hidden"
           >
-            <p className="text-sm text-grey-500 leading-relaxed pb-5 pr-12">
+            <p className="text-sm text-on-surface-variant/80 leading-relaxed pb-5 pr-12">
               {a}
             </p>
           </motion.div>

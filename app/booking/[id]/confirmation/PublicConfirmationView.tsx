@@ -27,9 +27,9 @@ export function PublicConfirmationView({
     <div className="min-h-screen py-12 px-4 bg-surface">
       <div className="max-w-2xl mx-auto">
         {/* Success Header */}
-        <div className="rounded-3xl p-10 mb-8 text-center border bg-white border-grey-200 shadow-card">
+        <div className="rounded-3xl p-10 mb-8 text-center border bg-surface-container-lowest border-outline-variant/30 shadow-card">
           <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-primary">
-            <Icon name="check" className="w-10 h-10 text-white" />
+            <Icon name="check" className="w-10 h-10 text-surface" />
           </div>
           <h1 className="text-3xl font-semibold mb-3 text-primary">
             Booking bekreftet!
@@ -40,8 +40,8 @@ export function PublicConfirmationView({
         </div>
 
         {/* Booking Details */}
-        <div className="rounded-3xl p-8 mb-8 border bg-white border-grey-200 shadow-card">
-          <h2 className="text-xl font-semibold mb-6 pb-4 border-b text-primary border-grey-200">
+        <div className="rounded-3xl p-8 mb-8 border bg-surface-container-lowest border-outline-variant/30 shadow-card">
+          <h2 className="text-xl font-semibold mb-6 pb-4 border-b text-primary border-outline-variant/30">
             Bookingdetaljer
           </h2>
 
@@ -89,7 +89,7 @@ export function PublicConfirmationView({
         </div>
 
         {/* Email Notice */}
-        <div className="rounded-2xl p-6 mb-6 border bg-surface border-grey-200">
+        <div className="rounded-2xl p-6 mb-6 border bg-surface border-outline-variant/30">
           <div className="flex items-start gap-4">
             <Icon name="mail" className="w-6 h-6 shrink-0 mt-0.5 text-primary" />
             <div>
@@ -114,7 +114,7 @@ export function PublicConfirmationView({
         </div>
 
         {/* Login CTA */}
-        <div className="rounded-2xl p-6 border bg-white border-grey-200">
+        <div className="rounded-2xl p-6 border bg-surface-container-lowest border-outline-variant/30">
           <div className="flex items-start gap-4">
             <Icon name="login" className="w-6 h-6 shrink-0 mt-0.5 text-primary" />
             <div className="flex-1">
@@ -127,7 +127,7 @@ export function PublicConfirmationView({
               </p>
               <Link
                 href="/portal/login"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity duration-300 bg-primary text-white"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity duration-300 bg-primary text-surface"
               >
                 <Icon name="login" className="w-4 h-4" />
                 Logg inn på portalen

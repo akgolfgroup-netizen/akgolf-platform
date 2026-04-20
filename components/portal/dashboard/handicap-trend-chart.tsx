@@ -46,12 +46,12 @@ export function HandicapTrendChart({ data }: HandicapTrendChartProps) {
   const improvement = startHcp - currentHcp;
 
   return (
-    <div className="flex h-full flex-col rounded-xl border border-grey-200 bg-white p-5 shadow-card">
+    <div className="flex h-full flex-col rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-5 shadow-card">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Handicap-utvikling</MonoLabel>
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Handicap-utvikling</MonoLabel>
           <div className="mt-1 flex items-baseline gap-2">
-            <span className="text-[32px] font-semibold tracking-tight text-black">
+            <span className="text-[32px] font-semibold tracking-tight text-on-surface">
               {currentHcp.toFixed(1)}
             </span>
             {improvement > 0 && (

@@ -45,7 +45,7 @@ function StatRow({
   avgIntensity,
 }: StatRowProps) {
   return (
-    <div className="flex items-center justify-between py-3 border-b border-grey-100 last:border-0">
+    <div className="flex items-center justify-between py-3 border-b border-outline-variant/20 last:border-0">
       <div className="flex items-center gap-3">
         <div className={cn(
           "w-10 h-10 rounded-xl flex items-center justify-center",
@@ -53,15 +53,15 @@ function StatRow({
             ? "bg-orange-100 text-orange-600"
             : color === "intensity" && avgIntensity >= 4
               ? "bg-green-100 text-green-600"
-              : "bg-grey-50 text-grey-400"
+              : "bg-surface text-on-surface-variant"
         )}>
           <Icon className="w-5 h-5" />
         </div>
         <div>
-          <p className="text-xs text-grey-400">{label}</p>
-          <p className="text-lg font-semibold text-black tabular-nums">
+          <p className="text-xs text-on-surface-variant">{label}</p>
+          <p className="text-lg font-semibold text-on-surface tabular-nums">
             {value}
-            <span className="text-sm font-normal text-grey-400 ml-1">{unit}</span>
+            <span className="text-sm font-normal text-on-surface-variant ml-1">{unit}</span>
           </p>
         </div>
       </div>
@@ -76,7 +76,7 @@ function StatRow({
               ? "bg-green-100 text-green-700"
               : change < 0
                 ? "bg-red-100 text-red-700"
-                : "bg-grey-100 text-grey-500"
+                : "bg-surface-container text-on-surface-variant/80"
           )}
         >
           {change > 0 ? (
@@ -143,11 +143,11 @@ export function WeeklyStats({ sessions }: WeeklyStatsProps) {
     <PremiumCard padding="lg">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Denne uken</MonoLabel>
-          <p className="text-xs text-grey-400 mt-1">{stats.weekLabel}</p>
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Denne uken</MonoLabel>
+          <p className="text-xs text-on-surface-variant mt-1">{stats.weekLabel}</p>
         </div>
-        <div className="w-10 h-10 rounded-xl bg-accent-cta/20 flex items-center justify-center">
-          <Icon name="monitoring" className="w-5 h-5 text-black" />
+        <div className="w-10 h-10 rounded-xl bg-secondary-fixed/20 flex items-center justify-center">
+          <Icon name="monitoring" className="w-5 h-5 text-on-surface" />
         </div>
       </div>
 
@@ -180,19 +180,19 @@ export function WeeklyStats({ sessions }: WeeklyStatsProps) {
       </div>
 
       {/* Progress indicator */}
-      <div className="mt-4 pt-4 border-t border-grey-200">
+      <div className="mt-4 pt-4 border-t border-outline-variant/30">
         <div className="flex items-center justify-between text-xs mb-2">
-          <span className="text-grey-400">Ukentlig mål</span>
-          <span className="font-medium text-black">{stats.count} / 4 økter</span>
+          <span className="text-on-surface-variant">Ukentlig mål</span>
+          <span className="font-medium text-on-surface">{stats.count} / 4 økter</span>
         </div>
-        <div className="h-2 bg-grey-100 rounded-full overflow-hidden">
+        <div className="h-2 bg-surface-container rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${Math.min((stats.count / 4) * 100, 100)}%` }}
             transition={{ duration: 0.8, ease: EASE_APPLE, delay: 0.2 }}
             className={cn(
               "h-full rounded-full",
-              stats.count >= 4 ? "bg-accent-cta" : "bg-[#16A34A]"
+              stats.count >= 4 ? "bg-secondary-fixed" : "bg-[#16A34A]"
             )}
           />
         </div>

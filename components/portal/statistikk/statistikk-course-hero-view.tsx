@@ -62,8 +62,8 @@ export function StatistikkCourseHeroView({
         {/* Hero label top */}
         <div className="absolute top-6 left-8 z-10 flex items-center gap-3 flex-wrap">
           <HeroLabel>
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-cta shadow-[0_0_12px_#D1F843]" />
-            <strong className="text-white font-semibold">Statistikk</strong>
+            <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed shadow-[0_0_12px_#D1F843]" />
+            <strong className="text-surface font-semibold">Statistikk</strong>
             <HeroLabelSeparator />
             <span>{periodLabel}</span>
           </HeroLabel>
@@ -91,7 +91,7 @@ export function StatistikkCourseHeroView({
         <div className="absolute inset-x-8 bottom-8 z-10 grid grid-cols-[1.3fr_1fr_1fr] gap-4">
           {/* Summary */}
           <GlassPanel padding="md">
-            <MonoLabel size="xs" uppercase className="text-white/45 block mb-3">
+            <MonoLabel size="xs" uppercase className="text-surface/45 block mb-3">
               ◆ Performance · {periodLabel}
             </MonoLabel>
             <div className="flex items-baseline gap-3">
@@ -100,16 +100,16 @@ export function StatistikkCourseHeroView({
                   ? `${avgSgTotal > 0 ? "+" : ""}${avgSgTotal.toFixed(2)}`
                   : "—"}
               </span>
-              <MonoLabel size="sm" className="text-white/55">
+              <MonoLabel size="sm" className="text-surface/55">
                 SG/runde
               </MonoLabel>
             </div>
             <div className="flex items-center gap-3 mt-4">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent-cta/18 text-accent-cta text-[12px] font-semibold">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed/18 text-secondary-fixed text-[12px] font-semibold">
                 <Icon name="trending_up" className="w-3 h-3" />
                 Snittscore {avgScore != null ? avgScore.toFixed(1) : "—"}
               </span>
-              <MonoLabel size="xs" className="text-white/45">
+              <MonoLabel size="xs" className="text-surface/45">
                 {roundCount ?? 0} runder
               </MonoLabel>
             </div>
@@ -118,7 +118,7 @@ export function StatistikkCourseHeroView({
           {/* SG per kategori — panel rows */}
           <GlassPanel padding="none">
             <div className="px-5 pt-4 pb-2">
-              <MonoLabel size="xs" uppercase className="text-white/45">
+              <MonoLabel size="xs" uppercase className="text-surface/45">
                 SG per område
               </MonoLabel>
             </div>
@@ -159,7 +159,7 @@ export function StatistikkCourseHeroView({
 
           {/* Actions */}
           <GlassPanel padding="md">
-            <MonoLabel size="xs" uppercase className="text-white/45 block mb-4">
+            <MonoLabel size="xs" uppercase className="text-surface/45 block mb-4">
               ◆ Handlinger
             </MonoLabel>
             <div className="flex flex-col gap-2">

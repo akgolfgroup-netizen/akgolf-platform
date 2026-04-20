@@ -12,7 +12,7 @@ export default function CoachingHistorikkLoading() {
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-xl border border-outline-variant p-5"
+            className="bg-surface-container-lowest rounded-xl border border-outline-variant p-5"
           >
             <div className="flex justify-between items-start mb-3">
               <div className="space-y-2">

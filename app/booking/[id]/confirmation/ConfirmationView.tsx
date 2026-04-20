@@ -74,7 +74,7 @@ export function ConfirmationView({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-          className="rounded-3xl p-8 mb-8 border bg-white border-grey-200 shadow-card"
+          className="rounded-3xl p-8 mb-8 border bg-surface-container-lowest border-outline-variant/30 shadow-card"
         >
           {/* Decorative top line */}
           <div className="absolute top-0 left-8 right-8 h-1 rounded-full bg-primary" />
@@ -150,7 +150,7 @@ export function ConfirmationView({
           </div>
 
           {/* Divider */}
-          <div className="my-6 h-px bg-grey-200" />
+          <div className="my-6 h-px bg-surface-variant" />
 
           {/* Price & Payment */}
           <div className="flex items-center justify-between">
@@ -198,7 +198,7 @@ export function ConfirmationView({
         >
           <Link
             href="/portal/bookinger"
-            className="flex items-center justify-center w-full px-6 py-4 rounded-2xl text-base font-semibold transition-opacity duration-300 bg-primary text-white shadow-md"
+            className="flex items-center justify-center w-full px-6 py-4 rounded-2xl text-base font-semibold transition-opacity duration-300 bg-primary text-surface shadow-md"
           >
             Se mine bookinger
           </Link>

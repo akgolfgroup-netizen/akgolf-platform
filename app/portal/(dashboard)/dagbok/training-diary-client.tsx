@@ -141,10 +141,10 @@ export function TrainingDiaryClient({
         className="space-y-3"
       >
         <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Din treningsdagbok</MonoLabel>
-        <h1 className="text-2xl font-bold text-black">
+        <h1 className="text-2xl font-bold text-on-surface">
           Logg og{" "}
-          <span className="font-serif italic text-black font-normal">spor</span>
-          <span className="text-accent-cta">.</span>
+          <span className="font-serif italic text-on-surface font-normal">spor</span>
+          <span className="text-secondary-fixed">.</span>
         </h1>
         <p className="text-[13px] text-on-surface-variant max-w-xl">
           Hold oversikt over aktiviteten din. Hver økt teller, og hver streak er et skritt nærmere målet.
@@ -193,7 +193,7 @@ export function TrainingDiaryClient({
             className={cn(
               "inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
               activeView === view.id
-                ? "bg-black text-white shadow-sm"
+                ? "bg-on-surface text-surface shadow-sm"
                 : "text-on-surface-variant hover:text-on-surface"
             )}
           >
@@ -206,10 +206,10 @@ export function TrainingDiaryClient({
       {isEmpty ? (
         <PremiumCard variant="default" padding="lg" className="text-center py-16">
           <div className="flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-black/10">
-              <Icon name="bar_chart" className="w-8 h-8 text-black" strokeWidth={1.75} />
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-on-surface/10">
+              <Icon name="bar_chart" className="w-8 h-8 text-on-surface" strokeWidth={1.75} />
             </div>
-            <p className="text-[20px] font-semibold text-black mb-2">Din treningsdagbok er tom</p>
+            <p className="text-[20px] font-semibold text-on-surface mb-2">Din treningsdagbok er tom</p>
             <p className="text-[13px] text-on-surface-variant mb-6 max-w-md leading-relaxed">
               Logg din første treningsøkt for å komme i gang. Alt du logger blir automatisk en del av fremdriften din.
             </p>

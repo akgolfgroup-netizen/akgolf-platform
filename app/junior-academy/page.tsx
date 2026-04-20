@@ -26,7 +26,7 @@ export default function JuniorPage() {
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-black focus:text-white focus:rounded-lg"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-on-surface focus:text-surface focus:rounded-lg"
       >
         Hopp til hovedinnhold
       </a>
@@ -58,7 +58,7 @@ export default function JuniorPage() {
         />
 
         {/* 1. Hero */}
-        <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-black grain-overlay">
+        <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-on-surface grain-overlay">
           <div className="absolute inset-0 pointer-events-none">
             <Image
               src={JUNIOR_HERO_V2.heroImage}
@@ -76,13 +76,13 @@ export default function JuniorPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [...EASE_ENTRANCE] }}
             >
-              <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/60 font-medium">
+              <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-surface/60 font-medium">
                 {JUNIOR_HERO_V2.label}
               </span>
             </motion.div>
 
             <motion.h1
-              className="text-[48px] font-extrabold leading-[1.1] tracking-tight text-white max-w-3xl mt-6 whitespace-pre-line"
+              className="text-[48px] font-extrabold leading-[1.1] tracking-tight text-surface max-w-3xl mt-6 whitespace-pre-line"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -95,7 +95,7 @@ export default function JuniorPage() {
             </motion.h1>
 
             <motion.p
-              className="text-base text-white/60 max-w-2xl leading-relaxed mt-6"
+              className="text-base text-surface/60 max-w-2xl leading-relaxed mt-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -119,13 +119,13 @@ export default function JuniorPage() {
             >
               <Link
                 href="#apply"
-                className="px-7 py-3.5 rounded-[20px] bg-primary text-white text-sm font-semibold hover:bg-primary-alt transition-colors"
+                className="px-7 py-3.5 rounded-[20px] bg-primary text-surface text-sm font-semibold hover:bg-primary-alt transition-colors"
               >
                 {JUNIOR_HERO_V2.ctaPrimary} &rarr;
               </Link>
               <Link
                 href="#age-groups"
-                className="px-7 py-3.5 rounded-[20px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
+                className="px-7 py-3.5 rounded-[20px] border border-white/30 text-surface text-sm font-semibold hover:bg-surface-container-lowest/10 transition-colors"
               >
                 {JUNIOR_HERO_V2.ctaSecondary} &rarr;
               </Link>
@@ -134,7 +134,7 @@ export default function JuniorPage() {
         </section>
 
         {/* 2. AK Golf Junior Academy program */}
-        <section className="py-24 md:py-32 bg-white">
+        <section className="py-24 md:py-32 bg-surface-container-lowest">
           <div className="w-container">
             <RevealOnScroll>
               <div className="max-w-3xl mx-auto text-center">
@@ -142,19 +142,19 @@ export default function JuniorPage() {
                 <h2 className="w-heading-lg mt-4 mb-4">
                   {JUNIOR_ACADEMY_PROGRAM.heading}
                 </h2>
-                <p className="text-grey-400 leading-relaxed max-w-xl mx-auto mb-8">
+                <p className="text-on-surface-variant leading-relaxed max-w-xl mx-auto mb-8">
                   {JUNIOR_ACADEMY_PROGRAM.description}
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10">
                   <div className="text-center">
-                    <p className="text-3xl md:text-4xl font-bold text-black">
+                    <p className="text-3xl md:text-4xl font-bold text-on-surface">
                       {JUNIOR_ACADEMY_PROGRAM.price}
                     </p>
                   </div>
-                  <div className="hidden sm:block w-px h-10 bg-grey-200" />
+                  <div className="hidden sm:block w-px h-10 bg-surface-variant" />
                   <div className="text-center">
-                    <p className="text-sm text-grey-400">
+                    <p className="text-sm text-on-surface-variant">
                       {JUNIOR_ACADEMY_PROGRAM.capacity}
                     </p>
                   </div>
@@ -162,7 +162,7 @@ export default function JuniorPage() {
 
                 <Link
                   href="#apply"
-                  className="inline-flex px-8 py-4 rounded-[20px] bg-primary text-white text-sm font-semibold hover:bg-primary-alt transition-colors"
+                  className="inline-flex px-8 py-4 rounded-[20px] bg-primary text-surface text-sm font-semibold hover:bg-primary-alt transition-colors"
                 >
                   {JUNIOR_ACADEMY_PROGRAM.ctaLabel} &rarr;
                 </Link>
@@ -206,21 +206,21 @@ export default function JuniorPage() {
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {JUNIOR_AGE_GROUPS_V2.groups.map((group) => (
                 <StaggerItem key={group.ageRange}>
-                  <div className="bg-white rounded-2xl border border-grey-200 p-8 shadow-card hover:shadow-card-hover transition-shadow duration-300 h-full flex flex-col">
-                    <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-grey-400 font-medium">
+                  <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-8 shadow-card hover:shadow-card-hover transition-shadow duration-300 h-full flex flex-col">
+                    <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-on-surface-variant font-medium">
                       {group.ageRange}
                     </span>
-                    <h3 className="text-2xl font-bold text-black mt-3 mb-3">
+                    <h3 className="text-2xl font-bold text-on-surface mt-3 mb-3">
                       {group.name}
                     </h3>
-                    <p className="text-sm text-grey-400 leading-relaxed mb-6 flex-1">
+                    <p className="text-sm text-on-surface-variant leading-relaxed mb-6 flex-1">
                       {group.description}
                     </p>
-                    <div className="pt-4 border-t border-grey-200">
-                      <p className="text-xs text-grey-400">
+                    <div className="pt-4 border-t border-outline-variant/30">
+                      <p className="text-xs text-on-surface-variant">
                         {group.schedule}
                       </p>
-                      <p className="text-xs text-grey-300 mt-1">
+                      <p className="text-xs text-on-surface-variant/60 mt-1">
                         {group.maxParticipants}
                       </p>
                       {"note" in group && group.note && (
@@ -244,7 +244,7 @@ export default function JuniorPage() {
                   height={80}
                   className="opacity-60"
                 />
-                <p className="text-xs text-grey-400">
+                <p className="text-xs text-on-surface-variant">
                   I regi av GFGK Junior
                 </p>
               </div>
@@ -253,14 +253,14 @@ export default function JuniorPage() {
         </section>
 
         {/* 4. WANG Toppidrett */}
-        <section className="py-24 md:py-32 bg-black">
+        <section className="py-24 md:py-32 bg-on-surface">
           <div className="w-container">
             <RevealOnScroll>
               <div className="max-w-2xl mx-auto text-center">
-                <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/60 font-medium">
+                <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-surface/60 font-medium">
                   {JUNIOR_WANG_V2.label}
                 </span>
-                <h2 className="w-heading-lg text-white mt-4 mb-6">
+                <h2 className="w-heading-lg text-surface mt-4 mb-6">
                   {JUNIOR_WANG_V2.heading}
                 </h2>
                 <div className="flex justify-center mb-8">
@@ -272,14 +272,14 @@ export default function JuniorPage() {
                     className="opacity-80"
                   />
                 </div>
-                <p className="text-white/60 leading-relaxed mb-10">
+                <p className="text-surface/60 leading-relaxed mb-10">
                   {JUNIOR_WANG_V2.description}
                 </p>
                 <a
                   href="https://wang.no/toppidrett/fredrikstad"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex px-7 py-3.5 rounded-[20px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
+                  className="inline-flex px-7 py-3.5 rounded-[20px] border border-white/30 text-surface text-sm font-semibold hover:bg-surface-container-lowest/10 transition-colors"
                 >
                   {JUNIOR_WANG_V2.ctaLabel} &rarr;
                 </a>
@@ -289,26 +289,26 @@ export default function JuniorPage() {
         </section>
 
         {/* 5. CTA */}
-        <section id="apply" className="py-24 md:py-32 bg-white">
+        <section id="apply" className="py-24 md:py-32 bg-surface-container-lowest">
           <div className="w-container">
             <RevealOnScroll>
               <div className="max-w-2xl mx-auto text-center">
                 <h2 className="w-heading-lg mb-4">
                   {JUNIOR_CTA_V2.heading}
                 </h2>
-                <p className="text-grey-400 leading-relaxed mb-10">
+                <p className="text-on-surface-variant leading-relaxed mb-10">
                   {JUNIOR_CTA_V2.description}
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
                     href={JUNIOR_CTA_V2.ctaPrimaryHref}
-                    className="inline-flex px-7 py-3.5 rounded-[20px] bg-primary text-white text-sm font-semibold hover:bg-primary-alt transition-colors"
+                    className="inline-flex px-7 py-3.5 rounded-[20px] bg-primary text-surface text-sm font-semibold hover:bg-primary-alt transition-colors"
                   >
                     {JUNIOR_CTA_V2.ctaPrimary} &rarr;
                   </Link>
                   <a
                     href={JUNIOR_CTA_V2.ctaSecondaryHref}
-                    className="inline-flex px-7 py-3.5 rounded-[20px] border border-grey-200 text-text text-sm font-semibold hover:bg-grey-50 transition-colors"
+                    className="inline-flex px-7 py-3.5 rounded-[20px] border border-outline-variant/30 text-text text-sm font-semibold hover:bg-surface transition-colors"
                   >
                     {JUNIOR_CTA_V2.ctaSecondary} &rarr;
                   </a>

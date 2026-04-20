@@ -59,10 +59,10 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                   isActive(item.href)
                     ? variant === "light"
                       ? "text-[black] border-b-2 border-[accent-cta]"
-                      : "text-white border-b-2 border-[accent-cta]"
+                      : "text-surface border-b-2 border-[accent-cta]"
                     : variant === "light"
                       ? "text-[black]/70 hover:text-[black]"
-                      : "text-white/70 hover:text-white"
+                      : "text-surface/70 hover:text-surface"
                 }`}
               >
                 {item.label}
@@ -78,7 +78,7 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                 className={`font-medium uppercase tracking-wider text-sm transition-colors ${
                   variant === "light" 
                     ? "text-[black]/70 hover:text-[black]" 
-                    : "text-white/70 hover:text-white"
+                    : "text-surface/70 hover:text-surface"
                 }`}
               >
                 Logg inn
@@ -98,7 +98,7 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
             className={`md:hidden p-2 rounded-lg transition-colors ${
               variant === "light" 
                 ? "text-[black] hover:bg-[black]/5" 
-                : "text-white hover:bg-white/10"
+                : "text-surface hover:bg-surface-container-lowest/10"
             }`}
             aria-label="Toggle menu"
           >
@@ -147,10 +147,10 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                   isActive(item.href)
                     ? variant === "light"
                       ? "text-[black] border-l-2 border-[accent-cta] pl-3"
-                      : "text-white border-l-2 border-[accent-cta] pl-3"
+                      : "text-surface border-l-2 border-[accent-cta] pl-3"
                     : variant === "light"
                       ? "text-[black]/70 hover:text-[black]"
-                      : "text-white/70 hover:text-white"
+                      : "text-surface/70 hover:text-surface"
                 }`}
               >
                 {item.label}
@@ -164,7 +164,7 @@ export function Navbar({ variant = "light", showCTA = true }: NavbarProps) {
                   className={`block py-2 font-medium uppercase tracking-wider text-sm ${
                     variant === "light" 
                       ? "text-[black]/70" 
-                      : "text-white/70"
+                      : "text-surface/70"
                   }`}
                 >
                   Logg inn

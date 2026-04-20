@@ -27,7 +27,7 @@ export function PyramidTag({ level, className = "" }: TagProps & { level: Pyrami
   const pyramid = PYRAMID_LEVELS[level];
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold text-white ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold text-surface ${className}`}
       style={{ backgroundColor: pyramid.color }}
     >
       {pyramid.id}
@@ -39,7 +39,7 @@ export function AreaTag({ area, className = "" }: TagProps & { area: TrainingAre
   const areaData = TRAINING_AREAS[area];
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-primary text-white ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-primary text-surface ${className}`}
     >
       {areaData.name}
     </span>
@@ -50,7 +50,7 @@ export function LPhaseTag({ phase, className = "" }: TagProps & { phase: LPhase 
   const phaseData = L_PHASES[phase];
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-surface text-text border border-grey-200/50 ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-surface text-text border border-outline-variant/30/50 ${className}`}
       title={phaseData.description}
     >
       L-{phaseData.id}
@@ -109,7 +109,7 @@ export function LifeTag({ dimension, className = "" }: TagProps & { dimension: L
   const lifeData = LIFE_DIMENSIONS[dimension];
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium text-white ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium text-surface ${className}`}
       style={{ backgroundColor: lifeData.color }}
       title={lifeData.description}
     >
@@ -178,7 +178,7 @@ interface FormulaBarProps {
 export function FormulaBar({ sessionId, className = "" }: FormulaBarProps) {
   return (
     <div
-      className={`inline-flex items-center px-3 py-1.5 rounded-lg bg-surface border border-grey-200/50 font-mono text-xs text-text ${className}`}
+      className={`inline-flex items-center px-3 py-1.5 rounded-lg bg-surface border border-outline-variant/30/50 font-mono text-xs text-text ${className}`}
     >
       <span className="text-primary font-semibold mr-1">AK</span>
       <span>{sessionId}</span>

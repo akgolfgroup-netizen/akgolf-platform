@@ -38,10 +38,10 @@ export function DesignPreviewClient() {
         <MonoLabel size="xs" uppercase className="text-primary">
           ◆ Design System v3.1
         </MonoLabel>
-        <h1 className="text-4xl font-bold tracking-tight text-grey-900 mt-3">
+        <h1 className="text-4xl font-bold tracking-tight text-on-surface mt-3">
           Pattern Preview
         </h1>
-        <p className="text-grey-500 mt-2 max-w-2xl">
+        <p className="text-on-surface-variant/80 mt-2 max-w-2xl">
           Seks nye v3.1-patterns implementert fra design canvas (
           <code className="font-mono text-xs">AK Golf Portal.html</code>). Brukes som
           byggeklosser for dashboard-views og tematiske skjermer.
@@ -58,23 +58,23 @@ export function DesignPreviewClient() {
 
       {/* P-02 Mono Label */}
       <PatternSection id="p-02" code="P-02" title="Mono Label" description="JetBrains Mono for tidsstempler, IDer, prosenter, tabellheaders.">
-        <div className="bg-white rounded-2xl p-8 shadow-card space-y-4">
+        <div className="bg-surface-container-lowest rounded-2xl p-8 shadow-card space-y-4">
           <div className="flex items-center gap-4">
-            <MonoLabel size="xs" uppercase className="text-grey-400">
+            <MonoLabel size="xs" uppercase className="text-on-surface-variant">
               Runde-id
             </MonoLabel>
             <MonoLabel size="sm">RND-2026-04-23</MonoLabel>
           </div>
           <div className="flex items-center gap-4">
-            <MonoLabel size="xs" uppercase className="text-grey-400">
+            <MonoLabel size="xs" uppercase className="text-on-surface-variant">
               Club speed
             </MonoLabel>
-            <MonoLabel size="md" className="text-grey-900 font-semibold">
+            <MonoLabel size="md" className="text-on-surface font-semibold">
               142.3 mph
             </MonoLabel>
           </div>
           <div className="flex items-center gap-4">
-            <MonoLabel size="xs" uppercase className="text-grey-400">
+            <MonoLabel size="xs" uppercase className="text-on-surface-variant">
               Konsistens
             </MonoLabel>
             <MonoLabel size="lg" className="text-primary font-bold">
@@ -88,11 +88,11 @@ export function DesignPreviewClient() {
       <PatternSection id="p-03" code="P-03" title="Night Surface" description="Kontekstuell dark mode for data-first-skjermer (TrackMan, Mission Control, V2).">
         <NightSurface variant="ambient" className="rounded-2xl p-10 min-h-[200px] flex items-center justify-center">
           <div className="text-center">
-            <MonoLabel size="xs" uppercase className="text-accent-cta">
+            <MonoLabel size="xs" uppercase className="text-secondary-fixed">
               ◆ Night Ops Active
             </MonoLabel>
             <h3 className="text-2xl font-semibold mt-2">Data-first flate</h3>
-            <p className="text-grey-300 mt-2">
+            <p className="text-on-surface-variant/60 mt-2">
               Gradient-bakgrunn + radial accents for å bryte flat svart.
             </p>
           </div>
@@ -132,7 +132,7 @@ export function DesignPreviewClient() {
       {/* P-05 AI Attribution */}
       <PatternSection id="p-05" code="P-05" title="AI Attribution" description="Context-chips som viser hvilke datakilder AI brukte.">
         <div className="bg-ai-light/50 rounded-2xl p-6 border border-ai/10">
-          <p className="text-[15px] text-grey-900 leading-relaxed mb-4">
+          <p className="text-[15px] text-on-surface leading-relaxed mb-4">
             Din approach-spill er 0.82 slag bedre enn peer-gjennomsnittet. Fokuser
             på 100–150m for ytterligere forbedring. Anbefaler 3 økter denne uken.
           </p>
@@ -149,8 +149,8 @@ export function DesignPreviewClient() {
 
       {/* P-06 Vertical Timeline */}
       <PatternSection id="p-06" code="P-06" title="Vertical Timeline" description="Vertikal dag-tidslinje med tid + dot + tittel.">
-        <div className="bg-white rounded-2xl p-6 shadow-card max-w-lg">
-          <MonoLabel size="xs" uppercase className="text-grey-400 block mb-3">
+        <div className="bg-surface-container-lowest rounded-2xl p-6 shadow-card max-w-lg">
+          <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-3">
             I dag · 23. april
           </MonoLabel>
           <VerticalTimeline
@@ -200,8 +200,8 @@ export function DesignPreviewClient() {
         >
           <div className="absolute top-6 left-6 right-6 z-20 flex items-start justify-between">
             <HeroLabel>
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-cta" />
-              <strong className="text-white font-semibold">Miklagard GK</strong>
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed" />
+              <strong className="text-surface font-semibold">Miklagard GK</strong>
               <HeroLabelSeparator />
               <span>23. april · uke 17</span>
             </HeroLabel>
@@ -222,7 +222,7 @@ export function DesignPreviewClient() {
             <h2 className="text-[48px] font-bold tracking-tight mt-3 leading-none">
               Coach Thomas
               <br />
-              <span className="text-accent-cta">· impact drill</span>
+              <span className="text-secondary-fixed">· impact drill</span>
             </h2>
           </div>
         </CourseHero>
@@ -250,10 +250,10 @@ export function DesignPreviewClient() {
               <GlassPanelRow label="SG this hole" value="+0.42" last />
             </GlassPanel>
           </NightSurface>
-          <div className="bg-grey-100 rounded-2xl p-8 flex items-center justify-center">
+          <div className="bg-surface-container rounded-2xl p-8 flex items-center justify-center">
             <GlassPanel variant="light" padding="none" className="w-full">
               <div className="p-5 border-b border-[rgba(10,31,24,0.06)]">
-                <MonoLabel size="xs" uppercase className="text-grey-400">
+                <MonoLabel size="xs" uppercase className="text-on-surface-variant">
                   Light-variant
                 </MonoLabel>
                 <h3 className="text-2xl font-bold mt-2 leading-tight">
@@ -303,15 +303,15 @@ export function DesignPreviewClient() {
         <NightSurface variant="ambient" className="rounded-2xl p-10 flex flex-wrap gap-3">
           <HeroLabel>
             <Icon name="location_on" className="w-3 h-3" />
-            <strong className="text-white font-semibold">Miklagard GK</strong>
+            <strong className="text-surface font-semibold">Miklagard GK</strong>
             <HeroLabelSeparator />
-            <span className="text-white/55">Hull 8 · 342m</span>
+            <span className="text-surface/55">Hull 8 · 342m</span>
           </HeroLabel>
           <HeroLabel>
             <Icon name="calendar_today" className="w-3 h-3" />
-            <strong className="text-white font-semibold">23. april 2026</strong>
+            <strong className="text-surface font-semibold">23. april 2026</strong>
             <HeroLabelSeparator />
-            <span className="text-white/55">Uke 17</span>
+            <span className="text-surface/55">Uke 17</span>
           </HeroLabel>
           <HeroLabel variant="lime">
             <span className="w-1.5 h-1.5 rounded-full bg-[#0A1F18]" />
@@ -353,7 +353,7 @@ export function DesignPreviewClient() {
                 <div className="text-[44px] font-bold tracking-tight leading-none tabular-nums">
                   +1.42
                 </div>
-                <MonoLabel size="xs" className="text-white/55 mt-2">
+                <MonoLabel size="xs" className="text-surface/55 mt-2">
                   vs peer HCP 3
                 </MonoLabel>
               </div>
@@ -371,9 +371,9 @@ export function DesignPreviewClient() {
               <BentoEyebrow>Streak</BentoEyebrow>
               <div className="mt-3">
                 <div className="text-[44px] font-bold tracking-tight leading-none tabular-nums">
-                  41<span className="text-[18px] ml-1 text-accent-cta">dager</span>
+                  41<span className="text-[18px] ml-1 text-secondary-fixed">dager</span>
                 </div>
-                <MonoLabel size="xs" className="text-white/55 mt-2">
+                <MonoLabel size="xs" className="text-surface/55 mt-2">
                   PR · 2026
                 </MonoLabel>
               </div>
@@ -401,13 +401,13 @@ function PatternSection({
   return (
     <section id={id} className="scroll-mt-20">
       <div className="flex items-baseline gap-4 mb-5">
-        <MonoLabel size="sm" className="text-accent-cta-text bg-accent-cta px-2 py-0.5 rounded">
+        <MonoLabel size="sm" className="text-secondary-fixed-text bg-secondary-fixed px-2 py-0.5 rounded">
           {code}
         </MonoLabel>
-        <h2 className="text-2xl font-semibold tracking-tight text-grey-900">
+        <h2 className="text-2xl font-semibold tracking-tight text-on-surface">
           {title}
         </h2>
-        <p className="text-sm text-grey-500 ml-auto max-w-md text-right">
+        <p className="text-sm text-on-surface-variant/80 ml-auto max-w-md text-right">
           {description}
         </p>
       </div>

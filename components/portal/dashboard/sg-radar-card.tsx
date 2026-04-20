@@ -34,10 +34,10 @@ interface SGRadarCardProps {
 
 export function SGRadarCard({ data = PLACEHOLDER_DATA }: SGRadarCardProps) {
   return (
-    <div className="flex h-full flex-col rounded-xl border border-grey-200 bg-white p-5 shadow-card">
+    <div className="flex h-full flex-col rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-5 shadow-card">
       <div className="mb-3 flex items-center justify-between">
-        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Strokes Gained</MonoLabel>
-        <Icon name="my_location" className="h-4 w-4 text-grey-300" />
+        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Strokes Gained</MonoLabel>
+        <Icon name="my_location" className="h-4 w-4 text-on-surface-variant/60" />
       </div>
 
       <div className="min-h-[200px] flex-1">
@@ -99,14 +99,14 @@ export function SGRadarCard({ data = PLACEHOLDER_DATA }: SGRadarCardProps) {
             className="h-2 w-4 rounded-full"
             style={{ backgroundColor: colors.primary.main }}
           />
-          <span className="text-xs text-grey-500">Din score</span>
+          <span className="text-xs text-on-surface-variant/80">Din score</span>
         </div>
         <div className="flex items-center gap-1.5">
           <span
             className="h-0.5 w-4 rounded-full"
             style={{ backgroundColor: colors.data.coral }}
           />
-          <span className="text-xs text-grey-500">Mål</span>
+          <span className="text-xs text-on-surface-variant/80">Mål</span>
         </div>
       </div>
     </div>

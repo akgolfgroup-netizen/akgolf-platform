@@ -35,8 +35,8 @@ export function LeaderboardWidget() {
               className={
                 "w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold " +
                 (p.rank <= 3
-                  ? "bg-primary text-white"
-                  : "bg-grey-100 text-grey-500")
+                  ? "bg-primary text-surface"
+                  : "bg-surface-container text-on-surface-variant/80")
               }
             >
               {p.rank}

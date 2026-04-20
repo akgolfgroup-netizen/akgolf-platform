@@ -85,8 +85,8 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-black">Min bag</h1>
-          <p className="text-grey-400 mt-1">
+          <h1 className="text-2xl font-bold text-on-surface">Min bag</h1>
+          <p className="text-on-surface-variant mt-1">
             {clubs.length > 0
               ? `${clubs.length} klubber registrert`
               : "Ingen klubber registrert enda"}
@@ -94,7 +94,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
         </div>
         <button
           onClick={() => setShowAdd(true)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-sm font-medium hover:bg-grey-800 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-on-surface text-surface text-sm font-medium hover:bg-inverse-surface transition-colors"
         >
           <Icon name="add" className="w-4 h-4" />
           Legg til klubb
@@ -105,11 +105,11 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
       {clubs.length === 0 && !showAdd && (
         <PremiumCard>
           <div className="p-6 text-center">
-            <Icon name="my_location" className="w-12 h-12 text-grey-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-black mb-2">
+            <Icon name="my_location" className="w-12 h-12 text-on-surface-variant mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-on-surface mb-2">
               Ingen klubber i bagen
             </h3>
-            <p className="text-grey-400 max-w-md mx-auto">
+            <p className="text-on-surface-variant max-w-md mx-auto">
               Legg til klubbene dine for a fa oversikt over avstander, gap-analyse
               og anbefalinger.
             </p>
@@ -130,8 +130,8 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                 onClick={() => setSelectedClub(club.id)}
                 className={`aspect-[3/4] rounded-xl flex flex-col items-center justify-center p-2 transition-all ${
                   selectedClub === club.id
-                    ? "bg-accent-cta text-black"
-                    : "bg-grey-50 text-grey-400 hover:bg-grey-200"
+                    ? "bg-secondary-fixed text-on-surface"
+                    : "bg-surface text-on-surface-variant hover:bg-surface-variant"
                 }`}
               >
                 <span className="text-[10px] uppercase tracking-wider opacity-70">
@@ -156,21 +156,21 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-16 h-16 rounded-2xl bg-grey-50 flex items-center justify-center">
-                      <Icon name="my_location" className="w-8 h-8 text-black" />
+                    <div className="w-16 h-16 rounded-2xl bg-surface flex items-center justify-center">
+                      <Icon name="my_location" className="w-8 h-8 text-on-surface" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-black">
+                      <h3 className="text-xl font-bold text-on-surface">
                         {club.name}
                       </h3>
-                      <p className="text-grey-400">
+                      <p className="text-on-surface-variant">
                         {[club.brand, club.model].filter(Boolean).join(" ") ||
                           "Ikke spesifisert"}
                       </p>
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-grey-50 text-sm text-grey-400 hover:bg-grey-200 transition-colors">
+                    <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface text-sm text-on-surface-variant hover:bg-surface-variant transition-colors">
                       <Icon name="edit"2 className="w-3 h-3" />
                       Rediger
                     </button>
@@ -186,27 +186,27 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-grey-50">
-                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Carry</MonoLabel>
-                    <p className="text-2xl font-bold text-black tabular-nums tracking-tight">
+                  <div className="p-4 rounded-xl bg-surface">
+                    <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Carry</MonoLabel>
+                    <p className="text-2xl font-bold text-on-surface tabular-nums tracking-tight">
                       {club.avgCarry != null ? `${club.avgCarry}m` : "--"}
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl bg-grey-50">
-                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Total</MonoLabel>
-                    <p className="text-2xl font-bold text-black tabular-nums tracking-tight">
+                  <div className="p-4 rounded-xl bg-surface">
+                    <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Total</MonoLabel>
+                    <p className="text-2xl font-bold text-on-surface tabular-nums tracking-tight">
                       {club.avgTotal != null ? `${club.avgTotal}m` : "--"}
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl bg-grey-50">
-                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Slag</MonoLabel>
-                    <p className="text-2xl font-bold text-black tabular-nums tracking-tight">
+                  <div className="p-4 rounded-xl bg-surface">
+                    <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Slag</MonoLabel>
+                    <p className="text-2xl font-bold text-on-surface tabular-nums tracking-tight">
                       {club.shotCount}
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl bg-grey-50">
-                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Loft</MonoLabel>
-                    <p className="text-2xl font-bold text-black tabular-nums tracking-tight">
+                  <div className="p-4 rounded-xl bg-surface">
+                    <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Loft</MonoLabel>
+                    <p className="text-2xl font-bold text-on-surface tabular-nums tracking-tight">
                       {club.loft != null ? `${club.loft}` : "--"}
                     </p>
                   </div>
@@ -219,7 +219,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
       {/* Distance Chart */}
       {clubs.some((c) => (c.avgCarry ?? 0) > 0) && (
         <PremiumCard>
-          <h3 className="font-semibold text-black mb-4">
+          <h3 className="font-semibold text-on-surface mb-4">
             Avstandsoversikt
           </h3>
           <div className="space-y-3">
@@ -228,18 +228,18 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
               .sort((a, b) => (b.avgCarry ?? 0) - (a.avgCarry ?? 0))
               .map((club) => (
                 <div key={club.id} className="flex items-center gap-4">
-                  <span className="w-16 text-sm font-medium text-black">
+                  <span className="w-16 text-sm font-medium text-on-surface">
                     {club.name}
                   </span>
-                  <div className="flex-1 h-6 bg-grey-50 rounded-full overflow-hidden">
+                  <div className="flex-1 h-6 bg-surface rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-black rounded-full transition-all duration-500"
+                      className="h-full bg-on-surface rounded-full transition-all duration-500"
                       style={{
                         width: `${((club.avgCarry ?? 0) / maxCarry) * 100}%`,
                       }}
                     />
                   </div>
-                  <span className="w-16 text-sm text-right text-grey-400 tabular-nums tracking-tight">
+                  <span className="w-16 text-sm text-right text-on-surface-variant tabular-nums tracking-tight">
                     {club.avgCarry}m
                   </span>
                 </div>
@@ -250,17 +250,17 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
 
       {/* Gap Analysis */}
       {gapAnalysis.length > 0 && (
-        <div className="bg-accent-cta/10 rounded-2xl p-6 border border-[accent-cta]/40">
+        <div className="bg-secondary-fixed/10 rounded-2xl p-6 border border-[accent-cta]/40">
           <div className="flex items-center gap-2 mb-4">
-            <Icon name="trending_up" className="w-5 h-5 text-black" />
-            <h3 className="font-semibold text-black">Gap-analyse</h3>
+            <Icon name="trending_up" className="w-5 h-5 text-on-surface" />
+            <h3 className="font-semibold text-on-surface">Gap-analyse</h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {gapAnalysis.map((gap) => (
-              <div key={gap.between} className="p-4 rounded-xl bg-white/50">
-                <p className="text-xs text-grey-400 mb-1">{gap.between}</p>
-                <p className="text-2xl font-bold text-black tabular-nums tracking-tight">{gap.gap}m</p>
-                <p className="text-xs text-grey-400 mt-1">
+              <div key={gap.between} className="p-4 rounded-xl bg-surface-container-lowest/50">
+                <p className="text-xs text-on-surface-variant mb-1">{gap.between}</p>
+                <p className="text-2xl font-bold text-on-surface tabular-nums tracking-tight">{gap.gap}m</p>
+                <p className="text-xs text-on-surface-variant mt-1">
                   {gap.recommended}
                 </p>
               </div>
@@ -276,7 +276,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
             <select
               value={newClub.name}
               onChange={(e) => setNewClub({ ...newClub, name: e.target.value })}
-              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-black bg-grey-50 outline-none focus:border-[black]"
+              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-on-surface bg-surface outline-none focus:border-[black]"
             >
               <option value="">Velg klubb...</option>
               {DEFAULT_CLUBS.filter(
@@ -292,7 +292,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
               value={newClub.brand}
               onChange={(e) => setNewClub({ ...newClub, brand: e.target.value })}
               placeholder="Merke (valgfritt)"
-              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-black bg-grey-50 outline-none focus:border-[black]"
+              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-on-surface bg-surface outline-none focus:border-[black]"
             />
             <input
               type="number"
@@ -301,20 +301,20 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                 setNewClub({ ...newClub, avgCarry: e.target.value })
               }
               placeholder="Gjennomsnittlig carry (meter)"
-              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-black bg-grey-50 outline-none focus:border-[black]"
+              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-on-surface bg-surface outline-none focus:border-[black]"
             />
             <div className="flex gap-2">
               <button
                 onClick={handleAdd}
                 disabled={!newClub.name || isPending}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full bg-black text-white font-medium disabled:opacity-50 hover:bg-grey-800 transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full bg-on-surface text-surface font-medium disabled:opacity-50 hover:bg-inverse-surface transition-colors"
               >
                 <Icon name="save" className="h-4 w-4" />
                 {isPending ? "Lagrer..." : "Legg til"}
               </button>
               <button
                 onClick={() => setShowAdd(false)}
-                className="px-4 py-2.5 rounded-full border border-[grey-200] text-grey-400 hover:bg-grey-50 transition-colors"
+                className="px-4 py-2.5 rounded-full border border-[grey-200] text-on-surface-variant hover:bg-surface transition-colors"
               >
                 <Icon name="close" className="h-4 w-4" />
               </button>
@@ -325,8 +325,8 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
 
       {/* TrackMan import hint */}
       {clubs.length > 0 && clubs.every((c) => !c.avgCarry) && (
-        <div className="bg-grey-50 rounded-xl p-4 text-sm text-grey-400">
-          <p className="font-medium text-black">Visste du?</p>
+        <div className="bg-surface rounded-xl p-4 text-sm text-on-surface-variant">
+          <p className="font-medium text-on-surface">Visste du?</p>
           <p className="mt-1">
             Last opp TrackMan-data for a fa presise gjennomsnitt og spredning
             per klubb automatisk.

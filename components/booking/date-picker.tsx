@@ -74,18 +74,18 @@ export function BookingDatePicker({
           <button
             onClick={() => setCurrentMonth((m) => addMonths(m, -1))}
             disabled={!canGoBack}
-            className="w-9 h-9 rounded-lg flex items-center justify-center text-grey-400 hover:bg-grey-50 hover:text-black disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface hover:text-on-surface disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             aria-label="Forrige måned"
           >
             <Icon name="chevron_left" className="w-4 h-4" />
           </button>
-          <h3 className="text-base font-semibold text-black capitalize">
+          <h3 className="text-base font-semibold text-on-surface capitalize">
             {format(currentMonth, "MMMM yyyy", { locale: nb })}
           </h3>
           <button
             onClick={() => setCurrentMonth((m) => addMonths(m, 1))}
             disabled={!canGoForward}
-            className="w-9 h-9 rounded-lg flex items-center justify-center text-grey-400 hover:bg-grey-50 hover:text-black disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface hover:text-on-surface disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             aria-label="Neste måned"
           >
             <Icon name="chevron_right" className="w-4 h-4" />
@@ -121,7 +121,7 @@ export function BookingDatePicker({
                 {isSelected ? (
                   <motion.div
                     layoutId="booking-date-selected"
-                    className="absolute inset-1 bg-black rounded-lg"
+                    className="absolute inset-1 bg-on-surface rounded-lg"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
                   />
                 ) : null}
@@ -129,12 +129,12 @@ export function BookingDatePicker({
                   className={[
                     "relative z-10 w-full h-full flex items-center justify-center rounded-lg",
                     isSelected
-                      ? "text-white font-semibold"
+                      ? "text-surface font-semibold"
                       : !inMonth
                         ? "text-transparent cursor-default"
                         : disabled
-                          ? "text-grey-300 cursor-not-allowed"
-                          : "text-black font-medium hover:bg-grey-50 cursor-pointer",
+                          ? "text-on-surface-variant/60 cursor-not-allowed"
+                          : "text-on-surface font-medium hover:bg-surface cursor-pointer",
                     todayDate && !isSelected && inMonth ? "ring-1 ring-accent-cta" : "",
                   ].join(" ")}
                 >

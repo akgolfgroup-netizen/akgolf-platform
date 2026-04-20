@@ -29,25 +29,25 @@ export default async function TesterPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl shadow-card p-5">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
           <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Fullførte tester</MonoLabel>
           <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
             {stats.completedTests}/{stats.totalTests}
           </p>
         </div>
-        <div className="bg-white rounded-xl shadow-card p-5">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
           <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Total score</MonoLabel>
           <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
             {stats.totalScore}
           </p>
         </div>
-        <div className="bg-white rounded-xl shadow-card p-5">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
           <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Tilgjengelige tester</MonoLabel>
           <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
             {stats.totalTests}
           </p>
         </div>
-        <div className="bg-white rounded-xl shadow-card p-5">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
           <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Beste test</MonoLabel>
           <p className="text-3xl font-bold text-on-surface mt-1">
             {stats.bestTestName ?? "-"}

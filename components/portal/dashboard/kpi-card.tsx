@@ -31,14 +31,14 @@ export function KpiCard({
   const isNegative = change != null && change > 0;
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-grey-200 hover:shadow-md">
+    <div className="flex h-full flex-col justify-between rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-5 shadow-sm transition-all duration-200 hover:border-outline-variant/30 hover:shadow-md">
       <div>
-        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{label}</MonoLabel>
+        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">{label}</MonoLabel>
         <div className="mt-1">
           <NumberTicker
             value={value}
             decimalPlaces={decimalPlaces}
-            className="text-[40px] font-semibold tracking-tight text-black"
+            className="text-[40px] font-semibold tracking-tight text-on-surface"
           />
         </div>
       </div>
@@ -55,7 +55,7 @@ export function KpiCard({
                 ? "bg-success-light text-success-text"
                 : isNegative
                   ? "bg-error-light text-error-text"
-                  : "bg-grey-100 text-grey-500"
+                  : "bg-surface-container text-on-surface-variant/80"
             }`}
           >
             {isPositive ? (
@@ -66,7 +66,7 @@ export function KpiCard({
             {Math.abs(change).toFixed(decimalPlaces)}
           </span>
           {changeLabel && (
-            <span className="text-[11px] text-grey-400">{changeLabel}</span>
+            <span className="text-[11px] text-on-surface-variant">{changeLabel}</span>
           )}
         </div>
       )}

@@ -48,14 +48,14 @@ export function AdminDrawer({
   return (
     <div className="fixed inset-0 z-[90]" role="dialog" aria-modal="true">
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
+        className="absolute inset-0 bg-on-surface/40 backdrop-blur-sm animate-in fade-in duration-200"
         onClick={onClose}
         aria-hidden="true"
       />
       <div
         className={cn(
-          "absolute top-0 bottom-0 w-full flex flex-col shadow-2xl bg-white",
-          side === "right" ? "right-0 border-l border-grey-200" : "left-0 border-r border-grey-200",
+          "absolute top-0 bottom-0 w-full flex flex-col shadow-2xl bg-surface-container-lowest",
+          side === "right" ? "right-0 border-l border-outline-variant/30" : "left-0 border-r border-outline-variant/30",
           widthClass[width],
         )}
         style={{
@@ -63,15 +63,15 @@ export function AdminDrawer({
         }}
       >
         {(title || description) && (
-          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-grey-200">
+          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-outline-variant/30">
             <div className="flex-1 min-w-0">
               {title && (
-                <h2 className="text-lg font-semibold text-black">
+                <h2 className="text-lg font-semibold text-on-surface">
                   {title}
                 </h2>
               )}
               {description && (
-                <p className="text-sm mt-0.5 text-grey-400">
+                <p className="text-sm mt-0.5 text-on-surface-variant">
                   {description}
                 </p>
               )}
@@ -88,7 +88,7 @@ export function AdminDrawer({
         )}
         <div className="flex-1 overflow-y-auto px-6 py-4">{children}</div>
         {footer && (
-          <div className="px-6 py-4 border-t border-grey-200">
+          <div className="px-6 py-4 border-t border-outline-variant/30">
             {footer}
           </div>
         )}

@@ -46,7 +46,7 @@ export function PeriodiseringWidget() {
           <span className="text-muted">Sesong-progress</span>
           <span className="font-medium text-text">{overallProgress}%</span>
         </div>
-        <div className="h-2 rounded-full bg-grey-100 overflow-hidden">
+        <div className="h-2 rounded-full bg-surface-container overflow-hidden">
           <div
             className="h-full rounded-full bg-primary transition-all"
             style={{ width: `${overallProgress}%` }}
@@ -63,7 +63,7 @@ export function PeriodiseringWidget() {
               <div
                 className={cn(
                   "w-1.5 h-1.5 rounded-full shrink-0",
-                  phase.active ? "bg-primary" : phaseProgress === 100 ? "bg-success" : "bg-grey-200"
+                  phase.active ? "bg-primary" : phaseProgress === 100 ? "bg-success" : "bg-surface-variant"
                 )}
               />
               <span

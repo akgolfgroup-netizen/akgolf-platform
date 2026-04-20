@@ -24,7 +24,7 @@ export function PortalPreviewSection() {
           <h2 className="w-heading-lg mt-4 mb-4">
             Din treningspartner mellom oktene
           </h2>
-          <p className="text-grey-500 leading-relaxed max-w-2xl mb-12">
+          <p className="text-on-surface-variant/80 leading-relaxed max-w-2xl mb-12">
             Treningsplaner, statistikk, AI-coaching og TrackMan-data — samlet
             pa ett sted. Inkludert i alle abonnement.
           </p>
@@ -40,13 +40,13 @@ export function PortalPreviewSection() {
                   onClick={() => setActiveIndex(i)}
                   className={`w-full text-left rounded-xl p-5 transition-all duration-300 ${
                     i === activeIndex
-                      ? "bg-white shadow-card border border-black/6"
-                      : "bg-transparent hover:bg-white/60"
+                      ? "bg-surface-container-lowest shadow-card border border-black/6"
+                      : "bg-transparent hover:bg-surface-container-lowest/60"
                   }`}
                 >
                   <p
                     className={`text-sm font-semibold tracking-tight mb-2 transition-colors duration-300 ${
-                      i === activeIndex ? "text-black" : "text-grey-400"
+                      i === activeIndex ? "text-on-surface" : "text-on-surface-variant"
                     }`}
                   >
                     {screen.title}
@@ -69,7 +69,7 @@ export function PortalPreviewSection() {
 
               <Link
                 href={PORTAL_URL}
-                className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-primary text-white rounded-[20px] text-sm font-semibold hover:bg-primary-alt transition-colors duration-300"
+                className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-primary text-surface rounded-[20px] text-sm font-semibold hover:bg-primary-alt transition-colors duration-300"
               >
                 Oppdag portalen
                 <Icon name="arrow_forward" className="w-4 h-4" />

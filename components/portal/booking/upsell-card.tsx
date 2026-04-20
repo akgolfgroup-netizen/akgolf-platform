@@ -33,40 +33,40 @@ export function BookingUpsellCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
-      className="bg-gradient-to-br from-grey-50 to-white border border-grey-200 rounded-2xl p-6 mt-6"
+      className="bg-gradient-to-br from-grey-50 to-white border border-outline-variant/30 rounded-2xl p-6 mt-6"
     >
       <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 w-12 h-12 bg-black rounded-xl flex items-center justify-center">
-          <Icon name="auto_awesome" className="h-6 w-6 text-white" />
+        <div className="flex-shrink-0 w-12 h-12 bg-on-surface rounded-xl flex items-center justify-center">
+          <Icon name="auto_awesome" className="h-6 w-6 text-surface" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-lg font-semibold text-grey-900">
+            <h3 className="text-lg font-semibold text-on-surface">
               Spar {savingsPercent}% med Performance
             </h3>
             <span className="px-2 py-0.5 bg-[var(--color-brand)]/10 text-[var(--color-brand)] text-xs font-medium rounded-full">
               Populaert
             </span>
           </div>
-          <p className="text-grey-500 text-sm mb-4">
+          <p className="text-on-surface-variant/80 text-sm mb-4">
             {userName ? `${userName}, f` : "F"}a mer ut av treningen med fast
             oppfolging og personlig treningsplan.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-            <div className="flex items-center gap-2 text-sm text-grey-600">
+            <div className="flex items-center gap-2 text-sm text-on-surface-variant/80">
               <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>2 x 20 min okter/mnd</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-grey-600">
+            <div className="flex items-center gap-2 text-sm text-on-surface-variant/80">
               <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>TrackMan-analyse hver okt</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-grey-600">
+            <div className="flex items-center gap-2 text-sm text-on-surface-variant/80">
               <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>Personlig treningsplan</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-grey-600">
+            <div className="flex items-center gap-2 text-sm text-on-surface-variant/80">
               <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
               <span>Full portal-tilgang</span>
             </div>
@@ -74,25 +74,25 @@ export function BookingUpsellCard({
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-grey-900">
+              <span className="text-2xl font-bold text-on-surface">
                 {PERFORMANCE_PRICE.toLocaleString("nb-NO")} kr
               </span>
-              <span className="text-grey-500 text-sm">/mnd</span>
-              <span className="text-grey-400 text-sm line-through">
+              <span className="text-on-surface-variant/80 text-sm">/mnd</span>
+              <span className="text-on-surface-variant text-sm line-through">
                 {monthlyValue.toLocaleString("nb-NO")} kr
               </span>
             </div>
 
             <Link
               href={isLoggedIn ? "/portal/apper" : "/portal/login?redirect=/portal/apper"}
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-black text-white font-medium rounded-full hover:bg-grey-800 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-on-surface text-surface font-medium rounded-full hover:bg-inverse-surface transition-colors"
             >
               <Icon name="trending_up" className="h-4 w-4" />
               Oppgrader na
             </Link>
           </div>
 
-          <p className="text-xs text-grey-400 mt-3">
+          <p className="text-xs text-on-surface-variant mt-3">
             Ingen binding. Avslutt nar som helst.
           </p>
         </div>

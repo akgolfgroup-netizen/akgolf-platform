@@ -92,7 +92,7 @@ export function PeerBenchmarkCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div
-            className="flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold text-white shadow-[0_8px_24px_-8px_rgba(0,88,64,0.35)]"
+            className="flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold text-surface shadow-[0_8px_24px_-8px_rgba(0,88,64,0.35)]"
             style={{
               background:
                 "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-alt) 100%)",
@@ -137,7 +137,7 @@ export function PeerBenchmarkCard({
               {Math.round(progress)}%
             </span>
           </div>
-          <div className="h-2 rounded-full overflow-hidden bg-black/5">
+          <div className="h-2 rounded-full overflow-hidden bg-on-surface/5">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
@@ -159,7 +159,7 @@ export function PeerBenchmarkCard({
           return (
             <motion.div
               key={cat.key}
-              className="rounded-2xl p-4 bg-white border border-black/5"
+              className="rounded-2xl p-4 bg-surface-container-lowest border border-black/5"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: categories.indexOf(cat) * 0.08 }}
@@ -201,7 +201,7 @@ export function PeerBenchmarkCard({
 
       {/* Score comparison */}
       {avgScore && (
-        <div className="flex items-center justify-between rounded-2xl p-4 bg-white border border-black/5">
+        <div className="flex items-center justify-between rounded-2xl p-4 bg-surface-container-lowest border border-black/5">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-primary)]/10">
               <Icon name="workspace_premium" className="h-5 w-5 text-[var(--color-primary)]" />

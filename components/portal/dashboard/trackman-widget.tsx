@@ -36,12 +36,12 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
 
   if (!hasData) {
     return (
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
+      <div className="rounded-2xl border border-slate-800 bg-inverse-surface/50 p-6">
       <div className="flex items-center gap-2 mb-4">
           <Icon name="monitoring" className="w-5 h-5 text-emerald-400" />
-          <h3 className="font-semibold text-slate-100">TrackMan Data</h3>
+          <h3 className="font-semibold text-inverse-on-surface">TrackMan Data</h3>
         </div>
-        <p className="text-sm text-slate-400 mb-4">
+        <p className="text-sm text-inverse-on-surface/60 mb-4">
           Ingen TrackMan-data ennå. Book en TrackMan-time for å se din swing-analyse.
         </p>
         <Link
@@ -59,12 +59,12 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6"
+      className="rounded-2xl border border-slate-800 bg-inverse-surface/50 p-6"
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Icon name="monitoring" className="w-5 h-5 text-emerald-400" />
-          <h3 className="font-semibold text-slate-100">TrackMan</h3>
+          <h3 className="font-semibold text-inverse-on-surface">TrackMan</h3>
         </div>
         <Link
           href="/portal/trackman"
@@ -75,14 +75,14 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
       </div>
 
       {/* Siste økt */}
-      <div className="mb-4 p-3 bg-slate-800/50 rounded-xl">
-        <p className="text-xs text-slate-400 mb-1">Siste økt • {data.lastSession?.date}</p>
+      <div className="mb-4 p-3 bg-inverse-surface/50 rounded-xl">
+        <p className="text-xs text-inverse-on-surface/60 mb-1">Siste økt • {data.lastSession?.date}</p>
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-slate-100">
+          <span className="text-2xl font-bold text-inverse-on-surface">
             {data.lastSession?.value}
           </span>
-          <span className="text-sm text-slate-400">{data.lastSession?.unit}</span>
-          <span className="text-xs text-slate-500">({data.lastSession?.club})</span>
+          <span className="text-sm text-inverse-on-surface/60">{data.lastSession?.unit}</span>
+          <span className="text-xs text-inverse-on-surface/70">({data.lastSession?.club})</span>
         </div>
         <p className="text-xs text-emerald-400 mt-1">{data.lastSession?.metric}</p>
       </div>
@@ -90,7 +90,7 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
       {/* Trend-grafer */}
       <div className="grid grid-cols-3 gap-3 mb-4">
         <div>
-          <p className="text-xs text-slate-400 mb-1">Club Speed</p>
+          <p className="text-xs text-inverse-on-surface/60 mb-1">Club Speed</p>
           <Sparkline
             data={data.trends.clubSpeed}
             width={80}
@@ -99,7 +99,7 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
           />
         </div>
         <div>
-          <p className="text-xs text-slate-400 mb-1">Ball Speed</p>
+          <p className="text-xs text-inverse-on-surface/60 mb-1">Ball Speed</p>
           <Sparkline
             data={data.trends.ballSpeed}
             width={80}
@@ -108,7 +108,7 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
           />
         </div>
         <div>
-          <p className="text-xs text-slate-400 mb-1">Carry</p>
+          <p className="text-xs text-inverse-on-surface/60 mb-1">Carry</p>
           <Sparkline
             data={data.trends.carry}
             width={80}
@@ -121,13 +121,13 @@ export function TrackManWidget({ data }: TrackManWidgetProps) {
       {/* Forbedringer */}
       {data.improvements.length > 0 && (
         <div className="space-y-2">
-          <p className="text-xs font-medium text-slate-400 flex items-center gap-1">
+          <p className="text-xs font-medium text-inverse-on-surface/60 flex items-center gap-1">
             <Icon name="trending_up" className="w-3 h-3" />
             Fremgang
           </p>
           {data.improvements.slice(0, 2).map((imp, i) => (
             <div key={i} className="flex items-center justify-between text-sm">
-              <span className="text-slate-300">{imp.metric}</span>
+              <span className="text-inverse-on-surface/50">{imp.metric}</span>
               <span className="text-emerald-400 font-medium">+{imp.change}%</span>
             </div>
           ))}

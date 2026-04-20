@@ -33,12 +33,12 @@ interface VerticalTimelineProps {
 }
 
 const DOT_COLOR_MAP: Record<TimelineDotColor, string> = {
-  lime: "bg-accent-cta",
+  lime: "bg-secondary-fixed",
   sage: "bg-[#2A7D5A]",
   coral: "bg-[#E85D4E]",
   blue: "bg-[#007AFF]",
   amber: "bg-[#E8A94A]",
-  muted: "bg-grey-300",
+  muted: "bg-outline-variant",
 };
 
 export function VerticalTimeline({ items, className, compact = false }: VerticalTimelineProps) {
@@ -47,7 +47,7 @@ export function VerticalTimeline({ items, className, compact = false }: Vertical
       {/* Vertical line */}
       <span
         aria-hidden="true"
-        className="absolute top-2 bottom-2 left-[42px] w-px bg-grey-100"
+        className="absolute top-2 bottom-2 left-[42px] w-px bg-surface-container"
       />
 
       {items.map((item, i) => {
@@ -57,7 +57,7 @@ export function VerticalTimeline({ items, className, compact = false }: Vertical
           <>
             <MonoLabel
               size="xs"
-              className="w-[34px] shrink-0 text-grey-400 pt-0.5 text-right"
+              className="w-[34px] shrink-0 text-on-surface-variant pt-0.5 text-right"
             >
               {item.time}
             </MonoLabel>
@@ -73,11 +73,11 @@ export function VerticalTimeline({ items, className, compact = false }: Vertical
             </div>
 
             <div className="flex-1 min-w-0">
-              <div className={cn("text-[13px] font-semibold text-grey-900", item.active && "text-primary")}>
+              <div className={cn("text-[13px] font-semibold text-on-surface", item.active && "text-primary")}>
                 {item.title}
               </div>
               {item.meta && (
-                <div className="text-[11px] text-grey-500 mt-0.5">{item.meta}</div>
+                <div className="text-[11px] text-on-surface-variant/80 mt-0.5">{item.meta}</div>
               )}
             </div>
 
@@ -94,7 +94,7 @@ export function VerticalTimeline({ items, className, compact = false }: Vertical
         if (item.href) {
           return (
             <li key={item.id ?? i} className="relative">
-              <a href={item.href} className={cn(baseClasses, "hover:bg-grey-50 rounded-lg -mx-2 px-2")}>
+              <a href={item.href} className={cn(baseClasses, "hover:bg-surface rounded-lg -mx-2 px-2")}>
                 {content}
               </a>
             </li>

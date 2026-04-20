@@ -141,7 +141,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
     >
       {/* Mode tabs — glassmorphism pill */}
       <motion.div variants={fadeInUp}>
-        <div className="inline-flex gap-1 p-1 rounded-full bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_8px_24px_-12px_rgba(10,31,24,0.15)]">
+        <div className="inline-flex gap-1 p-1 rounded-full bg-surface-container-lowest/70 backdrop-blur-xl border border-white/80 shadow-[0_8px_24px_-12px_rgba(10,31,24,0.15)]">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -150,7 +150,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
               className={cn(
                 "px-5 py-2 rounded-full text-[12px] font-semibold transition-all duration-200",
                 mode === tab.key
-                  ? "bg-[var(--color-primary)] text-white shadow-[0_4px_16px_-4px_rgba(0,88,64,0.3)]"
+                  ? "bg-[var(--color-primary)] text-surface shadow-[0_4px_16px_-4px_rgba(0,88,64,0.3)]"
                   : tab.disabled
                     ? "text-[var(--color-muted)] cursor-not-allowed opacity-50"
                     : "text-[var(--color-text)] hover:text-[var(--color-primary)]"
@@ -183,12 +183,12 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Søk etter spiller…"
-                  className="w-full px-4 py-2 rounded-xl bg-white border border-black/10 text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+                  className="w-full px-4 py-2 rounded-xl bg-surface-container-lowest border border-black/10 text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
                 />
                 <select
                   value={selectedPlayerId ?? ""}
                   onChange={(e) => setSelectedPlayerId(Number(e.target.value))}
-                  className="w-full px-4 py-2 rounded-xl bg-white border border-black/10 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+                  className="w-full px-4 py-2 rounded-xl bg-surface-container-lowest border border-black/10 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
                   size={5}
                 >
                   {filteredPlayers.map((p) => (
@@ -209,7 +209,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
             <select
               value={selectedTier}
               onChange={(e) => setSelectedTier(e.target.value)}
-              className="w-full px-4 py-2 rounded-xl bg-white border border-black/10 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+              className="w-full px-4 py-2 rounded-xl bg-surface-container-lowest border border-black/10 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
             >
               {SG_BENCHMARKS.map((b) => (
                 <option key={b.category} value={b.category}>
@@ -239,20 +239,20 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
           <NightSurface variant="ambient" className="rounded-2xl p-8">
             <div className="mb-6 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="h-px w-6 bg-white/40" />
-                <MonoLabel size="xs" uppercase className="text-white/60">
+                <span className="h-px w-6 bg-surface-container-lowest/40" />
+                <MonoLabel size="xs" uppercase className="text-surface/60">
                   SG-ringer · deg vs {comparisonLabel}
                 </MonoLabel>
               </div>
               {mode === "peer" && peerData && (
-                <MonoLabel size="xs" className="text-white/50">
+                <MonoLabel size="xs" className="text-surface/50">
                   {peerData.myRoundCount}r vs {peerData.peerRoundCount}r
                 </MonoLabel>
               )}
             </div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="flex flex-col items-center gap-3">
-                <MonoLabel size="xs" uppercase className="text-white/70">
+                <MonoLabel size="xs" uppercase className="text-surface/70">
                   Deg
                 </MonoLabel>
                 <SGRing
@@ -264,7 +264,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
                 />
               </div>
               <div className="flex flex-col items-center gap-3">
-                <MonoLabel size="xs" uppercase className="text-white/70">
+                <MonoLabel size="xs" uppercase className="text-surface/70">
                   {comparisonLabel}
                 </MonoLabel>
                 <SGRing

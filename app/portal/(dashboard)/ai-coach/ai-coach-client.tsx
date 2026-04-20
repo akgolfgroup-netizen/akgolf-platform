@@ -170,12 +170,12 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
           </div>
           <div>
             <h1
-              className="text-xl font-bold tracking-tight text-black"
+              className="text-xl font-bold tracking-tight text-on-surface"
             >
               AI Coach
             </h1>
             <p
-              className="text-sm text-grey-400"
+              className="text-sm text-on-surface-variant"
             >
               Din personlige golfcoach
             </p>
@@ -207,12 +207,12 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
                 className="w-8 h-8 text-ai" />
             </div>
             <h2
-              className="text-lg font-semibold mb-2 text-black"
+              className="text-lg font-semibold mb-2 text-on-surface"
             >
               Still et sporsmal
             </h2>
             <p
-              className="text-sm text-center mb-8 max-w-md text-grey-400"
+              className="text-sm text-center mb-8 max-w-md text-on-surface-variant"
             >
               AI Coach kjenner dine runder, treningshistorikk og mal. Spor om
               hva som helst relatert til golfen din.
@@ -225,7 +225,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
                   key={q.label}
                   onClick={() => sendMessage(q.message)}
                   disabled={isStreaming}
-                  className="text-left px-4 py-3 rounded-full text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 bg-grey-50 text-grey-400 border border-grey-200 hover:border-grey-300"
+                  className="text-left px-4 py-3 rounded-full text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 bg-surface text-on-surface-variant border border-outline-variant/30 hover:border-outline-variant/50"
                 >
                   {q.label}
                 </button>
@@ -254,8 +254,8 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
                 message.role === "user" ? "rounded-br-md" : "rounded-bl-md"
               } ${
                 message.role === "user"
-                  ? "bg-black text-white"
-                  : "bg-grey-50 text-black"
+                  ? "bg-on-surface text-surface"
+                  : "bg-surface text-on-surface"
               }`}
             >
               {message.content ? (
@@ -264,7 +264,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
                 <div className="flex items-center gap-2">
                   <Icon name="progress_activity"
                     className="w-4 h-4 animate-spin text-ai" />
-                  <span className="text-grey-400">
+                  <span className="text-on-surface-variant">
                     Tenker...
                   </span>
                 </div>
@@ -272,10 +272,10 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
             </div>
             {message.role === "user" && (
               <div
-                className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-grey-200"
+                className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center mt-0.5 bg-surface-variant"
               >
                 <Icon name="person"
-                  className="w-4 h-4 text-grey-400" />
+                  className="w-4 h-4 text-on-surface-variant" />
               </div>
             )}
           </div>
@@ -292,7 +292,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
                 key={q.label}
                 onClick={() => sendMessage(q.message)}
                 disabled={isStreaming}
-                className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full transition-colors disabled:opacity-50 bg-grey-50 text-grey-400 border border-grey-200 hover:border-grey-300"
+                className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full transition-colors disabled:opacity-50 bg-surface text-on-surface-variant border border-outline-variant/30 hover:border-outline-variant/50"
               >
                 {q.label}
               </button>
@@ -302,7 +302,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-end gap-2 rounded-2xl p-2 bg-grey-50 border border-grey-200"
+          className="flex items-end gap-2 rounded-2xl p-2 bg-surface border border-outline-variant/30"
         >
           <textarea
             ref={inputRef}
@@ -312,7 +312,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
             placeholder="Spor AI Coach om hva som helst..."
             disabled={isStreaming}
             rows={1}
-            className="flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none placeholder:text-grey-400 disabled:opacity-50 text-black"
+            className="flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none placeholder:text-on-surface-variant disabled:opacity-50 text-on-surface"
             style={{
               maxHeight: "120px",
             }}
@@ -325,7 +325,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
           <button
             type="submit"
             disabled={!input.trim() || isStreaming}
-            className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-30 text-white"
+            className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-30 text-surface"
             style={{
               backgroundColor: input.trim()
                 ? "#AF52DE"
@@ -341,7 +341,7 @@ export function AiCoachClient({ context, quickInsight }: AiCoachClientProps) {
         </form>
 
         <p
-          className="text-center text-xs mt-2 text-grey-400"
+          className="text-center text-xs mt-2 text-on-surface-variant"
         >
           AI Coach bruker dine data for personlige rad. Svar er veiledende.
         </p>

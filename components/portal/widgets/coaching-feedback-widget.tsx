@@ -37,12 +37,12 @@ export function CoachingFeedbackWidget() {
               className={
                 "w-3 h-3 " +
                 (i < feedback.rating
-                  ? "text-accent-cta fill-accent-cta"
-                  : "text-grey-200")
+                  ? "text-secondary-fixed fill-accent-cta"
+                  : "text-surface-variant")
               } />
           ))}
         </div>
-        <span className="text-[10px] text-muted bg-grey-50 px-1.5 py-0.5 rounded">
+        <span className="text-[10px] text-muted bg-surface px-1.5 py-0.5 rounded">
           {feedback.focusArea}
         </span>
       </div>

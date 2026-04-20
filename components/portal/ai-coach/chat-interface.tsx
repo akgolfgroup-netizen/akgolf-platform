@@ -232,10 +232,10 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
                 <Icon name="smart_toy" className="w-10 h-10 text-ai" />
               </div>
               
-              <h2 className="text-xl font-semibold mb-2 text-black">
+              <h2 className="text-xl font-semibold mb-2 text-on-surface">
                 Hei! Hva kan jeg hjelpe deg med?
               </h2>
-              <p className="text-sm text-center mb-8 max-w-md text-grey-400">
+              <p className="text-sm text-center mb-8 max-w-md text-on-surface-variant">
                 AI Coach kjenner dine runder, treningshistorikk og mal. Spor om
                 hva som helst relatert til golfen din.
               </p>
@@ -293,7 +293,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-end gap-2 rounded-2xl p-2 bg-grey-50 border border-grey-200 focus-within:border-grey-300 focus-within:ring-2 focus-within:ring-ai/10 transition-all"
+          className="flex items-end gap-2 rounded-2xl p-2 bg-surface border border-outline-variant/30 focus-within:border-outline-variant/50 focus-within:ring-2 focus-within:ring-ai/10 transition-all"
         >
           <textarea
             ref={inputRef}
@@ -303,7 +303,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
             placeholder="Skriv en melding til AI Coach..."
             disabled={isStreaming}
             rows={1}
-            className="flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none placeholder:text-grey-400 disabled:opacity-50 text-black min-h-[40px]"
+            className="flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none placeholder:text-on-surface-variant disabled:opacity-50 text-on-surface min-h-[40px]"
             style={{
               maxHeight: "120px",
             }}
@@ -312,7 +312,7 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
             <button
               type="button"
               onClick={handleStop}
-              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center bg-error hover:opacity-90 text-white transition-colors"
+              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center bg-error hover:opacity-90 text-surface transition-colors"
             >
               <Icon name="stop" className="w-4 h-4 fill-current" />
             </button>
@@ -320,14 +320,14 @@ export function ChatInterface({ context, quickInsight, onNewChat }: ChatInterfac
             <button
               type="submit"
               disabled={!input.trim()}
-              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-30 text-white bg-ai hover:opacity-90 disabled:hover:bg-grey-400"
+              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-30 text-surface bg-ai hover:opacity-90 disabled:hover:bg-surface-variant"
             >
               <Icon name="send" className="w-4 h-4" />
             </button>
           )}
         </form>
 
-        <p className="text-center text-xs mt-2 text-grey-400">
+        <p className="text-center text-xs mt-2 text-on-surface-variant">
           AI Coach bruker dine data for personlige rad. Svar er veiledende.
         </p>
       </div>

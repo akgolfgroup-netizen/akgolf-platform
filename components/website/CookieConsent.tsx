@@ -25,20 +25,20 @@ export function CookieConsent() {
   if (consent) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-50 bg-white rounded-2xl shadow-lg border border-grey-200 p-5">
-      <p className="text-sm text-grey-500 mb-4">
+    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-sm z-50 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 p-5">
+      <p className="text-sm text-on-surface-variant/80 mb-4">
         Vi bruker informasjonskapsler for å forbedre din opplevelse.
       </p>
       <div className="flex items-center gap-3">
         <button 
           onClick={handleAccept} 
-          className="bg-forest text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-black transition-colors"
+          className="bg-forest text-surface px-5 py-2 rounded-full text-sm font-medium hover:bg-on-surface transition-colors"
         >
           Godta
         </button>
         <Link 
           href="/personvern" 
-          className="text-sm text-grey-500 hover:text-black transition-colors"
+          className="text-sm text-on-surface-variant/80 hover:text-on-surface transition-colors"
         >
           Les mer
         </Link>

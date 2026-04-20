@@ -70,17 +70,17 @@ export function CalendarWeekView({ events, weekStart }: CalendarWeekViewProps) {
               <MonoLabel
                 size="sm"
                 uppercase
-                className={isToday ? "text-primary" : "text-grey-500"}
+                className={isToday ? "text-primary" : "text-on-surface-variant/80"}
               >
                 {format(day, "EEEE d. MMM", { locale: nb })}
               </MonoLabel>
-              <span className="h-px flex-1 bg-grey-100" />
-              <MonoLabel size="xs" className="text-grey-400">
+              <span className="h-px flex-1 bg-surface-container" />
+              <MonoLabel size="xs" className="text-on-surface-variant">
                 {items.length}
               </MonoLabel>
             </div>
             {items.length === 0 ? (
-              <p className="pl-[34px] text-[12px] text-grey-400">Ingen hendelser</p>
+              <p className="pl-[34px] text-[12px] text-on-surface-variant">Ingen hendelser</p>
             ) : (
               <VerticalTimeline
                 items={items.map<TimelineItem>((e) => ({

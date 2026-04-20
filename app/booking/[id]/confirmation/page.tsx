@@ -42,7 +42,7 @@ export default async function BookingConfirmationPage({ params }: Props) {
   if (!booking) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
-        <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border border-outline-variant/30 bg-surface-container-lowest">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-surface">
             <Icon name="error" className="w-8 h-8 text-primary" />
           </div>

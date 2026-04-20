@@ -85,7 +85,7 @@ export function AdminToastProvider({
             <div
               key={t.id}
               role="status"
-              className="pointer-events-auto min-w-[280px] max-w-sm flex items-start gap-3 px-4 py-3 rounded-xl shadow-xl bg-white border border-grey-200"
+              className="pointer-events-auto min-w-[280px] max-w-sm flex items-start gap-3 px-4 py-3 rounded-xl shadow-xl bg-surface-container-lowest border border-outline-variant/30"
               style={{
                 borderLeft: `3px solid ${color}`,
                 animation: "admin-toast-in 220ms ease",
@@ -93,11 +93,11 @@ export function AdminToastProvider({
             >
               <Icon className="w-5 h-5 shrink-0 mt-0.5" style={{ color }} />
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold text-black">
+                <div className="text-sm font-semibold text-on-surface">
                   {t.title}
                 </div>
                 {t.description && (
-                  <div className="text-xs mt-0.5 text-grey-400">
+                  <div className="text-xs mt-0.5 text-on-surface-variant">
                     {t.description}
                   </div>
                 )}
@@ -105,10 +105,10 @@ export function AdminToastProvider({
               <button
                 type="button"
                 onClick={() => dismiss(t.id)}
-                className="shrink-0 p-0.5 rounded hover:bg-black/5"
+                className="shrink-0 p-0.5 rounded hover:bg-on-surface/5"
                 aria-label="Lukk varsel"
               >
-                <Icon name="close" className="w-4 h-4 text-grey-400" />
+                <Icon name="close" className="w-4 h-4 text-on-surface-variant" />
               </button>
             </div>
           );

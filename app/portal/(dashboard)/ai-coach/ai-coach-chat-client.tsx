@@ -73,7 +73,7 @@ export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientPr
           opacity: showHistory ? 1 : 0
         }}
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-        className="flex-shrink-0 border-r border-grey-100 overflow-hidden bg-white"
+        className="flex-shrink-0 border-r border-outline-variant/20 overflow-hidden bg-surface-container-lowest"
       >
         <div className="w-[280px] h-full">
           <ChatHistory
@@ -87,29 +87,29 @@ export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientPr
       </motion.aside>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col min-w-0 bg-white">
+      <div className="flex-1 flex flex-col min-w-0 bg-surface-container-lowest">
         {/* Header */}
-        <header className="flex items-center justify-between px-4 py-3 border-b border-grey-100">
+        <header className="flex items-center justify-between px-4 py-3 border-b border-outline-variant/20">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowHistory(!showHistory)}
               className={`p-2 rounded-lg transition-colors ${
-                showHistory ? "bg-ai-light text-ai-text" : "hover:bg-grey-50 text-grey-400"
+                showHistory ? "bg-ai-light text-ai-text" : "hover:bg-surface text-on-surface-variant"
               }`}
               title={showHistory ? "Skjul historikk" : "Vis historikk"}
             >
               {showHistory ? <Icon name="left_panel_open"Close className="w-5 h-5" /> : <Icon name="menu" className="w-5 h-5" />}
             </button>
             <div>
-              <h1 className="text-lg font-semibold text-black">AI Coach</h1>
-              <p className="text-xs text-grey-400">Din personlige golfcoach</p>
+              <h1 className="text-lg font-semibold text-on-surface">AI Coach</h1>
+              <p className="text-xs text-on-surface-variant">Din personlige golfcoach</p>
             </div>
           </div>
           
           <button
             onClick={() => setShowContext(!showContext)}
             className={`p-2 rounded-lg transition-colors ${
-              showContext ? "bg-ai-light text-ai-text" : "hover:bg-grey-50 text-grey-400"
+              showContext ? "bg-ai-light text-ai-text" : "hover:bg-surface text-on-surface-variant"
             }`}
             title={showContext ? "Skjul kontekst" : "Vis kontekst"}
           >
@@ -135,7 +135,7 @@ export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientPr
           opacity: showContext ? 1 : 0
         }}
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-        className="flex-shrink-0 border-l border-grey-100 overflow-hidden bg-grey-50/50"
+        className="flex-shrink-0 border-l border-outline-variant/20 overflow-hidden bg-surface/50"
       >
         <div className="w-[280px] h-full overflow-y-auto p-4">
           <ContextPanel context={context} />

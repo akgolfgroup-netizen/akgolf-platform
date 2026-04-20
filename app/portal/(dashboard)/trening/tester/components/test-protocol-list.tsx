@@ -103,14 +103,14 @@ export function TestProtocolList({ categories, grouped }: Props) {
             placeholder="Sok etter test..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-white border border-outline-variant rounded-[12px] text-on-surface placeholder-portal-muted focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            className="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-[12px] text-on-surface placeholder-portal-muted focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
           />
         </div>
 
         <select
           value={selectedCategory ?? ""}
           onChange={(e) => setSelectedCategory(e.target.value || null)}
-          className="px-4 py-2 bg-white border border-outline-variant rounded-[12px] text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+          className="px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-[12px] text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
         >
           <option value="">Alle kategorier</option>
           {categories.map((cat) => (
@@ -123,7 +123,7 @@ export function TestProtocolList({ categories, grouped }: Props) {
         <select
           value={selectedDifficulty ?? ""}
           onChange={(e) => setSelectedDifficulty(e.target.value || null)}
-          className="px-4 py-2 bg-white border border-outline-variant rounded-[12px] text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+          className="px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-[12px] text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
         >
           <option value="">Alle nivaer</option>
           {difficulties.map((diff) => (
@@ -162,7 +162,7 @@ export function TestProtocolList({ categories, grouped }: Props) {
                   <Link
                     key={protocol.id}
                     href={`/portal/trening/tester/${protocol.id}`}
-                    className="group bg-white border border-outline-variant rounded-xl p-4 hover:border-black/8 transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover"
+                    className="group bg-surface-container-lowest border border-outline-variant rounded-xl p-4 hover:border-black/8 transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">

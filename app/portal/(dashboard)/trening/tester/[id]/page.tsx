@@ -89,22 +89,22 @@ export default async function TestDetailPage({ params }: Props) {
 
         {/* Quick stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+          <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-card">
             <Icon name="schedule" className="w-5 h-5 text-on-surface mb-2" />
             <p className="text-xl font-bold text-on-surface tabular-nums">{protocol.duration_minutes} min</p>
             <p className="text-sm text-on-surface-variant">Varighet</p>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+          <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-card">
             <Icon name="my_location" className="w-5 h-5 text-on-surface mb-2" />
             <p className="text-xl font-bold text-on-surface tabular-nums">{protocol.shots_required}</p>
             <p className="text-sm text-on-surface-variant">Slag</p>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+          <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-card">
             <Icon name="fitness_center" className="w-5 h-5 text-on-surface mb-2" />
             <p className="text-xl font-bold text-on-surface tabular-nums">{protocol.clubs?.length ?? 0}</p>
             <p className="text-sm text-on-surface-variant">Køller</p>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+          <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-card">
             <Icon name="check"Circle2 className="w-5 h-5 text-on-surface mb-2" />
             <p className="text-xl font-bold text-on-surface">
               {protocol.min_category}-{protocol.max_category}
@@ -117,7 +117,7 @@ export default async function TestDetailPage({ params }: Props) {
       {/* Content grid */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Instructions */}
-        <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
+        <div className="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-card">
           <h2 className="text-lg font-semibold text-on-surface mb-4">Instruksjoner</h2>
           <div className="space-y-3">
             {protocol.instructions?.split("\n").map((line: string, i: number) => (
@@ -129,7 +129,7 @@ export default async function TestDetailPage({ params }: Props) {
         </div>
 
         {/* Tips */}
-        <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
+        <div className="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-card">
           <h2 className="text-lg font-semibold text-on-surface mb-4 flex items-center gap-2">
             <Icon name="lightbulb" className="w-5 h-5 text-warning" />
             Tips
@@ -145,7 +145,7 @@ export default async function TestDetailPage({ params }: Props) {
         </div>
 
         {/* Equipment */}
-        <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
+        <div className="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-card">
           <h2 className="text-lg font-semibold text-on-surface mb-4">Utstyr</h2>
           <div className="flex flex-wrap gap-2">
             {protocol.equipment_required?.map((item: string, i: number) => (
@@ -171,7 +171,7 @@ export default async function TestDetailPage({ params }: Props) {
         </div>
 
         {/* Metrics */}
-        <div className="bg-white rounded-xl p-6 border border-outline-variant shadow-card">
+        <div className="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-card">
           <h2 className="text-lg font-semibold text-on-surface mb-4">Metrikker som spores</h2>
           <div className="flex flex-wrap gap-2">
             {protocol.metrics_tracked?.map((metric: string, i: number) => (
@@ -208,7 +208,7 @@ export default async function TestDetailPage({ params }: Props) {
       {/* Start test button */}
       <div className="flex justify-center pt-4">
         <button
-          className="flex items-center gap-3 px-8 py-4 bg-black text-white font-semibold rounded-[20px] transition-colors hover:opacity-90"
+          className="flex items-center gap-3 px-8 py-4 bg-on-surface text-surface font-semibold rounded-[20px] transition-colors hover:opacity-90"
         >
           <Icon name="play_arrow" className="w-5 h-5" />
           Start Test

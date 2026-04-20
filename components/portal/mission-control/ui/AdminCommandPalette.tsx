@@ -129,13 +129,13 @@ export function AdminCommandPalette({
       aria-label="Kommandopalett"
     >
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-on-surface/40 backdrop-blur-sm"
         onClick={() => setOpen(false)}
         aria-hidden="true"
       />
-      <div className="relative w-full max-w-xl rounded-2xl overflow-hidden shadow-2xl bg-white border border-grey-200">
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-grey-200">
-          <Icon name="search" className="w-4 h-4 text-grey-400" />
+      <div className="relative w-full max-w-xl rounded-2xl overflow-hidden shadow-2xl bg-surface-container-lowest border border-outline-variant/30">
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-outline-variant/30">
+          <Icon name="search" className="w-4 h-4 text-on-surface-variant" />
           <input
             ref={inputRef}
             type="text"
@@ -146,21 +146,21 @@ export function AdminCommandPalette({
             }}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            className="flex-1 bg-transparent outline-none text-sm text-black"
+            className="flex-1 bg-transparent outline-none text-sm text-on-surface"
           />
-          <kbd className="text-[10px] px-1.5 py-0.5 rounded border border-grey-200 text-grey-400">
+          <kbd className="text-[10px] px-1.5 py-0.5 rounded border border-outline-variant/30 text-on-surface-variant">
             ESC
           </kbd>
         </div>
         <div className="max-h-[50vh] overflow-y-auto py-2">
           {flat.length === 0 ? (
-            <div className="px-4 py-6 text-center text-sm text-grey-400">
+            <div className="px-4 py-6 text-center text-sm text-on-surface-variant">
               Ingen treff.
             </div>
           ) : (
             grouped.map(([group, list]) => (
               <div key={group} className="mb-2 last:mb-0">
-                <div className="px-4 py-1 text-[10px] font-semibold uppercase tracking-wide text-grey-400">
+                <div className="px-4 py-1 text-[10px] font-semibold uppercase tracking-wide text-on-surface-variant">
                   {group}
                 </div>
                 {list.map((item) => {
@@ -179,8 +179,8 @@ export function AdminCommandPalette({
                       className={cn(
                         "w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors",
                         isActive
-                          ? "bg-black text-white"
-                          : "bg-transparent text-black"
+                          ? "bg-on-surface text-surface"
+                          : "bg-transparent text-on-surface"
                       )}
                     >
                       {item.icon && (
@@ -194,7 +194,7 @@ export function AdminCommandPalette({
                           <div
                             className={cn(
                               "text-xs truncate",
-                              isActive ? "text-white/80" : "text-grey-400"
+                              isActive ? "text-surface/80" : "text-on-surface-variant"
                             )}
                           >
                             {item.description}

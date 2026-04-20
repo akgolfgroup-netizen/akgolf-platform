@@ -30,8 +30,8 @@ export function SubNavTabs({ tabs, activeTab, className }: SubNavTabsProps) {
             className={cn(
               "px-4 py-1.5 rounded-full text-sm font-medium transition-colors",
               isActive
-                ? "bg-primary text-white"
-                : "text-grey-500 hover:bg-grey-50"
+                ? "bg-primary text-surface"
+                : "text-on-surface-variant/80 hover:bg-surface"
             )}
           >
             {tab.label}

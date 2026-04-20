@@ -15,7 +15,7 @@ const mockWeekDays = [
 
 export default function PortalPreviewPage() {
   return (
-    <div className="min-h-screen bg-grey-100 px-4 py-6 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-surface-container px-4 py-6 sm:px-6 lg:px-8">
       <DashboardClient
         userName="Anders"
         tier="PRO"

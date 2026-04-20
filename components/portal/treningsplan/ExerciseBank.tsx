@@ -175,26 +175,26 @@ export function ExerciseBank({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider">
+      <h3 className="text-sm font-medium text-inverse-on-surface/60 uppercase tracking-wider">
         Øvelsesbank
       </h3>
 
       {/* Search */}
       <div className="relative">
-        <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+        <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-inverse-on-surface/70" />
         <input
           type="text"
           placeholder="Søk øvelser..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-9 pr-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-slate-600 focus:ring-1 focus:ring-slate-600 transition-colors"
+          className="w-full pl-9 pr-3 py-2 bg-inverse-surface/50 border border-inverse-on-surface/20 rounded-lg text-sm text-inverse-on-surface placeholder-slate-500 focus:outline-none focus:border-inverse-on-surface/20 focus:ring-1 focus:ring-slate-600 transition-colors"
         />
       </div>
 
       {/* Favorites section */}
       {favoriteExercises.length > 0 && (
         <div className="space-y-2">
-          <h4 className="text-xs font-medium text-slate-500 uppercase flex items-center gap-1">
+          <h4 className="text-xs font-medium text-inverse-on-surface/70 uppercase flex items-center gap-1">
             <Icon name="star" className="w-3 h-3 fill-yellow-500 text-yellow-500" />
             Favoritter
           </h4>
@@ -219,7 +219,7 @@ export function ExerciseBank({
       {selectedFilter ? (
         // Show single group when filtered
         <div className="space-y-2">
-          <h4 className="text-xs font-medium text-slate-500 uppercase">
+          <h4 className="text-xs font-medium text-inverse-on-surface/70 uppercase">
             {selectedFilter} - {filteredExercises.length} øvelser
           </h4>
           <div className="space-y-1">
@@ -244,7 +244,7 @@ export function ExerciseBank({
 
           return (
             <div key={level} className="space-y-2">
-              <h4 className="text-xs font-medium text-slate-500 uppercase flex items-center gap-1">
+              <h4 className="text-xs font-medium text-inverse-on-surface/70 uppercase flex items-center gap-1">
                 <span
                   className="w-2 h-2 rounded-full"
                   style={{ backgroundColor: FOCUS_COLORS[level] }}
@@ -271,7 +271,7 @@ export function ExerciseBank({
       )}
 
       {filteredExercises.length === 0 && (
-        <div className="text-center py-4 text-slate-500 text-sm">
+        <div className="text-center py-4 text-inverse-on-surface/70 text-sm">
           Ingen øvelser funnet
         </div>
       )}
@@ -311,23 +311,23 @@ function ExerciseItem({
         group relative flex items-center gap-2 p-2 rounded-lg
         cursor-move transition-all duration-200
         ${isDragging
-          ? "opacity-50 bg-slate-800/30"
-          : "hover:bg-slate-800/50"
+          ? "opacity-50 bg-inverse-surface/30"
+          : "hover:bg-inverse-surface/50"
         }
       `}
     >
       {/* Drag handle */}
-      <Icon name="drag_indicator" className="w-3 h-3 text-slate-600 group-hover:text-slate-400 shrink-0" />
+      <Icon name="drag_indicator" className="w-3 h-3 text-inverse-on-surface/60 group-hover:text-inverse-on-surface/60 shrink-0" />
 
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5">
           <span style={{ color }}>{icon}</span>
-          <span className="text-sm text-slate-300 group-hover:text-slate-200 truncate">
+          <span className="text-sm text-inverse-on-surface/50 group-hover:text-inverse-on-surface truncate">
             {exercise.name}
           </span>
         </div>
-        <div className="flex items-center gap-2 text-[10px] text-slate-500">
+        <div className="flex items-center gap-2 text-[10px] text-inverse-on-surface/70">
           <span className="flex items-center gap-0.5">
             <Icon name="schedule" className="w-3 h-3" />
             {exercise.duration}min
@@ -348,7 +348,7 @@ function ExerciseItem({
             p-1 rounded transition-colors
             ${isFavorite
               ? "text-yellow-500 hover:text-yellow-400"
-              : "text-slate-600 hover:text-slate-400"
+              : "text-inverse-on-surface/60 hover:text-inverse-on-surface/60"
             }
           `}
           aria-label={isFavorite ? "Fjern fra favoritter" : "Legg til favoritter"}
@@ -360,7 +360,7 @@ function ExerciseItem({
             e.stopPropagation();
             onAdd();
           }}
-          className="p-1 text-slate-600 hover:text-blue-400 transition-colors"
+          className="p-1 text-inverse-on-surface/60 hover:text-blue-400 transition-colors"
           aria-label="Legg til økt"
         >
           <Icon name="add" className="w-3.5 h-3.5" />

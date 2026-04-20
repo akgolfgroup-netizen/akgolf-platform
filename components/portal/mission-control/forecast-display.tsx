@@ -119,42 +119,42 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
       className="space-y-5"
     >
       {/* Header: nåværende → mål */}
-      <div className="bg-white border border-grey-200 rounded-xl p-6">
+      <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-black flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-on-surface flex items-center gap-2">
             <Icon name="my_location" className="w-5 h-5 text-primary" />
             Forecast
           </h3>
-          <span className="text-xs text-grey-400">
+          <span className="text-xs text-on-surface-variant">
             {formatDate(forecast.generatedAt)} · {forecast.modelVersion}
           </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-4 rounded-lg bg-grey-50 border border-grey-100">
-            <p className="text-xs text-grey-400 mb-1">Nåværende</p>
-            <p className="text-2xl font-bold text-black tabular-nums">
+          <div className="p-4 rounded-lg bg-surface border border-outline-variant/20">
+            <p className="text-xs text-on-surface-variant mb-1">Nåværende</p>
+            <p className="text-2xl font-bold text-on-surface tabular-nums">
               {round1(forecast.currentScoreAvg)}
             </p>
-            <p className="text-xs text-grey-400 mt-0.5">
+            <p className="text-xs text-on-surface-variant mt-0.5">
               SG {round1(forecast.currentSgTotal)} · Kat {forecast.currentCategory}
             </p>
           </div>
-          <div className="p-4 rounded-lg bg-grey-50 border border-grey-100">
-            <p className="text-xs text-grey-400 mb-1">Mål</p>
-            <p className="text-2xl font-bold text-black tabular-nums">
+          <div className="p-4 rounded-lg bg-surface border border-outline-variant/20">
+            <p className="text-xs text-on-surface-variant mb-1">Mål</p>
+            <p className="text-2xl font-bold text-on-surface tabular-nums">
               {round1(forecast.targetScoreAvg)}
             </p>
-            <p className="text-xs text-grey-400 mt-0.5">
+            <p className="text-xs text-on-surface-variant mt-0.5">
               Deadline: {formatDate(forecast.deadline)} · Kat {forecast.targetCategory}
             </p>
           </div>
-          <div className="p-4 rounded-lg bg-grey-50 border border-grey-100">
-            <p className="text-xs text-grey-400 mb-1">Delta SG</p>
-            <p className="text-2xl font-bold text-black tabular-nums">
+          <div className="p-4 rounded-lg bg-surface border border-outline-variant/20">
+            <p className="text-xs text-on-surface-variant mb-1">Delta SG</p>
+            <p className="text-2xl font-bold text-on-surface tabular-nums">
               +{round1(forecast.requiredSgDelta)}
             </p>
-            <p className="text-xs text-grey-400 mt-0.5">
+            <p className="text-xs text-on-surface-variant mt-0.5">
               Primærfokus: {CATEGORY_LABELS[forecast.primaryFocusCategory] ?? forecast.primaryFocusCategory}
             </p>
           </div>
@@ -163,7 +163,7 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
 
       {/* Sannsynlighet + timer */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div className="bg-white border border-grey-200 rounded-xl p-6 flex items-center gap-5">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 flex items-center gap-5">
           <AdminProgressRing
             value={probPct}
             max={100}
@@ -174,36 +174,36 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
           />
           <div>
             <p className={`text-3xl font-bold tabular-nums ${probColor}`}>{probPct}%</p>
-            <p className="text-sm text-grey-400 mt-0.5">sannsynlighet for måloppnåelse</p>
+            <p className="text-sm text-on-surface-variant mt-0.5">sannsynlighet for måloppnåelse</p>
             <Badge variant={probBadge as never} className="mt-2">
               {probPct >= 70 ? "Realistisk" : probPct >= 40 ? "Krevende" : "Vanskelig"}
             </Badge>
           </div>
         </div>
 
-        <div className="bg-white border border-grey-200 rounded-xl p-6">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
           <div className="flex items-center gap-2 mb-3">
             <Icon name="schedule" className="w-4 h-4 text-primary" />
-            <p className="text-sm font-semibold text-black">Estimert tidsbruk</p>
+            <p className="text-sm font-semibold text-on-surface">Estimert tidsbruk</p>
           </div>
-          <p className="text-3xl font-bold text-black tabular-nums">
+          <p className="text-3xl font-bold text-on-surface tabular-nums">
             {Math.round(forecast.estimatedTotalHours)}
-            <span className="text-lg font-medium text-grey-400 ml-1">timer</span>
+            <span className="text-lg font-medium text-on-surface-variant ml-1">timer</span>
           </p>
-          <p className="text-sm text-grey-400 mt-1">
+          <p className="text-sm text-on-surface-variant mt-1">
             95% CI: {Math.round(forecast.estimatedHoursCi95Low)}–{Math.round(forecast.estimatedHoursCi95High)} timer
           </p>
-          <p className="text-sm text-grey-400 mt-0.5">
+          <p className="text-sm text-on-surface-variant mt-0.5">
             {round1(forecast.estimatedHoursPerWeek)} t/uke frem til deadline
           </p>
         </div>
       </div>
 
       {/* Kategori-fordeling med Tek/Tak/Mental/Fys */}
-      <div className="bg-white border border-grey-200 rounded-xl p-6 space-y-4">
+      <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 space-y-4">
         <div className="flex items-center gap-2">
           <Icon name="trending_up" className="w-4 h-4 text-primary" />
-          <p className="text-sm font-semibold text-black">Fordeling per kategori</p>
+          <p className="text-sm font-semibold text-on-surface">Fordeling per kategori</p>
         </div>
 
         {cats.map((cat) => {
@@ -225,14 +225,14 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
                     className="inline-block w-2.5 h-2.5 rounded-full"
                     style={{ backgroundColor: CATEGORY_COLORS[cat] }}
                   />
-                  <span className="text-sm font-medium text-black">
+                  <span className="text-sm font-medium text-on-surface">
                     {CATEGORY_LABELS[cat] ?? cat}
                   </span>
-                  <span className="text-xs text-grey-400">
+                  <span className="text-xs text-on-surface-variant">
                     +{round1(delta)} SG · {Math.round(hours)} t
                   </span>
                 </div>
-                <span className="text-xs text-grey-400 capitalize">{rootCause}</span>
+                <span className="text-xs text-on-surface-variant capitalize">{rootCause}</span>
               </div>
 
               {/* Tek/Tak/Mental/Fys stablet bar */}
@@ -249,7 +249,7 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
                   />
                 ))}
               </div>
-              <div className="flex gap-3 text-[10px] text-grey-400">
+              <div className="flex gap-3 text-[10px] text-on-surface-variant">
                 {(["tek", "tak", "mental", "fys"] as const).map((key) => (
                   <span key={key} className="flex items-center gap-1">
                     <span
@@ -266,10 +266,10 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
       </div>
 
       {/* Anbefalinger */}
-      <div className="bg-white border border-grey-200 rounded-xl p-6">
+      <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
           <Icon name="gps_fixed" className="w-4 h-4 text-primary" />
-          <p className="text-sm font-semibold text-black">Anbefalinger</p>
+          <p className="text-sm font-semibold text-on-surface">Anbefalinger</p>
         </div>
         <ul className="space-y-2">
           {forecast.recommendationsJson.map((rec, i) => (
@@ -282,10 +282,10 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
       </div>
 
       {/* Antakelser */}
-      <div className="bg-white border border-grey-200 rounded-xl p-6">
+      <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
           <Icon name="psychology" className="w-4 h-4 text-primary" />
-          <p className="text-sm font-semibold text-black">Antakelser</p>
+          <p className="text-sm font-semibold text-on-surface">Antakelser</p>
         </div>
         <ul className="space-y-2">
           {forecast.assumptionsJson.map((ass, i) => (
@@ -293,7 +293,7 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
               {ass.startsWith("ADVARSEL") ? (
                 <Icon name="warning" className="w-4 h-4 text-warning mt-0.5 shrink-0" />
               ) : (
-                <Icon name="fitness_center" className="w-4 h-4 text-grey-300 mt-0.5 shrink-0" />
+                <Icon name="fitness_center" className="w-4 h-4 text-on-surface-variant/60 mt-0.5 shrink-0" />
               )}
               {ass}
             </li>
@@ -302,10 +302,10 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
       </div>
 
       {/* Monte-Carlo CI */}
-      <div className="bg-white border border-grey-200 rounded-xl p-6">
+      <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
           <Map className="w-4 h-4 text-primary" />
-          <p className="text-sm font-semibold text-black">Usikkerhet</p>
+          <p className="text-sm font-semibold text-on-surface">Usikkerhet</p>
         </div>
         <p className="text-sm text-text">
           95% konfidensintervall for oppnådd SG-delta: [{" "}

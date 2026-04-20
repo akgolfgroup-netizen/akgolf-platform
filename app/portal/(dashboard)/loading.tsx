@@ -6,7 +6,7 @@ export default function DashboardLoading() {
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-4 text-center"
+            className="bg-surface-container-lowest rounded-[20px] border border-[var(--color-surface-container)] p-4 text-center"
           >
             <div className="h-8 w-16 bg-[var(--color-surface-container)] rounded mx-auto mb-2" />
             <div className="h-3 w-12 bg-[var(--color-surface-container-lowest)] rounded mx-auto" />
@@ -16,7 +16,7 @@ export default function DashboardLoading() {
 
       {/* Next session + actions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-5">
+        <div className="bg-surface-container-lowest rounded-[20px] border border-[var(--color-surface-container)] p-5">
           <div className="h-3 w-24 bg-[var(--color-surface-container)] rounded mb-4" />
           <div className="h-6 w-48 bg-[var(--color-surface-container)] rounded mb-2" />
           <div className="h-4 w-32 bg-[var(--color-surface-container-lowest)] rounded" />

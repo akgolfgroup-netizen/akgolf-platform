@@ -30,11 +30,11 @@ function CustomTooltip({
 }) {
   if (active && payload && payload.length) {
     return (
-      <div className="rounded-xl border border-[rgba(10,31,24,0.08)] bg-white px-3 py-2 shadow-[0_4px_16px_rgba(10,31,24,0.08)]">
-        <p className="text-[11px] font-medium uppercase tracking-[0.06em] text-grey-400">
+      <div className="rounded-xl border border-[rgba(10,31,24,0.08)] bg-surface-container-lowest px-3 py-2 shadow-[0_4px_16px_rgba(10,31,24,0.08)]">
+        <p className="text-[11px] font-medium uppercase tracking-[0.06em] text-on-surface-variant">
           {label}
         </p>
-        <p className="mt-0.5 text-sm font-semibold text-black tabular-nums">
+        <p className="mt-0.5 text-sm font-semibold text-on-surface tabular-nums">
           HCP {payload[0].value.toFixed(1)}
         </p>
       </div>

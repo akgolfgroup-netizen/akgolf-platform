@@ -14,7 +14,7 @@ export default function Loading() {
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-xl border border-outline-variant p-4"
+            className="bg-surface-container-lowest rounded-xl border border-outline-variant p-4"
           >
             <div className="flex items-start justify-between">
               <div className="space-y-2 flex-1">

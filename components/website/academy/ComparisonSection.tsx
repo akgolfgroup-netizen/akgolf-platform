@@ -18,21 +18,21 @@ export function ComparisonSection() {
           <h2 className="w-heading-lg mt-4 mb-4">
             {ABO_VS_FLEX.heading}
           </h2>
-          <p className="text-grey-500 leading-relaxed max-w-2xl mb-12">
+          <p className="text-on-surface-variant/80 leading-relaxed max-w-2xl mb-12">
             {ABO_VS_FLEX.description}
           </p>
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <div className="bg-white rounded-2xl shadow-card overflow-hidden max-w-2xl">
+          <div className="bg-surface-container-lowest rounded-2xl shadow-card overflow-hidden max-w-2xl">
             {/* Header */}
-            <div className="grid grid-cols-3 gap-0 border-b border-grey-100">
+            <div className="grid grid-cols-3 gap-0 border-b border-outline-variant/20">
               <div className="p-5" />
               <div className="p-5 text-center">
-                <p className="text-sm font-bold text-black">Abonnement</p>
+                <p className="text-sm font-bold text-on-surface">Abonnement</p>
               </div>
               <div className="p-5 text-center">
-                <p className="text-sm font-bold text-grey-400">Flex</p>
+                <p className="text-sm font-bold text-on-surface-variant">Flex</p>
               </div>
             </div>
 
@@ -42,7 +42,7 @@ export function ComparisonSection() {
                 key={row.feature}
                 className={`grid grid-cols-3 gap-0 ${
                   i < ABO_VS_FLEX.rows.length - 1
-                    ? "border-b border-grey-100"
+                    ? "border-b border-outline-variant/20"
                     : ""
                 }`}
               >
@@ -53,14 +53,14 @@ export function ComparisonSection() {
                   {row.abo ? (
                     <Icon name="check" className="w-4 h-4 text-primary" />
                   ) : (
-                    <Icon name="close" className="w-4 h-4 text-grey-300" />
+                    <Icon name="close" className="w-4 h-4 text-on-surface-variant/60" />
                   )}
                 </div>
                 <div className="p-4 flex justify-center">
                   {row.flex ? (
                     <Icon name="check" className="w-4 h-4 text-primary" />
                   ) : (
-                    <Icon name="close" className="w-4 h-4 text-grey-300" />
+                    <Icon name="close" className="w-4 h-4 text-on-surface-variant/60" />
                   )}
                 </div>
               </div>

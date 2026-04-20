@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
             <Icon name="shield"
               className="w-4 h-4 text-primary"
               aria-hidden="true" />
-            <h1 className="text-2xl font-bold text-black tracking-tight">Mission Control</h1>
+            <h1 className="text-2xl font-bold text-on-surface tracking-tight">Mission Control</h1>
           </div>
           <p className="text-sm text-muted">
             Kun for staff
@@ -70,13 +70,13 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Kort */}
-        <div className="bg-white border border-grey-200 rounded-xl p-6">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
           <form onSubmit={handleLogin} className="space-y-5">
             {/* E-post */}
             <div className="space-y-1.5">
               <label
                 htmlFor="admin-email"
-                className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400"
+                className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant"
               >
                 E-postadresse
               </label>
@@ -93,7 +93,7 @@ export default function AdminLoginPage() {
                   required
                   autoComplete="email"
                   spellCheck={false}
-                  className="w-full px-3.5 py-2.5 pl-10 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+                  className="w-full px-3.5 py-2.5 pl-10 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
                 />
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function AdminLoginPage() {
             <div className="space-y-1.5">
               <label
                 htmlFor="admin-password"
-                className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400"
+                className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant"
               >
                 Passord
               </label>
@@ -118,7 +118,7 @@ export default function AdminLoginPage() {
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
-                  className="w-full px-3.5 py-2.5 pl-10 pr-10 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+                  className="w-full px-3.5 py-2.5 pl-10 pr-10 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
                 />
                 <button
                   type="button"

@@ -84,21 +84,21 @@ function WeekDaySelector({
               flex-1 flex flex-col items-center gap-1 py-3 px-1 rounded-xl
               transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
               ${isSelected
-                ? "bg-black text-white shadow-[0_4px_12px_rgba(10,31,24,0.08)]"
-                : "bg-white text-black hover:bg-grey-50"
+                ? "bg-on-surface text-surface shadow-[0_4px_12px_rgba(10,31,24,0.08)]"
+                : "bg-surface-container-lowest text-on-surface hover:bg-surface"
               }
             `}
           >
             <span
               className={`text-[10px] font-semibold uppercase tracking-[0.08em] ${
-                isSelected ? "text-white/70" : "text-grey-400"
+                isSelected ? "text-surface/70" : "text-on-surface-variant"
               }`}
             >
               {day.dayName}
             </span>
             <span
               className={`text-base font-semibold tabular-nums ${
-                isSelected ? "text-white" : "text-black"
+                isSelected ? "text-surface" : "text-on-surface"
               }`}
             >
               {format(new Date(day.dateISO), "d", { locale: nb })}
@@ -110,8 +110,8 @@ function WeekDaySelector({
                     isCompleted
                       ? "bg-success"
                       : isSelected
-                        ? "bg-white/60"
-                        : "bg-black"
+                        ? "bg-surface-container-lowest/60"
+                        : "bg-on-surface"
                   }`}
                 />
               )}
@@ -134,13 +134,13 @@ function TodaySessionCard({ day }: { day: DayData }) {
     return (
       <PremiumCard delay={0.1}>
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center mb-4">
-            <Icon name="my_location" className="w-6 h-6 text-grey-400" />
+          <div className="w-12 h-12 rounded-xl bg-surface flex items-center justify-center mb-4">
+            <Icon name="my_location" className="w-6 h-6 text-on-surface-variant" />
           </div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant mb-1">
             {day.dayName} {format(new Date(day.dateISO), "d. MMMM", { locale: nb })}
           </p>
-          <p className="text-sm text-grey-400">
+          <p className="text-sm text-on-surface-variant">
             Ingen okt planlagt. Nyt hviledagen.
           </p>
         </div>
@@ -162,17 +162,17 @@ function TodaySessionCard({ day }: { day: DayData }) {
       {/* Header */}
       <div className="flex items-start justify-between mb-5">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant mb-1">
             Dagens okt
           </p>
-          <h3 className="text-lg font-bold tracking-tight text-black">
+          <h3 className="text-lg font-bold tracking-tight text-on-surface">
             {session.title}
           </h3>
           <div className="flex items-center gap-3 mt-2">
             {session.pyramidLevel && (
               <PyramidTag level={session.pyramidLevel} />
             )}
-            <span className="flex items-center gap-1 text-xs text-grey-400">
+            <span className="flex items-center gap-1 text-xs text-on-surface-variant">
               <Icon name="schedule" className="w-3.5 h-3.5" />
               {session.duration} min
             </span>
@@ -195,7 +195,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
           <button
             onClick={handleToggleComplete}
             disabled={isToggling}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-grey-200 text-grey-400 hover:bg-success/10 hover:text-success hover:border-success/30 transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant hover:bg-success/10 hover:text-success hover:border-success/30 transition-colors"
           >
             {isToggling ? (
               <Icon name="progress_activity" className="w-3.5 h-3.5 animate-spin" />
@@ -214,18 +214,18 @@ function TodaySessionCard({ day }: { day: DayData }) {
             <div
               key={`${exercise.name}-${idx}`}
               className={`flex items-start gap-4 py-4 ${
-                idx < session.exercises.length - 1 ? "border-b border-grey-200" : ""
+                idx < session.exercises.length - 1 ? "border-b border-outline-variant/30" : ""
               }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center flex-shrink-0">
-                <Icon name="fitness_center" className="w-5 h-5 text-grey-400" />
+              <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center flex-shrink-0">
+                <Icon name="fitness_center" className="w-5 h-5 text-on-surface-variant" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-black">
+                <p className="text-sm font-semibold text-on-surface">
                   {exercise.name}
                 </p>
                 {exercise.details && (
-                  <p className="text-xs text-grey-400 mt-0.5 line-clamp-2">
+                  <p className="text-xs text-on-surface-variant mt-0.5 line-clamp-2">
                     {exercise.details}
                   </p>
                 )}
@@ -236,16 +236,16 @@ function TodaySessionCard({ day }: { day: DayData }) {
       )}
 
       {session.exercises.length === 0 && (
-        <p className="text-xs text-grey-400 py-4">
+        <p className="text-xs text-on-surface-variant py-4">
           Ingen ovelser lagt til enna.
         </p>
       )}
 
       {/* CTA Buttons */}
-      <div className="flex gap-3 mt-5 pt-5 border-t border-grey-200">
+      <div className="flex gap-3 mt-5 pt-5 border-t border-outline-variant/30">
         <Link
           href={`/portal/treningsplan/${session.id}`}
-          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full bg-accent-cta text-black text-sm font-semibold
+          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full bg-secondary-fixed text-on-surface text-sm font-semibold
             transition-all duration-300 hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] active:opacity-75"
         >
           <Icon name="play_arrow" className="w-4 h-4" />
@@ -253,8 +253,8 @@ function TodaySessionCard({ day }: { day: DayData }) {
         </Link>
         <Link
           href="/portal/bookinger"
-          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full border border-grey-200 bg-white text-black text-sm font-semibold
-            transition-all duration-300 hover:border-grey-300"
+          className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full border border-outline-variant/30 bg-surface-container-lowest text-on-surface text-sm font-semibold
+            transition-all duration-300 hover:border-outline-variant/50"
         >
           <Icon name="calendar_today" className="w-4 h-4" />
           Book coaching
@@ -277,10 +277,10 @@ function WeeklyFocusCard({ weekDays }: { weekDays: DayData[] }) {
 
   return (
     <PremiumCard delay={0.2}>
-      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-1">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant mb-1">
         Ukens fokusomrade
       </p>
-      <h3 className="text-lg font-bold tracking-tight text-black mb-4">
+      <h3 className="text-lg font-bold tracking-tight text-on-surface mb-4">
         {primaryFocus}
       </h3>
       {uniqueAreas.length > 1 && (
@@ -288,7 +288,7 @@ function WeeklyFocusCard({ weekDays }: { weekDays: DayData[] }) {
           {uniqueAreas.map((area) => (
             <span
               key={area}
-              className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-grey-50 text-grey-400"
+              className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-surface text-on-surface-variant"
             >
               {area}
             </span>
@@ -296,7 +296,7 @@ function WeeklyFocusCard({ weekDays }: { weekDays: DayData[] }) {
         </div>
       )}
       {uniqueAreas.length <= 1 && (
-        <p className="text-xs text-grey-400 leading-relaxed">
+        <p className="text-xs text-on-surface-variant leading-relaxed">
           Coach-anbefaling for denne uken. Fokuser pa {primaryFocus.toLowerCase()} for best mulig fremgang.
         </p>
       )}
@@ -314,30 +314,30 @@ function ProgressCard({ weekDays }: { weekDays: DayData[] }) {
 
   return (
     <PremiumCard delay={0.3} >
-      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-3">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant mb-3">
         Fremgang denne uken
       </p>
 
       {/* Big number */}
       <div className="flex items-baseline gap-1 mb-4">
-        <span className="text-4xl font-extrabold tracking-tight tabular-nums text-black">
+        <span className="text-4xl font-extrabold tracking-tight tabular-nums text-on-surface">
           {completed}
         </span>
-        <span className="text-lg font-semibold text-grey-400 tabular-nums">
+        <span className="text-lg font-semibold text-on-surface-variant tabular-nums">
           / {planned}
         </span>
       </div>
 
       {/* Progress bar */}
-      <div className="h-[5px] bg-grey-200/50 rounded-full overflow-hidden mb-3">
+      <div className="h-[5px] bg-surface-variant/50 rounded-full overflow-hidden mb-3">
         <div
-          className="h-full rounded-full bg-black transition-all duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+          className="h-full rounded-full bg-on-surface transition-all duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
           style={{ width: `${percentage}%` }}
         />
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="text-xs text-grey-400">
+        <span className="text-xs text-on-surface-variant">
           {planned === 0
             ? "Ingen okter planlagt"
             : completed === planned
@@ -372,23 +372,23 @@ function EmptyState({
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/treningsplan" />
 
       <div className="mb-2">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-2">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant mb-2">
           Uke {weekNumber}
         </p>
-        <h1 className="text-3xl font-bold tracking-tight text-black">
+        <h1 className="text-3xl font-bold tracking-tight text-on-surface">
           Treningsplan
         </h1>
       </div>
 
       <PremiumCard className="text-center">
         <div className="py-8">
-          <div className="w-16 h-16 rounded-2xl bg-grey-50 flex items-center justify-center mx-auto mb-5">
-            <Icon name="calendar_today" className="w-8 h-8 text-grey-400" strokeWidth={1.75} />
+          <div className="w-16 h-16 rounded-2xl bg-surface flex items-center justify-center mx-auto mb-5">
+            <Icon name="calendar_today" className="w-8 h-8 text-on-surface-variant" strokeWidth={1.75} />
           </div>
-          <h2 className="text-xl font-semibold text-black mb-2">
+          <h2 className="text-xl font-semibold text-on-surface mb-2">
             Din treningsplan er tom
           </h2>
-          <p className="text-sm text-grey-400 max-w-md mx-auto mb-6 leading-relaxed">
+          <p className="text-sm text-on-surface-variant max-w-md mx-auto mb-6 leading-relaxed">
             {canGenerate
               ? "Opprett en plan manuelt, eller la AI lage en personlig plan for deg."
               : "Kontakt din coach for a fa en personlig treningsplan."}
@@ -446,21 +446,21 @@ export function TreningsplanClient({
       {/* Page header */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-2">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant mb-2">
             Uke {weekNumber}
           </p>
-          <h1 className="text-3xl font-bold tracking-tight text-black">
+          <h1 className="text-3xl font-bold tracking-tight text-on-surface">
             Treningsplan
           </h1>
-          <p className="text-sm text-grey-400 mt-1">{weekRange}</p>
+          <p className="text-sm text-on-surface-variant mt-1">{weekRange}</p>
         </div>
 
         <div className="flex items-center gap-2">
           {/* Week nav */}
-          <div className="flex items-center gap-1 p-1 rounded-full bg-white border border-grey-200">
+          <div className="flex items-center gap-1 p-1 rounded-full bg-surface-container-lowest border border-outline-variant/30">
             <Link
               href={`/portal/treningsplan?week=${weekOffset - 1}`}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface transition-colors"
               aria-label="Forrige uke"
             >
               <Icon name="chevron_left" className="w-4 h-4" />
@@ -468,14 +468,14 @@ export function TreningsplanClient({
             {weekOffset !== 0 && (
               <Link
                 href="/portal/treningsplan"
-                className="h-9 px-3 rounded-full text-xs font-semibold text-black hover:bg-grey-50 transition-colors inline-flex items-center"
+                className="h-9 px-3 rounded-full text-xs font-semibold text-on-surface hover:bg-surface transition-colors inline-flex items-center"
               >
                 I dag
               </Link>
             )}
             <Link
               href={`/portal/treningsplan?week=${weekOffset + 1}`}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface transition-colors"
               aria-label="Neste uke"
             >
               <Icon name="chevron_right" className="w-4 h-4" />

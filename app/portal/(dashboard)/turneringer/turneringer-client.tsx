@@ -34,24 +34,24 @@ interface TurneringerClientProps {
 
 const LEVEL_BADGE_STYLES: Record<string, { bg: string; text: string; border: string }> = {
   nasjonal: {
-    bg: "bg-black",
-    text: "text-white",
+    bg: "bg-on-surface",
+    text: "text-surface",
     border: "border-black",
   },
   internasjonal: {
-    bg: "bg-grey-400",
-    text: "text-white",
-    border: "border-grey-400",
+    bg: "bg-surface-variant",
+    text: "text-surface",
+    border: "border-outline-variant",
   },
   regional: {
-    bg: "bg-accent-cta",
-    text: "text-black",
-    border: "border-accent-cta",
+    bg: "bg-secondary-fixed",
+    text: "text-on-surface",
+    border: "border-secondary-fixed",
   },
   lokal: {
-    bg: "bg-grey-50",
-    text: "text-grey-400",
-    border: "border-grey-200",
+    bg: "bg-surface",
+    text: "text-on-surface-variant",
+    border: "border-outline-variant/30",
   },
 };
 
@@ -129,8 +129,8 @@ export function TurneringerClient({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-black">Turneringer</h1>
-          <p className="text-sm text-grey-400 mt-1">
+          <h1 className="text-2xl font-bold text-on-surface">Turneringer</h1>
+          <p className="text-sm text-on-surface-variant mt-1">
             {myTournaments.length} planlagte turneringer
           </p>
         </div>
@@ -138,7 +138,7 @@ export function TurneringerClient({
 
       {/* Tab Navigation */}
       <div className="flex items-center justify-between">
-        <div className="flex gap-1 p-1.5 rounded-full bg-white border border-grey-200">
+        <div className="flex gap-1 p-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/30">
           {([
             { key: "mine" as Tab, label: "Mine turneringer", count: myTournaments.length },
             { key: "alle" as Tab, label: "Alle turneringer", count: tournaments.length },
@@ -150,15 +150,15 @@ export function TurneringerClient({
               className={cn(
                 "px-5 py-2.5 text-[13px] font-semibold rounded-full transition-all duration-300",
                 activeTab === tab.key
-                  ? "bg-accent-cta text-black shadow-sm"
-                  : "text-grey-400 hover:text-black hover:bg-grey-50"
+                  ? "bg-secondary-fixed text-on-surface shadow-sm"
+                  : "text-on-surface-variant hover:text-on-surface hover:bg-surface"
               )}
             >
               {tab.label}
               {tab.count !== undefined && (
                 <span className={cn(
                   "ml-2 text-xs tabular-nums px-1.5 py-0.5 rounded-full",
-                  activeTab === tab.key ? "bg-black/10 text-black" : "bg-grey-50 text-grey-400"
+                  activeTab === tab.key ? "bg-on-surface/10 text-on-surface" : "bg-surface text-on-surface-variant"
                 )}>
                   {tab.count}
                 </span>
@@ -175,20 +175,20 @@ export function TurneringerClient({
               className={cn(
                 "p-2.5 rounded-full border transition-all duration-300",
                 showFilters
-                  ? "bg-black text-white border-black shadow-sm"
-                  : "border-grey-200 text-grey-400 hover:border-grey-300 hover:bg-white"
+                  ? "bg-on-surface text-surface border-black shadow-sm"
+                  : "border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/50 hover:bg-surface-container-lowest"
               )}
             >
               <Icon name="filter_list" className="w-4 h-4" />
             </button>
-            <div className="flex p-1 rounded-full bg-white border border-grey-200">
+            <div className="flex p-1 rounded-full bg-surface-container-lowest border border-outline-variant/30">
               <button
                 onClick={() => setViewMode("list")}
                 className={cn(
                   "p-2 rounded-full transition-all duration-300",
                   viewMode === "list"
-                    ? "bg-grey-50 shadow-sm text-black"
-                    : "text-grey-400 hover:text-black"
+                    ? "bg-surface shadow-sm text-on-surface"
+                    : "text-on-surface-variant hover:text-on-surface"
                 )}
               >
                 <Icon name="list" className="w-4 h-4" />
@@ -198,8 +198,8 @@ export function TurneringerClient({
                 className={cn(
                   "p-2 rounded-full transition-all duration-300",
                   viewMode === "calendar"
-                    ? "bg-grey-50 shadow-sm text-black"
-                    : "text-grey-400 hover:text-black"
+                    ? "bg-surface shadow-sm text-on-surface"
+                    : "text-on-surface-variant hover:text-on-surface"
                 )}
               >
                 <Icon name="calendar_today"Days className="w-4 h-4" />
@@ -219,8 +219,8 @@ export function TurneringerClient({
               className={cn(
                 "px-4 py-2 text-xs font-semibold rounded-full border transition-all duration-300",
                 levelFilter === level
-                  ? "bg-accent-cta text-black border-accent-cta shadow-sm"
-                  : "bg-white text-grey-400 border-grey-200 hover:border-grey-300"
+                  ? "bg-secondary-fixed text-on-surface border-secondary-fixed shadow-sm"
+                  : "bg-surface-container-lowest text-on-surface-variant border-outline-variant/30 hover:border-outline-variant/50"
               )}
             >
               {level === "alle"
@@ -300,8 +300,8 @@ function ListView({
     <div className="space-y-8">
       {upcoming.length > 0 && (
         <section>
-          <h2 className="text-xs font-semibold text-black uppercase tracking-[0.14em] mb-4 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-accent-cta" />
+          <h2 className="text-xs font-semibold text-on-surface uppercase tracking-[0.14em] mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-secondary-fixed" />
             Kommende
           </h2>
           <div className="space-y-2">
@@ -318,8 +318,8 @@ function ListView({
 
       {past.length > 0 && (
         <section>
-          <h2 className="text-xs font-semibold text-grey-400 uppercase tracking-[0.14em] mb-4 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-grey-400/30" />
+          <h2 className="text-xs font-semibold text-on-surface-variant uppercase tracking-[0.14em] mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-surface-variant/30" />
             Tidligere
           </h2>
           <div className="space-y-2 opacity-60">
@@ -361,7 +361,7 @@ function TournamentListCard({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left bg-white border border-grey-200 rounded-2xl p-5 hover:border-grey-300 hover:shadow-sm transition-all duration-300 group"
+      className="w-full text-left bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-5 hover:border-outline-variant/50 hover:shadow-sm transition-all duration-300 group"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
@@ -395,21 +395,21 @@ function TournamentListCard({
               </span>
             )}
             {tournament.series && (
-              <span className="text-[10px] text-grey-400">
+              <span className="text-[10px] text-on-surface-variant">
                 {tournament.series}
               </span>
             )}
           </div>
 
           {/* Name */}
-          <h3 className="font-semibold text-black text-sm group-hover:text-grey-400 transition-colors truncate">
+          <h3 className="font-semibold text-on-surface text-sm group-hover:text-on-surface-variant transition-colors truncate">
             {tournament.name}
           </h3>
 
           {/* Meta */}
           <div className="mt-3 space-y-1.5">
-            <div className="flex items-center gap-2 text-xs text-grey-400">
-              <Icon name="calendar_today" className="w-3.5 h-3.5 flex-shrink-0 text-black" />
+            <div className="flex items-center gap-2 text-xs text-on-surface-variant">
+              <Icon name="calendar_today" className="w-3.5 h-3.5 flex-shrink-0 text-on-surface" />
               <span>
                 {format(new Date(tournament.startDate), "d. MMM yyyy", { locale: nb })}
                 {tournament.endDate &&
@@ -417,15 +417,15 @@ function TournamentListCard({
               </span>
             </div>
             {(tournament.course || tournament.location) && (
-              <div className="flex items-center gap-2 text-xs text-grey-400">
-                <Icon name="location_on" className="w-3.5 h-3.5 flex-shrink-0 text-black" />
+              <div className="flex items-center gap-2 text-xs text-on-surface-variant">
+                <Icon name="location_on" className="w-3.5 h-3.5 flex-shrink-0 text-on-surface" />
                 <span className="truncate">
                   {[tournament.course, tournament.location].filter(Boolean).join(', ')}
                 </span>
               </div>
             )}
             {tournament.registrationDeadline && !deadlinePassed && (
-              <div className="flex items-center gap-2 text-xs text-grey-400">
+              <div className="flex items-center gap-2 text-xs text-on-surface-variant">
                 <Icon name="schedule" className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>
                   Påmeldingsfrist:{" "}
@@ -439,12 +439,12 @@ function TournamentListCard({
         {/* Right side — plan info */}
         <div className="flex flex-col items-end gap-2 flex-shrink-0">
           {plan && (
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-black/10 text-black">
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-on-surface/10 text-on-surface">
               {PLAN_LEVEL_CONFIG[plan.planLevel as PlanLevel]?.label}
             </span>
           )}
           {tournament.externalUrl && (
-            <span className="p-2 rounded-full bg-grey-50 text-grey-400 group-hover:bg-accent-cta group-hover:text-black transition-all duration-300">
+            <span className="p-2 rounded-full bg-surface text-on-surface-variant group-hover:bg-secondary-fixed group-hover:text-on-surface transition-all duration-300">
               <Icon name="open_in_new" className="w-3.5 h-3.5" />
             </span>
           )}
@@ -488,32 +488,32 @@ function CalendarView({
   const weekdays = ["Ma", "Ti", "On", "To", "Fr", "Lø", "Sø"];
 
   return (
-    <PremiumCard noHover radius="large" className="p-0 overflow-hidden border-grey-200 bg-white rounded-2xl">
+    <PremiumCard noHover radius="large" className="p-0 overflow-hidden border-outline-variant/30 bg-surface-container-lowest rounded-2xl">
       {/* Month nav */}
-      <div className="flex items-center justify-between px-6 py-5 border-b border-grey-200">
+      <div className="flex items-center justify-between px-6 py-5 border-b border-outline-variant/30">
         <button
           onClick={prevMonth}
-          className="p-2 rounded-full hover:bg-grey-50 text-grey-400 transition-colors"
+          className="p-2 rounded-full hover:bg-surface text-on-surface-variant transition-colors"
         >
           <Icon name="chevron_left" className="w-5 h-5" />
         </button>
-        <h3 className="text-sm font-semibold text-black capitalize">
+        <h3 className="text-sm font-semibold text-on-surface capitalize">
           {format(calendarMonth, "MMMM yyyy", { locale: nb })}
         </h3>
         <button
           onClick={nextMonth}
-          className="p-2 rounded-full hover:bg-grey-50 text-grey-400 transition-colors"
+          className="p-2 rounded-full hover:bg-surface text-on-surface-variant transition-colors"
         >
           <Icon name="chevron_right" className="w-5 h-5" />
         </button>
       </div>
 
       {/* Weekday headers */}
-      <div className="grid grid-cols-7 border-b border-grey-200">
+      <div className="grid grid-cols-7 border-b border-outline-variant/30">
         {weekdays.map((day) => (
           <div
             key={day}
-            className="py-3 text-center text-[10px] font-semibold text-grey-400 uppercase tracking-[0.14em]"
+            className="py-3 text-center text-[10px] font-semibold text-on-surface-variant uppercase tracking-[0.14em]"
           >
             {day}
           </div>
@@ -531,16 +531,16 @@ function CalendarView({
             <div
               key={i}
               className={cn(
-                "min-h-[90px] p-2 border-b border-r border-grey-200 last:border-r-0",
-                !isCurrentMonth && "bg-grey-50/50"
+                "min-h-[90px] p-2 border-b border-r border-outline-variant/30 last:border-r-0",
+                !isCurrentMonth && "bg-surface/50"
               )}
             >
               <span
                 className={cn(
                   "inline-flex items-center justify-center w-7 h-7 text-sm rounded-full",
-                  isToday && "bg-accent-cta text-black font-semibold",
-                  !isToday && isCurrentMonth && "text-black",
-                  !isCurrentMonth && "text-grey-400"
+                  isToday && "bg-secondary-fixed text-on-surface font-semibold",
+                  !isToday && isCurrentMonth && "text-on-surface",
+                  !isCurrentMonth && "text-on-surface-variant"
                 )}
               >
                 {format(day, "d")}
@@ -563,7 +563,7 @@ function CalendarView({
                   );
                 })}
                 {dayTournaments.length > 2 && (
-                  <span className="text-[9px] text-grey-400 pl-1">
+                  <span className="text-[9px] text-on-surface-variant pl-1">
                     +{dayTournaments.length - 2} til
                   </span>
                 )}
@@ -596,14 +596,14 @@ function ProTourSection({
   return (
     <div className="space-y-4">
       {/* Tour toggle */}
-      <div className="flex gap-2 p-1.5 rounded-full bg-white border border-grey-200 w-fit">
+      <div className="flex gap-2 p-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/30 w-fit">
         <button
           onClick={() => setProTour("pga")}
           className={cn(
             "px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300",
             proTour === "pga"
-              ? "bg-accent-cta text-black shadow-sm"
-              : "text-grey-400 hover:text-black hover:bg-grey-50"
+              ? "bg-secondary-fixed text-on-surface shadow-sm"
+              : "text-on-surface-variant hover:text-on-surface hover:bg-surface"
           )}
         >
           PGA Tour
@@ -613,8 +613,8 @@ function ProTourSection({
           className={cn(
             "px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300",
             proTour === "euro"
-              ? "bg-accent-cta text-black shadow-sm"
-              : "text-grey-400 hover:text-black hover:bg-grey-50"
+              ? "bg-secondary-fixed text-on-surface shadow-sm"
+              : "text-on-surface-variant hover:text-on-surface hover:bg-surface"
           )}
         >
           DP World Tour
@@ -642,31 +642,31 @@ function ProTournamentCard({ event }: { event: TourScheduleEvent }) {
   return (
     <div
       className={cn(
-        "bg-white border border-grey-200 rounded-2xl p-5 transition-all duration-300 hover:border-grey-300 hover:shadow-sm",
+        "bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-5 transition-all duration-300 hover:border-outline-variant/50 hover:shadow-sm",
         isPast && "opacity-50"
       )}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-black/10 text-black border border-black/20">
+            <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-on-surface/10 text-on-surface border border-black/20">
               <Globe className="w-3 h-3" />
               Pro Tour
             </span>
             {event.winner_name && (
-              <span className="text-[10px] text-grey-400">
+              <span className="text-[10px] text-on-surface-variant">
                 Vinner: {event.winner_name}
               </span>
             )}
           </div>
 
-          <h3 className="font-semibold text-black text-sm">
+          <h3 className="font-semibold text-on-surface text-sm">
             {event.event_name}
           </h3>
 
           <div className="mt-2 space-y-1">
             {startDate && (
-              <div className="flex items-center gap-2 text-xs text-grey-400">
+              <div className="flex items-center gap-2 text-xs text-on-surface-variant">
                 <Icon name="calendar_today" className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>
                   {format(startDate, "d. MMM yyyy", { locale: nb })}
@@ -675,7 +675,7 @@ function ProTournamentCard({ event }: { event: TourScheduleEvent }) {
               </div>
             )}
             {(event.course || event.location) && (
-              <div className="flex items-center gap-2 text-xs text-grey-400">
+              <div className="flex items-center gap-2 text-xs text-on-surface-variant">
                 <Icon name="location_on" className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>{[event.course, event.location].filter(Boolean).join(', ')}</span>
               </div>
@@ -732,12 +732,12 @@ function TournamentDetailModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-on-surface/40 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto border border-grey-200">
+      <div className="relative bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto border border-outline-variant/30">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-grey-200 px-6 py-4 flex items-start justify-between rounded-t-2xl z-10">
+        <div className="sticky top-0 bg-surface-container-lowest border-b border-outline-variant/30 px-6 py-4 flex items-start justify-between rounded-t-2xl z-10">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <span
@@ -757,13 +757,13 @@ function TournamentDetailModal({
                 </span>
               )}
             </div>
-            <h2 className="text-lg font-bold text-black truncate">
+            <h2 className="text-lg font-bold text-on-surface truncate">
               {tournament.name}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-grey-50 text-grey-400 transition-colors ml-2"
+            className="p-1.5 rounded-lg hover:bg-surface text-on-surface-variant transition-colors ml-2"
           >
             <Icon name="close" className="w-4 h-4" />
           </button>
@@ -773,8 +773,8 @@ function TournamentDetailModal({
         <div className="px-6 py-5 space-y-6">
           {/* Info */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2.5 text-sm text-grey-400">
-              <Icon name="calendar_today" className="w-4 h-4 text-grey-400" />
+            <div className="flex items-center gap-2.5 text-sm text-on-surface-variant">
+              <Icon name="calendar_today" className="w-4 h-4 text-on-surface-variant" />
               <span>
                 {format(new Date(tournament.startDate), "d. MMMM yyyy", { locale: nb })}
                 {tournament.endDate &&
@@ -782,16 +782,16 @@ function TournamentDetailModal({
               </span>
             </div>
             {(tournament.course || tournament.location) && (
-              <div className="flex items-center gap-2.5 text-sm text-grey-400">
-                <Icon name="location_on" className="w-4 h-4 text-grey-400" />
+              <div className="flex items-center gap-2.5 text-sm text-on-surface-variant">
+                <Icon name="location_on" className="w-4 h-4 text-on-surface-variant" />
                 <span>
                   {[tournament.course, tournament.location].filter(Boolean).join(', ')}
                 </span>
               </div>
             )}
             {tournament.registrationDeadline && (
-              <div className="flex items-center gap-2.5 text-sm text-grey-400">
-                <Icon name="schedule" className="w-4 h-4 text-grey-400" />
+              <div className="flex items-center gap-2.5 text-sm text-on-surface-variant">
+                <Icon name="schedule" className="w-4 h-4 text-on-surface-variant" />
                 <span>
                   Påmeldingsfrist:{" "}
                   {format(new Date(tournament.registrationDeadline), "d. MMMM yyyy", { locale: nb })}
@@ -799,8 +799,8 @@ function TournamentDetailModal({
               </div>
             )}
             {tournament.numberOfHoles && (
-              <div className="flex items-center gap-2.5 text-sm text-grey-400">
-                <Icon name="my_location" className="w-4 h-4 text-grey-400" />
+              <div className="flex items-center gap-2.5 text-sm text-on-surface-variant">
+                <Icon name="my_location" className="w-4 h-4 text-on-surface-variant" />
                 <span>{tournament.numberOfHoles} hull</span>
               </div>
             )}
@@ -812,7 +812,7 @@ function TournamentDetailModal({
               href={tournament.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-full border border-grey-200 text-grey-400 hover:border-grey-300 hover:text-black transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-full border border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/50 hover:text-on-surface transition-colors"
             >
               <Icon name="open_in_new" className="w-4 h-4" />
               Se turnering / meld deg på
@@ -820,15 +820,15 @@ function TournamentDetailModal({
           )}
 
           {/* Divider */}
-          <div className="border-t border-grey-200" />
+          <div className="border-t border-outline-variant/30" />
 
           {/* Plan section */}
           <div>
-            <h3 className="text-sm font-semibold text-black mb-3">Min plan</h3>
+            <h3 className="text-sm font-semibold text-on-surface mb-3">Min plan</h3>
 
             {/* Goal type */}
             <div className="mb-4">
-              <label className="text-xs font-medium text-grey-400 mb-2 block">
+              <label className="text-xs font-medium text-on-surface-variant mb-2 block">
                 Mål
               </label>
               <div className="flex gap-2">
@@ -841,7 +841,7 @@ function TournamentDetailModal({
                         "flex-1 px-3 py-2 text-xs font-medium rounded-xl border transition-all",
                         goalType === key
                           ? "border-2 shadow-sm"
-                          : "border-grey-200 text-grey-400 hover:border-grey-300"
+                          : "border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/50"
                       )}
                       style={
                         goalType === key
@@ -863,7 +863,7 @@ function TournamentDetailModal({
 
             {/* Plan level */}
             <div className="mb-4">
-              <label className="text-xs font-medium text-grey-400 mb-2 block">
+              <label className="text-xs font-medium text-on-surface-variant mb-2 block">
                 Prioritet
               </label>
               <div className="flex gap-2">
@@ -875,12 +875,12 @@ function TournamentDetailModal({
                       className={cn(
                         "flex-1 px-3 py-2 text-xs font-medium rounded-xl border transition-all text-center",
                         planLevel === key
-                          ? "border-black bg-black text-white"
-                          : "border-grey-200 text-grey-400 hover:border-grey-300"
+                          ? "border-black bg-on-surface text-surface"
+                          : "border-outline-variant/30 text-on-surface-variant hover:border-outline-variant/50"
                       )}
                     >
                       <div>{config.label}</div>
-                      <div className={cn("text-[10px] mt-0.5", planLevel === key ? "text-white/70" : "text-grey-400")}>
+                      <div className={cn("text-[10px] mt-0.5", planLevel === key ? "text-surface/70" : "text-on-surface-variant")}>
                         {config.description}
                       </div>
                     </button>
@@ -891,7 +891,7 @@ function TournamentDetailModal({
 
             {/* Notes */}
             <div className="mb-4">
-              <label className="text-xs font-medium text-grey-400 mb-2 block">
+              <label className="text-xs font-medium text-on-surface-variant mb-2 block">
                 Notater
               </label>
               <textarea
@@ -899,24 +899,24 @@ function TournamentDetailModal({
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Tanker om turneringen, strategi, mål..."
                 rows={3}
-                className="w-full px-3 py-2.5 text-sm rounded-xl border border-grey-200 focus:border-grey-300 focus:outline-none resize-none placeholder:text-grey-400 text-black"
+                className="w-full px-3 py-2.5 text-sm rounded-xl border border-outline-variant/30 focus:border-outline-variant/50 focus:outline-none resize-none placeholder:text-on-surface-variant text-on-surface"
               />
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-white border-t border-grey-200 px-6 py-4 flex items-center justify-end gap-3 rounded-b-2xl">
+        <div className="sticky bottom-0 bg-surface-container-lowest border-t border-outline-variant/30 px-6 py-4 flex items-center justify-end gap-3 rounded-b-2xl">
           <button
             onClick={onClose}
-            className="px-4 py-2.5 text-sm font-medium rounded-full text-grey-400 hover:text-black transition-colors"
+            className="px-4 py-2.5 text-sm font-medium rounded-full text-on-surface-variant hover:text-on-surface transition-colors"
           >
             Avbryt
           </button>
           <button
             onClick={handleSave}
             disabled={isPending}
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-accent-cta text-black hover:opacity-90 disabled:opacity-50 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-secondary-fixed text-on-surface hover:opacity-90 disabled:opacity-50 transition-colors"
           >
             {isPending && <Icon name="progress_activity" className="w-4 h-4 animate-spin" />}
             {plan ? "Oppdater plan" : "Legg til plan"}
@@ -934,10 +934,10 @@ function TournamentDetailModal({
 function EmptyState({ message }: { message: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="w-16 h-16 rounded-[24px] bg-grey-50 border border-grey-200 flex items-center justify-center mb-4">
-        <Icon name="emoji_events" className="w-7 h-7 text-black" />
+      <div className="w-16 h-16 rounded-[24px] bg-surface border border-outline-variant/30 flex items-center justify-center mb-4">
+        <Icon name="emoji_events" className="w-7 h-7 text-on-surface" />
       </div>
-      <p className="text-sm text-grey-400 max-w-xs">{message}</p>
+      <p className="text-sm text-on-surface-variant max-w-xs">{message}</p>
     </div>
   );
 }

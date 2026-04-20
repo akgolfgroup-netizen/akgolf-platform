@@ -64,8 +64,8 @@ export function RevenueChart({
               <Icon name="account_balance_wallet" className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h3 className="text-sm font-medium text-grey-400">Totalt ({period === "month" ? "12 måneder" : period})</h3>
-              <p className="text-2xl font-bold text-black tabular-nums">
+              <h3 className="text-sm font-medium text-on-surface-variant">Totalt ({period === "month" ? "12 måneder" : period})</h3>
+              <p className="text-2xl font-bold text-on-surface tabular-nums">
                 {formatRevenue(totalRevenue)}
               </p>
             </div>
@@ -86,7 +86,7 @@ export function RevenueChart({
             {change.positive ? "+" : ""}
             {change.value}%
           </div>
-          <p className="text-xs text-grey-400 mt-1">vs forrige periode</p>
+          <p className="text-xs text-on-surface-variant mt-1">vs forrige periode</p>
         </div>
       </div>
 
@@ -99,22 +99,22 @@ export function RevenueChart({
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-grey-200">
+      <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-outline-variant/30">
         <div>
-          <p className="text-xs text-grey-400">Gjennomsnitt</p>
-          <p className="text-lg font-semibold text-black tabular-nums">
+          <p className="text-xs text-on-surface-variant">Gjennomsnitt</p>
+          <p className="text-lg font-semibold text-on-surface tabular-nums">
             {formatRevenue(averageRevenue)}
           </p>
         </div>
         <div>
-          <p className="text-xs text-grey-400">Høyeste</p>
-          <p className="text-lg font-semibold text-black tabular-nums">
+          <p className="text-xs text-on-surface-variant">Høyeste</p>
+          <p className="text-lg font-semibold text-on-surface tabular-nums">
             {formatRevenue(Math.max(...data.map((d) => d.value)))}
           </p>
         </div>
         <div>
-          <p className="text-xs text-grey-400">Laveste</p>
-          <p className="text-lg font-semibold text-black tabular-nums">
+          <p className="text-xs text-on-surface-variant">Laveste</p>
+          <p className="text-lg font-semibold text-on-surface tabular-nums">
             {formatRevenue(Math.min(...data.map((d) => d.value)))}
           </p>
         </div>
@@ -152,16 +152,16 @@ export function RevenueByService({
 
   return (
     <Card className="p-5">
-      <h3 className="text-sm font-semibold text-black mb-4">Inntekt per tjeneste</h3>
+      <h3 className="text-sm font-semibold text-on-surface mb-4">Inntekt per tjeneste</h3>
       <div className="space-y-4">
         {services.map((service) => (
           <div key={service.name}>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-sm font-medium text-black">{service.name}</span>
-              <span className="text-sm text-grey-400">{formatRevenue(service.amount)}</span>
+              <span className="text-sm font-medium text-on-surface">{service.name}</span>
+              <span className="text-sm text-on-surface-variant">{formatRevenue(service.amount)}</span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex-1 h-2 bg-grey-100 rounded-full overflow-hidden">
+              <div className="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{
@@ -170,17 +170,17 @@ export function RevenueByService({
                   }}
                 />
               </div>
-              <span className="text-xs font-medium text-grey-400 w-10 text-right">
+              <span className="text-xs font-medium text-on-surface-variant w-10 text-right">
                 {service.percentage}%
               </span>
             </div>
           </div>
         ))}
       </div>
-      <div className="mt-4 pt-4 border-t border-grey-200">
+      <div className="mt-4 pt-4 border-t border-outline-variant/30">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-black">Totalt</span>
-          <span className="text-lg font-bold text-black tabular-nums">
+          <span className="text-sm font-medium text-on-surface">Totalt</span>
+          <span className="text-lg font-bold text-on-surface tabular-nums">
             {formatRevenue(total)}
           </span>
         </div>

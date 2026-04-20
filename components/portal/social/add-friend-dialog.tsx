@@ -91,7 +91,7 @@ export function AddFriendDialog({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-50"
             onClick={onClose}
           />
 
@@ -101,16 +101,16 @@ export function AddFriendDialog({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-x-4 top-[15%] sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-md z-50 bg-white rounded-2xl shadow-lg overflow-hidden"
+            className="fixed inset-x-4 top-[15%] sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-md z-50 bg-surface-container-lowest rounded-2xl shadow-lg overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-grey-200">
-              <h2 className="text-base font-semibold text-grey-900">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-outline-variant/30">
+              <h2 className="text-base font-semibold text-on-surface">
                 Legg til venn
               </h2>
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg hover:bg-grey-50 transition-colors"
+                className="p-1.5 rounded-lg hover:bg-surface transition-colors"
               >
                 <Icon name="close" className="w-4 h-4 text-muted" />
               </button>
@@ -149,14 +149,14 @@ export function AddFriendDialog({
                 return (
                   <div
                     key={result.id}
-                    className="flex items-center justify-between px-5 py-3 hover:bg-grey-50 transition-colors"
+                    className="flex items-center justify-between px-5 py-3 hover:bg-surface transition-colors"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold shrink-0">
+                      <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-surface text-xs font-bold shrink-0">
                         {getInitials(result.name)}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-grey-900 truncate">
+                        <p className="text-sm font-medium text-on-surface truncate">
                           {result.name}
                         </p>
                         {result.email && (
@@ -187,7 +187,7 @@ export function AddFriendDialog({
                         disabled={sendingId === result.id}
                         className={cn(
                           "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all",
-                          "bg-primary text-white hover:bg-primary-alt active:scale-[0.97]",
+                          "bg-primary text-surface hover:bg-primary-alt active:scale-[0.97]",
                           sendingId === result.id &&
                             "opacity-60 cursor-not-allowed"
                         )}
@@ -206,7 +206,7 @@ export function AddFriendDialog({
             </div>
 
             {/* Bunninfo */}
-            <div className="px-5 py-3 border-t border-grey-200 bg-grey-50">
+            <div className="px-5 py-3 border-t border-outline-variant/30 bg-surface">
               <p className="text-[11px] text-muted text-center">
                 Skriv minst 2 tegn for å søke. Venneforespørsler må godkjennes.
               </p>

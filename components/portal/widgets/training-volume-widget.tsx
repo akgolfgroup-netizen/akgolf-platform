@@ -12,7 +12,7 @@ export function TrainingVolumeWidget() {
   // TODO: Koble til reelle data via server action
   const areas = [
     { name: "Teknikk", hours: 8.5, color: "bg-primary" },
-    { name: "Fysikk", hours: 4.0, color: "bg-accent-cta" },
+    { name: "Fysikk", hours: 4.0, color: "bg-secondary-fixed" },
     { name: "Slag", hours: 6.0, color: "bg-success" },
     { name: "Spill", hours: 3.5, color: "bg-info" },
     { name: "Turnering", hours: 2.0, color: "bg-ai" },
@@ -37,7 +37,7 @@ export function TrainingVolumeWidget() {
                 <span className="text-muted">{area.name}</span>
                 <span className="font-medium text-text">{area.hours}t</span>
               </div>
-              <div className="h-1.5 rounded-full bg-grey-100 overflow-hidden">
+              <div className="h-1.5 rounded-full bg-surface-container overflow-hidden">
                 <div
                   className={cn("h-full rounded-full transition-all", area.color)}
                   style={{ width: `${pct}%` }}

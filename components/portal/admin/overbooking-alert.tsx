@@ -35,10 +35,10 @@ export function OverbookingAlert({
       >
         <Icon name="check"Circle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-medium text-black">
+          <p className="text-sm font-medium text-on-surface">
             God kapasitet
           </p>
-          <p className="text-xs text-grey-400 mt-0.5">
+          <p className="text-xs text-on-surface-variant mt-0.5">
             {expectedSessions} forventede okter ({hoursNeeded.toFixed(1)}t) -{" "}
             {availableHours.toFixed(1)}t tilgjengelig.{" "}
             <span className="font-medium text-success">
@@ -59,10 +59,10 @@ export function OverbookingAlert({
       >
         <Icon name="trending_up" className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-medium text-black">
+          <p className="text-sm font-medium text-on-surface">
             Nesten fullt
           </p>
-          <p className="text-xs text-grey-400 mt-0.5">
+          <p className="text-xs text-on-surface-variant mt-0.5">
             {expectedSessions} forventede okter ({hoursNeeded.toFixed(1)}t) mot{" "}
             {availableHours.toFixed(1)}t tilgjengelig. Lite margin.
           </p>
@@ -79,10 +79,10 @@ export function OverbookingAlert({
     >
       <Icon name="warning" className="w-5 h-5 text-error flex-shrink-0 mt-0.5" />
       <div>
-        <p className="text-sm font-medium text-black">
+        <p className="text-sm font-medium text-on-surface">
           Overbooking-varsel
         </p>
-        <p className="text-xs text-grey-400 mt-0.5">
+        <p className="text-xs text-on-surface-variant mt-0.5">
           {expectedSessions} forventede okter krever{" "}
           <span className="font-medium">{hoursNeeded.toFixed(1)}t</span>, men
           kun{" "}

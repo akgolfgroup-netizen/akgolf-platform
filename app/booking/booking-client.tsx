@@ -84,7 +84,7 @@ export function BookingClient({ trainers, prefilledUser, isLoggedIn, hasSubscrip
       <main className="max-w-[720px] mx-auto px-5 pt-7 pb-32">
         <StepIndicator currentStep={currentStep} />
 
-        <h1 className="text-[26px] font-bold text-black tracking-tight mb-1">
+        <h1 className="text-[26px] font-bold text-on-surface tracking-tight mb-1">
           Hvem vil du trene med?
         </h1>
         <p className="text-sm text-muted mb-7">

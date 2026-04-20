@@ -38,7 +38,7 @@ function ActivityRing({ day }: { day: WeekDay }) {
   return (
     <div className="group relative flex flex-col items-center gap-1.5">
       {/* Tooltip */}
-      <div className="absolute -top-10 left-1/2 z-20 hidden -translate-x-1/2 whitespace-nowrap rounded-lg bg-black px-2.5 py-1 text-xs font-medium text-white opacity-0 shadow-md transition-opacity group-hover:block group-hover:opacity-100">
+      <div className="absolute -top-10 left-1/2 z-20 hidden -translate-x-1/2 whitespace-nowrap rounded-lg bg-on-surface px-2.5 py-1 text-xs font-medium text-surface opacity-0 shadow-md transition-opacity group-hover:block group-hover:opacity-100">
         {formatTooltip(day)}
       </div>
 
@@ -47,7 +47,7 @@ function ActivityRing({ day }: { day: WeekDay }) {
         style={{ width: size, height: size }}
       >
         {day.isToday && (
-          <div className="absolute inset-0 rounded-full bg-accent-cta" />
+          <div className="absolute inset-0 rounded-full bg-secondary-fixed" />
         )}
         <svg
           width={size}
@@ -79,14 +79,14 @@ function ActivityRing({ day }: { day: WeekDay }) {
         </svg>
         <span
           className={`relative z-10 text-sm font-semibold ${
-            day.isToday ? "text-accent-cta-text" : "text-black"
+            day.isToday ? "text-secondary-fixed-text" : "text-on-surface"
           }`}
         >
           {day.dateNumber}
         </span>
       </div>
 
-      <span className="text-[10px] font-semibold uppercase tracking-wide text-grey-400">
+      <span className="text-[10px] font-semibold uppercase tracking-wide text-on-surface-variant">
         {day.dayLabel}
       </span>
     </div>
@@ -95,7 +95,7 @@ function ActivityRing({ day }: { day: WeekDay }) {
 
 export function WeekRings({ days }: WeekRingsProps) {
   return (
-    <div className="flex items-center justify-between gap-2 overflow-x-auto rounded-2xl border border-grey-100 bg-white p-4 shadow-sm sm:justify-center sm:gap-6 sm:p-6">
+    <div className="flex items-center justify-between gap-2 overflow-x-auto rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-4 shadow-sm sm:justify-center sm:gap-6 sm:p-6">
       {days.map((day, i) => (
         <ActivityRing key={i} day={day} />
       ))}

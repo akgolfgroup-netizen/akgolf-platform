@@ -9,7 +9,7 @@ export function NotFoundView() {
   return (
     <div className="min-h-screen bg-[var(--color-grey-100)] flex items-center justify-center px-4">
       <div className="max-w-md w-full">
-        <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-8 text-center">
+        <div className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] p-8 text-center">
           <div className="w-16 h-16 rounded-2xl bg-[var(--color-grey-100)] flex items-center justify-center mx-auto mb-6">
             <Icon name="search" className="w-8 h-8 text-[var(--color-grey-500)]" />
           </div>
@@ -39,7 +39,7 @@ export function NotFoundView() {
           <div className="flex flex-col gap-3">
             <Link
               href="/booking"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--color-black)] text-white rounded-full text-sm font-medium hover:bg-[var(--color-grey-800)] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--color-black)] text-surface rounded-full text-sm font-medium hover:bg-[var(--color-grey-800)] transition-colors"
             >
               Gå til booking
             </Link>

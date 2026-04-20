@@ -25,7 +25,7 @@ export default function Error({
         </p>
         <button
           onClick={reset}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--color-black)] text-white rounded-[980px] text-sm font-semibold hover:bg-[var(--color-grey-800)] transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--color-black)] text-surface rounded-[980px] text-sm font-semibold hover:bg-[var(--color-grey-800)] transition-colors"
         >
           <Icon name="refresh" className="w-4 h-4" />
           Prøv igjen

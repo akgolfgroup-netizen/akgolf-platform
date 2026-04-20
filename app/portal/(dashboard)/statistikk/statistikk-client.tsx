@@ -177,7 +177,7 @@ export function StatistikkClient({
           </div>
           <Link
             href="/portal/runde/ny"
-            className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition-all hover:opacity-90 active:scale-95"
+            className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold uppercase tracking-widest text-surface transition-all hover:opacity-90 active:scale-95"
           >
             <Icon name="add" size={14} />
             Ny runde

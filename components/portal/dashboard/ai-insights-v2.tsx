@@ -33,22 +33,22 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
     >
       <div className="flex items-center gap-2 mb-4">
         <Icon name="psychology" className="w-5 h-5 text-purple-400" />
-        <h3 className="font-semibold text-slate-100">AI-Analyse</h3>
-        <span className="ml-auto text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded-full">
+        <h3 className="font-semibold text-inverse-on-surface">AI-Analyse</h3>
+        <span className="ml-auto text-xs text-inverse-on-surface/70 bg-inverse-surface px-2 py-1 rounded-full">
           Oppdatert i dag
         </span>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-4 bg-slate-800/50 p-1 rounded-lg">
+      <div className="flex gap-1 mb-4 bg-inverse-surface/50 p-1 rounded-lg">
         {(["overview", "analysis", "recommendations"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`flex-1 py-2 px-3 rounded-md text-xs font-medium transition-all ${
               activeTab === tab
-                ? "bg-slate-700 text-slate-100"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-inverse-surface/80 text-inverse-on-surface"
+                : "text-inverse-on-surface/60 hover:text-inverse-on-surface"
             }`}
           >
             {tab === "overview" && "Oversikt"}
@@ -66,12 +66,12 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
             animate={{ opacity: 1 }}
             className="space-y-4"
           >
-            <p className="text-sm text-slate-300 leading-relaxed">{insights.summary}</p>
+            <p className="text-sm text-inverse-on-surface/50 leading-relaxed">{insights.summary}</p>
             
             {/* Goal Progress */}
-            <div className="p-3 bg-slate-800/30 rounded-xl">
+            <div className="p-3 bg-inverse-surface/30 rounded-xl">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-slate-400 flex items-center gap-1">
+                <span className="text-xs text-inverse-on-surface/60 flex items-center gap-1">
                   <Icon name="my_location" className="w-3 h-3" />
                   {insights.goalProgress.target}
                 </span>
@@ -79,7 +79,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
                   {insights.goalProgress.current} / {insights.goalProgress.target_value} {insights.goalProgress.unit}
                 </span>
               </div>
-              <div className="w-full bg-slate-700 rounded-full h-2">
+              <div className="w-full bg-inverse-surface/80 rounded-full h-2">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${(insights.goalProgress.current / insights.goalProgress.target_value) * 100}%` }}
@@ -105,7 +105,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
               </p>
               <ul className="space-y-1">
                 {insights.strengths.slice(0, 2).map((s, i) => (
-                  <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
+                  <li key={i} className="text-sm text-inverse-on-surface/50 flex items-start gap-2">
                     <span className="text-emerald-500 mt-1">•</span>
                     {s}
                   </li>
@@ -121,7 +121,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
               </p>
               <ul className="space-y-1">
                 {insights.weaknesses.slice(0, 2).map((w, i) => (
-                  <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
+                  <li key={i} className="text-sm text-inverse-on-surface/50 flex items-start gap-2">
                     <span className="text-amber-500 mt-1">•</span>
                     {w}
                   </li>
@@ -129,7 +129,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
               </ul>
             </div>
 
-            <p className="text-xs text-slate-400 mt-3 italic">{insights.patternAnalysis}</p>
+            <p className="text-xs text-inverse-on-surface/60 mt-3 italic">{insights.patternAnalysis}</p>
           </motion.div>
         )}
 
@@ -147,7 +147,7 @@ export function AiInsightsV2({ insights }: AiInsightV2Props) {
               {insights.recommendations.map((rec, i) => (
                 <li
                   key={i}
-                  className="text-sm text-slate-300 p-2 bg-slate-800/30 rounded-lg flex items-start gap-2"
+                  className="text-sm text-inverse-on-surface/50 p-2 bg-inverse-surface/30 rounded-lg flex items-start gap-2"
                 >
                   <span className="bg-purple-500/20 text-purple-400 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0">
                     {i + 1}

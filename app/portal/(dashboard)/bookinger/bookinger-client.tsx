@@ -92,14 +92,14 @@ export function BookingerClient({
           <span className="font-serif italic text-on-surface font-normal">
             bookinger
           </span>
-          <span className="text-accent-cta">.</span>
+          <span className="text-secondary-fixed">.</span>
         </h1>
         <p className="text-[13px] text-on-surface-variant max-w-xl">
           <span className="font-semibold text-on-surface tabular-nums">
             {upcomingCount}
           </span>{" "}
           kommende og{" "}
-          <span className="font-semibold text-black tabular-nums">
+          <span className="font-semibold text-on-surface tabular-nums">
             {pastCount}
           </span>{" "}
           tidligere økter.

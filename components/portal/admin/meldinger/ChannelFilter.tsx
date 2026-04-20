@@ -76,16 +76,16 @@ export function ChannelFilter({
           className={cn(
             "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
             selected === channel.value
-              ? "bg-[var(--color-black)] text-white"
-              : "bg-white border border-[var(--color-grey-200)] text-[var(--color-grey-400)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)]"
+              ? "bg-[var(--color-black)] text-surface"
+              : "bg-surface-container-lowest border border-[var(--color-grey-200)] text-[var(--color-grey-400)] hover:bg-[var(--color-grey-100)] hover:text-[var(--color-grey-900)]"
           )}
         >
-          <span className={cn("rounded p-1 text-white", channel.color)}>
+          <span className={cn("rounded p-1 text-surface", channel.color)}>
             {channel.icon}
           </span>
           {channel.label}
           {counts[channel.value] > 0 && (
-            <span className="ml-1 rounded-full bg-[var(--color-error)] px-2 py-0.5 text-xs text-white">
+            <span className="ml-1 rounded-full bg-[var(--color-error)] px-2 py-0.5 text-xs text-surface">
               {counts[channel.value]}
             </span>
           )}

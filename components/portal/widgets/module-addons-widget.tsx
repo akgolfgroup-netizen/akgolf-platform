@@ -50,7 +50,7 @@ export function ModuleAddonsWidget() {
       {modules.map((mod) => (
         <div
           key={mod.id}
-          className="flex items-center justify-between py-2 px-3 rounded-xl border border-grey-100 bg-grey-50"
+          className="flex items-center justify-between py-2 px-3 rounded-xl border border-outline-variant/20 bg-surface"
         >
           <div className="flex items-center gap-3">
             {mod.active ? (
@@ -58,8 +58,8 @@ export function ModuleAddonsWidget() {
                 <Icon name="check" className="w-3.5 h-3.5 text-success" />
               </div>
             ) : (
-              <div className="w-6 h-6 rounded-full bg-grey-100 flex items-center justify-center">
-                <Icon name="open_in_new" className="w-3 h-3 text-grey-400" />
+              <div className="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center">
+                <Icon name="open_in_new" className="w-3 h-3 text-on-surface-variant" />
               </div>
             )}
             <div>

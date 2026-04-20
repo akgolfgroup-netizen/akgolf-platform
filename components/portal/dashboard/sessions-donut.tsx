@@ -34,10 +34,10 @@ export function SessionsDonut({ data = MOCK_DATA }: SessionsDonutProps) {
   const total = data.reduce((sum, d) => sum + d.value, 0);
 
   return (
-    <div className="flex h-full flex-col rounded-xl border border-grey-200 bg-white p-5 shadow-card">
+    <div className="flex h-full flex-col rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-5 shadow-card">
       <div className="mb-4 flex items-center justify-between">
-        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Økt-fordeling</MonoLabel>
-        <Icon name="circle"Dashed className="h-4 w-4 text-grey-300" />
+        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Økt-fordeling</MonoLabel>
+        <Icon name="circle"Dashed className="h-4 w-4 text-on-surface-variant/60" />
       </div>
 
       <div className="flex flex-1 items-center gap-4">
@@ -74,8 +74,8 @@ export function SessionsDonut({ data = MOCK_DATA }: SessionsDonutProps) {
             </PieChart>
           </ResponsiveContainer>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-2xl font-semibold text-black">{total}</span>
-            <span className="text-[10px] uppercase tracking-wider text-grey-400">
+            <span className="text-2xl font-semibold text-on-surface">{total}</span>
+            <span className="text-[10px] uppercase tracking-wider text-on-surface-variant">
               Økter
             </span>
           </div>
@@ -88,8 +88,8 @@ export function SessionsDonut({ data = MOCK_DATA }: SessionsDonutProps) {
                 className="h-2.5 w-2.5 rounded-full"
                 style={{ backgroundColor: item.color }}
               />
-              <span className="text-sm text-grey-600">{item.name}</span>
-              <span className="ml-auto text-sm font-semibold text-black">
+              <span className="text-sm text-on-surface-variant/80">{item.name}</span>
+              <span className="ml-auto text-sm font-semibold text-on-surface">
                 {item.value}
               </span>
             </div>

@@ -123,16 +123,16 @@ export default function StrategiPage() {
         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
         <div>
-          <h1 className="text-2xl font-bold text-black">DECADE Strategi</h1>
-          <p className="text-grey-400 mt-1">Hull-for-hull strategi og pre-shot rutine</p>
+          <h1 className="text-2xl font-bold text-on-surface">DECADE Strategi</h1>
+          <p className="text-on-surface-variant mt-1">Hull-for-hull strategi og pre-shot rutine</p>
         </div>
         <div className="relative">
-          <Icon name="location_on" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+          <Icon name="location_on" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
           <select
             value={selectedCourseId}
             onChange={(e) => setSelectedCourseId(e.target.value)}
             disabled={loadingCourses || courses.length === 0}
-            className="pl-10 pr-10 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black appearance-none disabled:opacity-50"
+            className="pl-10 pr-10 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black appearance-none disabled:opacity-50"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%237A8C85' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
               backgroundRepeat: "no-repeat",
@@ -150,29 +150,29 @@ export default function StrategiPage() {
 
       {loadingCourses || loadingHoles ? (
         <div className="flex items-center justify-center py-20">
-          <Icon name="progress_activity" className="w-8 h-8 text-black animate-spin" />
-          <span className="ml-3 text-sm text-grey-400">
+          <Icon name="progress_activity" className="w-8 h-8 text-on-surface animate-spin" />
+          <span className="ml-3 text-sm text-on-surface-variant">
             {loadingCourses ? "Laster baner..." : "Laster hull..."}
           </span>
         </div>
       ) : courses.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-grey-200/50 p-8 text-center">
-          <div className="w-12 h-12 rounded-full bg-grey-50 flex items-center justify-center mx-auto mb-4">
-            <Icon name="location_on" className="w-6 h-6 text-grey-400" />
+        <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30/50 p-8 text-center">
+          <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center mx-auto mb-4">
+            <Icon name="location_on" className="w-6 h-6 text-on-surface-variant" />
           </div>
-          <h3 className="text-lg font-semibold text-black mb-2">Ingen baner funnet</h3>
-          <p className="text-sm text-grey-400 max-w-md mx-auto mb-6">
+          <h3 className="text-lg font-semibold text-on-surface mb-2">Ingen baner funnet</h3>
+          <p className="text-sm text-on-surface-variant max-w-md mx-auto mb-6">
             Det finnes ingen golfbaner i databasen ennå. Kontakt administrator for aa legge til baner,
-            eller koer seed-scriptet <code className="bg-grey-50 px-1 rounded">prisma/seed-courses.ts</code>.
+            eller koer seed-scriptet <code className="bg-surface px-1 rounded">prisma/seed-courses.ts</code>.
           </p>
         </div>
       ) : holes.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-grey-200/50 p-8 text-center">
-          <div className="w-12 h-12 rounded-full bg-grey-50 flex items-center justify-center mx-auto mb-4">
-            <Icon name="flag" className="w-6 h-6 text-grey-400" />
+        <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30/50 p-8 text-center">
+          <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center mx-auto mb-4">
+            <Icon name="flag" className="w-6 h-6 text-on-surface-variant" />
           </div>
-          <h3 className="text-lg font-semibold text-black mb-2">Ingen hull funnet</h3>
-          <p className="text-sm text-grey-400 max-w-md mx-auto">
+          <h3 className="text-lg font-semibold text-on-surface mb-2">Ingen hull funnet</h3>
+          <p className="text-sm text-on-surface-variant max-w-md mx-auto">
             Banen <strong>{course?.name}</strong> har ingen registrerte hull ennå.
           </p>
         </div>
@@ -183,17 +183,17 @@ export default function StrategiPage() {
             <div className="flex items-center justify-between mb-3">
               <button
                 onClick={() => setSelectedHole((h) => Math.max(1, h - 1))}
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-grey-50 text-sm font-medium text-black hover:bg-grey-50 transition-colors"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface text-sm font-medium text-on-surface hover:bg-surface transition-colors"
               >
                 <Icon name="chevron_left" className="w-4 h-4" />
                 Forrige
               </button>
-              <span className="text-sm font-semibold text-black">
+              <span className="text-sm font-semibold text-on-surface">
                 Hull {selectedHole} / {holes.length}
               </span>
               <button
                 onClick={() => setSelectedHole((h) => Math.min(holes.length, h + 1))}
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-grey-50 text-sm font-medium text-black hover:bg-grey-50 transition-colors"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface text-sm font-medium text-on-surface hover:bg-surface transition-colors"
               >
                 Neste
                 <Icon name="chevron_right" className="w-4 h-4" />
@@ -208,8 +208,8 @@ export default function StrategiPage() {
                     onClick={() => setSelectedHole(h.holeNumber)}
                     className={`flex-shrink-0 w-10 h-10 rounded-lg text-sm font-semibold transition-colors ${
                       isActive
-                        ? "bg-black text-white"
-                        : "bg-grey-50 text-black hover:bg-grey-50"
+                        ? "bg-on-surface text-surface"
+                        : "bg-surface text-on-surface hover:bg-surface"
                     }`}
                   >
                     {h.holeNumber}
@@ -224,26 +224,26 @@ export default function StrategiPage() {
             {/* Hole info */}
             <PremiumCard delay={0.05} padding="md" radius="large">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center text-base font-bold">
+                <div className="w-10 h-10 rounded-xl bg-on-surface text-surface flex items-center justify-center text-base font-bold">
                   {hole.holeNumber}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-black">{course?.name}</p>
-                  <p className="text-xs text-grey-400">{course?.location}</p>
+                  <p className="text-sm font-semibold text-on-surface">{course?.name}</p>
+                  <p className="text-xs text-on-surface-variant">{course?.location}</p>
                 </div>
               </div>
               <div className="space-y-3">
-                <div className="flex items-center justify-between py-2 border-b border-grey-200/50">
-                  <span className="text-sm text-grey-400">Par</span>
-                  <span className="text-sm font-semibold text-black">{hole.par}</span>
+                <div className="flex items-center justify-between py-2 border-b border-outline-variant/30/50">
+                  <span className="text-sm text-on-surface-variant">Par</span>
+                  <span className="text-sm font-semibold text-on-surface">{hole.par}</span>
                 </div>
-                <div className="flex items-center justify-between py-2 border-b border-grey-200/50">
-                  <span className="text-sm text-grey-400">Lengde</span>
-                  <span className="text-sm font-semibold text-black">{hole.lengthMeter}m</span>
+                <div className="flex items-center justify-between py-2 border-b border-outline-variant/30/50">
+                  <span className="text-sm text-on-surface-variant">Lengde</span>
+                  <span className="text-sm font-semibold text-on-surface">{hole.lengthMeter}m</span>
                 </div>
                 <div className="flex items-center justify-between py-2">
-                  <span className="text-sm text-grey-400">Hcp-indeks</span>
-                  <span className="text-sm font-semibold text-black">{hole.handicap}</span>
+                  <span className="text-sm text-on-surface-variant">Hcp-indeks</span>
+                  <span className="text-sm font-semibold text-on-surface">{hole.handicap}</span>
                 </div>
               </div>
             </PremiumCard>
@@ -254,25 +254,25 @@ export default function StrategiPage() {
                 <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
                   <Icon name="my_location" className="w-4 h-4 text-success" />
                 </div>
-                <h3 className="text-base font-semibold text-black">DECADE Strategi</h3>
+                <h3 className="text-base font-semibold text-on-surface">DECADE Strategi</h3>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-4">
                   <div>
-                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Anbefalt klubb</MonoLabel>
-                    <p className="text-lg font-semibold text-black">{strategy?.recommendedClub}</p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Anbefalt klubb</MonoLabel>
+                    <p className="text-lg font-semibold text-on-surface">{strategy?.recommendedClub}</p>
                   </div>
                   <div>
-                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Aimpoint</MonoLabel>
-                    <p className="text-sm text-black">{strategy?.aimPoint}</p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Aimpoint</MonoLabel>
+                    <p className="text-sm text-on-surface">{strategy?.aimPoint}</p>
                   </div>
                   <div>
-                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Mål-sone</MonoLabel>
-                    <p className="text-sm text-black">{strategy?.targetZone}</p>
+                    <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Mål-sone</MonoLabel>
+                    <p className="text-sm text-on-surface">{strategy?.targetZone}</p>
                   </div>
                 </div>
                 <div>
-                  <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-2">Fare-områder</MonoLabel>
+                  <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block mb-2">Fare-områder</MonoLabel>
                   <div className="space-y-2">
                     {strategy?.dangerAreas.map((danger, idx) => (
                       <div
@@ -296,29 +296,29 @@ export default function StrategiPage() {
                 <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
                   <Icon name="air" className="w-4 h-4 text-purple-500" />
                 </div>
-                <h3 className="text-base font-semibold text-black">Pre-shot rutine</h3>
+                <h3 className="text-base font-semibold text-on-surface">Pre-shot rutine</h3>
               </div>
-              <ol className="space-y-3 text-sm text-black">
+              <ol className="space-y-3 text-sm text-on-surface">
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-grey-50 text-black flex items-center justify-center text-xs font-semibold">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-surface text-on-surface flex items-center justify-center text-xs font-semibold">
                     1
                   </span>
                   <span>Visualiser ball-flight bak ballen</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-grey-50 text-black flex items-center justify-center text-xs font-semibold">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-surface text-on-surface flex items-center justify-center text-xs font-semibold">
                     2
                   </span>
                   <span>Velg target og commit til klubbvalg</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-grey-50 text-black flex items-center justify-center text-xs font-semibold">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-surface text-on-surface flex items-center justify-center text-xs font-semibold">
                     3
                   </span>
                   <span>Gjennomfør pust og trigger</span>
                 </li>
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-grey-50 text-black flex items-center justify-center text-xs font-semibold">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-surface text-on-surface flex items-center justify-center text-xs font-semibold">
                     4
                   </span>
                   <span>Sving fritt — aksepter resultatet</span>
@@ -331,16 +331,16 @@ export default function StrategiPage() {
                 <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
                   <Icon name="flag" className="w-4 h-4 text-blue-500" />
                 </div>
-                <h3 className="text-base font-semibold text-black">Dispersion-visualisering</h3>
+                <h3 className="text-base font-semibold text-on-surface">Dispersion-visualisering</h3>
               </div>
-              <div className="relative h-48 bg-grey-50 rounded-xl overflow-hidden">
+              <div className="relative h-48 bg-surface rounded-xl overflow-hidden">
                 {/* Fairway */}
-                <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-16 bg-success/10 border-x border-grey-200" />
+                <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-16 bg-success/10 border-x border-outline-variant/30" />
                 {/* Target line */}
-                <div className="absolute top-1/2 left-0 right-0 h-px bg-black/20" />
+                <div className="absolute top-1/2 left-0 right-0 h-px bg-on-surface/20" />
                 {/* Dispersion ellipse */}
                 <div
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/10 border border-black/30"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-on-surface/10 border border-black/30"
                   style={{
                     width: 120,
                     height: 64,
@@ -348,11 +348,11 @@ export default function StrategiPage() {
                   }}
                 />
                 {/* Aimpoint dot */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-black" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-on-surface" />
                 {/* Labels */}
-                <span className="absolute top-2 left-2 text-[10px] text-grey-400">Venstre rough</span>
-                <span className="absolute top-2 right-2 text-[10px] text-grey-400">Høyre rough</span>
-                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-grey-400">
+                <span className="absolute top-2 left-2 text-[10px] text-on-surface-variant">Venstre rough</span>
+                <span className="absolute top-2 right-2 text-[10px] text-on-surface-variant">Høyre rough</span>
+                <span className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-on-surface-variant">
                   Fairway
                 </span>
               </div>

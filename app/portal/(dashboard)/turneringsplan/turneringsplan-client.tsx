@@ -30,11 +30,11 @@ function getLevelColor(level: string): string {
   switch (level.toLowerCase()) {
     case "major":
     case "nasjonal":
-      return "bg-black/10 text-black";
+      return "bg-on-surface/10 text-on-surface";
     case "regional":
       return "bg-blue-50 text-blue-800";
     default:
-      return "bg-grey-50 text-grey-400";
+      return "bg-surface text-on-surface-variant";
   }
 }
 
@@ -112,17 +112,17 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {/* ═══ HEADER ═══ */}
       <div className="mb-8 flex items-start justify-between gap-4">
         <div>
-          <MonoLabel size="xs" uppercase className="text-grey-400 block">
+          <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
             Sesong 2026
           </MonoLabel>
-          <h1 className="mt-1 text-[28px] font-bold tracking-tight text-black">
+          <h1 className="mt-1 text-[28px] font-bold tracking-tight text-on-surface">
             Turneringsplan
           </h1>
         </div>
         <button
           type="button"
           onClick={() => setAddOpen(true)}
-          className="inline-flex items-center gap-2 rounded-[20px] bg-primary px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-alt"
+          className="inline-flex items-center gap-2 rounded-[20px] bg-primary px-4 py-2 text-sm font-semibold text-surface transition-colors hover:bg-primary-alt"
         >
           <Icon name="add" className="h-4 w-4" />
           Legg til egen turnering
@@ -140,43 +140,43 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       <div className="mb-6 grid grid-cols-3 gap-4">
         <PremiumCard delay={0} >
           <div className="flex flex-col items-center py-2 text-center">
-            <MonoLabel size="xs" uppercase className="text-grey-400">Kommende</MonoLabel>
-            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-black tabular-nums">
+            <MonoLabel size="xs" uppercase className="text-on-surface-variant">Kommende</MonoLabel>
+            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-on-surface tabular-nums">
               <NumberTicker value={stats.upcoming} />
             </span>
-            <Icon name="my_location" className="mt-2 h-4 w-4 text-grey-400" />
+            <Icon name="my_location" className="mt-2 h-4 w-4 text-on-surface-variant" />
           </div>
         </PremiumCard>
 
         <PremiumCard delay={0.06}>
           <div className="flex flex-col items-center py-2 text-center">
-            <MonoLabel size="xs" uppercase className="text-grey-400">Påmeldt</MonoLabel>
-            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-black tabular-nums">
+            <MonoLabel size="xs" uppercase className="text-on-surface-variant">Påmeldt</MonoLabel>
+            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-on-surface tabular-nums">
               <NumberTicker value={stats.registered} />
             </span>
-            <Icon name="check"Circle2 className="mt-2 h-4 w-4 text-grey-400" />
+            <Icon name="check"Circle2 className="mt-2 h-4 w-4 text-on-surface-variant" />
           </div>
         </PremiumCard>
 
         <PremiumCard delay={0.12}>
           <div className="flex flex-col items-center py-2 text-center">
-            <MonoLabel size="xs" uppercase className="text-grey-400">Fullført</MonoLabel>
-            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-black tabular-nums">
+            <MonoLabel size="xs" uppercase className="text-on-surface-variant">Fullført</MonoLabel>
+            <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-on-surface tabular-nums">
               <NumberTicker value={stats.completed} />
             </span>
-            <Icon name="flag" className="mt-2 h-4 w-4 text-grey-400" />
+            <Icon name="flag" className="mt-2 h-4 w-4 text-on-surface-variant" />
           </div>
         </PremiumCard>
       </div>
 
       {/* ═══ NESTE TURNERINGER (v3.1 timeline) ═══ */}
       {nextTimelineItems.length > 0 && (
-        <div className="mb-6 rounded-xl bg-white shadow-card p-6">
+        <div className="mb-6 rounded-xl bg-surface-container-lowest shadow-card p-6">
           <div className="mb-4 flex items-center justify-between">
-            <MonoLabel size="xs" uppercase className="text-grey-400">
+            <MonoLabel size="xs" uppercase className="text-on-surface-variant">
               Neste turneringer
             </MonoLabel>
-            <MonoLabel size="xs" className="text-grey-400">
+            <MonoLabel size="xs" className="text-on-surface-variant">
               {nextTimelineItems.length} av {tournaments.length}
             </MonoLabel>
           </div>
@@ -185,15 +185,15 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       )}
 
       {/* ═══ TABS ═══ */}
-      <div className="mb-5 flex gap-1.5 rounded-[10px] bg-grey-50 p-[3px]">
+      <div className="mb-5 flex gap-1.5 rounded-[10px] bg-surface p-[3px]">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`rounded-[7px] px-4 py-[7px] text-[13px] font-medium transition-all duration-200 ${
               activeTab === tab.key
-                ? "bg-black text-white shadow-[0_2px_8px_rgba(10,31,24,0.3)]"
-                : "text-grey-400 hover:text-grey-400"
+                ? "bg-on-surface text-surface shadow-[0_2px_8px_rgba(10,31,24,0.3)]"
+                : "text-on-surface-variant hover:text-on-surface-variant"
             }`}
           >
             {tab.label}
@@ -206,11 +206,11 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {activeTab === "resultater" && stats.completed === 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
-            <Icon name="emoji_events" className="mb-3 h-8 w-8 text-grey-400 opacity-40" />
-            <p className="text-sm font-medium text-grey-400">
+            <Icon name="emoji_events" className="mb-3 h-8 w-8 text-on-surface-variant opacity-40" />
+            <p className="text-sm font-medium text-on-surface-variant">
               Ingen resultater ennå
             </p>
-            <p className="mt-1 text-xs text-grey-400">
+            <p className="mt-1 text-xs text-on-surface-variant">
               Resultater vises her etter gjennomførte turneringer
             </p>
           </div>
@@ -220,11 +220,11 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {activeTab === "resultater" && stats.completed > 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
-            <Icon name="emoji_events" className="mb-3 h-8 w-8 text-black opacity-60" />
-            <p className="text-sm font-medium text-grey-400">
+            <Icon name="emoji_events" className="mb-3 h-8 w-8 text-on-surface opacity-60" />
+            <p className="text-sm font-medium text-on-surface-variant">
               {stats.completed} fullførte turneringer
             </p>
-            <p className="mt-1 text-xs text-grey-400">
+            <p className="mt-1 text-xs text-on-surface-variant">
               Detaljert resultatoversikt kommer snart
             </p>
           </div>
@@ -234,13 +234,13 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       {activeTab !== "resultater" && displayList.length === 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
-            <Icon name="calendar_today" className="mb-3 h-8 w-8 text-grey-400 opacity-40" />
-            <p className="text-sm font-medium text-grey-400">
+            <Icon name="calendar_today" className="mb-3 h-8 w-8 text-on-surface-variant opacity-40" />
+            <p className="text-sm font-medium text-on-surface-variant">
               {activeTab === "pameldt"
                 ? "Du er ikke påmeldt noen turneringer"
                 : "Ingen kommende turneringer"}
             </p>
-            <p className="mt-1 text-xs text-grey-400">
+            <p className="mt-1 text-xs text-on-surface-variant">
               {activeTab === "pameldt"
                 ? "Meld deg på fra listen over kommende turneringer"
                 : "Nye turneringer legges til fortløpende"}
@@ -263,11 +263,11 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                   className="flex w-full items-start gap-4 p-5 text-left"
                 >
                   {/* Dato-blokk */}
-                  <div className="flex h-12 w-12 flex-shrink-0 flex-col items-center justify-center rounded-xl bg-grey-50">
-                    <span className="text-[10px] font-semibold uppercase leading-none text-grey-400">
+                  <div className="flex h-12 w-12 flex-shrink-0 flex-col items-center justify-center rounded-xl bg-surface">
+                    <span className="text-[10px] font-semibold uppercase leading-none text-on-surface-variant">
                       {format(tournamentDate, "MMM", { locale: nb })}
                     </span>
-                    <span className="text-lg font-bold leading-tight text-black tabular-nums">
+                    <span className="text-lg font-bold leading-tight text-on-surface tabular-nums">
                       {format(tournamentDate, "d")}
                     </span>
                   </div>
@@ -275,7 +275,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                   {/* Innhold */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className="truncate text-[14px] font-semibold text-black">
+                      <h3 className="truncate text-[14px] font-semibold text-on-surface">
                         {t.name}
                       </h3>
                       {t.isRegistered && (
@@ -286,7 +286,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                       )}
                     </div>
 
-                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-grey-400">
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-on-surface-variant">
                       {(t.course ?? t.location) && (
                         <span className="flex items-center gap-1">
                           <Icon name="location_on" className="h-3 w-3" />
@@ -305,7 +305,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                   {/* Chevron */}
                   <Icon name="chevron_right"
-                    className={`h-4 w-4 flex-shrink-0 text-grey-400 transition-transform duration-200 ${
+                    className={`h-4 w-4 flex-shrink-0 text-on-surface-variant transition-transform duration-200 ${
                       isExpanded ? "rotate-90" : ""
                     }`} />
                 </button>
@@ -315,31 +315,31 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                   <div className="border-t border-[grey-200] px-5 pb-5 pt-4">
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                       <div>
-                        <MonoLabel size="xs" uppercase className="text-grey-400">Periode</MonoLabel>
-                        <p className="mt-0.5 text-sm font-medium text-black">
+                        <MonoLabel size="xs" uppercase className="text-on-surface-variant">Periode</MonoLabel>
+                        <p className="mt-0.5 text-sm font-medium text-on-surface">
                           {getPeriodLabel(tournamentDate)}
                         </p>
                       </div>
                       {t.numberOfHoles && (
                         <div>
-                          <MonoLabel size="xs" uppercase className="text-grey-400">Hull</MonoLabel>
-                          <p className="mt-0.5 text-sm font-medium text-black">
+                          <MonoLabel size="xs" uppercase className="text-on-surface-variant">Hull</MonoLabel>
+                          <p className="mt-0.5 text-sm font-medium text-on-surface">
                             {t.numberOfHoles}
                           </p>
                         </div>
                       )}
                       {t.series && (
                         <div>
-                          <MonoLabel size="xs" uppercase className="text-grey-400">Serie</MonoLabel>
-                          <p className="mt-0.5 text-sm font-medium text-black">
+                          <MonoLabel size="xs" uppercase className="text-on-surface-variant">Serie</MonoLabel>
+                          <p className="mt-0.5 text-sm font-medium text-on-surface">
                             {t.series}
                           </p>
                         </div>
                       )}
                       {t.planLevel && (
                         <div>
-                          <MonoLabel size="xs" uppercase className="text-grey-400">Prioritet</MonoLabel>
-                          <p className="mt-0.5 text-sm font-medium text-black">
+                          <MonoLabel size="xs" uppercase className="text-on-surface-variant">Prioritet</MonoLabel>
+                          <p className="mt-0.5 text-sm font-medium text-on-surface">
                             {t.planLevel}
                           </p>
                         </div>
@@ -348,8 +348,8 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                     {t.goalType && (
                       <div className="mt-3">
-                        <MonoLabel size="xs" uppercase className="text-grey-400">Mål</MonoLabel>
-                        <p className="mt-0.5 text-sm text-grey-400">
+                        <MonoLabel size="xs" uppercase className="text-on-surface-variant">Mål</MonoLabel>
+                        <p className="mt-0.5 text-sm text-on-surface-variant">
                           {t.goalType}
                         </p>
                       </div>
@@ -357,8 +357,8 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
 
                     {t.planNotes && (
                       <div className="mt-3">
-                        <MonoLabel size="xs" uppercase className="text-grey-400">Notater</MonoLabel>
-                        <p className="mt-0.5 text-sm italic text-grey-400">
+                        <MonoLabel size="xs" uppercase className="text-on-surface-variant">Notater</MonoLabel>
+                        <p className="mt-0.5 text-sm italic text-on-surface-variant">
                           {t.planNotes}
                         </p>
                       </div>
@@ -369,7 +369,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                         <button
                           onClick={() => handleRegister(t.id)}
                           disabled={registeringId === t.id}
-                          className="inline-flex items-center gap-1.5 rounded-full bg-[accent-cta] px-4 py-2 text-[12px] font-bold text-black transition-opacity hover:opacity-85 disabled:opacity-60"
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[accent-cta] px-4 py-2 text-[12px] font-bold text-on-surface transition-opacity hover:opacity-85 disabled:opacity-60"
                         >
                           <Icon name="check"Circle2 className="h-3.5 w-3.5" />
                           {registeringId === t.id ? "Melder på..." : "Meld meg på"}
@@ -380,7 +380,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                           href={t.externalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-full border border-[grey-200] bg-white px-4 py-2 text-[12px] font-medium text-grey-400 transition-colors hover:border-[grey-300]"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-[grey-200] bg-surface-container-lowest px-4 py-2 text-[12px] font-medium text-on-surface-variant transition-colors hover:border-[grey-300]"
                         >
                           <Icon name="open_in_new" className="h-3.5 w-3.5" />
                           Se turnering

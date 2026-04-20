@@ -202,38 +202,38 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-on-surface/60 backdrop-blur-sm"
         onClick={handleClose}
       />
       
       {/* Modal */}
-      <div className="relative w-full max-w-lg max-h-[90vh] bg-[#0F172A] rounded-xl border border-slate-700 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div className="relative w-full max-w-lg max-h-[90vh] bg-[#0F172A] rounded-xl border border-inverse-on-surface/20 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-inverse-on-surface/20">
           <div>
-            <h2 className="text-xl font-semibold text-slate-100">
+            <h2 className="text-xl font-semibold text-inverse-on-surface">
               Legg til økt
             </h2>
-            <p className="text-sm text-slate-400 mt-0.5">
+            <p className="text-sm text-inverse-on-surface/60 mt-0.5">
               {dayName}
             </p>
           </div>
           <button
             onClick={handleClose}
-            className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-200 transition-colors"
+            className="p-2 hover:bg-inverse-surface rounded-lg text-inverse-on-surface/60 hover:text-inverse-on-surface transition-colors"
           >
             <Icon name="close" className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-slate-700">
+        <div className="flex border-b border-inverse-on-surface/20">
           <button
             onClick={() => setActiveTab("templates")}
             className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
               activeTab === "templates"
                 ? "text-blue-400 border-b-2 border-blue-400 bg-blue-500/5"
-                : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+                : "text-inverse-on-surface/60 hover:text-inverse-on-surface hover:bg-inverse-surface/50"
             }`}
           >
             <span className="flex items-center justify-center gap-2">
@@ -246,7 +246,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
             className={`flex-1 px-4 py-3 text-sm font-medium transition-colors ${
               activeTab === "custom"
                 ? "text-blue-400 border-b-2 border-blue-400 bg-blue-500/5"
-                : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+                : "text-inverse-on-surface/60 hover:text-inverse-on-surface hover:bg-inverse-surface/50"
             }`}
           >
             <span className="flex items-center justify-center gap-2">
@@ -260,7 +260,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
           {activeTab === "templates" ? (
             <div className="space-y-3">
-              <p className="text-sm text-slate-400 mb-4">
+              <p className="text-sm text-inverse-on-surface/60 mb-4">
                 Velg en standardmal for å raskt legge til en økt:
               </p>
               
@@ -275,14 +275,14 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                     className={`w-full text-left p-4 rounded-lg border transition-all duration-200 group ${
                       selectedTemplate?.id === template.id
                         ? `${colors.border} ${colors.bg} ring-2 ring-blue-500/50`
-                        : "border-slate-700 hover:border-slate-600 hover:bg-slate-800/50"
+                        : "border-inverse-on-surface/20 hover:border-inverse-on-surface/20 hover:bg-inverse-surface/50"
                     }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <span className={`w-2 h-2 rounded-full ${colors.dot}`} />
-                          <span className="font-medium text-slate-200">
+                          <span className="font-medium text-inverse-on-surface">
                             {template.title}
                           </span>
                           <span className={`text-xs px-1.5 py-0.5 rounded ${colors.bg} ${colors.text}`}>
@@ -290,7 +290,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                           </span>
                         </div>
                         
-                        <div className="flex items-center gap-4 text-sm text-slate-400">
+                        <div className="flex items-center gap-4 text-sm text-inverse-on-surface/60">
                           <span className="flex items-center gap-1">
                             <Icon name="schedule" className="w-3.5 h-3.5" />
                             {template.duration} min
@@ -303,7 +303,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                         
                         {/* Exercise preview */}
                         {template.exercises.length > 0 && (
-                          <div className="mt-2 text-xs text-slate-500">
+                          <div className="mt-2 text-xs text-inverse-on-surface/70">
                             {template.exercises.slice(0, 3).map(e => e.name).join(", ")}
                             {template.exercises.length > 3 && ` +${template.exercises.length - 3} flere`}
                           </div>
@@ -312,8 +312,8 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                       
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
                         selectedTemplate?.id === template.id
-                          ? "bg-blue-500 text-white"
-                          : "bg-slate-800 text-slate-400 opacity-0 group-hover:opacity-100"
+                          ? "bg-blue-500 text-surface"
+                          : "bg-inverse-surface text-inverse-on-surface/60 opacity-0 group-hover:opacity-100"
                       }`}>
                         <Icon name="add" className="w-4 h-4" />
                       </div>
@@ -324,13 +324,13 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
             </div>
           ) : (
             <div className="space-y-4">
-              <p className="text-sm text-slate-400 mb-4">
+              <p className="text-sm text-inverse-on-surface/60 mb-4">
                 Opprett en egendefinert økt:
               </p>
               
               {/* Title */}
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">
+                <label className="block text-sm font-medium text-inverse-on-surface/60 mb-2">
                   Tittel
                 </label>
                 <input
@@ -338,13 +338,13 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                   value={customTitle}
                   onChange={(e) => setCustomTitle(e.target.value)}
                   placeholder="F.eks. Teknikktrening"
-                  className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
+                  className="w-full px-3 py-2 bg-inverse-surface border border-inverse-on-surface/20 rounded-lg text-inverse-on-surface placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
                 />
               </div>
               
               {/* Duration */}
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">
+                <label className="block text-sm font-medium text-inverse-on-surface/60 mb-2">
                   Varighet (minutter)
                 </label>
                 <div className="flex items-center gap-3">
@@ -355,9 +355,9 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                     step={5}
                     value={customDuration}
                     onChange={(e) => setCustomDuration(parseInt(e.target.value))}
-                    className="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                    className="flex-1 h-2 bg-inverse-surface/80 rounded-lg appearance-none cursor-pointer accent-blue-500"
                   />
-                  <span className="w-16 text-right text-slate-300 font-medium">
+                  <span className="w-16 text-right text-inverse-on-surface/50 font-medium">
                     {customDuration} min
                   </span>
                 </div>
@@ -365,7 +365,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
               
               {/* Focus */}
               <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">
+                <label className="block text-sm font-medium text-inverse-on-surface/60 mb-2">
                   Fokusområde
                 </label>
                 <div className="grid grid-cols-5 gap-2">
@@ -378,7 +378,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
                         className={`px-2 py-2 rounded-lg text-xs font-medium transition-all ${
                           customFocus === focus
                             ? `${colors.bg} ${colors.text} ring-1 ${colors.border}`
-                            : "bg-slate-800 text-slate-400 hover:bg-slate-700"
+                            : "bg-inverse-surface text-inverse-on-surface/60 hover:bg-inverse-surface/80"
                         }`}
                       >
                         {focus}
@@ -392,7 +392,7 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
               <button
                 onClick={handleAddCustom}
                 disabled={isAdding || !customTitle.trim()}
-                className="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:bg-inverse-surface/80 disabled:text-inverse-on-surface/70 text-surface rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
               >
                 <Icon name="add" className="w-4 h-4" />
                 {isAdding ? "Legger til..." : "Legg til økt"}
@@ -402,10 +402,10 @@ export function NewSessionModal({ isOpen, onClose, onAdd, dayOfWeek, standardTem
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end px-6 py-4 border-t border-slate-700 bg-slate-900/50">
+        <div className="flex items-center justify-end px-6 py-4 border-t border-inverse-on-surface/20 bg-inverse-surface/50">
           <button
             onClick={handleClose}
-            className="px-4 py-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-colors"
+            className="px-4 py-2 text-inverse-on-surface/60 hover:text-inverse-on-surface hover:bg-inverse-surface rounded-lg transition-colors"
           >
             Avbryt
           </button>

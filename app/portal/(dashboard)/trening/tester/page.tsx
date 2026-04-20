@@ -96,19 +96,19 @@ export default async function TesterPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+        <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-card">
           <p className="text-3xl font-bold text-on-surface tabular-nums">{protocols.length}</p>
           <p className="text-sm text-on-surface-variant">Tester tilgjengelig</p>
         </div>
-        <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+        <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-card">
           <p className="text-3xl font-bold text-on-surface tabular-nums">{categories.length}</p>
           <p className="text-sm text-on-surface-variant">Kategorier</p>
         </div>
-        <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+        <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-card">
           <p className="text-3xl font-bold text-on-surface tabular-nums">{testStats.completedCount}</p>
           <p className="text-sm text-on-surface-variant">Fullførte tester</p>
         </div>
-        <div className="bg-white rounded-xl p-4 border border-outline-variant shadow-card">
+        <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-card">
           <p className="text-3xl font-bold text-success tabular-nums">{testStats.lastTestLabel ?? "-"}</p>
           <p className="text-sm text-on-surface-variant">Siste test</p>
         </div>

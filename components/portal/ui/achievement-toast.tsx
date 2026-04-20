@@ -140,7 +140,7 @@ export function AchievementToast({ achievement, onClose }: AchievementToastProps
                     boxShadow: "0 4px 12px rgba(255, 193, 7, 0.4)",
                   }}
                 >
-                  <Icon className="w-7 h-7 text-white" />
+                  <Icon className="w-7 h-7 text-surface" />
                 </motion.div>
                 <div>
                   <motion.p
@@ -155,7 +155,7 @@ export function AchievementToast({ achievement, onClose }: AchievementToastProps
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="text-lg font-bold text-black"
+                    className="text-lg font-bold text-on-surface"
                   >
                     {achievement.title}
                   </motion.p>

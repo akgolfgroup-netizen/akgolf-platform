@@ -44,16 +44,16 @@ export function ForecastCard({ points }: ForecastCardProps) {
     <BentoCard variant="glass" padding="lg">
       <div className="flex items-center justify-between mb-3">
         <BentoEyebrow dotColor="#2A7D5A">12-ukers prognose</BentoEyebrow>
-        <span className="text-[11px] text-white/50">USI-utvikling</span>
+        <span className="text-[11px] text-surface/50">USI-utvikling</span>
       </div>
 
-      <div className="flex items-center gap-4 text-[11px] text-white/60 mb-2">
+      <div className="flex items-center gap-4 text-[11px] text-surface/60 mb-2">
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-[2px] bg-white/40" />
+          <span className="w-3 h-[2px] bg-surface-container-lowest/40" />
           Fortsett som nå
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-[2px] bg-accent-cta" />
+          <span className="w-3 h-[2px] bg-secondary-fixed" />
           Følg anbefalt plan
         </span>
       </div>
@@ -81,12 +81,12 @@ export function ForecastCard({ points }: ForecastCardProps) {
       </svg>
 
       <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-        <span className="text-xs text-white/70">
+        <span className="text-xs text-surface/70">
           Differanse om 12 uker
         </span>
         <span
           className={`text-sm font-semibold tabular-nums ${
-            gap > 0.1 ? "text-accent-cta" : "text-white"
+            gap > 0.1 ? "text-secondary-fixed" : "text-surface"
           }`}
         >
           {gap > 0 ? "+" : ""}
@@ -95,7 +95,7 @@ export function ForecastCard({ points }: ForecastCardProps) {
       </div>
 
       {gap > 0.3 && (
-        <p className="mt-3 text-xs leading-relaxed text-white/70">
+        <p className="mt-3 text-xs leading-relaxed text-surface/70">
           Gapet mellom linjene = hva du lar ligge på bordet. Å følge anbefalt
           plan gir +{gap.toFixed(2)} USI ekstra på 12 uker.
         </p>

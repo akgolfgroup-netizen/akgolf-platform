@@ -151,21 +151,21 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
     return (
       <div className="space-y-6">
         <header>
-          <h1 className="text-2xl font-bold text-black">Benchmarking</h1>
-          <p className="text-grey-400 mt-1">
+          <h1 className="text-2xl font-bold text-on-surface">Benchmarking</h1>
+          <p className="text-on-surface-variant mt-1">
             Sammenlign deg med PGA Tour og proffspillere
           </p>
         </header>
 
         <PremiumCard>
           <div className="p-6 text-center">
-            <div className="mx-auto w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center mb-4">
-              <Icon name="bar_chart" className="w-6 h-6 text-grey-400" />
+            <div className="mx-auto w-12 h-12 rounded-xl bg-surface flex items-center justify-center mb-4">
+              <Icon name="bar_chart" className="w-6 h-6 text-on-surface-variant" />
             </div>
-            <h2 className="text-lg font-semibold text-black mb-2">
+            <h2 className="text-lg font-semibold text-on-surface mb-2">
               Ingen statistikk ennå
             </h2>
-            <p className="text-sm text-grey-400 max-w-md mx-auto">
+            <p className="text-sm text-on-surface-variant max-w-md mx-auto">
               Registrer Strokes Gained-data fra rundene dine under Statistikk for
               å se hvordan du måler deg mot PGA Tour-spillere.
             </p>
@@ -327,14 +327,14 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
     <div className="space-y-6">
       {/* ── Header ── */}
       <header>
-        <MonoLabel size="xs" uppercase className="mb-2 block text-grey-400">
+        <MonoLabel size="xs" uppercase className="mb-2 block text-on-surface-variant">
           Benchmarking
         </MonoLabel>
-        <h1 className="text-2xl font-bold text-black">Sammenlign deg med touren</h1>
-        <p className="text-grey-400 mt-1">
+        <h1 className="text-2xl font-bold text-on-surface">Sammenlign deg med touren</h1>
+        <p className="text-on-surface-variant mt-1">
           PGA Tour og proffspillere
           {profile.roundCount > 0 && (
-            <MonoLabel size="xs" className="ml-2 text-grey-400">
+            <MonoLabel size="xs" className="ml-2 text-on-surface-variant">
               · {profile.roundCount} runder
             </MonoLabel>
           )}
@@ -344,8 +344,8 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
       {/* ── SG Ring Hero (v3.1) ── */}
       <NightSurface variant="ambient" className="rounded-2xl p-8">
         <div className="mb-6 flex items-center gap-2">
-          <span className="h-px w-6 bg-white/40" />
-          <MonoLabel size="xs" uppercase className="text-white/60">
+          <span className="h-px w-6 bg-surface-container-lowest/40" />
+          <MonoLabel size="xs" uppercase className="text-surface/60">
             Din SG-profil · siste {profile.roundCount}r
           </MonoLabel>
         </div>
@@ -365,14 +365,14 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         {/* Tour Percentile Bar Chart */}
         <PremiumCard>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-              <Icon name="bar_chart" className="w-5 h-5 text-black" />
+            <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
+              <Icon name="bar_chart" className="w-5 h-5 text-on-surface" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-black">
+              <h3 className="text-sm font-semibold text-on-surface">
                 PGA Tour-persentil
               </h3>
-              <p className="text-xs text-grey-400">Hvor du ligger sammenlignet med touren</p>
+              <p className="text-xs text-on-surface-variant">Hvor du ligger sammenlignet med touren</p>
             </div>
           </div>
           <div className="h-[300px] mt-4">
@@ -445,7 +445,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             {percentileData.map((d) => (
               <div
                 key={d.category}
-                className="flex items-center gap-1.5 text-xs text-grey-400"
+                className="flex items-center gap-1.5 text-xs text-on-surface-variant"
               >
                 <div
                   className="w-2.5 h-2.5 rounded-full"
@@ -460,29 +460,29 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         {/* A-K Category Card */}
         <PremiumCard>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-              <Layers className="w-5 h-5 text-black" />
+            <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
+              <Layers className="w-5 h-5 text-on-surface" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-black">
+              <h3 className="text-sm font-semibold text-on-surface">
                 A-K Ferdighetsnivå
               </h3>
-              <p className="text-xs text-grey-400">Din kategori per SG-område</p>
+              <p className="text-xs text-on-surface-variant">Din kategori per SG-område</p>
             </div>
           </div>
           {/* Overall level */}
           {akCategory && (
-            <div className="flex items-center gap-4 mt-4 p-4 rounded-xl bg-grey-50">
-              <div className="w-14 h-14 rounded-xl bg-black flex items-center justify-center shrink-0">
-                <span className="text-2xl font-bold text-white tabular-nums tracking-tight">
+            <div className="flex items-center gap-4 mt-4 p-4 rounded-xl bg-surface">
+              <div className="w-14 h-14 rounded-xl bg-on-surface flex items-center justify-center shrink-0">
+                <span className="text-2xl font-bold text-surface tabular-nums tracking-tight">
                   {akCategory.category}
                 </span>
               </div>
               <div className="flex-1">
-                <p className="text-sm font-semibold text-black">
+                <p className="text-sm font-semibold text-on-surface">
                   {akCategory.label}
                 </p>
-                <p className="text-xs text-grey-400">
+                <p className="text-xs text-on-surface-variant">
                   {profile?.usi
                     ? `Estimert HCP ${profile.usi.estimatedHandicap.toFixed(1)}`
                     : `HCP ${akCategory.handicapRange[0]}-${akCategory.handicapRange[1]}`}
@@ -501,32 +501,32 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             {categoryAK.map((c) => (
               <div
                 key={c.label}
-                className="p-3 rounded-xl border border-grey-200 bg-white"
+                className="p-3 rounded-xl border border-outline-variant/30 bg-surface-container-lowest"
               >
-                <MonoLabel size="xs" uppercase className="mb-1 block text-grey-400">
+                <MonoLabel size="xs" uppercase className="mb-1 block text-on-surface-variant">
                   {c.label}
                 </MonoLabel>
                 <div className="flex items-baseline gap-2">
                   {c.category ? (
                     <>
-                      <span className="text-xl font-bold text-black tabular-nums tracking-tight">
+                      <span className="text-xl font-bold text-on-surface tabular-nums tracking-tight">
                         {c.category.category}
                       </span>
-                      <span className="text-xs text-grey-400">
+                      <span className="text-xs text-on-surface-variant">
                         {c.category.label}
                       </span>
                     </>
                   ) : (
-                    <span className="text-sm text-grey-400">Ingen data</span>
+                    <span className="text-sm text-on-surface-variant">Ingen data</span>
                   )}
                 </div>
                 {c.userVal !== null && (
                   <div className="mt-1 flex items-center gap-1.5">
-                    <MonoLabel size="xs" className="text-grey-500">
+                    <MonoLabel size="xs" className="text-on-surface-variant/80">
                       SG {c.userVal.toFixed(2)}
                     </MonoLabel>
                     {c.estimatedHcp !== null && (
-                      <MonoLabel size="xs" className="text-grey-400">
+                      <MonoLabel size="xs" className="text-on-surface-variant">
                         · HCP {c.estimatedHcp.toFixed(1)}
                       </MonoLabel>
                     )}
@@ -541,46 +541,46 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
       {/* ── Row 2: Pro Comparison ── */}
       <PremiumCard>
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-            <Icon name="search" className="w-5 h-5 text-black" />
+          <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
+            <Icon name="search" className="w-5 h-5 text-on-surface" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-black">
+            <h3 className="text-sm font-semibold text-on-surface">
               Sammenlign med proff
             </h3>
-            <p className="text-xs text-grey-400">Søk etter en PGA Tour-spiller og se side-ved-side SG-sammenligning</p>
+            <p className="text-xs text-on-surface-variant">Søk etter en PGA Tour-spiller og se side-ved-side SG-sammenligning</p>
           </div>
         </div>
         {/* Search bar */}
         <div className="relative mt-4 max-w-md">
-          <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+          <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Søk etter spiller (f.eks. Viktor Hovland)"
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-grey-200 bg-grey-50 text-sm text-black placeholder:text-grey-400 focus:outline-none focus:border-black transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-outline-variant/30 bg-surface text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-black transition-colors"
           />
           {isSearching && (
-            <Icon name="progress_activity" className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 animate-spin" />
+            <Icon name="progress_activity" className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant animate-spin" />
           )}
         </div>
 
         {/* Search results dropdown */}
         {searchResults.length > 0 && (
-          <div className="mt-2 max-w-md rounded-xl border border-grey-200 bg-white shadow-lg overflow-hidden">
+          <div className="mt-2 max-w-md rounded-xl border border-outline-variant/30 bg-surface-container-lowest shadow-lg overflow-hidden">
             {searchResults.map((player) => (
               <button
                 key={player.dgId}
                 onClick={() => handleSelectPro(player.dgId)}
                 disabled={isPending}
-                className="w-full text-left px-4 py-3 hover:bg-grey-50 transition-colors border-b border-grey-200 last:border-b-0 disabled:opacity-50"
+                className="w-full text-left px-4 py-3 hover:bg-surface transition-colors border-b border-outline-variant/30 last:border-b-0 disabled:opacity-50"
               >
-                <span className="text-sm font-medium text-black">
+                <span className="text-sm font-medium text-on-surface">
                   {player.name}
                 </span>
                 {player.sgTotal !== null && (
-                  <span className="ml-2 text-xs text-grey-400">
+                  <span className="ml-2 text-xs text-on-surface-variant">
                     SG Total: {player.sgTotal.toFixed(2)}
                   </span>
                 )}
@@ -594,7 +594,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Radar chart */}
             <div>
-              <h3 className="text-sm font-semibold text-black mb-3">
+              <h3 className="text-sm font-semibold text-on-surface mb-3">
                 SG-profil: Du vs {selectedPro.pro.name}
               </h3>
               <div className="h-[300px]">
@@ -670,7 +670,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
 
             {/* Side-by-side values */}
             <div>
-              <h3 className="text-sm font-semibold text-black mb-3">
+              <h3 className="text-sm font-semibold text-on-surface mb-3">
                 Detaljert sammenligning
               </h3>
               <div className="space-y-3">
@@ -708,17 +708,17 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                   return (
                     <div
                       key={row.label}
-                      className="flex items-center justify-between p-3 rounded-xl border border-grey-200 bg-white"
+                      className="flex items-center justify-between p-3 rounded-xl border border-outline-variant/30 bg-surface-container-lowest"
                     >
-                      <span className="text-sm font-medium text-grey-400 w-20">
+                      <span className="text-sm font-medium text-on-surface-variant w-20">
                         {row.label}
                       </span>
                       <div className="flex items-center gap-6 text-sm">
-                        <span className="tabular-nums tracking-tight font-semibold text-black w-16 text-right">
+                        <span className="tabular-nums tracking-tight font-semibold text-on-surface w-16 text-right">
                           {row.yours !== null ? row.yours.toFixed(2) : "-"}
                         </span>
-                        <span className="text-grey-400">vs</span>
-                        <span className="tabular-nums tracking-tight font-semibold text-black w-16">
+                        <span className="text-on-surface-variant">vs</span>
+                        <span className="tabular-nums tracking-tight font-semibold text-on-surface w-16">
                           {row.theirs !== null ? row.theirs.toFixed(2) : "-"}
                         </span>
                         {diff !== null && (
@@ -745,8 +745,8 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         {/* No pro selected placeholder */}
         {!selectedPro && !isPending && (
           <div className="mt-6 py-8 text-center">
-            <Icon name="gps_fixed" className="w-8 h-8 text-grey-400 mx-auto mb-3" />
-            <p className="text-sm text-grey-400">
+            <Icon name="gps_fixed" className="w-8 h-8 text-on-surface-variant mx-auto mb-3" />
+            <p className="text-sm text-on-surface-variant">
               Søk etter en spiller for å se sammenligning
             </p>
           </div>
@@ -754,8 +754,8 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
 
         {isPending && !isSearching && (
           <div className="mt-6 py-8 text-center">
-            <Icon name="progress_activity" className="w-6 h-6 text-grey-400 mx-auto mb-3 animate-spin" />
-            <p className="text-sm text-grey-400">Henter spillerdata...</p>
+            <Icon name="progress_activity" className="w-6 h-6 text-on-surface-variant mx-auto mb-3 animate-spin" />
+            <p className="text-sm text-on-surface-variant">Henter spillerdata...</p>
           </div>
         )}
       </PremiumCard>
@@ -765,14 +765,14 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         {/* Improvement Potential */}
         <PremiumCard>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-              <Icon name="trending_up" className="w-5 h-5 text-black" />
+            <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
+              <Icon name="trending_up" className="w-5 h-5 text-on-surface" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-black">
+              <h3 className="text-sm font-semibold text-on-surface">
                 Forbedringspotensial
               </h3>
-              <p className="text-xs text-grey-400">Estimert handicap-effekt av SG-forbedringer</p>
+              <p className="text-xs text-on-surface-variant">Estimert handicap-effekt av SG-forbedringer</p>
             </div>
           </div>
           <div className="space-y-3 mt-4">
@@ -784,30 +784,30 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
               return (
                 <div
                   key={area.label}
-                  className="p-4 rounded-xl border border-grey-200 bg-grey-50/50"
+                  className="p-4 rounded-xl border border-outline-variant/30 bg-surface/50"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-black">
+                    <span className="text-sm font-medium text-on-surface">
                       {area.label}
                     </span>
                     <span className="text-xs font-semibold text-success bg-success/10 px-2 py-0.5 rounded-full">
                       -{hcpImpact} HCP
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-grey-400">
+                  <div className="flex items-center gap-2 text-sm text-on-surface-variant">
                     <span className="tabular-nums tracking-tight">
                       {area.current.toFixed(2)} SG
                     </span>
-                    <Icon name="arrow_forward" className="w-3.5 h-3.5 text-grey-400" />
+                    <Icon name="arrow_forward" className="w-3.5 h-3.5 text-on-surface-variant" />
                     <span className="tabular-nums tracking-tight font-semibold">
                       {newSg.toFixed(2)} SG
                     </span>
-                    <span className="text-xs text-grey-400 ml-1">
+                    <span className="text-xs text-on-surface-variant ml-1">
                       (+{area.improvement.toFixed(2)})
                     </span>
                   </div>
                   {/* Progress bar showing how close to 0 */}
-                  <div className="mt-2 h-1.5 rounded-full bg-grey-50 overflow-hidden">
+                  <div className="mt-2 h-1.5 rounded-full bg-surface overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-500"
                       style={{
@@ -821,7 +821,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             })}
           </div>
 
-          <p className="text-[10px] text-grey-400 mt-4">
+          <p className="text-[10px] text-on-surface-variant mt-4">
             Estimater er basert på historiske sammenhenger mellom SG og handicap.
             Faktisk effekt varierer.
           </p>
@@ -830,14 +830,14 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
         {/* Approach Distance Breakdown */}
         <PremiumCard>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
-              <Icon name="my_location" className="w-5 h-5 text-black" />
+            <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
+              <Icon name="my_location" className="w-5 h-5 text-on-surface" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-black">
+              <h3 className="text-sm font-semibold text-on-surface">
                 Innspill per avstand
               </h3>
-              <p className="text-xs text-grey-400">
+              <p className="text-xs text-on-surface-variant">
                 {approachDistanceData.length > 0
                   ? "Dine SG-verdier per avstandskategori"
                   : "Registrer approach-data for å se fordeling"}
@@ -905,25 +905,25 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
               {/* Pro approach overlay if available */}
               {proApproachData && (
                 <div className="mt-4">
-                  <p className="text-xs font-medium text-grey-400 mb-2">
+                  <p className="text-xs font-medium text-on-surface-variant mb-2">
                     Sammenligning med {selectedPro?.pro.name} (yards)
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {proApproachData.map((d) => (
                       <div
                         key={d.bucket}
-                        className="text-center p-2 rounded-lg bg-grey-50"
+                        className="text-center p-2 rounded-lg bg-surface"
                       >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 mb-1">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-1">
                           {d.bucket}
                         </p>
-                        <p className="text-xs text-black">
+                        <p className="text-xs text-on-surface">
                           Du:{" "}
                           <span className="tabular-nums tracking-tight font-semibold">
                             {d.player !== null ? d.player.toFixed(1) : "-"}
                           </span>
                         </p>
-                        <p className="text-xs text-grey-400">
+                        <p className="text-xs text-on-surface-variant">
                           Pro:{" "}
                           <span className="tabular-nums tracking-tight">
                             {d.pro !== null ? d.pro.toFixed(1) : "-"}
@@ -937,8 +937,8 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             </>
           ) : (
             <div className="py-10 text-center">
-              <Icon name="my_location" className="w-8 h-8 text-grey-400 mx-auto mb-3" />
-              <p className="text-sm text-grey-400">
+              <Icon name="my_location" className="w-8 h-8 text-on-surface-variant mx-auto mb-3" />
+              <p className="text-sm text-on-surface-variant">
                 Legg til approach-statistikk per avstand i rundene dine for å se
                 denne analysen.
               </p>

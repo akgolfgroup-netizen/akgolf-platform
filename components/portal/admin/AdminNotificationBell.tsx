@@ -116,7 +116,7 @@ export function AdminNotificationBell({ className }: AdminNotificationBellProps)
                 transition={{ 
                   duration: hasNewNotification ? 0.3 : 0.15,
                 }}
-                className="absolute -top-1.5 -right-1.5 min-w-[14px] h-[14px] px-1 bg-[var(--color-error)] text-white text-[9px] font-semibold rounded-full flex items-center justify-center"
+                className="absolute -top-1.5 -right-1.5 min-w-[14px] h-[14px] px-1 bg-[var(--color-error)] text-surface text-[9px] font-semibold rounded-full flex items-center justify-center"
               >
                 {unreadCount > 9 ? "9+" : unreadCount}
               </motion.span>

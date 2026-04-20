@@ -41,8 +41,8 @@ export function MessageBubble({ message, isStreaming, sources }: MessageBubblePr
             isUser ? "rounded-br-md" : "rounded-bl-md"
           } ${
             isUser
-              ? "bg-black text-white"
-              : "border border-grey-100 bg-grey-50 text-black"
+              ? "bg-on-surface text-surface"
+              : "border border-outline-variant/20 bg-surface text-on-surface"
           }`}
         >
           {message.content ? (
@@ -57,7 +57,7 @@ export function MessageBubble({ message, isStreaming, sources }: MessageBubblePr
           ) : isStreaming ? (
             <div className="flex items-center gap-2">
               <Icon name="progress_activity" className="h-4 w-4 animate-spin text-ai-text" />
-              <span className="text-grey-400">AI Coach tenker...</span>
+              <span className="text-on-surface-variant">AI Coach tenker...</span>
             </div>
           ) : null}
         </div>
@@ -66,7 +66,7 @@ export function MessageBubble({ message, isStreaming, sources }: MessageBubblePr
         {!isUser && message.content && !isStreaming && (
           <div className="space-y-1.5">
             {showAttribution && <AIAttribution sources={sources!} />}
-            <MonoLabel size="xs" className="text-grey-400">
+            <MonoLabel size="xs" className="text-on-surface-variant">
               {new Date(message.timestamp).toLocaleTimeString("nb-NO", {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -78,8 +78,8 @@ export function MessageBubble({ message, isStreaming, sources }: MessageBubblePr
 
       {/* User Avatar */}
       {isUser && (
-        <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-grey-200">
-          <Icon name="person" className="h-4 w-4 text-grey-400" />
+        <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-surface-variant">
+          <Icon name="person" className="h-4 w-4 text-on-surface-variant" />
         </div>
       )}
     </motion.div>

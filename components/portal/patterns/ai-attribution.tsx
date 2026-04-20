@@ -76,7 +76,7 @@ export function AIAttribution({ sources, className }: AIAttributionProps) {
             <MonoLabel size="xs" className="text-ai-text/80">
               {typeLabel}
             </MonoLabel>
-            <span className="text-[11px] text-grey-600">{source.label}</span>
+            <span className="text-[11px] text-on-surface-variant/80">{source.label}</span>
           </>
         );
 

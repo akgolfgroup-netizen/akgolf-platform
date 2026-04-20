@@ -73,9 +73,9 @@ export function QuickQuestions({ onSelect, disabled, variant = "grid" }: QuickQu
             key={q.id}
             onClick={() => onSelect(q.message)}
             disabled={disabled}
-            className="flex-shrink-0 flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-colors disabled:opacity-50 bg-grey-50 text-grey-600 border border-grey-200 hover:border-grey-300 hover:bg-grey-100"
+            className="flex-shrink-0 flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-colors disabled:opacity-50 bg-surface text-on-surface-variant/80 border border-outline-variant/30 hover:border-outline-variant/50 hover:bg-surface-container"
           >
-            <span className="text-grey-400">{q.icon}</span>
+            <span className="text-on-surface-variant">{q.icon}</span>
             <span className="truncate">{q.text}</span>
           </button>
         ))}
@@ -93,9 +93,9 @@ export function QuickQuestions({ onSelect, disabled, variant = "grid" }: QuickQu
           transition={{ delay: index * 0.05 }}
           onClick={() => onSelect(q.message)}
           disabled={disabled}
-          className="flex items-center gap-3 text-left px-4 py-3 rounded-xl text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 bg-grey-50 text-grey-600 border border-grey-200 hover:border-ai/20 hover:bg-ai-light/50 group"
+          className="flex items-center gap-3 text-left px-4 py-3 rounded-xl text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 bg-surface text-on-surface-variant/80 border border-outline-variant/30 hover:border-ai/20 hover:bg-ai-light/50 group"
         >
-          <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-grey-200 flex items-center justify-center text-grey-400 group-hover:text-ai group-hover:border-ai/20 transition-colors">
+          <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center text-on-surface-variant group-hover:text-ai group-hover:border-ai/20 transition-colors">
             {q.icon}
           </span>
           <span className="font-medium">{q.text}</span>

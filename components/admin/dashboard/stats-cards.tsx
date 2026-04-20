@@ -38,8 +38,8 @@ function StatCard({
     <Card className={cn("p-5 overflow-hidden", className)}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{title}</MonoLabel>
-          <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">{title}</MonoLabel>
+          <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
             {value}
           </p>
           {(subtitle || trend) && (
@@ -61,12 +61,12 @@ function StatCard({
                 </span>
               )}
               {subtitle && (
-                <span className="text-xs text-grey-400">{subtitle}</span>
+                <span className="text-xs text-on-surface-variant">{subtitle}</span>
               )}
             </div>
           )}
         </div>
-        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black shrink-0">
+        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface shrink-0">
           {icon}
         </div>
       </div>
@@ -181,14 +181,14 @@ export function MiniStatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-3 p-3 rounded-lg bg-grey-50">
-      <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-white text-grey-400 shrink-0">
+    <div className="flex items-center gap-3 p-3 rounded-lg bg-surface">
+      <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-surface-container-lowest text-on-surface-variant shrink-0">
         {icon}
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-xs text-grey-400 truncate">{label}</p>
+        <p className="text-xs text-on-surface-variant truncate">{label}</p>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-black tabular-nums">{value}</span>
+          <span className="text-sm font-semibold text-on-surface tabular-nums">{value}</span>
           {trend && (
             <span
               className={cn(

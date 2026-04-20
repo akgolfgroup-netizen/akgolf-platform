@@ -51,11 +51,11 @@ export function HowItWorksSection() {
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {STEPS.map((step) => (
             <StaggerItem key={step.step}>
-              <div className="rounded-2xl border border-grey-200 bg-white p-6 h-full">
-                <span className="text-4xl font-bold tracking-tight text-grey-200">
+              <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-6 h-full">
+                <span className="text-4xl font-bold tracking-tight text-surface-variant">
                   {step.step}
                 </span>
-                <h3 className="text-base font-semibold text-black mt-4 mb-2">
+                <h3 className="text-base font-semibold text-on-surface mt-4 mb-2">
                   {step.title}
                 </h3>
                 <p className="text-sm text-text leading-relaxed">

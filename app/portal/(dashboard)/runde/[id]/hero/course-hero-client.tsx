@@ -113,7 +113,7 @@ export function RundeCourseHeroClient({
         <div className="absolute top-24 left-8 z-10 flex items-center gap-3 flex-wrap">
           <HeroLabel>
             <Icon name="flag" className="w-3 h-3" />
-            <strong className="text-white font-semibold">{courseName}</strong>
+            <strong className="text-surface font-semibold">{courseName}</strong>
             <HeroLabelSeparator />
             <span>
               Hull {currentHole?.holeNumber ?? "-"} · Par{" "}
@@ -132,7 +132,7 @@ export function RundeCourseHeroClient({
           {/* Score & progress */}
           <div className="flex flex-col gap-4">
             <GlassPanel padding="md">
-              <MonoLabel size="xs" uppercase className="text-white/45 block">
+              <MonoLabel size="xs" uppercase className="text-surface/45 block">
                 Total score
               </MonoLabel>
               <div className="mt-3 flex items-baseline gap-2">
@@ -143,22 +143,22 @@ export function RundeCourseHeroClient({
                   size="sm"
                   className={
                     relative < 0
-                      ? "text-accent-cta"
+                      ? "text-secondary-fixed"
                       : relative > 0
                         ? "text-[#E85D4E]"
-                        : "text-white/55"
+                        : "text-surface/55"
                   }
                 >
                   {relativeLabel}
                 </MonoLabel>
               </div>
-              <MonoLabel size="xs" className="text-white/45 mt-3 block">
+              <MonoLabel size="xs" className="text-surface/45 mt-3 block">
                 {completedCount} / 18 hull · Par {coursePar}
               </MonoLabel>
             </GlassPanel>
 
             <GlassPanel padding="md">
-              <MonoLabel size="xs" uppercase className="text-white/45 block mb-3">
+              <MonoLabel size="xs" uppercase className="text-surface/45 block mb-3">
                 Hull-navigator
               </MonoLabel>
               <div className="grid grid-cols-6 gap-1.5">
@@ -175,14 +175,14 @@ export function RundeCourseHeroClient({
                       className={[
                         "rounded-md py-2 text-center",
                         isCurrent
-                          ? "bg-accent-cta text-[#0A1F18]"
+                          ? "bg-secondary-fixed text-[#0A1F18]"
                           : hasResult
                             ? diff < 0
-                              ? "bg-accent-cta/25 text-accent-cta"
+                              ? "bg-secondary-fixed/25 text-secondary-fixed"
                               : diff > 0
                                 ? "bg-[#E85D4E]/25 text-[#E85D4E]"
-                                : "bg-white/10 text-white"
-                            : "bg-white/5 text-white/40",
+                                : "bg-surface-container-lowest/10 text-surface"
+                            : "bg-surface-container-lowest/5 text-surface/40",
                       ].join(" ")}
                     >
                       <div className="text-[9px] font-mono opacity-70">
@@ -201,7 +201,7 @@ export function RundeCourseHeroClient({
           {/* Bane-hero midten (plass til SVG/shot-tracking senere) */}
           <div className="relative flex items-center justify-center">
             {/* Distance pill */}
-            <div className="absolute top-8 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-full bg-white/92 text-[#0A1F18] text-xs font-semibold shadow-[0_3px_10px_rgba(0,0,0,0.25)]">
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-full bg-surface-container-lowest/92 text-[#0A1F18] text-xs font-semibold shadow-[0_3px_10px_rgba(0,0,0,0.25)]">
               <MonoLabel size="xs">
                 {currentHole?.lengthMeter ?? 0}m til flagg
               </MonoLabel>
@@ -209,7 +209,7 @@ export function RundeCourseHeroClient({
 
             {/* Center call-to-action — score input */}
             <div className="flex flex-col items-center gap-6">
-              <MonoLabel size="xs" uppercase className="text-white/45">
+              <MonoLabel size="xs" uppercase className="text-surface/45">
                 Slagtelling
               </MonoLabel>
               <div className="flex items-center gap-3">
@@ -225,8 +225,8 @@ export function RundeCourseHeroClient({
                         "w-14 h-14 rounded-2xl font-bold text-xl tabular-nums",
                         "border backdrop-blur-[22px] transition-all duration-200",
                         isSelected
-                          ? "bg-accent-cta text-[#0A1F18] border-transparent scale-110"
-                          : "bg-[rgba(12,22,17,0.62)] border-white/14 text-white hover:bg-white/10",
+                          ? "bg-secondary-fixed text-[#0A1F18] border-transparent scale-110"
+                          : "bg-[rgba(12,22,17,0.62)] border-white/14 text-surface hover:bg-surface-container-lowest/10",
                       ].join(" ")}
                     >
                       {score}
@@ -236,10 +236,10 @@ export function RundeCourseHeroClient({
                           isSelected
                             ? "text-[#0A1F18]/60"
                             : diff < 0
-                              ? "text-accent-cta"
+                              ? "text-secondary-fixed"
                               : diff > 0
                                 ? "text-[#E85D4E]"
-                                : "text-white/55",
+                                : "text-surface/55",
                         ].join(" ")}
                       >
                         {diff === 0
@@ -253,7 +253,7 @@ export function RundeCourseHeroClient({
                 })}
               </div>
               {scoreInput && currentHole && (
-                <MonoLabel size="sm" className="text-accent-cta">
+                <MonoLabel size="sm" className="text-secondary-fixed">
                   Velg for hull {currentHole.holeNumber} · vil lagres
                 </MonoLabel>
               )}
@@ -264,17 +264,17 @@ export function RundeCourseHeroClient({
           <div className="flex flex-col gap-4">
             <GlassPanel padding="md">
               <div className="flex items-center gap-3 mb-3">
-                <Compass className="w-5 h-5 text-accent-cta" />
+                <Compass className="w-5 h-5 text-secondary-fixed" />
                 <div>
                   <h4 className="text-[15px] font-bold leading-tight">
                     Caddie-tips
                   </h4>
-                  <MonoLabel size="xs" className="text-white/55">
+                  <MonoLabel size="xs" className="text-surface/55">
                     AI · basert på din runde
                   </MonoLabel>
                 </div>
               </div>
-              <p className="text-[13px] text-white/80 leading-relaxed">
+              <p className="text-[13px] text-surface/80 leading-relaxed">
                 Dogleg høyre. Hold deg til venstre for bunkeren — du har vind i
                 ryggen. Jern 6 anbefales basert på ditt carry siste 30 dager.
               </p>
@@ -282,14 +282,14 @@ export function RundeCourseHeroClient({
 
             <GlassPanel padding="md">
               <div className="flex items-center gap-3">
-                <Icon name="air" className="w-6 h-6 text-accent-cta" />
+                <Icon name="air" className="w-6 h-6 text-secondary-fixed" />
                 <div className="flex-1">
-                  <MonoLabel size="xs" uppercase className="text-white/45 block">
+                  <MonoLabel size="xs" uppercase className="text-surface/45 block">
                     Vær nå
                   </MonoLabel>
                   <div className="flex items-baseline gap-2 mt-1">
                     <span className="text-xl font-bold tabular-nums">14°</span>
-                    <MonoLabel size="xs" className="text-white/55">
+                    <MonoLabel size="xs" className="text-surface/55">
                       NV 6 m/s
                     </MonoLabel>
                   </div>
@@ -298,24 +298,24 @@ export function RundeCourseHeroClient({
             </GlassPanel>
 
             <GlassPanel padding="md">
-              <MonoLabel size="xs" uppercase className="text-white/45 block mb-3">
+              <MonoLabel size="xs" uppercase className="text-surface/45 block mb-3">
                 Denne hullet
               </MonoLabel>
               <div className="space-y-1.5">
                 <div className="flex justify-between text-[13px]">
-                  <span className="text-white/60">Score</span>
+                  <span className="text-surface/60">Score</span>
                   <MonoLabel size="sm">
                     {currentHoleResult?.score ?? "—"}
                   </MonoLabel>
                 </div>
                 <div className="flex justify-between text-[13px]">
-                  <span className="text-white/60">Putts</span>
+                  <span className="text-surface/60">Putts</span>
                   <MonoLabel size="sm">
                     {currentHoleResult?.putts ?? "—"}
                   </MonoLabel>
                 </div>
                 <div className="flex justify-between text-[13px]">
-                  <span className="text-white/60">Target par</span>
+                  <span className="text-surface/60">Target par</span>
                   <MonoLabel size="sm">{currentHole?.par ?? "—"}</MonoLabel>
                 </div>
               </div>

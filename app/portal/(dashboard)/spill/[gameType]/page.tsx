@@ -103,16 +103,16 @@ export default function GameSessionPage() {
             >
               <Icon name="emoji_events" className="w-8 h-8" style={{ color: meta.color }} />
             </div>
-            <h2 className="text-xl font-bold text-black mb-1">Økt fullført</h2>
-            <p className="text-sm text-grey-400">{meta.title}</p>
+            <h2 className="text-xl font-bold text-on-surface mb-1">Økt fullført</h2>
+            <p className="text-sm text-on-surface-variant">{meta.title}</p>
             <div className="mt-6 grid grid-cols-2 gap-4">
-              <div className="bg-grey-50 rounded-xl p-4">
-                <p className="text-xs text-grey-400">Slag</p>
-                <p className="text-2xl font-bold text-black">{shots}</p>
+              <div className="bg-surface rounded-xl p-4">
+                <p className="text-xs text-on-surface-variant">Slag</p>
+                <p className="text-2xl font-bold text-on-surface">{shots}</p>
               </div>
-              <div className="bg-grey-50 rounded-xl p-4">
-                <p className="text-xs text-grey-400">Poeng</p>
-                <p className="text-2xl font-bold text-black">{score}</p>
+              <div className="bg-surface rounded-xl p-4">
+                <p className="text-xs text-on-surface-variant">Poeng</p>
+                <p className="text-2xl font-bold text-on-surface">{score}</p>
               </div>
             </div>
             <div className="mt-6">
@@ -137,7 +137,7 @@ export default function GameSessionPage() {
       >
         <Link
           href="/portal/spill"
-          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white border border-grey-200 text-black hover:bg-grey-50 transition-colors"
+          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-surface transition-colors"
         >
           <Icon name="chevron_left" className="w-4 h-4" />
         </Link>
@@ -149,37 +149,37 @@ export default function GameSessionPage() {
             <meta.icon className="w-5 h-5" style={{ color: meta.color }} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-black">{meta.title}</h1>
-            <p className="text-grey-400 text-sm">Live økt</p>
+            <h1 className="text-2xl font-bold text-on-surface">{meta.title}</h1>
+            <p className="text-on-surface-variant text-sm">Live økt</p>
           </div>
         </div>
       </motion.div>
 
       {creating && (
         <PremiumCard padding="md" radius="large">
-          <p className="text-sm text-grey-400">Oppretter økt...</p>
+          <p className="text-sm text-on-surface-variant">Oppretter økt...</p>
         </PremiumCard>
       )}
 
       {/* Scoreboard */}
       <div className="grid grid-cols-2 gap-4">
         <PremiumCard padding="md" radius="large" noHover>
-          <p className="text-xs text-grey-400">Slag logget</p>
-          <p className="text-3xl font-bold text-black tabular-nums">{shots}</p>
+          <p className="text-xs text-on-surface-variant">Slag logget</p>
+          <p className="text-3xl font-bold text-on-surface tabular-nums">{shots}</p>
         </PremiumCard>
         <PremiumCard padding="md" radius="large" noHover>
-          <p className="text-xs text-grey-400">Poeng</p>
-          <p className="text-3xl font-bold text-black tabular-nums">{score}</p>
+          <p className="text-xs text-on-surface-variant">Poeng</p>
+          <p className="text-3xl font-bold text-on-surface tabular-nums">{score}</p>
         </PremiumCard>
       </div>
 
       {/* Shot input */}
       <PremiumCard delay={0.1} padding="md" radius="large">
-        <h3 className="text-sm font-semibold text-black mb-4">Registrer slag</h3>
+        <h3 className="text-sm font-semibold text-on-surface mb-4">Registrer slag</h3>
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1.5">
                 Avstand (m)
               </label>
               <input
@@ -187,11 +187,11 @@ export default function GameSessionPage() {
                 value={distance}
                 onChange={(e) => setDistance(e.target.value)}
                 placeholder="F.eks. 12"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1.5">
                 Resultat
               </label>
               <input
@@ -199,12 +199,12 @@ export default function GameSessionPage() {
                 value={result}
                 onChange={(e) => setResult(e.target.value)}
                 placeholder="F.eks. Inne 1m"
-                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+                className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1.5">
               Notater
             </label>
             <input
@@ -212,15 +212,15 @@ export default function GameSessionPage() {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="F.eks. Litt rask i nedswing"
-              className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+              className="w-full px-3.5 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
             />
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-grey-400">
+              <label className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
                 Pressnivå
               </label>
-              <span className="text-sm font-semibold text-black">PR{pressure}</span>
+              <span className="text-sm font-semibold text-on-surface">PR{pressure}</span>
             </div>
             <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map((pr) => (
@@ -229,8 +229,8 @@ export default function GameSessionPage() {
                   onClick={() => setPressure(pr)}
                   className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-colors ${
                     pressure === pr
-                      ? "bg-black text-white"
-                      : "bg-grey-50 text-black hover:bg-grey-50"
+                      ? "bg-on-surface text-surface"
+                      : "bg-surface text-on-surface hover:bg-surface"
                   }`}
                 >
                   PR{pr}

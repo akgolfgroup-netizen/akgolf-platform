@@ -31,7 +31,7 @@ export default function KalenderLoading() {
         {[...Array(42)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-xl border border-outline-variant p-3 aspect-square"
+            className="bg-surface-container-lowest rounded-xl border border-outline-variant p-3 aspect-square"
           >
             <div className="h-4 w-6 bg-surface-container rounded mb-2" />
             {i % 5 === 0 && (

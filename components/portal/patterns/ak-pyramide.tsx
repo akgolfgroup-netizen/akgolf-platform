@@ -64,7 +64,7 @@ export function AKPyramide({
   };
 
   return (
-    <div className={cn("rounded-xl bg-white p-5 shadow-card", className)}>
+    <div className={cn("rounded-xl bg-surface-container-lowest p-5 shadow-card", className)}>
       {(title || subtitle) && (
         <div className="mb-4">
           {title && (
@@ -73,7 +73,7 @@ export function AKPyramide({
             </MonoLabel>
           )}
           {subtitle && (
-            <div className="text-xs text-grey-500 mt-1">{subtitle}</div>
+            <div className="text-xs text-on-surface-variant/80 mt-1">{subtitle}</div>
           )}
         </div>
       )}
@@ -90,7 +90,7 @@ export function AKPyramide({
               onClick={() => handleClick(item.level)}
               className={cn(
                 "w-full flex items-center gap-3 text-left rounded-lg px-1 py-1 -mx-1 transition-all",
-                !readOnly && "hover:bg-grey-50 cursor-pointer",
+                !readOnly && "hover:bg-surface cursor-pointer",
                 readOnly && "cursor-default",
                 isFaded && "opacity-40"
               )}
@@ -99,12 +99,12 @@ export function AKPyramide({
               <span
                 className={cn(
                   "text-[11px] font-bold tracking-[0.1em] w-11 shrink-0",
-                  isActive ? "text-primary" : "text-grey-700"
+                  isActive ? "text-primary" : "text-on-surface-variant/90"
                 )}
               >
                 {LEVEL_LABELS[item.level]}
               </span>
-              <div className="flex-1 h-2.5 rounded-full bg-grey-100 overflow-hidden relative">
+              <div className="flex-1 h-2.5 rounded-full bg-surface-container overflow-hidden relative">
                 <div
                   className={cn(
                     "h-full rounded-full transition-all duration-500",
@@ -121,7 +121,7 @@ export function AKPyramide({
                 size="xs"
                 className={cn(
                   "w-12 text-right shrink-0",
-                  isActive ? "text-primary font-semibold" : "text-grey-500"
+                  isActive ? "text-primary font-semibold" : "text-on-surface-variant/80"
                 )}
               >
                 {item.value}
@@ -132,7 +132,7 @@ export function AKPyramide({
       </div>
 
       {!readOnly && onChange && (
-        <div className="mt-4 pt-3 border-t border-grey-100 text-[11px] text-grey-500 leading-[1.5]">
+        <div className="mt-4 pt-3 border-t border-outline-variant/20 text-[11px] text-on-surface-variant/80 leading-[1.5]">
           Klikk et niva for a filtrere biblioteket.
         </div>
       )}

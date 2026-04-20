@@ -116,7 +116,7 @@ export function UpgradeModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-on-surface/50 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
         role="presentation"
@@ -167,7 +167,7 @@ export function UpgradeModal({
               onClick={() => setBillingPeriod("monthly")}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)] ${
                 billingPeriod === "monthly"
-                  ? "bg-white text-[var(--color-grey-900)] shadow-sm"
+                  ? "bg-surface-container-lowest text-[var(--color-grey-900)] shadow-sm"
                   : "text-[var(--color-grey-500)]"
               }`}
             >
@@ -177,7 +177,7 @@ export function UpgradeModal({
               onClick={() => setBillingPeriod("annual")}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-grey-900)] ${
                 billingPeriod === "annual"
-                  ? "bg-white text-[var(--color-grey-900)] shadow-sm"
+                  ? "bg-surface-container-lowest text-[var(--color-grey-900)] shadow-sm"
                   : "text-[var(--color-grey-500)]"
               }`}
             >

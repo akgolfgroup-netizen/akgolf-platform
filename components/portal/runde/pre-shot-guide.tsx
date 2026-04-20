@@ -65,8 +65,8 @@ export function PreShotGuide({ routine, onComplete, onClose }: PreShotGuideProps
   const seconds = timeLeft % 60;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40">
-      <div className="w-full max-w-lg bg-white rounded-t-2xl sm:rounded-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-on-surface/40">
+      <div className="w-full max-w-lg bg-surface-container-lowest rounded-t-2xl sm:rounded-2xl overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[var(--color-grey-100)]">
           <div className="flex items-center gap-2">
@@ -133,10 +133,10 @@ export function PreShotGuide({ routine, onComplete, onClose }: PreShotGuideProps
                 <div
                   className={`mt-0.5 h-5 w-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
                     isDone
-                      ? "bg-[var(--color-success)] text-white"
+                      ? "bg-[var(--color-success)] text-surface"
                       : isActive
-                        ? "text-white"
-                        : "bg-[var(--color-grey-300)] text-white"
+                        ? "text-surface"
+                        : "bg-[var(--color-grey-300)] text-surface"
                   }`}
                   style={isActive ? { backgroundColor: "var(--color-ai)" } : undefined}
                 >
@@ -177,7 +177,7 @@ export function PreShotGuide({ routine, onComplete, onClose }: PreShotGuideProps
           {!isRunning && !isFinished && (
             <button
               onClick={startTimer}
-              className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-colors"
+              className="flex-1 py-3 rounded-xl font-semibold text-sm text-surface transition-colors"
               style={{ backgroundColor: "var(--color-ai)" }}
             >
               Start timer
@@ -186,7 +186,7 @@ export function PreShotGuide({ routine, onComplete, onClose }: PreShotGuideProps
           {isFinished && (
             <button
               onClick={handleDone}
-              className="flex-1 py-3 rounded-xl bg-[var(--color-success)] text-white font-semibold text-sm transition-colors"
+              className="flex-1 py-3 rounded-xl bg-[var(--color-success)] text-surface font-semibold text-sm transition-colors"
             >
               Ferdig
             </button>
@@ -194,7 +194,7 @@ export function PreShotGuide({ routine, onComplete, onClose }: PreShotGuideProps
           {isRunning && (
             <button
               onClick={handleDone}
-              className="flex-1 py-3 rounded-xl bg-[var(--color-brand)] text-white font-semibold text-sm transition-colors"
+              className="flex-1 py-3 rounded-xl bg-[var(--color-brand)] text-surface font-semibold text-sm transition-colors"
             >
               Ferdig
             </button>

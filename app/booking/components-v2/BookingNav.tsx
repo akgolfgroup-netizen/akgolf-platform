@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export function BookingNav() {
   return (
-    <nav className="bg-white border-b border-grey-200 px-6 py-3.5 sticky top-0 z-10">
+    <nav className="bg-surface-container-lowest border-b border-outline-variant/30 px-6 py-3.5 sticky top-0 z-10">
       <div className="max-w-[720px] mx-auto flex items-center justify-between">
         <Link
           href="/"

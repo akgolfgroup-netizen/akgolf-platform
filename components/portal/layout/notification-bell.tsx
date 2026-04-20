@@ -302,7 +302,7 @@ export function NotificationBell() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
-              className="absolute top-1.5 right-1.5 w-4 h-4 bg-[var(--color-error)] text-white text-[10px] font-bold rounded-full flex items-center justify-center"
+              className="absolute top-1.5 right-1.5 w-4 h-4 bg-[var(--color-error)] text-surface text-[10px] font-bold rounded-full flex items-center justify-center"
             >
               {unreadCount > 9 ? "9+" : unreadCount}
             </motion.span>
@@ -318,7 +318,7 @@ export function NotificationBell() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-[var(--color-grey-200)] z-50 overflow-hidden"
+            className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-surface-container-lowest rounded-2xl shadow-xl border border-[var(--color-grey-200)] z-50 overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--color-grey-200)]">

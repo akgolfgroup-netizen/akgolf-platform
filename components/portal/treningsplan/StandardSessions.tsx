@@ -111,7 +111,7 @@ export function StandardSessions({ onAddSession }: StandardSessionsProps) {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider">
+      <h3 className="text-sm font-medium text-inverse-on-surface/60 uppercase tracking-wider">
         Standard økter
       </h3>
 
@@ -131,13 +131,13 @@ export function StandardSessions({ onAddSession }: StandardSessionsProps) {
                 group relative p-3 rounded-lg border cursor-move
                 transition-all duration-200
                 ${isDragging
-                  ? "opacity-50 scale-95 border-slate-600"
-                  : "border-slate-700/50 bg-slate-800/30 hover:border-slate-600 hover:bg-slate-800/50"
+                  ? "opacity-50 scale-95 border-inverse-on-surface/20"
+                  : "border-inverse-on-surface/20/50 bg-inverse-surface/30 hover:border-inverse-on-surface/20 hover:bg-inverse-surface/50"
                 }
               `}
             >
               {/* Drag handle */}
-              <div className="absolute left-1 top-1/2 -translate-y-1/2 text-slate-600 group-hover:text-slate-400">
+              <div className="absolute left-1 top-1/2 -translate-y-1/2 text-inverse-on-surface/60 group-hover:text-inverse-on-surface/60">
                 <Icon name="drag_indicator" className="w-4 h-4" />
               </div>
 
@@ -145,11 +145,11 @@ export function StandardSessions({ onAddSession }: StandardSessionsProps) {
               <div className="pl-4 pr-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-1">
-                  <h4 className="text-sm font-medium text-slate-200 group-hover:text-white">
+                  <h4 className="text-sm font-medium text-inverse-on-surface group-hover:text-surface">
                     {template.title}
                   </h4>
                   <div
-                    className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold text-white"
+                    className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold text-surface"
                     style={{ backgroundColor: color }}
                   >
                     {template.focus}
@@ -157,7 +157,7 @@ export function StandardSessions({ onAddSession }: StandardSessionsProps) {
                 </div>
 
                 {/* Meta */}
-                <div className="flex items-center gap-3 text-xs text-slate-400">
+                <div className="flex items-center gap-3 text-xs text-inverse-on-surface/60">
                   <span className="flex items-center gap-1">
                     <Icon name="schedule" className="w-3 h-3" />
                     {template.duration} min
@@ -181,7 +181,7 @@ export function StandardSessions({ onAddSession }: StandardSessionsProps) {
                   transition-all duration-200
                   ${isDragging
                     ? "opacity-0"
-                    : "opacity-0 group-hover:opacity-100 bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white"
+                    : "opacity-0 group-hover:opacity-100 bg-inverse-surface/80 hover:bg-inverse-surface text-inverse-on-surface/50 hover:text-surface"
                   }
                 `}
                 aria-label={`Legg til ${template.title}`}
@@ -200,7 +200,7 @@ export function StandardSessions({ onAddSession }: StandardSessionsProps) {
       </div>
 
       {/* Drag hint */}
-      <p className="text-xs text-slate-500 text-center">
+      <p className="text-xs text-inverse-on-surface/70 text-center">
         Dra til kalenderen eller klikk + for å legge til
       </p>
     </div>

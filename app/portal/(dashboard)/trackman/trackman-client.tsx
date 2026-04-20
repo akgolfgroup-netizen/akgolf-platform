@@ -300,11 +300,11 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <MonoLabel size="xs" uppercase className="mb-2 block text-grey-400">
+          <MonoLabel size="xs" uppercase className="mb-2 block text-on-surface-variant">
             TrackMan Lab
           </MonoLabel>
-          <h1 className="text-2xl font-bold text-black">TrackMan Data</h1>
-          <p className="text-grey-400 mt-1">
+          <h1 className="text-2xl font-bold text-on-surface">TrackMan Data</h1>
+          <p className="text-on-surface-variant mt-1">
             Spredning, teknikk-profil og klubb-analyse
           </p>
         </div>
@@ -318,7 +318,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               success: null,
             })
           }
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-sm font-medium hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-on-surface text-surface text-sm font-medium hover:opacity-90 transition-opacity"
         >
           <Upload className="w-4 h-4" />
           Last opp data
@@ -339,8 +339,8 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
       {/* Hero — NightSurface med nøkkeltall */}
       <NightSurface variant="ambient" className="rounded-2xl p-8">
         <div className="mb-6 flex items-center gap-2">
-          <span className="h-px w-6 bg-white/40" />
-          <MonoLabel size="xs" uppercase className="text-white/60">
+          <span className="h-px w-6 bg-surface-container-lowest/40" />
+          <MonoLabel size="xs" uppercase className="text-surface/60">
             Sesjonsoversikt · siste 30 dager
           </MonoLabel>
         </div>
@@ -372,8 +372,8 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-white rounded-2xl p-6 border border-grey-200/50">
-          <h3 className="text-sm font-semibold text-black mb-4">
+        <div className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/30/50">
+          <h3 className="text-sm font-semibold text-on-surface mb-4">
             Ballfart-trend (Driver)
           </h3>
           <div className="h-[220px]">
@@ -398,15 +398,15 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                 </LineChart>
               </ResponsiveContainer>
             ) : (
-              <div className="flex items-center justify-center h-full text-sm text-grey-400">
+              <div className="flex items-center justify-center h-full text-sm text-on-surface-variant">
                 Ingen driver-sesjoner ennå
               </div>
             )}
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 border border-grey-200/50">
-          <h3 className="text-sm font-semibold text-black mb-4">
+        <div className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/30/50">
+          <h3 className="text-sm font-semibold text-on-surface mb-4">
             Carry per klubb
           </h3>
           <div className="h-[220px]">
@@ -425,7 +425,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div className="flex items-center justify-center h-full text-sm text-grey-400">
+              <div className="flex items-center justify-center h-full text-sm text-on-surface-variant">
                 Ingen sesjoner ennå
               </div>
             )}
@@ -435,13 +435,13 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Club Stats Table */}
       {data.clubStats.length > 0 && (
-        <div className="bg-white rounded-2xl border border-grey-200/50 overflow-hidden">
-          <div className="p-4 border-b border-grey-200/30">
-            <h3 className="font-semibold text-black">Klubb-statistikk</h3>
+        <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30/50 overflow-hidden">
+          <div className="p-4 border-b border-outline-variant/30/30">
+            <h3 className="font-semibold text-on-surface">Klubb-statistikk</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-grey-50">
+              <thead className="bg-surface">
                 <tr>
                   {[
                     "Klubb",
@@ -453,7 +453,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                   ].map((header) => (
                     <th
                       key={header}
-                      className={`text-xs font-semibold text-grey-400 uppercase tracking-wider p-4 ${
+                      className={`text-xs font-semibold text-on-surface-variant uppercase tracking-wider p-4 ${
                         header === "Klubb" ? "text-left" : "text-right"
                       }`}
                     >
@@ -466,31 +466,31 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                 {data.clubStats.map((club) => (
                   <tr
                     key={club.club}
-                    className="border-t border-grey-200/30 hover:bg-grey-50/50"
+                    className="border-t border-outline-variant/30/30 hover:bg-surface/50"
                   >
-                    <td className="p-4 font-medium text-black">{club.club}</td>
+                    <td className="p-4 font-medium text-on-surface">{club.club}</td>
                     <td className="p-4 text-right">
-                      <MonoLabel size="md" className="text-black">
+                      <MonoLabel size="md" className="text-on-surface">
                         {club.avgSpeed ? `${club.avgSpeed} mph` : "\u2013"}
                       </MonoLabel>
                     </td>
                     <td className="p-4 text-right">
-                      <MonoLabel size="md" className="text-black">
+                      <MonoLabel size="md" className="text-on-surface">
                         {club.avgBallSpeed ? `${club.avgBallSpeed} mph` : "\u2013"}
                       </MonoLabel>
                     </td>
                     <td className="p-4 text-right">
-                      <MonoLabel size="md" className="text-black">
+                      <MonoLabel size="md" className="text-on-surface">
                         {club.avgSpin ? `${Math.round(club.avgSpin)} rpm` : "\u2013"}
                       </MonoLabel>
                     </td>
                     <td className="p-4 text-right">
-                      <MonoLabel size="md" className="text-black">
+                      <MonoLabel size="md" className="text-on-surface">
                         {club.avgLaunch ? `${club.avgLaunch}\u00B0` : "\u2013"}
                       </MonoLabel>
                     </td>
                     <td className="p-4 text-right">
-                      <MonoLabel size="md" className="font-semibold text-black">
+                      <MonoLabel size="md" className="font-semibold text-on-surface">
                         {club.avgCarry}m
                       </MonoLabel>
                     </td>
@@ -504,16 +504,16 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Session List */}
       <div>
-        <h3 className="font-semibold text-black mb-4">Sesjonsoversikt</h3>
-        <div className="bg-white rounded-2xl border border-grey-200/50 overflow-hidden">
+        <h3 className="font-semibold text-on-surface mb-4">Sesjonsoversikt</h3>
+        <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30/50 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-grey-50">
+              <thead className="bg-surface">
                 <tr>
                   {["Dato", "Klubb", "Slag", "Kontekst"].map((h) => (
                     <th
                       key={h}
-                      className="text-xs font-semibold text-grey-400 uppercase tracking-wider p-4 text-left"
+                      className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider p-4 text-left"
                     >
                       {h}
                     </th>
@@ -524,11 +524,11 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               <tbody>
                 {loadingSessions ? (
                   <tr>
-                    <td colSpan={5} className="p-4 text-sm text-grey-400">Laster sesjoner...</td>
+                    <td colSpan={5} className="p-4 text-sm text-on-surface-variant">Laster sesjoner...</td>
                   </tr>
                 ) : displaySessions.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="p-4 text-sm text-grey-400">Ingen sesjoner funnet. Last opp TrackMan-data for å komme i gang.</td>
+                    <td colSpan={5} className="p-4 text-sm text-on-surface-variant">Ingen sesjoner funnet. Last opp TrackMan-data for å komme i gang.</td>
                   </tr>
                 ) : (
                   displaySessions.map((session) => {
@@ -538,25 +538,25 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                     return (
                       <React.Fragment key={session.id}>
                         <tr
-                          className="border-t border-grey-200/30 hover:bg-grey-50/50 cursor-pointer"
+                          className="border-t border-outline-variant/30/30 hover:bg-surface/50 cursor-pointer"
                           onClick={() => setExpandedSessionId(isOpen ? null : session.id)}
                         >
-                          <td className="p-4 text-sm text-black">
+                          <td className="p-4 text-sm text-on-surface">
                             {new Date(session.sessionDate).toLocaleDateString("nb-NO", {
                               day: "numeric",
                               month: "short",
                               year: "numeric",
                             })}
                           </td>
-                          <td className="p-4 font-medium text-black">{session.club}</td>
-                          <td className="p-4 text-sm text-black">{session.shotCount}</td>
-                          <td className="p-4 text-sm text-black">TRAINING</td>
+                          <td className="p-4 font-medium text-on-surface">{session.club}</td>
+                          <td className="p-4 text-sm text-on-surface">{session.shotCount}</td>
+                          <td className="p-4 text-sm text-on-surface">TRAINING</td>
                           <td className="p-4">
-                            <button className="p-1 rounded-lg hover:bg-grey-200/30 transition-colors">
+                            <button className="p-1 rounded-lg hover:bg-surface-variant/30 transition-colors">
                               {isOpen ? (
-                                <Icon name="expand_less" className="w-4 h-4 text-grey-400" />
+                                <Icon name="expand_less" className="w-4 h-4 text-on-surface-variant" />
                               ) : (
-                                <Icon name="expand_more" className="w-4 h-4 text-grey-400" />
+                                <Icon name="expand_more" className="w-4 h-4 text-on-surface-variant" />
                               )}
                             </button>
                           </td>
@@ -570,11 +570,11 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                               transition={{ duration: 0.25, ease: "easeInOut" }}
                             >
                               <td colSpan={5} className="p-0">
-                                <div className="bg-grey-50/60 px-4 py-4 space-y-6">
+                                <div className="bg-surface/60 px-4 py-4 space-y-6">
                                   {/* Shot Dispersion Chart */}
                                   <div>
-                                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-3">Shot-spredning</MonoLabel>
-                                    <div className="bg-white rounded-xl border border-grey-200/50 p-3">
+                                    <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block mb-3">Shot-spredning</MonoLabel>
+                                    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30/50 p-3">
                                       <ShotDispersionChart shots={shots} />
                                     </div>
                                   </div>
@@ -582,18 +582,18 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                                   {/* Session Analytics */}
                                   {analytics && (
                                     <div>
-                                      <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-3">Sesjonsanalyse</MonoLabel>
+                                      <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block mb-3">Sesjonsanalyse</MonoLabel>
                                       <TrackManAnalyticsCard analytics={analytics} />
                                     </div>
                                   )}
 
                                   {/* Shot Details Table */}
                                   <div>
-                                    <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-3">Slagdetaljer</MonoLabel>
+                                    <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block mb-3">Slagdetaljer</MonoLabel>
                                     <div className="overflow-x-auto">
                                       <table className="w-full text-sm">
                                         <thead>
-                                          <tr className="text-left text-xs text-grey-400">
+                                          <tr className="text-left text-xs text-on-surface-variant">
                                             <th className="pb-2 font-medium">#</th>
                                             <th className="pb-2 font-medium">Ballfart</th>
                                             <th className="pb-2 font-medium">Carry</th>
@@ -606,27 +606,27 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                                           {shots.length > 0 ? (
                                             shots.map((shot, idx) => (
                                               <tr key={shot.id}>
-                                                <td className="py-2 text-black">{idx + 1}</td>
-                                                <td className="py-2 text-black">
+                                                <td className="py-2 text-on-surface">{idx + 1}</td>
+                                                <td className="py-2 text-on-surface">
                                                   {shot.ballSpeed ? `${Math.round(shot.ballSpeed * 10) / 10} mph` : "–"}
                                                 </td>
-                                                <td className="py-2 text-black">
+                                                <td className="py-2 text-on-surface">
                                                   {shot.carryDistance ? `${Math.round(shot.carryDistance)}m` : "–"}
                                                 </td>
-                                                <td className="py-2 text-black">
+                                                <td className="py-2 text-on-surface">
                                                   {shot.totalDistance ? `${Math.round(shot.totalDistance)}m` : "–"}
                                                 </td>
-                                                <td className="py-2 text-black">
+                                                <td className="py-2 text-on-surface">
                                                   {shot.spinRate ? `${Math.round(shot.spinRate)} rpm` : "–"}
                                                 </td>
-                                                <td className="py-2 text-black">
+                                                <td className="py-2 text-on-surface">
                                                   {shot.launchAngle ? `${Math.round(shot.launchAngle * 10) / 10}°` : "–"}
                                                 </td>
                                               </tr>
                                             ))
                                           ) : (
                                             <tr>
-                                              <td colSpan={6} className="py-3 text-grey-400">
+                                              <td colSpan={6} className="py-3 text-on-surface-variant">
                                                 Ingen detaljerte slagdata tilgjengelig.
                                               </td>
                                             </tr>
@@ -652,7 +652,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Quick Actions */}
       <div>
-        <h3 className="text-sm font-semibold text-black mb-4">Handlinger</h3>
+        <h3 className="text-sm font-semibold text-on-surface mb-4">Handlinger</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Button variant="secondary" className="h-auto py-3 justify-start gap-3" asChild>
             <a href="#">
@@ -722,7 +722,7 @@ function UploadModal({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-on-surface/40 p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget && !upload.loading) resetUpload();
       }}
@@ -730,16 +730,16 @@ function UploadModal({
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
+        className="bg-surface-container-lowest rounded-2xl shadow-xl max-w-md w-full p-6"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-bold text-black">Last opp TrackMan-data</h2>
+          <h2 className="text-lg font-bold text-on-surface">Last opp TrackMan-data</h2>
           {!upload.loading && (
             <button
               onClick={resetUpload}
-              className="p-1 rounded-lg hover:bg-grey-50 transition-colors"
+              className="p-1 rounded-lg hover:bg-surface transition-colors"
             >
-              <Icon name="close" className="w-5 h-5 text-grey-400" />
+              <Icon name="close" className="w-5 h-5 text-on-surface-variant" />
             </button>
           )}
         </div>
@@ -761,8 +761,8 @@ function UploadModal({
         {/* Loading */}
         {upload.loading && (
           <div className="flex flex-col items-center gap-3 py-8">
-            <Icon name="progress_activity" className="w-8 h-8 text-black animate-spin" />
-            <p className="text-sm text-grey-400">
+            <Icon name="progress_activity" className="w-8 h-8 text-on-surface animate-spin" />
+            <p className="text-sm text-on-surface-variant">
               {upload.mode === "image"
                 ? "Analyserer bilde med AI..."
                 : "Importerer CSV-data..."}
@@ -778,14 +778,14 @@ function UploadModal({
                 setUpload((prev) => ({ ...prev, mode: "csv" }));
                 csvInputRef.current?.click();
               }}
-              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-grey-200 hover:border-black hover:bg-grey-50 transition-all"
+              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-outline-variant/30 hover:border-black hover:bg-surface transition-all"
             >
-              <div className="w-12 h-12 rounded-xl bg-black/10 flex items-center justify-center flex-shrink-0">
-                <FileSpreadsheet className="w-6 h-6 text-black" />
+              <div className="w-12 h-12 rounded-xl bg-on-surface/10 flex items-center justify-center flex-shrink-0">
+                <FileSpreadsheet className="w-6 h-6 text-on-surface" />
               </div>
               <div className="text-left">
-                <p className="font-semibold text-sm text-black">Last opp CSV-fil</p>
-                <p className="text-xs text-grey-400 mt-0.5">
+                <p className="font-semibold text-sm text-on-surface">Last opp CSV-fil</p>
+                <p className="text-xs text-on-surface-variant mt-0.5">
                   Eksporter fra TrackMan Range eller Performance Studio
                 </p>
               </div>
@@ -796,14 +796,14 @@ function UploadModal({
                 setUpload((prev) => ({ ...prev, mode: "image" }));
                 imageInputRef.current?.click();
               }}
-              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-grey-200 hover:border-ai hover:bg-ai-light/30 transition-all"
+              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-outline-variant/30 hover:border-ai hover:bg-ai-light/30 transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-ai-light flex items-center justify-center flex-shrink-0">
                 <ImageIcon className="w-6 h-6 text-ai" />
               </div>
               <div className="text-left">
-                <p className="font-semibold text-sm text-black">Last opp skjermbilde</p>
-                <p className="text-xs text-grey-400 mt-0.5">
+                <p className="font-semibold text-sm text-on-surface">Last opp skjermbilde</p>
+                <p className="text-xs text-on-surface-variant mt-0.5">
                   AI leser data fra TrackMan-skjerm (PNG, JPG)
                 </p>
               </div>
@@ -828,13 +828,13 @@ function NightStatCell({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <div className="flex items-center gap-2 text-white/50">
+      <div className="flex items-center gap-2 text-surface/50">
         {icon}
         <MonoLabel size="xs" uppercase>
           {label}
         </MonoLabel>
       </div>
-      <p className="text-3xl font-bold tabular-nums tracking-tight text-white">{value}</p>
+      <p className="text-3xl font-bold tabular-nums tracking-tight text-surface">{value}</p>
     </div>
   );
 }

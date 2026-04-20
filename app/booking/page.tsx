@@ -159,9 +159,9 @@ export default function BookingPage() {
   }, [selectedTrainer]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-surface-container-lowest">
       {/* Hero — matcher forsiden */}
-      <section className="relative flex items-center pt-[48px] min-h-[50svh] overflow-hidden bg-black">
+      <section className="relative flex items-center pt-[48px] min-h-[50svh] overflow-hidden bg-on-surface">
         <Image
           src="/images/hero/academy.jpg"
           alt="Coaching på banen"
@@ -172,13 +172,13 @@ export default function BookingPage() {
           sizes="100vw"
         />
         <div className="w-container relative py-16 md:py-24">
-          <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/60 font-medium">
+          <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-surface/60 font-medium">
             AK Golf Academy
           </p>
-          <h1 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-[1.1] tracking-tight text-white mt-6 mb-4">
+          <h1 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-[1.1] tracking-tight text-surface mt-6 mb-4">
             Book coaching
           </h1>
-          <p className="text-base text-white/60 max-w-md leading-relaxed">
+          <p className="text-base text-surface/60 max-w-md leading-relaxed">
             Velg trener for å booke din neste coaching-time.
           </p>
         </div>
@@ -205,7 +205,7 @@ export default function BookingPage() {
             {/* Tilbake-knapp */}
             <button
               onClick={() => setSelectedTrainer(null)}
-              className="flex items-center gap-2 mb-8 text-sm font-medium text-text hover:text-black transition-colors"
+              className="flex items-center gap-2 mb-8 text-sm font-medium text-text hover:text-on-surface transition-colors"
             >
               <Icon name="arrow_back" className="w-4 h-4" />
               Tilbake til treneroversikt
@@ -213,7 +213,7 @@ export default function BookingPage() {
 
             {/* Valgt trener */}
             <div className="flex items-center gap-4 mb-8">
-              <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-grey-100 shrink-0">
+              <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-surface-container shrink-0">
                 {selectedTrainer.trainer.image ? (
                   <Image
                     src={selectedTrainer.trainer.image}
@@ -223,14 +223,14 @@ export default function BookingPage() {
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-primary">
-                    <span className="text-lg font-bold text-white">
+                    <span className="text-lg font-bold text-surface">
                       {getInitials(selectedTrainer.trainer.name)}
                     </span>
                   </div>
                 )}
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-black">
+                <h2 className="text-xl font-semibold text-on-surface">
                   {selectedTrainer.trainer.name}
                 </h2>
                 <p className="text-sm text-text">
@@ -241,7 +241,7 @@ export default function BookingPage() {
 
             {/* Acuity Embed */}
             {selectedTrainer.trainer.acuityEmbedUrl ? (
-              <div className="rounded-2xl border border-grey-200 bg-white overflow-hidden">
+              <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest overflow-hidden">
                 <iframe
                   src={selectedTrainer.trainer.acuityEmbedUrl}
                   title={`Book time med ${selectedTrainer.trainer.name}`}
@@ -253,9 +253,9 @@ export default function BookingPage() {
                 />
               </div>
             ) : (
-              <div className="rounded-2xl border border-grey-200 bg-white p-12 text-center">
+              <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-12 text-center">
                 <Icon name="schedule" className="w-10 h-10 text-text mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-black mb-2">
+                <h3 className="text-lg font-semibold text-on-surface mb-2">
                   Kommer snart
                 </h3>
                 <p className="text-sm text-text max-w-sm mx-auto">
@@ -285,7 +285,7 @@ export default function BookingPage() {
                       <Icon name="location_on" className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-black">
+                      <h2 className="text-xl font-semibold text-on-surface">
                         {location.name}
                       </h2>
                       <p className="text-sm text-text">
@@ -307,10 +307,10 @@ export default function BookingPage() {
                             locationName: location.name,
                           })
                         }
-                        className="group rounded-2xl border border-grey-200 bg-white overflow-hidden transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover text-left"
+                        className="group rounded-2xl border border-outline-variant/30 bg-surface-container-lowest overflow-hidden transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover text-left"
                       >
                         {/* Trenerbilde */}
-                        <div className="relative aspect-square overflow-hidden bg-grey-100">
+                        <div className="relative aspect-square overflow-hidden bg-surface-container">
                           {trainer.image ? (
                             <Image
                               src={trainer.image}
@@ -320,19 +320,19 @@ export default function BookingPage() {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-primary">
-                              <span className="text-3xl font-bold text-white">
+                              <span className="text-3xl font-bold text-surface">
                                 {getInitials(trainer.name)}
                               </span>
                             </div>
                           )}
-                          <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-black backdrop-blur-sm">
+                          <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-semibold bg-surface-container-lowest/90 text-on-surface backdrop-blur-sm">
                             {trainer.role}
                           </div>
                         </div>
 
                         {/* Trenerinfo */}
                         <div className="p-6">
-                          <h3 className="text-lg font-semibold text-black mb-1">
+                          <h3 className="text-lg font-semibold text-on-surface mb-1">
                             {trainer.name}
                           </h3>
                           <p className="text-sm text-text mb-4">
@@ -344,7 +344,7 @@ export default function BookingPage() {
                             {trainer.services.map((service) => (
                               <span
                                 key={service}
-                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-grey-100 text-text"
+                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-surface-container text-text"
                               >
                                 {service}
                               </span>
@@ -352,11 +352,11 @@ export default function BookingPage() {
                           </div>
 
                           {/* CTA */}
-                          <div className="flex items-center justify-between pt-4 border-t border-grey-100">
-                            <span className="text-sm font-semibold text-black group-hover:text-black/70 transition-colors">
+                          <div className="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+                            <span className="text-sm font-semibold text-on-surface group-hover:text-on-surface/70 transition-colors">
                               Velg tid
                             </span>
-                            <div className="w-8 h-8 rounded-full bg-accent-cta flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+                            <div className="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
                               <svg
                                 width="16"
                                 height="16"
@@ -366,7 +366,7 @@ export default function BookingPage() {
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                className="text-accent-cta-text"
+                                className="text-secondary-fixed-text"
                               >
                                 <path d="M5 12h14" />
                                 <path d="m12 5 7 7-7 7" />
@@ -382,11 +382,11 @@ export default function BookingPage() {
             </div>
 
             {/* Info */}
-            <div className="mt-16 rounded-2xl bg-grey-50 border border-grey-200 p-8 md:p-10">
+            <div className="mt-16 rounded-2xl bg-surface border border-outline-variant/30 p-8 md:p-10">
               <div className="flex items-start gap-4">
                 <Icon name="schedule" className="w-6 h-6 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="font-semibold text-black mb-2">
+                  <h3 className="font-semibold text-on-surface mb-2">
                     Slik booker du
                   </h3>
                   <p className="text-sm text-text leading-relaxed">
@@ -403,7 +403,7 @@ export default function BookingPage() {
         <div className="mt-10 text-center">
           <Link
             href="/academy"
-            className="text-sm text-text hover:text-black transition-colors"
+            className="text-sm text-text hover:text-on-surface transition-colors"
           >
             &larr; Tilbake til Academy
           </Link>

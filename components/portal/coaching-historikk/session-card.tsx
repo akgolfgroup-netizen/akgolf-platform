@@ -39,7 +39,7 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
 
   const hasAI = aiData.keyPoints.length > 0;
   const hasPrimaryFocus = Boolean(session.primaryFocus);
-  const dotColor = hasAI ? "bg-ai" : hasPrimaryFocus ? "bg-primary" : "bg-grey-300";
+  const dotColor = hasAI ? "bg-ai" : hasPrimaryFocus ? "bg-primary" : "bg-outline-variant";
 
   async function handleGenerateAI() {
     setGenerating(true);
@@ -57,13 +57,13 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
   }
 
   return (
-    <article className="relative flex items-start gap-4 rounded-xl border border-black/6 bg-white p-5 shadow-card transition-all duration-300 hover:border-black/10 hover:shadow-card-hover">
+    <article className="relative flex items-start gap-4 rounded-xl border border-black/6 bg-surface-container-lowest p-5 shadow-card transition-all duration-300 hover:border-black/10 hover:shadow-card-hover">
       {/* Timeline dot + mono date */}
       <div className="flex w-[72px] shrink-0 flex-col items-start gap-2 pt-0.5">
-        <MonoLabel size="xs" uppercase className="text-grey-500">
+        <MonoLabel size="xs" uppercase className="text-on-surface-variant/80">
           {format(new Date(session.sessionDate), "d MMM", { locale: nb })}
         </MonoLabel>
-        <MonoLabel size="xs" className="text-grey-400">
+        <MonoLabel size="xs" className="text-on-surface-variant">
           {format(new Date(session.sessionDate), "HH:mm")}
         </MonoLabel>
       </div>
@@ -73,7 +73,7 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
       {/* Content */}
       <div className="min-w-0 flex-1">
         <div className="mb-1 flex flex-wrap items-center gap-2">
-          <h3 className="text-[15px] font-semibold leading-tight tracking-tight text-grey-900">
+          <h3 className="text-[15px] font-semibold leading-tight tracking-tight text-on-surface">
             {session.primaryFocus ?? "Coachingsesjon"}
           </h3>
           {hasAI && (
@@ -82,7 +82,7 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
             </span>
           )}
         </div>
-        <p className="text-[12px] text-grey-500">
+        <p className="text-[12px] text-on-surface-variant/80">
           {session.student.name} · Coach: {session.instructor.user.name}
           {session.instructor.title ? ` · ${session.instructor.title}` : ""}
         </p>
@@ -92,7 +92,7 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
           <div className="mt-4 space-y-3 border-t border-black/6 pt-4">
             {session.studentNotes && (
               <div>
-                <MonoLabel size="xs" uppercase className="mb-1 block text-grey-500">
+                <MonoLabel size="xs" uppercase className="mb-1 block text-on-surface-variant/80">
                   Notater
                 </MonoLabel>
                 <p className="whitespace-pre-wrap text-sm text-text">
@@ -131,7 +131,7 @@ export function SessionCard({ session, canGenerateAI }: SessionCardProps) {
         )}
         <button
           onClick={() => setExpanded(!expanded)}
-          className="rounded-lg p-1.5 text-grey-400 transition-colors hover:bg-grey-50 hover:text-grey-700"
+          className="rounded-lg p-1.5 text-on-surface-variant transition-colors hover:bg-surface hover:text-on-surface-variant/90"
           aria-label={expanded ? "Skjul detaljer" : "Vis detaljer"}
         >
           {expanded ? (

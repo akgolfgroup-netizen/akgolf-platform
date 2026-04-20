@@ -26,7 +26,7 @@ function InstructorPicker({ service, onSelect, selected }: InstructorPickerProps
 
   return (
     <div className="mb-6">
-      <p className="text-xs font-semibold text-grey-400 uppercase tracking-wider mb-3">
+      <p className="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-3">
         Velg instruktør
       </p>
       <div className="flex gap-2 flex-wrap">
@@ -39,8 +39,8 @@ function InstructorPicker({ service, onSelect, selected }: InstructorPickerProps
               className={[
                 "flex items-center gap-2.5 px-4 py-2.5 rounded-full border text-sm font-medium transition-all duration-200",
                 isActive
-                  ? "bg-black text-white border-black"
-                  : "bg-white text-black border-grey-200 hover:border-grey-300",
+                  ? "bg-on-surface text-surface border-black"
+                  : "bg-surface-container-lowest text-on-surface border-outline-variant/30 hover:border-outline-variant/50",
               ].join(" ")}
             >
               {inst.user.image ? (
@@ -52,7 +52,7 @@ function InstructorPicker({ service, onSelect, selected }: InstructorPickerProps
                   className="rounded-full object-cover"
                 />
               ) : (
-                <div className="w-6 h-6 rounded-full bg-[#F5F8F7] flex items-center justify-center text-xs font-bold text-grey-400">
+                <div className="w-6 h-6 rounded-full bg-[#F5F8F7] flex items-center justify-center text-xs font-bold text-on-surface-variant">
                   {inst.user.name?.charAt(0) ?? "?"}
                 </div>
               )}
@@ -81,10 +81,10 @@ function ProgressBar({ steps, currentStep }: { steps: BookingStep[]; currentStep
               className={[
                 "flex items-center justify-center w-8 h-8 rounded-full text-xs font-semibold transition-all duration-300",
                 isActive
-                  ? "bg-[#0A1F18] text-white"
+                  ? "bg-[#0A1F18] text-surface"
                   : isCompleted
                     ? "bg-[#E8F5EF] text-success border-2 border-success"
-                    : "bg-[#F5F8F7] text-grey-400 border border-grey-200",
+                    : "bg-[#F5F8F7] text-on-surface-variant border border-outline-variant/30",
               ].join(" ")}
             >
               {isCompleted ? <Icon name="check" className="w-3.5 h-3.5" /> : i + 1}
@@ -92,7 +92,7 @@ function ProgressBar({ steps, currentStep }: { steps: BookingStep[]; currentStep
             <span
               className={[
                 "text-xs font-medium hidden sm:inline",
-                isActive ? "text-[#0A1F18]" : "text-grey-400",
+                isActive ? "text-[#0A1F18]" : "text-on-surface-variant",
               ].join(" ")}
             >
               {STEP_CONFIG[s].label}
@@ -101,7 +101,7 @@ function ProgressBar({ steps, currentStep }: { steps: BookingStep[]; currentStep
               <div
                 className={[
                   "w-8 h-0.5 mx-1",
-                  isCompleted ? "bg-success" : "bg-grey-200",
+                  isCompleted ? "bg-success" : "bg-surface-variant",
                 ].join(" ")}
               />
             )}
@@ -139,7 +139,7 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
 
   if (loadingServices) {
     return (
-      <div className="flex items-center justify-center py-20 gap-3 text-grey-400">
+      <div className="flex items-center justify-center py-20 gap-3 text-on-surface-variant">
         <Icon name="progress_activity" className="w-5 h-5 animate-spin" />
         <span>Laster tilgjengelige tjenester...</span>
       </div>
@@ -153,7 +153,7 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
       {showBackButton && (
         <button
           onClick={goBack}
-          className="flex items-center gap-1.5 text-sm text-grey-400 hover:text-black transition-colors mb-4"
+          className="flex items-center gap-1.5 text-sm text-on-surface-variant hover:text-on-surface transition-colors mb-4"
         >
           <Icon name="arrow_back" className="w-3.5 h-3.5" />
           Tilbake
@@ -169,10 +169,10 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
 
         {state.step === "datetime" && state.selectedService && (
           <StepWrapper key="datetime">
-            <h2 className="text-2xl font-semibold text-black mb-1 tracking-tight">
+            <h2 className="text-2xl font-semibold text-on-surface mb-1 tracking-tight">
               Velg dato og tid
             </h2>
-            <p className="text-sm text-grey-400 mb-6">
+            <p className="text-sm text-on-surface-variant mb-6">
               {state.selectedService.name}
               {state.selectedInstructor ? ` med ${state.selectedInstructor.user.name}` : ""}
             </p>
@@ -185,13 +185,13 @@ export function BookingWizard({ mode, services: preloadedServices, onComplete }:
 
             {state.selectedInstructor && (
               <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] gap-6">
-                <div className="bg-white rounded-xl border border-grey-200 p-4">
+                <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-4">
                   <BookingDatePicker
                     selected={state.selectedDate}
                     onSelect={wizard.selectDate}
                   />
                 </div>
-                <div className="bg-white rounded-xl border border-grey-200 p-4">
+                <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-4">
                   <TimeSlots
                     date={state.selectedDate}
                     slots={state.availableSlots}

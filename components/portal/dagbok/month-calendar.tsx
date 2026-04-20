@@ -39,39 +39,39 @@ interface MonthCalendarProps {
 const TYPE_COLORS: Record<string, { bg: string; text: string; border: string; label: string }> = {
   FYS: { 
     bg: "bg-blue-500", 
-    text: "text-white", 
+    text: "text-surface", 
     border: "border-blue-500",
     label: "Fysisk" 
   },
   TEK: { 
     bg: "bg-[#16A34A]", 
-    text: "text-white", 
+    text: "text-surface", 
     border: "border-[#16A34A]",
     label: "Teknikk" 
   },
   SLAG: { 
     bg: "bg-[#D4AF37]", 
-    text: "text-black", 
+    text: "text-on-surface", 
     border: "border-[#D4AF37]",
     label: "Slagtrening" 
   },
   SPILL: { 
     bg: "bg-orange-500", 
-    text: "text-white", 
+    text: "text-surface", 
     border: "border-orange-500",
     label: "Spill" 
   },
   TURN: { 
     bg: "bg-red-500", 
-    text: "text-white", 
+    text: "text-surface", 
     border: "border-red-500",
     label: "Turnering" 
   },
   // Fallback mappings
-  STYRKE: { bg: "bg-blue-500", text: "text-white", border: "border-blue-500", label: "Styrke" },
-  TRENING: { bg: "bg-[#16A34A]", text: "text-white", border: "border-[#16A34A]", label: "Trening" },
-  COACHING: { bg: "bg-purple-500", text: "text-white", border: "border-purple-500", label: "Coaching" },
-  OTHER: { bg: "bg-grey-400", text: "text-white", border: "border-grey-400", label: "Annet" },
+  STYRKE: { bg: "bg-blue-500", text: "text-surface", border: "border-blue-500", label: "Styrke" },
+  TRENING: { bg: "bg-[#16A34A]", text: "text-surface", border: "border-[#16A34A]", label: "Trening" },
+  COACHING: { bg: "bg-purple-500", text: "text-surface", border: "border-purple-500", label: "Coaching" },
+  OTHER: { bg: "bg-surface-variant", text: "text-surface", border: "border-outline-variant", label: "Annet" },
 };
 
 const getTypeColor = (type: string) => {
@@ -140,12 +140,12 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-            className="p-2 rounded-full hover:bg-grey-100 transition-colors"
+            className="p-2 rounded-full hover:bg-surface-container transition-colors"
           >
-            <Icon name="chevron_left" className="w-5 h-5 text-grey-400" />
+            <Icon name="chevron_left" className="w-5 h-5 text-on-surface-variant" />
           </motion.button>
           
-          <h3 className="text-lg font-semibold text-black min-w-[140px] text-center">
+          <h3 className="text-lg font-semibold text-on-surface min-w-[140px] text-center">
             {format(currentMonth, "MMMM yyyy", { locale: nb })}
           </h3>
           
@@ -153,15 +153,15 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-            className="p-2 rounded-full hover:bg-grey-100 transition-colors"
+            className="p-2 rounded-full hover:bg-surface-container transition-colors"
           >
-            <Icon name="chevron_right" className="w-5 h-5 text-grey-400" />
+            <Icon name="chevron_right" className="w-5 h-5 text-on-surface-variant" />
           </motion.button>
         </div>
 
         {/* Quick filter indicator */}
         {selectedTypes.length < ALL_TYPES.length && (
-          <span className="text-xs text-grey-400 bg-grey-100 px-2 py-1 rounded-full">
+          <span className="text-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded-full">
             {selectedTypes.length} av {ALL_TYPES.length} typer
           </span>
         )}
@@ -169,7 +169,7 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
 
       {/* Type filters */}
       <div className="flex flex-wrap gap-2 mb-4">
-        <div className="flex items-center gap-1.5 text-xs text-grey-400 mr-2">
+        <div className="flex items-center gap-1.5 text-xs text-on-surface-variant mr-2">
           <Icon name="filter_list" className="w-3.5 h-3.5" />
           Filter:
         </div>
@@ -187,7 +187,7 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
                 "px-2.5 py-1 rounded-full text-xs font-medium transition-all border",
                 isActive 
                   ? `${colors.bg} ${colors.text} ${colors.border}`
-                  : "bg-white text-grey-400 border-grey-200 hover:border-grey-300"
+                  : "bg-surface-container-lowest text-on-surface-variant border-outline-variant/30 hover:border-outline-variant/50"
               )}
             >
               {colors.label}
@@ -197,13 +197,13 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
       </div>
 
       {/* Calendar grid */}
-      <div className="border border-grey-200 rounded-2xl overflow-hidden">
+      <div className="border border-outline-variant/30 rounded-2xl overflow-hidden">
         {/* Week day headers */}
-        <div className="grid grid-cols-7 border-b border-grey-200 bg-grey-50">
+        <div className="grid grid-cols-7 border-b border-outline-variant/30 bg-surface">
           {weekDays.map(day => (
             <div 
               key={day} 
-              className="py-2 text-center text-xs font-medium text-grey-400"
+              className="py-2 text-center text-xs font-medium text-on-surface-variant"
             >
               {day}
             </div>
@@ -231,20 +231,20 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.005 }}
                 className={cn(
-                  "relative aspect-square p-1 border-b border-r border-grey-100 last:border-r-0 transition-all",
-                  !isCurrentMonth && "bg-grey-50/50",
-                  isSelected && "bg-accent-cta/10",
-                  "hover:bg-grey-50"
+                  "relative aspect-square p-1 border-b border-r border-outline-variant/20 last:border-r-0 transition-all",
+                  !isCurrentMonth && "bg-surface/50",
+                  isSelected && "bg-secondary-fixed/10",
+                  "hover:bg-surface"
                 )}
               >
                 {/* Date number */}
                 <span className={cn(
                   "text-xs font-medium w-6 h-6 flex items-center justify-center rounded-full",
                   isToday 
-                    ? "bg-black text-white" 
+                    ? "bg-on-surface text-surface" 
                     : isCurrentMonth 
-                      ? "text-black" 
-                      : "text-grey-300"
+                      ? "text-on-surface" 
+                      : "text-on-surface-variant/60"
                 )}>
                   {format(day, "d")}
                 </span>
@@ -263,7 +263,7 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
                       />
                     ))}
                     {daySessions.length > 3 && (
-                      <span className="text-[8px] text-grey-400 leading-none">
+                      <span className="text-[8px] text-on-surface-variant leading-none">
                         +{daySessions.length - 3}
                       </span>
                     )}
@@ -284,13 +284,13 @@ export function MonthCalendar({ sessions, onSelectDate }: MonthCalendarProps) {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-3 mt-4 pt-4 border-t border-grey-200">
+      <div className="flex flex-wrap gap-3 mt-4 pt-4 border-t border-outline-variant/30">
         {ALL_TYPES.map(type => {
           const colors = getTypeColor(type);
           return (
             <div key={type} className="flex items-center gap-1.5">
               <div className={cn("w-2 h-2 rounded-full", colors.bg)} />
-              <span className="text-xs text-grey-400">{colors.label}</span>
+              <span className="text-xs text-on-surface-variant">{colors.label}</span>
             </div>
           );
         })}

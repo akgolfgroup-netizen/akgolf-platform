@@ -29,7 +29,7 @@ export function DivisionsSection() {
           <h2 className="w-heading-lg mt-4 mb-4">
             Tre divisjoner. Ett mal.
           </h2>
-          <p className="text-grey-500 leading-relaxed max-w-2xl mb-12">
+          <p className="text-on-surface-variant/80 leading-relaxed max-w-2xl mb-12">
             AK Golf Group utvikler spillere, systemer og klubber
             — med struktur og dokumenterte metoder.
           </p>
@@ -40,12 +40,12 @@ export function DivisionsSection() {
             <StaggerItem key={div.id}>
               <Link
                 href={div.href}
-                className="group relative block bg-white rounded-2xl p-8 md:p-10 shadow-card hover:shadow-card-hover hover:-translate-y-px transition-all duration-300 h-full"
+                className="group relative block bg-surface-container-lowest rounded-2xl p-8 md:p-10 shadow-card hover:shadow-card-hover hover:-translate-y-px transition-all duration-300 h-full"
               >
                 <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted mb-4">
                   {DIVISION_NUMBERS[div.id] ?? "00"}
                 </p>
-                <h3 className="text-xl font-bold text-black tracking-tight mb-3">
+                <h3 className="text-xl font-bold text-on-surface tracking-tight mb-3">
                   {div.title}
                 </h3>
                 <p className="text-sm text-text leading-relaxed mb-6">
@@ -55,7 +55,7 @@ export function DivisionsSection() {
                   {div.features.map((f) => (
                     <li
                       key={f}
-                      className="text-sm text-grey-500 pl-5 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-primary"
+                      className="text-sm text-on-surface-variant/80 pl-5 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:rounded-full before:bg-primary"
                     >
                       {f}
                     </li>

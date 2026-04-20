@@ -20,13 +20,13 @@ interface GlassButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const VARIANT_CLASSES: Record<GlassButtonVariant, string> = {
   glass:
-    "bg-[rgba(12,22,17,0.62)] backdrop-blur-[22px] backdrop-saturate-[130%] border border-white/[0.14] text-white hover:bg-[rgba(12,22,17,0.78)]",
+    "bg-[rgba(12,22,17,0.62)] backdrop-blur-[22px] backdrop-saturate-[130%] border border-white/[0.14] text-surface hover:bg-[rgba(12,22,17,0.78)]",
   lime:
-    "bg-accent-cta text-[#0A1F18] border border-[rgba(10,31,24,0.08)] hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(209,248,67,0.35)]",
+    "bg-secondary-fixed text-[#0A1F18] border border-[rgba(10,31,24,0.08)] hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(209,248,67,0.35)]",
   amber:
     "bg-[#F5C542] text-[#0A1F18] hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(245,197,66,0.3)]",
   dark:
-    "bg-[#0A1F18] text-white border border-white/10 hover:bg-[#0A1F18]/90",
+    "bg-[#0A1F18] text-surface border border-white/10 hover:bg-[#0A1F18]/90",
 };
 
 const SIZE_CLASSES: Record<GlassButtonSize, string> = {

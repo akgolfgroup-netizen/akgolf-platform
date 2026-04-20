@@ -61,7 +61,7 @@ export function TesterClient({ tests }: Props) {
             <button
               key={test.testNumber}
               onClick={() => loadLeaderboard(test.testNumber)}
-              className="w-full text-left bg-white rounded-xl border border-outline-variant p-4 hover:border-black/8 transition-all"
+              className="w-full text-left bg-surface-container-lowest rounded-xl border border-outline-variant p-4 hover:border-black/8 transition-all"
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -116,7 +116,7 @@ export function TesterClient({ tests }: Props) {
             Tilbake til alle tester
           </button>
 
-          <div className="bg-white rounded-xl border border-outline-variant p-6">
+          <div className="bg-surface-container-lowest rounded-xl border border-outline-variant p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h2 className="text-lg font-bold text-on-surface">
@@ -148,7 +148,7 @@ export function TesterClient({ tests }: Props) {
                   onClick={() => handlePeriodChange(p.id)}
                   className={`flex-1 py-[7px] rounded-[7px] text-[13px] font-medium transition-all ${
                     period === p.id
-                      ? "bg-primary text-white shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
+                      ? "bg-primary text-surface shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
                       : "text-outline hover:text-on-surface-variant"
                   }`}
                 >

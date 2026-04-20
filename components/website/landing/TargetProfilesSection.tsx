@@ -33,11 +33,11 @@ export function TargetProfilesSection() {
             const Icon = ICONS[profile.id] ?? Target;
             return (
               <StaggerItem key={profile.id}>
-                <div className="bg-white rounded-2xl p-8 shadow-card hover:shadow-card-hover hover:-translate-y-px transition-all duration-300 h-full">
+                <div className="bg-surface-container-lowest rounded-2xl p-8 shadow-card hover:shadow-card-hover hover:-translate-y-px transition-all duration-300 h-full">
                   <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center mb-5">
                     <Icon className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="text-lg font-bold text-black tracking-tight mb-3">
+                  <h3 className="text-lg font-bold text-on-surface tracking-tight mb-3">
                     {profile.title}
                   </h3>
                   <p className="text-sm text-text leading-relaxed">

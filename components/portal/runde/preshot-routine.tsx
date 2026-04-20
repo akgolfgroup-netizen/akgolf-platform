@@ -91,7 +91,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
   const allStepsCompleted = completed.size === STEPS.length;
 
   return (
-    <div className={cn("fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4", className)}>
+    <div className={cn("fixed inset-0 z-50 flex items-center justify-center bg-on-surface/50 backdrop-blur-sm p-4", className)}>
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -106,8 +106,8 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
                 <Icon name="my_location" className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-black">Pre-shot rutine</h3>
-                <p className="text-xs text-grey-400">Mental forberedelse</p>
+                <h3 className="font-semibold text-on-surface">Pre-shot rutine</h3>
+                <p className="text-xs text-on-surface-variant">Mental forberedelse</p>
               </div>
             </div>
             
@@ -118,7 +118,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
                 "flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
                 isTiming 
                   ? "bg-green-100 text-green-700" 
-                  : "bg-grey-100 text-grey-600 hover:bg-grey-200"
+                  : "bg-surface-container text-on-surface-variant/80 hover:bg-surface-variant"
               )}
             >
               {isTiming ? (
@@ -132,14 +132,14 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
 
           {/* Progress bar */}
           <div className="mb-6">
-            <div className="h-2 bg-grey-100 rounded-full overflow-hidden">
+            <div className="h-2 bg-surface-container rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${(completed.size / STEPS.length) * 100}%` }}
                 className="h-full bg-purple-500 rounded-full"
               />
             </div>
-            <p className="text-xs text-grey-400 mt-2 text-center">
+            <p className="text-xs text-on-surface-variant mt-2 text-center">
               {completed.size} av {STEPS.length} steg fullført
             </p>
           </div>
@@ -160,31 +160,31 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
                     "w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left",
                     isCompleted
                       ? "border-purple-200 bg-purple-50"
-                      : "border-grey-200 hover:border-purple-200"
+                      : "border-outline-variant/30 hover:border-purple-200"
                   )}
                 >
                   <div className={cn(
                     "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
-                    isCompleted ? "bg-purple-500" : "bg-grey-100"
+                    isCompleted ? "bg-purple-500" : "bg-surface-container"
                   )}>
                     {isCompleted ? (
-                      <Icon name="check"Circle2 className="w-5 h-5 text-white" />
+                      <Icon name="check"Circle2 className="w-5 h-5 text-surface" />
                     ) : (
-                      <Icon className="w-5 h-5 text-grey-400" />
+                      <Icon className="w-5 h-5 text-on-surface-variant" />
                     )}
                   </div>
                   <div className="flex-1">
                     <p className={cn(
                       "font-semibold transition-colors",
-                      isCompleted ? "text-purple-900" : "text-black"
+                      isCompleted ? "text-purple-900" : "text-on-surface"
                     )}>
                       {idx + 1}. {s.label}
                     </p>
-                    <p className="text-xs text-grey-400">{s.description}</p>
+                    <p className="text-xs text-on-surface-variant">{s.description}</p>
                   </div>
                   <Icon name="circle" className={cn(
                     "w-5 h-5 transition-colors",
-                    isCompleted ? "text-purple-500 fill-purple-500" : "text-grey-300"
+                    isCompleted ? "text-purple-500 fill-purple-500" : "text-on-surface-variant/60"
                   )} />
                 </motion.button>
               );
@@ -192,15 +192,15 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
           </div>
 
           {/* Focus & Commitment sliders */}
-          <div className="space-y-4 mb-6 p-4 bg-grey-50 rounded-xl">
+          <div className="space-y-4 mb-6 p-4 bg-surface rounded-xl">
             {/* Focus level */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-sm font-medium text-grey-700 flex items-center gap-2">
+                <label className="text-sm font-medium text-on-surface-variant/90 flex items-center gap-2">
                   <Icon name="center_focus_strong" className="w-4 h-4" />
                   Fokus-nivå
                 </label>
-                <span className="text-sm font-bold text-black">{focusLevel}/10</span>
+                <span className="text-sm font-bold text-on-surface">{focusLevel}/10</span>
               </div>
               <input
                 type="range"
@@ -215,11 +215,11 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
             {/* Commitment level */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-sm font-medium text-grey-700 flex items-center gap-2">
+                <label className="text-sm font-medium text-on-surface-variant/90 flex items-center gap-2">
                   <Icon name="bolt" className="w-4 h-4" />
                   Commitment
                 </label>
-                <span className="text-sm font-bold text-black">{commitmentLevel}/10</span>
+                <span className="text-sm font-bold text-on-surface">{commitmentLevel}/10</span>
               </div>
               <input
                 type="range"
@@ -240,7 +240,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
                 setCompleted(new Set());
                 setIsTiming(false);
               }}
-              className="px-4 py-2.5 rounded-xl text-sm font-medium text-grey-600 hover:bg-grey-100 transition-colors flex items-center gap-2"
+              className="px-4 py-2.5 rounded-xl text-sm font-medium text-on-surface-variant/80 hover:bg-surface-container transition-colors flex items-center gap-2"
             >
               <Icon name="restart_alt" className="w-4 h-4" />
               Nullstill
@@ -248,7 +248,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
             
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-grey-600 bg-grey-100 hover:bg-grey-200 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-on-surface-variant/80 bg-surface-container hover:bg-surface-variant transition-colors"
             >
               Avbryt
             </button>
@@ -259,8 +259,8 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
               className={cn(
                 "flex-1 px-4 py-2.5 rounded-xl text-sm font-bold transition-colors",
                 allStepsCompleted
-                  ? "bg-purple-500 text-white hover:bg-purple-600"
-                  : "bg-grey-200 text-grey-400 cursor-not-allowed"
+                  ? "bg-purple-500 text-surface hover:bg-purple-600"
+                  : "bg-surface-variant text-on-surface-variant cursor-not-allowed"
               )}
             >
               Fullfør

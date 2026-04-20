@@ -292,7 +292,7 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/20 z-40 lg:hidden"
+            className="fixed inset-0 bg-on-surface/20 z-40 lg:hidden"
             onClick={onClose}
           />
           
@@ -311,7 +311,7 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
                 <div className="relative">
                   <Icon name="notifications" className="w-5 h-5 text-[var(--color-on-surface)]" />
                   {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--color-error)] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--color-error)] text-surface text-[9px] font-bold rounded-full flex items-center justify-center">
                       {unreadCount > 9 ? "9+" : unreadCount}
                     </span>
                   )}

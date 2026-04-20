@@ -59,20 +59,20 @@ export function PortalPreviewSection() {
 
         {/* Live banner */}
         <RevealOnScroll>
-          <div className="mb-12 rounded-2xl bg-black p-6 text-center">
+          <div className="mb-12 rounded-2xl bg-on-surface p-6 text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
-              <Icon name="smartphone" className="w-5 h-5 text-accent-cta" />
-              <h3 className="font-semibold text-white">
+              <Icon name="smartphone" className="w-5 h-5 text-secondary-fixed" />
+              <h3 className="font-semibold text-surface">
                 Spillerportalen er live
               </h3>
             </div>
-            <p className="text-sm text-white/70 max-w-md mx-auto">
+            <p className="text-sm text-surface/70 max-w-md mx-auto">
               Logg inn for å se din personlige treningsplan, booke timer og
               følge utviklingen din — alt på ett sted.
             </p>
             <a
               href="/portal/login"
-              className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-full bg-accent-cta text-black text-sm font-bold hover:bg-accent-cta/90 transition-colors"
+              className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-full bg-secondary-fixed text-on-surface text-sm font-bold hover:bg-secondary-fixed/90 transition-colors"
             >
               Logg inn på portalen
             </a>
@@ -84,11 +84,11 @@ export function PortalPreviewSection() {
             const Icon = feature.icon;
             return (
               <StaggerItem key={feature.title}>
-                <div className="rounded-2xl border border-grey-200 bg-white p-6 h-full">
+                <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-6 h-full">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                     <Icon className="w-6 h-6 text-primary" />
                   </div>
-                  <h3 className="text-base font-semibold text-black mb-2">
+                  <h3 className="text-base font-semibold text-on-surface mb-2">
                     {feature.title}
                   </h3>
                   <p className="text-sm text-text leading-relaxed">

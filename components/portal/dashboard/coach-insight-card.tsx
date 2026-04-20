@@ -28,7 +28,7 @@ export function CoachInsightCard({ coachInsight }: CoachInsightCardProps) {
   };
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-grey-100 bg-white p-5 shadow-sm transition-all duration-200 hover:border-grey-200 hover:shadow-md">
+    <div className="flex h-full flex-col rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-5 shadow-sm transition-all duration-200 hover:border-outline-variant/30 hover:shadow-md">
       <div className="mb-3 flex items-center gap-2">
         <div
           className="flex h-8 w-8 items-center justify-center rounded-full"
@@ -36,29 +36,29 @@ export function CoachInsightCard({ coachInsight }: CoachInsightCardProps) {
         >
           <Icon name="chat" className="h-4 w-4" style={{ color: colors.primary.dark }} />
         </div>
-        <h3 className="text-sm font-semibold text-black">Fra treneren din</h3>
+        <h3 className="text-sm font-semibold text-on-surface">Fra treneren din</h3>
       </div>
 
       {hasCoach ? (
         <div className="flex-1">
-          <p className="line-clamp-4 text-sm leading-relaxed text-grey-500">
+          <p className="line-clamp-4 text-sm leading-relaxed text-on-surface-variant/80">
             {coachInsight.summary || coachInsight.primaryFocus}
           </p>
           {coachInsight.date && (
-            <p className="mt-3 text-xs text-grey-400">
+            <p className="mt-3 text-xs text-on-surface-variant">
               {formatDate(coachInsight.date)}
             </p>
           )}
         </div>
       ) : (
         <div className="flex-1">
-          <p className="text-sm text-grey-400">
+          <p className="text-sm text-on-surface-variant">
             Coaching-notater vises her etter din første økt med treneren.
           </p>
         </div>
       )}
 
-      <div className="mt-4 pt-3 border-t border-grey-100">
+      <div className="mt-4 pt-3 border-t border-outline-variant/20">
         <Link
           href="/portal/coaching-historikk"
           className="inline-flex items-center gap-1 text-xs font-semibold hover:underline"

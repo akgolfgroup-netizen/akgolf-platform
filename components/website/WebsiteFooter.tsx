@@ -4,7 +4,7 @@ import { AKLogo } from "./AKLogo";
 
 export function WebsiteFooter() {
   return (
-    <footer className="relative bg-black text-white overflow-hidden border-t border-white/10">
+    <footer className="relative bg-on-surface text-surface overflow-hidden border-t border-white/10">
       <div className="w-container relative py-16 md:py-20">
         {/* Links grid — 2 cols on mobile, 4 on desktop */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -12,11 +12,11 @@ export function WebsiteFooter() {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-3">
               <AKLogo variant="inverted" size={24} />
-              <span className="font-display text-sm font-semibold text-white tracking-tight">
+              <span className="font-display text-sm font-semibold text-surface tracking-tight">
                 AK Golf
               </span>
             </div>
-            <p className="text-xs leading-relaxed text-grey-400 max-w-[240px] mb-4">
+            <p className="text-xs leading-relaxed text-on-surface-variant max-w-[240px] mb-4">
               Premium golfcoaching for ambisiøse spillere.
             </p>
             {/* Social icons */}
@@ -27,7 +27,7 @@ export function WebsiteFooter() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-grey-400 hover:bg-[var(--color-brand)] hover:text-white transition-colors duration-300"
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-lowest/10 text-on-surface-variant hover:bg-[var(--color-brand)] hover:text-surface transition-colors duration-300"
                   aria-label={social.label}
                 >
                   {social.icon === "instagram" && (
@@ -56,7 +56,7 @@ export function WebsiteFooter() {
 
           {/* Tjenester */}
           <div>
-            <h4 className="text-[10px] font-mono uppercase tracking-wider text-grey-400 mb-3">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-on-surface-variant mb-3">
               Tjenester
             </h4>
             <ul className="space-y-2">
@@ -64,7 +64,7 @@ export function WebsiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-xs text-grey-500 hover:text-white transition-colors"
+                    className="text-xs text-on-surface-variant/80 hover:text-surface transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -75,7 +75,7 @@ export function WebsiteFooter() {
 
           {/* Selskap */}
           <div>
-            <h4 className="text-[10px] font-mono uppercase tracking-wider text-grey-400 mb-3">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-on-surface-variant mb-3">
               Selskap
             </h4>
             <ul className="space-y-2">
@@ -83,7 +83,7 @@ export function WebsiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-xs text-grey-500 hover:text-white transition-colors"
+                    className="text-xs text-on-surface-variant/80 hover:text-surface transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -94,14 +94,14 @@ export function WebsiteFooter() {
 
           {/* Kontakt */}
           <div>
-            <h4 className="text-[10px] font-mono uppercase tracking-wider text-grey-400 mb-3">
+            <h4 className="text-[10px] font-mono uppercase tracking-wider text-on-surface-variant mb-3">
               Kontakt
             </h4>
-            <ul className="space-y-2 text-xs text-grey-500">
+            <ul className="space-y-2 text-xs text-on-surface-variant/80">
               <li>
                 <a
                   href={`mailto:${FOOTER_LINKS.contact.email}`}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-surface transition-colors"
                 >
                   {FOOTER_LINKS.contact.email}
                 </a>
@@ -109,7 +109,7 @@ export function WebsiteFooter() {
               <li>
                 <Link
                   href="/#contact"
-                  className="hover:text-white transition-colors"
+                  className="hover:text-surface transition-colors"
                 >
                   Send oss en melding
                 </Link>
@@ -120,7 +120,7 @@ export function WebsiteFooter() {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center">
-          <p className="text-[10px] text-grey-500">
+          <p className="text-[10px] text-on-surface-variant/80">
             &copy; {new Date().getFullYear()} AK Golf Group AS
           </p>
         </div>

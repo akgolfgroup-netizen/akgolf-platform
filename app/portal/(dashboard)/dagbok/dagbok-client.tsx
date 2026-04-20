@@ -156,10 +156,10 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
 
       <div className="space-y-3">
         <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Din treningsdagbok</MonoLabel>
-        <h1 className="text-2xl font-bold text-black">
+        <h1 className="text-2xl font-bold text-on-surface">
           Logg og{" "}
-          <span className="font-serif italic text-black font-normal">spor</span>
-          <span className="text-accent-cta">.</span>
+          <span className="font-serif italic text-on-surface font-normal">spor</span>
+          <span className="text-secondary-fixed">.</span>
         </h1>
         <p className="text-[13px] text-on-surface-variant max-w-xl">
           Hold oversikt over aktiviteten din. Hver økt teller, og hver streak er et skritt nærmere målet.
@@ -169,7 +169,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
 
       {quickLogToast.show && (
         <motion.div initial={{ opacity: 0, y: -10, x: 20 }} animate={{ opacity: 1, y: 0, x: 0 }} exit={{ opacity: 0, x: 20 }}
-          className="fixed top-4 right-4 z-50 max-w-xs rounded-xl bg-black text-white text-sm shadow-lg overflow-hidden">
+          className="fixed top-4 right-4 z-50 max-w-xs rounded-xl bg-on-surface text-surface text-sm shadow-lg overflow-hidden">
           <div className="px-4 py-3">
             <p className="font-semibold">Økt logget!</p>
             {quickLogToast.focusArea && (
@@ -179,8 +179,8 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
               </p>
             )}
           </div>
-          <div className="px-4 py-2 bg-white/5 border-t border-white/10">
-            <Link href="/portal/treningsplan" className="text-xs font-medium text-accent-cta hover:underline">
+          <div className="px-4 py-2 bg-surface-container-lowest/5 border-t border-white/10">
+            <Link href="/portal/treningsplan" className="text-xs font-medium text-secondary-fixed hover:underline">
               Se treningsplan →
             </Link>
           </div>
@@ -198,10 +198,10 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
       {isEmpty && (
         <PremiumCard variant="default" padding="lg" className="text-center py-16">
           <div className="flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-black/10">
-              <NotebookPen className="w-8 h-8 text-black" strokeWidth={1.75} />
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-on-surface/10">
+              <NotebookPen className="w-8 h-8 text-on-surface" strokeWidth={1.75} />
             </div>
-            <p className="text-[20px] font-semibold text-black mb-2">Din treningsdagbok er tom</p>
+            <p className="text-[20px] font-semibold text-on-surface mb-2">Din treningsdagbok er tom</p>
             <p className="text-[13px] text-on-surface-variant mb-6 max-w-md leading-relaxed">
               Logg din første treningsøkt for å komme i gang. Alt du logger blir automatisk en del av fremdriften din.
             </p>
@@ -224,11 +224,11 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-1">Streak</p>
-                    <p className="text-[28px] font-bold text-black tabular-nums">{streak}</p>
+                    <p className="text-[28px] font-bold text-on-surface tabular-nums">{streak}</p>
                     <p className="text-[11px] text-on-surface-variant">{streak === 1 ? "dag" : "dager"}</p>
                   </div>
                   <div className="w-10 h-10 rounded-xl bg-secondary-fixed/20 flex items-center justify-center">
-                    <Icon name="local_fire_department" className="w-5 h-5 text-black" />
+                    <Icon name="local_fire_department" className="w-5 h-5 text-on-surface" />
                   </div>
                 </div>
               </PremiumCard>
@@ -238,7 +238,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-1">Økter totalt</p>
-                    <p className="text-[28px] font-bold text-black tabular-nums">{logs.length}</p>
+                    <p className="text-[28px] font-bold text-on-surface tabular-nums">{logs.length}</p>
                   </div>
                   <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center">
                     <Icon name="monitoring" className="w-5 h-5 text-on-surface-variant" />
@@ -251,7 +251,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-1">Timer totalt</p>
-                    <p className="text-[28px] font-bold text-black tabular-nums">{totalHours}</p>
+                    <p className="text-[28px] font-bold text-on-surface tabular-nums">{totalHours}</p>
                   </div>
                   <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center">
                     <Icon name="schedule" className="w-5 h-5 text-on-surface-variant" />
@@ -264,7 +264,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-1">Snitt vurdering</p>
-                    <p className="text-[28px] font-bold text-black tabular-nums">{avgRating}</p>
+                    <p className="text-[28px] font-bold text-on-surface tabular-nums">{avgRating}</p>
                   </div>
                   <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center">
                     <Icon name="star" className="w-5 h-5 text-on-surface-variant" />
@@ -317,7 +317,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
                       <div className="flex items-start justify-between mb-3">
                         <div className="min-w-0">
                           <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-1">{formatLogDate(log.date)}</p>
-                          <p className="text-[16px] font-semibold text-black truncate">{title}</p>
+                          <p className="text-[16px] font-semibold text-on-surface truncate">{title}</p>
                         </div>
                         <span className={cn("px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.1em] shrink-0 border",
                           isCoaching ? "bg-on-surface/10 text-on-surface border-on-surface/20" : "bg-on-surface-variant/10 text-on-surface-variant border-on-surface-variant/20")}>

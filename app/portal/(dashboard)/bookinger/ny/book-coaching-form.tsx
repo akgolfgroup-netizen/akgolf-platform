@@ -152,15 +152,15 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                   <motion.div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-[background-color,border-color,color] duration-300 ${
                       isActive
-                        ? "bg-on-surface text-white border-none"
+                        ? "bg-on-surface text-surface border-none"
                         : isCompleted
-                          ? "bg-outline-variant text-white border-2 border-on-surface"
+                          ? "bg-outline-variant text-surface border-2 border-on-surface"
                           : "bg-surface-container text-on-surface-variant border-2 border-outline-variant"
                     }`}
                     whileHover={!isActive ? { scale: 1.05 } : {}}
                   >
                     {isCompleted && s !== step ? (
-                      <Icon name="check" className={`w-5 h-5 ${isActive ? "text-white" : "text-on-surface"}`} />
+                      <Icon name="check" className={`w-5 h-5 ${isActive ? "text-surface" : "text-on-surface"}`} />
                     ) : (
                       index + 1
                     )}
@@ -381,13 +381,13 @@ export function BookCoachingForm({ serviceTypes }: Props) {
                       whileHover={!isWeekend ? { scale: 1.02 } : {}}
                       whileTap={!isWeekend ? { scale: 0.98 } : {}}
                     >
-                      <p className={`text-xs uppercase tracking-wide mb-1 ${isSelected ? "text-white" : "text-outline"}`}>
+                      <p className={`text-xs uppercase tracking-wide mb-1 ${isSelected ? "text-surface" : "text-outline"}`}>
                         {format(date, "EEE", { locale: nb })}
                       </p>
-                      <p className={`text-2xl font-semibold mb-1 tabular-nums ${isSelected ? "text-white" : "text-on-surface"}`}>
+                      <p className={`text-2xl font-semibold mb-1 tabular-nums ${isSelected ? "text-surface" : "text-on-surface"}`}>
                         {format(date, "d")}
                       </p>
-                      <p className={`text-xs ${isSelected ? "text-white/80" : "text-on-surface-variant"}`}>
+                      <p className={`text-xs ${isSelected ? "text-surface/80" : "text-on-surface-variant"}`}>
                         {format(date, "MMM", { locale: nb })}
                       </p>
                     </motion.button>
@@ -539,7 +539,7 @@ export function BookCoachingForm({ serviceTypes }: Props) {
               <motion.button
                 onClick={() => handleBook("STRIPE")}
                 disabled={booking}
-                className="w-full py-5 rounded-[20px] text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 bg-primary text-white hover:opacity-85 hover:scale-[1.01] active:scale-[0.99] active:opacity-75"
+                className="w-full py-5 rounded-[20px] text-base font-semibold flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 bg-primary text-surface hover:opacity-85 hover:scale-[1.01] active:scale-[0.99] active:opacity-75"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
               >

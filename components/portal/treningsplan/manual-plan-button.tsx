@@ -18,7 +18,7 @@ export function ManualPlanButton({ studentId }: Props) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-outline-variant text-on-surface text-sm font-semibold hover:bg-surface-container transition-colors"
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant text-on-surface text-sm font-semibold hover:bg-surface-container transition-colors"
       >
         <Icon name="assignment" className="w-4 h-4" />
         Lag manuell plan

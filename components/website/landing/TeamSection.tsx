@@ -16,7 +16,7 @@ export function TeamSection() {
           <h2 className="w-heading-lg mt-4 mb-4">
             Menneskene bak metodikken
           </h2>
-          <p className="text-grey-500 leading-relaxed max-w-2xl mb-12">
+          <p className="text-on-surface-variant/80 leading-relaxed max-w-2xl mb-12">
             Tett oppfolging krever trenere som kjenner deg. Derfor er teamet
             bevisst lite.
           </p>
@@ -25,7 +25,7 @@ export function TeamSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {TEAM.map((member, i) => (
             <RevealOnScroll key={member.name} delay={i * 0.1}>
-              <div className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover hover:-translate-y-px transition-all duration-300">
+              <div className="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover hover:-translate-y-px transition-all duration-300">
                 {/* Image */}
                 <div className="relative aspect-[3/4] overflow-hidden">
                   {member.image ? (
@@ -41,7 +41,7 @@ export function TeamSection() {
                     </>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-primary">
-                      <span className="text-5xl font-bold text-white">
+                      <span className="text-5xl font-bold text-surface">
                         {member.name.split(" ").map(n => n[0]).join("").slice(0, 3)}
                       </span>
                     </div>
@@ -53,7 +53,7 @@ export function TeamSection() {
                   <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted mb-2">
                     {member.division}
                   </p>
-                  <h3 className="text-xl font-bold text-black tracking-tight mb-1">
+                  <h3 className="text-xl font-bold text-on-surface tracking-tight mb-1">
                     {member.name}
                   </h3>
                   <p className="text-sm text-muted mb-4">

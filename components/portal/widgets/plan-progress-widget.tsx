@@ -22,7 +22,7 @@ export function PlanProgressWidget() {
         </span>
       </div>
 
-      <div className="h-2 rounded-full bg-grey-100 overflow-hidden">
+      <div className="h-2 rounded-full bg-surface-container overflow-hidden">
         <div
           className="h-full rounded-full bg-primary transition-all"
           style={{ width: `${percentage}%` }}

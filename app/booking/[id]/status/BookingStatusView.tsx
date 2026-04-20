@@ -234,7 +234,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
   return (
     <div className="min-h-screen bg-[var(--color-grey-100)]">
       {/* Header */}
-      <header className="bg-white border-b border-[var(--color-grey-200)]">
+      <header className="bg-surface-container-lowest border-b border-[var(--color-grey-200)]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <Link
@@ -300,7 +300,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-white rounded-2xl border border-[var(--color-grey-200)] overflow-hidden"
+              className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] overflow-hidden"
             >
               <div className="p-6 border-b border-[var(--color-grey-200)]">
                 <h2 className="text-lg font-semibold text-[var(--color-black)]">
@@ -387,7 +387,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6"
+                className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] p-6"
               >
                 <div className="flex items-center gap-2 mb-4">
                   <Icon name="chat" className="w-5 h-5 text-[var(--color-grey-600)]" />
@@ -414,14 +414,14 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6"
+                className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] p-6"
               >
                 <h3 className="font-semibold text-[var(--color-black)] mb-4">Handlinger</h3>
                 <div className="flex flex-wrap gap-3">
                   {canReschedule && (
                     <Link
                       href={`/portal/bookinger/${booking.id}/endre`}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-black)] text-white rounded-full text-sm font-medium hover:bg-[var(--color-grey-800)] transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-black)] text-surface rounded-full text-sm font-medium hover:bg-[var(--color-grey-800)] transition-colors"
                     >
                       <Icon name="refresh" className="w-4 h-4" />
                       Endre tid
@@ -451,7 +451,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl border border-[var(--color-grey-200)] p-6 h-fit"
+            className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] p-6 h-fit"
           >
             <h3 className="font-semibold text-[var(--color-black)] mb-6">Tidslinje</h3>
             <div className="space-y-0">
@@ -473,7 +473,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                             ? "bg-[var(--color-error-light)] text-[var(--color-error)]"
                             : step.isCancelled
                               ? "bg-[var(--color-error-light)] text-[var(--color-error)]"
-                              : "bg-[var(--color-success)] text-white"
+                              : "bg-[var(--color-success)] text-surface"
                           : "bg-[var(--color-grey-100)] text-[var(--color-grey-400)]"
                       }`}
                     >
@@ -524,11 +524,11 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
 
       {/* Cancel Confirmation Modal */}
       {showCancelConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-on-surface/50 flex items-center justify-center z-50 p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-2xl max-w-md w-full p-6"
+            className="bg-surface-container-lowest rounded-2xl max-w-md w-full p-6"
           >
             <div className="flex items-start gap-4 mb-4">
               <div className="w-12 h-12 rounded-full bg-[var(--color-warning-light)] flex items-center justify-center flex-shrink-0">
@@ -568,7 +568,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
               <button
                 onClick={handleCancel}
                 disabled={isCancelling}
-                className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-[var(--color-error)] rounded-full hover:bg-[var(--color-error)]/85 transition-colors flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-surface bg-[var(--color-error)] rounded-full hover:bg-[var(--color-error)]/85 transition-colors flex items-center justify-center gap-2"
               >
                 {isCancelling && <Icon name="progress_activity" className="w-4 h-4 animate-spin" />}
                 {isCancelling ? "Avbestiller..." : "Bekreft avbestilling"}

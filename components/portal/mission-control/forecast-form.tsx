@@ -97,16 +97,16 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
       initial="hidden"
       animate="show"
       onSubmit={handleSubmit}
-      className="bg-white border border-grey-200 rounded-xl p-6 space-y-5"
+      className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 space-y-5"
     >
-      <div className="flex items-center gap-2 text-sm font-semibold text-black">
+      <div className="flex items-center gap-2 text-sm font-semibold text-on-surface">
         <Icon name="my_location" className="w-4 h-4 text-primary" />
         Ny forecast
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
-          <label className="block text-xs font-medium text-grey-400 mb-1.5">
+          <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
             Mål-score (snitt)
           </label>
           <AdminInput
@@ -118,7 +118,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-grey-400 mb-1.5">
+          <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
             Deadline
           </label>
           <AdminInput
@@ -128,7 +128,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-grey-400 mb-1.5">
+          <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
             Timer/uke
           </label>
           <AdminInput
@@ -140,7 +140,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-grey-400 mb-1.5">
+          <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
             Course Rating
           </label>
           <AdminInput
@@ -153,7 +153,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-grey-400 mb-1.5">
+          <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
             Slope Rating
           </label>
           <AdminInput
@@ -165,7 +165,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-grey-400 mb-1.5">
+          <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
             Alder
           </label>
           <AdminInput
@@ -191,11 +191,11 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          className="space-y-4 border-t border-grey-100 pt-4"
+          className="space-y-4 border-t border-outline-variant/20 pt-4"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-grey-400 mb-1.5">
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
                 Face angle std dev — OTT (°)
               </label>
               <AdminInput
@@ -207,7 +207,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-grey-400 mb-1.5">
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
                 Face angle std dev — APP (°)
               </label>
               <AdminInput
@@ -219,7 +219,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-grey-400 mb-1.5">
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
                 Ball speed score (0–100)
               </label>
               <AdminInput
@@ -231,7 +231,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-grey-400 mb-1.5">
+              <label className="block text-xs font-medium text-on-surface-variant mb-1.5">
                 Press-gap SG — APP
               </label>
               <AdminInput
@@ -249,7 +249,7 @@ export function ForecastForm({ initialAge, onSubmit, isLoading }: ForecastFormPr
         <button
           type="submit"
           disabled={isLoading}
-          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[20px] text-sm font-semibold bg-primary text-white hover:bg-primary-alt transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[20px] text-sm font-semibold bg-primary text-surface hover:bg-primary-alt transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? "Genererer..." : "Generer forecast"}
         </button>

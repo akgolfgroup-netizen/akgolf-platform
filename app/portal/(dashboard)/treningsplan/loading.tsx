@@ -19,7 +19,7 @@ export default function TreningsplanLoading() {
         {[...Array(7)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-4"
+            className="bg-surface-container-lowest rounded-[20px] border border-[var(--color-surface-container)] p-4"
           >
             <div className="h-3 w-10 bg-[var(--color-surface-container)] rounded mb-3" />
             <div className="h-4 w-full bg-[var(--color-surface-container-lowest)] rounded mb-2" />

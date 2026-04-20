@@ -109,7 +109,7 @@ export default function LoginPage() {
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
-        className="hidden lg:flex lg:w-1/2 relative overflow-hidden text-white"
+        className="hidden lg:flex lg:w-1/2 relative overflow-hidden text-surface"
         aria-hidden="true"
       >
         {/* Bakgrunn: hero-bilde */}
@@ -172,9 +172,9 @@ export default function LoginPage() {
             className="flex items-center justify-between"
           >
             <AKLogo variant="white" size={56} />
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-white/5">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-surface-container-lowest/5">
               <Icon name="auto_awesome" className="w-3.5 h-3.5 text-[var(--color-accent-cta)]" />
-              <span className="text-[11px] font-medium tracking-wide uppercase text-white/90">
+              <span className="text-[11px] font-medium tracking-wide uppercase text-surface/90">
                 Spillerportal
               </span>
             </div>
@@ -195,7 +195,7 @@ export default function LoginPage() {
             </motion.p>
             <motion.h1
               variants={fadeInUp}
-              className="text-5xl xl:text-6xl font-semibold leading-[1.05] tracking-tight mb-6 text-white"
+              className="text-5xl xl:text-6xl font-semibold leading-[1.05] tracking-tight mb-6 text-surface"
             >
               Premium
               <br />
@@ -203,7 +203,7 @@ export default function LoginPage() {
             </motion.h1>
             <motion.p
               variants={fadeInUp}
-              className="text-lg leading-relaxed text-white/70 max-w-md"
+              className="text-lg leading-relaxed text-surface/70 max-w-md"
             >
               Logg inn for å se treningsplanen din, booke økter og følge
               utviklingen din med skreddersydd coaching fra AK Golf.
@@ -211,7 +211,7 @@ export default function LoginPage() {
 
             <motion.ul
               variants={fadeInUp}
-              className="mt-10 space-y-3 text-[15px] text-white/80"
+              className="mt-10 space-y-3 text-[15px] text-surface/80"
             >
               {[
                 "Personlig treningsplan generert av AI",
@@ -231,7 +231,7 @@ export default function LoginPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6, ease: EASE }}
-            className="text-xs text-white/50 tracking-wide"
+            className="text-xs text-surface/50 tracking-wide"
           >
             &copy; {new Date().getFullYear()} AK Golf Group
           </motion.div>
@@ -343,7 +343,7 @@ export default function LoginPage() {
                             {isActive && (
                               <motion.span
                                 layoutId="login-tab-indicator"
-                                className="absolute inset-0 bg-white rounded-lg shadow-[0_4px_12px_-4px_rgba(0,88,64,0.15)]"
+                                className="absolute inset-0 bg-surface-container-lowest rounded-lg shadow-[0_4px_12px_-4px_rgba(0,88,64,0.15)]"
                                 transition={{
                                   type: "spring",
                                   stiffness: 400,
@@ -397,7 +397,7 @@ export default function LoginPage() {
                             required
                             autoComplete="email"
                             spellCheck={false}
-                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
+                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-surface-container-lowest border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
                           />
                         </div>
                       </div>
@@ -430,7 +430,7 @@ export default function LoginPage() {
                                 placeholder="••••••••"
                                 required={mode === "password"}
                                 autoComplete="current-password"
-                                className="w-full pl-10 pr-11 py-3 text-sm rounded-xl bg-white border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
+                                className="w-full pl-10 pr-11 py-3 text-sm rounded-xl bg-surface-container-lowest border border-black/10 text-[var(--color-text)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-4 focus:ring-[var(--color-primary)]/10 transition-[border-color,box-shadow]"
                               />
                               <button
                                 type="button"
@@ -473,7 +473,7 @@ export default function LoginPage() {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-3 rounded-xl bg-[var(--color-primary)] text-white text-sm font-semibold hover:bg-[var(--color-primary-alt)] disabled:opacity-60 disabled:cursor-not-allowed transition-colors group relative overflow-hidden cursor-pointer border-none mt-1"
+                        className="w-full py-3 rounded-xl bg-[var(--color-primary)] text-surface text-sm font-semibold hover:bg-[var(--color-primary-alt)] disabled:opacity-60 disabled:cursor-not-allowed transition-colors group relative overflow-hidden cursor-pointer border-none mt-1"
                       >
                         <span className="relative z-10 flex items-center justify-center gap-2">
                           {loading

@@ -63,7 +63,7 @@ export function AISummaryBlock({
             {keyPoints.map((point, i) => (
               <motion.li key={i} variants={item} className="flex items-start gap-2">
                 <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ai" />
-                <span className="text-sm text-grey-900">{point}</span>
+                <span className="text-sm text-on-surface">{point}</span>
               </motion.li>
             ))}
           </motion.ul>
@@ -81,7 +81,7 @@ export function AISummaryBlock({
               <motion.span
                 key={i}
                 variants={item}
-                className="flex items-center gap-1.5 rounded-full border border-ai/25 bg-white px-3 py-1.5 text-xs text-ai-text"
+                className="flex items-center gap-1.5 rounded-full border border-ai/25 bg-surface-container-lowest px-3 py-1.5 text-xs text-ai-text"
               >
                 <Icon name="my_location" className="h-3 w-3" />
                 {area}
@@ -101,7 +101,7 @@ export function AISummaryBlock({
             {actionItems.map((action, i) => (
               <motion.li key={i} variants={item} className="flex items-start gap-2">
                 <Icon name="check"Square className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span className="text-sm text-grey-900">{action}</span>
+                <span className="text-sm text-on-surface">{action}</span>
               </motion.li>
             ))}
           </motion.ul>

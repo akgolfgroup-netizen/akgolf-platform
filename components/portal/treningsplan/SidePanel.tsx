@@ -27,7 +27,7 @@ export function SidePanel({
       {/* Mobile toggle button */}
       <button
         onClick={() => setIsMobileOpen(true)}
-        className="lg:hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-blue-600 hover:bg-blue-500 text-white rounded-full shadow-lg flex items-center justify-center transition-colors"
+        className="lg:hidden fixed bottom-4 right-4 z-50 w-12 h-12 bg-blue-600 hover:bg-blue-500 text-surface rounded-full shadow-lg flex items-center justify-center transition-colors"
         aria-label="Åpne øvelsesbank"
       >
         <Icon name="menu" className="w-6 h-6" />
@@ -36,7 +36,7 @@ export function SidePanel({
       {/* Mobile overlay */}
       {isMobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/60 z-40"
+          className="lg:hidden fixed inset-0 bg-on-surface/60 z-40"
           onClick={() => setIsMobileOpen(false)}
         />
       )}
@@ -53,10 +53,10 @@ export function SidePanel({
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800">
-          <h2 className="text-lg font-semibold text-slate-100">Øvelsesbank</h2>
+          <h2 className="text-lg font-semibold text-inverse-on-surface">Øvelsesbank</h2>
           <button
             onClick={() => setIsMobileOpen(false)}
-            className="lg:hidden p-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-colors"
+            className="lg:hidden p-2 text-inverse-on-surface/60 hover:text-inverse-on-surface hover:bg-inverse-surface rounded-lg transition-colors"
             aria-label="Lukk"
           >
             <Icon name="close" className="w-5 h-5" />

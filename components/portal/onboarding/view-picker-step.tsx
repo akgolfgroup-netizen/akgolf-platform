@@ -61,13 +61,13 @@ export function ViewPickerStep({ onSelect, onNext }: ViewPickerStepProps) {
   return (
     <div className="animate-in fade-in slide-in-from-right-4 duration-300">
       <div className="text-center mb-8">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-grey-100">
-          <Icon name="grid_view" className="w-6 h-6 text-grey-700" />
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-surface-container">
+          <Icon name="grid_view" className="w-6 h-6 text-on-surface-variant/90" />
         </div>
-        <h1 className="text-2xl font-bold text-grey-900 mb-2">
+        <h1 className="text-2xl font-bold text-on-surface mb-2">
           Velg dashboard-stil
         </h1>
-        <p className="text-sm text-grey-500">
+        <p className="text-sm text-on-surface-variant/80">
           Du kan bytte stil når som helst senere
         </p>
       </div>
@@ -84,13 +84,13 @@ export function ViewPickerStep({ onSelect, onNext }: ViewPickerStepProps) {
                 "flex items-center gap-4 p-4 rounded-xl text-left transition-all border " +
                 (isSelected
                   ? "border-primary bg-primary-soft ring-2 ring-primary"
-                  : "border-grey-200 bg-grey-50 hover:border-grey-300")
+                  : "border-outline-variant/30 bg-surface hover:border-outline-variant/50")
               }
             >
               <div
                 className={
                   "w-12 h-12 rounded-lg flex items-center justify-center shrink-0 " +
-                  (isSelected ? "bg-primary text-white" : "bg-white text-grey-500")
+                  (isSelected ? "bg-primary text-surface" : "bg-surface-container-lowest text-on-surface-variant/80")
                 }
               >
                 <Icon className="w-6 h-6" />
@@ -98,16 +98,16 @@ export function ViewPickerStep({ onSelect, onNext }: ViewPickerStepProps) {
               <div className="flex-1">
                 <p
                   className={
-                    "font-medium " + (isSelected ? "text-primary" : "text-grey-900")
+                    "font-medium " + (isSelected ? "text-primary" : "text-on-surface")
                   }
                 >
                   {view.label}
                 </p>
-                <p className="text-xs text-grey-500">{view.description}</p>
+                <p className="text-xs text-on-surface-variant/80">{view.description}</p>
               </div>
               {isSelected && (
                 <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0">
-                  <Icon name="check" className="w-3.5 h-3.5 text-white" />
+                  <Icon name="check" className="w-3.5 h-3.5 text-surface" />
                 </div>
               )}
             </button>
@@ -120,7 +120,7 @@ export function ViewPickerStep({ onSelect, onNext }: ViewPickerStepProps) {
         disabled={!selected}
         className={
           "w-full py-3 rounded-full font-semibold text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed " +
-          (selected ? "bg-grey-900 text-white" : "bg-grey-200 text-grey-500")
+          (selected ? "bg-on-surface text-surface" : "bg-surface-variant text-on-surface-variant/80")
         }
       >
         Neste

@@ -42,8 +42,8 @@ export function DataConsentDialog({ open, onClose }: DataConsentDialogProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-xl shadow-xl max-w-lg w-full p-6">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-on-surface/50 backdrop-blur-sm">
+      <div className="bg-surface-container-lowest rounded-xl shadow-xl max-w-lg w-full p-6">
         <div className="flex items-start gap-3 mb-4">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-success-light text-success-text shrink-0">
             <Icon name="shield"Check className="w-5 h-5" />
@@ -52,17 +52,17 @@ export function DataConsentDialog({ open, onClose }: DataConsentDialogProps) {
             <MonoLabel size="xs" uppercase className="text-primary block">
               GDPR
             </MonoLabel>
-            <h2 className="text-lg font-semibold text-grey-900 mt-1">
+            <h2 className="text-lg font-semibold text-on-surface mt-1">
               Samtykke til datainnsamling
             </h2>
-            <p className="mt-1 text-sm text-grey-500">
+            <p className="mt-1 text-sm text-on-surface-variant/80">
               For å gi deg bedre coaching samler vi inn og analyserer data fra
               treningen din. Du kan trekke samtykket når som helst.
             </p>
           </div>
         </div>
 
-        <div className="space-y-1 py-4 border-y border-grey-100">
+        <div className="space-y-1 py-4 border-y border-outline-variant/20">
           <ConsentRow
             checked={tests}
             onChange={setTests}
@@ -129,7 +129,7 @@ function ConsentRow({
   description: string;
 }) {
   return (
-    <label className="flex items-start gap-3 py-2.5 cursor-pointer hover:bg-grey-50 rounded-lg px-2 -mx-2 transition-colors">
+    <label className="flex items-start gap-3 py-2.5 cursor-pointer hover:bg-surface rounded-lg px-2 -mx-2 transition-colors">
       <input
         type="checkbox"
         className="mt-1 h-4 w-4 accent-primary"
@@ -137,8 +137,8 @@ function ConsentRow({
         onChange={(e) => onChange(e.target.checked)}
       />
       <div>
-        <div className="text-sm font-medium text-grey-900">{label}</div>
-        <div className="text-xs text-grey-500 mt-0.5">{description}</div>
+        <div className="text-sm font-medium text-on-surface">{label}</div>
+        <div className="text-xs text-on-surface-variant/80 mt-0.5">{description}</div>
       </div>
     </label>
   );

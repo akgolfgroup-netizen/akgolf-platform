@@ -19,11 +19,11 @@ interface RoiCardProps {
 export function RoiCard({ rows }: RoiCardProps) {
   if (rows.length === 0) {
     return (
-      <div className="rounded-xl bg-white shadow-card p-5 text-center">
-        <MonoLabel size="xs" uppercase className="text-grey-400 block">
+      <div className="rounded-xl bg-surface-container-lowest shadow-card p-5 text-center">
+        <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
           Hvor kommer slagene fra?
         </MonoLabel>
-        <p className="mt-3 text-sm text-grey-500">
+        <p className="mt-3 text-sm text-on-surface-variant/80">
           Ikke nok treningslogger til å regne ROI enda. Registrer økter for å se
           hvor du får mest utvikling per time.
         </p>
@@ -50,24 +50,24 @@ export function RoiCard({ rows }: RoiCardProps) {
             <div key={r.label} className="grid grid-cols-[1fr_auto] gap-x-4">
               <div className="min-w-0">
                 <div className="flex items-baseline justify-between gap-4">
-                  <span className="text-sm font-medium text-white/90 truncate">
+                  <span className="text-sm font-medium text-surface/90 truncate">
                     {r.label}
                   </span>
-                  <span className="text-[11px] text-white/50 tabular-nums whitespace-nowrap">
+                  <span className="text-[11px] text-surface/50 tabular-nums whitespace-nowrap">
                     {r.hours}t · {r.sgDelta > 0 ? "+" : ""}
                     {r.sgDelta.toFixed(2)} SG
                   </span>
                 </div>
-                <div className="mt-1 h-[3px] rounded-full bg-white/10 overflow-hidden">
+                <div className="mt-1 h-[3px] rounded-full bg-surface-container-lowest/10 overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-accent-cta"
+                    className="h-full rounded-full bg-secondary-fixed"
                     style={{ width: `${fillPct}%` }}
                   />
                 </div>
               </div>
-              <div className="text-right text-sm font-semibold tabular-nums text-white min-w-[72px]">
+              <div className="text-right text-sm font-semibold tabular-nums text-surface min-w-[72px]">
                 {r.sgPerHour.toFixed(3)}
-                <span className="block text-[10px] font-normal text-white/45 mt-0.5">
+                <span className="block text-[10px] font-normal text-surface/45 mt-0.5">
                   SG/time
                 </span>
               </div>
@@ -77,7 +77,7 @@ export function RoiCard({ rows }: RoiCardProps) {
       </div>
 
       {ratio !== null && ratio >= 2 && (
-        <div className="mt-5 rounded-lg bg-accent-cta/15 border border-accent-cta/25 px-3 py-2.5 text-xs leading-relaxed text-accent-cta">
+        <div className="mt-5 rounded-lg bg-secondary-fixed/15 border border-secondary-fixed/25 px-3 py-2.5 text-xs leading-relaxed text-secondary-fixed">
           1 time målrettet ferdighet gir ~{ratio}× mer utvikling enn 1 time
           banegolf. Evidens fra din egen trening.
         </div>

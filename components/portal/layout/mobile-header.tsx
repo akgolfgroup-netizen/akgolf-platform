@@ -12,7 +12,7 @@ export function MobileHeader() {
   const { toggle } = useSidebar();
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-14 z-30 flex items-center justify-between px-4 lg:hidden bg-white/95 backdrop-blur-sm border-b border-[var(--color-grey-200)]">
+    <header className="fixed top-0 left-0 right-0 h-14 z-30 flex items-center justify-between px-4 lg:hidden bg-surface-container-lowest/95 backdrop-blur-sm border-b border-[var(--color-grey-200)]">
       {/* Logo venstre */}
       <Link href="/portal" className="flex items-center gap-2">
         <AKLogo variant="black" size={24} />

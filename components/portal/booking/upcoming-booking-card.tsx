@@ -61,7 +61,7 @@ export function UpcomingBookingCard({ booking }: UpcomingBookingCardProps) {
           {/* Innhold */}
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-3 mb-1.5">
-              <h3 className="font-semibold text-[14px] text-grey-900 truncate">
+              <h3 className="font-semibold text-[14px] text-on-surface truncate">
                 {booking.serviceName}
               </h3>
               <BookingStatusBadge

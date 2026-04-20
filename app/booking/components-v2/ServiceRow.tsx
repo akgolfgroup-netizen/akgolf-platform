@@ -23,29 +23,29 @@ export function ServiceRow({ service, isActive, onSelect }: ServiceRowProps) {
       }}
       className={`w-full flex items-center justify-between p-4 rounded-xl mb-2 transition-all border-2 text-left ${
         isActive
-          ? "bg-primary border-primary text-white"
-          : "bg-surface border-transparent hover:bg-grey-200 hover:border-primary"
+          ? "bg-primary border-primary text-surface"
+          : "bg-surface border-transparent hover:bg-surface-variant hover:border-primary"
       }`}
     >
       <div className="min-w-0 flex-1">
-        <div className={`text-sm font-semibold ${isActive ? "text-white" : "text-black"}`}>
+        <div className={`text-sm font-semibold ${isActive ? "text-surface" : "text-on-surface"}`}>
           {service.name}
         </div>
-        <div className={`text-[11px] mt-0.5 ${isActive ? "text-white/60" : "text-muted"}`}>
+        <div className={`text-[11px] mt-0.5 ${isActive ? "text-surface/60" : "text-muted"}`}>
           {typeLabel}
         </div>
       </div>
       <div className="text-right flex-shrink-0 ml-3">
-        <div className={`text-base font-bold ${isActive ? "text-accent-cta" : "text-primary"}`}>
+        <div className={`text-base font-bold ${isActive ? "text-secondary-fixed" : "text-primary"}`}>
           {service.price.toLocaleString("nb-NO")}
         </div>
-        <div className={`text-[10px] ${isActive ? "text-white/60" : "text-muted"}`}>
+        <div className={`text-[10px] ${isActive ? "text-surface/60" : "text-muted"}`}>
           {periodLabel}
         </div>
         {typeof service.availableSlotsThisWeek === "number" && (
           <div
             className={`text-[9px] font-semibold px-2 py-0.5 rounded-full mt-1 inline-block ${
-              isActive ? "bg-accent-cta/20 text-accent-cta" : "bg-white text-primary"
+              isActive ? "bg-secondary-fixed/20 text-secondary-fixed" : "bg-surface-container-lowest text-primary"
             }`}
           >
             {service.availableSlotsThisWeek} ledige denne uken

@@ -43,7 +43,7 @@ export function DecadePanel({ strategy }: DecadePanelProps) {
   const RiskIcon = risk.Icon;
 
   return (
-    <div className="bg-white rounded-2xl border border-[var(--color-grey-200)] overflow-hidden mb-4">
+    <div className="bg-surface-container-lowest rounded-2xl border border-[var(--color-grey-200)] overflow-hidden mb-4">
       {/* Header — alltid synlig */}
       <button
         onClick={() => setIsOpen(!isOpen)}

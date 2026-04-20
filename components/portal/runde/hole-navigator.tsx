@@ -82,16 +82,16 @@ export function HoleNavigator({
           whileTap={{ scale: 0.95 }}
           onClick={() => onNavigate("prev")}
           disabled={currentHole === 0}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white border border-grey-200 text-grey-700 font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:border-grey-300 transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-on-surface-variant/90 font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:border-outline-variant/50 transition-colors"
         >
           <Icon name="chevron_left" className="w-4 h-4" />
           <span className="hidden sm:inline">Forrige</span>
         </motion.button>
 
         <div className="text-center">
-          <p className="text-xs text-grey-400 uppercase tracking-wide">Hull</p>
-          <p className="text-2xl font-bold text-black">
-            {currentHole + 1} <span className="text-grey-300">/ {totalHoles}</span>
+          <p className="text-xs text-on-surface-variant uppercase tracking-wide">Hull</p>
+          <p className="text-2xl font-bold text-on-surface">
+            {currentHole + 1} <span className="text-on-surface-variant/60">/ {totalHoles}</span>
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export function HoleNavigator({
           whileTap={{ scale: 0.95 }}
           onClick={() => onNavigate("next")}
           disabled={currentHole === totalHoles - 1}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white border border-grey-200 text-grey-700 font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:border-grey-300 transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-on-surface-variant/90 font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:border-outline-variant/50 transition-colors"
         >
           <span className="hidden sm:inline">Neste</span>
           <Icon name="chevron_right" className="w-4 h-4" />
@@ -124,10 +124,10 @@ export function HoleNavigator({
               className={cn(
                 "relative w-8 h-8 rounded-full text-xs font-semibold transition-all",
                 isCurrent
-                  ? "bg-accent-cta text-black shadow-lg shadow-accent-cta/30"
+                  ? "bg-secondary-fixed text-on-surface shadow-lg shadow-accent-cta/30"
                   : isCompleted
-                    ? "bg-black text-white"
-                    : "bg-grey-100 text-grey-400 hover:bg-grey-200"
+                    ? "bg-on-surface text-surface"
+                    : "bg-surface-container text-on-surface-variant hover:bg-surface-variant"
               )}
             >
               {holeNum}
@@ -151,12 +151,12 @@ export function HoleNavigator({
       </div>
 
       {/* Swipe hint (mobile) */}
-      <p className="text-xs text-grey-300 text-center sm:hidden">
+      <p className="text-xs text-on-surface-variant/60 text-center sm:hidden">
         Sveip for å navigere ← →
       </p>
 
       {/* Keyboard hint (desktop) */}
-      <p className="text-xs text-grey-300 text-center hidden sm:block">
+      <p className="text-xs text-on-surface-variant/60 text-center hidden sm:block">
         Bruk piltastene ← → for å navigere
       </p>
     </div>

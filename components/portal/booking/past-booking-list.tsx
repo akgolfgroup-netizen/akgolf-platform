@@ -45,7 +45,7 @@ function PastBookingRow({ booking }: PastBookingRowProps) {
             {renderIconForType(booking.type, "w-4 h-4 text-muted", 1.75)}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-medium text-[13px] text-grey-900 truncate">
+            <p className="font-medium text-[13px] text-on-surface truncate">
               {booking.serviceName}
             </p>
             <p className="text-[11px] text-muted tabular-nums">

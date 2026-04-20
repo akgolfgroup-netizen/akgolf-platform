@@ -107,14 +107,14 @@ export default function SosialtClient({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-black">Sosialt</h1>
-          <p className="text-grey-400 mt-1">
+          <h1 className="text-2xl font-bold text-on-surface">Sosialt</h1>
+          <p className="text-on-surface-variant mt-1">
             {friends.length} venner · Bli inspirert av andre spillere
           </p>
         </div>
         <button
           onClick={() => setShowAddFriend(true)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-cta text-black text-sm font-medium hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-fixed text-on-surface text-sm font-medium hover:opacity-90 transition-opacity"
         >
           <Icon name="person"Plus className="w-4 h-4" />
           Legg til venn
@@ -129,7 +129,7 @@ export default function SosialtClient({
       />
 
       {/* Tabs — Pill style */}
-      <div className="flex gap-1 p-[3px] rounded-[10px] bg-grey-50 w-fit border border-grey-200">
+      <div className="flex gap-1 p-[3px] rounded-[10px] bg-surface w-fit border border-outline-variant/30">
         {TABS.map((tab) => (
           <button
             key={tab.id}
@@ -137,8 +137,8 @@ export default function SosialtClient({
             className={cn(
               "flex items-center gap-2 px-4 py-[7px] rounded-[7px] text-[13px] font-medium transition-all",
               activeTab === tab.id
-                ? "bg-black text-white shadow-sm"
-                : "text-grey-400 hover:text-grey-400 hover:bg-white"
+                ? "bg-on-surface text-surface shadow-sm"
+                : "text-on-surface-variant hover:text-on-surface-variant hover:bg-surface-container-lowest"
             )}
           >
             <tab.icon className="w-4 h-4" />
@@ -149,23 +149,23 @@ export default function SosialtClient({
 
       {/* Friends Tab */}
       {activeTab === "friends" && (
-        <PremiumCard noHover className="p-0 overflow-hidden bg-white border border-grey-200 rounded-xl">
-          <div className="p-4 border-b border-grey-200">
+        <PremiumCard noHover className="p-0 overflow-hidden bg-surface-container-lowest border border-outline-variant/30 rounded-xl">
+          <div className="p-4 border-b border-outline-variant/30">
             <div className="relative">
-              <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+              <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
               <input
                 type="text"
                 value={friendFilter}
                 onChange={(e) => setFriendFilter(e.target.value)}
                 placeholder="Filtrer venner..."
-                className="w-full pl-10 pr-4 py-2 rounded-xl bg-grey-50 border-none text-sm placeholder:text-grey-400 focus:outline-none focus:ring-2 focus:ring-black/10"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-surface border-none text-sm placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-black/10"
               />
             </div>
           </div>
           {filteredFriends.length === 0 ? (
             <div className="p-8 text-center">
-              <Icon name="person"s className="w-10 h-10 text-grey-400 mx-auto mb-3" />
-              <p className="text-grey-400">
+              <Icon name="person"s className="w-10 h-10 text-on-surface-variant mx-auto mb-3" />
+              <p className="text-on-surface-variant">
                 {friends.length === 0
                   ? "Du har ingen venner ennå. Legg til noen for å komme i gang."
                   : "Ingen treff."}
@@ -173,7 +173,7 @@ export default function SosialtClient({
               {friends.length === 0 && (
                 <button
                   onClick={() => setShowAddFriend(true)}
-                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-black hover:underline"
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-on-surface hover:underline"
                 >
                   <Icon name="person"Plus className="w-4 h-4" />
                   Legg til din første venn
@@ -187,25 +187,25 @@ export default function SosialtClient({
                 return (
                   <div
                     key={friend.id}
-                    className="p-4 flex items-center justify-between hover:bg-grey-50 transition-colors"
+                    className="p-4 flex items-center justify-between hover:bg-surface transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       <div className="relative">
-                        <div className="w-10 h-10 rounded-full bg-[black] flex items-center justify-center text-white text-sm font-bold">
+                        <div className="w-10 h-10 rounded-full bg-[black] flex items-center justify-center text-surface text-sm font-bold">
                           {getInitials(friend.name)}
                         </div>
                         <span
                           className={cn(
                             "absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white",
-                            status === "online" ? "bg-success" : "bg-grey-400"
+                            status === "online" ? "bg-success" : "bg-surface-variant"
                           )}
                         />
                       </div>
                       <div>
-                        <h4 className="font-medium text-black">
+                        <h4 className="font-medium text-on-surface">
                           {friend.name}
                         </h4>
-                        <p className="text-xs text-grey-400">
+                        <p className="text-xs text-on-surface-variant">
                           {friend.latestHandicap !== null
                             ? `HCP ${friend.latestHandicap.toFixed(1)}`
                             : "HCP ukjent"}{" "}
@@ -213,8 +213,8 @@ export default function SosialtClient({
                         </p>
                       </div>
                     </div>
-                    <button className="p-2 rounded-lg hover:bg-grey-50 transition-colors">
-                      <Icon name="chat_bubble" className="w-4 h-4 text-grey-400" />
+                    <button className="p-2 rounded-lg hover:bg-surface transition-colors">
+                      <Icon name="chat_bubble" className="w-4 h-4 text-on-surface-variant" />
                     </button>
                   </div>
                 );
@@ -226,16 +226,16 @@ export default function SosialtClient({
 
       {/* Leaderboard Tab */}
       {activeTab === "leaderboard" && (
-        <PremiumCard noHover className="p-0 overflow-hidden bg-white border border-grey-200 rounded-xl">
-          <div className="p-4 border-b border-grey-200">
-            <h3 className="font-semibold text-black">
+        <PremiumCard noHover className="p-0 overflow-hidden bg-surface-container-lowest border border-outline-variant/30 rounded-xl">
+          <div className="p-4 border-b border-outline-variant/30">
+            <h3 className="font-semibold text-on-surface">
               Handicap-toppliste
             </h3>
           </div>
           {leaderboard.length === 0 ? (
             <div className="p-8 text-center">
-              <Icon name="emoji_events" className="w-10 h-10 text-grey-400 mx-auto mb-3" />
-              <p className="text-grey-400">
+              <Icon name="emoji_events" className="w-10 h-10 text-on-surface-variant mx-auto mb-3" />
+              <p className="text-on-surface-variant">
                 Ingen data for topplisten ennå. Legg til venner og registrer
                 handicap.
               </p>
@@ -249,38 +249,38 @@ export default function SosialtClient({
                     key={player.id}
                     className={cn(
                       "p-4 flex items-center gap-4",
-                      player.isCurrentUser && "bg-accent-cta/10"
+                      player.isCurrentUser && "bg-secondary-fixed/10"
                     )}
                   >
                     <span
                       className={cn(
                         "w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold tabular-nums",
                         rank === 1
-                          ? "bg-accent-cta text-black"
+                          ? "bg-secondary-fixed text-on-surface"
                           : rank === 2
-                            ? "bg-grey-700 text-white"
+                            ? "bg-inverse-surface text-surface"
                             : rank === 3
-                              ? "bg-black text-white"
-                              : "bg-grey-50 text-grey-400"
+                              ? "bg-on-surface text-surface"
+                              : "bg-surface text-on-surface-variant"
                       )}
                     >
                       {rank}
                     </span>
-                    <div className="w-10 h-10 rounded-full bg-[black] flex items-center justify-center text-white text-sm font-bold">
+                    <div className="w-10 h-10 rounded-full bg-[black] flex items-center justify-center text-surface text-sm font-bold">
                       {getInitials(player.name)}
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-black">
+                      <p className="font-medium text-on-surface">
                         {player.name}
                         {player.isCurrentUser && (
-                          <span className="ml-2 text-xs text-grey-400">
+                          <span className="ml-2 text-xs text-on-surface-variant">
                             (Deg)
                           </span>
                         )}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-black tabular-nums">
+                      <p className="font-bold text-on-surface tabular-nums">
                         {player.value !== null ? player.value.toFixed(1) : "-"}
                       </p>
                     </div>

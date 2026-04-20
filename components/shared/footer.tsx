@@ -45,7 +45,7 @@ export function Footer({ variant = "light" }: FooterProps) {
             {/* Logo and tagline */}
             <div className="flex flex-col gap-4">
               <Logo variant="light" size="lg" />
-              <p className="text-white/60 text-sm max-w-xs">
+              <p className="text-surface/60 text-sm max-w-xs">
                 Systematisk golf coaching.
               </p>
             </div>
@@ -56,7 +56,7 @@ export function Footer({ variant = "light" }: FooterProps) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/60 hover:text-[#d2f000] transition-colors"
+                  className="text-sm text-surface/60 hover:text-[#d2f000] transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -71,7 +71,7 @@ export function Footer({ variant = "light" }: FooterProps) {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-[#d2f000] hover:text-[#154212] transition-all"
+                  className="w-10 h-10 rounded-full bg-surface-container-lowest/10 flex items-center justify-center text-surface/60 hover:bg-[#d2f000] hover:text-[#154212] transition-all"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -81,10 +81,10 @@ export function Footer({ variant = "light" }: FooterProps) {
           </div>
 
           <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-white/40">
+            <p className="text-sm text-surface/40">
               © {currentYear} AK Golf Group AS. Alle rettigheter reservert.
             </p>
-            <p className="text-sm text-white/40">
+            <p className="text-sm text-surface/40">
               Gamle Fredrikstad GK • Miklagard Golfklubb
             </p>
           </div>

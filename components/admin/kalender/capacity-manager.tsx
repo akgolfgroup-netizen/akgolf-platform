@@ -37,10 +37,10 @@ function SettingRow({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex items-start justify-between py-4 px-6 hover:bg-grey-50 transition-colors gap-4">
+    <div className="flex items-start justify-between py-4 px-6 hover:bg-surface transition-colors gap-4">
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-black">{label}</p>
-        {description && <p className="text-xs text-grey-400 mt-0.5">{description}</p>}
+        <p className="text-sm font-medium text-on-surface">{label}</p>
+        {description && <p className="text-xs text-on-surface-variant mt-0.5">{description}</p>}
       </div>
       <div className="shrink-0">{children}</div>
     </div>
@@ -69,11 +69,11 @@ function NumberInput({
         min={min}
         max={max}
         className={cn(
-          "w-16 px-2 py-1.5 rounded-lg border border-grey-200 text-sm font-medium text-center",
+          "w-16 px-2 py-1.5 rounded-lg border border-outline-variant/30 text-sm font-medium text-center",
           "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
         )}
       />
-      {unit && <span className="text-sm text-grey-400">{unit}</span>}
+      {unit && <span className="text-sm text-on-surface-variant">{unit}</span>}
     </div>
   );
 }
@@ -116,8 +116,8 @@ export function CapacityManager() {
             <Icon name="speed" className="w-6 h-6" />
           </div>
           <div className="flex-1">
-            <h3 className="text-sm font-medium text-black">Dagens kapasitet</h3>
-            <p className="text-xs text-grey-400">
+            <h3 className="text-sm font-medium text-on-surface">Dagens kapasitet</h3>
+            <p className="text-xs text-on-surface-variant">
               {currentUtilization} av {settings.maxBookingsPerDay} bookinger
             </p>
           </div>
@@ -136,7 +136,7 @@ export function CapacityManager() {
             </span>
           </div>
         </div>
-        <div className="mt-4 h-2 bg-grey-100 rounded-full overflow-hidden">
+        <div className="mt-4 h-2 bg-surface-container rounded-full overflow-hidden">
           <div
             className={cn(
               "h-full transition-all duration-500",
@@ -159,10 +159,10 @@ export function CapacityManager() {
 
       {/* Settings */}
       <Card className="overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
           <div className="flex items-center gap-3">
-            <Icon name="settings"2 className="w-5 h-5 text-grey-400" />
-            <h2 className="text-sm font-semibold text-black">Kapasitetsinnstillinger</h2>
+            <Icon name="settings"2 className="w-5 h-5 text-on-surface-variant" />
+            <h2 className="text-sm font-semibold text-on-surface">Kapasitetsinnstillinger</h2>
           </div>
           {hasChanges && (
             <Button size="sm" onClick={handleSave}>
@@ -255,8 +255,8 @@ export function CapacityManager() {
             <Icon name="schedule" className="w-4 h-4 text-primary" />
           </div>
           <div>
-            <h4 className="text-sm font-medium text-black">Tips</h4>
-            <p className="text-xs text-grey-400 mt-1">
+            <h4 className="text-sm font-medium text-on-surface">Tips</h4>
+            <p className="text-xs text-on-surface-variant mt-1">
               Med 10 minutters pause mellom økter får du tid til å forberede neste elev og 
               dokumentere forrige økt. Ved høy etterspørsel kan du redusere pausen til 5 minutter.
             </p>

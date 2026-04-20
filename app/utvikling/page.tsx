@@ -41,15 +41,15 @@ function ExpandableCard({
         item.span === "large" ? "md:col-span-2 p-10" : ""
       } ${
         isDark
-          ? "bg-black text-white"
+          ? "bg-on-surface text-surface"
           : item.span === "large"
-            ? "bg-surface border border-grey-200"
-            : "bg-white border border-grey-200 shadow-card hover:shadow-card-hover transition-shadow duration-300"
+            ? "bg-surface border border-outline-variant/30"
+            : "bg-surface-container-lowest border border-outline-variant/30 shadow-card hover:shadow-card-hover transition-shadow duration-300"
       }`}
     >
       <span
         className={`text-[11px] font-mono uppercase tracking-[0.15em] font-medium ${
-          isDark ? "text-white/60" : "text-grey-400"
+          isDark ? "text-surface/60" : "text-on-surface-variant"
         }`}
       >
         {item.label}
@@ -57,14 +57,14 @@ function ExpandableCard({
       <h3
         className={`text-xl font-bold mt-3 mb-3 ${
           item.span === "large" ? "text-2xl" : ""
-        } ${isDark ? "text-white" : "text-black"}`}
+        } ${isDark ? "text-surface" : "text-on-surface"}`}
       >
         {item.title}
       </h3>
       <p
         className={`text-sm leading-relaxed ${
           item.span === "large" ? "max-w-xl" : ""
-        } ${isDark ? "text-white/60" : "text-grey-400"}`}
+        } ${isDark ? "text-surface/60" : "text-on-surface-variant"}`}
       >
         {item.description}
       </p>
@@ -80,7 +80,7 @@ function ExpandableCard({
             <p
               className={`text-sm leading-relaxed mt-4 ${
                 item.span === "large" ? "max-w-xl" : ""
-              } ${isDark ? "text-white/60" : "text-grey-400"}`}
+              } ${isDark ? "text-surface/60" : "text-on-surface-variant"}`}
             >
               {item.expandedDescription}
             </p>
@@ -91,8 +91,8 @@ function ExpandableCard({
         onClick={() => setExpanded(!expanded)}
         className={`text-xs font-semibold mt-4 transition-colors ${
           isDark
-            ? "text-white/80 hover:text-white"
-            : "text-black hover:text-grey-500"
+            ? "text-surface/80 hover:text-surface"
+            : "text-on-surface hover:text-on-surface-variant/80"
         }`}
       >
         {expanded ? "Vis mindre" : "Les mer"}
@@ -106,7 +106,7 @@ export default function UtviklingPage() {
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-black focus:text-white focus:rounded-lg"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-on-surface focus:text-surface focus:rounded-lg"
       >
         Hopp til hovedinnhold
       </a>
@@ -138,7 +138,7 @@ export default function UtviklingPage() {
         />
 
         {/* 1. Hero */}
-        <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-black grain-overlay">
+        <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-on-surface grain-overlay">
           <div className="absolute inset-0 pointer-events-none">
             <Image
               src="/images/academy/AK-Golf-Academy-8.jpg"
@@ -155,13 +155,13 @@ export default function UtviklingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [...EASE_ENTRANCE] }}
             >
-              <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/60 font-medium">
+              <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-surface/60 font-medium">
                 {UTVIKLING_HERO_V2.label}
               </span>
             </motion.div>
 
             <motion.h1
-              className="text-[48px] font-extrabold leading-[1.1] tracking-tight text-white max-w-3xl mt-6 whitespace-pre-line"
+              className="text-[48px] font-extrabold leading-[1.1] tracking-tight text-surface max-w-3xl mt-6 whitespace-pre-line"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -174,7 +174,7 @@ export default function UtviklingPage() {
             </motion.h1>
 
             <motion.p
-              className="text-base text-white/60 max-w-2xl leading-relaxed mt-6"
+              className="text-base text-surface/60 max-w-2xl leading-relaxed mt-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -198,7 +198,7 @@ export default function UtviklingPage() {
             >
               <Link
                 href="#contact"
-                className="px-7 py-3.5 rounded-[20px] bg-primary text-white text-sm font-semibold hover:bg-primary-alt transition-colors"
+                className="px-7 py-3.5 rounded-[20px] bg-primary text-surface text-sm font-semibold hover:bg-primary-alt transition-colors"
               >
                 {UTVIKLING_HERO_V2.ctaLabel} &rarr;
               </Link>
@@ -207,7 +207,7 @@ export default function UtviklingPage() {
         </section>
 
         {/* 2. Tjenester bento grid */}
-        <section className="py-24 md:py-32 bg-white">
+        <section className="py-24 md:py-32 bg-surface-container-lowest">
           <div className="w-container">
             <RevealOnScroll>
               <div className="text-center mb-16">
@@ -248,12 +248,12 @@ export default function UtviklingPage() {
                       height={80}
                       className="opacity-60 hover:opacity-100 transition-opacity"
                     />
-                    <p className="text-sm text-grey-400">
+                    <p className="text-sm text-on-surface-variant">
                       Gamle Fredrikstad Golfklubb
                     </p>
                   </div>
                   <div className="flex flex-col items-center gap-3">
-                    <div className="w-20 h-20 rounded-xl border border-grey-200 bg-white flex items-center justify-center">
+                    <div className="w-20 h-20 rounded-xl border border-outline-variant/30 bg-surface-container-lowest flex items-center justify-center">
                       <svg
                         viewBox="0 0 40 40"
                         className="w-10 h-10"
@@ -276,7 +276,7 @@ export default function UtviklingPage() {
                         </text>
                       </svg>
                     </div>
-                    <p className="text-sm text-grey-400">
+                    <p className="text-sm text-on-surface-variant">
                       Miklagard Golfklubb
                     </p>
                   </div>
@@ -287,19 +287,19 @@ export default function UtviklingPage() {
         </section>
 
         {/* 4. CTA */}
-        <section id="contact" className="py-24 md:py-32 bg-white">
+        <section id="contact" className="py-24 md:py-32 bg-surface-container-lowest">
           <div className="w-container">
             <RevealOnScroll>
               <div className="max-w-2xl mx-auto text-center">
-                <h2 className="w-heading-lg text-black mb-4">
+                <h2 className="w-heading-lg text-on-surface mb-4">
                   {UTVIKLING_CTA_V2.heading}
                 </h2>
-                <p className="text-grey-400 leading-relaxed mb-10">
+                <p className="text-on-surface-variant leading-relaxed mb-10">
                   {UTVIKLING_CTA_V2.description}
                 </p>
                 <Link
                   href="/booking"
-                  className="inline-flex px-7 py-3.5 rounded-[20px] bg-primary text-white text-sm font-semibold hover:bg-primary-alt transition-colors"
+                  className="inline-flex px-7 py-3.5 rounded-[20px] bg-primary text-surface text-sm font-semibold hover:bg-primary-alt transition-colors"
                 >
                   {UTVIKLING_CTA_V2.ctaPrimary} &rarr;
                 </Link>

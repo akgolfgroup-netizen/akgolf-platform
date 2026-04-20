@@ -66,7 +66,7 @@ export function TrainingActivityCard({
         <p className="text-2xl font-bold" style={{ color: colors.primary.dark }}>
           {sessionsCount}
         </p>
-        <p className="text-xs font-medium text-grey-600">treningsøkter denne måneden</p>
+        <p className="text-xs font-medium text-on-surface-variant/80">treningsøkter denne måneden</p>
       </div>
     </div>
   );

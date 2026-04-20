@@ -21,7 +21,7 @@ export function ShortcutPills() {
         <Link
           key={s.href}
           href={s.href}
-          className="group relative flex flex-col justify-between rounded-2xl border border-grey-100 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-grey-200 hover:shadow-md"
+          className="group relative flex flex-col justify-between rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-outline-variant/30 hover:shadow-md"
         >
           <div className="flex items-start justify-between">
             <div
@@ -30,10 +30,10 @@ export function ShortcutPills() {
             >
               <s.icon className="h-5 w-5" style={{ color: s.color }} />
             </div>
-            <Icon name="arrow_upward"Right className="h-4 w-4 text-grey-300 transition-colors group-hover:text-grey-400" />
+            <Icon name="arrow_upward"Right className="h-4 w-4 text-on-surface-variant/60 transition-colors group-hover:text-on-surface-variant" />
           </div>
           <div className="mt-3">
-            <h4 className="text-sm font-semibold text-black">{s.label}</h4>
+            <h4 className="text-sm font-semibold text-on-surface">{s.label}</h4>
           </div>
         </Link>
       ))}

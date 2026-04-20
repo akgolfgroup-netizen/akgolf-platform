@@ -133,17 +133,17 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-on-surface/60 backdrop-blur-sm"
         onClick={handleClose}
       />
       
       {/* Modal */}
-      <div className="relative w-full max-w-2xl max-h-[90vh] bg-[#0F172A] rounded-xl border border-slate-700 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div className="relative w-full max-w-2xl max-h-[90vh] bg-[#0F172A] rounded-xl border border-inverse-on-surface/20 shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-inverse-on-surface/20">
           <div className="flex items-center gap-3">
             <div className={`w-3 h-3 rounded-full ${colors.dot}`} />
-            <h2 className="text-xl font-semibold text-slate-100">
+            <h2 className="text-xl font-semibold text-inverse-on-surface">
               Øktdetaljer
             </h2>
             {editedSession.completed && (
@@ -155,7 +155,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
           </div>
           <button
             onClick={handleClose}
-            className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-200 transition-colors"
+            className="p-2 hover:bg-inverse-surface rounded-lg text-inverse-on-surface/60 hover:text-inverse-on-surface transition-colors"
           >
             <Icon name="close" className="w-5 h-5" />
           </button>
@@ -166,24 +166,24 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
           {/* Title & Time Row */}
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">
+              <label className="block text-sm font-medium text-inverse-on-surface/60 mb-2">
                 Tittel
               </label>
               <input
                 type="text"
                 value={editedSession.title}
                 onChange={(e) => updateField("title", e.target.value)}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
+                className="w-full px-3 py-2 bg-inverse-surface border border-inverse-on-surface/20 rounded-lg text-inverse-on-surface placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">
+              <label className="block text-sm font-medium text-inverse-on-surface/60 mb-2">
                 Fokusområde
               </label>
               <select
                 value={editedSession.focus}
                 onChange={(e) => updateField("focus", e.target.value as TrainingSession["focus"])}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
+                className="w-full px-3 py-2 bg-inverse-surface border border-inverse-on-surface/20 rounded-lg text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
               >
                 {FOCUS_OPTIONS.map((focus) => (
                   <option key={focus} value={focus}>
@@ -197,7 +197,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
           {/* Duration & Time */}
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">
+              <label className="block text-sm font-medium text-inverse-on-surface/60 mb-2">
                 <span className="flex items-center gap-1">
                   <Icon name="schedule" className="w-4 h-4" />
                   Varighet (min)
@@ -210,22 +210,22 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
                 step={5}
                 value={editedSession.duration}
                 onChange={(e) => updateField("duration", parseInt(e.target.value) || 30)}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
+                className="w-full px-3 py-2 bg-inverse-surface border border-inverse-on-surface/20 rounded-lg text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">
+              <label className="block text-sm font-medium text-inverse-on-surface/60 mb-2">
                 Starttid
               </label>
-              <div className="px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-slate-300">
+              <div className="px-3 py-2 bg-inverse-surface/50 border border-inverse-on-surface/20 rounded-lg text-inverse-on-surface/50">
                 {startTime}
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">
+              <label className="block text-sm font-medium text-inverse-on-surface/60 mb-2">
                 Sluttid
               </label>
-              <div className="px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-slate-300">
+              <div className="px-3 py-2 bg-inverse-surface/50 border border-inverse-on-surface/20 rounded-lg text-inverse-on-surface/50">
                 {endTime}
               </div>
             </div>
@@ -233,8 +233,8 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
 
           {/* Exercise Count Badge */}
           <div className="flex items-center gap-2 mb-4">
-            <Icon name="fitness_center" className="w-4 h-4 text-slate-400" />
-            <span className="text-sm text-slate-300">
+            <Icon name="fitness_center" className="w-4 h-4 text-inverse-on-surface/60" />
+            <span className="text-sm text-inverse-on-surface/50">
               {editedSession.exercises.length} øvelse{editedSession.exercises.length !== 1 ? "r" : ""}
             </span>
           </div>
@@ -242,7 +242,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
           {/* Exercises List */}
           {editedSession.exercises.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider">
+              <h3 className="text-sm font-medium text-inverse-on-surface/60 uppercase tracking-wider">
                 Øvelser
               </h3>
               
@@ -255,7 +255,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
                     <span className={`font-medium ${colors.text}`}>
                       {index + 1}. {exercise.name}
                     </span>
-                    <span className="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-400">
+                    <span className="text-xs px-2 py-0.5 rounded bg-inverse-surface text-inverse-on-surface/60">
                       {exercise.pyramid}
                     </span>
                   </div>
@@ -263,13 +263,13 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
                   {/* L-M-PR Parameters */}
                   <div className="grid grid-cols-3 gap-3">
                     <div>
-                      <label className="block text-xs text-slate-500 mb-1">
+                      <label className="block text-xs text-inverse-on-surface/70 mb-1">
                         Læringsfase
                       </label>
                       <select
                         value={exercise.lPhase || ""}
                         onChange={(e) => updateExercise(index, "lPhase", e.target.value || null)}
-                        className="w-full px-2 py-1.5 bg-slate-800 border border-slate-700 rounded text-xs text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500/50"
+                        className="w-full px-2 py-1.5 bg-inverse-surface border border-inverse-on-surface/20 rounded text-xs text-inverse-on-surface/50 focus:outline-none focus:ring-1 focus:ring-blue-500/50"
                       >
                         <option value="">Velg...</option>
                         {L_PHASE_OPTIONS.map((opt) => (
@@ -280,13 +280,13 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs text-slate-500 mb-1">
+                      <label className="block text-xs text-inverse-on-surface/70 mb-1">
                         Miljø
                       </label>
                       <select
                         value={exercise.m || ""}
                         onChange={(e) => updateExercise(index, "m", e.target.value || null)}
-                        className="w-full px-2 py-1.5 bg-slate-800 border border-slate-700 rounded text-xs text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500/50"
+                        className="w-full px-2 py-1.5 bg-inverse-surface border border-inverse-on-surface/20 rounded text-xs text-inverse-on-surface/50 focus:outline-none focus:ring-1 focus:ring-blue-500/50"
                       >
                         <option value="">Velg...</option>
                         {M_OPTIONS.map((opt) => (
@@ -297,13 +297,13 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs text-slate-500 mb-1">
+                      <label className="block text-xs text-inverse-on-surface/70 mb-1">
                         Press
                       </label>
                       <select
                         value={exercise.pr || ""}
                         onChange={(e) => updateExercise(index, "pr", e.target.value || null)}
-                        className="w-full px-2 py-1.5 bg-slate-800 border border-slate-700 rounded text-xs text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500/50"
+                        className="w-full px-2 py-1.5 bg-inverse-surface border border-inverse-on-surface/20 rounded text-xs text-inverse-on-surface/50 focus:outline-none focus:ring-1 focus:ring-blue-500/50"
                       >
                         <option value="">Velg...</option>
                         {PR_OPTIONS.map((opt) => (
@@ -317,8 +317,8 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
                   
                   {/* Area */}
                   <div className="mt-2">
-                    <span className="text-xs text-slate-500">
-                      Område: <span className="text-slate-400">{exercise.area || "-"}</span>
+                    <span className="text-xs text-inverse-on-surface/70">
+                      Område: <span className="text-inverse-on-surface/60">{exercise.area || "-"}</span>
                     </span>
                   </div>
                 </div>
@@ -327,15 +327,15 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
           )}
 
           {editedSession.exercises.length === 0 && (
-            <div className="text-center py-8 bg-slate-800/30 rounded-lg border border-slate-700/50 border-dashed">
-              <Icon name="my_location" className="w-8 h-8 text-slate-600 mx-auto mb-2" />
-              <p className="text-slate-500 text-sm">Ingen øvelser i denne økten</p>
+            <div className="text-center py-8 bg-inverse-surface/30 rounded-lg border border-inverse-on-surface/20/50 border-dashed">
+              <Icon name="my_location" className="w-8 h-8 text-inverse-on-surface/60 mx-auto mb-2" />
+              <p className="text-inverse-on-surface/70 text-sm">Ingen øvelser i denne økten</p>
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-slate-700 bg-slate-900/50">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-inverse-on-surface/20 bg-inverse-surface/50">
           {onDelete ? (
             <button
               onClick={handleDelete}
@@ -352,14 +352,14 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
           <div className="flex items-center gap-3">
             <button
               onClick={handleClose}
-              className="px-4 py-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-colors"
+              className="px-4 py-2 text-inverse-on-surface/60 hover:text-inverse-on-surface hover:bg-inverse-surface rounded-lg transition-colors"
             >
               Avbryt
             </button>
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-surface rounded-lg transition-colors disabled:opacity-50"
             >
               <Icon name="save" className="w-4 h-4" />
               {isSaving ? "Lagrer..." : "Lagre"}

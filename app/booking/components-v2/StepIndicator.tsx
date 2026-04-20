@@ -20,8 +20,8 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
               isActive
                 ? "w-6 bg-primary"
                 : isDone
-                ? "w-2 bg-accent-cta"
-                : "w-2 bg-grey-200"
+                ? "w-2 bg-secondary-fixed"
+                : "w-2 bg-surface-variant"
             }`}
           />
         );

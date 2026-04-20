@@ -141,8 +141,8 @@ export function ViewSwitcher({
               "inline-flex items-center rounded-full font-medium transition-colors",
               pillSizeClasses,
               isActive
-                ? "bg-primary text-white"
-                : "text-grey-500 hover:bg-grey-50 hover:text-text"
+                ? "bg-primary text-surface"
+                : "text-on-surface-variant/80 hover:bg-surface hover:text-text"
             )}
             aria-pressed={isActive}
             title={view.description ?? view.label}

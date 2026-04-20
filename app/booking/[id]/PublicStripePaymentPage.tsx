@@ -62,13 +62,13 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Service Reminder */}
-      <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border bg-surface border-grey-200">
+      <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border bg-surface border-outline-variant/30">
         <Icon name="credit_card" size={20} className="text-primary" />
         <p className="font-medium text-primary">{serviceName}</p>
       </div>
 
       {/* Customer Info (read-only) */}
-      <div className="rounded-2xl p-5 border bg-surface border-grey-200">
+      <div className="rounded-2xl p-5 border bg-surface border-outline-variant/30">
         <div className="flex items-center gap-3">
           <Icon name="mail" size={18} className="text-primary" />
           <div>
@@ -79,7 +79,7 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
       </div>
 
       {/* Stripe Payment Element */}
-      <div className="rounded-2xl p-5 border bg-white border-grey-200">
+      <div className="rounded-2xl p-5 border bg-surface-container-lowest border-outline-variant/30">
         <PaymentElement
           options={{
             layout: "tabs",
@@ -103,7 +103,7 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
       <motion.button
         type="submit"
         disabled={!stripe || !elements || loading}
-        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-[opacity,transform,box-shadow] duration-300 disabled:opacity-50 bg-primary text-white shadow-lg shadow-black/15"
+        className="w-full flex items-center justify-center gap-3 px-6 py-5 rounded-2xl text-base font-semibold transition-[opacity,transform,box-shadow] duration-300 disabled:opacity-50 bg-primary text-surface shadow-lg shadow-black/15"
         whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(29,29,31,0.25)" }}
         whileTap={{ scale: 0.99 }}
       >
@@ -179,7 +179,7 @@ export function PublicStripePaymentPage({
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-surface border-grey-200"
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5 border bg-surface border-outline-variant/30"
           >
             <Icon name="credit_card" size={28} className="text-primary" />
           </motion.div>
@@ -196,10 +196,10 @@ export function PublicStripePaymentPage({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="rounded-2xl p-6 mb-6 text-center border bg-primary border-grey-200"
+          className="rounded-2xl p-6 mb-6 text-center border bg-primary border-outline-variant/30"
         >
-          <p className="text-sm mb-1 text-white/70">Total å betale</p>
-          <p className="text-4xl font-bold text-white">{priceNOK}</p>
+          <p className="text-sm mb-1 text-surface/70">Total å betale</p>
+          <p className="text-4xl font-bold text-surface">{priceNOK}</p>
         </motion.div>
 
         {/* Card */}
@@ -207,7 +207,7 @@ export function PublicStripePaymentPage({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-3xl p-8 border bg-white border-grey-200 shadow-card"
+          className="rounded-3xl p-8 border bg-surface-container-lowest border-outline-variant/30 shadow-card"
         >
           <Elements
             stripe={stripePromise}

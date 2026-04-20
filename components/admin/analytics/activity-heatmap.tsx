@@ -41,7 +41,7 @@ const generateHeatmapData = (): HeatmapData[] => {
 const defaultData = generateHeatmapData();
 
 const intensityColors = [
-  "bg-grey-100",
+  "bg-surface-container",
   "bg-success-light",
   "bg-success/30",
   "bg-success/60",
@@ -59,12 +59,12 @@ export function ActivityHeatmap({ data = defaultData, title = "Booking-aktivitet
   return (
     <Card className="p-5">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-sm font-semibold text-black">{title}</h3>
+        <h3 className="text-sm font-semibold text-on-surface">{title}</h3>
         <div className="flex items-center gap-2">
           {intensityLabels.map((label, i) => (
             <div key={label} className="flex items-center gap-1">
               <div className={cn("w-3 h-3 rounded", intensityColors[i])} />
-              <span className="text-[10px] text-grey-400 hidden sm:inline">{label}</span>
+              <span className="text-[10px] text-on-surface-variant hidden sm:inline">{label}</span>
             </div>
           ))}
         </div>
@@ -78,7 +78,7 @@ export function ActivityHeatmap({ data = defaultData, title = "Booking-aktivitet
             <div className="flex-1 grid grid-cols-12 gap-1">
               {hours.map((hour) => (
                 <div key={hour} className="text-center">
-                  <span className="text-[10px] text-grey-400">{hour}</span>
+                  <span className="text-[10px] text-on-surface-variant">{hour}</span>
                 </div>
               ))}
             </div>
@@ -89,7 +89,7 @@ export function ActivityHeatmap({ data = defaultData, title = "Booking-aktivitet
             {days.map((day) => (
               <div key={day} className="flex items-center">
                 <div className="w-10 text-right pr-2">
-                  <span className="text-xs font-medium text-grey-400">{day}</span>
+                  <span className="text-xs font-medium text-on-surface-variant">{day}</span>
                 </div>
                 <div className="flex-1 grid grid-cols-12 gap-1">
                   {hours.map((hour) => {
@@ -113,22 +113,22 @@ export function ActivityHeatmap({ data = defaultData, title = "Booking-aktivitet
       </div>
 
       {/* Stats summary */}
-      <div className="grid grid-cols-4 gap-4 mt-6 pt-6 border-t border-grey-200">
+      <div className="grid grid-cols-4 gap-4 mt-6 pt-6 border-t border-outline-variant/30">
         <div className="text-center">
-          <p className="text-2xl font-bold text-black tabular-nums">156</p>
-          <p className="text-[10px] text-grey-400 uppercase tracking-wide">Bookinger</p>
+          <p className="text-2xl font-bold text-on-surface tabular-nums">156</p>
+          <p className="text-[10px] text-on-surface-variant uppercase tracking-wide">Bookinger</p>
         </div>
         <div className="text-center">
-          <p className="text-2xl font-bold text-black tabular-nums">42</p>
-          <p className="text-[10px] text-grey-400 uppercase tracking-wide">Treningsøkter</p>
+          <p className="text-2xl font-bold text-on-surface tabular-nums">42</p>
+          <p className="text-[10px] text-on-surface-variant uppercase tracking-wide">Treningsøkter</p>
         </div>
         <div className="text-center">
-          <p className="text-2xl font-bold text-black tabular-nums">28</p>
-          <p className="text-[10px] text-grey-400 uppercase tracking-wide">Runder</p>
+          <p className="text-2xl font-bold text-on-surface tabular-nums">28</p>
+          <p className="text-[10px] text-on-surface-variant uppercase tracking-wide">Runder</p>
         </div>
         <div className="text-center">
-          <p className="text-2xl font-bold text-black tabular-nums">89%</p>
-          <p className="text-[10px] text-grey-400 uppercase tracking-wide">Engasjement</p>
+          <p className="text-2xl font-bold text-on-surface tabular-nums">89%</p>
+          <p className="text-[10px] text-on-surface-variant uppercase tracking-wide">Engasjement</p>
         </div>
       </div>
     </Card>

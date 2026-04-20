@@ -107,7 +107,7 @@ export function IPhoneMockup({
 
         {/* Screen */}
         <div
-          className="relative w-full h-full bg-black overflow-hidden"
+          className="relative w-full h-full bg-on-surface overflow-hidden"
           style={{
             borderRadius: `${borderRadius - bezelWidth}px`,
           }}

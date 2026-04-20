@@ -81,7 +81,7 @@ export default async function AnalysePage() {
 
       {/* Tier Gate for Pro Features */}
       {!isPro && (
-        <div className="bg-white rounded-xl shadow-card p-6">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-warning-light">
               <Icon name="lightbulb" className="h-6 w-6 text-warning" strokeWidth={1.75} />
@@ -99,7 +99,7 @@ export default async function AnalysePage() {
               </p>
               <Link
                 href="/portal/abonnement"
-                className="inline-flex h-10 items-center rounded-[20px] bg-warning px-5 text-[12px] font-bold text-white shadow-sm transition-opacity hover:opacity-90"
+                className="inline-flex h-10 items-center rounded-[20px] bg-warning px-5 text-[12px] font-bold text-surface shadow-sm transition-opacity hover:opacity-90"
               >
                 Oppgrader til Pro
               </Link>
@@ -111,7 +111,7 @@ export default async function AnalysePage() {
       {/* STATS GRID */}
       {hasRoundData ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
             <MonoLabel as="p" size="xs" uppercase className="text-outline block">GIR</MonoLabel>
             <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-on-surface">
               {stats.girPercent != null ? Math.round(stats.girPercent) : 0}
@@ -123,7 +123,7 @@ export default async function AnalysePage() {
               </p>
             )}
           </div>
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
             <MonoLabel as="p" size="xs" uppercase className="text-outline block">Fairways</MonoLabel>
             <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-on-surface">
               {stats.fairwayPercent != null ? Math.round(stats.fairwayPercent) : 0}
@@ -135,7 +135,7 @@ export default async function AnalysePage() {
               </p>
             )}
           </div>
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
             <MonoLabel as="p" size="xs" uppercase className="text-outline block">Putts/runde</MonoLabel>
             <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-on-surface">
               {stats.puttsPerRound != null ? (Math.round(stats.puttsPerRound * 10) / 10).toFixed(1) : "0"}
@@ -146,7 +146,7 @@ export default async function AnalysePage() {
               </p>
             )}
           </div>
-          <div className="bg-white rounded-xl shadow-card p-5">
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
             <MonoLabel as="p" size="xs" uppercase className="text-outline block">Scrambling</MonoLabel>
             <p className="mt-2 text-[28px] font-bold leading-none tabular-nums tracking-[-0.02em] text-on-surface">
               {stats.scramblingPercent != null ? Math.round(stats.scramblingPercent) : 0}
@@ -160,7 +160,7 @@ export default async function AnalysePage() {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-card p-6">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-surface-container">
               <Icon name="bar_chart" className="h-6 w-6 text-outline" strokeWidth={1.75} />
@@ -173,7 +173,7 @@ export default async function AnalysePage() {
             </p>
             <Link
               href="/portal/statistikk/ny-runde"
-              className="inline-flex h-10 items-center rounded-[20px] bg-primary px-5 text-[12px] font-bold text-white shadow-sm transition-opacity hover:opacity-90"
+              className="inline-flex h-10 items-center rounded-[20px] bg-primary px-5 text-[12px] font-bold text-surface shadow-sm transition-opacity hover:opacity-90"
             >
               Registrer runde
             </Link>
@@ -190,7 +190,7 @@ export default async function AnalysePage() {
 
         {/* Main Charts */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <div className="bg-white rounded-xl shadow-card p-6">
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
             <h3 className="mb-5 text-[14px] font-semibold text-on-surface">
               Handicap-trend
             </h3>
@@ -206,7 +206,7 @@ export default async function AnalysePage() {
           </div>
 
           {/* Strokes Gained Breakdown — SG Ring hero (v3.1) */}
-          <div className="bg-white rounded-xl shadow-card p-6">
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
             <div className="mb-5 flex items-center justify-between">
               <h3 className="text-[14px] font-semibold text-on-surface">
                 Strokes Gained
@@ -249,7 +249,7 @@ export default async function AnalysePage() {
             <span className="h-px w-6 bg-surface-container-high" />
             TrackMan
           </p>
-          <div className="bg-white rounded-xl shadow-card p-6">
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
             <div className="mb-5 flex items-center justify-between">
               <h3 className="text-[14px] font-semibold text-on-surface">
                 TrackMan-data
@@ -266,7 +266,7 @@ export default async function AnalysePage() {
                 {trackManStats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-xl border border-outline-variant bg-white p-4"
+                    className="rounded-xl border border-outline-variant bg-surface-container-lowest p-4"
                   >
                     <MonoLabel as="p" size="xs" uppercase className="text-outline block">{stat.label}</MonoLabel>
                     <p className="mt-2 text-[28px] font-[300] leading-none tabular-nums tracking-[-0.02em] text-on-surface">
@@ -286,7 +286,7 @@ export default async function AnalysePage() {
                 </p>
                 <Link
                   href="/portal/trackman"
-                  className="mt-3 inline-flex h-9 items-center rounded-[20px] bg-primary px-4 text-[12px] font-bold text-white transition-opacity hover:opacity-90"
+                  className="mt-3 inline-flex h-9 items-center rounded-[20px] bg-primary px-4 text-[12px] font-bold text-surface transition-opacity hover:opacity-90"
                 >
                   Last opp data
                 </Link>
@@ -325,7 +325,7 @@ export default async function AnalysePage() {
       </div>
 
       {/* Info */}
-      <details className="group overflow-hidden rounded-xl border border-outline-variant bg-white shadow-card">
+      <details className="group overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest shadow-card">
         <summary className="flex cursor-pointer list-none items-center gap-3 p-5 transition-colors hover:bg-surface">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft">
             <Icon name="info" className="h-5 w-5 text-primary" strokeWidth={1.75} />
@@ -420,7 +420,7 @@ function AnalyseQuickAction({
   return (
     <Link
       href={href}
-      className="group relative flex items-center gap-3 rounded-xl border border-outline-variant bg-white p-4 shadow-card transition-all duration-300 will-change-transform hover:-translate-y-px hover:shadow-card-hover"
+      className="group relative flex items-center gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-4 shadow-card transition-all duration-300 will-change-transform hover:-translate-y-px hover:shadow-card-hover"
     >
       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft transition-transform group-hover:scale-110">
         <Icon className="h-[18px] w-[18px] text-primary" strokeWidth={1.75} />

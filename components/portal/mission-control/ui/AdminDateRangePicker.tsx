@@ -157,7 +157,7 @@ export function AdminDateRangePicker({
                 key={preset.id}
                 type="button"
                 onClick={() => applyPreset(preset)}
-                className="text-left text-xs px-3 py-2 rounded-lg transition-colors hover:bg-black/5"
+                className="text-left text-xs px-3 py-2 rounded-lg transition-colors hover:bg-on-surface/5"
                 style={{ color: "var(--color-text)" }}
               >
                 {preset.label}

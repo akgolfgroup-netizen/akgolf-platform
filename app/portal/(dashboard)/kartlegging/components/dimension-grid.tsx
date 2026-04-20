@@ -15,7 +15,7 @@ interface DimensionGridProps {
 
 const GAP_LABELS = {
   strength: { label: "Styrke", bg: "bg-success-light", text: "text-success-text" },
-  "on-level": { label: "På nivå", bg: "bg-grey-100", text: "text-grey-500" },
+  "on-level": { label: "På nivå", bg: "bg-surface-container", text: "text-on-surface-variant/80" },
   gap: { label: "Gap", bg: "bg-error-light", text: "text-error-text" },
 } as const;
 
@@ -49,9 +49,9 @@ export function DimensionGrid({ dimensions }: DimensionGridProps) {
           return (
             <div
               key={d.dimension}
-              className="rounded-xl bg-white shadow-card p-5 transition-shadow duration-200 hover:shadow-card-hover"
+              className="rounded-xl bg-surface-container-lowest shadow-card p-5 transition-shadow duration-200 hover:shadow-card-hover"
             >
-              <MonoLabel size="xs" uppercase className="text-grey-400 block">
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
                 {d.label}
               </MonoLabel>
 
@@ -62,7 +62,7 @@ export function DimensionGrid({ dimensions }: DimensionGridProps) {
                 >
                   {d.category}
                 </span>
-                <span className="text-sm text-grey-500 tabular-nums">
+                <span className="text-sm text-on-surface-variant/80 tabular-nums">
                   {sign}
                   {d.sgValue.toFixed(2)} SG
                 </span>

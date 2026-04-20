@@ -8,7 +8,7 @@ import { EASE_ENTRANCE } from "@/lib/design-tokens";
 
 export function AcademyHeroV2() {
   return (
-    <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-black grain-overlay">
+    <section className="relative min-h-[70svh] flex items-center pt-[48px] overflow-hidden bg-on-surface grain-overlay">
       <div className="absolute inset-0 pointer-events-none">
         <Image
           src={ACADEMY_HERO_V2.heroImage}
@@ -26,13 +26,13 @@ export function AcademyHeroV2() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [...EASE_ENTRANCE] }}
         >
-          <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/60 font-medium">
+          <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-surface/60 font-medium">
             {ACADEMY_HERO_V2.label}
           </span>
         </motion.div>
 
         <motion.h1
-          className="text-[48px] font-extrabold leading-[1.1] tracking-tight text-white max-w-3xl mt-6 whitespace-pre-line"
+          className="text-[48px] font-extrabold leading-[1.1] tracking-tight text-surface max-w-3xl mt-6 whitespace-pre-line"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.1, ease: [...EASE_ENTRANCE] }}
@@ -41,7 +41,7 @@ export function AcademyHeroV2() {
         </motion.h1>
 
         <motion.p
-          className="text-base text-white/60 max-w-2xl leading-relaxed mt-6"
+          className="text-base text-surface/60 max-w-2xl leading-relaxed mt-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [...EASE_ENTRANCE] }}
@@ -57,13 +57,13 @@ export function AcademyHeroV2() {
         >
           <Link
             href="/booking"
-            className="px-7 py-3.5 rounded-[20px] bg-primary text-white text-sm font-semibold hover:bg-primary-alt transition-colors"
+            className="px-7 py-3.5 rounded-[20px] bg-primary text-surface text-sm font-semibold hover:bg-primary-alt transition-colors"
           >
             {ACADEMY_HERO_V2.ctaPrimary} &rarr;
           </Link>
           <Link
             href="#priser"
-            className="px-7 py-3.5 rounded-[20px] border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
+            className="px-7 py-3.5 rounded-[20px] border border-white/30 text-surface text-sm font-semibold hover:bg-surface-container-lowest/10 transition-colors"
           >
             {ACADEMY_HERO_V2.ctaSecondary} &rarr;
           </Link>

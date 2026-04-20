@@ -52,30 +52,30 @@ export function AdminDialog({
       aria-labelledby={title ? "admin-dialog-title" : undefined}
     >
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
+        className="absolute inset-0 bg-on-surface/40 backdrop-blur-sm animate-in fade-in duration-200"
         onClick={onClose}
         aria-hidden="true"
       />
       <div
         className={cn(
-          "relative w-full rounded-2xl overflow-hidden shadow-2xl bg-white border border-grey-200",
+          "relative w-full rounded-2xl overflow-hidden shadow-2xl bg-surface-container-lowest border border-outline-variant/30",
           sizeClass[size],
           "animate-in fade-in zoom-in-95 duration-200",
         )}
       >
         {(title || showClose) && (
-          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-grey-200">
+          <div className="flex items-start justify-between gap-3 px-6 py-4 border-b border-outline-variant/30">
             <div className="flex-1 min-w-0">
               {title && (
                 <h2
                   id="admin-dialog-title"
-                  className="text-lg font-semibold text-black"
+                  className="text-lg font-semibold text-on-surface"
                 >
                   {title}
                 </h2>
               )}
               {description && (
-                <p className="text-sm mt-0.5 text-grey-400">
+                <p className="text-sm mt-0.5 text-on-surface-variant">
                   {description}
                 </p>
               )}
@@ -94,7 +94,7 @@ export function AdminDialog({
         )}
         {children && <div className="px-6 py-4">{children}</div>}
         {footer && (
-          <div className="flex items-center justify-end gap-2 px-6 py-4 border-t border-grey-200">
+          <div className="flex items-center justify-end gap-2 px-6 py-4 border-t border-outline-variant/30">
             {footer}
           </div>
         )}

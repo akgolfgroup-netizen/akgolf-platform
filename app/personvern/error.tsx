@@ -23,7 +23,7 @@ export default function Error({
         </button>
         <Link
           href="/"
-          className="px-5 py-2.5 bg-[var(--color-black)] text-white rounded-full font-semibold hover:bg-[var(--color-grey-800)] transition-colors"
+          className="px-5 py-2.5 bg-[var(--color-black)] text-surface rounded-full font-semibold hover:bg-[var(--color-grey-800)] transition-colors"
         >
           Til forsiden
         </Link>

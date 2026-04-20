@@ -21,10 +21,10 @@ export function TrainerCard({
   return (
     <div
       onClick={onSelectTrainer}
-      className={`rounded-[20px] overflow-hidden cursor-pointer bg-white transition-all duration-300 border-2 ${
+      className={`rounded-[20px] overflow-hidden cursor-pointer bg-surface-container-lowest transition-all duration-300 border-2 ${
         isSelected
-          ? "border-accent-cta shadow-[0_12px_40px_rgba(0,88,64,0.15)] -translate-y-0.5"
-          : "border-transparent hover:border-accent-cta hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,88,64,0.12)]"
+          ? "border-secondary-fixed shadow-[0_12px_40px_rgba(0,88,64,0.15)] -translate-y-0.5"
+          : "border-transparent hover:border-secondary-fixed hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,88,64,0.12)]"
       }`}
     >
       <div
@@ -33,16 +33,16 @@ export function TrainerCard({
       >
         {!trainer.imageUrl && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-6xl font-bold text-white/30 tracking-tight">
+            <span className="text-6xl font-bold text-surface/30 tracking-tight">
               {trainer.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
             </span>
           </div>
         )}
         <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-[rgba(10,31,24,0.9)] via-[rgba(10,31,24,0.4)] to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 p-5 text-white z-[2]">
+        <div className="absolute inset-x-0 bottom-0 p-5 text-surface z-[2]">
           <div className="text-xl font-bold tracking-tight">{trainer.name}</div>
-          <div className="text-xs text-white/60 mt-0.5 font-medium">{trainer.role}</div>
-          <div className="inline-block mt-2 bg-accent-cta/15 text-accent-cta text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+          <div className="text-xs text-surface/60 mt-0.5 font-medium">{trainer.role}</div>
+          <div className="inline-block mt-2 bg-secondary-fixed/15 text-secondary-fixed text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
             {trainer.badge}
           </div>
         </div>

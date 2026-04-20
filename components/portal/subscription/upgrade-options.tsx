@@ -43,7 +43,7 @@ export function UpgradeOptions({
   if (currentTier === "PRO" || currentTier === "ELITE") return null;
 
   return (
-    <div className="bg-white rounded-2xl border border-primary/10 overflow-hidden">
+    <div className="bg-surface-container-lowest rounded-2xl border border-primary/10 overflow-hidden">
       <div className="px-6 py-4 border-b border-surface">
         <h3 className="text-sm font-semibold text-text flex items-center gap-2">
           <Icon name="arrow_upward"Right className="w-4 h-4 text-primary" />
@@ -59,11 +59,11 @@ export function UpgradeOptions({
                 "text-center p-4 rounded-xl border transition-colors",
                 plan.recommended
                   ? "border-primary bg-primary/5"
-                  : "border-grey-200 bg-surface"
+                  : "border-outline-variant/30 bg-surface"
               )}
             >
               {plan.recommended && (
-                <span className="inline-block px-2 py-0.5 mb-2 rounded-full bg-primary text-white text-[10px] font-bold uppercase tracking-wider">
+                <span className="inline-block px-2 py-0.5 mb-2 rounded-full bg-primary text-surface text-[10px] font-bold uppercase tracking-wider">
                   Anbefalt
                 </span>
               )}
@@ -78,8 +78,8 @@ export function UpgradeOptions({
                 className={cn(
                   "mt-3 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-[20px] text-xs font-semibold transition-all",
                   plan.recommended
-                    ? "bg-accent-cta text-accent-cta-text hover:brightness-95"
-                    : "bg-white border border-grey-200 text-text hover:bg-grey-50"
+                    ? "bg-secondary-fixed text-secondary-fixed-text hover:brightness-95"
+                    : "bg-surface-container-lowest border border-outline-variant/30 text-text hover:bg-surface"
                 )}
               >
                 Velg

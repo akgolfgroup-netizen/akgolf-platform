@@ -28,12 +28,12 @@ export function SocialWidget({ data }: SocialWidgetProps) {
 
   if (!hasData) {
     return (
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
+      <div className="rounded-2xl border border-slate-800 bg-inverse-surface/50 p-6">
         <div className="flex items-center gap-2 mb-4">
           <Icon name="person"s className="w-5 h-5 text-amber-400" />
-          <h3 className="font-semibold text-slate-100">Sosialt</h3>
+          <h3 className="font-semibold text-inverse-on-surface">Sosialt</h3>
         </div>
-        <p className="text-sm text-slate-400 mb-4">
+        <p className="text-sm text-inverse-on-surface/60 mb-4">
           Bli med i fellesskapet. Konkurrer med venner og andre spillere.
         </p>
         <Link
@@ -51,12 +51,12 @@ export function SocialWidget({ data }: SocialWidgetProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6"
+      className="rounded-2xl border border-slate-800 bg-inverse-surface/50 p-6"
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Icon name="person"s className="w-5 h-5 text-amber-400" />
-          <h3 className="font-semibold text-slate-100">Sosialt</h3>
+          <h3 className="font-semibold text-inverse-on-surface">Sosialt</h3>
         </div>
         <Link
           href="/portal/sosialt"
@@ -68,43 +68,43 @@ export function SocialWidget({ data }: SocialWidgetProps) {
 
       {/* Rangering */}
       <div className="flex items-center gap-4 mb-4">
-        <div className="flex-1 p-3 bg-slate-800/50 rounded-xl text-center">
-          <p className="text-2xl font-bold text-slate-100">#{data.rank}</p>
-          <p className="text-xs text-slate-400">av {data.totalPlayers}</p>
+        <div className="flex-1 p-3 bg-inverse-surface/50 rounded-xl text-center">
+          <p className="text-2xl font-bold text-inverse-on-surface">#{data.rank}</p>
+          <p className="text-xs text-inverse-on-surface/60">av {data.totalPlayers}</p>
         </div>
-        <div className="flex-1 p-3 bg-slate-800/50 rounded-xl text-center">
+        <div className="flex-1 p-3 bg-inverse-surface/50 rounded-xl text-center">
           <div className="flex items-center justify-center gap-1">
             <Icon name="local_fire_department" className="w-5 h-5 text-orange-500" />
-            <span className="text-2xl font-bold text-slate-100">{data.streak}</span>
+            <span className="text-2xl font-bold text-inverse-on-surface">{data.streak}</span>
           </div>
-          <p className="text-xs text-slate-400">dager streak</p>
+          <p className="text-xs text-inverse-on-surface/60">dager streak</p>
         </div>
       </div>
 
       {/* Aktive utfordringer */}
       {data.challenges.length > 0 && (
         <div className="space-y-2">
-          <p className="text-xs font-medium text-slate-400">Aktive utfordringer</p>
+          <p className="text-xs font-medium text-inverse-on-surface/60">Aktive utfordringer</p>
           {data.challenges.slice(0, 2).map((challenge) => (
-            <div key={challenge.id} className="p-2 bg-slate-800/30 rounded-lg">
+            <div key={challenge.id} className="p-2 bg-inverse-surface/30 rounded-lg">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-sm text-slate-200">{challenge.name}</span>
-                <Icon name="chevron_right" className="w-4 h-4 text-slate-500" />
+                <span className="text-sm text-inverse-on-surface">{challenge.name}</span>
+                <Icon name="chevron_right" className="w-4 h-4 text-inverse-on-surface/70" />
               </div>
-              <div className="w-full bg-slate-700 rounded-full h-1.5">
+              <div className="w-full bg-inverse-surface/80 rounded-full h-1.5">
                 <div
                   className="bg-amber-500 h-1.5 rounded-full transition-all"
                   style={{ width: `${challenge.progress}%` }}
                 />
               </div>
-              <p className="text-xs text-slate-500 mt-1">{challenge.progress}% • Slutter {challenge.endDate}</p>
+              <p className="text-xs text-inverse-on-surface/70 mt-1">{challenge.progress}% • Slutter {challenge.endDate}</p>
             </div>
           ))}
         </div>
       )}
 
       {data.friendsOnline > 0 && (
-        <p className="text-xs text-slate-400 mt-3 flex items-center gap-1">
+        <p className="text-xs text-inverse-on-surface/60 mt-3 flex items-center gap-1">
           <span className="w-2 h-2 bg-green-500 rounded-full" />
           {data.friendsOnline} venn{data.friendsOnline > 1 ? 'er' : ''} online
         </p>

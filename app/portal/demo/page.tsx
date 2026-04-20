@@ -66,7 +66,7 @@ export default function DemoPage() {
         </p>
 
         {/* Controls */}
-        <div className="mb-8 p-4 rounded-xl bg-white border border-[var(--color-grey-200)]">
+        <div className="mb-8 p-4 rounded-xl bg-surface-container-lowest border border-[var(--color-grey-200)]">
           <p className="text-sm font-semibold text-[var(--color-grey-900)] mb-4">
             Kontroller
           </p>
@@ -130,9 +130,9 @@ export default function DemoPage() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* 1.1 Trial Banner */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">1</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">1</span>
                 Trial-banner med nedtelling
               </h3>
               <TrialBanner
@@ -142,14 +142,14 @@ export default function DemoPage() {
             </div>
 
             {/* 1.2 Upgrade Modal */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">2</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">2</span>
                 Upgrade Modal (med sosial proof)
               </h3>
               <button
                 onClick={() => setShowUpgradeModal(true)}
-                className="w-full px-4 py-3 rounded-xl text-sm font-medium bg-[var(--color-brand)] text-white hover:bg-[var(--color-brand)]/90 transition-colors"
+                className="w-full px-4 py-3 rounded-xl text-sm font-medium bg-[var(--color-brand)] text-surface hover:bg-[var(--color-brand)]/90 transition-colors"
               >
                 Apne Upgrade Modal
               </button>
@@ -159,9 +159,9 @@ export default function DemoPage() {
             </div>
 
             {/* 1.3 Usage Indicator */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">3</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">3</span>
                 Usage Indicator
               </h3>
               <UsageIndicator
@@ -175,9 +175,9 @@ export default function DemoPage() {
             </div>
 
             {/* 1.4 Tier Gate */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">4</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">4</span>
                 Tier Gate (last feature)
               </h3>
               <TierGate
@@ -207,9 +207,9 @@ export default function DemoPage() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* 2.1 Achievement Toast */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">5</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">5</span>
                 Achievement Toast (med confetti)
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -227,18 +227,18 @@ export default function DemoPage() {
             </div>
 
             {/* 2.2 Streak Milestones */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">6</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">6</span>
                 Streak Milestones
               </h3>
               <StreakMilestone currentStreak={streak} />
             </div>
 
             {/* 2.3 Quick-log */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)] md:col-span-2">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)] md:col-span-2">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">7</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">7</span>
                 Quick-log &quot;Gjenta siste okt&quot;
               </h3>
               <div className="flex items-center gap-4">
@@ -265,9 +265,9 @@ export default function DemoPage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {/* 3.1 Weekly Summary */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">8</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">8</span>
                 Ukessammendrag e-post
               </h3>
               <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
@@ -278,9 +278,9 @@ export default function DemoPage() {
             </div>
 
             {/* 3.2 Win-back Day 3 */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">9</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">9</span>
                 Win-back Dag 3
               </h3>
               <div className="p-4 rounded-lg bg-amber-50 border border-amber-200">
@@ -291,9 +291,9 @@ export default function DemoPage() {
             </div>
 
             {/* 3.3 Win-back Day 7 */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">10</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">10</span>
                 Win-back Dag 7
               </h3>
               <div className="p-4 rounded-lg bg-orange-50 border border-orange-200">
@@ -304,12 +304,12 @@ export default function DemoPage() {
             </div>
 
             {/* 3.4 Win-back Day 14 */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)] md:col-span-3">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)] md:col-span-3">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">11</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">11</span>
                 Win-back Dag 14 (med rabattkode)
               </h3>
-              <div className="p-4 rounded-lg bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-brand)]/80 text-white">
+              <div className="p-4 rounded-lg bg-gradient-to-r from-[var(--color-brand)] to-[var(--color-brand)]/80 text-surface">
                 <Icon name="mail" className="w-5 h-5 mb-2" />
                 <p className="text-sm font-bold">20% rabatt pa Pro!</p>
                 <p className="text-xs mt-1 opacity-90">Kode: WINBACK-XXXXXXXX • Gyldig 7 dager</p>
@@ -329,9 +329,9 @@ export default function DemoPage() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* 4.1 SG Radar */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">12</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">12</span>
                 SG-radar (fullstendig)
               </h3>
               <SGRadarChart
@@ -348,9 +348,9 @@ export default function DemoPage() {
             </div>
 
             {/* 4.2 Score Trend */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)]">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)]">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">13</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">13</span>
                 Score-trend graf
               </h3>
               <ScoreTrendChart
@@ -361,9 +361,9 @@ export default function DemoPage() {
             </div>
 
             {/* 4.3 Peer Benchmark */}
-            <div className="bg-white p-6 rounded-xl border border-[var(--color-grey-200)] md:col-span-2">
+            <div className="bg-surface-container-lowest p-6 rounded-xl border border-[var(--color-grey-200)] md:col-span-2">
               <h3 className="text-sm font-semibold text-[var(--color-grey-900)] mb-4 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-white text-xs flex items-center justify-center">14</span>
+                <span className="w-6 h-6 rounded-full bg-[var(--color-grey-900)] text-surface text-xs flex items-center justify-center">14</span>
                 Peer Benchmark (A-K kategorier)
               </h3>
               <PeerBenchmarkCard

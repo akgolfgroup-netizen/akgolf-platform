@@ -17,23 +17,23 @@ export function PricingCard({
     <div
       className={`rounded-[20px] p-8 flex flex-col h-full transition-[border-color,box-shadow] duration-400 ${
         highlighted
-          ? "bg-black text-white border border-black shadow-xl relative"
-          : "bg-white border border-grey-200 hover:border-grey-300 hover:shadow-lg"
+          ? "bg-on-surface text-surface border border-black shadow-xl relative"
+          : "bg-surface-container-lowest border border-outline-variant/30 hover:border-outline-variant/50 hover:shadow-lg"
       }`}
     >
       {highlighted && (
-        <span className="absolute -top-3 left-8 bg-black text-white text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full border border-grey-700">
+        <span className="absolute -top-3 left-8 bg-on-surface text-surface text-[10px] font-mono uppercase tracking-[0.12em] px-3 py-1 rounded-full border border-inverse-surface/30">
           Mest populær
         </span>
       )}
 
-      <h3 className={`font-display text-xl font-semibold mb-1 ${highlighted ? "text-white" : "text-black"}`}>
+      <h3 className={`font-display text-xl font-semibold mb-1 ${highlighted ? "text-surface" : "text-on-surface"}`}>
         {name}
       </h3>
-      <p className={`font-mono text-lg mb-3 ${highlighted ? "text-grey-300" : "text-black"}`}>
+      <p className={`font-mono text-lg mb-3 ${highlighted ? "text-on-surface-variant/60" : "text-on-surface"}`}>
         {price}
       </p>
-      <p className={`text-sm leading-relaxed mb-6 ${highlighted ? "text-grey-400" : "text-grey-500"}`}>
+      <p className={`text-sm leading-relaxed mb-6 ${highlighted ? "text-on-surface-variant" : "text-on-surface-variant/80"}`}>
         {description}
       </p>
 
@@ -47,12 +47,12 @@ export function PricingCard({
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className={`shrink-0 mt-0.5 ${highlighted ? "text-white" : "text-black"}`}
+              className={`shrink-0 mt-0.5 ${highlighted ? "text-surface" : "text-on-surface"}`}
               aria-hidden="true"
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            <span className={highlighted ? "text-grey-300" : "text-grey-500"}>
+            <span className={highlighted ? "text-on-surface-variant/60" : "text-on-surface-variant/80"}>
               {feature}
             </span>
           </li>

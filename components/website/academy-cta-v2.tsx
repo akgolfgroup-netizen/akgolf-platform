@@ -22,19 +22,19 @@ export function AcademyCtaV2() {
       <div className="w-container relative">
         <RevealOnScroll>
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-bold text-surface mb-6 leading-tight">
               {ACADEMY_CTA_V2.heading}
             </h2>
-            <p className="text-white/60 text-lg leading-relaxed mb-10">
+            <p className="text-surface/60 text-lg leading-relaxed mb-10">
               {ACADEMY_CTA_V2.description}
             </p>
             <Link
               href="/booking"
-              className="inline-flex px-8 py-4 rounded-[20px] bg-accent-cta text-accent-cta-text text-sm font-bold hover:brightness-105 transition-all duration-200"
+              className="inline-flex px-8 py-4 rounded-[20px] bg-secondary-fixed text-secondary-fixed-text text-sm font-bold hover:brightness-105 transition-all duration-200"
             >
               {ACADEMY_CTA_V2.ctaLabel} &rarr;
             </Link>
-            <p className="mt-6 text-sm text-white/40">
+            <p className="mt-6 text-sm text-surface/40">
               Ingen binding. Avbestilling frem til 24 timer for.
             </p>
           </div>

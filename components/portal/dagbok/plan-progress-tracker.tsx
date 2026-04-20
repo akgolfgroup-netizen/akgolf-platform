@@ -33,11 +33,11 @@ export function PlanProgressTracker({
               <Icon name="my_location" className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-grey-400">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant">
                 Aktiv treningsplan
               </p>
-              <h3 className="text-sm font-semibold text-black">{weekTitle}</h3>
-              <p className="text-[12px] text-grey-400">
+              <h3 className="text-sm font-semibold text-on-surface">{weekTitle}</h3>
+              <p className="text-[12px] text-on-surface-variant">
                 {loggedCount} av {plannedCount} økter logget denne uken
                 {remaining > 0 && ` — ${remaining} igjen`}
               </p>
@@ -47,10 +47,10 @@ export function PlanProgressTracker({
           <div className="flex items-center gap-3 sm:w-48">
             <div className="flex-1">
               <div className="mb-1 flex items-center justify-between text-[11px] font-medium">
-                <span className="text-grey-400">Fremdrift</span>
-                <span className="text-black">{progress}%</span>
+                <span className="text-on-surface-variant">Fremdrift</span>
+                <span className="text-on-surface">{progress}%</span>
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-grey-100">
+              <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
@@ -62,7 +62,7 @@ export function PlanProgressTracker({
             {progress === 100 ? (
               <Icon name="check"Circle2 className="h-5 w-5 shrink-0 text-success" />
             ) : (
-              <Icon name="calendar_today" className="h-5 w-5 shrink-0 text-grey-300" />
+              <Icon name="calendar_today" className="h-5 w-5 shrink-0 text-on-surface-variant/60" />
             )}
           </div>
         </div>

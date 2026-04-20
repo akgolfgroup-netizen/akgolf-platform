@@ -21,12 +21,12 @@ export const Button: React.FC<ButtonProps> = ({
   const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variants = {
-    primary: 'bg-accent-cta text-accent-cta-text hover:brightness-95 focus:ring-accent-cta active:scale-95',
-    secondary: 'bg-white border border-grey-200 text-text hover:border-grey-300 focus:ring-grey-200',
-    dark: 'bg-black text-white hover:bg-grey-800 focus:ring-black active:scale-95',
-    destructive: 'bg-error text-white hover:bg-error-text focus:ring-error',
-    ghost: 'bg-transparent text-grey-500 hover:text-black hover:bg-grey-50',
-    accent: 'bg-accent-cta text-accent-cta-text hover:opacity-90 focus:ring-accent-cta active:scale-95',
+    primary: 'bg-secondary-fixed text-secondary-fixed-text hover:brightness-95 focus:ring-accent-cta active:scale-95',
+    secondary: 'bg-surface-container-lowest border border-outline-variant/30 text-text hover:border-outline-variant/50 focus:ring-grey-200',
+    dark: 'bg-on-surface text-surface hover:bg-inverse-surface focus:ring-black active:scale-95',
+    destructive: 'bg-error text-surface hover:bg-error-text focus:ring-error',
+    ghost: 'bg-transparent text-on-surface-variant/80 hover:text-on-surface hover:bg-surface',
+    accent: 'bg-secondary-fixed text-secondary-fixed-text hover:opacity-90 focus:ring-accent-cta active:scale-95',
   };
   
   const sizes = {

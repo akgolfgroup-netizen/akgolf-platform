@@ -24,17 +24,17 @@ export default function Loading() {
         />
         <div className="relative z-10 flex flex-col justify-between w-full p-12 xl:p-16 animate-pulse">
           <div className="flex items-center justify-between">
-            <div className="h-14 w-14 rounded-lg bg-white/10" />
-            <div className="h-7 w-32 rounded-full bg-white/10" />
+            <div className="h-14 w-14 rounded-lg bg-surface-container-lowest/10" />
+            <div className="h-7 w-32 rounded-full bg-surface-container-lowest/10" />
           </div>
           <div className="space-y-5">
-            <div className="h-3 w-40 rounded bg-white/20" />
-            <div className="h-14 w-72 rounded bg-white/15" />
-            <div className="h-14 w-56 rounded bg-white/15" />
-            <div className="h-4 w-full max-w-md rounded bg-white/10 mt-6" />
-            <div className="h-4 w-2/3 rounded bg-white/10" />
+            <div className="h-3 w-40 rounded bg-surface-container-lowest/20" />
+            <div className="h-14 w-72 rounded bg-surface-container-lowest/15" />
+            <div className="h-14 w-56 rounded bg-surface-container-lowest/15" />
+            <div className="h-4 w-full max-w-md rounded bg-surface-container-lowest/10 mt-6" />
+            <div className="h-4 w-2/3 rounded bg-surface-container-lowest/10" />
           </div>
-          <div className="h-3 w-32 rounded bg-white/10" />
+          <div className="h-3 w-32 rounded bg-surface-container-lowest/10" />
         </div>
       </aside>
 
@@ -48,7 +48,7 @@ export default function Loading() {
             <div className="h-8 w-64 rounded bg-[var(--color-primary-soft)]" />
             <div className="h-4 w-48 rounded bg-[var(--color-primary-soft)]" />
           </div>
-          <div className="bg-white rounded-[24px] border border-black/5 p-6 lg:p-8 space-y-5">
+          <div className="bg-surface-container-lowest rounded-[24px] border border-black/5 p-6 lg:p-8 space-y-5">
             <div className="h-11 rounded-xl bg-[var(--color-primary-soft)]" />
             <div className="space-y-2">
               <div className="h-3 w-24 rounded bg-[var(--color-primary-soft)]" />

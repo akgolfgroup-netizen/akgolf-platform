@@ -74,7 +74,7 @@ export function PaymentDrawer({
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
-      <div className="text-lg font-bold text-black">Bekreft og betal</div>
+      <div className="text-lg font-bold text-on-surface">Bekreft og betal</div>
       <div className="text-xs text-muted mb-5">
         {service.name} · {service.price.toLocaleString("nb-NO")} {periodLabel}
       </div>
@@ -99,7 +99,7 @@ export function PaymentDrawer({
         type="button"
         onClick={handleSubmit}
         disabled={submitting}
-        className="w-full py-4 rounded-[14px] bg-accent-cta text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="w-full py-4 rounded-[14px] bg-secondary-fixed text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
         {submitting ? (
           <>

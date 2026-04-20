@@ -173,7 +173,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-on-surface/40 backdrop-blur-sm p-4"
         onClick={onClose}
       >
         <motion.div
@@ -181,12 +181,12 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+          className="bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
         >
           {/* Header */}
-          <div className="sticky top-0 bg-white border-b border-grey-200 px-6 py-4 flex items-center justify-between z-10">
+          <div className="sticky top-0 bg-surface-container-lowest border-b border-outline-variant/30 px-6 py-4 flex items-center justify-between z-10">
             <div>
-              <h2 className="text-lg font-semibold text-black">
+              <h2 className="text-lg font-semibold text-on-surface">
                 {editLog ? "Rediger treningsøkt" : "Logg ny treningsøkt"}
               </h2>
               <div className="flex items-center gap-2 mt-1">
@@ -194,17 +194,17 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                   onClick={() => setStep("type")}
                   className={cn(
                     "text-xs font-medium transition-colors",
-                    step === "type" ? "text-black" : "text-grey-400 hover:text-grey-600"
+                    step === "type" ? "text-on-surface" : "text-on-surface-variant hover:text-on-surface-variant/80"
                   )}
                 >
                   1. Type
                 </button>
-                <span className="text-grey-300">→</span>
+                <span className="text-on-surface-variant/60">→</span>
                 <button 
                   onClick={() => typeValue && setStep("details")}
                   className={cn(
                     "text-xs font-medium transition-colors",
-                    step === "details" ? "text-black" : "text-grey-400 hover:text-grey-600"
+                    step === "details" ? "text-on-surface" : "text-on-surface-variant hover:text-on-surface-variant/80"
                   )}
                 >
                   2. Detaljer
@@ -214,9 +214,9 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="p-1 rounded-lg hover:bg-grey-100 transition-colors"
+              className="p-1 rounded-lg hover:bg-surface-container transition-colors"
             >
-              <Icon name="close" className="w-5 h-5 text-grey-400" />
+              <Icon name="close" className="w-5 h-5 text-on-surface-variant" />
             </button>
           </div>
 
@@ -230,7 +230,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                   exit={{ opacity: 0, x: -20 }}
                   className="space-y-4"
                 >
-                  <p className="text-sm text-grey-400">Velg type treningsøkt:</p>
+                  <p className="text-sm text-on-surface-variant">Velg type treningsøkt:</p>
                   
                   <div className="grid grid-cols-2 gap-3">
                     {TRAINING_TYPES.map((t) => {
@@ -245,15 +245,15 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                           className={cn(
                             "p-4 rounded-xl border-2 text-left transition-all",
                             typeValue === t.value
-                              ? `border-black bg-grey-50`
-                              : "border-grey-200 hover:border-grey-300 bg-white"
+                              ? `border-black bg-surface`
+                              : "border-outline-variant/30 hover:border-outline-variant/50 bg-surface-container-lowest"
                           )}
                         >
                           <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center mb-3", t.color)}>
-                            <Icon className="w-5 h-5 text-white" />
+                            <Icon className="w-5 h-5 text-surface" />
                           </div>
-                          <p className="font-semibold text-black text-sm">{t.label}</p>
-                          <p className="text-xs text-grey-400 mt-1">{t.description}</p>
+                          <p className="font-semibold text-on-surface text-sm">{t.label}</p>
+                          <p className="text-xs text-on-surface-variant mt-1">{t.description}</p>
                         </motion.button>
                       );
                     })}
@@ -269,18 +269,18 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                 >
                   {/* Selected type indicator */}
                   {selectedTypeInfo && (
-                    <div className="flex items-center gap-3 p-3 bg-grey-50 rounded-xl">
+                    <div className="flex items-center gap-3 p-3 bg-surface rounded-xl">
                       <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", selectedTypeInfo.color)}>
-                        <selectedTypeInfo.icon className="w-4 h-4 text-white" />
+                        <selectedTypeInfo.icon className="w-4 h-4 text-surface" />
                       </div>
                       <div>
-                        <p className="text-xs text-grey-400">Valgt type</p>
-                        <p className="font-medium text-black">{selectedTypeInfo.label}</p>
+                        <p className="text-xs text-on-surface-variant">Valgt type</p>
+                        <p className="font-medium text-on-surface">{selectedTypeInfo.label}</p>
                       </div>
                       <button
                         type="button"
                         onClick={() => setStep("type")}
-                        className="ml-auto text-xs text-grey-400 hover:text-black underline"
+                        className="ml-auto text-xs text-on-surface-variant hover:text-on-surface underline"
                       >
                         Endre
                       </button>
@@ -289,7 +289,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
 
                   {/* Date */}
                   <div>
-                    <label className="block text-sm font-medium text-grey-700 mb-1.5">
+                    <label className="block text-sm font-medium text-on-surface-variant/90 mb-1.5">
                       Dato
                     </label>
                     <input
@@ -298,14 +298,14 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                       onChange={(e) => setDate(e.target.value)}
                       disabled={!!editLog}
                       required
-                      className="w-full px-3 py-2.5 rounded-xl border border-grey-200 focus:outline-none focus:ring-2 focus:ring-accent-cta focus:border-transparent disabled:bg-grey-50"
+                      className="w-full px-3 py-2.5 rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-accent-cta focus:border-transparent disabled:bg-surface"
                     />
                   </div>
 
                   {/* Duration slider */}
                   <div>
-                    <label className="block text-sm font-medium text-grey-700 mb-1.5">
-                      Varighet: <span className="text-black font-semibold">{durationMinutes || 0} minutter</span>
+                    <label className="block text-sm font-medium text-on-surface-variant/90 mb-1.5">
+                      Varighet: <span className="text-on-surface font-semibold">{durationMinutes || 0} minutter</span>
                     </label>
                     <input
                       type="range"
@@ -316,7 +316,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                       onChange={(e) => setDurationMinutes(e.target.value)}
                       className="w-full accent-accent-cta"
                     />
-                    <div className="flex justify-between text-xs text-grey-400 mt-1">
+                    <div className="flex justify-between text-xs text-on-surface-variant mt-1">
                       <span>15 min</span>
                       <span>60 min</span>
                       <span>180 min</span>
@@ -325,7 +325,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
 
                   {/* Focus areas */}
                   <div>
-                    <label className="block text-sm font-medium text-grey-700 mb-2">
+                    <label className="block text-sm font-medium text-on-surface-variant/90 mb-2">
                       Fokusområder
                     </label>
                     <div className="flex flex-wrap gap-2">
@@ -337,8 +337,8 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                           className={cn(
                             "px-3 py-1.5 rounded-full text-xs font-medium transition-all border",
                             focusArea === area.value
-                              ? "bg-black text-white border-black"
-                              : "bg-white text-grey-600 border-grey-200 hover:border-grey-300"
+                              ? "bg-on-surface text-surface border-black"
+                              : "bg-surface-container-lowest text-on-surface-variant/80 border-outline-variant/30 hover:border-outline-variant/50"
                           )}
                         >
                           {area.label}
@@ -349,8 +349,8 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
 
                   {/* Rating */}
                   <div>
-                    <label className="block text-sm font-medium text-grey-700 mb-2">
-                      Vurdering: <span className="text-black font-semibold">{rating}/10</span>
+                    <label className="block text-sm font-medium text-on-surface-variant/90 mb-2">
+                      Vurdering: <span className="text-on-surface font-semibold">{rating}/10</span>
                     </label>
                     <div className="flex gap-2">
                       {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
@@ -361,8 +361,8 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                           className={cn(
                             "w-8 h-8 rounded-lg text-sm font-medium transition-all",
                             rating === num
-                              ? "bg-accent-cta text-black"
-                              : "bg-grey-100 text-grey-400 hover:bg-grey-200"
+                              ? "bg-secondary-fixed text-on-surface"
+                              : "bg-surface-container text-on-surface-variant hover:bg-surface-variant"
                           )}
                         >
                           {num}
@@ -373,7 +373,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
 
                   {/* Notes */}
                   <div>
-                    <label className="block text-sm font-medium text-grey-700 mb-1.5">
+                    <label className="block text-sm font-medium text-on-surface-variant/90 mb-1.5">
                       Notater
                     </label>
                     <textarea
@@ -382,13 +382,13 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                       rows={3}
                       maxLength={2000}
                       placeholder="Hva jobbet du med? Hva gikk bra? Hva kan forbedres?"
-                      className="w-full px-3 py-2.5 rounded-xl border border-grey-200 focus:outline-none focus:ring-2 focus:ring-accent-cta focus:border-transparent resize-none"
+                      className="w-full px-3 py-2.5 rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-accent-cta focus:border-transparent resize-none"
                     />
                   </div>
 
                   {/* Deviation from plan */}
                   <div>
-                    <label className="flex items-center gap-2 text-sm font-medium text-grey-700 cursor-pointer">
+                    <label className="flex items-center gap-2 text-sm font-medium text-on-surface-variant/90 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={deviatedFromPlan}
@@ -404,7 +404,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                         rows={2}
                         maxLength={500}
                         placeholder="Hvorfor avvek du fra planen?"
-                        className="w-full mt-2 px-3 py-2 rounded-xl border border-grey-200 focus:outline-none focus:ring-2 focus:ring-accent-cta focus:border-transparent resize-none text-sm"
+                        className="w-full mt-2 px-3 py-2 rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-accent-cta focus:border-transparent resize-none text-sm"
                       />
                     )}
                   </div>
@@ -419,7 +419,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
             )}
 
             {/* Actions */}
-            <div className="flex items-center justify-between pt-4 border-t border-grey-200">
+            <div className="flex items-center justify-between pt-4 border-t border-outline-variant/30">
               {editLog && step === "details" ? (
                 <button
                   type="button"
@@ -439,7 +439,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                   <button
                     type="button"
                     onClick={() => setStep("type")}
-                    className="px-4 py-2.5 rounded-xl text-sm font-medium text-grey-600 hover:bg-grey-100 transition-colors"
+                    className="px-4 py-2.5 rounded-xl text-sm font-medium text-on-surface-variant/80 hover:bg-surface-container transition-colors"
                   >
                     Tilbake
                   </button>
@@ -449,7 +449,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                   <button
                     type="submit"
                     disabled={isPending || !typeValue}
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold bg-accent-cta text-black hover:opacity-90 transition-opacity disabled:opacity-50"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold bg-secondary-fixed text-on-surface hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
                     {isPending ? (
                       <Icon name="progress_activity" className="w-4 h-4 animate-spin" />

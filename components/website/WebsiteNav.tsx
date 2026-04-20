@@ -29,10 +29,10 @@ export function WebsiteNav() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
           scrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06)]"
+            ? "bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.06)]"
             : isDarkMode
               ? "bg-transparent"
-              : "bg-white/70 backdrop-blur-md"
+              : "bg-surface-container-lowest/70 backdrop-blur-md"
         }`}
         style={{ height: 48 }}
       >
@@ -54,10 +54,10 @@ export function WebsiteNav() {
                 className={`relative text-[13px] font-medium uppercase tracking-wider transition-colors duration-300 pb-1 ${
                   pathname === link.href
                     ? isDarkMode
-                      ? "text-white border-b-2 border-[#d2f000]"
+                      ? "text-surface border-b-2 border-[#d2f000]"
                       : "text-[#154212] border-b-2 border-[#d2f000]"
                     : isDarkMode
-                      ? "text-white/70 hover:text-white"
+                      ? "text-surface/70 hover:text-surface"
                       : "text-[#154212]/70 hover:text-[#154212]"
                 }`}
               >
@@ -79,18 +79,18 @@ export function WebsiteNav() {
             aria-label={mobileOpen ? "Lukk meny" : "Apne meny"}
           >
             <span
-              className={`block h-[1.5px] w-5 transition-[transform,opacity] duration-300 ${isDarkMode ? "bg-white" : "bg-black"} ${
-                mobileOpen ? "rotate-45 translate-y-[6.5px] !bg-black" : ""
+              className={`block h-[1.5px] w-5 transition-[transform,opacity] duration-300 ${isDarkMode ? "bg-surface-container-lowest" : "bg-on-surface"} ${
+                mobileOpen ? "rotate-45 translate-y-[6.5px] !bg-on-surface" : ""
               }`}
             />
             <span
-              className={`block h-[1.5px] w-5 transition-[transform,opacity] duration-300 ${isDarkMode ? "bg-white" : "bg-black"} ${
+              className={`block h-[1.5px] w-5 transition-[transform,opacity] duration-300 ${isDarkMode ? "bg-surface-container-lowest" : "bg-on-surface"} ${
                 mobileOpen ? "opacity-0" : ""
               }`}
             />
             <span
-              className={`block h-[1.5px] w-5 transition-[transform,opacity] duration-300 ${isDarkMode ? "bg-white" : "bg-black"} ${
-                mobileOpen ? "-rotate-45 -translate-y-[6.5px] !bg-black" : ""
+              className={`block h-[1.5px] w-5 transition-[transform,opacity] duration-300 ${isDarkMode ? "bg-surface-container-lowest" : "bg-on-surface"} ${
+                mobileOpen ? "-rotate-45 -translate-y-[6.5px] !bg-on-surface" : ""
               }`}
             />
           </button>
@@ -105,7 +105,7 @@ export function WebsiteNav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-white/95 backdrop-blur-2xl md:hidden"
+            className="fixed inset-0 z-40 bg-surface-container-lowest/95 backdrop-blur-2xl md:hidden"
           >
             <div className="flex flex-col items-center justify-center h-full gap-8">
               {NAV_LINKS.map((link, i) => (
@@ -120,8 +120,8 @@ export function WebsiteNav() {
                     onClick={() => setMobileOpen(false)}
                     className={`font-display text-2xl font-normal tracking-tight transition-colors ${
                       pathname === link.href
-                        ? "text-black"
-                        : "text-grey-400 hover:text-black"
+                        ? "text-on-surface"
+                        : "text-on-surface-variant hover:text-on-surface"
                     }`}
                   >
                     {link.label}
@@ -130,7 +130,7 @@ export function WebsiteNav() {
               ))}
 
               {/* Separator */}
-              <div className="w-12 h-px bg-grey-200 mx-auto" />
+              <div className="w-12 h-px bg-surface-variant mx-auto" />
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -140,7 +140,7 @@ export function WebsiteNav() {
                 <a
                   href={BOOKING_URL}
                   onClick={() => setMobileOpen(false)}
-                  className="text-lg font-semibold px-8 py-4 mt-4 rounded-[980px] bg-black text-white hover:opacity-85 transition-opacity"
+                  className="text-lg font-semibold px-8 py-4 mt-4 rounded-[980px] bg-on-surface text-surface hover:opacity-85 transition-opacity"
                 >
                   Book coaching
                 </a>

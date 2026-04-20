@@ -90,8 +90,8 @@ export function PricingTable({
           onClick={() => setInterval("month")}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-[background-color,color] ${
             interval === "month"
-              ? "bg-black text-white"
-              : "bg-grey-100 text-grey-600 hover:bg-grey-200"
+              ? "bg-on-surface text-surface"
+              : "bg-surface-container text-on-surface-variant/80 hover:bg-surface-variant"
           }`}
         >
           Manedlig
@@ -100,8 +100,8 @@ export function PricingTable({
           onClick={() => setInterval("year")}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-[background-color,color] flex items-center gap-2 ${
             interval === "year"
-              ? "bg-black text-white"
-              : "bg-grey-100 text-grey-600 hover:bg-grey-200"
+              ? "bg-on-surface text-surface"
+              : "bg-surface-container text-on-surface-variant/80 hover:bg-surface-variant"
           }`}
         >
           Arlig
@@ -128,14 +128,14 @@ export function PricingTable({
               animate={{ opacity: 1, y: 0 }}
               className={`relative rounded-2xl border p-6 ${
                 tier.highlight
-                  ? "border-black bg-white shadow-lg scale-105"
-                  : "border-grey-200 bg-grey-50"
+                  ? "border-black bg-surface-container-lowest shadow-lg scale-105"
+                  : "border-outline-variant/30 bg-surface"
               }`}
             >
               {/* Badge */}
               {tier.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-black text-white text-xs font-semibold rounded-full">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-on-surface text-surface text-xs font-semibold rounded-full">
                     <Icon name="star" className="h-3 w-3" />
                     Mest populaer
                   </span>
@@ -144,26 +144,26 @@ export function PricingTable({
 
               {tierKey === "ELITE" && (
                 <div className="absolute top-4 right-4">
-                  <Icon name="workspace_premium" className="h-5 w-5 text-grey-400" />
+                  <Icon name="workspace_premium" className="h-5 w-5 text-on-surface-variant" />
                 </div>
               )}
 
               {/* Header */}
               <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-grey-900 mb-1">
+                <h3 className="text-xl font-bold text-on-surface mb-1">
                   {tier.name}
                 </h3>
-                <p className="text-sm text-grey-500">{tier.description}</p>
+                <p className="text-sm text-on-surface-variant/80">{tier.description}</p>
               </div>
 
               {/* Price */}
               <div className="text-center mb-6">
                 <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-4xl font-bold text-grey-900">
+                  <span className="text-4xl font-bold text-on-surface">
                     {price === 0 ? "Gratis" : `${price}`}
                   </span>
                   {price > 0 && (
-                    <span className="text-grey-500 text-sm">
+                    <span className="text-on-surface-variant/80 text-sm">
                       kr/{interval === "month" ? "mnd" : "ar"}
                     </span>
                   )}
@@ -181,13 +181,13 @@ export function PricingTable({
                   <li
                     key={feature.name}
                     className={`flex items-center gap-2 text-sm ${
-                      feature.included ? "text-grey-700" : "text-grey-400"
+                      feature.included ? "text-on-surface-variant/90" : "text-on-surface-variant"
                     }`}
                   >
                     {feature.included ? (
                       <Icon name="check" className="h-4 w-4 text-[var(--color-brand)] flex-shrink-0" />
                     ) : (
-                      <Icon name="close" className="h-4 w-4 text-grey-300 flex-shrink-0" />
+                      <Icon name="close" className="h-4 w-4 text-on-surface-variant/60 flex-shrink-0" />
                     )}
                     {feature.name}
                   </li>
@@ -196,8 +196,8 @@ export function PricingTable({
 
               {/* CTA */}
               {isCurrentTier ? (
-                <div className="text-center py-3 bg-grey-100 rounded-xl">
-                  <span className="text-sm font-medium text-grey-600">
+                <div className="text-center py-3 bg-surface-container rounded-xl">
+                  <span className="text-sm font-medium text-on-surface-variant/80">
                     Ditt navarende abonnement
                   </span>
                 </div>
@@ -209,8 +209,8 @@ export function PricingTable({
                   disabled={loading !== null}
                   className={`w-full py-3 rounded-xl text-sm font-semibold transition-[background-color,color] flex items-center justify-center gap-2 ${
                     tier.highlight
-                      ? "bg-black text-white hover:bg-grey-800"
-                      : "bg-grey-200 text-grey-900 hover:bg-grey-300"
+                      ? "bg-on-surface text-surface hover:bg-inverse-surface"
+                      : "bg-surface-variant text-on-surface hover:bg-outline-variant"
                   }`}
                 >
                   {loading === tierKey ? (
@@ -229,16 +229,16 @@ export function PricingTable({
       </div>
 
       {/* Trust Badges */}
-      <div className="flex flex-wrap items-center justify-center gap-6 pt-6 border-t border-grey-200">
-        <div className="flex items-center gap-2 text-sm text-grey-500">
+      <div className="flex flex-wrap items-center justify-center gap-6 pt-6 border-t border-outline-variant/30">
+        <div className="flex items-center gap-2 text-sm text-on-surface-variant/80">
           <Icon name="shield" className="h-4 w-4" />
           <span>Sikker betaling med Stripe</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-grey-500">
+        <div className="flex items-center gap-2 text-sm text-on-surface-variant/80">
           <Icon name="check" className="h-4 w-4" />
           <span>14 dagers gratis proveperiode</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-grey-500">
+        <div className="flex items-center gap-2 text-sm text-on-surface-variant/80">
           <Icon name="close" className="h-4 w-4" />
           <span>Ingen binding</span>
         </div>

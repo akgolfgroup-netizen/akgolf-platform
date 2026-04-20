@@ -12,7 +12,7 @@ export default function AnalyseLoading() {
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-xl border border-outline-variant p-5"
+            className="bg-surface-container-lowest rounded-xl border border-outline-variant p-5"
           >
             <div className="h-3 w-20 bg-surface-container rounded mb-3" />
             <div className="h-8 w-16 bg-surface-container rounded" />
@@ -22,11 +22,11 @@ export default function AnalyseLoading() {
 
       {/* Two charts side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-white rounded-xl border border-outline-variant p-5">
+        <div className="bg-surface-container-lowest rounded-xl border border-outline-variant p-5">
           <div className="h-4 w-32 bg-surface-container rounded mb-4" />
           <div className="h-56 bg-surface-container rounded-lg" />
         </div>
-        <div className="bg-white rounded-xl border border-outline-variant p-5">
+        <div className="bg-surface-container-lowest rounded-xl border border-outline-variant p-5">
           <div className="h-4 w-28 bg-surface-container rounded mb-4" />
           <div className="h-56 bg-surface-container rounded-lg" />
         </div>

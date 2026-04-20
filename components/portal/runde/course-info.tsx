@@ -45,17 +45,17 @@ export function CourseInfo({
       {/* Header with hole number */}
       <div className="flex items-start justify-between mb-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-accent-cta flex items-center justify-center shadow-lg shadow-accent-cta/30">
-            <span className="text-3xl font-bold text-black">{holeNumber}</span>
+          <div className="w-16 h-16 rounded-2xl bg-secondary-fixed flex items-center justify-center shadow-lg shadow-accent-cta/30">
+            <span className="text-3xl font-bold text-on-surface">{holeNumber}</span>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-black">Hull {holeNumber}</h2>
+            <h2 className="text-xl font-bold text-on-surface">Hull {holeNumber}</h2>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-sm text-grey-400">Par {par}</span>
+              <span className="text-sm text-on-surface-variant">Par {par}</span>
               {handicapIndex && (
                 <>
-                  <span className="text-grey-300">•</span>
-                  <span className="text-sm text-grey-400">HCP {handicapIndex}</span>
+                  <span className="text-on-surface-variant/60">•</span>
+                  <span className="text-sm text-on-surface-variant">HCP {handicapIndex}</span>
                 </>
               )}
             </div>
@@ -72,41 +72,41 @@ export function CourseInfo({
       {/* Stats grid */}
       <div className="grid grid-cols-3 gap-4">
         {/* Length */}
-        <div className="text-center p-3 bg-grey-50 rounded-xl">
-          <Icon name="straighten" className="w-5 h-5 text-grey-400 mx-auto mb-1" />
-          <p className="text-lg font-bold text-black">{lengthMeter}</p>
-          <p className="text-xs text-grey-400">meter</p>
+        <div className="text-center p-3 bg-surface rounded-xl">
+          <Icon name="straighten" className="w-5 h-5 text-on-surface-variant mx-auto mb-1" />
+          <p className="text-lg font-bold text-on-surface">{lengthMeter}</p>
+          <p className="text-xs text-on-surface-variant">meter</p>
         </div>
 
         {/* Par indicator */}
-        <div className="text-center p-3 bg-grey-50 rounded-xl">
-          <Icon name="flag" className="w-5 h-5 text-grey-400 mx-auto mb-1" />
-          <p className="text-lg font-bold text-black">{par}</p>
-          <p className="text-xs text-grey-400">par</p>
+        <div className="text-center p-3 bg-surface rounded-xl">
+          <Icon name="flag" className="w-5 h-5 text-on-surface-variant mx-auto mb-1" />
+          <p className="text-lg font-bold text-on-surface">{par}</p>
+          <p className="text-xs text-on-surface-variant">par</p>
         </div>
 
         {/* Handicap */}
-        <div className="text-center p-3 bg-grey-50 rounded-xl">
-          <Icon name="trending_up" className="w-5 h-5 text-grey-400 mx-auto mb-1" />
-          <p className="text-lg font-bold text-black">{handicapIndex || "–"}</p>
-          <p className="text-xs text-grey-400">handicap</p>
+        <div className="text-center p-3 bg-surface rounded-xl">
+          <Icon name="trending_up" className="w-5 h-5 text-on-surface-variant mx-auto mb-1" />
+          <p className="text-lg font-bold text-on-surface">{handicapIndex || "–"}</p>
+          <p className="text-xs text-on-surface-variant">handicap</p>
         </div>
       </div>
 
       {/* Personal history */}
       {history && history.timesPlayed > 0 && (
-        <div className="mt-6 pt-6 border-t border-grey-200">
+        <div className="mt-6 pt-6 border-t border-outline-variant/30">
           <div className="flex items-center gap-2 mb-4">
-            <Icon name="emoji_events" className="w-4 h-4 text-grey-400" />
-            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Din historikk på dette hullet</MonoLabel>
+            <Icon name="emoji_events" className="w-4 h-4 text-on-surface-variant" />
+            <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Din historikk på dette hullet</MonoLabel>
           </div>
 
           <div className="grid grid-cols-3 gap-4">
             <div className="text-center">
-              <p className="text-xs text-grey-400 mb-1">Beste</p>
+              <p className="text-xs text-on-surface-variant mb-1">Beste</p>
               <p className={cn(
                 "text-xl font-bold",
-                history.best <= par - 1 ? "text-red-500" : "text-black"
+                history.best <= par - 1 ? "text-red-500" : "text-on-surface"
               )}>
                 {history.best}
               </p>
@@ -117,29 +117,29 @@ export function CourseInfo({
               )}
             </div>
             <div className="text-center">
-              <p className="text-xs text-grey-400 mb-1">Snitt</p>
+              <p className="text-xs text-on-surface-variant mb-1">Snitt</p>
               <p className={cn(
                 "text-xl font-bold",
-                history.average > par ? "text-orange-500" : "text-black"
+                history.average > par ? "text-orange-500" : "text-on-surface"
               )}>
                 {history.average.toFixed(1)}
               </p>
             </div>
             <div className="text-center">
-              <p className="text-xs text-grey-400 mb-1">Verste</p>
-              <p className="text-xl font-bold text-black">{history.worst}</p>
+              <p className="text-xs text-on-surface-variant mb-1">Verste</p>
+              <p className="text-xl font-bold text-on-surface">{history.worst}</p>
             </div>
           </div>
 
-          <p className="text-xs text-grey-400 text-center mt-3">
+          <p className="text-xs text-on-surface-variant text-center mt-3">
             Spilt {history.timesPlayed} {history.timesPlayed === 1 ? "gang" : "ganger"}
           </p>
         </div>
       )}
 
       {!history && (
-        <div className="mt-6 pt-6 border-t border-grey-200">
-          <div className="flex items-center gap-2 text-grey-400">
+        <div className="mt-6 pt-6 border-t border-outline-variant/30">
+          <div className="flex items-center gap-2 text-on-surface-variant">
             <Icon name="error" className="w-4 h-4" />
             <p className="text-xs">Ingen historikk for dette hullet ennå</p>
           </div>

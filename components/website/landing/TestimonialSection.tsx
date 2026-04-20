@@ -12,7 +12,7 @@ export function TestimonialSection() {
       <div className="w-container">
         <RevealOnScroll>
           <div className="max-w-3xl mx-auto text-center">
-            <blockquote className="text-xl md:text-2xl font-medium text-black leading-relaxed tracking-tight mb-8">
+            <blockquote className="text-xl md:text-2xl font-medium text-on-surface leading-relaxed tracking-tight mb-8">
               &ldquo;{testimonial.quote}&rdquo;
             </blockquote>
             <p className="text-sm text-muted">

@@ -45,7 +45,7 @@ export function DegradationAlertWidget() {
         return (
           <div
             key={area.name}
-            className="flex items-center justify-between py-2 px-3 rounded-xl bg-grey-50"
+            className="flex items-center justify-between py-2 px-3 rounded-xl bg-surface"
           >
             <div className="flex items-center gap-3">
               <div className={cn("w-2.5 h-2.5 rounded-full", config.dot)} />

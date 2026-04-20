@@ -135,7 +135,7 @@ function SetPasswordContent() {
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
-        className="hidden lg:flex lg:w-1/2 relative overflow-hidden text-white"
+        className="hidden lg:flex lg:w-1/2 relative overflow-hidden text-surface"
         style={{
           background:
             "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-alt) 100%)",
@@ -170,9 +170,9 @@ function SetPasswordContent() {
             className="flex items-center justify-between"
           >
             <AKLogo variant="white" size={56} />
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-white/5">
-              <Icon name="auto_awesome" className="w-3.5 h-3.5 text-accent-cta" />
-              <span className="text-[11px] font-medium tracking-wide uppercase text-white/90">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-surface-container-lowest/5">
+              <Icon name="auto_awesome" className="w-3.5 h-3.5 text-secondary-fixed" />
+              <span className="text-[11px] font-medium tracking-wide uppercase text-surface/90">
                 Ny konto
               </span>
             </div>
@@ -186,7 +186,7 @@ function SetPasswordContent() {
           >
             <motion.p
               variants={fadeInUp}
-              className="text-sm font-medium tracking-[0.18em] uppercase text-accent-cta mb-6"
+              className="text-sm font-medium tracking-[0.18em] uppercase text-secondary-fixed mb-6"
             >
               Velkommen ombord
             </motion.p>
@@ -200,7 +200,7 @@ function SetPasswordContent() {
             </motion.h1>
             <motion.p
               variants={fadeInUp}
-              className="text-lg leading-relaxed text-white/70 max-w-md"
+              className="text-lg leading-relaxed text-surface/70 max-w-md"
             >
               Velg et passord for kontoen din, så tar vi deg rett inn i
               spillerportalen og treningsplanen din.
@@ -211,7 +211,7 @@ function SetPasswordContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6, ease: EASE }}
-            className="text-xs text-white/50 tracking-wide"
+            className="text-xs text-surface/50 tracking-wide"
           >
             &copy; {new Date().getFullYear()} AK Golf Group
           </motion.div>
@@ -329,7 +329,7 @@ function SetPasswordContent() {
                             minLength={8}
                             autoComplete="new-password"
                             placeholder="Minst 8 tegn"
-                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-text placeholder:text-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-[border-color,box-shadow]"
+                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-surface-container-lowest border border-black/10 text-text placeholder:text-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-[border-color,box-shadow]"
                           />
                         </div>
                       </div>
@@ -353,7 +353,7 @@ function SetPasswordContent() {
                             required
                             autoComplete="new-password"
                             placeholder="Gjenta passordet"
-                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-white border border-black/10 text-text placeholder:text-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-[border-color,box-shadow]"
+                            className="w-full pl-10 pr-4 py-3 text-sm rounded-xl bg-surface-container-lowest border border-black/10 text-text placeholder:text-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-[border-color,box-shadow]"
                           />
                         </div>
                       </div>
@@ -374,7 +374,7 @@ function SetPasswordContent() {
                       <button
                         type="submit"
                         disabled={submitting}
-                        className="w-full py-3 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-alt disabled:opacity-60 disabled:cursor-not-allowed transition-colors group relative overflow-hidden cursor-pointer border-none mt-1"
+                        className="w-full py-3 rounded-xl bg-primary text-surface text-sm font-semibold hover:bg-primary-alt disabled:opacity-60 disabled:cursor-not-allowed transition-colors group relative overflow-hidden cursor-pointer border-none mt-1"
                       >
                         <span className="relative z-10 flex items-center justify-center gap-2">
                           {submitting

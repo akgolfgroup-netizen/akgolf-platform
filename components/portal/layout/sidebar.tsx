@@ -8,12 +8,12 @@
  *
  * Eksakte klasser fra Heritage:
  * - Container: h-screen w-64 bg-primary-container py-8 gap-y-6
- * - Header: px-8 mb-4, h1 text-white text-lg, p text-[#d2f000] text-[11px] widest
+ * - Header: px-8 mb-4, h1 text-surface text-lg, p text-[#d2f000] text-[11px] widest
  * - Active: bg-[#d2f000] text-[#154212] rounded-lg mx-4 px-4 py-3 text-[11px] widest
  *   + icon FILLED
- * - Inactive: text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-white
+ * - Inactive: text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-surface
  * - Subscription: bg-[#154212] border border-[#d2f000]/20 rounded-xl p-4
- * - Bottom links: px-4 py-2 text-[#fdf9f0]/70 hover:text-white text-[11px]
+ * - Bottom links: px-4 py-2 text-[#fdf9f0]/70 hover:text-surface text-[11px]
  */
 
 import Link from "next/link";
@@ -90,7 +90,7 @@ function NavLink({
         "flex items-center gap-3 rounded-lg mx-4 px-4 py-3 uppercase text-[11px] font-medium tracking-widest transition-all",
         active
           ? "bg-[#d2f000] text-[#154212]"
-          : "text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-white",
+          : "text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-surface",
       )}
     >
       <Icon name={item.iconName} size={20} filled={active} />
@@ -120,7 +120,7 @@ function SidebarBody({
           onClick={onNavClick}
           className="flex flex-col"
         >
-          <h1 className="text-white font-bold text-lg tracking-tight">AK Golf</h1>
+          <h1 className="text-surface font-bold text-lg tracking-tight">AK Golf</h1>
           <p className="uppercase text-[11px] font-medium tracking-widest text-[#d2f000]">
             Precision Performance
           </p>
@@ -158,7 +158,7 @@ function SidebarBody({
           <Link
             href="/portal/profil"
             onClick={onNavClick}
-            className="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
+            className="flex items-center gap-3 text-[#fdf9f0]/70 hover:text-surface px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
           >
             <Icon name="help_outline" size={20} />
             <span>Support</span>
@@ -168,7 +168,7 @@ function SidebarBody({
               onSignOut();
               onNavClick?.();
             }}
-            className="w-full flex items-center gap-3 text-[#fdf9f0]/70 hover:text-white px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
+            className="w-full flex items-center gap-3 text-[#fdf9f0]/70 hover:text-surface px-4 py-2 text-[11px] font-medium tracking-widest uppercase transition-all"
           >
             <Icon name="logout" size={20} />
             <span>Sign out</span>
@@ -219,7 +219,7 @@ export function Sidebar({ user }: SidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={close}
-              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-40 bg-on-surface/50 backdrop-blur-sm lg:hidden"
             />
             <motion.aside
               initial={{ x: "-100%" }}
@@ -231,7 +231,7 @@ export function Sidebar({ user }: SidebarProps) {
             >
               <button
                 onClick={close}
-                className="absolute right-4 top-4 rounded-lg p-2 text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-white transition-colors"
+                className="absolute right-4 top-4 rounded-lg p-2 text-[#fdf9f0]/70 hover:bg-[#154212]/80 hover:text-surface transition-colors"
                 aria-label="Lukk meny"
               >
                 <Icon name="close" size={20} />

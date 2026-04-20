@@ -196,7 +196,7 @@ function CustomerDetailsForm({
       <motion.button
         onClick={onProceed}
         disabled={!isValid}
-        className="w-full mt-6 py-4 rounded-full bg-[black] text-white font-semibold hover:bg-[grey-800] transition-colors disabled:opacity-50"
+        className="w-full mt-6 py-4 rounded-full bg-[black] text-surface font-semibold hover:bg-[grey-800] transition-colors disabled:opacity-50"
         whileTap={{ scale: 0.99 }}
       >
         Fortsett til betaling
@@ -266,7 +266,7 @@ function InputField({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={[
-            "w-full py-3 rounded-lg border border-[grey-200] bg-white text-[black] placeholder:text-[grey-300]",
+            "w-full py-3 rounded-lg border border-[grey-200] bg-surface-container-lowest text-[black] placeholder:text-[grey-300]",
             "focus:outline-none focus:border-[black] focus:ring-1 focus:ring-[black]/20 transition-colors",
             Icon ? "pl-10 pr-4" : "px-4",
           ].join(" ")}

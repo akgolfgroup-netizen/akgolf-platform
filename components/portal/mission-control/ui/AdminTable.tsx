@@ -14,7 +14,7 @@ export function AdminTable({
   return (
     <div
       className={cn(
-        "overflow-x-auto bg-white border border-[var(--color-grey-200)] rounded-xl",
+        "overflow-x-auto bg-surface-container-lowest border border-[var(--color-grey-200)] rounded-xl",
         containerClassName,
       )}
     >

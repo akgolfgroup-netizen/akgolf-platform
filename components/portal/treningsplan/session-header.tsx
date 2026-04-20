@@ -42,23 +42,23 @@ export function SessionHeader({
   const progress = totalExercises > 0 ? (completedCount / totalExercises) * 100 : 0;
 
   return (
-    <div className="rounded-2xl border border-grey-200/50 bg-white overflow-hidden shadow-sm">
+    <div className="rounded-2xl border border-outline-variant/30/50 bg-surface-container-lowest overflow-hidden shadow-sm">
       {/* Top bar with title and action */}
-      <div className="flex items-center justify-between p-5 border-b border-grey-200/30">
+      <div className="flex items-center justify-between p-5 border-b border-outline-variant/30/30">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <h2 className="text-lg font-semibold text-black">{session.title}</h2>
+            <h2 className="text-lg font-semibold text-on-surface">{session.title}</h2>
             <AreaCategoryBadge category={areaData.category} />
           </div>
           {session.description && (
-            <p className="text-sm text-grey-400">{session.description}</p>
+            <p className="text-sm text-on-surface-variant">{session.description}</p>
           )}
         </div>
 
         {onStartSession && !isActive && (
           <button
             onClick={onStartSession}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent-cta text-primary font-semibold hover:bg-accent-cta/80 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary-fixed text-primary font-semibold hover:bg-secondary-fixed/80 transition-colors"
           >
             <Icon name="play_arrow" className="w-4 h-4" />
             Start okt
@@ -68,8 +68,8 @@ export function SessionHeader({
         {isActive && (
           <div className="flex items-center gap-3">
             <div className="text-right">
-              <p className="text-sm text-grey-400">Fremgang</p>
-              <p className="text-lg font-semibold text-black">
+              <p className="text-sm text-on-surface-variant">Fremgang</p>
+              <p className="text-lg font-semibold text-on-surface">
                 {completedCount}/{totalExercises}
               </p>
             </div>
@@ -90,9 +90,9 @@ export function SessionHeader({
         <div className="col-span-2">
           <div className="flex items-center gap-2 mb-2">
             <Icon name="my_location" className="w-4 h-4 text-primary" />
-            <span className="text-[11px] text-grey-400 uppercase font-medium">Malsetning</span>
+            <span className="text-[11px] text-on-surface-variant uppercase font-medium">Malsetning</span>
           </div>
-          <p className="text-sm text-black">{session.objective}</p>
+          <p className="text-sm text-on-surface">{session.objective}</p>
           {session.focusPoints.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mt-2">
               {session.focusPoints.map((point, idx) => (
@@ -111,9 +111,9 @@ export function SessionHeader({
         <div>
           <div className="flex items-center gap-2 mb-2">
             <Icon name="schedule" className="w-4 h-4 text-primary" />
-            <span className="text-[11px] text-grey-400 uppercase font-medium">Varighet</span>
+            <span className="text-[11px] text-on-surface-variant uppercase font-medium">Varighet</span>
           </div>
-          <p className="text-sm text-black">{session.durationMinutes} minutter</p>
+          <p className="text-sm text-on-surface">{session.durationMinutes} minutter</p>
           <div className="flex items-center gap-1.5 mt-1">
             <Icon name="bolt" className="w-3 h-3" style={{ color: intensity.color }} />
             <span className="text-[11px]" style={{ color: intensity.color }}>
@@ -126,7 +126,7 @@ export function SessionHeader({
         <div>
           <div className="flex items-center gap-2 mb-2">
             <Icon name="build" className="w-4 h-4 text-primary" />
-            <span className="text-[11px] text-grey-400 uppercase font-medium">Hjelpemidler</span>
+            <span className="text-[11px] text-on-surface-variant uppercase font-medium">Hjelpemidler</span>
           </div>
           <div className="flex flex-wrap gap-1">
             {session.equipment.slice(0, 3).map((item, idx) => (
@@ -138,7 +138,7 @@ export function SessionHeader({
               </span>
             ))}
             {session.equipment.length > 3 && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-surface text-grey-400">
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-surface text-on-surface-variant">
                 +{session.equipment.length - 3}
               </span>
             )}
@@ -147,7 +147,7 @@ export function SessionHeader({
       </div>
 
       {/* AK-formelen section */}
-      <div className="flex items-center justify-between p-5 border-t border-grey-200/30 bg-background-beige">
+      <div className="flex items-center justify-between p-5 border-t border-outline-variant/30/30 bg-background-beige">
         <div className="flex items-center gap-4">
           {/* Pyramid visualization */}
           <div className="hidden sm:block w-24">
@@ -156,7 +156,7 @@ export function SessionHeader({
 
           {/* Session ID display */}
           <div>
-            <p className="text-[11px] text-grey-400 uppercase mb-1.5">AK-formel</p>
+            <p className="text-[11px] text-on-surface-variant uppercase mb-1.5">AK-formel</p>
             <SessionIdDisplay
               pyramid={session.primaryPyramid}
               area={session.primaryArea}
@@ -167,12 +167,12 @@ export function SessionHeader({
           {/* Secondary areas */}
           {session.secondaryAreas && session.secondaryAreas.length > 0 && (
             <div className="hidden md:block">
-              <p className="text-[11px] text-grey-400 uppercase mb-1.5">Sekundaere omrader</p>
+              <p className="text-[11px] text-on-surface-variant uppercase mb-1.5">Sekundaere omrader</p>
               <div className="flex gap-1">
                 {session.secondaryAreas.map((area) => (
                   <span
                     key={area}
-                    className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-white border border-grey-200/50 text-grey-400"
+                    className="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-surface-container-lowest border border-outline-variant/30/50 text-on-surface-variant"
                   >
                     {TRAINING_AREAS[area].name}
                   </span>
@@ -192,7 +192,7 @@ export function SessionHeader({
       {isActive && (
         <div className="h-1 bg-surface">
           <div
-            className="h-full bg-accent-cta transition-[width] duration-300"
+            className="h-full bg-secondary-fixed transition-[width] duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -221,7 +221,7 @@ export function SessionCardCompact({
       className={`w-full text-left p-4 rounded-xl border transition-all ${
         isCompleted
           ? "bg-success/5 border-success/30"
-          : "bg-white border-grey-200/50 hover:border-grey-200 hover:shadow-sm"
+          : "bg-surface-container-lowest border-outline-variant/30/50 hover:border-outline-variant/30 hover:shadow-sm"
       }`}
     >
       <div className="flex items-center justify-between">
@@ -241,7 +241,7 @@ export function SessionCardCompact({
 
           <div>
             <div className="flex items-center gap-2">
-              <h3 className={`font-medium ${isCompleted ? "text-grey-400" : "text-black"}`}>
+              <h3 className={`font-medium ${isCompleted ? "text-on-surface-variant" : "text-on-surface"}`}>
                 {session.title}
               </h3>
               <SessionIdDisplay
@@ -250,13 +250,13 @@ export function SessionCardCompact({
                 compact
               />
             </div>
-            <p className="text-sm text-grey-400">
+            <p className="text-sm text-on-surface-variant">
               {session.durationMinutes} min - {intensity.name} intensitet
             </p>
           </div>
         </div>
 
-        <Icon name="chevron_right" className="w-5 h-5 text-grey-200" />
+        <Icon name="chevron_right" className="w-5 h-5 text-surface-variant" />
       </div>
     </button>
   );

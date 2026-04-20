@@ -91,7 +91,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
       {/* Tilbake-lenke */}
       <Link
         href="/portal/bookinger"
-        className="inline-flex items-center gap-1.5 text-[12px] font-medium text-grey-400 hover:text-black transition-colors"
+        className="inline-flex items-center gap-1.5 text-[12px] font-medium text-on-surface-variant hover:text-on-surface transition-colors"
       >
         <Icon name="arrow_back" className="w-3.5 h-3.5" />
         Tilbake til bookinger
@@ -100,10 +100,10 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-black">
+          <h1 className="text-xl font-bold text-on-surface">
             {booking.serviceName}
           </h1>
-          <p className="text-sm text-grey-400 mt-1 tabular-nums">
+          <p className="text-sm text-on-surface-variant mt-1 tabular-nums">
             {format(start, "EEEE d. MMMM yyyy", { locale: nb })}
           </p>
         </div>
@@ -152,18 +152,18 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
 
           {/* Betaling */}
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-xl bg-grey-50 flex items-center justify-center shrink-0">
-              <Icon name="credit_card" className="w-4 h-4 text-grey-400" />
+            <div className="w-8 h-8 rounded-xl bg-surface flex items-center justify-center shrink-0">
+              <Icon name="credit_card" className="w-4 h-4 text-on-surface-variant" />
             </div>
             <div className="flex-1">
-              <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Betaling</MonoLabel>
+              <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Betaling</MonoLabel>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-[14px] text-black tabular-nums">
+                <span className="text-[14px] text-on-surface tabular-nums">
                   {booking.amount > 0
                     ? `kr ${booking.amount.toLocaleString("nb-NO")}`
                     : "Inkludert i abonnement"}
                 </span>
-                <span className="text-[11px] text-grey-400">
+                <span className="text-[11px] text-on-surface-variant">
                   ({METHOD_LABELS[booking.paymentMethod] ?? booking.paymentMethod})
                 </span>
                 <BookingStatusBadge
@@ -197,7 +197,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
       {/* Resultatmelding */}
       {cancelResult && (
         <PremiumCard>
-          <p className="text-sm text-black">{cancelResult}</p>
+          <p className="text-sm text-on-surface">{cancelResult}</p>
         </PremiumCard>
       )}
 
@@ -207,7 +207,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {isActive(booking.status) && (
             <Link
               href={`/portal/bookinger/${booking.id}/endre`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent-cta text-black text-[12px] font-bold hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold hover:opacity-90 transition-opacity"
             >
               <Icon name="calendar_today"Clock className="w-4 h-4" />
               Endre tidspunkt
@@ -217,7 +217,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {!showCancelConfirm && (
             <button
               onClick={() => setShowCancelConfirm(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-grey-200 bg-white text-black text-[12px] font-bold hover:border-grey-300 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-outline-variant/30 bg-surface-container-lowest text-on-surface text-[12px] font-bold hover:border-outline-variant/50 transition-colors cursor-pointer"
             >
               <Icon name="close"Circle className="w-4 h-4" />
               Avbestill
@@ -230,28 +230,28 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
       {showCancelConfirm && (
         <PremiumCard>
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-xl bg-grey-50 flex items-center justify-center shrink-0">
-              <Icon name="warning" className="w-4 h-4 text-grey-400" />
+            <div className="w-8 h-8 rounded-xl bg-surface flex items-center justify-center shrink-0">
+              <Icon name="warning" className="w-4 h-4 text-on-surface-variant" />
             </div>
             <div className="flex-1">
-              <p className="text-[14px] font-semibold text-black mb-1">
+              <p className="text-[14px] font-semibold text-on-surface mb-1">
                 Bekreft avbestilling
               </p>
-              <p className="text-[12px] text-grey-400 mb-4">
+              <p className="text-[12px] text-on-surface-variant mb-4">
                 Er du sikker på at du vil avbestille denne timen? Avbestillingsreglene gjelder.
               </p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleCancel}
                   disabled={isPending}
-                  className="px-4 py-2 rounded-full bg-error text-white text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
+                  className="px-4 py-2 rounded-full bg-error text-surface text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
                 >
                   {isPending ? "Avbestiller..." : "Ja, avbestill"}
                 </button>
                 <button
                   onClick={() => setShowCancelConfirm(false)}
                   disabled={isPending}
-                  className="px-4 py-2 rounded-full border border-grey-200 bg-white text-black text-[12px] font-bold hover:border-grey-300 transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-full border border-outline-variant/30 bg-surface-container-lowest text-on-surface text-[12px] font-bold hover:border-outline-variant/50 transition-colors cursor-pointer"
                 >
                   Angre
                 </button>
@@ -279,12 +279,12 @@ function DetailRow({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="w-8 h-8 rounded-xl bg-grey-50 flex items-center justify-center shrink-0">
-        <span className="text-grey-400">{icon}</span>
+      <div className="w-8 h-8 rounded-xl bg-surface flex items-center justify-center shrink-0">
+        <span className="text-on-surface-variant">{icon}</span>
       </div>
       <div>
-        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{label}</MonoLabel>
-        <p className={`text-[14px] text-black mt-0.5${tabular ? " tabular-nums" : ""}`}>{value}</p>
+        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">{label}</MonoLabel>
+        <p className={`text-[14px] text-on-surface mt-0.5${tabular ? " tabular-nums" : ""}`}>{value}</p>
       </div>
     </div>
   );

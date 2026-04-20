@@ -39,7 +39,7 @@ export function GlassPanel({
         variant === "dark" &&
           "bg-[rgba(10,20,15,0.82)] text-[#F2F5F1] border-white/[0.14]",
         variant === "light" &&
-          "bg-[rgba(248,250,246,0.78)] text-grey-900 border-[rgba(10,31,24,0.08)] shadow-[0_20px_60px_rgba(10,31,24,0.18)]",
+          "bg-[rgba(248,250,246,0.78)] text-on-surface border-[rgba(10,31,24,0.08)] shadow-[0_20px_60px_rgba(10,31,24,0.18)]",
         blur === "default" && "backdrop-blur-[22px] backdrop-saturate-[130%]",
         blur === "strong" && "backdrop-blur-[36px] backdrop-saturate-[140%]",
         PADDING_MAP[padding],
@@ -85,7 +85,7 @@ export function GlassPanelRow({
       <span
         className={cn(
           "text-xs",
-          variant === "dark" ? "text-white/58" : "text-grey-500"
+          variant === "dark" ? "text-surface/58" : "text-on-surface-variant/80"
         )}
       >
         {label}

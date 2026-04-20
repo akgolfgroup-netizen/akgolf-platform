@@ -28,9 +28,9 @@ const VARIANT_CLASSES = {
   glass:
     "bg-[rgba(10,20,15,0.82)] backdrop-blur-[22px] backdrop-saturate-[130%] border border-white/[0.14] text-[#F2F5F1]",
   accent:
-    "bg-accent-cta text-[#0A1F18] border border-transparent",
+    "bg-secondary-fixed text-[#0A1F18] border border-transparent",
   light:
-    "bg-[rgba(248,250,246,0.78)] backdrop-blur-[22px] backdrop-saturate-[130%] border border-[rgba(10,31,24,0.08)] text-grey-900",
+    "bg-[rgba(248,250,246,0.78)] backdrop-blur-[22px] backdrop-saturate-[130%] border border-[rgba(10,31,24,0.08)] text-on-surface",
 };
 
 export function BentoCard({
@@ -48,7 +48,7 @@ export function BentoCard({
         VARIANT_CLASSES[variant],
         PADDING_MAP[padding],
         interactive &&
-          "transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:border-accent-cta/30",
+          "transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:border-secondary-fixed/30",
         className
       )}
       {...props}
@@ -110,7 +110,7 @@ export function BentoEyebrow({
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45",
+        "inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-surface/45",
         className
       )}
       {...props}

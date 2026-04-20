@@ -18,7 +18,7 @@ export function CancellationRulesCard({ rules }: CancellationRulesCardProps) {
           <Icon name="schedule" className="w-4 h-4 text-primary" />
         </div>
         <div>
-          <h3 className="font-semibold text-[13px] text-grey-900">
+          <h3 className="font-semibold text-[13px] text-on-surface">
             Avbestillingsregler
           </h3>
           <p className="text-[10px] text-muted uppercase tracking-wider">
@@ -30,7 +30,7 @@ export function CancellationRulesCard({ rules }: CancellationRulesCardProps) {
         {rules.map((rule) => (
           <div
             key={rule.hours}
-            className="rounded-2xl border border-grey-200 bg-white/50 p-3"
+            className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/50 p-3"
           >
             <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted mb-1">
               {rule.hours} timer

@@ -95,13 +95,13 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
         <div>
-          <h1 className="text-2xl font-bold text-black">AI Coach</h1>
-          <p className="text-grey-400 mt-1">Din personlige golf-assistent</p>
+          <h1 className="text-2xl font-bold text-on-surface">AI Coach</h1>
+          <p className="text-on-surface-variant mt-1">Din personlige golf-assistent</p>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/portal/ai-coach/chat"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black text-white text-sm font-medium hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-on-surface text-surface text-sm font-medium hover:opacity-90 transition-opacity"
           >
             <Icon name="auto_awesome" className="w-4 h-4" />
             Chat med AI Coach
@@ -118,10 +118,10 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
         >
           <PremiumCard variant="accent" padding="md" radius="large">
             <div className="flex items-start gap-3">
-              <Icon name="auto_awesome" className="w-5 h-5 text-black mt-0.5 flex-shrink-0" />
+              <Icon name="auto_awesome" className="w-5 h-5 text-on-surface mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-black">Dagens innsikt</p>
-                <p className="text-sm text-grey-400 mt-0.5">{quickInsight}</p>
+                <p className="text-sm font-semibold text-on-surface">Dagens innsikt</p>
+                <p className="text-sm text-on-surface-variant mt-0.5">{quickInsight}</p>
               </div>
             </div>
           </PremiumCard>
@@ -135,7 +135,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
           value={KPI_DATA.driverSpeed.value}
           unit={KPI_DATA.driverSpeed.unit}
           trend={KPI_DATA.driverSpeed.trend}
-          icon={<Icon name="monitoring" className="w-5 h-5 text-black" />}
+          icon={<Icon name="monitoring" className="w-5 h-5 text-on-surface" />}
           delay={0.1}
         />
         <KpiCard
@@ -170,7 +170,7 @@ export function AiCoachDashboardClient({ quickInsight }: AiCoachDashboardClientP
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3, ease: EASE_APPLE }}
       >
-        <h3 className="text-sm font-semibold text-black mb-4">Hurtighandlinger</h3>
+        <h3 className="text-sm font-semibold text-on-surface mb-4">Hurtighandlinger</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <QuickActionButton
             href="/portal/trackman"
@@ -244,8 +244,8 @@ function KpiCard({
     <PremiumCard delay={delay} padding="md" radius="large" hover="lift">
       <div className="flex items-start justify-between">
         <div>
-          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{label}</MonoLabel>
-          <p className="text-3xl font-bold text-black mt-1 tabular-nums">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">{label}</MonoLabel>
+          <p className="text-3xl font-bold text-on-surface mt-1 tabular-nums">
             {typeof value === "number" && value % 1 !== 0
               ? value.toFixed(1)
               : value}
@@ -266,7 +266,7 @@ function KpiCard({
             </span>
           </div>
         </div>
-        <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
           {icon}
         </div>
       </div>
@@ -288,14 +288,14 @@ function QuickActionButton({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 rounded-xl bg-white border border-grey-200 p-4 text-sm font-medium text-black hover:border-grey-300 hover:shadow-[0_4px_12px_rgba(10,31,24,0.04)] transition-all"
+      className="flex items-center gap-3 rounded-xl bg-surface-container-lowest border border-outline-variant/30 p-4 text-sm font-medium text-on-surface hover:border-outline-variant/50 hover:shadow-[0_4px_12px_rgba(10,31,24,0.04)] transition-all"
     >
-      <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center flex-shrink-0">
+      <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center flex-shrink-0">
         {icon}
       </div>
       <div className="text-left">
-        <p className="font-semibold text-sm text-black">{title}</p>
-        <p className="text-xs text-grey-400 mt-0.5">{subtitle}</p>
+        <p className="font-semibold text-sm text-on-surface">{title}</p>
+        <p className="text-xs text-on-surface-variant mt-0.5">{subtitle}</p>
       </div>
     </Link>
   );
@@ -315,8 +315,8 @@ function ModulePreviewCard({
   return (
     <PremiumCard delay={delay} padding="md" radius="large" hover="lift">
       <div className="flex flex-col h-full">
-        <h4 className="text-sm font-semibold text-black">{title}</h4>
-        <p className="text-sm text-grey-400 mt-1 flex-1">{description}</p>
+        <h4 className="text-sm font-semibold text-on-surface">{title}</h4>
+        <p className="text-sm text-on-surface-variant mt-1 flex-1">{description}</p>
         <div className="mt-4">
           <Button variant="secondary" size="sm" asChild>
             <Link href={href}>Åpne</Link>

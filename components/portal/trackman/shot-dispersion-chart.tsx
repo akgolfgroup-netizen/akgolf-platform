@@ -66,7 +66,7 @@ export function ShotDispersionChart({ shots }: ShotDispersionChartProps) {
 
   if (validShots.length === 0) {
     return (
-      <div className="h-[260px] flex items-center justify-center text-sm text-grey-400">
+      <div className="h-[260px] flex items-center justify-center text-sm text-on-surface-variant">
         Ingen shot-data med offline- og carry-målinger for denne sesjonen
       </div>
     );

@@ -65,19 +65,19 @@ export function FloatingCrumbs({
       className={cn(
         "inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full",
         "bg-[rgba(12,22,17,0.62)] backdrop-blur-[22px] backdrop-saturate-[130%]",
-        "border border-white/[0.14] text-white/88 text-xs",
+        "border border-white/[0.14] text-surface/88 text-xs",
         className
       )}
       {...props}
     >
       {items.map((item, i) => (
         <span key={i} className="flex items-center gap-2.5">
-          {i > 0 && <span className="w-1 h-1 rounded-full bg-white/30" />}
-          <span className={item.active ? "font-semibold text-white" : ""}>
+          {i > 0 && <span className="w-1 h-1 rounded-full bg-surface-container-lowest/30" />}
+          <span className={item.active ? "font-semibold text-surface" : ""}>
             {item.label}
           </span>
           {item.meta && (
-            <span className="text-white/55 text-[11px]">{item.meta}</span>
+            <span className="text-surface/55 text-[11px]">{item.meta}</span>
           )}
         </span>
       ))}
@@ -124,10 +124,10 @@ export function FloatingSegmented<T extends string>({
             className={cn(
               "px-4 py-1.5 rounded-full text-[12px] font-semibold transition-all duration-200",
               isActive
-                ? "bg-[#0A1F18] text-white shadow-[0_2px_6px_rgba(0,0,0,0.3)]"
+                ? "bg-[#0A1F18] text-surface shadow-[0_2px_6px_rgba(0,0,0,0.3)]"
                 : variant === "dark"
-                  ? "text-white/60 hover:text-white"
-                  : "text-grey-500 hover:text-grey-900"
+                  ? "text-surface/60 hover:text-surface"
+                  : "text-on-surface-variant/80 hover:text-on-surface"
             )}
           >
             {item.label}

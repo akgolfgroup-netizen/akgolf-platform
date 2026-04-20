@@ -19,7 +19,7 @@ export function HowItWorksSection() {
           <h2 className="w-heading-lg mt-4 mb-4 max-w-[640px]">
             {HOW_IT_WORKS.heading}
           </h2>
-          <p className="text-grey-500 leading-relaxed max-w-2xl mb-16">
+          <p className="text-on-surface-variant/80 leading-relaxed max-w-2xl mb-16">
             {HOW_IT_WORKS.description}
           </p>
         </RevealOnScroll>
@@ -30,7 +30,7 @@ export function HowItWorksSection() {
               <div
                 className={`flex gap-6 md:gap-10 py-8 ${
                   i < HOW_IT_WORKS.steps.length - 1
-                    ? "border-b border-grey-100"
+                    ? "border-b border-outline-variant/20"
                     : ""
                 }`}
               >
@@ -38,7 +38,7 @@ export function HowItWorksSection() {
                   {step.number}
                 </p>
                 <div>
-                  <h3 className="text-lg font-bold text-black tracking-tight mb-2">
+                  <h3 className="text-lg font-bold text-on-surface tracking-tight mb-2">
                     {step.title}
                   </h3>
                   <p className="text-sm text-text leading-relaxed max-w-lg">

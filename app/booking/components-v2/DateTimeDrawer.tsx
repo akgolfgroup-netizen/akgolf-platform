@@ -87,7 +87,7 @@ export function DateTimeDrawer({
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
-      <div className="text-lg font-bold text-black">Velg dato og tid</div>
+      <div className="text-lg font-bold text-on-surface">Velg dato og tid</div>
       <div className="text-xs text-muted mb-5">
         {serviceName} med {trainerFirstName}
       </div>
@@ -133,7 +133,7 @@ export function DateTimeDrawer({
             type="button"
             onClick={handleConfirm}
             disabled={!canConfirm}
-            className="w-full mt-5 py-4 rounded-[14px] bg-accent-cta text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="w-full mt-5 py-4 rounded-[14px] bg-secondary-fixed text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             Bekreft tid
             <Icon name="chevron_right" className="w-4 h-4" strokeWidth={2.5} />

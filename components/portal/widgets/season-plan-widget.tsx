@@ -29,10 +29,10 @@ export function SeasonPlanWidget() {
 
   const phaseColors: Record<string, string> = {
     Grunnlag: "bg-primary",
-    Spesialisering: "bg-accent-cta",
+    Spesialisering: "bg-secondary-fixed",
     Konkurranse: "bg-success",
     Overgang: "bg-warning",
-    Restitusjon: "bg-grey-300",
+    Restitusjon: "bg-outline-variant",
   };
 
   return (
@@ -54,13 +54,13 @@ export function SeasonPlanWidget() {
               "text-center py-2 rounded-lg border transition-colors " +
               (m.active
                 ? "border-primary bg-primary-soft"
-                : "border-grey-100 bg-grey-50")
+                : "border-outline-variant/20 bg-surface")
             }
           >
             <p className="text-xs font-medium text-text">{m.name}</p>
             <div
               className={
-                "mx-auto mt-1 h-1 w-4 rounded-full " + (phaseColors[m.phase] ?? "bg-grey-300")
+                "mx-auto mt-1 h-1 w-4 rounded-full " + (phaseColors[m.phase] ?? "bg-outline-variant")
               }
             />
           </div>

@@ -160,7 +160,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
             <div className="flex-1">
               <div className="h-2 bg-surface-variant/50 rounded-full overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-black transition-all duration-700"
+                  className="h-full rounded-full bg-on-surface transition-all duration-700"
                   style={{ width: `${percentage}%` }}
                 />
               </div>

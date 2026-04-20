@@ -134,7 +134,7 @@ export function RescheduleForm({
                 onClick={() => handleDateChange(date)}
                 className={`flex-shrink-0 px-3 py-2 rounded-lg text-center transition-colors ${
                   isSelected
-                    ? "bg-[var(--color-grey-900)] text-white"
+                    ? "bg-[var(--color-grey-900)] text-surface"
                     : "bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-100)] text-[var(--color-grey-700)]"
                 }`}
               >
@@ -176,7 +176,7 @@ export function RescheduleForm({
                   onClick={() => setSelectedSlot(slot.startTime)}
                   className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isSelected
-                      ? "bg-[var(--color-grey-900)] text-white"
+                      ? "bg-[var(--color-grey-900)] text-surface"
                       : "bg-[var(--color-grey-100)] hover:bg-[var(--color-grey-100)] text-[var(--color-grey-700)]"
                   }`}
                 >
@@ -198,7 +198,7 @@ export function RescheduleForm({
       <button
         onClick={handleSubmit}
         disabled={!selectedSlot || submitting}
-        className="w-full py-3 px-4 bg-[var(--color-grey-900)] text-white font-medium rounded-xl hover:bg-[var(--color-grey-900)]/90 disabled:opacity-50 transition-colors"
+        className="w-full py-3 px-4 bg-[var(--color-grey-900)] text-surface font-medium rounded-xl hover:bg-[var(--color-grey-900)]/90 disabled:opacity-50 transition-colors"
       >
         {submitting ? "Endrer tidspunkt..." : "Bekreft nytt tidspunkt"}
       </button>

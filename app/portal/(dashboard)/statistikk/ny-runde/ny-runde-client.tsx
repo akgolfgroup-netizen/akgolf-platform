@@ -66,7 +66,7 @@ export function NyRundeClient() {
   }
 
   const inputClass =
-    "w-full rounded-xl border border-outline-variant bg-white px-4 py-2.5 text-[13px] text-on-surface outline-none transition-colors placeholder:text-outline focus:border-primary/40 focus:ring-2 focus:ring-primary/20";
+    "w-full rounded-xl border border-outline-variant bg-surface-container-lowest px-4 py-2.5 text-[13px] text-on-surface outline-none transition-colors placeholder:text-outline focus:border-primary/40 focus:ring-2 focus:ring-primary/20";
 
   const labelClass =
     "mb-1.5 block text-[10px] font-bold uppercase tracking-[0.15em] text-outline";
@@ -87,7 +87,7 @@ export function NyRundeClient() {
         <div className="mt-4">
           <Link
             href="/portal/statistikk"
-            className="inline-flex h-11 items-center gap-2 rounded-[20px] border border-outline-variant bg-white px-5 text-[12px] font-semibold text-on-surface shadow-sm transition-colors hover:bg-surface-container"
+            className="inline-flex h-11 items-center gap-2 rounded-[20px] border border-outline-variant bg-surface-container-lowest px-5 text-[12px] font-semibold text-on-surface shadow-sm transition-colors hover:bg-surface-container"
           >
             <Icon name="arrow_back" className="h-3.5 w-3.5" />
             Tilbake
@@ -97,9 +97,9 @@ export function NyRundeClient() {
 
       <form onSubmit={handleSubmit} className="max-w-2xl space-y-4">
         {/* Grunnleggende info */}
-        <div className="bg-white rounded-xl shadow-card p-6">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
           <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-on-surface">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white tabular-nums">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-surface tabular-nums">
               1
             </span>
             Grunnleggende info
@@ -160,9 +160,9 @@ export function NyRundeClient() {
         </div>
 
         {/* Statistikk */}
-        <div className="bg-white rounded-xl shadow-card p-6">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
           <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-on-surface">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white tabular-nums">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-surface tabular-nums">
               2
             </span>
             Statistikk
@@ -221,9 +221,9 @@ export function NyRundeClient() {
         </div>
 
         {/* Notater */}
-        <div className="bg-white rounded-xl shadow-card p-6">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
           <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-semibold text-on-surface">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white tabular-nums">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-surface tabular-nums">
               3
             </span>
             Notater
@@ -249,7 +249,7 @@ export function NyRundeClient() {
         <div className="flex gap-3 pt-2">
           <Link
             href="/portal/statistikk"
-            className="flex flex-1 items-center justify-center gap-2 rounded-[20px] border border-outline-variant bg-white py-3 text-[12px] font-semibold text-outline transition-colors hover:bg-surface-container hover:text-on-surface"
+            className="flex flex-1 items-center justify-center gap-2 rounded-[20px] border border-outline-variant bg-surface-container-lowest py-3 text-[12px] font-semibold text-outline transition-colors hover:bg-surface-container hover:text-on-surface"
           >
             Avbryt
           </Link>
@@ -258,7 +258,7 @@ export function NyRundeClient() {
             disabled={saving || !form.date || !form.totalScore}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.97 }}
-            className="relative flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-[20px] bg-accent-cta py-3 text-[12px] font-bold text-accent-cta-text shadow-[0_8px_24px_rgba(209,248,67,0.4)] transition-shadow hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
+            className="relative flex flex-1 items-center justify-center gap-2 overflow-hidden rounded-[20px] bg-secondary-fixed py-3 text-[12px] font-bold text-secondary-fixed-text shadow-[0_8px_24px_rgba(209,248,67,0.4)] transition-shadow hover:shadow-[0_12px_32px_rgba(209,248,67,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving ? (
               <Icon name="progress_activity" className="h-3.5 w-3.5 animate-spin" />

@@ -66,13 +66,13 @@ export function WeekAdjustmentGrid({
   };
 
   return (
-    <div className="bg-white rounded-xl border border-grey-200 overflow-hidden">
+    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
       {/* Header */}
-      <div className="px-4 py-3 bg-grey-50 border-b border-grey-200">
-        <h3 className="font-semibold text-black">
+      <div className="px-4 py-3 bg-surface border-b border-outline-variant/30">
+        <h3 className="font-semibold text-on-surface">
           Ukejustering
         </h3>
-        <p className="text-xs text-grey-400 mt-0.5">
+        <p className="text-xs text-on-surface-variant mt-0.5">
           Klikk for a endre tilgjengelighet for spesifikke dager
         </p>
       </div>
@@ -87,14 +87,14 @@ export function WeekAdjustmentGrid({
           return (
             <div
               key={day.date.toISOString()}
-              className={`p-3 ${ day.hasOverride ? "bg-white" : "bg-grey-50/50" } ${day.hasOverride ? "border-l-2 border-l-black" : ""}`}
+              className={`p-3 ${ day.hasOverride ? "bg-surface-container-lowest" : "bg-surface/50" } ${day.hasOverride ? "border-l-2 border-l-black" : ""}`}
             >
               {/* Day Header */}
               <div className="text-center mb-2">
-                <span className="text-xs font-medium text-grey-400 uppercase">
+                <span className="text-xs font-medium text-on-surface-variant uppercase">
                   {shortDay}
                 </span>
-                <p className="text-lg font-semibold text-black">
+                <p className="text-lg font-semibold text-on-surface">
                   {dateNum}
                 </p>
               </div>
@@ -110,13 +110,13 @@ export function WeekAdjustmentGrid({
                     className="space-y-2"
                   >
                     <div>
-                      <label className="text-[10px] text-grey-400 uppercase">
+                      <label className="text-[10px] text-on-surface-variant uppercase">
                         Fra
                       </label>
                       <select
                         value={editStartTime}
                         onChange={(e) => setEditStartTime(e.target.value)}
-                        className="w-full px-2 py-1 text-xs border border-grey-200 rounded bg-white"
+                        className="w-full px-2 py-1 text-xs border border-outline-variant/30 rounded bg-surface-container-lowest"
                       >
                         {TIME_OPTIONS.map((t) => (
                           <option key={t} value={t}>
@@ -126,13 +126,13 @@ export function WeekAdjustmentGrid({
                       </select>
                     </div>
                     <div>
-                      <label className="text-[10px] text-grey-400 uppercase">
+                      <label className="text-[10px] text-on-surface-variant uppercase">
                         Til
                       </label>
                       <select
                         value={editEndTime}
                         onChange={(e) => setEditEndTime(e.target.value)}
-                        className="w-full px-2 py-1 text-xs border border-grey-200 rounded bg-white"
+                        className="w-full px-2 py-1 text-xs border border-outline-variant/30 rounded bg-surface-container-lowest"
                       >
                         {TIME_OPTIONS.map((t) => (
                           <option key={t} value={t}>
@@ -145,13 +145,13 @@ export function WeekAdjustmentGrid({
                       <button
                         onClick={() => handleSave(day.date)}
                         disabled={saving}
-                        className="flex-1 p-1.5 bg-black text-white rounded text-xs flex items-center justify-center gap-1 disabled:opacity-50"
+                        className="flex-1 p-1.5 bg-on-surface text-surface rounded text-xs flex items-center justify-center gap-1 disabled:opacity-50"
                       >
                         <Icon name="check" className="w-3 h-3" />
                       </button>
                       <button
                         onClick={cancelEditing}
-                        className="flex-1 p-1.5 bg-grey-50 rounded text-xs flex items-center justify-center gap-1"
+                        className="flex-1 p-1.5 bg-surface rounded text-xs flex items-center justify-center gap-1"
                       >
                         <Icon name="close" className="w-3 h-3" />
                       </button>
@@ -169,12 +169,12 @@ export function WeekAdjustmentGrid({
                     {/* Hours Display */}
                     <div className="text-center">
                       <span
-                        className={`text-xl font-bold ${ day.hasOverride ? "text-black" : "text-grey-400" }`}
+                        className={`text-xl font-bold ${ day.hasOverride ? "text-on-surface" : "text-on-surface-variant" }`}
                       >
                         {day.effectiveHours.toFixed(0)}t
                       </span>
                       {day.hasOverride && (
-                        <p className="text-[10px] text-grey-400">
+                        <p className="text-[10px] text-on-surface-variant">
                           (fast: {day.regularHours.toFixed(0)}t)
                         </p>
                       )}
@@ -182,7 +182,7 @@ export function WeekAdjustmentGrid({
 
                     {/* Time Range */}
                     {day.effectiveHours > 0 && (
-                      <p className="text-[10px] text-center text-grey-400">
+                      <p className="text-[10px] text-center text-on-surface-variant">
                         {day.hasOverride && day.override
                           ? `${day.override.startTime}-${day.override.endTime}`
                           : day.regularSlots.length > 0
@@ -204,19 +204,19 @@ export function WeekAdjustmentGrid({
                     <div className="flex gap-1 justify-center">
                       <button
                         onClick={() => startEditing(day)}
-                        className="p-1.5 rounded hover:bg-grey-50 transition-colors"
+                        className="p-1.5 rounded hover:bg-surface transition-colors"
                         title="Rediger"
                       >
-                        <Icon name="edit" className="w-3.5 h-3.5 text-grey-400" />
+                        <Icon name="edit" className="w-3.5 h-3.5 text-on-surface-variant" />
                       </button>
                       {day.hasOverride && (
                         <button
                           onClick={() => handleReset(day.date)}
                           disabled={saving}
-                          className="p-1.5 rounded hover:bg-grey-50 transition-colors disabled:opacity-50"
+                          className="p-1.5 rounded hover:bg-surface transition-colors disabled:opacity-50"
                           title="Tilbakestill til fast"
                         >
-                          <Icon name="restart_alt" className="w-3.5 h-3.5 text-grey-400" />
+                          <Icon name="restart_alt" className="w-3.5 h-3.5 text-on-surface-variant" />
                         </button>
                       )}
                     </div>
@@ -229,13 +229,13 @@ export function WeekAdjustmentGrid({
       </div>
 
       {/* Legend */}
-      <div className="px-4 py-2 bg-grey-50/50 border-t border-grey-200 flex items-center gap-4 text-[10px] text-grey-400">
+      <div className="px-4 py-2 bg-surface/50 border-t border-outline-variant/30 flex items-center gap-4 text-[10px] text-on-surface-variant">
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-grey-50/50" />
+          <div className="w-3 h-3 rounded bg-surface/50" />
           <span>Fast tilgjengelighet</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-white border-l-2 border-l-black" />
+          <div className="w-3 h-3 rounded bg-surface-container-lowest border-l-2 border-l-black" />
           <span>Override aktiv</span>
         </div>
       </div>

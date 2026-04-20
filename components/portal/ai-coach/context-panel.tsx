@@ -29,7 +29,7 @@ export function ContextPanel({ context }: ContextPanelProps) {
     <div className="space-y-6">
       {/* Profile Summary */}
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-3 flex items-center gap-2">
           <Icon name="my_location" className="w-3.5 h-3.5" />
           Din profil
         </h3>
@@ -53,24 +53,24 @@ export function ContextPanel({ context }: ContextPanelProps) {
       {/* Recent Activity */}
       {latestRound && (
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-3 flex items-center gap-2">
             <Icon name="schedule" className="w-3.5 h-3.5" />
             Siste aktivitet
           </h3>
           <div className="space-y-2">
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100">
-              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-grey-200 flex items-center justify-center text-grey-400">
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant/20">
+              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center text-on-surface-variant">
                 <Icon name="location_on" className="w-4 h-4" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-black truncate">
+                <p className="text-sm font-medium text-on-surface truncate">
                   {latestRound.courseName || "Ukjent bane"}
                 </p>
-                <p className="text-xs text-grey-400">
+                <p className="text-xs text-on-surface-variant">
                   {formatDate(latestRound.date)} • {latestRound.totalScore ?? "?"} slag
                 </p>
                 {latestRound.sgTotal !== null && (
-                  <p className="text-xs text-grey-500 mt-1">
+                  <p className="text-xs text-on-surface-variant/80 mt-1">
                     SG: {latestRound.sgTotal.toFixed(1)}
                   </p>
                 )}
@@ -83,7 +83,7 @@ export function ContextPanel({ context }: ContextPanelProps) {
       {/* Active Plan */}
       {context.activePlan && (
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-3 flex items-center gap-2">
             <Icon name="calendar_today" className="w-3.5 h-3.5" />
             Aktiv plan
           </h3>
@@ -104,23 +104,23 @@ export function ContextPanel({ context }: ContextPanelProps) {
       {/* Recent Training */}
       {latestTraining && (
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-3 flex items-center gap-2">
             <Icon name="description" className="w-3.5 h-3.5" />
             Siste trening
           </h3>
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100">
-            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-grey-200 flex items-center justify-center text-grey-400">
+          <div className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant/20">
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center text-on-surface-variant">
               <Icon name="trending_up" className="w-4 h-4" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-black">
+              <p className="text-sm font-medium text-on-surface">
                 {latestTraining.focusArea || "Generell trening"}
               </p>
-              <p className="text-xs text-grey-400">
+              <p className="text-xs text-on-surface-variant">
                 {formatDate(latestTraining.date)} • {latestTraining.durationMinutes ?? "?"} min
               </p>
               {latestTraining.rating && (
-                <p className="text-xs text-grey-500 mt-1">
+                <p className="text-xs text-on-surface-variant/80 mt-1">
                   Vurdering: {latestTraining.rating}/5
                 </p>
               )}
@@ -132,7 +132,7 @@ export function ContextPanel({ context }: ContextPanelProps) {
       {/* Upcoming Tournaments */}
       {context.upcomingTournaments.length > 0 && (
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-grey-400 mb-3 flex items-center gap-2">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-3 flex items-center gap-2">
             <Icon name="emoji_events" className="w-3.5 h-3.5" />
             Kommende turneringer
           </h3>
@@ -140,16 +140,16 @@ export function ContextPanel({ context }: ContextPanelProps) {
             {context.upcomingTournaments.slice(0, 2).map((tournament, idx) => (
               <div 
                 key={idx}
-                className="flex items-start gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100"
+                className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant/20"
               >
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-grey-200 flex items-center justify-center text-grey-400">
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center text-on-surface-variant">
                   <Icon name="calendar_today" className="w-4 h-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-black truncate">
+                  <p className="text-sm font-medium text-on-surface truncate">
                     {tournament.name}
                   </p>
-                  <p className="text-xs text-grey-400">
+                  <p className="text-xs text-on-surface-variant">
                     {formatDate(tournament.startDate)}
                     {tournament.course && ` • ${tournament.course}`}
                   </p>
@@ -174,10 +174,10 @@ function ContextItem({
 }) {
   return (
     <div className="flex items-center gap-3 text-sm">
-      <span className="text-grey-400">{icon}</span>
+      <span className="text-on-surface-variant">{icon}</span>
       <div className="flex-1 min-w-0">
-        <p className="text-xs text-grey-400">{label}</p>
-        <p className="font-medium text-black truncate">{value}</p>
+        <p className="text-xs text-on-surface-variant">{label}</p>
+        <p className="font-medium text-on-surface truncate">{value}</p>
       </div>
     </div>
   );

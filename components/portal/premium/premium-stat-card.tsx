@@ -104,7 +104,7 @@ export function PremiumStatCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "relative overflow-hidden rounded-[24px] bg-white p-6 border border-black/5 transition-all duration-300",
+        "relative overflow-hidden rounded-[24px] bg-surface-container-lowest p-6 border border-black/5 transition-all duration-300",
         "hover:border-[var(--color-primary)]/20 hover:shadow-[0_8px_32px_-12px_rgba(0,88,64,0.12)]",
         "hover:-translate-y-0.5 will-change-transform",
         className

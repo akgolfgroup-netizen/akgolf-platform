@@ -15,7 +15,7 @@ export default function BookingerLoading() {
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-5"
+            className="bg-surface-container-lowest rounded-[20px] border border-[var(--color-surface-container)] p-5"
           >
             <div className="flex justify-between items-start">
               <div className="space-y-2">

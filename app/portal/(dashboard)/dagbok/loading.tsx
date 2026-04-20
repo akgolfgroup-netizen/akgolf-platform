@@ -12,7 +12,7 @@ export default function DagbokLoading() {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-4 text-center"
+            className="bg-surface-container-lowest rounded-[20px] border border-[var(--color-surface-container)] p-4 text-center"
           >
             <div className="h-8 w-12 bg-[var(--color-surface-container)] rounded mx-auto mb-2" />
             <div className="h-3 w-20 bg-[var(--color-surface-container)] rounded mx-auto" />
@@ -25,7 +25,7 @@ export default function DagbokLoading() {
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-[20px] border border-[var(--color-surface-container)] p-5"
+            className="bg-surface-container-lowest rounded-[20px] border border-[var(--color-surface-container)] p-5"
           >
             <div className="flex justify-between items-start mb-3">
               <div className="h-4 w-32 bg-[var(--color-surface-container)] rounded" />

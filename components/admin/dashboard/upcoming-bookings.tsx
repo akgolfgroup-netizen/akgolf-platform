@@ -103,17 +103,17 @@ function BookingItem({ booking }: { booking: Booking }) {
   const StatusIcon = status.icon;
 
   return (
-    <div className="flex items-start gap-4 p-4 hover:bg-grey-50 transition-colors group">
+    <div className="flex items-start gap-4 p-4 hover:bg-surface transition-colors group">
       <div className="flex flex-col items-center min-w-[60px]">
-        <span className="text-lg font-bold text-black tabular-nums">{booking.time}</span>
+        <span className="text-lg font-bold text-on-surface tabular-nums">{booking.time}</span>
         {booking.duration && (
-          <span className="text-[10px] text-grey-400 uppercase">{booking.duration}</span>
+          <span className="text-[10px] text-on-surface-variant uppercase">{booking.duration}</span>
         )}
       </div>
       
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="font-semibold text-black truncate">{booking.studentName}</span>
+          <span className="font-semibold text-on-surface truncate">{booking.studentName}</span>
           <span
             className={cn(
               "px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wide",
@@ -124,7 +124,7 @@ function BookingItem({ booking }: { booking: Booking }) {
           </span>
         </div>
         {booking.notes && (
-          <p className="text-xs text-grey-400 mt-0.5 truncate">{booking.notes}</p>
+          <p className="text-xs text-on-surface-variant mt-0.5 truncate">{booking.notes}</p>
         )}
       </div>
 
@@ -142,7 +142,7 @@ function BookingItem({ booking }: { booking: Booking }) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
-              className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center justify-center rounded-lg text-grey-400 hover:text-black hover:bg-grey-50"
+              className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center justify-center rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface"
             >
               <Icon name="more_horiz" className="w-4 h-4" />
             </button>
@@ -163,14 +163,14 @@ export function UpcomingBookings({ bookings = defaultBookings, maxItems = 5 }: U
 
   return (
     <Card className="overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
         <div className="flex items-center gap-3">
-          <Icon name="schedule" className="w-5 h-5 text-grey-400" />
-          <h2 className="text-sm font-semibold text-black">Neste bookinger</h2>
+          <Icon name="schedule" className="w-5 h-5 text-on-surface-variant" />
+          <h2 className="text-sm font-semibold text-on-surface">Neste bookinger</h2>
         </div>
         <Link
           href="/admin/kalender"
-          className="text-sm text-grey-400 hover:text-black font-medium transition-colors"
+          className="text-sm text-on-surface-variant hover:text-on-surface font-medium transition-colors"
         >
           Se alle
         </Link>
@@ -183,8 +183,8 @@ export function UpcomingBookings({ bookings = defaultBookings, maxItems = 5 }: U
           ))
         ) : (
           <div className="px-6 py-12 text-center">
-            <Icon name="calendar_today" className="w-10 h-10 text-grey-300 mx-auto mb-3 opacity-50" />
-            <p className="text-sm text-grey-400">Ingen kommende bookinger</p>
+            <Icon name="calendar_today" className="w-10 h-10 text-on-surface-variant/60 mx-auto mb-3 opacity-50" />
+            <p className="text-sm text-on-surface-variant">Ingen kommende bookinger</p>
           </div>
         )}
       </div>
@@ -198,11 +198,11 @@ export function CompactBookingList({ bookings = defaultBookings.slice(0, 3) }: {
       {bookings.map((booking) => (
         <div
           key={booking.id}
-          className="flex items-center justify-between p-3 rounded-lg bg-grey-50 hover:bg-grey-100 transition-colors"
+          className="flex items-center justify-between p-3 rounded-lg bg-surface hover:bg-surface-container transition-colors"
         >
           <div className="flex items-center gap-3">
-            <span className="text-sm font-semibold text-black tabular-nums">{booking.time}</span>
-            <span className="text-sm text-grey-400 truncate">{booking.studentName}</span>
+            <span className="text-sm font-semibold text-on-surface tabular-nums">{booking.time}</span>
+            <span className="text-sm text-on-surface-variant truncate">{booking.studentName}</span>
           </div>
           <span
             className={cn(

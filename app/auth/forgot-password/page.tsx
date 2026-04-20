@@ -36,26 +36,26 @@ export default function ForgotPasswordPage() {
 
   if (sent) {
     return (
-      <div className="min-h-screen bg-grey-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-surface flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md"
         >
-          <Card className="p-8 bg-white border-black/10 text-center">
+          <Card className="p-8 bg-surface-container-lowest border-black/10 text-center">
             <div className="w-16 h-16 bg-success/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <Icon name="check"Circle2 className="w-8 h-8 text-success" />
             </div>
-            <h1 className="text-2xl font-bold text-black mb-2">
+            <h1 className="text-2xl font-bold text-on-surface mb-2">
               Sjekk e-posten din
             </h1>
-            <p className="text-grey-400 mb-4">
+            <p className="text-on-surface-variant mb-4">
               Hvis e-postadressen finnes i systemet vårt, har vi sendt en
               lenke for å tilbakestille passordet.
             </p>
             <button
               onClick={() => router.push("/auth/login")}
-              className="text-black hover:underline text-sm font-medium"
+              className="text-on-surface hover:underline text-sm font-medium"
             >
               ← Tilbake til innlogging
             </button>
@@ -66,20 +66,20 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-grey-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-surface flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <Card className="p-8 bg-white border-black/10">
+        <Card className="p-8 bg-surface-container-lowest border-black/10">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Icon name="bolt" className="w-8 h-8 text-accent-cta" />
+            <div className="w-16 h-16 bg-on-surface rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Icon name="bolt" className="w-8 h-8 text-secondary-fixed" />
             </div>
-            <h1 className="text-2xl font-bold text-black">Glemt passord</h1>
-            <p className="text-grey-400">
+            <h1 className="text-2xl font-bold text-on-surface">Glemt passord</h1>
+            <p className="text-on-surface-variant">
               Skriv inn e-postadressen din, så sender vi en reset-lenke.
             </p>
           </div>
@@ -87,18 +87,18 @@ export default function ForgotPasswordPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-black mb-1">
+              <label className="block text-sm font-medium text-on-surface mb-1">
                 E-post
               </label>
               <div className="relative">
-                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
                 <input
                   name="email"
                   type="email"
                   placeholder="navn@eksempel.no"
                   required
                   autoComplete="email"
-                  className="w-full pl-10 pr-4 py-3 bg-grey-50 border border-black/10 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-accent-cta"
+                  className="w-full pl-10 pr-4 py-3 bg-surface border border-black/10 rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta"
                 />
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function ForgotPasswordPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-black hover:bg-black/90 text-white font-bold py-3 rounded-xl"
+              className="w-full bg-on-surface hover:bg-on-surface/90 text-surface font-bold py-3 rounded-xl"
             >
               {loading ? "Sender..." : "Send reset-lenke"}
             </Button>
@@ -120,8 +120,8 @@ export default function ForgotPasswordPage() {
 
           {/* Footer */}
           <div className="mt-6 pt-6 border-t border-black/10 text-center">
-            <p className="text-sm text-grey-400">
-              <a href="/auth/login" className="text-black hover:underline font-medium">
+            <p className="text-sm text-on-surface-variant">
+              <a href="/auth/login" className="text-on-surface hover:underline font-medium">
                 ← Tilbake til innlogging
               </a>
             </p>

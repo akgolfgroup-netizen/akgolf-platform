@@ -146,8 +146,8 @@ export function WidgetGrid({
           className={cn(
             "px-3 py-1.5 rounded-full text-xs font-medium transition-colors",
             isEditing
-              ? "bg-primary text-white"
-              : "bg-grey-100 text-grey-500 hover:bg-grey-200 hover:text-text"
+              ? "bg-primary text-surface"
+              : "bg-surface-container text-on-surface-variant/80 hover:bg-surface-variant hover:text-text"
           )}
         >
           {isEditing ? "Ferdig" : "Rediger layout"}

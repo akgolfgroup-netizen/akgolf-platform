@@ -45,7 +45,7 @@ export function StreakMilestone({ currentStreak }: StreakMilestoneProps) {
             className="w-8 h-8 rounded-lg flex items-center justify-center"
             style={{ backgroundColor: latestAchieved?.color || "var(--color-grey-400)" }}
           >
-            <Icon className="w-4 h-4 text-white" />
+            <Icon className="w-4 h-4 text-surface" />
           </div>
           <div>
             <p className="text-sm font-semibold text-[var(--color-grey-900)]">
@@ -68,7 +68,7 @@ export function StreakMilestone({ currentStreak }: StreakMilestoneProps) {
               className="w-6 h-6 rounded-md flex items-center justify-center opacity-50"
               style={{ backgroundColor: nextMilestone.color }}
             >
-              <NextIcon className="w-3 h-3 text-white" />
+              <NextIcon className="w-3 h-3 text-surface" />
             </div>
           </div>
         )}
@@ -112,7 +112,7 @@ export function StreakMilestone({ currentStreak }: StreakMilestoneProps) {
                 style={{ backgroundColor: milestone.color }}
                 title={milestone.label}
               >
-                <MIcon className="w-4 h-4 text-white" />
+                <MIcon className="w-4 h-4 text-surface" />
               </motion.div>
             );
           })}

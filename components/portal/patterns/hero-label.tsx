@@ -18,9 +18,9 @@ interface HeroLabelProps extends HTMLAttributes<HTMLDivElement> {
 
 const VARIANT_CLASSES = {
   glass:
-    "bg-[rgba(12,22,17,0.62)] backdrop-blur-[22px] backdrop-saturate-[130%] border border-white/[0.14] text-white/88",
+    "bg-[rgba(12,22,17,0.62)] backdrop-blur-[22px] backdrop-saturate-[130%] border border-white/[0.14] text-surface/88",
   lime:
-    "bg-accent-cta text-[#0A1F18] border border-[rgba(10,31,24,0.08)]",
+    "bg-secondary-fixed text-[#0A1F18] border border-[rgba(10,31,24,0.08)]",
 };
 
 export function HeroLabel({
@@ -51,7 +51,7 @@ export function HeroLabelSeparator() {
   return (
     <span
       aria-hidden="true"
-      className="w-1 h-1 rounded-full bg-white/30 shrink-0"
+      className="w-1 h-1 rounded-full bg-surface-container-lowest/30 shrink-0"
     />
   );
 }

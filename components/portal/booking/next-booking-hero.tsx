@@ -45,7 +45,7 @@ export function NextBookingHero({ booking }: NextBookingHeroProps) {
   return (
     <motion.div variants={fadeInUp} initial="hidden" animate="visible">
       <Link href={`/portal/bookinger/${booking.id}`} className="block group">
-        <div className="relative rounded-[24px] overflow-hidden bg-black p-6 lg:p-8 shadow-[0_20px_60px_-20px_rgba(10,31,24,0.25)] border border-white/5">
+        <div className="relative rounded-[24px] overflow-hidden bg-on-surface p-6 lg:p-8 shadow-[0_20px_60px_-20px_rgba(10,31,24,0.25)] border border-white/5">
           {/* Gradient mesh */}
           <div
             className="absolute inset-0 pointer-events-none"
@@ -59,27 +59,27 @@ export function NextBookingHero({ booking }: NextBookingHeroProps) {
           <div className="relative z-10">
             {/* Øvre rad: label + countdown */}
             <div className="flex items-center justify-between mb-5">
-              <span className="text-[10px] font-bold tracking-[0.22em] text-white/50 uppercase flex items-center gap-2">
-                <span className="w-6 h-px bg-white/30" />
+              <span className="text-[10px] font-bold tracking-[0.22em] text-surface/50 uppercase flex items-center gap-2">
+                <span className="w-6 h-px bg-surface-container-lowest/30" />
                 Neste booking
               </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent-cta text-accent-cta-text text-[11px] font-bold">
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-secondary-fixed text-secondary-fixed-text text-[11px] font-bold">
                 {countdown}
               </span>
             </div>
 
             {/* Tjenestenavn */}
-            <h2 className="text-[28px] lg:text-[36px] font-bold text-white tracking-tight leading-tight mb-1">
+            <h2 className="text-[28px] lg:text-[36px] font-bold text-surface tracking-tight leading-tight mb-1">
               {booking.serviceName}
             </h2>
 
             {/* Dato og tid */}
-            <p className="text-[16px] text-accent-cta font-semibold mb-5 tabular-nums">
+            <p className="text-[16px] text-secondary-fixed font-semibold mb-5 tabular-nums">
               {dateLabel} · {timeLabel}
             </p>
 
             {/* Meta-info */}
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-white/60">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-surface/60">
               <span className="flex items-center gap-2">
                 <Icon name="person"Icon className="w-4 h-4" strokeWidth={1.5} />
                 {booking.instructorName}
@@ -97,7 +97,7 @@ export function NextBookingHero({ booking }: NextBookingHeroProps) {
             </div>
 
             {/* Pil-indikator */}
-            <div className="mt-6 flex items-center gap-2 text-[12px] text-accent-cta font-semibold opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+            <div className="mt-6 flex items-center gap-2 text-[12px] text-secondary-fixed font-semibold opacity-0 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
               <span>Se detaljer</span>
               <Icon name="arrow_forward" className="w-3.5 h-3.5" />
             </div>

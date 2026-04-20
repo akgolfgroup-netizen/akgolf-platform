@@ -81,7 +81,7 @@ export default async function SessionDetailPage({ params }: Props) {
       <div className="flex items-center gap-4">
         <Link
           href="/portal/dagbok"
-          className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white border border-[var(--color-outline-variant)]/70 text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container)] hover:text-[var(--color-on-surface)] transition-colors"
+          className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-surface-container-lowest border border-[var(--color-outline-variant)]/70 text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container)] hover:text-[var(--color-on-surface)] transition-colors"
         >
           <Icon name="arrow_back" className="w-5 h-5" />
         </Link>
@@ -92,14 +92,14 @@ export default async function SessionDetailPage({ params }: Props) {
       </div>
 
       {/* Session Overview Card */}
-      <div className="bg-white rounded-2xl border border-[var(--color-outline-variant)]/70 p-6 space-y-5">
+      <div className="bg-surface-container-lowest rounded-2xl border border-[var(--color-outline-variant)]/70 p-6 space-y-5">
         <h2 className="text-lg font-semibold text-[var(--color-on-surface)]">Øktoversikt</h2>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {log.durationMinutes && (
             <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-container)] rounded-xl">
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center">
                 <Icon name="schedule" className="w-5 h-5 text-[var(--color-primary)]" />
               </div>
               <div>
@@ -111,7 +111,7 @@ export default async function SessionDetailPage({ params }: Props) {
 
           {log.focusArea && (
             <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-container)] rounded-xl">
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center">
                 <Icon name="my_location" className="w-5 h-5 text-[var(--color-primary)]" />
               </div>
               <div>
@@ -123,7 +123,7 @@ export default async function SessionDetailPage({ params }: Props) {
 
           {log.rating !== null && (
             <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-container)] rounded-xl">
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center">
                 <Icon name="monitoring" className="w-5 h-5 text-[var(--color-primary)]" />
               </div>
               <div>
@@ -134,7 +134,7 @@ export default async function SessionDetailPage({ params }: Props) {
           )}
 
           <div className="flex items-center gap-3 p-4 bg-[var(--color-surface-container)] rounded-xl">
-            <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center">
               <Layers className="w-5 h-5 text-[var(--color-primary)]" />
             </div>
             <div>
@@ -192,7 +192,7 @@ export default async function SessionDetailPage({ params }: Props) {
 
       {/* Exercises Card */}
       {log.TrainingLogExercises && log.TrainingLogExercises.length > 0 && (
-        <div className="bg-white rounded-2xl border border-[var(--color-outline-variant)]/70 p-6 space-y-4">
+        <div className="bg-surface-container-lowest rounded-2xl border border-[var(--color-outline-variant)]/70 p-6 space-y-4">
           <h2 className="text-lg font-semibold text-[var(--color-on-surface)]">Øvelser</h2>
 
           <div className="space-y-3">
@@ -201,7 +201,7 @@ export default async function SessionDetailPage({ params }: Props) {
                 {/* Exercise header */}
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-lg bg-white flex items-center justify-center text-sm font-semibold text-[var(--color-primary)]">
+                    <span className="w-7 h-7 rounded-lg bg-surface-container-lowest flex items-center justify-center text-sm font-semibold text-[var(--color-primary)]">
                       {idx + 1}
                     </span>
                     <div>
@@ -209,7 +209,7 @@ export default async function SessionDetailPage({ params }: Props) {
                     </div>
                   </div>
                   {exercise.score !== null && (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[var(--color-outline-variant)]/70 text-sm font-medium text-[var(--color-on-surface)]">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest border border-[var(--color-outline-variant)]/70 text-sm font-medium text-[var(--color-on-surface)]">
                       <Icon name="star" className="w-3.5 h-3.5 text-[var(--color-warning)]" />
                       <span className="tabular-nums tracking-tight">{exercise.score}/10</span>
                     </span>
@@ -286,7 +286,7 @@ export default async function SessionDetailPage({ params }: Props) {
 
       {/* Coach Feedback Card */}
       {log.coachFeedback && (
-        <div className="bg-white rounded-2xl border border-[var(--color-outline-variant)]/70 p-6 space-y-3">
+        <div className="bg-surface-container-lowest rounded-2xl border border-[var(--color-outline-variant)]/70 p-6 space-y-3">
           <div className="flex items-center gap-2">
             <Icon name="chat" className="w-5 h-5 text-[var(--color-primary)]" />
             <h2 className="text-lg font-semibold text-[var(--color-on-surface)]">Coach-feedback</h2>

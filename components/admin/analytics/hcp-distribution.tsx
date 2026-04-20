@@ -37,9 +37,9 @@ export function HcpDistribution({
             <Icon name="my_location" className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <h3 className="text-sm font-medium text-grey-400">Snitt HCP</h3>
+            <h3 className="text-sm font-medium text-on-surface-variant">Snitt HCP</h3>
             <div className="flex items-center gap-2">
-              <p className="text-2xl font-bold text-black tabular-nums">{averageHcp}</p>
+              <p className="text-2xl font-bold text-on-surface tabular-nums">{averageHcp}</p>
               <span className="inline-flex items-center gap-0.5 text-xs font-medium text-success">
                 <Icon name="trending_down" className="w-3.5 h-3.5" />
                 -{improvement}
@@ -66,13 +66,13 @@ export function HcpDistribution({
                 className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: item.color }}
               />
-              <span className="text-sm text-grey-400">HCP {item.label}</span>
+              <span className="text-sm text-on-surface-variant">HCP {item.label}</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-sm font-semibold text-black tabular-nums">
+              <span className="text-sm font-semibold text-on-surface tabular-nums">
                 {item.value}
               </span>
-              <span className="text-xs text-grey-400 w-10 text-right">
+              <span className="text-xs text-on-surface-variant w-10 text-right">
                 {Math.round((item.value / total) * 100)}%
               </span>
             </div>
@@ -99,7 +99,7 @@ export function HcpTrendBadge({
 }: HcpTrendProps) {
   const trendConfig = {
     improving: { icon: TrendingDown, label: "Forbedrer", color: "text-success" },
-    stable: { icon: Target, label: "Stabil", color: "text-grey-400" },
+    stable: { icon: Target, label: "Stabil", color: "text-on-surface-variant" },
     declining: { icon: TrendingDown, label: "Økende", color: "text-error" },
   };
 
@@ -112,14 +112,14 @@ export function HcpTrendBadge({
         className={cn(
           "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium",
           trend === "improving" && "bg-success-light text-success",
-          trend === "stable" && "bg-grey-100 text-grey-400",
+          trend === "stable" && "bg-surface-container text-on-surface-variant",
           trend === "declining" && "bg-error-light text-error"
         )}
       >
         <Icon className="w-3.5 h-3.5" />
         {config.label}
       </div>
-      <div className="flex items-center gap-2 text-xs text-grey-400">
+      <div className="flex items-center gap-2 text-xs text-on-surface-variant">
         <span>HCP {currentHcp}</span>
         <span>·</span>
         <span>Mål: {targetHcp}</span>

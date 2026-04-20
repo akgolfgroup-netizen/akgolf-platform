@@ -45,7 +45,7 @@ export function PyramidFilter({
 
   return (
     <div className="space-y-3">
-      <MonoLabel size="xs" uppercase className="text-slate-400 block">
+      <MonoLabel size="xs" uppercase className="text-inverse-on-surface/60 block">
         ◆ AK-Pyramiden · Uke 17
       </MonoLabel>
 
@@ -64,7 +64,7 @@ export function PyramidFilter({
               `}
               aria-pressed={isSelected}
             >
-              <div className="relative h-8 rounded-lg overflow-hidden bg-slate-800">
+              <div className="relative h-8 rounded-lg overflow-hidden bg-inverse-surface">
                 <div
                   className="absolute inset-y-0 left-0 transition-all duration-500"
                   style={{
@@ -78,7 +78,7 @@ export function PyramidFilter({
                 <div
                   className={`
                     absolute inset-0 transition-opacity duration-200
-                    ${isSelected ? "bg-white/10" : "group-hover:bg-white/5"}
+                    ${isSelected ? "bg-surface-container-lowest/10" : "group-hover:bg-surface-container-lowest/5"}
                   `}
                 />
 
@@ -86,7 +86,7 @@ export function PyramidFilter({
                   <div className="flex items-center gap-2">
                     <MonoLabel
                       size="xs"
-                      className="w-11 text-white font-bold"
+                      className="w-11 text-surface font-bold"
                       uppercase
                     >
                       {level}
@@ -94,14 +94,14 @@ export function PyramidFilter({
                     <span
                       className={`
                         text-sm font-medium transition-colors
-                        ${isSelected ? "text-white" : "text-slate-300 group-hover:text-white"}
+                        ${isSelected ? "text-surface" : "text-inverse-on-surface/50 group-hover:text-surface"}
                       `}
                     >
                       {label}
                     </span>
                   </div>
 
-                  <MonoLabel size="xs" className="text-slate-300">
+                  <MonoLabel size="xs" className="text-inverse-on-surface/50">
                     {PROGRESS_PERCENT}%
                   </MonoLabel>
                 </div>
@@ -121,7 +121,7 @@ export function PyramidFilter({
       {selectedFilter && (
         <button
           onClick={() => onFilterChange(null)}
-          className="w-full py-2 text-xs text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 rounded-lg transition-colors"
+          className="w-full py-2 text-xs text-inverse-on-surface/60 hover:text-inverse-on-surface hover:bg-inverse-surface/50 rounded-lg transition-colors"
         >
           Vis alle nivåer
         </button>

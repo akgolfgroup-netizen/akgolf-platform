@@ -68,8 +68,8 @@ export function SlimIconRail({
                 "relative w-10 h-10 rounded-xl grid place-items-center",
                 "transition-all duration-200",
                 isActive
-                  ? "bg-accent-cta text-[#0A1F18]"
-                  : "text-white/55 hover:bg-white/[0.06] hover:text-white"
+                  ? "bg-secondary-fixed text-[#0A1F18]"
+                  : "text-surface/55 hover:bg-surface-container-lowest/[0.06] hover:text-surface"
               )}
             >
               <Icon className="w-[18px] h-[18px]" strokeWidth={isActive ? 2.5 : 1.75} />
@@ -80,8 +80,8 @@ export function SlimIconRail({
                     "text-[8px] font-extrabold grid place-items-center px-0.5",
                     "border-2 border-[#0a0f0c]",
                     isActive
-                      ? "bg-[#0A1F18] text-accent-cta border-accent-cta"
-                      : "bg-accent-cta text-[#0A1F18]"
+                      ? "bg-[#0A1F18] text-secondary-fixed border-secondary-fixed"
+                      : "bg-secondary-fixed text-[#0A1F18]"
                   )}
                 >
                   {item.badge}
@@ -102,7 +102,7 @@ export function SlimIconRail({
  */
 export function SlimIconRailLogo() {
   return (
-    <div className="w-10 h-10 rounded-xl bg-white grid place-items-center overflow-hidden shadow-[0_4px_14px_rgba(0,0,0,0.3)]">
+    <div className="w-10 h-10 rounded-xl bg-surface-container-lowest grid place-items-center overflow-hidden shadow-[0_4px_14px_rgba(0,0,0,0.3)]">
       <span className="font-extrabold text-[13px] tracking-tight text-[#0A1F18]">
         AK
       </span>
@@ -115,7 +115,7 @@ export function SlimIconRailLogo() {
  */
 export function SlimIconRailAvatar({ initials }: { initials: string }) {
   return (
-    <div className="w-9 h-9 rounded-full grid place-items-center font-bold text-xs text-accent-cta border-2 border-white/10 bg-gradient-to-br from-primary to-[#0A1F18]">
+    <div className="w-9 h-9 rounded-full grid place-items-center font-bold text-xs text-secondary-fixed border-2 border-white/10 bg-gradient-to-br from-primary to-[#0A1F18]">
       {initials}
     </div>
   );

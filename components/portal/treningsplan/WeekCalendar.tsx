@@ -82,7 +82,7 @@ function DayColumn({
               {dayName.short}
             </span>
             {isToday && (
-              <span className="px-1.5 py-0.5 text-[10px] rounded-full bg-blue-500 text-white font-medium">
+              <span className="px-1.5 py-0.5 text-[10px] rounded-full bg-blue-500 text-surface font-medium">
                 I dag
               </span>
             )}
@@ -217,7 +217,7 @@ export function WeekCalendar({
   }, [weekOffset]);
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+    <div className="flex flex-col h-full bg-surface-container-lowest rounded-xl border border-gray-200 shadow-sm overflow-hidden">
       {/* Tidslinje-header */}
       <div className="flex border-b border-gray-200">
         {/* Tid-kolonne header */}
@@ -328,7 +328,7 @@ export function WeekCalendarCompact({
           <div
             key={day}
             className={`rounded-xl border shadow-sm overflow-hidden ${
-              isToday ? "border-blue-300 bg-blue-50/30" : "border-gray-200 bg-white"
+              isToday ? "border-blue-300 bg-blue-50/30" : "border-gray-200 bg-surface-container-lowest"
             }`}
           >
             {/* Dag-header */}
@@ -341,7 +341,7 @@ export function WeekCalendarCompact({
                     {DAY_NAMES[day].short}
                   </span>
                   {isToday && (
-                    <span className="px-1.5 py-0.5 text-[10px] rounded-full bg-blue-500 text-white font-medium">
+                    <span className="px-1.5 py-0.5 text-[10px] rounded-full bg-blue-500 text-surface font-medium">
                       I dag
                     </span>
                   )}

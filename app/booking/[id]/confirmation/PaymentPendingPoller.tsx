@@ -89,7 +89,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
   if (status === "confirmed") {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
-        <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border border-outline-variant/30 bg-surface-container-lowest">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-success/10">
             <Icon name="check"Circle2 className="w-8 h-8 text-success" />
           </div>
@@ -103,13 +103,13 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
   if (status === "failed") {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
-        <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border border-outline-variant/30 bg-surface-container-lowest">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-error/10">
             <Icon name="error" className="w-8 h-8 text-error" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betalingen feilet</h2>
           <p className="text-muted mb-6">Vi kunne ikke bekrefte betalingen din. Vennligst prov igjen eller kontakt oss.</p>
-          <Link href="/booking" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-white">
+          <Link href="/booking" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-surface">
             Prov igjen
           </Link>
         </div>
@@ -120,13 +120,13 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
   if (status === "timeout") {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
-        <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
+        <div className="rounded-3xl p-10 max-w-md w-full text-center border border-outline-variant/30 bg-surface-container-lowest">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-warning/10">
             <Icon name="check"Circle2 className="w-8 h-8 text-warning" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betalingen behandles</h2>
           <p className="text-muted mb-6">Betalingen din er registrert, men bekreftelsen tar litt lenger enn vanlig. Du vil motta en bekreftelse pa e-post.</p>
-          <Link href="/portal/bookinger" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-white">
+          <Link href="/portal/bookinger" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-surface">
             Se mine bookinger
           </Link>
         </div>
@@ -136,7 +136,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
-      <div className="rounded-3xl p-10 max-w-md w-full text-center border border-grey-200 bg-white">
+      <div className="rounded-3xl p-10 max-w-md w-full text-center border border-outline-variant/30 bg-surface-container-lowest">
         <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-surface">
           <Icon name="progress_activity" className="w-8 h-8 animate-spin text-primary" />
         </div>

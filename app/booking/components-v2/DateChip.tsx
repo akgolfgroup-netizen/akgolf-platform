@@ -19,13 +19,13 @@ export function DateChip({ dayName, dayNumber, month, isSelected, onClick }: Dat
           : "bg-surface border-transparent hover:border-primary"
       }`}
     >
-      <div className={`text-[10px] font-semibold uppercase ${isSelected ? "text-white/60" : "text-muted"}`}>
+      <div className={`text-[10px] font-semibold uppercase ${isSelected ? "text-surface/60" : "text-muted"}`}>
         {dayName}
       </div>
-      <div className={`text-lg font-bold mt-0.5 ${isSelected ? "text-white" : "text-black"}`}>
+      <div className={`text-lg font-bold mt-0.5 ${isSelected ? "text-surface" : "text-on-surface"}`}>
         {dayNumber}
       </div>
-      <div className={`text-[10px] ${isSelected ? "text-accent-cta" : "text-muted"}`}>
+      <div className={`text-[10px] ${isSelected ? "text-secondary-fixed" : "text-muted"}`}>
         {month}
       </div>
     </button>

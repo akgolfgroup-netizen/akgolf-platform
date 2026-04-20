@@ -23,15 +23,15 @@ export const Badge: React.FC<BadgeProps> = ({
   };
   
   const variants: Record<BadgeVariant, string> = {
-    default: 'bg-grey-100 text-text border border-grey-200',
-    secondary: 'bg-grey-100 text-grey-500 border border-grey-200',
+    default: 'bg-surface-container text-text border border-outline-variant/30',
+    secondary: 'bg-surface-container text-on-surface-variant/80 border border-outline-variant/30',
     success: 'bg-success-light text-success-text',
     warning: 'bg-warning-light text-warning-text',
     error: 'bg-error-light text-error-text',
     info: 'bg-info-light text-info-text',
-    muted: 'bg-grey-50 text-grey-400 border border-grey-200',
-    pro: 'bg-accent-cta text-accent-cta-text',
-    lime: 'bg-accent-cta text-accent-cta-text',
+    muted: 'bg-surface text-on-surface-variant border border-outline-variant/30',
+    pro: 'bg-secondary-fixed text-secondary-fixed-text',
+    lime: 'bg-secondary-fixed text-secondary-fixed-text',
     purple: 'bg-ai-light text-ai-text',
   };
 

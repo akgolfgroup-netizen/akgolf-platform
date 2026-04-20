@@ -43,13 +43,13 @@ export default function LandingPricingPage() {
 
       <main className="pt-32 pb-24 px-6 max-w-[1280px] mx-auto">
         <header className="text-center mb-16">
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-black opacity-60 mb-4 block">
+          <span className="font-mono text-xs uppercase tracking-[0.3em] text-on-surface opacity-60 mb-4 block">
             Alle pakker inkluderer spillerportalen
           </span>
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-black mb-6 leading-tight">
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-on-surface mb-6 leading-tight">
             Velg ditt nivå
           </h1>
-          <p className="text-grey-500 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-on-surface-variant/80 max-w-2xl mx-auto text-lg leading-relaxed">
             Alle pakker inkluderer full tilgang til AK Golf spillerportalen —
             treningsplaner, øvelsesbank, statistikk og progresjonslogging.
             Coaching-tjenester er MVA-fritatt.
@@ -58,27 +58,27 @@ export default function LandingPricingPage() {
 
         {/* Abonnement */}
         <div className="mb-16">
-          <h2 className="text-center text-2xl font-bold text-black mb-10 uppercase tracking-wider">
+          <h2 className="text-center text-2xl font-bold text-on-surface mb-10 uppercase tracking-wider">
             Abonnement
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Performance Pro */}
-            <div className="bg-white rounded-[1.5rem] p-8 flex flex-col h-full border-2 border-accent-cta shadow-[0_4px_32px_rgba(45,90,39,0.08)] relative">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent-cta text-black font-bold text-[10px] uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-lg">
+            <div className="bg-surface-container-lowest rounded-[1.5rem] p-8 flex flex-col h-full border-2 border-secondary-fixed shadow-[0_4px_32px_rgba(45,90,39,0.08)] relative">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-secondary-fixed text-on-surface font-bold text-[10px] uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-lg">
                 Mest populær
               </div>
               <div className="mb-8">
-                <h3 className="font-mono text-xs uppercase tracking-widest text-black/60 mb-2">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-on-surface/60 mb-2">
                   Abonnement
                 </h3>
-                <div className="text-4xl font-bold text-black mb-1">
+                <div className="text-4xl font-bold text-on-surface mb-1">
                   Performance Pro
                 </div>
                 <div className="flex items-baseline gap-1 mt-4">
-                  <span className="text-3xl font-bold text-black">
+                  <span className="text-3xl font-bold text-on-surface">
                     {subProAmount} kr
                   </span>
-                  <span className="text-grey-500 opacity-60 text-sm">/mnd</span>
+                  <span className="text-on-surface-variant/80 opacity-60 text-sm">/mnd</span>
                 </div>
               </div>
               <div className="flex-grow space-y-4 mb-10">
@@ -90,36 +90,36 @@ export default function LandingPricingPage() {
                   "Full spillerportal",
                 ]).map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-black flex-shrink-0" />
-                    <span className="text-sm text-black">{feature}</span>
+                    <CheckCircle className="w-5 h-5 text-on-surface flex-shrink-0" />
+                    <span className="text-sm text-on-surface">{feature}</span>
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-grey-500 mb-6 italic">
+              <p className="text-sm text-on-surface-variant/80 mb-6 italic">
                 Passer for: Ambisiøse spillere som trener 3+ ganger i uken.
               </p>
               <Link
                 href="/booking"
-                className="w-full py-4 bg-accent-cta text-black font-bold uppercase text-xs tracking-widest rounded-xl hover:shadow-[0_0_20px_rgba(210,240,0,0.4)] transition-all duration-300 transform hover:scale-[1.02] text-center block"
+                className="w-full py-4 bg-secondary-fixed text-on-surface font-bold uppercase text-xs tracking-widest rounded-xl hover:shadow-[0_0_20px_rgba(210,240,0,0.4)] transition-all duration-300 transform hover:scale-[1.02] text-center block"
               >
                 Velg Performance Pro
               </Link>
             </div>
 
             {/* Performance */}
-            <div className="bg-grey-50 rounded-[1.5rem] p-8 flex flex-col h-full border border-transparent transition-all hover:bg-beige-hover">
+            <div className="bg-surface rounded-[1.5rem] p-8 flex flex-col h-full border border-transparent transition-all hover:bg-beige-hover">
               <div className="mb-8">
-                <h3 className="font-mono text-xs uppercase tracking-widest text-black/60 mb-2">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-on-surface/60 mb-2">
                   Abonnement
                 </h3>
-                <div className="text-4xl font-bold text-black mb-1">
+                <div className="text-4xl font-bold text-on-surface mb-1">
                   Performance
                 </div>
                 <div className="flex items-baseline gap-1 mt-4">
-                  <span className="text-3xl font-bold text-black">
+                  <span className="text-3xl font-bold text-on-surface">
                     {subAmount} kr
                   </span>
-                  <span className="text-grey-500 opacity-60 text-sm">/mnd</span>
+                  <span className="text-on-surface-variant/80 opacity-60 text-sm">/mnd</span>
                 </div>
               </div>
               <div className="flex-grow space-y-4 mb-10">
@@ -131,17 +131,17 @@ export default function LandingPricingPage() {
                   "Treningsplan oppdatert etter hver sesjon",
                 ]).map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-black flex-shrink-0" />
-                    <span className="text-sm text-black">{feature}</span>
+                    <CheckCircle className="w-5 h-5 text-on-surface flex-shrink-0" />
+                    <span className="text-sm text-on-surface">{feature}</span>
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-grey-500 mb-6 italic">
+              <p className="text-sm text-on-surface-variant/80 mb-6 italic">
                 Passer for: Klubbspillere som spiller 1–2 ganger i uken.
               </p>
               <Link
                 href="/booking"
-                className="w-full py-4 border-2 border-black text-black font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-black hover:text-white transition-all duration-300 text-center block"
+                className="w-full py-4 border-2 border-black text-on-surface font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-on-surface hover:text-surface transition-all duration-300 text-center block"
               >
                 Velg Performance
               </Link>
@@ -151,19 +151,19 @@ export default function LandingPricingPage() {
 
         {/* Onboarding */}
         <div className="mb-16">
-          <h2 className="text-center text-2xl font-bold text-black mb-10 uppercase tracking-wider">
+          <h2 className="text-center text-2xl font-bold text-on-surface mb-10 uppercase tracking-wider">
             Onboarding
           </h2>
           <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-[1.5rem] p-8 border border-black/10">
+            <div className="bg-surface-container-lowest rounded-[1.5rem] p-8 border border-black/10">
               <div className="mb-8">
-                <h3 className="font-mono text-xs uppercase tracking-widest text-black/60 mb-2">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-on-surface/60 mb-2">
                   Onboarding
                 </h3>
-                <div className="text-4xl font-bold text-black mb-1">Start</div>
+                <div className="text-4xl font-bold text-on-surface mb-1">Start</div>
                 <div className="flex items-baseline gap-1 mt-4">
-                  <span className="text-3xl font-bold text-black">3 000 kr</span>
-                  <span className="text-grey-500 opacity-60 text-sm">
+                  <span className="text-3xl font-bold text-on-surface">3 000 kr</span>
+                  <span className="text-on-surface-variant/80 opacity-60 text-sm">
                     /engangsavgift
                   </span>
                 </div>
@@ -176,19 +176,19 @@ export default function LandingPricingPage() {
                   "30 dagers tilgang til spillerportalen",
                 ].map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-black flex-shrink-0" />
-                    <span className="text-sm text-black">{feature}</span>
+                    <CheckCircle className="w-5 h-5 text-on-surface flex-shrink-0" />
+                    <span className="text-sm text-on-surface">{feature}</span>
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-grey-500 mb-6 italic">
+              <p className="text-sm text-on-surface-variant/80 mb-6 italic">
                 Passer for: Alle som vil prøve AK Golf-metoden før de forplikter
                 seg til abonnement. Etter Start anbefaler vi overgang til
                 Performance eller Performance Pro.
               </p>
               <Link
                 href="/booking"
-                className="w-full py-4 bg-black text-white font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
+                className="w-full py-4 bg-on-surface text-surface font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
               >
                 Start nå
               </Link>
@@ -198,23 +198,23 @@ export default function LandingPricingPage() {
 
         {/* Drop-in */}
         <div className="mb-16">
-          <h2 className="text-center text-2xl font-bold text-black mb-10 uppercase tracking-wider">
+          <h2 className="text-center text-2xl font-bold text-on-surface mb-10 uppercase tracking-wider">
             Drop-in
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-grey-50 rounded-[1.5rem] p-8">
+            <div className="bg-surface rounded-[1.5rem] p-8">
               <div className="mb-6">
-                <h3 className="font-mono text-xs uppercase tracking-widest text-black/60 mb-2">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-on-surface/60 mb-2">
                   Drop-in
                 </h3>
-                <div className="text-3xl font-bold text-black mb-1">Flex 50</div>
+                <div className="text-3xl font-bold text-on-surface mb-1">Flex 50</div>
                 <div className="flex items-baseline gap-1 mt-2">
-                  <span className="text-2xl font-bold text-black">
+                  <span className="text-2xl font-bold text-on-surface">
                     {flex50Amount} kr
                   </span>
-                  <span className="text-grey-500 opacity-60 text-sm">/solo</span>
+                  <span className="text-on-surface-variant/80 opacity-60 text-sm">/solo</span>
                 </div>
-                <p className="text-sm text-grey-500 mt-2">
+                <p className="text-sm text-on-surface-variant/80 mt-2">
                   850 kr per person for duo
                 </p>
               </div>
@@ -226,8 +226,8 @@ export default function LandingPricingPage() {
                   "Coaching-notater i appen",
                 ].map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-black flex-shrink-0" />
-                    <span className="text-sm text-black">{feature}</span>
+                    <CheckCircle className="w-5 h-5 text-on-surface flex-shrink-0" />
+                    <span className="text-sm text-on-surface">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -236,25 +236,25 @@ export default function LandingPricingPage() {
               </p>
               <Link
                 href="/booking"
-                className="w-full py-4 border-2 border-black text-black font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-black hover:text-white transition-all duration-300 text-center block"
+                className="w-full py-4 border-2 border-black text-on-surface font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-on-surface hover:text-surface transition-all duration-300 text-center block"
               >
                 Book Flex 50
               </Link>
             </div>
 
-            <div className="bg-grey-50 rounded-[1.5rem] p-8">
+            <div className="bg-surface rounded-[1.5rem] p-8">
               <div className="mb-6">
-                <h3 className="font-mono text-xs uppercase tracking-widest text-black/60 mb-2">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-on-surface/60 mb-2">
                   Drop-in
                 </h3>
-                <div className="text-3xl font-bold text-black mb-1">Flex 90</div>
+                <div className="text-3xl font-bold text-on-surface mb-1">Flex 90</div>
                 <div className="flex items-baseline gap-1 mt-2">
-                  <span className="text-2xl font-bold text-black">
+                  <span className="text-2xl font-bold text-on-surface">
                     {flex90Amount} kr
                   </span>
-                  <span className="text-grey-500 opacity-60 text-sm">/solo</span>
+                  <span className="text-on-surface-variant/80 opacity-60 text-sm">/solo</span>
                 </div>
-                <p className="text-sm text-grey-500 mt-2">
+                <p className="text-sm text-on-surface-variant/80 mt-2">
                   1 400 kr per person for duo
                 </p>
               </div>
@@ -266,8 +266,8 @@ export default function LandingPricingPage() {
                   "Book 48 timer i forveien",
                 ].map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-black flex-shrink-0" />
-                    <span className="text-sm text-black">{feature}</span>
+                    <CheckCircle className="w-5 h-5 text-on-surface flex-shrink-0" />
+                    <span className="text-sm text-on-surface">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -276,7 +276,7 @@ export default function LandingPricingPage() {
               </p>
               <Link
                 href="/booking"
-                className="w-full py-4 border-2 border-black text-black font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-black hover:text-white transition-all duration-300 text-center block"
+                className="w-full py-4 border-2 border-black text-on-surface font-bold uppercase text-xs tracking-widest rounded-xl hover:bg-on-surface hover:text-surface transition-all duration-300 text-center block"
               >
                 Book Flex 90
               </Link>
@@ -286,23 +286,23 @@ export default function LandingPricingPage() {
 
         {/* Banecoaching */}
         <div className="mb-16">
-          <h2 className="text-center text-2xl font-bold text-black mb-10 uppercase tracking-wider">
+          <h2 className="text-center text-2xl font-bold text-on-surface mb-10 uppercase tracking-wider">
             Banecoaching
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white rounded-[1.5rem] p-8 border border-black/10">
+            <div className="bg-surface-container-lowest rounded-[1.5rem] p-8 border border-black/10">
               <div className="mb-6">
-                <h3 className="font-mono text-xs uppercase tracking-widest text-black/60 mb-2">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-on-surface/60 mb-2">
                   Banecoaching
                 </h3>
-                <div className="text-3xl font-bold text-black mb-1">
+                <div className="text-3xl font-bold text-on-surface mb-1">
                   Banecoaching 9 hull
                 </div>
                 <div className="flex items-baseline gap-1 mt-2">
-                  <span className="text-2xl font-bold text-black">
+                  <span className="text-2xl font-bold text-on-surface">
                     {bane9?.price ?? "3 000"} kr
                   </span>
-                  <span className="text-grey-500 opacity-60 text-sm">
+                  <span className="text-on-surface-variant/80 opacity-60 text-sm">
                     /per spiller
                   </span>
                 </div>
@@ -316,34 +316,34 @@ export default function LandingPricingPage() {
                   "Greenfee inkludert",
                 ].map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-black flex-shrink-0" />
-                    <span className="text-sm text-black">{feature}</span>
+                    <CheckCircle className="w-5 h-5 text-on-surface flex-shrink-0" />
+                    <span className="text-sm text-on-surface">{feature}</span>
                   </div>
                 ))}
               </div>
               <Link
                 href="/booking"
-                className="w-full py-4 bg-black text-white font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
+                className="w-full py-4 bg-on-surface text-surface font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
               >
                 Book Banecoaching 9 hull
               </Link>
             </div>
 
-            <div className="bg-white rounded-[1.5rem] p-8 border border-black/10">
+            <div className="bg-surface-container-lowest rounded-[1.5rem] p-8 border border-black/10">
               <div className="mb-6">
-                <h3 className="font-mono text-xs uppercase tracking-widest text-black/60 mb-2">
+                <h3 className="font-mono text-xs uppercase tracking-widest text-on-surface/60 mb-2">
                   Banecoaching
                 </h3>
-                <div className="text-3xl font-bold text-black mb-1">
+                <div className="text-3xl font-bold text-on-surface mb-1">
                   Banecoaching Par 3
                 </div>
                 <div className="flex items-baseline gap-1 mt-2">
-                  <span className="text-2xl font-bold text-black">
+                  <span className="text-2xl font-bold text-on-surface">
                     {banePar3?.price && banePar3.price !== "TBD"
                       ? `${banePar3.price} kr`
                       : "Pris kommer"}
                   </span>
-                  <span className="text-grey-500 opacity-60 text-sm">
+                  <span className="text-on-surface-variant/80 opacity-60 text-sm">
                     /per spiller
                   </span>
                 </div>
@@ -356,14 +356,14 @@ export default function LandingPricingPage() {
                   "Lav terskel, høyt læringsutbytte",
                 ].map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-black flex-shrink-0" />
-                    <span className="text-sm text-black">{feature}</span>
+                    <CheckCircle className="w-5 h-5 text-on-surface flex-shrink-0" />
+                    <span className="text-sm text-on-surface">{feature}</span>
                   </div>
                 ))}
               </div>
               <Link
                 href="/booking"
-                className="w-full py-4 bg-black text-white font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
+                className="w-full py-4 bg-on-surface text-surface font-bold uppercase text-xs tracking-widest rounded-xl hover:opacity-90 transition-all duration-300 text-center block"
               >
                 Book Par 3
               </Link>
@@ -373,24 +373,24 @@ export default function LandingPricingPage() {
 
         {/* FAQ / Drop-in vs Abonnement */}
         <section className="mt-24 max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-black mb-8 text-center">
+          <h2 className="text-3xl font-bold text-on-surface mb-8 text-center">
             Drop-in vs Abonnement
           </h2>
-          <div className="bg-grey-50 rounded-xl p-8 mb-6">
-            <h3 className="font-bold text-black text-lg mb-3">
+          <div className="bg-surface rounded-xl p-8 mb-6">
+            <h3 className="font-bold text-on-surface text-lg mb-3">
               Trenger du binding? Nei. Men det lønner seg.
             </h3>
-            <p className="text-grey-500 leading-relaxed">
+            <p className="text-on-surface-variant/80 leading-relaxed">
               Flex gir deg coaching uten forpliktelser. Men du får kun
               coaching-notater — ikke spillerportalen. Ingen treningsplan mellom
               sesjonene, ingen statistikk, ingen progresjon.
             </p>
           </div>
-          <div className="bg-white rounded-xl p-8 border-2 border-accent-cta">
-            <h3 className="font-bold text-black text-lg mb-3">
+          <div className="bg-surface-container-lowest rounded-xl p-8 border-2 border-secondary-fixed">
+            <h3 className="font-bold text-on-surface text-lg mb-3">
               Performance gir deg coaching OG systemet
             </h3>
-            <p className="text-grey-500 leading-relaxed">
+            <p className="text-on-surface-variant/80 leading-relaxed">
               Performance gir deg coaching OG systemet som gjør at treningen
               mellom sesjonene faktisk fungerer. Det er forskjellen mellom å ta
               en time og å utvikle seg.

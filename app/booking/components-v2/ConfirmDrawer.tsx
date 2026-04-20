@@ -56,22 +56,22 @@ export function ConfirmDrawer({
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
-      <div className="text-lg font-bold text-black">Bekreft din booking</div>
+      <div className="text-lg font-bold text-on-surface">Bekreft din booking</div>
       <div className="text-xs text-muted mb-5">Sjekk detaljene og bekreft</div>
 
-      <div className="bg-primary rounded-2xl p-5 text-white mb-5">
+      <div className="bg-primary rounded-2xl p-5 text-surface mb-5">
         <SummaryRow label="Trener" value={trainerName} />
         <SummaryRow label="Tjeneste" value={service.name} />
         <SummaryRow label="Dato" value={dateStr} />
         <SummaryRow label="Tid" value={`${state.time} — ${endStr} (${service.duration} min)`} />
         <SummaryRow label="Sted" value="Gamle Fredrikstad GK" />
         <div className="flex justify-between items-end mt-3 pt-3 border-t border-white/15">
-          <div className="text-[10px] uppercase tracking-wider text-white/40">Total</div>
+          <div className="text-[10px] uppercase tracking-wider text-surface/40">Total</div>
           <div>
-            <span className="text-[28px] font-extrabold text-accent-cta tracking-tight">
+            <span className="text-[28px] font-extrabold text-secondary-fixed tracking-tight">
               {service.price.toLocaleString("nb-NO")}
             </span>
-            <span className="text-[11px] text-white/40 ml-1">{periodLabel}</span>
+            <span className="text-[11px] text-surface/40 ml-1">{periodLabel}</span>
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@ export function ConfirmDrawer({
           onChange={(e) => updateState({ notes: e.target.value })}
           placeholder="Beskriv utfordringen din (valgfritt)..."
           maxLength={500}
-          className="w-full mt-2.5 px-3.5 py-3 rounded-[10px] bg-surface border-2 border-transparent focus:border-primary outline-none text-[13px] text-black resize-none"
+          className="w-full mt-2.5 px-3.5 py-3 rounded-[10px] bg-surface border-2 border-transparent focus:border-primary outline-none text-[13px] text-on-surface resize-none"
         />
       </div>
 
@@ -132,11 +132,11 @@ export function ConfirmDrawer({
           className={`w-5 h-5 rounded-md flex-shrink-0 flex items-center justify-center border-2 transition-all mt-0.5 ${
             state.acceptedTerms
               ? "bg-primary border-primary"
-              : "bg-white border-muted"
+              : "bg-surface-container-lowest border-muted"
           }`}
         >
           {state.acceptedTerms && (
-            <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3 h-3 text-surface" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12" />
             </svg>
           )}
@@ -163,7 +163,7 @@ export function ConfirmDrawer({
         type="button"
         onClick={onContinue}
         disabled={!canContinue}
-        className="w-full mt-5 py-4 rounded-[14px] bg-accent-cta text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="w-full mt-5 py-4 rounded-[14px] bg-secondary-fixed text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
         Ga til betaling
         <Icon name="chevron_right" className="w-4 h-4" strokeWidth={2.5} />
@@ -175,7 +175,7 @@ export function ConfirmDrawer({
 function SummaryRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center py-1.5 border-b border-white/8 last:border-0">
-      <span className="text-xs text-white/50">{label}</span>
+      <span className="text-xs text-surface/50">{label}</span>
       <span className="text-[13px] font-semibold">{value}</span>
     </div>
   );
@@ -204,8 +204,8 @@ function FormField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className={`px-3.5 py-3 rounded-[10px] border-2 border-transparent focus:border-primary outline-none text-[13px] text-black ${
-          prefilled ? "bg-grey-50" : "bg-surface"
+        className={`px-3.5 py-3 rounded-[10px] border-2 border-transparent focus:border-primary outline-none text-[13px] text-on-surface ${
+          prefilled ? "bg-surface" : "bg-surface"
         }`}
       />
     </div>

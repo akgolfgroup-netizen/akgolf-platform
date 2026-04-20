@@ -72,7 +72,7 @@ export default async function RoundSummaryPage({ params }: Props) {
   const backNinePar = courseHoles.filter(h => h.holeNumber > 9).reduce((s, h) => s + h.par, 0);
 
   const scoreToPar = round.scoreToPar ?? 0;
-  const scoreColor = scoreToPar < 0 ? "text-green-500" : scoreToPar === 0 ? "text-black" : "text-red-500";
+  const scoreColor = scoreToPar < 0 ? "text-green-500" : scoreToPar === 0 ? "text-on-surface" : "text-red-500";
   const scoreLabel = scoreToPar < 0 ? "Under par!" : scoreToPar === 0 ? "Par" : "Over par";
 
   const sgSections = [
@@ -87,7 +87,7 @@ export default async function RoundSummaryPage({ params }: Props) {
       {/* Back navigation */}
       <Link
         href="/portal/runde/ny"
-        className="flex items-center gap-2 text-sm text-grey-400 hover:text-black transition-colors"
+        className="flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors"
       >
         <Icon name="arrow_back" className="h-4 w-4" />
         Ny runde
@@ -96,10 +96,10 @@ export default async function RoundSummaryPage({ params }: Props) {
       {/* Main Score Card */}
       <PremiumCard padding="xl" className="text-center relative overflow-hidden">
         {/* Background decoration */}
-        <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent-cta/10 rounded-full blur-3xl" />
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-secondary-fixed/10 rounded-full blur-3xl" />
         
         <div className="relative">
-          <p className="text-sm text-grey-400">{courseName}</p>
+          <p className="text-sm text-on-surface-variant">{courseName}</p>
           
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -115,11 +115,11 @@ export default async function RoundSummaryPage({ params }: Props) {
             <span className={cn("text-xl font-medium", scoreColor)}>
               {scoreToPar > 0 ? "+" : ""}{scoreToPar}
             </span>
-            <span className="text-grey-300">•</span>
-            <span className="text-grey-400">{scoreLabel}</span>
+            <span className="text-on-surface-variant/60">•</span>
+            <span className="text-on-surface-variant">{scoreLabel}</span>
           </div>
           
-          <p className="text-xs text-grey-400 mt-2">
+          <p className="text-xs text-on-surface-variant mt-2">
             {new Date(round.date).toLocaleDateString("nb-NO", {
               weekday: "long",
               day: "numeric",
@@ -129,29 +129,29 @@ export default async function RoundSummaryPage({ params }: Props) {
 
           {/* 9-hole splits */}
           {frontNine.length > 0 && (
-            <div className="flex items-center justify-center gap-6 mt-6 pt-6 border-t border-grey-200">
+            <div className="flex items-center justify-center gap-6 mt-6 pt-6 border-t border-outline-variant/30">
               <div className="text-center">
-                <p className="text-xs text-grey-400">Ut</p>
+                <p className="text-xs text-on-surface-variant">Ut</p>
                 <p className={cn(
                   "text-lg font-bold",
-                  frontNineScore < frontNinePar ? "text-green-500" : frontNineScore > frontNinePar ? "text-red-500" : "text-black"
+                  frontNineScore < frontNinePar ? "text-green-500" : frontNineScore > frontNinePar ? "text-red-500" : "text-on-surface"
                 )}>
                   {frontNineScore}
                 </p>
-                <p className="text-xs text-grey-300">Par {frontNinePar}</p>
+                <p className="text-xs text-on-surface-variant/60">Par {frontNinePar}</p>
               </div>
               {backNine.length > 0 && (
                 <>
-                  <div className="w-px h-10 bg-grey-200" />
+                  <div className="w-px h-10 bg-surface-variant" />
                   <div className="text-center">
-                    <p className="text-xs text-grey-400">Inn</p>
+                    <p className="text-xs text-on-surface-variant">Inn</p>
                     <p className={cn(
                       "text-lg font-bold",
-                      backNineScore < backNinePar ? "text-green-500" : backNineScore > backNinePar ? "text-red-500" : "text-black"
+                      backNineScore < backNinePar ? "text-green-500" : backNineScore > backNinePar ? "text-red-500" : "text-on-surface"
                     )}>
                       {backNineScore}
                     </p>
-                    <p className="text-xs text-grey-300">Par {backNinePar}</p>
+                    <p className="text-xs text-on-surface-variant/60">Par {backNinePar}</p>
                   </div>
                 </>
               )}
@@ -166,38 +166,38 @@ export default async function RoundSummaryPage({ params }: Props) {
           <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-2">
             <Icon name="my_location" className="w-5 h-5 text-blue-600" />
           </div>
-          <p className="text-2xl font-bold text-black tabular-nums">{fairwayPercentage}%</p>
-          <p className="text-xs text-grey-400">Fairway ({fairwaysHit}/{fairwayHoles.length})</p>
+          <p className="text-2xl font-bold text-on-surface tabular-nums">{fairwayPercentage}%</p>
+          <p className="text-xs text-on-surface-variant">Fairway ({fairwaysHit}/{fairwayHoles.length})</p>
         </PremiumCard>
         
         <PremiumCard padding="md" className="text-center">
           <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center mx-auto mb-2">
             <Icon name="circle" className="w-5 h-5 text-green-600" />
           </div>
-          <p className="text-2xl font-bold text-black tabular-nums">{girPercentage}%</p>
-          <p className="text-xs text-grey-400">GIR ({girCount}/{holes.length})</p>
+          <p className="text-2xl font-bold text-on-surface tabular-nums">{girPercentage}%</p>
+          <p className="text-xs text-on-surface-variant">GIR ({girCount}/{holes.length})</p>
         </PremiumCard>
         
         <PremiumCard padding="md" className="text-center">
           <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center mx-auto mb-2">
             <Icon name="flag" className="w-5 h-5 text-orange-600" />
           </div>
-          <p className="text-2xl font-bold text-black tabular-nums">{puttsPerHole}</p>
-          <p className="text-xs text-grey-400">Putts per hull</p>
+          <p className="text-2xl font-bold text-on-surface tabular-nums">{puttsPerHole}</p>
+          <p className="text-xs text-on-surface-variant">Putts per hull</p>
         </PremiumCard>
         
         <PremiumCard padding="md" className="text-center">
           <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center mx-auto mb-2">
             <Icon name="emoji_events" className="w-5 h-5 text-purple-600" />
           </div>
-          <p className="text-2xl font-bold text-black tabular-nums">{scramblePercentage}%</p>
-          <p className="text-xs text-grey-400">Scramble ({scrambleSuccess}/{scrambleOpportunities})</p>
+          <p className="text-2xl font-bold text-on-surface tabular-nums">{scramblePercentage}%</p>
+          <p className="text-xs text-on-surface-variant">Scramble ({scrambleSuccess}/{scrambleOpportunities})</p>
         </PremiumCard>
       </div>
 
       {/* Score Distribution */}
       <PremiumCard padding="lg">
-        <h2 className="text-sm font-semibold text-black mb-4 flex items-center gap-2">
+        <h2 className="text-sm font-semibold text-on-surface mb-4 flex items-center gap-2">
           <Icon name="bar_chart" className="w-4 h-4" />
           Score-fordeling
         </h2>
@@ -206,7 +206,7 @@ export default async function RoundSummaryPage({ params }: Props) {
           {[
             { label: "Eagle+", count: eagles, color: "bg-green-500", emoji: "🦅" },
             { label: "Birdie", count: birdies, color: "bg-green-400", emoji: "🎯" },
-            { label: "Par", count: pars, color: "bg-black", emoji: "✓" },
+            { label: "Par", count: pars, color: "bg-on-surface", emoji: "✓" },
             { label: "Bogey", count: bogeys, color: "bg-orange-400", emoji: "⚡" },
             { label: "Dobbel+", count: doubles, color: "bg-red-400", emoji: "⛔" },
           ].map((item) => {
@@ -224,13 +224,13 @@ export default async function RoundSummaryPage({ params }: Props) {
                     style={{ minHeight: item.count > 0 ? 8 : 4 }}
                   />
                   {item.count > 0 && (
-                    <span className="absolute -top-5 text-xs font-bold text-black">
+                    <span className="absolute -top-5 text-xs font-bold text-on-surface">
                       {item.count}
                     </span>
                   )}
                 </div>
                 <span className="text-lg">{item.emoji}</span>
-                <span className="text-[10px] text-grey-400 text-center">{item.label}</span>
+                <span className="text-[10px] text-on-surface-variant text-center">{item.label}</span>
               </div>
             );
           })}
@@ -240,7 +240,7 @@ export default async function RoundSummaryPage({ params }: Props) {
       {/* Best/Worst Holes */}
       {(bestHole || worstHole) && (
         <PremiumCard padding="lg">
-          <h2 className="text-sm font-semibold text-black mb-4 flex items-center gap-2">
+          <h2 className="text-sm font-semibold text-on-surface mb-4 flex items-center gap-2">
             <Icon name="workspace_premium" className="w-4 h-4" />
             Høydepunkter
           </h2>
@@ -249,7 +249,7 @@ export default async function RoundSummaryPage({ params }: Props) {
             {bestHole && bestHole.scoreToPar < 0 && (
               <div className="flex items-center justify-between p-3 bg-green-50 rounded-xl">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-green-500 flex items-center justify-center text-white font-bold">
+                  <div className="w-10 h-10 rounded-xl bg-green-500 flex items-center justify-center text-surface font-bold">
                     {bestHole.holeNumber}
                   </div>
                   <div>
@@ -268,7 +268,7 @@ export default async function RoundSummaryPage({ params }: Props) {
             {worstHole && worstHole.scoreToPar > 1 && (
               <div className="flex items-center justify-between p-3 bg-red-50 rounded-xl">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center text-white font-bold">
+                  <div className="w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center text-surface font-bold">
                     {worstHole.holeNumber}
                   </div>
                   <div>
@@ -290,11 +290,11 @@ export default async function RoundSummaryPage({ params }: Props) {
       {/* Strokes Gained */}
       {round.sgTotal !== null && (
         <PremiumCard padding="lg">
-          <h2 className="text-sm font-semibold text-black mb-1 flex items-center gap-2">
+          <h2 className="text-sm font-semibold text-on-surface mb-1 flex items-center gap-2">
             <Icon name="trending_up" className="w-4 h-4" />
             Strokes Gained
           </h2>
-          <div className="text-3xl font-bold text-black mb-4 tabular-nums tracking-tight">
+          <div className="text-3xl font-bold text-on-surface mb-4 tabular-nums tracking-tight">
             {(round.sgTotal ?? 0) > 0 ? "+" : ""}
             {(round.sgTotal ?? 0).toFixed(1)}
           </div>
@@ -308,8 +308,8 @@ export default async function RoundSummaryPage({ params }: Props) {
               return (
                 <div key={sg.label} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-grey-400" />
-                    <span className="text-sm text-grey-600">{sg.label}</span>
+                    <Icon className="w-4 h-4 text-on-surface-variant" />
+                    <span className="text-sm text-on-surface-variant/80">{sg.label}</span>
                   </div>
                   <span
                     className={cn(
@@ -330,19 +330,19 @@ export default async function RoundSummaryPage({ params }: Props) {
       {/* DECADE Score */}
       {round.decadeScore !== null && (
         <PremiumCard padding="lg">
-          <h2 className="text-sm font-semibold text-black mb-1">DECADE Score</h2>
-          <div className="text-3xl font-bold text-black mb-4 tabular-nums tracking-tight">
+          <h2 className="text-sm font-semibold text-on-surface mb-1">DECADE Score</h2>
+          <div className="text-3xl font-bold text-on-surface mb-4 tabular-nums tracking-tight">
             {round.decadeScore}/100
           </div>
-          <div className="h-3 bg-grey-100 rounded-full overflow-hidden">
+          <div className="h-3 bg-surface-container rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${round.decadeScore}%` }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="h-full rounded-full bg-accent-cta"
+              className="h-full rounded-full bg-secondary-fixed"
             />
           </div>
-          <p className="text-xs text-grey-400 mt-2">
+          <p className="text-xs text-on-surface-variant mt-2">
             Strategietterlevelse og beslutningskvalitet
           </p>
         </PremiumCard>
@@ -352,7 +352,7 @@ export default async function RoundSummaryPage({ params }: Props) {
       <div className="grid grid-cols-2 gap-3">
         <Link
           href="/portal/statistikk"
-          className="flex items-center justify-center gap-2 py-3.5 rounded-2xl border border-grey-200 text-black font-medium hover:bg-grey-50 transition-all"
+          className="flex items-center justify-center gap-2 py-3.5 rounded-2xl border border-outline-variant/30 text-on-surface font-medium hover:bg-surface transition-all"
         >
           <Icon name="bar_chart" className="w-4 h-4" />
           Se statistikk
@@ -360,7 +360,7 @@ export default async function RoundSummaryPage({ params }: Props) {
         
         <Link
           href="/portal/runde/ny"
-          className="flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-accent-cta text-black font-bold hover:opacity-90 transition-opacity"
+          className="flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-secondary-fixed text-on-surface font-bold hover:opacity-90 transition-opacity"
         >
           <Icon name="restart_alt" className="w-4 h-4" />
           Ny runde
@@ -369,7 +369,7 @@ export default async function RoundSummaryPage({ params }: Props) {
 
       {/* Share button */}
       <button 
-        className="w-full flex items-center justify-center gap-2 py-3 text-grey-400 hover:text-black transition-colors text-sm"
+        className="w-full flex items-center justify-center gap-2 py-3 text-on-surface-variant hover:text-on-surface transition-colors text-sm"
         onClick={() => {
           if (navigator.share) {
             navigator.share({

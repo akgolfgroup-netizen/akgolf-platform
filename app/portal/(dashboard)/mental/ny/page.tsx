@@ -76,46 +76,46 @@ export default function NewRoundPage() {
       >
         <Link
           href="/portal/mental"
-          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white border border-grey-200 text-black hover:bg-grey-50 transition-colors"
+          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-surface transition-colors"
         >
           <Icon name="chevron_left" className="w-4 h-4" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-black">Ny mental scorecard</h1>
-          <p className="text-grey-400 mt-1">Start en ny runde-logg</p>
+          <h1 className="text-2xl font-bold text-on-surface">Ny mental scorecard</h1>
+          <p className="text-on-surface-variant mt-1">Start en ny runde-logg</p>
         </div>
       </motion.div>
 
       <PremiumCard delay={0.1} padding="lg" radius="large">
         <div className="space-y-5">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1.5">
               Dato
             </label>
             <div className="relative">
-              <Icon name="calendar_today" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+              <Icon name="calendar_today" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+                className="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1.5">
               Bane
             </label>
             <div className="relative">
-              <Icon name="location_on" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400" />
+              <Icon name="location_on" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
               {loadingCourses ? (
-                <div className="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-grey-400 flex items-center gap-2">
+                <div className="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface-variant flex items-center gap-2">
                   <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                   Laster baner...
                 </div>
               ) : courses.length === 0 ? (
-                <div className="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-grey-400">
+                <div className="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface-variant">
                   Ingen baner funnet
                 </div>
               ) : (
@@ -126,7 +126,7 @@ export default function NewRoundPage() {
                     setCourseId(e.target.value);
                     setCourseName(selected?.name ?? "");
                   }}
-                  className="w-full pl-10 pr-10 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black appearance-none"
+                  className="w-full pl-10 pr-10 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black appearance-none"
                   style={{
                     backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%237A8C85' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
                     backgroundRepeat: "no-repeat",
@@ -144,7 +144,7 @@ export default function NewRoundPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-grey-400 mb-1.5">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1.5">
               Score (valgfritt)
             </label>
             <input
@@ -152,7 +152,7 @@ export default function NewRoundPage() {
               value={score}
               onChange={(e) => setScore(e.target.value)}
               placeholder="F.eks. 78"
-              className="w-full px-4 py-2.5 rounded-lg text-sm bg-white border border-grey-200 text-black placeholder:text-grey-300 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
+              className="w-full px-4 py-2.5 rounded-lg text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-on-surface-variant/60 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black"
             />
           </div>
 

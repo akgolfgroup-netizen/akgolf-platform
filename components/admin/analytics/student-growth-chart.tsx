@@ -50,8 +50,8 @@ export function StudentGrowthChart({
             <Icon name="person"s className="w-5 h-5 text-success" />
           </div>
           <div>
-            <h3 className="text-sm font-medium text-grey-400">Totale elever</h3>
-            <p className="text-2xl font-bold text-black tabular-nums">{totalStudents}</p>
+            <h3 className="text-sm font-medium text-on-surface-variant">Totale elever</h3>
+            <p className="text-2xl font-bold text-on-surface tabular-nums">{totalStudents}</p>
           </div>
         </div>
         <div className="text-right">
@@ -59,7 +59,7 @@ export function StudentGrowthChart({
             <Icon name="person"Plus className="w-3.5 h-3.5" />
             +{newStudents}
           </span>
-          <p className="text-xs text-grey-400 mt-1">Nye denne måneden</p>
+          <p className="text-xs text-on-surface-variant mt-1">Nye denne måneden</p>
         </div>
       </div>
 
@@ -72,24 +72,24 @@ export function StudentGrowthChart({
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-grey-200">
+      <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-outline-variant/30">
         <div>
           <div className="flex items-center gap-2">
             <Icon name="person"Plus className="w-4 h-4 text-success" />
-            <span className="text-xs text-grey-400">Nye</span>
+            <span className="text-xs text-on-surface-variant">Nye</span>
           </div>
-          <p className="text-lg font-semibold text-black tabular-nums">{newStudents}</p>
+          <p className="text-lg font-semibold text-on-surface tabular-nums">{newStudents}</p>
         </div>
         <div>
           <div className="flex items-center gap-2">
             <Icon name="person"Minus className="w-4 h-4 text-error" />
-            <span className="text-xs text-grey-400">Sluttet</span>
+            <span className="text-xs text-on-surface-variant">Sluttet</span>
           </div>
-          <p className="text-lg font-semibold text-black tabular-nums">{churnedStudents}</p>
+          <p className="text-lg font-semibold text-on-surface tabular-nums">{churnedStudents}</p>
         </div>
         <div>
-          <p className="text-xs text-grey-400">Retensjonsrate</p>
-          <p className="text-lg font-semibold text-black tabular-nums">{retentionRate}%</p>
+          <p className="text-xs text-on-surface-variant">Retensjonsrate</p>
+          <p className="text-lg font-semibold text-on-surface tabular-nums">{retentionRate}%</p>
         </div>
       </div>
     </Card>
@@ -118,7 +118,7 @@ export function StudentTierDistribution({
 
   return (
     <Card className="p-5">
-      <h3 className="text-sm font-semibold text-black mb-4">Fordeling per tier</h3>
+      <h3 className="text-sm font-semibold text-on-surface mb-4">Fordeling per tier</h3>
       <div className="space-y-3">
         {tiers.map((tier) => (
           <div key={tier.tier} className="flex items-center gap-3">
@@ -128,26 +128,26 @@ export function StudentTierDistribution({
             />
             <div className="flex-1">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-black">{tier.tier}</span>
-                <span className="text-sm text-grey-400">{tier.count}</span>
+                <span className="text-sm font-medium text-on-surface">{tier.tier}</span>
+                <span className="text-sm text-on-surface-variant">{tier.count}</span>
               </div>
-              <div className="h-1.5 bg-grey-100 rounded-full overflow-hidden mt-1">
+              <div className="h-1.5 bg-surface-container rounded-full overflow-hidden mt-1">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${tier.percentage}%`, backgroundColor: tier.color }}
                 />
               </div>
             </div>
-            <span className="text-xs font-medium text-grey-400 w-10 text-right">
+            <span className="text-xs font-medium text-on-surface-variant w-10 text-right">
               {tier.percentage}%
             </span>
           </div>
         ))}
       </div>
-      <div className="mt-4 pt-4 border-t border-grey-200">
+      <div className="mt-4 pt-4 border-t border-outline-variant/30">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-black">Totalt</span>
-          <span className="text-lg font-bold text-black tabular-nums">{total}</span>
+          <span className="text-sm font-medium text-on-surface">Totalt</span>
+          <span className="text-lg font-bold text-on-surface tabular-nums">{total}</span>
         </div>
       </div>
     </Card>

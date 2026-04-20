@@ -54,7 +54,7 @@ export function MentalTrendsWidget() {
                 <span className={`font-medium ${vsBenchmark}`}>{m.value}%</span>
                 <span
                   className={`flex items-center gap-0.5 text-[10px] font-medium ${
-                    isPositive ? "text-success" : isNeutral ? "text-grey-400" : "text-error"
+                    isPositive ? "text-success" : isNeutral ? "text-on-surface-variant" : "text-error"
                   }`}
                 >
                   {isPositive ? (
@@ -68,7 +68,7 @@ export function MentalTrendsWidget() {
                 </span>
               </div>
             </div>
-            <div className="h-2 rounded-full bg-grey-100 overflow-hidden">
+            <div className="h-2 rounded-full bg-surface-container overflow-hidden">
               <div
                 className="h-full rounded-full bg-primary transition-all"
                 style={{ width: `${m.value}%` }}

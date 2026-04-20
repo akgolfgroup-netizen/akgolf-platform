@@ -7,11 +7,11 @@
  *
  * Spec:
  * - Container: h-screen w-64 fixed bg-emerald-950 flex-col py-8 px-4
- * - Header: mb-10 px-4, h1 text-xl font-bold tracking-widest text-white,
+ * - Header: mb-10 px-4, h1 text-xl font-bold tracking-widest text-surface,
  *   p text-xs font-medium uppercase text-emerald-100/50
  * - Nav: flex-1 space-y-2
  * - Active: bg-lime-400 text-emerald-950 font-bold rounded-lg px-4 py-3 text-sm uppercase tracking-tight
- * - Inactive: text-emerald-100/70 hover:text-white hover:bg-emerald-900/50
+ * - Inactive: text-emerald-100/70 hover:text-surface hover:bg-emerald-900/50
  * - Bottom: mt-auto pt-6 border-t border-emerald-900/50 px-4
  * - Bruker beholder grupper (8 i MC_NAV_CONFIG) — Heritage har flat nav men vi må tilpasse
  * - Gruppe-label: text-[10px] text-emerald-100/40 uppercase tracking-[0.12em]
@@ -83,7 +83,7 @@ function NavLink({
         "flex items-center gap-3 px-4 py-3 rounded-lg tracking-tight text-sm uppercase transition-colors",
         isActive
           ? "bg-lime-400 text-emerald-950 font-bold"
-          : "text-emerald-100/70 hover:text-white hover:bg-emerald-900/50 font-medium",
+          : "text-emerald-100/70 hover:text-surface hover:bg-emerald-900/50 font-medium",
       )}
       aria-current={isActive ? "page" : undefined}
     >
@@ -138,7 +138,7 @@ function NavGroupComponent({
 function SidebarHeader() {
   return (
     <div className="mb-8 px-4">
-      <h1 className="text-xl font-bold tracking-widest text-white">AK Golf</h1>
+      <h1 className="text-xl font-bold tracking-widest text-surface">AK Golf</h1>
       <p className="text-xs font-medium uppercase tracking-tight text-emerald-100/50 mt-1">
         Mission Control
       </p>
@@ -168,7 +168,7 @@ function SidebarBottom({
           {initial}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-semibold text-white truncate">
+          <div className="text-sm font-semibold text-surface truncate">
             {user.name ?? "Bruker"}
           </div>
           <div className="text-[10px] text-emerald-100/50 uppercase tracking-widest truncate">
@@ -180,14 +180,14 @@ function SidebarBottom({
       <div className="space-y-1">
         <Link
           href="/portal"
-          className="flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-emerald-100/70 hover:text-white transition-colors"
+          className="flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-emerald-100/70 hover:text-surface transition-colors"
         >
           <Icon name="home" size={18} />
           <span>Til portal</span>
         </Link>
         <button
           onClick={onSignOut}
-          className="w-full flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-emerald-100/70 hover:text-white transition-colors"
+          className="w-full flex items-center gap-3 px-4 py-2 text-[11px] font-medium tracking-widest uppercase text-emerald-100/70 hover:text-surface transition-colors"
         >
           <Icon name="logout" size={18} />
           <span>Logg ut</span>
@@ -259,7 +259,7 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={onClose}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+              className="fixed inset-0 bg-on-surface/50 backdrop-blur-sm z-40 lg:hidden"
             />
             <motion.aside
               initial={{ x: "-100%" }}
@@ -271,7 +271,7 @@ export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
             >
               <button
                 onClick={onClose}
-                className="absolute right-4 top-4 p-2 rounded-lg text-emerald-100/70 hover:text-white hover:bg-emerald-900/50 transition-colors"
+                className="absolute right-4 top-4 p-2 rounded-lg text-emerald-100/70 hover:text-surface hover:bg-emerald-900/50 transition-colors"
                 aria-label="Lukk meny"
               >
                 <Icon name="close" size={20} />

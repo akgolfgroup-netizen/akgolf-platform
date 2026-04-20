@@ -2,7 +2,7 @@
 
 /**
  * GapAnalysisCard — bar-chart per dimensjon med flaskehals-markering.
- * Bruker design-system tokens (shadow-card, rounded-xl, text-grey-*).
+ * Bruker design-system tokens (shadow-card, rounded-xl, text-on-surface-variant).
  */
 
 import { MonoLabel } from "@/components/portal/patterns";
@@ -15,11 +15,11 @@ interface GapAnalysisCardProps {
 export function GapAnalysisCard({ gap }: GapAnalysisCardProps) {
   if (!gap.targetCategory) {
     return (
-      <section className="rounded-xl bg-white shadow-card p-6 text-center">
-        <MonoLabel size="xs" uppercase className="text-grey-400 block">
+      <section className="rounded-xl bg-surface-container-lowest shadow-card p-6 text-center">
+        <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
           Gap-analyse
         </MonoLabel>
-        <p className="mt-3 text-sm text-grey-700">
+        <p className="mt-3 text-sm text-on-surface-variant/90">
           Du er allerede på toppkategorien.
         </p>
       </section>
@@ -29,12 +29,12 @@ export function GapAnalysisCard({ gap }: GapAnalysisCardProps) {
   const maxGap = Math.max(...gap.rows.map((r) => r.gap), 0.01);
 
   return (
-    <section className="rounded-xl bg-white shadow-card p-6 md:p-8">
+    <section className="rounded-xl bg-surface-container-lowest shadow-card p-6 md:p-8">
       <div className="flex items-baseline justify-between mb-1">
         <MonoLabel size="xs" uppercase className="text-primary">
           Veien til {gap.targetCategory}
         </MonoLabel>
-        <span className="text-xs text-grey-400 tabular-nums">
+        <span className="text-xs text-on-surface-variant tabular-nums">
           Totalt +{gap.totalGap.toFixed(2)} SG
         </span>
       </div>
@@ -44,10 +44,10 @@ export function GapAnalysisCard({ gap }: GapAnalysisCardProps) {
           const fillPct = Math.min(100, (1 - r.gap / maxGap) * 100);
           return (
             <div key={r.dimension} className="grid grid-cols-[80px_1fr_64px_88px] items-center gap-3">
-              <span className="text-sm font-medium text-grey-700">
+              <span className="text-sm font-medium text-on-surface-variant/90">
                 {r.label}
               </span>
-              <div className="h-[5px] rounded-full bg-grey-100 overflow-hidden">
+              <div className="h-[5px] rounded-full bg-surface-container overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-700"
                   style={{
@@ -65,7 +65,7 @@ export function GapAnalysisCard({ gap }: GapAnalysisCardProps) {
               >
                 +{r.gap.toFixed(2)}
               </span>
-              <span className="text-right text-[11px] text-grey-400">
+              <span className="text-right text-[11px] text-on-surface-variant">
                 {r.statusLabel}
               </span>
             </div>
@@ -73,17 +73,17 @@ export function GapAnalysisCard({ gap }: GapAnalysisCardProps) {
         })}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-grey-100 flex items-baseline justify-between">
+      <div className="mt-6 pt-4 border-t border-outline-variant/20 flex items-baseline justify-between">
         <div>
-          <p className="text-sm text-grey-500">
+          <p className="text-sm text-on-surface-variant/80">
             Estimert tid:{" "}
-            <span className="font-semibold text-grey-900">
+            <span className="font-semibold text-on-surface">
               {gap.estimatedMonths !== null
                 ? `${gap.estimatedMonths} måneder`
                 : "—"}
             </span>
           </p>
-          <p className="mt-1 text-xs text-grey-400">{gap.assumption}</p>
+          <p className="mt-1 text-xs text-on-surface-variant">{gap.assumption}</p>
         </div>
       </div>
     </section>

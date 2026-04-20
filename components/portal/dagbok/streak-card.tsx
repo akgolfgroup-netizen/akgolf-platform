@@ -37,7 +37,7 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
       {/* Animated flame background for long streaks */}
       {isLongStreak && (
         <motion.div
-          className="absolute -top-10 -right-10 w-40 h-40 bg-accent-cta/20 rounded-full blur-3xl"
+          className="absolute -top-10 -right-10 w-40 h-40 bg-secondary-fixed/20 rounded-full blur-3xl"
           animate={{ 
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3]
@@ -54,17 +54,17 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
         {/* Header with icon */}
         <div className="flex items-start justify-between mb-4">
           <div>
-            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Treningsstreak</MonoLabel>
+            <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Treningsstreak</MonoLabel>
             <motion.div 
               className="flex items-baseline gap-2 mt-1"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE_APPLE }}
             >
-              <span className="text-4xl font-bold text-black tabular-nums tracking-tight">
+              <span className="text-4xl font-bold text-on-surface tabular-nums tracking-tight">
                 {currentStreak}
               </span>
-              <span className="text-sm text-grey-400">
+              <span className="text-sm text-on-surface-variant">
                 {currentStreak === 1 ? "dag" : "dager"}
               </span>
             </motion.div>
@@ -74,8 +74,8 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
             className={cn(
               "w-14 h-14 rounded-2xl flex items-center justify-center",
               isLongStreak 
-                ? "bg-accent-cta shadow-lg shadow-accent-cta/30" 
-                : "bg-grey-50"
+                ? "bg-secondary-fixed shadow-lg shadow-accent-cta/30" 
+                : "bg-surface"
             )}
             animate={isLongStreak ? {
               scale: [1, 1.05, 1],
@@ -89,7 +89,7 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
             <Icon name="local_fire_department" 
               className={cn(
                 "w-7 h-7",
-                isLongStreak ? "text-black" : "text-grey-400"
+                isLongStreak ? "text-on-surface" : "text-on-surface-variant"
               )} 
               strokeWidth={isLongStreak ? 2.5 : 2} />
           </motion.div>
@@ -98,15 +98,15 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
         {/* Streak message */}
         <div className="mb-4">
           {currentStreak === 0 ? (
-            <p className="text-sm text-grey-400">
+            <p className="text-sm text-on-surface-variant">
               Start din streak i dag! 🔥
             </p>
           ) : isNewRecord ? (
-            <p className="text-sm text-black font-medium">
+            <p className="text-sm text-on-surface font-medium">
               🎉 Ny personlig rekord!
             </p>
           ) : (
-            <p className="text-sm text-grey-400">
+            <p className="text-sm text-on-surface-variant">
               {currentStreak >= 7 
                 ? "Imponerende konsistens!" 
                 : currentStreak >= 3 
@@ -117,12 +117,12 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
         </div>
 
         {/* Stats row */}
-        <div className="flex items-center gap-4 pt-4 border-t border-grey-200">
+        <div className="flex items-center gap-4 pt-4 border-t border-outline-variant/30">
           <div className="flex items-center gap-2">
-            <Icon name="emoji_events" className="w-4 h-4 text-grey-400" />
+            <Icon name="emoji_events" className="w-4 h-4 text-on-surface-variant" />
             <div>
-              <p className="text-xs text-grey-400">Rekord</p>
-              <p className="text-sm font-semibold text-black">{longestStreak} dager</p>
+              <p className="text-xs text-on-surface-variant">Rekord</p>
+              <p className="text-sm font-semibold text-on-surface">{longestStreak} dager</p>
             </div>
           </div>
           
@@ -139,7 +139,7 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
                 {streakFreezesRemaining} freeze{streakFreezesRemaining !== 1 ? "s" : ""}
               </motion.button>
             ) : (
-              <span className="text-xs text-grey-300">
+              <span className="text-xs text-on-surface-variant/60">
                 Ingen freezes igjen
               </span>
             )}

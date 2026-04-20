@@ -15,12 +15,12 @@ export const Card: React.FC<CardProps> = ({
   className,
   ...props
 }) => {
-  const baseStyles = 'rounded-xl border border-grey-200';
+  const baseStyles = 'rounded-xl border border-outline-variant/30';
   
   const variants = {
-    default: 'bg-white',
-    soft: 'bg-grey-50',
-    elevated: 'bg-white shadow-card',
+    default: 'bg-surface-container-lowest',
+    soft: 'bg-surface',
+    elevated: 'bg-surface-container-lowest shadow-card',
   };
   
   const paddings = {
@@ -31,7 +31,7 @@ export const Card: React.FC<CardProps> = ({
   };
 
   const hoverStyles = hover
-    ? 'transition-all duration-300 hover:border-grey-300 hover:-translate-y-px hover:shadow-card-hover'
+    ? 'transition-all duration-300 hover:border-outline-variant/50 hover:-translate-y-px hover:shadow-card-hover'
     : '';
 
   return (
@@ -49,7 +49,7 @@ export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ cla
 );
 
 export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({ className, ...props }) => (
-  <h3 className={cn('text-base font-semibold text-black', className)} {...props} />
+  <h3 className={cn('text-base font-semibold text-on-surface', className)} {...props} />
 );
 
 export const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
@@ -57,5 +57,5 @@ export const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ cl
 );
 
 export const CardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
-  <div className={cn('flex items-center justify-between mt-4 pt-4 border-t border-grey-200', className)} {...props} />
+  <div className={cn('flex items-center justify-between mt-4 pt-4 border-t border-outline-variant/30', className)} {...props} />
 );
