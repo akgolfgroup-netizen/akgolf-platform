@@ -281,6 +281,7 @@ function PlannerSidebar({
 function ExercisesPlaceholder() {
   const [pyramide, setPyramide] = useState<string | null>(null);
   const [omraadeGruppe, setOmraadeGruppe] = useState<string | null>(null);
+  const [omraadeCode, setOmraadeCode] = useState<string | null>(null);
   const [lFase, setLFase] = useState<string | null>(null);
   const [life, setLife] = useState<string | null>(null);
   const [sok, setSok] = useState("");
@@ -292,12 +293,14 @@ function ExercisesPlaceholder() {
   const resetFilters = () => {
     setPyramide(null);
     setOmraadeGruppe(null);
+    setOmraadeCode(null);
     setLFase(null);
     setLife(null);
     setSok("");
   };
 
-  const hasFilters = pyramide || omraadeGruppe || lFase || life || sok;
+  const hasFilters =
+    pyramide || omraadeGruppe || omraadeCode || lFase || life || sok;
 
   return (
     <div className="space-y-3">
@@ -352,7 +355,15 @@ function ExercisesPlaceholder() {
             return (
               <button
                 key={g.code}
-                onClick={() => setOmraadeGruppe(active ? null : g.code)}
+                onClick={() => {
+                  if (active) {
+                    setOmraadeGruppe(null);
+                    setOmraadeCode(null);
+                  } else {
+                    setOmraadeGruppe(g.code);
+                    setOmraadeCode(null);
+                  }
+                }}
                 className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
                   active
                     ? "bg-primary text-white"
@@ -366,14 +377,23 @@ function ExercisesPlaceholder() {
         </div>
         {omraadeGruppe && (
           <div className="mt-2 flex flex-wrap gap-1">
-            {filteredOmrader.map((o) => (
-              <span
-                key={o.code}
-                className="rounded bg-surface-container-low px-2 py-0.5 font-mono text-[9px] uppercase tracking-tight text-on-surface-variant"
-              >
-                {o.code}
-              </span>
-            ))}
+            {filteredOmrader.map((o) => {
+              const active = omraadeCode === o.code;
+              return (
+                <button
+                  key={o.code}
+                  onClick={() => setOmraadeCode(active ? null : o.code)}
+                  className={`rounded px-2 py-0.5 font-mono text-[9px] uppercase tracking-tight transition-colors ${
+                    active
+                      ? "bg-secondary-fixed text-primary"
+                      : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container"
+                  }`}
+                  title={o.label}
+                >
+                  {o.code}
+                </button>
+              );
+            })}
           </div>
         )}
       </FilterSection>
