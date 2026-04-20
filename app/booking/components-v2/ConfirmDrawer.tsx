@@ -57,7 +57,7 @@ export function ConfirmDrawer({
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
       <div className="text-lg font-bold text-on-surface">Bekreft din booking</div>
-      <div className="text-xs text-muted mb-5">Sjekk detaljene og bekreft</div>
+      <div className="text-xs text-on-surface-variant mb-5">Sjekk detaljene og bekreft</div>
 
       <div className="bg-primary rounded-2xl p-5 text-surface mb-5">
         <SummaryRow label="Trener" value={trainerName} />
@@ -77,7 +77,7 @@ export function ConfirmDrawer({
       </div>
 
       <div className="mb-5">
-        <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-muted mb-2.5">
+        <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-on-surface-variant mb-2.5">
           Hva vil du jobbe med? (valgfritt)
         </div>
         <Icon name="center_focus_strong"AreaChips selected={state.focusAreas} onToggle={toggleFocus} />
@@ -92,7 +92,7 @@ export function ConfirmDrawer({
       </div>
 
       <div className="mb-5">
-        <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-muted mb-2.5">
+        <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-on-surface-variant mb-2.5">
           Dine opplysninger
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -132,7 +132,7 @@ export function ConfirmDrawer({
           className={`w-5 h-5 rounded-md flex-shrink-0 flex items-center justify-center border-2 transition-all mt-0.5 ${
             state.acceptedTerms
               ? "bg-primary border-primary"
-              : "bg-surface-container-lowest border-muted"
+              : "bg-surface-container-lowest border-outline-variant"
           }`}
         >
           {state.acceptedTerms && (
@@ -141,7 +141,7 @@ export function ConfirmDrawer({
             </svg>
           )}
         </button>
-        <div className="text-[11px] text-text leading-relaxed">
+        <div className="text-[11px] text-on-surface leading-relaxed">
           {hasSubscription ? (
             <>Jeg bekrefter bookingen. Denne timen er inkludert i mitt abonnement. Avbestilling minst 24 timer for.</>
           ) : service.isSubscription ? (
@@ -198,7 +198,7 @@ function FormField({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-[10px] font-semibold uppercase tracking-wider text-muted">{label}</label>
+      <label className="text-[10px] font-semibold uppercase tracking-wider text-on-surface-variant">{label}</label>
       <input
         type={type}
         value={value}

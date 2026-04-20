@@ -188,12 +188,12 @@ export default function BookingPage() {
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            <span className="ml-3 text-sm text-text">Laster trenere...</span>
+            <span className="ml-3 text-sm text-on-surface">Laster trenere...</span>
           </div>
         ) : locations.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-text">Ingen trenere tilgjengelig for online booking akkurat nå.</p>
-            <p className="text-sm text-text mt-2">
+            <p className="text-on-surface">Ingen trenere tilgjengelig for online booking akkurat nå.</p>
+            <p className="text-sm text-on-surface mt-2">
               Ta kontakt på{" "}
               <a href="mailto:anders@akgolf.no" className="text-primary font-medium">
                 anders@akgolf.no
@@ -205,7 +205,7 @@ export default function BookingPage() {
             {/* Tilbake-knapp */}
             <button
               onClick={() => setSelectedTrainer(null)}
-              className="flex items-center gap-2 mb-8 text-sm font-medium text-text hover:text-on-surface transition-colors"
+              className="flex items-center gap-2 mb-8 text-sm font-medium text-on-surface hover:text-on-surface transition-colors"
             >
               <Icon name="arrow_back" className="w-4 h-4" />
               Tilbake til treneroversikt
@@ -233,7 +233,7 @@ export default function BookingPage() {
                 <h2 className="text-xl font-semibold text-on-surface">
                   {selectedTrainer.trainer.name}
                 </h2>
-                <p className="text-sm text-text">
+                <p className="text-sm text-on-surface">
                   {selectedTrainer.trainer.role} — {selectedTrainer.locationName}
                 </p>
               </div>
@@ -254,11 +254,11 @@ export default function BookingPage() {
               </div>
             ) : (
               <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest p-12 text-center">
-                <Icon name="schedule" className="w-10 h-10 text-text mx-auto mb-4" />
+                <Icon name="schedule" className="w-10 h-10 text-on-surface mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-on-surface mb-2">
                   Kommer snart
                 </h3>
-                <p className="text-sm text-text max-w-sm mx-auto">
+                <p className="text-sm text-on-surface max-w-sm mx-auto">
                   Online booking for {selectedTrainer.trainer.name} på{" "}
                   {selectedTrainer.locationName} er under oppsett.
                   Ta kontakt på{" "}
@@ -288,7 +288,7 @@ export default function BookingPage() {
                       <h2 className="text-xl font-semibold text-on-surface">
                         {location.name}
                       </h2>
-                      <p className="text-sm text-text">
+                      <p className="text-sm text-on-surface">
                         {location.trainers.length === 1
                           ? "1 trener tilgjengelig"
                           : `${location.trainers.length} trenere tilgjengelige`}
@@ -307,7 +307,7 @@ export default function BookingPage() {
                             locationName: location.name,
                           })
                         }
-                        className="group rounded-2xl border border-outline-variant/30 bg-surface-container-lowest overflow-hidden transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover text-left"
+                        className="group rounded-2xl border border-outline-variant/30 bg-surface-container-lowest overflow-hidden transition-all duration-300 hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(45,90,39,0.08)] text-left"
                       >
                         {/* Trenerbilde */}
                         <div className="relative aspect-square overflow-hidden bg-surface-container">
@@ -335,7 +335,7 @@ export default function BookingPage() {
                           <h3 className="text-lg font-semibold text-on-surface mb-1">
                             {trainer.name}
                           </h3>
-                          <p className="text-sm text-text mb-4">
+                          <p className="text-sm text-on-surface mb-4">
                             {location.name}
                           </p>
 
@@ -344,7 +344,7 @@ export default function BookingPage() {
                             {trainer.services.map((service) => (
                               <span
                                 key={service}
-                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-surface-container text-text"
+                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-surface-container text-on-surface"
                               >
                                 {service}
                               </span>
@@ -389,7 +389,7 @@ export default function BookingPage() {
                   <h3 className="font-semibold text-on-surface mb-2">
                     Slik booker du
                   </h3>
-                  <p className="text-sm text-text leading-relaxed">
+                  <p className="text-sm text-on-surface leading-relaxed">
                     Velg trener og lokasjon over. Du får opp tilgjengelige tider
                     og kan booke direkte. Bekreftelse sendes på e-post.
                   </p>
@@ -403,7 +403,7 @@ export default function BookingPage() {
         <div className="mt-10 text-center">
           <Link
             href="/academy"
-            className="text-sm text-text hover:text-on-surface transition-colors"
+            className="text-sm text-on-surface hover:text-on-surface transition-colors"
           >
             &larr; Tilbake til Academy
           </Link>

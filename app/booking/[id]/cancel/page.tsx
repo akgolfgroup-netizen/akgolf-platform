@@ -10,7 +10,7 @@ export default function BookingCancelPage() {
           <Icon name="close"Circle className="w-8 h-8 text-error" />
         </div>
         <h1 className="text-2xl font-bold text-primary mb-2">Booking avbrutt</h1>
-        <p className="text-text text-sm mb-8">
+        <p className="text-on-surface text-sm mb-8">
           Betalingen ble ikke fullført. Bookingen din er ikke bekreftet.
           Du kan prøve igjen eller gå tilbake til forsiden.
         </p>

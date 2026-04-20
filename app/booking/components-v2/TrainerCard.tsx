@@ -28,7 +28,7 @@ export function TrainerCard({
       }`}
     >
       <div
-        className={`w-full aspect-[4/3] bg-cover bg-center relative ${trainer.imageUrl ? "bg-text" : "bg-primary"}`}
+        className={`w-full aspect-[4/3] bg-cover bg-center relative ${trainer.imageUrl ? "bg-on-surface" : "bg-primary"}`}
         style={trainer.imageUrl ? { backgroundImage: `url(${trainer.imageUrl})` } : undefined}
       >
         {!trainer.imageUrl && (
@@ -54,7 +54,7 @@ export function TrainerCard({
         }`}
       >
         <div className="px-5 pt-4 pb-5">
-          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-muted mb-3">
+          <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-on-surface-variant mb-3">
             Tilgjengelige tjenester
           </div>
           {trainer.services.map((service) => (

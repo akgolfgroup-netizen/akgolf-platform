@@ -34,7 +34,7 @@ export function PublicConfirmationView({
           <h1 className="text-3xl font-semibold mb-3 text-primary">
             Booking bekreftet!
           </h1>
-          <p className="text-muted">
+          <p className="text-on-surface-variant">
             Takk for din booking. Du vil motta en bekreftelse på e-post.
           </p>
         </div>
@@ -51,7 +51,7 @@ export function PublicConfirmationView({
                 <Icon name="calendar_today" className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted">Dato og tid</p>
+                <p className="text-sm text-on-surface-variant">Dato og tid</p>
                 <p className="font-medium text-primary">{formattedDate}</p>
               </div>
             </div>
@@ -61,7 +61,7 @@ export function PublicConfirmationView({
                 <Icon name="person" className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted">Instruktør</p>
+                <p className="text-sm text-on-surface-variant">Instruktør</p>
                 <p className="font-medium text-primary">{instructorName}</p>
               </div>
             </div>
@@ -71,7 +71,7 @@ export function PublicConfirmationView({
                 <Icon name="schedule" className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted">Varighet</p>
+                <p className="text-sm text-on-surface-variant">Varighet</p>
                 <p className="font-medium text-primary">{duration} minutter</p>
               </div>
             </div>
@@ -81,7 +81,7 @@ export function PublicConfirmationView({
                 <Icon name="credit_card" className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-muted">Pris</p>
+                <p className="text-sm text-on-surface-variant">Pris</p>
                 <p className="font-medium text-primary">{priceNOK}</p>
               </div>
             </div>
@@ -96,7 +96,7 @@ export function PublicConfirmationView({
               <h3 className="font-semibold mb-1 text-primary">
                 Bekreftelse sendt
               </h3>
-              <p className="text-sm text-muted">
+              <p className="text-sm text-on-surface-variant">
                 En detaljert bekreftelse er sendt til <strong>{studentEmail}</strong>.
                 Sjekk innboksen din (og spam-mappen) for mer informasjon om timen.
               </p>
@@ -121,7 +121,7 @@ export function PublicConfirmationView({
               <h3 className="font-semibold mb-1 text-primary">
                 Din spillerportal
               </h3>
-              <p className="text-sm mb-4 text-muted">
+              <p className="text-sm mb-4 text-on-surface-variant">
                 Ved første booking opprettes en konto automatisk. Hvis du er ny kunde,
                 vil du motta innloggingsinformasjon på e-post.
               </p>
@@ -140,7 +140,7 @@ export function PublicConfirmationView({
         <div className="mt-8 text-center">
           <Link
             href="/academy"
-            className="text-sm transition-colors hover:opacity-70 text-muted"
+            className="text-sm transition-colors hover:opacity-70 text-on-surface-variant"
           >
             ← Tilbake til Academy
           </Link>

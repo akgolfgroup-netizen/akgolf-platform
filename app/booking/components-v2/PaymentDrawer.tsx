@@ -75,11 +75,11 @@ export function PaymentDrawer({
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
       <div className="text-lg font-bold text-on-surface">Bekreft og betal</div>
-      <div className="text-xs text-muted mb-5">
+      <div className="text-xs text-on-surface-variant mb-5">
         {service.name} · {service.price.toLocaleString("nb-NO")} {periodLabel}
       </div>
 
-      <div className="mb-4 p-4 rounded-xl bg-surface text-[13px] text-text">
+      <div className="mb-4 p-4 rounded-xl bg-surface text-[13px] text-on-surface">
         Du blir videresendt til Stripe for sikker betaling. Stripe stotter automatisk kort, Apple Pay og Google Pay avhengig av din enhet.
       </div>
 

@@ -49,7 +49,7 @@ export default async function BookingConfirmationPage({ params }: Props) {
           <h2 className="text-xl font-semibold mb-2 text-primary">
             Booking ikke funnet
           </h2>
-          <p className="text-muted">
+          <p className="text-on-surface-variant">
             Vi kunne ikke finne denne bookingen. Kontroller at lenken er korrekt.
           </p>
         </div>

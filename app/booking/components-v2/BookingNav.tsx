@@ -11,13 +11,13 @@ export function BookingNav() {
       <div className="max-w-[720px] mx-auto flex items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-1.5 text-muted text-sm hover:text-primary transition-colors"
+          className="flex items-center gap-1.5 text-on-surface-variant text-sm hover:text-primary transition-colors"
         >
           <Icon name="chevron_left" className="w-4 h-4" />
           Tilbake
         </Link>
         <div className="font-extrabold text-lg text-primary tracking-tight">
-          AK Golf <span className="text-muted font-medium text-xs ml-1.5">Book</span>
+          AK Golf <span className="text-on-surface-variant font-medium text-xs ml-1.5">Book</span>
         </div>
       </div>
     </nav>

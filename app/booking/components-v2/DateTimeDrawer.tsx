@@ -88,7 +88,7 @@ export function DateTimeDrawer({
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
       <div className="text-lg font-bold text-on-surface">Velg dato og tid</div>
-      <div className="text-xs text-muted mb-5">
+      <div className="text-xs text-on-surface-variant mb-5">
         {serviceName} med {trainerFirstName}
       </div>
 
@@ -97,7 +97,7 @@ export function DateTimeDrawer({
           <Icon name="progress_activity" className="w-6 h-6 text-primary animate-spin" />
         </div>
       ) : days.length === 0 ? (
-        <div className="text-center py-8 text-sm text-muted">
+        <div className="text-center py-8 text-sm text-on-surface-variant">
           Ingen ledige tider denne uken.
         </div>
       ) : (

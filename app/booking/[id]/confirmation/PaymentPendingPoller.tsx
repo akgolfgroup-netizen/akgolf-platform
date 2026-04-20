@@ -94,7 +94,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
             <Icon name="check"Circle2 className="w-8 h-8 text-success" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betaling mottatt</h2>
-          <p className="text-muted">Laster bekreftelsen din...</p>
+          <p className="text-on-surface-variant">Laster bekreftelsen din...</p>
         </div>
       </div>
     );
@@ -108,7 +108,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
             <Icon name="error" className="w-8 h-8 text-error" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betalingen feilet</h2>
-          <p className="text-muted mb-6">Vi kunne ikke bekrefte betalingen din. Vennligst prov igjen eller kontakt oss.</p>
+          <p className="text-on-surface-variant mb-6">Vi kunne ikke bekrefte betalingen din. Vennligst prov igjen eller kontakt oss.</p>
           <Link href="/booking" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-surface">
             Prov igjen
           </Link>
@@ -125,7 +125,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
             <Icon name="check"Circle2 className="w-8 h-8 text-warning" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betalingen behandles</h2>
-          <p className="text-muted mb-6">Betalingen din er registrert, men bekreftelsen tar litt lenger enn vanlig. Du vil motta en bekreftelse pa e-post.</p>
+          <p className="text-on-surface-variant mb-6">Betalingen din er registrert, men bekreftelsen tar litt lenger enn vanlig. Du vil motta en bekreftelse pa e-post.</p>
           <Link href="/portal/bookinger" className="inline-flex items-center justify-center px-6 py-3 rounded-[20px] text-sm font-semibold bg-primary text-surface">
             Se mine bookinger
           </Link>
@@ -141,7 +141,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
           <Icon name="progress_activity" className="w-8 h-8 animate-spin text-primary" />
         </div>
         <h2 className="text-xl font-semibold mb-2 text-primary">Bekrefter betaling</h2>
-        <p className="text-muted">Vi verifiserer betalingen din. Dette tar vanligvis noen sekunder...</p>
+        <p className="text-on-surface-variant">Vi verifiserer betalingen din. Dette tar vanligvis noen sekunder...</p>
       </div>
     </div>
   );

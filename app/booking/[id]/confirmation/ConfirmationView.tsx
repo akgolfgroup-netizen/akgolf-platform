@@ -63,7 +63,7 @@ export function ConfirmationView({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-muted"
+            className="text-on-surface-variant"
           >
             Din coaching-time er booket og bekreftet
           </motion.p>
@@ -79,7 +79,7 @@ export function ConfirmationView({
           {/* Decorative top line */}
           <div className="absolute top-0 left-8 right-8 h-1 rounded-full bg-primary" />
 
-          <h3 className="text-xs font-semibold uppercase tracking-widest mb-6 text-muted">
+          <h3 className="text-xs font-semibold uppercase tracking-widest mb-6 text-on-surface-variant">
             Bookingdetaljer
           </h3>
 
@@ -95,7 +95,7 @@ export function ConfirmationView({
                 <Icon name="credit_card" size={20} className="text-primary" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1 text-muted">Tjeneste</p>
+                <p className="text-xs uppercase tracking-wide mb-1 text-on-surface-variant">Tjeneste</p>
                 <p className="font-semibold text-primary">{serviceName}</p>
               </div>
             </motion.div>
@@ -111,7 +111,7 @@ export function ConfirmationView({
                 <Icon name="person" size={20} className="text-primary" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1 text-muted">Instruktør</p>
+                <p className="text-xs uppercase tracking-wide mb-1 text-on-surface-variant">Instruktør</p>
                 <p className="font-semibold text-primary">{instructorName}</p>
               </div>
             </motion.div>
@@ -127,7 +127,7 @@ export function ConfirmationView({
                 <Icon name="calendar_today" size={20} className="text-primary" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1 text-muted">Dato og tid</p>
+                <p className="text-xs uppercase tracking-wide mb-1 text-on-surface-variant">Dato og tid</p>
                 <p className="font-semibold text-primary">{formattedDate}</p>
               </div>
             </motion.div>
@@ -143,7 +143,7 @@ export function ConfirmationView({
                 <Icon name="schedule" size={20} className="text-primary" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide mb-1 text-muted">Varighet</p>
+                <p className="text-xs uppercase tracking-wide mb-1 text-on-surface-variant">Varighet</p>
                 <p className="font-semibold text-primary">{duration} minutter</p>
               </div>
             </motion.div>
@@ -155,7 +155,7 @@ export function ConfirmationView({
           {/* Price & Payment */}
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wide mb-1 text-muted">Betalt</p>
+              <p className="text-xs uppercase tracking-wide mb-1 text-on-surface-variant">Betalt</p>
               <p className="text-3xl font-semibold text-primary">{priceNOK}</p>
             </div>
             {paymentMethod !== "NONE" && (
@@ -177,7 +177,7 @@ export function ConfirmationView({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="text-sm text-center mb-6 text-muted"
+          className="text-sm text-center mb-6 text-on-surface-variant"
         >
           En bekreftelse er sendt til din e-post.<br/>
           Du kan administrere bookingen fra &quot;Bookinger&quot; i menyen.

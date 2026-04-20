@@ -101,7 +101,7 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
       </motion.button>
 
       {/* Payment Methods Info */}
-      <div className="flex items-center justify-center gap-4 text-xs text-muted">
+      <div className="flex items-center justify-center gap-4 text-xs text-on-surface-variant">
         <div className="flex items-center gap-1.5">
           <Icon name="smartphone" size={14} />
           <span>Apple Pay</span>
@@ -116,7 +116,7 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
       </div>
 
       {/* Security Note */}
-      <p className="text-xs text-center text-muted">
+      <p className="text-xs text-center text-on-surface-variant">
         Sikker betaling via Stripe. AK Golf Academy lagrer ikke kortinformasjon.
       </p>
     </form>
@@ -155,7 +155,7 @@ export function StripePaymentPage({
           <h1 className="text-2xl font-semibold mb-2 text-primary">
             Fullfør betaling
           </h1>
-          <p className="text-muted">
+          <p className="text-on-surface-variant">
             Apple Pay, Google Pay eller kort
           </p>
         </div>

@@ -43,7 +43,7 @@ export default async function BookingPayPage({ params }: Props) {
           <h2 className="text-xl font-semibold mb-2 text-primary">
             Booking ikke funnet
           </h2>
-          <p className="text-muted">
+          <p className="text-on-surface-variant">
             Vi kunne ikke finne denne bookingen. Kontroller at lenken er korrekt.
           </p>
         </div>
@@ -62,7 +62,7 @@ export default async function BookingPayPage({ params }: Props) {
           <h2 className="text-xl font-semibold mb-2 text-primary">
             Allerede betalt
           </h2>
-          <p className="text-muted">
+          <p className="text-on-surface-variant">
             Denne bookingen er allerede betalt og bekreftet.
           </p>
         </div>
@@ -80,7 +80,7 @@ export default async function BookingPayPage({ params }: Props) {
           <h2 className="text-xl font-semibold mb-2 text-primary">
             Booking kansellert
           </h2>
-          <p className="text-muted">
+          <p className="text-on-surface-variant">
             Denne bookingen har blitt kansellert.
           </p>
         </div>
@@ -98,7 +98,7 @@ export default async function BookingPayPage({ params }: Props) {
           <h2 className="text-xl font-semibold mb-2 text-primary">
             Betaling ikke tilgjengelig
           </h2>
-          <p className="text-muted">
+          <p className="text-on-surface-variant">
             Ingen Stripe-betaling er knyttet til denne bookingen.
           </p>
         </div>
@@ -120,7 +120,7 @@ export default async function BookingPayPage({ params }: Props) {
           <h2 className="text-xl font-semibold mb-2 text-primary">
             Betalingsfeil
           </h2>
-          <p className="text-muted">
+          <p className="text-on-surface-variant">
             Kunne ikke hente betalingsinformasjon. Prøv igjen eller kontakt support.
           </p>
         </div>

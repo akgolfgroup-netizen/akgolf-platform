@@ -87,7 +87,7 @@ export function BookingClient({ trainers, prefilledUser, isLoggedIn, hasSubscrip
         <h1 className="text-[26px] font-bold text-on-surface tracking-tight mb-1">
           Hvem vil du trene med?
         </h1>
-        <p className="text-sm text-muted mb-7">
+        <p className="text-sm text-on-surface-variant mb-7">
           Velg din coach for a se tilgjengelige tjenester
         </p>
 

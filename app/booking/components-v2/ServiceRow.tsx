@@ -31,7 +31,7 @@ export function ServiceRow({ service, isActive, onSelect }: ServiceRowProps) {
         <div className={`text-sm font-semibold ${isActive ? "text-surface" : "text-on-surface"}`}>
           {service.name}
         </div>
-        <div className={`text-[11px] mt-0.5 ${isActive ? "text-surface/60" : "text-muted"}`}>
+        <div className={`text-[11px] mt-0.5 ${isActive ? "text-surface/60" : "text-on-surface-variant"}`}>
           {typeLabel}
         </div>
       </div>
@@ -39,7 +39,7 @@ export function ServiceRow({ service, isActive, onSelect }: ServiceRowProps) {
         <div className={`text-base font-bold ${isActive ? "text-secondary-fixed" : "text-primary"}`}>
           {service.price.toLocaleString("nb-NO")}
         </div>
-        <div className={`text-[10px] ${isActive ? "text-surface/60" : "text-muted"}`}>
+        <div className={`text-[10px] ${isActive ? "text-surface/60" : "text-on-surface-variant"}`}>
           {periodLabel}
         </div>
         {typeof service.availableSlotsThisWeek === "number" && (

@@ -27,7 +27,7 @@ export function FocusAreaChips({ selected, onToggle }: FocusAreaChipsProps) {
             className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[13px] font-medium border-2 transition-all ${
               isSelected
                 ? "bg-primary text-surface border-primary"
-                : "bg-surface text-text border-transparent hover:border-primary"
+                : "bg-surface text-on-surface border-transparent hover:border-primary"
             }`}
           >
             <Icon className="w-4 h-4" />

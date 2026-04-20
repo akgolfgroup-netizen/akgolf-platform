@@ -33,9 +33,9 @@ export function SuccessDrawer({ isOpen, state, service, trainerName }: SuccessDr
           <Icon name="check" className="w-7 h-7 text-primary" strokeWidth={3} />
         </div>
         <div className="text-xl font-bold text-on-surface mb-1">Bookingen er bekreftet!</div>
-        <div className="text-[13px] text-muted mb-6">Du mottar en bekreftelse pa e-post</div>
+        <div className="text-[13px] text-on-surface-variant mb-6">Du mottar en bekreftelse pa e-post</div>
 
-        <div className="bg-surface rounded-xl p-4 text-left text-[13px] text-text space-y-1">
+        <div className="bg-surface rounded-xl p-4 text-left text-[13px] text-on-surface space-y-1">
           <DetailRow label="Trener" value={trainerName} />
           <DetailRow label="Tjeneste" value={service.name} />
           <DetailRow label="Dato" value={dateStr} />
