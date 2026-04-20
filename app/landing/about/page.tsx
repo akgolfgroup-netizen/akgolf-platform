@@ -148,7 +148,7 @@ export default function LandingAboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Gamle Fredrikstad GK */}
-            <div className="bg-surface-container-lowest rounded-2xl p-6 border border-black/5 shadow-sm">
+            <div className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/20 shadow-sm">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-on-surface flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-6 h-6 text-secondary-fixed" />
@@ -174,7 +174,7 @@ export default function LandingAboutPage() {
             </div>
 
             {/* Miklagard GK */}
-            <div className="bg-surface-container-lowest rounded-2xl p-6 border border-black/5 shadow-sm">
+            <div className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/20 shadow-sm">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-on-surface flex items-center justify-center flex-shrink-0">
                   <Target className="w-6 h-6 text-secondary-fixed" />

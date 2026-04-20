@@ -40,7 +40,7 @@ export default function AcademyBookingPage() {
                   <h1 className="text-4xl md:text-5xl font-bold text-on-surface mb-4 tracking-tight">
                     Book din coaching-time
                   </h1>
-                  <p className="text-muted max-w-lg mx-auto">
+                  <p className="text-on-surface-variant max-w-lg mx-auto">
                     Velg tjeneste, trener og tidspunkt. Ingen konto nødvendig —
                     hvis du har booket før, kobles timen automatisk til din profil.
                   </p>
@@ -99,7 +99,7 @@ function InfoItem({
         <Icon className="w-5 h-5 text-primary" />
       </div>
       <h3 className="font-semibold text-on-surface mb-2">{title}</h3>
-      <p className="text-sm text-muted">{text}</p>
+      <p className="text-sm text-on-surface-variant">{text}</p>
     </div>
   );
 }

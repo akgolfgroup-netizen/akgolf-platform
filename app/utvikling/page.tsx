@@ -44,7 +44,7 @@ function ExpandableCard({
           ? "bg-on-surface text-surface"
           : item.span === "large"
             ? "bg-surface border border-outline-variant/30"
-            : "bg-surface-container-lowest border border-outline-variant/30 shadow-card hover:shadow-card-hover transition-shadow duration-300"
+            : "bg-surface-container-lowest border border-outline-variant/30 shadow-card hover:shadow-[0_8px_24px_rgba(45,90,39,0.08)] transition-shadow duration-300"
       }`}
     >
       <span
@@ -267,7 +267,7 @@ export default function UtviklingPage() {
                           style={{
                             fontSize: "16px",
                             fontWeight: 700,
-                            fill: "var(--color-grey-500)",
+                            fill: "var(--color-on-surface-variant)",
                             fontFamily:
                               "var(--font-inter), system-ui",
                           }}

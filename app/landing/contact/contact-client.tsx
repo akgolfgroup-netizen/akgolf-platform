@@ -87,7 +87,7 @@ export function ContactClient() {
               <a
                 key={item.title}
                 href={item.href}
-                className="bg-surface-container-lowest rounded-2xl p-8 border border-black/5 shadow-lg hover:-translate-y-1 transition-transform group"
+                className="bg-surface-container-lowest rounded-2xl p-8 border border-outline-variant/20 shadow-lg hover:-translate-y-1 transition-transform group"
               >
                 <div className="w-12 h-12 bg-surface rounded-xl flex items-center justify-center mb-4 group-hover:bg-secondary-fixed transition-colors">
                   <item.icon className="w-6 h-6 text-on-surface" />
@@ -118,7 +118,7 @@ export function ContactClient() {
             {locations.map((location) => (
               <div
                 key={location.name}
-                className="bg-surface-container-lowest rounded-[32px] overflow-hidden border border-black/5 shadow-lg"
+                className="bg-surface-container-lowest rounded-[32px] overflow-hidden border border-outline-variant/20 shadow-lg"
               >
                 <div className="aspect-[16/9] bg-surface">
                   <Image
@@ -169,7 +169,7 @@ export function ContactClient() {
               </div>
 
               {submitted ? (
-                <div className="bg-surface-container-lowest rounded-[32px] p-12 text-center border border-black/5">
+                <div className="bg-surface-container-lowest rounded-[32px] p-12 text-center border border-outline-variant/20">
                   <div className="w-16 h-16 bg-secondary-fixed rounded-full flex items-center justify-center mx-auto mb-6">
                     <Check className="w-8 h-8 text-on-surface" />
                   </div>
@@ -189,7 +189,7 @@ export function ContactClient() {
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="bg-surface-container-lowest rounded-[32px] p-8 lg:p-12 border border-black/5"
+                  className="bg-surface-container-lowest rounded-[32px] p-8 lg:p-12 border border-outline-variant/20"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>

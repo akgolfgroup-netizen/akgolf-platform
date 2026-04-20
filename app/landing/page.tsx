@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function LandingHomepage() {
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 bg-surface backdrop-blur-md flex justify-between items-center px-8 py-6 max-w-[1440px] mx-auto w-full border-b border-black/5">
+      <nav className="fixed top-0 w-full z-50 bg-surface backdrop-blur-md flex justify-between items-center px-8 py-6 max-w-[1440px] mx-auto w-full border-b border-outline-variant/20">
         <div className="text-2xl font-bold tracking-tighter text-on-surface">
           AK Golf Academy
         </div>
@@ -68,7 +68,7 @@ export default function LandingHomepage() {
                   <span className="material-symbols-outlined text-[200px] text-on-surface/10">sports_golf</span>
                 </div>
               </div>
-              <div className="absolute -bottom-8 -left-8 bg-surface-container-lowest p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-black/5">
+              <div className="absolute -bottom-8 -left-8 bg-surface-container-lowest p-8 rounded-3xl shadow-xl flex items-center gap-6 border border-outline-variant/20">
                 <div className="w-16 h-16 rounded-2xl bg-on-surface flex items-center justify-center">
                   <span className="material-symbols-outlined text-secondary-fixed text-3xl">insights</span>
                 </div>
@@ -91,7 +91,7 @@ export default function LandingHomepage() {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-surface-container-lowest p-10 rounded-[32px] border border-black/5 hover:-translate-y-1 transition-transform">
+            <div className="bg-surface-container-lowest p-10 rounded-[32px] border border-outline-variant/20 hover:-translate-y-1 transition-transform">
               <div className="w-14 h-14 bg-surface rounded-2xl flex items-center justify-center mb-8">
                 <span className="material-symbols-outlined text-on-surface text-3xl">calendar_today</span>
               </div>
@@ -99,7 +99,7 @@ export default function LandingHomepage() {
               <h3 className="text-2xl font-semibold text-on-surface mb-4">Book selv</h3>
               <p className="text-on-surface-variant/80 leading-relaxed">Book selv i appen. Velg tid som passer deg. Performance Pro-medlemmer ser tider 14 dager frem, Performance ser 7 dager.</p>
             </div>
-            <div className="bg-surface-container-lowest p-10 rounded-[32px] border border-black/5 hover:-translate-y-1 transition-transform">
+            <div className="bg-surface-container-lowest p-10 rounded-[32px] border border-outline-variant/20 hover:-translate-y-1 transition-transform">
               <div className="w-14 h-14 bg-surface rounded-2xl flex items-center justify-center mb-8">
                 <span className="material-symbols-outlined text-on-surface text-3xl">sports_golf</span>
               </div>
@@ -107,7 +107,7 @@ export default function LandingHomepage() {
               <h3 className="text-2xl font-semibold text-on-surface mb-4">20 minutter med fokus</h3>
               <p className="text-on-surface-variant/80 leading-relaxed">Én ting per sesjon. Teknisk veiledning etter plan — ikke tilfeldig trening. TrackMan bekrefter at endringene sitter.</p>
             </div>
-            <div className="bg-surface-container-lowest p-10 rounded-[32px] border border-black/5 hover:-translate-y-1 transition-transform">
+            <div className="bg-surface-container-lowest p-10 rounded-[32px] border border-outline-variant/20 hover:-translate-y-1 transition-transform">
               <div className="w-14 h-14 bg-surface rounded-2xl flex items-center justify-center mb-8">
                 <span className="material-symbols-outlined text-on-surface text-3xl">trending_up</span>
               </div>
@@ -136,7 +136,7 @@ export default function LandingHomepage() {
                 Hver spiller får en individuell utviklingsplan som oppdateres etter hver sesjon, slik at du alltid vet hva du skal jobbe med og hvorfor.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-                <div className="flex items-start gap-3 bg-surface-container-lowest rounded-xl p-4 border border-black/5 shadow-sm">
+                <div className="flex items-start gap-3 bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/20 shadow-sm">
                   <div className="w-10 h-10 rounded-lg bg-on-surface flex items-center justify-center flex-shrink-0">
                     <span className="material-symbols-outlined text-secondary-fixed text-xl">location_on</span>
                   </div>
@@ -145,7 +145,7 @@ export default function LandingHomepage() {
                     <p className="text-on-surface-variant/80 text-xs mt-1">Kongleveien 142, 1615 Fredrikstad</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 bg-surface-container-lowest rounded-xl p-4 border border-black/5 shadow-sm">
+                <div className="flex items-start gap-3 bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/20 shadow-sm">
                   <div className="w-10 h-10 rounded-lg bg-on-surface flex items-center justify-center flex-shrink-0">
                     <span className="material-symbols-outlined text-secondary-fixed text-xl">location_on</span>
                   </div>
@@ -194,7 +194,7 @@ export default function LandingHomepage() {
         </section>
       </main>
 
-      <footer className="w-full border-t border-black/5 bg-surface flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8">
+      <footer className="w-full border-t border-outline-variant/20 bg-surface flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8">
         <div className="flex flex-col gap-4">
           <div className="font-semibold text-on-surface text-xl">AK Golf Academy</div>
           <p className="text-sm tracking-normal text-on-surface/60">© 2024 AK Golf Group AS. Alle rettigheter reservert.</p>

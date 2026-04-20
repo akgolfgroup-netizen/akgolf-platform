@@ -206,7 +206,7 @@ export default function JuniorPage() {
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {JUNIOR_AGE_GROUPS_V2.groups.map((group) => (
                 <StaggerItem key={group.ageRange}>
-                  <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-8 shadow-card hover:shadow-card-hover transition-shadow duration-300 h-full flex flex-col">
+                  <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-8 shadow-card hover:shadow-[0_8px_24px_rgba(45,90,39,0.08)] transition-shadow duration-300 h-full flex flex-col">
                     <span className="text-[11px] font-mono uppercase tracking-[0.15em] text-on-surface-variant font-medium">
                       {group.ageRange}
                     </span>
@@ -308,7 +308,7 @@ export default function JuniorPage() {
                   </Link>
                   <a
                     href={JUNIOR_CTA_V2.ctaSecondaryHref}
-                    className="inline-flex px-7 py-3.5 rounded-[20px] border border-outline-variant/30 text-text text-sm font-semibold hover:bg-surface transition-colors"
+                    className="inline-flex px-7 py-3.5 rounded-[20px] border border-outline-variant/30 text-on-surface text-sm font-semibold hover:bg-surface transition-colors"
                   >
                     {JUNIOR_CTA_V2.ctaSecondary} &rarr;
                   </a>
