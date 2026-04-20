@@ -108,7 +108,7 @@ export function AthleticGridView({
       <div className="grid grid-cols-12 gap-6">
         <SgRadarHero summary={sgSummary} />
         <div className="col-span-12 lg:col-span-4">
-          <div className="bento-card relative h-full overflow-hidden rounded-3xl bg-primary p-8 text-[#fdf9f0]">
+          <div className="bento-card relative h-full overflow-hidden rounded-3xl bg-primary p-8 text-white">
             <div className="relative z-10">
               <div className="mb-6 flex items-center gap-2">
                 <Icon name="bolt" filled className="text-secondary-fixed" size={20} />
@@ -116,45 +116,45 @@ export function AthleticGridView({
                   AI-analyse
                 </span>
               </div>
-              <h3 className="mb-2 text-3xl font-bold leading-tight">
+              <h3 className="mb-2 text-3xl font-bold leading-tight text-white">
                 {goal?.target ?? "Ditt utviklingsmål"}
               </h3>
-              <p className="mb-8 text-sm leading-relaxed text-[#fdf9f0]/70">
+              <p className="mb-8 text-sm leading-relaxed text-white/70">
                 {aiInsight?.summary ??
                   "Loggfør minst én runde og én økt, så gir AI-en deg en personlig analyse."}
               </p>
               <div className="space-y-4">
-                <div className="flex items-end justify-between">
+                <div className="flex items-end justify-between text-white/80">
                   <span className="font-mono text-[11px] uppercase">{hcpGoalLabel}</span>
                   <span className="font-mono text-[11px] uppercase">
                     {Math.round(goalPercent)}%
                   </span>
                 </div>
-                <div className="h-1 overflow-hidden rounded-full bg-[#fdf9f0]/10">
+                <div className="h-1 overflow-hidden rounded-full bg-white/10">
                   <div
                     className="h-full bg-secondary-fixed transition-all duration-500"
                     style={{ width: `${goalPercent}%` }}
                   />
                 </div>
               </div>
-              <div className="mt-8 border-t border-[#fdf9f0]/10 pt-6">
+              <div className="mt-8 border-t border-white/10 pt-6">
                 <p className="mb-3 font-mono text-[10px] uppercase text-secondary-fixed">
                   Dagens fokus
                 </p>
-                <div className="flex items-center gap-4 rounded-xl bg-[#fdf9f0]/5 p-3">
+                <div className="flex items-center gap-4 rounded-xl bg-white/5 p-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary-fixed">
                     <Icon name="target" className="text-primary" size={20} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-xs font-bold">{todaysFocus}</p>
+                    <p className="truncate text-xs font-bold text-white">{todaysFocus}</p>
                     {coachInsight?.date ? (
-                      <p className="text-[10px] text-[#fdf9f0]/40">Fra sist coaching</p>
+                      <p className="text-[10px] text-white/50">Fra sist coaching</p>
                     ) : null}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="absolute -right-10 -bottom-10 opacity-10">
+            <div className="absolute -right-10 -bottom-10 text-white/10">
               <Icon name="monitoring" size={260} filled />
             </div>
           </div>
