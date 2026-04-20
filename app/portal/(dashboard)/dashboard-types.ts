@@ -80,6 +80,44 @@ export interface Achievement {
   progress?: number;
 }
 
+export interface SgSummary {
+  total: number | null;
+  offTheTee: number | null;
+  approach: number | null;
+  aroundTheGreen: number | null;
+  putting: number | null;
+  roundCount: number;
+  trend: "up" | "down" | "flat";
+}
+
+export interface TrainingIndexData {
+  weeklyHours: number;
+  recommendedSummer: [number, number];
+  recommendedWinter: [number, number];
+  planAdherencePct: number;
+  distribution: {
+    onCourse: number;
+    skillTechnical: number;
+    shortGame: number;
+    putting: number;
+    physicalMental: number;
+  };
+}
+
+export interface TestProgress {
+  totalTests: number;
+  completedTests: number;
+  passedTests: number;
+  latestTest: {
+    name: string;
+    passed: boolean;
+    value: number;
+    unit: string;
+    conductedAt: string;
+  } | null;
+  missingCount: number;
+}
+
 export interface DashboardV3Props {
   userName: string | null;
   tier: string;
@@ -96,4 +134,7 @@ export interface DashboardV3Props {
   achievements: Achievement[];
   totalAchievements: number;
   playerLevel: "beginner" | "intermediate" | "advanced" | "pro";
+  sgSummary: SgSummary;
+  trainingIndex: TrainingIndexData | null;
+  testProgress: TestProgress;
 }

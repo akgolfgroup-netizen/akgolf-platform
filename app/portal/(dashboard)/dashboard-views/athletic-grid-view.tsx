@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
-import type { DashboardV3Props } from "../dashboard-types";
+import type {
+  DashboardV3Props,
+  SgSummary,
+  TrainingIndexData,
+  TestProgress,
+} from "../dashboard-types";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 
@@ -14,10 +19,25 @@ const TIER_LABEL: Record<string, string> = {
   ELITE: "Elite",
 };
 
-function formatTrend(value: number | null, suffix = ""): string {
+function formatSG(value: number | null): string {
   if (value === null) return "–";
   const sign = value > 0 ? "+" : "";
-  return `${sign}${value.toFixed(1)}${suffix}`;
+  return `${sign}${value.toFixed(2)}`;
+}
+
+function sgToRadarPoint(
+  sg: number | null,
+  angleDeg: number,
+  maxAbs = 2.5
+): { x: number; y: number } {
+  const cx = 50;
+  const cy = 50;
+  const maxRadius = 35;
+  const v = sg ?? 0;
+  const norm = Math.max(0.2, Math.min(1.0, 0.6 + v / (maxAbs * 2)));
+  const r = maxRadius * norm;
+  const rad = (angleDeg - 90) * (Math.PI / 180);
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
 }
 
 export function AthleticGridView({
@@ -25,13 +45,15 @@ export function AthleticGridView({
   tier,
   memberSince,
   stats,
-  handicap,
   nextBooking,
   weekRings,
   coachInsight,
   aiInsight,
   socialData,
   achievements,
+  sgSummary,
+  trainingIndex,
+  testProgress,
 }: DashboardV3Props) {
   const firstName = userName?.split(" ")[0] ?? "Spiller";
   const tierLabel = TIER_LABEL[tier] ?? tier;
@@ -56,14 +78,6 @@ export function AthleticGridView({
   const hcpGoalLabel = goal
     ? `Mål: ${goal.target_value.toFixed(1)} ${goal.unit}`
     : "Registrer handicap for å se mål";
-
-  // SG-placeholder verdier — kobles til ekte SG-data senere
-  const sgValues = {
-    driving: "+0.8",
-    approach: "+0.4",
-    short: "-0.3",
-    putting: "+0.2",
-  };
 
   return (
     <section className="space-y-6">
@@ -92,77 +106,7 @@ export function AthleticGridView({
 
       {/* Rad 1: SG Radar (col-8) + AI-fokus (col-4) */}
       <div className="grid grid-cols-12 gap-6">
-        <div className="bento-card col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-8 lg:col-span-8">
-          <div className="mb-8 flex items-start justify-between">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-tight text-primary/60">
-                Fremdriftsanalyse
-              </span>
-              <h3 className="text-2xl font-bold tracking-tight text-primary">
-                Strokes Gained Radar
-              </h3>
-            </div>
-            <div className="flex gap-2">
-              <span className="rounded-full bg-primary px-3 py-1 text-[10px] font-bold text-white">
-                TOTALT +1.1
-              </span>
-              <span className="rounded-full bg-surface-container px-3 py-1 text-[10px] font-bold text-primary/60">
-                BENCHMARK
-              </span>
-            </div>
-          </div>
-          <div className="relative flex h-[320px] items-center justify-center overflow-hidden">
-            <svg className="h-full w-full max-w-md" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="45" fill="none" stroke="#2d5a27" strokeDasharray="2 2" strokeWidth="0.1" />
-              <circle cx="50" cy="50" r="30" fill="none" stroke="#2d5a27" strokeDasharray="2 2" strokeWidth="0.1" />
-              <circle cx="50" cy="50" r="15" fill="none" stroke="#2d5a27" strokeDasharray="2 2" strokeWidth="0.1" />
-              <path
-                d="M50 5 L50 95 M5 50 L95 50 M18 18 L82 82 M18 82 L82 18"
-                opacity="0.3"
-                stroke="#2d5a27"
-                strokeWidth="0.05"
-              />
-              <path
-                d="M50 20 L75 45 L70 70 L50 80 L30 70 L25 45 Z"
-                fill="rgba(210, 240, 0, 0.4)"
-                stroke="#d2f000"
-                strokeWidth="1.5"
-              />
-              <text x="50" y="8" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="middle">
-                DRIVE
-              </text>
-              <text x="92" y="52" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="end">
-                INNSPILL
-              </text>
-              <text x="50" y="98" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="middle">
-                PUTTING
-              </text>
-              <text x="8" y="52" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="start">
-                KORT SPILL
-              </text>
-            </svg>
-          </div>
-          <div className="mt-8 grid grid-cols-4 gap-4">
-            {[
-              { label: "Drive", value: sgValues.driving },
-              { label: "Innspill", value: sgValues.approach },
-              { label: "Kort spill", value: sgValues.short },
-              { label: "Putting", value: sgValues.putting },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="rounded-2xl border-l-4 border-secondary-fixed bg-surface p-4"
-              >
-                <p className="font-mono text-[9px] uppercase text-primary/50">
-                  {item.label}
-                </p>
-                <p className="text-lg font-bold text-primary">{item.value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* AI-fokus card (mørk primary) */}
+        <SgRadarHero summary={sgSummary} />
         <div className="col-span-12 lg:col-span-4">
           <div className="bento-card relative h-full overflow-hidden rounded-3xl bg-primary p-8 text-[#fdf9f0]">
             <div className="relative z-10">
@@ -181,9 +125,7 @@ export function AthleticGridView({
               </p>
               <div className="space-y-4">
                 <div className="flex items-end justify-between">
-                  <span className="font-mono text-[11px] uppercase">
-                    {hcpGoalLabel}
-                  </span>
+                  <span className="font-mono text-[11px] uppercase">{hcpGoalLabel}</span>
                   <span className="font-mono text-[11px] uppercase">
                     {Math.round(goalPercent)}%
                   </span>
@@ -206,9 +148,7 @@ export function AthleticGridView({
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-xs font-bold">{todaysFocus}</p>
                     {coachInsight?.date ? (
-                      <p className="text-[10px] text-[#fdf9f0]/40">
-                        Fra sist coaching
-                      </p>
+                      <p className="text-[10px] text-[#fdf9f0]/40">Fra sist coaching</p>
                     ) : null}
                   </div>
                 </div>
@@ -221,46 +161,17 @@ export function AthleticGridView({
         </div>
       </div>
 
-      {/* Rad 2: 3 stat-kort */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        <StatCard
-          label="Handicap"
-          value={
-            handicap.current !== null ? handicap.current.toFixed(1) : "–"
-          }
-          trend={
-            handicap.trend !== null ? formatTrend(handicap.trend) : null
-          }
-          trendPositive={(handicap.trend ?? 0) < 0}
-          barHeights={[40, 55, 45, 70, 60, 85]}
-        />
-        <StatCard
-          label="Runder 30d"
-          value={String(stats.roundsCount)}
-          trend={stats.roundsCount > 0 ? `${trainedDays} trente denne uken` : null}
-          trendPositive
-          barHeights={[60, 50, 65, 55, 40, 50]}
-        />
-        <StatCard
-          label="Treningsøkter 30d"
-          value={String(stats.sessionsCount)}
-          trend={
-            socialData?.streak
-              ? `${socialData.streak} dagers streak`
-              : null
-          }
-          trendPositive
-          barHeights={[70, 65, 60, 55, 50, 45]}
-        />
+      {/* Rad 2: Fremdrift — Trening (col-6) + Test (col-6) */}
+      <div className="grid grid-cols-12 gap-6">
+        <TrainingPyramidCard index={trainingIndex} />
+        <TestProgressCard progress={testProgress} />
       </div>
 
-      {/* Rad 3: Upcoming Sessions + Anbefaling + Membership */}
+      {/* Rad 3: Upcoming + Anbefaling + Medlemskap */}
       <div className="grid grid-cols-12 gap-6">
         <div className="bento-card col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-8 lg:col-span-7">
           <div className="mb-8 flex items-center justify-between">
-            <h3 className="text-xl font-bold tracking-tight text-primary">
-              Kommende økter
-            </h3>
+            <h3 className="text-xl font-bold tracking-tight text-primary">Kommende økter</h3>
             <Link
               href="/portal/bookinger"
               className="text-xs font-bold uppercase tracking-widest text-primary/40 transition-colors hover:text-primary"
@@ -283,7 +194,6 @@ export function AthleticGridView({
         </div>
 
         <div className="col-span-12 flex flex-col gap-6 lg:col-span-5">
-          {/* Anbefaling CTA */}
           <Link
             href="/portal/treningsplan"
             className="bento-card group relative flex-1 overflow-hidden rounded-3xl bg-[#d2f000] p-8"
@@ -309,7 +219,6 @@ export function AthleticGridView({
             </div>
           </Link>
 
-          {/* Membership card */}
           <div className="bento-card rounded-3xl border border-outline-variant/10 bg-surface-container-high p-8">
             <div className="mb-4 flex items-center gap-4">
               <div className="rounded-2xl bg-primary/5 p-3">
@@ -337,12 +246,8 @@ export function AthleticGridView({
                 </p>
               </div>
               <div className="flex-1 rounded-xl border border-outline-variant/10 bg-surface-container-lowest p-3 text-center">
-                <p className="mb-1 font-mono text-[9px] uppercase text-primary/40">
-                  Uken
-                </p>
-                <p className="text-sm font-bold text-primary">
-                  {trainedDays} av 7
-                </p>
+                <p className="mb-1 font-mono text-[9px] uppercase text-primary/40">Uken</p>
+                <p className="text-sm font-bold text-primary">{trainedDays} av 7</p>
               </div>
             </div>
           </div>
@@ -353,21 +258,17 @@ export function AthleticGridView({
       <div className="mt-2 flex flex-wrap items-center justify-between gap-4 border-t border-primary/10 pt-6">
         <div className="flex gap-8">
           <div>
-            <p className="font-mono text-[10px] uppercase text-primary/40">
-              Status
-            </p>
+            <p className="font-mono text-[10px] uppercase text-primary/40">Status</p>
             <div className="flex items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
-              <p className="text-xs font-bold text-primary">Alle data synkronisert</p>
+              <p className="text-xs font-bold text-primary">
+                {sgSummary.roundCount} runder · {stats.sessionsCount} økter siste 30d
+              </p>
             </div>
           </div>
           <div className="border-l border-primary/10 pl-8">
-            <p className="font-mono text-[10px] uppercase text-primary/40">
-              Siste oppdatering
-            </p>
-            <p className="text-xs font-bold text-primary">
-              {format(new Date(), "HH:mm")}
-            </p>
+            <p className="font-mono text-[10px] uppercase text-primary/40">Siste oppdatering</p>
+            <p className="text-xs font-bold text-primary">{format(new Date(), "HH:mm")}</p>
           </div>
         </div>
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/30">
@@ -378,55 +279,356 @@ export function AthleticGridView({
   );
 }
 
-/* ── Delkomponenter ── */
+/* ── SG Radar Hero (col-8) ── */
 
-function StatCard({
-  label,
-  value,
-  trend,
-  trendPositive,
-  barHeights,
+function SgRadarHero({ summary }: { summary: SgSummary }) {
+  const hasData = summary.roundCount > 0 && summary.total !== null;
+  const trendLabel =
+    summary.trend === "up" ? "Oppadgående" : summary.trend === "down" ? "Nedadgående" : "Stabil";
+  const trendIcon =
+    summary.trend === "up" ? "trending_up" : summary.trend === "down" ? "trending_down" : "trending_flat";
+  const trendColor =
+    summary.trend === "up" ? "text-[#2d5a27]" : summary.trend === "down" ? "text-[#ba1a1a]" : "text-on-surface-variant";
+
+  const points = [
+    sgToRadarPoint(summary.offTheTee, 0),
+    sgToRadarPoint(summary.approach, 90),
+    sgToRadarPoint(summary.aroundTheGreen, 180),
+    sgToRadarPoint(summary.putting, 270),
+  ];
+  const polygonPoints = points.map((p) => `${p.x},${p.y}`).join(" ");
+
+  return (
+    <div className="bento-card col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-8 lg:col-span-8">
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <Link
+            href="/portal/statistikk"
+            className="font-mono text-[10px] uppercase tracking-tight text-primary/60 hover:text-primary"
+          >
+            Fremdriftsanalyse →
+          </Link>
+          <h3 className="text-2xl font-bold tracking-tight text-primary">Strokes Gained</h3>
+        </div>
+        <div className="flex gap-2">
+          <span className="rounded-full bg-primary px-3 py-1 text-[10px] font-bold text-white">
+            TOTALT {formatSG(summary.total)}
+          </span>
+          <span className={`flex items-center gap-1 rounded-full bg-surface-container px-3 py-1 text-[10px] font-bold ${trendColor}`}>
+            <Icon name={trendIcon} size={12} />
+            {trendLabel}
+          </span>
+        </div>
+      </div>
+
+      {hasData ? (
+        <>
+          <div className="relative flex h-[260px] items-center justify-center">
+            <svg className="h-full w-full max-w-md" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="35" fill="none" stroke="#c2c9bb" strokeDasharray="2 2" strokeOpacity="0.4" strokeWidth="0.3" />
+              <circle cx="50" cy="50" r="23" fill="none" stroke="#c2c9bb" strokeDasharray="2 2" strokeOpacity="0.4" strokeWidth="0.3" />
+              <circle cx="50" cy="50" r="12" fill="none" stroke="#c2c9bb" strokeDasharray="2 2" strokeOpacity="0.4" strokeWidth="0.3" />
+              <line x1="50" y1="15" x2="50" y2="85" stroke="#c2c9bb" strokeOpacity="0.3" strokeWidth="0.3" />
+              <line x1="15" y1="50" x2="85" y2="50" stroke="#c2c9bb" strokeOpacity="0.3" strokeWidth="0.3" />
+              <polygon points={polygonPoints} fill="rgba(210, 240, 0, 0.4)" stroke="#d2f000" strokeWidth="1.5" />
+              {points.map((p, i) => (
+                <circle key={i} cx={p.x} cy={p.y} r="1" fill="#154212" />
+              ))}
+              <text x="50" y="10" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="middle">DRIVE</text>
+              <text x="90" y="52" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="end">INNSPILL</text>
+              <text x="50" y="95" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="middle">KORT SPILL</text>
+              <text x="10" y="52" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="start">PUTTING</text>
+            </svg>
+          </div>
+          <div className="mt-6 grid grid-cols-4 gap-4">
+            {[
+              { label: "Drive", value: summary.offTheTee },
+              { label: "Innspill", value: summary.approach },
+              { label: "Kort spill", value: summary.aroundTheGreen },
+              { label: "Putting", value: summary.putting },
+            ].map((item) => (
+              <div key={item.label} className="rounded-2xl border-l-4 border-secondary-fixed bg-surface p-4">
+                <p className="font-mono text-[9px] uppercase text-primary/50">{item.label}</p>
+                <p className="text-lg font-bold text-primary">{formatSG(item.value)}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <EmptyState
+          icon="flag"
+          title="Ingen SG-data siste 30d"
+          description="Registrer en runde med skuddetaljer for å se Strokes Gained-profil"
+          ctaLabel="Registrer runde"
+          ctaHref="/portal/runde/ny"
+        />
+      )}
+    </div>
+  );
+}
+
+/* ── Trening-pyramide (col-6) ── */
+
+function TrainingPyramidCard({ index }: { index: TrainingIndexData | null }) {
+  if (!index || index.weeklyHours === 0) {
+    return (
+      <div className="bento-card col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-8 lg:col-span-6">
+        <TrainingHeader />
+        <EmptyState
+          icon="fitness_center"
+          title="Ingen treningslogg"
+          description="Logg din første økt for å se trenings-pyramide og volum"
+          ctaLabel="Logg økt"
+          ctaHref="/portal/dagbok"
+        />
+      </div>
+    );
+  }
+
+  const minHours = index.recommendedSummer[0];
+  const maxHours = index.recommendedSummer[1];
+  const belowTarget = index.weeklyHours < minHours;
+  const aboveTarget = index.weeklyHours > maxHours;
+  const onTarget = !belowTarget && !aboveTarget;
+  const volumeLabel = belowTarget ? "Under anbefalt" : aboveTarget ? "Over anbefalt" : "På mål";
+  const volumeColor = onTarget ? "text-[#2d5a27]" : "text-[#ba1a1a]";
+
+  const layers = [
+    { key: "onCourse", label: "Bane", pct: index.distribution.onCourse, color: "#d2f000" },
+    { key: "skillTechnical", label: "Teknikk", pct: index.distribution.skillTechnical, color: "#a1d494" },
+    { key: "shortGame", label: "Kort spill", pct: index.distribution.shortGame, color: "#bcf0ae" },
+    { key: "putting", label: "Putting", pct: index.distribution.putting, color: "#2d5a27" },
+    { key: "physicalMental", label: "Fys / Mental", pct: index.distribution.physicalMental, color: "#154212" },
+  ];
+
+  return (
+    <div className="bento-card col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-8 lg:col-span-6">
+      <TrainingHeader />
+      <div className="mb-6 flex items-end justify-between">
+        <div>
+          <p className="font-mono text-[9px] uppercase text-primary/50">Timer / uke (30d)</p>
+          <p className="text-4xl font-bold text-primary">{index.weeklyHours}</p>
+        </div>
+        <div className="text-right">
+          <p className={`font-mono text-[10px] font-bold uppercase ${volumeColor}`}>{volumeLabel}</p>
+          <p className="font-mono text-[10px] text-primary/40">
+            Mål: {minHours}–{maxHours}t
+          </p>
+        </div>
+      </div>
+      <div className="space-y-2">
+        {layers.map((layer) => {
+          const pct = Math.round(layer.pct * 100);
+          return (
+            <div key={layer.key} className="flex items-center gap-3">
+              <span className="w-20 font-mono text-[10px] uppercase text-primary/60">{layer.label}</span>
+              <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-surface-container">
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{ width: `${pct}%`, backgroundColor: layer.color }}
+                />
+              </div>
+              <span className="w-10 text-right font-mono text-[10px] font-bold text-primary">
+                {pct}%
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="mt-6 flex items-center justify-between border-t border-outline-variant/10 pt-4">
+        <div>
+          <p className="font-mono text-[9px] uppercase text-primary/40">Plan-gjennomføring</p>
+          <p className="text-sm font-bold text-primary">{index.planAdherencePct}%</p>
+        </div>
+        <Link
+          href="/portal/treningsplan"
+          className="text-[11px] font-bold uppercase tracking-widest text-primary hover:opacity-70"
+        >
+          Se plan →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function TrainingHeader() {
+  return (
+    <div className="mb-6 flex items-start justify-between">
+      <div>
+        <Link
+          href="/portal/dagbok"
+          className="font-mono text-[10px] uppercase tracking-tight text-primary/60 hover:text-primary"
+        >
+          Treningsdata →
+        </Link>
+        <h3 className="text-xl font-bold tracking-tight text-primary">AK-pyramide</h3>
+      </div>
+      <Icon name="fitness_center" size={20} className="text-primary/40" />
+    </div>
+  );
+}
+
+/* ── Test-progresjon (col-6) ── */
+
+function TestProgressCard({ progress }: { progress: TestProgress }) {
+  if (progress.completedTests === 0) {
+    return (
+      <div className="bento-card col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-8 lg:col-span-6">
+        <TestHeader />
+        <EmptyState
+          icon="checklist"
+          title="Ingen tester gjennomført"
+          description="Ta din første test for å få baseline og kategori-vurdering"
+          ctaLabel="Se tester"
+          ctaHref="/portal/kartlegging"
+        />
+      </div>
+    );
+  }
+
+  const completedPct = (progress.completedTests / progress.totalTests) * 100;
+  const passedPct =
+    progress.completedTests > 0
+      ? (progress.passedTests / progress.completedTests) * 100
+      : 0;
+
+  return (
+    <div className="bento-card col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-8 lg:col-span-6">
+      <TestHeader />
+      <div className="mb-6 flex items-end justify-between">
+        <div>
+          <p className="font-mono text-[9px] uppercase text-primary/50">Gjennomført</p>
+          <p className="text-4xl font-bold text-primary">
+            {progress.completedTests}
+            <span className="text-xl text-primary/40"> / {progress.totalTests}</span>
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="font-mono text-[10px] font-bold uppercase text-[#2d5a27]">
+            {Math.round(passedPct)}% bestått
+          </p>
+          <p className="font-mono text-[10px] text-primary/40">
+            {progress.passedTests} av {progress.completedTests}
+          </p>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
+          <span className="w-20 font-mono text-[10px] uppercase text-primary/60">Dekning</span>
+          <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-surface-container">
+            <div
+              className="h-full rounded-full bg-secondary-fixed transition-all duration-500"
+              style={{ width: `${completedPct}%` }}
+            />
+          </div>
+          <span className="w-10 text-right font-mono text-[10px] font-bold text-primary">
+            {Math.round(completedPct)}%
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="w-20 font-mono text-[10px] uppercase text-primary/60">Bestått</span>
+          <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-surface-container">
+            <div
+              className="h-full rounded-full bg-[#2d5a27] transition-all duration-500"
+              style={{
+                width: `${(progress.passedTests / progress.totalTests) * 100}%`,
+              }}
+            />
+          </div>
+          <span className="w-10 text-right font-mono text-[10px] font-bold text-primary">
+            {progress.passedTests}
+          </span>
+        </div>
+      </div>
+
+      {progress.latestTest ? (
+        <div className="mt-6 rounded-2xl bg-surface p-4">
+          <p className="font-mono text-[9px] uppercase text-primary/40">Siste test</p>
+          <div className="mt-1 flex items-center justify-between">
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-bold text-primary">
+                {progress.latestTest.name}
+              </p>
+              <p className="font-mono text-[11px] text-on-surface-variant">
+                {progress.latestTest.value} {progress.latestTest.unit} ·{" "}
+                {format(new Date(progress.latestTest.conductedAt), "d. MMM", { locale: nb })}
+              </p>
+            </div>
+            <span
+              className={`rounded px-2 py-1 text-[10px] font-bold uppercase ${
+                progress.latestTest.passed
+                  ? "bg-green-50 text-green-700"
+                  : "bg-red-50 text-red-700"
+              }`}
+            >
+              {progress.latestTest.passed ? "Bestått" : "Ikke bestått"}
+            </span>
+          </div>
+        </div>
+      ) : null}
+
+      <div className="mt-6 flex items-center justify-between border-t border-outline-variant/10 pt-4">
+        <div>
+          <p className="font-mono text-[9px] uppercase text-primary/40">Manglende</p>
+          <p className="text-sm font-bold text-primary">{progress.missingCount} tester</p>
+        </div>
+        <Link
+          href="/portal/kartlegging"
+          className="text-[11px] font-bold uppercase tracking-widest text-primary hover:opacity-70"
+        >
+          Se alle →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function TestHeader() {
+  return (
+    <div className="mb-6 flex items-start justify-between">
+      <div>
+        <Link
+          href="/portal/kartlegging"
+          className="font-mono text-[10px] uppercase tracking-tight text-primary/60 hover:text-primary"
+        >
+          Testdata →
+        </Link>
+        <h3 className="text-xl font-bold tracking-tight text-primary">AK-tester</h3>
+      </div>
+      <Icon name="checklist" size={20} className="text-primary/40" />
+    </div>
+  );
+}
+
+/* ── Empty state ── */
+
+function EmptyState({
+  icon,
+  title,
+  description,
+  ctaLabel,
+  ctaHref,
 }: {
-  label: string;
-  value: string;
-  trend: string | null;
-  trendPositive?: boolean;
-  barHeights: number[];
+  icon: string;
+  title: string;
+  description: string;
+  ctaLabel: string;
+  ctaHref: string;
 }) {
   return (
-    <div className="bento-card rounded-2xl border border-outline-variant/10 bg-surface-container-lowest p-6">
-      <div className="mb-4 flex items-start justify-between">
-        <div>
-          <p className="font-mono text-[10px] uppercase text-primary/50">
-            {label}
-          </p>
-          <h4 className="text-3xl font-bold text-primary">{value}</h4>
-        </div>
-        {trend ? (
-          <span
-            className={`rounded px-2 py-1 text-[10px] font-bold ${
-              trendPositive
-                ? "bg-green-50 text-green-700"
-                : "bg-red-50 text-red-700"
-            }`}
-          >
-            {trend}
-          </span>
-        ) : null}
+    <div className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-outline-variant/40 bg-surface p-8 text-center">
+      <Icon name={icon} size={36} className="text-primary/30" />
+      <div>
+        <p className="text-sm font-bold text-primary">{title}</p>
+        <p className="mx-auto mt-1 max-w-xs text-xs text-primary/60">{description}</p>
       </div>
-      <div className="flex h-12 items-end gap-1">
-        {barHeights.map((h, i) => (
-          <div
-            key={i}
-            className={`flex-1 rounded-t-sm ${
-              i === barHeights.length - 1
-                ? "bg-secondary-fixed"
-                : "bg-primary/10"
-            }`}
-            style={{ height: `${h}%` }}
-          />
-        ))}
-      </div>
+      <Link
+        href={ctaHref}
+        className="rounded-lg bg-secondary-fixed px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:opacity-90"
+      >
+        {ctaLabel}
+      </Link>
     </div>
   );
 }
@@ -453,9 +655,7 @@ function UpcomingSessionRow({
         </div>
         <div>
           <p className="text-sm font-bold text-primary">{title}</p>
-          <p className="font-mono text-[11px] text-primary/40">
-            m/ {instructor}
-          </p>
+          <p className="font-mono text-[11px] text-primary/40">m/ {instructor}</p>
         </div>
       </div>
       <div className="text-right">
@@ -473,9 +673,7 @@ function EmptySessions() {
       <Icon name="event_busy" className="text-primary/30" size={36} />
       <div>
         <p className="text-sm font-bold text-primary">Ingen kommende økter</p>
-        <p className="mt-1 text-xs text-primary/60">
-          Book en coachingtime for å komme i gang
-        </p>
+        <p className="mt-1 text-xs text-primary/60">Book en coachingtime for å komme i gang</p>
       </div>
       <Link
         href="/portal/bookinger/ny"

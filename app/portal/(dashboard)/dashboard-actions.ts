@@ -1,6 +1,9 @@
 "use server";
 
 import { createServerSupabase } from "@/lib/supabase/server";
+import { prisma } from "@/lib/portal/prisma";
+import { getTrainingIndex } from "@/lib/portal/kartlegging/training-index";
+import type { TrainingIndex } from "@/lib/portal/kartlegging/types";
 import {
   subDays,
   startOfDay,
@@ -17,6 +20,122 @@ interface TrackManShot {
   clubSpeed?: number;
   ballSpeed?: number;
   carry?: number;
+}
+
+export interface SgSummary {
+  total: number | null;
+  offTheTee: number | null;
+  approach: number | null;
+  aroundTheGreen: number | null;
+  putting: number | null;
+  roundCount: number;
+  trend: "up" | "down" | "flat";
+}
+
+export interface TestProgress {
+  totalTests: number;
+  completedTests: number;
+  passedTests: number;
+  latestTest: {
+    name: string;
+    passed: boolean;
+    value: number;
+    unit: string;
+    conductedAt: string;
+  } | null;
+  missingCount: number;
+}
+
+export async function getSgSummary(userId: string): Promise<SgSummary> {
+  const since = subDays(new Date(), 30);
+  const rounds = await prisma.roundStats.findMany({
+    where: { userId, date: { gte: since } },
+    select: {
+      sgTotal: true,
+      sgOffTheTee: true,
+      sgApproach: true,
+      sgAroundTheGreen: true,
+      sgPutting: true,
+      date: true,
+    },
+    orderBy: { date: "desc" },
+  });
+
+  const avg = (field: "sgTotal" | "sgOffTheTee" | "sgApproach" | "sgAroundTheGreen" | "sgPutting") => {
+    const valid = rounds.filter((r) => r[field] !== null);
+    if (valid.length === 0) return null;
+    return valid.reduce((s, r) => s + (r[field] ?? 0), 0) / valid.length;
+  };
+
+  let trend: "up" | "down" | "flat" = "flat";
+  const sgRounds = rounds.filter((r) => r.sgTotal !== null);
+  if (sgRounds.length >= 4) {
+    const mid = Math.floor(sgRounds.length / 2);
+    const recent = sgRounds.slice(0, mid).reduce((s, r) => s + (r.sgTotal ?? 0), 0) / mid;
+    const older =
+      sgRounds.slice(mid).reduce((s, r) => s + (r.sgTotal ?? 0), 0) /
+      (sgRounds.length - mid);
+    if (recent > older + 0.1) trend = "up";
+    else if (recent < older - 0.1) trend = "down";
+  }
+
+  return {
+    total: avg("sgTotal"),
+    offTheTee: avg("sgOffTheTee"),
+    approach: avg("sgApproach"),
+    aroundTheGreen: avg("sgAroundTheGreen"),
+    putting: avg("sgPutting"),
+    roundCount: rounds.length,
+    trend,
+  };
+}
+
+export async function getDashboardTrainingIndex(userId: string): Promise<TrainingIndex | null> {
+  try {
+    return await getTrainingIndex(userId);
+  } catch (error) {
+    console.error("Error fetching training index:", error);
+    return null;
+  }
+}
+
+export async function getTestProgress(userId: string): Promise<TestProgress> {
+  const TOTAL_TESTS = 20;
+  const results = await prisma.testResult.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+    select: {
+      testNumber: true,
+      value: true,
+      passed: true,
+      createdAt: true,
+      TestDefinition: { select: { name: true, unit: true } },
+    },
+  });
+
+  const uniqueTestNumbers = new Set(results.map((r) => r.testNumber));
+  const passedTestNumbers = new Set(
+    results.filter((r) => r.passed).map((r) => r.testNumber)
+  );
+
+  const latest = results[0];
+  const latestTest = latest
+    ? {
+        name: latest.TestDefinition?.name ?? `Test ${latest.testNumber}`,
+        passed: latest.passed,
+        value: latest.value,
+        unit: latest.TestDefinition?.unit ?? "",
+        conductedAt: latest.createdAt.toISOString(),
+      }
+    : null;
+
+  return {
+    totalTests: TOTAL_TESTS,
+    completedTests: uniqueTestNumbers.size,
+    passedTests: passedTestNumbers.size,
+    latestTest,
+    missingCount: TOTAL_TESTS - uniqueTestNumbers.size,
+  };
 }
 
 export async function getDashboardStats(userId: string) {

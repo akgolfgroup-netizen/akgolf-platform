@@ -33,6 +33,9 @@ import {
   getTrackManData,
   getSocialData,
   getPlayerLevel,
+  getSgSummary,
+  getDashboardTrainingIndex,
+  getTestProgress,
 } from "./dashboard-actions";
 import { DashboardClientV3 } from "./dashboard-client-v3";
 
@@ -66,6 +69,9 @@ export default async function DashboardPage() {
     trackManData,
     socialData,
     playerLevel,
+    sgSummary,
+    trainingIndex,
+    testProgress,
   ] = await Promise.all([
     getDashboardStats(user.id),
     getHandicapData(user.id),
@@ -78,6 +84,9 @@ export default async function DashboardPage() {
     getTrackManData(user.id),
     getSocialData(user.id),
     getPlayerLevel(user.id),
+    getSgSummary(user.id),
+    getDashboardTrainingIndex(user.id),
+    getTestProgress(user.id),
   ]);
 
   const memberSince = userData?.createdAt
@@ -101,6 +110,9 @@ export default async function DashboardPage() {
       achievements={achievementsData.achievements}
       totalAchievements={achievementsData.totalAchievements}
       playerLevel={playerLevel}
+      sgSummary={sgSummary}
+      trainingIndex={trainingIndex}
+      testProgress={testProgress}
     />
   );
 }
