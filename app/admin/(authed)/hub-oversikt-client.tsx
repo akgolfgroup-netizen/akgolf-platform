@@ -97,7 +97,7 @@ function Badge({
   );
 }
 
-// Card component with grey tokens
+// Heritage Card component
 function Card({
   children,
   className = "",
@@ -106,13 +106,13 @@ function Card({
   className?: string;
 }) {
   return (
-    <div className={`bg-surface-container-lowest rounded-xl border border-outline-variant/30 ${className}`}>
+    <div className={`bg-surface-container-lowest rounded-3xl border border-outline-variant/10 shadow-sm ${className}`}>
       {children}
     </div>
   );
 }
 
-// Button component with grey tokens
+// Heritage Button component
 function Button({
   children,
   variant = "secondary",
@@ -125,10 +125,10 @@ function Button({
   className?: string;
 }) {
   const baseStyles =
-    "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors";
+    "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all active:scale-[0.98]";
   const variantStyles = {
-    primary: "bg-on-surface text-surface hover:bg-inverse-surface",
-    secondary: "bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-surface",
+    primary: "bg-primary-container text-surface hover:bg-primary shadow-sm hover:shadow-md",
+    secondary: "bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-surface-container",
   };
 
   return (
@@ -237,32 +237,32 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
     []
   );
 
-  // Elevfordeling per tier (VISITOR / ACADEMY / STARTER / PRO / ELITE)
+  // Elevfordeling per tier — Heritage palette
   const tierDistribution: AdminDonutChartDatum[] = [
     {
       label: "Visitor",
       value: data.divisions.gfgk.studentCount,
-      color: "var(--color-grey-300)",
+      color: "var(--color-outline-variant)",
     },
     {
       label: "Academy",
       value: Math.round(data.divisions.junior.studentCount * 0.6),
-      color: "var(--color-accent-cta)",
+      color: "var(--color-secondary-fixed)",
     },
     {
       label: "Starter",
       value: Math.round(data.divisions.junior.studentCount * 0.4),
-      color: "var(--color-warning)",
+      color: "var(--color-tertiary-container)",
     },
     {
       label: "Pro",
       value: Math.round(data.divisions.coaching.studentCount * 0.7),
-      color: "var(--color-primary)",
+      color: "var(--color-primary-container)",
     },
     {
       label: "Elite",
       value: Math.round(data.divisions.coaching.studentCount * 0.3),
-      color: "var(--color-ai)",
+      color: "var(--color-primary)",
     },
   ];
 
@@ -300,7 +300,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                   {data.kpis.sessionsToday}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface">
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary-container/10 text-primary-container">
                 <Icon name="calendar_today" className="w-5 h-5" />
               </div>
             </div>
@@ -317,8 +317,8 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                   {data.kpis.activeStudents}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface">
-                <Icon name="person"s className="w-5 h-5" />
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-success/10 text-success">
+                <Icon name="groups" className="w-5 h-5" />
               </div>
             </div>
             <AdminSparkline
@@ -339,8 +339,8 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                   {data.kpis.pendingBookings}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface">
-                <Icon name="schedule" className="w-5 h-5" />
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-warning/10 text-warning">
+                <Icon name="pending_actions" className="w-5 h-5" />
               </div>
             </div>
             <AdminSparkline
@@ -361,7 +361,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                   {formatRevenue(data.kpis.mtdRevenue)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface">
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-secondary-fixed/20 text-primary-container">
                 <Icon name="trending_up" className="w-5 h-5" />
               </div>
             </div>
@@ -434,7 +434,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
               </div>
 
               {timelineItems.length > 0 ? (
-                <ul className="divide-y divide-grey-50">
+                <ul className="divide-y divide-surface-container">
                   {timelineItems.map((item) => (
                     <li
                       key={item.id}
@@ -508,30 +508,30 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 Divisjoner
               </h3>
               <div className="space-y-2">
-                <div className="flex items-center justify-between p-3 rounded-lg bg-surface">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-surface-container">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-on-surface" />
+                    <div className="w-2 h-2 rounded-full bg-primary-container" />
                     <span className="text-sm text-on-surface-variant">Coaching</span>
                   </div>
-                  <span className="text-sm font-semibold text-on-surface tabular-nums">
+                  <span className="text-sm font-bold text-on-surface tabular-nums">
                     {data.divisions.coaching.studentCount}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-surface">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-surface-container">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-warning" />
+                    <div className="w-2 h-2 rounded-full bg-secondary-fixed" />
                     <span className="text-sm text-on-surface-variant">Junior</span>
                   </div>
-                  <span className="text-sm font-semibold text-on-surface tabular-nums">
+                  <span className="text-sm font-bold text-on-surface tabular-nums">
                     {data.divisions.junior.studentCount}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-surface">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-surface-container">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-success" />
+                    <div className="w-2 h-2 rounded-full bg-tertiary-container" />
                     <span className="text-sm text-on-surface-variant">GFGK</span>
                   </div>
-                  <span className="text-sm font-semibold text-on-surface tabular-nums">
+                  <span className="text-sm font-bold text-on-surface tabular-nums">
                     {data.divisions.gfgk.studentCount}
                   </span>
                 </div>
@@ -558,8 +558,8 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                           item.variant === "error"
                             ? "text-[var(--color-error)]"
                             : item.variant === "warning"
-                              ? "text-[var(--color-warning)]"
-                              : "text-[var(--color-info)]"
+                              ? "text-warning"
+                              : "text-info"
                         }`} />
                       <span className="text-xs text-on-surface-variant">{item.text}</span>
                     </div>

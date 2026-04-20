@@ -171,7 +171,7 @@ export function CapacityManager() {
           )}
         </div>
 
-        <div className="divide-y divide-grey-50">
+        <div className="divide-y divide-surface-container">
           <SettingRow
             label="Maks bookinger per dag"
             description="Maksimalt antall bookinger som kan aksepteres per dag"

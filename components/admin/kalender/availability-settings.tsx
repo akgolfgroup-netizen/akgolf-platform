@@ -183,7 +183,7 @@ export function AvailabilitySettings() {
             <h2 className="text-sm font-semibold text-on-surface">Standard arbeidstider</h2>
           </div>
         </div>
-        <div className="divide-y divide-grey-50">
+        <div className="divide-y divide-surface-container">
           {workHours.map((hours, index) => (
             <WorkDayRow
               key={hours.day}
@@ -207,7 +207,7 @@ export function AvailabilitySettings() {
             <span className="hidden sm:inline">Legg til</span>
           </button>
         </div>
-        <div className="divide-y divide-grey-50">
+        <div className="divide-y divide-surface-container">
           {specialDates.length > 0 ? (
             specialDates.map((date) => (
               <SpecialDateItem

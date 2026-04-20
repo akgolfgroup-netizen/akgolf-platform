@@ -176,7 +176,7 @@ export function UpcomingBookings({ bookings = defaultBookings, maxItems = 5 }: U
         </Link>
       </div>
 
-      <div className="divide-y divide-grey-50">
+      <div className="divide-y divide-surface-container">
         {displayBookings.length > 0 ? (
           displayBookings.map((booking) => (
             <BookingItem key={booking.id} booking={booking} />

@@ -200,7 +200,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  {filteredSessions.length} resultater
  </span>
  </div>
- <div className="divide-y divide-grey-50">
+ <div className="divide-y divide-surface-container">
  {filteredSessions.map((session) => {
  const config =
  statusConfig[session.status] ?? statusConfig.COMPLETED;

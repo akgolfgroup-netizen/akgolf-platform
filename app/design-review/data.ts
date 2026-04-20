@@ -32,12 +32,12 @@ export const screens: Screen[] = [
 
   // ─── Sprint C — Booking-system ───
   { route: "/booking", heritageRef: "booking_select_service", label: "Velg tjeneste", sprint: "C", auth: "none", status: "tokens" },
-  { route: "/booking/demo/wizard", heritageRef: "booking_coach_selection", label: "Velg coach", sprint: "C", auth: "none", status: "todo" },
-  { route: "/booking/demo/wizard/date", heritageRef: "booking_date_time", label: "Dato + tid", sprint: "C", auth: "none", status: "todo" },
-  { route: "/booking/demo/wizard/review", heritageRef: "booking_review_confirm", label: "Review + betal", sprint: "C", auth: "none", status: "todo" },
-  { route: "/booking/demo/confirmation", heritageRef: "booking_confirmed", label: "Bekreftelse", sprint: "C", auth: "none", status: "todo" },
-  { route: "/portal/bookinger/demo/endre", heritageRef: "reschedule_booking", label: "Reschedule", sprint: "C", auth: "portal", status: "todo" },
-  { route: "/booking/demo/cancel", heritageRef: "booking_confirmed", label: "Avlys", sprint: "C", auth: "none", status: "todo" },
+  { route: "/booking/demo/wizard", heritageRef: "booking_coach_selection", label: "Velg coach", sprint: "C", auth: "none", status: "tokens" },
+  { route: "/booking/demo/wizard/date", heritageRef: "booking_date_time", label: "Dato + tid", sprint: "C", auth: "none", status: "tokens" },
+  { route: "/booking/demo/wizard/review", heritageRef: "booking_review_confirm", label: "Review + betal", sprint: "C", auth: "none", status: "tokens" },
+  { route: "/booking/demo/confirmation", heritageRef: "booking_confirmed", label: "Bekreftelse", sprint: "C", auth: "none", status: "tokens" },
+  { route: "/portal/bookinger/demo/endre", heritageRef: "reschedule_booking", label: "Reschedule", sprint: "C", auth: "portal", status: "tokens" },
+  { route: "/booking/demo/cancel", heritageRef: "booking_confirmed", label: "Avlys", sprint: "C", auth: "none", status: "tokens" },
 
   // ─── Sprint D — Landingpages ───
   { route: "/academy", heritageRef: "landing_pricing", label: "Academy", sprint: "D", auth: "none", status: "tokens" },
