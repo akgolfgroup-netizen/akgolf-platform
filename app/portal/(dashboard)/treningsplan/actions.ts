@@ -588,6 +588,97 @@ export async function deleteSession(sessionId: string) {
 }
 
 // -------------------------------------------------------------------
+// Create single session for current week (B-1.2)
+// -------------------------------------------------------------------
+
+export async function createSessionForWeek(data: {
+  weekOffset: number;
+  dayOfWeek: number;
+  title: string;
+  description?: string;
+  durationMinutes?: number;
+  focusArea?: string;
+  startH?: number;
+  startM?: number;
+}) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const supabase = await createServerSupabase();
+  const now = new Date();
+  const targetDate = addWeeks(now, data.weekOffset);
+  const weekStart = startOfISOWeek(targetDate);
+
+  // Finn aktiv plan
+  const { data: plan } = await supabase
+    .from("TrainingPlan")
+    .select("id, TrainingPlanWeek(id, weekStart)")
+    .eq("studentId", user.id)
+    .eq("isActive", true)
+    .single();
+
+  if (!plan) throw new Error("Ingen aktiv treningsplan. Opprett en plan først.");
+
+  interface WeekRow {
+    id: string;
+    weekStart: string;
+  }
+
+  const weeks = (plan.TrainingPlanWeek as unknown as WeekRow[]) || [];
+  const weekStartStr = weekStart.toISOString().slice(0, 10);
+
+  let weekId = weeks.find(
+    (w) => w.weekStart === weekStartStr
+  )?.id;
+
+  // Hvis uken ikke finnes, opprett den
+  if (!weekId) {
+    weekId = nanoid();
+    const { error: weekError } = await supabase.from("TrainingPlanWeek").insert({
+      id: weekId,
+      planId: plan.id,
+      weekNumber: parseInt(format(targetDate, "I")),
+      weekStart: weekStartStr,
+    });
+    if (weekError) {
+      throw new Error(`Kunne ikke opprette uke: ${weekError.message}`);
+    }
+  }
+
+  // Bygg exercises JSON med starttids-metadata
+  const exercises: Record<string, unknown>[] = [];
+  if (data.startH !== undefined && data.startM !== undefined) {
+    exercises.push({
+      _startH: data.startH,
+      _startM: data.startM,
+    });
+  }
+
+  // Opprett økt
+  const sessionId = nanoid();
+  const { error: sessionError } = await supabase
+    .from("TrainingPlanSession")
+    .insert({
+      id: sessionId,
+      weekId,
+      dayOfWeek: data.dayOfWeek,
+      title: data.title,
+      description: data.description ?? null,
+      durationMinutes: data.durationMinutes ?? 60,
+      focusArea: data.focusArea ?? null,
+      exercises,
+      sortOrder: 0,
+    });
+
+  if (sessionError) {
+    throw new Error(`Kunne ikke opprette økt: ${sessionError.message}`);
+  }
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true, sessionId };
+}
+
+// -------------------------------------------------------------------
 // V2: Get all sessions for a week as V2 events
 // -------------------------------------------------------------------
 

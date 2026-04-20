@@ -10,7 +10,7 @@
  * Data-kobling i B-1.2, drag-drop i B-1.4.
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
@@ -32,12 +32,35 @@ const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
 type SidebarTab = "exercises" | "templates" | "history";
 
+interface V2Event {
+  id: string;
+  date: string;
+  startH: number;
+  startM: number;
+  dur: number;
+  title: string;
+  focus: string;
+  exercises: unknown[];
+  done: boolean;
+}
+
 interface TreningsplanPlannerProps {
   weekOffset: number;
   planId: string | null;
   sessionCount?: number;
   totalMinutes?: number;
   adherencePct?: number;
+  events: V2Event[];
+  onCreateSession: (data: {
+    weekOffset: number;
+    dayOfWeek: number;
+    title: string;
+    description?: string;
+    durationMinutes?: number;
+    focusArea?: string;
+    startH?: number;
+    startM?: number;
+  }) => Promise<{ success: boolean; sessionId?: string } | { error: string }>;
 }
 
 export function TreningsplanPlanner({
@@ -46,10 +69,16 @@ export function TreningsplanPlanner({
   sessionCount = 0,
   totalMinutes = 0,
   adherencePct = 0,
+  events,
+  onCreateSession,
 }: TreningsplanPlannerProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<SidebarTab>("exercises");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalDay, setModalDay] = useState(0);
+  const [modalHour, setModalHour] = useState(9);
+  const [isPending, startTransition] = useTransition();
 
   // Uke-navigasjon
   const baseMonday = startOfWeek(new Date(), { weekStartsOn: 1 });
@@ -132,12 +161,33 @@ export function TreningsplanPlanner({
       {/* Hovedgrid: ukes-scheduler + sidebar */}
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-0 lg:col-span-9">
-          <WeekGrid weekDates={weekDates} />
+          <WeekGrid
+            weekDates={weekDates}
+            events={events}
+            onCellClick={(dayIndex, hour) => {
+              setModalDay(dayIndex);
+              setModalHour(hour);
+              setModalOpen(true);
+            }}
+          />
         </div>
         <div className="col-span-12 lg:col-span-3">
           <PlannerSidebar activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
       </div>
+
+      {/* Modal: Opprett økt */}
+      {modalOpen && (
+        <CreateSessionModal
+          weekOffset={weekOffset}
+          dayIndex={modalDay}
+          startHour={modalHour}
+          weekDates={weekDates}
+          onClose={() => setModalOpen(false)}
+          onCreate={onCreateSession}
+          isPending={isPending}
+        />
+      )}
 
       {/* Stats-stripe */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-t border-outline-variant/10 pt-6">
@@ -167,9 +217,32 @@ export function TreningsplanPlanner({
 
 /* ── Ukes-grid ── */
 
-function WeekGrid({ weekDates }: { weekDates: Date[] }) {
+function WeekGrid({
+  weekDates,
+  events,
+  onCellClick,
+}: {
+  weekDates: Date[];
+  events: V2Event[];
+  onCellClick: (dayIndex: number, hour: number) => void;
+}) {
   const today = new Date();
   const todayISO = format(today, "yyyy-MM-dd");
+
+  // Bygg lookup: `${dayIndex}-${hour}` → event[]
+  const eventMap = new Map<string, V2Event[]>();
+  for (const ev of events) {
+    const dayIndex = weekDates.findIndex(
+      (d) => format(d, "yyyy-MM-dd") === ev.date
+    );
+    if (dayIndex === -1) continue;
+    const key = `${dayIndex}-${ev.startH}`;
+    const list = eventMap.get(key) ?? [];
+    list.push(ev);
+    eventMap.set(key, list);
+  }
+
+  const hasAnyEvents = events.length > 0;
 
   return (
     <div className="overflow-x-auto">
@@ -214,24 +287,270 @@ function WeekGrid({ weekDates }: { weekDates: Date[] }) {
                   {String(h).padStart(2, "0")}:00
                 </span>
               </div>
-              {weekDates.map((_, dayIndex) => (
-                <div
-                  key={dayIndex}
-                  className="h-14 cursor-pointer border-r border-outline-variant/5 transition-colors hover:bg-surface-container/60"
-                  title="Klikk for å opprette økt (kommer i B-1.2)"
-                />
-              ))}
+              {weekDates.map((_, dayIndex) => {
+                const key = `${dayIndex}-${h}`;
+                const slotEvents = eventMap.get(key) ?? [];
+                return (
+                  <div
+                    key={dayIndex}
+                    onClick={() => {
+                      if (slotEvents.length === 0) onCellClick(dayIndex, h);
+                    }}
+                    className={`relative h-14 border-r border-outline-variant/5 transition-colors ${
+                      slotEvents.length === 0
+                        ? "cursor-pointer hover:bg-surface-container/60"
+                        : ""
+                    }`}
+                  >
+                    {slotEvents.map((ev) => (
+                      <div
+                        key={ev.id}
+                        className={`absolute inset-1 rounded-lg px-2 py-1 text-[10px] font-bold leading-tight shadow-sm ${
+                          ev.done
+                            ? "bg-primary/20 text-primary/70 line-through"
+                            : eventColorClass(ev.focus)
+                        }`}
+                        title={`${ev.title} · ${ev.dur}m · ${ev.focus}`}
+                      >
+                        <span className="block truncate">{ev.title}</span>
+                        <span className="font-mono text-[9px] opacity-80">
+                          {ev.dur}m
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           ))}
         </div>
 
-        {/* Tom state overlay */}
-        <div className="px-8 py-12 text-center">
-          <Icon name="calendar_today" size={36} className="text-primary/20" />
-          <p className="mt-3 text-sm text-on-surface-variant">
-            Ukesgrid er klar — klikk-å-opprette aktiveres i neste steg (B-1.2)
-          </p>
+        {/* Tom state */}
+        {!hasAnyEvents && (
+          <div className="px-8 py-12 text-center">
+            <Icon name="calendar_today" size={36} className="text-primary/20" />
+            <p className="mt-3 text-sm text-on-surface-variant">
+              Klikk på en time-slot for å opprette din første økt
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function eventColorClass(focus: string): string {
+  switch (focus) {
+    case "FYS":
+      return "bg-primary/15 text-primary";
+    case "TEK":
+      return "bg-secondary-container/80 text-primary";
+    case "SLAG":
+      return "bg-secondary-fixed/40 text-primary";
+    case "SPILL":
+      return "bg-tertiary-container/40 text-primary";
+    case "TURN":
+      return "bg-error-container/40 text-primary";
+    default:
+      return "bg-surface-container-high text-on-surface-variant";
+  }
+}
+
+/* ── Modal: Opprett økt ── */
+
+function CreateSessionModal({
+  weekOffset,
+  dayIndex,
+  startHour,
+  weekDates,
+  onClose,
+  onCreate,
+  isPending,
+}: {
+  weekOffset: number;
+  dayIndex: number;
+  startHour: number;
+  weekDates: Date[];
+  onClose: () => void;
+  onCreate: TreningsplanPlannerProps["onCreateSession"];
+  isPending: boolean;
+}) {
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+  const [duration, setDuration] = useState(60);
+  const [focus, setFocus] = useState<string>("TEK");
+  const [notes, setNotes] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const date = weekDates[dayIndex];
+  const dayOfWeek = dayIndex + 1; // 1 = Man, 7 = Søn
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    if (!title.trim()) {
+      setError("Tittel er påkrevd");
+      return;
+    }
+
+    const result = await onCreate({
+      weekOffset,
+      dayOfWeek,
+      title: title.trim(),
+      description: notes.trim() || undefined,
+      durationMinutes: duration,
+      focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
+      startH: startHour,
+      startM: 0,
+    });
+
+    if (result && "error" in result) {
+      setError(result.error);
+      return;
+    }
+
+    router.refresh();
+    onClose();
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/40 backdrop-blur-sm"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="w-full max-w-md rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-6 shadow-card-hover">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-primary">Ny økt</h2>
+          <button
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-surface-container"
+          >
+            <Icon name="close" size={18} className="text-on-surface-variant" />
+          </button>
         </div>
+
+        <p className="mt-1 font-mono text-[11px] text-on-surface-variant">
+          {DAYS[dayIndex]} {format(date, "d. MMMM", { locale: nb })} · kl{" "}
+          {String(startHour).padStart(2, "0")}:00
+        </p>
+
+        {error && (
+          <div className="mt-3 rounded-lg bg-error-container px-3 py-2 text-xs text-error">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+          {/* Tittel */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Tittel
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="f.eks. Range-session"
+              className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+              autoFocus
+            />
+          </div>
+
+          {/* Varighet */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Varighet
+            </label>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {[15, 30, 45, 60, 90, 120].map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setDuration(m)}
+                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                    duration === m
+                      ? "bg-primary text-white"
+                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                  }`}
+                >
+                  {m}m
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Pyramide-fokus */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Fokus
+            </label>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {PYRAMIDE.map((p) => (
+                <button
+                  key={p.code}
+                  type="button"
+                  onClick={() => setFocus(p.code)}
+                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                    focus === p.code
+                      ? "bg-primary text-white"
+                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                  }`}
+                  title={p.description}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Notater */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Notater
+            </label>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Valgfrie notater om økten…"
+              rows={3}
+              className="mt-1 w-full resize-none rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+            />
+          </div>
+
+          {/* Knapper */}
+          <div className="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface-container"
+            >
+              Avbryt
+            </button>
+            <button
+              type="submit"
+              disabled={isPending || !title.trim()}
+              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-white hover:bg-primary-container disabled:opacity-50"
+            >
+              {isPending ? (
+                <>
+                  <Icon
+                    name="progress_activity"
+                    size={14}
+                    className="animate-spin"
+                  />
+                  Lagrer…
+                </>
+              ) : (
+                <>
+                  <Icon name="add" size={14} />
+                  Opprett økt
+                </>
+              )}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

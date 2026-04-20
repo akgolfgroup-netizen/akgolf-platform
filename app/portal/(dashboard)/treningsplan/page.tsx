@@ -5,6 +5,7 @@ import {
   moveSessionToDay,
   deleteSession,
   logLiveSession,
+  createSessionForWeek,
 } from "./actions";
 import { TrainingPlannerV3 } from "./treningsplan-v3-client";
 import { TrainingPlanViewer } from "./training-plan-viewer";
@@ -84,6 +85,20 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     await logLiveSession(data);
   }
 
+  async function handleCreateSession(data: {
+    weekOffset: number;
+    dayOfWeek: number;
+    title: string;
+    description?: string;
+    durationMinutes?: number;
+    focusArea?: string;
+    startH?: number;
+    startM?: number;
+  }) {
+    "use server";
+    return createSessionForWeek(data);
+  }
+
   const templates = [
     { id: "t1", title: "Putting-drill", dur: 20, focus: "TEK", exercises: [] },
     { id: "t2", title: "Short game", dur: 30, focus: "SLAG", exercises: [] },
@@ -104,6 +119,8 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         sessionCount={sessionCount}
         totalMinutes={totalMinutes}
         adherencePct={0}
+        events={events}
+        onCreateSession={handleCreateSession}
       />
     );
   }
