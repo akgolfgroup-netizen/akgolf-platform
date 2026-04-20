@@ -30,14 +30,14 @@ export const screens: Screen[] = [
   { route: "/admin/team", heritageRef: "team_setup", label: "Team + tilgang", sprint: "B", auth: "admin", status: "done" },
   { route: "/admin/bookinger", heritageRef: "booking_review_confirm", label: "Bookinger (admin)", sprint: "B", auth: "admin", status: "done" },
 
-  // ─── Sprint C — Booking-system ───
-  { route: "/booking", heritageRef: "booking_select_service", label: "Velg tjeneste", sprint: "C", auth: "none", status: "tokens" },
-  { route: "/booking/demo/wizard", heritageRef: "booking_coach_selection", label: "Velg coach", sprint: "C", auth: "none", status: "tokens" },
-  { route: "/booking/demo/wizard/date", heritageRef: "booking_date_time", label: "Dato + tid", sprint: "C", auth: "none", status: "tokens" },
-  { route: "/booking/demo/wizard/review", heritageRef: "booking_review_confirm", label: "Review + betal", sprint: "C", auth: "none", status: "tokens" },
-  { route: "/booking/demo/confirmation", heritageRef: "booking_confirmed", label: "Bekreftelse", sprint: "C", auth: "none", status: "tokens" },
-  { route: "/portal/bookinger/demo/endre", heritageRef: "reschedule_booking", label: "Reschedule", sprint: "C", auth: "portal", status: "tokens" },
-  { route: "/booking/demo/cancel", heritageRef: "booking_confirmed", label: "Avlys", sprint: "C", auth: "none", status: "tokens" },
+  // ─── Sprint C — Booking-system (DONE ✅) ───
+  { route: "/booking", heritageRef: "booking_select_service", label: "Velg tjeneste", sprint: "C", auth: "none", status: "done" },
+  { route: "/booking/[id]/confirmation", heritageRef: "booking_confirmed", label: "Bekreftelse", sprint: "C", auth: "none", status: "done" },
+  { route: "/booking/[id]/cancel", heritageRef: "booking_confirmed", label: "Avlys", sprint: "C", auth: "none", status: "done" },
+  { route: "/booking/[id]/pay", heritageRef: "booking_review_confirm", label: "Betaling", sprint: "C", auth: "none", status: "done" },
+  { route: "/booking/[id]/status", heritageRef: "booking_review_confirm", label: "Status", sprint: "C", auth: "none", status: "done" },
+  { route: "/portal/bookinger", heritageRef: "sessions_calendar_view", label: "Bookinger (portal)", sprint: "C", auth: "portal", status: "done" },
+  { route: "/portal/bookinger/[id]/endre", heritageRef: "reschedule_booking", label: "Endre booking", sprint: "C", auth: "portal", status: "done" },
 
   // ─── Sprint D — Landingpages ───
   { route: "/academy", heritageRef: "landing_pricing", label: "Academy", sprint: "D", auth: "none", status: "tokens" },
