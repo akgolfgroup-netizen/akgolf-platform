@@ -25,6 +25,7 @@ import {
 } from "@/lib/portal/training/ak-taxonomy";
 import {
   searchExercises,
+  createUserExercise,
   type ExerciseSearchResult,
 } from "@/lib/portal/training/exercise-actions";
 
@@ -611,6 +612,16 @@ function ExercisesPlaceholder() {
   const [results, setResults] = useState<ExerciseSearchResult[]>([]);
   const [loading, setLoading] = useState(false);
 
+  // X-6: Inline opprett egen øvelse
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [createName, setCreateName] = useState("");
+  const [createPyramid, setCreatePyramid] = useState<string>("TEK");
+  const [createArea, setCreateArea] = useState<string>("TEE");
+  const [createLFase, setCreateLFase] = useState<string | null>(null);
+  const [createDesc, setCreateDesc] = useState("");
+  const [creating, setCreating] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
+
   const filteredOmrader = omraadeGruppe
     ? TRENINGSOMRADER.filter((o) => o.gruppe === omraadeGruppe)
     : TRENINGSOMRADER;
@@ -626,6 +637,25 @@ function ExercisesPlaceholder() {
 
   const hasFilters =
     pyramide || omraadeGruppe || omraadeCode || lFase || life || sok;
+
+  const doSearch = async () => {
+    setLoading(true);
+    try {
+      const data = await searchExercises({
+        query: sok || undefined,
+        pyramid: pyramide ?? undefined,
+        area: omraadeCode ?? undefined,
+        lPhase: lFase ?? undefined,
+        lifeCode: life ?? undefined,
+        limit: 30,
+      });
+      setResults(data);
+    } catch {
+      setResults([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Debounced søk ved filter-endring
   useEffect(() => {
@@ -653,6 +683,33 @@ function ExercisesPlaceholder() {
       clearTimeout(timer);
     };
   }, [sok, pyramide, omraadeCode, lFase, life]);
+
+  const handleCreateExercise = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateError(null);
+    if (!createName.trim()) {
+      setCreateError("Navn er påkrevd");
+      return;
+    }
+    setCreating(true);
+    const result = await createUserExercise({
+      name: createName.trim(),
+      description: createDesc.trim() || undefined,
+      pyramid: createPyramid,
+      area: createArea,
+      lPhase: createLFase ?? undefined,
+    });
+    setCreating(false);
+    if ("error" in result) {
+      setCreateError(result.error);
+      return;
+    }
+    // Nullstill form og oppdater søk
+    setCreateName("");
+    setCreateDesc("");
+    setShowCreateForm(false);
+    doSearch();
+  };
 
   return (
     <div className="space-y-3">
@@ -799,6 +856,134 @@ function ExercisesPlaceholder() {
 
       {/* Resultater */}
       <ExerciseList results={results} loading={loading} hasFilters={Boolean(hasFilters)} />
+
+      {/* X-6: Opprett egen øvelse */}
+      {!showCreateForm ? (
+        <button
+          onClick={() => setShowCreateForm(true)}
+          className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-outline-variant/40 py-2.5 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant hover:border-primary/30 hover:text-primary transition-colors"
+        >
+          <Icon name="add" size={14} />
+          Opprett egen øvelse
+        </button>
+      ) : (
+        <form
+          onSubmit={handleCreateExercise}
+          className="space-y-3 rounded-xl border border-outline-variant/20 bg-surface p-3"
+        >
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-bold text-primary">Ny øvelse</p>
+            <button
+              type="button"
+              onClick={() => setShowCreateForm(false)}
+              className="flex h-6 w-6 items-center justify-center rounded-full hover:bg-surface-container"
+            >
+              <Icon name="close" size={14} className="text-on-surface-variant" />
+            </button>
+          </div>
+
+          {createError && (
+            <p className="rounded bg-error-container px-2 py-1 text-[10px] text-error">
+              {createError}
+            </p>
+          )}
+
+          <input
+            type="text"
+            value={createName}
+            onChange={(e) => setCreateName(e.target.value)}
+            placeholder="Navn på øvelse"
+            className="w-full rounded-lg border border-outline-variant/30 bg-surface-container-lowest px-2.5 py-1.5 text-xs text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+            autoFocus
+          />
+
+          {/* Pyramide */}
+          <div className="flex flex-wrap gap-1">
+            {PYRAMIDE.map((p) => (
+              <button
+                key={p.code}
+                type="button"
+                onClick={() => setCreatePyramid(p.code)}
+                className={`rounded px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight transition-colors ${
+                  createPyramid === p.code
+                    ? "bg-primary text-white"
+                    : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high"
+                }`}
+              >
+                {p.code}
+              </button>
+            ))}
+          </div>
+
+          {/* Område */}
+          <select
+            value={createArea}
+            onChange={(e) => setCreateArea(e.target.value)}
+            className="w-full rounded-lg border border-outline-variant/30 bg-surface-container-lowest px-2.5 py-1.5 text-xs text-on-surface focus:border-primary focus:outline-none"
+          >
+            {TRENINGSOMRADER.map((o) => (
+              <option key={o.code} value={o.code}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+
+          {/* L-fase */}
+          <div className="flex flex-wrap gap-1">
+            <button
+              type="button"
+              onClick={() => setCreateLFase(null)}
+              className={`rounded px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight transition-colors ${
+                createLFase === null
+                  ? "bg-primary text-white"
+                  : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high"
+              }`}
+            >
+              —
+            </button>
+            {L_FASER.map((f) => (
+              <button
+                key={f.code}
+                type="button"
+                onClick={() => setCreateLFase(f.code)}
+                className={`rounded px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight transition-colors ${
+                  createLFase === f.code
+                    ? "bg-primary text-white"
+                    : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high"
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          <textarea
+            value={createDesc}
+            onChange={(e) => setCreateDesc(e.target.value)}
+            placeholder="Beskrivelse (valgfri)"
+            rows={2}
+            className="w-full resize-none rounded-lg border border-outline-variant/30 bg-surface-container-lowest px-2.5 py-1.5 text-xs text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+          />
+
+          <button
+            type="submit"
+            disabled={creating || !createName.trim()}
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2 text-[11px] font-bold uppercase tracking-widest text-white hover:bg-primary-container disabled:opacity-50"
+          >
+            {creating ? (
+              <>
+                <Icon name="progress_activity" size={14} className="animate-spin" />
+                Lagrer…
+              </>
+            ) : (
+              <>
+                <Icon name="save" size={14} />
+                Lagre øvelse
+              </>
+            )}
+          </button>
+        </form>
+      )}
     </div>
   );
 }
