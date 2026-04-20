@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<title>AK Golf — App Demo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --primary: #154212;
+    --primary-container: #2d5a27;
+    --secondary: #d2f000;
+    --surface: #fdf9f0;
+    --surface-container: #f1eee5;
+    --on-surface: #1c1c16;
+    --on-surface-variant: #42493e;
+    --outline: #72796e;
+    --outline-variant: #c2c9bb;
+    --emerald-950: #022c22;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "DM Sans", sans-serif;
+    background: var(--surface);
+    color: var(--on-surface);
+    min-height: 100vh;
+  }
+  header {
+    background: var(--primary-container);
+    color: white;
+    padding: 32px 48px;
+  }
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 8px;
+  }
+  h1 {
+    margin: 0 0 8px;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .meta {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+  }
+  .status-bar {
+    display: flex;
+    gap: 32px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  main {
+    padding: 48px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 48px 0 24px;
+  }
+  .section-header:first-child {
+    margin-top: 0;
+  }
+  .section-header h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+  }
+  .section-header .count {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: var(--outline);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: white;
+    border: 1px solid rgba(114,121,110,0.15);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+    display: block;
+  }
+  .card:hover {
+    border-color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(45,90,39,0.08);
+  }
+  .card-badge {
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    background: var(--secondary);
+    color: var(--on-surface);
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .card-badge.auth {
+    background: var(--outline-variant);
+    color: var(--on-surface);
+  }
+  .card-badge.admin {
+    background: var(--emerald-950);
+    color: var(--secondary);
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--on-surface);
+  }
+  .card-path {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--outline);
+    word-break: break-all;
+  }
+  .card-desc {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--on-surface-variant);
+    line-height: 1.5;
+  }
+  .tips {
+    background: rgba(210,240,0,0.12);
+    border-left: 4px solid var(--secondary);
+    padding: 16px 20px;
+    margin: 16px 0 32px;
+    border-radius: 4px;
+  }
+  .tips strong {
+    color: var(--primary);
+  }
+  .heritage-ref {
+    margin-top: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--outline);
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Design Migration // 2026-04-20</div>
+  <h1>AK Golf Platform — Demo</h1>
+  <div class="meta">Heritage Grid Material 3 Expressive · DM Sans · Material Symbols Outlined</div>
+  <div class="status-bar">
+    <div class="stat">
+      <span class="stat-label">Ruter totalt</span>
+      <span class="stat-value">~80</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Migrerte commits</span>
+      <span class="stat-value">10</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Type-feil (baseline)</span>
+      <span class="stat-value">12</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Stitch-skjermer som kilde</span>
+      <span class="stat-value">195</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="tips">
+    <strong>Tips:</strong> Portal og Admin krever innlogging (307 redirect til login). Åpne i samme nettleser hvor du allerede er logget inn for full demo.
+  </div>
+
+  <!-- MARKEDSSIDE -->
+  <div class="section-header">
+    <h2>Markedsside</h2>
+    <span class="count">8 sider</span>
+  </div>
+  <div class="grid">
+    <a class="card" href="http://localhost:3000/" target="_blank">
+      <span class="card-badge">PUBLIC</span>
+      <div class="card-title">Forside</div>
+      <div class="card-path">/</div>
+      <div class="card-desc">Hero + storytelling + CTA. Heritage landing-nav.</div>
+    </a>
+    <a class="card" href="http://localhost:3000/academy" target="_blank">
+      <span class="card-badge">PUBLIC</span>
+      <div class="card-title">Academy</div>
+      <div class="card-path">/academy</div>
+    </a>
+    <a class="card" href="http://localhost:3000/academy/abonnement" target="_blank">
+      <span class="card-badge">PUBLIC</span>
+      <div class="card-title">Abonnement</div>
+      <div class="card-path">/academy/abonnement</div>
+    </a>
+    <a class="card" href="http://localhost:3000/junior-academy" target="_blank">
+      <span class="card-badge">PUBLIC</span>
+      <div class="card-title">Junior Academy</div>
+      <div class="card-path">/junior-academy</div>
+    </a>
+    <a class="card" href="http://localhost:3000/utvikling" target="_blank">
+      <span class="card-badge">PUBLIC</span>
+      <div class="card-title">Utvikling</div>
+      <div class="card-path">/utvikling</div>
+    </a>
+    <a class="card" href="http://localhost:3000/booking" target="_blank">
+      <span class="card-badge">PUBLIC</span>
+      <div class="card-title">Book coaching</div>
+      <div class="card-path">/booking</div>
+    </a>
+    <a class="card" href="http://localhost:3000/landing/pricing" target="_blank">
+      <span class="card-badge">PUBLIC</span>
+      <div class="card-title">Priser (landing)</div>
+      <div class="card-path">/landing/pricing</div>
+      <div class="heritage-ref">ref: landing_pricing</div>
+    </a>
+    <a class="card" href="http://localhost:3000/personvern" target="_blank">
+      <span class="card-badge">PUBLIC</span>
+      <div class="card-title">Personvern</div>
+      <div class="card-path">/personvern</div>
+    </a>
+  </div>
+
+  <!-- AUTH -->
+  <div class="section-header">
+    <h2>Auth</h2>
+    <span class="count">4 sider</span>
+  </div>
+  <div class="grid">
+    <a class="card" href="http://localhost:3000/auth/login" target="_blank">
+      <span class="card-badge auth">AUTH</span>
+      <div class="card-title">Logg inn</div>
+      <div class="card-path">/auth/login</div>
+      <div class="heritage-ref">ref: auth_sign_in_updated</div>
+    </a>
+    <a class="card" href="http://localhost:3000/auth/register" target="_blank">
+      <span class="card-badge auth">AUTH</span>
+      <div class="card-title">Registrer</div>
+      <div class="card-path">/auth/register</div>
+      <div class="heritage-ref">ref: auth_register_step_1..3</div>
+    </a>
+    <a class="card" href="http://localhost:3000/auth/forgot-password" target="_blank">
+      <span class="card-badge auth">AUTH</span>
+      <div class="card-title">Glemt passord</div>
+      <div class="card-path">/auth/forgot-password</div>
+      <div class="heritage-ref">ref: auth_forgot_password_updated</div>
+    </a>
+    <a class="card" href="http://localhost:3000/auth/set-password" target="_blank">
+      <span class="card-badge auth">AUTH</span>
+      <div class="card-title">Sett passord</div>
+      <div class="card-path">/auth/set-password</div>
+      <div class="heritage-ref">ref: auth_new_password</div>
+    </a>
+  </div>
+
+  <!-- SPILLERPORTAL -->
+  <div class="section-header">
+    <h2>Spillerportal</h2>
+    <span class="count">~40 sider (krever innlogging)</span>
+  </div>
+  <div class="grid">
+    <a class="card" href="http://localhost:3000/portal" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Dashboard</div>
+      <div class="card-path">/portal</div>
+      <div class="heritage-ref">ref: dashboard_mission_control</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/statistikk" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Statistikk</div>
+      <div class="card-path">/portal/statistikk</div>
+      <div class="heritage-ref">ref: analytics_strokes_gained</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/kartlegging" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Kartlegging</div>
+      <div class="card-path">/portal/kartlegging</div>
+      <div class="heritage-ref">ref: coach_player_view</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/runde/ny" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Ny runde</div>
+      <div class="card-path">/portal/runde/ny</div>
+      <div class="heritage-ref">ref: log_practice_diary</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/dagbok" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Dagbok</div>
+      <div class="card-path">/portal/dagbok</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/treningsplan" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Treningsplan</div>
+      <div class="card-path">/portal/treningsplan</div>
+      <div class="heritage-ref">ref: iup_12_week_training_plan</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/min-plan" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Min plan</div>
+      <div class="card-path">/portal/min-plan</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/trackman" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">TrackMan</div>
+      <div class="card-path">/portal/trackman</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/tester" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Tester</div>
+      <div class="card-path">/portal/tester</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/bookinger" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Bookinger</div>
+      <div class="card-path">/portal/bookinger</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/bookinger/ny" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Ny booking</div>
+      <div class="card-path">/portal/bookinger/ny</div>
+      <div class="heritage-ref">ref: booking_coach_selection</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/kalender" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Kalender</div>
+      <div class="card-path">/portal/kalender</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/turneringer" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Turneringer</div>
+      <div class="card-path">/portal/turneringer</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/spill" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Spill-variasjoner</div>
+      <div class="card-path">/portal/spill</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/mental" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Mental</div>
+      <div class="card-path">/portal/mental</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/strategi" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Strategi</div>
+      <div class="card-path">/portal/strategi</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/analyse" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Analyse</div>
+      <div class="card-path">/portal/analyse</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/benchmark" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Benchmark</div>
+      <div class="card-path">/portal/benchmark</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/sammenligning" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Sammenligning</div>
+      <div class="card-path">/portal/sammenligning</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/ai-coach" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">AI-coach</div>
+      <div class="card-path">/portal/ai-coach</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/coaching-historikk" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Coaching-historikk</div>
+      <div class="card-path">/portal/coaching-historikk</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/meldinger" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Meldinger</div>
+      <div class="card-path">/portal/meldinger</div>
+      <div class="heritage-ref">ref: coach_messages</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/sosialt" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Sosialt</div>
+      <div class="card-path">/portal/sosialt</div>
+      <div class="heritage-ref">ref: social_feed_community</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/profil" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Profil</div>
+      <div class="card-path">/portal/profil</div>
+      <div class="heritage-ref">ref: settings_profile</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/bag" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Bag</div>
+      <div class="card-path">/portal/bag</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/apper" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Apper</div>
+      <div class="card-path">/portal/apper</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/abonnement" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Abonnement</div>
+      <div class="card-path">/portal/abonnement</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/onboarding" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Onboarding</div>
+      <div class="card-path">/portal/onboarding</div>
+    </a>
+    <a class="card" href="http://localhost:3000/portal/design-preview" target="_blank">
+      <span class="card-badge">PORTAL</span>
+      <div class="card-title">Design-preview (13 patterns)</div>
+      <div class="card-path">/portal/design-preview</div>
+    </a>
+  </div>
+
+  <!-- ADMIN / MISSION CONTROL -->
+  <div class="section-header">
+    <h2>Mission Control (Admin)</h2>
+    <span class="count">~28 sider (krever admin-rolle)</span>
+  </div>
+  <div class="grid">
+    <a class="card" href="http://localhost:3000/admin" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Oversikt (Hub)</div>
+      <div class="card-path">/admin</div>
+      <div class="heritage-ref">ref: mission_control_command_center</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/mission-board" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Mission Board</div>
+      <div class="card-path">/admin/mission-board</div>
+      <div class="heritage-ref">ref: dashboard_mission_control</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/coaching-board" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Coaching Mission Board</div>
+      <div class="card-path">/admin/coaching-board</div>
+      <div class="heritage-ref">ref: coach_my_day</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/elever" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Elever</div>
+      <div class="card-path">/admin/elever</div>
+      <div class="heritage-ref">ref: admin_player_management</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/team" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Team og tilgang</div>
+      <div class="card-path">/admin/team</div>
+      <div class="heritage-ref">ref: team_setup</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/team/audit" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Team audit-logg</div>
+      <div class="card-path">/admin/team/audit</div>
+      <div class="heritage-ref">ref: mission_control_audit_log</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/focus" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Focus</div>
+      <div class="card-path">/admin/focus</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/denne-uken" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Denne uken</div>
+      <div class="card-path">/admin/denne-uken</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/kalender" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Kalender</div>
+      <div class="card-path">/admin/kalender</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/bookinger" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Bookinger</div>
+      <div class="card-path">/admin/bookinger</div>
+      <div class="heritage-ref">ref: booking_review_confirm</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/godkjenninger" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Godkjenninger</div>
+      <div class="card-path">/admin/godkjenninger</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/tilgjengelighet" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Tilgjengelighet</div>
+      <div class="card-path">/admin/tilgjengelighet</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/kapasitet" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Kapasitet</div>
+      <div class="card-path">/admin/kapasitet</div>
+      <div class="heritage-ref">ref: mission_control_capacity_forecast</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/okter" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Coaching-notater (økter)</div>
+      <div class="card-path">/admin/okter</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/treningsplan" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Treningsplaner</div>
+      <div class="card-path">/admin/treningsplan</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/turneringer" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Turneringer</div>
+      <div class="card-path">/admin/turneringer</div>
+      <div class="heritage-ref">ref: tournaments_competitions</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/meldinger" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Meldinger</div>
+      <div class="card-path">/admin/meldinger</div>
+      <div class="heritage-ref">ref: inbox_main</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/e-postmaler" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">E-postmaler</div>
+      <div class="card-path">/admin/e-postmaler</div>
+      <div class="heritage-ref">ref: email_templates</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/notifications" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Push-varsler</div>
+      <div class="card-path">/admin/notifications</div>
+      <div class="heritage-ref">ref: push_notifications</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/ai-assistent" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">AI-assistent</div>
+      <div class="card-path">/admin/ai-assistent</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/agenter" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Agenter</div>
+      <div class="card-path">/admin/agenter</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/analytics" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Analytics</div>
+      <div class="card-path">/admin/analytics</div>
+      <div class="heritage-ref">ref: analytics_live_dashboard</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/okonomi" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Økonomi</div>
+      <div class="card-path">/admin/okonomi</div>
+      <div class="heritage-ref">ref: analytics_financials</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/rapporter" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Rapporter</div>
+      <div class="card-path">/admin/rapporter</div>
+      <div class="heritage-ref">ref: analytics_generated_report</div>
+    </a>
+    <a class="card" href="http://localhost:3000/admin/fasiliteter" target="_blank">
+      <span class="card-badge admin">ADMIN</span>
+      <div class="card-title">Fasiliteter</div>
+      <div class="card-path">/admin/fasiliteter</div>
+    </a>
+  </div>
+
+  <!-- DESIGN-VERKTØY -->
+  <div class="section-header">
+    <h2>Design-verktøy</h2>
+    <span class="count">Intern review</span>
+  </div>
+  <div class="grid">
+    <a class="card" href="file:///Users/anderskristiansen/Developer/akgolf/akgolf-platform/design-ref/stitch/review.html" target="_blank">
+      <span class="card-badge">TOOL</span>
+      <div class="card-title">Stitch Review (213 skjermer)</div>
+      <div class="card-path">design-ref/stitch/review.html</div>
+      <div class="card-desc">Ja/Kanskje/Nei-verktøy for Heritage-referansene</div>
+    </a>
+    <a class="card" href="file:///Users/anderskristiansen/Developer/akgolf/akgolf-platform/docs/status/HERITAGE_MIGRATION_STATUS.md" target="_blank">
+      <span class="card-badge">DOC</span>
+      <div class="card-title">Migrering sluttstatus</div>
+      <div class="card-path">docs/status/HERITAGE_MIGRATION_STATUS.md</div>
+      <div class="card-desc">Hva som ble gjort i natt (6 commits autonomt)</div>
+    </a>
+    <a class="card" href="file:///Users/anderskristiansen/Developer/akgolf/akgolf-platform/.claude/rules/design-system.md" target="_blank">
+      <span class="card-badge">DOC</span>
+      <div class="card-title">Design System (én sannhet)</div>
+      <div class="card-path">.claude/rules/design-system.md</div>
+      <div class="card-desc">Heritage Grid Material 3 — 40+ tokens + referanse-tabell</div>
+    </a>
+  </div>
+</main>
+</body>
+</html>
