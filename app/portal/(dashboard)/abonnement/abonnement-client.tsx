@@ -8,11 +8,10 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { cn } from "@/lib/portal/utils/cn";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { UpgradeOptions } from "@/components/portal/subscription/upgrade-options";
 import { getStripePortalUrl } from "./actions";
 import type { SubscriptionData } from "./actions";
-import { MonoLabel, NightSurface } from "@/components/portal/patterns";
+import { MonoLabel, NightSurface, BentoCard, BentoGrid } from "@/components/portal/patterns";
 
 const TIER_DISPLAY: Record<string, string> = {
   PRO: "Performance Pro",
@@ -76,17 +75,17 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
       : 0;
 
   return (
-    <div className="space-y-8">
+    <section className="space-y-6">
       {/* Header */}
-      <div>
-        <MonoLabel size="xs" uppercase className="mb-2 block text-on-surface-variant">
+      <header>
+        <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
           Ditt abonnement
         </MonoLabel>
         <h1 className="text-2xl font-bold text-on-surface">Abonnement</h1>
-        <p className="mt-1 text-on-surface-variant">
+        <p className="text-on-surface-variant mt-1">
           Oversikt over din plan, kvoter og bookinger
         </p>
-      </div>
+      </header>
 
       {hasActivePlan ? (
         <>
@@ -134,7 +133,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
           </NightSurface>
 
           {/* Plan detalj-kort */}
-          <PremiumCard>
+          <BentoCard variant="light" padding="lg">
             <div className="space-y-6">
               {/* Session quota */}
               {quota ? (
@@ -271,7 +270,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                     disabled={isPending}
                     className="inline-flex items-center gap-1.5 text-xs text-on-surface-variant transition-colors hover:text-on-surface"
                   >
-                    <Icon name="close"Circle className="h-3.5 w-3.5" />
+                    <Icon name="close" className="h-3.5 w-3.5" />
                     Avbryt abonnement
                   </button>
                   <p className="mt-1 text-[10px] text-on-surface-variant">
@@ -280,7 +279,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                 </div>
               )}
             </div>
-          </PremiumCard>
+          </BentoCard>
 
           {/* Tilgjengelige oppgraderinger */}
           <UpgradeOptions
@@ -290,7 +289,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
           />
 
           {/* Booking shortcut */}
-          <PremiumCard>
+          <BentoCard variant="light" padding="lg">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface">
@@ -313,7 +312,7 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
                 <Icon name="arrow_forward" className="h-4 w-4" />
               </Link>
             </div>
-          </PremiumCard>
+          </BentoCard>
         </>
       ) : (
         /* No subscription — upsell card */
@@ -345,42 +344,42 @@ export default function AbonnementClient({ data }: AbonnementClientProps) {
             </Link>
           </NightSurface>
 
-          <PremiumCard>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {[
-                {
-                  label: "Performance",
-                  price: "1 600 kr/mnd",
-                  desc: "2 x 20 min per uke",
-                },
-                {
-                  label: "Performance Pro",
-                  price: "2 000 kr/mnd",
-                  desc: "4 x 20 min per uke",
-                },
-                {
-                  label: "Gruppe",
-                  price: "900 kr/mnd",
-                  desc: "2 x 60 min gruppeøkt",
-                },
-              ].map((plan) => (
-                <div
-                  key={plan.label}
-                  className="rounded-xl border border-black/6 p-4 text-center"
-                >
-                  <MonoLabel size="xs" uppercase className="block text-on-surface-variant">
-                    {plan.label}
-                  </MonoLabel>
-                  <MonoLabel size="lg" className="mt-2 block font-bold text-on-surface">
-                    {plan.price}
-                  </MonoLabel>
-                  <p className="mt-1 text-xs text-on-surface-variant">{plan.desc}</p>
-                </div>
-              ))}
-            </div>
-          </PremiumCard>
+          <BentoGrid cols={3} gap="md">
+            {[
+              {
+                label: "Performance",
+                price: "1 600 kr/mnd",
+                desc: "2 x 20 min per uke",
+              },
+              {
+                label: "Performance Pro",
+                price: "2 000 kr/mnd",
+                desc: "4 x 20 min per uke",
+              },
+              {
+                label: "Gruppe",
+                price: "900 kr/mnd",
+                desc: "2 x 60 min gruppeøkt",
+              },
+            ].map((plan) => (
+              <BentoCard
+                key={plan.label}
+                variant="light"
+                padding="md"
+                className="text-center"
+              >
+                <MonoLabel size="xs" uppercase className="block text-on-surface-variant">
+                  {plan.label}
+                </MonoLabel>
+                <MonoLabel size="lg" className="mt-2 block font-bold text-on-surface">
+                  {plan.price}
+                </MonoLabel>
+                <p className="mt-1 text-xs text-on-surface-variant">{plan.desc}</p>
+              </BentoCard>
+            ))}
+          </BentoGrid>
         </>
       )}
-    </div>
+    </section>
   );
 }

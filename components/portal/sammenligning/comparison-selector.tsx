@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -141,7 +140,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
     >
       {/* Mode tabs — glassmorphism pill */}
       <motion.div variants={fadeInUp}>
-        <div className="inline-flex gap-1 p-1 rounded-full bg-surface-container-lowest/70 backdrop-blur-xl border border-white/80 shadow-[0_8px_24px_-12px_rgba(10,31,24,0.15)]">
+        <div className="inline-flex gap-1 p-1 rounded-full bg-surface-container-lowest/70 backdrop-blur-xl border border-outline-variant/30 shadow-lg">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -150,10 +149,10 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
               className={cn(
                 "px-5 py-2 rounded-full text-[12px] font-semibold transition-all duration-200",
                 mode === tab.key
-                  ? "bg-[var(--color-primary)] text-surface shadow-[0_4px_16px_-4px_rgba(0,88,64,0.3)]"
+                  ? "bg-primary text-surface shadow-md"
                   : tab.disabled
-                    ? "text-[var(--color-muted)] cursor-not-allowed opacity-50"
-                    : "text-[var(--color-text)] hover:text-[var(--color-primary)]"
+                    ? "text-on-surface-variant cursor-not-allowed opacity-50"
+                    : "text-on-surface hover:text-primary"
               )}
             >
               {tab.label}
@@ -167,12 +166,12 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
         <motion.div variants={fadeInUp}>
           <Card variant="elevated" padding="md" className="space-y-3">
             {loadingPlayers ? (
-              <div className="flex items-center gap-2 text-sm text-[var(--color-muted)]">
+              <div className="flex items-center gap-2 text-sm text-on-surface-variant">
                 <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                 Henter spillere…
               </div>
             ) : playerError ? (
-              <div className="flex items-center gap-2 text-sm text-[var(--color-error)]">
+              <div className="flex items-center gap-2 text-sm text-error">
                 <Icon name="error" className="w-4 h-4" />
                 {playerError}
               </div>
@@ -183,12 +182,12 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Søk etter spiller…"
-                  className="w-full px-4 py-2 rounded-xl bg-surface-container-lowest border border-black/10 text-sm text-[var(--color-text)] placeholder:text-[var(--color-muted)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+                  className="w-full px-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-sm text-on-surface placeholder:text-on-surface-variant outline-none focus:border-primary/40 transition-colors"
                 />
                 <select
                   value={selectedPlayerId ?? ""}
                   onChange={(e) => setSelectedPlayerId(Number(e.target.value))}
-                  className="w-full px-4 py-2 rounded-xl bg-surface-container-lowest border border-black/10 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+                  className="w-full px-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-sm text-on-surface outline-none focus:border-primary/40 transition-colors"
                   size={5}
                 >
                   {filteredPlayers.map((p) => (
@@ -209,7 +208,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
             <select
               value={selectedTier}
               onChange={(e) => setSelectedTier(e.target.value)}
-              className="w-full px-4 py-2 rounded-xl bg-surface-container-lowest border border-black/10 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+              className="w-full px-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-sm text-on-surface outline-none focus:border-primary/40 transition-colors"
             >
               {SG_BENCHMARKS.map((b) => (
                 <option key={b.category} value={b.category}>
@@ -236,7 +235,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
       {/* SG Ring side-by-side */}
       {comparisonStats && (
         <motion.div variants={fadeInUp}>
-          <NightSurface variant="ambient" className="rounded-2xl p-8">
+          <NightSurface variant="ambient" className="rounded-3xl p-8">
             <div className="mb-6 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="h-px w-6 bg-surface-container-lowest/40" />
@@ -328,12 +327,12 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
         <motion.div variants={fadeInUp}>
           <Card variant="elevated" padding="lg">
             <div className="flex items-center justify-between mb-4">
-              <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase flex items-center gap-2">
-                <span className="w-6 h-px bg-[var(--color-muted)]" />
+              <p className="text-[10px] font-bold tracking-[0.22em] text-on-surface-variant uppercase flex items-center gap-2">
+                <span className="w-6 h-px bg-outline-variant" />
                 SG-profil vs. {comparisonLabel}
               </p>
               {mode === "peer" && peerData && (
-                <p className="text-[11px] text-[var(--color-muted)]">
+                <p className="text-[11px] text-on-surface-variant">
                   {peerData.myRoundCount} runder vs. {peerData.peerRoundCount} runder
                 </p>
               )}
@@ -352,11 +351,11 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
         <motion.div variants={fadeInUp}>
           <Card variant="elevated" padding="lg">
             <div className="flex items-center justify-between mb-4">
-              <p className="text-[10px] font-bold tracking-[0.22em] text-[var(--color-muted)] uppercase flex items-center gap-2">
-                <span className="w-6 h-px bg-[var(--color-muted)]" />
+              <p className="text-[10px] font-bold tracking-[0.22em] text-on-surface-variant uppercase flex items-center gap-2">
+                <span className="w-6 h-px bg-outline-variant" />
                 Detaljert sammenligning
               </p>
-              <div className="flex gap-6 text-[11px] text-[var(--color-muted)]">
+              <div className="flex gap-6 text-[11px] text-on-surface-variant">
                 <span>Du</span>
                 <span>{comparisonLabel}</span>
               </div>
@@ -382,7 +381,7 @@ export function ComparisonSelector({ myStats, peerData }: ComparisonSelectorProp
       )}
 
       {!comparisonStats && mode === "tour" && !loadingPlayers && (
-        <p className="text-sm text-center text-[var(--color-muted)] py-8">
+        <p className="text-sm text-center text-on-surface-variant py-8">
           Velg en spiller for å se sammenligning
         </p>
       )}

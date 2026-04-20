@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
+import { BentoCard } from "@/components/portal/patterns";
 import { updateProfile } from "../actions";
 import { AvatarUpload } from "@/components/portal/profil/avatar-upload";
 import { MonoLabel } from "@/components/portal/patterns";
@@ -51,7 +51,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
   const hasChanges = name !== profile.name || phone !== profile.phone;
 
   return (
-    <div className="mx-auto w-full max-w-[680px] space-y-6 pb-12">
+    <section className="space-y-6 max-w-[680px] pb-12">
       {/* Tilbake-lenke */}
       <Link
         href="/portal/profil"
@@ -61,26 +61,31 @@ export function SettingsClient({ profile }: SettingsClientProps) {
         Tilbake til profil
       </Link>
 
-      <h1 className="text-xl font-bold text-on-surface">
-        Kontoinnstillinger
-      </h1>
+      <header>
+        <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
+          Konto
+        </MonoLabel>
+        <h1 className="text-2xl font-bold text-on-surface">
+          Kontoinnstillinger
+        </h1>
+      </header>
 
       {/* Profilbilde */}
-      <PremiumCard delay={0}>
+      <BentoCard variant="light" padding="lg">
         <MonoLabel size="xs" uppercase className="mb-4 block text-on-surface-variant">
           Profilbilde
         </MonoLabel>
         <div className="flex items-center gap-4">
           <AvatarUpload currentImage={profile.image} name={profile.name} />
           <p className="text-xs text-on-surface-variant">
-            Klikk eller dra et bilde for a endre profilbildet ditt.
+            Klikk eller dra et bilde for å endre profilbildet ditt.
             Maks 5 MB. JPG, PNG eller WebP.
           </p>
         </div>
-      </PremiumCard>
+      </BentoCard>
 
       {/* Redigeringsskjema */}
-      <PremiumCard delay={0.1}>
+      <BentoCard variant="light" padding="lg">
         <MonoLabel size="xs" uppercase className="mb-4 block text-on-surface-variant">
           Personlig informasjon
         </MonoLabel>
@@ -88,12 +93,15 @@ export function SettingsClient({ profile }: SettingsClientProps) {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Navn */}
           <div>
-            <label
+            <MonoLabel
+              as="label"
               htmlFor="name"
-              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant/80"
+              size="xs"
+              uppercase
+              className="mb-1.5 block text-on-surface-variant/80"
             >
               Navn
-            </label>
+            </MonoLabel>
             <input
               id="name"
               type="text"
@@ -106,12 +114,15 @@ export function SettingsClient({ profile }: SettingsClientProps) {
 
           {/* E-post (skrivebeskyttet) */}
           <div>
-            <label
+            <MonoLabel
+              as="label"
               htmlFor="email"
-              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant/80"
+              size="xs"
+              uppercase
+              className="mb-1.5 block text-on-surface-variant/80"
             >
               E-post
-            </label>
+            </MonoLabel>
             <input
               id="email"
               type="email"
@@ -126,12 +137,15 @@ export function SettingsClient({ profile }: SettingsClientProps) {
 
           {/* Telefon */}
           <div>
-            <label
+            <MonoLabel
+              as="label"
               htmlFor="phone"
-              className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant/80"
+              size="xs"
+              uppercase
+              className="mb-1.5 block text-on-surface-variant/80"
             >
               Telefon
-            </label>
+            </MonoLabel>
             <input
               id="phone"
               type="tel"
@@ -164,7 +178,7 @@ export function SettingsClient({ profile }: SettingsClientProps) {
             {saving ? "Lagrer ..." : "Lagre endringer"}
           </button>
         </form>
-      </PremiumCard>
-    </div>
+      </BentoCard>
+    </section>
   );
 }

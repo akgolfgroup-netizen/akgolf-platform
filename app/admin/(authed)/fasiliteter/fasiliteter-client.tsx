@@ -8,6 +8,7 @@ import { Building2, Wrench, AlertCircle, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { format } from "date-fns";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
 
 // Types
 
@@ -121,16 +122,14 @@ export default function FasiliteterClient({
  />
 
  <div className="p-6 space-y-6">
- {/* Page Header */}
- <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
- <div>
- <h1 className="text-2xl font-semibold text-on-surface">
- Fasiliteter
- </h1>
- <p className="text-sm text-on-surface-variant">
- Administrer anlegg, aktiviteter og bookinger
- </p>
+ {/* Heritage Grid Header */}
+ <div className="space-y-2">
+ <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+ <h1 className="text-2xl font-bold tracking-tight text-on-surface">Fasiliteter<span className="text-outline">.</span></h1>
+ <p className="text-on-surface-variant">Administrer anlegg, aktiviteter og bookinger</p>
  </div>
+
+ <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
  <div className="flex items-center gap-3">
  <Link href="/admin/fasiliteter/innstillinger">
  <button className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-on-surface-variant bg-surface-container-lowest border border-outline-variant/30 rounded-lg hover:bg-surface transition-colors">
@@ -148,60 +147,25 @@ export default function FasiliteterClient({
  </div>
 
  {/* Stats */}
- <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
- <div className="flex items-center gap-3">
- <div className="p-2 bg-surface rounded-lg">
- <Building2 className="w-5 h-5 text-on-surface-variant"/>
- </div>
- <div>
- <p className="text-2xl font-semibold text-on-surface">
- {facilities.length}
- </p>
- <p className="text-xs text-on-surface-variant">Anlegg</p>
- </div>
- </div>
- </div>
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
- <div className="flex items-center gap-3">
- <div className="p-2 bg-surface rounded-lg">
- <Icon name="schedule" className="w-5 h-5 text-on-surface-variant" />
- </div>
- <div>
- <p className="text-2xl font-semibold text-on-surface">
- {totalBookings}
- </p>
- <p className="text-xs text-on-surface-variant">Bookinger i dag</p>
- </div>
- </div>
- </div>
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
- <div className="flex items-center gap-3">
- <div className="p-2 bg-surface rounded-lg">
- <Icon name="check"Circle className="w-5 h-5 text-on-surface-variant" />
- </div>
- <div>
- <p className="text-2xl font-semibold text-on-surface">
- {todaySchedule.length}
- </p>
- <p className="text-xs text-on-surface-variant">Aktiviteter i dag</p>
- </div>
- </div>
- </div>
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
- <div className="flex items-center gap-3">
- <div className="p-2 bg-surface rounded-lg">
- <Icon name="error" className="w-5 h-5 text-on-surface-variant" />
- </div>
- <div>
- <p className="text-2xl font-semibold text-on-surface">
- {pendingCount}
- </p>
- <p className="text-xs text-on-surface-variant">Ventende</p>
- </div>
- </div>
- </div>
- </div>
+ <BentoGrid cols={4} gap="md">
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Anlegg</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{facilities.length}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Bookinger i dag</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{totalBookings}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Aktiviteter i dag</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{todaySchedule.length}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Ventende</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{pendingCount}</p>
+ </BentoCard>
+ </BentoGrid>
+
 
  {/* Main Content */}
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -1,10 +1,11 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 
 import type { TestOverviewData } from "./actions";
+
+import { MonoLabel } from "@/components/portal/patterns";
 
 type TestData = TestOverviewData;
 
@@ -61,14 +62,14 @@ export function TesterClient({ tests }: Props) {
             <button
               key={test.testNumber}
               onClick={() => loadLeaderboard(test.testNumber)}
-              className="w-full text-left bg-surface-container-lowest rounded-xl border border-outline-variant p-4 hover:border-black/8 transition-all"
+              className="w-full text-left bg-surface-container-lowest rounded-xl border border-outline-variant p-4 hover:border-on-surface/20 transition-all"
             >
               <div className="flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-outline tabular-nums">
+                    <MonoLabel size="xs" className="text-on-surface-variant tabular-nums">
                       #{test.testNumber}
-                    </span>
+                    </MonoLabel>
                     <span className="font-semibold text-on-surface">
                       {test.name}
                     </span>
@@ -82,16 +83,16 @@ export function TesterClient({ tests }: Props) {
                     <div>
                       <div className="text-lg font-bold text-on-surface tabular-nums">
                         {test.userBest.value}
-                        <span className="text-xs text-outline ml-1">
+                        <span className="text-xs text-on-surface-variant ml-1">
                           {test.unit}
                         </span>
                       </div>
-                      <div className={`text-xs ${test.userBest.passed ? "text-success-text" : "text-outline"}`}>
-                        {test.userBest.passed ? "Bestatt" : "Ikke bestatt"}
+                      <div className={`text-xs ${test.userBest.passed ? "text-success" : "text-on-surface-variant"}`}>
+                        {test.userBest.passed ? "Bestått" : "Ikke bestått"}
                       </div>
                     </div>
                   ) : (
-                    <span className="text-sm text-outline">
+                    <span className="text-sm text-on-surface-variant">
                       Ingen resultat
                     </span>
                   )}
@@ -101,7 +102,7 @@ export function TesterClient({ tests }: Props) {
           ))}
 
           {tests.length === 0 && (
-            <p className="text-center text-sm text-outline py-8">
+            <p className="text-center text-sm text-on-surface-variant py-8">
               Ingen tester tilgjengelig
             </p>
           )}
@@ -131,7 +132,7 @@ export function TesterClient({ tests }: Props) {
                   <div className="text-2xl font-bold text-primary tabular-nums">
                     #{userRank}
                   </div>
-                  <div className="text-xs text-outline">Din plass</div>
+                  <MonoLabel size="xs" className="text-on-surface-variant">Din plass</MonoLabel>
                 </div>
               )}
             </div>
@@ -140,7 +141,7 @@ export function TesterClient({ tests }: Props) {
             <div className="flex gap-1.5 rounded-[10px] bg-surface-container p-[3px] mb-4">
               {[
                 { id: "all" as const, label: "Alle" },
-                { id: "month" as const, label: "Denne maned" },
+                { id: "month" as const, label: "Denne måned" },
                 { id: "week" as const, label: "Denne uke" },
               ].map((p) => (
                 <button
@@ -148,8 +149,8 @@ export function TesterClient({ tests }: Props) {
                   onClick={() => handlePeriodChange(p.id)}
                   className={`flex-1 py-[7px] rounded-[7px] text-[13px] font-medium transition-all ${
                     period === p.id
-                      ? "bg-primary text-surface shadow-[0_2px_8px_rgba(0,88,64,0.3)]"
-                      : "text-outline hover:text-on-surface-variant"
+                      ? "bg-primary text-surface shadow-sm"
+                      : "text-on-surface-variant hover:text-on-surface"
                   }`}
                 >
                   {p.label}
@@ -160,7 +161,7 @@ export function TesterClient({ tests }: Props) {
             {/* Leaderboard */}
             {isPending ? (
               <div className="flex justify-center py-8">
-                <div className="h-6 w-6 border-2 border-outline border-t-primary rounded-full animate-spin" />
+                <div className="h-6 w-6 border-2 border-outline-variant border-t-primary rounded-full animate-spin" />
               </div>
             ) : (
               <div className="space-y-1">
@@ -177,10 +178,10 @@ export function TesterClient({ tests }: Props) {
                           entry.rank === 1
                             ? "text-warning"
                             : entry.rank === 2
-                              ? "text-outline"
+                              ? "text-on-surface-variant"
                               : entry.rank === 3
                                 ? "text-warning"
-                                : "text-outline"
+                                : "text-on-surface-variant"
                         }`}
                       >
                         {entry.rank <= 3 ? (
@@ -204,15 +205,15 @@ export function TesterClient({ tests }: Props) {
                         {entry.bestValue} {selectedTestData?.unit}
                       </span>
                       {entry.passed && (
-                        <span className="text-xs text-success-text">
-                          Bestatt
+                        <span className="text-xs text-success">
+                          Bestått
                         </span>
                       )}
                     </div>
                   </div>
                 ))}
                 {leaderboard.length === 0 && (
-                  <p className="text-center text-sm text-outline py-8">
+                  <p className="text-center text-sm text-on-surface-variant py-8">
                     Ingen resultater for denne perioden
                   </p>
                 )}

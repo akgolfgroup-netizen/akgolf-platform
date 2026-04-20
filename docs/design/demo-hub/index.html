@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AK Golf Platform — Demo-hub · alle 76 skjermer</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        heritage: {
+          green: '#1a3c34',
+          teal: '#2d6b5e',
+          sage: '#7a9e8e',
+          sand: '#f5f0e8',
+          cream: '#faf8f5',
+          gold: '#c9a962',
+          charcoal: '#2c2c2c',
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.screen-card {
+  transition: all 200ms ease;
+}
+.screen-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(26, 60, 52, 0.12);
+}
+.status-done { background: linear-gradient(135deg, #1a3c34 0%, #2d6b5e 100%); }
+.status-tokens { background: linear-gradient(135deg, #c9a962 0%, #b8944f 100%); }
+.sprint-section { scroll-margin-top: 100px; }
+.approved-ring { box-shadow: 0 0 0 3px #10b981, 0 16px 40px rgba(26, 60, 52, 0.12) !important; }
+.comment-ring { box-shadow: 0 0 0 3px #f59e0b, 0 16px 40px rgba(26, 60, 52, 0.12) !important; }
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+}
+iframe { border: none; }
+</style>
+</head>
+<body class="bg-heritage-cream text-heritage-charcoal font-sans antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-heritage-green/95 backdrop-blur-md border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-white/15 flex items-center justify-center">
+        <span class="material-symbols-outlined text-white text-xl">golf_course</span>
+      </div>
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-widest text-heritage-sage">AK Golf Platform</p>
+        <h1 class="text-white font-serif text-lg font-semibold tracking-tight">Demo-hub</h1>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="exportReviews()" class="bg-white/15 hover:bg-white/25 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">download</span>
+        Eksporter
+      </button>
+      <button onclick="clearAllReviews()" class="bg-white/10 hover:bg-red-500/30 text-white/70 hover:text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">delete</span>
+        Tøm
+      </button>
+      <div class="hidden md:flex items-center gap-2 text-sm text-white/70 ml-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span><span id="count-done">0</span>
+        <span class="w-2 h-2 rounded-full bg-amber-400 ml-2"></span><span id="count-comment">0</span>
+        <span class="w-2 h-2 rounded-full bg-gray-400 ml-2"></span><span id="count-pending">76</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="bg-heritage-green relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20">
+    <svg class="w-full h-full" viewBox="0 0 1200 400" preserveAspectRatio="none">
+      <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      </pattern></defs>
+      <rect width="100%" height="100%" fill="url(#grid)"/>
+    </svg>
+  </div>
+  <div class="absolute top-0 right-0 w-[500px] h-full bg-gradient-to-l from-heritage-teal/30 to-transparent"></div>
+  
+  <div class="relative max-w-7xl mx-auto px-6 py-12">
+    <p class="text-heritage-sage text-xs font-bold uppercase tracking-widest mb-3">Heritage Design System · v3.1</p>
+    <h2 class="text-4xl md:text-5xl font-serif font-bold text-white tracking-tight leading-tight max-w-2xl">
+      Alle 76 skjermer — klikk, godkjenn eller kommenter.
+    </h2>
+    <div class="mt-6 flex items-center gap-6">
+      <div class="flex-1 max-w-md">
+        <div class="flex justify-between text-xs text-white/60 mb-2">
+          <span>Progress</span>
+          <span id="progress-text">0 / 76 (0%)</span>
+        </div>
+        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-emerald-400 to-heritage-sage rounded-full transition-all" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sprint Navigation -->
+<nav class="bg-white border-b border-gray-100 sticky top-[72px] z-40">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex gap-2 overflow-x-auto">
+    <a href="#sprint-a" class="px-4 py-2 rounded-lg text-sm font-medium bg-heritage-green/10 text-heritage-green hover:bg-heritage-green/20 transition-colors whitespace-nowrap">Sprint A <span class="text-xs opacity-60 ml-1">10</span></a>
+    <a href="#sprint-b" class="px-4 py-2 rounded-lg text-sm font-medium bg-heritage-green/10 text-heritage-green hover:bg-heritage-green/20 transition-colors whitespace-nowrap">Sprint B <span class="text-xs opacity-60 ml-1">7</span></a>
+    <a href="#sprint-c" class="px-4 py-2 rounded-lg text-sm font-medium bg-heritage-green/10 text-heritage-green hover:bg-heritage-green/20 transition-colors whitespace-nowrap">Sprint C <span class="text-xs opacity-60 ml-1">7</span></a>
+    <a href="#sprint-d" class="px-4 py-2 rounded-lg text-sm font-medium bg-heritage-green/10 text-heritage-green hover:bg-heritage-green/20 transition-colors whitespace-nowrap">Sprint D <span class="text-xs opacity-60 ml-1">7</span></a>
+    <a href="#sprint-e" class="px-4 py-2 rounded-lg text-sm font-medium bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors whitespace-nowrap">Sprint E <span class="text-xs opacity-60 ml-1">21</span></a>
+    <a href="#sprint-f" class="px-4 py-2 rounded-lg text-sm font-medium bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors whitespace-nowrap">Sprint F <span class="text-xs opacity-60 ml-1">17</span></a>
+    <a href="#sprint-g" class="px-4 py-2 rounded-lg text-sm font-medium bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors whitespace-nowrap">Sprint G <span class="text-xs opacity-60 ml-1">6</span></a>
+  </div>
+</nav>
+
+<!-- Modal -->
+<div id="preview-modal" class="fixed inset-0 z-[100] hidden">
+  <div class="modal-overlay absolute inset-0" onclick="closeModal()"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white rounded-2xl shadow-2xl p-8">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h3 id="modal-title" class="font-semibold text-xl text-heritage-charcoal">Skjerm</h3>
+        <p id="modal-route" class="text-xs text-gray-400 mt-1">/route</p>
+      </div>
+      <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <p class="text-sm text-gray-600 mb-6">Åpne skjermen i ny fane for å vurdere den.</p>
+    <div class="flex gap-3">
+      <a id="modal-open-link" href="#" target="_blank" class="flex-1 bg-heritage-green hover:bg-heritage-teal text-white text-sm font-semibold px-5 py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-sm">open_in_new</span> Åpne i ny fane
+      </a>
+    </div>
+    <div class="mt-6 pt-4 border-t border-gray-100">
+      <div class="flex gap-3">
+        <button onclick="approveCurrent()" id="modal-yes-btn" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-sm">check</span> YES
+        </button>
+        <button onclick="saveCommentFromModal()" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-sm">comment</span> Kommentar
+        </button>
+      </div>
+      <input type="text" id="modal-comment-input" placeholder="Skriv kommentar her..." class="w-full mt-3 px-4 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-heritage-green/30">
+      <p id="modal-comment-display" class="text-sm text-amber-700 mt-2 hidden"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Export Modal -->
+<div id="export-modal" class="fixed inset-0 z-[100] hidden">
+  <div class="modal-overlay absolute inset-0" onclick="closeExportModal()"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="font-semibold text-xl text-heritage-charcoal">Review-rapport</h3>
+      <button onclick="closeExportModal()" class="text-gray-400 hover:text-gray-600"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <textarea id="export-textarea" class="w-full h-96 p-4 rounded-lg border border-gray-200 text-sm font-mono bg-gray-50" readonly></textarea>
+    <div class="flex gap-3 mt-4">
+      <button onclick="copyExport()" class="bg-heritage-green hover:bg-heritage-teal text-white text-sm font-semibold px-5 py-2 rounded-lg transition-colors flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">content_copy</span> Kopier
+      </button>
+      <button onclick="downloadExport()" class="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-semibold px-5 py-2 rounded-lg transition-colors flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">download</span> Last ned JSON
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Screens Grid -->
+<main class="max-w-7xl mx-auto px-6 py-10" id="screens-container">
+  <!-- Generated by JS -->
+</main>
+
+<!-- Footer -->
+<footer class="bg-heritage-green text-white/60 py-8 mt-10">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <div>
+      <p class="text-sm font-semibold text-white">AK Golf Platform</p>
+      <p class="text-xs mt-1">Heritage Design System v3.1 · 76 skjermer</p>
+    </div>
+    <div class="flex gap-4">
+      <span class="flex items-center gap-1 text-xs"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span id="footer-done">0</span> godkjent</span>
+      <span class="flex items-center gap-1 text-xs"><span class="w-2 h-2 rounded-full bg-amber-400"></span> <span id="footer-comment">0</span> med kommentar</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const screens = [
+  // Sprint A
+  { route: "/portal", label: "Dashboard", sprint: "A", group: "A", auth: "portal", status: "done", icon: "dashboard", desc: "Hoveddashboard for spillere med fremdrift, AI-insights og widgets." },
+  { route: "/portal/statistikk", label: "Statistikk", sprint: "A", group: "A", auth: "portal", status: "done", icon: "analytics", desc: "Strokes Gained-analyse og detaljert spillerstatistikk." },
+  { route: "/portal/kartlegging", label: "Kartlegging", sprint: "A", group: "A", auth: "portal", status: "done", icon: "sports_golf", desc: "Coach player view — ferdighetsvurdering og analyse." },
+  { route: "/portal/dagbok", label: "Dagbok", sprint: "A", group: "A", auth: "portal", status: "done", icon: "edit_note", desc: "Treningsdagbok med streak, aktivitetsheatmap og ukentlige stats." },
+  { route: "/portal/runde/ny", label: "Ny runde", sprint: "A", group: "A", auth: "portal", status: "done", icon: "add_circle", desc: "Opprett ny runde med banevalg og spillere." },
+  { route: "/portal/runde/demo", label: "Live runde", sprint: "A", group: "A", auth: "portal", status: "done", icon: "live_tv", desc: "Live scoring med hole navigator og preshot routine." },
+  { route: "/portal/treningsplan", label: "Treningsplan", sprint: "A", group: "A", auth: "portal", status: "done", icon: "calendar_month", desc: "12-ukers treningsplan med øvelser, drag-drop og historikk." },
+  { route: "/portal/min-plan", label: "Min plan", sprint: "A", group: "A", auth: "portal", status: "done", icon: "event_note", desc: "Personlig treningsplan med fremdrift og øktsoversikt." },
+  { route: "/portal/bookinger", label: "Bookinger", sprint: "A", group: "A", auth: "portal", status: "done", icon: "event_available", desc: "Kalendervisning av kommende bookinger og økter." },
+  { route: "/portal/profil", label: "Profil", sprint: "A", group: "A", auth: "portal", status: "done", icon: "person", desc: "Spillerprofil med innstillinger, stats og personlig info." },
+  // Sprint B
+  { route: "/admin", label: "Hub-oversikt", sprint: "B", group: "B", auth: "admin", status: "done", icon: "admin_panel_settings", desc: "Mission Control hoveddashboard med KPIer og oversikt." },
+  { route: "/admin/mission-board", label: "Mission Board", sprint: "B", group: "B", auth: "admin", status: "done", icon: "assignment", desc: "Oppgavestyring og prosjektboard for admin-teamet." },
+  { route: "/admin/coaching-board", label: "Coaching Board", sprint: "B", group: "B", auth: "admin", status: "done", icon: "school", desc: "Daglig oversikt over coaching-økter og elevfremdrift." },
+  { route: "/admin/elever", label: "Elever", sprint: "B", group: "B", auth: "admin", status: "done", icon: "groups", desc: "Elevadministrasjon med profiler og fremdrift." },
+  { route: "/admin/elever/demo", label: "Elev-detalj", sprint: "B", group: "B", auth: "admin", status: "done", icon: "person_search", desc: "Detaljvisning av enkeltspiller med historikk og stats." },
+  { route: "/admin/team", label: "Team + tilgang", sprint: "B", group: "B", auth: "admin", status: "done", icon: "shield_person", desc: "Teamoppsett og tilgangsstyring for ansatte." },
+  { route: "/admin/bookinger", label: "Bookinger (admin)", sprint: "B", group: "B", auth: "admin", status: "done", icon: "book_online", desc: "Administrasjon av alle bookinger og timeplan." },
+  // Sprint C
+  { route: "/booking", label: "Velg tjeneste", sprint: "C", group: "C", auth: "none", status: "done", icon: "shopping_cart", desc: "Offentlig booking med tjenestevelger og kalender." },
+  { route: "/booking/test-confirmation", label: "Bekreftelse", sprint: "C", group: "C", auth: "none", status: "done", icon: "check_circle", desc: "Booking bekreftet med detaljer og neste steg." },
+  { route: "/booking/test-cancel", label: "Avlys", sprint: "C", group: "C", auth: "none", status: "done", icon: "cancel", desc: "Avbestilling med refusjonsflyt og bekreftelse." },
+  { route: "/booking/test-pay", label: "Betaling", sprint: "C", group: "C", auth: "none", status: "done", icon: "payments", desc: "Stripe-betaling med review og checkout." },
+  { route: "/booking/test-status", label: "Status", sprint: "C", group: "C", auth: "none", status: "done", icon: "schedule", desc: "Bookingstatus med timeline og oppdateringer." },
+  { route: "/portal/bookinger", label: "Bookinger (portal)", sprint: "C", group: "C", auth: "portal", status: "done", icon: "calendar_today", desc: "Spillerens bookingoversikt i portalen." },
+  { route: "/portal/bookinger/test-endre", label: "Endre booking", sprint: "C", group: "C", auth: "portal", status: "done", icon: "edit_calendar", desc: "Ombooke eller endre eksisterende booking." },
+  // Sprint D
+  { route: "/academy", label: "Academy", sprint: "D", group: "D", auth: "none", status: "done", icon: "golf_course", desc: "AK Golf Academy landing med tjenester og priser." },
+  { route: "/academy/abonnement", label: "Academy abonnement", sprint: "D", group: "D", auth: "none", status: "done", icon: "card_membership", desc: "Abonnementsplaner og medlemskapsoversikt." },
+  { route: "/junior-academy", label: "Junior Academy", sprint: "D", group: "D", auth: "none", status: "done", icon: "child_care", desc: "Juniorprogram landing med aktiviteter og påmelding." },
+  { route: "/landing/pricing", label: "Landing pricing", sprint: "D", group: "D", auth: "none", status: "done", icon: "price_check", desc: "Prisoversikt og pakketering av tjenester." },
+  { route: "/landing/contact", label: "Landing contact", sprint: "D", group: "D", auth: "none", status: "done", icon: "contact_mail", desc: "Kontaktskjema og informasjon om AK Golf." },
+  { route: "/utvikling", label: "Utvikling", sprint: "D", group: "D", auth: "none", status: "done", icon: "code", desc: "Utvikler-side med dokumentasjon og roadmap." },
+  { route: "/personvern", label: "Personvern", sprint: "D", group: "D", auth: "none", status: "done", icon: "policy", desc: "Personvernerklæring og GDPR-info." },
+  // Sprint E
+  { route: "/portal/kalender", label: "Kalender", sprint: "E", group: "E1", auth: "portal", status: "tokens", icon: "calendar_month", desc: "E1 · Full kalendervisning for spillere." },
+  { route: "/portal/meldinger", label: "Meldinger", sprint: "E", group: "E1", auth: "portal", status: "tokens", icon: "chat", desc: "E1 · Inbox og meldingsutveksling." },
+  { route: "/portal/meldinger/demo", label: "Melding thread", sprint: "E", group: "E1", auth: "portal", status: "tokens", icon: "forum", desc: "E1 · Samtalevisning med thread." },
+  { route: "/portal/sosialt", label: "Sosialt feed", sprint: "E", group: "E2", auth: "portal", status: "tokens", icon: "group", desc: "E2 · Community feed og sosial interaksjon." },
+  { route: "/portal/sosialt/venner", label: "Venner", sprint: "E", group: "E2", auth: "portal", status: "tokens", icon: "diversity_3", desc: "E2 · Venneliste og nettverk." },
+  { route: "/portal/spill", label: "Spill", sprint: "E", group: "E2", auth: "portal", status: "tokens", icon: "sports_esports", desc: "E2 · Challenges, quests og gamification." },
+  { route: "/portal/analyse", label: "Analyse", sprint: "E", group: "E3", auth: "portal", status: "tokens", icon: "auto_graph", desc: "E3 · AI-drevet analyse og insights." },
+  { route: "/portal/ai-coach", label: "AI-coach", sprint: "E", group: "E3", auth: "portal", status: "tokens", icon: "smart_toy", desc: "E3 · Personlig AI-coaching og chat." },
+  { route: "/portal/benchmark", label: "Benchmark", sprint: "E", group: "E3", auth: "portal", status: "tokens", icon: "leaderboard", desc: "E3 · Sammenligning med andre spillere." },
+  { route: "/portal/sammenligning", label: "Sammenligning", sprint: "E", group: "E3", auth: "portal", status: "tokens", icon: "compare_arrows", desc: "E3 · Head-to-head versus andre." },
+  { route: "/portal/strategi", label: "Strategi", sprint: "E", group: "E3", auth: "portal", status: "tokens", icon: "strategy", desc: "E3 · Banestrategi og forberedelse." },
+  { route: "/portal/bag", label: "Bag", sprint: "E", group: "E4", auth: "portal", status: "tokens", icon: "golf_course", desc: "E4 · Utstyrsoversikt og bag-setup." },
+  { route: "/portal/trackman", label: "TrackMan", sprint: "E", group: "E4", auth: "portal", status: "tokens", icon: "speed", desc: "E4 · TrackMan-data og analyse." },
+  { route: "/portal/tester", label: "Tester", sprint: "E", group: "E4", auth: "portal", status: "tokens", icon: "fact_check", desc: "E4 · DECADE-test og drill-bibliotek." },
+  { route: "/portal/mental", label: "Mental", sprint: "E", group: "E4", auth: "portal", status: "tokens", icon: "psychology", desc: "E4 · Mental trening og observasjoner." },
+  { route: "/portal/abonnement", label: "Abonnement", sprint: "E", group: "E5", auth: "portal", status: "tokens", icon: "subscriptions", desc: "E5 · Abonnementsstyring og fakturering." },
+  { route: "/portal/apper", label: "Apper", sprint: "E", group: "E5", auth: "portal", status: "tokens", icon: "apps", desc: "E5 · Integrasjoner og app-directory." },
+  { route: "/portal/onboarding", label: "Onboarding", sprint: "E", group: "E5", auth: "portal", status: "tokens", icon: "rocket_launch", desc: "E5 · Velkomstwizard og introduksjon." },
+  { route: "/portal/profil/innstillinger", label: "Profil innstillinger", sprint: "E", group: "E5", auth: "portal", status: "tokens", icon: "settings", desc: "E5 · Brukerpreferanser og innstillinger." },
+  { route: "/portal/coaching-historikk", label: "Coaching-historikk", sprint: "E", group: "E5", auth: "portal", status: "tokens", icon: "history", desc: "E5 · Historikk over coaching-økter." },
+  { route: "/portal/turneringer", label: "Turneringer", sprint: "E", group: "E5", auth: "portal", status: "tokens", icon: "emoji_events", desc: "E5 · Turneringer og konkurranser." },
+  // Sprint F
+  { route: "/admin/kalender", label: "Kalender (admin)", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "calendar_today", desc: "F1 · Admin-kalender med timeplan." },
+  { route: "/admin/godkjenninger", label: "Godkjenninger", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "checklist", desc: "F1 · Bookinggodkjenning og review." },
+  { route: "/admin/tilgjengelighet", label: "Tilgjengelighet", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "event_available", desc: "F1 · Sett tilgjengelige timer og dager." },
+  { route: "/admin/kapasitet", label: "Kapasitet", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "trending_up", desc: "F1 · Kapasitetsplanlegging og forecast." },
+  { route: "/admin/focus", label: "Focus", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "target", desc: "F1 · Daglig fokus og prioriteter." },
+  { route: "/admin/denne-uken", label: "Denne uken", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "date_range", desc: "F1 · Ukentlig oversikt og planlegging." },
+  { route: "/admin/okter", label: "Økter (admin)", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "sports_golf", desc: "F1 · Administrasjon av coaching-økter." },
+  { route: "/admin/treningsplan", label: "Treningsplan (admin)", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "fitness_center", desc: "F1 · Admin-treningsplan og oppfølging." },
+  { route: "/admin/turneringer", label: "Turneringer (admin)", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "emoji_events", desc: "F1 · Turneringsadministrasjon." },
+  { route: "/admin/fasiliteter", label: "Fasiliteter", sprint: "F", group: "F1", auth: "admin", status: "tokens", icon: "location_on", desc: "F1 · Fasilitetsstyring og vedlikehold." },
+  { route: "/admin/meldinger", label: "Meldinger (admin)", sprint: "F", group: "F2", auth: "admin", status: "tokens", icon: "chat_bubble", desc: "F2 · Admin-inbox og kundekommunikasjon." },
+  { route: "/admin/e-postmaler", label: "E-postmaler", sprint: "F", group: "F2", auth: "admin", status: "tokens", icon: "mail", desc: "F2 · E-postmal-editor og automasjon." },
+  { route: "/admin/notifications", label: "Push-varsler", sprint: "F", group: "F2", auth: "admin", status: "tokens", icon: "notifications", desc: "F2 · Push-notifikasjonsoppsett." },
+  { route: "/admin/ai-assistent", label: "AI-assistent", sprint: "F", group: "F3", auth: "admin", status: "tokens", icon: "auto_awesome", desc: "F3 · Automatiserte svar og AI-hjelp." },
+  { route: "/admin/agenter", label: "Agenter", sprint: "F", group: "F3", auth: "admin", status: "tokens", icon: "smart_toy", desc: "F3 · AI-agent konfigurasjon og styring." },
+  { route: "/admin/analytics", label: "Analytics", sprint: "F", group: "F3", auth: "admin", status: "tokens", icon: "bar_chart", desc: "F3 · Live dashboard og dataanalyse." },
+  { route: "/admin/okonomi", label: "Økonomi", sprint: "F", group: "F3", auth: "admin", status: "tokens", icon: "account_balance", desc: "F3 · Økonomisk oversikt og rapportering." },
+  { route: "/admin/rapporter", label: "Rapporter", sprint: "F", group: "F3", auth: "admin", status: "tokens", icon: "summarize", desc: "F3 · Genererte rapporter og eksport." },
+  // Sprint G
+  { route: "/auth/login", label: "Login", sprint: "G", group: "G", auth: "none", status: "tokens", icon: "login", desc: "Innlogging med e-post og passord." },
+  { route: "/auth/signup", label: "Registrering", sprint: "G", group: "G", auth: "none", status: "tokens", icon: "person_add", desc: "Ny brukerregistrering og onboarding." },
+  { route: "/auth/forgot-password", label: "Glemt passord", sprint: "G", group: "G", auth: "none", status: "tokens", icon: "lock_reset", desc: "Passordgjenoppretting via e-post." },
+  { route: "/404", label: "404", sprint: "G", group: "G", auth: "none", status: "tokens", icon: "error", desc: "Side ikke funnet." },
+  { route: "/403", label: "403", sprint: "G", group: "G", auth: "none", status: "tokens", icon: "block", desc: "Ingen tilgang." },
+  { route: "/500", label: "500", sprint: "G", group: "G", auth: "none", status: "tokens", icon: "warning", desc: "Serverfeil." },
+];
+
+const sprintNames = {
+  A: "Sprint A — Spillerportal kjerne",
+  B: "Sprint B — Mission Control",
+  C: "Sprint C — Booking-system",
+  D: "Sprint D — Landingpages",
+  E: "Sprint E — Sekundær portal",
+  F: "Sprint F — Sekundær MC",
+  G: "Sprint G — Auth + Error",
+};
+
+const groupNames = {
+  E1: "Kalender & Kommunikasjon",
+  E2: "Sosialt & Spill",
+  E3: "Analyse & AI",
+  E4: "Utstyr & Tester",
+  E5: "Administrasjon",
+  F1: "Operasjon",
+  F2: "Kommunikasjon",
+  F3: "AI + Analyse",
+};
+
+function getReviews() {
+  try {
+    return JSON.parse(localStorage.getItem('akgolf-reviews') || '{}');
+  } catch { return {}; }
+}
+
+function saveReviews(reviews) {
+  localStorage.setItem('akgolf-reviews', JSON.stringify(reviews));
+  updateCounts();
+}
+
+function updateCounts() {
+  const reviews = getReviews();
+  let approved = 0, commented = 0;
+  screens.forEach(s => {
+    const r = reviews[s.route];
+    if (r?.approved) approved++;
+    else if (r?.comment) commented++;
+  });
+  const pending = screens.length - approved - commented;
+  document.getElementById('count-done').textContent = approved;
+  document.getElementById('count-comment').textContent = commented;
+  document.getElementById('count-pending').textContent = pending;
+  document.getElementById('footer-done').textContent = approved;
+  document.getElementById('footer-comment').textContent = commented;
+  document.getElementById('progress-text').textContent = `${approved} / ${screens.length} (${Math.round(approved/screens.length*100)}%)`;
+  document.getElementById('progress-bar').style.width = `${approved/screens.length*100}%`;
+}
+
+function approve(route) {
+  const reviews = getReviews();
+  reviews[route] = { approved: true, comment: reviews[route]?.comment || '' };
+  saveReviews(reviews);
+  renderScreens();
+}
+
+function unapprove(route) {
+  const reviews = getReviews();
+  if (reviews[route]) {
+    reviews[route].approved = false;
+    saveReviews(reviews);
+    renderScreens();
+  }
+}
+
+function addComment(route) {
+  const comment = prompt('Kommentar for ' + route + ':');
+  if (comment !== null) {
+    const reviews = getReviews();
+    reviews[route] = { approved: false, comment };
+    saveReviews(reviews);
+    renderScreens();
+  }
+}
+
+function clearComment(route) {
+  const reviews = getReviews();
+  if (reviews[route]) {
+    delete reviews[route];
+    saveReviews(reviews);
+    renderScreens();
+  }
+}
+
+let currentModalRoute = '';
+
+function openModal(route) {
+  currentModalRoute = route;
+  const screen = screens.find(s => s.route === route);
+  document.getElementById('modal-title').textContent = screen.label;
+  document.getElementById('modal-route').textContent = route;
+  document.getElementById('modal-open-link').href = 'http://localhost:3000' + route;
+  
+  const reviews = getReviews();
+  const r = reviews[route];
+  const yesBtn = document.getElementById('modal-yes-btn');
+  if (r?.approved) {
+    yesBtn.innerHTML = '<span class="material-symbols-outlined text-sm">undo</span> Angre YES';
+    yesBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+    yesBtn.classList.add('bg-gray-400', 'hover:bg-gray-500');
+    yesBtn.onclick = () => { unapprove(route); closeModal(); };
+  } else {
+    yesBtn.innerHTML = '<span class="material-symbols-outlined text-sm">check</span> YES';
+    yesBtn.classList.remove('bg-gray-400', 'hover:bg-gray-500');
+    yesBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+    yesBtn.onclick = () => { approve(route); closeModal(); };
+  }
+  
+  const commentDisplay = document.getElementById('modal-comment-display');
+  if (r?.comment) {
+    commentDisplay.textContent = 'Kommentar: ' + r.comment;
+    commentDisplay.classList.remove('hidden');
+    document.getElementById('modal-comment-input').value = r.comment;
+  } else {
+    commentDisplay.classList.add('hidden');
+    document.getElementById('modal-comment-input').value = '';
+  }
+  
+  document.getElementById('preview-modal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('preview-modal').classList.add('hidden');
+  currentModalRoute = '';
+}
+
+function saveCommentFromModal() {
+  const comment = document.getElementById('modal-comment-input').value.trim();
+  if (comment && currentModalRoute) {
+    const reviews = getReviews();
+    reviews[currentModalRoute] = { approved: false, comment };
+    saveReviews(reviews);
+    renderScreens();
+    document.getElementById('modal-comment-display').textContent = 'Kommentar: ' + comment;
+    document.getElementById('modal-comment-display').classList.remove('hidden');
+  }
+}
+
+function approveCurrent() {
+  if (currentModalRoute) {
+    approve(currentModalRoute);
+    closeModal();
+  }
+}
+
+function exportReviews() {
+  const reviews = getReviews();
+  const approved = [];
+  const commented = [];
+  const pending = [];
+  
+  screens.forEach(s => {
+    const r = reviews[s.route];
+    if (r?.approved) approved.push({ ...s, review: r });
+    else if (r?.comment) commented.push({ ...s, review: r });
+    else pending.push(s);
+  });
+  
+  const report = {
+    dato: new Date().toISOString(),
+    totalt: screens.length,
+    godkjent: approved.length,
+    kommentert: commented.length,
+    pending: pending.length,
+    godkjenteSkjermer: approved.map(s => ({ route: s.route, label: s.label, sprint: s.sprint })),
+    kommenterteSkjermer: commented.map(s => ({ route: s.route, label: s.label, sprint: s.sprint, kommentar: s.review.comment })),
+    pendingSkjermer: pending.map(s => ({ route: s.route, label: s.label, sprint: s.sprint })),
+  };
+  
+  document.getElementById('export-textarea').value = JSON.stringify(report, null, 2);
+  document.getElementById('export-modal').classList.remove('hidden');
+}
+
+function closeExportModal() {
+  document.getElementById('export-modal').classList.add('hidden');
+}
+
+function copyExport() {
+  const textarea = document.getElementById('export-textarea');
+  textarea.select();
+  document.execCommand('copy');
+  alert('Kopiert til utklippstavle!');
+}
+
+function downloadExport() {
+  const data = document.getElementById('export-textarea').value;
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'akgolf-review-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function clearAllReviews() {
+  if (confirm('Slette alle godkjenninger og kommentarer?')) {
+    localStorage.removeItem('akgolf-reviews');
+    updateCounts();
+    renderScreens();
+  }
+}
+
+function renderScreens() {
+  const reviews = getReviews();
+  const container = document.getElementById('screens-container');
+  const sprints = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+  
+  let html = '';
+  sprints.forEach(sprint => {
+    const sprintScreens = screens.filter(s => s.sprint === sprint);
+    const isDone = ['A', 'B', 'C', 'D'].includes(sprint);
+    const statusClass = isDone ? 'status-done' : 'status-tokens';
+    const statusIcon = isDone ? 'check_circle' : 'timelapse';
+    const statusLabel = isDone ? 'Done' : 'Tokens';
+    const statusBadge = isDone ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700';
+    
+    html += `
+      <section id="sprint-${sprint.toLowerCase()}" class="sprint-section mb-14">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl ${statusClass} flex items-center justify-center">
+            <span class="material-symbols-outlined text-white">${statusIcon}</span>
+          </div>
+          <div>
+            <h3 class="text-xl font-serif font-semibold text-heritage-charcoal">${sprintNames[sprint]}</h3>
+            <p class="text-sm text-gray-500">${sprintScreens.length} skjermer · ${isDone ? 'Heritage Grid · Fullstendig redesignet' : 'Tokens migrert · Layout trengs'}</p>
+          </div>
+          <span class="ml-auto px-3 py-1 rounded-full ${statusBadge} text-xs font-semibold">${statusLabel}</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    `;
+    
+    sprintScreens.forEach(screen => {
+      const r = reviews[screen.route];
+      const isApproved = r?.approved;
+      const hasComment = r?.comment && !r?.approved;
+      const cardClass = isApproved ? 'approved-ring' : hasComment ? 'comment-ring' : '';
+      const opacity = screen.status === 'tokens' ? 'opacity-80' : '';
+      const iconColor = isDone ? 'text-heritage-green' : 'text-amber-600';
+      const badgeClass = isDone ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700';
+      const badgeText = isDone ? 'Done' : 'Tokens';
+      
+      let actionButtons = '';
+      if (isApproved) {
+        actionButtons = `
+          <div class="flex items-center gap-2 mt-3">
+            <span class="text-xs font-semibold text-emerald-600 flex items-center gap-1"><span class="material-symbols-outlined text-sm">check_circle</span> Godkjent</span>
+            <button onclick="event.stopPropagation(); unapprove('${screen.route}')" class="text-xs text-gray-400 hover:text-gray-600 underline ml-auto">Angre</button>
+          </div>`;
+      } else if (hasComment) {
+        actionButtons = `
+          <div class="mt-3">
+            <p class="text-xs text-amber-700 bg-amber-50 rounded px-2 py-1 mb-1">${r.comment}</p>
+            <div class="flex gap-2">
+              <button onclick="event.stopPropagation(); approve('${screen.route}')" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-1.5 rounded transition-colors">YES</button>
+              <button onclick="event.stopPropagation(); clearComment('${screen.route}')" class="text-xs text-gray-400 hover:text-gray-600 underline px-2">Slett</button>
+            </div>
+          </div>`;
+      } else {
+        actionButtons = `
+          <div class="flex gap-2 mt-3">
+            <button onclick="event.stopPropagation(); approve('${screen.route}')" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-1.5 rounded transition-colors flex items-center justify-center gap-1">
+              <span class="material-symbols-outlined text-sm">check</span> YES
+            </button>
+            <button onclick="event.stopPropagation(); addComment('${screen.route}')" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-1.5 rounded transition-colors flex items-center justify-center gap-1">
+              <span class="material-symbols-outlined text-sm">comment</span> Kommentar
+            </button>
+          </div>`;
+      }
+      
+      html += `
+        <div onclick="openModal('${screen.route}')" class="screen-card bg-white rounded-xl border border-gray-100 p-5 block cursor-pointer ${cardClass} ${opacity}">
+          <div class="flex items-start justify-between mb-3">
+            <span class="material-symbols-outlined ${iconColor} text-2xl">${screen.icon}</span>
+            <span class="px-2 py-0.5 rounded-full ${badgeClass} text-[10px] font-bold uppercase">${badgeText}</span>
+          </div>
+          <h4 class="font-semibold text-sm text-heritage-charcoal">${screen.label}</h4>
+          <p class="text-xs text-gray-400 mt-1">${screen.route}</p>
+          <p class="text-xs text-gray-500 mt-2 line-clamp-2">${screen.desc}</p>
+          ${actionButtons}
+        </div>
+      `;
+    });
+    
+    html += '</div></section>';
+  });
+  
+  container.innerHTML = html;
+  updateCounts();
+}
+
+// Init
+renderScreens();
+</script>
+
+</body>
+</html>

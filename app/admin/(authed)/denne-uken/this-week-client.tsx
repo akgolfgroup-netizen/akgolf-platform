@@ -21,7 +21,7 @@ import { nb } from "date-fns/locale";
 import { motion } from "framer-motion";
 import type { WeekBooking, WeekStats } from "./actions";
 
-import { MonoLabel } from "@/components/portal/patterns";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
 // Status config
 
 const STATUS_CONFIG: Record<
@@ -88,7 +88,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
         b.status === "CONFIRMED" || b.status === "COMPLETED"
           ? "success-text"
           : b.status === "PENDING"
-            ? "var(--color-accent-cta)"
+            ? "text-secondary-fixed"
             : "black",
     }));
 
@@ -105,103 +105,77 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
 
       <div className="p-6 space-y-6">
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Stat Card: Bookinger */}
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 min-w-0">
-                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Bookinger</MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
-                  {stats.totalBookings}
-                </p>
-              </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text">
-                <Icon name="calendar_today" className="w-5 h-5" />
-              </div>
-            </div>
-          </div>
+        <BentoGrid cols={4} gap="md">
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Bookinger</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{stats.totalBookings}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Unike elever</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{stats.uniqueStudents}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Bekreftet</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{stats.confirmedBookings}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Inntekt</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{stats.weeklyRevenue.toLocaleString("nb-NO")} kr</p>
+          </BentoCard>
+        </BentoGrid>
 
-          {/* Stat Card: Unike elever */}
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 min-w-0">
-                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Unike elever</MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
-                  {stats.uniqueStudents}
-                </p>
-              </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text">
-                <Icon name="person"s className="w-5 h-5" />
-              </div>
+        <div className="hidden">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
+              <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Bookinger</MonoLabel>
+              <p className="mt-2 text-3xl font-bold text-on-surface">{stats.totalBookings}</p>
             </div>
-          </div>
-
-          {/* Stat Card: Bekreftet */}
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 min-w-0">
-                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Bekreftet</MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
-                  {stats.confirmedBookings}
-                </p>
-                {confirmRate >= 80 && (
-                  <div className="mt-2 flex items-center gap-1 text-xs font-medium">
-                    <Icon name="arrow_upward"Right className="w-3.5 h-3.5 text-text" />
-                    <span className="text-text tabular-nums">+{confirmRate}%</span>
-                    <span className="text-on-surface-variant">vs forrige</span>
-                  </div>
-                )}
-              </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text">
-                <Icon name="check"Circle2 className="w-5 h-5" />
-              </div>
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
+              <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Unike elever</MonoLabel>
+              <p className="mt-2 text-3xl font-bold text-on-surface">{stats.uniqueStudents}</p>
             </div>
-          </div>
-
-          {/* Stat Card: Inntekt */}
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 min-w-0">
-                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Inntekt</MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
-                  {stats.weeklyRevenue.toLocaleString("nb-NO")} kr
-                </p>
-              </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text">
-                <DollarSign className="w-5 h-5" />
-              </div>
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
+              <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Bekreftet</MonoLabel>
+              <p className="mt-2 text-3xl font-bold text-on-surface">{stats.confirmedBookings}</p>
+            </div>
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
+              <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Inntekt</MonoLabel>
+              <p className="mt-2 text-3xl font-bold text-on-surface">{stats.weeklyRevenue.toLocaleString("nb-NO")} kr</p>
             </div>
           </div>
         </div>
 
         {/* Visualiseringer - ukemal, daglig aktivitet, timeline */}
         {bookings.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-on-surface mb-4">Ukemal</h3>
-              <div className="flex flex-col items-center justify-center py-2">
-                <AdminProgressRing
-                  value={stats.totalBookings}
-                  max={weeklyGoal}
-                  size={160}
-                  strokeWidth={12}
-                  label={stats.totalBookings + " av " + weeklyGoal + " bookinger"}
-                />
-              </div>
-            </div>
+          <NightSurface variant="ambient" className="rounded-2xl p-6">
+            <MonoLabel size="xs" uppercase className="text-surface/60 block mb-4">Visualiseringer</MonoLabel>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <GlassPanel variant="dark" padding="md">
+                <h3 className="text-lg font-semibold text-[#F2F5F1] mb-4">Ukemal</h3>
+                <div className="flex flex-col items-center justify-center py-2">
+                  <AdminProgressRing
+                    value={stats.totalBookings}
+                    max={weeklyGoal}
+                    size={160}
+                    strokeWidth={12}
+                    label={stats.totalBookings + " av " + weeklyGoal + " bookinger"}
+                  />
+                </div>
+              </GlassPanel>
 
-            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 lg:col-span-2">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-on-surface">Daglig aktivitet</h3>
-                <Badge variant="info">Denne uken</Badge>
-              </div>
-              <AdminBarChart data={dailyData} height={220} />
+              <GlassPanel variant="dark" padding="md" className="lg:col-span-2">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-[#F2F5F1]">Daglig aktivitet</h3>
+                  <Badge variant="info">Denne uken</Badge>
+                </div>
+                <AdminBarChart data={dailyData} height={220} />
+              </GlassPanel>
             </div>
-          </div>
+          </NightSurface>
         )}
 
         {timelineItems.length > 0 && (
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
+          <GlassPanel variant="light" padding="md">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-on-surface">Ukens kommende hendelser</h3>
               <span className="text-xs text-on-surface-variant">
@@ -209,7 +183,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
               </span>
             </div>
             <AdminTimeline items={timelineItems} />
-          </div>
+          </GlassPanel>
         )}
 
         {/* Bookings by Day */}

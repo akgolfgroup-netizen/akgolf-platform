@@ -35,7 +35,6 @@ export function Icon({
   className,
   style,
   "aria-hidden": ariaHidden = true,
-  ...props
 }: IconProps) {
   return (
     <span
@@ -49,7 +48,6 @@ export function Icon({
         ...style,
       }}
       aria-hidden={ariaHidden}
-      {...props}
     >
       {name}
     </span>

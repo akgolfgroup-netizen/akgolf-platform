@@ -12,8 +12,7 @@ import {
   fadeInUp,
 } from "@/components/portal/premium";
 import { cn } from "@/lib/portal/utils/cn";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
-import { MonoLabel } from "@/components/portal/patterns";
+import { MonoLabel, BentoCard } from "@/components/portal/patterns";
 
 interface AppModule {
   id: string;
@@ -250,8 +249,8 @@ export function ApperClient({
               </button>
             )}
           </div>
-          <PremiumCard padding="sm" noHover>
-            <ul className="divide-y divide-grey-200">
+          <BentoCard variant="light" padding="sm">
+            <ul className="divide-y divide-outline-variant/30">
               {activeSubscriptions.map((sub) => {
                 const name =
                   sub.bundle?.slug ?? sub.module?.slug ?? "Abonnement";
@@ -287,7 +286,7 @@ export function ApperClient({
                 );
               })}
             </ul>
-          </PremiumCard>
+          </BentoCard>
         </motion.section>
       )}
 
@@ -304,12 +303,11 @@ export function ApperClient({
             const BundleIcon = isPremium ? Trophy : Package;
 
             return (
-              <PremiumCard
+              <BentoCard
                 key={bundle.id}
+                variant={isPremium ? "accent" : "light"}
                 padding="lg"
-                variant={isPremium ? "accent" : "default"}
-                hover={isPremium ? "glow" : "lift"}
-                glow={isPremium ? "accent" : undefined}
+                interactive
               >
                 <div className="flex items-start justify-between mb-4">
                   <div
@@ -414,7 +412,7 @@ export function ApperClient({
                     </button>
                   )}
                 </div>
-              </PremiumCard>
+              </BentoCard>
             );
           })}
         </div>
@@ -429,18 +427,19 @@ export function ApperClient({
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {modules.map((mod) => {
             const active = isModuleActive(mod.slug);
-            const Icon = ICON_MAP[mod.icon ?? ""] ?? BarChart3;
+            const ModuleIcon = ICON_MAP[mod.icon ?? ""] ?? BarChart3;
             const isFree = mod.monthlyPriceNok === 0;
 
             return (
-              <PremiumCard
+              <BentoCard
                 key={mod.id}
+                variant="light"
                 padding="md"
-                hover="lift"
+                interactive
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
-                    <Icon
+                    <ModuleIcon
                       className="h-[18px] w-[18px] text-on-surface"
                       strokeWidth={1.75}
                     />
@@ -512,7 +511,7 @@ export function ApperClient({
                     </button>
                   ) : null}
                 </div>
-              </PremiumCard>
+              </BentoCard>
             );
           })}
         </div>

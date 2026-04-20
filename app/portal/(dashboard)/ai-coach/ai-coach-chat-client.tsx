@@ -1,12 +1,12 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 
 import { ChatInterface, ContextPanel, ChatHistory, type ChatSession, type Message } from "@/components/portal/ai-coach";
 import type { ChatContext } from "./actions";
+import { MonoLabel, GlassPanel } from "@/components/portal/patterns";
 
 interface AiCoachChatClientProps {
   context: ChatContext;
@@ -94,11 +94,11 @@ export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientPr
             <button
               onClick={() => setShowHistory(!showHistory)}
               className={`p-2 rounded-lg transition-colors ${
-                showHistory ? "bg-ai-light text-ai-text" : "hover:bg-surface text-on-surface-variant"
+                showHistory ? "bg-ai/10 text-ai" : "hover:bg-surface-container text-on-surface-variant"
               }`}
               title={showHistory ? "Skjul historikk" : "Vis historikk"}
             >
-              {showHistory ? <Icon name="left_panel_open"Close className="w-5 h-5" /> : <Icon name="menu" className="w-5 h-5" />}
+              {showHistory ? <Icon name="left_panel_open" className="w-5 h-5" /> : <Icon name="menu" className="w-5 h-5" />}
             </button>
             <div>
               <h1 className="text-lg font-semibold text-on-surface">AI Coach</h1>
@@ -109,7 +109,7 @@ export function AiCoachChatClient({ context, quickInsight }: AiCoachChatClientPr
           <button
             onClick={() => setShowContext(!showContext)}
             className={`p-2 rounded-lg transition-colors ${
-              showContext ? "bg-ai-light text-ai-text" : "hover:bg-surface text-on-surface-variant"
+              showContext ? "bg-ai/10 text-ai" : "hover:bg-surface-container text-on-surface-variant"
             }`}
             title={showContext ? "Skjul kontekst" : "Vis kontekst"}
           >

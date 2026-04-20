@@ -50,9 +50,9 @@ export const screens: Screen[] = [
 
   // ─── Sprint E — Sekundær portal ───
   // E1 — Kalender & Kommunikasjon
-  { route: "/portal/kalender", heritageRef: "sessions_calendar_view", label: "Kalender", sprint: "E", group: "E1", auth: "portal", status: "tokens" },
-  { route: "/portal/meldinger", heritageRef: "coach_messages", label: "Meldinger", sprint: "E", group: "E1", auth: "portal", status: "tokens" },
-  { route: "/portal/meldinger/demo", heritageRef: "inbox_main", label: "Melding thread", sprint: "E", group: "E1", auth: "portal", status: "tokens" },
+  { route: "/portal/kalender", heritageRef: "sessions_calendar_view", label: "Kalender", sprint: "E", group: "E1", auth: "portal", status: "done" },
+  { route: "/portal/meldinger", heritageRef: "coach_messages", label: "Meldinger", sprint: "E", group: "E1", auth: "portal", status: "done" },
+  { route: "/portal/meldinger/demo", heritageRef: "inbox_main", label: "Melding thread", sprint: "E", group: "E1", auth: "portal", status: "done" },
   // E2 — Sosialt & Spill
   { route: "/portal/sosialt", heritageRef: "social_feed_community", label: "Sosialt feed", sprint: "E", group: "E2", auth: "portal", status: "tokens" },
   { route: "/portal/sosialt/venner", heritageRef: "friend_list", label: "Venner", sprint: "E", group: "E2", auth: "portal", status: "tokens" },
@@ -69,43 +69,43 @@ export const screens: Screen[] = [
   { route: "/portal/tester", heritageRef: "coach_drills_library", label: "Tester", sprint: "E", group: "E4", auth: "portal", status: "tokens" },
   { route: "/portal/mental", heritageRef: "coach_observations", label: "Mental", sprint: "E", group: "E4", auth: "portal", status: "tokens" },
   // E5 — Administrasjon
-  { route: "/portal/abonnement", heritageRef: "settings_billing", label: "Abonnement", sprint: "E", group: "E5", auth: "portal", status: "tokens" },
-  { route: "/portal/apper", heritageRef: "integration_directory", label: "Apper", sprint: "E", group: "E5", auth: "portal", status: "tokens" },
-  { route: "/portal/onboarding", heritageRef: "onboarding_wizard", label: "Onboarding", sprint: "E", group: "E5", auth: "portal", status: "tokens" },
-  { route: "/portal/profil/innstillinger", heritageRef: "settings_user_preferences", label: "Profil innstillinger", sprint: "E", group: "E5", auth: "portal", status: "tokens" },
-  { route: "/portal/coaching-historikk", heritageRef: "coach_session_review", label: "Coaching-historikk", sprint: "E", group: "E5", auth: "portal", status: "tokens" },
-  { route: "/portal/turneringer", heritageRef: "tournaments_competitions", label: "Turneringer", sprint: "E", group: "E5", auth: "portal", status: "tokens" },
+  { route: "/portal/abonnement", heritageRef: "settings_billing", label: "Abonnement", sprint: "E", group: "E5", auth: "portal", status: "done" },
+  { route: "/portal/apper", heritageRef: "integration_directory", label: "Apper", sprint: "E", group: "E5", auth: "portal", status: "done" },
+  { route: "/portal/onboarding", heritageRef: "onboarding_wizard", label: "Onboarding", sprint: "E", group: "E5", auth: "portal", status: "done" },
+  { route: "/portal/profil/innstillinger", heritageRef: "settings_user_preferences", label: "Profil innstillinger", sprint: "E", group: "E5", auth: "portal", status: "done" },
+  { route: "/portal/coaching-historikk", heritageRef: "coach_session_review", label: "Coaching-historikk", sprint: "E", group: "E5", auth: "portal", status: "done" },
+  { route: "/portal/turneringer", heritageRef: "tournaments_competitions", label: "Turneringer", sprint: "E", group: "E5", auth: "portal", status: "done" },
 
   // ─── Sprint F — Sekundær MC ───
   // F1 — Operasjon
-  { route: "/admin/kalender", heritageRef: "sessions_calendar_view", label: "Kalender (admin)", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
-  { route: "/admin/godkjenninger", heritageRef: "booking_review_confirm", label: "Godkjenninger", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
-  { route: "/admin/tilgjengelighet", heritageRef: "coach_set_hours", label: "Tilgjengelighet", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
-  { route: "/admin/kapasitet", heritageRef: "mission_control_capacity_forecast", label: "Kapasitet", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
-  { route: "/admin/focus", heritageRef: "coach_my_day", label: "Focus", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
-  { route: "/admin/denne-uken", heritageRef: "coach_my_day", label: "Denne uken", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
-  { route: "/admin/okter", heritageRef: "coach_session_review", label: "Økter (admin)", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
-  { route: "/admin/treningsplan", heritageRef: "iup_12_week_training_plan", label: "Treningsplan (admin)", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
-  { route: "/admin/turneringer", heritageRef: "tournaments_competitions", label: "Turneringer (admin)", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
-  { route: "/admin/fasiliteter", heritageRef: "admin_player_management", label: "Fasiliteter", sprint: "F", group: "F1", auth: "admin", status: "tokens" },
+  { route: "/admin/kalender", heritageRef: "sessions_calendar_view", label: "Kalender (admin)", sprint: "F", group: "F1", auth: "admin", status: "done" },
+  { route: "/admin/godkjenninger", heritageRef: "booking_review_confirm", label: "Godkjenninger", sprint: "F", group: "F1", auth: "admin", status: "done" },
+  { route: "/admin/tilgjengelighet", heritageRef: "coach_set_hours", label: "Tilgjengelighet", sprint: "F", group: "F1", auth: "admin", status: "done" },
+  { route: "/admin/kapasitet", heritageRef: "mission_control_capacity_forecast", label: "Kapasitet", sprint: "F", group: "F1", auth: "admin", status: "done" },
+  { route: "/admin/focus", heritageRef: "coach_my_day", label: "Focus", sprint: "F", group: "F1", auth: "admin", status: "done" },
+  { route: "/admin/denne-uken", heritageRef: "coach_my_day", label: "Denne uken", sprint: "F", group: "F1", auth: "admin", status: "done" },
+  { route: "/admin/okter", heritageRef: "coach_session_review", label: "Økter (admin)", sprint: "F", group: "F1", auth: "admin", status: "done" },
+  { route: "/admin/treningsplan", heritageRef: "iup_12_week_training_plan", label: "Treningsplan (admin)", sprint: "F", group: "F1", auth: "admin", status: "done" },
+  { route: "/admin/turneringer", heritageRef: "tournaments_competitions", label: "Turneringer (admin)", sprint: "F", group: "F1", auth: "admin", status: "done" },
+  { route: "/admin/fasiliteter", heritageRef: "admin_player_management", label: "Fasiliteter", sprint: "F", group: "F1", auth: "admin", status: "done" },
   // F2 — Kommunikasjon
-  { route: "/admin/meldinger", heritageRef: "inbox_main", label: "Meldinger (admin)", sprint: "F", group: "F2", auth: "admin", status: "tokens" },
-  { route: "/admin/e-postmaler", heritageRef: "email_templates", label: "E-postmaler", sprint: "F", group: "F2", auth: "admin", status: "tokens" },
-  { route: "/admin/notifications", heritageRef: "push_notifications", label: "Push-varsler", sprint: "F", group: "F2", auth: "admin", status: "tokens" },
+  { route: "/admin/meldinger", heritageRef: "inbox_main", label: "Meldinger (admin)", sprint: "F", group: "F2", auth: "admin", status: "done" },
+  { route: "/admin/e-postmaler", heritageRef: "email_templates", label: "E-postmaler", sprint: "F", group: "F2", auth: "admin", status: "done" },
+  { route: "/admin/notifications", heritageRef: "push_notifications", label: "Push-varsler", sprint: "F", group: "F2", auth: "admin", status: "done" },
   // F3 — AI + Analyse
-  { route: "/admin/ai-assistent", heritageRef: "automated_responses", label: "AI-assistent", sprint: "F", group: "F3", auth: "admin", status: "tokens" },
-  { route: "/admin/agenter", heritageRef: "developer_console", label: "Agenter", sprint: "F", group: "F3", auth: "admin", status: "tokens" },
-  { route: "/admin/analytics", heritageRef: "analytics_live_dashboard", label: "Analytics", sprint: "F", group: "F3", auth: "admin", status: "tokens" },
-  { route: "/admin/okonomi", heritageRef: "analytics_financials", label: "Økonomi", sprint: "F", group: "F3", auth: "admin", status: "tokens" },
-  { route: "/admin/rapporter", heritageRef: "analytics_generated_report", label: "Rapporter", sprint: "F", group: "F3", auth: "admin", status: "tokens" },
+  { route: "/admin/ai-assistent", heritageRef: "automated_responses", label: "AI-assistent", sprint: "F", group: "F3", auth: "admin", status: "done" },
+  { route: "/admin/agenter", heritageRef: "developer_console", label: "Agenter", sprint: "F", group: "F3", auth: "admin", status: "done" },
+  { route: "/admin/analytics", heritageRef: "analytics_live_dashboard", label: "Analytics", sprint: "F", group: "F3", auth: "admin", status: "done" },
+  { route: "/admin/okonomi", heritageRef: "analytics_financials", label: "Økonomi", sprint: "F", group: "F3", auth: "admin", status: "done" },
+  { route: "/admin/rapporter", heritageRef: "analytics_generated_report", label: "Rapporter", sprint: "F", group: "F3", auth: "admin", status: "done" },
 
   // ─── Sprint G — Auth + Error ───
-  { route: "/auth/login", heritageRef: "auth_sign_in_updated", label: "Login", sprint: "G", auth: "none", status: "tokens" },
-  { route: "/auth/signup", heritageRef: "auth_register_step_1", label: "Registrering", sprint: "G", auth: "none", status: "tokens" },
-  { route: "/auth/forgot-password", heritageRef: "auth_forgot_password_updated", label: "Glemt passord", sprint: "G", auth: "none", status: "tokens" },
-  { route: "/404", heritageRef: "error_404_not_found", label: "404", sprint: "G", auth: "none", status: "tokens" },
-  { route: "/403", heritageRef: "error_403_access_denied", label: "403", sprint: "G", auth: "none", status: "tokens" },
-  { route: "/500", heritageRef: "error_500_server_error", label: "500", sprint: "G", auth: "none", status: "tokens" },
+  { route: "/auth/login", heritageRef: "auth_sign_in_updated", label: "Login", sprint: "G", auth: "none", status: "done" },
+  { route: "/auth/signup", heritageRef: "auth_register_step_1", label: "Registrering", sprint: "G", auth: "none", status: "done" },
+  { route: "/auth/forgot-password", heritageRef: "auth_forgot_password_updated", label: "Glemt passord", sprint: "G", auth: "none", status: "done" },
+  { route: "/404", heritageRef: "error_404_not_found", label: "404", sprint: "G", auth: "none", status: "done" },
+  { route: "/403", heritageRef: "error_403_access_denied", label: "403", sprint: "G", auth: "none", status: "done" },
+  { route: "/500", heritageRef: "error_500_server_error", label: "500", sprint: "G", auth: "none", status: "done" },
 ];
 
 export const sprintNames: Record<string, string> = {

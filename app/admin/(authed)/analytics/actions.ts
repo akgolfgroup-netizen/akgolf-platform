@@ -52,8 +52,8 @@ const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Se
 const WEEKDAY_LABELS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
 const HOUR_LABELS = ["08", "10", "12", "14", "16", "18", "20"];
 const FALLBACK_COLORS = [
-  "var(--color-primary)", "var(--color-accent-cta)", "var(--color-success)",
-  "var(--color-warning)", "var(--color-ai)", "var(--color-info)",
+  "#154212", "#D1F843", "#2A7D5A",
+  "#C48A32", "#AF52DE", "#007AFF",
 ];
 
 async function requireStaffUser() {

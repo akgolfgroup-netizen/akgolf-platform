@@ -7,7 +7,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import Link from "next/link";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { MonoLabel } from "@/components/portal/patterns";
+import { MonoLabel, BentoCard } from "@/components/portal/patterns";
 
 type RawSession = Awaited<ReturnType<typeof getCoachingSessions>>[number];
 
@@ -51,54 +51,54 @@ export default async function CoachingHistorikkPage() {
   const groups = groupByMonth(sessions);
 
   return (
-    <div className="space-y-10">
+    <section className="space-y-6">
       {/* Header */}
-      <div>
-        <MonoLabel size="xs" uppercase className="mb-2 block text-outline">
+      <header>
+        <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
           Coaching
         </MonoLabel>
-        <h1 className="text-2xl font-bold tracking-tight text-on-surface">
+        <h1 className="text-2xl font-bold text-on-surface">
           Coaching-historikk
         </h1>
-        <p className="mt-1 text-on-surface-variant">
+        <p className="text-on-surface-variant mt-1">
           Dine coachingsesjoner og oppfølging — komplett oversikt med AI-genererte oppsummeringer.
         </p>
         <div className="mt-4">
           <Link
             href="/portal/bookinger/ny"
-            className="inline-flex h-11 items-center gap-2 rounded-[20px] bg-secondary-fixed px-6 text-[12px] font-bold text-secondary-fixed-text shadow-sm transition-opacity hover:opacity-90"
+            className="inline-flex h-11 items-center gap-2 rounded-full bg-secondary-fixed px-6 text-[12px] font-bold text-on-surface shadow-sm transition-opacity hover:opacity-90"
           >
             Book coaching
           </Link>
         </div>
-      </div>
+      </header>
 
       <div className="max-w-3xl">
         <div className="mb-4 flex items-center gap-2">
           <span className="h-px w-6 bg-surface-container-high" />
-          <MonoLabel size="xs" uppercase className="text-outline">
+          <MonoLabel size="xs" uppercase className="text-on-surface-variant">
             Alle sesjoner · {sessions.length}
           </MonoLabel>
         </div>
 
         {sessions.length === 0 ? (
-          <div className="rounded-xl bg-surface-container-lowest p-6 shadow-card">
+          <BentoCard variant="light" padding="lg">
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-container text-on-primary">
                 <Icon name="menu_book" className="h-6 w-6" />
               </div>
-              <p className="text-sm text-outline">
+              <p className="text-sm text-on-surface-variant">
                 Ingen coachingsesjoner ennå.
               </p>
               <Link
                 href="/portal/bookinger/ny"
-                className="mt-4 inline-flex items-center gap-2 rounded-[20px] bg-primary px-4 py-2 text-[12px] font-semibold text-surface transition-colors hover:bg-primary-alt"
+                className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-[12px] font-semibold text-on-primary transition-colors hover:bg-primary-container"
               >
                 <Icon name="add" className="h-3.5 w-3.5" />
                 Book din første sesjon
               </Link>
             </div>
-          </div>
+          </BentoCard>
         ) : (
           <div className="space-y-8">
             {groups.map(([key, group]) => (
@@ -126,6 +126,6 @@ export default async function CoachingHistorikkPage() {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }

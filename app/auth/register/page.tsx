@@ -1,13 +1,14 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { GlassPanel } from "@/components/portal/patterns/glass-panel";
+import { MonoLabel } from "@/components/portal/patterns/mono-label";
+import { NightSurface } from "@/components/portal/patterns/night-surface";
 import { registerUser } from "./actions";
 
 export default function RegisterPage() {
@@ -39,60 +40,65 @@ export default function RegisterPage() {
 
   if (sent) {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center p-4">
+      <NightSurface variant="ambient" className="min-h-screen flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md"
         >
-          <Card className="p-8 bg-surface-container-lowest border-black/10 text-center">
+          <GlassPanel variant="dark" padding="lg" className="text-center">
             <div className="w-16 h-16 bg-success/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Icon name="check"Circle2 className="w-8 h-8 text-success" />
+              <Icon name="check_circle" size={32} className="text-success" />
             </div>
-            <h1 className="text-2xl font-bold text-on-surface mb-2">
+            <h1 className="text-2xl font-bold text-[#F2F5F1] mb-2">
               Sjekk e-posten din
             </h1>
-            <p className="text-on-surface-variant mb-4">
+            <p className="text-[#F2F5F1]/60 mb-4">
               Vi har sendt en bekreftelseslenke til din e-postadresse.
               Klikk lenken for å aktivere kontoen din.
             </p>
             <button
               onClick={() => router.push("/auth/login")}
-              className="text-on-surface hover:underline text-sm font-medium"
+              className="text-[#F2F5F1]/70 hover:text-[#F2F5F1] text-sm font-medium transition-colors"
             >
               Gå til innlogging →
             </button>
-          </Card>
+          </GlassPanel>
         </motion.div>
-      </div>
+      </NightSurface>
     );
   }
 
   return (
-    <div className="min-h-screen bg-surface flex items-center justify-center p-4">
+    <NightSurface variant="ambient" className="min-h-screen flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <Card className="p-8 bg-surface-container-lowest border-black/10">
+        <GlassPanel variant="dark" padding="lg">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-on-surface rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Icon name="bolt" className="w-8 h-8 text-secondary-fixed" />
+            <div className="w-16 h-16 bg-secondary-fixed/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Icon name="bolt" size={32} className="text-secondary-fixed" />
             </div>
-            <h1 className="text-2xl font-bold text-on-surface">Opprett konto</h1>
-            <p className="text-on-surface-variant">Bli med i AK Golf Academy</p>
+            <h1 className="text-2xl font-bold text-[#F2F5F1]">Opprett konto</h1>
+            <p className="text-[#F2F5F1]/60 mt-1">Bli med i AK Golf Academy</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-on-surface mb-1">
+              <MonoLabel
+                as="label"
+                size="xs"
+                uppercase
+                className="block text-[#F2F5F1]/60 mb-1.5"
+              >
                 Navn
-              </label>
+              </MonoLabel>
               <div className="relative">
-                <Icon name="person" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
+                <Icon name="person" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#F2F5F1]/40" />
                 <input
                   name="name"
                   type="text"
@@ -100,8 +106,8 @@ export default function RegisterPage() {
                   required
                   minLength={2}
                   autoComplete="name"
-                  className={`w-full pl-10 pr-4 py-3 bg-surface border rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta ${
-                    fieldError === "name" ? "border-red-500" : "border-black/10"
+                  className={`w-full pl-10 pr-4 py-3 bg-[#F2F5F1]/5 border rounded-xl text-[#F2F5F1] placeholder:text-[#F2F5F1]/30 focus:outline-none focus:ring-2 focus:ring-secondary-fixed/40 transition-all ${
+                    fieldError === "name" ? "border-error" : "border-white/[0.10]"
                   }`}
                 />
               </div>
@@ -109,19 +115,24 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-on-surface mb-1">
+              <MonoLabel
+                as="label"
+                size="xs"
+                uppercase
+                className="block text-[#F2F5F1]/60 mb-1.5"
+              >
                 E-post
-              </label>
+              </MonoLabel>
               <div className="relative">
-                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
+                <Icon name="mail" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#F2F5F1]/40" />
                 <input
                   name="email"
                   type="email"
                   placeholder="navn@eksempel.no"
                   required
                   autoComplete="email"
-                  className={`w-full pl-10 pr-4 py-3 bg-surface border rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta ${
-                    fieldError === "email" ? "border-red-500" : "border-black/10"
+                  className={`w-full pl-10 pr-4 py-3 bg-[#F2F5F1]/5 border rounded-xl text-[#F2F5F1] placeholder:text-[#F2F5F1]/30 focus:outline-none focus:ring-2 focus:ring-secondary-fixed/40 transition-all ${
+                    fieldError === "email" ? "border-error" : "border-white/[0.10]"
                   }`}
                 />
               </div>
@@ -129,28 +140,38 @@ export default function RegisterPage() {
 
             {/* Phone */}
             <div>
-              <label className="block text-sm font-medium text-on-surface mb-1">
-                Telefon <span className="text-on-surface-variant font-normal">(valgfritt)</span>
-              </label>
+              <MonoLabel
+                as="label"
+                size="xs"
+                uppercase
+                className="block text-[#F2F5F1]/60 mb-1.5"
+              >
+                Telefon <span className="text-[#F2F5F1]/40 font-normal normal-case">(valgfritt)</span>
+              </MonoLabel>
               <div className="relative">
-                <Icon name="smartphone" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
+                <Icon name="smartphone" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#F2F5F1]/40" />
                 <input
                   name="phone"
                   type="tel"
                   placeholder="+47 000 00 000"
                   autoComplete="tel"
-                  className="w-full pl-10 pr-4 py-3 bg-surface border border-black/10 rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta"
+                  className="w-full pl-10 pr-4 py-3 bg-[#F2F5F1]/5 border border-white/[0.10] rounded-xl text-[#F2F5F1] placeholder:text-[#F2F5F1]/30 focus:outline-none focus:ring-2 focus:ring-secondary-fixed/40 transition-all"
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-on-surface mb-1">
+              <MonoLabel
+                as="label"
+                size="xs"
+                uppercase
+                className="block text-[#F2F5F1]/60 mb-1.5"
+              >
                 Passord
-              </label>
+              </MonoLabel>
               <div className="relative">
-                <Icon name="lock" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
+                <Icon name="lock" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#F2F5F1]/40" />
                 <input
                   name="password"
                   type="password"
@@ -158,8 +179,8 @@ export default function RegisterPage() {
                   required
                   minLength={8}
                   autoComplete="new-password"
-                  className={`w-full pl-10 pr-4 py-3 bg-surface border rounded-xl text-on-surface focus:outline-none focus:ring-2 focus:ring-accent-cta ${
-                    fieldError === "password" ? "border-red-500" : "border-black/10"
+                  className={`w-full pl-10 pr-4 py-3 bg-[#F2F5F1]/5 border rounded-xl text-[#F2F5F1] placeholder:text-[#F2F5F1]/30 focus:outline-none focus:ring-2 focus:ring-secondary-fixed/40 transition-all ${
+                    fieldError === "password" ? "border-error" : "border-white/[0.10]"
                   }`}
                 />
               </div>
@@ -172,17 +193,17 @@ export default function RegisterPage() {
                 name="acceptTerms"
                 type="checkbox"
                 required
-                className={`mt-1 h-4 w-4 rounded border-outline-variant/50 text-primary focus:ring-accent-cta ${
-                  fieldError === "acceptTerms" ? "border-red-500" : ""
+                className={`mt-1 h-4 w-4 rounded border bg-transparent text-secondary-fixed focus:ring-secondary-fixed/40 ${
+                  fieldError === "acceptTerms" ? "border-error" : "border-white/[0.20]"
                 }`}
               />
-              <label htmlFor="acceptTerms" className="text-sm text-on-surface-variant/80 leading-relaxed">
+              <label htmlFor="acceptTerms" className="text-sm text-[#F2F5F1]/60 leading-relaxed">
                 Jeg aksepterer{" "}
-                <a href="/vilkår" className="text-on-surface hover:underline font-medium">
+                <a href="/vilkår" className="text-[#F2F5F1] hover:text-secondary-fixed font-medium transition-colors">
                   vilkårene
                 </a>{" "}
                 og{" "}
-                <a href="/personvern" className="text-on-surface hover:underline font-medium">
+                <a href="/personvern" className="text-[#F2F5F1] hover:text-secondary-fixed font-medium transition-colors">
                   personvernerklæringen
                 </a>
                 .
@@ -190,7 +211,7 @@ export default function RegisterPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600" role="alert">
+              <p className="text-sm text-error-container" role="alert">
                 {error}
               </p>
             )}
@@ -198,23 +219,23 @@ export default function RegisterPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-on-surface hover:bg-on-surface/90 text-surface font-bold py-3 rounded-xl"
+              className="w-full bg-secondary-fixed hover:bg-secondary-fixed/90 text-on-secondary-fixed font-bold py-3 rounded-xl transition-all"
             >
               {loading ? "Oppretter konto..." : "Opprett konto"}
             </Button>
           </form>
 
           {/* Footer */}
-          <div className="mt-6 pt-6 border-t border-black/10 text-center">
-            <p className="text-sm text-on-surface-variant">
+          <div className="mt-6 pt-6 border-t border-white/[0.08] text-center">
+            <p className="text-sm text-[#F2F5F1]/50">
               Har du allerede konto?{" "}
-              <a href="/auth/login" className="text-on-surface hover:underline font-medium">
+              <a href="/auth/login" className="text-[#F2F5F1] hover:text-secondary-fixed font-medium transition-colors">
                 Logg inn
               </a>
             </p>
           </div>
-        </Card>
+        </GlassPanel>
       </motion.div>
-    </div>
+    </NightSurface>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { LineChart, PieChart } from "lucide-react";
@@ -16,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, type TabItem } from "@/components/ui/tabs";
 import { getDashboardData, type DashboardData, type AnalyticsPeriod } from "./actions";
-import { MonoLabel } from "@/components/portal/patterns";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
 
 // ── Constants ──────────────────────────────────────────────
 
@@ -28,7 +27,7 @@ const PERIOD_OPTIONS: { value: AnalyticsPeriod; label: string }[] = [
 
 const TAB_ITEMS: TabItem[] = [
   { id: "overview", label: "Oversikt", icon: <Icon name="bar_chart" className="w-4 h-4" /> },
-  { id: "students", label: "Elever", icon: <Icon name="person"s className="w-4 h-4" /> },
+  { id: "students", label: "Elever", icon: <Icon name="person" className="w-4 h-4" /> },
   { id: "bookings", label: "Bookinger", icon: <LineChart className="w-4 h-4" /> },
   { id: "revenue", label: "Inntekt", icon: <PieChart className="w-4 h-4" /> },
 ];
@@ -87,6 +86,19 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
       <MCTopbar title="Analytics" subtitle={data.periodLabel} onMenuClick={toggle} />
 
       <div className={cn("p-6 space-y-6", isPending && "opacity-60 pointer-events-none transition-opacity")}>
+        {/* Heritage Grid Header */}
+        <div className="space-y-2">
+          <MonoLabel size="xs" uppercase className="block text-outline">
+            Mission Control
+          </MonoLabel>
+          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
+            Analytics<span className="text-outline">.</span>
+          </h1>
+          <p className="text-on-surface-variant">
+            {data.periodLabel}
+          </p>
+        </div>
+
         {/* Period selector - Chips with grey tokens */}
         <div className="flex items-center gap-2">
           {PERIOD_OPTIONS.map((opt) => (
@@ -97,7 +109,7 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                 "px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200",
                 period === opt.value
                   ? "bg-on-surface text-surface shadow-sm"
-                  : "bg-surface text-text hover:text-on-surface hover:bg-surface-variant",
+                  : "bg-surface text-on-surface hover:text-on-surface hover:bg-surface-variant",
               )}
             >
               {opt.label}
@@ -107,46 +119,93 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
 
         <Tabs items={TAB_ITEMS} value={activeTab} onValueChange={setActiveTab} />
 
-        {/* KPI Cards - White cards with shadow, tabular-nums */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <KpiCard 
-            label="Aktive elever" 
-            value={data.activeStudents} 
-            icon={<Icon name="person"s className="w-5 h-5" />} 
-            change={data.newStudents > 0 ? `+${data.newStudents} nye` : undefined} 
-            positive 
-          />
-          <KpiCard 
-            label="Bookinger" 
-            value={data.totalBookings} 
-            icon={<Icon name="monitoring" className="w-5 h-5" />} 
-            change={`${data.completedBookings} fullført`} 
-            positive 
-          />
-          <KpiCard 
-            label="Churn-rate" 
-            value={`${data.churnRate.toFixed(1)}%`} 
-            icon={<Icon name="restart_alt" className="w-5 h-5" />} 
-            change={`${data.churnedStudents} inaktive`} 
-            positive={data.churnRate < 5} 
-          />
-          <KpiCard 
-            label="Inntekt" 
-            value={formatKr(data.revenue)} 
-            icon={<Icon name="trending_up" className="w-5 h-5" />} 
-            change={`${data.revenueGrowth >= 0 ? "+" : ""}${data.revenueGrowth.toFixed(0)}% vs forrige`} 
-            positive={data.revenueGrowth >= 0} 
-          />
-        </div>
+        {/* KPI Cards - BentoGrid */}
+        <BentoGrid cols={4} gap="md">
+          <BentoCard variant="light" padding="md">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Aktive elever</MonoLabel>
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
+                  {data.activeStudents}
+                </p>
+                {data.newStudents > 0 && (
+                  <p className="mt-2 text-xs font-medium text-success-text">
+                    +{data.newStudents} nye
+                  </p>
+                )}
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface shrink-0">
+                <Icon name="person" className="w-5 h-5" />
+              </div>
+            </div>
+          </BentoCard>
+
+          <BentoCard variant="light" padding="md">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Bookinger</MonoLabel>
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
+                  {data.totalBookings}
+                </p>
+                <p className="mt-2 text-xs font-medium text-success-text">
+                  {data.completedBookings} fullført
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface shrink-0">
+                <Icon name="monitoring" className="w-5 h-5" />
+              </div>
+            </div>
+          </BentoCard>
+
+          <BentoCard variant="light" padding="md">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Churn-rate</MonoLabel>
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
+                  {data.churnRate.toFixed(1)}%
+                </p>
+                <p className={cn(
+                  "mt-2 text-xs font-medium",
+                  data.churnRate < 5 ? "text-success-text" : "text-error"
+                )}>
+                  {data.churnedStudents} inaktive
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface shrink-0">
+                <Icon name="restart_alt" className="w-5 h-5" />
+              </div>
+            </div>
+          </BentoCard>
+
+          <BentoCard variant="light" padding="md">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Inntekt</MonoLabel>
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
+                  {formatKr(data.revenue)}
+                </p>
+                <p className={cn(
+                  "mt-2 text-xs font-medium",
+                  data.revenueGrowth >= 0 ? "text-success-text" : "text-error"
+                )}>
+                  {data.revenueGrowth >= 0 ? "+" : ""}{data.revenueGrowth.toFixed(0)}% vs forrige
+                </p>
+              </div>
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface shrink-0">
+                <Icon name="trending_up" className="w-5 h-5" />
+              </div>
+            </div>
+          </BentoCard>
+        </BentoGrid>
 
         {/* ── Overview tab ──────────────────────────────────── */}
         {activeTab === "overview" && (
           <>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <ChartCard title="Elev-vekst" subtitle="Siste 9 måneder" className="lg:col-span-2">
-                <AdminLineChart 
-                  data={data.monthlyGrowth} 
-                  valueLabel="Aktive elever" 
+                <AdminLineChart
+                  data={data.monthlyGrowth}
+                  valueLabel="Aktive elever"
                 />
               </ChartCard>
               <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-0 overflow-hidden">
@@ -154,13 +213,13 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                   <h3 className="text-sm font-semibold text-on-surface">Churn-rate</h3>
                 </div>
                 <div className="flex flex-col items-center gap-4 py-6 px-6">
-                  <AdminProgressRing 
-                    value={data.churnRate} 
-                    max={10} 
-                    size={140} 
-                    color="success-text" 
-                    label="Siste periode" 
-                    valueSuffix="%" 
+                  <AdminProgressRing
+                    value={data.churnRate}
+                    max={10}
+                    size={140}
+                    color="success-text"
+                    label="Siste periode"
+                    valueSuffix="%"
                   />
                   <p className="text-xs text-on-surface-variant">Mål: under 5%</p>
                 </div>
@@ -168,16 +227,16 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <ChartCard title="Bookinger per uke" subtitle={`Siste ${data.weeklyBookings.length} uker`} className="lg:col-span-2">
-                <AdminBarChart 
-                  data={data.weeklyBookings.map((w) => ({ label: w.week, value: w.count }))} 
-                  valueLabel="Bookinger" 
+                <AdminBarChart
+                  data={data.weeklyBookings.map((w) => ({ label: w.week, value: w.count }))}
+                  valueLabel="Bookinger"
                 />
               </ChartCard>
               <ChartCard title="Fordeling tjenester">
-                <AdminDonutChart 
-                  data={data.serviceDistribution} 
-                  centerLabel="Total" 
-                  centerValue="100%" 
+                <AdminDonutChart
+                  data={data.serviceDistribution}
+                  centerLabel="Total"
+                  centerValue="100%"
                 />
               </ChartCard>
             </div>
@@ -230,10 +289,10 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                 <h3 className="text-sm font-semibold text-on-surface">Trenger oppfølging</h3>
                 <Badge variant="warning">{followUp.length} elever</Badge>
               </div>
-              <div className="divide-y divide-grey-200">
+              <div className="divide-y divide-outline-variant">
                 {followUp.map((s) => (
                   <div key={s.id} className="px-6 py-4 flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-surface text-text text-xs font-semibold flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-full bg-surface text-on-surface text-xs font-semibold flex items-center justify-center">
                       {s.name.split(" ").map((n) => n[0]).join("")}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -261,20 +320,20 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
         {activeTab === "bookings" && (
           <div className="space-y-6">
             <ChartCard title="Bookinger per uke" subtitle={`Siste ${data.weeklyBookings.length} uker`}>
-              <AdminBarChart 
-                data={data.weeklyBookings.map((w) => ({ label: w.week, value: w.count }))} 
-                height={320} 
-                valueLabel="Bookinger" 
+              <AdminBarChart
+                data={data.weeklyBookings.map((w) => ({ label: w.week, value: w.count }))}
+                height={320}
+                valueLabel="Bookinger"
               />
             </ChartCard>
             <ChartCard title="Aktivitet per dag og time" subtitle="Mørkere = mer aktivitet">
               <div className="overflow-x-auto">
-                <AdminHeatmap 
-                  data={data.heatmap} 
-                  rows={WEEKDAY_LABELS} 
-                  cols={HOUR_LABELS} 
-                  cellSize={40} 
-                  formatTooltip={(c) => `${c.row} kl ${c.col}: ${c.value} økter`} 
+                <AdminHeatmap
+                  data={data.heatmap}
+                  rows={WEEKDAY_LABELS}
+                  cols={HOUR_LABELS}
+                  cellSize={40}
+                  formatTooltip={(c) => `${c.row} kl ${c.col}: ${c.value} økter`}
                 />
               </div>
             </ChartCard>
@@ -285,9 +344,9 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
         {activeTab === "revenue" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <ChartCard title="Inntektstrend" subtitle="Siste 9 måneder" className="lg:col-span-2">
-              <AdminLineChart 
-                data={data.monthlyRevenue} 
-                valueLabel="Omsetning (kr)" 
+              <AdminLineChart
+                data={data.monthlyRevenue}
+                valueLabel="Omsetning (kr)"
               />
             </ChartCard>
             <ChartCard title="Per tjeneste">
@@ -301,35 +360,6 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
 }
 
 // ── Sub-components ─────────────────────────────────────────
-
-function KpiCard({ label, value, icon, change, positive }: {
-  label: string; value: string | number; icon: React.ReactNode;
-  change?: string; positive?: boolean;
-}) {
-  return (
-    <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">{label}</MonoLabel>
-          <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
-            {value}
-          </p>
-          {change && (
-            <p className={cn(
-              "mt-2 text-xs font-medium",
-              positive ? "text-success-text" : "text-error"
-            )}>
-              {change}
-            </p>
-          )}
-        </div>
-        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text shrink-0">
-          {icon}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function ChartCard({ title, subtitle, className, children }: {
   title: string; subtitle?: string; className?: string; children: React.ReactNode;

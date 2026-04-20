@@ -51,15 +51,15 @@ export function CalendarSyncSettings() {
 
   if (loading) {
     return (
-      <div className="animate-pulse rounded-xl border border-black/6 p-4">
-        <div className="mb-2 h-4 w-1/3 rounded bg-surface-container" />
-        <div className="h-3 w-2/3 rounded bg-surface-container" />
+      <div className="animate-pulse rounded-xl bg-surface-container p-4">
+        <div className="mb-2 h-4 w-1/3 rounded bg-surface-container-high" />
+        <div className="h-3 w-2/3 rounded bg-surface-container-high" />
       </div>
     );
   }
 
   return (
-    <div className="rounded-xl border border-black/6 p-5">
+    <div>
       <div className="mb-3 flex items-center gap-2">
         <Icon name="calendar_today" className="h-4 w-4 text-on-surface" />
         <MonoLabel size="sm" uppercase className="text-on-surface">

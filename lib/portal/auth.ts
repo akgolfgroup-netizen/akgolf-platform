@@ -18,7 +18,22 @@ export type PortalUser = {
   portalMonthlyLogCount: number;
 };
 
+const DEMO_USER: PortalUser = {
+  id: "demo-user-001",
+  name: "Demo Bruker",
+  email: "demo@akgolf.no",
+  image: null,
+  role: "ADMIN",
+  subscriptionTier: "PRO",
+  stripeCustomerId: null,
+  subscriptionStatus: "ACTIVE",
+  subscriptionExpiresAt: new Date("2030-01-01"),
+  portalMonthlyLogCount: 0,
+};
+
 export async function getPortalUser(): Promise<PortalUser | null> {
+  if (process.env.DEMO_BYPASS === "true") return DEMO_USER;
+
   const supabase = await createServerSupabase();
   const {
     data: { user: supabaseUser },

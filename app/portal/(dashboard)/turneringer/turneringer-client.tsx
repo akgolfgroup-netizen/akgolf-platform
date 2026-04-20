@@ -8,7 +8,7 @@ import { format, parseISO, isAfter, isBefore, startOfMonth, endOfMonth, isSameMo
 import { nb } from "date-fns/locale";
 import { Globe } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
+import { BentoCard, MonoLabel, GlassPanel } from "@/components/portal/patterns";
 import { TOURNAMENT_LEVEL_CONFIG, GOAL_TYPE_CONFIG, PLAN_LEVEL_CONFIG } from "@/modules/tournament-planner/constants";
 import type { TournamentWithPlan, GoalType, PlanLevel, TournamentLevel } from "@/modules/tournament-planner";
 import type { TourScheduleEvent } from "@/lib/portal/datagolf/client";
@@ -125,16 +125,17 @@ export function TurneringerClient({
   }, [calendarMonth]);
 
   return (
-    <div className="space-y-6">
+    <section className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-on-surface">Turneringer</h1>
-          <p className="text-sm text-on-surface-variant mt-1">
-            {myTournaments.length} planlagte turneringer
-          </p>
-        </div>
-      </div>
+      <header>
+        <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
+          Turneringer
+        </MonoLabel>
+        <h1 className="text-2xl font-bold text-on-surface">Turneringer</h1>
+        <p className="text-sm text-on-surface-variant mt-1">
+          {myTournaments.length} planlagte turneringer
+        </p>
+      </header>
 
       {/* Tab Navigation */}
       <div className="flex items-center justify-between">
@@ -202,7 +203,7 @@ export function TurneringerClient({
                     : "text-on-surface-variant hover:text-on-surface"
                 )}
               >
-                <Icon name="calendar_today"Days className="w-4 h-4" />
+                <Icon name="calendar_today" className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -240,14 +241,14 @@ export function TurneringerClient({
           setProTour={setProTour}
         />
       ) : viewMode === "calendar" ? (
-        <Icon name="calendar_today"View
+        <CalendarView
           calendarMonth={calendarMonth}
           setCalendarMonth={setCalendarMonth}
           calendarDays={calendarDays}
           calendarTournaments={calendarTournaments}
           onSelect={setSelectedTournament} />
       ) : (
-        <Icon name="list"View
+        <ListView
           upcoming={upcomingTournaments}
           past={pastTournaments}
           showMine={activeTab === "mine"}
@@ -265,7 +266,7 @@ export function TurneringerClient({
           }}
         />
       )}
-    </div>
+    </section>
   );
 }
 
@@ -488,7 +489,7 @@ function CalendarView({
   const weekdays = ["Ma", "Ti", "On", "To", "Fr", "Lø", "Sø"];
 
   return (
-    <PremiumCard noHover radius="large" className="p-0 overflow-hidden border-outline-variant/30 bg-surface-container-lowest rounded-2xl">
+    <BentoCard variant="light" padding="none" className="overflow-hidden rounded-2xl">
       {/* Month nav */}
       <div className="flex items-center justify-between px-6 py-5 border-b border-outline-variant/30">
         <button
@@ -572,7 +573,7 @@ function CalendarView({
           );
         })}
       </div>
-    </PremiumCard>
+    </BentoCard>
   );
 }
 
@@ -735,9 +736,9 @@ function TournamentDetailModal({
       <div className="absolute inset-0 bg-on-surface/40 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
-      <div className="relative bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto border border-outline-variant/30">
+      <GlassPanel variant="light" padding="none" className="w-full max-w-lg max-h-[85vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-surface-container-lowest border-b border-outline-variant/30 px-6 py-4 flex items-start justify-between rounded-t-2xl z-10">
+        <div className="sticky top-0 bg-surface-container-lowest/80 backdrop-blur-[22px] border-b border-outline-variant/30 px-6 py-4 flex items-start justify-between rounded-t-[24px] z-10">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <span
@@ -906,7 +907,7 @@ function TournamentDetailModal({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-surface-container-lowest border-t border-outline-variant/30 px-6 py-4 flex items-center justify-end gap-3 rounded-b-2xl">
+        <div className="sticky bottom-0 bg-surface-container-lowest/80 backdrop-blur-[22px] border-t border-outline-variant/30 px-6 py-4 flex items-center justify-end gap-3 rounded-b-[24px]">
           <button
             onClick={onClose}
             className="px-4 py-2.5 text-sm font-medium rounded-full text-on-surface-variant hover:text-on-surface transition-colors"
@@ -922,7 +923,7 @@ function TournamentDetailModal({
             {plan ? "Oppdater plan" : "Legg til plan"}
           </button>
         </div>
-      </div>
+      </GlassPanel>
     </div>
   );
 }

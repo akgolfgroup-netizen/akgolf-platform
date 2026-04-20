@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
 import {
   AdminEmptyState,
   AdminDataTable,
@@ -246,9 +247,13 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
           subtitle="Ingen ventende godkjenninger"
           onMenuClick={toggle}
         />
-        <div className="p-6">
+        <div className="p-6 space-y-6">
+          <div className="space-y-2">
+            <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+            <h1 className="text-2xl font-bold tracking-tight text-on-surface">Godkjenninger<span className="text-outline">.</span></h1>
+          </div>
           <AdminEmptyState
-            icon={<Icon name="check"Circle className="h-6 w-6" />}
+            icon={<Icon name="check_circle" className="h-6 w-6" />}
             title="Alt er godkjent"
             description="Du har ingen ventende godkjenninger"
           />
@@ -271,6 +276,28 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       />
 
       <div className="p-6 space-y-6">
+        {/* Heritage Grid Header */}
+        <div className="space-y-2">
+          <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+          <h1 className="text-2xl font-bold tracking-tight text-on-surface">Godkjenninger<span className="text-outline">.</span></h1>
+          <p className="text-on-surface-variant">{items.length} ventende godkjenning{items.length === 1 ? "" : "er"}</p>
+        </div>
+
+        <BentoGrid cols={3} gap="md">
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Totalt</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{items.length}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Bookinger</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{bookingCount}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Aktiviteter</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{activityCount}</p>
+          </BentoCard>
+        </BentoGrid>
+
         {conflictItems.length > 0 && (
           <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-surface text-warning text-sm border border-outline-variant/30">
             <Icon name="warning" className="h-4 w-4 flex-shrink-0 mt-0.5" />
@@ -292,7 +319,9 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
           onValueChange={(v) => setActiveTab(v as FilterTab)}
         />
 
-        <AdminDataTable<PendingItem>
+        <NightSurface variant="ambient" className="rounded-2xl p-6">
+          <MonoLabel size="xs" uppercase className="text-surface/60 block mb-4">Ventende forespørsler</MonoLabel>
+          <AdminDataTable<PendingItem>
           columns={columns}
           data={filtered}
           searchable
@@ -301,6 +330,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
           bulkActions={bulkActions}
           emptyMessage="Ingen ventende items i denne kategorien."
         />
+        </NightSurface>
       </div>
 
       {/* Dialog — bekreft godkjenn/avvis */}

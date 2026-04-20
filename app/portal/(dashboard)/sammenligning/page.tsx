@@ -3,10 +3,10 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { TierGate } from "@/components/portal/ui/tier-gate";
 import { ComparisonSelector } from "@/components/portal/sammenligning/comparison-selector";
 import { PeerBenchmarkCard } from "@/components/portal/sammenligning/peer-benchmark-card";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
+import { BentoCard } from "@/components/portal/patterns";
 import { getPeerComparisonData } from "./actions";
 import { SubscriptionTier } from "@prisma/client";
-
+import { MonoLabel } from "@/components/portal/patterns";
 
 export default async function SammenligningPage() {
   const user = await requirePortalUser();
@@ -15,27 +15,27 @@ export default async function SammenligningPage() {
   const data = await getPeerComparisonData();
 
   return (
-    <div className="space-y-8">
+    <section className="space-y-6">
       {/* Header */}
-      <div className="space-y-2">
-        <p className="text-[10px] font-bold tracking-[0.22em] text-outline uppercase">
+      <header>
+        <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
           Peer-analyse
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight text-on-surface">
+        </MonoLabel>
+        <h1 className="text-3xl font-semibold tracking-tight text-primary">
           Sammenligning
         </h1>
-        <p className="text-on-surface-variant max-w-xl">
+        <p className="text-on-surface-variant max-w-xl mt-1">
           Sammenlign deg med spillere på ditt nivå, tour-proffer eller handicap-tier.
         </p>
-      </div>
+      </header>
 
       <div className="max-w-5xl">
         <TierGate userTier={userTier} required={SubscriptionTier.PRO}>
           {!data || "error" in data ? (
-            <PremiumCard>
+            <BentoCard variant="light" padding="lg">
               <div className="flex flex-col items-center justify-center py-16 text-center">
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 mb-4">
-                  <Icon name="person"s className="h-7 w-7 text-on-surface" />
+                  <Icon name="groups" className="h-7 w-7 text-on-surface" />
                 </div>
                 <p className="text-sm font-medium text-on-surface mb-1">
                   Ingen data tilgjengelig
@@ -46,11 +46,11 @@ export default async function SammenligningPage() {
                     : "Registrer handicap og noen runder for å se sammenligning."}
                 </p>
               </div>
-            </PremiumCard>
+            </BentoCard>
           ) : (
             <div className="space-y-6">
-              <PremiumCard>
-                <p className="text-[10px] font-bold tracking-[0.22em] text-outline uppercase mb-5 flex items-center gap-2">
+              <BentoCard variant="light" padding="lg">
+                <p className="text-[10px] font-bold tracking-[0.22em] text-on-surface-variant uppercase mb-5 flex items-center gap-2">
                   <span className="w-6 h-px bg-outline-variant" />
                   Din spillerkategori
                 </p>
@@ -65,7 +65,7 @@ export default async function SammenligningPage() {
                   }}
                   avgScore={data.myStats.avgScore ?? undefined}
                 />
-              </PremiumCard>
+              </BentoCard>
 
               <ComparisonSelector
                 myStats={data.myStats}
@@ -83,6 +83,6 @@ export default async function SammenligningPage() {
           )}
         </TierGate>
       </div>
-    </div>
+    </section>
   );
 }

@@ -18,7 +18,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MonoLabel } from "@/components/portal/patterns";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import type {
@@ -153,6 +153,13 @@ function PlanOverview({
  />
 
  <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-surface">
+ {/* Heritage Grid Header */}
+ <div className="space-y-2">
+ <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+ <h1 className="text-2xl font-bold tracking-tight text-on-surface">Treningsplaner<span className="text-outline">.</span></h1>
+ <p className="text-on-surface-variant">Oversikt over alle aktive og tidligere treningsplaner</p>
+ </div>
+
  <AdminPageHeader
  title="Treningsplaner"
  subtitle="Oversikt over alle aktive og tidligere treningsplaner"
@@ -169,11 +176,26 @@ function PlanOverview({
  />
 
  {/* Stats */}
- <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+ <BentoGrid cols={3} gap="md">
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Aktive planer</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{activePlans}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">AI-genererte</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{aiPlans}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Manuelle</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{manualPlans}</p>
+ </BentoCard>
+ </BentoGrid>
+
+ <div className="hidden">
  <AdminStatCard
  label="Aktive planer"
  value={activePlans}
- icon={<Icon name="check"Circle className="w-5 h-5" />}
+ icon={<Icon name="check_circle" className="w-5 h-5" />}
  />
  <AdminStatCard
  label="AI-genererte"

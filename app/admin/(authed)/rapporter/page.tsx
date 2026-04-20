@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { Calendar, TrendingUp, Users, DollarSign, FileSpreadsheet } from "lucide-react";
@@ -25,6 +24,7 @@ import {
   exportRevenueCSV,
   exportStudentsCSV,
 } from "./actions";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
 
 // ─── Typer ───
 
@@ -35,7 +35,8 @@ interface ReportType {
   name: string;
   description: string;
   icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
-  colorVar: string;
+  iconBgClass: string;
+  iconColorClass: string;
   lastGenerated: string;
 }
 
@@ -64,7 +65,8 @@ const reportTypes: ReportType[] = [
     name: "Månedsrapport",
     description: "Oversikt over omsetning, elever og aktivitet",
     icon: Calendar,
-    colorVar: "var(--color-primary)",
+    iconBgClass: "bg-primary/10",
+    iconColorClass: "text-primary",
     lastGenerated: "1. april 2024",
   },
   {
@@ -72,7 +74,8 @@ const reportTypes: ReportType[] = [
     name: "Elev-statistikk",
     description: "Detaljert analyse av elevaktivitet og fremgang",
     icon: Users,
-    colorVar: "var(--color-success)",
+    iconBgClass: "bg-success/10",
+    iconColorClass: "text-success",
     lastGenerated: "5. april 2024",
   },
   {
@@ -80,7 +83,8 @@ const reportTypes: ReportType[] = [
     name: "Økonomisk rapport",
     description: "Inntekter, utgifter og lønnsomhet",
     icon: DollarSign,
-    colorVar: "var(--color-accent-cta)",
+    iconBgClass: "bg-secondary-fixed/20",
+    iconColorClass: "text-secondary-fixed",
     lastGenerated: "1. april 2024",
   },
   {
@@ -88,7 +92,8 @@ const reportTypes: ReportType[] = [
     name: "Kapasitetsrapport",
     description: "Utnyttelse og booking-trender",
     icon: TrendingUp,
-    colorVar: "var(--color-warning)",
+    iconBgClass: "bg-warning/10",
+    iconColorClass: "text-warning",
     lastGenerated: "3. april 2024",
   },
 ];
@@ -285,6 +290,19 @@ export default function RapporterPage() {
       />
 
       <div className="p-6 space-y-6">
+        {/* Heritage Grid Header */}
+        <div className="space-y-2">
+          <MonoLabel size="xs" uppercase className="block text-outline">
+            Mission Control
+          </MonoLabel>
+          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
+            Rapporter<span className="text-outline">.</span>
+          </h1>
+          <p className="text-on-surface-variant">
+            Generer, planlegg og last ned rapporter fra akademiet
+          </p>
+        </div>
+
         <AdminPageHeader
           title="Rapporter"
           subtitle="Generer, planlegg og last ned rapporter fra akademiet"
@@ -300,26 +318,29 @@ export default function RapporterPage() {
         />
 
         {/* Report Types Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <BentoGrid cols={4} gap="md">
           {reportTypes.map((report) => {
-            const Icon = report.icon;
+            const ReportIcon = report.icon;
             const isSelected = selectedReport === report.id;
             return (
-              <div
+              <BentoCard
                 key={report.id}
+                variant="light"
+                interactive
+                padding="md"
                 onClick={() => setSelectedReport(report.id)}
                 className={cn(
-                  "bg-surface-container-lowest rounded-xl shadow-card p-5 cursor-pointer transition-all hover:shadow-lg",
-                  isSelected && "ring-2 ring-grey-600",
+                  isSelected && "ring-2 ring-outline",
                 )}
               >
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-3"
-                  style={{ backgroundColor: `${report.colorVar}1A` }}
+                  className={cn(
+                    "w-10 h-10 rounded-lg flex items-center justify-center mb-3",
+                    report.iconBgClass,
+                  )}
                 >
-                  <Icon
-                    className="w-5 h-5"
-                    style={{ color: report.colorVar }}
+                  <ReportIcon
+                    className={cn("w-5 h-5", report.iconColorClass)}
                   />
                 </div>
                 <h3 className="text-sm font-semibold text-on-surface mb-1">
@@ -329,9 +350,9 @@ export default function RapporterPage() {
                   {report.description}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-on-surface-variant/80">
+                  <MonoLabel size="xs" className="text-on-surface-variant/80">
                     Sist: {report.lastGenerated}
-                  </span>
+                  </MonoLabel>
                   <AdminDropdown
                     label="Eksporter"
                     align="right"
@@ -361,15 +382,15 @@ export default function RapporterPage() {
                     ]}
                   />
                 </div>
-              </div>
+              </BentoCard>
             );
           })}
-        </div>
+        </BentoGrid>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Generate Report */}
-          <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
+          <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-5">
             <h3 className="text-sm font-semibold text-on-surface mb-4">
               Generer ny rapport
             </h3>
@@ -431,7 +452,7 @@ export default function RapporterPage() {
           </div>
 
           {/* Scheduled Reports */}
-          <div className="bg-surface-container-lowest rounded-xl shadow-card p-0 overflow-hidden">
+          <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-0 overflow-hidden">
             <div className="px-5 py-4 border-b border-outline-variant/30 flex items-center justify-between">
               <h3 className="text-sm font-semibold text-on-surface">
                 Automatiske rapporter
@@ -446,7 +467,7 @@ export default function RapporterPage() {
                 <Icon name="add" className="w-4 h-4" />
               </button>
             </div>
-            <div className="divide-y divide-grey-200">
+            <div className="divide-y divide-outline-variant">
               {scheduledReports.map((report) => (
                 <div key={report.id} className="p-4">
                   <div className="flex items-start justify-between mb-2">
@@ -462,7 +483,7 @@ export default function RapporterPage() {
                       className={cn(
                         "w-2 h-2 rounded-full mt-1.5",
                         report.active
-                          ? "bg-emerald-500"
+                          ? "bg-success"
                           : "bg-surface-variant",
                       )}
                       aria-label={report.active ? "Aktiv" : "Inaktiv"}
@@ -485,12 +506,12 @@ export default function RapporterPage() {
         </div>
 
         {/* Nylig genererte rapporter — DataTable */}
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-on-surface">
+        <NightSurface variant="ambient" className="rounded-2xl p-6">
+          <div className="flex items-center justify-between mb-4">
+            <MonoLabel size="xs" uppercase className="text-surface/60 block">
               Nylig genererte rapporter
-            </h3>
-            <span className="text-xs text-on-surface-variant/80">
+            </MonoLabel>
+            <span className="text-xs text-surface/60">
               {recentReports.length} rapporter
             </span>
           </div>
@@ -502,7 +523,7 @@ export default function RapporterPage() {
             pagination={{ pageSize: 10 }}
             emptyMessage="Ingen rapporter ennå."
           />
-        </div>
+        </NightSurface>
       </div>
 
       {/* Dialog: Ny rapport */}

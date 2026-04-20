@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useCallback } from "react";
 import { Search, Layers } from "lucide-react";
@@ -21,7 +20,6 @@ import {
   Cell,
   ReferenceLine,
 } from "recharts";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import {
   calculateTourPercentile,
   getPercentileLabel,
@@ -41,6 +39,8 @@ import {
   MonoLabel,
   NightSurface,
   SGRing,
+  BentoCard,
+  BentoGrid,
 } from "@/components/portal/patterns";
 
 // ── Design tokens as hex (for Recharts which doesn't støtter CSS vars) ──
@@ -149,17 +149,20 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
 
   if (!profile) {
     return (
-      <div className="space-y-6">
+      <section className="space-y-6">
         <header>
-          <h1 className="text-2xl font-bold text-on-surface">Benchmarking</h1>
+          <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
+            Benchmarking
+          </MonoLabel>
+          <h1 className="text-2xl font-bold text-primary">Benchmarking</h1>
           <p className="text-on-surface-variant mt-1">
             Sammenlign deg med PGA Tour og proffspillere
           </p>
         </header>
 
-        <PremiumCard>
+        <BentoCard variant="light" padding="lg">
           <div className="p-6 text-center">
-            <div className="mx-auto w-12 h-12 rounded-xl bg-surface flex items-center justify-center mb-4">
+            <div className="mx-auto w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center mb-4">
               <Icon name="bar_chart" className="w-6 h-6 text-on-surface-variant" />
             </div>
             <h2 className="text-lg font-semibold text-on-surface mb-2">
@@ -170,8 +173,8 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
               å se hvordan du måler deg mot PGA Tour-spillere.
             </p>
           </div>
-        </PremiumCard>
-      </div>
+        </BentoCard>
+      </section>
     );
   }
 
@@ -324,13 +327,13 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
       : null;
 
   return (
-    <div className="space-y-6">
+    <section className="space-y-6">
       {/* ── Header ── */}
       <header>
-        <MonoLabel size="xs" uppercase className="mb-2 block text-on-surface-variant">
+        <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
           Benchmarking
         </MonoLabel>
-        <h1 className="text-2xl font-bold text-on-surface">Sammenlign deg med touren</h1>
+        <h1 className="text-2xl font-bold text-primary">Sammenlign deg med touren</h1>
         <p className="text-on-surface-variant mt-1">
           PGA Tour og proffspillere
           {profile.roundCount > 0 && (
@@ -342,7 +345,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
       </header>
 
       {/* ── SG Ring Hero (v3.1) ── */}
-      <NightSurface variant="ambient" className="rounded-2xl p-8">
+      <NightSurface variant="ambient" className="rounded-3xl p-8">
         <div className="mb-6 flex items-center gap-2">
           <span className="h-px w-6 bg-surface-container-lowest/40" />
           <MonoLabel size="xs" uppercase className="text-surface/60">
@@ -361,187 +364,191 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
       </NightSurface>
 
       {/* ── Row 1: Tour Percentile + A-K Category ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-12 gap-6">
         {/* Tour Percentile Bar Chart */}
-        <PremiumCard>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
-              <Icon name="bar_chart" className="w-5 h-5 text-on-surface" />
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-on-surface">
-                PGA Tour-persentil
-              </h3>
-              <p className="text-xs text-on-surface-variant">Hvor du ligger sammenlignet med touren</p>
-            </div>
-          </div>
-          <div className="h-[300px] mt-4">
-            <ResponsiveContainer>
-              <BarChart
-                data={percentileData}
-                layout="vertical"
-                margin={{ left: 10, right: 30, top: 0, bottom: 0 }}
-              >
-                <CartesianGrid
-                  horizontal={false}
-                  stroke={COLORS.grey200}
-                  strokeDasharray="3 3"
-                />
-                <XAxis
-                  type="number"
-                  domain={[0, 100]}
-                  tick={{ fill: COLORS.grey500, fontSize: 11 }}
-                  tickFormatter={(v) => `${v}%`}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis
-                  type="category"
-                  dataKey="category"
-                  width={80}
-                  tick={{ fill: COLORS.grey600, fontSize: 12, fontWeight: 500 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <Tooltip
-                  cursor={{ fill: "rgba(0,0,0,0.03)" }}
-                  contentStyle={{
-                    background: "white",
-                    border: `1px solid ${COLORS.grey200}`,
-                    borderRadius: 12,
-                    fontSize: 12,
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                  }}
-                  formatter={(value, _name, entry) => {
-                    const payload = entry?.payload as (typeof percentileData)[0] | undefined;
-                    return [
-                      `${value}% (SG: ${payload?.value ?? "-"})`,
-                      "Persentil",
-                    ];
-                  }}
-                />
-                <ReferenceLine
-                  x={50}
-                  stroke={COLORS.grey400}
-                  strokeDasharray="4 4"
-                  label={{
-                    value: "Median",
-                    position: "top",
-                    fill: COLORS.grey400,
-                    fontSize: 10,
-                  }}
-                />
-                <Bar dataKey="percentile" radius={[0, 6, 6, 0]} barSize={24}>
-                  {percentileData.map((entry, idx) => (
-                    <Cell key={idx} fill={entry.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Percentile labels */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            {percentileData.map((d) => (
-              <div
-                key={d.category}
-                className="flex items-center gap-1.5 text-xs text-on-surface-variant"
-              >
-                <div
-                  className="w-2.5 h-2.5 rounded-full"
-                  style={{ backgroundColor: d.color }}
-                />
-                {d.category}: {getPercentileLabel(d.percentile)}
+        <div className="col-span-12 lg:col-span-6">
+          <BentoCard variant="light" padding="lg" className="h-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center">
+                <Icon name="bar_chart" className="w-5 h-5 text-on-surface" />
               </div>
-            ))}
-          </div>
-        </PremiumCard>
+              <div>
+                <h3 className="text-sm font-semibold text-on-surface">
+                  PGA Tour-persentil
+                </h3>
+                <p className="text-xs text-on-surface-variant">Hvor du ligger sammenlignet med touren</p>
+              </div>
+            </div>
+            <div className="h-[300px] mt-4">
+              <ResponsiveContainer>
+                <BarChart
+                  data={percentileData}
+                  layout="vertical"
+                  margin={{ left: 10, right: 30, top: 0, bottom: 0 }}
+                >
+                  <CartesianGrid
+                    horizontal={false}
+                    stroke={COLORS.grey200}
+                    strokeDasharray="3 3"
+                  />
+                  <XAxis
+                    type="number"
+                    domain={[0, 100]}
+                    tick={{ fill: COLORS.grey500, fontSize: 11 }}
+                    tickFormatter={(v) => `${v}%`}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    type="category"
+                    dataKey="category"
+                    width={80}
+                    tick={{ fill: COLORS.grey600, fontSize: 12, fontWeight: 500 }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip
+                    cursor={{ fill: "rgba(0,0,0,0.03)" }}
+                    contentStyle={{
+                      background: "white",
+                      border: `1px solid ${COLORS.grey200}`,
+                      borderRadius: 12,
+                      fontSize: 12,
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                    }}
+                    formatter={(value, _name, entry) => {
+                      const payload = entry?.payload as (typeof percentileData)[0] | undefined;
+                      return [
+                        `${value}% (SG: ${payload?.value ?? "-"})`,
+                        "Persentil",
+                      ];
+                    }}
+                  />
+                  <ReferenceLine
+                    x={50}
+                    stroke={COLORS.grey400}
+                    strokeDasharray="4 4"
+                    label={{
+                      value: "Median",
+                      position: "top",
+                      fill: COLORS.grey400,
+                      fontSize: 10,
+                    }}
+                  />
+                  <Bar dataKey="percentile" radius={[0, 6, 6, 0]} barSize={24}>
+                    {percentileData.map((entry, idx) => (
+                      <Cell key={idx} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Percentile labels */}
+            <div className="flex flex-wrap gap-2 mt-4">
+              {percentileData.map((d) => (
+                <div
+                  key={d.category}
+                  className="flex items-center gap-1.5 text-xs text-on-surface-variant"
+                >
+                  <div
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: d.color }}
+                  />
+                  {d.category}: {getPercentileLabel(d.percentile)}
+                </div>
+              ))}
+            </div>
+          </BentoCard>
+        </div>
 
         {/* A-K Category Card */}
-        <PremiumCard>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
-              <Layers className="w-5 h-5 text-on-surface" />
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-on-surface">
-                A-K Ferdighetsnivå
-              </h3>
-              <p className="text-xs text-on-surface-variant">Din kategori per SG-område</p>
-            </div>
-          </div>
-          {/* Overall level */}
-          {akCategory && (
-            <div className="flex items-center gap-4 mt-4 p-4 rounded-xl bg-surface">
-              <div className="w-14 h-14 rounded-xl bg-on-surface flex items-center justify-center shrink-0">
-                <span className="text-2xl font-bold text-surface tabular-nums tracking-tight">
-                  {akCategory.category}
-                </span>
+        <div className="col-span-12 lg:col-span-6">
+          <BentoCard variant="light" padding="lg" className="h-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center">
+                <Layers className="w-5 h-5 text-on-surface" />
               </div>
-              <div className="flex-1">
-                <p className="text-sm font-semibold text-on-surface">
-                  {akCategory.label}
-                </p>
-                <p className="text-xs text-on-surface-variant">
-                  {profile?.usi
-                    ? `Estimert HCP ${profile.usi.estimatedHandicap.toFixed(1)}`
-                    : `HCP ${akCategory.handicapRange[0]}-${akCategory.handicapRange[1]}`}
-                  {profile?.usi && (
-                    <span className="ml-2">
-                      | {Math.round(profile.usi.vsTourAvgPct)}% vs tour
-                    </span>
-                  )}
-                </p>
+              <div>
+                <h3 className="text-sm font-semibold text-on-surface">
+                  A-K Ferdighetsnivå
+                </h3>
+                <p className="text-xs text-on-surface-variant">Din kategori per SG-område</p>
               </div>
             </div>
-          )}
-
-          {/* Per-category breakdown */}
-          <div className="grid grid-cols-2 gap-3 mt-4">
-            {categoryAK.map((c) => (
-              <div
-                key={c.label}
-                className="p-3 rounded-xl border border-outline-variant/30 bg-surface-container-lowest"
-              >
-                <MonoLabel size="xs" uppercase className="mb-1 block text-on-surface-variant">
-                  {c.label}
-                </MonoLabel>
-                <div className="flex items-baseline gap-2">
-                  {c.category ? (
-                    <>
-                      <span className="text-xl font-bold text-on-surface tabular-nums tracking-tight">
-                        {c.category.category}
-                      </span>
-                      <span className="text-xs text-on-surface-variant">
-                        {c.category.label}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-sm text-on-surface-variant">Ingen data</span>
-                  )}
+            {/* Overall level */}
+            {akCategory && (
+              <div className="flex items-center gap-4 mt-4 p-4 rounded-xl bg-surface-container">
+                <div className="w-14 h-14 rounded-xl bg-on-surface flex items-center justify-center shrink-0">
+                  <span className="text-2xl font-bold text-surface tabular-nums tracking-tight">
+                    {akCategory.category}
+                  </span>
                 </div>
-                {c.userVal !== null && (
-                  <div className="mt-1 flex items-center gap-1.5">
-                    <MonoLabel size="xs" className="text-on-surface-variant/80">
-                      SG {c.userVal.toFixed(2)}
-                    </MonoLabel>
-                    {c.estimatedHcp !== null && (
-                      <MonoLabel size="xs" className="text-on-surface-variant">
-                        · HCP {c.estimatedHcp.toFixed(1)}
-                      </MonoLabel>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-on-surface">
+                    {akCategory.label}
+                  </p>
+                  <p className="text-xs text-on-surface-variant">
+                    {profile?.usi
+                      ? `Estimert HCP ${profile.usi.estimatedHandicap.toFixed(1)}`
+                      : `HCP ${akCategory.handicapRange[0]}-${akCategory.handicapRange[1]}`}
+                    {profile?.usi && (
+                      <span className="ml-2">
+                        | {Math.round(profile.usi.vsTourAvgPct)}% vs tour
+                      </span>
+                    )}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Per-category breakdown */}
+            <div className="grid grid-cols-2 gap-3 mt-4">
+              {categoryAK.map((c) => (
+                <div
+                  key={c.label}
+                  className="p-3 rounded-xl border border-outline-variant/10 bg-surface-container-lowest"
+                >
+                  <MonoLabel size="xs" uppercase className="mb-1 block text-on-surface-variant">
+                    {c.label}
+                  </MonoLabel>
+                  <div className="flex items-baseline gap-2">
+                    {c.category ? (
+                      <>
+                        <span className="text-xl font-bold text-on-surface tabular-nums tracking-tight">
+                          {c.category.category}
+                        </span>
+                        <span className="text-xs text-on-surface-variant">
+                          {c.category.label}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-sm text-on-surface-variant">Ingen data</span>
                     )}
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </PremiumCard>
+                  {c.userVal !== null && (
+                    <div className="mt-1 flex items-center gap-1.5">
+                      <MonoLabel size="xs" className="text-on-surface-variant/80">
+                        SG {c.userVal.toFixed(2)}
+                      </MonoLabel>
+                      {c.estimatedHcp !== null && (
+                        <MonoLabel size="xs" className="text-on-surface-variant">
+                          · HCP {c.estimatedHcp.toFixed(1)}
+                        </MonoLabel>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </BentoCard>
+        </div>
       </div>
 
       {/* ── Row 2: Pro Comparison ── */}
-      <PremiumCard>
+      <BentoCard variant="light" padding="lg">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center">
             <Icon name="search" className="w-5 h-5 text-on-surface" />
           </div>
           <div>
@@ -559,7 +566,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Søk etter spiller (f.eks. Viktor Hovland)"
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-outline-variant/30 bg-surface text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-black transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-outline-variant/30 bg-surface-container-lowest text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary transition-colors"
           />
           {isSearching && (
             <Icon name="progress_activity" className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant animate-spin" />
@@ -574,7 +581,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                 key={player.dgId}
                 onClick={() => handleSelectPro(player.dgId)}
                 disabled={isPending}
-                className="w-full text-left px-4 py-3 hover:bg-surface transition-colors border-b border-outline-variant/30 last:border-b-0 disabled:opacity-50"
+                className="w-full text-left px-4 py-3 hover:bg-surface-container transition-colors border-b border-outline-variant/30 last:border-b-0 disabled:opacity-50"
               >
                 <span className="text-sm font-medium text-on-surface">
                   {player.name}
@@ -708,7 +715,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                   return (
                     <div
                       key={row.label}
-                      className="flex items-center justify-between p-3 rounded-xl border border-outline-variant/30 bg-surface-container-lowest"
+                      className="flex items-center justify-between p-3 rounded-xl border border-outline-variant/10 bg-surface-container-lowest"
                     >
                       <span className="text-sm font-medium text-on-surface-variant w-20">
                         {row.label}
@@ -758,194 +765,198 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
             <p className="text-sm text-on-surface-variant">Henter spillerdata...</p>
           </div>
         )}
-      </PremiumCard>
+      </BentoCard>
 
       {/* ── Row 3: Improvement Potential + Approach Distance ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-12 gap-6">
         {/* Improvement Potential */}
-        <PremiumCard>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
-              <Icon name="trending_up" className="w-5 h-5 text-on-surface" />
+        <div className="col-span-12 lg:col-span-6">
+          <BentoCard variant="light" padding="lg" className="h-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center">
+                <Icon name="trending_up" className="w-5 h-5 text-on-surface" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-on-surface">
+                  Forbedringspotensial
+                </h3>
+                <p className="text-xs text-on-surface-variant">Estimert handicap-effekt av SG-forbedringer</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-sm font-semibold text-on-surface">
-                Forbedringspotensial
-              </h3>
-              <p className="text-xs text-on-surface-variant">Estimert handicap-effekt av SG-forbedringer</p>
+            <div className="space-y-3 mt-4">
+              {improvementAreas.map((area) => {
+                if (area.current === null) return null;
+                const hcpImpact = estimateHandicapImpact(area.improvement);
+                const newSg = area.current + area.improvement;
+
+                return (
+                  <div
+                    key={area.label}
+                    className="p-4 rounded-xl border border-outline-variant/10 bg-surface-container/50"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-on-surface">
+                        {area.label}
+                      </span>
+                      <span className="text-xs font-semibold text-success bg-success/10 px-2 py-0.5 rounded-full">
+                        -{hcpImpact} HCP
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-on-surface-variant">
+                      <span className="tabular-nums tracking-tight">
+                        {area.current.toFixed(2)} SG
+                      </span>
+                      <Icon name="arrow_forward" className="w-3.5 h-3.5 text-on-surface-variant" />
+                      <span className="tabular-nums tracking-tight font-semibold">
+                        {newSg.toFixed(2)} SG
+                      </span>
+                      <span className="text-xs text-on-surface-variant ml-1">
+                        (+{area.improvement.toFixed(2)})
+                      </span>
+                    </div>
+                    {/* Progress bar showing how close to 0 */}
+                    <div className="mt-2 h-1.5 rounded-full bg-surface-container overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-500 bg-success"
+                        style={{
+                          width: `${Math.max(0, Math.min(100, ((newSg + 6) / 6) * 100))}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
-          <div className="space-y-3 mt-4">
-            {improvementAreas.map((area) => {
-              if (area.current === null) return null;
-              const hcpImpact = estimateHandicapImpact(area.improvement);
-              const newSg = area.current + area.improvement;
 
-              return (
-                <div
-                  key={area.label}
-                  className="p-4 rounded-xl border border-outline-variant/30 bg-surface/50"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-on-surface">
-                      {area.label}
-                    </span>
-                    <span className="text-xs font-semibold text-success bg-success/10 px-2 py-0.5 rounded-full">
-                      -{hcpImpact} HCP
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-                    <span className="tabular-nums tracking-tight">
-                      {area.current.toFixed(2)} SG
-                    </span>
-                    <Icon name="arrow_forward" className="w-3.5 h-3.5 text-on-surface-variant" />
-                    <span className="tabular-nums tracking-tight font-semibold">
-                      {newSg.toFixed(2)} SG
-                    </span>
-                    <span className="text-xs text-on-surface-variant ml-1">
-                      (+{area.improvement.toFixed(2)})
-                    </span>
-                  </div>
-                  {/* Progress bar showing how close to 0 */}
-                  <div className="mt-2 h-1.5 rounded-full bg-surface overflow-hidden">
-                    <div
-                      className="h-full rounded-full transition-all duration-500"
-                      style={{
-                        width: `${Math.max(0, Math.min(100, ((newSg + 6) / 6) * 100))}%`,
-                        backgroundColor: COLORS.brand,
-                      }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <p className="text-[10px] text-on-surface-variant mt-4">
-            Estimater er basert på historiske sammenhenger mellom SG og handicap.
-            Faktisk effekt varierer.
-          </p>
-        </PremiumCard>
+            <p className="text-[10px] text-on-surface-variant mt-4">
+              Estimater er basert på historiske sammenhenger mellom SG og handicap.
+              Faktisk effekt varierer.
+            </p>
+          </BentoCard>
+        </div>
 
         {/* Approach Distance Breakdown */}
-        <PremiumCard>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
-              <Icon name="my_location" className="w-5 h-5 text-on-surface" />
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-on-surface">
-                Innspill per avstand
-              </h3>
-              <p className="text-xs text-on-surface-variant">
-                {approachDistanceData.length > 0
-                  ? "Dine SG-verdier per avstandskategori"
-                  : "Registrer approach-data for å se fordeling"}
-              </p>
-            </div>
-          </div>
-          {approachDistanceData.length > 0 ? (
-            <>
-              <div className="h-[260px] mt-4">
-                <ResponsiveContainer>
-                  <BarChart
-                    data={approachDistanceData}
-                    margin={{ left: 0, right: 10, top: 0, bottom: 0 }}
-                  >
-                    <CartesianGrid
-                      stroke={COLORS.grey200}
-                      strokeDasharray="3 3"
-                      vertical={false}
-                    />
-                    <Icon name="close"Axis
-                      dataKey="bucket"
-                      tick={{
-                        fill: COLORS.grey600,
-                        fontSize: 11,
-                        fontWeight: 500,
-                      }}
-                      axisLine={false}
-                      tickLine={false} />
-                    <YAxis
-                      tick={{ fill: COLORS.grey400, fontSize: 11 }}
-                      axisLine={false}
-                      tickLine={false}
-                    />
-                    <Tooltip
-                      contentStyle={{
-                        background: "white",
-                        border: `1px solid ${COLORS.grey200}`,
-                        borderRadius: 12,
-                        fontSize: 12,
-                        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                      }}
-                      formatter={(v) => [`${Number(v).toFixed(2)} SG`, ""]}
-                    />
-                    <ReferenceLine
-                      y={0}
-                      stroke={COLORS.grey400}
-                      strokeDasharray="4 4"
-                    />
-                    <Bar dataKey="value" radius={[6, 6, 0, 0]} barSize={40}>
-                      {approachDistanceData.map((entry, idx) => (
-                        <Cell
-                          key={idx}
-                          fill={
-                            (entry.value ?? 0) >= 0
-                              ? COLORS.brand
-                              : COLORS.error
-                          }
-                        />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
+        <div className="col-span-12 lg:col-span-6">
+          <BentoCard variant="light" padding="lg" className="h-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center">
+                <Icon name="my_location" className="w-5 h-5 text-on-surface" />
               </div>
-
-              {/* Pro approach overlay if available */}
-              {proApproachData && (
-                <div className="mt-4">
-                  <p className="text-xs font-medium text-on-surface-variant mb-2">
-                    Sammenligning med {selectedPro?.pro.name} (yards)
-                  </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    {proApproachData.map((d) => (
-                      <div
-                        key={d.bucket}
-                        className="text-center p-2 rounded-lg bg-surface"
-                      >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-1">
-                          {d.bucket}
-                        </p>
-                        <p className="text-xs text-on-surface">
-                          Du:{" "}
-                          <span className="tabular-nums tracking-tight font-semibold">
-                            {d.player !== null ? d.player.toFixed(1) : "-"}
-                          </span>
-                        </p>
-                        <p className="text-xs text-on-surface-variant">
-                          Pro:{" "}
-                          <span className="tabular-nums tracking-tight">
-                            {d.pro !== null ? d.pro.toFixed(1) : "-"}
-                          </span>
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="py-10 text-center">
-              <Icon name="my_location" className="w-8 h-8 text-on-surface-variant mx-auto mb-3" />
-              <p className="text-sm text-on-surface-variant">
-                Legg til approach-statistikk per avstand i rundene dine for å se
-                denne analysen.
-              </p>
+              <div>
+                <h3 className="text-sm font-semibold text-on-surface">
+                  Innspill per avstand
+                </h3>
+                <p className="text-xs text-on-surface-variant">
+                  {approachDistanceData.length > 0
+                    ? "Dine SG-verdier per avstandskategori"
+                    : "Registrer approach-data for å se fordeling"}
+                </p>
+              </div>
             </div>
-          )}
-        </PremiumCard>
+            {approachDistanceData.length > 0 ? (
+              <>
+                <div className="h-[260px] mt-4">
+                  <ResponsiveContainer>
+                    <BarChart
+                      data={approachDistanceData}
+                      margin={{ left: 0, right: 10, top: 0, bottom: 0 }}
+                    >
+                      <CartesianGrid
+                        stroke={COLORS.grey200}
+                        strokeDasharray="3 3"
+                        vertical={false}
+                      />
+                      <XAxis
+                        dataKey="bucket"
+                        tick={{
+                          fill: COLORS.grey600,
+                          fontSize: 11,
+                          fontWeight: 500,
+                        }}
+                        axisLine={false}
+                        tickLine={false}
+                      />
+                      <YAxis
+                        tick={{ fill: COLORS.grey400, fontSize: 11 }}
+                        axisLine={false}
+                        tickLine={false}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          background: "white",
+                          border: `1px solid ${COLORS.grey200}`,
+                          borderRadius: 12,
+                          fontSize: 12,
+                          boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                        }}
+                        formatter={(v) => [`${Number(v).toFixed(2)} SG`, ""]}
+                      />
+                      <ReferenceLine
+                        y={0}
+                        stroke={COLORS.grey400}
+                        strokeDasharray="4 4"
+                      />
+                      <Bar dataKey="value" radius={[6, 6, 0, 0]} barSize={40}>
+                        {approachDistanceData.map((entry, idx) => (
+                          <Cell
+                            key={idx}
+                            fill={
+                              (entry.value ?? 0) >= 0
+                                ? COLORS.brand
+                                : COLORS.error
+                            }
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Pro approach overlay if available */}
+                {proApproachData && (
+                  <div className="mt-4">
+                    <p className="text-xs font-medium text-on-surface-variant mb-2">
+                      Sammenligning med {selectedPro?.pro.name} (yards)
+                    </p>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {proApproachData.map((d) => (
+                        <div
+                          key={d.bucket}
+                          className="text-center p-2 rounded-lg bg-surface-container"
+                        >
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-1">
+                            {d.bucket}
+                          </p>
+                          <p className="text-xs text-on-surface">
+                            Du:{" "}
+                            <span className="tabular-nums tracking-tight font-semibold">
+                              {d.player !== null ? d.player.toFixed(1) : "-"}
+                            </span>
+                          </p>
+                          <p className="text-xs text-on-surface-variant">
+                            Pro:{" "}
+                            <span className="tabular-nums tracking-tight">
+                              {d.pro !== null ? d.pro.toFixed(1) : "-"}
+                            </span>
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="py-10 text-center">
+                <Icon name="my_location" className="w-8 h-8 text-on-surface-variant mx-auto mb-3" />
+                <p className="text-sm text-on-surface-variant">
+                  Legg til approach-statistikk per avstand i rundene dine for å se
+                  denne analysen.
+                </p>
+              </div>
+            )}
+          </BentoCard>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

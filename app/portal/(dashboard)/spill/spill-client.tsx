@@ -1,12 +1,10 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import {
   type GameSessionData,
   type CourseData,
@@ -17,7 +15,13 @@ import {
 } from "./actions";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
-import { MonoLabel } from "@/components/portal/patterns";
+import {
+  MonoLabel,
+  BentoCard,
+  BentoGrid,
+  GlassPanel,
+  NightSurface,
+} from "@/components/portal/patterns";
 
 // ─── Hjelpefunksjoner ───────────────────────────────────
 
@@ -168,22 +172,26 @@ export default function SpillClient({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Spillerportal</MonoLabel>
-          <h1 className="mt-1 text-[28px] font-bold tracking-tight text-on-surface">Spill</h1>
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">
+            Spillerportal
+          </MonoLabel>
+          <h1 className="mt-1 text-[28px] font-bold tracking-tight text-on-surface">
+            Spill
+          </h1>
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setShowJoinGame(true)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-outline-variant/30 bg-surface-container-lowest text-on-surface text-sm font-medium hover:border-outline-variant/50 transition-colors"
           >
-            <Icon name="person"s className="w-4 h-4" />
+            <Icon name="group" size={16} />
             Bli med
           </button>
           <button
             onClick={() => setShowNewGame(true)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-fixed text-on-surface text-sm font-medium hover:opacity-90 transition-opacity"
           >
-            <Icon name="add" className="w-4 h-4" />
+            <Icon name="add" size={16} />
             Nytt spill
           </button>
         </div>
@@ -191,23 +199,23 @@ export default function SpillClient({
 
       {/* Aktivt spill */}
       {activeSession && (
-        <PremiumCard className="!p-6 bg-surface-container-lowest border border-outline-variant/30 rounded-xl">
+        <GlassPanel variant="light" padding="lg">
           <div className="flex items-start justify-between mb-4">
             <div>
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-secondary-fixed text-on-surface text-xs font-bold">
-                <Icon name="schedule" className="w-3 h-3" />
+                <Icon name="schedule" size={12} />
                 Aktiv
               </span>
               <h2 className="text-xl font-bold mt-3 text-on-surface">
                 {activeSession.name ?? "Aktiv runde"}
               </h2>
               <p className="text-on-surface-variant flex items-center gap-1 mt-1 text-sm">
-                <Icon name="location_on" className="w-4 h-4" />
+                <Icon name="location_on" size={16} />
                 {activeSession.Course.name}
               </p>
             </div>
             <div className="w-12 h-12 rounded-xl bg-on-surface/10 flex items-center justify-center">
-              <Icon name="emoji_events" className="w-6 h-6 text-on-surface" />
+              <Icon name="emoji_events" size={24} className="text-on-surface" />
             </div>
           </div>
 
@@ -233,43 +241,50 @@ export default function SpillClient({
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface text-sm text-on-surface-variant hover:text-on-surface transition-colors"
             >
               {copied === activeSession.joinCode ? (
-                <Icon name="check" className="w-3 h-3 text-success" />
+                <Icon name="check" size={12} className="text-success" />
               ) : (
-                <Icon name="content_copy" className="w-3 h-3" />
+                <Icon name="content_copy" size={12} />
               )}
               Kode: {activeSession.joinCode}
             </button>
           </div>
 
           <button className="w-full py-3 rounded-full bg-secondary-fixed text-on-surface font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-            <Icon name="play_arrow" className="w-4 h-4" />
+            <Icon name="play_arrow" size={16} />
             Fortsett spill
           </button>
-        </PremiumCard>
+        </GlassPanel>
       )}
 
       {/* Ingen spill */}
       {initialSessions.length === 0 && (
-        <PremiumCard className="!p-8 text-center bg-surface-container-lowest border border-outline-variant/30 rounded-xl">
-          <Icon name="emoji_events" className="w-12 h-12 text-on-surface-variant mx-auto mb-3" />
-          <h2 className="text-lg font-semibold text-on-surface">
-            Ingen spill ennå
-          </h2>
-          <p className="text-on-surface-variant mt-1 text-sm">
-            Start ditt første spill eller bli med via en kode
-          </p>
-        </PremiumCard>
+        <BentoCard variant="light" padding="lg">
+          <div className="text-center">
+            <Icon name="emoji_events" size={48} className="text-on-surface-variant mx-auto mb-3" />
+            <h2 className="text-lg font-semibold text-on-surface">
+              Ingen spill ennå
+            </h2>
+            <p className="text-on-surface-variant mt-1 text-sm">
+              Start ditt første spill eller bli med via en kode
+            </p>
+          </div>
+        </BentoCard>
       )}
 
       {/* Nylige spill */}
       {recentSessions.length > 0 && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-4">
+          <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-4">
             Nylige spill
-          </p>
+          </MonoLabel>
           <div className="space-y-3">
-            {recentSessions.map((session, index) => (
-              <PremiumCard key={session.id} delay={index * 0.1} className="!p-4 bg-surface-container-lowest border border-outline-variant/30 rounded-xl hover:border-outline-variant/50 transition-colors">
+            {recentSessions.map((session) => (
+              <GlassPanel
+                key={session.id}
+                variant="light"
+                padding="md"
+                className="hover:border-outline-variant/50 transition-colors"
+              >
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium text-on-surface">
@@ -277,11 +292,11 @@ export default function SpillClient({
                     </h4>
                     <div className="flex items-center gap-3 mt-1 text-sm text-on-surface-variant">
                       <span className="flex items-center gap-1">
-                        <Icon name="location_on" className="w-3 h-3" />
+                        <Icon name="location_on" size={12} />
                         {session.Course.name}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Icon name="person"s className="w-3 h-3" />
+                        <Icon name="group" size={12} />
                         {session.Players.length} spillere
                       </span>
                       <span className="text-xs">
@@ -293,10 +308,10 @@ export default function SpillClient({
                     <span className="text-xs text-on-surface-variant">
                       {formatDate(session.date)}
                     </span>
-                    <Icon name="chevron_right" className="w-5 h-5 text-on-surface-variant" />
+                    <Icon name="chevron_right" size={20} className="text-on-surface-variant" />
                   </div>
                 </div>
-              </PremiumCard>
+              </GlassPanel>
             ))}
           </div>
         </div>
@@ -305,17 +320,22 @@ export default function SpillClient({
       {/* Utforsk baner */}
       {initialCourses.length > 0 && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-4">
+          <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-4">
             Utforsk baner
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {initialCourses.slice(0, 4).map((course, index) => (
-              <PremiumCard key={course.id} delay={index * 0.1} className="!p-4 bg-surface-container-lowest border border-outline-variant/30 rounded-xl hover:border-outline-variant/50 transition-colors">
+          </MonoLabel>
+          <BentoGrid cols={2} gap="md">
+            {initialCourses.slice(0, 4).map((course) => (
+              <BentoCard
+                key={course.id}
+                variant="light"
+                padding="md"
+                interactive
+              >
                 <div className="flex items-start justify-between">
                   <div>
                     <h4 className="font-medium text-on-surface">{course.name}</h4>
                     <p className="text-sm text-on-surface-variant flex items-center gap-1 mt-1">
-                      <Icon name="location_on" className="w-3 h-3" />
+                      <Icon name="location_on" size={12} />
                       {course.location ?? "Norge"}
                     </p>
                   </div>
@@ -323,23 +343,25 @@ export default function SpillClient({
                     Par {course.par}
                   </span>
                 </div>
-              </PremiumCard>
+              </BentoCard>
             ))}
-          </div>
+          </BentoGrid>
         </div>
       )}
 
       {/* Utfordringer */}
       {initialChallenges.length > 0 && (
-        <PremiumCard className="!p-6 bg-surface-container-lowest border border-outline-variant/30 rounded-xl">
+        <NightSurface variant="ambient" className="rounded-2xl p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Icon name="emoji_events" className="w-5 h-5 text-purple-500" />
-              <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Utfordringer</MonoLabel>
+              <Icon name="emoji_events" size={20} className="text-purple-400" />
+              <MonoLabel size="xs" uppercase className="text-surface/60 block">
+                Utfordringer
+              </MonoLabel>
             </div>
-            <span className="text-xs text-on-surface-variant">
+            <MonoLabel size="xs" className="text-surface/60">
               {initialChallenges.length} aktive
-            </span>
+            </MonoLabel>
           </div>
           <div className="space-y-3">
             {initialChallenges.map((challenge) => {
@@ -347,23 +369,23 @@ export default function SpillClient({
               return (
                 <div
                   key={challenge.id}
-                  className="p-4 rounded-xl bg-surface flex items-center justify-between"
+                  className="p-4 rounded-xl bg-white/[0.06] flex items-center justify-between"
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="font-medium text-on-surface">
+                      <h4 className="font-medium text-surface">
                         {challenge.title}
                       </h4>
                       <span className={`text-[10px] font-semibold uppercase tracking-[0.08em] ${color}`}>
                         {label}
                       </span>
                     </div>
-                    <p className="text-xs text-on-surface-variant mt-1">
+                    <p className="text-xs text-surface/60 mt-1">
                       {challenge.metric}
                     </p>
                   </div>
                   <div className="text-right">
-                    <span className="text-xs font-medium text-on-surface">
+                    <span className="text-xs font-medium text-surface/80">
                       {challenge._participantCount} deltakere
                     </span>
                   </div>
@@ -371,17 +393,17 @@ export default function SpillClient({
               );
             })}
           </div>
-        </PremiumCard>
+        </NightSurface>
       )}
 
       {/* Hurtiglenker */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <BentoGrid cols={3} gap="md">
         <Link
           href="/portal/sosialt"
           className="flex items-center gap-3 rounded-xl bg-surface-container-lowest border border-outline-variant/30 p-4 text-sm font-medium text-on-surface hover:border-outline-variant/50 transition-colors shadow-sm"
         >
           <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center flex-shrink-0">
-            <Icon name="search" className="w-5 h-5 text-on-surface-variant" />
+            <Icon name="search" size={20} className="text-on-surface-variant" />
           </div>
           <div>
             <p className="font-semibold text-sm text-on-surface">Finn spillere</p>
@@ -393,7 +415,7 @@ export default function SpillClient({
           className="flex items-center gap-3 rounded-xl bg-surface-container-lowest border border-outline-variant/30 p-4 text-sm font-medium text-on-surface hover:border-outline-variant/50 transition-colors shadow-sm"
         >
           <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center flex-shrink-0">
-            <Icon name="location_on" className="w-5 h-5 text-on-surface-variant" />
+            <Icon name="location_on" size={20} className="text-on-surface-variant" />
           </div>
           <div>
             <p className="font-semibold text-sm text-on-surface">Banedatabase</p>
@@ -405,14 +427,14 @@ export default function SpillClient({
           className="flex items-center gap-3 rounded-xl bg-surface-container-lowest border border-outline-variant/30 p-4 text-sm font-medium text-on-surface hover:border-outline-variant/50 transition-colors shadow-sm"
         >
           <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center flex-shrink-0">
-            <Icon name="emoji_events" className="w-5 h-5 text-on-surface-variant" />
+            <Icon name="emoji_events" size={20} className="text-on-surface-variant" />
           </div>
           <div>
             <p className="font-semibold text-sm text-on-surface">Toppliste</p>
             <p className="text-xs text-on-surface-variant mt-0.5">Se topplisten</p>
           </div>
         </Link>
-      </div>
+      </BentoGrid>
 
       {/* ─── Nytt spill-dialog ─────────────────────────────── */}
       {showNewGame && (
@@ -425,7 +447,7 @@ export default function SpillClient({
             {createdSession ? (
               <div className="text-center">
                 <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4">
-                  <Icon name="emoji_events" className="w-8 h-8 text-success" />
+                  <Icon name="emoji_events" size={32} className="text-success" />
                 </div>
                 <h3 className="text-xl font-bold text-on-surface mb-2">
                   Spill opprettet
@@ -434,7 +456,9 @@ export default function SpillClient({
                   Del koden med andre for å bli med
                 </p>
                 <div className="bg-surface rounded-xl p-4 mb-6">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-1">Delekode</p>
+                  <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-1">
+                    Delekode
+                  </MonoLabel>
                   <p className="text-3xl font-bold tracking-widest text-on-surface">
                     {createdSession.joinCode}
                   </p>
@@ -456,17 +480,17 @@ export default function SpillClient({
                     onClick={resetNewGameDialog}
                     className="p-1 rounded-lg hover:bg-surface"
                   >
-                    <Icon name="close" className="w-5 h-5 text-on-surface-variant" />
+                    <Icon name="close" size={20} className="text-on-surface-variant" />
                   </button>
                 </div>
 
                 {/* Banesøk */}
                 <div className="mb-4">
-                  <label className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-2">
+                  <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
                     Velg bane
-                  </label>
+                  </MonoLabel>
                   <div className="relative">
-                    <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
+                    <Icon name="search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
                     <input
                       type="text"
                       placeholder="Søk etter bane..."
@@ -475,12 +499,12 @@ export default function SpillClient({
                       className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-outline-variant/30 bg-surface-container-lowest text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-outline-variant/50"
                     />
                     {isSearching && (
-                      <Icon name="progress_activity" className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant animate-spin" />
+                      <Icon name="progress_activity" size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant animate-spin" />
                     )}
                   </div>
                   {selectedCourse && (
                     <div className="mt-2 flex items-center gap-2 bg-surface rounded-lg px-3 py-2">
-                      <Icon name="location_on" className="w-4 h-4 text-on-surface" />
+                      <Icon name="location_on" size={16} className="text-on-surface" />
                       <span className="text-sm font-medium text-on-surface">
                         {selectedCourse.name}
                       </span>
@@ -488,12 +512,12 @@ export default function SpillClient({
                         onClick={() => setSelectedCourse(null)}
                         className="ml-auto"
                       >
-                        <Icon name="close" className="w-4 h-4 text-on-surface-variant" />
+                        <Icon name="close" size={16} className="text-on-surface-variant" />
                       </button>
                     </div>
                   )}
                   {!selectedCourse && searchResults.length > 0 && (
-                    <div className="mt-2 max-h-40 overflow-y-auto rounded-xl border border-outline-variant/30 divide-y divide-grey-200">
+                    <div className="mt-2 max-h-40 overflow-y-auto rounded-xl border border-outline-variant/30 divide-y divide-outline-variant/10">
                       {searchResults.map((course) => (
                         <button
                           key={course.id}
@@ -518,9 +542,9 @@ export default function SpillClient({
 
                 {/* Spillnavn */}
                 <div className="mb-4">
-                  <label className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-2">
+                  <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
                     Navn (valgfritt)
-                  </label>
+                  </MonoLabel>
                   <input
                     type="text"
                     placeholder="F.eks. Lørdagsrunde"
@@ -532,9 +556,9 @@ export default function SpillClient({
 
                 {/* Format */}
                 <div className="mb-6">
-                  <label className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant mb-2">
+                  <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
                     Format
-                  </label>
+                  </MonoLabel>
                   <div className="grid grid-cols-2 gap-2">
                     {Object.entries(FORMAT_LABELS).map(([value, label]) => (
                       <button
@@ -562,9 +586,9 @@ export default function SpillClient({
                   className="w-full py-3 rounded-full bg-secondary-fixed text-on-surface font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {isPending ? (
-                    <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
+                    <Icon name="progress_activity" size={16} className="animate-spin" />
                   ) : (
-                    <Icon name="play_arrow" className="w-4 h-4" />
+                    <Icon name="play_arrow" size={16} />
                   )}
                   Opprett spill
                 </button>
@@ -598,7 +622,7 @@ export default function SpillClient({
                 }}
                 className="p-1 rounded-lg hover:bg-surface"
               >
-                <Icon name="close" className="w-5 h-5 text-on-surface-variant" />
+                <Icon name="close" size={20} className="text-on-surface-variant" />
               </button>
             </div>
 
@@ -628,9 +652,9 @@ export default function SpillClient({
               className="w-full mt-4 py-3 rounded-full bg-secondary-fixed text-on-surface font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {isPending ? (
-                <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
+                <Icon name="progress_activity" size={16} className="animate-spin" />
               ) : (
-                <Icon name="person"s className="w-4 h-4" />
+                <Icon name="group" size={16} />
               )}
               Bli med
             </button>

@@ -30,41 +30,41 @@ export function AdminStatCard({
     <div className={cn("admin-card", className)}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <MonoLabel as="p" size="xs" uppercase className="text-[var(--color-muted)] block">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">
             {label}
           </MonoLabel>
-          <p className="mt-2 text-3xl font-bold text-[var(--color-text)] tracking-tight tabular-nums">
+          <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
             {value}
           </p>
           {change && (
             <div className="mt-2 flex items-center gap-1 text-xs font-medium">
               {isPositive ? (
-                <Icon name="arrow_upward"Right
-                  className="w-3.5 h-3.5 text-[var(--color-success)]"
+                <Icon name="arrow_upward"
+                  className="w-3.5 h-3.5 text-success"
                   aria-hidden="true" />
               ) : (
-                <Icon name="arrow_downward"Right
-                  className="w-3.5 h-3.5 text-[var(--color-error)]"
+                <Icon name="arrow_downward"
+                  className="w-3.5 h-3.5 text-error"
                   aria-hidden="true" />
               )}
               <span
                 className={cn(
                   isPositive
-                    ? "text-[var(--color-success)]"
-                    : "text-[var(--color-error)]",
+                    ? "text-success"
+                    : "text-error",
                 )}
               >
                 {isPositive ? "+" : ""}
                 {change.value}%
               </span>
-              <span className="text-[var(--color-muted)]">vs forrige</span>
+              <span className="text-on-surface-variant">vs forrige</span>
             </div>
           )}
         </div>
         <div className="flex flex-col items-end gap-2">
           {icon && (
             <div
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary"
               aria-hidden="true"
             >
               {icon}
@@ -76,10 +76,10 @@ export function AdminStatCard({
               color={
                 sparklineColor ??
                 (isPositive
-                  ? "var(--color-success)"
+                  ? "success"
                   : change
-                    ? "var(--color-error)"
-                    : "var(--color-primary)")
+                    ? "error"
+                    : "primary")
               }
               width={72}
               height={24}

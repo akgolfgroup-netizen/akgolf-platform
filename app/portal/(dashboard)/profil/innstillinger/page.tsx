@@ -9,7 +9,7 @@ export default async function InnstillingerPage() {
   if (!profile) {
     return (
       <div className="flex items-center justify-center h-64">
-        <p className="text-sm text-[var(--color-surface-container-high)]">
+        <p className="text-sm text-on-surface-variant">
           Kunne ikke laste profil.
         </p>
       </div>

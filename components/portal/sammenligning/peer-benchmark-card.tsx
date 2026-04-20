@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 
@@ -24,10 +23,10 @@ interface PeerBenchmarkCardProps {
 
 function getTrendIcon(diff: number) {
   if (diff > 0.1)
-    return <Icon name="trending_up" className="w-4 h-4 text-[var(--color-success)]" />;
+    return <Icon name="trending_up" className="w-4 h-4 text-success" />;
   if (diff < -0.1)
-    return <Icon name="trending_down" className="w-4 h-4 text-[var(--color-error)]" />;
-  return <Icon name="remove" className="w-4 h-4 text-[var(--color-muted)]" />;
+    return <Icon name="trending_down" className="w-4 h-4 text-error" />;
+  return <Icon name="remove" className="w-4 h-4 text-on-surface-variant" />;
 }
 
 function getProgressToNextCategory(
@@ -66,8 +65,8 @@ export function PeerBenchmarkCard({
 
   if (!benchmark) {
     return (
-      <div className="flex items-center justify-center rounded-2xl p-6 bg-[var(--color-primary)]/5 text-center">
-        <p className="text-sm text-[var(--color-muted)]">
+      <div className="flex items-center justify-center rounded-3xl p-6 bg-primary/5 text-center">
+        <p className="text-sm text-on-surface-variant">
           Registrer handicap for å se sammenligning
         </p>
       </div>
@@ -92,28 +91,28 @@ export function PeerBenchmarkCard({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div
-            className="flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold text-surface shadow-[0_8px_24px_-8px_rgba(0,88,64,0.35)]"
+            className="flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold text-surface shadow-lg"
             style={{
               background:
-                "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-alt) 100%)",
+                "linear-gradient(135deg, #154212 0%, #1A4D36 100%)",
             }}
           >
             {benchmark.category}
           </div>
           <div>
-            <p className="text-lg font-bold tracking-tight text-[var(--color-text)]">
+            <p className="text-lg font-bold tracking-tight text-on-surface">
               {benchmark.label}
             </p>
-            <p className="text-sm text-[var(--color-muted)]">
+            <p className="text-sm text-on-surface-variant">
               HCP {benchmark.handicapRange[0]}–{benchmark.handicapRange[1]}
             </p>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
             Din HCP
           </p>
-          <p className="text-3xl font-bold tracking-tight text-[var(--color-text)]">
+          <p className="text-3xl font-bold tracking-tight text-on-surface">
             {handicap.toFixed(1)}
           </p>
         </div>
@@ -122,18 +121,18 @@ export function PeerBenchmarkCard({
       {/* Progress to next category */}
       {nextCategory && playerSG.total !== null && (
         <motion.div
-          className="rounded-2xl p-4 bg-gradient-to-br from-[var(--color-primary)]/[0.04] to-white border border-[var(--color-primary)]/15"
+          className="rounded-3xl p-4 bg-gradient-to-br from-primary/5 to-white border border-primary/15"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <Icon name="my_location" className="w-4 h-4 text-[var(--color-primary)]" />
-              <span className="text-sm font-medium text-[var(--color-text)]">
+              <Icon name="my_location" className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-on-surface">
                 Progresjon mot {nextCategory.label} ({nextCategory.category})
               </span>
             </div>
-            <span className="text-sm font-bold text-[var(--color-primary)]">
+            <span className="text-sm font-bold text-primary">
               {Math.round(progress)}%
             </span>
           </div>
@@ -142,7 +141,7 @@ export function PeerBenchmarkCard({
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-alt)]"
+              className="h-full rounded-full bg-gradient-to-r from-primary to-primary/80"
             />
           </div>
         </motion.div>
@@ -159,36 +158,34 @@ export function PeerBenchmarkCard({
           return (
             <motion.div
               key={cat.key}
-              className="rounded-2xl p-4 bg-surface-container-lowest border border-black/5"
+              className="rounded-3xl p-4 bg-surface-container-lowest border border-outline-variant/10"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: categories.indexOf(cat) * 0.08 }}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant">
                   {cat.label}
                 </span>
                 {diff !== null && getTrendIcon(diff)}
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-bold tracking-tight text-[var(--color-text)]">
+                <span className="text-xl font-bold tracking-tight text-on-surface">
                   {playerValue !== null ? playerValue.toFixed(2) : "—"}
                 </span>
-                <span className="text-xs text-[var(--color-muted)]">
+                <span className="text-xs text-on-surface-variant">
                   vs {benchmarkValue.toFixed(2)}
                 </span>
               </div>
               {diff !== null && (
                 <p
-                  className="text-xs mt-1 font-semibold"
-                  style={{
-                    color:
-                      diff > 0
-                        ? "var(--color-success)"
-                        : diff < 0
-                          ? "var(--color-error)"
-                          : "var(--color-muted)",
-                  }}
+                  className={`text-xs mt-1 font-semibold ${
+                    diff > 0
+                      ? "text-success"
+                      : diff < 0
+                        ? "text-error"
+                        : "text-on-surface-variant"
+                  }`}
                 >
                   {diff > 0 ? "+" : ""}
                   {diff.toFixed(2)} slag
@@ -201,34 +198,32 @@ export function PeerBenchmarkCard({
 
       {/* Score comparison */}
       {avgScore && (
-        <div className="flex items-center justify-between rounded-2xl p-4 bg-surface-container-lowest border border-black/5">
+        <div className="flex items-center justify-between rounded-3xl p-4 bg-surface-container-lowest border border-outline-variant/10">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-primary)]/10">
-              <Icon name="workspace_premium" className="h-5 w-5 text-[var(--color-primary)]" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+              <Icon name="workspace_premium" className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-[var(--color-text)]">
+              <p className="text-sm font-semibold text-on-surface">
                 Gjennomsnittlig score
               </p>
-              <p className="text-xs text-[var(--color-muted)]">
+              <p className="text-xs text-on-surface-variant">
                 Benchmark for kategori {benchmark.category}: {benchmark.averageScore}
               </p>
             </div>
           </div>
           <div className="text-right">
-            <p className="text-xl font-bold tracking-tight text-[var(--color-text)]">
+            <p className="text-xl font-bold tracking-tight text-on-surface">
               {avgScore}
             </p>
             <p
-              className="text-xs font-semibold"
-              style={{
-                color:
-                  avgScore < benchmark.averageScore
-                    ? "var(--color-success)"
-                    : avgScore > benchmark.averageScore
-                      ? "var(--color-error)"
-                      : "var(--color-muted)",
-              }}
+              className={`text-xs font-semibold ${
+                avgScore < benchmark.averageScore
+                  ? "text-success"
+                  : avgScore > benchmark.averageScore
+                    ? "text-error"
+                    : "text-on-surface-variant"
+              }`}
             >
               {avgScore < benchmark.averageScore ? "−" : "+"}
               {Math.abs(avgScore - benchmark.averageScore)} vs benchmark
@@ -238,8 +233,8 @@ export function PeerBenchmarkCard({
       )}
 
       {/* Peer info */}
-      <div className="flex items-center gap-2 text-xs text-[var(--color-muted)]">
-        <Icon name="person"s className="h-4 w-4" />
+      <div className="flex items-center gap-2 text-xs text-on-surface-variant">
+        <Icon name="groups" className="h-4 w-4" />
         <span>
           Benchmark basert på {benchmark.label.toLowerCase()}-spillere (HCP{" "}
           {benchmark.handicapRange[0]}–{benchmark.handicapRange[1]})

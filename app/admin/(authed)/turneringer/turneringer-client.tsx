@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
 import type { TournamentItem, TournamentStats } from "./actions";
 import { deleteTournament } from "./actions";
 
@@ -236,6 +237,13 @@ export function TurneringerClient({
  />
 
  <div className="p-6 space-y-6">
+ {/* Heritage Grid Header */}
+ <div className="space-y-2">
+ <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+ <h1 className="text-2xl font-bold tracking-tight text-on-surface">Turneringer<span className="text-outline">.</span></h1>
+ <p className="text-on-surface-variant">Administrer turneringer og spillerplaner</p>
+ </div>
+
  <AdminPageHeader
  title="Turneringer"
  subtitle="Administrer turneringer og spillerplaner"
@@ -251,7 +259,26 @@ export function TurneringerClient({
  />
 
  {/* Stats */}
- <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+ <BentoGrid cols={4} gap="md">
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Kommende</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{stats.upcoming}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Pågående</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{stats.ongoing}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Fullført</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{stats.completed}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Totale spillere</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{stats.totalPlayers}</p>
+ </BentoCard>
+ </BentoGrid>
+
+ <div className="hidden">
  <AdminStatCard
  label="Kommende"
  value={stats.upcoming}
@@ -265,18 +292,19 @@ export function TurneringerClient({
  <AdminStatCard
  label="Fullført"
  value={stats.completed}
- icon={<Icon name="check"Circle className="w-5 h-5" />}
+ icon={<Icon name="check_circle" className="w-5 h-5" />}
  />
  <AdminStatCard
  label="Totale spillere"
  value={stats.totalPlayers}
- icon={<Icon name="person"s className="w-5 h-5" />}
+ icon={<Icon name="person" className="w-5 h-5" />}
  />
  </div>
 
+ <NightSurface variant="ambient" className="rounded-2xl p-6">
+ <MonoLabel size="xs" uppercase className="text-surface/60 block mb-4">Turneringsoversikt</MonoLabel>
  {/* Filter tabs */}
- <Card>
- <div className="flex gap-2 flex-wrap">
+ <div className="flex gap-2 flex-wrap mb-4">
  {filterTabs.map((f) => (
  <button
  key={f.id}
@@ -293,7 +321,6 @@ export function TurneringerClient({
  </button>
  ))}
  </div>
- </Card>
 
  {/* Tournaments List */}
  {filteredTournaments.length === 0 ? (
@@ -405,6 +432,7 @@ export function TurneringerClient({
  })}
  </div>
  )}
+ </NightSurface>
  </div>
 
  <NyTurneringModal

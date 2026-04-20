@@ -123,7 +123,7 @@ export function MeldingerChatClient({
   }
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] bg-surface-container-lowest rounded-2xl border border-outline-variant/30 overflow-hidden shadow-sm">
+    <div className="flex h-[calc(100vh-8rem)] overflow-hidden">
       {/* Samtaleliste */}
       <div
         className={cn(

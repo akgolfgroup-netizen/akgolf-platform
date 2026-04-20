@@ -32,7 +32,7 @@ export const AdminTextarea = React.forwardRef<
         rows={rows}
         className={cn(
           "admin-input resize-y",
-          error && "border-[var(--color-error)] focus:ring-[var(--color-error)]/20 focus:border-[var(--color-error)]",
+          error && "border-error focus:ring-error/20 focus:border-error",
           className,
         )}
         aria-invalid={error ? "true" : undefined}
@@ -48,13 +48,13 @@ export const AdminTextarea = React.forwardRef<
       {error ? (
         <p
           id={`${textareaId}-error`}
-          className="text-xs text-[var(--color-error)]"
+          className="text-xs text-error"
           role="alert"
         >
           {error}
         </p>
       ) : helper ? (
-        <p id={`${textareaId}-helper`} className="text-xs text-[var(--color-muted)]">
+        <p id={`${textareaId}-helper`} className="text-xs text-on-surface-variant">
           {helper}
         </p>
       ) : null}

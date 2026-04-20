@@ -8,6 +8,7 @@ import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
 import {
   getTasks, updateTaskStatus, deleteTask,
   type FocusTask, type DivisionStats,
@@ -99,6 +100,13 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
       <MCTopbar title="Focus" subtitle="Oppgaver og dagsoversikt per divisjon" onMenuClick={toggle} />
 
       <div className="p-6 space-y-6">
+        {/* Heritage Grid Header */}
+        <div className="space-y-2">
+          <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+          <h1 className="text-2xl font-bold tracking-tight text-on-surface">Focus<span className="text-outline">.</span></h1>
+          <p className="text-on-surface-variant">Oppgaver og dagsoversikt per divisjon</p>
+        </div>
+
         {/* Division selector */}
         <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-surface-container-lowest border border-outline-variant/30">
           {DIVISIONS.map((d) => {
@@ -117,13 +125,30 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4">
+        <BentoGrid cols={3} gap="md">
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Å gjøre</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{divStats?.todo ?? 0}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Pågår</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{divStats?.inProgress ?? 0}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Ferdig</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{divStats?.done ?? 0}</p>
+          </BentoCard>
+        </BentoGrid>
+
+        <div className="hidden">
           <StatCard label="Å gjøre" value={divStats?.todo ?? 0} />
           <StatCard label="Pågår" value={divStats?.inProgress ?? 0} />
           <StatCard label="Ferdig" value={divStats?.done ?? 0} />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <NightSurface variant="ambient" className="rounded-2xl p-6">
+          <MonoLabel size="xs" uppercase className="text-surface/60 block mb-4">Oppgaveboard</MonoLabel>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Todo */}
           <TaskColumn
             title="Å gjøre"
@@ -151,56 +176,57 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
           />
 
           {/* Today's bookings */}
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden flex flex-col">
-            <div className="px-5 py-4 border-b border-outline-variant/30 flex items-center justify-between bg-surface">
-              <h3 className="text-sm font-semibold text-on-surface">I dag</h3>
-              <Icon name="calendar_today" className="w-4 h-4 text-on-surface-variant" />
+          <GlassPanel variant="dark" padding="md">
+            <div className="flex items-center justify-between mb-4">
+              <MonoLabel size="xs" uppercase className="text-surface/60">I dag</MonoLabel>
+              <Icon name="calendar_today" className="w-4 h-4 text-surface/60" />
             </div>
-            <div className="p-4 space-y-2 flex-1">
+            <div className="space-y-2">
               {divBookings.length === 0 ? (
-                <div className="text-center py-8 text-on-surface-variant">
+                <div className="text-center py-8 text-surface/60">
                   <Icon name="schedule" className="w-8 h-8 mx-auto mb-2 opacity-50" />
                   <p className="text-sm">Ingen økter i dag</p>
                 </div>
               ) : divBookings.map((b) => (
                 <div 
                   key={b.id} 
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-surface transition-colors border border-transparent hover:border-outline-variant/30"
+                  className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.04] border border-white/[0.06] hover:border-white/[0.12] transition-colors"
                 >
-                  <div className="flex items-center justify-center w-14 h-9 bg-on-surface text-surface rounded-lg text-xs font-semibold tabular-nums">
+                  <div className="flex items-center justify-center w-14 h-9 bg-secondary-fixed text-on-secondary-fixed rounded-lg text-xs font-semibold tabular-nums">
                     {format(new Date(b.time), "HH:mm")}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-semibold text-on-surface truncate">{b.studentName}</div>
-                    <div className="text-xs text-on-surface-variant">{b.serviceName}</div>
+                    <div className="text-sm font-semibold text-[#F2F5F1] truncate">{b.studentName}</div>
+                    <div className="text-xs text-surface/60">{b.serviceName}</div>
                   </div>
                 </div>
               ))}
             </div>
+          </GlassPanel>
           </div>
-        </div>
+        </NightSurface>
 
         {/* Done (collapsed) */}
         {doneTasks.length > 0 && (
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden">
+          <GlassPanel variant="light" padding="md">
             <details>
-              <summary className="px-5 py-4 text-sm font-semibold text-on-surface cursor-pointer select-none hover:bg-surface transition-colors border-b border-outline-variant/30 list-none flex items-center justify-between">
+              <summary className="text-sm font-semibold text-on-surface cursor-pointer select-none hover:bg-surface-container transition-colors list-none flex items-center justify-between">
                 <span>Ferdig ({doneTasks.length})</span>
                 <span className="text-on-surface-variant">▼</span>
               </summary>
-              <div className="p-4 space-y-1">
+              <div className="mt-4 space-y-1">
                 {doneTasks.map((t) => (
                   <div 
                     key={t.id} 
                     className="flex items-center gap-3 p-2 text-sm text-on-surface-variant line-through"
                   >
-                    <Icon name="check"Circle2 className="w-4 h-4 text-on-surface-variant shrink-0" />
+                    <Icon name="check_circle" className="w-4 h-4 text-on-surface-variant shrink-0" />
                     {t.title}
                   </div>
                 ))}
               </div>
             </details>
-          </div>
+          </GlassPanel>
         )}
       </div>
 

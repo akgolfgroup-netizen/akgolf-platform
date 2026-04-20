@@ -11,6 +11,7 @@ import {
 } from "date-fns";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { useToast } from "@/components/portal/mission-control/ui";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
 import type { CalendarBooking, CalendarBlockedTime, CalendarAvailability } from "./actions";
 import {
   getBookingsForPeriod,
@@ -213,6 +214,34 @@ export default function KalenderClient({
       />
 
       <div className="p-6 space-y-6 bg-surface min-h-screen">
+        {/* Heritage Grid Header */}
+        <div className="space-y-2">
+          <MonoLabel size="xs" uppercase className="block text-outline">
+            Mission Control
+          </MonoLabel>
+          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
+            Kalender<span className="text-outline">.</span>
+          </h1>
+          <p className="text-on-surface-variant">
+            Full oversikt over alle bookinger og hendelser
+          </p>
+        </div>
+
+        <BentoGrid cols={3} gap="md">
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Måned</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{format(currentDate, "MMMM yyyy")}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Bookinger</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{bookings.length}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Instruktører</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{instructors.length}</p>
+          </BentoCard>
+        </BentoGrid>
+
         <KalenderControls
           currentDate={currentDate}
           viewMode={viewMode}
@@ -266,7 +295,12 @@ export default function KalenderClient({
           )}
         </div>
 
-        {viewMode !== "availability" && <KalenderHeatmap bookings={bookings} />}
+        {viewMode !== "availability" && (
+          <NightSurface variant="ambient" className="rounded-2xl p-6">
+            <MonoLabel size="xs" uppercase className="text-surface/60 block mb-4">Aktivitetsheatmap</MonoLabel>
+            <KalenderHeatmap bookings={bookings} />
+          </NightSurface>
+        )}
       </div>
 
       <KalenderOverlays

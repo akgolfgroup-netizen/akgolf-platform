@@ -219,7 +219,7 @@ export default function LoginPage() {
                 "Direkte kontakt med din trener",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-3">
-                  <Icon name="check"Circle2 className="w-4 h-4 text-[var(--color-accent-cta)] flex-shrink-0" />
+                  <Icon name="check_circle" className="w-4 h-4 text-[var(--color-accent-cta)] flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}

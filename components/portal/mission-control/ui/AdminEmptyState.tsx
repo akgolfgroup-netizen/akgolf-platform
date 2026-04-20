@@ -25,17 +25,17 @@ export function AdminEmptyState({
     >
       {icon && (
         <div
-          className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-[var(--color-grey-100)] text-[var(--color-muted)]"
+          className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-surface-container text-on-surface-variant"
           aria-hidden="true"
         >
           {icon}
         </div>
       )}
-      <h3 className="text-base font-semibold text-[var(--color-text)]">
+      <h3 className="text-base font-semibold text-on-surface">
         {title}
       </h3>
       {description && (
-        <p className="mt-1.5 max-w-sm text-sm text-[var(--color-muted)]">
+        <p className="mt-1.5 max-w-sm text-sm text-on-surface-variant">
           {description}
         </p>
       )}

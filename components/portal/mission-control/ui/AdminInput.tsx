@@ -28,7 +28,7 @@ export const AdminInput = React.forwardRef<HTMLInputElement, AdminInputProps>(
           id={inputId}
           className={cn(
             "admin-input",
-            error && "border-[var(--color-error)] focus:ring-[var(--color-error)]/20 focus:border-[var(--color-error)]",
+            error && "border-error focus:ring-error/20 focus:border-error",
             className,
           )}
           aria-invalid={error ? "true" : undefined}
@@ -40,13 +40,13 @@ export const AdminInput = React.forwardRef<HTMLInputElement, AdminInputProps>(
         {error ? (
           <p
             id={`${inputId}-error`}
-            className="text-xs text-[var(--color-error)]"
+            className="text-xs text-error"
             role="alert"
           >
             {error}
           </p>
         ) : helper ? (
-          <p id={`${inputId}-helper`} className="text-xs text-[var(--color-muted)]">
+          <p id={`${inputId}-helper`} className="text-xs text-on-surface-variant">
             {helper}
           </p>
         ) : null}

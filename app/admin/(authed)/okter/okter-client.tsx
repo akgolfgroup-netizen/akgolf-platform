@@ -8,6 +8,7 @@ import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
 import type { SessionItem, SessionStats } from "./actions";
 import { saveSessionNotes } from "./actions";
 import { BookingStatus } from "@prisma/client";
@@ -115,36 +116,42 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  />
 
  <div className="p-6 space-y-6">
- {/* Page Header */}
- <div>
- <h1 className="text-2xl font-semibold text-on-surface">Økter</h1>
- <p className="text-sm text-on-surface-variant mt-1">
- Gjennomgå fullførte økter, avlysninger og no-shows
- </p>
+ {/* Heritage Grid Header */}
+ <div className="space-y-2">
+ <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+ <h1 className="text-2xl font-bold tracking-tight text-on-surface">Økter<span className="text-outline">.</span></h1>
+ <p className="text-on-surface-variant">Gjennomgå fullførte økter, avlysninger og no-shows</p>
  </div>
 
  {/* Stats */}
- <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
- <StatCard
- label="Fullført totalt"
- value={stats.completed}
- icon={<Icon name="check"Circle className="w-5 h-5" />}
- />
- <StatCard
- label="Avlyst"
- value={stats.cancelled}
- icon={<Icon name="close"Circle className="w-5 h-5" />}
- />
- <StatCard
- label="No-show"
- value={stats.noShow}
- icon={<Icon name="error" className="w-5 h-5" />}
- />
- <StatCard
- label="Oppmøterate"
- value={`${stats.attendanceRate}%`}
- />
+ <BentoGrid cols={4} gap="md">
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Fullført totalt</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{stats.completed}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Avlyst</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{stats.cancelled}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">No-show</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{stats.noShow}</p>
+ </BentoCard>
+ <BentoCard variant="light" padding="md">
+ <MonoLabel size="xs" uppercase className="text-outline block">Oppmøterate</MonoLabel>
+ <p className="text-2xl font-bold text-on-surface mt-1">{stats.attendanceRate}%</p>
+ </BentoCard>
+ </BentoGrid>
+
+ <div className="hidden">
+ <StatCard label="Fullført totalt" value={stats.completed} icon={<Icon name="check_circle" className="w-5 h-5" />} />
+ <StatCard label="Avlyst" value={stats.cancelled} icon={<Icon name="cancel" className="w-5 h-5" />} />
+ <StatCard label="No-show" value={stats.noShow} icon={<Icon name="error" className="w-5 h-5" />} />
+ <StatCard label="Oppmøterate" value={`${stats.attendanceRate}%`} />
  </div>
+
+ <NightSurface variant="ambient" className="rounded-2xl p-6">
+ <MonoLabel size="xs" uppercase className="text-surface/60 block mb-4">Øktoversikt</MonoLabel>
 
  {/* Filters & Search */}
  <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
@@ -255,7 +262,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  className="p-1.5 rounded-md hover:bg-surface text-on-surface-variant transition-colors"
  aria-label="Rediger notater"
  >
- <Icon name="edit"3 className="w-4 h-4" />
+ <Icon name="edit" className="w-4 h-4" />
  </button>
  </div>
  );
@@ -264,9 +271,11 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  </div>
  )}
 
+ </NightSurface>
+
  {/* Notes Panel */}
  {selectedSessionData && (
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
+ <GlassPanel variant="light" padding="md">
  <div className="flex items-center justify-between mb-4">
  <h3 className="text-sm font-semibold text-on-surface">Notater</h3>
  <button
@@ -275,7 +284,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  className="p-1.5 rounded-md hover:bg-surface transition-colors"
  aria-label="Lukk"
  >
- <Icon name="close"Circle className="w-4 h-4 text-on-surface-variant" />
+ <Icon name="cancel" className="w-4 h-4 text-on-surface-variant" />
  </button>
  </div>
  <div className="flex items-center gap-3 mb-4">
@@ -319,7 +328,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  {isPending ? "Lagrer...": "Lagre notater"}
  </button>
  </div>
- </div>
+ </GlassPanel>
  )}
  </div>
  </>

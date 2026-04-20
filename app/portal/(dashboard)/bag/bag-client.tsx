@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
@@ -85,6 +84,9 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
+          <MonoLabel size="xs" uppercase className="mb-2 block text-on-surface-variant">
+            Utstyr
+          </MonoLabel>
           <h1 className="text-2xl font-bold text-on-surface">Min bag</h1>
           <p className="text-on-surface-variant mt-1">
             {clubs.length > 0
@@ -110,7 +112,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
               Ingen klubber i bagen
             </h3>
             <p className="text-on-surface-variant max-w-md mx-auto">
-              Legg til klubbene dine for a fa oversikt over avstander, gap-analyse
+              Legg til klubbene dine for å få oversikt over avstander, gap-analyse
               og anbefalinger.
             </p>
           </div>
@@ -171,13 +173,13 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                   </div>
                   <div className="flex gap-2">
                     <button className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface text-sm text-on-surface-variant hover:bg-surface-variant transition-colors">
-                      <Icon name="edit"2 className="w-3 h-3" />
+                      <Icon name="edit" className="w-3 h-3" />
                       Rediger
                     </button>
                     <button
                       onClick={() => handleDelete(club.id)}
                       disabled={isPending}
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[error]/10 text-sm text-[error] hover:bg-[error]/20 transition-colors disabled:opacity-50"
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-error/10 text-sm text-error hover:bg-error/20 transition-colors disabled:opacity-50"
                     >
                       <Icon name="delete" className="w-3 h-3" />
                       Fjern
@@ -250,7 +252,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
 
       {/* Gap Analysis */}
       {gapAnalysis.length > 0 && (
-        <div className="bg-secondary-fixed/10 rounded-2xl p-6 border border-[accent-cta]/40">
+        <div className="bg-secondary-fixed/10 rounded-2xl p-6 border border-secondary-fixed/40">
           <div className="flex items-center gap-2 mb-4">
             <Icon name="trending_up" className="w-5 h-5 text-on-surface" />
             <h3 className="font-semibold text-on-surface">Gap-analyse</h3>
@@ -276,7 +278,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
             <select
               value={newClub.name}
               onChange={(e) => setNewClub({ ...newClub, name: e.target.value })}
-              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-on-surface bg-surface outline-none focus:border-[black]"
+              className="w-full px-3 py-2.5 rounded-xl border border-outline-variant text-on-surface bg-surface outline-none focus:border-on-surface"
             >
               <option value="">Velg klubb...</option>
               {DEFAULT_CLUBS.filter(
@@ -292,7 +294,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
               value={newClub.brand}
               onChange={(e) => setNewClub({ ...newClub, brand: e.target.value })}
               placeholder="Merke (valgfritt)"
-              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-on-surface bg-surface outline-none focus:border-[black]"
+              className="w-full px-3 py-2.5 rounded-xl border border-outline-variant text-on-surface bg-surface outline-none focus:border-on-surface"
             />
             <input
               type="number"
@@ -301,7 +303,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
                 setNewClub({ ...newClub, avgCarry: e.target.value })
               }
               placeholder="Gjennomsnittlig carry (meter)"
-              className="w-full px-3 py-2.5 rounded-xl border border-[grey-200] text-on-surface bg-surface outline-none focus:border-[black]"
+              className="w-full px-3 py-2.5 rounded-xl border border-outline-variant text-on-surface bg-surface outline-none focus:border-on-surface"
             />
             <div className="flex gap-2">
               <button
@@ -314,7 +316,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
               </button>
               <button
                 onClick={() => setShowAdd(false)}
-                className="px-4 py-2.5 rounded-full border border-[grey-200] text-on-surface-variant hover:bg-surface transition-colors"
+                className="px-4 py-2.5 rounded-full border border-outline-variant text-on-surface-variant hover:bg-surface transition-colors"
               >
                 <Icon name="close" className="h-4 w-4" />
               </button>
@@ -328,7 +330,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
         <div className="bg-surface rounded-xl p-4 text-sm text-on-surface-variant">
           <p className="font-medium text-on-surface">Visste du?</p>
           <p className="mt-1">
-            Last opp TrackMan-data for a fa presise gjennomsnitt og spredning
+            Last opp TrackMan-data for å få presise gjennomsnitt og spredning
             per klubb automatisk.
           </p>
         </div>
@@ -341,7 +343,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
             <Icon name="my_location" className="w-4 h-4" />
             <div className="text-left">
               <p className="text-sm font-medium">Mal avstander</p>
-              <p className="text-xs text-muted-foreground">Kalibrer dine klubber</p>
+              <p className="text-xs text-on-surface-variant">Kalibrer dine klubber</p>
             </div>
           </a>
         </Button>
@@ -350,7 +352,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
             <Icon name="trending_up" className="w-4 h-4" />
             <div className="text-left">
               <p className="text-sm font-medium">Se trend</p>
-              <p className="text-xs text-muted-foreground">Avstandsutvikling</p>
+              <p className="text-xs text-on-surface-variant">Avstandsutvikling</p>
             </div>
           </a>
         </Button>
@@ -359,7 +361,7 @@ export function BagClient({ clubs: initialClubs, gapAnalysis }: BagClientProps) 
             <Icon name="chevron_right" className="w-4 h-4" />
             <div className="text-left">
               <p className="text-sm font-medium">Anbefalinger</p>
-              <p className="text-xs text-muted-foreground">Optimaliser bagen</p>
+              <p className="text-xs text-on-surface-variant">Optimaliser bagen</p>
             </div>
           </a>
         </Button>

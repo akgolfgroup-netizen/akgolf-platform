@@ -1,11 +1,11 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Send, TrendingUp, Users, Calendar, BarChart3, Lightbulb, ThumbsUp, ThumbsDown, Clock } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { MonoLabel, GlassPanel } from "@/components/portal/patterns";
 
 const suggestedQuestions = [
   { icon: Users, text: "Hvem har ikke booket på 2 uker?", category: "elever" },
@@ -165,8 +165,21 @@ export function ChatClient() {
         onMenuClick={toggle}
       />
 
-      <div className="p-6 flex flex-col" style={{ height: "calc(100vh - 56px)" }}>
-        <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-surface-container-lowest border border-outline-variant/30 rounded-xl">
+      <div className="p-6 space-y-6 flex flex-col h-[calc(100vh-56px)]">
+        {/* Heritage Grid Header */}
+        <div className="space-y-2">
+          <MonoLabel size="xs" uppercase className="block text-outline">
+            Mission Control
+          </MonoLabel>
+          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
+            AI-assistent<span className="text-outline">.</span>
+          </h1>
+          <p className="text-on-surface-variant">
+            Still spørsmål om data, elever og analytikk
+          </p>
+        </div>
+
+        <GlassPanel variant="light" padding="none" className="flex flex-col flex-1 min-h-0">
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.map((msg) => (
@@ -224,12 +237,12 @@ export function ChatClient() {
                       >
                         <ThumbsDown className="w-3.5 h-3.5" />
                       </button>
-                      <span className="text-[10px] text-on-surface-variant ml-auto">
+                      <MonoLabel size="xs" className="text-on-surface-variant ml-auto">
                         {msg.timestamp.toLocaleTimeString("nb-NO", {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
-                      </span>
+                      </MonoLabel>
                     </div>
                   )}
                 </div>
@@ -252,10 +265,12 @@ export function ChatClient() {
           {/* Suggested Questions */}
           {messages.length < 3 && (
             <div className="px-6 py-3 border-t border-outline-variant/30">
-              <p className="text-xs text-on-surface-variant mb-2">Foreslåtte spørsmål:</p>
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-2">
+                Foreslåtte spørsmål
+              </MonoLabel>
               <div className="flex flex-wrap gap-2">
                 {suggestedQuestions.map((q, i) => {
-                  const Icon = q.icon;
+                  const SuggestedIcon = q.icon;
                   return (
                     <button
                       key={i}
@@ -263,7 +278,7 @@ export function ChatClient() {
                       disabled={isStreaming}
                       className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-surface-container-lowest hover:bg-surface text-on-surface rounded-full transition-colors border border-outline-variant/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <Icon className="w-3 h-3" />
+                      <SuggestedIcon className="w-3 h-3" />
                       {q.text}
                     </button>
                   );
@@ -301,12 +316,11 @@ export function ChatClient() {
                 <Icon name="send" className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-[10px] text-on-surface-variant mt-2 text-center">
-              AI-assistenten kan gjøre feil. Viktig informasjon bør
-              dobbeltsjekkes.
-            </p>
+            <MonoLabel size="xs" className="text-on-surface-variant mt-2 text-center block">
+              AI-assistenten kan gjøre feil. Viktig informasjon bør dobbeltsjekkes.
+            </MonoLabel>
           </div>
-        </div>
+        </GlassPanel>
       </div>
     </>
   );

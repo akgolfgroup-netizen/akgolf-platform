@@ -17,6 +17,7 @@ import {
   AdminHeatmap,
   AdminDataTable,
 } from "@/components/portal/mission-control/ui";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
 import { Badge } from "@/components/ui/badge";
 import type {
   AdminBarChartDatum,
@@ -205,6 +206,13 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
       />
 
       <div className="p-6 space-y-6">
+        {/* Heritage Grid Header */}
+        <div className="space-y-2">
+          <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+          <h1 className="text-2xl font-bold tracking-tight text-on-surface">Kapasitet<span className="text-outline">.</span></h1>
+          <p className="text-on-surface-variant">{data.weekRange.from} – {data.weekRange.to}</p>
+        </div>
+
         {/* Alert */}
         <div className="flex items-start gap-3 rounded-xl bg-info-light border border-info/20 p-4 text-info-text">
           <Icon name="info" className="w-5 h-5 shrink-0 mt-0.5" />
@@ -216,7 +224,27 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <BentoGrid cols={4} gap="md">
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Denne uken</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{occupancyPct}%</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Ledige sloter</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{freeSlots}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Potensiell inntekt</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{formatKr(potentialRevenue)}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Ukentlig inntekt</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{formatKr(weeklyTotal.revenue)}</p>
+          </BentoCard>
+        </BentoGrid>
+
+        {/* Legacy stat cards - hidden, replaced by BentoGrid above */}
+        <div className="hidden">
           <AdminStatCard
             label="Denne uken"
             value={`${occupancyPct}%`}
@@ -239,8 +267,11 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
           />
         </div>
 
-        {/* Hero — total utnyttelse + trend */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <NightSurface variant="ambient" className="rounded-2xl p-6">
+          <MonoLabel size="xs" uppercase className="text-surface/60 block mb-4">Kapasitetsanalyse</MonoLabel>
+
+          {/* Hero — total utnyttelse + trend */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
             <h3 className="text-lg font-semibold text-on-surface mb-4">
               Total utnyttelse
@@ -275,8 +306,8 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
           </div>
         </div>
 
-        {/* Coach Gauges */}
-        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
+          {/* Coach Gauges */}
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
           <h3 className="text-lg font-semibold text-on-surface mb-4">
             Kapasitet per coach
           </h3>
@@ -314,8 +345,8 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
           )}
         </div>
 
-        {/* Ukesutnyttelse + belegg heatmap */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Ukesutnyttelse + belegg heatmap */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
             <h3 className="text-lg font-semibold text-on-surface mb-4">
               Ukesutnyttelse
@@ -352,19 +383,51 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
           </div>
         </div>
 
-        {/* Detail table */}
-        <div>
-          <h3 className="text-lg font-semibold text-on-surface mb-3">
-            Detaljer per coach
-          </h3>
-          <AdminDataTable
+          {/* Detail table */}
+          <div>
+            <h3 className="text-lg font-semibold text-on-surface mb-3">
+              Detaljer per coach
+            </h3>
+            <AdminDataTable
             columns={coachColumns}
             data={coachRows}
             searchable
             searchPlaceholder="Søk coach..."
             emptyMessage="Ingen coacher funnet."
-          />
-        </div>
+            />
+          </div>
+        </NightSurface>
+
+        {/* Monthly summary */}
+        <GlassPanel variant="light" padding="md">
+          <div className="mb-4 flex items-center gap-2">
+            <Icon name="calendar_today" size={20} className="text-primary" />
+            <MonoLabel size="xs" uppercase>Månedsoversikt</MonoLabel>
+          </div>
+          <h3 className="text-lg font-semibold text-on-surface mb-3">
+            Denne måneden ({data.monthRange.from} – {data.monthRange.to})
+          </h3>
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <p className="text-xs text-on-surface-variant">Inntekt</p>
+              <p className="text-lg font-bold text-on-surface tabular-nums">
+                {formatKr(data.monthlyTotal.revenue)}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-on-surface-variant">Maks potensiell</p>
+              <p className="text-lg font-bold text-on-surface tabular-nums">
+                {formatKr(data.monthlyTotal.maxRevenue)}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-on-surface-variant">Bookinger</p>
+              <p className="text-lg font-bold text-on-surface tabular-nums">
+                {data.monthlyTotal.bookedCount}
+              </p>
+            </div>
+          </div>
+        </GlassPanel>
 
         {/* Empty slots */}
         <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
@@ -449,32 +512,6 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
           </div>
         </div>
 
-        {/* Monthly summary */}
-        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-on-surface mb-3">
-            Denne måneden ({data.monthRange.from} – {data.monthRange.to})
-          </h3>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <p className="text-xs text-on-surface-variant">Inntekt</p>
-              <p className="text-lg font-bold text-on-surface tabular-nums">
-                {formatKr(data.monthlyTotal.revenue)}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs text-on-surface-variant">Maks potensiell</p>
-              <p className="text-lg font-bold text-on-surface tabular-nums">
-                {formatKr(data.monthlyTotal.maxRevenue)}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs text-on-surface-variant">Bookinger</p>
-              <p className="text-lg font-bold text-on-surface tabular-nums">
-                {data.monthlyTotal.bookedCount}
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </>
   );

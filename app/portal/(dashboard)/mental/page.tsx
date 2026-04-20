@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -19,6 +18,18 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+
+import { MonoLabel, BentoGrid, BentoCard } from "@/components/portal/patterns";
+
+// ── Design tokens as hex (for Recharts) ──────────────────
+const COLORS = {
+  outlineVariant: "#D5DFDB",
+  onSurfaceVariant: "#7A8C85",
+  onSurface: "#0A1F18",
+  ai: "#AF52DE",
+  info: "#007AFF",
+  success: "#1A4D36",
+};
 
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
@@ -79,6 +90,9 @@ export default function MentalPage() {
         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
         <div>
+          <MonoLabel size="xs" uppercase className="mb-2 block text-on-surface-variant">
+            Mental trening
+          </MonoLabel>
           <h1 className="text-2xl font-bold text-on-surface">Mental scorecard</h1>
           <p className="text-on-surface-variant mt-1">Spor fokus, selvtillit og rutiner</p>
         </div>
@@ -147,44 +161,70 @@ function TrendsTab({ data, loading }: { data: { date: string; focus: number; con
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#ECF0EF" />
-                <Icon name="close"Axis dataKey="date" tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
-                <YAxis domain={[0, 10]} tick={{ fontSize: 12, fill: "#7A8C85" }} axisLine={false} tickLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke={COLORS.outlineVariant} />
+                <XAxis dataKey="date" tick={{ fontSize: 12, fill: COLORS.onSurfaceVariant }} axisLine={false} tickLine={false} />
+                <YAxis domain={[0, 10]} tick={{ fontSize: 12, fill: COLORS.onSurfaceVariant }} axisLine={false} tickLine={false} />
                 <Tooltip
-                  contentStyle={{ borderRadius: 12, border: "1px solid #D5DFDB" }}
-                  labelStyle={{ color: "#0A1F18", fontWeight: 600 }}
+                  contentStyle={{ borderRadius: 12, border: `1px solid ${COLORS.outlineVariant}` }}
+                  labelStyle={{ color: COLORS.onSurface, fontWeight: 600 }}
                 />
                 <Legend wrapperStyle={{ paddingTop: 8 }} />
-                <Line type="monotone" dataKey="focus" name="Fokus" stroke="#AF52DE" strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="confidence" name="Selvtillit" stroke="#007AFF" strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="commitment" name="Engasjement" stroke="#0A1F18" strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="acceptance" name="Aksept" stroke="#1A4D36" strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="focus" name="Fokus" stroke={COLORS.ai} strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="confidence" name="Selvtillit" stroke={COLORS.info} strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="commitment" name="Engasjement" stroke={COLORS.onSurface} strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="acceptance" name="Aksept" stroke={COLORS.success} strokeWidth={2} dot={{ r: 3 }} />
               </LineChart>
             </ResponsiveContainer>
           )}
         </div>
       </PremiumCard>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <MiniStat icon={<Icon name="psychology" className="w-4 h-4 text-purple-500" />} label="Fokus snitt" value={avg(data.map((d) => d.focus))} />
-        <MiniStat icon={<Icon name="my_location" className="w-4 h-4 text-blue-500" />} label="Selvtillit snitt" value={avg(data.map((d) => d.confidence))} />
-        <MiniStat icon={<Icon name="calendar_today" className="w-4 h-4 text-on-surface" />} label="Engasjement snitt" value={avg(data.map((d) => d.commitment))} />
-        <MiniStat icon={<Icon name="flag" className="w-4 h-4 text-success" />} label="Aksept snitt" value={avg(data.map((d) => d.acceptance))} />
-      </div>
+      <BentoGrid cols={4} gap="md">
+        <BentoCard variant="light" padding="md">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">
+              <Icon name="psychology" className="w-4 h-4 text-ai" />
+            </div>
+            <div>
+              <p className="text-xs text-on-surface-variant">Fokus snitt</p>
+              <p className="text-lg font-bold text-on-surface tabular-nums">{avg(data.map((d) => d.focus))}</p>
+            </div>
+          </div>
+        </BentoCard>
+        <BentoCard variant="light" padding="md">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">
+              <Icon name="my_location" className="w-4 h-4 text-info" />
+            </div>
+            <div>
+              <p className="text-xs text-on-surface-variant">Selvtillit snitt</p>
+              <p className="text-lg font-bold text-on-surface tabular-nums">{avg(data.map((d) => d.confidence))}</p>
+            </div>
+          </div>
+        </BentoCard>
+        <BentoCard variant="light" padding="md">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">
+              <Icon name="calendar_today" className="w-4 h-4 text-on-surface" />
+            </div>
+            <div>
+              <p className="text-xs text-on-surface-variant">Engasjement snitt</p>
+              <p className="text-lg font-bold text-on-surface tabular-nums">{avg(data.map((d) => d.commitment))}</p>
+            </div>
+          </div>
+        </BentoCard>
+        <BentoCard variant="light" padding="md">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">
+              <Icon name="flag" className="w-4 h-4 text-success" />
+            </div>
+            <div>
+              <p className="text-xs text-on-surface-variant">Aksept snitt</p>
+              <p className="text-lg font-bold text-on-surface tabular-nums">{avg(data.map((d) => d.acceptance))}</p>
+            </div>
+          </div>
+        </BentoCard>
+      </BentoGrid>
     </div>
-  );
-}
-
-function MiniStat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return (
-    <PremiumCard padding="md" radius="large" hover="lift">
-      <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">{icon}</div>
-        <div>
-          <p className="text-xs text-on-surface-variant">{label}</p>
-          <p className="text-lg font-bold text-on-surface tabular-nums">{value}</p>
-        </div>
-      </div>
-    </PremiumCard>
   );
 }

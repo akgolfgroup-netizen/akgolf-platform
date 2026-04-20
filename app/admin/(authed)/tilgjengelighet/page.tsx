@@ -17,6 +17,7 @@ import { Card, Button, Tabs, Badge } from "@/components/ui";
 import type { TabItem } from "@/components/ui";
 import { format, startOfWeek, addDays } from "date-fns";
 import { nb } from "date-fns/locale";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
 import {
   getAvailability,
   upsertAvailability,
@@ -64,7 +65,7 @@ const tabItems: TabItem[] = [
   {
     id: "hours",
     label: "Arbeidstider",
-    icon: <Icon name="schedule"Icon className="w-4 h-4" />,
+    icon: <Icon name="schedule" className="w-4 h-4" />,
   },
   {
     id: "blocked",
@@ -350,6 +351,27 @@ export default function TilgjengelighetPage() {
       />
 
       <div className="p-6 space-y-6">
+        {/* Heritage Grid Header */}
+        <div className="space-y-2">
+          <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+          <h1 className="text-2xl font-bold tracking-tight text-on-surface">Tilgjengelighet<span className="text-outline">.</span></h1>
+          <p className="text-on-surface-variant">Sett arbeidstider og unntak for instruktører</p>
+        </div>
+
+        <BentoGrid cols={3} gap="md">
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Instruktører</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{instructors.length}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Blokkeringer</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{blockedTimes.length}</p>
+          </BentoCard>
+          <BentoCard variant="light" padding="md">
+            <MonoLabel size="xs" uppercase className="text-outline block">Google-synk</MonoLabel>
+            <p className="text-2xl font-bold text-on-surface mt-1">{blockedTimes.filter((bt) => bt.source === "GOOGLE_CALENDAR").length}</p>
+          </BentoCard>
+        </BentoGrid>
         {/* Instructor Selector */}
         <Card padding="sm">
           <div className="flex items-center gap-4 flex-wrap">
@@ -406,9 +428,9 @@ export default function TilgjengelighetPage() {
             {/* Tab: Arbeidstider */}
             {activeTab === "hours" && (
               <>
-                <Card padding="none" className="overflow-hidden">
+                <GlassPanel variant="light" padding="none" className="overflow-hidden">
                   <div className="px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-on-surface">Faste arbeidstider</h3>
+                    <MonoLabel size="xs" uppercase className="text-on-surface-variant">Faste arbeidstider</MonoLabel>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
                         <Icon name="repeat" className="w-4 h-4 text-on-surface-variant" />
@@ -421,7 +443,7 @@ export default function TilgjengelighetPage() {
                         onClick={handleSaveAvailability}
                         isLoading={isSaving}
                       >
-                        <Icon name="check"Circle className="w-4 h-4" />
+                        <Icon name="check_circle" className="w-4 h-4" />
                         Lagre
                       </Button>
                     </div>
@@ -479,12 +501,12 @@ export default function TilgjengelighetPage() {
                       );
                     })}
                   </div>
-                </Card>
+                </GlassPanel>
 
                 {/* Calendar Preview */}
-                <Card padding="none" className="overflow-hidden">
+                <GlassPanel variant="light" padding="none" className="overflow-hidden">
                   <div className="px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-on-surface">Kalendervisning</h3>
+                    <MonoLabel size="xs" uppercase className="text-on-surface-variant">Kalendervisning</MonoLabel>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setCurrentWeek(addDays(currentWeek, -7))}
@@ -547,12 +569,14 @@ export default function TilgjengelighetPage() {
                       })}
                     </div>
                   </div>
-                </Card>
+                </GlassPanel>
               </>
             )}
 
             {/* Tab: Blokkerte tider */}
             {activeTab === "blocked" && (
+              <NightSurface variant="ambient" className="rounded-2xl p-6">
+                <MonoLabel size="xs" uppercase className="text-surface/60 block mb-4">Blokkerte tider</MonoLabel>
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <div>
@@ -582,11 +606,12 @@ export default function TilgjengelighetPage() {
                   pagination={{ pageSize: 10 }}
                 />
               </div>
+              </NightSurface>
             )}
 
             {/* Tab: Google Calendar */}
             {activeTab === "google" && (
-              <Card>
+              <GlassPanel variant="light" padding="md">
                 <div className="flex flex-col items-center text-center py-6">
                   <div className="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-3">
                     <Icon name="calendar_today" className="w-6 h-6 text-on-surface" />
@@ -623,7 +648,7 @@ export default function TilgjengelighetPage() {
                     </p>
                   )}
                 </div>
-              </Card>
+              </GlassPanel>
             )}
           </>
         )}

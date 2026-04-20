@@ -203,7 +203,7 @@ export function WeekAdjustmentView() {
                 </div>
                 <div>
                   <p className="admin-label">Ledig</p>
-                  <p className="text-2xl font-bold text-[var(--color-success)] mt-1">
+                  <p className="text-2xl font-bold text-success mt-1">
                     {(
                       weekData.totalEffectiveHours - weekData.totalBookedHours
                     ).toFixed(1)}

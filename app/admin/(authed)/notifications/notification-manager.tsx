@@ -1,16 +1,18 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
-import { Send } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   AdminInput,
   AdminTextarea,
-  AdminStatCard,
 } from "@/components/portal/mission-control/ui";
+import {
+  MonoLabel,
+  BentoGrid,
+  BentoCard,
+  GlassPanel,
+} from "@/components/portal/patterns";
 
 interface PushStats {
   totalSubscriptions: number;
@@ -70,21 +72,41 @@ export function NotificationManager() {
   return (
     <div className="space-y-6">
       {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <AdminStatCard
-          label="Push-abonnementer"
-          value={stats?.totalSubscriptions ?? "—"}
-          icon={<Icon name="notifications" className="w-5 h-5" />}
-        />
-        <AdminStatCard
-          label="Unike brukere"
-          value={stats?.uniqueUsers ?? "—"}
-          icon={<Icon name="person"s className="w-5 h-5" />}
-        />
-      </div>
+      <BentoGrid cols={2} gap="md">
+        <BentoCard variant="light" padding="md">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
+                Push-abonnementer
+              </MonoLabel>
+              <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
+                {stats?.totalSubscriptions ?? "—"}
+              </p>
+            </div>
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary">
+              <Icon name="notifications" className="w-5 h-5" />
+            </div>
+          </div>
+        </BentoCard>
+        <BentoCard variant="light" padding="md">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
+                Unike brukere
+              </MonoLabel>
+              <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
+                {stats?.uniqueUsers ?? "—"}
+              </p>
+            </div>
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary">
+              <Icon name="person" className="w-5 h-5" />
+            </div>
+          </div>
+        </BentoCard>
+      </BentoGrid>
 
       {/* Send form */}
-      <Card>
+      <GlassPanel variant="light" padding="md">
         <h2 className="admin-section-title mb-5">Send notifikasjon</h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -122,7 +144,7 @@ export function NotificationManager() {
               onChange={(e) =>
                 setForm({ ...form, broadcast: e.target.checked })
               }
-              className="w-4 h-4 rounded border-outline-variant/30 text-on-surface focus:ring-black"
+              className="w-4 h-4 rounded border-outline-variant/30 text-on-surface focus:ring-on-surface"
             />
             <span className="text-sm text-on-surface">
               Send til alle brukere (broadcast)
@@ -135,7 +157,7 @@ export function NotificationManager() {
             isLoading={isSending}
           >
             {sent ? (
-              <Icon name="check"Circle className="w-4 h-4" />
+              <Icon name="check_circle" className="w-4 h-4" />
             ) : isSending ? (
               <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
             ) : (
@@ -144,7 +166,7 @@ export function NotificationManager() {
             {isSending ? "Sender..." : sent ? "Sendt!" : "Send notifikasjon"}
           </Button>
         </form>
-      </Card>
+      </GlassPanel>
     </div>
   );
 }

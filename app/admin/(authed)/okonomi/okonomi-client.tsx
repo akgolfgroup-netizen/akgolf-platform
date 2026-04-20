@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useMemo, useState } from "react";
 import { DollarSign } from "lucide-react";
@@ -10,7 +9,6 @@ import {
  AdminAreaChart,
  AdminBarChart,
  AdminDonutChart,
- AdminLineChart,
  AdminDataTable,
  AdminGauge,
  AdminSparkline,
@@ -21,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { OkonomiData } from "./actions";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -145,7 +144,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  sortable: true,
  align: "right",
  render: (row) => (
- <span className="tabular-nums font-semibold text-text">
+ <span className="tabular-nums font-semibold text-on-surface">
  {formatKr(row.amount)}
  </span>
  ),
@@ -177,7 +176,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  sortable: true,
  align: "right",
  render: (row) => (
- <span className="tabular-nums font-semibold text-red-600">
+ <span className="tabular-nums font-semibold text-error">
  -{formatKr(row.grossAmount)}
  </span>
  ),
@@ -220,6 +219,19 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  />
 
  <div className="p-6 space-y-6">
+ {/* Heritage Grid Header */}
+ <div className="space-y-2">
+ <MonoLabel size="xs" uppercase className="block text-outline">
+ Mission Control
+ </MonoLabel>
+ <h1 className="text-2xl font-bold tracking-tight text-on-surface">
+ Økonomi<span className="text-outline">.</span>
+ </h1>
+ <p className="text-on-surface-variant">
+ Oversikt over inntekter, fakturaer og refusjoner
+ </p>
+ </div>
+
  {/* Tidsperiode og handlinger */}
  <div className="flex items-center justify-between flex-wrap gap-3">
  <AdminDateRangePicker value={dateRange} onChange={setDateRange} />
@@ -239,45 +251,116 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  </div>
  </div>
 
- {/* KPI-kort med sparklines */}
- <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
- <StatCardSpark
- label="Dag"
- value={formatKr(data.revenue.day)}
- icon={<DollarSign className="w-5 h-5"/>}
- sparkData={sparkDaily}
- sparkColor="black"
- change={{ value: 8, positive: true }}
- />
- <StatCardSpark
- label="Uke"
- value={formatKr(data.revenue.week)}
- icon={<Icon name="credit_card" className="w-5 h-5" />}
- sparkData={sparkWeekly}
- sparkColor="success-text"
- change={{ value: 12, positive: true }}
- />
- <StatCardSpark
- label="Måned"
- value={formatKr(data.revenue.month)}
- icon={<Icon name="error" className="w-5 h-5" />}
- sparkData={sparkMonthly}
- sparkColor="#C48A32"
- change={{ value: 15, positive: true }}
- />
- <StatCardSpark
- label="År"
- value={yearTotal}
- icon={<Icon name="restart_alt" className="w-5 h-5" />}
- sparkData={sparkYearly}
- sparkColor="#D1F843"
- change={{ value: 22, positive: true }}
+ {/* KPI-kort med sparklines — BentoGrid */}
+ <BentoGrid cols={4} gap="md">
+ <BentoCard variant="light" padding="md">
+ <div className="flex items-start justify-between gap-4">
+ <div className="flex-1 min-w-0">
+ <MonoLabel size="xs" uppercase className="text-on-surface-variant block">Dag</MonoLabel>
+ <p className="mt-2 text-2xl font-bold text-on-surface tracking-tight tabular-nums">
+ {formatKr(data.revenue.day)}
+ </p>
+ <div className="mt-2 flex items-center gap-1 text-xs font-medium">
+ <span className="text-success-text">+8%</span>
+ <span className="text-on-surface-variant">vs forrige</span>
+ </div>
+ </div>
+ <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success-text shrink-0">
+ <DollarSign className="w-5 h-5" />
+ </div>
+ </div>
+ <div className="mt-3">
+ <AdminSparkline
+ data={sparkDaily}
+ color="#0A1F18"
+ width="100%"
+ height={32}
  />
  </div>
+ </BentoCard>
+
+ <BentoCard variant="light" padding="md">
+ <div className="flex items-start justify-between gap-4">
+ <div className="flex-1 min-w-0">
+ <MonoLabel size="xs" uppercase className="text-on-surface-variant block">Uke</MonoLabel>
+ <p className="mt-2 text-2xl font-bold text-on-surface tracking-tight tabular-nums">
+ {formatKr(data.revenue.week)}
+ </p>
+ <div className="mt-2 flex items-center gap-1 text-xs font-medium">
+ <span className="text-success-text">+12%</span>
+ <span className="text-on-surface-variant">vs forrige</span>
+ </div>
+ </div>
+ <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success-text shrink-0">
+ <Icon name="credit_card" className="w-5 h-5" />
+ </div>
+ </div>
+ <div className="mt-3">
+ <AdminSparkline
+ data={sparkWeekly}
+ color="#1A4D36"
+ width="100%"
+ height={32}
+ />
+ </div>
+ </BentoCard>
+
+ <BentoCard variant="light" padding="md">
+ <div className="flex items-start justify-between gap-4">
+ <div className="flex-1 min-w-0">
+ <MonoLabel size="xs" uppercase className="text-on-surface-variant block">Måned</MonoLabel>
+ <p className="mt-2 text-2xl font-bold text-on-surface tracking-tight tabular-nums">
+ {formatKr(data.revenue.month)}
+ </p>
+ <div className="mt-2 flex items-center gap-1 text-xs font-medium">
+ <span className="text-warning">+15%</span>
+ <span className="text-on-surface-variant">vs forrige</span>
+ </div>
+ </div>
+ <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-warning-light text-warning shrink-0">
+ <Icon name="error" className="w-5 h-5" />
+ </div>
+ </div>
+ <div className="mt-3">
+ <AdminSparkline
+ data={sparkMonthly}
+ color="#C48A32"
+ width="100%"
+ height={32}
+ />
+ </div>
+ </BentoCard>
+
+ <BentoCard variant="light" padding="md">
+ <div className="flex items-start justify-between gap-4">
+ <div className="flex-1 min-w-0">
+ <MonoLabel size="xs" uppercase className="text-on-surface-variant block">År</MonoLabel>
+ <p className="mt-2 text-2xl font-bold text-on-surface tracking-tight tabular-nums">
+ {yearTotal}
+ </p>
+ <div className="mt-2 flex items-center gap-1 text-xs font-medium">
+ <span className="text-success-text">+22%</span>
+ <span className="text-on-surface-variant">vs forrige</span>
+ </div>
+ </div>
+ <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-secondary-fixed/20 text-secondary-fixed shrink-0">
+ <Icon name="restart_alt" className="w-5 h-5" />
+ </div>
+ </div>
+ <div className="mt-3">
+ <AdminSparkline
+ data={sparkYearly}
+ color="#D1F843"
+ width="100%"
+ height={32}
+ />
+ </div>
+ </BentoCard>
+ </BentoGrid>
 
  {/* Inntektstrend (Area chart med gradient) */}
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl lg:col-span-2 overflow-hidden">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 lg:col-span-2 overflow-hidden">
  <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
  <div>
  <h3 className="text-base font-semibold text-on-surface">Inntektstrend</h3>
@@ -286,7 +369,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  </span>
  </div>
  <div className="text-right">
- <span className="text-lg font-bold text-green-700 tabular-nums">
+ <span className="text-lg font-bold text-success-text tabular-nums">
  {yearTotal}
  </span>
  <span className="text-xs text-on-surface-variant/80 block">
@@ -310,7 +393,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  </div>
 
  {/* Måloppnåelse-gauge */}
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30">
  <div className="px-6 py-4 border-b border-outline-variant/30">
  <h3 className="text-base font-semibold text-on-surface">Måloppnåelse vs budsjett</h3>
  </div>
@@ -331,7 +414,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
 
  {/* Bar chart siste 6 mnd + Donut per kategori */}
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl lg:col-span-2 overflow-hidden">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 lg:col-span-2 overflow-hidden">
  <div className="px-6 py-4 border-b border-outline-variant/30">
  <h3 className="text-base font-semibold text-on-surface">Inntekt per måned</h3>
  <span className="text-xs text-on-surface-variant/80">
@@ -349,7 +432,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  </div>
  </div>
 
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl overflow-hidden">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
  <div className="px-6 py-4 border-b border-outline-variant/30">
  <h3 className="text-base font-semibold text-on-surface">Per tjeneste</h3>
  </div>
@@ -366,7 +449,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  </div>
 
  {/* Sammenligning i år vs i fjor */}
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl overflow-hidden">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
  <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
  <div>
  <h3 className="text-base font-semibold text-on-surface">I år vs i fjor</h3>
@@ -392,9 +475,9 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  </div>
 
  {/* Ubetalte bookinger (DataTable, søkbar + sorterbar) */}
- <div>
- <div className="flex items-center justify-between mb-3">
- <h3 className="text-base font-semibold text-on-surface">Ubetalte bookinger</h3>
+ <NightSurface variant="ambient" className="rounded-2xl p-6">
+ <div className="flex items-center justify-between mb-4">
+ <MonoLabel size="xs" uppercase className="text-surface/60 block">Ubetalte bookinger</MonoLabel>
  {unpaidRows.length > 0 && (
  <Badge variant="warning">
  {unpaidRows.length} stk · {formatKr(data.totalUnpaid)}
@@ -409,12 +492,12 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  pagination={{ pageSize: 10 }}
  emptyMessage="Ingen ubetalte bookinger."
  />
- </div>
+ </NightSurface>
 
  {/* Refusjoner (DataTable) */}
- <div>
- <div className="flex items-center justify-between mb-3">
- <h3 className="text-base font-semibold text-on-surface">Refusjoner</h3>
+ <NightSurface variant="ambient" className="rounded-2xl p-6">
+ <div className="flex items-center justify-between mb-4">
+ <MonoLabel size="xs" uppercase className="text-surface/60 block">Refusjoner</MonoLabel>
  {refundRows.length > 0 && (
  <Badge variant="error">
  {refundRows.length} totalt · {formatKr(data.totalRefunds)}
@@ -429,65 +512,8 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  pagination={{ pageSize: 10 }}
  emptyMessage="Ingen refusjoner."
  />
- </div>
+ </NightSurface>
  </div>
  </>
- );
-}
-
-// ─── Stat card med sparkline ────────────────────────────────────────────────
-
-interface StatCardSparkProps {
- label: string;
- value: string;
- icon: React.ReactNode;
- sparkData: number[];
- sparkColor?: string;
- change: { value: number; positive: boolean };
-}
-
-function StatCardSpark({
- label,
- value,
- icon,
- sparkData,
- sparkColor,
- change,
-}: StatCardSparkProps) {
- return (
- <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-5">
- <div className="flex items-start justify-between gap-4">
- <div className="flex-1 min-w-0">
- <p className="text-sm font-medium text-on-surface-variant/80">{label}</p>
- <p className="mt-2 text-2xl font-bold text-on-surface tracking-tight tabular-nums">
- {value}
- </p>
- <div className="mt-2 flex items-center gap-1 text-xs font-medium">
- <span
- className={
- change.positive
- ? "text-green-600"
- : "text-red-600"
- }
- >
- {change.positive ? "+": "-"}
- {change.value}%
- </span>
- <span className="text-on-surface-variant">vs forrige</span>
- </div>
- </div>
- <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-green-100 text-green-700">
- {icon}
- </div>
- </div>
- <div className="mt-3">
- <AdminSparkline
- data={sparkData}
- color={sparkColor}
- width="100%"
- height={32}
- />
- </div>
- </div>
  );
 }

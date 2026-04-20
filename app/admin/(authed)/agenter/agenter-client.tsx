@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useTransition } from "react";
 
@@ -15,7 +14,8 @@ import {
 } from "./actions";
 import type { AgentTeam } from "@prisma/client";
 
-import { MonoLabel } from "@/components/portal/patterns";
+import { MonoLabel, BentoGrid, BentoCard } from "@/components/portal/patterns";
+
 const TEAM_LABELS: Record<AgentTeam, string> = {
   LEADERSHIP: "Ledergruppen",
   DEV: "Utviklingsteam",
@@ -66,28 +66,36 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
       />
 
       <div className="p-6 space-y-6">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-semibold text-on-surface">AI-agenter</h1>
-          <p className="text-on-surface-variant">Administrer autonome AI-agenter</p>
+        {/* Heritage Grid Header */}
+        <div className="space-y-2">
+          <MonoLabel size="xs" uppercase className="block text-outline">
+            Mission Control
+          </MonoLabel>
+          <h1 className="text-2xl font-bold tracking-tight text-on-surface">
+            AI-agenter<span className="text-outline">.</span>
+          </h1>
+          <p className="text-on-surface-variant">
+            Administrer autonome AI-agenter
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
+        <BentoGrid cols={4} gap="md">
+          <BentoCard variant="light" padding="md">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
                 <Icon name="smart_toy" className="w-5 h-5 text-on-surface-variant" />
               </div>
-              <span className="text-sm font-medium text-on-surface-variant">Totalt</span>
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant">Totalt</MonoLabel>
             </div>
             <div className="text-2xl font-semibold text-on-surface tabular-nums">{stats.total}</div>
-          </div>
+          </BentoCard>
 
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
+          <BentoCard variant="light" padding="md">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
-                <Icon name="check"Circle className="w-5 h-5 text-on-surface-variant" />
+                <Icon name="check_circle" className="w-5 h-5 text-on-surface-variant" />
               </div>
-              <span className="text-sm font-medium text-on-surface-variant">Aktive</span>
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant">Aktive</MonoLabel>
             </div>
             <div className="flex items-baseline gap-2">
               <div className="text-2xl font-semibold text-on-surface tabular-nums">{stats.active}</div>
@@ -97,28 +105,28 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                 </span>
               )}
             </div>
-          </div>
+          </BentoCard>
 
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
+          <BentoCard variant="light" padding="md">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
                 <Icon name="bolt" className="w-5 h-5 text-on-surface-variant" />
               </div>
-              <span className="text-sm font-medium text-on-surface-variant">Handlinger i dag</span>
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant">Handlinger i dag</MonoLabel>
             </div>
             <div className="text-2xl font-semibold text-on-surface tabular-nums">{stats.actionsToday}</div>
-          </div>
+          </BentoCard>
 
-          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
+          <BentoCard variant="light" padding="md">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
                 <Icon name="trending_up" className="w-5 h-5 text-on-surface-variant" />
               </div>
-              <span className="text-sm font-medium text-on-surface-variant">Kostnader MTD</span>
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant">Kostnader MTD</MonoLabel>
             </div>
             <div className="text-2xl font-semibold text-on-surface tabular-nums">${stats.costMtd.toFixed(2)}</div>
-          </div>
-        </div>
+          </BentoCard>
+        </BentoGrid>
 
         <div className="space-y-6">
           {TEAM_ORDER.filter((team) => agentsByTeam.has(team)).map((team) => (
@@ -194,12 +202,12 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                       >
                         {agent.isActive ? (
                           <>
-                            <Icon name="check"Circle className="w-3 h-3" />
+                            <Icon name="check_circle" className="w-3 h-3" />
                             Aktiv
                           </>
                         ) : (
                           <>
-                            <Icon name="close"Circle className="w-3 h-3" />
+                            <Icon name="cancel" className="w-3 h-3" />
                             Inaktiv
                           </>
                         )}

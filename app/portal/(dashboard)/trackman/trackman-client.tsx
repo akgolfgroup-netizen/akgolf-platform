@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +20,14 @@ import type { TrackManOverview, TrackManAnalyticsSummary } from "./actions";
 import { ShotDispersionChart } from "@/components/portal/trackman/shot-dispersion-chart";
 import { TrackManAnalyticsCard } from "@/components/portal/trackman/trackman-analytics-card";
 import { MonoLabel, NightSurface } from "@/components/portal/patterns";
+
+// ── Design tokens as hex (for Recharts) ──────────────────
+const COLORS = {
+  outlineVariant: "#D5DFDB",
+  onSurfaceVariant: "#7A8C85",
+  onSurface: "#0A1F18",
+  primary: "#154212",
+};
 
 // ── Typer ────────────────────────────────────────────────
 
@@ -174,7 +181,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
         setUpload((prev) => ({
           ...prev,
           loading: false,
-          error: "Nettverksfeil — proev igjen",
+          error: "Nettverksfeil — prøv igjen",
         }));
       }
 
@@ -192,7 +199,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
       if (!file.type.startsWith("image/")) {
         setUpload((prev) => ({
           ...prev,
-          error: "Filen maa vaere et bilde (PNG, JPG, etc.)",
+          error: "Filen må være et bilde (PNG, JPG, etc.)",
         }));
         return;
       }
@@ -245,7 +252,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
         setUpload((prev) => ({
           ...prev,
           loading: false,
-          error: "Nettverksfeil — proev igjen",
+          error: "Nettverksfeil — prøv igjen",
         }));
       }
 
@@ -372,7 +379,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/30/50">
+        <div className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/30">
           <h3 className="text-sm font-semibold text-on-surface mb-4">
             Ballfart-trend (Driver)
           </h3>
@@ -380,19 +387,19 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
             {ballSpeedTrend.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={ballSpeedTrend}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" />
-                  <Icon name="close"Axis dataKey="date" tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} domain={[0, 'auto']} />
+                  <CartesianGrid strokeDasharray="3 3" stroke={COLORS.outlineVariant} />
+                  <XAxis dataKey="date" tick={{ fontSize: 12, fill: COLORS.onSurfaceVariant }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 12, fill: COLORS.onSurfaceVariant }} axisLine={false} tickLine={false} domain={[0, 'auto']} />
                   <Tooltip
-                    contentStyle={{ borderRadius: 12, border: "1px solid var(--color-grey-200)" }}
-                    labelStyle={{ color: "var(--color-black)", fontWeight: 600 }}
+                    contentStyle={{ borderRadius: 12, border: `1px solid ${COLORS.outlineVariant}` }}
+                    labelStyle={{ color: COLORS.onSurface, fontWeight: 600 }}
                   />
                   <Line
                     type="monotone"
                     dataKey="speed"
-                    stroke="var(--color-black)"
+                    stroke={COLORS.onSurface}
                     strokeWidth={2}
-                    dot={{ r: 4, fill: "var(--color-black)", strokeWidth: 0 }}
+                    dot={{ r: 4, fill: COLORS.onSurface, strokeWidth: 0 }}
                     activeDot={{ r: 6 }}
                   />
                 </LineChart>
@@ -405,7 +412,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/30/50">
+        <div className="bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant/30">
           <h3 className="text-sm font-semibold text-on-surface mb-4">
             Carry per klubb
           </h3>
@@ -413,15 +420,15 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
             {carryByClub.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={carryByClub}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-grey-200)" vertical={false} />
-                  <Icon name="close"Axis dataKey="club" tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 12, fill: "var(--color-grey-400)" }} axisLine={false} tickLine={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke={COLORS.outlineVariant} vertical={false} />
+                  <XAxis dataKey="club" tick={{ fontSize: 12, fill: COLORS.onSurfaceVariant }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 12, fill: COLORS.onSurfaceVariant }} axisLine={false} tickLine={false} />
                   <Tooltip
-                    contentStyle={{ borderRadius: 12, border: "1px solid var(--color-grey-200)" }}
-                    labelStyle={{ color: "var(--color-black)", fontWeight: 600 }}
+                    contentStyle={{ borderRadius: 12, border: `1px solid ${COLORS.outlineVariant}` }}
+                    labelStyle={{ color: COLORS.onSurface, fontWeight: 600 }}
                     formatter={(value) => [`${value}m`, "Carry"]}
                   />
-                  <Bar dataKey="carry" fill="var(--color-primary)" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="carry" fill={COLORS.primary} radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
@@ -435,8 +442,8 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
 
       {/* Club Stats Table */}
       {data.clubStats.length > 0 && (
-        <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30/50 overflow-hidden">
-          <div className="p-4 border-b border-outline-variant/30/30">
+        <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 overflow-hidden">
+          <div className="p-4 border-b border-outline-variant/30">
             <h3 className="font-semibold text-on-surface">Klubb-statistikk</h3>
           </div>
           <div className="overflow-x-auto">
@@ -466,7 +473,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                 {data.clubStats.map((club) => (
                   <tr
                     key={club.club}
-                    className="border-t border-outline-variant/30/30 hover:bg-surface/50"
+                    className="border-t border-outline-variant/30 hover:bg-surface/50"
                   >
                     <td className="p-4 font-medium text-on-surface">{club.club}</td>
                     <td className="p-4 text-right">
@@ -505,7 +512,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
       {/* Session List */}
       <div>
         <h3 className="font-semibold text-on-surface mb-4">Sesjonsoversikt</h3>
-        <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30/50 overflow-hidden">
+        <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-surface">
@@ -538,7 +545,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                     return (
                       <React.Fragment key={session.id}>
                         <tr
-                          className="border-t border-outline-variant/30/30 hover:bg-surface/50 cursor-pointer"
+                          className="border-t border-outline-variant/30 hover:bg-surface/50 cursor-pointer"
                           onClick={() => setExpandedSessionId(isOpen ? null : session.id)}
                         >
                           <td className="p-4 text-sm text-on-surface">
@@ -574,7 +581,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                                   {/* Shot Dispersion Chart */}
                                   <div>
                                     <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block mb-3">Shot-spredning</MonoLabel>
-                                    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30/50 p-3">
+                                    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-3">
                                       <ShotDispersionChart shots={shots} />
                                     </div>
                                   </div>
@@ -659,7 +666,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               <Upload className="w-4 h-4" />
               <div className="text-left">
                 <p className="text-sm font-medium">Last opp CSV</p>
-                <p className="text-xs text-muted-foreground">Importer fra TrackMan</p>
+                <p className="text-xs text-on-surface-variant">Importer fra TrackMan</p>
               </div>
             </a>
           </Button>
@@ -668,7 +675,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               <FileSpreadsheet className="w-4 h-4" />
               <div className="text-left">
                 <p className="text-sm font-medium">Eksporter data</p>
-                <p className="text-xs text-muted-foreground">Last ned rapport</p>
+                <p className="text-xs text-on-surface-variant">Last ned rapport</p>
               </div>
             </a>
           </Button>
@@ -677,7 +684,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
               <Icon name="trending_up" className="w-4 h-4" />
               <div className="text-left">
                 <p className="text-sm font-medium">Se analyse</p>
-                <p className="text-xs text-muted-foreground">Dyp innsikt</p>
+                <p className="text-xs text-on-surface-variant">Dyp innsikt</p>
               </div>
             </a>
           </Button>
@@ -753,7 +760,7 @@ function UploadModal({
         )}
         {upload.success && (
           <div className="flex items-start gap-3 p-3 rounded-xl bg-success/10 text-success text-sm mb-4">
-            <Icon name="check"Circle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
+            <Icon name="check_circle" className="w-5 h-5 flex-shrink-0 mt-0.5" />
             <p>{upload.success}</p>
           </div>
         )}
@@ -778,7 +785,7 @@ function UploadModal({
                 setUpload((prev) => ({ ...prev, mode: "csv" }));
                 csvInputRef.current?.click();
               }}
-              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-outline-variant/30 hover:border-black hover:bg-surface transition-all"
+              className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-dashed border-outline-variant/30 hover:border-on-surface hover:bg-surface transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-on-surface/10 flex items-center justify-center flex-shrink-0">
                 <FileSpreadsheet className="w-6 h-6 text-on-surface" />

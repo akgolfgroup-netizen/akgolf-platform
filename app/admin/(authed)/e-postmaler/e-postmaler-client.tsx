@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -14,6 +13,7 @@ import {
 } from "@/components/portal/mission-control/ui";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { MonoLabel, GlassPanel } from "@/components/portal/patterns";
 import { createTemplate, updateTemplate, deleteTemplate } from "./actions";
 
 interface EmailTemplate {
@@ -156,9 +156,10 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
       />
 
       <div className="p-6">
-        {/* Main Card */}
-        <div
-          className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden"
+        <GlassPanel
+          variant="light"
+          padding="none"
+          className="overflow-hidden"
           style={{ minHeight: "calc(100vh - 180px)" }}
         >
           <div className="flex h-full">
@@ -194,7 +195,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                         "px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
                         selectedCategory === cat
                           ? "bg-on-surface text-surface"
-                          : "bg-surface text-text hover:text-on-surface hover:bg-surface-variant",
+                          : "bg-surface text-on-surface hover:text-on-surface hover:bg-surface-variant",
                       )}
                     >
                       {cat}
@@ -221,7 +222,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                     >
                       <div className="flex items-start gap-3">
                         <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center flex-shrink-0">
-                          <Icon name="mail" className="w-5 h-5 text-text" />
+                          <Icon name="mail" className="w-5 h-5 text-on-surface" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium text-on-surface truncate">
@@ -234,9 +235,9 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                             <Badge variant="muted">
                               {getCategory(t.name)}
                             </Badge>
-                            <span className="text-[10px] text-on-surface-variant">
+                            <MonoLabel size="xs" className="text-on-surface-variant">
                               {formatDate(t.updatedAt)}
-                            </span>
+                            </MonoLabel>
                           </div>
                         </div>
                       </div>
@@ -263,15 +264,15 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                         className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-surface"
                         aria-label="Lukk"
                       >
-                        <Icon name="close" className="w-5 h-5 text-text" />
+                        <Icon name="close" className="w-5 h-5 text-on-surface" />
                       </button>
                       <div>
                         <h3 className="text-base font-semibold text-on-surface">
                           {editName}
                         </h3>
-                        <p className="text-xs text-on-surface-variant">
+                        <MonoLabel size="xs" className="text-on-surface-variant">
                           Sist redigert {formatDate(selectedTemplate.updatedAt)}
-                        </p>
+                        </MonoLabel>
                       </div>
                     </div>
                     <div className="flex gap-2">
@@ -317,10 +318,15 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
 
                     {/* Variables */}
                     <div>
-                      <div className="text-sm font-medium text-text flex items-center gap-2 mb-1.5">
+                      <MonoLabel
+                        as="div"
+                        size="sm"
+                        uppercase
+                        className="text-on-surface-variant flex items-center gap-2 mb-1.5"
+                      >
                         <Variable className="w-4 h-4" />
                         Tilgjengelige variabler
-                      </div>
+                      </MonoLabel>
                       <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-surface">
                         {editVariables.length > 0 ? (
                           editVariables.map((v) => (
@@ -329,7 +335,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                               onClick={() => {
                                 setEditHtmlContent((prev) => prev + v);
                               }}
-                              className="text-xs px-2 py-1 rounded bg-surface-container-lowest border border-outline-variant/30 text-text hover:bg-on-surface hover:text-surface hover:border-black transition-colors"
+                              className="text-xs px-2 py-1 rounded bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-on-surface hover:text-surface hover:border-black transition-colors"
                             >
                               {v}
                             </button>
@@ -364,7 +370,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               )}
             </div>
           </div>
-        </div>
+        </GlassPanel>
       </div>
     </>
   );

@@ -10,6 +10,14 @@ import {
   Tooltip,
 } from "recharts";
 
+// Hex-farger for Recharts (støtter ikke Tailwind-klasser på SVG-attributter)
+const COLORS = {
+  grey200: "#D5DFDB",
+  grey400: "#7A8C85",
+  grey900: "#0A1F18",
+  info: "#007AFF",
+};
+
 interface PeerRadarChartProps {
   myStats: {
     sgOffTheTee: number | null;
@@ -28,11 +36,11 @@ interface PeerRadarChartProps {
 
 export function PeerRadarChart({ myStats, peerStats, comparisonLabel = "Gruppe" }: PeerRadarChartProps) {
   const categories = [
-    { key: "sgOffTheTee", label: "Off the Tee" },
-    { key: "sgApproach", label: "Approach" },
-    { key: "sgAroundTheGreen", label: "Rundt Green" },
-    { key: "sgPutting", label: "Putting" },
-  ] as const;
+    { key: "sgOffTheTee" as const, label: "Off the Tee" },
+    { key: "sgApproach" as const, label: "Approach" },
+    { key: "sgAroundTheGreen" as const, label: "Rundt Green" },
+    { key: "sgPutting" as const, label: "Putting" },
+  ];
 
   const data = categories.map((c) => ({
     category: c.label,
@@ -44,15 +52,15 @@ export function PeerRadarChart({ myStats, peerStats, comparisonLabel = "Gruppe" 
     <div className="w-full h-[320px]">
       <ResponsiveContainer>
         <RadarChart data={data} cx="50%" cy="50%" outerRadius="70%">
-          <PolarGrid stroke="var(--color-grey-200)" />
+          <PolarGrid stroke={COLORS.grey200} />
           <PolarAngleAxis
             dataKey="category"
-            tick={{ fill: "var(--color-muted)", fontSize: 11 }}
+            tick={{ fill: COLORS.grey400, fontSize: 11 }}
           />
           <Tooltip
             contentStyle={{
-              background: "var(--color-grey-900)",
-              border: "1px solid var(--color-grey-200)",
+              background: COLORS.grey900,
+              border: `1px solid ${COLORS.grey200}`,
               borderRadius: 8,
               fontSize: 12,
             }}
@@ -63,19 +71,19 @@ export function PeerRadarChart({ myStats, peerStats, comparisonLabel = "Gruppe" 
           <Radar
             name={comparisonLabel}
             dataKey="gruppe"
-            stroke="var(--color-info)"
-            fill="var(--color-info)"
+            stroke={COLORS.info}
+            fill={COLORS.info}
             fillOpacity={0.1}
             strokeWidth={1.5}
           />
           <Radar
             name="Du"
             dataKey="du"
-            stroke="var(--color-grey-900)"
-            fill="var(--color-grey-900)"
+            stroke={COLORS.grey900}
+            fill={COLORS.grey900}
             fillOpacity={0.2}
             strokeWidth={2}
-            dot={{ fill: "var(--color-grey-900)", r: 3 }}
+            dot={{ fill: COLORS.grey900, r: 3 }}
           />
         </RadarChart>
       </ResponsiveContainer>

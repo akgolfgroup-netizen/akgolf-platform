@@ -53,7 +53,7 @@ export function CalendarWeekView({ events, weekStart }: CalendarWeekViewProps) {
     return (
       <div className="flex flex-col items-center justify-center py-14 text-center">
         <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
-          <Icon name="calendar_today"Days className="h-6 w-6" />
+          <Icon name="calendar_today" className="h-6 w-6" />
         </div>
         <p className="text-sm text-outline">Ingen hendelser denne uka.</p>
       </div>

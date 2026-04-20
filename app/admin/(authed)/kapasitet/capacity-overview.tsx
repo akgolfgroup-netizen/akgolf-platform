@@ -55,10 +55,10 @@ function StatCard({ title, value, subtitle, icon, trend, trendValue }: StatCardP
 
 function CoachCapacityCard({ coach }: { coach: CapacityData["coaches"][0] }) {
   const occupancyColor = coach.occupancy >= 0.8
-    ? "var(--color-success)"
+    ? "bg-success"
     : coach.occupancy >= 0.5
-    ? "var(--color-warning)"
-    : "var(--color-error)";
+    ? "bg-warning"
+    : "bg-error";
 
   return (
     <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
@@ -109,12 +109,12 @@ function OccupancyHeatmap({ dailyBreakdown, coaches }: {
   coaches: string[];
 }) {
   const getColor = (booked: number, total: number) => {
-    if (total === 0) return "var(--color-grey-50)";
+    if (total === 0) return "bg-surface-container-low";
     const ratio = booked / total;
-    if (ratio >= 0.8) return "var(--color-success)";
-    if (ratio >= 0.5) return "var(--color-warning)";
+    if (ratio >= 0.8) return "bg-success";
+    if (ratio >= 0.5) return "bg-warning";
     if (ratio > 0) return "color-mix(in srgb, #C48A32 50%, #ECF0EF)";
-    return "var(--color-grey-50)";
+    return "bg-surface-container-low";
   };
 
   return (
@@ -166,15 +166,15 @@ function OccupancyHeatmap({ dailyBreakdown, coaches }: {
 
       <div className="flex items-center gap-4 mt-4 text-xs text-on-surface-variant">
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded" style={{ background: "var(--color-success)" }} />
+          <div className="w-3 h-3 rounded bg-success" />
           <span>80%+</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded" style={{ background: "var(--color-warning)" }} />
+          <div className="w-3 h-3 rounded bg-warning" />
           <span>50-80%</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded" style={{ background: "var(--color-grey-50)" }} />
+          <div className="w-3 h-3 rounded bg-surface-container-low" />
           <span>&lt;50%</span>
         </div>
       </div>
