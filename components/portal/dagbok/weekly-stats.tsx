@@ -50,9 +50,9 @@ function StatRow({
         <div className={cn(
           "w-10 h-10 rounded-xl flex items-center justify-center",
           color === "intensity" && avgIntensity >= 7
-            ? "bg-orange-100 text-orange-600"
+            ? "bg-warning/15 text-warning"
             : color === "intensity" && avgIntensity >= 4
-              ? "bg-green-100 text-green-600"
+              ? "bg-success/15 text-success"
               : "bg-surface text-on-surface-variant"
         )}>
           <Icon className="w-5 h-5" />
@@ -73,9 +73,9 @@ function StatRow({
           className={cn(
             "flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full",
             change > 0
-              ? "bg-green-100 text-green-700"
+              ? "bg-success/15 text-success"
               : change < 0
-                ? "bg-red-100 text-red-700"
+                ? "bg-error/15 text-error"
                 : "bg-surface-container text-on-surface-variant/80"
           )}
         >
@@ -192,7 +192,7 @@ export function WeeklyStats({ sessions }: WeeklyStatsProps) {
             transition={{ duration: 0.8, ease: EASE_APPLE, delay: 0.2 }}
             className={cn(
               "h-full rounded-full",
-              stats.count >= 4 ? "bg-secondary-fixed" : "bg-[#16A34A]"
+              stats.count >= 4 ? "bg-secondary-fixed" : "bg-primary-container"
             )}
           />
         </div>

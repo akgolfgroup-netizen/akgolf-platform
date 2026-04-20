@@ -39,7 +39,7 @@ const ENERGY_LEVELS = [
   { value: 2, emoji: "😴", label: "Sliten", color: "text-primary" },
   { value: 3, emoji: "😐", label: "Gjennomsnittlig", color: "text-on-surface-variant" },
   { value: 4, emoji: "🙂", label: "God", color: "text-primary-container" },
-  { value: 5, emoji: "🤩", label: "Super", color: "text-green-600" },
+  { value: 5, emoji: "🤩", label: "Super", color: "text-success" },
 ];
 
 interface LogEntry {
@@ -298,7 +298,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                       onChange={(e) => setDate(e.target.value)}
                       disabled={!!editLog}
                       required
-                      className="w-full px-3 py-2.5 rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-accent-cta focus:border-transparent disabled:bg-surface"
+                      className="w-full px-3 py-2.5 rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-secondary-fixed focus:border-transparent disabled:bg-surface"
                     />
                   </div>
 
@@ -314,7 +314,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                       step="15"
                       value={durationMinutes || 60}
                       onChange={(e) => setDurationMinutes(e.target.value)}
-                      className="w-full accent-accent-cta"
+                      className="w-full accent-secondary-fixed"
                     />
                     <div className="flex justify-between text-xs text-on-surface-variant mt-1">
                       <span>15 min</span>
@@ -382,7 +382,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                       rows={3}
                       maxLength={2000}
                       placeholder="Hva jobbet du med? Hva gikk bra? Hva kan forbedres?"
-                      className="w-full px-3 py-2.5 rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-accent-cta focus:border-transparent resize-none"
+                      className="w-full px-3 py-2.5 rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-secondary-fixed focus:border-transparent resize-none"
                     />
                   </div>
 
@@ -404,7 +404,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                         rows={2}
                         maxLength={500}
                         placeholder="Hvorfor avvek du fra planen?"
-                        className="w-full mt-2 px-3 py-2 rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-accent-cta focus:border-transparent resize-none text-sm"
+                        className="w-full mt-2 px-3 py-2 rounded-xl border border-outline-variant/30 focus:outline-none focus:ring-2 focus:ring-secondary-fixed focus:border-transparent resize-none text-sm"
                       />
                     )}
                   </div>
@@ -413,7 +413,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
             </AnimatePresence>
 
             {error && (
-              <div className="p-3 rounded-xl bg-red-50 text-red-600 text-sm">
+              <div className="p-3 rounded-xl bg-error/10 text-error text-sm">
                 {error}
               </div>
             )}
@@ -425,7 +425,7 @@ export function LogSessionModal({ open, onClose, editLog }: Props) {
                   type="button"
                   onClick={handleDelete}
                   disabled={isPending}
-                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-error hover:bg-error/10 transition-colors disabled:opacity-50"
                 >
                   <Icon name="delete" className="w-4 h-4" />
                   Slett

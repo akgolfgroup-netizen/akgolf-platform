@@ -131,7 +131,7 @@ export function RecentSessionsList({
               {/* Intensity/rating indicator */}
               {session.intensity && (
                 <div className="flex items-center gap-1 text-xs">
-                  <Icon name="star" className="w-3 h-3 text-secondary-fixed fill-accent-cta" />
+                  <Icon name="star" className="w-3 h-3 text-secondary-fixed fill-secondary-fixed" />
                   <span className="font-medium text-on-surface">{session.intensity}</span>
                 </div>
               )}

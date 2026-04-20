@@ -74,7 +74,7 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
             className={cn(
               "w-14 h-14 rounded-2xl flex items-center justify-center",
               isLongStreak 
-                ? "bg-secondary-fixed shadow-lg shadow-accent-cta/30" 
+                ? "bg-secondary-fixed shadow-lg shadow-secondary-fixed/30" 
                 : "bg-surface"
             )}
             animate={isLongStreak ? {
@@ -133,7 +133,7 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
                 onClick={onUseFreeze}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-xs font-medium hover:bg-blue-100 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-variant border border-outline-variant/50 text-on-surface-variant text-xs font-medium hover:bg-outline-variant/30 transition-colors"
               >
                 <Icon name="ac_unit" className="w-3.5 h-3.5" />
                 {streakFreezesRemaining} freeze{streakFreezesRemaining !== 1 ? "s" : ""}

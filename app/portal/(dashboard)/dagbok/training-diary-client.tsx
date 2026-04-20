@@ -249,7 +249,7 @@ export function TrainingDiaryClient({
               {/* Bento Grid - Middle Row: Heatmap + Recent Sessions */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <motion.div variants={itemVariants} className="lg:col-span-2">
-                  <Icon name="monitoring"Heatmap data={activityData} />
+                  <ActivityHeatmap data={activityData} />
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <RecentSessionsList 
@@ -298,7 +298,7 @@ export function TrainingDiaryClient({
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <WeeklyStats sessions={sessionData} />
-                <Icon name="monitoring"Heatmap data={activityData} />
+                <ActivityHeatmap data={activityData} />
               </div>
               <VolumePyramid
                 sessions={sessionData.map((s) => ({

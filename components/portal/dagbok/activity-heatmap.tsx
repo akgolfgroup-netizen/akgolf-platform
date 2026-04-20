@@ -178,7 +178,7 @@ export function ActivityHeatmap({ data, year = new Date().getFullYear() }: Activ
                         duration: 0.2
                       }}
                       className={cn(
-                        "w-3 h-3 rounded-sm cursor-pointer transition-all duration-200 hover:ring-2 hover:ring-offset-1 hover:ring-grey-300",
+                        "w-3 h-3 rounded-sm cursor-pointer transition-all duration-200 hover:ring-2 hover:ring-offset-1 hover:ring-outline-variant",
                         ACTIVITY_COLORS[day.level as keyof typeof ACTIVITY_COLORS]
                       )}
                       title={`${format(day.date, "d. MMMM yyyy", { locale: nb })}: ${day.minutes > 0 ? `${day.minutes} min` : "Ingen aktivitet"}`}
