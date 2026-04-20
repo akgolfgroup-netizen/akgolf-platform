@@ -10,7 +10,7 @@
  * Data-kobling i B-1.2, drag-drop i B-1.4.
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
@@ -23,6 +23,10 @@ import {
   L_FASER,
   LIFE_KODER,
 } from "@/lib/portal/training/ak-taxonomy";
+import {
+  searchExercises,
+  type ExerciseSearchResult,
+} from "@/lib/portal/training/exercise-actions";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -285,6 +289,8 @@ function ExercisesPlaceholder() {
   const [lFase, setLFase] = useState<string | null>(null);
   const [life, setLife] = useState<string | null>(null);
   const [sok, setSok] = useState("");
+  const [results, setResults] = useState<ExerciseSearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const filteredOmrader = omraadeGruppe
     ? TRENINGSOMRADER.filter((o) => o.gruppe === omraadeGruppe)
@@ -301,6 +307,33 @@ function ExercisesPlaceholder() {
 
   const hasFilters =
     pyramide || omraadeGruppe || omraadeCode || lFase || life || sok;
+
+  // Debounced søk ved filter-endring
+  useEffect(() => {
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const data = await searchExercises({
+          query: sok || undefined,
+          pyramid: pyramide ?? undefined,
+          area: omraadeCode ?? undefined,
+          lPhase: lFase ?? undefined,
+          lifeCode: life ?? undefined,
+          limit: 30,
+        });
+        if (!cancelled) setResults(data);
+      } catch {
+        if (!cancelled) setResults([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }, 250);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [sok, pyramide, omraadeCode, lFase, life]);
 
   return (
     <div className="space-y-3">
@@ -445,12 +478,99 @@ function ExercisesPlaceholder() {
         </div>
       </FilterSection>
 
-      {/* Liste-placeholder */}
+      {/* Resultater */}
+      <ExerciseList results={results} loading={loading} hasFilters={Boolean(hasFilters)} />
+    </div>
+  );
+}
+
+function ExerciseList({
+  results,
+  loading,
+  hasFilters,
+}: {
+  results: ExerciseSearchResult[];
+  loading: boolean;
+  hasFilters: boolean;
+}) {
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-outline-variant/40 p-6">
+        <Icon
+          name="progress_activity"
+          size={18}
+          className="animate-spin text-primary/50"
+        />
+        <span className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+          Laster…
+        </span>
+      </div>
+    );
+  }
+
+  if (results.length === 0) {
+    return (
       <div className="rounded-2xl border border-dashed border-outline-variant/40 p-6 text-center">
         <Icon name="fitness_center" size={28} className="text-primary/20" />
         <p className="mt-2 text-xs text-on-surface-variant">
-          {hasFilters ? "Filter-resultater" : "Øvelsesbibliotek"} fylles i B-1.3
+          {hasFilters
+            ? "Ingen øvelser matcher filter"
+            : "Ingen øvelser i databasen ennå"}
         </p>
+        <p className="mt-1 text-[10px] text-on-surface-variant/70">
+          {hasFilters
+            ? "Juster filter eller opprett egen øvelse"
+            : "Seed kjører i X-2/X-3 (se plan-fil)"}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-1.5">
+      <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-primary/50">
+        {results.length} treff
+      </p>
+      {results.map((r) => (
+        <ExerciseCard key={r.id} exercise={r} />
+      ))}
+    </div>
+  );
+}
+
+function ExerciseCard({ exercise }: { exercise: ExerciseSearchResult }) {
+  const durationLabel =
+    exercise.minDurationMinutes === exercise.maxDurationMinutes
+      ? `${exercise.minDurationMinutes}m`
+      : `${exercise.minDurationMinutes}–${exercise.maxDurationMinutes}m`;
+  return (
+    <div
+      className="group cursor-grab rounded-lg border border-outline-variant/20 bg-surface p-2.5 transition-all hover:border-primary/30 hover:bg-surface-container active:cursor-grabbing"
+      title="Drag til slot (drag-drop kommer i B-1.4)"
+    >
+      <div className="flex items-start justify-between gap-2">
+        <p className="flex-1 text-xs font-bold text-primary leading-tight">
+          {exercise.name}
+        </p>
+        {exercise.isFavorite && (
+          <Icon name="star" filled size={12} className="text-secondary-fixed-dim flex-shrink-0" />
+        )}
+      </div>
+      <div className="mt-1.5 flex flex-wrap items-center gap-1">
+        <span className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight text-primary">
+          {exercise.pyramid}
+        </span>
+        <span className="rounded bg-surface-container-high px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-tight text-on-surface-variant">
+          {exercise.area}
+        </span>
+        {exercise.lPhase && (
+          <span className="rounded bg-surface-container-high px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-tight text-on-surface-variant">
+            {exercise.lPhase}
+          </span>
+        )}
+        <span className="ml-auto font-mono text-[9px] text-on-surface-variant">
+          {durationLabel}
+        </span>
       </div>
     </div>
   );
