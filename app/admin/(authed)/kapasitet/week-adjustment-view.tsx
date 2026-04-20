@@ -141,7 +141,7 @@ export function WeekAdjustmentView() {
       {/* Loading State */}
       {isPending && !weekData && (
         <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-grey-200 border-t-black" />
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-outline-variant/30 border-t-black" />
         </div>
       )}
 
@@ -164,13 +164,13 @@ export function WeekAdjustmentView() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                   <p className="admin-label">Fast kapasitet</p>
-                  <p className="text-2xl font-bold text-black mt-1">
+                  <p className="text-2xl font-bold text-on-surface mt-1">
                     {weekData.totalRegularHours.toFixed(0)}t
                   </p>
                 </div>
                 <div>
                   <p className="admin-label">Justert kapasitet</p>
-                  <p className="text-2xl font-bold text-black mt-1">
+                  <p className="text-2xl font-bold text-on-surface mt-1">
                     {weekData.totalEffectiveHours.toFixed(0)}t
                   </p>
                   {weekData.totalEffectiveHours !==
@@ -197,7 +197,7 @@ export function WeekAdjustmentView() {
                 </div>
                 <div>
                   <p className="admin-label">Booket</p>
-                  <p className="text-2xl font-bold text-black mt-1">
+                  <p className="text-2xl font-bold text-on-surface mt-1">
                     {weekData.totalBookedHours.toFixed(1)}t
                   </p>
                 </div>

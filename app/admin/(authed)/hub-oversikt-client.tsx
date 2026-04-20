@@ -84,8 +84,8 @@ function Badge({
     success: "bg-success-light text-success",
     warning: "bg-warning-light text-warning",
     error: "bg-error-light text-error",
-    info: "bg-grey-200 text-black",
-    muted: "bg-grey-50 text-grey-400",
+    info: "bg-surface-variant text-on-surface",
+    muted: "bg-surface text-on-surface-variant",
   };
 
   return (
@@ -106,7 +106,7 @@ function Card({
   className?: string;
 }) {
   return (
-    <div className={`bg-white rounded-xl border border-grey-200 ${className}`}>
+    <div className={`bg-surface-container-lowest rounded-xl border border-outline-variant/30 ${className}`}>
       {children}
     </div>
   );
@@ -127,8 +127,8 @@ function Button({
   const baseStyles =
     "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors";
   const variantStyles = {
-    primary: "bg-black text-white hover:bg-grey-800",
-    secondary: "bg-white border border-grey-200 text-black hover:bg-grey-50",
+    primary: "bg-on-surface text-surface hover:bg-inverse-surface",
+    secondary: "bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-surface",
   };
 
   return (
@@ -276,7 +276,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
         notificationCount={data.alerts.length}
       />
 
-      <div className="p-6 space-y-6 bg-grey-50 min-h-screen">
+      <div className="p-6 space-y-6 bg-surface min-h-screen">
         {/* Alerts */}
         {data.alerts.length > 0 && (
           <div className="flex flex-wrap items-center gap-2">
@@ -293,14 +293,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <MonoLabel size="xs" uppercase className="text-grey-400 block">
+                <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
                   Økter i dag
                 </MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
                   {data.kpis.sessionsToday}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface">
                 <Icon name="calendar_today" className="w-5 h-5" />
               </div>
             </div>
@@ -310,14 +310,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <MonoLabel size="xs" uppercase className="text-grey-400 block">
+                <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
                   Aktive elever
                 </MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
                   {data.kpis.activeStudents}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface">
                 <Icon name="person"s className="w-5 h-5" />
               </div>
             </div>
@@ -332,14 +332,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <MonoLabel size="xs" uppercase className="text-grey-400 block">
+                <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
                   Ventende bookinger
                 </MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
                   {data.kpis.pendingBookings}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface">
                 <Icon name="schedule" className="w-5 h-5" />
               </div>
             </div>
@@ -354,14 +354,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <Card className="p-5">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div className="flex-1 min-w-0">
-                <MonoLabel size="xs" uppercase className="text-grey-400 block">
+                <MonoLabel size="xs" uppercase className="text-on-surface-variant block">
                   Omsetning MTD
                 </MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
                   {formatRevenue(data.kpis.mtdRevenue)}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-black">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-on-surface">
                 <Icon name="trending_up" className="w-5 h-5" />
               </div>
             </div>
@@ -377,7 +377,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
         {/* Kapasitet + Tier fordeling + Handicap-trend */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="p-5">
-            <h3 className="text-sm font-semibold text-black mb-4">
+            <h3 className="text-sm font-semibold text-on-surface mb-4">
               Kapasitetsutnyttelse
             </h3>
             <div className="flex flex-col items-center justify-center py-2">
@@ -390,7 +390,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           </Card>
 
           <Card className="p-5">
-            <h3 className="text-sm font-semibold text-black mb-4">
+            <h3 className="text-sm font-semibold text-on-surface mb-4">
               Elevfordeling per tier
             </h3>
             <AdminDonutChart
@@ -403,7 +403,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
 
           <Card className="p-5">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-black">
+              <h3 className="text-sm font-semibold text-on-surface">
                 Handicap-trend (30 dager)
               </h3>
               <Badge variant="info">Snitt</Badge>
@@ -417,16 +417,16 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           {/* Today's Schedule - Takes 2 columns */}
           <div className="lg:col-span-2">
             <Card className="overflow-hidden">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-grey-200">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
                 <div className="flex items-center gap-3">
-                  <Icon name="schedule" className="w-5 h-5 text-grey-400" />
-                  <h2 className="text-sm font-semibold text-black">
+                  <Icon name="schedule" className="w-5 h-5 text-on-surface-variant" />
+                  <h2 className="text-sm font-semibold text-on-surface">
                     Dagens timeplan
                   </h2>
                 </div>
                 <Link
                   href="/admin/kalender"
-                  className="text-sm text-grey-400 hover:text-black font-medium inline-flex items-center gap-1.5 transition-colors"
+                  className="text-sm text-on-surface-variant hover:text-on-surface font-medium inline-flex items-center gap-1.5 transition-colors"
                 >
                   Se kalender
                   <Icon name="arrow_forward" className="w-4 h-4" />
@@ -438,21 +438,21 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                   {timelineItems.map((item) => (
                     <li
                       key={item.id}
-                      className="flex items-center gap-5 px-6 py-4 hover:bg-grey-50 transition-colors"
+                      className="flex items-center gap-5 px-6 py-4 hover:bg-surface transition-colors"
                     >
                       <div className="min-w-[60px] text-center">
-                        <p className="text-lg font-bold text-black tabular-nums">
+                        <p className="text-lg font-bold text-on-surface tabular-nums">
                           {item.time}
                         </p>
-                        <p className="text-[10px] uppercase tracking-wide text-grey-400">
+                        <p className="text-[10px] uppercase tracking-wide text-on-surface-variant">
                           {item.duration}
                         </p>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-black truncate">
+                        <p className="font-semibold text-on-surface truncate">
                           {item.name}
                         </p>
-                        <p className="text-xs text-grey-400 truncate mt-0.5">
+                        <p className="text-xs text-on-surface-variant truncate mt-0.5">
                           {item.subtitle ?? item.division}
                         </p>
                       </div>
@@ -466,8 +466,8 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                 </ul>
               ) : (
                 <div className="px-6 py-16 text-center">
-                  <Icon name="calendar_today" className="w-10 h-10 text-grey-300 mx-auto mb-3 opacity-50" />
-                  <p className="text-sm text-grey-400">Ingen økter i dag</p>
+                  <Icon name="calendar_today" className="w-10 h-10 text-on-surface-variant/60 mx-auto mb-3 opacity-50" />
+                  <p className="text-sm text-on-surface-variant">Ingen økter i dag</p>
                 </div>
               )}
             </Card>
@@ -477,7 +477,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
           <div className="space-y-6">
             {/* Quick Actions */}
             <Card className="p-5">
-              <h3 className="text-sm font-semibold text-black mb-4">
+              <h3 className="text-sm font-semibold text-on-surface mb-4">
                 Snarveier
               </h3>
               <div className="space-y-2">
@@ -504,34 +504,34 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
 
             {/* Division Stats */}
             <Card className="p-5">
-              <h3 className="text-sm font-semibold text-black mb-4">
+              <h3 className="text-sm font-semibold text-on-surface mb-4">
                 Divisjoner
               </h3>
               <div className="space-y-2">
-                <div className="flex items-center justify-between p-3 rounded-lg bg-grey-50">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-surface">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-black" />
-                    <span className="text-sm text-grey-400">Coaching</span>
+                    <div className="w-2 h-2 rounded-full bg-on-surface" />
+                    <span className="text-sm text-on-surface-variant">Coaching</span>
                   </div>
-                  <span className="text-sm font-semibold text-black tabular-nums">
+                  <span className="text-sm font-semibold text-on-surface tabular-nums">
                     {data.divisions.coaching.studentCount}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-grey-50">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-surface">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-warning" />
-                    <span className="text-sm text-grey-400">Junior</span>
+                    <span className="text-sm text-on-surface-variant">Junior</span>
                   </div>
-                  <span className="text-sm font-semibold text-black tabular-nums">
+                  <span className="text-sm font-semibold text-on-surface tabular-nums">
                     {data.divisions.junior.studentCount}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg bg-grey-50">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-surface">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-success" />
-                    <span className="text-sm text-grey-400">GFGK</span>
+                    <span className="text-sm text-on-surface-variant">GFGK</span>
                   </div>
-                  <span className="text-sm font-semibold text-black tabular-nums">
+                  <span className="text-sm font-semibold text-on-surface tabular-nums">
                     {data.divisions.gfgk.studentCount}
                   </span>
                 </div>
@@ -544,14 +544,14 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
             {/* Pending Actions */}
             {allActionItems.length > 0 && (
               <Card className="p-5">
-                <h3 className="text-sm font-semibold text-black mb-3">
+                <h3 className="text-sm font-semibold text-on-surface mb-3">
                   Påminnelser
                 </h3>
                 <div className="space-y-2">
                   {allActionItems.map((item, i) => (
                     <div
                       key={i}
-                      className="flex items-start gap-2 p-3 rounded-lg bg-grey-50"
+                      className="flex items-start gap-2 p-3 rounded-lg bg-surface"
                     >
                       <Icon name="error"
                         className={`w-4 h-4 shrink-0 mt-0.5 ${
@@ -561,7 +561,7 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
                               ? "text-[var(--color-warning)]"
                               : "text-[var(--color-info)]"
                         }`} />
-                      <span className="text-xs text-grey-400">{item.text}</span>
+                      <span className="text-xs text-on-surface-variant">{item.text}</span>
                     </div>
                   ))}
                 </div>

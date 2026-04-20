@@ -127,28 +127,28 @@ export function AdminChatClient({
 
  <div className="p-6">
  <div
- className="bg-white rounded-xl border border-grey-200 rounded-xl overflow-hidden"
+ className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl overflow-hidden"
  style={{ minHeight: "calc(100vh - 180px)"}}
  >
  <div className="flex h-full">
  {/* Sidebar - Samtaleliste */}
  <div
  className={cn(
- "w-full lg:w-80 border-r border-grey-200 flex flex-col",
+ "w-full lg:w-80 border-r border-outline-variant/30 flex flex-col",
  selectedId && "hidden lg:flex"
  )}
  >
  {/* Sok */}
- <div className="p-3 border-b border-grey-200">
+ <div className="p-3 border-b border-outline-variant/30">
  <div className="flex items-center gap-2">
- <div className="flex-1 flex items-center gap-2 bg-grey-50 border border-grey-200 rounded-lg px-3 py-2 focus-within:border-black focus-within:ring-1 focus-within:ring-black/20 transition-all">
- <Icon name="search" className="w-4 h-4 text-grey-400" />
+ <div className="flex-1 flex items-center gap-2 bg-surface border border-outline-variant/30 rounded-lg px-3 py-2 focus-within:border-black focus-within:ring-1 focus-within:ring-black/20 transition-all">
+ <Icon name="search" className="w-4 h-4 text-on-surface-variant" />
  <input
  type="text"
  value={searchQuery}
  onChange={(e) => setSearchQuery(e.target.value)}
  placeholder="Sok i samtaler..."
- className="flex-1 bg-transparent text-sm text-black placeholder:text-grey-400 outline-none"
+ className="flex-1 bg-transparent text-sm text-on-surface placeholder:text-on-surface-variant outline-none"
  />
  </div>
  </div>
@@ -158,7 +158,7 @@ export function AdminChatClient({
  <div className="flex-1 overflow-y-auto">
  {filteredConversations.length === 0 ? (
  <div className="p-6 text-center">
- <p className="text-sm text-grey-500">
+ <p className="text-sm text-on-surface-variant/80">
  {searchQuery
  ? "Ingen treff"
  : "Ingen samtaler enna"}
@@ -170,18 +170,18 @@ export function AdminChatClient({
  key={conv.id}
  onClick={() => setSelectedId(conv.id)}
  className={cn(
- "w-full p-3 flex items-start gap-3 text-left hover:bg-grey-100 transition-colors border-b border-grey-100 cursor-pointer",
- selectedId === conv.id && "bg-grey-100"
+ "w-full p-3 flex items-start gap-3 text-left hover:bg-surface-container transition-colors border-b border-outline-variant/20 cursor-pointer",
+ selectedId === conv.id && "bg-surface-container"
  )}
  >
- <div className="w-9 h-9 rounded-full bg-black/10 text-black text-xs font-semibold flex items-center justify-center shrink-0">
+ <div className="w-9 h-9 rounded-full bg-on-surface/10 text-on-surface text-xs font-semibold flex items-center justify-center shrink-0">
  {getInitials(conv.participantName)}
  </div>
  <div className="flex-1 min-w-0">
  <div className="flex items-center gap-2">
  <span
  className={cn(
- "text-sm truncate text-black",
+ "text-sm truncate text-on-surface",
  conv.unreadCount > 0 && "font-semibold"
  )}
  >
@@ -192,8 +192,8 @@ export function AdminChatClient({
  className={cn(
  "text-xs truncate mt-0.5",
  conv.unreadCount > 0
- ? "text-black"
- : "text-grey-500"
+ ? "text-on-surface"
+ : "text-on-surface-variant/80"
  )}
  >
  {conv.lastMessage ?? "Ingen meldinger enna"}
@@ -201,7 +201,7 @@ export function AdminChatClient({
  </div>
  <div className="flex flex-col items-end gap-1">
  {conv.lastMessageAt && (
- <span className="text-[10px] text-grey-500 whitespace-nowrap">
+ <span className="text-[10px] text-on-surface-variant/80 whitespace-nowrap">
  {formatDistanceToNow(
  new Date(conv.lastMessageAt),
  { addSuffix: true, locale: nb }
@@ -209,7 +209,7 @@ export function AdminChatClient({
  </span>
  )}
  {conv.unreadCount > 0 && (
- <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] font-semibold flex items-center justify-center">
+ <span className="w-5 h-5 rounded-full bg-on-surface text-surface text-[10px] font-semibold flex items-center justify-center">
  {conv.unreadCount}
  </span>
  )}
@@ -230,28 +230,28 @@ export function AdminChatClient({
  {selectedId && selectedConversation ? (
  <>
  {/* Chat Header */}
- <div className="p-3 border-b border-grey-200 flex items-center gap-3 bg-white">
+ <div className="p-3 border-b border-outline-variant/30 flex items-center gap-3 bg-surface-container-lowest">
  <button
  onClick={() => setSelectedId(null)}
- className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-grey-100 cursor-pointer"
+ className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-surface-container cursor-pointer"
  aria-label="Tilbake"
  >
  <Icon name="chevron_left" className="w-5 h-5 text-text" />
  </button>
- <div className="w-9 h-9 rounded-full bg-black/10 text-black text-xs font-semibold flex items-center justify-center">
+ <div className="w-9 h-9 rounded-full bg-on-surface/10 text-on-surface text-xs font-semibold flex items-center justify-center">
  {getInitials(selectedConversation.participantName)}
  </div>
  <div className="flex-1">
- <h3 className="font-semibold text-black">
+ <h3 className="font-semibold text-on-surface">
  {selectedConversation.participantName}
  </h3>
  </div>
  </div>
 
  {/* Meldinger */}
- <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-grey-50">
+ <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-surface">
  {isPending && messages.length === 0 ? (
- <div className="flex items-center justify-center h-full text-grey-500">
+ <div className="flex items-center justify-center h-full text-on-surface-variant/80">
  <p className="text-sm">Laster meldinger...</p>
  </div>
  ) : (
@@ -265,7 +265,7 @@ export function AdminChatClient({
  isMe ? "flex-row-reverse":""
  )}
  >
- <div className="w-8 h-8 rounded-full bg-black/10 text-black text-[10px] font-semibold flex items-center justify-center shrink-0">
+ <div className="w-8 h-8 rounded-full bg-on-surface/10 text-on-surface text-[10px] font-semibold flex items-center justify-center shrink-0">
  {isMe
  ? "ME"
  : getInitials(msg.senderName)}
@@ -274,8 +274,8 @@ export function AdminChatClient({
  className={cn(
  "max-w-[70%] p-3 rounded-2xl text-sm",
  isMe
- ? "bg-black text-white rounded-tr-sm"
- : "bg-grey-100 text-black rounded-tl-sm"
+ ? "bg-on-surface text-surface rounded-tr-sm"
+ : "bg-surface-container text-on-surface rounded-tl-sm"
  )}
  >
  <p className="whitespace-pre-wrap">
@@ -285,8 +285,8 @@ export function AdminChatClient({
  className={cn(
  "text-[10px] mt-1 flex items-center gap-1",
  isMe
- ? "text-white/70"
- : "text-grey-500"
+ ? "text-surface/70"
+ : "text-on-surface-variant/80"
  )}
  >
  {new Date(msg.createdAt).toLocaleTimeString(
@@ -306,13 +306,13 @@ export function AdminChatClient({
  </div>
 
  {/* Input */}
- <div className="p-3 border-t border-grey-200 bg-white">
+ <div className="p-3 border-t border-outline-variant/30 bg-surface-container-lowest">
  <form
  onSubmit={(e) => {
  e.preventDefault();
  handleSend();
  }}
- className="flex items-end gap-2 bg-grey-50 border border-grey-200 rounded-xl p-2 focus-within:border-black focus-within:ring-1 focus-within:ring-black/20 transition-all"
+ className="flex items-end gap-2 bg-surface border border-outline-variant/30 rounded-xl p-2 focus-within:border-black focus-within:ring-1 focus-within:ring-black/20 transition-all"
  >
  <textarea
  value={newMessage}
@@ -320,7 +320,7 @@ export function AdminChatClient({
  placeholder="Skriv en melding..."
  rows={1}
  disabled={isSending}
- className="flex-1 bg-transparent text-sm text-black placeholder:text-grey-400 outline-none resize-none py-2"
+ className="flex-1 bg-transparent text-sm text-on-surface placeholder:text-on-surface-variant outline-none resize-none py-2"
  style={{ minHeight: "20px", maxHeight: "100px"}}
  onKeyDown={(e) => {
  if (e.key === "Enter"&& !e.shiftKey) {
@@ -332,7 +332,7 @@ export function AdminChatClient({
  <button
  type="submit"
  disabled={!newMessage.trim() || isSending}
- className="p-2 rounded-lg bg-black text-white hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
+ className="p-2 rounded-lg bg-on-surface text-surface hover:opacity-90 transition-opacity disabled:opacity-40 cursor-pointer"
  aria-label="Send melding"
  >
  <Icon name="send" className="w-4 h-4" />
@@ -341,7 +341,7 @@ export function AdminChatClient({
  </div>
  </>
  ) : (
- <div className="flex-1 flex items-center justify-center p-8 bg-grey-50">
+ <div className="flex-1 flex items-center justify-center p-8 bg-surface">
  <AdminEmptyState
  icon={<Icon name="chat" className="w-6 h-6" />}
  title="Velg en samtale"

@@ -113,7 +113,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
   return (
     <>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-base font-semibold text-black">
+        <h3 className="text-base font-semibold text-on-surface">
           Alle turneringer ({filtered.length})
         </h3>
         <div className="flex items-center gap-2">
@@ -154,7 +154,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
           <button
             onClick={() => setFilterSeries("")}
             className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
-              !filterSeries ? "bg-grey-200 text-black" : "text-grey-400 hover:text-black"
+              !filterSeries ? "bg-surface-variant text-on-surface" : "text-on-surface-variant hover:text-on-surface"
             }`}
           >
             Alle
@@ -164,7 +164,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
               key={s}
               onClick={() => setFilterSeries(s === filterSeries ? "" : s)}
               className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
-                filterSeries === s ? "bg-grey-200 text-black" : "text-grey-400 hover:text-black"
+                filterSeries === s ? "bg-surface-variant text-on-surface" : "text-on-surface-variant hover:text-on-surface"
               }`}
             >
               {s}
@@ -185,16 +185,16 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                 >
                   {t._count.playerPlans > 0 ? (
                     isExpanded ? (
-                      <Icon name="expand_more" className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
+                      <Icon name="expand_more" className="w-3.5 h-3.5 text-on-surface-variant flex-shrink-0" />
                     ) : (
-                      <Icon name="chevron_right" className="w-3.5 h-3.5 text-grey-400 flex-shrink-0" />
+                      <Icon name="chevron_right" className="w-3.5 h-3.5 text-on-surface-variant flex-shrink-0" />
                     )
                   ) : (
                     <span className="w-3.5 flex-shrink-0" />
                   )}
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-black truncate">{t.name}</p>
-                    <p className="text-xs text-grey-400">
+                    <p className="text-sm font-medium text-on-surface truncate">{t.name}</p>
+                    <p className="text-xs text-on-surface-variant">
                       {new Date(t.startDate).toLocaleDateString("nb-NO")} · {t.level}
                       {t.source && ` · ${SOURCE_LABELS[t.source] ?? t.source}`}
                       {t.series && ` · ${t.series}`}
@@ -202,12 +202,12 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                   </div>
                 </button>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-xs text-grey-400">
+                  <span className="text-xs text-on-surface-variant">
                     {t._count.playerPlans} planer
                   </span>
                   <button
                     onClick={() => setEditTournament(t)}
-                    className="p-1.5 rounded-lg hover:bg-grey-200 transition-colors text-grey-400"
+                    className="p-1.5 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant"
                     title="Rediger"
                   >
                     <Icon name="edit" className="w-3.5 h-3.5" />
@@ -215,7 +215,7 @@ export function TournamentAdminList({ tournaments }: TournamentAdminListProps) {
                   <button
                     onClick={() => handleDelete(t)}
                     disabled={deletingId === t.id}
-                    className="p-1.5 rounded-lg hover:bg-error-light transition-colors text-grey-400 hover:text-error"
+                    className="p-1.5 rounded-lg hover:bg-error-light transition-colors text-on-surface-variant hover:text-error"
                     title="Slett"
                   >
                     {deletingId === t.id ? (

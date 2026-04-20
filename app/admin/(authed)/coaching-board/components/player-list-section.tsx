@@ -33,7 +33,7 @@ function getInitials(name: string | null): string {
 
 function Sparkline({ data, color }: { data: number[]; color: string }) {
   if (data.length < 2) {
-    return <div className="h-[20px] flex items-center text-[10px] text-grey-300">—</div>;
+    return <div className="h-[20px] flex items-center text-[10px] text-on-surface-variant/60">—</div>;
   }
   const min = Math.min(...data);
   const max = Math.max(...data);
@@ -61,7 +61,7 @@ function Sparkline({ data, color }: { data: number[]; color: string }) {
 function TrendIndicator({ value }: { value: number | null }) {
   if (value === null || Math.abs(value) < 0.05) {
     return (
-      <span className="inline-flex items-center gap-1 text-xs text-grey-400">
+      <span className="inline-flex items-center gap-1 text-xs text-on-surface-variant">
         <Icon name="remove" className="h-3 w-3" />
         0.00
       </span>
@@ -177,7 +177,7 @@ export function PlayerListSection({ players }: PlayerListSectionProps) {
       </div>
 
       {filtered.length === 0 && (
-        <div className="rounded-xl bg-white shadow-card p-10 text-center text-sm text-grey-500">
+        <div className="rounded-xl bg-surface-container-lowest shadow-card p-10 text-center text-sm text-on-surface-variant/80">
           Ingen spillere matcher filteret.
         </div>
       )}
@@ -189,11 +189,11 @@ export function PlayerListSection({ players }: PlayerListSectionProps) {
             <Link
               key={p.userId}
               href={`/admin/elever/${p.userId}`}
-              className="rounded-xl bg-white shadow-card p-5 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200 group"
+              className="rounded-xl bg-surface-container-lowest shadow-card p-5 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200 group"
             >
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div
-                  className="flex items-center justify-center w-11 h-11 rounded-xl text-sm font-bold text-white shrink-0"
+                  className="flex items-center justify-center w-11 h-11 rounded-xl text-sm font-bold text-surface shrink-0"
                   style={{ background: level?.color ?? "#005840" }}
                 >
                   {getInitials(p.name)}
@@ -211,27 +211,27 @@ export function PlayerListSection({ players }: PlayerListSectionProps) {
                 )}
               </div>
 
-              <div className="text-sm font-semibold text-grey-900 group-hover:text-primary transition-colors">
+              <div className="text-sm font-semibold text-on-surface group-hover:text-primary transition-colors">
                 {p.name ?? "Uten navn"}
               </div>
-              <div className="text-xs text-grey-500 mt-0.5 truncate">
+              <div className="text-xs text-on-surface-variant/80 mt-0.5 truncate">
                 {p.email ?? "—"}
               </div>
 
               <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
                 <div>
-                  <div className="text-grey-400">USI</div>
-                  <div className="text-sm font-semibold tabular-nums text-grey-900">
+                  <div className="text-on-surface-variant">USI</div>
+                  <div className="text-sm font-semibold tabular-nums text-on-surface">
                     {p.totalUsi !== null ? p.totalUsi.toFixed(2) : "—"}
                   </div>
                 </div>
                 <div>
-                  <div className="text-grey-400">Trend 30d</div>
+                  <div className="text-on-surface-variant">Trend 30d</div>
                   <TrendIndicator value={p.trend30d} />
                 </div>
               </div>
 
-              <div className="mt-3 pt-3 border-t border-grey-100">
+              <div className="mt-3 pt-3 border-t border-outline-variant/20">
                 <div className="flex items-center justify-between gap-2">
                   <Sparkline
                     data={p.usiSparkline}
@@ -241,17 +241,17 @@ export function PlayerListSection({ players }: PlayerListSectionProps) {
                         : "var(--color-error)"
                     }
                   />
-                  <span className="text-[11px] text-grey-400">
+                  <span className="text-[11px] text-on-surface-variant">
                     {formatLastTraining(p.lastTrainingAt)}
                   </span>
                 </div>
               </div>
 
               {p.biggestGap && p.biggestGap.value < 0 && (
-                <div className="mt-3 flex items-center gap-1.5 text-[11px] text-grey-500">
+                <div className="mt-3 flex items-center gap-1.5 text-[11px] text-on-surface-variant/80">
                   <Icon name="error" className="h-3 w-3 text-warning-text" />
                   <span>
-                    Gap i <span className="font-medium text-grey-700">{p.biggestGap.label}</span>
+                    Gap i <span className="font-medium text-on-surface-variant/90">{p.biggestGap.label}</span>
                     <span className="ml-1 tabular-nums">
                       {p.biggestGap.value.toFixed(2)} SG
                     </span>
@@ -292,15 +292,15 @@ function FilterPill({
         ? "text-warning-text"
         : tone === "error"
           ? "text-error-text"
-          : "text-grey-500";
+          : "text-on-surface-variant/80";
 
   return (
     <button
       onClick={onClick}
       className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-colors ${
         active
-          ? "bg-primary text-white"
-          : `bg-white border border-grey-200 hover:bg-grey-50 ${toneBg}`
+          ? "bg-primary text-surface"
+          : `bg-surface-container-lowest border border-outline-variant/30 hover:bg-surface ${toneBg}`
       }`}
     >
       {label}

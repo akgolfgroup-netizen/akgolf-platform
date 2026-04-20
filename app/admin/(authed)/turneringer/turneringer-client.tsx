@@ -77,9 +77,9 @@ function NyTurneringModal({ open, onClose, onCreated }: NyTurneringModalProps) {
  }
 
  return (
- <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+ <div className="fixed inset-0 z-50 flex items-center justify-center bg-on-surface/50 p-4">
  <Card className="w-full max-w-lg">
- <h2 className="text-lg font-semibold text-black mb-4">
+ <h2 className="text-lg font-semibold text-on-surface mb-4">
  Ny turnering
  </h2>
  <form onSubmit={handleSubmit} className="space-y-4">
@@ -168,20 +168,20 @@ const STATUS_CONFIG: Record<
  ongoing: {
  label: "Pågående",
  variant: "info",
- iconWrapClass: "bg-grey-100",
+ iconWrapClass: "bg-surface-container",
  iconClass: "text-text",
  },
  upcoming: {
  label: "Kommende",
  variant: "success",
- iconWrapClass: "bg-grey-100",
- iconClass: "text-grey-500",
+ iconWrapClass: "bg-surface-container",
+ iconClass: "text-on-surface-variant/80",
  },
  completed: {
  label: "Fullført",
  variant: "muted",
- iconWrapClass: "bg-grey-100",
- iconClass: "text-grey-400",
+ iconWrapClass: "bg-surface-container",
+ iconClass: "text-on-surface-variant",
  },
 };
 
@@ -285,8 +285,8 @@ export function TurneringerClient({
  className={cn(
  "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
  filter === f.id
- ? "bg-black text-white border-black"
- : "bg-white border-grey-200 text-text hover:bg-grey-100",
+ ? "bg-on-surface text-surface border-black"
+ : "bg-surface-container-lowest border-outline-variant/30 text-text hover:bg-surface-container",
  )}
  >
  {f.label}
@@ -330,7 +330,7 @@ export function TurneringerClient({
  </div>
  <div className="min-w-0">
  <div className="flex items-center gap-2 mb-1 flex-wrap">
- <h3 className="font-semibold text-black">
+ <h3 className="font-semibold text-on-surface">
  {tournament.name}
  </h3>
  <Badge variant={config.variant}>
@@ -342,7 +342,7 @@ export function TurneringerClient({
  </Badge>
  )}
  </div>
- <div className="flex flex-wrap items-center gap-4 text-sm text-grey-500">
+ <div className="flex flex-wrap items-center gap-4 text-sm text-on-surface-variant/80">
  <span className="flex items-center gap-1">
  <Icon name="calendar_today" className="w-3.5 h-3.5" />
  {format(new Date(tournament.startDate), "d. MMM", {

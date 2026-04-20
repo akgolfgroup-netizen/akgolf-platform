@@ -67,30 +67,30 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
 
       <div className="p-6 space-y-6">
         <div className="space-y-1">
-          <h1 className="text-2xl font-semibold text-black">AI-agenter</h1>
-          <p className="text-grey-400">Administrer autonome AI-agenter</p>
+          <h1 className="text-2xl font-semibold text-on-surface">AI-agenter</h1>
+          <p className="text-on-surface-variant">Administrer autonome AI-agenter</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
-                <Icon name="smart_toy" className="w-5 h-5 text-grey-400" />
+              <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
+                <Icon name="smart_toy" className="w-5 h-5 text-on-surface-variant" />
               </div>
-              <span className="text-sm font-medium text-grey-400">Totalt</span>
+              <span className="text-sm font-medium text-on-surface-variant">Totalt</span>
             </div>
-            <div className="text-2xl font-semibold text-black tabular-nums">{stats.total}</div>
+            <div className="text-2xl font-semibold text-on-surface tabular-nums">{stats.total}</div>
           </div>
 
-          <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
-                <Icon name="check"Circle className="w-5 h-5 text-grey-400" />
+              <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
+                <Icon name="check"Circle className="w-5 h-5 text-on-surface-variant" />
               </div>
-              <span className="text-sm font-medium text-grey-400">Aktive</span>
+              <span className="text-sm font-medium text-on-surface-variant">Aktive</span>
             </div>
             <div className="flex items-baseline gap-2">
-              <div className="text-2xl font-semibold text-black tabular-nums">{stats.active}</div>
+              <div className="text-2xl font-semibold text-on-surface tabular-nums">{stats.active}</div>
               {stats.total > 0 && (
                 <span className="text-xs font-medium text-success tabular-nums">
                   {Math.round((stats.active / stats.total) * 100)}%
@@ -99,44 +99,44 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
             </div>
           </div>
 
-          <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
-                <Icon name="bolt" className="w-5 h-5 text-grey-400" />
+              <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
+                <Icon name="bolt" className="w-5 h-5 text-on-surface-variant" />
               </div>
-              <span className="text-sm font-medium text-grey-400">Handlinger i dag</span>
+              <span className="text-sm font-medium text-on-surface-variant">Handlinger i dag</span>
             </div>
-            <div className="text-2xl font-semibold text-black tabular-nums">{stats.actionsToday}</div>
+            <div className="text-2xl font-semibold text-on-surface tabular-nums">{stats.actionsToday}</div>
           </div>
 
-          <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center">
-                <Icon name="trending_up" className="w-5 h-5 text-grey-400" />
+              <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center">
+                <Icon name="trending_up" className="w-5 h-5 text-on-surface-variant" />
               </div>
-              <span className="text-sm font-medium text-grey-400">Kostnader MTD</span>
+              <span className="text-sm font-medium text-on-surface-variant">Kostnader MTD</span>
             </div>
-            <div className="text-2xl font-semibold text-black tabular-nums">${stats.costMtd.toFixed(2)}</div>
+            <div className="text-2xl font-semibold text-on-surface tabular-nums">${stats.costMtd.toFixed(2)}</div>
           </div>
         </div>
 
         <div className="space-y-6">
           {TEAM_ORDER.filter((team) => agentsByTeam.has(team)).map((team) => (
             <section key={team}>
-              <MonoLabel as="h3" size="xs" uppercase className="text-grey-400 mb-3">{TEAM_LABELS[team]}</MonoLabel>
+              <MonoLabel as="h3" size="xs" uppercase className="text-on-surface-variant mb-3">{TEAM_LABELS[team]}</MonoLabel>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {agentsByTeam.get(team)?.map((agent) => (
                   <div
                     key={agent.id}
                     className={cn(
-                      "bg-white border border-grey-200 rounded-xl p-5 transition-all hover:border-grey-300",
+                      "bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5 transition-all hover:border-outline-variant/50",
                       !agent.isActive && "opacity-60",
                       isPending && "pointer-events-none",
                     )}
                   >
                     <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center">
-                        <Icon name="smart_toy" className="w-6 h-6 text-grey-400" />
+                      <div className="w-12 h-12 rounded-xl bg-surface flex items-center justify-center">
+                        <Icon name="smart_toy" className="w-6 h-6 text-on-surface-variant" />
                       </div>
                       <button
                         onClick={() => handleToggle(agent.id, agent.isActive)}
@@ -150,25 +150,25 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                           "w-11 h-6 rounded-full transition-colors relative",
                           agent.isActive
                             ? "bg-success"
-                            : "bg-grey-200",
+                            : "bg-surface-variant",
                         )}
                       >
                         <span
                           className={cn(
-                            "absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all",
+                            "absolute top-0.5 w-5 h-5 rounded-full bg-surface-container-lowest shadow-sm transition-all",
                             agent.isActive ? "left-[22px]" : "left-0.5",
                           )}
                         />
                       </button>
                     </div>
 
-                    <h3 className="font-semibold text-black mb-1">
+                    <h3 className="font-semibold text-on-surface mb-1">
                       {agent.displayName}
                     </h3>
-                    <p className="text-xs text-grey-400 mb-2">
+                    <p className="text-xs text-on-surface-variant mb-2">
                       {agent.model}
                     </p>
-                    <p className="text-sm text-grey-400 mb-4">
+                    <p className="text-sm text-on-surface-variant mb-4">
                       {agent.description}
                     </p>
 
@@ -176,20 +176,20 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                       {agent.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="text-[10px] px-2 py-0.5 rounded-full bg-grey-50 text-grey-400"
+                          className="text-[10px] px-2 py-0.5 rounded-full bg-surface text-on-surface-variant"
                         >
                           {skill}
                         </span>
                       ))}
                     </div>
 
-                    <div className="pt-3 border-t border-grey-200 flex items-center justify-between text-xs">
+                    <div className="pt-3 border-t border-outline-variant/30 flex items-center justify-between text-xs">
                       <span
                         className={cn(
                           "inline-flex items-center gap-1 font-medium",
                           agent.isActive
                             ? "text-success"
-                            : "text-grey-400",
+                            : "text-on-surface-variant",
                         )}
                       >
                         {agent.isActive ? (
@@ -204,7 +204,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
                           </>
                         )}
                       </span>
-                      <span className="text-grey-400">
+                      <span className="text-on-surface-variant">
                         {agent.lastActionAt
                           ? `Sist: ${formatDistanceToNow(new Date(agent.lastActionAt), { locale: nb, addSuffix: true })}`
                           : "Ingen handlinger"}
@@ -218,14 +218,14 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
         </div>
 
         {agents.length === 0 && (
-          <div className="bg-white border border-grey-200 rounded-xl p-12 text-center">
-            <div className="w-12 h-12 rounded-xl bg-grey-50 flex items-center justify-center mx-auto mb-4">
-              <Icon name="smart_toy" className="w-6 h-6 text-grey-400" />
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-12 text-center">
+            <div className="w-12 h-12 rounded-xl bg-surface flex items-center justify-center mx-auto mb-4">
+              <Icon name="smart_toy" className="w-6 h-6 text-on-surface-variant" />
             </div>
-            <h3 className="text-lg font-semibold text-black mb-1">
+            <h3 className="text-lg font-semibold text-on-surface mb-1">
               Ingen agenter konfigurert
             </h3>
-            <p className="text-grey-400">
+            <p className="text-on-surface-variant">
               Det er ikke lagt til noen AI-agenter ennå.
             </p>
           </div>

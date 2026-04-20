@@ -33,15 +33,15 @@ export function CoachingBoardClient({
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      <header className="flex items-start justify-between flex-wrap gap-3 pb-2 border-b border-grey-100">
+      <header className="flex items-start justify-between flex-wrap gap-3 pb-2 border-b border-outline-variant/20">
         <div>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-grey-400">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-on-surface-variant">
             Coaching
           </div>
-          <h1 className="mt-1 text-2xl font-bold text-grey-900 tracking-tight">
+          <h1 className="mt-1 text-2xl font-bold text-on-surface tracking-tight">
             Coaching Mission Board
           </h1>
-          <p className="mt-1 text-sm text-grey-500 max-w-xl">
+          <p className="mt-1 text-sm text-on-surface-variant/80 max-w-xl">
             Dagsagenda, spillerliste og gruppe-helsesjekk for {viewLabel}. Data
             oppdateres hver 15 min.
           </p>
@@ -51,7 +51,7 @@ export function CoachingBoardClient({
           {permissions.canEditPlan && (
             <Link
               href="/admin/treningsplan"
-              className="inline-flex items-center rounded-[20px] border border-grey-200 px-4 py-2 text-sm font-medium text-grey-700 hover:bg-grey-50 transition-colors"
+              className="inline-flex items-center rounded-[20px] border border-outline-variant/30 px-4 py-2 text-sm font-medium text-on-surface-variant/90 hover:bg-surface transition-colors"
             >
               Treningsplaner
             </Link>
@@ -59,7 +59,7 @@ export function CoachingBoardClient({
           {permissions.canRegisterTest && (
             <Link
               href="/admin/elever"
-              className="inline-flex items-center rounded-[20px] bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-alt transition-colors"
+              className="inline-flex items-center rounded-[20px] bg-primary px-4 py-2 text-sm font-medium text-surface hover:bg-primary-alt transition-colors"
             >
               Registrer test
             </Link>

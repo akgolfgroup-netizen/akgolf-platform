@@ -26,12 +26,12 @@ export default function KalenderMonthView({
     bookings.filter((b) => isSameDay(new Date(b.startTime), date));
 
   return (
-    <div className="bg-white rounded-xl border border-grey-200 overflow-hidden">
-      <div className="grid grid-cols-7 border-b border-grey-200 bg-grey-50">
+    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
+      <div className="grid grid-cols-7 border-b border-outline-variant/30 bg-surface">
         {["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"].map((label) => (
           <div
             key={label}
-            className="px-3 py-2.5 text-center text-xs font-semibold text-grey-500 uppercase tracking-wider"
+            className="px-3 py-2.5 text-center text-xs font-semibold text-on-surface-variant/80 uppercase tracking-wider"
           >
             {label}
           </div>
@@ -50,24 +50,24 @@ export default function KalenderMonthView({
               key={i}
               onClick={() => onSelectDate(date)}
               className={cn(
-                "min-h-[110px] p-2 border-b border-r border-grey-100 text-left transition-colors",
-                !isCurrentMonth && "bg-grey-50 opacity-60",
-                isToday && "bg-grey-100",
+                "min-h-[110px] p-2 border-b border-r border-outline-variant/20 text-left transition-colors",
+                !isCurrentMonth && "bg-surface opacity-60",
+                isToday && "bg-surface-container",
                 isSelected && "ring-2 ring-black ring-inset",
-                "hover:bg-grey-50"
+                "hover:bg-surface"
               )}
             >
               <div className="flex items-center justify-between mb-1">
                 <span
                   className={cn(
                     "text-sm font-medium w-7 h-7 flex items-center justify-center rounded-full",
-                    isToday ? "bg-black text-white" : "text-black"
+                    isToday ? "bg-on-surface text-surface" : "text-on-surface"
                   )}
                 >
                   {format(date, "d")}
                 </span>
                 {dayBookings.length > 0 && (
-                  <span className="text-[10px] text-grey-400 tabular-nums">
+                  <span className="text-[10px] text-on-surface-variant tabular-nums">
                     {dayBookings.length}
                   </span>
                 )}
@@ -91,7 +91,7 @@ export default function KalenderMonthView({
                   </div>
                 ))}
                 {dayBookings.length > 3 && (
-                  <div className="text-[10px] text-grey-400 pl-1">
+                  <div className="text-[10px] text-on-surface-variant pl-1">
                     +{dayBookings.length - 3} flere
                   </div>
                 )}

@@ -27,19 +27,19 @@ const statusConfig: Record<
  label: "Fullført",
  icon: CheckCircle,
  variant: "success",
- iconClass: "bg-grey-50 text-grey-400",
+ iconClass: "bg-surface text-on-surface-variant",
  },
  CANCELLED: {
  label: "Avlyst",
  icon: XCircle,
  variant: "error",
- iconClass: "bg-grey-50 text-grey-400",
+ iconClass: "bg-surface text-on-surface-variant",
  },
  NO_SHOW: {
  label: "No-show",
  icon: AlertCircle,
  variant: "muted",
- iconClass: "bg-grey-50 text-grey-400",
+ iconClass: "bg-surface text-on-surface-variant",
  },
 };
 
@@ -117,8 +117,8 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  <div className="p-6 space-y-6">
  {/* Page Header */}
  <div>
- <h1 className="text-2xl font-semibold text-black">Økter</h1>
- <p className="text-sm text-grey-400 mt-1">
+ <h1 className="text-2xl font-semibold text-on-surface">Økter</h1>
+ <p className="text-sm text-on-surface-variant mt-1">
  Gjennomgå fullførte økter, avlysninger og no-shows
  </p>
  </div>
@@ -147,16 +147,16 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  </div>
 
  {/* Filters & Search */}
- <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
  <div className="flex flex-col lg:flex-row gap-3">
  <div className="flex-1 relative">
- <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none" />
+ <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant pointer-events-none" />
  <input
  type="text"
  value={searchQuery}
  onChange={(e) => setSearchQuery(e.target.value)}
  placeholder="Søk etter elev..."
- className="w-full pl-9 pr-3 py-2 bg-grey-50 border border-grey-200 rounded-lg text-sm text-black placeholder:text-grey-400 focus:outline-none focus:ring-2 focus:ring-grey-200 focus:border-grey-300 transition-colors"
+ className="w-full pl-9 pr-3 py-2 bg-surface border border-outline-variant/30 rounded-lg text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-grey-200 focus:border-outline-variant/50 transition-colors"
  />
  </div>
  <div className="flex gap-2 flex-wrap">
@@ -167,8 +167,8 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  className={cn(
  "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
  activeFilter === filter.value
- ? "bg-black text-white border-black"
- : "bg-white border-grey-200 text-grey-400 hover:bg-grey-50",
+ ? "bg-on-surface text-surface border-black"
+ : "bg-surface-container-lowest border-outline-variant/30 text-on-surface-variant hover:bg-surface",
  )}
  >
  {filter.label}
@@ -181,22 +181,22 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
 
  {/* Sessions List */}
  {filteredSessions.length === 0 ? (
- <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-12 text-center">
- <div className="w-12 h-12 rounded-full bg-grey-50 flex items-center justify-center mx-auto mb-3">
- <Icon name="assignment" className="w-6 h-6 text-grey-400" />
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-12 text-center">
+ <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center mx-auto mb-3">
+ <Icon name="assignment" className="w-6 h-6 text-on-surface-variant" />
  </div>
- <h3 className="text-base font-medium text-black mb-1">
+ <h3 className="text-base font-medium text-on-surface mb-1">
  Ingen økter funnet
  </h3>
- <p className="text-sm text-grey-400">
+ <p className="text-sm text-on-surface-variant">
  Prøv å justere filter eller søk for å finne det du leter etter.
  </p>
  </div>
  ) : (
- <div className="bg-white rounded-xl border border-grey-200 rounded-xl overflow-hidden">
- <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
- <h3 className="text-sm font-semibold text-black">Økter</h3>
- <span className="text-xs text-grey-400">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl overflow-hidden">
+ <div className="px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
+ <h3 className="text-sm font-semibold text-on-surface">Økter</h3>
+ <span className="text-xs text-on-surface-variant">
  {filteredSessions.length} resultater
  </span>
  </div>
@@ -210,8 +210,8 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  key={session.id}
  onClick={() => handleSelectSession(session)}
  className={cn(
- "p-4 flex items-start gap-4 hover:bg-grey-50 transition-colors cursor-pointer",
- selectedSession === session.id && "bg-grey-50",
+ "p-4 flex items-start gap-4 hover:bg-surface transition-colors cursor-pointer",
+ selectedSession === session.id && "bg-surface",
  )}
  >
  <div
@@ -224,7 +224,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  </div>
  <div className="flex-1 min-w-0">
  <div className="flex items-center gap-2 mb-1">
- <span className="text-sm font-semibold text-black">
+ <span className="text-sm font-semibold text-on-surface">
  {format(new Date(session.startTime), "d. MMM HH:mm", {
  locale: nb,
  })}
@@ -233,26 +233,26 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  {config.label}
  </StatusBadge>
  </div>
- <h4 className="text-sm text-black">
+ <h4 className="text-sm text-on-surface">
  {session.student?.name ??
  session.student?.email ??
  "Ukjent"}
  </h4>
- <p className="text-xs text-grey-400">
+ <p className="text-xs text-on-surface-variant">
  {session.service?.name ?? "Ukjent tjeneste"}
  {session.instructor?.name
  ? ` \u2022 ${session.instructor.name}`
  :""}
  </p>
  {session.adminNotes && (
- <p className="text-xs text-grey-400 mt-2 line-clamp-2">
+ <p className="text-xs text-on-surface-variant mt-2 line-clamp-2">
  {session.adminNotes}
  </p>
  )}
  </div>
  <button
  type="button"
- className="p-1.5 rounded-md hover:bg-grey-50 text-grey-400 transition-colors"
+ className="p-1.5 rounded-md hover:bg-surface text-on-surface-variant transition-colors"
  aria-label="Rediger notater"
  >
  <Icon name="edit"3 className="w-4 h-4" />
@@ -266,20 +266,20 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
 
  {/* Notes Panel */}
  {selectedSessionData && (
- <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
  <div className="flex items-center justify-between mb-4">
- <h3 className="text-sm font-semibold text-black">Notater</h3>
+ <h3 className="text-sm font-semibold text-on-surface">Notater</h3>
  <button
  type="button"
  onClick={() => setSelectedSession(null)}
- className="p-1.5 rounded-md hover:bg-grey-50 transition-colors"
+ className="p-1.5 rounded-md hover:bg-surface transition-colors"
  aria-label="Lukk"
  >
- <Icon name="close"Circle className="w-4 h-4 text-grey-400" />
+ <Icon name="close"Circle className="w-4 h-4 text-on-surface-variant" />
  </button>
  </div>
  <div className="flex items-center gap-3 mb-4">
- <div className="w-9 h-9 rounded-full bg-grey-50 text-grey-400 flex items-center justify-center text-xs font-semibold">
+ <div className="w-9 h-9 rounded-full bg-surface text-on-surface-variant flex items-center justify-center text-xs font-semibold">
  {(selectedSessionData.student?.name ?? "?")
  .split("")
  .map((n) => n[0])
@@ -287,10 +287,10 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  .slice(0, 2)}
  </div>
  <div>
- <h4 className="text-sm font-medium text-black">
+ <h4 className="text-sm font-medium text-on-surface">
  {selectedSessionData.student?.name ?? "Ukjent"}
  </h4>
- <p className="text-xs text-grey-400">
+ <p className="text-xs text-on-surface-variant">
  {selectedSessionData.service?.name ?? "Ukjent tjeneste"}
  </p>
  </div>
@@ -300,13 +300,13 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  value={notesValue}
  onChange={(e) => setNotesValue(e.target.value)}
  rows={4}
- className="w-full px-3 py-2 bg-grey-50 border border-grey-200 rounded-lg text-sm text-black placeholder:text-grey-400 focus:outline-none focus:ring-2 focus:ring-grey-200 focus:border-grey-300 transition-colors resize-none"
+ className="w-full px-3 py-2 bg-surface border border-outline-variant/30 rounded-lg text-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-grey-200 focus:border-outline-variant/50 transition-colors resize-none"
  />
  <div className="flex justify-end gap-2 mt-3">
  <button
  type="button"
  onClick={() => setSelectedSession(null)}
- className="px-4 py-2 text-sm font-medium text-grey-400 bg-grey-50 hover:bg-grey-50 rounded-lg transition-colors"
+ className="px-4 py-2 text-sm font-medium text-on-surface-variant bg-surface hover:bg-surface rounded-lg transition-colors"
  >
  Avbryt
  </button>
@@ -314,7 +314,7 @@ export function OkterClient({ initialSessions, stats }: OkterClientProps) {
  type="button"
  onClick={handleSaveNotes}
  disabled={isPending}
- className="px-4 py-2 text-sm font-medium text-white bg-black hover:bg-grey-800 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
+ className="px-4 py-2 text-sm font-medium text-surface bg-on-surface hover:bg-inverse-surface disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
  >
  {isPending ? "Lagrer...": "Lagre notater"}
  </button>
@@ -337,12 +337,12 @@ function StatCard({
  icon?: React.ReactNode;
 }) {
  return (
- <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
  <div className="flex items-center justify-between mb-2">
- <span className="text-xs font-medium text-grey-400">{label}</span>
- {icon && <div className="text-grey-400">{icon}</div>}
+ <span className="text-xs font-medium text-on-surface-variant">{label}</span>
+ {icon && <div className="text-on-surface-variant">{icon}</div>}
  </div>
- <div className="text-2xl font-semibold text-black">{value}</div>
+ <div className="text-2xl font-semibold text-on-surface">{value}</div>
  </div>
  );
 }
@@ -356,9 +356,9 @@ function StatusBadge({
  children: React.ReactNode;
 }) {
  const variantClasses = {
- success: "bg-grey-50 text-grey-400",
- error: "bg-grey-50 text-grey-400",
- muted: "bg-grey-50 text-grey-400",
+ success: "bg-surface text-on-surface-variant",
+ error: "bg-surface text-on-surface-variant",
+ muted: "bg-surface text-on-surface-variant",
  };
 
  return (

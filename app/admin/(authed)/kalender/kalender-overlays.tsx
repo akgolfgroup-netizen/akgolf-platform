@@ -226,10 +226,10 @@ export default function KalenderOverlays({
 
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <Icon name="schedule" className="w-4 h-4 text-grey-400 mt-0.5" />
+                <Icon name="schedule" className="w-4 h-4 text-on-surface-variant mt-0.5" />
                 <div>
-                  <div className="text-xs text-grey-400">Tidspunkt</div>
-                  <div className="text-sm text-black font-medium tabular-nums">
+                  <div className="text-xs text-on-surface-variant">Tidspunkt</div>
+                  <div className="text-sm text-on-surface font-medium tabular-nums">
                     {formatTime(drawerBooking.startTime)}–
                     {formatTime(drawerBooking.endTime)}
                   </div>
@@ -237,14 +237,14 @@ export default function KalenderOverlays({
               </div>
 
               <div className="flex items-start gap-3">
-                <Icon name="person" className="w-4 h-4 text-grey-400 mt-0.5" />
+                <Icon name="person" className="w-4 h-4 text-on-surface-variant mt-0.5" />
                 <div>
-                  <div className="text-xs text-grey-400">Elev</div>
-                  <div className="text-sm text-grey-900 font-medium">
+                  <div className="text-xs text-on-surface-variant">Elev</div>
+                  <div className="text-sm text-on-surface font-medium">
                     {drawerBooking.student.name || "Ukjent"}
                   </div>
                   {drawerBooking.student.email && (
-                    <div className="text-xs text-grey-400">
+                    <div className="text-xs text-on-surface-variant">
                       {drawerBooking.student.email}
                     </div>
                   )}
@@ -253,10 +253,10 @@ export default function KalenderOverlays({
 
               {drawerBooking.instructor.user.name && (
                 <div className="flex items-start gap-3">
-                  <Icon name="check"Circle2 className="w-4 h-4 text-grey-400 mt-0.5" />
+                  <Icon name="check"Circle2 className="w-4 h-4 text-on-surface-variant mt-0.5" />
                   <div>
-                    <div className="text-xs text-grey-400">Instruktør</div>
-                    <div className="text-sm text-grey-900 font-medium">
+                    <div className="text-xs text-on-surface-variant">Instruktør</div>
+                    <div className="text-sm text-on-surface font-medium">
                       {drawerBooking.instructor.user.name}
                     </div>
                   </div>
@@ -265,10 +265,10 @@ export default function KalenderOverlays({
 
               {drawerBooking.location && (
                 <div className="flex items-start gap-3">
-                  <Icon name="location_on" className="w-4 h-4 text-grey-400 mt-0.5" />
+                  <Icon name="location_on" className="w-4 h-4 text-on-surface-variant mt-0.5" />
                   <div>
-                    <div className="text-xs text-grey-400">Lokasjon</div>
-                    <div className="text-sm text-grey-900 font-medium">
+                    <div className="text-xs text-on-surface-variant">Lokasjon</div>
+                    <div className="text-sm text-on-surface font-medium">
                       {drawerBooking.location.name}
                     </div>
                   </div>
@@ -277,11 +277,11 @@ export default function KalenderOverlays({
             </div>
 
             {drawerBooking.adminNotes && (
-              <div className="pt-3 border-t border-grey-200">
-                <div className="text-xs font-semibold text-grey-400 uppercase tracking-wide mb-1">
+              <div className="pt-3 border-t border-outline-variant/30">
+                <div className="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1">
                   Admin-notat
                 </div>
-                <p className="text-sm text-black whitespace-pre-wrap">
+                <p className="text-sm text-on-surface whitespace-pre-wrap">
                   {drawerBooking.adminNotes}
                 </p>
               </div>

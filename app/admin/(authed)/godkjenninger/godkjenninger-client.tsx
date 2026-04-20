@@ -120,14 +120,14 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
           <div
             className={
               row.type === "activity"
-                ? "h-8 w-8 rounded-full flex items-center justify-center bg-grey-50"
-                : "h-8 w-8 rounded-full flex items-center justify-center bg-grey-50"
+                ? "h-8 w-8 rounded-full flex items-center justify-center bg-surface"
+                : "h-8 w-8 rounded-full flex items-center justify-center bg-surface"
             }
           >
             {row.type === "activity" ? (
               <Icon name="location_on" className="h-4 w-4 text-text" />
             ) : (
-              <Icon name="person" className="h-4 w-4 text-grey-400" />
+              <Icon name="person" className="h-4 w-4 text-on-surface-variant" />
             )}
           </div>
           <Badge variant={row.type === "activity" ? "info" : "warning"}>
@@ -142,10 +142,10 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       sortable: true,
       render: (row) => (
         <div>
-          <div className="text-sm font-medium text-black">
+          <div className="text-sm font-medium text-on-surface">
             {row.type === "activity" ? row.serviceName : row.studentName}
           </div>
-          <div className="text-xs text-grey-400">
+          <div className="text-xs text-on-surface-variant">
             {row.type === "activity"
               ? `Opprettet av ${row.studentName}`
               : row.serviceName}
@@ -158,8 +158,8 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       label: "Ønsket tid",
       sortable: true,
       render: (row) => (
-        <div className="text-sm text-black flex items-center gap-1.5">
-          <Icon name="calendar_today" className="h-3.5 w-3.5 text-grey-400" />
+        <div className="text-sm text-on-surface flex items-center gap-1.5">
+          <Icon name="calendar_today" className="h-3.5 w-3.5 text-on-surface-variant" />
           {format(new Date(row.requestedTime), "d. MMM 'kl.' HH:mm", {
             locale: nb,
           })}
@@ -173,9 +173,9 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       align: "right",
       render: (row) =>
         row.type === "activity" ? (
-          <span className="text-grey-400">—</span>
+          <span className="text-on-surface-variant">—</span>
         ) : (
-          <span className="tabular-nums text-black">
+          <span className="tabular-nums text-on-surface">
             {row.price.toLocaleString("nb-NO")} kr
           </span>
         ),
@@ -185,7 +185,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       label: "Opprettet",
       sortable: true,
       render: (row) => (
-        <span className="text-xs text-grey-400">
+        <span className="text-xs text-on-surface-variant">
           {format(new Date(row.createdAt), "d. MMM HH:mm", { locale: nb })}
         </span>
       ),
@@ -272,7 +272,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
 
       <div className="p-6 space-y-6">
         {conflictItems.length > 0 && (
-          <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-grey-50 text-warning text-sm border border-grey-200">
+          <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-surface text-warning text-sm border border-outline-variant/30">
             <Icon name="warning" className="h-4 w-4 flex-shrink-0 mt-0.5" />
             <span>
               {conflictItems.length} aktivitet

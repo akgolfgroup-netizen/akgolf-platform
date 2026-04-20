@@ -158,19 +158,19 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
       <div className="p-6">
         {/* Main Card */}
         <div
-          className="bg-white border border-grey-200 rounded-xl overflow-hidden"
+          className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden"
           style={{ minHeight: "calc(100vh - 180px)" }}
         >
           <div className="flex h-full">
             {/* Sidebar - Template List */}
             <div
               className={cn(
-                "w-full lg:w-80 border-r border-grey-200 flex flex-col",
+                "w-full lg:w-80 border-r border-outline-variant/30 flex flex-col",
                 selectedTemplateId && "hidden lg:flex",
               )}
             >
               {/* Header */}
-              <div className="p-4 border-b border-grey-200">
+              <div className="p-4 border-b border-outline-variant/30">
                 <Button
                   variant="accent"
                   className="w-full"
@@ -184,7 +184,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               </div>
 
               {/* Categories */}
-              <div className="p-3 border-b border-grey-200">
+              <div className="p-3 border-b border-outline-variant/30">
                 <div className="flex flex-wrap gap-1">
                   {categories.map((cat) => (
                     <button
@@ -193,8 +193,8 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                       className={cn(
                         "px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
                         selectedCategory === cat
-                          ? "bg-black text-white"
-                          : "bg-grey-50 text-text hover:text-black hover:bg-grey-200",
+                          ? "bg-on-surface text-surface"
+                          : "bg-surface text-text hover:text-on-surface hover:bg-surface-variant",
                       )}
                     >
                       {cat}
@@ -206,7 +206,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               {/* Templates */}
               <div className="flex-1 overflow-y-auto">
                 {filteredTemplates.length === 0 ? (
-                  <div className="p-6 text-center text-sm text-grey-400">
+                  <div className="p-6 text-center text-sm text-on-surface-variant">
                     Ingen maler funnet
                   </div>
                 ) : (
@@ -215,26 +215,26 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                       key={t.id}
                       onClick={() => selectTemplate(t)}
                       className={cn(
-                        "w-full p-4 text-left hover:bg-grey-50 transition-colors border-b border-grey-200",
-                        selectedTemplateId === t.id && "bg-grey-50",
+                        "w-full p-4 text-left hover:bg-surface transition-colors border-b border-outline-variant/30",
+                        selectedTemplateId === t.id && "bg-surface",
                       )}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-grey-50 flex items-center justify-center flex-shrink-0">
+                        <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center flex-shrink-0">
                           <Icon name="mail" className="w-5 h-5 text-text" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium text-black truncate">
+                          <h4 className="text-sm font-medium text-on-surface truncate">
                             {t.name}
                           </h4>
-                          <p className="text-xs text-grey-400 truncate">
+                          <p className="text-xs text-on-surface-variant truncate">
                             {t.subject}
                           </p>
                           <div className="flex items-center gap-2 mt-2">
                             <Badge variant="muted">
                               {getCategory(t.name)}
                             </Badge>
-                            <span className="text-[10px] text-grey-400">
+                            <span className="text-[10px] text-on-surface-variant">
                               {formatDate(t.updatedAt)}
                             </span>
                           </div>
@@ -256,20 +256,20 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
               {selectedTemplate ? (
                 <>
                   {/* Editor Header */}
-                  <div className="p-4 border-b border-grey-200 flex items-center justify-between gap-3 flex-wrap">
+                  <div className="p-4 border-b border-outline-variant/30 flex items-center justify-between gap-3 flex-wrap">
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => setSelectedTemplateId(null)}
-                        className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-grey-50"
+                        className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-surface"
                         aria-label="Lukk"
                       >
                         <Icon name="close" className="w-5 h-5 text-text" />
                       </button>
                       <div>
-                        <h3 className="text-base font-semibold text-black">
+                        <h3 className="text-base font-semibold text-on-surface">
                           {editName}
                         </h3>
-                        <p className="text-xs text-grey-400">
+                        <p className="text-xs text-on-surface-variant">
                           Sist redigert {formatDate(selectedTemplate.updatedAt)}
                         </p>
                       </div>
@@ -321,7 +321,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                         <Variable className="w-4 h-4" />
                         Tilgjengelige variabler
                       </div>
-                      <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-grey-50">
+                      <div className="flex flex-wrap gap-2 p-3 rounded-lg bg-surface">
                         {editVariables.length > 0 ? (
                           editVariables.map((v) => (
                             <button
@@ -329,13 +329,13 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
                               onClick={() => {
                                 setEditHtmlContent((prev) => prev + v);
                               }}
-                              className="text-xs px-2 py-1 rounded bg-white border border-grey-200 text-text hover:bg-black hover:text-white hover:border-black transition-colors"
+                              className="text-xs px-2 py-1 rounded bg-surface-container-lowest border border-outline-variant/30 text-text hover:bg-on-surface hover:text-surface hover:border-black transition-colors"
                             >
                               {v}
                             </button>
                           ))
                         ) : (
-                          <span className="text-xs text-grey-400">
+                          <span className="text-xs text-on-surface-variant">
                             Ingen variabler definert
                           </span>
                         )}

@@ -311,7 +311,7 @@ export default function TilgjengelighetPage() {
       sortable: true,
       render: (r) => (
         <div className="flex items-center gap-2">
-          <span className="text-black">{r.reason}</span>
+          <span className="text-on-surface">{r.reason}</span>
           {r.source === "GOOGLE_CALENDAR" && (
             <Badge variant="info">Google</Badge>
           )}
@@ -332,7 +332,7 @@ export default function TilgjengelighetPage() {
               e.stopPropagation();
               handleDeleteException(r.id);
             }}
-            className="p-1.5 rounded-md hover:bg-error-light text-grey-400 hover:text-error transition-colors"
+            className="p-1.5 rounded-md hover:bg-error-light text-on-surface-variant hover:text-error transition-colors"
             aria-label="Slett unntak"
           >
             <Icon name="delete" className="w-4 h-4" />
@@ -353,7 +353,7 @@ export default function TilgjengelighetPage() {
         {/* Instructor Selector */}
         <Card padding="sm">
           <div className="flex items-center gap-4 flex-wrap">
-            <span className="text-sm text-grey-500">
+            <span className="text-sm text-on-surface-variant/80">
               Velg instruktør:
             </span>
             <div className="flex gap-2 flex-wrap">
@@ -364,12 +364,12 @@ export default function TilgjengelighetPage() {
                   className={cn(
                     "flex items-center gap-2 px-3 py-2 rounded-lg transition-colors",
                     selectedInstructor === instructor.id
-                      ? "bg-grey-100 ring-2 ring-black"
-                      : "hover:bg-grey-50",
+                      ? "bg-surface-container ring-2 ring-black"
+                      : "hover:bg-surface",
                   )}
                 >
-                  <div className="w-2 h-2 rounded-full bg-black" />
-                  <span className="text-sm text-black">
+                  <div className="w-2 h-2 rounded-full bg-on-surface" />
+                  <span className="text-sm text-on-surface">
                     {instructor.name}
                   </span>
                 </button>
@@ -398,7 +398,7 @@ export default function TilgjengelighetPage() {
         {isLoading ? (
           <Card>
             <div className="flex items-center justify-center py-8">
-              <Icon name="progress_activity" className="w-8 h-8 animate-spin text-black" />
+              <Icon name="progress_activity" className="w-8 h-8 animate-spin text-on-surface" />
             </div>
           </Card>
         ) : (
@@ -407,12 +407,12 @@ export default function TilgjengelighetPage() {
             {activeTab === "hours" && (
               <>
                 <Card padding="none" className="overflow-hidden">
-                  <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-black">Faste arbeidstider</h3>
+                  <div className="px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
+                    <h3 className="text-base font-semibold text-on-surface">Faste arbeidstider</h3>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
-                        <Icon name="repeat" className="w-4 h-4 text-grey-400" />
-                        <span className="text-xs text-grey-500">
+                        <Icon name="repeat" className="w-4 h-4 text-on-surface-variant" />
+                        <span className="text-xs text-on-surface-variant/80">
                           Gjentas ukentlig
                         </span>
                       </div>
@@ -434,7 +434,7 @@ export default function TilgjengelighetPage() {
                       return (
                         <div key={day} className="px-4 py-3 flex items-start gap-4">
                           <div className="w-12 shrink-0 pt-1">
-                            <span className="text-sm font-semibold text-black">
+                            <span className="text-sm font-semibold text-on-surface">
                               {day}
                             </span>
                           </div>
@@ -444,7 +444,7 @@ export default function TilgjengelighetPage() {
                                 slots.map((slot, j) => (
                                   <div
                                     key={j}
-                                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-grey-100 rounded-full text-sm text-success-text"
+                                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-sm text-success-text"
                                   >
                                     <span className="tabular-nums">
                                       {slot.start} – {slot.end}
@@ -452,7 +452,7 @@ export default function TilgjengelighetPage() {
                                     <button
                                       type="button"
                                       onClick={() => handleRemoveSlot(dayIndex, j)}
-                                      className="w-5 h-5 rounded-full hover:bg-grey-200 flex items-center justify-center text-grey-500 hover:text-error transition-colors"
+                                      className="w-5 h-5 rounded-full hover:bg-surface-variant flex items-center justify-center text-on-surface-variant/80 hover:text-error transition-colors"
                                       aria-label="Fjern slot"
                                       title="Fjern slot"
                                     >
@@ -461,7 +461,7 @@ export default function TilgjengelighetPage() {
                                   </div>
                                 ))
                               ) : (
-                                <span className="text-sm text-grey-500 py-1.5">
+                                <span className="text-sm text-on-surface-variant/80 py-1.5">
                                   Fri
                                 </span>
                               )}
@@ -483,14 +483,14 @@ export default function TilgjengelighetPage() {
 
                 {/* Calendar Preview */}
                 <Card padding="none" className="overflow-hidden">
-                  <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-black">Kalendervisning</h3>
+                  <div className="px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
+                    <h3 className="text-base font-semibold text-on-surface">Kalendervisning</h3>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setCurrentWeek(addDays(currentWeek, -7))}
-                        className="p-1.5 rounded-lg hover:bg-grey-50"
+                        className="p-1.5 rounded-lg hover:bg-surface"
                       >
-                        <Icon name="chevron_left" className="w-4 h-4 text-grey-500" />
+                        <Icon name="chevron_left" className="w-4 h-4 text-on-surface-variant/80" />
                       </button>
                       <span className="text-sm text-text">
                         {format(weekStart, "d. MMM", { locale: nb })} -{" "}
@@ -500,9 +500,9 @@ export default function TilgjengelighetPage() {
                       </span>
                       <button
                         onClick={() => setCurrentWeek(addDays(currentWeek, 7))}
-                        className="p-1.5 rounded-lg hover:bg-grey-50"
+                        className="p-1.5 rounded-lg hover:bg-surface"
                       >
-                        <Icon name="chevron_right" className="w-4 h-4 text-grey-500" />
+                        <Icon name="chevron_right" className="w-4 h-4 text-on-surface-variant/80" />
                       </button>
                     </div>
                   </div>
@@ -519,7 +519,7 @@ export default function TilgjengelighetPage() {
 
                         return (
                           <div key={day} className="text-center">
-                            <span className="text-xs text-grey-500">
+                            <span className="text-xs text-on-surface-variant/80">
                               {day}
                             </span>
                             <div
@@ -527,10 +527,10 @@ export default function TilgjengelighetPage() {
                                 "mt-1 p-3 rounded-lg border min-h-[80px]",
                                 isBlocked
                                   ? "bg-error-light border-error"
-                                  : "bg-grey-50 border-grey-200",
+                                  : "bg-surface border-outline-variant/30",
                               )}
                             >
-                              <span className="text-sm font-medium text-black">
+                              <span className="text-sm font-medium text-on-surface">
                                 {format(date, "d")}
                               </span>
                               {isBlocked && (
@@ -556,10 +556,10 @@ export default function TilgjengelighetPage() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <h3 className="text-base font-semibold text-black">
+                    <h3 className="text-base font-semibold text-on-surface">
                       Unntak (ferie, sykdom, blokkeringer)
                     </h3>
-                    <p className="text-xs text-grey-500 mt-0.5">
+                    <p className="text-xs text-on-surface-variant/80 mt-0.5">
                       {selectedInstructorData?.name ?? "Instruktør"} —{" "}
                       {blockedRows.length} kommende
                     </p>
@@ -588,10 +588,10 @@ export default function TilgjengelighetPage() {
             {activeTab === "google" && (
               <Card>
                 <div className="flex flex-col items-center text-center py-6">
-                  <div className="w-12 h-12 rounded-full bg-grey-100 flex items-center justify-center mb-3">
-                    <Icon name="calendar_today" className="w-6 h-6 text-black" />
+                  <div className="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-3">
+                    <Icon name="calendar_today" className="w-6 h-6 text-on-surface" />
                   </div>
-                  <h3 className="text-base font-semibold text-black">
+                  <h3 className="text-base font-semibold text-on-surface">
                     Google Calendar-synk
                   </h3>
                   <p className="text-sm text-text mt-1 max-w-md">
@@ -613,7 +613,7 @@ export default function TilgjengelighetPage() {
                   {blockedTimes.filter(
                     (bt) => bt.source === "GOOGLE_CALENDAR",
                   ).length > 0 && (
-                    <p className="text-xs text-grey-500 mt-4">
+                    <p className="text-xs text-on-surface-variant/80 mt-4">
                       {
                         blockedTimes.filter(
                           (bt) => bt.source === "GOOGLE_CALENDAR",

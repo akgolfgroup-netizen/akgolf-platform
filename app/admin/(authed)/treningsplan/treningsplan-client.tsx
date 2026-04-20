@@ -64,11 +64,11 @@ const FOCUS_VARIANT: Record<
 };
 
 const FOCUS_BG: Record<FocusArea, string> = {
- FYS: "bg-black/5 border-black/20",
+ FYS: "bg-on-surface/5 border-black/20",
  TEK: "bg-success-text/5 border-success-text/20",
  SLAG: "bg-warning/5 border-warning/20",
  SPILL: "bg-error/5 border-error/20",
- TURN: "bg-grey-100 border-grey-300",
+ TURN: "bg-surface-container border-outline-variant/50",
 };
 
 const PERIOD_LABELS: Record<string, string> = {
@@ -152,7 +152,7 @@ function PlanOverview({
  onMenuClick={toggle}
  />
 
- <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-grey-50">
+ <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-surface">
  <AdminPageHeader
  title="Treningsplaner"
  subtitle="Oversikt over alle aktive og tidligere treningsplaner"
@@ -188,10 +188,10 @@ function PlanOverview({
  </div>
 
  {/* Filters */}
- <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
  <div className="flex flex-col sm:flex-row gap-3">
  <div className="relative flex-1">
- <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none" />
+ <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant pointer-events-none" />
  <AdminInput
  type="text"
  placeholder="Søk etter elev eller plantittel..."
@@ -209,8 +209,8 @@ function PlanOverview({
  className={cn(
  "px-3 py-2 rounded-lg text-sm font-medium transition-colors border",
  filterActive === f
- ? "bg-black text-white border-black"
- : "bg-white border-grey-200 text-text hover:bg-grey-100",
+ ? "bg-on-surface text-surface border-black"
+ : "bg-surface-container-lowest border-outline-variant/30 text-text hover:bg-surface-container",
  )}
  >
  {f === "all"? "Alle": f === "active"? "Aktive": "Inaktive"}
@@ -248,12 +248,12 @@ function PlanOverview({
  {filteredPlans.map((plan) => (
  <div
  key={plan.id}
- className="bg-white rounded-xl border border-grey-200 rounded-xl p-4 transition-all hover:shadow-md hover:border-grey-300 border border-grey-200"
+ className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4 transition-all hover:shadow-md hover:border-outline-variant/50 border border-outline-variant/30"
  >
  <div className="flex items-start justify-between gap-4">
  <div className="flex-1 min-w-0">
  <div className="flex items-center gap-2 mb-1 flex-wrap">
- <h3 className="font-medium text-black truncate">
+ <h3 className="font-medium text-on-surface truncate">
  {plan.title}
  </h3>
  {plan.isActive && (
@@ -265,7 +265,7 @@ function PlanOverview({
  <Badge variant="muted">Manuell</Badge>
  )}
  </div>
- <div className="flex items-center gap-4 text-sm text-grey-500 flex-wrap">
+ <div className="flex items-center gap-4 text-sm text-on-surface-variant/80 flex-wrap">
  {plan.student?.name && (
  <span className="flex items-center gap-1">
  <Icon name="person" className="w-3.5 h-3.5" />
@@ -282,7 +282,7 @@ function PlanOverview({
  locale: nb,
  })}
  </span>
- <span className="text-grey-500">
+ <span className="text-on-surface-variant/80">
  {PERIOD_LABELS[plan.periodType] ?? plan.periodType}
  </span>
  </div>
@@ -370,7 +370,7 @@ function StudentPlanEditor({
  onMenuClick={toggle}
  />
 
- <div className="p-6 space-y-6 bg-grey-50 min-h-[calc(100vh-56px)]">
+ <div className="p-6 space-y-6 bg-surface min-h-[calc(100vh-56px)]">
  <AdminPageHeader
  title={student?.name ?? "Treningsplan"}
  subtitle="Rediger uker, økter og fokus for eleven"
@@ -384,7 +384,7 @@ function StudentPlanEditor({
  {/* Back link */}
  <Link
  href={`/admin/elever/${studentId}`}
- className="inline-flex items-center gap-1 text-sm text-grey-500 hover:text-text transition-colors"
+ className="inline-flex items-center gap-1 text-sm text-on-surface-variant/80 hover:text-text transition-colors"
  >
  <Icon name="arrow_back" className="w-4 h-4" />
  Tilbake til elevprofil
@@ -424,7 +424,7 @@ function StudentPlanEditor({
 
  {/* Plan selector */}
  {plans.length > 1 && (
- <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
  <h3 className="admin-label mb-3">Velg plan</h3>
  <div className="flex gap-2 flex-wrap">
  {plans.map((plan) => (
@@ -440,8 +440,8 @@ function StudentPlanEditor({
  className={cn(
  "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
  activePlanId === plan.id
- ? "bg-black text-white border-black"
- : "bg-white text-text border-grey-200 hover:border-black",
+ ? "bg-on-surface text-surface border-black"
+ : "bg-surface-container-lowest text-text border-outline-variant/30 hover:border-black",
  )}
  >
  {plan.title}
@@ -458,11 +458,11 @@ function StudentPlanEditor({
 
  {/* Active plan header */}
  {activePlan && (
- <div className="bg-white rounded-xl border border-grey-200 rounded-xl p-4">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl p-4">
  <div className="flex items-start justify-between gap-4">
  <div className="min-w-0">
  <div className="flex items-center gap-2 mb-1 flex-wrap">
- <h2 className="text-lg font-bold text-black">
+ <h2 className="text-lg font-bold text-on-surface">
  {activePlan.title}
  </h2>
  {activePlan.aiGenerated && (
@@ -472,7 +472,7 @@ function StudentPlanEditor({
  <Badge variant="success">Aktiv</Badge>
  )}
  </div>
- <p className="text-xs text-grey-500">
+ <p className="text-xs text-on-surface-variant/80">
  {format(new Date(activePlan.startDate), "d. MMM yyyy", {
  locale: nb,
  })}{""}
@@ -590,44 +590,44 @@ function WeekCard({
  }
 
  return (
- <div className="bg-white rounded-xl border border-grey-200 rounded-xl border border-grey-200 overflow-hidden">
+ <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl border border-outline-variant/30 overflow-hidden">
  {/* Week header */}
  <button
  type="button"
  onClick={onToggle}
- className="w-full flex items-center gap-3 px-4 py-3 hover:bg-grey-100 transition-colors"
+ className="w-full flex items-center gap-3 px-4 py-3 hover:bg-surface-container transition-colors"
  >
  {expanded ? (
- <Icon name="expand_more" className="w-4 h-4 text-grey-400" />
+ <Icon name="expand_more" className="w-4 h-4 text-on-surface-variant" />
  ) : (
- <Icon name="chevron_right" className="w-4 h-4 text-grey-400" />
+ <Icon name="chevron_right" className="w-4 h-4 text-on-surface-variant" />
  )}
  <div className="flex-1 flex items-center gap-3 flex-wrap">
- <span className="text-sm font-semibold text-black">
+ <span className="text-sm font-semibold text-on-surface">
  Uke {week.weekNumber}
  </span>
- <span className="text-xs text-grey-500">
+ <span className="text-xs text-on-surface-variant/80">
  {format(new Date(week.weekStart), "d. MMM", { locale: nb })}
  </span>
  {week.focus && (
  <Badge variant="info">{week.focus}</Badge>
  )}
  {week.volumeLabel && (
- <span className="text-[10px] text-grey-400">
+ <span className="text-[10px] text-on-surface-variant">
  {week.volumeLabel}
  </span>
  )}
  </div>
- <span className="text-xs text-grey-500">
+ <span className="text-xs text-on-surface-variant/80">
  {week.sessions.length} sesjoner
  </span>
  </button>
 
  {expanded && (
- <div className="border-t border-grey-200">
+ <div className="border-t border-outline-variant/30">
  {/* Week focus edit */}
  {editingWeekFocus === week.id ? (
- <div className="px-4 py-3 bg-grey-100 flex items-center gap-2">
+ <div className="px-4 py-3 bg-surface-container flex items-center gap-2">
  <div className="flex-1">
  <AdminInput
  type="text"
@@ -653,8 +653,8 @@ function WeekCard({
  </Button>
  </div>
  ) : (
- <div className="px-4 py-2 bg-grey-100 flex items-center justify-between">
- <span className="text-xs text-grey-500">
+ <div className="px-4 py-2 bg-surface-container flex items-center justify-between">
+ <span className="text-xs text-on-surface-variant/80">
  Fokus: {week.focus || "Ikke satt"}
  </span>
  <button
@@ -663,7 +663,7 @@ function WeekCard({
  setWeekFocusValue(week.focus ??"");
  onEditWeekFocus(week.id);
  }}
- className="text-xs text-black hover:underline"
+ className="text-xs text-on-surface hover:underline"
  >
  Endre fokus
  </button>
@@ -678,8 +678,8 @@ function WeekCard({
 
  return (
  <div key={dayOfWeek} className="min-h-[120px]">
- <div className="px-3 py-2 border-b border-grey-200 bg-white">
- <MonoLabel size="xs" uppercase className="text-grey-500">
+ <div className="px-3 py-2 border-b border-outline-variant/30 bg-surface-container-lowest">
+ <MonoLabel size="xs" uppercase className="text-on-surface-variant/80">
  {dayName}
  </MonoLabel>
  </div>
@@ -743,7 +743,7 @@ function WeekCard({
  onClick={() =>
  onAddToWeek({ weekId: week.id, dayOfWeek })
  }
- className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] text-grey-500 hover:text-black hover:bg-black/5 rounded transition-colors"
+ className="w-full flex items-center justify-center gap-1 py-1.5 text-[10px] text-on-surface-variant/80 hover:text-on-surface hover:bg-on-surface/5 rounded transition-colors"
  >
  <Icon name="add" className="w-3 h-3" />
  Legg til
@@ -796,12 +796,12 @@ function SessionCard({
  const focusKey = (session.focusArea ??"") as FocusArea;
  const bgClass =
  FOCUS_BG[focusKey] ??
- "bg-white border-grey-300";
+ "bg-surface-container-lowest border-outline-variant/50";
  const variant = FOCUS_VARIANT[focusKey] ?? "muted";
 
  if (isEditing) {
  return (
- <div className="p-2 bg-white border border-black/40 rounded-lg space-y-2">
+ <div className="p-2 bg-surface-container-lowest border border-black/40 rounded-lg space-y-2">
  <AdminInput
  type="text"
  value={title}
@@ -849,7 +849,7 @@ function SessionCard({
  })
  }
  disabled={isPending || !title.trim()}
- className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-black text-white rounded hover:opacity-90 disabled:opacity-50"
+ className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-on-surface text-surface rounded hover:opacity-90 disabled:opacity-50"
  >
  <Icon name="save" className="w-3 h-3" />
  {isPending ? "Lagrer...": "Lagre"}
@@ -857,7 +857,7 @@ function SessionCard({
  <button
  type="button"
  onClick={onCancel}
- className="px-2 py-1 text-[10px] text-grey-500 hover:text-text"
+ className="px-2 py-1 text-[10px] text-on-surface-variant/80 hover:text-text"
  >
  Avbryt
  </button>
@@ -885,14 +885,14 @@ function SessionCard({
  )}
  >
  <div className="flex items-start justify-between gap-1">
- <span className="text-[11px] font-semibold leading-tight line-clamp-2 text-black">
+ <span className="text-[11px] font-semibold leading-tight line-clamp-2 text-on-surface">
  {session.title}
  </span>
  </div>
  {session.durationMinutes && (
  <div className="flex items-center gap-1 mt-1">
- <Icon name="schedule" className="w-2.5 h-2.5 text-grey-500" />
- <span className="text-[10px] text-grey-500">
+ <Icon name="schedule" className="w-2.5 h-2.5 text-on-surface-variant/80" />
+ <span className="text-[10px] text-on-surface-variant/80">
  {session.durationMinutes} min
  </span>
  </div>
@@ -924,7 +924,7 @@ function AddSessionForm({ isPending, onSave, onCancel }: AddSessionFormProps) {
  const [focusArea, setFocusArea] = useState<string>("");
 
  return (
- <div className="p-2 bg-white border border-dashed border-black/40 rounded-lg space-y-2">
+ <div className="p-2 bg-surface-container-lowest border border-dashed border-black/40 rounded-lg space-y-2">
  <AdminInput
  type="text"
  value={title}
@@ -965,7 +965,7 @@ function AddSessionForm({ isPending, onSave, onCancel }: AddSessionFormProps) {
  })
  }
  disabled={isPending || !title.trim()}
- className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-black text-white rounded hover:opacity-90 disabled:opacity-50"
+ className="flex-1 flex items-center justify-center gap-1 px-2 py-1 text-[10px] font-medium bg-on-surface text-surface rounded hover:opacity-90 disabled:opacity-50"
  >
  <Icon name="add" className="w-3 h-3" />
  {isPending ? "Legger til...": "Legg til"}
@@ -973,7 +973,7 @@ function AddSessionForm({ isPending, onSave, onCancel }: AddSessionFormProps) {
  <button
  type="button"
  onClick={onCancel}
- className="px-2 py-1 text-[10px] text-grey-500 hover:text-text"
+ className="px-2 py-1 text-[10px] text-on-surface-variant/80 hover:text-text"
  >
  Avbryt
  </button>

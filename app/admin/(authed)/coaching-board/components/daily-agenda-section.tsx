@@ -37,8 +37,8 @@ const SEVERITY: Record<
   low: {
     icon: <Icon name="info" className="h-4 w-4" />,
     label: "Lav",
-    bg: "bg-grey-100",
-    text: "text-grey-500",
+    bg: "bg-surface-container",
+    text: "text-on-surface-variant/80",
     border: "border-l-4 border-l-grey-300",
   },
 };
@@ -50,11 +50,11 @@ export function DailyAgendaSection({ signals }: DailyAgendaSectionProps) {
 
   if (prioritized.length === 0) {
     return (
-      <section className="rounded-xl bg-white shadow-card p-10 text-center">
-        <div className="text-sm font-medium text-grey-900">
+      <section className="rounded-xl bg-surface-container-lowest shadow-card p-10 text-center">
+        <div className="text-sm font-medium text-on-surface">
           Ingen påtrengende varsler akkurat nå
         </div>
-        <div className="text-xs text-grey-400 mt-1">
+        <div className="text-xs text-on-surface-variant mt-1">
           Spillerne dine er på rett vei. Se spillerlisten under for detaljer.
         </div>
       </section>
@@ -67,18 +67,18 @@ export function DailyAgendaSection({ signals }: DailyAgendaSectionProps) {
         <MonoLabel size="xs" uppercase className="text-primary">
           Dagsagenda
         </MonoLabel>
-        <span className="text-[11px] text-grey-400 tabular-nums">
+        <span className="text-[11px] text-on-surface-variant tabular-nums">
           {prioritized.length} spillere trenger oppmerksomhet
         </span>
       </div>
 
-      <ul className="rounded-xl bg-white shadow-card divide-y divide-grey-100 overflow-hidden">
+      <ul className="rounded-xl bg-surface-container-lowest shadow-card divide-y divide-grey-100 overflow-hidden">
         {prioritized.map((signal) => {
           const s = SEVERITY[signal.severity];
           return (
             <li
               key={signal.userId}
-              className={`flex items-start gap-4 px-5 py-4 hover:bg-grey-50 transition-colors ${s.border}`}
+              className={`flex items-start gap-4 px-5 py-4 hover:bg-surface transition-colors ${s.border}`}
             >
               <div
                 className={`flex items-center justify-center w-9 h-9 rounded-lg shrink-0 ${s.bg} ${s.text}`}
@@ -88,27 +88,27 @@ export function DailyAgendaSection({ signals }: DailyAgendaSectionProps) {
 
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-semibold text-grey-900">
+                  <span className="text-sm font-semibold text-on-surface">
                     {signal.playerName ?? "Ukjent"}
                   </span>
                   <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${s.bg} ${s.text}`}>
                     {s.label}
                   </span>
-                  <span className="text-[11px] text-grey-400 tabular-nums">
+                  <span className="text-[11px] text-on-surface-variant tabular-nums">
                     prioritet {signal.priorityScore}
                   </span>
                 </div>
-                <div className="mt-0.5 text-sm text-grey-500">
+                <div className="mt-0.5 text-sm text-on-surface-variant/80">
                   {signal.headline}
                 </div>
 
                 {signal.evidence.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-grey-400">
+                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-on-surface-variant">
                     {signal.evidence.slice(0, 3).map((e, i) => (
                       <span key={i}>
                         {e.label}
                         {e.value && (
-                          <span className="ml-1 tabular-nums text-grey-500">
+                          <span className="ml-1 tabular-nums text-on-surface-variant/80">
                             {e.value}
                           </span>
                         )}
@@ -118,13 +118,13 @@ export function DailyAgendaSection({ signals }: DailyAgendaSectionProps) {
                 )}
 
                 {signal.recommendedActions[0] && (
-                  <div className="mt-2 text-xs text-grey-700">
+                  <div className="mt-2 text-xs text-on-surface-variant/90">
                     →{" "}
                     <span className="font-medium">
                       {signal.recommendedActions[0].label}
                     </span>
                     {signal.recommendedActions[0].detail && (
-                      <span className="text-grey-400 ml-1">
+                      <span className="text-on-surface-variant ml-1">
                         · {signal.recommendedActions[0].detail}
                       </span>
                     )}

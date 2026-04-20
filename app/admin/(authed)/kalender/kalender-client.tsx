@@ -212,7 +212,7 @@ export default function KalenderClient({
         onMenuClick={toggle}
       />
 
-      <div className="p-6 space-y-6 bg-grey-50 min-h-screen">
+      <div className="p-6 space-y-6 bg-surface min-h-screen">
         <KalenderControls
           currentDate={currentDate}
           viewMode={viewMode}

@@ -95,16 +95,16 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
 
   const listColumns: AdminDataTableColumn<AdminBooking>[] = [
     { key: "startTime", label: "Tidspunkt", sortable: true, render: (r) => (
-      <div><div className="text-sm font-medium text-black">{format(new Date(r.startTime), "d. MMM", { locale: nb })}</div><div className="text-xs text-grey-400 tabular-nums">{formatTime(r.startTime)}</div></div>
+      <div><div className="text-sm font-medium text-on-surface">{format(new Date(r.startTime), "d. MMM", { locale: nb })}</div><div className="text-xs text-on-surface-variant tabular-nums">{formatTime(r.startTime)}</div></div>
     )},
-    { key: "User", label: "Elev", render: (r) => <span className="text-sm text-black">{r.User?.name ?? r.User?.email ?? "Ukjent"}</span> },
-    { key: "ServiceType", label: "Tjeneste", render: (r) => <span className="text-sm text-black">{r.ServiceType?.name ?? "—"}</span> },
-    { key: "Instructor", label: "Instruktør", render: (r) => <span className="text-sm text-grey-400">{r.Instructor?.User?.name ?? "—"}</span> },
+    { key: "User", label: "Elev", render: (r) => <span className="text-sm text-on-surface">{r.User?.name ?? r.User?.email ?? "Ukjent"}</span> },
+    { key: "ServiceType", label: "Tjeneste", render: (r) => <span className="text-sm text-on-surface">{r.ServiceType?.name ?? "—"}</span> },
+    { key: "Instructor", label: "Instruktør", render: (r) => <span className="text-sm text-on-surface-variant">{r.Instructor?.User?.name ?? "—"}</span> },
     { key: "status", label: "Status", sortable: true, render: (r) => {
       const k = isStatusKey(r.status) ? r.status : "PENDING"; const c = STATUS_CONFIG[k]; const I = c.icon;
       return <Badge variant={c.variant}><I className="w-3 h-3" />{c.label}</Badge>;
     }},
-    { key: "amount", label: "Beløp", sortable: true, align: "right", render: (r) => <span className="text-sm font-semibold text-black tabular-nums">{(r.amount ?? 0).toLocaleString("nb-NO")} kr</span> },
+    { key: "amount", label: "Beløp", sortable: true, align: "right", render: (r) => <span className="text-sm font-semibold text-on-surface tabular-nums">{(r.amount ?? 0).toLocaleString("nb-NO")} kr</span> },
   ];
 
   const listBulkActions: AdminDataTableBulkAction<AdminBooking>[] = [
@@ -125,21 +125,21 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
         </div>
 
         {/* Controls Card */}
-        <div className="bg-white border border-grey-200 rounded-xl p-6">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
           <div className="flex flex-col lg:flex-row gap-3">
             <div className="flex-1 relative">
-              <Icon name="search" className="w-4 h-4 text-grey-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Icon name="search" className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <AdminInput 
                 value={searchQuery} 
                 onChange={(e) => handleSearchChange(e.target.value)} 
                 placeholder="Søk etter elev, tjeneste..." 
                 className="pl-9" 
               />
-              {isPending && <Icon name="progress_activity" className="w-4 h-4 text-grey-400 animate-spin absolute right-3 top-1/2 -translate-y-1/2" />}
+              {isPending && <Icon name="progress_activity" className="w-4 h-4 text-on-surface-variant animate-spin absolute right-3 top-1/2 -translate-y-1/2" />}
             </div>
             
             {/* View Mode Toggle */}
-            <div className="inline-flex rounded-lg border border-grey-200 bg-grey-50 p-1">
+            <div className="inline-flex rounded-lg border border-outline-variant/30 bg-surface p-1">
               {VIEW_MODES.map((mode) => { 
                 const Icon = mode.icon; 
                 return (
@@ -149,8 +149,8 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
                     className={cn(
                       "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors",
                       viewMode === mode.value 
-                        ? "bg-black text-white" 
-                        : "text-grey-400 hover:text-black"
+                        ? "bg-on-surface text-surface" 
+                        : "text-on-surface-variant hover:text-on-surface"
                     )}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -207,12 +207,12 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
 
         {/* Day View */}
         {viewMode === "day" && (
-          <div className="bg-white border border-grey-200 rounded-xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-grey-200">
-              <h3 className="text-lg font-semibold text-black capitalize">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-outline-variant/30">
+              <h3 className="text-lg font-semibold text-on-surface capitalize">
                 {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
               </h3>
-              <span className="text-xs text-grey-400">
+              <span className="text-xs text-on-surface-variant">
                 {dayBookings.length} booking{dayBookings.length !== 1 ? "er" : ""}
               </span>
             </div>
@@ -257,8 +257,8 @@ function FilterPill({ active, onClick, children }: { active: boolean; onClick: (
       className={cn(
         "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-colors",
         active 
-          ? "bg-black text-white" 
-          : "bg-grey-50 text-grey-400 hover:text-black hover:bg-grey-200"
+          ? "bg-on-surface text-surface" 
+          : "bg-surface text-on-surface-variant hover:text-on-surface hover:bg-surface-variant"
       )}
     >
       {children}
@@ -274,21 +274,21 @@ function DayBookingRow({ booking, onDetail }: { booking: AdminBooking; onDetail:
 
   return (
     <div 
-      className="p-4 hover:bg-grey-50 transition-colors group cursor-pointer" 
+      className="p-4 hover:bg-surface transition-colors group cursor-pointer" 
       onClick={() => onDetail(booking)}
     >
       <div className="flex items-start gap-4">
         <div className="flex flex-col items-center min-w-[4rem]">
-          <span className="text-lg font-bold text-black tabular-nums">
+          <span className="text-lg font-bold text-on-surface tabular-nums">
             {formatTime(booking.startTime)}
           </span>
-          <span className="text-xs text-grey-400">
+          <span className="text-xs text-on-surface-variant">
             {booking.ServiceType?.duration ?? 0} min
           </span>
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
-            <h4 className="text-sm font-semibold text-black">
+            <h4 className="text-sm font-semibold text-on-surface">
               {booking.ServiceType?.name ?? "Ukjent"}
             </h4>
             <Badge variant={cfg.variant}>
@@ -302,7 +302,7 @@ function DayBookingRow({ booking, onDetail }: { booking: AdminBooking; onDetail:
               </Badge>
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-4 text-xs text-grey-400">
+          <div className="flex flex-wrap items-center gap-4 text-xs text-on-surface-variant">
             <span className="flex items-center gap-1">
               <Icon name="person" className="w-3.5 h-3.5" />
               {booking.User?.name ?? booking.User?.email ?? "Ukjent"}
@@ -314,7 +314,7 @@ function DayBookingRow({ booking, onDetail }: { booking: AdminBooking; onDetail:
           </div>
           {booking.focusArea && booking.status !== "CANCELLED" && <SessionPlanPanel bookingId={booking.id} />}
         </div>
-        <span className="text-sm font-semibold text-black tabular-nums">
+        <span className="text-sm font-semibold text-on-surface tabular-nums">
           {(booking.amount ?? 0).toLocaleString("nb-NO")} kr
         </span>
       </div>

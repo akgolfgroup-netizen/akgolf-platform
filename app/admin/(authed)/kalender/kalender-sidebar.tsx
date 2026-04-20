@@ -70,16 +70,16 @@ export default function KalenderSidebar({
   return (
     <div className="space-y-6">
       {/* Selected Date Details */}
-      <div className="bg-white rounded-xl border border-grey-200 p-4">
-        <h3 className="text-sm font-semibold text-black mb-3 capitalize">
+      <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-4">
+        <h3 className="text-sm font-semibold text-on-surface mb-3 capitalize">
           {selectedDate
             ? format(selectedDate, "EEEE d. MMMM", { locale: nb })
             : "Velg en dato"}
         </h3>
         {selectedDateBookings.length === 0 ? (
           <div className="py-8 text-center">
-            <Icon name="calendar_today"Icon className="w-10 h-10 text-grey-300 mx-auto mb-2" />
-            <span className="text-sm text-grey-400">Ingen bookinger</span>
+            <Icon name="calendar_today"Icon className="w-10 h-10 text-on-surface-variant/60 mx-auto mb-2" />
+            <span className="text-sm text-on-surface-variant">Ingen bookinger</span>
           </div>
         ) : (
           <div className="space-y-2">
@@ -90,16 +90,16 @@ export default function KalenderSidebar({
               return (
                 <div
                   key={booking.id}
-                  className="p-3 rounded-lg border border-grey-200 bg-grey-50"
+                  className="p-3 rounded-lg border border-outline-variant/30 bg-surface"
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <div className="flex items-center gap-1.5 text-black">
-                      <Icon name="schedule" className="w-3.5 h-3.5 text-grey-400" />
+                    <div className="flex items-center gap-1.5 text-on-surface">
+                      <Icon name="schedule" className="w-3.5 h-3.5 text-on-surface-variant" />
                       <span className="text-xs font-medium tabular-nums">
                         {formatTime(booking.startTime)}–
                         {formatTime(booking.endTime)}
                       </span>
-                      <span className="text-[10px] text-grey-400">
+                      <span className="text-[10px] text-on-surface-variant">
                         ({formatDuration(booking)})
                       </span>
                     </div>
@@ -112,7 +112,7 @@ export default function KalenderSidebar({
                         trigger={
                           <button
                             aria-label="Handlinger"
-                            className="p-1 rounded hover:bg-grey-100 text-grey-400"
+                            className="p-1 rounded hover:bg-surface-container text-on-surface-variant"
                           >
                             <Icon name="more_horiz" className="w-3.5 h-3.5" />
                           </button>
@@ -125,21 +125,21 @@ export default function KalenderSidebar({
                     onClick={() => onBookingClick(booking)}
                     className="block w-full text-left"
                   >
-                    <div className="text-sm font-medium text-black">
+                    <div className="text-sm font-medium text-on-surface">
                       {booking.serviceType.name}
                     </div>
-                    <div className="text-xs text-grey-500 mt-0.5">
+                    <div className="text-xs text-on-surface-variant/80 mt-0.5">
                       {booking.student.name ||
                         booking.student.email ||
                         "Ukjent elev"}
                     </div>
                     {booking.instructor.user.name && (
-                      <div className="text-xs text-grey-600">
+                      <div className="text-xs text-on-surface-variant/80">
                         Med {booking.instructor.user.name}
                       </div>
                     )}
                     {booking.location && (
-                      <div className="text-xs text-grey-600">
+                      <div className="text-xs text-on-surface-variant/80">
                         {booking.location.name}
                       </div>
                     )}
@@ -156,8 +156,8 @@ export default function KalenderSidebar({
       </div>
 
       {/* Status Legend */}
-      <div className="bg-white rounded-xl border border-grey-200 p-4">
-        <h3 className="text-sm font-semibold text-black mb-3">Status</h3>
+      <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-4">
+        <h3 className="text-sm font-semibold text-on-surface mb-3">Status</h3>
         <div className="space-y-2">
           {Object.entries(statusLabels).map(([status, label]) => (
             <div key={status} className="flex items-center gap-2">

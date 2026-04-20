@@ -62,11 +62,11 @@ export default function AvailabilityBlockedTimes({
   };
 
   return (
-    <div className="bg-white rounded-xl border border-grey-200 overflow-hidden">
-      <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
+    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
+      <div className="px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Icon name="block" className="w-4 h-4 text-grey-500" />
-          <h3 className="text-base font-semibold text-black">Blokkerte tider</h3>
+          <Icon name="block" className="w-4 h-4 text-on-surface-variant/80" />
+          <h3 className="text-base font-semibold text-on-surface">Blokkerte tider</h3>
         </div>
         <Button variant="accent" onClick={() => setShowDialog(true)}>
           <Icon name="add" className="w-4 h-4" />
@@ -75,7 +75,7 @@ export default function AvailabilityBlockedTimes({
       </div>
       <div className="divide-y divide-grey-200">
         {blockedTimes.length === 0 ? (
-          <div className="px-4 py-8 text-center text-sm text-grey-500">
+          <div className="px-4 py-8 text-center text-sm text-on-surface-variant/80">
             Ingen blokkerte tider de neste to månedene.
           </div>
         ) : (
@@ -85,10 +85,10 @@ export default function AvailabilityBlockedTimes({
             return (
               <div key={bt.id} className="px-4 py-3 flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-medium text-black">
+                  <div className="text-sm font-medium text-on-surface">
                     {bt.reason || "Blokkert tid"}
                   </div>
-                  <div className="text-xs text-grey-500">
+                  <div className="text-xs text-on-surface-variant/80">
                     {format(s, "EEEE d. MMMM", { locale: nb })} — {format(s, "HH:mm")}–
                     {format(e, "HH:mm")}
                   </div>
@@ -96,7 +96,7 @@ export default function AvailabilityBlockedTimes({
                 <button
                   type="button"
                   onClick={() => handleDelete(bt.id)}
-                  className="p-1.5 rounded-md hover:bg-error-light text-grey-400 hover:text-error transition-colors"
+                  className="p-1.5 rounded-md hover:bg-error-light text-on-surface-variant hover:text-error transition-colors"
                   aria-label="Slett"
                 >
                   <Icon name="delete" className="w-4 h-4" />

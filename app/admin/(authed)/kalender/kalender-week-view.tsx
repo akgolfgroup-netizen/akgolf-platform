@@ -77,10 +77,10 @@ export default function KalenderWeekView({
   };
 
   return (
-    <div className="bg-white rounded-xl border border-grey-200 overflow-hidden">
+    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
       {/* Header */}
-      <div className="grid grid-cols-8 border-b border-grey-200 bg-grey-50">
-        <div className="px-3 py-2.5 text-center text-xs font-semibold text-grey-500 border-r border-grey-200">
+      <div className="grid grid-cols-8 border-b border-outline-variant/30 bg-surface">
+        <div className="px-3 py-2.5 text-center text-xs font-semibold text-on-surface-variant/80 border-r border-outline-variant/30">
           Tid
         </div>
         {days.map((day) => {
@@ -89,17 +89,17 @@ export default function KalenderWeekView({
             <div
               key={day.toISOString()}
               className={cn(
-                "px-3 py-2.5 text-center border-r border-grey-200 last:border-r-0",
+                "px-3 py-2.5 text-center border-r border-outline-variant/30 last:border-r-0",
                 isToday && "bg-primary-soft"
               )}
             >
-              <div className="text-xs text-grey-500 capitalize">
+              <div className="text-xs text-on-surface-variant/80 capitalize">
                 {format(day, "EEEE", { locale: nb })}
               </div>
               <div
                 className={cn(
                   "text-sm font-semibold",
-                  isToday ? "text-primary" : "text-black"
+                  isToday ? "text-primary" : "text-on-surface"
                 )}
               >
                 {format(day, "d. MMM", { locale: nb })}
@@ -116,11 +116,11 @@ export default function KalenderWeekView({
           style={{ height: `${TOTAL_HOURS * HOUR_HEIGHT}px`, minHeight: "400px" }}
         >
           {/* Time labels */}
-          <div className="border-r border-grey-200 sticky left-0 bg-white z-10">
+          <div className="border-r border-outline-variant/30 sticky left-0 bg-surface-container-lowest z-10">
             {hours.map((hour) => (
               <div
                 key={hour}
-                className="border-b border-grey-100 px-2 text-[10px] text-grey-400 flex items-start justify-end pt-1"
+                className="border-b border-outline-variant/20 px-2 text-[10px] text-on-surface-variant flex items-start justify-end pt-1"
                 style={{ height: `${HOUR_HEIGHT}px` }}
               >
                 {String(hour).padStart(2, "0")}:00
@@ -136,13 +136,13 @@ export default function KalenderWeekView({
             return (
               <div
                 key={day.toISOString()}
-                className="relative border-r border-grey-100 last:border-r-0"
+                className="relative border-r border-outline-variant/20 last:border-r-0"
               >
                 {/* Hour rows */}
                 {hours.map((hour) => (
                   <div
                     key={hour}
-                    className="border-b border-grey-50"
+                    className="border-b border-surface"
                     style={{ height: `${HOUR_HEIGHT}px` }}
                   />
                 ))}
@@ -209,11 +209,11 @@ export default function KalenderWeekView({
                       >
                         {format(s, "HH:mm")} {booking.serviceType.name}
                       </div>
-                      <div className="truncate text-black">
+                      <div className="truncate text-on-surface">
                         {booking.student.name || "Ukjent elev"}
                       </div>
                       {booking.instructor.user.name && (
-                        <div className="truncate text-grey-500 text-[10px]">
+                        <div className="truncate text-on-surface-variant/80 text-[10px]">
                           {booking.instructor.user.name}
                         </div>
                       )}

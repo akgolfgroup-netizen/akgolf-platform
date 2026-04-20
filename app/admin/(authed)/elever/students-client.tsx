@@ -159,14 +159,14 @@ export function StudentsClient({ initialData }: Props) {
           }}
           className="flex items-center gap-3 group text-left"
         >
-          <div className="w-9 h-9 rounded-full bg-grey-50 text-black flex items-center justify-center text-xs font-semibold border border-grey-200">
+          <div className="w-9 h-9 rounded-full bg-surface text-on-surface flex items-center justify-center text-xs font-semibold border border-outline-variant/30">
             {getInitials(row.name)}
           </div>
           <div className="min-w-0">
-            <div className="font-medium text-black group-hover:text-grey-400 transition-colors">
+            <div className="font-medium text-on-surface group-hover:text-on-surface-variant transition-colors">
               {row.name ?? "Uten navn"}
             </div>
-            <div className="text-xs text-grey-400 truncate">
+            <div className="text-xs text-on-surface-variant truncate">
               {row.email}
             </div>
           </div>
@@ -202,7 +202,7 @@ export function StudentsClient({ initialData }: Props) {
       sortable: true,
       align: "right",
       render: (row) => (
-        <span className="tabular-nums text-black">
+        <span className="tabular-nums text-on-surface">
           {row.handicap !== null ? row.handicap.toFixed(1) : "—"}
         </span>
       ),
@@ -213,7 +213,7 @@ export function StudentsClient({ initialData }: Props) {
       sortable: true,
       align: "center",
       render: (row) => (
-        <span className="tabular-nums font-semibold text-black">
+        <span className="tabular-nums font-semibold text-on-surface">
           {row.category ?? "—"}
         </span>
       ),
@@ -224,7 +224,7 @@ export function StudentsClient({ initialData }: Props) {
       sortable: true,
       align: "right",
       render: (row) => (
-        <span className="tabular-nums text-black">
+        <span className="tabular-nums text-on-surface">
           {row.sessionsThisMonth}
         </span>
       ),
@@ -234,7 +234,7 @@ export function StudentsClient({ initialData }: Props) {
       label: "Sist aktiv",
       sortable: true,
       render: (row) => (
-        <span className="text-sm text-grey-400">
+        <span className="text-sm text-on-surface-variant">
           {formatRelativeDate(row.lastActiveAt)}
         </span>
       ),
@@ -249,7 +249,7 @@ export function StudentsClient({ initialData }: Props) {
             {formatFutureDate(row.nextBookingDate)}
           </span>
         ) : (
-          <span className="text-grey-300">—</span>
+          <span className="text-on-surface-variant/60">—</span>
         ),
     },
     {
@@ -261,7 +261,7 @@ export function StudentsClient({ initialData }: Props) {
         row.hasActivePlan ? (
           <Icon name="check"Circle className="w-4 h-4 text-success-text mx-auto" />
         ) : (
-          <Icon name="close"Circle className="w-4 h-4 text-grey-200 mx-auto" />
+          <Icon name="close"Circle className="w-4 h-4 text-surface-variant mx-auto" />
         ),
     },
   ];
@@ -353,11 +353,11 @@ export function StudentsClient({ initialData }: Props) {
           />
         </div>
 
-        {/* Filter-chips - bg-white rounded-xl shadow-card pattern */}
-        <div className="bg-white rounded-xl border border-grey-200 p-5">
+        {/* Filter-chips - bg-surface-container-lowest rounded-xl shadow-card pattern */}
+        <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-5">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <MonoLabel size="xs" uppercase className="text-grey-400 mr-2">Status</MonoLabel>
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant mr-2">Status</MonoLabel>
               {(
                 [
                   { label: "Alle", value: "all" as const },
@@ -372,8 +372,8 @@ export function StudentsClient({ initialData }: Props) {
                   onClick={() => setStatusFilter(f.value)}
                   className={
                     statusFilter === f.value
-                      ? "px-3 py-1 text-xs font-medium rounded-full bg-black text-white"
-                      : "px-3 py-1 text-xs font-medium rounded-full bg-grey-50 text-grey-500 hover:text-black hover:bg-grey-100 transition-colors"
+                      ? "px-3 py-1 text-xs font-medium rounded-full bg-on-surface text-surface"
+                      : "px-3 py-1 text-xs font-medium rounded-full bg-surface text-on-surface-variant/80 hover:text-on-surface hover:bg-surface-container transition-colors"
                   }
                 >
                   {f.label}
@@ -381,14 +381,14 @@ export function StudentsClient({ initialData }: Props) {
               ))}
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <MonoLabel size="xs" uppercase className="text-grey-400 mr-2">Medlemskap</MonoLabel>
+              <MonoLabel size="xs" uppercase className="text-on-surface-variant mr-2">Medlemskap</MonoLabel>
               <button
                 type="button"
                 onClick={() => setTierFilter("all")}
                 className={
                   tierFilter === "all"
-                    ? "px-3 py-1 text-xs font-medium rounded-full bg-black text-white"
-                    : "px-3 py-1 text-xs font-medium rounded-full bg-grey-50 text-grey-500 hover:text-black hover:bg-grey-100 transition-colors"
+                    ? "px-3 py-1 text-xs font-medium rounded-full bg-on-surface text-surface"
+                    : "px-3 py-1 text-xs font-medium rounded-full bg-surface text-on-surface-variant/80 hover:text-on-surface hover:bg-surface-container transition-colors"
                 }
               >
                 Alle
@@ -400,8 +400,8 @@ export function StudentsClient({ initialData }: Props) {
                   onClick={() => setTierFilter(tier)}
                   className={
                     tierFilter === tier
-                      ? "px-3 py-1 text-xs font-medium rounded-full bg-black text-white"
-                      : "px-3 py-1 text-xs font-medium rounded-full bg-grey-50 text-grey-500 hover:text-black hover:bg-grey-100 transition-colors"
+                      ? "px-3 py-1 text-xs font-medium rounded-full bg-on-surface text-surface"
+                      : "px-3 py-1 text-xs font-medium rounded-full bg-surface text-on-surface-variant/80 hover:text-on-surface hover:bg-surface-container transition-colors"
                   }
                 >
                   {TIER_LABEL[tier] ?? tier}
@@ -411,8 +411,8 @@ export function StudentsClient({ initialData }: Props) {
           </div>
         </div>
 
-        {/* DataTable - bg-white rounded-xl shadow-card wrapper */}
-        <div className="bg-white rounded-xl border border-grey-200 overflow-hidden">
+        {/* DataTable - bg-surface-container-lowest rounded-xl shadow-card wrapper */}
+        <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
           <AdminDataTable<StudentRow>
             columns={columns}
             data={filtered}
@@ -453,7 +453,7 @@ export function StudentsClient({ initialData }: Props) {
         {previewStudent && (
           <div className="space-y-5">
             <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-full bg-grey-50 text-black flex items-center justify-center text-lg font-semibold border border-grey-200">
+              <div className="w-14 h-14 rounded-full bg-surface text-on-surface flex items-center justify-center text-lg font-semibold border border-outline-variant/30">
                 {getInitials(previewStudent.name)}
               </div>
               <div className="flex-1">
@@ -470,10 +470,10 @@ export function StudentsClient({ initialData }: Props) {
                     </Badge>
                   )}
                 </div>
-                <div className="space-y-1 text-sm text-grey-400">
+                <div className="space-y-1 text-sm text-on-surface-variant">
                   <a
                     href={`mailto:${previewStudent.email}`}
-                    className="flex items-center gap-1.5 hover:text-black transition-colors"
+                    className="flex items-center gap-1.5 hover:text-on-surface transition-colors"
                   >
                     <Icon name="mail" className="w-3.5 h-3.5" />
                     {previewStudent.email}
@@ -481,7 +481,7 @@ export function StudentsClient({ initialData }: Props) {
                   {previewStudent.phone && (
                     <a
                       href={`tel:${previewStudent.phone}`}
-                      className="flex items-center gap-1.5 hover:text-black transition-colors"
+                      className="flex items-center gap-1.5 hover:text-on-surface transition-colors"
                     >
                       <Icon name="phone" className="w-3.5 h-3.5" />
                       {previewStudent.phone}
@@ -506,32 +506,32 @@ export function StudentsClient({ initialData }: Props) {
               />
             </div>
 
-            <div className="bg-grey-50 rounded-lg p-4 border border-grey-100">
-              <h4 className="text-sm font-semibold text-black mb-2">Neste booking</h4>
+            <div className="bg-surface rounded-lg p-4 border border-outline-variant/20">
+              <h4 className="text-sm font-semibold text-on-surface mb-2">Neste booking</h4>
               {previewStudent.nextBookingDate ? (
                 <div className="flex items-center gap-2 text-sm text-text">
-                  <Icon name="calendar_today" className="w-4 h-4 text-grey-400" />
+                  <Icon name="calendar_today" className="w-4 h-4 text-on-surface-variant" />
                   {new Date(previewStudent.nextBookingDate).toLocaleDateString(
                     "nb-NO",
                     { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" },
                   )}
                 </div>
               ) : (
-                <p className="text-sm text-grey-400">
+                <p className="text-sm text-on-surface-variant">
                   Ingen kommende bookinger.
                 </p>
               )}
             </div>
 
-            <div className="bg-grey-50 rounded-lg p-4 border border-grey-100">
-              <h4 className="text-sm font-semibold text-black mb-2">Treningsplan</h4>
+            <div className="bg-surface rounded-lg p-4 border border-outline-variant/20">
+              <h4 className="text-sm font-semibold text-on-surface mb-2">Treningsplan</h4>
               {previewStudent.hasActivePlan ? (
                 <div className="flex items-center gap-2 text-sm text-success-text">
                   <Icon name="check"Circle className="w-4 h-4" />
                   Aktiv treningsplan
                 </div>
               ) : (
-                <p className="text-sm text-grey-400">
+                <p className="text-sm text-on-surface-variant">
                   Ingen aktiv treningsplan.
                 </p>
               )}

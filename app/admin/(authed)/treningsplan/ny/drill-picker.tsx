@@ -87,32 +87,32 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-on-surface/40 p-4">
       <div className="admin-card w-full max-w-xl max-h-[80vh] flex flex-col shadow-xl p-0">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-grey-200">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-outline-variant/30">
           <div>
-            <h3 className="text-base font-semibold text-black">
+            <h3 className="text-base font-semibold text-on-surface">
               Velg øvelser
             </h3>
-            <p className="text-xs text-grey-400">
+            <p className="text-xs text-on-surface-variant">
               {selected.size} valgt
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-grey-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-surface-container transition-colors"
             aria-label="Lukk"
           >
-            <Icon name="close" className="w-5 h-5 text-grey-400" />
+            <Icon name="close" className="w-5 h-5 text-on-surface-variant" />
           </button>
         </div>
 
         {/* Search & filters */}
-        <div className="px-5 py-3 border-b border-grey-200 space-y-3">
+        <div className="px-5 py-3 border-b border-outline-variant/30 space-y-3">
           <div className="relative">
-            <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-grey-400 pointer-events-none" />
+            <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant pointer-events-none" />
             <AdminInput
               type="text"
               placeholder="Søk etter øvelse..."
@@ -131,8 +131,8 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                 className={cn(
                   "px-2.5 py-1 rounded-md text-xs font-medium transition-colors border",
                   pyramidFilter === pl.value
-                    ? "bg-black text-white border-black"
-                    : "bg-white border-grey-200 text-black hover:bg-grey-100",
+                    ? "bg-on-surface text-surface border-black"
+                    : "bg-surface-container-lowest border-outline-variant/30 text-on-surface hover:bg-surface-container",
                 )}
               >
                 {pl.label}
@@ -145,7 +145,7 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
         <div className="flex-1 overflow-y-auto p-3 space-y-1">
           {filteredDrills.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-sm text-grey-400">
+              <p className="text-sm text-on-surface-variant">
                 Ingen øvelser funnet
               </p>
             </div>
@@ -162,24 +162,24 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                   className={cn(
                     "w-full text-left px-4 py-3 rounded-lg border transition-colors",
                     isSelected
-                      ? "border-black bg-black/5"
-                      : "border-transparent hover:bg-grey-100",
+                      ? "border-black bg-on-surface/5"
+                      : "border-transparent hover:bg-surface-container",
                   )}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-black truncate">
+                        <p className="text-sm font-medium text-on-surface truncate">
                           {drill.name}
                         </p>
                         <Badge variant={variant}>{drill.pyramid}</Badge>
                       </div>
                       {drill.description && (
-                        <p className="text-xs text-grey-400 mt-0.5 line-clamp-1">
+                        <p className="text-xs text-on-surface-variant mt-0.5 line-clamp-1">
                           {drill.description}
                         </p>
                       )}
-                      <div className="flex items-center gap-3 mt-1 text-xs text-grey-400">
+                      <div className="flex items-center gap-3 mt-1 text-xs text-on-surface-variant">
                         <span>{drill.area}</span>
                         <span>
                           {drill.minDurationMinutes}-{drill.maxDurationMinutes} min
@@ -194,11 +194,11 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
                       className={cn(
                         "w-5 h-5 rounded border flex items-center justify-center flex-shrink-0 mt-0.5",
                         isSelected
-                          ? "bg-black border-black"
-                          : "border-grey-300",
+                          ? "bg-on-surface border-black"
+                          : "border-outline-variant/50",
                       )}
                     >
-                      {isSelected && <Icon name="check" className="w-3 h-3 text-white" />}
+                      {isSelected && <Icon name="check" className="w-3 h-3 text-surface" />}
                     </div>
                   </div>
                 </button>
@@ -208,7 +208,7 @@ export function DrillPicker({ drills, onSelect, onClose }: DrillPickerProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-5 py-4 border-t border-grey-200">
+        <div className="flex items-center justify-between px-5 py-4 border-t border-outline-variant/30">
           <Button variant="secondary" onClick={onClose}>
             Avbryt
           </Button>

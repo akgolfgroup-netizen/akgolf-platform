@@ -87,10 +87,10 @@ export function MeldingerClient({
  onMenuClick={toggle}
  />
  <div className="p-6">
- <div className="flex items-center justify-center py-20 text-grey-400">
+ <div className="flex items-center justify-center py-20 text-on-surface-variant">
  <div className="text-center">
  <Icon name="inbox" className="w-12 h-12 mx-auto mb-3 opacity-40" />
- <p className="text-lg font-medium mb-1 text-black">
+ <p className="text-lg font-medium mb-1 text-on-surface">
  Ingen meldinger ennå
  </p>
  <p className="text-sm">Nye meldinger fra spillere dukker opp her</p>
@@ -110,7 +110,7 @@ export function MeldingerClient({
  />
  <div className="p-6">
  <div 
- className="flex flex-col bg-white rounded-xl border border-grey-200 rounded-xl overflow-hidden"
+ className="flex flex-col bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl overflow-hidden"
  style={{ height: "calc(100vh - 180px)"}}
  >
  {/* Error banner */}
@@ -130,7 +130,7 @@ export function MeldingerClient({
  )}
 
  {/* Channel filter */}
- <div className="p-4 border-b border-grey-200 bg-grey-50">
+ <div className="p-4 border-b border-outline-variant/30 bg-surface">
  <ChannelFilter
  selected={selectedChannel}
  onChange={setSelectedChannel}
@@ -141,7 +141,7 @@ export function MeldingerClient({
  {/* Main content */}
  <div className="flex-1 flex min-h-0">
  {/* Message list */}
- <div className="w-96 border-r border-grey-200 overflow-auto bg-white">
+ <div className="w-96 border-r border-outline-variant/30 overflow-auto bg-surface-container-lowest">
  <MessageList
  messages={filteredMessages}
  selectedId={selectedMessageId}
@@ -150,7 +150,7 @@ export function MeldingerClient({
  </div>
 
  {/* Message detail */}
- <div className="flex-1 bg-grey-50 overflow-hidden">
+ <div className="flex-1 bg-surface overflow-hidden">
  {selectedMessage ? (
  <MessageDetail
  message={selectedMessage}
@@ -158,9 +158,9 @@ export function MeldingerClient({
  onReject={handleReject}
  />
  ) : (
- <div className="flex items-center justify-center h-full text-grey-400">
+ <div className="flex items-center justify-center h-full text-on-surface-variant">
  <div className="text-center">
- <p className="text-lg font-medium mb-1 text-black">
+ <p className="text-lg font-medium mb-1 text-on-surface">
  Velg en melding for å se detaljer
  </p>
  <p className="text-sm">

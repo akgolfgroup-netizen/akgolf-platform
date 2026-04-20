@@ -209,10 +209,10 @@ export default function RapporterPage() {
       sortable: true,
       render: (row) => (
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-grey-100">
-            <Icon name="description" className="w-4 h-4 text-grey-600" />
+          <div className="p-2 rounded-lg bg-surface-container">
+            <Icon name="description" className="w-4 h-4 text-on-surface-variant/80" />
           </div>
-          <span className="font-medium text-grey-900">
+          <span className="font-medium text-on-surface">
             {row.name}
           </span>
         </div>
@@ -245,7 +245,7 @@ export default function RapporterPage() {
           trigger={
             <button
               type="button"
-              className="p-1.5 rounded-md hover:bg-grey-100 text-grey-500 transition-colors"
+              className="p-1.5 rounded-md hover:bg-surface-container text-on-surface-variant/80 transition-colors"
               aria-label={`Handlinger for ${row.name}`}
             >
               <Icon name="more_horiz" className="w-4 h-4" />
@@ -309,7 +309,7 @@ export default function RapporterPage() {
                 key={report.id}
                 onClick={() => setSelectedReport(report.id)}
                 className={cn(
-                  "bg-white rounded-xl shadow-card p-5 cursor-pointer transition-all hover:shadow-lg",
+                  "bg-surface-container-lowest rounded-xl shadow-card p-5 cursor-pointer transition-all hover:shadow-lg",
                   isSelected && "ring-2 ring-grey-600",
                 )}
               >
@@ -322,14 +322,14 @@ export default function RapporterPage() {
                     style={{ color: report.colorVar }}
                   />
                 </div>
-                <h3 className="text-sm font-semibold text-grey-900 mb-1">
+                <h3 className="text-sm font-semibold text-on-surface mb-1">
                   {report.name}
                 </h3>
-                <p className="text-xs text-grey-500 mb-3">
+                <p className="text-xs text-on-surface-variant/80 mb-3">
                   {report.description}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-grey-500">
+                  <span className="text-[10px] text-on-surface-variant/80">
                     Sist: {report.lastGenerated}
                   </span>
                   <AdminDropdown
@@ -339,7 +339,7 @@ export default function RapporterPage() {
                       <button
                         type="button"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-1.5 rounded-md hover:bg-grey-100 text-grey-600 transition-colors"
+                        className="p-1.5 rounded-md hover:bg-surface-container text-on-surface-variant/80 transition-colors"
                         aria-label={`Last ned ${report.name}`}
                       >
                         <Icon name="download" className="w-4 h-4" />
@@ -369,8 +369,8 @@ export default function RapporterPage() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Generate Report */}
-          <div className="bg-white rounded-xl shadow-card p-5">
-            <h3 className="text-sm font-semibold text-grey-900 mb-4">
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
+            <h3 className="text-sm font-semibold text-on-surface mb-4">
               Generer ny rapport
             </h3>
             <div className="space-y-4">
@@ -408,8 +408,8 @@ export default function RapporterPage() {
                         className={cn(
                           "flex-1 py-2 text-xs font-medium rounded-lg border transition-colors",
                           isActive
-                            ? "bg-grey-700 text-white border-grey-700"
-                            : "bg-white text-grey-700 border-grey-200 hover:bg-grey-50",
+                            ? "bg-inverse-surface text-surface border-inverse-surface/30"
+                            : "bg-surface-container-lowest text-on-surface-variant/90 border-outline-variant/30 hover:bg-surface",
                         )}
                       >
                         {fmt}
@@ -431,15 +431,15 @@ export default function RapporterPage() {
           </div>
 
           {/* Scheduled Reports */}
-          <div className="bg-white rounded-xl shadow-card p-0 overflow-hidden">
-            <div className="px-5 py-4 border-b border-grey-200 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-grey-900">
+          <div className="bg-surface-container-lowest rounded-xl shadow-card p-0 overflow-hidden">
+            <div className="px-5 py-4 border-b border-outline-variant/30 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-on-surface">
                 Automatiske rapporter
               </h3>
               <button
                 type="button"
                 disabled
-                className="p-1.5 rounded-md text-grey-400 opacity-50 cursor-not-allowed"
+                className="p-1.5 rounded-md text-on-surface-variant opacity-50 cursor-not-allowed"
                 aria-label="Legg til automatisk rapport"
                 title="Kommer snart"
               >
@@ -451,10 +451,10 @@ export default function RapporterPage() {
                 <div key={report.id} className="p-4">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h4 className="text-sm font-medium text-grey-900">
+                      <h4 className="text-sm font-medium text-on-surface">
                         {report.name}
                       </h4>
-                      <p className="text-xs text-grey-500">
+                      <p className="text-xs text-on-surface-variant/80">
                         {report.frequency}
                       </p>
                     </div>
@@ -463,12 +463,12 @@ export default function RapporterPage() {
                         "w-2 h-2 rounded-full mt-1.5",
                         report.active
                           ? "bg-emerald-500"
-                          : "bg-grey-400",
+                          : "bg-surface-variant",
                       )}
                       aria-label={report.active ? "Aktiv" : "Inaktiv"}
                     />
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-grey-500">
+                  <div className="flex items-center gap-4 text-xs text-on-surface-variant/80">
                     <span className="flex items-center gap-1">
                       <Icon name="mail" className="w-3 h-3" />
                       {report.recipients}
@@ -487,10 +487,10 @@ export default function RapporterPage() {
         {/* Nylig genererte rapporter — DataTable */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-grey-900">
+            <h3 className="text-sm font-semibold text-on-surface">
               Nylig genererte rapporter
             </h3>
-            <span className="text-xs text-grey-500">
+            <span className="text-xs text-on-surface-variant/80">
               {recentReports.length} rapporter
             </span>
           </div>
@@ -565,8 +565,8 @@ export default function RapporterPage() {
                     className={cn(
                       "flex-1 py-2 text-xs font-medium rounded-lg border transition-colors",
                       isActive
-                        ? "bg-grey-700 text-white border-grey-700"
-                        : "bg-white text-grey-700 border-grey-200 hover:bg-grey-50",
+                        ? "bg-inverse-surface text-surface border-inverse-surface/30"
+                        : "bg-surface-container-lowest text-on-surface-variant/90 border-outline-variant/30 hover:bg-surface",
                     )}
                   >
                     {fmt}

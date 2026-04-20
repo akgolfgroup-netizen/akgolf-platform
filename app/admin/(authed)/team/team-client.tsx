@@ -176,7 +176,7 @@ export function TeamClient({
             onClick={() => setRoleFilter(o.id)}
             className={`rounded-[7px] px-3 py-1.5 text-[13px] font-medium transition-colors ${
               roleFilter === o.id
-                ? "bg-[var(--color-primary)] text-white"
+                ? "bg-[var(--color-primary)] text-surface"
                 : "text-[var(--color-outline)] hover:text-[var(--color-on-surface-variant)]"
             }`}
           >

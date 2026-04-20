@@ -96,8 +96,8 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
               className={cn(
                 "px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200",
                 period === opt.value
-                  ? "bg-black text-white shadow-sm"
-                  : "bg-grey-50 text-text hover:text-black hover:bg-grey-200",
+                  ? "bg-on-surface text-surface shadow-sm"
+                  : "bg-surface text-text hover:text-on-surface hover:bg-surface-variant",
               )}
             >
               {opt.label}
@@ -149,9 +149,9 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                   valueLabel="Aktive elever" 
                 />
               </ChartCard>
-              <div className="bg-white border border-grey-200 rounded-xl p-0 overflow-hidden">
-                <div className="px-6 py-4 border-b border-grey-200">
-                  <h3 className="text-sm font-semibold text-black">Churn-rate</h3>
+              <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-0 overflow-hidden">
+                <div className="px-6 py-4 border-b border-outline-variant/30">
+                  <h3 className="text-sm font-semibold text-on-surface">Churn-rate</h3>
                 </div>
                 <div className="flex flex-col items-center gap-4 py-6 px-6">
                   <AdminProgressRing 
@@ -162,7 +162,7 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                     label="Siste periode" 
                     valueSuffix="%" 
                   />
-                  <p className="text-xs text-grey-400">Mål: under 5%</p>
+                  <p className="text-xs text-on-surface-variant">Mål: under 5%</p>
                 </div>
               </div>
             </div>
@@ -187,10 +187,10 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
         {/* ── Students tab ──────────────────────────────────── */}
         {activeTab === "students" && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white border border-grey-200 rounded-xl p-0 overflow-hidden">
-              <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-black">Elev-status</h3>
-                <span className="text-xs text-grey-400">{data.studentHealth.length} elever</span>
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-0 overflow-hidden">
+              <div className="px-6 py-4 border-b border-outline-variant/30 flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-on-surface">Elev-status</h3>
+                <span className="text-xs text-on-surface-variant">{data.studentHealth.length} elever</span>
               </div>
               <AdminTable containerClassName="border-0 rounded-none">
                 <AdminTableHead>
@@ -206,18 +206,18 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                   {data.studentHealth.map((s) => (
                     <AdminTableRow key={s.id}>
                       <AdminTableCell>
-                        <span className="font-medium text-black">{s.name}</span>
+                        <span className="font-medium text-on-surface">{s.name}</span>
                       </AdminTableCell>
                       <AdminTableCell>
                         <Badge variant={STATUS_CONFIG[s.status].variant}>
                           {STATUS_CONFIG[s.status].label}
                         </Badge>
                       </AdminTableCell>
-                      <AdminTableCell className="text-grey-400">{relativeDate(s.lastSession)}</AdminTableCell>
+                      <AdminTableCell className="text-on-surface-variant">{relativeDate(s.lastSession)}</AdminTableCell>
                       <AdminTableCell className={cn(!s.nextSession && "text-error")}>
                         {futureDate(s.nextSession)}
                       </AdminTableCell>
-                      <AdminTableCell className="text-right tabular-nums text-black">
+                      <AdminTableCell className="text-right tabular-nums text-on-surface">
                         {s.sessionsThisMonth}
                       </AdminTableCell>
                     </AdminTableRow>
@@ -225,20 +225,20 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                 </AdminTableBody>
               </AdminTable>
             </div>
-            <div className="bg-white border border-grey-200 rounded-xl p-0 overflow-hidden">
-              <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-black">Trenger oppfølging</h3>
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-0 overflow-hidden">
+              <div className="px-6 py-4 border-b border-outline-variant/30 flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-on-surface">Trenger oppfølging</h3>
                 <Badge variant="warning">{followUp.length} elever</Badge>
               </div>
               <div className="divide-y divide-grey-200">
                 {followUp.map((s) => (
                   <div key={s.id} className="px-6 py-4 flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-grey-50 text-text text-xs font-semibold flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-full bg-surface text-text text-xs font-semibold flex items-center justify-center">
                       {s.name.split(" ").map((n) => n[0]).join("")}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-black truncate">{s.name}</div>
-                      <div className="text-xs text-grey-400 flex items-center gap-1">
+                      <div className="text-sm font-medium text-on-surface truncate">{s.name}</div>
+                      <div className="text-xs text-on-surface-variant flex items-center gap-1">
                         <Icon name="error" className="w-3 h-3" />
                         Sist aktiv: {relativeDate(s.lastSession)}
                       </div>
@@ -249,7 +249,7 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
                 {followUp.length === 0 && (
                   <div className="py-10 text-center">
                     <Icon name="calendar_today" className="w-10 h-10 text-success-text mx-auto mb-2" />
-                    <span className="text-sm text-grey-400">Alle elever er aktive</span>
+                    <span className="text-sm text-on-surface-variant">Alle elever er aktive</span>
                   </div>
                 )}
               </div>
@@ -307,11 +307,11 @@ function KpiCard({ label, value, icon, change, positive }: {
   change?: string; positive?: boolean;
 }) {
   return (
-    <div className="bg-white border border-grey-200 rounded-xl p-5">
+    <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">{label}</MonoLabel>
-          <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+          <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">{label}</MonoLabel>
+          <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
             {value}
           </p>
           {change && (
@@ -323,7 +323,7 @@ function KpiCard({ label, value, icon, change, positive }: {
             </p>
           )}
         </div>
-        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text shrink-0">
+        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text shrink-0">
           {icon}
         </div>
       </div>
@@ -335,10 +335,10 @@ function ChartCard({ title, subtitle, className, children }: {
   title: string; subtitle?: string; className?: string; children: React.ReactNode;
 }) {
   return (
-    <div className={cn("bg-white border border-grey-200 rounded-xl p-0 overflow-hidden", className)}>
-      <div className="px-6 py-4 border-b border-grey-200">
-        <h3 className="text-sm font-semibold text-black">{title}</h3>
-        {subtitle && <span className="text-xs text-grey-400 mt-0.5 block">{subtitle}</span>}
+    <div className={cn("bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-0 overflow-hidden", className)}>
+      <div className="px-6 py-4 border-b border-outline-variant/30">
+        <h3 className="text-sm font-semibold text-on-surface">{title}</h3>
+        {subtitle && <span className="text-xs text-on-surface-variant mt-0.5 block">{subtitle}</span>}
       </div>
       <div className="p-6">{children}</div>
     </div>

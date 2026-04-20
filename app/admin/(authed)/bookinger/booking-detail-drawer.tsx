@@ -158,17 +158,17 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
 
             <Card>
               <h4 className="admin-section-title mb-2">Elev</h4>
-              <div className="space-y-1 text-sm text-black">
-                <div className="flex items-center gap-2"><Icon name="person" className="w-4 h-4 text-grey-400" />{booking.User?.name ?? "Ukjent"}</div>
-                {booking.User?.email && <div className="text-grey-400 ml-6">{booking.User.email}</div>}
-                {booking.User?.phone && <div className="text-grey-400 ml-6">{booking.User.phone}</div>}
+              <div className="space-y-1 text-sm text-on-surface">
+                <div className="flex items-center gap-2"><Icon name="person" className="w-4 h-4 text-on-surface-variant" />{booking.User?.name ?? "Ukjent"}</div>
+                {booking.User?.email && <div className="text-on-surface-variant ml-6">{booking.User.email}</div>}
+                {booking.User?.phone && <div className="text-on-surface-variant ml-6">{booking.User.phone}</div>}
               </div>
             </Card>
 
             <Card>
               <h4 className="admin-section-title mb-2">Instruktør</h4>
-              <div className="flex items-center gap-2 text-sm text-black">
-                <Icon name="schedule" className="w-4 h-4 text-grey-400" />
+              <div className="flex items-center gap-2 text-sm text-on-surface">
+                <Icon name="schedule" className="w-4 h-4 text-on-surface-variant" />
                 {booking.Instructor?.User?.name ?? "Ukjent"}
               </div>
             </Card>
@@ -176,14 +176,14 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
             {booking.playerNotes && (
               <Card>
                 <h4 className="admin-section-title mb-2">Spillernotater</h4>
-                <p className="text-sm text-black italic">{booking.playerNotes}</p>
+                <p className="text-sm text-on-surface italic">{booking.playerNotes}</p>
               </Card>
             )}
 
             {booking.adminNotes && (
               <Card>
                 <h4 className="admin-section-title mb-2">Admin-notater</h4>
-                <p className="text-sm text-black">{booking.adminNotes}</p>
+                <p className="text-sm text-on-surface">{booking.adminNotes}</p>
               </Card>
             )}
 
@@ -211,13 +211,13 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
                   </div>
 
                   {loadingSlots && (
-                    <div className="flex items-center gap-2 text-xs text-grey-400">
+                    <div className="flex items-center gap-2 text-xs text-on-surface-variant">
                       <Icon name="progress_activity" className="w-4 h-4 animate-spin" />Henter ledige tider...
                     </div>
                   )}
 
                   {rescheduleDate && !loadingSlots && rescheduleSlots.length === 0 && (
-                    <p className="text-xs text-grey-400">Ingen ledige tider denne dagen.</p>
+                    <p className="text-xs text-on-surface-variant">Ingen ledige tider denne dagen.</p>
                   )}
 
                   {rescheduleSlots.length > 0 && (
@@ -233,8 +233,8 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
                               onClick={() => setRescheduleTime(slot)}
                               className={`py-2 text-sm font-medium rounded-lg border transition-colors ${
                                 isSelected
-                                  ? "bg-black text-white border-black"
-                                  : "bg-white text-black border-grey-200 hover:border-grey-300"
+                                  ? "bg-on-surface text-surface border-black"
+                                  : "bg-surface-container-lowest text-on-surface border-outline-variant/30 hover:border-outline-variant/50"
                               }`}
                             >
                               {time}

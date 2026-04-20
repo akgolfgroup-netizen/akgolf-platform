@@ -157,8 +157,8 @@ export default function MissionBoardPage() {
         />
         <div className="flex items-center justify-center py-32">
           <div className="flex flex-col items-center gap-4">
-            <Icon name="progress_activity" className="w-10 h-10 text-grey-600 animate-spin" />
-            <p className="text-grey-500 font-medium">
+            <Icon name="progress_activity" className="w-10 h-10 text-on-surface-variant/80 animate-spin" />
+            <p className="text-on-surface-variant/80 font-medium">
               Laster Mission Board...
             </p>
           </div>
@@ -178,8 +178,8 @@ export default function MissionBoardPage() {
         <div className="flex items-center justify-center p-6 py-32">
           <Card padding="lg" className="max-w-md flex flex-col items-center justify-center text-center py-12 px-6">
             <Icon name="error" className="w-12 h-12 text-error mb-4" />
-            <h3 className="text-lg font-semibold text-black mb-2">Kunne ikke laste data</h3>
-            <p className="text-sm text-grey-500 mb-6">{error}</p>
+            <h3 className="text-lg font-semibold text-on-surface mb-2">Kunne ikke laste data</h3>
+            <p className="text-sm text-on-surface-variant/80 mb-6">{error}</p>
             <Button variant="accent" onClick={fetchDashboardData} className="gap-2">
               <Icon name="refresh" className="w-4 h-4" />
               Prøv igjen
@@ -245,9 +245,9 @@ export default function MissionBoardPage() {
       <div className="p-6 space-y-6">
         {/* Last Updated */}
         <div className="flex items-center justify-end">
-          <div className="flex items-center gap-2 px-4 py-2 bg-grey-100 rounded-lg">
+          <div className="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-lg">
             <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-            <span className="text-sm text-grey-500">
+            <span className="text-sm text-on-surface-variant/80">
               Sist oppdatert:{" "}
               {lastUpdated.toLocaleTimeString("nb-NO", {
                 hour: "2-digit",
@@ -258,11 +258,11 @@ export default function MissionBoardPage() {
               type="button"
               onClick={fetchDashboardData}
               disabled={loading}
-              className="ml-2 p-1.5 hover:bg-grey-200 rounded-lg transition-colors disabled:opacity-50"
+              className="ml-2 p-1.5 hover:bg-surface-variant rounded-lg transition-colors disabled:opacity-50"
               aria-label="Oppdater"
             >
               <Icon name="refresh"
-                className={`w-4 h-4 text-grey-600 ${loading ? "animate-spin" : ""}`} />
+                className={`w-4 h-4 text-on-surface-variant/80 ${loading ? "animate-spin" : ""}`} />
             </button>
           </div>
         </div>
@@ -313,8 +313,8 @@ export default function MissionBoardPage() {
             <Card padding="sm" hover>
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-grey-500">Okter i dag</p>
-                  <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                  <p className="text-sm font-medium text-on-surface-variant/80">Okter i dag</p>
+                  <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight">
                     {stats.today.totalBookings}
                   </p>
                 </div>
@@ -328,8 +328,8 @@ export default function MissionBoardPage() {
             <Card padding="sm" hover>
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-grey-500">Aktive okter</p>
-                  <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                  <p className="text-sm font-medium text-on-surface-variant/80">Aktive okter</p>
+                  <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight">
                     {stats.today.activeSessions}
                   </p>
                 </div>
@@ -348,8 +348,8 @@ export default function MissionBoardPage() {
             <Card padding="sm" hover>
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-grey-500">Nye elever (uke)</p>
-                  <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                  <p className="text-sm font-medium text-on-surface-variant/80">Nye elever (uke)</p>
+                  <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight">
                     {stats.week.newStudents}
                   </p>
                 </div>
@@ -368,8 +368,8 @@ export default function MissionBoardPage() {
             <Card padding="sm" hover>
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-grey-500">Omsetning (uke)</p>
-                  <p className="mt-2 text-3xl font-bold text-grey-900 tracking-tight">
+                  <p className="text-sm font-medium text-on-surface-variant/80">Omsetning (uke)</p>
+                  <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight">
                     {`${stats.week.revenue.toLocaleString("nb-NO")} kr`}
                   </p>
                 </div>
@@ -393,14 +393,14 @@ export default function MissionBoardPage() {
           >
             <Card padding="sm" className="lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-semibold text-grey-900">Bookinger siste 30 dager</h3>
+                <h3 className="text-base font-semibold text-on-surface">Bookinger siste 30 dager</h3>
                 <Badge variant="info">Trend</Badge>
               </div>
               <AdminAreaChart data={bookingTrendData} height={240} />
             </Card>
 
             <Card padding="sm">
-              <h3 className="text-base font-semibold text-grey-900 mb-4">Manedlig mal</h3>
+              <h3 className="text-base font-semibold text-on-surface mb-4">Manedlig mal</h3>
               <div className="flex flex-col items-center justify-center py-4">
                 <AdminProgressRing
                   value={monthlyCurrent}
@@ -418,10 +418,10 @@ export default function MissionBoardPage() {
             {/* Today's Schedule */}
             <motion.div variants={itemVariants} className="lg:col-span-2">
               <Card padding="none" className="overflow-hidden">
-                <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
+                <div className="px-6 py-4 border-b border-outline-variant/30 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Icon name="schedule" className="w-5 h-5 text-success" />
-                    <h2 className="text-base font-semibold text-grey-900">Dagens timeplan</h2>
+                    <h2 className="text-base font-semibold text-on-surface">Dagens timeplan</h2>
                   </div>
                   <Link
                     href="/admin/kalender"
@@ -441,42 +441,42 @@ export default function MissionBoardPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.05 }}
                         onClick={() => router.push(`/admin/bookinger?date=${new Date().toISOString().slice(0, 10)}`)}
-                        className="px-6 py-4 hover:bg-grey-50 transition-colors group cursor-pointer"
+                        className="px-6 py-4 hover:bg-surface transition-colors group cursor-pointer"
                       >
                         <div className="flex items-center gap-5">
                           <div className="text-center min-w-[60px]">
-                            <p className="text-lg font-bold text-grey-900 tabular-nums">
+                            <p className="text-lg font-bold text-on-surface tabular-nums">
                               {booking.time}
                             </p>
                           </div>
 
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-1">
-                              <p className="font-semibold text-grey-900">
+                              <p className="font-semibold text-on-surface">
                                 {booking.studentName}
                               </p>
                               <StatusBadge status={booking.status} />
                             </div>
-                            <p className="text-sm text-grey-500">
+                            <p className="text-sm text-on-surface-variant/80">
                               {booking.service}
                             </p>
                           </div>
 
                           <div className="text-right">
-                            <p className="text-sm text-grey-500">
+                            <p className="text-sm text-on-surface-variant/80">
                               {booking.instructor}
                             </p>
                           </div>
 
-                          <Icon name="arrow_forward" className="w-5 h-5 text-grey-300 group-hover:text-success transition-colors" />
+                          <Icon name="arrow_forward" className="w-5 h-5 text-on-surface-variant/60 group-hover:text-success transition-colors" />
                         </div>
                       </motion.div>
                     ))}
                   </div>
                 ) : (
                   <div className="px-6 py-12 text-center">
-                    <Icon name="calendar_today" className="w-12 h-12 text-grey-400 mx-auto mb-4" />
-                    <p className="text-grey-500">
+                    <Icon name="calendar_today" className="w-12 h-12 text-on-surface-variant mx-auto mb-4" />
+                    <p className="text-on-surface-variant/80">
                       Ingen bookinger i dag
                     </p>
                   </div>
@@ -491,10 +491,10 @@ export default function MissionBoardPage() {
                 <Card padding="sm" className="border-l-4 border-l-ai">
                   <div className="flex items-center gap-2 mb-4">
                     <Icon name="auto_awesome" className="w-5 h-5 text-ai" />
-                    <h3 className="text-base font-semibold text-grey-900">AI-innsikt</h3>
+                    <h3 className="text-base font-semibold text-on-surface">AI-innsikt</h3>
                   </div>
 
-                  <p className="text-sm text-grey-500 mb-4 leading-relaxed">
+                  <p className="text-sm text-on-surface-variant/80 mb-4 leading-relaxed">
                     Basert pa monsteret denne uken, anbefales det a legge
                     til en ekstra &quot;Quick Fix&quot;-slot pa fredag
                     ettermiddag. Etterspurselen er hoy.
@@ -513,10 +513,10 @@ export default function MissionBoardPage() {
               {/* Alerts */}
               <motion.div variants={itemVariants}>
                 <Card padding="none" className="overflow-hidden">
-                  <div className="px-6 py-4 border-b border-grey-200">
+                  <div className="px-6 py-4 border-b border-outline-variant/30">
                     <div className="flex items-center gap-2">
                       <Icon name="notifications" className="w-5 h-5 text-success" />
-                      <h3 className="text-base font-semibold text-grey-900">Varsler</h3>
+                      <h3 className="text-base font-semibold text-on-surface">Varsler</h3>
                       {stats.alerts.length > 0 && (
                         <span className="ml-auto px-2.5 py-0.5 bg-success-light text-success-text text-xs font-bold rounded-full">
                           {stats.alerts.length}
@@ -530,7 +530,7 @@ export default function MissionBoardPage() {
                       {stats.alerts.map((alert, index) => (
                         <div
                           key={index}
-                          className="px-6 py-4 flex items-start gap-3 hover:bg-grey-50 transition-colors"
+                          className="px-6 py-4 flex items-start gap-3 hover:bg-surface transition-colors"
                         >
                           <div
                             className={`w-2 h-2 rounded-full mt-2 ${
@@ -542,10 +542,10 @@ export default function MissionBoardPage() {
                             }`}
                           />
                           <div className="flex-1">
-                            <p className="text-sm text-grey-900">
+                            <p className="text-sm text-on-surface">
                               {alert.message}
                             </p>
-                            <p className="text-xs text-grey-500 mt-1">
+                            <p className="text-xs text-on-surface-variant/80 mt-1">
                               {alert.time}
                             </p>
                           </div>
@@ -555,7 +555,7 @@ export default function MissionBoardPage() {
                   ) : (
                     <div className="px-6 py-8 text-center">
                       <Icon name="check"Circle className="w-10 h-10 text-success mx-auto mb-3 opacity-50" />
-                      <p className="text-sm text-grey-500">
+                      <p className="text-sm text-on-surface-variant/80">
                         Ingen aktive varsler
                       </p>
                     </div>
@@ -567,7 +567,7 @@ export default function MissionBoardPage() {
               {timelineItems.length > 0 && (
                 <motion.div variants={itemVariants}>
                   <Card padding="sm" className="p-5">
-                    <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
+                    <h3 className="text-base font-semibold text-on-surface mb-4 flex items-center gap-2">
                       <Icon name="schedule" className="w-5 h-5 text-success" />
                       Dagens aktivitet
                     </h3>
@@ -579,22 +579,22 @@ export default function MissionBoardPage() {
               {/* Weekly Summary */}
               <motion.div variants={itemVariants}>
                 <Card padding="sm" className="p-5">
-                  <h3 className="text-base font-semibold text-grey-900 mb-4 flex items-center gap-2">
+                  <h3 className="text-base font-semibold text-on-surface mb-4 flex items-center gap-2">
                     <Icon name="bolt" className="w-5 h-5 text-success" />
                     Denne uken
                   </h3>
 
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-grey-500">
+                      <span className="text-sm text-on-surface-variant/80">
                         Totale bookinger
                       </span>
-                      <span className="font-semibold text-grey-900 tabular-nums">
+                      <span className="font-semibold text-on-surface tabular-nums">
                         {stats.week.totalBookings}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-grey-500">
+                      <span className="text-sm text-on-surface-variant/80">
                         Omsetning
                       </span>
                       <span className="font-semibold text-success tabular-nums">
@@ -602,10 +602,10 @@ export default function MissionBoardPage() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-grey-500">
+                      <span className="text-sm text-on-surface-variant/80">
                         Retention
                       </span>
-                      <span className="font-semibold text-grey-900 tabular-nums">
+                      <span className="font-semibold text-on-surface tabular-nums">
                         {stats.week.retention}%
                       </span>
                     </div>

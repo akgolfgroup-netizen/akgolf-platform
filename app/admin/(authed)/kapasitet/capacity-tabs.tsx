@@ -29,7 +29,7 @@ export function CapacityTabs({ activeTab, data }: CapacityTabsProps) {
   return (
     <div className="space-y-6">
       {/* Tab Navigation */}
-      <div className="flex gap-1 p-1 bg-grey-50 rounded-xl w-fit">
+      <div className="flex gap-1 p-1 bg-surface rounded-xl w-fit">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -40,8 +40,8 @@ export function CapacityTabs({ activeTab, data }: CapacityTabsProps) {
               onClick={() => handleTabChange(tab.id)}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-[background-color,color,box-shadow] ${
                 isActive
-                  ? "bg-white text-black shadow-sm"
-                  : "text-grey-400 hover:text-black"
+                  ? "bg-surface-container-lowest text-on-surface shadow-sm"
+                  : "text-on-surface-variant hover:text-on-surface"
               }`}
             >
               <Icon className="w-4 h-4" />

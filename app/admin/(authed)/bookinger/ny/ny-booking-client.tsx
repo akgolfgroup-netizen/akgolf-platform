@@ -172,14 +172,14 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
         {/* Tilbake */}
         <Link
           href="/admin/bookinger"
-          className="inline-flex items-center gap-1 text-sm text-grey-400 hover:text-black transition-colors mb-6"
+          className="inline-flex items-center gap-1 text-sm text-on-surface-variant hover:text-on-surface transition-colors mb-6"
         >
           <Icon name="chevron_left" className="w-4 h-4" />
           Tilbake til bookinger
         </Link>
 
         {/* Steg-indikator */}
-        <div className="bg-white border border-grey-200 rounded-xl p-4 mb-6">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-4 mb-6">
           <div className="flex items-center gap-2">
             {steps.map((s, i) => (
               <div key={i} className="flex items-center gap-2">
@@ -187,10 +187,10 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                   className={cn(
                     "w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-colors",
                     s.complete
-                      ? "bg-success-text text-white"
+                      ? "bg-success-text text-surface"
                       : step === i + 1
-                        ? "bg-black text-white"
-                        : "bg-grey-200 text-grey-400",
+                        ? "bg-on-surface text-surface"
+                        : "bg-surface-variant text-on-surface-variant",
                   )}
                 >
                   {s.complete ? <Icon name="check" className="w-4 h-4" /> : i + 1}
@@ -199,8 +199,8 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                   className={cn(
                     "text-xs font-medium hidden sm:block",
                     step === i + 1
-                      ? "text-black"
-                      : "text-grey-400",
+                      ? "text-on-surface"
+                      : "text-on-surface-variant",
                   )}
                 >
                   {s.label}
@@ -211,7 +211,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                       "w-8 h-0.5 mx-1 hidden sm:block",
                       s.complete
                         ? "bg-success-text"
-                        : "bg-grey-200",
+                        : "bg-surface-variant",
                     )}
                   />
                 )}
@@ -221,16 +221,16 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
         </div>
 
         {/* Steg-innhold */}
-        <div className="bg-white border border-grey-200 rounded-xl p-6">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
           {/* Steg 1: Velg elev */}
           {step === 1 && (
             <div className="space-y-4">
-              <h2 className="text-lg font-semibold text-black">
+              <h2 className="text-lg font-semibold text-on-surface">
                 Velg elev
               </h2>
 
               <div className="relative">
-                <Icon name="search" className="w-4 h-4 text-grey-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Icon name="search" className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <AdminInput
                   type="text"
                   value={searchQuery}
@@ -240,7 +240,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                   autoFocus
                 />
                 {searchLoading && (
-                  <Icon name="progress_activity" className="w-4 h-4 text-grey-400 animate-spin absolute right-3 top-1/2 -translate-y-1/2" />
+                  <Icon name="progress_activity" className="w-4 h-4 text-on-surface-variant animate-spin absolute right-3 top-1/2 -translate-y-1/2" />
                 )}
               </div>
 
@@ -255,18 +255,18 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                     className={cn(
                       "w-full flex items-center gap-3 p-3 rounded-lg transition-colors text-left",
                       selectedStudent?.id === student.id
-                        ? "bg-grey-50 border border-success-text"
-                        : "hover:bg-grey-50",
+                        ? "bg-surface border border-success-text"
+                        : "hover:bg-surface",
                     )}
                   >
-                    <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs font-semibold">
+                    <div className="w-8 h-8 rounded-full bg-on-surface text-surface flex items-center justify-center text-xs font-semibold">
                       {getInitials(student.name, student.email)}
                     </div>
                     <div className="flex-1">
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium text-on-surface">
                         {student.name ?? student.email}
                       </div>
-                      <div className="text-xs text-grey-400">
+                      <div className="text-xs text-on-surface-variant">
                         {student.email}
                       </div>
                     </div>
@@ -276,7 +276,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                   </button>
                 ))}
                 {!searchLoading && students.length === 0 && searchQuery && (
-                  <p className="text-sm text-grey-400 text-center py-4">
+                  <p className="text-sm text-on-surface-variant text-center py-4">
                     Ingen elever funnet
                   </p>
                 )}
@@ -288,12 +288,12 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
           {step === 2 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-black">
+                <h2 className="text-lg font-semibold text-on-surface">
                   Velg tjeneste
                 </h2>
                 <button
                   onClick={() => setStep(1)}
-                  className="text-xs text-grey-400 hover:text-black"
+                  className="text-xs text-on-surface-variant hover:text-on-surface"
                 >
                   Tilbake
                 </button>
@@ -310,20 +310,20 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                     className={cn(
                       "p-4 rounded-xl border text-left transition-all",
                       selectedService?.id === service.id
-                        ? "bg-grey-50 border-success-text"
-                        : "bg-grey-50 border-grey-200 hover:border-grey-300",
+                        ? "bg-surface border-success-text"
+                        : "bg-surface border-outline-variant/30 hover:border-outline-variant/50",
                     )}
                   >
                     <div className="flex items-start justify-between mb-2">
                       <Briefcase className="w-5 h-5 text-success-text" />
-                      <span className="text-lg font-bold text-black tabular-nums">
+                      <span className="text-lg font-bold text-on-surface tabular-nums">
                         {service.price.toLocaleString("nb-NO")} kr
                       </span>
                     </div>
-                    <h3 className="text-sm font-medium text-black">
+                    <h3 className="text-sm font-medium text-on-surface">
                       {service.name}
                     </h3>
-                    <p className="text-xs text-grey-400 mt-1">
+                    <p className="text-xs text-on-surface-variant mt-1">
                       {service.duration} min
                     </p>
                   </button>
@@ -336,12 +336,12 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
           {step === 3 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-black">
+                <h2 className="text-lg font-semibold text-on-surface">
                   Velg coach
                 </h2>
                 <button
                   onClick={() => setStep(2)}
-                  className="text-xs text-grey-400 hover:text-black"
+                  className="text-xs text-on-surface-variant hover:text-on-surface"
                 >
                   Tilbake
                 </button>
@@ -361,22 +361,22 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                     className={cn(
                       "w-full flex items-center gap-3 p-4 rounded-xl border transition-all text-left",
                       selectedInstructor?.id === instructor.id
-                        ? "bg-grey-50 border-success-text"
-                        : "bg-grey-50 border-grey-200 hover:border-grey-300",
+                        ? "bg-surface border-success-text"
+                        : "bg-surface border-outline-variant/30 hover:border-outline-variant/50",
                     )}
                   >
-                    <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center text-sm font-semibold">
+                    <div className="w-10 h-10 rounded-full bg-on-surface text-surface flex items-center justify-center text-sm font-semibold">
                       {instructor.name
                         .split(" ")
                         .map((n) => n[0])
                         .join("")}
                     </div>
                     <div className="flex-1">
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm font-medium text-on-surface">
                         {instructor.name}
                       </div>
                       {instructor.title && (
-                        <div className="text-xs text-grey-400">
+                        <div className="text-xs text-on-surface-variant">
                           {instructor.title}
                         </div>
                       )}
@@ -394,12 +394,12 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
           {step === 4 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-black">
+                <h2 className="text-lg font-semibold text-on-surface">
                   Velg tidspunkt
                 </h2>
                 <button
                   onClick={() => setStep(3)}
-                  className="text-xs text-grey-400 hover:text-black"
+                  className="text-xs text-on-surface-variant hover:text-on-surface"
                 >
                   Tilbake
                 </button>
@@ -411,7 +411,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                   (day) => (
                     <div
                       key={day}
-                      className="text-center text-xs font-medium text-grey-400 py-2"
+                      className="text-center text-xs font-medium text-on-surface-variant py-2"
                     >
                       {day}
                     </div>
@@ -436,10 +436,10 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                       className={cn(
                         "aspect-square rounded-lg flex flex-col items-center justify-center text-xs transition-colors",
                         isSelected
-                          ? "bg-black text-white"
+                          ? "bg-on-surface text-surface"
                           : isPast
-                            ? "bg-grey-50 text-grey-400 cursor-not-allowed"
-                            : "bg-grey-50 text-black hover:bg-grey-200",
+                            ? "bg-surface text-on-surface-variant cursor-not-allowed"
+                            : "bg-surface text-on-surface hover:bg-surface-variant",
                       )}
                     >
                       <span className="font-medium">{format(date, "d")}</span>
@@ -450,19 +450,19 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
 
               {/* Tilgjengelige tider */}
               {selectedDate && (
-                <div className="pt-4 border-t border-grey-200">
-                  <h3 className="text-sm font-medium text-black mb-3">
+                <div className="pt-4 border-t border-outline-variant/30">
+                  <h3 className="text-sm font-medium text-on-surface mb-3">
                     Tilgjengelige tider for{" "}
                     {format(selectedDate, "EEEE d. MMMM", { locale: nb })}
                   </h3>
 
                   {slotsLoading ? (
-                    <div className="flex items-center gap-2 py-4 text-sm text-grey-400">
+                    <div className="flex items-center gap-2 py-4 text-sm text-on-surface-variant">
                       <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                       Henter ledige tider...
                     </div>
                   ) : slots.length === 0 ? (
-                    <p className="text-sm text-grey-400 py-4">
+                    <p className="text-sm text-on-surface-variant py-4">
                       Ingen ledige tider denne dagen
                     </p>
                   ) : (
@@ -477,8 +477,8 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                             "px-3 py-1.5 text-sm font-medium rounded-lg transition-colors",
                             selectedSlot?.time === time &&
                               selectedSlot.date === selectedDate
-                              ? "bg-black text-white"
-                              : "bg-grey-50 text-black hover:bg-grey-200",
+                              ? "bg-on-surface text-surface"
+                              : "bg-surface text-on-surface hover:bg-surface-variant",
                           )}
                         >
                           {time}
@@ -497,8 +497,8 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
           selectedService &&
           selectedInstructor &&
           selectedSlot && (
-            <div className="bg-white border border-grey-200 rounded-xl p-6 mt-5">
-              <h3 className="text-sm font-medium text-black mb-4">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 mt-5">
+              <h3 className="text-sm font-medium text-on-surface mb-4">
                 Oppsummering
               </h3>
 
@@ -510,35 +510,35 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
 
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="flex items-center gap-2">
-                  <Icon name="person" className="w-4 h-4 text-grey-400" />
-                  <span className="text-sm text-black">
+                  <Icon name="person" className="w-4 h-4 text-on-surface-variant" />
+                  <span className="text-sm text-on-surface">
                     {selectedStudent.name ?? selectedStudent.email}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Briefcase className="w-4 h-4 text-grey-400" />
-                  <span className="text-sm text-black">
+                  <Briefcase className="w-4 h-4 text-on-surface-variant" />
+                  <span className="text-sm text-on-surface">
                     {selectedService.name}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Icon name="person" className="w-4 h-4 text-grey-400" />
-                  <span className="text-sm text-black">
+                  <Icon name="person" className="w-4 h-4 text-on-surface-variant" />
+                  <span className="text-sm text-on-surface">
                     {selectedInstructor.name}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Icon name="calendar_today" className="w-4 h-4 text-grey-400" />
-                  <span className="text-sm text-black">
+                  <Icon name="calendar_today" className="w-4 h-4 text-on-surface-variant" />
+                  <span className="text-sm text-on-surface">
                     {format(selectedSlot.date, "d. MMMM", { locale: nb })} kl{" "}
                     {selectedSlot.time}
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-grey-200">
+              <div className="flex items-center justify-between pt-4 border-t border-outline-variant/30">
                 <div>
-                  <span className="text-xs text-grey-400">
+                  <span className="text-xs text-on-surface-variant">
                     Total pris
                   </span>
                   <div className="text-xl font-bold text-success-text tabular-nums">

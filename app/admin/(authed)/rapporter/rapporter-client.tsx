@@ -121,8 +121,8 @@ export function RapporterClient({ data }: RapporterClientProps) {
                 className={cn(
                   "px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border",
                   isActive
-                    ? "bg-black text-white border-black"
-                    : "bg-white border-grey-200 text-text hover:bg-grey-50",
+                    ? "bg-on-surface text-surface border-black"
+                    : "bg-surface-container-lowest border-outline-variant/30 text-text hover:bg-surface",
                 )}
               >
                 {range.label}
@@ -133,7 +133,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
 
         {/* Student KPIs */}
         <div>
-          <MonoLabel as="h2" size="xs" uppercase className="text-grey-400 block mb-3">
+          <MonoLabel as="h2" size="xs" uppercase className="text-on-surface-variant block mb-3">
             Elever
           </MonoLabel>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -163,7 +163,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
 
         {/* Session KPIs */}
         <div>
-          <MonoLabel as="h2" size="xs" uppercase className="text-grey-400 block mb-3">
+          <MonoLabel as="h2" size="xs" uppercase className="text-on-surface-variant block mb-3">
             Økter (siste 30 dager)
           </MonoLabel>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -196,9 +196,9 @@ export function RapporterClient({ data }: RapporterClientProps) {
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Booking Trends */}
-          <div className="bg-white border border-grey-200 rounded-xl p-0 overflow-hidden">
-            <div className="px-5 py-4 border-b border-grey-200">
-              <h3 className="text-sm font-semibold text-black">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-0 overflow-hidden">
+            <div className="px-5 py-4 border-b border-outline-variant/30">
+              <h3 className="text-sm font-semibold text-on-surface">
                 Booking-trend
               </h3>
             </div>
@@ -210,13 +210,13 @@ export function RapporterClient({ data }: RapporterClientProps) {
                       <span className="text-sm text-text">
                         Uke fra {trend.week}
                       </span>
-                      <span className="text-sm text-grey-400">
+                      <span className="text-sm text-on-surface-variant">
                         {trend.count} bookinger
                       </span>
                     </div>
-                    <div className="h-2 bg-grey-50 rounded-full overflow-hidden">
+                    <div className="h-2 bg-surface rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-grey-500 rounded-full transition-all"
+                        className="h-full bg-surface-variant rounded-full transition-all"
                         style={{
                           width: `${(trend.count / maxBookings) * 100}%`,
                         }}
@@ -225,7 +225,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
                   </div>
                 ))
               ) : (
-                <div className="py-4 text-center text-sm text-grey-400">
+                <div className="py-4 text-center text-sm text-on-surface-variant">
                   Ingen bookinger i perioden
                 </div>
               )}
@@ -233,9 +233,9 @@ export function RapporterClient({ data }: RapporterClientProps) {
           </div>
 
           {/* Tier Distribution */}
-          <div className="bg-white border border-grey-200 rounded-xl p-0 overflow-hidden">
-            <div className="px-5 py-4 border-b border-grey-200">
-              <h3 className="text-sm font-semibold text-black">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-0 overflow-hidden">
+            <div className="px-5 py-4 border-b border-outline-variant/30">
+              <h3 className="text-sm font-semibold text-on-surface">
                 Fordeling per tier
               </h3>
             </div>
@@ -258,11 +258,11 @@ export function RapporterClient({ data }: RapporterClientProps) {
                             {tierLabels[tier.tier] ?? tier.tier}
                           </span>
                         </div>
-                        <span className="text-sm text-grey-400">
+                        <span className="text-sm text-on-surface-variant">
                           {tier.count} ({percentage.toFixed(1)}%)
                         </span>
                       </div>
-                      <div className="h-2 bg-grey-50 rounded-full overflow-hidden">
+                      <div className="h-2 bg-surface rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full transition-all"
                           style={{
@@ -287,43 +287,43 @@ export function RapporterClient({ data }: RapporterClientProps) {
         </div>
 
         {/* Additional Insights */}
-        <div className="bg-white rounded-xl shadow-card p-5">
-          <h3 className="text-sm font-semibold text-black mb-4">
+        <div className="bg-surface-container-lowest rounded-xl shadow-card p-5">
+          <h3 className="text-sm font-semibold text-on-surface mb-4">
             Innsikt og anbefalinger
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-grey-50">
+            <div className="p-4 rounded-xl bg-surface">
               <div className="flex items-center gap-2 mb-2">
-                <Icon name="person"s className="w-4 h-4 text-grey-500" />
+                <Icon name="person"s className="w-4 h-4 text-on-surface-variant/80" />
                 <span className="text-sm font-medium text-text">
                   Vekst
                 </span>
               </div>
-              <p className="text-xs text-grey-400">
+              <p className="text-xs text-on-surface-variant">
                 {data.newStudents} nye elever denne måneden. Fortsett
                 markedsføringen på Instagram.
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-grey-50">
+            <div className="p-4 rounded-xl bg-surface">
               <div className="flex items-center gap-2 mb-2">
                 <Icon name="calendar_today"Check className="w-4 h-4 text-success-text" />
                 <span className="text-sm font-medium text-text">
                   Oppmøte
                 </span>
               </div>
-              <p className="text-xs text-grey-400">
+              <p className="text-xs text-on-surface-variant">
                 {data.cancellationRate}% kanselleringsrate er innenfor normalen.
                 Send påminnelser dagen før.
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-grey-50">
+            <div className="p-4 rounded-xl bg-surface">
               <div className="flex items-center gap-2 mb-2">
                 <Icon name="emoji_events" className="w-4 h-4 text-warning" />
                 <span className="text-sm font-medium text-text">
                   Fremskritt
                 </span>
               </div>
-              <p className="text-xs text-grey-400">
+              <p className="text-xs text-on-surface-variant">
                 Elevene forbedrer i snitt {data.handicapImprovement} i handicap.
                 Godt arbeid!
               </p>

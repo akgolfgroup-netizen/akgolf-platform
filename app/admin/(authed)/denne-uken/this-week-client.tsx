@@ -107,67 +107,67 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Stat Card: Bookinger */}
-          <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Bookinger</MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Bookinger</MonoLabel>
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
                   {stats.totalBookings}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text">
                 <Icon name="calendar_today" className="w-5 h-5" />
               </div>
             </div>
           </div>
 
           {/* Stat Card: Unike elever */}
-          <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Unike elever</MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Unike elever</MonoLabel>
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
                   {stats.uniqueStudents}
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text">
                 <Icon name="person"s className="w-5 h-5" />
               </div>
             </div>
           </div>
 
           {/* Stat Card: Bekreftet */}
-          <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Bekreftet</MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Bekreftet</MonoLabel>
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
                   {stats.confirmedBookings}
                 </p>
                 {confirmRate >= 80 && (
                   <div className="mt-2 flex items-center gap-1 text-xs font-medium">
                     <Icon name="arrow_upward"Right className="w-3.5 h-3.5 text-text" />
                     <span className="text-text tabular-nums">+{confirmRate}%</span>
-                    <span className="text-grey-400">vs forrige</span>
+                    <span className="text-on-surface-variant">vs forrige</span>
                   </div>
                 )}
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text">
                 <Icon name="check"Circle2 className="w-5 h-5" />
               </div>
             </div>
           </div>
 
           {/* Stat Card: Inntekt */}
-          <div className="bg-white border border-grey-200 rounded-xl p-5">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Inntekt</MonoLabel>
-                <p className="mt-2 text-3xl font-bold text-black tracking-tight tabular-nums">
+                <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Inntekt</MonoLabel>
+                <p className="mt-2 text-3xl font-bold text-on-surface tracking-tight tabular-nums">
                   {stats.weeklyRevenue.toLocaleString("nb-NO")} kr
                 </p>
               </div>
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-grey-50 text-text">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-surface text-text">
                 <DollarSign className="w-5 h-5" />
               </div>
             </div>
@@ -177,8 +177,8 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
         {/* Visualiseringer - ukemal, daglig aktivitet, timeline */}
         {bookings.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="bg-white border border-grey-200 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-black mb-4">Ukemal</h3>
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-on-surface mb-4">Ukemal</h3>
               <div className="flex flex-col items-center justify-center py-2">
                 <AdminProgressRing
                   value={stats.totalBookings}
@@ -190,9 +190,9 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
               </div>
             </div>
 
-            <div className="bg-white border border-grey-200 rounded-xl p-6 lg:col-span-2">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-black">Daglig aktivitet</h3>
+                <h3 className="text-lg font-semibold text-on-surface">Daglig aktivitet</h3>
                 <Badge variant="info">Denne uken</Badge>
               </div>
               <AdminBarChart data={dailyData} height={220} />
@@ -201,10 +201,10 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
         )}
 
         {timelineItems.length > 0 && (
-          <div className="bg-white border border-grey-200 rounded-xl p-6">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-black">Ukens kommende hendelser</h3>
-              <span className="text-xs text-grey-400">
+              <h3 className="text-lg font-semibold text-on-surface">Ukens kommende hendelser</h3>
+              <span className="text-xs text-on-surface-variant">
                 {timelineItems.length} hendelser
               </span>
             </div>
@@ -220,10 +220,10 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
             description="Nar elever booker okter vil de dukke opp her."
           />
         ) : (
-          <div className="bg-white border border-grey-200 rounded-xl p-0 overflow-hidden">
-            <div className="px-6 py-4 border-b border-grey-200 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-black">Ukens bookinger</h3>
-              <span className="text-sm text-grey-400">
+          <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-0 overflow-hidden">
+            <div className="px-6 py-4 border-b border-outline-variant/30 flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-on-surface">Ukens bookinger</h3>
+              <span className="text-sm text-on-surface-variant">
                 {bookings.length} booking{bookings.length !== 1 ? "er" : ""}
               </span>
             </div>
@@ -238,8 +238,8 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
                     {/* Day Header */}
-                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-grey-200">
-                      <div className="w-10 h-10 rounded-xl bg-grey-50 flex items-center justify-center">
+                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-outline-variant/30">
+                      <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
                         <Icon name="calendar_today" className="w-5 h-5 text-text" />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -266,7 +266,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                         return (
                           <div
                             key={booking.id}
-                            className="flex items-center gap-4 p-3 rounded-xl bg-grey-50 hover:bg-grey-200 transition-colors"
+                            className="flex items-center gap-4 p-3 rounded-xl bg-surface hover:bg-surface-variant transition-colors"
                           >
                             {/* Avatar */}
                             {booking.student.image ? (
@@ -278,7 +278,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                                 className="w-11 h-11 rounded-xl object-cover ring-2 ring-white"
                               />
                             ) : (
-                              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-text bg-grey-50">
+                              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-sm font-bold text-text bg-surface">
                                 {booking.student.name?.charAt(0) ?? "?"}
                               </div>
                             )}
@@ -288,7 +288,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                               <p className="text-sm font-semibold text-text truncate">
                                 {booking.student.name ?? "Ukjent elev"}
                               </p>
-                              <p className="text-xs text-grey-400 truncate mt-0.5">
+                              <p className="text-xs text-on-surface-variant truncate mt-0.5">
                                 {booking.service.name} ·{" "}
                                 {booking.instructor.name ??
                                   "Ukjent instruktor"}
@@ -297,7 +297,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
 
                             {/* Time + Status */}
                             <div className="flex items-center gap-2 flex-shrink-0">
-                              <span className="text-xs text-grey-400 flex items-center gap-1 tabular-nums">
+                              <span className="text-xs text-on-surface-variant flex items-center gap-1 tabular-nums">
                                 <Icon name="schedule" className="w-3 h-3" />
                                 {format(new Date(booking.startTime), "HH:mm")}
                               </span>

@@ -275,7 +275,7 @@ export function NyPlanWizard({
 
       <div className="flex-1 overflow-y-auto">
         {/* Step indicator */}
-        <div className="border-b border-grey-200 bg-white px-6 py-4">
+        <div className="border-b border-outline-variant/30 bg-surface-container-lowest px-6 py-4">
           <div className="flex items-center gap-2 max-w-2xl mx-auto">
             {([1, 2, 3] as const).map((s) => (
               <div key={s} className="flex items-center gap-2 flex-1">
@@ -283,10 +283,10 @@ export function NyPlanWizard({
                   className={cn(
                     "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors",
                     step === s
-                      ? "bg-black text-white"
+                      ? "bg-on-surface text-surface"
                       : step > s
-                        ? "bg-success-text text-white"
-                        : "bg-grey-100 text-grey-400",
+                        ? "bg-success-text text-surface"
+                        : "bg-surface-container text-on-surface-variant",
                   )}
                 >
                   {step > s ? <Icon name="check" className="w-4 h-4" /> : s}
@@ -295,14 +295,14 @@ export function NyPlanWizard({
                   className={cn(
                     "text-sm hidden sm:block",
                     step === s
-                      ? "text-black font-medium"
-                      : "text-grey-400",
+                      ? "text-on-surface font-medium"
+                      : "text-on-surface-variant",
                   )}
                 >
                   {s === 1 ? "Grunninfo" : s === 2 ? "Uker og økter" : "Bekreft"}
                 </span>
                 {s < 3 && (
-                  <div className="flex-1 h-px bg-grey-200 mx-2" />
+                  <div className="flex-1 h-px bg-surface-variant mx-2" />
                 )}
               </div>
             ))}
@@ -322,7 +322,7 @@ export function NyPlanWizard({
           {/* Step 1: Metadata */}
           {step === 1 && (
             <Card>
-              <h2 className="text-lg font-semibold text-black mb-5">
+              <h2 className="text-lg font-semibold text-on-surface mb-5">
                 Grunnleggende info
               </h2>
 
@@ -361,8 +361,8 @@ export function NyPlanWizard({
                         className={cn(
                           "px-3 py-2 rounded-lg text-sm font-medium transition-colors border",
                           periodType === pt.value
-                            ? "bg-black text-white border-black"
-                            : "bg-white border-grey-200 text-black hover:bg-grey-100",
+                            ? "bg-on-surface text-surface border-black"
+                            : "bg-surface-container-lowest border-outline-variant/30 text-on-surface hover:bg-surface-container",
                         )}
                       >
                         {pt.label}
@@ -400,8 +400,8 @@ export function NyPlanWizard({
               {weeks.map((week, weekIndex) => (
                 <Card key={weekIndex} className="p-0 overflow-hidden">
                   {/* Week header */}
-                  <div className="px-5 py-4 bg-grey-100 border-b border-grey-200">
-                    <h3 className="text-sm font-semibold text-black mb-3">
+                  <div className="px-5 py-4 bg-surface-container border-b border-outline-variant/30">
+                    <h3 className="text-sm font-semibold text-on-surface mb-3">
                       Uke {weekIndex + 1}
                     </h3>
                     <div className="grid grid-cols-2 gap-3">
@@ -433,10 +433,10 @@ export function NyPlanWizard({
                     {week.sessions.map((session, sessionIndex) => (
                       <div
                         key={sessionIndex}
-                        className="rounded-lg border border-grey-200 p-4 space-y-3 bg-white"
+                        className="rounded-lg border border-outline-variant/30 p-4 space-y-3 bg-surface-container-lowest"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-medium text-grey-400 uppercase tracking-wider">
+                          <span className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">
                             Økt {sessionIndex + 1}
                           </span>
                           {week.sessions.length > 1 && (
@@ -488,7 +488,7 @@ export function NyPlanWizard({
                               Varighet (min)
                             </label>
                             <div className="relative">
-                              <Icon name="schedule" className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-grey-400 pointer-events-none" />
+                              <Icon name="schedule" className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-on-surface-variant pointer-events-none" />
                               <AdminInput
                                 type="number"
                                 min={10}
@@ -521,8 +521,8 @@ export function NyPlanWizard({
                                   className={cn(
                                     "flex-1 py-2 rounded text-xs font-medium transition-colors border",
                                     session.focusArea === fa
-                                      ? "bg-black text-white border-black"
-                                      : "bg-white border-grey-200 text-grey-400 hover:bg-grey-100",
+                                      ? "bg-on-surface text-surface border-black"
+                                      : "bg-surface-container-lowest border-outline-variant/30 text-on-surface-variant hover:bg-surface-container",
                                   )}
                                 >
                                   {fa}
@@ -535,19 +535,19 @@ export function NyPlanWizard({
                         {/* Exercises */}
                         {session.exercises && session.exercises.length > 0 && (
                           <div className="space-y-1.5">
-                            <p className="text-xs font-medium text-grey-400">
+                            <p className="text-xs font-medium text-on-surface-variant">
                               Øvelser ({session.exercises.length})
                             </p>
                             {session.exercises.map((ex, exIdx) => (
                               <div
                                 key={exIdx}
-                                className="flex items-center justify-between py-1.5 px-3 rounded bg-grey-100 text-sm"
+                                className="flex items-center justify-between py-1.5 px-3 rounded bg-surface-container text-sm"
                               >
-                                <span className="text-black">
+                                <span className="text-on-surface">
                                   {ex.name}
                                 </span>
                                 <div className="flex items-center gap-2">
-                                  <span className="text-xs text-grey-400">
+                                  <span className="text-xs text-on-surface-variant">
                                     {ex.durationMinutes} min
                                   </span>
                                   <button
@@ -575,7 +575,7 @@ export function NyPlanWizard({
                           onClick={() =>
                             setDrillPickerOpen({ weekIndex, sessionIndex })
                           }
-                          className="flex items-center gap-1.5 text-xs text-black font-medium hover:underline"
+                          className="flex items-center gap-1.5 text-xs text-on-surface font-medium hover:underline"
                         >
                           <Icon name="add" className="w-3.5 h-3.5" />
                           Legg til øvelser
@@ -586,7 +586,7 @@ export function NyPlanWizard({
                     <button
                       type="button"
                       onClick={() => addSession(weekIndex)}
-                      className="flex items-center gap-2 w-full justify-center py-2.5 rounded-lg border border-dashed border-grey-300 text-sm text-grey-400 hover:border-black hover:text-black transition-colors"
+                      className="flex items-center gap-2 w-full justify-center py-2.5 rounded-lg border border-dashed border-outline-variant/50 text-sm text-on-surface-variant hover:border-black hover:text-on-surface transition-colors"
                     >
                       <Icon name="add" className="w-4 h-4" />
                       Legg til økt
@@ -601,32 +601,32 @@ export function NyPlanWizard({
           {step === 3 && (
             <div className="space-y-6">
               <Card>
-                <h2 className="text-lg font-semibold text-black mb-4">
+                <h2 className="text-lg font-semibold text-on-surface mb-4">
                   Bekreft treningsplan
                 </h2>
 
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="text-grey-400">Elev</p>
-                    <p className="font-medium text-black">
+                    <p className="text-on-surface-variant">Elev</p>
+                    <p className="font-medium text-on-surface">
                       {selectedStudent?.name ?? selectedStudent?.email ?? "-"}
                     </p>
                   </div>
                   <div>
-                    <p className="text-grey-400">Tittel</p>
-                    <p className="font-medium text-black">
+                    <p className="text-on-surface-variant">Tittel</p>
+                    <p className="font-medium text-on-surface">
                       {title}
                     </p>
                   </div>
                   <div>
-                    <p className="text-grey-400">Periodetype</p>
-                    <p className="font-medium text-black">
+                    <p className="text-on-surface-variant">Periodetype</p>
+                    <p className="font-medium text-on-surface">
                       {PERIOD_TYPES.find((pt) => pt.value === periodType)?.label}
                     </p>
                   </div>
                   <div>
-                    <p className="text-grey-400">Varighet</p>
-                    <p className="font-medium text-black">
+                    <p className="text-on-surface-variant">Varighet</p>
+                    <p className="font-medium text-on-surface">
                       {durationWeeks} uker fra {startDate}
                     </p>
                   </div>
@@ -635,12 +635,12 @@ export function NyPlanWizard({
 
               {weeks.map((week, weekIndex) => (
                 <Card key={weekIndex} className="p-0 overflow-hidden">
-                  <div className="px-5 py-3 bg-grey-100 border-b border-grey-200">
-                    <h3 className="text-sm font-semibold text-black">
+                  <div className="px-5 py-3 bg-surface-container border-b border-outline-variant/30">
+                    <h3 className="text-sm font-semibold text-on-surface">
                       Uke {weekIndex + 1}: {week.focus || "(ingen fokus)"}
                     </h3>
                     {week.volumeLabel && (
-                      <p className="text-xs text-grey-400">
+                      <p className="text-xs text-on-surface-variant">
                         Volum: {week.volumeLabel}
                       </p>
                     )}
@@ -652,23 +652,23 @@ export function NyPlanWizard({
                       return (
                         <div
                           key={sIdx}
-                          className="flex items-center gap-4 py-2 px-3 rounded-lg bg-grey-100 text-sm"
+                          className="flex items-center gap-4 py-2 px-3 rounded-lg bg-surface-container text-sm"
                         >
-                          <span className="text-grey-400 w-20">
+                          <span className="text-on-surface-variant w-20">
                             {DAY_LABELS[session.dayOfWeek]}
                           </span>
-                          <span className="font-medium text-black flex-1">
+                          <span className="font-medium text-on-surface flex-1">
                             {session.title || "(uten tittel)"}
                           </span>
                           <Badge variant={variant}>
                             {session.focusArea}
                           </Badge>
-                          <span className="text-grey-400 flex items-center gap-1 text-xs">
+                          <span className="text-on-surface-variant flex items-center gap-1 text-xs">
                             <Icon name="schedule" className="w-3 h-3" />
                             {session.durationMinutes} min
                           </span>
                           {session.exercises && session.exercises.length > 0 && (
-                            <span className="text-xs text-grey-400">
+                            <span className="text-xs text-on-surface-variant">
                               {session.exercises.length} øvelser
                             </span>
                           )}
@@ -681,8 +681,8 @@ export function NyPlanWizard({
 
               {/* Advarsel om eksisterende plan */}
               <Card className="border-warning/30 bg-warning/5">
-                <p className="font-medium mb-1 text-black">Merk</p>
-                <p className="text-sm text-grey-400">
+                <p className="font-medium mb-1 text-on-surface">Merk</p>
+                <p className="text-sm text-on-surface-variant">
                   Eventuelle eksisterende aktive planer for denne eleven vil bli
                   deaktivert når du oppretter den nye planen.
                 </p>

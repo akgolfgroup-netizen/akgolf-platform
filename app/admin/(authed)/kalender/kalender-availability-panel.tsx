@@ -108,13 +108,13 @@ export default function KalenderAvailabilityPanel({
   return (
     <div className="space-y-6">
       {/* Recurring availability */}
-      <div className="bg-white rounded-xl border border-grey-200 overflow-hidden">
-        <div className="px-4 py-3 border-b border-grey-200 flex items-center justify-between">
+      <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
+        <div className="px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h3 className="text-base font-semibold text-black">
+            <h3 className="text-base font-semibold text-on-surface">
               Faste arbeidstider
             </h3>
-            <div className="flex items-center gap-1 text-xs text-grey-500">
+            <div className="flex items-center gap-1 text-xs text-on-surface-variant/80">
               <Icon name="repeat" className="w-3.5 h-3.5" />
               Gjentas ukentlig
             </div>
@@ -131,7 +131,7 @@ export default function KalenderAvailabilityPanel({
             return (
               <div key={day} className="px-4 py-3 flex items-start gap-4">
                 <div className="w-12 shrink-0 pt-1">
-                  <span className="text-sm font-semibold text-black">{day}</span>
+                  <span className="text-sm font-semibold text-on-surface">{day}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
@@ -139,7 +139,7 @@ export default function KalenderAvailabilityPanel({
                       slots.map((slot, j) => (
                         <div
                           key={j}
-                          className="inline-flex items-center gap-2 px-3 py-1.5 bg-grey-100 rounded-full text-sm text-success-text"
+                          className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-sm text-success-text"
                         >
                           <span className="tabular-nums">
                             {slot.start} – {slot.end}
@@ -147,7 +147,7 @@ export default function KalenderAvailabilityPanel({
                           <button
                             type="button"
                             onClick={() => handleRemoveSlot(dayIndex, j)}
-                            className="w-5 h-5 rounded-full hover:bg-grey-200 flex items-center justify-center text-grey-500 hover:text-error transition-colors"
+                            className="w-5 h-5 rounded-full hover:bg-surface-variant flex items-center justify-center text-on-surface-variant/80 hover:text-error transition-colors"
                             aria-label="Fjern"
                           >
                             <span className="text-xs leading-none">×</span>
@@ -155,7 +155,7 @@ export default function KalenderAvailabilityPanel({
                         </div>
                       ))
                     ) : (
-                      <span className="text-sm text-grey-500 py-1.5">Fri</span>
+                      <span className="text-sm text-on-surface-variant/80 py-1.5">Fri</span>
                     )}
                     <Button
                       variant="secondary"

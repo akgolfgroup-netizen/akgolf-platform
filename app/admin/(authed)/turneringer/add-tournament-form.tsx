@@ -38,30 +38,30 @@ export function AddTournamentForm() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2">
-            <label className="block text-xs font-medium text-grey-400 mb-1.5">Turneringsnavn *</label>
+            <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Turneringsnavn *</label>
             <input
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl bg-white border border-grey-200 text-black text-sm outline-none focus:border-black"
+              className="w-full px-3 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-on-surface text-sm outline-none focus:border-black"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-grey-400 mb-1.5">Startdato *</label>
+            <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Startdato *</label>
             <input
               type="date"
               required
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl bg-white border border-grey-200 text-black text-sm outline-none focus:border-black"
+              className="w-full px-3 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-on-surface text-sm outline-none focus:border-black"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-grey-400 mb-1.5">Nivå</label>
+            <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Nivå</label>
             <select
               value={level}
               onChange={(e) => setLevel(e.target.value as typeof level)}
-              className="w-full px-3 py-2.5 rounded-xl bg-white border border-grey-200 text-black text-sm outline-none focus:border-black"
+              className="w-full px-3 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-on-surface text-sm outline-none focus:border-black"
             >
               {LEVELS.map((l) => (
                 <option key={l} value={l}>{l.charAt(0).toUpperCase() + l.slice(1)}</option>
@@ -69,21 +69,21 @@ export function AddTournamentForm() {
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-grey-400 mb-1.5">Sted/bane</label>
+            <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Sted/bane</label>
             <input
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl bg-white border border-grey-200 text-black text-sm outline-none focus:border-black"
+              className="w-full px-3 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-on-surface text-sm outline-none focus:border-black"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-grey-400 mb-1.5">Ekstern URL</label>
+            <label className="block text-xs font-medium text-on-surface-variant mb-1.5">Ekstern URL</label>
             <input
               type="url"
               value={externalUrl}
               onChange={(e) => setExternalUrl(e.target.value)}
               placeholder="https://..."
-              className="w-full px-3 py-2.5 rounded-xl bg-white border border-grey-200 text-black text-sm outline-none focus:border-black"
+              className="w-full px-3 py-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-on-surface text-sm outline-none focus:border-black"
             />
           </div>
         </div>

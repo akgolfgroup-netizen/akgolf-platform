@@ -67,22 +67,22 @@ export default function KalenderControls({
       : format(currentDate, "MMMM yyyy", { locale: nb });
 
   return (
-    <div className="bg-white rounded-xl border border-grey-200 p-4">
+    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-4">
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
         <div className="flex items-center gap-3">
           <button
             onClick={handlePrev}
-            className="p-2 rounded-lg hover:bg-grey-50 text-grey-500 transition-colors"
+            className="p-2 rounded-lg hover:bg-surface text-on-surface-variant/80 transition-colors"
             aria-label="Forrige"
           >
             <Icon name="chevron_left" className="w-5 h-5" />
           </button>
-          <h2 className="text-lg font-semibold text-black min-w-[180px] text-center capitalize">
+          <h2 className="text-lg font-semibold text-on-surface min-w-[180px] text-center capitalize">
             {dateLabel}
           </h2>
           <button
             onClick={handleNext}
-            className="p-2 rounded-lg hover:bg-grey-50 text-grey-500 transition-colors"
+            className="p-2 rounded-lg hover:bg-surface text-on-surface-variant/80 transition-colors"
             aria-label="Neste"
           >
             <Icon name="chevron_right" className="w-5 h-5" />
@@ -95,7 +95,7 @@ export default function KalenderControls({
             I dag
           </Button>
           {isPending && (
-            <Icon name="progress_activity" className="w-4 h-4 animate-spin text-grey-400" />
+            <Icon name="progress_activity" className="w-4 h-4 animate-spin text-on-surface-variant" />
           )}
         </div>
 

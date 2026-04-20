@@ -118,11 +118,11 @@ export function RescheduleDialog({
       <div className="space-y-4">
         {/* Navarende tid */}
         {booking && (
-          <div className="rounded-lg bg-grey-50 border border-grey-200 p-3">
-            <p className="text-xs font-medium text-grey-400 mb-1">
+          <div className="rounded-lg bg-surface border border-outline-variant/30 p-3">
+            <p className="text-xs font-medium text-on-surface-variant mb-1">
               Navarende tidspunkt
             </p>
-            <p className="text-sm font-semibold text-black">
+            <p className="text-sm font-semibold text-on-surface">
               {format(
                 new Date(booking.startTime),
                 "EEEE d. MMMM 'kl.' HH:mm",
@@ -134,7 +134,7 @@ export function RescheduleDialog({
 
         {/* Ny dato */}
         <div>
-          <label className="block text-xs font-medium text-black mb-1.5">
+          <label className="block text-xs font-medium text-on-surface mb-1.5">
             Ny dato
           </label>
           <AdminInput
@@ -147,7 +147,7 @@ export function RescheduleDialog({
 
         {/* Ny tid */}
         <div>
-          <label className="block text-xs font-medium text-black mb-1.5">
+          <label className="block text-xs font-medium text-on-surface mb-1.5">
             Nytt klokkeslett
           </label>
           <AdminInput
@@ -160,7 +160,7 @@ export function RescheduleDialog({
 
         {/* Forhåndsvisning */}
         {newEnd && (
-          <div className="flex items-center gap-2 text-xs text-grey-400">
+          <div className="flex items-center gap-2 text-xs text-on-surface-variant">
             <Icon name="schedule" className="w-3.5 h-3.5" />
             <span>
               {time} – {newEnd} ({duration} min)

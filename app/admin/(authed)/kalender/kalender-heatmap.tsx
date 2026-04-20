@@ -40,11 +40,11 @@ export default function KalenderHeatmap({ bookings }: KalenderHeatmapProps) {
   }, [bookings]);
 
   return (
-    <div className="bg-white rounded-xl border border-grey-200 p-4">
+    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-4">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-sm font-semibold text-black">Aktivitet</h3>
-          <p className="text-xs text-grey-400 mt-0.5">
+          <h3 className="text-sm font-semibold text-on-surface">Aktivitet</h3>
+          <p className="text-xs text-on-surface-variant mt-0.5">
             Antall bookinger per ukedag og klokkeslett
           </p>
         </div>

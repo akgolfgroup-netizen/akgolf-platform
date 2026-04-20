@@ -167,7 +167,7 @@ export function StudentDetailClient({ profile }: Props) {
           actions={
             <>
               <Link href="/admin/kalender">
-                <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-black text-white hover:bg-grey-800 transition-colors">
+                <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-on-surface text-surface hover:bg-inverse-surface transition-colors">
                   <Icon name="calendar_today" className="w-4 h-4" />
                   Book ny time
                 </button>
@@ -175,13 +175,13 @@ export function StudentDetailClient({ profile }: Props) {
               <button
                 onClick={handleSendMessage}
                 disabled={isSendingMessage}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-white border border-grey-200 text-black hover:bg-grey-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-surface transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Icon name="chat" className="w-4 h-4" />
                 {isSendingMessage ? "Starter samtale..." : "Send melding"}
               </button>
               <Link href={`/admin/treningsplan?studentId=${profile.id}`}>
-                <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-white border border-grey-200 text-black hover:bg-[var(--color-grey-50)] transition-colors">
+                <button className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-[var(--color-grey-50)] transition-colors">
                   <Icon name="description" className="w-4 h-4" />
                   Treningsplan
                 </button>
@@ -189,7 +189,7 @@ export function StudentDetailClient({ profile }: Props) {
               <button
                 disabled
                 title="Kommer snart"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-grey-400 hover:bg-grey-50 transition-colors cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface transition-colors cursor-not-allowed"
               >
                 <Icon name="edit"3 className="w-4 h-4" />
                 Rediger
@@ -199,14 +199,14 @@ export function StudentDetailClient({ profile }: Props) {
         />
 
         {/* Profile Header Card */}
-        <div className="bg-white border border-grey-200 rounded-xl p-6">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="flex items-start gap-4">
-              <div className="w-16 h-16 rounded-full bg-grey-50 text-text flex items-center justify-center text-xl font-semibold">
+              <div className="w-16 h-16 rounded-full bg-surface text-text flex items-center justify-center text-xl font-semibold">
                 {getInitials(profile.name)}
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-black">
+                <h2 className="text-lg font-semibold text-on-surface">
                   {profile.name ?? "Uten navn"}
                 </h2>
                 <div className="flex flex-wrap items-center gap-2 mt-1.5">
@@ -220,7 +220,7 @@ export function StudentDetailClient({ profile }: Props) {
                     <Badge variant="muted">Kat {profile.category}</Badge>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-grey-400">
+                <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-on-surface-variant">
                   {profile.email && (
                     <a
                       href={`mailto:${profile.email}`}
@@ -243,12 +243,12 @@ export function StudentDetailClient({ profile }: Props) {
               </div>
             </div>
 
-            <div className="flex-1 grid grid-cols-4 gap-4 lg:border-l lg:border-grey-200 lg:pl-6 items-center">
+            <div className="flex-1 grid grid-cols-4 gap-4 lg:border-l lg:border-outline-variant/30 lg:pl-6 items-center">
               <div className="text-center">
-                <div className="text-3xl font-bold text-black tabular-nums">
+                <div className="text-3xl font-bold text-on-surface tabular-nums">
                   {profile.handicap !== null ? profile.handicap.toFixed(1) : "—"}
                 </div>
-                <div className="text-xs text-grey-400 mt-0.5">
+                <div className="text-xs text-on-surface-variant mt-0.5">
                   Handicap
                 </div>
                 {hcpChange !== null && (
@@ -270,10 +270,10 @@ export function StudentDetailClient({ profile }: Props) {
                 )}
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-black tabular-nums">
+                <div className="text-3xl font-bold text-on-surface tabular-nums">
                   {profile.totalSessions}
                 </div>
-                <div className="text-xs text-grey-400 mt-0.5">
+                <div className="text-xs text-on-surface-variant mt-0.5">
                   Okter totalt
                 </div>
               </div>
@@ -281,7 +281,7 @@ export function StudentDetailClient({ profile }: Props) {
                 <div className="text-3xl font-bold text-success-text tabular-nums">
                   {profile.attendanceRate}%
                 </div>
-                <div className="text-xs text-grey-400 mt-0.5">
+                <div className="text-xs text-on-surface-variant mt-0.5">
                   Oppmote
                 </div>
               </div>
@@ -348,12 +348,12 @@ export function StudentDetailClient({ profile }: Props) {
         {activeTab === "overview" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {handicapTrend.length > 1 && (
-              <div className="bg-white border border-grey-200 rounded-xl p-6 lg:col-span-2">
+              <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 lg:col-span-2">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-black">
+                  <h3 className="text-lg font-semibold text-on-surface">
                     Handicap-utvikling
                   </h3>
-                  <span className="text-xs text-grey-400">
+                  <span className="text-xs text-on-surface-variant">
                     {handicapTrend.length} maling{handicapTrend.length !== 1 ? "er" : ""}
                   </span>
                 </div>
@@ -366,9 +366,9 @@ export function StudentDetailClient({ profile }: Props) {
               </div>
             )}
 
-            <div className="bg-white rounded-xl shadow-card p-6">
+            <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-black">
+                <h3 className="text-lg font-semibold text-on-surface">
                   Manedlig mal
                 </h3>
               </div>
@@ -381,19 +381,19 @@ export function StudentDetailClient({ profile }: Props) {
                   valueSuffix=""
                   label={`av ${monthlyGoal} okter`}
                 />
-                <p className="text-xs text-center text-grey-400">
+                <p className="text-xs text-center text-on-surface-variant">
                   {Math.max(0, monthlyGoal - profile.sessionsThisMonth)} okter
                   igjen denne maneden
                 </p>
               </div>
             </div>
 
-            <div className="bg-white border border-grey-200 rounded-xl p-6 lg:col-span-2">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 lg:col-span-2">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-black">
+                <h3 className="text-lg font-semibold text-on-surface">
                   Treningsvolum
                 </h3>
-                <span className="text-xs text-grey-400">
+                <span className="text-xs text-on-surface-variant">
                   Okter per maned
                 </span>
               </div>
@@ -405,13 +405,13 @@ export function StudentDetailClient({ profile }: Props) {
               />
             </div>
 
-            <div className="bg-white rounded-xl shadow-card p-6">
+            <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-black">
+                <h3 className="text-lg font-semibold text-on-surface">
                   Malsettinger
                 </h3>
                 <button
-                  className="p-1.5 rounded-md text-grey-400 opacity-50 cursor-not-allowed"
+                  className="p-1.5 rounded-md text-on-surface-variant opacity-50 cursor-not-allowed"
                   disabled
                   title="Kommer snart"
                 >
@@ -423,14 +423,14 @@ export function StudentDetailClient({ profile }: Props) {
                   {goals.map((goal) => (
                     <div
                       key={goal.id}
-                      className="p-3 rounded-lg bg-grey-50 border border-grey-100"
+                      className="p-3 rounded-lg bg-surface border border-outline-variant/20"
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="text-sm font-medium text-black">
+                        <h4 className="text-sm font-medium text-on-surface">
                           {goal.title}
                         </h4>
                         {goal.targetDate && (
-                          <span className="text-xs text-grey-400">
+                          <span className="text-xs text-on-surface-variant">
                             {format(new Date(goal.targetDate), "MMM yyyy", {
                               locale: nb,
                             })}
@@ -438,19 +438,19 @@ export function StudentDetailClient({ profile }: Props) {
                         )}
                       </div>
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm font-semibold text-black tabular-nums">
+                        <span className="text-sm font-semibold text-on-surface tabular-nums">
                           {goal.currentValue ?? 0}
                         </span>
-                        <span className="text-xs text-grey-400">
+                        <span className="text-xs text-on-surface-variant">
                           / {goal.targetValue ?? "?"}
                         </span>
                         <span className="text-xs text-success-text ml-auto">
                           {goal.progress}%
                         </span>
                       </div>
-                      <div className="h-1.5 bg-grey-100 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-surface-container rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-black rounded-full"
+                          className="h-full bg-on-surface rounded-full"
                           style={{ width: `${goal.progress}%` }}
                         />
                       </div>
@@ -458,19 +458,19 @@ export function StudentDetailClient({ profile }: Props) {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-grey-400 py-4 text-center">
+                <p className="text-sm text-on-surface-variant py-4 text-center">
                   Ingen aktive mal
                 </p>
               )}
             </div>
 
             {activityTimeline.length > 0 && (
-              <div className="bg-white border border-grey-200 rounded-xl p-6 lg:col-span-3">
+              <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 lg:col-span-3">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-black">
+                  <h3 className="text-lg font-semibold text-on-surface">
                     Aktivitetslogg
                   </h3>
-                  <span className="text-xs text-grey-400">
+                  <span className="text-xs text-on-surface-variant">
                     Siste aktiviteter
                   </span>
                 </div>
@@ -483,14 +483,14 @@ export function StudentDetailClient({ profile }: Props) {
         {/* Tab: Trening (kommende + historikk) */}
         {activeTab === "training" && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-card p-6">
+            <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-black">
+                <h3 className="text-lg font-semibold text-on-surface">
                   Kommende bookinger
                 </h3>
                 <Link
                   href="/admin/bookinger/ny"
-                  className="text-xs text-black hover:underline"
+                  className="text-xs text-on-surface hover:underline"
                 >
                   + Ny
                 </Link>
@@ -500,17 +500,17 @@ export function StudentDetailClient({ profile }: Props) {
                   {profile.UpcomingBooking.map((booking) => (
                     <div
                       key={booking.id}
-                      className="p-3 rounded-lg bg-grey-50 border border-grey-100"
+                      className="p-3 rounded-lg bg-surface border border-outline-variant/20"
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-medium text-black">
+                        <span className="text-sm font-medium text-on-surface">
                           {format(new Date(booking.startTime), "EEEE d. MMMM", {
                             locale: nb,
                           })}
                         </span>
                         <Badge variant="success">{booking.status}</Badge>
                       </div>
-                      <div className="flex items-center gap-3 text-xs text-grey-400">
+                      <div className="flex items-center gap-3 text-xs text-on-surface-variant">
                         <span className="flex items-center gap-1">
                           <Icon name="schedule" className="w-3 h-3" />
                           {format(new Date(booking.startTime), "HH:mm")}
@@ -524,14 +524,14 @@ export function StudentDetailClient({ profile }: Props) {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-grey-400 py-4 text-center">
+                <p className="text-sm text-on-surface-variant py-4 text-center">
                   Ingen kommende bookinger
                 </p>
               )}
             </div>
 
-            <div className="bg-white rounded-xl shadow-card p-6">
-              <h3 className="text-lg font-semibold text-black mb-4">
+            <div className="bg-surface-container-lowest rounded-xl shadow-card p-6">
+              <h3 className="text-lg font-semibold text-on-surface mb-4">
                 Treningshistorikk
               </h3>
               {profile.Booking.length > 0 ? (
@@ -539,20 +539,20 @@ export function StudentDetailClient({ profile }: Props) {
                   {profile.Booking.slice(0, 10).map((session) => (
                     <div
                       key={session.id}
-                      className="flex items-start gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100"
+                      className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant/20"
                     >
-                      <div className="p-2 rounded-lg bg-white text-black border border-[var(--color-grey-100)]">
+                      <div className="p-2 rounded-lg bg-surface-container-lowest text-on-surface border border-[var(--color-grey-100)]">
                         <Icon name="calendar_today" className="w-4 h-4" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h4 className="text-sm font-medium text-black">
+                          <h4 className="text-sm font-medium text-on-surface">
                             {(session.ServiceType as { name?: string })?.name ??
                               "Okt"}
                           </h4>
                           <Badge variant="muted">{session.status}</Badge>
                         </div>
-                        <p className="text-xs text-grey-400">
+                        <p className="text-xs text-on-surface-variant">
                           {format(new Date(session.startTime), "d. MMMM yyyy", {
                             locale: nb,
                           })}{" "}
@@ -563,7 +563,7 @@ export function StudentDetailClient({ profile }: Props) {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-grey-400 py-4 text-center">
+                <p className="text-sm text-on-surface-variant py-4 text-center">
                   Ingen treningshistorikk
                 </p>
               )}
@@ -571,25 +571,25 @@ export function StudentDetailClient({ profile }: Props) {
 
             {/* Aktiv treningsplan */}
             {profile.ActivePlan && (
-              <div className="bg-white border border-grey-200 rounded-xl p-6 lg:col-span-2">
+              <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 lg:col-span-2">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-black">
+                  <h3 className="text-lg font-semibold text-on-surface">
                     Aktiv treningsplan
                   </h3>
                   <Link
                     href={`/admin/treningsplan?studentId=${profile.id}`}
-                    className="text-xs text-black hover:underline"
+                    className="text-xs text-on-surface hover:underline"
                   >
                     Se full plan
                   </Link>
                 </div>
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-grey-50 border border-grey-100">
-                  <Icon name="description" className="w-5 h-5 text-black" />
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-surface border border-outline-variant/20">
+                  <Icon name="description" className="w-5 h-5 text-on-surface" />
                   <div>
-                    <div className="text-sm font-medium text-black">
+                    <div className="text-sm font-medium text-on-surface">
                       {profile.ActivePlan.title}
                     </div>
-                    <div className="text-xs text-grey-400">
+                    <div className="text-xs text-on-surface-variant">
                       {profile.ActivePlan.periodType} —{" "}
                       {format(new Date(profile.ActivePlan.startDate), "d. MMM", {
                         locale: nb,

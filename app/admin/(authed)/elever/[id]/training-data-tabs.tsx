@@ -116,7 +116,7 @@ export function TrainingDataTabs({ studentId }: Props) {
       <Card className="min-h-[200px]">
         {isPending ? (
           <div className="flex items-center justify-center py-12">
-            <div className="h-6 w-6 border-2 border-grey-200 border-t-black rounded-full animate-spin" />
+            <div className="h-6 w-6 border-2 border-outline-variant/30 border-t-black rounded-full animate-spin" />
           </div>
         ) : (
           <>
@@ -162,7 +162,7 @@ function PlanTab({ data }: { data: unknown }) {
 
   if (!plan) {
     return (
-      <p className="text-grey-400 text-sm py-8 text-center">
+      <p className="text-on-surface-variant text-sm py-8 text-center">
         Ingen aktiv treningsplan
       </p>
     );
@@ -171,17 +171,17 @@ function PlanTab({ data }: { data: unknown }) {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="font-semibold text-black">{plan.title}</h3>
-        <p className="text-sm text-grey-400">
+        <h3 className="font-semibold text-on-surface">{plan.title}</h3>
+        <p className="text-sm text-on-surface-variant">
           {plan.periodType} {plan.goals ? `— ${plan.goals}` : ""}
         </p>
       </div>
       {plan.TrainingPlanWeek.map((week) => (
         <div
           key={week.weekNumber}
-          className="border border-grey-200 rounded-lg p-3 bg-white"
+          className="border border-outline-variant/30 rounded-lg p-3 bg-surface-container-lowest"
         >
-          <div className="text-sm font-medium text-black mb-2 flex items-center gap-2">
+          <div className="text-sm font-medium text-on-surface mb-2 flex items-center gap-2">
             Uke {week.weekNumber}
             {week.focus && (
               <Badge variant="info">{week.focus}</Badge>
@@ -204,10 +204,10 @@ function PlanTab({ data }: { data: unknown }) {
                   key={i}
                   className="flex items-center gap-2 text-sm"
                 >
-                  <span className="text-grey-400 w-8">
+                  <span className="text-on-surface-variant w-8">
                     {days[session.dayOfWeek]}
                   </span>
-                  <span className="text-black flex-1">
+                  <span className="text-on-surface flex-1">
                     {session.title}
                   </span>
                   {session.focusArea && (
@@ -218,7 +218,7 @@ function PlanTab({ data }: { data: unknown }) {
                     </Badge>
                   )}
                   {session.durationMinutes && (
-                    <span className="text-grey-400 text-xs tabular-nums">
+                    <span className="text-on-surface-variant text-xs tabular-nums">
                       {session.durationMinutes} min
                     </span>
                   )}
@@ -271,7 +271,7 @@ function DagbokTab({
 
   if (logs.length === 0) {
     return (
-      <p className="text-grey-400 text-sm py-8 text-center">
+      <p className="text-on-surface-variant text-sm py-8 text-center">
         Ingen treningslogger
       </p>
     );
@@ -282,17 +282,17 @@ function DagbokTab({
       {logs.map((log) => (
         <div
           key={log.id}
-          className="border border-grey-200 rounded-lg p-3 bg-white"
+          className="border border-outline-variant/30 rounded-lg p-3 bg-surface-container-lowest"
         >
           <div className="flex items-center justify-between">
-            <div className="text-sm font-medium text-black">
+            <div className="text-sm font-medium text-on-surface">
               {new Date(log.date).toLocaleDateString("nb-NO", {
                 day: "numeric",
                 month: "short",
               })}
               {log.focusArea && ` — ${log.focusArea}`}
             </div>
-            <div className="flex items-center gap-2 text-xs text-grey-400">
+            <div className="flex items-center gap-2 text-xs text-on-surface-variant">
               {log.durationMinutes && `${log.durationMinutes} min`}
               {log.rating && ` — ${log.rating}/5`}
             </div>
@@ -318,11 +318,11 @@ function DagbokTab({
             </div>
           )}
           {log.notes && (
-            <p className="text-sm text-black mt-2">{log.notes}</p>
+            <p className="text-sm text-on-surface mt-2">{log.notes}</p>
           )}
 
           {log.coachFeedback && (
-            <div className="mt-2 p-2 rounded bg-black/5 text-sm text-black flex items-start gap-1.5">
+            <div className="mt-2 p-2 rounded bg-on-surface/5 text-sm text-on-surface flex items-start gap-1.5">
               <Icon name="chat_bubble" className="h-3.5 w-3.5 mt-0.5 shrink-0" />
               <span>{log.coachFeedback}</span>
             </div>
@@ -348,7 +348,7 @@ function DagbokTab({
           ) : (
             <button
               onClick={() => setFeedbackId(log.id)}
-              className="mt-2 text-xs text-black hover:underline"
+              className="mt-2 text-xs text-on-surface hover:underline"
             >
               Legg til tilbakemelding
             </button>
@@ -388,7 +388,7 @@ function RunderTab({ data }: { data: unknown }) {
 
   if (rounds.length === 0) {
     return (
-      <p className="text-grey-400 text-sm py-8 text-center">
+      <p className="text-on-surface-variant text-sm py-8 text-center">
         Ingen runder registrert
       </p>
     );
@@ -414,7 +414,7 @@ function RunderTab({ data }: { data: unknown }) {
       <AdminTableBody>
         {rounds.map((r) => (
           <AdminTableRow key={r.id}>
-            <AdminTableCell className="text-grey-400">
+            <AdminTableCell className="text-on-surface-variant">
               {new Date(r.date).toLocaleDateString("nb-NO", {
                 day: "numeric",
                 month: "short",
@@ -439,18 +439,18 @@ function RunderTab({ data }: { data: unknown }) {
                 </span>
               )}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-grey-400">
+            <AdminTableCell className="text-right text-on-surface-variant">
               {r.sgTotal !== null ? r.sgTotal.toFixed(1) : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-grey-400">
+            <AdminTableCell className="text-right text-on-surface-variant">
               {r.fairwaysHit !== null && r.fairwaysTotal
                 ? `${Math.round((r.fairwaysHit / r.fairwaysTotal) * 100)}%`
                 : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-grey-400">
+            <AdminTableCell className="text-right text-on-surface-variant">
               {r.gir ?? "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-grey-400">
+            <AdminTableCell className="text-right text-on-surface-variant">
               {r.totalPutts ?? "—"}
             </AdminTableCell>
           </AdminTableRow>
@@ -510,7 +510,7 @@ function FoundationTab({
 
   if (!foundationData) {
     return (
-      <p className="text-grey-400 text-sm py-8 text-center">
+      <p className="text-on-surface-variant text-sm py-8 text-center">
         Laster...
       </p>
     );
@@ -535,9 +535,9 @@ function FoundationTab({
             return (
               <div
                 key={st}
-                className="border border-grey-200 rounded-lg p-3 bg-white"
+                className="border border-outline-variant/30 rounded-lg p-3 bg-surface-container-lowest"
               >
-                <div className="text-xs text-grey-400 mb-1.5">
+                <div className="text-xs text-on-surface-variant mb-1.5">
                   {st}
                 </div>
                 <AdminSelect
@@ -565,10 +565,10 @@ function FoundationTab({
           {foundationData.degradation.curves.map((curve) => (
             <div
               key={curve.shotType}
-              className="border border-grey-200 rounded-lg p-3 bg-white"
+              className="border border-outline-variant/30 rounded-lg p-3 bg-surface-container-lowest"
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-black">
+                <span className="text-sm font-medium text-on-surface">
                   {curve.shotType}
                 </span>
                 <Badge
@@ -594,16 +594,16 @@ function FoundationTab({
                   const point = curve.points.find((p) => p.level === level);
                   return (
                     <div key={level} className="flex-1 text-center">
-                      <div className="text-lg font-bold text-black tabular-nums">
+                      <div className="text-lg font-bold text-on-surface tabular-nums">
                         {point?.avgScore !== null &&
                         point?.avgScore !== undefined
                           ? point.avgScore.toFixed(1)
                           : "—"}
                       </div>
-                      <div className="text-xs text-grey-400">
+                      <div className="text-xs text-on-surface-variant">
                         {level}
                       </div>
-                      <div className="text-[10px] text-grey-400 opacity-60">
+                      <div className="text-[10px] text-on-surface-variant opacity-60">
                         {point?.dataPoints ?? 0}p
                       </div>
                     </div>
@@ -624,16 +624,16 @@ function FoundationTab({
               key={env.environment}
               className="flex items-center gap-2"
             >
-              <span className="text-xs text-grey-400 w-24">
+              <span className="text-xs text-on-surface-variant w-24">
                 M{env.environment}: {env.name}
               </span>
-              <div className="flex-1 h-2 bg-grey-100 rounded-full overflow-hidden">
+              <div className="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[var(--color-primary)] rounded-full"
                   style={{ width: `${env.percentage}%` }}
                 />
               </div>
-              <span className="text-xs text-black w-12 text-right tabular-nums">
+              <span className="text-xs text-on-surface w-12 text-right tabular-nums">
                 {env.percentage}%
               </span>
             </div>
@@ -687,25 +687,25 @@ function TrackManTab({ data }: { data: unknown }) {
       <AdminTableBody>
         {sessions.map((s) => (
           <AdminTableRow key={s.id}>
-            <AdminTableCell className="text-grey-400">
+            <AdminTableCell className="text-on-surface-variant">
               {new Date(s.sessionDate).toLocaleDateString("nb-NO", {
                 day: "numeric",
                 month: "short",
               })}
             </AdminTableCell>
             <AdminTableCell className="font-medium">{s.club}</AdminTableCell>
-            <AdminTableCell className="text-right text-grey-400">
+            <AdminTableCell className="text-right text-on-surface-variant">
               {s.averages.avgCarry ? `${Math.round(s.averages.avgCarry)}m` : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-grey-400">
+            <AdminTableCell className="text-right text-on-surface-variant">
               {s.averages.avgTotal ? `${Math.round(s.averages.avgTotal)}m` : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-grey-400">
+            <AdminTableCell className="text-right text-on-surface-variant">
               {s.averages.avgOffline
                 ? `${Math.round(s.averages.avgOffline)}m`
                 : "—"}
             </AdminTableCell>
-            <AdminTableCell className="text-right text-grey-400">
+            <AdminTableCell className="text-right text-on-surface-variant">
               {s.averages.count ?? "—"}
             </AdminTableCell>
           </AdminTableRow>
