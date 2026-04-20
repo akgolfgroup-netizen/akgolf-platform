@@ -39,14 +39,14 @@ export const screens: Screen[] = [
   { route: "/portal/bookinger", heritageRef: "sessions_calendar_view", label: "Bookinger (portal)", sprint: "C", auth: "portal", status: "done" },
   { route: "/portal/bookinger/[id]/endre", heritageRef: "reschedule_booking", label: "Endre booking", sprint: "C", auth: "portal", status: "done" },
 
-  // ─── Sprint D — Landingpages ───
-  { route: "/academy", heritageRef: "landing_pricing", label: "Academy", sprint: "D", auth: "none", status: "tokens" },
-  { route: "/academy/abonnement", heritageRef: "landing_pricing", label: "Academy abonnement", sprint: "D", auth: "none", status: "tokens" },
-  { route: "/junior-academy", heritageRef: "landing_contact", label: "Junior Academy", sprint: "D", auth: "none", status: "tokens" },
-  { route: "/landing/pricing", heritageRef: "landing_pricing", label: "Landing pricing", sprint: "D", auth: "none", status: "tokens" },
-  { route: "/landing/contact", heritageRef: "landing_contact", label: "Landing contact", sprint: "D", auth: "none", status: "tokens" },
-  { route: "/utvikling", heritageRef: "", label: "Utvikling", sprint: "D", auth: "none", status: "tokens" },
-  { route: "/personvern", heritageRef: "legal_pages", label: "Personvern", sprint: "D", auth: "none", status: "tokens" },
+  // ─── Sprint D — Landingpages (DONE ✅) ───
+  { route: "/academy", heritageRef: "landing_pricing", label: "Academy", sprint: "D", auth: "none", status: "done" },
+  { route: "/academy/abonnement", heritageRef: "landing_pricing", label: "Academy abonnement", sprint: "D", auth: "none", status: "done" },
+  { route: "/junior-academy", heritageRef: "landing_contact", label: "Junior Academy", sprint: "D", auth: "none", status: "done" },
+  { route: "/landing/pricing", heritageRef: "landing_pricing", label: "Landing pricing", sprint: "D", auth: "none", status: "done" },
+  { route: "/landing/contact", heritageRef: "landing_contact", label: "Landing contact", sprint: "D", auth: "none", status: "done" },
+  { route: "/utvikling", heritageRef: "", label: "Utvikling", sprint: "D", auth: "none", status: "done" },
+  { route: "/personvern", heritageRef: "legal_pages", label: "Personvern", sprint: "D", auth: "none", status: "done" },
 
   // ─── Sprint E — Sekundær portal ───
   // E1 — Kalender & Kommunikasjon
