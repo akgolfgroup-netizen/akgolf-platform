@@ -15,7 +15,6 @@ export {
 
 // Øvelse-komponenter
 export { ExerciseCard } from "./exercise-card";
-export { ExerciseBankSheet } from "./exercise-bank-sheet";
 
 // Økt-komponenter
 export { SessionHeader, SessionCardCompact } from "./session-header";

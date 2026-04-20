@@ -105,17 +105,17 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
         className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
       >
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-grey-400 mb-2">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-on-surface-variant mb-2">
             Ukevisning
           </p>
-          <h1 className="text-3xl font-bold tracking-tight text-black">Treningsplan</h1>
-          <p className="text-sm text-grey-400 mt-1">{weekRange}</p>
+          <h1 className="text-3xl font-bold tracking-tight text-on-surface">Treningsplan</h1>
+          <p className="text-sm text-on-surface-variant mt-1">{weekRange}</p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 p-1 rounded-full bg-white border border-grey-200">
+          <div className="flex items-center gap-1 p-1 rounded-full bg-surface-container-lowest border border-outline-variant/30">
             <Link
               href={`/portal/treningsplan?view=viewer&week=${weekOffset - 1}`}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface transition-colors"
               aria-label="Forrige uke"
             >
               <Icon name="chevron_left" className="w-4 h-4" />
@@ -123,14 +123,14 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
             {weekOffset !== 0 && (
               <Link
                 href="/portal/treningsplan?view=viewer"
-                className="h-9 px-3 rounded-full text-xs font-semibold text-black hover:bg-grey-50 transition-colors inline-flex items-center"
+                className="h-9 px-3 rounded-full text-xs font-semibold text-on-surface hover:bg-surface transition-colors inline-flex items-center"
               >
                 I dag
               </Link>
             )}
             <Link
               href={`/portal/treningsplan?view=viewer&week=${weekOffset + 1}`}
-              className="w-9 h-9 flex items-center justify-center rounded-full text-grey-400 hover:text-black hover:bg-grey-50 transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface transition-colors"
               aria-label="Neste uke"
             >
               <Icon name="chevron_right" className="w-4 h-4" />
@@ -151,21 +151,21 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
         <PremiumCard padding="md" radius="large">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1">
-              <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block mb-1">Fremgang denne uken</MonoLabel>
+              <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block mb-1">Fremgang denne uken</MonoLabel>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-black tabular-nums">{completed}</span>
-                <span className="text-lg font-semibold text-grey-400 tabular-nums">/ {planned}</span>
+                <span className="text-3xl font-bold text-on-surface tabular-nums">{completed}</span>
+                <span className="text-lg font-semibold text-on-surface-variant tabular-nums">/ {planned}</span>
               </div>
             </div>
             <div className="flex-1">
-              <div className="h-2 bg-grey-200/50 rounded-full overflow-hidden">
+              <div className="h-2 bg-surface-variant/50 rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full bg-black transition-all duration-700"
                   style={{ width: `${percentage}%` }}
                 />
               </div>
               <div className="flex items-center justify-between mt-2">
-                <span className="text-xs text-grey-400">
+                <span className="text-xs text-on-surface-variant">
                   {planned === 0
                     ? "Ingen økter planlagt"
                     : completed === planned
@@ -198,15 +198,15 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
                 <div
                   className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold ${
                     day.isToday
-                      ? "bg-black text-white"
-                      : "bg-grey-50 text-black"
+                      ? "bg-on-surface text-surface"
+                      : "bg-surface text-on-surface"
                   }`}
                 >
                   {format(day.date, "d", { locale: nb })}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-black">{day.dayName}</p>
-                  <p className="text-xs text-grey-400">
+                  <p className="text-sm font-semibold text-on-surface">{day.dayName}</p>
+                  <p className="text-xs text-on-surface-variant">
                     {day.events.length > 0
                       ? `${day.events.length} økt${day.events.length > 1 ? "er" : ""}`
                       : "Ingen økter"}
@@ -221,7 +221,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
                     return (
                       <div
                         key={event.id}
-                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 rounded-xl bg-grey-50/60"
+                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 rounded-xl bg-surface-container/60"
                       >
                         <div className="flex items-start gap-3">
                           <div
@@ -232,7 +232,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
                           </div>
                           <div>
                             <div className="flex items-center gap-2">
-                              <p className="text-sm font-semibold text-black">
+                              <p className="text-sm font-semibold text-on-surface">
                                 {event.title}
                               </p>
                               <span
@@ -242,7 +242,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
                                 {cfg.label}
                               </span>
                             </div>
-                            <div className="flex items-center gap-3 mt-1 text-xs text-grey-400">
+                            <div className="flex items-center gap-3 mt-1 text-xs text-on-surface-variant">
                               <span className="flex items-center gap-1">
                                 <Icon name="schedule" className="w-3 h-3" />
                                 {String(event.startH).padStart(2, "0")}:
@@ -255,7 +255,7 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
                             {event.exercises.length > 0 && (
                               <ul className="mt-2 space-y-1">
                                 {event.exercises.map((ex) => (
-                                  <li key={ex.id} className="text-xs text-grey-400">
+                                  <li key={ex.id} className="text-xs text-on-surface-variant">
                                     • {ex.name}
                                   </li>
                                 ))}
@@ -289,12 +289,12 @@ export function TrainingPlanViewer({ events, weekOffset }: TrainingPlanViewerPro
       >
         <PremiumCard variant="accent" padding="md" radius="large">
           <div className="flex items-start gap-3">
-            <Icon name="lightbulb" className="w-5 h-5 text-black mt-0.5 flex-shrink-0" />
+            <Icon name="lightbulb" className="w-5 h-5 text-on-surface mt-0.5 flex-shrink-0" />
             <div>
-              <p className="text-sm font-semibold text-black">Tips fra AI Coach</p>
-              <p className="text-sm text-grey-400 mt-0.5">
+              <p className="text-sm font-semibold text-on-surface">Tips fra AI Coach</p>
+              <p className="text-sm text-on-surface-variant mt-0.5">
                 For SPILL-økter: bruk{" "}
-                <Link href="/portal/strategi" className="underline font-medium text-black">
+                <Link href="/portal/strategi" className="underline font-medium text-on-surface">
                   DECADE-strategien
                 </Link>{" "}
                 før runden for å forberede hull-for-hull plan.

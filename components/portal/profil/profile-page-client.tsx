@@ -83,29 +83,29 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
           <AvatarUpload currentImage={profile.image} name={profile.name} />
 
           <div className="flex-1 min-w-0 text-center sm:text-left">
-            <MonoLabel size="xs" uppercase className="mb-2 block text-white/50">
+            <MonoLabel size="xs" uppercase className="mb-2 block text-surface/50">
               Spillerprofil
             </MonoLabel>
-            <h1 className="text-2xl font-bold leading-tight text-white">
+            <h1 className="text-2xl font-bold leading-tight text-surface">
               {profile.name ?? "Ukjent bruker"}
             </h1>
-            <p className="mt-1 text-sm text-white/60">
+            <p className="mt-1 text-sm text-surface/60">
               {profile.email ?? ""}
             </p>
 
             {/* Badges */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
-              <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-white/80">
+              <span className="inline-flex items-center gap-1 rounded-full bg-surface/10 px-2.5 py-1 text-xs font-medium text-surface/80">
                 {roleLabelMap[profile.role] ?? profile.role}
               </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-accent-cta/20 px-2.5 py-1 text-xs font-semibold text-accent-cta">
+              <span className="inline-flex items-center gap-1 rounded-full bg-secondary-fixed/20 px-2.5 py-1 text-xs font-semibold text-secondary-fixed">
                 <Icon name="workspace_premium" className="h-3 w-3" />
                 {tierLabelMap[profile.subscriptionTier] ?? profile.subscriptionTier}
               </span>
               {stats.currentHandicap !== null && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-white/80">
-                  <MonoLabel size="xs" uppercase className="text-white/50">HCP</MonoLabel>
-                  <MonoLabel size="xs" className="text-white">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-surface/10 px-2.5 py-1 text-xs font-medium text-surface/80">
+                  <MonoLabel size="xs" uppercase className="text-surface/50">HCP</MonoLabel>
+                  <MonoLabel size="xs" className="text-surface">
                     {stats.currentHandicap.toFixed(1)}
                   </MonoLabel>
                 </span>

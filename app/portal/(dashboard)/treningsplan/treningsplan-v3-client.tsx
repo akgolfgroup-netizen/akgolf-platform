@@ -301,16 +301,16 @@ export function TrainingPlannerV3({
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
-            <h2 className="text-xl font-semibold text-slate-100">
+            <h2 className="text-xl font-semibold text-inverse-on-surface">
               {weekInfo.label}
             </h2>
-            <span className="text-sm text-slate-400">{weekInfo.range}</span>
+            <span className="text-sm text-inverse-on-surface/60">{weekInfo.range}</span>
             
             {/* Uke-navigasjon */}
             <div className="flex items-center gap-1">
               <Link
                 href={`/portal/treningsplan?view=calendar&week=${weekOffset - 1}`}
-                className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-200 transition-colors"
+                className="p-1.5 hover:bg-inverse-surface rounded-lg text-inverse-on-surface/60 hover:text-inverse-on-surface transition-colors"
               >
                 <Icon name="chevron_left" className="w-5 h-5" />
               </Link>
@@ -318,15 +318,15 @@ export function TrainingPlannerV3({
                 href="/portal/treningsplan?view=calendar&week=0"
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   weekOffset === 0
-                    ? "bg-slate-700 text-slate-200"
-                    : "hover:bg-slate-800 text-slate-400 hover:text-slate-200"
+                    ? "bg-inverse-surface/80 text-inverse-on-surface"
+                    : "hover:bg-inverse-surface text-inverse-on-surface/60 hover:text-inverse-on-surface"
                 }`}
               >
                 I dag
               </Link>
               <Link
                 href={`/portal/treningsplan?view=calendar&week=${weekOffset + 1}`}
-                className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-200 transition-colors"
+                className="p-1.5 hover:bg-inverse-surface rounded-lg text-inverse-on-surface/60 hover:text-inverse-on-surface transition-colors"
               >
                 <Icon name="chevron_right" className="w-5 h-5" />
               </Link>
@@ -335,11 +335,11 @@ export function TrainingPlannerV3({
 
           {/* Visnings-kontroller */}
           <div className="flex items-center gap-2">
-            <div className="flex items-center bg-slate-800 rounded-lg p-1">
+            <div className="flex items-center bg-inverse-surface rounded-lg p-1">
               <button
                 onClick={() => setView("calendar")}
                 className={`p-2 rounded-md transition-colors ${
-                  view === "calendar" ? "bg-slate-700 text-slate-200" : "text-slate-400 hover:text-slate-200"
+                  view === "calendar" ? "bg-inverse-surface/80 text-inverse-on-surface" : "text-inverse-on-surface/60 hover:text-inverse-on-surface"
                 }`}
                 title="Kalendervisning"
               >
@@ -348,7 +348,7 @@ export function TrainingPlannerV3({
               <button
                 onClick={() => setView("compact")}
                 className={`p-2 rounded-md transition-colors ${
-                  view === "compact" ? "bg-slate-700 text-slate-200" : "text-slate-400 hover:text-slate-200"
+                  view === "compact" ? "bg-inverse-surface/80 text-inverse-on-surface" : "text-inverse-on-surface/60 hover:text-inverse-on-surface"
                 }`}
                 title="Kompakt visning"
               >
@@ -357,7 +357,7 @@ export function TrainingPlannerV3({
               <button
                 onClick={() => setView("list")}
                 className={`p-2 rounded-md transition-colors ${
-                  view === "list" ? "bg-slate-700 text-slate-200" : "text-slate-400 hover:text-slate-200"
+                  view === "list" ? "bg-inverse-surface/80 text-inverse-on-surface" : "text-inverse-on-surface/60 hover:text-inverse-on-surface"
                 }`}
                 title="Listevisning"
               >
@@ -368,16 +368,16 @@ export function TrainingPlannerV3({
         </div>
 
         {/* Statistikk-bar */}
-        <div className="flex items-center gap-6 mb-4 px-4 py-3 bg-slate-800/50 rounded-lg">
+        <div className="flex items-center gap-6 mb-4 px-4 py-3 bg-inverse-surface/50 rounded-lg">
           <div className="flex items-center gap-2">
-            <Icon name="schedule" className="w-4 h-4 text-slate-400" />
-            <span className="text-sm text-slate-300">
-              <span className="font-semibold text-slate-100">{stats.totalMinutes}</span> min totalt
+            <Icon name="schedule" className="w-4 h-4 text-inverse-on-surface/60" />
+            <span className="text-sm text-inverse-on-surface/70">
+              <span className="font-semibold text-inverse-on-surface">{stats.totalMinutes}</span> min totalt
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-slate-300">
-              <span className="font-semibold text-slate-100">{stats.completed}</span>/{stats.total} fullført
+            <span className="text-sm text-inverse-on-surface/70">
+              <span className="font-semibold text-inverse-on-surface">{stats.completed}</span>/{stats.total} fullført
             </span>
           </div>
           {/* Fokus-fordeling */}
@@ -427,8 +427,8 @@ export function TrainingPlannerV3({
               />
             )}
             {view === "list" && (
-              <div className="bg-slate-800 rounded-xl border border-slate-700 p-4">
-                <p className="text-slate-400 text-center">Listevisning kommer snart</p>
+              <div className="bg-inverse-surface rounded-xl border border-inverse-on-surface/20 p-4">
+                <p className="text-inverse-on-surface/60 text-center">Listevisning kommer snart</p>
               </div>
             )}
           </div>

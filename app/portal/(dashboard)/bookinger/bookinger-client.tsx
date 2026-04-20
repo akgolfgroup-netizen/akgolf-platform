@@ -86,16 +86,16 @@ export function BookingerClient({
     <div className="space-y-6">
       {/* ═══ HERO ═══ */}
       <div className="space-y-3">
-        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Mine bookinger</MonoLabel>
-        <h1 className="text-2xl font-bold text-black">
+        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Mine bookinger</MonoLabel>
+        <h1 className="text-2xl font-bold text-on-surface">
           Dine{" "}
-          <span className="font-serif italic text-black font-normal">
+          <span className="font-serif italic text-on-surface font-normal">
             bookinger
           </span>
           <span className="text-accent-cta">.</span>
         </h1>
-        <p className="text-[13px] text-grey-400 max-w-xl">
-          <span className="font-semibold text-black tabular-nums">
+        <p className="text-[13px] text-on-surface-variant max-w-xl">
+          <span className="font-semibold text-on-surface tabular-nums">
             {upcomingCount}
           </span>{" "}
           kommende og{" "}
@@ -107,7 +107,7 @@ export function BookingerClient({
         <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
           <Link
             href="/portal/bookinger/ny"
-            className="relative h-11 px-6 rounded-full bg-accent-cta text-black text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
+            className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
           >
             <Icon name="add"
               className="w-3.5 h-3.5 relative z-10"
@@ -126,13 +126,13 @@ export function BookingerClient({
           variants={fadeInUp}
           initial="hidden"
           animate="visible"
-          className="bg-white rounded-xl shadow-card p-6"
+          className="bg-surface-container-lowest rounded-xl shadow-card p-6"
         >
           <div className="mb-4 flex items-center justify-between">
-            <MonoLabel size="xs" uppercase className="text-grey-400">
+            <MonoLabel size="xs" uppercase className="text-on-surface-variant">
               Neste 7 dager
             </MonoLabel>
-            <MonoLabel size="xs" className="text-grey-400">
+            <MonoLabel size="xs" className="text-on-surface-variant">
               {timelineItems.length} planlagt
             </MonoLabel>
           </div>
@@ -154,11 +154,11 @@ export function BookingerClient({
           className="space-y-4"
         >
           <div className="flex items-center justify-between">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-grey-400 flex items-center gap-2">
-              <span className="w-6 h-px bg-grey-400" />
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant flex items-center gap-2">
+              <span className="w-6 h-px bg-on-surface-variant" />
               Kommende
             </p>
-            <span className="text-[11px] text-grey-400 tabular-nums">
+            <span className="text-[11px] text-on-surface-variant tabular-nums">
               {restUpcoming.length} planlagt
             </span>
           </div>
@@ -183,15 +183,15 @@ export function BookingerClient({
         <motion.div variants={fadeInUp} initial="hidden" animate="visible">
           <PremiumCard className="text-center">
             <div className="flex flex-col items-center gap-4 py-6">
-              <div className="w-14 h-14 rounded-2xl bg-black/10 flex items-center justify-center">
+              <div className="w-14 h-14 rounded-2xl bg-on-surface/10 flex items-center justify-center">
                 <Icon name="calendar_today"
-                  className="w-6 h-6 text-black"
+                  className="w-6 h-6 text-on-surface"
                   strokeWidth={1.75} />
               </div>
-              <p className="text-[13px] text-grey-400 max-w-sm">{emptyMessage}</p>
+              <p className="text-[13px] text-on-surface-variant max-w-sm">{emptyMessage}</p>
               <Link
                 href="/portal/bookinger/ny"
-                className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-black hover:gap-2 transition-all"
+                className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-on-surface hover:gap-2 transition-all"
               >
                 <Icon name="add" className="w-3.5 h-3.5" />
                 Book din første time

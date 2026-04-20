@@ -127,17 +127,17 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
         className="mx-auto w-full max-w-[1200px] space-y-5 pb-12 pt-2"
       >
         <motion.div variants={item}>
-          <h1 className="text-2xl font-bold text-black">Min plan</h1>
-          <p className="text-sm text-grey-400 mt-1">
+          <h1 className="text-2xl font-bold text-on-surface">Min plan</h1>
+          <p className="text-sm text-on-surface-variant mt-1">
             Hei{userName ? `, ${userName}` : ""} — din coach har ikke laget en forecast ennå.
           </p>
         </motion.div>
         <motion.div
           variants={item}
-          className="bg-white border border-grey-200 rounded-xl p-10 text-center"
+          className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-10 text-center"
         >
-          <Compass className="w-10 h-10 text-grey-300 mx-auto mb-3" />
-          <p className="text-sm text-grey-400 max-w-sm mx-auto">
+          <Compass className="w-10 h-10 text-on-surface-variant/60 mx-auto mb-3" />
+          <p className="text-sm text-on-surface-variant max-w-sm mx-auto">
             Når din coach genererer en forecast, vil du se dine mål, estimert tidsbruk og
             sannsynlighet for å nå dem her.
           </p>
@@ -166,8 +166,8 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       className="mx-auto w-full max-w-[1200px] space-y-5 pb-12 pt-2"
     >
       <motion.div variants={item}>
-        <h1 className="text-2xl font-bold text-black">Min plan</h1>
-        <p className="text-sm text-grey-400 mt-1">
+        <h1 className="text-2xl font-bold text-on-surface">Min plan</h1>
+        <p className="text-sm text-on-surface-variant mt-1">
           Din coaching-forecast — oppdatert {new Date(forecast.generatedAt).toLocaleDateString("no-NO")}
         </p>
       </motion.div>
@@ -177,41 +177,41 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
         variants={item}
         className="grid grid-cols-1 sm:grid-cols-3 gap-4"
       >
-        <div className="bg-white border border-grey-200 rounded-xl p-5">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-2">
             <Compass className="w-4 h-4 text-primary" />
-            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Hvor er du nå?</MonoLabel>
+            <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Hvor er du nå?</MonoLabel>
           </div>
-          <p className="text-3xl font-bold text-black tabular-nums">
+          <p className="text-3xl font-bold text-on-surface tabular-nums">
             {round1(forecast.currentScoreAvg)}
           </p>
-          <p className="text-sm text-grey-400 mt-0.5">
+          <p className="text-sm text-on-surface-variant mt-0.5">
             SG {round1(forecast.currentSgTotal)} · Kategori {forecast.currentCategory}
           </p>
         </div>
 
-        <div className="bg-white border border-grey-200 rounded-xl p-5">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-2">
             <Icon name="my_location" className="w-4 h-4 text-primary" />
-            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Hvor vil du?</MonoLabel>
+            <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Hvor vil du?</MonoLabel>
           </div>
-          <p className="text-3xl font-bold text-black tabular-nums">
+          <p className="text-3xl font-bold text-on-surface tabular-nums">
             {round1(forecast.targetScoreAvg)}
           </p>
-          <p className="text-sm text-grey-400 mt-0.5">
+          <p className="text-sm text-on-surface-variant mt-0.5">
             Innen {formatDeadline(forecast.deadline)} · Kat {forecast.targetCategory}
           </p>
         </div>
 
-        <div className="bg-white border border-grey-200 rounded-xl p-5">
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-2">
             <Icon name="trending_up" className="w-4 h-4 text-primary" />
-            <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Hva kreves?</MonoLabel>
+            <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Hva kreves?</MonoLabel>
           </div>
-          <p className="text-3xl font-bold text-black tabular-nums">
+          <p className="text-3xl font-bold text-on-surface tabular-nums">
             +{round1(forecast.requiredSgDelta)}
           </p>
-          <p className="text-sm text-grey-400 mt-0.5">
+          <p className="text-sm text-on-surface-variant mt-0.5">
             SG-forbedring · {round1(forecast.estimatedHoursPerWeek)} t/uke
           </p>
         </div>
@@ -220,7 +220,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       {/* Sannsynlighet — ærlig og tydelig */}
       <motion.div
         variants={item}
-        className="bg-white border border-grey-200 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6"
+        className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6"
       >
         <AdminProgressRing
           value={probPct}
@@ -232,7 +232,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
         />
         <div className="text-center sm:text-left">
           <p className={`text-4xl font-bold tabular-nums ${probColor}`}>{probPct}%</p>
-          <p className="text-sm text-grey-400 mt-1">
+          <p className="text-sm text-on-surface-variant mt-1">
             sannsynlighet for å nå målet
           </p>
           <Badge variant={probBadge as never} className="mt-2">
@@ -248,27 +248,27 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       </motion.div>
 
       {/* Timer + CI */}
-      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
+      <motion.div variants={item} className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
           <Icon name="schedule" className="w-4 h-4 text-primary" />
-          <p className="text-sm font-semibold text-black">Estimert tidsbruk</p>
+          <p className="text-sm font-semibold text-on-surface">Estimert tidsbruk</p>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-end gap-2 sm:gap-4">
-          <p className="text-3xl font-bold text-black tabular-nums">
+          <p className="text-3xl font-bold text-on-surface tabular-nums">
             {Math.round(forecast.estimatedTotalHours)}
-            <span className="text-lg font-medium text-grey-400 ml-1">timer totalt</span>
+            <span className="text-lg font-medium text-on-surface-variant ml-1">timer totalt</span>
           </p>
-          <p className="text-sm text-grey-400 pb-1">
+          <p className="text-sm text-on-surface-variant pb-1">
             95% CI: {Math.round(forecast.estimatedHoursCi95Low)}–{Math.round(forecast.estimatedHoursCi95High)} timer
           </p>
         </div>
       </motion.div>
 
       {/* Kategori-fordeling */}
-      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6 space-y-4">
+      <motion.div variants={item} className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 space-y-4">
         <div className="flex items-center gap-2">
           <Icon name="trending_up" className="w-4 h-4 text-primary" />
-          <p className="text-sm font-semibold text-black">Fordeling per kategori</p>
+          <p className="text-sm font-semibold text-on-surface">Fordeling per kategori</p>
         </div>
 
         {cats.map((cat) => {
@@ -290,14 +290,14 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
                     className="inline-block w-2.5 h-2.5 rounded-full"
                     style={{ backgroundColor: CATEGORY_COLORS[cat] }}
                   />
-                  <span className="text-sm font-medium text-black">
+                  <span className="text-sm font-medium text-on-surface">
                     {CATEGORY_LABELS[cat] ?? cat}
                   </span>
-                  <span className="text-xs text-grey-400">
+                  <span className="text-xs text-on-surface-variant">
                     +{round1(delta)} SG · {Math.round(hours)} t
                   </span>
                 </div>
-                <span className="text-xs text-grey-400 capitalize">{rootCause}</span>
+                <span className="text-xs text-on-surface-variant capitalize">{rootCause}</span>
               </div>
               <div className="h-3 w-full rounded-full overflow-hidden flex">
                 {(["tek", "tak", "mental", "fys"] as const).map((key) => (
@@ -318,15 +318,15 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       </motion.div>
 
       {/* Anbefalinger */}
-      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
+      <motion.div variants={item} className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
           <Icon name="psychology" className="w-4 h-4 text-primary" />
-          <p className="text-sm font-semibold text-black">Coach sine anbefalinger</p>
+          <p className="text-sm font-semibold text-on-surface">Coach sine anbefalinger</p>
         </div>
         <ul className="space-y-2">
           {forecast.recommendationsJson.map((rec, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-text">
-              <Icon name="fitness_center" className="w-4 h-4 text-grey-300 mt-0.5 shrink-0" />
+              <Icon name="fitness_center" className="w-4 h-4 text-on-surface-variant/60 mt-0.5 shrink-0" />
               {rec}
             </li>
           ))}
@@ -334,10 +334,10 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       </motion.div>
 
       {/* Usikkerhet */}
-      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
+      <motion.div variants={item} className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
           <Map className="w-4 h-4 text-primary" />
-          <p className="text-sm font-semibold text-black">Usikkerhet</p>
+          <p className="text-sm font-semibold text-on-surface">Usikkerhet</p>
         </div>
         <p className="text-sm text-text">
           95% konfidensintervall for oppnådd SG-delta: [{" "}
@@ -349,15 +349,15 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
       </motion.div>
 
       {/* Antakelser — alltid synlig */}
-      <motion.div variants={item} className="bg-white border border-grey-200 rounded-xl p-6">
+      <motion.div variants={item} className="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6">
         <div className="flex items-center gap-2 mb-3">
           <Icon name="warning" className="w-4 h-4 text-warning" />
-          <p className="text-sm font-semibold text-black">Viktige antakelser</p>
+          <p className="text-sm font-semibold text-on-surface">Viktige antakelser</p>
         </div>
         <ul className="space-y-2">
           {forecast.assumptionsJson.map((ass, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-text">
-              <span className="text-grey-300 mt-0.5 shrink-0">·</span>
+              <span className="text-on-surface-variant/60 mt-0.5 shrink-0">·</span>
               {ass}
             </li>
           ))}

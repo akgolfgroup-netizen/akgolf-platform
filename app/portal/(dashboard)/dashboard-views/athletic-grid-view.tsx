@@ -193,7 +193,7 @@ export function AthleticGridView({
         <div className="col-span-12 flex flex-col gap-6 lg:col-span-5">
           <Link
             href="/portal/treningsplan"
-            className="bento-card group relative flex-1 overflow-hidden rounded-3xl bg-[#d2f000] p-8"
+            className="bento-card group relative flex-1 overflow-hidden rounded-3xl bg-secondary-fixed p-8"
           >
             <div className="relative z-10">
               <span className="mb-4 inline-block rounded bg-primary px-2 py-1 text-[9px] font-bold text-white">
@@ -257,7 +257,7 @@ export function AthleticGridView({
           <div>
             <p className="font-mono text-[10px] uppercase text-primary/40">Status</p>
             <div className="flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
+              <div className="h-1.5 w-1.5 rounded-full bg-primary-container" />
               <p className="text-xs font-bold text-primary">
                 {sgSummary.roundCount} runder · {stats.sessionsCount} økter siste 30d
               </p>
@@ -285,7 +285,7 @@ function SgRadarHero({ summary }: { summary: SgSummary }) {
   const trendIcon =
     summary.trend === "up" ? "trending_up" : summary.trend === "down" ? "trending_down" : "trending_flat";
   const trendColor =
-    summary.trend === "up" ? "text-[#2d5a27]" : summary.trend === "down" ? "text-[#ba1a1a]" : "text-on-surface-variant";
+    summary.trend === "up" ? "text-primary-container" : summary.trend === "down" ? "text-error" : "text-on-surface-variant";
 
   const points = [
     sgToRadarPoint(summary.offTheTee, 0),
@@ -322,19 +322,19 @@ function SgRadarHero({ summary }: { summary: SgSummary }) {
         <>
           <div className="relative flex h-[260px] items-center justify-center">
             <svg className="h-full w-full max-w-md" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="35" fill="none" stroke="#c2c9bb" strokeDasharray="2 2" strokeOpacity="0.4" strokeWidth="0.3" />
-              <circle cx="50" cy="50" r="23" fill="none" stroke="#c2c9bb" strokeDasharray="2 2" strokeOpacity="0.4" strokeWidth="0.3" />
-              <circle cx="50" cy="50" r="12" fill="none" stroke="#c2c9bb" strokeDasharray="2 2" strokeOpacity="0.4" strokeWidth="0.3" />
-              <line x1="50" y1="15" x2="50" y2="85" stroke="#c2c9bb" strokeOpacity="0.3" strokeWidth="0.3" />
-              <line x1="15" y1="50" x2="85" y2="50" stroke="#c2c9bb" strokeOpacity="0.3" strokeWidth="0.3" />
-              <polygon points={polygonPoints} fill="rgba(210, 240, 0, 0.4)" stroke="#d2f000" strokeWidth="1.5" />
+              <circle cx="50" cy="50" r="35" fill="none" stroke="outline-variant" strokeDasharray="2 2" strokeOpacity="0.4" strokeWidth="0.3" />
+              <circle cx="50" cy="50" r="23" fill="none" stroke="outline-variant" strokeDasharray="2 2" strokeOpacity="0.4" strokeWidth="0.3" />
+              <circle cx="50" cy="50" r="12" fill="none" stroke="outline-variant" strokeDasharray="2 2" strokeOpacity="0.4" strokeWidth="0.3" />
+              <line x1="50" y1="15" x2="50" y2="85" stroke="outline-variant" strokeOpacity="0.3" strokeWidth="0.3" />
+              <line x1="15" y1="50" x2="85" y2="50" stroke="outline-variant" strokeOpacity="0.3" strokeWidth="0.3" />
+              <polygon points={polygonPoints} fill="rgba(210,240,0,0.4)" stroke="secondary-fixed" strokeWidth="1.5" />
               {points.map((p, i) => (
-                <circle key={i} cx={p.x} cy={p.y} r="1" fill="#154212" />
+                <circle key={i} cx={p.x} cy={p.y} r="1" fill="primary" />
               ))}
-              <text x="50" y="10" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="middle">DRIVE</text>
-              <text x="90" y="52" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="end">INNSPILL</text>
-              <text x="50" y="95" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="middle">KORT SPILL</text>
-              <text x="10" y="52" fill="#154212" fontSize="3" fontWeight="bold" textAnchor="start">PUTTING</text>
+              <text x="50" y="10" fill="primary" fontSize="3" fontWeight="bold" textAnchor="middle">DRIVE</text>
+              <text x="90" y="52" fill="primary" fontSize="3" fontWeight="bold" textAnchor="end">INNSPILL</text>
+              <text x="50" y="95" fill="primary" fontSize="3" fontWeight="bold" textAnchor="middle">KORT SPILL</text>
+              <text x="10" y="52" fill="primary" fontSize="3" fontWeight="bold" textAnchor="start">PUTTING</text>
             </svg>
           </div>
           <div className="mt-6 grid grid-cols-4 gap-4">
@@ -388,14 +388,14 @@ function TrainingPyramidCard({ index }: { index: TrainingIndexData | null }) {
   const aboveTarget = index.weeklyHours > maxHours;
   const onTarget = !belowTarget && !aboveTarget;
   const volumeLabel = belowTarget ? "Under anbefalt" : aboveTarget ? "Over anbefalt" : "På mål";
-  const volumeColor = onTarget ? "text-[#2d5a27]" : "text-[#ba1a1a]";
+  const volumeColor = onTarget ? "text-primary-container" : "text-error";
 
   const layers = [
-    { key: "onCourse", label: "Bane", pct: index.distribution.onCourse, color: "#d2f000" },
-    { key: "skillTechnical", label: "Teknikk", pct: index.distribution.skillTechnical, color: "#a1d494" },
-    { key: "shortGame", label: "Kort spill", pct: index.distribution.shortGame, color: "#bcf0ae" },
-    { key: "putting", label: "Putting", pct: index.distribution.putting, color: "#2d5a27" },
-    { key: "physicalMental", label: "Fys / Mental", pct: index.distribution.physicalMental, color: "#154212" },
+    { key: "onCourse", label: "Bane", pct: index.distribution.onCourse, barClass: "bg-secondary-fixed" },
+    { key: "skillTechnical", label: "Teknikk", pct: index.distribution.skillTechnical, barClass: "bg-primary-container/70" },
+    { key: "shortGame", label: "Kort spill", pct: index.distribution.shortGame, barClass: "bg-primary-container/50" },
+    { key: "putting", label: "Putting", pct: index.distribution.putting, barClass: "bg-primary-container" },
+    { key: "physicalMental", label: "Fys / Mental", pct: index.distribution.physicalMental, barClass: "bg-primary" },
   ];
 
   return (
@@ -421,8 +421,8 @@ function TrainingPyramidCard({ index }: { index: TrainingIndexData | null }) {
               <span className="w-20 font-mono text-[10px] uppercase text-primary/60">{layer.label}</span>
               <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-surface-container">
                 <div
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{ width: `${pct}%`, backgroundColor: layer.color }}
+                  className={`h-full rounded-full transition-all duration-500 ${layer.barClass}`}
+                  style={{ width: `${pct}%` }}
                 />
               </div>
               <span className="w-10 text-right font-mono text-[10px] font-bold text-primary">
@@ -501,7 +501,7 @@ function TestProgressCard({ progress }: { progress: TestProgress }) {
           </p>
         </div>
         <div className="text-right">
-          <p className="font-mono text-[10px] font-bold uppercase text-[#2d5a27]">
+          <p className="font-mono text-[10px] font-bold uppercase text-primary-container">
             {Math.round(passedPct)}% bestått
           </p>
           <p className="font-mono text-[10px] text-primary/40">
@@ -527,7 +527,7 @@ function TestProgressCard({ progress }: { progress: TestProgress }) {
           <span className="w-20 font-mono text-[10px] uppercase text-primary/60">Bestått</span>
           <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-surface-container">
             <div
-              className="h-full rounded-full bg-[#2d5a27] transition-all duration-500"
+              className="h-full rounded-full bg-primary-container transition-all duration-500"
               style={{
                 width: `${(progress.passedTests / progress.totalTests) * 100}%`,
               }}

@@ -318,7 +318,7 @@ function WeekGrid({
                 </span>
                 <span
                   className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
-                    isToday ? "bg-primary text-white" : "text-primary"
+                    isToday ? "bg-primary text-surface" : "text-primary"
                   }`}
                 >
                   {format(d, "d")}
@@ -542,7 +542,7 @@ function CreateSessionModal({
                   onClick={() => setDuration(m)}
                   className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
                     duration === m
-                      ? "bg-primary text-white"
+                      ? "bg-primary text-surface"
                       : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
                   }`}
                 >
@@ -565,7 +565,7 @@ function CreateSessionModal({
                   onClick={() => setFocus(p.code)}
                   className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
                     focus === p.code
-                      ? "bg-primary text-white"
+                      ? "bg-primary text-surface"
                       : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
                   }`}
                   title={p.description}
@@ -602,7 +602,7 @@ function CreateSessionModal({
             <button
               type="submit"
               disabled={isPending || !title.trim()}
-              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-white hover:bg-primary-container disabled:opacity-50"
+              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-surface hover:bg-primary-container disabled:opacity-50"
             >
               {isPending ? (
                 <>
@@ -726,7 +726,7 @@ function EditSessionModal({
                   onClick={() => setDuration(m)}
                   className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
                     duration === m
-                      ? "bg-primary text-white"
+                      ? "bg-primary text-surface"
                       : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
                   }`}
                 >
@@ -748,7 +748,7 @@ function EditSessionModal({
                   onClick={() => setFocus(p.code)}
                   className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
                     focus === p.code
-                      ? "bg-primary text-white"
+                      ? "bg-primary text-surface"
                       : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
                   }`}
                   title={p.description}
@@ -783,7 +783,7 @@ function EditSessionModal({
             <button
               type="submit"
               disabled={isPending || !title.trim()}
-              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-white hover:bg-primary-container disabled:opacity-50"
+              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-surface hover:bg-primary-container disabled:opacity-50"
             >
               {isPending ? (
                 <>
@@ -993,7 +993,7 @@ function ExercisesPlaceholder() {
                 onClick={() => setPyramide(active ? null : p.code)}
                 className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
                   active
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-surface"
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
                 }`}
                 title={p.description}
@@ -1024,7 +1024,7 @@ function ExercisesPlaceholder() {
                 }}
                 className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
                   active
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-surface"
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
                 }`}
               >
@@ -1067,7 +1067,7 @@ function ExercisesPlaceholder() {
                 onClick={() => setLFase(active ? null : f.code)}
                 className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
                   active
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-surface"
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
                 }`}
                 title={`${f.description} · ${f.csAnbefalt}`}
@@ -1155,7 +1155,7 @@ function ExercisesPlaceholder() {
                 onClick={() => setCreatePyramid(p.code)}
                 className={`rounded px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight transition-colors ${
                   createPyramid === p.code
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-surface"
                     : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high"
                 }`}
               >
@@ -1184,7 +1184,7 @@ function ExercisesPlaceholder() {
               onClick={() => setCreateLFase(null)}
               className={`rounded px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight transition-colors ${
                 createLFase === null
-                  ? "bg-primary text-white"
+                  ? "bg-primary text-surface"
                   : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high"
               }`}
             >
@@ -1197,7 +1197,7 @@ function ExercisesPlaceholder() {
                 onClick={() => setCreateLFase(f.code)}
                 className={`rounded px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight transition-colors ${
                   createLFase === f.code
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-surface"
                     : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high"
                 }`}
               >
@@ -1217,7 +1217,7 @@ function ExercisesPlaceholder() {
           <button
             type="submit"
             disabled={creating || !createName.trim()}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2 text-[11px] font-bold uppercase tracking-widest text-white hover:bg-primary-container disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2 text-[11px] font-bold uppercase tracking-widest text-surface hover:bg-primary-container disabled:opacity-50"
           >
             {creating ? (
               <>

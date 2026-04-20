@@ -60,13 +60,13 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
         {!selectedCourse ? (
           <div className="space-y-3">
             <div className="relative">
-              <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-grey-400" />
+              <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Sok etter bane..."
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-grey-200 bg-white text-black placeholder:text-grey-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-outline-variant/30 bg-surface-container-lowest text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                 autoFocus
               />
             </div>
@@ -76,15 +76,15 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                 <button
                   key={course.id}
                   onClick={() => setSelectedCourse(course)}
-                  className="w-full text-left p-4 rounded-xl border border-grey-200 bg-white hover:border-primary hover:bg-grey-50 transition-all"
+                  className="w-full text-left p-4 rounded-xl border border-outline-variant/30 bg-surface-container-lowest hover:border-primary hover:bg-surface transition-all"
                 >
                   <div className="flex items-start gap-3">
-                    <Icon name="location_on" className="h-5 w-5 text-black mt-0.5 shrink-0" />
+                    <Icon name="location_on" className="h-5 w-5 text-on-surface mt-0.5 shrink-0" />
                     <div>
-                      <div className="font-semibold text-black">
+                      <div className="font-semibold text-on-surface">
                         {course.name}
                       </div>
-                      <div className="text-sm text-grey-400 tabular-nums">
+                      <div className="text-sm text-on-surface-variant tabular-nums">
                         {course.location} — Par <span className="tabular-nums">{course.par}</span>
                         {course.courseRating && ` — CR ${course.courseRating}`}
                         {course.slopeRating && ` / Slope ${course.slopeRating}`}
@@ -94,7 +94,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                 </button>
               ))}
               {filtered.length === 0 && (
-                <p className="text-center text-grey-400 py-8">
+                <p className="text-center text-on-surface-variant py-8">
                   Ingen baner funnet
                 </p>
               )}
@@ -103,22 +103,22 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
         ) : (
           <>
             {/* Valgt bane */}
-            <div className="p-4 rounded-xl border border-grey-200 bg-white">
+            <div className="p-4 rounded-xl border border-outline-variant/30 bg-surface-container-lowest">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Icon name="location_on" className="h-5 w-5 text-black" />
+                  <Icon name="location_on" className="h-5 w-5 text-on-surface" />
                   <div>
-                    <div className="font-semibold text-black">
+                    <div className="font-semibold text-on-surface">
                       {selectedCourse.name}
                     </div>
-                    <div className="text-sm text-grey-400 tabular-nums">
+                    <div className="text-sm text-on-surface-variant tabular-nums">
                       Par <span className="tabular-nums">{selectedCourse.par}</span> — {selectedCourse.location}
                     </div>
                   </div>
                 </div>
                 <button
                   onClick={() => setSelectedCourse(null)}
-                  className="text-sm text-black hover:underline"
+                  className="text-sm text-on-surface hover:underline"
                 >
                   Endre
                 </button>
@@ -127,7 +127,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
 
             {/* Tee-valg */}
             <div>
-              <label className="text-sm font-medium text-black mb-2 block">
+              <label className="text-sm font-medium text-on-surface mb-2 block">
                 Tee
               </label>
               <div className="flex gap-2">
@@ -137,15 +137,15 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                     onClick={() => setTeeColor(tee.value)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
                       teeColor === tee.value
-                        ? "border-black bg-grey-50 ring-1 ring-black"
-                        : "border-grey-200 bg-white hover:border-grey-200"
+                        ? "border-on-surface bg-surface ring-1 ring-on-surface"
+                        : "border-outline-variant/30 bg-surface-container-lowest hover:border-outline-variant/30"
                     }`}
                   >
                     <div
-                      className="h-4 w-4 rounded-full border border-grey-200"
+                      className="h-4 w-4 rounded-full border border-outline-variant/30"
                       style={{ backgroundColor: tee.color }}
                     />
-                    <span className="text-sm font-medium text-black">
+                    <span className="text-sm font-medium text-on-surface">
                       {tee.label}
                     </span>
                   </button>
@@ -155,7 +155,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
 
             {/* Vaer */}
             <div>
-              <label className="text-sm font-medium text-black mb-2 block">
+              <label className="text-sm font-medium text-on-surface mb-2 block">
                 Vaer (valgfritt)
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -170,19 +170,19 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
                     onClick={() => setWeather(weather === w.value ? "" : w.value)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
                       weather === w.value
-                        ? "border-black bg-grey-50"
-                        : "border-grey-200 bg-white hover:border-grey-200"
+                        ? "border-on-surface bg-surface"
+                        : "border-outline-variant/30 bg-surface-container-lowest hover:border-outline-variant/30"
                     }`}
                   >
-                    <w.icon className="h-4 w-4 text-grey-400" />
-                    <span className="text-sm text-black">{w.label}</span>
+                    <w.icon className="h-4 w-4 text-on-surface-variant" />
+                    <span className="text-sm text-on-surface">{w.label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {error && (
-              <div className="text-sm text-black bg-[accent-cta]/10 rounded-xl p-3">
+              <div className="text-sm text-on-surface bg-secondary-fixed/10 rounded-xl p-3">
                 {error}
               </div>
             )}
@@ -191,7 +191,7 @@ export function StartRoundClient({ courses }: { courses: Course[] }) {
             <button
               onClick={handleStart}
               disabled={isPending}
-              className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[accent-cta] text-black font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-secondary-fixed text-on-surface font-semibold text-lg hover:opacity-85 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50"
             >
               <Icon name="play_arrow" className="h-5 w-5" />
               {isPending ? "Starter..." : "Start runde"}

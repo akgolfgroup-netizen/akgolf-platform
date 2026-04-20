@@ -209,7 +209,7 @@ export function StatistikkClient({
                     cy="50"
                     r="40"
                     fill="none"
-                    stroke="#c2c9bb"
+                    stroke="outline-variant"
                     strokeDasharray="2 2"
                     strokeOpacity="0.4"
                     strokeWidth="0.3"
@@ -219,7 +219,7 @@ export function StatistikkClient({
                     cy="50"
                     r="27"
                     fill="none"
-                    stroke="#c2c9bb"
+                    stroke="outline-variant"
                     strokeDasharray="2 2"
                     strokeOpacity="0.4"
                     strokeWidth="0.3"
@@ -229,7 +229,7 @@ export function StatistikkClient({
                     cy="50"
                     r="14"
                     fill="none"
-                    stroke="#c2c9bb"
+                    stroke="outline-variant"
                     strokeDasharray="2 2"
                     strokeOpacity="0.4"
                     strokeWidth="0.3"
@@ -245,7 +245,7 @@ export function StatistikkClient({
                         y1="50"
                         x2={x2}
                         y2={y2}
-                        stroke="#c2c9bb"
+                        stroke="outline-variant"
                         strokeOpacity="0.3"
                         strokeWidth="0.3"
                       />
@@ -255,7 +255,7 @@ export function StatistikkClient({
                     <polygon
                       points={radarPoints}
                       fill="rgba(210, 240, 0, 0.4)"
-                      stroke="#d2f000"
+                      stroke="secondary-fixed"
                       strokeWidth="1.5"
                     />
                   ) : null}
@@ -338,8 +338,8 @@ export function StatistikkClient({
                         y1="0"
                         y2="1"
                       >
-                        <stop offset="0%" stopColor="#154212" />
-                        <stop offset="100%" stopColor="#fdf9f0" />
+                        <stop offset="0%" stopColor="primary" />
+                        <stop offset="100%" stopColor="surface" />
                       </linearGradient>
                     </defs>
                     <g className="text-primary/10">
@@ -376,7 +376,7 @@ export function StatistikkClient({
                     <path
                       d={sgTrendData.linePath}
                       fill="none"
-                      stroke="#154212"
+                      stroke="primary"
                       strokeWidth="1.5"
                     />
                     {sgTrendData.points.map((p, i) => (
@@ -385,8 +385,8 @@ export function StatistikkClient({
                         cx={p.x}
                         cy={p.y}
                         r="0.8"
-                        fill="#d2f000"
-                        stroke="#154212"
+                        fill="secondary-fixed"
+                        stroke="primary"
                         strokeWidth="0.3"
                       />
                     ))}
@@ -522,8 +522,8 @@ export function StatistikkClient({
                         : null;
                     const sgClass =
                       r.sgTotal !== null && r.sgTotal >= 0
-                        ? "text-[#2d5a27]"
-                        : "text-[#ba1a1a]";
+                        ? "text-primary-container"
+                        : "text-error";
                     return (
                       <tr
                         key={r.id}
@@ -618,9 +618,9 @@ function MetricCard({
           <span
             className={`flex items-center text-[10px] font-bold ${
               isPositive
-                ? "text-[#2d5a27]"
+                ? "text-primary-container"
                 : isNegative
-                  ? "text-[#ba1a1a]"
+                  ? "text-error"
                   : "text-on-surface-variant"
             }`}
           >

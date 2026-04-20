@@ -140,13 +140,13 @@ export function TrainingDiaryClient({
         animate={{ opacity: 1, y: 0 }}
         className="space-y-3"
       >
-        <MonoLabel as="p" size="xs" uppercase className="text-grey-400 block">Din treningsdagbok</MonoLabel>
+        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Din treningsdagbok</MonoLabel>
         <h1 className="text-2xl font-bold text-black">
           Logg og{" "}
           <span className="font-serif italic text-black font-normal">spor</span>
           <span className="text-accent-cta">.</span>
         </h1>
-        <p className="text-[13px] text-grey-400 max-w-xl">
+        <p className="text-[13px] text-on-surface-variant max-w-xl">
           Hold oversikt over aktiviteten din. Hver økt teller, og hver streak er et skritt nærmere målet.
         </p>
         
@@ -158,7 +158,7 @@ export function TrainingDiaryClient({
               whileTap={{ scale: 0.97 }}
               onClick={handleQuickLog}
               disabled={isPending}
-              className="h-11 px-6 rounded-full bg-white border border-grey-200 text-black text-[12px] font-semibold hover:border-grey-300 transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
+              className="h-11 px-6 rounded-full bg-surface-container-lowest border border-outline-variant/30 text-on-surface text-[12px] font-semibold hover:border-outline-variant/50 transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-60"
             >
               {isPending ? (
                 <Icon name="progress_activity" className="w-3.5 h-3.5 animate-spin" />
@@ -172,7 +172,7 @@ export function TrainingDiaryClient({
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
-            className="relative h-11 px-6 rounded-full bg-accent-cta text-black text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow"
+            className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow"
           >
             <Icon name="add" className="w-3.5 h-3.5" strokeWidth={2.5} />
             <span>Logg ny økt</span>
@@ -181,7 +181,7 @@ export function TrainingDiaryClient({
       </motion.div>
 
       {/* View toggle */}
-      <div className="flex gap-1 p-1 rounded-full bg-white border border-grey-200 shadow-sm w-fit">
+      <div className="flex gap-1 p-1 rounded-full bg-surface-container-lowest border border-outline-variant/30 shadow-sm w-fit">
         {[
           { id: "overview", label: "Oversikt", icon: BarChart3 },
           { id: "calendar", label: "Kalender", icon: Calendar },
@@ -194,7 +194,7 @@ export function TrainingDiaryClient({
               "inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold transition-colors duration-200",
               activeView === view.id
                 ? "bg-black text-white shadow-sm"
-                : "text-grey-400 hover:text-black"
+                : "text-on-surface-variant hover:text-on-surface"
             )}
           >
             <view.icon className="w-3.5 h-3.5" />
@@ -210,14 +210,14 @@ export function TrainingDiaryClient({
               <Icon name="bar_chart" className="w-8 h-8 text-black" strokeWidth={1.75} />
             </div>
             <p className="text-[20px] font-semibold text-black mb-2">Din treningsdagbok er tom</p>
-            <p className="text-[13px] text-grey-400 mb-6 max-w-md leading-relaxed">
+            <p className="text-[13px] text-on-surface-variant mb-6 max-w-md leading-relaxed">
               Logg din første treningsøkt for å komme i gang. Alt du logger blir automatisk en del av fremdriften din.
             </p>
             <motion.button
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
-              className="relative h-11 px-6 rounded-full bg-accent-cta text-black text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)]"
+              className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)]"
             >
               <Icon name="add" className="w-3.5 h-3.5" strokeWidth={2.5} />
               <span>Logg ny økt</span>

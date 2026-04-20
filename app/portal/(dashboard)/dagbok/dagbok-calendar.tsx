@@ -107,7 +107,7 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
           <h3 className="text-[16px] font-semibold text-on-surface capitalize">
             {format(calendarMonth, "MMMM yyyy", { locale: nb })}
           </h3>
-          <div className="flex gap-1 p-1 rounded-full bg-white border border-outline-variant shadow-sm">
+          <div className="flex gap-1 p-1 rounded-full bg-surface-container-lowest border border-outline-variant shadow-sm">
             <button
               onClick={() => setCalendarMonth(subMonths(calendarMonth, 1))}
               className="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors"
@@ -184,16 +184,16 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
               exit={{ opacity: 0, height: 0 }}
               className="mt-4 overflow-hidden"
             >
-              <div className="rounded-xl border border-grey-200/50 bg-grey-50/60 p-4">
+              <div className="rounded-xl border border-outline-variant/30 bg-surface-container/60 p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-semibold text-black">
+                  <p className="text-sm font-semibold text-on-surface">
                     {format(selectedDay.date, "d. MMMM yyyy", { locale: nb })}
                   </p>
                   <button
                     onClick={() => setSelectedDay(null)}
-                    className="p-1 rounded-lg hover:bg-grey-200/30 transition-colors"
+                    className="p-1 rounded-lg hover:bg-surface-variant/30 transition-colors"
                   >
-                    <Icon name="close" className="w-4 h-4 text-grey-400" />
+                    <Icon name="close" className="w-4 h-4 text-on-surface-variant" />
                   </button>
                 </div>
                 <div className="space-y-3">
@@ -201,17 +201,17 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
                     const title = log.TrainingPlanSession?.title || log.focusArea || "Treningsøkt";
                     const area = log.focusArea || log.TrainingPlanSession?.focusArea || "Trening";
                     return (
-                      <div key={log.id} className="rounded-lg bg-white p-3 border border-grey-200/50">
+                      <div key={log.id} className="rounded-lg bg-surface-container-lowest p-3 border border-outline-variant/30">
                         <div className="flex items-center justify-between">
-                          <p className="text-sm font-medium text-black">{title}</p>
+                          <p className="text-sm font-medium text-on-surface">{title}</p>
                           {log.rating != null && (
-                            <span className="flex items-center gap-1 text-xs text-grey-400">
+                            <span className="flex items-center gap-1 text-xs text-on-surface-variant">
                               <Icon name="star" className="w-3 h-3" />
                               {log.rating}/10
                             </span>
                           )}
                         </div>
-                        <div className="mt-1 flex flex-wrap gap-3 text-xs text-grey-400">
+                        <div className="mt-1 flex flex-wrap gap-3 text-xs text-on-surface-variant">
                           {log.durationMinutes != null && (
                             <span className="flex items-center gap-1">
                               <Icon name="schedule" className="w-3 h-3" />
@@ -224,7 +224,7 @@ export function DagbokCalendar({ logs, onSelectDate }: DagbokCalendarProps) {
                           </span>
                         </div>
                         {log.notes && (
-                          <p className="mt-2 text-xs text-grey-500 line-clamp-2">{log.notes}</p>
+                          <p className="mt-2 text-xs text-on-surface-variant/80 line-clamp-2">{log.notes}</p>
                         )}
                       </div>
                     );
