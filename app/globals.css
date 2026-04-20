@@ -2192,13 +2192,13 @@
 
   /* Kort */
   .admin-card {
-    @apply bg-white border border-[#D5DFDB] rounded-xl p-6;
+    @apply bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-6;
   }
   .admin-card-sm {
-    @apply bg-white border border-[#D5DFDB] rounded-xl p-4;
+    @apply bg-surface-container-lowest border border-outline-variant/30 rounded-2xl p-4;
   }
   .admin-card-hover {
-    @apply transition-all hover:border-[#A5B2AD] hover:shadow-[0_4px_12px_rgba(10,31,24,0.04)];
+    @apply transition-all hover:border-outline-variant/50 hover:shadow-sm;
   }
 
   /* Knapper */
@@ -2206,32 +2206,32 @@
     @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-colors cursor-pointer;
   }
   .admin-btn-primary {
-    @apply bg-[#0A1F18] text-white hover:bg-[#1A3529];
+    @apply bg-primary-container text-surface hover:bg-primary;
   }
   .admin-btn-secondary {
-    @apply bg-white border border-[#D5DFDB] text-[#0A1F18] hover:bg-[#F5F8F7] hover:border-[#A5B2AD];
+    @apply bg-surface-container-lowest border border-outline-variant/30 text-on-surface hover:bg-surface-container hover:border-outline-variant/50;
   }
   .admin-btn-ghost {
-    @apply text-[#0A1F18] hover:bg-[#F5F8F7];
+    @apply text-on-surface hover:bg-surface-container;
   }
   .admin-btn-danger {
-    @apply bg-[#EF4444] text-white hover:bg-[#DC2626];
+    @apply bg-error text-surface hover:bg-error-container;
   }
 
   /* Skjemafelter */
   .admin-input {
-    @apply w-full px-3.5 py-2.5 rounded-lg text-sm bg-white border border-[#D5DFDB] text-[#0A1F18] placeholder:text-[#A5B2AD] focus:outline-none focus:ring-2 focus:ring-[#0A1F18]/10 focus:border-[#0A1F18];
+    @apply w-full px-3.5 py-2.5 rounded-xl text-sm bg-surface-container-lowest border border-outline-variant/30 text-on-surface placeholder:text-outline-variant focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary;
   }
 
   /* Typografi — admin-label aliaserer MonoLabel-stilen (v3.1 P-02) */
   .admin-label {
-    @apply text-[10px] font-semibold uppercase tracking-[0.12em] text-[#7A8C85] font-mono tabular-nums;
+    @apply text-[10px] font-bold uppercase tracking-[0.14em] text-on-surface-variant font-mono tabular-nums;
   }
   .admin-section-title {
-    @apply text-lg font-semibold text-[#0A1F18];
+    @apply text-lg font-semibold text-on-surface;
   }
   .admin-page-title {
-    @apply text-3xl font-bold text-[#0A1F18] tracking-tight;
+    @apply text-3xl font-bold text-on-surface tracking-tight;
   }
 
   /* Badges */
@@ -2239,19 +2239,19 @@
     @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
   }
   .admin-badge-success {
-    @apply bg-[#E8F5EF] text-[#1A4D36];
+    @apply bg-primary-container/10 text-primary-container;
   }
   .admin-badge-warning {
-    @apply bg-[#FDF4E4] text-[#7A5520];
+    @apply bg-secondary-fixed/20 text-primary;
   }
   .admin-badge-error {
-    @apply bg-[#FCEAE8] text-[#7A2C22];
+    @apply bg-error/10 text-error;
   }
   .admin-badge-info {
-    @apply bg-[#FAF5FF] text-[#AF52DE];
+    @apply bg-tertiary-container/10 text-tertiary-container;
   }
   .admin-badge-muted {
-    @apply bg-[#F5F8F7] text-[#7A8C85] border border-[#D5DFDB];
+    @apply bg-surface-container text-on-surface-variant border border-outline-variant/30;
   }
 
   /* Tabell */
@@ -2259,12 +2259,12 @@
     @apply w-full;
   }
   .admin-table thead th {
-    @apply text-left px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A8C85] border-b border-[#D5DFDB];
+    @apply text-left px-4 py-3 text-[10px] font-bold uppercase tracking-[0.14em] text-on-surface-variant border-b border-outline-variant/30;
   }
   .admin-table tbody td {
-    @apply px-4 py-3.5 text-sm text-[#0A1F18] border-b border-[#ECF0EF];
+    @apply px-4 py-3.5 text-sm text-on-surface border-b border-outline-variant/20;
   }
   .admin-table tbody tr {
-    @apply hover:bg-[#F5F8F7] transition-colors;
+    @apply hover:bg-surface-container transition-colors;
   }
 }
