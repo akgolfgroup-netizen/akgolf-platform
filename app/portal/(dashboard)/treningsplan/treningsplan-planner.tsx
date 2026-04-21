@@ -194,17 +194,45 @@ export function TreningsplanPlanner({
         </div>
         <div className="flex items-center gap-3">
           <button
-            disabled
-            className="flex items-center gap-2 rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-primary/50 opacity-50"
-            title="Kommer i B-1.6"
+            onClick={() => {
+              if (historyEvents.length === 0) return;
+              startTransition(async () => {
+                let copied = 0;
+                for (const ev of historyEvents) {
+                  const d = new Date(ev.date);
+                  const day = d.getDay();
+                  const dayOfWeek = day === 0 ? 7 : day;
+                  const focusLabel = PYRAMIDE.find((p) => p.code === ev.focus)?.label ?? ev.focus;
+                  const result = await onCreateSession({
+                    weekOffset,
+                    dayOfWeek,
+                    title: ev.title,
+                    durationMinutes: ev.dur,
+                    focusArea: focusLabel,
+                    startH: ev.startH,
+                    startM: ev.startM,
+                  });
+                  if (result && "success" in result && result.success) {
+                    copied++;
+                  }
+                }
+                if (copied > 0) {
+                  window.location.reload();
+                }
+              });
+            }}
+            className="flex items-center gap-2 rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:bg-surface-container transition-colors"
           >
             <Icon name="content_copy" size={14} />
             Kopier uke
           </button>
           <button
-            disabled
-            className="flex items-center gap-2 rounded-lg bg-secondary-fixed px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-primary opacity-50"
-            title="Kommer i B-1.2"
+            onClick={() => {
+              setModalDay(1);
+              setModalHour(9);
+              setModalOpen(true);
+            }}
+            className="flex items-center gap-2 rounded-lg bg-secondary-fixed px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:bg-secondary-fixed/80 transition-colors"
           >
             <Icon name="add" size={14} />
             Ny økt
