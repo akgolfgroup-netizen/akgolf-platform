@@ -38,7 +38,13 @@ const NAV_ITEMS: NavItem[] = [
     href: "/portal/treningsplan",
     label: "Planlegg",
     iconName: "assignment",
-    matchPaths: ["/portal/bookinger", "/portal/kalender", "/portal/periodisering"],
+    matchPaths: ["/portal/bookinger", "/portal/kalender", "/portal/periodisering", "/portal/timeplan"],
+  },
+  {
+    href: "/portal/timeplan",
+    label: "Timeplan",
+    iconName: "calendar_month",
+    matchPaths: [],
   },
   {
     href: "/portal/dagbok",
