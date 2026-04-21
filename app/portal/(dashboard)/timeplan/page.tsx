@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { getWeekEvents } from "../treningsplan/actions";
+import { getWeekEvents, createSessionForWeek } from "../treningsplan/actions";
 import { TimeplanClient, type TimeplanEvent } from "./timeplan-client";
 
 export const metadata: Metadata = {
@@ -40,6 +40,10 @@ export default async function TimeplanPage({ searchParams }: TimeplanPageProps) 
 
   // --- Kombiner til TimeplanEvent ---
   const events: TimeplanEvent[] = [];
+  let bookingCount = 0;
+  let trainingCount = 0;
+  let groupCount = 0;
+  let totalMinutes = 0;
 
   // Treningsøkter
   for (const ev of trainingEvents) {
@@ -56,6 +60,9 @@ export default async function TimeplanPage({ searchParams }: TimeplanPageProps) 
       subtitle: ev.isGroupSession ? ev.groupName ?? "Gruppeøkt" : ev.focus,
       href: `/portal/treningsplan`,
     });
+    totalMinutes += ev.dur;
+    if (ev.isGroupSession) groupCount++;
+    else trainingCount++;
   }
 
   // Bookinger
@@ -63,18 +70,57 @@ export default async function TimeplanPage({ searchParams }: TimeplanPageProps) 
     const st = Array.isArray(b.ServiceType) ? b.ServiceType[0] : b.ServiceType;
     const startTime = new Date(b.startTime as string);
     const dayOfWeek = (startTime.getDay() + 6) % 7;
+    const duration = (st?.duration as number) ?? 60;
     events.push({
       id: b.id as string,
       title: (st?.name as string) ?? "Booking",
       dayOfWeek,
       startH: startTime.getHours(),
       startM: startTime.getMinutes(),
-      duration: (st?.duration as number) ?? 60,
+      duration,
       type: "booking",
       subtitle: "Coaching",
       href: `/portal/bookinger/${b.id}`,
     });
+    totalMinutes += duration;
+    bookingCount++;
   }
 
-  return <TimeplanClient weekOffset={weekOffset} events={events} />;
+  const stats = {
+    bookingCount,
+    trainingCount,
+    groupCount,
+    totalHours: Math.round(totalMinutes / 60 * 10) / 10,
+  };
+
+  // Server action wrapper for creating sessions from timeplan
+  async function handleCreateSession(data: {
+    weekOffset: number;
+    dayOfWeek: number;
+    title: string;
+    durationMinutes: number;
+    startH: number;
+    startM: number;
+    focusArea?: string;
+  }) {
+    "use server";
+    return createSessionForWeek({
+      weekOffset: data.weekOffset,
+      dayOfWeek: data.dayOfWeek,
+      title: data.title,
+      durationMinutes: data.durationMinutes,
+      startH: data.startH,
+      startM: data.startM,
+      focusArea: data.focusArea,
+    });
+  }
+
+  return (
+    <TimeplanClient
+      weekOffset={weekOffset}
+      events={events}
+      stats={stats}
+      onCreateSession={handleCreateSession}
+    />
+  );
 }
