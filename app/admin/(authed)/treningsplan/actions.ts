@@ -53,6 +53,7 @@ export type CreateManualPlanInput = {
   studentId: string;
   title: string;
   periodType: string;
+  periodizationPeriodId?: string;
   startDate: string;
   durationWeeks: number;
   weeks: ManualPlanWeek[];
@@ -499,6 +500,7 @@ export async function createManualPlan(
         createdById: user.id,
         title: data.title,
         periodType: data.periodType,
+        periodizationPeriodId: data.periodizationPeriodId ?? null,
         startDate,
         endDate,
         isActive: true,

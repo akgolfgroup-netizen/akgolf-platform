@@ -1,6 +1,7 @@
 import {
   getWeekEvents,
   getActivePlan,
+  getCurrentPeriodization,
   updateSessionTime,
   moveSessionToDay,
   deleteSession,
@@ -27,6 +28,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   const activeView = view ?? "planner";
 
   const plan = await getActivePlan();
+  const periodization = await getCurrentPeriodization();
   const events = await getWeekEvents(weekOffset);
   const historyEvents = await getWeekEvents(weekOffset - 1);
 
@@ -152,6 +154,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         sessionCount={sessionCount}
         totalMinutes={totalMinutes}
         adherencePct={adherencePct}
+        periodization={periodization}
         events={events}
         historyEvents={historyEvents}
         onCreateSession={handleCreateSession}

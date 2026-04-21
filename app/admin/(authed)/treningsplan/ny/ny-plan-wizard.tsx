@@ -2,7 +2,7 @@
 
 
 import { Icon } from "@/components/ui/icon";
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
@@ -98,6 +98,8 @@ export function NyPlanWizard({
   const [studentId, setStudentId] = useState(preselectedStudentId ?? "");
   const [title, setTitle] = useState("");
   const [periodType, setPeriodType] = useState("grunnperiode");
+  const [periodizationPeriodId, setPeriodizationPeriodId] = useState("");
+  const [availablePeriods, setAvailablePeriods] = useState<Array<{ id: string; label: string | null; periodType: string; startDate: string; endDate: string }>>([]);
   const [durationWeeks, setDurationWeeks] = useState(4);
   const [startDate, setStartDate] = useState(() => {
     const d = new Date();
@@ -106,6 +108,20 @@ export function NyPlanWizard({
     d.setDate(d.getDate() + daysUntilMonday);
     return d.toISOString().split("T")[0];
   });
+
+  // Fetch available periodization periods
+  useEffect(() => {
+    fetch("/api/portal/public/periodization")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.periods) {
+          setAvailablePeriods(data.periods);
+        }
+      })
+      .catch(() => {
+        // Silently fail — coach can still create plan without linking period
+      });
+  }, []);
 
   // Step 2: Weeks & sessions
   const [weeks, setWeeks] = useState<ManualPlanWeek[]>(() =>
@@ -234,6 +250,8 @@ export function NyPlanWizard({
   // Validation
   const step1Valid =
     studentId && title.trim() && startDate && durationWeeks > 0;
+
+  const selectedPeriod = availablePeriods.find((p) => p.id === periodizationPeriodId);
   const step2Valid = weeks.every(
     (w) =>
       w.focus.trim() &&
@@ -248,6 +266,7 @@ export function NyPlanWizard({
         studentId,
         title,
         periodType,
+        periodizationPeriodId: periodizationPeriodId || undefined,
         startDate,
         durationWeeks,
         weeks,
@@ -371,6 +390,29 @@ export function NyPlanWizard({
                   </div>
                 </div>
 
+                {availablePeriods.length > 0 && (
+                  <AdminSelect
+                    label="Koble til periodiseringsperiode (valgfritt)"
+                    value={periodizationPeriodId}
+                    onChange={(e) => {
+                      const pid = e.target.value;
+                      setPeriodizationPeriodId(pid);
+                      const p = availablePeriods.find((ap) => ap.id === pid);
+                      if (p) {
+                        setPeriodType(p.periodType);
+                        setStartDate(p.startDate);
+                      }
+                    }}
+                  >
+                    <option value="">Ingen kobling</option>
+                    {availablePeriods.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.label ?? p.periodType} ({p.startDate} – {p.endDate})
+                      </option>
+                    ))}
+                  </AdminSelect>
+                )}
+
                 <div className="grid grid-cols-2 gap-4">
                   <AdminInput
                     label="Startdato"
@@ -397,6 +439,43 @@ export function NyPlanWizard({
           {/* Step 2: Weeks & sessions */}
           {step === 2 && (
             <div className="space-y-6">
+              {/* Period focus recommendation */}
+              {selectedPeriod && (
+                <Card className="bg-surface-container-low border-info/20">
+                  <div className="flex items-start gap-3">
+                    <Icon name="info" className="w-5 h-5 text-info mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-sm font-medium text-on-surface">
+                        Anbefalt fokus i {selectedPeriod.label ?? selectedPeriod.periodType}
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {selectedPeriod.periodType === "grunnperiode" && (
+                          <>
+                            <Badge variant="info">50% Teknikk</Badge>
+                            <Badge variant="success">30% Fysisk</Badge>
+                            <Badge variant="warning">20% SLAG</Badge>
+                          </>
+                        )}
+                        {selectedPeriod.periodType === "spesialiseringsperiode" && (
+                          <>
+                            <Badge variant="warning">40% SLAG</Badge>
+                            <Badge variant="error">30% SPILL</Badge>
+                            <Badge variant="info">30% Teknikk</Badge>
+                          </>
+                        )}
+                        {selectedPeriod.periodType === "turneringsperiode" && (
+                          <>
+                            <Badge variant="error">50% SPILL</Badge>
+                            <Badge variant="warning">30% SLAG</Badge>
+                            <Badge variant="muted">20% TURN</Badge>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              )}
+
               {weeks.map((week, weekIndex) => (
                 <Card key={weekIndex} className="p-0 overflow-hidden">
                   {/* Week header */}

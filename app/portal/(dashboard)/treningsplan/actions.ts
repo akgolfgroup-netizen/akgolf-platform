@@ -206,6 +206,54 @@ export async function getActivePlan(studentId?: string) {
   return plan;
 }
 
+export interface CurrentPeriodization {
+  id: string;
+  periodType: string;
+  label: string | null;
+  startDate: string;
+  endDate: string;
+  focusAllocation: Record<string, number> | null;
+  weekNumber: number;
+  totalWeeks: number;
+}
+
+export async function getCurrentPeriodization(studentId?: string): Promise<CurrentPeriodization | null> {
+  const user = await requirePortalUser();
+  if (!user?.id) return null;
+
+  const supabase = await createServerSupabase();
+  const id = studentId ?? user.id;
+  const now = new Date().toISOString();
+
+  const { data: period } = await supabase
+    .from("PeriodizationPeriod")
+    .select("id, periodType, label, startDate, endDate, focusAllocation")
+    .or(`studentId.is.null,studentId.eq.${id}`)
+    .lte("startDate", now)
+    .gte("endDate", now)
+    .order("startDate", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (!period) return null;
+
+  const start = new Date(period.startDate);
+  const end = new Date(period.endDate);
+  const totalWeeks = Math.max(1, Math.round((end.getTime() - start.getTime()) / (7 * 24 * 60 * 60 * 1000)));
+  const currentWeek = Math.max(1, Math.min(totalWeeks, Math.floor((new Date().getTime() - start.getTime()) / (7 * 24 * 60 * 60 * 1000)) + 1));
+
+  return {
+    id: period.id,
+    periodType: period.periodType,
+    label: period.label,
+    startDate: period.startDate,
+    endDate: period.endDate,
+    focusAllocation: period.focusAllocation as Record<string, number> | null,
+    weekNumber: currentWeek,
+    totalWeeks,
+  };
+}
+
 export async function getCurrentWeekSessions(studentId?: string) {
   const user = await requirePortalUser();
   if (!user?.id) return [];

@@ -45,12 +45,21 @@ interface V2Event {
   done: boolean;
 }
 
+interface PeriodizationInfo {
+  periodType: string;
+  label: string | null;
+  weekNumber: number;
+  totalWeeks: number;
+  focusAllocation: Record<string, number> | null;
+}
+
 interface TreningsplanPlannerProps {
   weekOffset: number;
   planId: string | null;
   sessionCount?: number;
   totalMinutes?: number;
   adherencePct?: number;
+  periodization?: PeriodizationInfo | null;
   events: V2Event[];
   historyEvents: V2Event[];
   onCreateSession: (data: {
@@ -91,6 +100,7 @@ export function TreningsplanPlanner({
   sessionCount = 0,
   totalMinutes = 0,
   adherencePct = 0,
+  periodization,
   events,
   historyEvents,
   onCreateSession,
@@ -143,6 +153,21 @@ export function TreningsplanPlanner({
             <h1 className="text-2xl font-bold tracking-tight text-primary">
               Treningsplan
             </h1>
+            {periodization && (
+              <div className="mt-1 flex items-center gap-2">
+                <span className={cn(
+                  "inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+                  periodization.periodType === "grunnperiode" && "bg-info/10 text-info",
+                  periodization.periodType === "spesialiseringsperiode" && "bg-warning/10 text-warning",
+                  periodization.periodType === "turneringsperiode" && "bg-error/10 text-error",
+                )}>
+                  {periodization.label ?? periodization.periodType}
+                </span>
+                <span className="text-[10px] text-on-surface-variant">
+                  uke {periodization.weekNumber} av {periodization.totalWeeks}
+                </span>
+              </div>
+            )}
           </div>
           <div className="hidden h-10 w-px bg-outline-variant sm:block" />
           <div className="hidden items-center gap-2 rounded-full bg-surface-container px-3 py-1 sm:flex">
