@@ -1028,6 +1028,7 @@ export interface PlanDeviationAnalysis {
   deviationCount: number;
   plannedHours: number;
   actualHours: number;
+  plannedSessionsThisWeek: number;
   recommendation: "reduce" | "increase" | "adjust" | "none";
   message: string;
   detailMessage: string;
@@ -1116,14 +1117,85 @@ export async function analyzePlanDeviation(): Promise<PlanDeviationAnalysis | nu
     detailMessage = "Du følger planen godt. Fortsett som planlagt!";
   }
 
+  // Count planned sessions for current week for display
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(startOfWeek.getDate() - ((startOfWeek.getDay() + 6) % 7));
+  startOfWeek.setHours(0, 0, 0, 0);
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 7);
+
+  const plannedSessionsThisWeek = weeks
+    .filter((w) => {
+      const ws = new Date(w.weekStart);
+      return ws >= startOfWeek && ws < endOfWeek;
+    })
+    .flatMap((w) => w.TrainingPlanSession).length;
+
   return {
     adherencePct,
     avgRating,
     deviationCount,
     plannedHours,
     actualHours,
+    plannedSessionsThisWeek,
     recommendation,
     message,
     detailMessage,
   };
+}
+
+
+// -------------------------------------------------------------------
+// Adjust plan volume — scale upcoming sessions by factor
+// -------------------------------------------------------------------
+
+export async function adjustPlanVolume(factor: number): Promise<{ success: boolean; adjustedCount: number; error?: string }> {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const supabase = await createServerSupabase();
+
+  // Find active plan
+  const { data: plan } = await supabase
+    .from("TrainingPlan")
+    .select("id")
+    .eq("studentId", user.id)
+    .eq("isActive", true)
+    .single();
+
+  if (!plan) {
+    return { success: false, adjustedCount: 0, error: "Ingen aktiv plan funnet" };
+  }
+
+  // Get upcoming sessions (from today onwards)
+  const today = new Date().toISOString().slice(0, 10);
+  const { data: sessions } = await supabase
+    .from("TrainingPlanSession")
+    .select("id, durationMinutes, weekId!inner(weekStart)")
+    .gte("weekId.weekStart", today)
+    .eq("weekId.planId", plan.id);
+
+  if (!sessions || sessions.length === 0) {
+    return { success: false, adjustedCount: 0, error: "Ingen kommende økter å justere" };
+  }
+
+  let adjustedCount = 0;
+
+  for (const session of sessions) {
+    const currentDur = session.durationMinutes ?? 60;
+    const newDur = Math.max(15, Math.round(currentDur * factor));
+
+    const { error } = await supabase
+      .from("TrainingPlanSession")
+      .update({ durationMinutes: newDur })
+      .eq("id", session.id);
+
+    if (!error) {
+      adjustedCount++;
+    }
+  }
+
+  revalidatePath("/portal/treningsplan");
+  return { success: adjustedCount > 0, adjustedCount };
 }

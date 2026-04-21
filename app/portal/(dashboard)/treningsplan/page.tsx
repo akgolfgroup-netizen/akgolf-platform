@@ -10,6 +10,7 @@ import {
   addExerciseToSession,
   updateSession,
   analyzePlanDeviation,
+  adjustPlanVolume,
 } from "./actions";
 import { TrainingPlannerV3 } from "./treningsplan-v3-client";
 import { TrainingPlanViewer } from "./training-plan-viewer";
@@ -133,6 +134,11 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     return updateSession(sessionId, data);
   }
 
+  async function handleAdjustPlan(factor: number) {
+    "use server";
+    return adjustPlanVolume(factor);
+  }
+
   const templates = [
     { id: "t1", title: "Putting-drill", dur: 20, focus: "TEK", exercises: [] },
     { id: "t2", title: "Short game", dur: 30, focus: "SLAG", exercises: [] },
@@ -164,6 +170,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         onAddExerciseToSession={handleAddExerciseToSession}
         onUpdateSession={handleUpdateSession}
         adjustmentSuggestion={adjustmentSuggestion}
+        onAdjustPlan={handleAdjustPlan}
       />
     );
   }

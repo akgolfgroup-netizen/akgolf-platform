@@ -32,6 +32,7 @@ import {
   PlanAdjustmentBanner,
   type AdjustmentSuggestion,
 } from "./components/plan-adjustment-banner";
+import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -99,6 +100,7 @@ interface TreningsplanPlannerProps {
     }
   ) => Promise<{ success: boolean }>;
   adjustmentSuggestion?: AdjustmentSuggestion | null;
+  onAdjustPlan?: (factor: number) => Promise<{ success: boolean; adjustedCount?: number; error?: string }>;
 }
 
 export function TreningsplanPlanner({
@@ -113,6 +115,7 @@ export function TreningsplanPlanner({
   onCreateSession,
   onAddExerciseToSession,
   adjustmentSuggestion,
+  onAdjustPlan,
 }: TreningsplanPlannerProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -124,6 +127,7 @@ export function TreningsplanPlanner({
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editEvent, setEditEvent] = useState<V2Event | null>(null);
+  const [adjustModalOpen, setAdjustModalOpen] = useState(false);
 
   // Uke-navigasjon
   const baseMonday = startOfWeek(new Date(), { weekStartsOn: 1 });
@@ -246,13 +250,27 @@ export function TreningsplanPlanner({
         </div>
       </header>
 
-      {/* Plan-justering banner */}
+      {/* Plan-justering banner + modal */}
       {adjustmentSuggestion && adjustmentSuggestion.recommendation !== "none" && (
         <PlanAdjustmentBanner
           suggestion={adjustmentSuggestion}
           onDismiss={() => {}}
+          onAdjust={() => setAdjustModalOpen(true)}
         />
       )}
+      <PlanAdjustmentModal
+        isOpen={adjustModalOpen}
+        onClose={() => setAdjustModalOpen(false)}
+        suggestion={adjustmentSuggestion}
+        onApprove={async (factor) => {
+          if (onAdjustPlan) {
+            const result = await onAdjustPlan(factor);
+            if (result.success) {
+              window.location.reload();
+            }
+          }
+        }}
+      />
 
       {/* Hovedgrid: ukes-scheduler + sidebar */}
       <div className="grid grid-cols-12 gap-6">

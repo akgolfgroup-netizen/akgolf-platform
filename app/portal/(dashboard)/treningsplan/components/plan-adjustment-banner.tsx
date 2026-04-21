@@ -10,14 +10,18 @@ export interface AdjustmentSuggestion {
   recommendation: "reduce" | "increase" | "adjust" | "none";
   message: string;
   detailMessage: string;
+  plannedHours: number;
+  actualHours: number;
+  plannedSessionsThisWeek: number;
 }
 
 interface PlanAdjustmentBannerProps {
   suggestion: AdjustmentSuggestion | null;
   onDismiss: () => void;
+  onAdjust: () => void;
 }
 
-export function PlanAdjustmentBanner({ suggestion, onDismiss }: PlanAdjustmentBannerProps) {
+export function PlanAdjustmentBanner({ suggestion, onDismiss, onAdjust }: PlanAdjustmentBannerProps) {
   const [dismissed, setDismissed] = useState(false);
 
   if (!suggestion || dismissed || suggestion.recommendation === "none") return null;
@@ -72,7 +76,16 @@ export function PlanAdjustmentBanner({ suggestion, onDismiss }: PlanAdjustmentBa
               <Icon name="close" className="w-4 h-4 text-on-surface-variant" />
             </button>
           </div>
-          <div className="flex items-center gap-2 mt-3">
+          <div className="flex items-center gap-3 mt-3">
+            {suggestion.recommendation !== "none" && (
+              <button
+                onClick={onAdjust}
+                className="text-xs font-bold text-primary hover:text-primary-container transition-colors inline-flex items-center gap-1"
+              >
+                <Icon name="sync" className="w-3.5 h-3.5" />
+                Juster plan
+              </button>
+            )}
             <Link
               href="/portal/dagbok"
               className="text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors inline-flex items-center gap-1"
