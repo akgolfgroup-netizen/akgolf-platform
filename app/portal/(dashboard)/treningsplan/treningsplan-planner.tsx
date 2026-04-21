@@ -243,7 +243,17 @@ export function TreningsplanPlanner({
         <div className="flex gap-8">
           <Stat label="Økter" value={String(sessionCount)} />
           <Stat label="Total tid" value={`${totalHours}t ${remMinutes}m`} />
-          <Stat label="Plan-adherence" value={`${adherencePct}%`} />
+          <Stat
+            label="Plan-adherence"
+            value={`${adherencePct}%`}
+            colorClass={
+              adherencePct >= 80
+                ? "text-success"
+                : adherencePct >= 50
+                  ? "text-warning"
+                  : "text-error"
+            }
+          />
         </div>
         <div className="flex items-center gap-3">
           {planId ? (
@@ -1438,13 +1448,23 @@ function HistoryList({ events }: { events: V2Event[] }) {
 
 /* ── Stats ── */
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({
+  label,
+  value,
+  colorClass,
+}: {
+  label: string;
+  value: string;
+  colorClass?: string;
+}) {
   return (
     <div>
       <p className="font-mono text-[10px] uppercase tracking-widest text-primary/40">
         {label}
       </p>
-      <p className="text-sm font-bold text-primary">{value}</p>
+      <p className={`text-sm font-bold ${colorClass ?? "text-primary"}`}>
+        {value}
+      </p>
     </div>
   );
 }

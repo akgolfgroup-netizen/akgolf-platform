@@ -141,6 +141,8 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
 
   const sessionCount = events.length;
   const totalMinutes = events.reduce((sum, e) => sum + (e.dur ?? 0), 0);
+  const doneCount = events.filter((e) => e.done).length;
+  const adherencePct = sessionCount > 0 ? Math.round((doneCount / sessionCount) * 100) : 0;
 
   if (activeView === "planner") {
     return (
@@ -149,7 +151,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         planId={plan?.id ?? null}
         sessionCount={sessionCount}
         totalMinutes={totalMinutes}
-        adherencePct={0}
+        adherencePct={adherencePct}
         events={events}
         historyEvents={historyEvents}
         onCreateSession={handleCreateSession}
