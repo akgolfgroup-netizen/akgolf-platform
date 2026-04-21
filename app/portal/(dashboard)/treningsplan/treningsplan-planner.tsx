@@ -43,6 +43,8 @@ interface V2Event {
   focus: string;
   exercises: unknown[];
   done: boolean;
+  isGroupSession?: boolean;
+  groupName?: string | null;
 }
 
 interface PeriodizationInfo {
@@ -222,6 +224,10 @@ export function TreningsplanPlanner({
               setModalOpen(true);
             }}
             onEventClick={(ev) => {
+              if (ev.isGroupSession) {
+                // Group sessions are read-only for players
+                return;
+              }
               setEditEvent(ev);
               setEditModalOpen(true);
             }}
@@ -416,11 +422,19 @@ function WeekGrid({
                             ? "bg-primary/20 text-primary/70 line-through"
                             : eventColorClass(ev.focus)
                         }`}
-                        title={`${ev.title} · ${ev.dur}m · ${ev.focus} — Klikk for å redigere, dropp øvelse her`}
+                        title={`${ev.title} · ${ev.dur}m · ${ev.focus}${ev.isGroupSession ? " — Gruppeøkt (ikke redigerbar)" : " — Klikk for å redigere, dropp øvelse her"}`}
                       >
-                        <span className="block truncate">{ev.title}</span>
+                        <span className="block truncate">
+                          {ev.isGroupSession && (
+                            <span className="inline-block w-1.5 h-1.5 rounded-full bg-info mr-1 align-middle" />
+                          )}
+                          {ev.title}
+                        </span>
                         <span className="font-mono text-[9px] opacity-80">
                           {ev.dur}m
+                          {ev.isGroupSession && ev.groupName && (
+                            <span className="ml-1 text-info">· {ev.groupName}</span>
+                          )}
                         </span>
                       </div>
                     ))}
@@ -1459,6 +1473,11 @@ function HistoryList({ events }: { events: V2Event[] }) {
                 <span className="font-mono text-[9px] text-on-surface-variant">
                   {ev.dur}m
                 </span>
+                {ev.isGroupSession && (
+                  <span className="rounded bg-info/10 px-1.5 py-0.5 font-mono text-[9px] text-info">
+                    {ev.groupName ?? "Gruppe"}
+                  </span>
+                )}
               </div>
             </div>
             {ev.done && (

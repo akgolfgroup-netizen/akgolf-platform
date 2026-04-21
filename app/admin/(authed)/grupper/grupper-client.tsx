@@ -17,9 +17,13 @@ import {
   removeMember,
   getGroupMembers,
   listAvailablePlayers,
+  getGroupPlan,
+  syncGroupPlanToMembers,
   type GroupSummary,
   type GroupMember,
   type PlayerOption,
+  type GroupPlanDetail,
+  type SyncResult,
 } from "./actions";
 
 const PERIOD_LABELS: Record<string, string> = {
@@ -33,6 +37,8 @@ const PERIOD_COLORS: Record<string, string> = {
   spesialiseringsperiode: "bg-warning/10 text-warning",
   turneringsperiode: "bg-error/10 text-error",
 };
+
+const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
 
 interface GrupperClientProps {
   initialGroups: GroupSummary[];
@@ -51,6 +57,13 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
   const [members, setMembers] = useState<GroupMember[]>([]);
   const [availableForDetail, setAvailableForDetail] = useState<PlayerOption[]>([]);
   const [selectedPlayerId, setSelectedPlayerId] = useState("");
+
+  // Sync state
+  const [groupPlan, setGroupPlan] = useState<GroupPlanDetail | null>(null);
+  const [syncWeekOffset, setSyncWeekOffset] = useState(0);
+  const [syncConflictStrategy, setSyncConflictStrategy] = useState<"skip" | "keep" | "overwrite">("skip");
+  const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
+  const [syncOpen, setSyncOpen] = useState(false);
 
   // Create form
   const [newName, setNewName] = useState("");
@@ -99,13 +112,33 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
 
   async function openDetail(group: GroupSummary) {
     setDetailGroup(group);
-    const [ms, av] = await Promise.all([
+    const [ms, av, plan] = await Promise.all([
       getGroupMembers(group.id),
       listAvailablePlayers(group.id),
+      getGroupPlan(group.id),
     ]);
     setMembers(ms);
     setAvailableForDetail(av);
     setSelectedPlayerId("");
+    setGroupPlan(plan);
+    setSyncResult(null);
+  }
+
+  async function handleSync() {
+    if (!detailGroup) return;
+    startTransition(async () => {
+      const result = await syncGroupPlanToMembers(
+        detailGroup.id,
+        syncWeekOffset,
+        syncConflictStrategy
+      );
+      setSyncResult(result);
+      if (result.success && result.syncedCount > 0) {
+        // Refresh group data
+        const plan = await getGroupPlan(detailGroup.id);
+        setGroupPlan(plan);
+      }
+    });
   }
 
   async function handleAddMember() {
@@ -390,6 +423,127 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
                   <p className="text-sm text-on-surface-variant">Ingen medlemmer ennå.</p>
                 )}
               </div>
+
+              {/* Sync plan */}
+              {groupPlan && (
+                <div className="mt-6 border-t border-outline-variant/20 pt-6">
+                  <h3 className="text-sm font-semibold text-on-surface mb-2">
+                    Synkroniser plan til medlemmer
+                  </h3>
+
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-[11px] text-on-surface-variant block mb-1">Uke</label>
+                      <div className="flex gap-2">
+                        {[0, 1, 2, 3].map((offset) => (
+                          <button
+                            key={offset}
+                            type="button"
+                            onClick={() => setSyncWeekOffset(offset)}
+                            className={cn(
+                              "px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors flex-1",
+                              syncWeekOffset === offset
+                                ? "bg-on-surface text-surface border-black"
+                                : "bg-surface-container-lowest border-outline-variant/30 text-on-surface hover:bg-surface-container"
+                            )}
+                          >
+                            {offset === 0 ? "Denne uken" : `+${offset} uker`}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-[11px] text-on-surface-variant block mb-1">
+                        Ved konflikt (spiller har egen økt samme dag)
+                      </label>
+                      <select
+                        value={syncConflictStrategy}
+                        onChange={(e) => setSyncConflictStrategy(e.target.value as "skip" | "keep" | "overwrite")}
+                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/30 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
+                      >
+                        <option value="skip">Hopp over (behold begge)</option>
+                        <option value="keep">Behold spillerens økt</option>
+                        <option value="overwrite">Overskriv med gruppeøkt</option>
+                      </select>
+                    </div>
+
+                    <div className="text-xs text-on-surface-variant">
+                      {(() => {
+                        const targetWeek = groupPlan.weeks.find((w) => {
+                          const now = new Date();
+                          const target = new Date(now);
+                          target.setDate(target.getDate() + syncWeekOffset * 7);
+                          // Approximate week match
+                          const startOfYear = new Date(target.getFullYear(), 0, 1);
+                          const weekNum = Math.ceil(((target.getTime() - startOfYear.getTime()) / 86400000 + startOfYear.getDay() + 1) / 7);
+                          return w.weekNumber === weekNum;
+                        });
+                        if (targetWeek) {
+                          return (
+                            <span>
+                              Gruppeplan uke {targetWeek.weekNumber}: {targetWeek.sessions.length} økter
+                            </span>
+                          );
+                        }
+                        return <span>Ingen gruppeøkter for valgt uke</span>;
+                      })()}
+                    </div>
+
+                    <Button
+                      onClick={handleSync}
+                      isLoading={isPending}
+                      className="w-full"
+                    >
+                      <Icon name="sync" className="w-4 h-4 mr-2" />
+                      Synkroniser nå
+                    </Button>
+                  </div>
+
+                  {/* Sync result */}
+                  {syncResult && (
+                    <div className="mt-3 space-y-2">
+                      {syncResult.success ? (
+                        <div className="rounded-lg bg-success/10 px-3 py-2 text-xs text-success">
+                          ✅ {syncResult.syncedCount} økter synkronisert til {members.length} medlemmer
+                        </div>
+                      ) : syncResult.syncedCount > 0 ? (
+                        <div className="rounded-lg bg-warning/10 px-3 py-2 text-xs text-warning">
+                          ⚠️ {syncResult.syncedCount} økter synkronisert, men {syncResult.conflictCount} konflikter funnet
+                        </div>
+                      ) : (
+                        <div className="rounded-lg bg-error/10 px-3 py-2 text-xs text-error">
+                          ❌ Ingen økter synkronisert. {syncResult.errors[0]?.message ?? "Sjekk konflikter."}
+                        </div>
+                      )}
+
+                      {syncResult.conflicts.length > 0 && (
+                        <div className="rounded-lg bg-surface-container-low px-3 py-2">
+                          <p className="text-[11px] font-semibold text-on-surface mb-1">Konflikter:</p>
+                          <div className="space-y-1 max-h-32 overflow-y-auto">
+                            {syncResult.conflicts.map((c, i) => (
+                              <p key={i} className="text-[11px] text-on-surface-variant">
+                                {c.userName ?? c.userId}: {c.groupSessionTitle} vs {c.existingSessionTitle} ({DAYS[c.dayOfWeek - 1]})
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {syncResult.errors.length > 0 && (
+                        <div className="rounded-lg bg-error/5 px-3 py-2">
+                          <p className="text-[11px] font-semibold text-error mb-1">Feil:</p>
+                          {syncResult.errors.map((e, i) => (
+                            <p key={i} className="text-[11px] text-error/80">
+                              {e.message}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="mt-6">
                 <Button

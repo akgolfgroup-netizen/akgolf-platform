@@ -526,6 +526,12 @@ export async function updateSessionTime(
 
   if (!session) throw new Error("Treningsokten finnes ikke");
 
+  // Check if this is a group session
+  const rawExercises = Array.isArray(session.exercises) ? session.exercises : [];
+  if (rawExercises.some((ex: unknown) => typeof ex === "object" && ex !== null && (ex as Record<string, unknown>)._groupSessionId)) {
+    throw new Error("Gruppeøkter kan ikke endres. Kontakt coach for endringer.");
+  }
+
   // Store startH/startM in exercises JSON metadata
   const currentExercises = Array.isArray(session.exercises) ? session.exercises : [];
   const meta = { _startH: startH, _startM: startM };
@@ -571,6 +577,12 @@ export async function moveSessionToDay(
 
   if (!session) throw new Error("Treningsokten finnes ikke");
 
+  // Check if this is a group session
+  const rawExercises = Array.isArray(session.exercises) ? session.exercises : [];
+  if (rawExercises.some((ex: unknown) => typeof ex === "object" && ex !== null && (ex as Record<string, unknown>)._groupSessionId)) {
+    throw new Error("Gruppeøkter kan ikke flyttes. Kontakt coach for endringer.");
+  }
+
   const updateData: Record<string, unknown> = {
     dayOfWeek: newDayOfWeek,
   };
@@ -606,6 +618,22 @@ export async function deleteSession(sessionId: string) {
   if (!user?.id) throw new Error("Ikke autentisert");
 
   const supabase = await createServerSupabase();
+
+  // Check if this is a group session
+  const { data: sessionCheck } = await supabase
+    .from("TrainingPlanSession")
+    .select("exercises")
+    .eq("id", sessionId)
+    .single();
+
+  if (sessionCheck?.exercises) {
+    const exercises = Array.isArray(sessionCheck.exercises)
+      ? (sessionCheck.exercises as Record<string, unknown>[])
+      : [];
+    if (exercises.some((ex) => ex._groupSessionId)) {
+      throw new Error("Gruppeøkter kan ikke slettes. Kontakt coach for endringer.");
+    }
+  }
 
   // Delete associated training logs first
   await supabase
@@ -746,11 +774,19 @@ export async function updateSession(
 
   const { data: session } = await supabase
     .from("TrainingPlanSession")
-    .select("id")
+    .select("id, exercises")
     .eq("id", sessionId)
     .single();
 
   if (!session) throw new Error("Treningsøkten finnes ikke");
+
+  // Check if this is a group session
+  const exercises = Array.isArray(session.exercises)
+    ? (session.exercises as Record<string, unknown>[])
+    : [];
+  if (exercises.some((ex) => ex._groupSessionId)) {
+    throw new Error("Gruppeøkter kan ikke endres. Kontakt coach for endringer.");
+  }
 
   const updateData: Record<string, unknown> = {};
   if (data.title !== undefined) updateData.title = data.title;
@@ -782,6 +818,8 @@ interface V2Event {
   focus: string;
   exercises: V2ExerciseData[];
   done: boolean;
+  isGroupSession?: boolean;
+  groupName?: string | null;
 }
 
 interface V2ExerciseData {
@@ -894,6 +932,11 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
       }
     }
 
+    // Check if this is a group session
+    const groupMeta = rawExercises.find((ex) => ex._groupSessionId);
+    const isGroupSession = !!groupMeta;
+    const groupName = groupMeta?._groupName as string | undefined;
+
     return {
       id: session.id,
       date: dateStr,
@@ -904,6 +947,8 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
       focus: inferPyramidFromFocus(session.focusArea),
       exercises: v2Exercises,
       done: session.TrainingLog?.length > 0,
+      isGroupSession,
+      groupName: groupName ?? null,
     };
   });
 }
