@@ -1,13 +1,17 @@
 "use client";
 
-
+import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 import { Map, Compass } from "lucide-react";
 import { Badge } from "@/components/ui";
+import { Button } from "@/components/ui/button";
 import { AdminProgressRing } from "@/components/portal/mission-control/ui";
 
 import { MonoLabel } from "@/components/portal/patterns";
+import { generateWeekFromForecast } from "@/lib/ai/forecast-plan-allocator";
+import type { ForecastPlanSession } from "@/lib/ai/forecast-plan-allocator";
+import { GenerateWeekModal } from "./components/generate-week-modal";
 interface CategoryHours {
   hours: number;
   ci95Low: number;
@@ -118,6 +122,66 @@ function formatDeadline(d: string): string {
 }
 
 export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [proposedSessions, setProposedSessions] = useState<ForecastPlanSession[]>([]);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  function openModal() {
+    if (!forecast) return;
+    const sessions = generateWeekFromForecast(
+      {
+        modelVersion: forecast.modelVersion,
+        generatedAt: new Date(forecast.generatedAt),
+        currentState: {
+          scoreAvg: forecast.currentScoreAvg,
+          sgTotal: forecast.currentSgTotal,
+          sgOtt: forecast.currentSgOtt,
+          sgApp: forecast.currentSgApp,
+          sgArg: forecast.currentSgArg,
+          sgPutt: forecast.currentSgPutt,
+          category: forecast.currentCategory,
+          sampleSize: 0,
+          confidence: "medium",
+        },
+        target: {
+          scoreAvg: forecast.targetScoreAvg,
+          category: forecast.targetCategory,
+          deadlineWeeks: 0,
+          requiredSgDelta: forecast.requiredSgDelta,
+        },
+        allocations: Object.entries(forecast.deltaAllocationJson).map(([category, deltaSg]) => ({
+          category: category as "OTT" | "APP" | "ARG" | "PUTT",
+          deltaSg,
+          share: deltaSg / (forecast.requiredSgDelta || 1),
+          estimatedHours: forecast.hoursPerCategoryJson[category]?.hours ?? 0,
+          ci95Low: forecast.hoursPerCategoryJson[category]?.ci95Low ?? 0,
+          ci95High: forecast.hoursPerCategoryJson[category]?.ci95High ?? 0,
+          rootCause: (forecast.rootCauseJson[category] ?? "blandet") as "teknisk" | "fysisk" | "mental" | "taktisk" | "blandet",
+          techTactMentalPhys: forecast.techTactMentalPhysJson[category] ?? { tek: 0.25, tak: 0.25, mental: 0.25, fys: 0.25 },
+        })),
+        primaryFocusCategory: forecast.primaryFocusCategory as "OTT" | "APP" | "ARG" | "PUTT",
+        estimatedTotalHours: forecast.estimatedTotalHours,
+        estimatedHoursCi95Low: forecast.estimatedHoursCi95Low,
+        estimatedHoursCi95High: forecast.estimatedHoursCi95High,
+        requiredHoursPerWeek: forecast.estimatedHoursPerWeek,
+        probabilityOfSuccess: forecast.probabilityOfSuccess,
+        confidenceInterval95: forecast.confidenceInterval95,
+        monteCarloRuns: forecast.monteCarloRuns,
+        rootCauseSummary: forecast.rootCauseJson,
+        assumptions: forecast.assumptionsJson,
+        recommendations: forecast.recommendationsJson,
+      }
+    );
+    setProposedSessions(sessions);
+    setModalOpen(true);
+    setSuccessMessage(null);
+  }
+
+  function handleSuccess(count: number) {
+    setSuccessMessage(`${count} økter lagt til din treningsplan`);
+    setTimeout(() => setSuccessMessage(null), 4000);
+  }
+
   if (!forecast) {
     return (
       <motion.div
@@ -159,6 +223,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
   );
 
   return (
+    <>
     <motion.div
       variants={container}
       initial="hidden"
@@ -171,6 +236,16 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
           Din coaching-forecast — oppdatert {new Date(forecast.generatedAt).toLocaleDateString("no-NO")}
         </p>
       </motion.div>
+
+      {successMessage && (
+        <motion.div
+          variants={item}
+          className="bg-success-container border border-success/30 rounded-xl p-4 flex items-center gap-3"
+        >
+          <Icon name="check_circle" className="w-5 h-5 text-success" />
+          <p className="text-sm font-medium text-success-text">{successMessage}</p>
+        </motion.div>
+      )}
 
       {/* Hvor er du nå → Hvor vil du */}
       <motion.div
@@ -215,6 +290,18 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
             SG-forbedring · {round1(forecast.estimatedHoursPerWeek)} t/uke
           </p>
         </div>
+      </motion.div>
+
+      {/* Generer ukeplan-knapp */}
+      <motion.div variants={item}>
+        <Button
+          onClick={openModal}
+          className="w-full sm:w-auto"
+          size="lg"
+        >
+          <Icon name="auto_fix_high" className="w-4 h-4 mr-2" />
+          Generer ukeplan fra forecast
+        </Button>
       </motion.div>
 
       {/* Sannsynlighet — ærlig og tydelig */}
@@ -364,5 +451,13 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
         </ul>
       </motion.div>
     </motion.div>
+
+    <GenerateWeekModal
+      isOpen={modalOpen}
+      onClose={() => setModalOpen(false)}
+      sessions={proposedSessions}
+      onSuccess={handleSuccess}
+    />
+    </>
   );
 }
