@@ -1720,13 +1720,46 @@ model TrainingPlan {
   periodizationPeriodId               String?
   createdAt                           DateTime             @default(now())
   updatedAt                           DateTime
+  groupId                             String?
   User_TrainingPlan_createdByIdToUser User                 @relation("TrainingPlan_createdByIdToUser", fields: [createdById], references: [id])
   User_TrainingPlan_studentIdToUser   User                 @relation("TrainingPlan_studentIdToUser", fields: [studentId], references: [id])
   PeriodizationPeriod                 PeriodizationPeriod? @relation(fields: [periodizationPeriodId], references: [id], onDelete: SetNull)
+  TrainingGroup                       TrainingGroup?       @relation(fields: [groupId], references: [id], onDelete: SetNull)
   TrainingPlanWeek                    TrainingPlanWeek[]
 
   @@index([studentId])
   @@index([periodizationPeriodId])
+  @@index([groupId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model TrainingGroup {
+  id          String            @id
+  name        String
+  coachId     String
+  description String?
+  periodType  String            @default("grunnperiode")
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  Coach       User              @relation("TrainingGroupCoach", fields: [coachId], references: [id], onDelete: Cascade)
+  members     GroupMembership[]
+  plans       TrainingPlan[]
+
+  @@index([coachId])
+}
+
+model GroupMembership {
+  id            String        @id
+  groupId       String
+  userId        String
+  role          String        @default("PLAYER")
+  joinedAt      DateTime      @default(now())
+  TrainingGroup TrainingGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  User          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
+  @@index([groupId])
+  @@index([userId])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1890,6 +1923,8 @@ model User {
   UserCapability                              UserCapability[]
   CoachRelations                              CoachPlayerRelation[]      @relation("CoachRelations")
   PlayerRelations                             CoachPlayerRelation[]      @relation("PlayerRelations")
+  TrainingGroups                              TrainingGroup[]            @relation("TrainingGroupCoach")
+  GroupMemberships                            GroupMembership[]
   dataConsentAt                               DateTime?
   dataConsentScope                            Json?
 }
