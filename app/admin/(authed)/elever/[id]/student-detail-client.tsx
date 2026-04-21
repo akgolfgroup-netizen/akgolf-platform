@@ -191,7 +191,7 @@ export function StudentDetailClient({ profile }: Props) {
                 title="Kommer snart"
                 className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface transition-colors cursor-not-allowed"
               >
-                <Icon name="edit"3 className="w-4 h-4" />
+                <Icon name="edit" className="w-4 h-4" />
                 Rediger
               </button>
             </>

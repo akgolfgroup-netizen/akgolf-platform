@@ -1,6 +1,6 @@
 "use client";
 
-import { DashboardClient } from "@/app/portal/(dashboard)/dashboard-client";
+import { DashboardClientV3 } from "@/app/portal/(dashboard)/dashboard-client-v3";
 import { addDays, subDays } from "date-fns";
 
 const mockWeekDays = [
@@ -16,7 +16,7 @@ const mockWeekDays = [
 export default function PortalPreviewPage() {
   return (
     <div className="min-h-screen bg-surface-container px-4 py-6 sm:px-6 lg:px-8">
-      <DashboardClient
+      <DashboardClientV3
         userName="Anders"
         tier="PRO"
         memberSince="2023"
