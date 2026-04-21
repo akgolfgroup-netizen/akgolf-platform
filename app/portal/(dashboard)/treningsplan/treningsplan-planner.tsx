@@ -28,6 +28,10 @@ import {
   createUserExercise,
   type ExerciseSearchResult,
 } from "@/lib/portal/training/exercise-actions";
+import {
+  PlanAdjustmentBanner,
+  type AdjustmentSuggestion,
+} from "./components/plan-adjustment-banner";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -94,6 +98,7 @@ interface TreningsplanPlannerProps {
       focusArea?: string;
     }
   ) => Promise<{ success: boolean }>;
+  adjustmentSuggestion?: AdjustmentSuggestion | null;
 }
 
 export function TreningsplanPlanner({
@@ -107,6 +112,7 @@ export function TreningsplanPlanner({
   historyEvents,
   onCreateSession,
   onAddExerciseToSession,
+  adjustmentSuggestion,
 }: TreningsplanPlannerProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -239,6 +245,14 @@ export function TreningsplanPlanner({
           </button>
         </div>
       </header>
+
+      {/* Plan-justering banner */}
+      {adjustmentSuggestion && adjustmentSuggestion.recommendation !== "none" && (
+        <PlanAdjustmentBanner
+          suggestion={adjustmentSuggestion}
+          onDismiss={() => {}}
+        />
+      )}
 
       {/* Hovedgrid: ukes-scheduler + sidebar */}
       <div className="grid grid-cols-12 gap-6">

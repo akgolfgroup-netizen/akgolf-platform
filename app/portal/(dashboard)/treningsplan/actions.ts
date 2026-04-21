@@ -1016,3 +1016,114 @@ export async function logLiveSession(data: {
   revalidatePath("/portal/treningsplan");
   return { success: true, logId };
 }
+
+
+// -------------------------------------------------------------------
+// Plan deviation analysis — auto-adjustment trigger (B-1.7)
+// -------------------------------------------------------------------
+
+export interface PlanDeviationAnalysis {
+  adherencePct: number;
+  avgRating: number | null;
+  deviationCount: number;
+  plannedHours: number;
+  actualHours: number;
+  recommendation: "reduce" | "increase" | "adjust" | "none";
+  message: string;
+  detailMessage: string;
+}
+
+export async function analyzePlanDeviation(): Promise<PlanDeviationAnalysis | null> {
+  const user = await requirePortalUser();
+  if (!user?.id) return null;
+
+  const supabase = await createServerSupabase();
+  const since = new Date();
+  since.setDate(since.getDate() - 14);
+
+  // Fetch TrainingLog for last 14 days
+  const { data: logs } = await supabase
+    .from("TrainingLog")
+    .select("durationMinutes, rating, deviatedFromPlan, date")
+    .eq("userId", user.id)
+    .gte("date", since.toISOString())
+    .order("date", { ascending: false });
+
+  // Fetch active plan with sessions for last 2 weeks
+  const { data: plan } = await supabase
+    .from("TrainingPlan")
+    .select("id, TrainingPlanWeek (weekStart, TrainingPlanSession (durationMinutes))")
+    .eq("studentId", user.id)
+    .eq("isActive", true)
+    .single();
+
+  if (!plan) return null;
+
+  // Calculate actual hours from logs
+  const actualMinutes = (logs ?? []).reduce((sum, log) => sum + (log.durationMinutes ?? 0), 0);
+  const actualHours = actualMinutes / 60;
+
+  // Calculate planned hours from sessions in last 2 weeks
+  const twoWeeksAgo = new Date();
+  twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+  const weeks = (plan.TrainingPlanWeek as unknown as { weekStart: string; TrainingPlanSession: { durationMinutes: number | null }[] }[]) || [];
+  const plannedMinutes = weeks
+    .filter((w) => new Date(w.weekStart) >= twoWeeksAgo)
+    .flatMap((w) => w.TrainingPlanSession)
+    .reduce((sum, s) => sum + (s.durationMinutes ?? 60), 0);
+  const plannedHours = plannedMinutes / 60;
+
+  // Calculate adherence: planned sessions vs logged sessions with planSessionId
+  const { data: plannedSessions } = await supabase
+    .from("TrainingPlanSession")
+    .select("id, weekId!inner(weekStart)")
+    .gte("weekId.weekStart", twoWeeksAgo.toISOString().slice(0, 10))
+    .eq("weekId.planId", plan.id);
+
+  const plannedCount = plannedSessions?.length ?? 0;
+  const completedCount = plannedCount > 0
+    ? (logs ?? []).filter((log) => log.planSessionId && plannedSessions?.some((ps) => ps.id === log.planSessionId)).length
+    : 0;
+  const adherencePct = plannedCount > 0 ? Math.round((completedCount / plannedCount) * 100) : 0;
+
+  // Average rating
+  const ratings = (logs ?? []).map((l) => l.rating).filter((r): r is number => r != null);
+  const avgRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : null;
+
+  // Deviation count
+  const deviationCount = (logs ?? []).filter((l) => l.deviatedFromPlan).length;
+
+  // Determine recommendation
+  let recommendation: PlanDeviationAnalysis["recommendation"] = "none";
+  let message = "";
+  let detailMessage = "";
+
+  if (adherencePct < 40 && actualHours < plannedHours * 0.5) {
+    recommendation = "reduce";
+    message = "Planen er for ambisiøs";
+    detailMessage = `Du har fulgt ${adherencePct}% av planen siste 2 uker og trent ${actualHours.toFixed(1)}t av ${plannedHours.toFixed(1)}t planlagt. Vil du redusere volumet med ca. 20%?`;
+  } else if (adherencePct < 40 && actualHours > plannedHours * 1.5) {
+    recommendation = "increase";
+    message = "Du trener mer enn planlagt!";
+    detailMessage = `Du har trent ${actualHours.toFixed(1)}t mot ${plannedHours.toFixed(1)}t planlagt. Vil du øke volumet i planen?`;
+  } else if (adherencePct >= 40 && adherencePct < 70) {
+    recommendation = "adjust";
+    message = "Du er på vei";
+    detailMessage = `Du har fulgt ${adherencePct}% av planen siste 2 uker. Vil du justere planen til din timeplan?`;
+  } else if (adherencePct >= 80) {
+    recommendation = "none";
+    message = "Bra jobbet!";
+    detailMessage = "Du følger planen godt. Fortsett som planlagt!";
+  }
+
+  return {
+    adherencePct,
+    avgRating,
+    deviationCount,
+    plannedHours,
+    actualHours,
+    recommendation,
+    message,
+    detailMessage,
+  };
+}

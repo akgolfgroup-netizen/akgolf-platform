@@ -9,6 +9,7 @@ import {
   createSessionForWeek,
   addExerciseToSession,
   updateSession,
+  analyzePlanDeviation,
 } from "./actions";
 import { TrainingPlannerV3 } from "./treningsplan-v3-client";
 import { TrainingPlanViewer } from "./training-plan-viewer";
@@ -146,6 +147,8 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   const doneCount = events.filter((e) => e.done).length;
   const adherencePct = sessionCount > 0 ? Math.round((doneCount / sessionCount) * 100) : 0;
 
+  const adjustmentSuggestion = await analyzePlanDeviation();
+
   if (activeView === "planner") {
     return (
       <TreningsplanPlanner
@@ -160,6 +163,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         onCreateSession={handleCreateSession}
         onAddExerciseToSession={handleAddExerciseToSession}
         onUpdateSession={handleUpdateSession}
+        adjustmentSuggestion={adjustmentSuggestion}
       />
     );
   }
