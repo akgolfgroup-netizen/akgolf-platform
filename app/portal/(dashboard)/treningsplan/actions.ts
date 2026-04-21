@@ -2,6 +2,7 @@
 
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
+import { prisma } from "@/lib/portal/prisma";
 import { endOfISOWeek, isWithinInterval, addWeeks, startOfISOWeek } from "date-fns";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
@@ -1154,29 +1155,28 @@ export async function adjustPlanVolume(factor: number): Promise<{ success: boole
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke autentisert");
 
-  const supabase = await createServerSupabase();
-
-  // Find active plan
-  const { data: plan } = await supabase
-    .from("TrainingPlan")
-    .select("id")
-    .eq("studentId", user.id)
-    .eq("isActive", true)
-    .single();
+  // Use Prisma for reliable relational queries
+  const plan = await prisma.trainingPlan.findFirst({
+    where: { studentId: user.id, isActive: true },
+    include: {
+      TrainingPlanWeek: {
+        where: {
+          weekStart: { gte: new Date() },
+        },
+        include: {
+          TrainingPlanSession: true,
+        },
+      },
+    },
+  });
 
   if (!plan) {
     return { success: false, adjustedCount: 0, error: "Ingen aktiv plan funnet" };
   }
 
-  // Get upcoming sessions (from today onwards)
-  const today = new Date().toISOString().slice(0, 10);
-  const { data: sessions } = await supabase
-    .from("TrainingPlanSession")
-    .select("id, durationMinutes, weekId!inner(weekStart)")
-    .gte("weekId.weekStart", today)
-    .eq("weekId.planId", plan.id);
+  const sessions = plan.TrainingPlanWeek.flatMap((w) => w.TrainingPlanSession);
 
-  if (!sessions || sessions.length === 0) {
+  if (sessions.length === 0) {
     return { success: false, adjustedCount: 0, error: "Ingen kommende økter å justere" };
   }
 
@@ -1186,12 +1186,11 @@ export async function adjustPlanVolume(factor: number): Promise<{ success: boole
     const currentDur = session.durationMinutes ?? 60;
     const newDur = Math.max(15, Math.round(currentDur * factor));
 
-    const { error } = await supabase
-      .from("TrainingPlanSession")
-      .update({ durationMinutes: newDur })
-      .eq("id", session.id);
-
-    if (!error) {
+    if (newDur !== currentDur) {
+      await prisma.trainingPlanSession.update({
+        where: { id: session.id },
+        data: { durationMinutes: newDur },
+      });
       adjustedCount++;
     }
   }

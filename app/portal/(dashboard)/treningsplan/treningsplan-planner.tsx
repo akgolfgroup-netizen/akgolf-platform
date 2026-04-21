@@ -266,6 +266,11 @@ export function TreningsplanPlanner({
           if (onAdjustPlan) {
             const result = await onAdjustPlan(factor);
             if (result.success) {
+              // Show brief confirmation before reload
+              const msg = result.adjustedCount
+                ? `Plan justert! ${result.adjustedCount} økt(er) oppdatert.`
+                : "Plan justert!";
+              alert(msg);
               window.location.reload();
             }
           }
