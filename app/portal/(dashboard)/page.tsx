@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
-import { redirect } from "next/navigation";
 import { createServerSupabase } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
@@ -51,10 +50,6 @@ export default async function DashboardPage() {
     .single();
 
   const needsOnboarding = !userData?.onboardingCompletedAt;
-
-  if (needsOnboarding) {
-    redirect("/portal/onboarding");
-  }
 
   // Hent all dashboard-data parallelt
   const [
@@ -113,6 +108,7 @@ export default async function DashboardPage() {
       sgSummary={sgSummary}
       trainingIndex={trainingIndex}
       testProgress={testProgress}
+      needsOnboarding={needsOnboarding}
     />
   );
 }

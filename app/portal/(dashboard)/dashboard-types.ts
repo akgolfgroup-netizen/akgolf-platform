@@ -137,4 +137,5 @@ export interface DashboardV3Props {
   sgSummary: SgSummary;
   trainingIndex: TrainingIndexData | null;
   testProgress: TestProgress;
+  needsOnboarding?: boolean;
 }

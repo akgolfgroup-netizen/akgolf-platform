@@ -10,6 +10,7 @@ import type {
 } from "../dashboard-types";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
+import { QuickOnboardingBanner } from "../onboarding/components/quick-onboarding-banner";
 
 const TIER_LABEL: Record<string, string> = {
   VISITOR: "Gratis",
@@ -54,6 +55,7 @@ export function AthleticGridView({
   sgSummary,
   trainingIndex,
   testProgress,
+  needsOnboarding,
 }: DashboardV3Props) {
   const firstName = userName?.split(" ")[0] ?? "Spiller";
   const tierLabel = TIER_LABEL[tier] ?? tier;
@@ -78,6 +80,9 @@ export function AthleticGridView({
 
   return (
     <section className="space-y-6">
+      {/* Rask onboarding for nye spillere */}
+      {needsOnboarding && <QuickOnboardingBanner />}
+
       {/* Velkomst-header */}
       <header className="flex flex-wrap items-end justify-between gap-4 pb-2">
         <div>
