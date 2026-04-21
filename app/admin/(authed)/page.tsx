@@ -1,6 +1,8 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
+import { prisma } from "@/lib/portal/prisma";
 import { HubOversiktClient } from "./hub-oversikt-client";
+import type { PrioritertElev } from "./dashboard/prioriterte-elever-kort";
 
 export const metadata = {
   title: "Dashboard — AK Golf Mission Control",
@@ -218,9 +220,101 @@ async function getDashboardData() {
   };
 }
 
+async function getPrioriterteElever(coachId: string): Promise<PrioritertElev[]> {
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(startOfWeek.getDate() - ((startOfWeek.getDay() + 6) % 7));
+  startOfWeek.setHours(0, 0, 0, 0);
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 7);
+  const sevenDaysAgo = new Date(now);
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const relations = await prisma.coachPlayerRelation.findMany({
+    where: { coachUserId: coachId, status: "ACTIVE" },
+    include: {
+      Player: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          image: true,
+          HandicapEntry: { orderBy: { date: "desc" }, take: 2 },
+          TrainingLog: {
+            where: { date: { gte: sevenDaysAgo } },
+            orderBy: { date: "desc" },
+            select: { id: true, date: true, durationMinutes: true, planSessionId: true },
+          },
+          TrainingPlan_TrainingPlan_studentIdToUser: {
+            where: { isActive: true },
+            take: 1,
+            select: {
+              TrainingPlanWeek: {
+                where: { weekStart: { gte: startOfWeek, lt: endOfWeek } },
+                select: {
+                  TrainingPlanSession: { select: { id: true } },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const mapped = relations.map((rel) => {
+    const p = rel.Player;
+    const plannedSessions = p.TrainingPlan_TrainingPlan_studentIdToUser[0]?.TrainingPlanWeek[0]?.TrainingPlanSession ?? [];
+    const plannedCount = plannedSessions.length;
+    const completedCount = plannedSessions.filter((s) =>
+      p.TrainingLog.some((log) => log.planSessionId === s.id)
+    ).length;
+    const adherencePct = plannedCount > 0 ? Math.round((completedCount / plannedCount) * 100) : 0;
+
+    const lastLog = p.TrainingLog[0];
+    const lastActivity = lastLog?.date ?? null;
+
+    const hcpEntries = p.HandicapEntry;
+    const currentHcp = hcpEntries[0]?.handicapIndex ?? null;
+    const previousHcp = hcpEntries[1]?.handicapIndex ?? null;
+    let hcpTrend: "down" | "up" | "same" | null = null;
+    if (currentHcp !== null && previousHcp !== null) {
+      if (currentHcp < previousHcp) hcpTrend = "down";
+      else if (currentHcp > previousHcp) hcpTrend = "up";
+      else hcpTrend = "same";
+    }
+
+    return {
+      id: p.id,
+      name: p.name,
+      email: p.email,
+      image: p.image,
+      adherencePct,
+      plannedSessionsThisWeek: plannedCount,
+      completedSessionsThisWeek: completedCount,
+      lastActivity,
+      currentHcp,
+      hcpTrend,
+    };
+  });
+
+  // Sort: adherence low→high, then lastActivity old→new (null last)
+  return mapped
+    .sort((a, b) => {
+      if (a.adherencePct !== b.adherencePct) return a.adherencePct - b.adherencePct;
+      const aTime = a.lastActivity ? new Date(a.lastActivity).getTime() : Infinity;
+      const bTime = b.lastActivity ? new Date(b.lastActivity).getTime() : Infinity;
+      return aTime - bTime;
+    })
+    .slice(0, 5);
+}
+
 export default async function AdminDashboardPage() {
   const user = await requirePortalUser();
-  const data = await getDashboardData();
+  const [data, prioriterteElever] = await Promise.all([
+    getDashboardData(),
+    getPrioriterteElever(user.id),
+  ]);
 
-  return <HubOversiktClient data={data} user={user} />;
+  return <HubOversiktClient data={data} user={user} prioriterteElever={prioriterteElever} />;
 }

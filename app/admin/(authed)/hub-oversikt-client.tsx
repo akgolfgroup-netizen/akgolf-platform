@@ -21,6 +21,7 @@ import type {
 } from "@/components/portal/mission-control/ui";
 import { Plus, MessageSquare, UserPlus } from "lucide-react";
 import { MonoLabel } from "@/components/portal/patterns";
+import { PrioriterteEleverKort } from "./dashboard/prioriterte-elever-kort";
 
 interface Session {
   id: string;
@@ -70,6 +71,7 @@ interface HubOversiktClientProps {
     email?: string | null;
     image?: string | null;
   };
+  prioriterteElever?: import("./dashboard/prioriterte-elever-kort").PrioritertElev[];
 }
 
 // Badge component with grey tokens
@@ -139,7 +141,7 @@ function Button({
   );
 }
 
-export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
+export function HubOversiktClient({ data, user, prioriterteElever }: HubOversiktClientProps) {
   const { toggle } = useMCSidebar();
 
   const today = new Date();
@@ -373,6 +375,15 @@ export function HubOversiktClient({ data, user }: HubOversiktClientProps) {
             />
           </Card>
         </div>
+
+        {/* Prioriterte elever */}
+        {prioriterteElever && prioriterteElever.length > 0 && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <PrioriterteEleverKort elever={prioriterteElever} />
+            </div>
+          </div>
+        )}
 
         {/* Kapasitet + Tier fordeling + Handicap-trend */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
