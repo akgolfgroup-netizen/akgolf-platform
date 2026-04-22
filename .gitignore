@@ -79,3 +79,6 @@ code.html
 check-data.js
 cleanup-data.js
 # .mcp.json — nå sporet i git
+*.backup
+tmp_*.mjs
+tmp_*.ts
