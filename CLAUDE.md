@@ -1,5 +1,31 @@
 # AK Golf Platform
 
+## Parallell-arbeidsregler (Cherny-style)
+
+> **VIKTIG:** Denne Claude-økten kjører i EN git worktree. Aldri les/skriv filer utenfor `$PWD`.
+
+### Worktree-isolasjon
+- Jeg ser KUN filer i gjeldende worktree (`$PWD`)
+- Jeg skriver ALDRI til andre worktrees (f.eks. `../akgolf-platform-*`)
+- `node_modules` er lokal per worktree — ikke slett eller endre den
+
+### Før hver oppgave
+1. Les `WORKLOG.md` for kontekst
+2. Sjekk `git status` — skal være rent
+3. Hvis oppgaven er kompleks (>10 filer): be om Plan Mode først
+
+### Etter hver oppgave
+1. Kjør `npm run lint` og `npm run test` (hvis relevant)
+2. Kjør `git diff --stat` — bekreft at kun forventede filer er endret
+3. Commit: `feat/fix/refactor: beskrivelse`
+4. Oppdater `WORKLOG.md` med hva som ble gjort
+
+### Når jeg er usikker
+- Stopp og spør, ikke gjett
+- Aldri endre eksisterende API-kontrakter uten eksplisitt tillatelse
+- Aldri slett `.env`-filer eller `prisma/migrations/`
+
+
 > 🚀 **START HER:** Les alltid `WORKLOG.md` først for å se hva som ble jobbet med sist. Deretter les `.claude/rules/design-system.md` hvis oppgaven involverer UI.
 
 Premium golfcoaching-plattform med markedsside, spillerportal og admin (Mission Control).
