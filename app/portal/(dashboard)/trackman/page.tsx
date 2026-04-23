@@ -4,11 +4,11 @@ import { getTrackManOverview } from "./actions";
 import { TrackManClient } from "./trackman-client";
 
 export const metadata: Metadata = {
-  title: "TrackMan | AK Golf Portal",
+  title: "TrackMan | PlayersHQ",
   description:
     "Dine TrackMan-sesjoner og analyser. Se klubbdata, trends og forbedringsområder.",
   openGraph: {
-    title: "TrackMan | AK Golf Portal",
+    title: "TrackMan | PlayersHQ",
     description:
       "Dine TrackMan-sesjoner og analyser. Se klubbdata, trends og forbedringsområder.",
     type: "website",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TrackMan | AK Golf Portal",
+    title: "TrackMan | PlayersHQ",
     description:
       "Dine TrackMan-sesjoner og analyser. Se klubbdata, trends og forbedringsområder.",
   },

@@ -6,7 +6,7 @@ import { DesignPreviewClient } from "./design-preview-client";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Design Preview v3.1 | AK Golf Portal",
+  title: "Design Preview v3.1 | PlayersHQ",
 };
 
 export default async function DesignPreviewPage() {

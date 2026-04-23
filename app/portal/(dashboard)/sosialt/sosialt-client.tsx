@@ -116,7 +116,7 @@ export default function SosialtClient({
             uppercase
             className="text-on-surface-variant block"
           >
-            Spillerportal
+            PlayersHQ
           </MonoLabel>
           <h1 className="mt-1 text-[28px] font-bold tracking-tight text-on-surface">
             Sosialt

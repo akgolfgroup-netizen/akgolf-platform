@@ -37,7 +37,7 @@ type TabId = "plan" | "dagbok" | "stats" | "foundation" | "runder" | "trackman";
 
 const TABS: { id: TabId; label: string; icon: typeof Calendar }[] = [
   { id: "plan", label: "Treningsplan", icon: Calendar },
-  { id: "dagbok", label: "Dagbok", icon: BookOpen },
+  { id: "dagbok", label: "Min Trening", icon: BookOpen },
   { id: "stats", label: "Statistikk", icon: BarChart3 },
   { id: "foundation", label: "Foundation", icon: TrendingDown },
   { id: "runder", label: "Runder", icon: Target },

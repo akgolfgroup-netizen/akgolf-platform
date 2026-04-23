@@ -119,7 +119,7 @@ export function PublicConfirmationView({
             <Icon name="login" className="w-6 h-6 shrink-0 mt-0.5 text-primary" />
             <div className="flex-1">
               <h3 className="font-semibold mb-1 text-primary">
-                Din spillerportal
+                Din PlayersHQ
               </h3>
               <p className="text-sm mb-4 text-on-surface-variant">
                 Ved første booking opprettes en konto automatisk. Hvis du er ny kunde,

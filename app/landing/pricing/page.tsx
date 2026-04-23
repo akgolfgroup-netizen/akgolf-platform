@@ -44,13 +44,13 @@ export default function LandingPricingPage() {
       <main className="pt-32 pb-24 px-6 max-w-[1280px] mx-auto">
         <header className="text-center mb-16">
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-on-surface opacity-60 mb-4 block">
-            Alle pakker inkluderer spillerportalen
+            Alle pakker inkluderer PlayersHQ
           </span>
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-on-surface mb-6 leading-tight">
             Velg ditt nivå
           </h1>
           <p className="text-on-surface-variant/80 max-w-2xl mx-auto text-lg leading-relaxed">
-            Alle pakker inkluderer full tilgang til AK Golf spillerportalen —
+            Alle pakker inkluderer full tilgang til AK Golf PlayersHQ —
             treningsplaner, øvelsesbank, statistikk og progresjonslogging.
             Coaching-tjenester er MVA-fritatt.
           </p>
@@ -87,7 +87,7 @@ export default function LandingPricingPage() {
                   "TrackMan analyse",
                   "Selvbooking 14 dager frem",
                   "Prioritert tilgang",
-                  "Full spillerportal",
+                  "Full PlayersHQ",
                 ]).map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-on-surface flex-shrink-0" />
@@ -127,7 +127,7 @@ export default function LandingPricingPage() {
                   "2 × 20 min coaching per måned",
                   "TrackMan analyse",
                   "Selvbooking 7 dager frem",
-                  "Full spillerportal",
+                  "Full PlayersHQ",
                   "Treningsplan oppdatert etter hver sesjon",
                 ]).map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
@@ -173,7 +173,7 @@ export default function LandingPricingPage() {
                   "3 × 20 min individuelle sesjoner over 30 dager",
                   "TrackMan spredningsanalyse med 7-jern og driver",
                   "Personlig teknisk plan",
-                  "30 dagers tilgang til spillerportalen",
+                  "30 dagers tilgang til PlayersHQ",
                 ].map((feature) => (
                   <div key={feature} className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-on-surface flex-shrink-0" />
@@ -232,7 +232,7 @@ export default function LandingPricingPage() {
                 ))}
               </div>
               <p className="text-xs text-error-bright mb-4">
-                Ingen spillerportal inkludert
+                Ingen PlayersHQ inkludert
               </p>
               <Link
                 href="/booking"
@@ -272,7 +272,7 @@ export default function LandingPricingPage() {
                 ))}
               </div>
               <p className="text-xs text-error-bright mb-4">
-                Ingen spillerportal inkludert
+                Ingen PlayersHQ inkludert
               </p>
               <Link
                 href="/booking"
@@ -382,7 +382,7 @@ export default function LandingPricingPage() {
             </h3>
             <p className="text-on-surface-variant/80 leading-relaxed">
               Flex gir deg coaching uten forpliktelser. Men du får kun
-              coaching-notater — ikke spillerportalen. Ingen treningsplan mellom
+              coaching-notater — ikke PlayersHQ. Ingen treningsplan mellom
               sesjonene, ingen statistikk, ingen progresjon.
             </p>
           </div>

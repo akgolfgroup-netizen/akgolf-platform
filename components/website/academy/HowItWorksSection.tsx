@@ -8,7 +8,7 @@ const STEPS = [
     step: "01",
     title: "Book i appen",
     description:
-      "Du booker 20-minutters coaching-sesjoner direkte i spillerportalen. Velg dag og tid som passer deg.",
+      "Du booker 20-minutters coaching-sesjoner direkte i PlayersHQ. Velg dag og tid som passer deg.",
   },
   {
     step: "02",
@@ -26,7 +26,7 @@ const STEPS = [
     step: "04",
     title: "Følg utviklingen",
     description:
-      "Spillerportalen viser handicap-utvikling, treningsstatistikk og Strokes Gained-analyse. Du ser fremgangen over tid.",
+      "PlayersHQ viser handicap-utvikling, treningsstatistikk og Strokes Gained-analyse. Du ser fremgangen over tid.",
   },
 ];
 

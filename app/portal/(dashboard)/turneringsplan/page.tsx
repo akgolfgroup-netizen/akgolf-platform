@@ -3,7 +3,7 @@ import { getPlayerTournaments } from "./actions";
 import { TurneringsplanClient } from "./turneringsplan-client";
 
 export const metadata = {
-  title: "Turneringsplan | AK Golf Portal",
+  title: "Turneringsplan | PlayersHQ",
 };
 
 export default async function TurneringsplanPage() {

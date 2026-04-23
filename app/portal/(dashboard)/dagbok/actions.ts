@@ -215,6 +215,43 @@ export async function getLoggedSessionIds() {
   return (logs || []).map((l) => l.planSessionId!);
 }
 
+// Quick-log: 1-click session by focus area
+export async function quickLogSession(focusArea: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Unauthorized");
+
+  if (!VALID_FOCUS_AREAS.includes(focusArea as (typeof VALID_FOCUS_AREAS)[number])) {
+    throw new Error("Ugyldig fokusomrade");
+  }
+
+  const supabase = await createServerSupabase();
+
+  const sessionId = nanoid();
+
+  await supabase.from("TrainingLog").insert({
+    id: sessionId,
+    updatedAt: new Date().toISOString(),
+    userId: user.id,
+    date: new Date().toISOString(),
+    focusArea,
+    durationMinutes: 60,
+    exercises: [],
+    notes: null,
+    rating: null,
+    deviatedFromPlan: false,
+    deviationReason: null,
+  });
+
+  revalidatePath("/dagbok");
+  revalidatePath("/treningsplan");
+  revalidatePath("/analyse");
+
+  // Check achievements in background
+  checkAchievements(user.id).catch(() => {});
+
+  return { success: true, focusArea, sessionId };
+}
+
 // Quick-log: Repeat last session
 export async function repeatLastSession() {
   const user = await requirePortalUser();

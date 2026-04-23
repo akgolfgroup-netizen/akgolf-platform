@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "AK Golf Portal",
-  description: "Spillerportal for AK Golf Academy",
+  description: "PlayersHQ — treningsplattform for AK Golf Academy",
 };
 
 export default function PortalLayout({

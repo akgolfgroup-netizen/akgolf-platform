@@ -13,11 +13,11 @@ import type { PeriodKey } from "./actions";
 import { getPlayerUSI, getLatestTrainingPrescription } from "@/lib/portal/usi/actions";
 
 export const metadata: Metadata = {
-  title: "Statistikk | AK Golf Portal",
+  title: "Statistikk | PlayersHQ",
   description:
     "Din golfstatistikk og progresjon. Strokes Gained, handicap-trend og benchmarks.",
   openGraph: {
-    title: "Statistikk | AK Golf Portal",
+    title: "Statistikk | PlayersHQ",
     description:
       "Din golfstatistikk og progresjon. Strokes Gained, handicap-trend og benchmarks.",
     type: "website",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Statistikk | AK Golf Portal",
+    title: "Statistikk | PlayersHQ",
     description:
       "Din golfstatistikk og progresjon. Strokes Gained, handicap-trend og benchmarks.",
   },

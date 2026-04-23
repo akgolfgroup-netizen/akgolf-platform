@@ -175,7 +175,7 @@ export default function LoginPage() {
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-sm bg-surface-container-lowest/5">
               <Icon name="auto_awesome" className="w-3.5 h-3.5 text-[var(--color-accent-cta)]" />
               <span className="text-[11px] font-medium tracking-wide uppercase text-surface/90">
-                Spillerportal
+                PlayersHQ
               </span>
             </div>
           </motion.div>
@@ -320,7 +320,7 @@ export default function LoginPage() {
                     Velkommen tilbake
                   </h1>
                   <p className="text-[15px] text-[var(--color-muted)]">
-                    Logg inn på spillerportalen for å fortsette.
+                    Logg inn på PlayersHQ for å fortsette.
                   </p>
                 </motion.div>
 

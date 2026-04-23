@@ -91,7 +91,7 @@ export function PlanAdjustmentBanner({ suggestion, onDismiss, onAdjust }: PlanAd
               className="text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors inline-flex items-center gap-1"
             >
               <Icon name="menu_book" className="w-3.5 h-3.5" />
-              Se dagbok
+              Se Min Trening
             </Link>
           </div>
         </div>

@@ -2,11 +2,13 @@
 
 
 import { Icon } from "@/components/ui/icon";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar, List, BarChart3 } from "lucide-react";
 import { repeatLastSession } from "./actions";
+import { useRouter } from "next/navigation";
 import { LogSessionModal } from "@/components/portal/dagbok/log-session-modal";
+import { QuickLogGrid } from "@/components/portal/dagbok/quick-log-grid";
 import { StreakCard, StreakData } from "@/components/portal/dagbok/streak-card";
 import { ActivityHeatmap } from "@/components/portal/dagbok/activity-heatmap";
 import { WeeklyStats } from "@/components/portal/dagbok/weekly-stats";
@@ -45,7 +47,7 @@ interface TrainingDiaryClientProps {
 }
 
 const SUB_NAV_TABS = [
-  { label: "Logg", href: "/portal/dagbok" },
+  { label: "Min Trening", href: "/portal/dagbok" },
   { label: "Treningsplan", href: "/portal/treningsplan" },
   { label: "Statistikk", href: "/portal/statistikk" },
 ];
@@ -79,12 +81,26 @@ export function TrainingDiaryClient({
   planProgress,
   streakData,
 }: TrainingDiaryClientProps) {
+  const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const [logModalOpen, setLogModalOpen] = useState(false);
   const [editingLog, setEditingLog] = useState<TrainingLogEntry | null>(null);
   const [activeView, setActiveView] = useState<"overview" | "calendar" | "stats">("overview");
+  const [pendingDetailSessionId, setPendingDetailSessionId] = useState<string | null>(null);
 
   const logs = initialLogs;
+
+  // Open detail modal when a quick-logged session appears after refresh
+  useEffect(() => {
+    if (pendingDetailSessionId) {
+      const log = logs.find((l) => l.id === pendingDetailSessionId);
+      if (log) {
+        setEditingLog(log);
+        setLogModalOpen(true);
+        setPendingDetailSessionId(null);
+      }
+    }
+  }, [logs, pendingDetailSessionId]);
 
   // Convert logs for activity heatmap
   const activityData = useMemo(() => {
@@ -140,7 +156,7 @@ export function TrainingDiaryClient({
         animate={{ opacity: 1, y: 0 }}
         className="space-y-3"
       >
-        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Din treningsdagbok</MonoLabel>
+        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Min Trening</MonoLabel>
         <h1 className="text-2xl font-bold text-on-surface">
           Logg og{" "}
           <span className="font-serif italic text-on-surface font-normal">spor</span>
@@ -203,25 +219,50 @@ export function TrainingDiaryClient({
         ))}
       </div>
 
+      {/* Quick-log grid — alltid synlig */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <QuickLogGrid
+          onLogged={(sessionId) => {
+            setPendingDetailSessionId(sessionId);
+            router.refresh();
+          }}
+          onOpenDetails={(focusArea) => {
+            const log = logs.find((l) => l.focusArea === focusArea);
+            if (log) {
+              setEditingLog(log);
+            } else {
+              setEditingLog({
+                id: "",
+                date: new Date(),
+                durationMinutes: 60,
+                focusArea,
+                notes: null,
+                rating: null,
+                deviatedFromPlan: false,
+                deviationReason: null,
+                planSessionId: null,
+                TrainingPlanSession: null,
+              });
+            }
+            setLogModalOpen(true);
+          }}
+        />
+      </motion.div>
+
       {isEmpty ? (
         <PremiumCard variant="default" padding="lg" className="text-center py-16">
           <div className="flex flex-col items-center justify-center text-center">
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-on-surface/10">
               <Icon name="bar_chart" className="w-8 h-8 text-on-surface" strokeWidth={1.75} />
             </div>
-            <p className="text-[20px] font-semibold text-on-surface mb-2">Din treningsdagbok er tom</p>
+            <p className="text-[20px] font-semibold text-on-surface mb-2">Ingen økter logget ennå</p>
             <p className="text-[13px] text-on-surface-variant mb-6 max-w-md leading-relaxed">
-              Logg din første treningsøkt for å komme i gang. Alt du logger blir automatisk en del av fremdriften din.
+              Bruk knappene over for å logge din første økt. Alt du logger blir automatisk en del av fremdriften din.
             </p>
-            <motion.button
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
-              className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)]"
-            >
-              <Icon name="add" className="w-3.5 h-3.5" strokeWidth={2.5} />
-              <span>Logg ny økt</span>
-            </motion.button>
           </div>
         </PremiumCard>
       ) : (
@@ -236,10 +277,7 @@ export function TrainingDiaryClient({
               {/* Bento Grid - Top Row: Streak + Weekly Stats */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <motion.div variants={itemVariants}>
-                  <StreakCard 
-                    data={streakData} 
-                    onUseFreeze={() => alert("Streak freeze brukt!")}
-                  />
+                  <StreakCard data={streakData} />
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <WeeklyStats sessions={sessionData} />

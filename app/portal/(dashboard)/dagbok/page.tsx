@@ -6,27 +6,27 @@ import { TrainingDiaryClient } from "./training-diary-client";
 import { isWithinInterval, endOfISOWeek, startOfISOWeek } from "date-fns";
 
 export const metadata: Metadata = {
-  title: "Dagbok | AK Golf Portal",
+  title: "Min Trening | PlayersHQ",
   description:
-    "Din treningsdagbok. Logg økter, følg planen og se utvikling over tid.",
+    "Din treningsdagbok i PlayersHQ. Logg økter, følg planen og se utvikling over tid.",
   openGraph: {
-    title: "Dagbok | AK Golf Portal",
+    title: "Min Trening | PlayersHQ",
     description:
-      "Din treningsdagbok. Logg økter, følg planen og se utvikling over tid.",
+      "Din treningsdagbok i PlayersHQ. Logg økter, følg planen og se utvikling over tid.",
     type: "website",
     locale: "nb_NO",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dagbok | AK Golf Portal",
+    title: "Min Trening | PlayersHQ",
     description:
-      "Din treningsdagbok. Logg økter, følg planen og se utvikling over tid.",
+      "Din treningsdagbok i PlayersHQ. Logg økter, følg planen og se utvikling over tid.",
   },
 };
 
 export const dynamic = "force-dynamic";
 
-export default async function DagbokPage() {
+export default async function MinTreningPage() {
   await requirePortalUser();
 
   // eslint-disable-next-line react-hooks/purity

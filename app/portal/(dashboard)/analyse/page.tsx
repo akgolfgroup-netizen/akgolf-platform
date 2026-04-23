@@ -21,11 +21,11 @@ import {
 import { Icon } from "@/components/ui/icon";
 
 export const metadata: Metadata = {
-  title: "Analyse | AK Golf Portal",
+  title: "Analyse | PlayersHQ",
   description:
     "AI-drevet innsikt i ditt spill. Dyp analyse av handicap, Strokes Gained og TrackMan-data.",
   openGraph: {
-    title: "Analyse | AK Golf Portal",
+    title: "Analyse | PlayersHQ",
     description:
       "AI-drevet innsikt i ditt spill. Dyp analyse av handicap, Strokes Gained og TrackMan-data.",
     type: "website",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Analyse | AK Golf Portal",
+    title: "Analyse | PlayersHQ",
     description:
       "AI-drevet innsikt i ditt spill. Dyp analyse av handicap, Strokes Gained og TrackMan-data.",
   },

@@ -17,12 +17,11 @@ export interface StreakData {
 
 interface StreakCardProps {
   data: StreakData;
-  onUseFreeze?: () => void;
 }
 
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
-export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
+export function StreakCard({ data }: StreakCardProps) {
   const { currentStreak, longestStreak, streakFreezesRemaining } = data;
   
   const isNewRecord = currentStreak > 0 && currentStreak >= longestStreak;
@@ -126,23 +125,13 @@ export function StreakCard({ data, onUseFreeze }: StreakCardProps) {
             </div>
           </div>
           
-          {/* Streak freeze indicator */}
+          {/* Streak freeze count */}
           <div className="flex-1 flex justify-end">
-            {streakFreezesRemaining > 0 ? (
-              <motion.button
-                onClick={onUseFreeze}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-variant border border-outline-variant/50 text-on-surface-variant text-xs font-medium hover:bg-outline-variant/30 transition-colors"
-              >
-                <Icon name="ac_unit" className="w-3.5 h-3.5" />
-                {streakFreezesRemaining} freeze{streakFreezesRemaining !== 1 ? "s" : ""}
-              </motion.button>
-            ) : (
-              <span className="text-xs text-on-surface-variant/60">
-                Ingen freezes igjen
-              </span>
-            )}
+            <span className="text-xs text-on-surface-variant/60">
+              {streakFreezesRemaining > 0
+                ? `${streakFreezesRemaining} freeze${streakFreezesRemaining !== 1 ? "s" : ""} igjen`
+                : "Ingen freezes igjen"}
+            </span>
           </div>
         </div>
       </div>
