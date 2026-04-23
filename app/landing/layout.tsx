@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 
 export const dynamic = "force-dynamic";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -72,14 +64,9 @@ export const metadata: Metadata = {
       "Personlig golf-coaching med TrackMan, videoanalyse og strukturerte treningsplaner.",
     images: ["/og-image.png"],
   },
-  verification: {
-    // Google Search Console verification (legg til når du har fått koden)
-    // google: "your-google-verification-code",
-  },
   category: "sports",
   other: {
-    "msapplication-TileColor": "#2d5a27",
-    "msapplication-config": "/browserconfig.xml",
+    "msapplication-TileColor": "#154212",
   },
 };
 
@@ -88,9 +75,5 @@ export default function LandingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="nb" className={`${inter.variable} h-full`}>
-      <body className="h-full antialiased">{children}</body>
-    </html>
-  );
+  return children;
 }
