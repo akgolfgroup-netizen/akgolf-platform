@@ -173,7 +173,7 @@ export default function SpillClient({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">
-            Spillerportal
+            PlayersHQ
           </MonoLabel>
           <h1 className="mt-1 text-[28px] font-bold tracking-tight text-on-surface">
             Spill

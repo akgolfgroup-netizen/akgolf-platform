@@ -4,7 +4,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { PYRAMIDE } from "@/lib/portal/training/ak-taxonomy";
 
 export const metadata = {
-  title: "Øvelser | AK Golf Portal",
+  title: "Øvelser | PlayersHQ",
 };
 
 async function getExercises() {

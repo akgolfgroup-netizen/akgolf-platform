@@ -56,7 +56,7 @@ export default function AcademyPage() {
         {/* 3. Slik fungerer det — 4 steg */}
         <HowItWorksSection />
 
-        {/* 4. Spillerportalen — funksjoner + lanseres mai 2026 */}
+        {/* 4. PlayersHQ — funksjoner + lanseres mai 2026 */}
         <PortalPreviewSection />
 
         {/* 5. Priser og pakker */}

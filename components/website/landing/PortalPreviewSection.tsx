@@ -18,7 +18,7 @@ export function PortalPreviewSection() {
     <section className="w-section">
       <div className="w-container">
         <RevealOnScroll>
-          <SectionLabel>Spillerportalen</SectionLabel>
+          <SectionLabel>PlayersHQ</SectionLabel>
         </RevealOnScroll>
         <RevealOnScroll>
           <h2 className="w-heading-lg mt-4 mb-4">

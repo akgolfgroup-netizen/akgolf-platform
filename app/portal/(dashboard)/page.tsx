@@ -3,11 +3,11 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "Dashboard | AK Golf Portal",
+  title: "Dashboard | PlayersHQ",
   description:
     "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
   openGraph: {
-    title: "Dashboard | AK Golf Portal",
+    title: "Dashboard | PlayersHQ",
     description:
       "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
     type: "website",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dashboard | AK Golf Portal",
+    title: "Dashboard | PlayersHQ",
     description:
       "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
   },

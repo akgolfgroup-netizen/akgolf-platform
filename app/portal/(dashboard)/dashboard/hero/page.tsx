@@ -10,7 +10,7 @@ import { CourseHeroClient } from "./course-hero-client";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Dashboard · Course Hero | AK Golf Portal",
+  title: "Dashboard · Course Hero | PlayersHQ",
   description:
     "Immersivt dashboard med foto-hero og glass bento. Din dag i ett blikk.",
 };

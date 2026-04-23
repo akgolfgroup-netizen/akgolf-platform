@@ -227,10 +227,10 @@ export const VIEW_REGISTRY: Record<ScreenId, ScreenViews> = {
     views: DEFAULT_VIEWS,
   },
 
-  // Portal — Dagbok
+  // Portal — Min Trening
   "portal-dagbok": {
     screenId: "portal-dagbok",
-    label: "Dagbok",
+    label: "Min Trening",
     views: DEFAULT_VIEWS,
   },
 

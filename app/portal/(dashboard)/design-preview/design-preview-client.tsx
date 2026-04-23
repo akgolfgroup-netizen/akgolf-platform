@@ -43,7 +43,7 @@ export function DesignPreviewClient() {
         </h1>
         <p className="text-on-surface-variant/80 mt-2 max-w-2xl">
           Seks nye v3.1-patterns implementert fra design canvas (
-          <code className="font-mono text-xs">AK Golf Portal.html</code>). Brukes som
+          <code className="font-mono text-xs">PlayersHQ.html</code>). Brukes som
           byggeklosser for dashboard-views og tematiske skjermer.
         </p>
       </header>

@@ -47,7 +47,7 @@ interface DagbokClientProps {
 }
 
 const SUB_NAV_TABS = [
-  { label: "Logg", href: "/portal/dagbok" },
+  { label: "Min trening", href: "/portal/dagbok" },
   { label: "Treningsplan", href: "/portal/treningsplan" },
   { label: "Statistikk", href: "/portal/statistikk" },
 ];
@@ -155,14 +155,14 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
       <SubNavTabs tabs={SUB_NAV_TABS} activeTab="/portal/dagbok" />
 
       <div className="space-y-3">
-        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Din treningsdagbok</MonoLabel>
+        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">PlayersHQ</MonoLabel>
         <h1 className="text-2xl font-bold text-on-surface">
-          Logg og{" "}
-          <span className="font-serif italic text-on-surface font-normal">spor</span>
+          Min{" "}
+          <span className="font-serif italic text-on-surface font-normal">trening</span>
           <span className="text-secondary-fixed">.</span>
         </h1>
         <p className="text-[13px] text-on-surface-variant max-w-xl">
-          Hold oversikt over aktiviteten din. Hver økt teller, og hver streak er et skritt nærmere målet.
+          Ett klikk logger økten din. Hver økt teller, og hver streak er et skritt nærmere målet.
         </p>
         {heroActions}
       </div>
@@ -201,9 +201,9 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-on-surface/10">
               <NotebookPen className="w-8 h-8 text-on-surface" strokeWidth={1.75} />
             </div>
-            <p className="text-[20px] font-semibold text-on-surface mb-2">Din treningsdagbok er tom</p>
+            <p className="text-[20px] font-semibold text-on-surface mb-2">Ingen økter logget ennå</p>
             <p className="text-[13px] text-on-surface-variant mb-6 max-w-md leading-relaxed">
-              Logg din første treningsøkt for å komme i gang. Alt du logger blir automatisk en del av fremdriften din.
+              Velg en kategori for å logge din første økt. Alt du logger blir automatisk en del av fremdriften din.
             </p>
             <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}
               onClick={() => { setEditingLog(null); setLogModalOpen(true); }}

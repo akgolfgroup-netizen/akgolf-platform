@@ -5,11 +5,11 @@ import { getUpcomingBookings, getPastBookings } from "./actions";
 import { BookingerClient } from "./bookinger-client";
 
 export const metadata: Metadata = {
-  title: "Bookinger | AK Golf Portal",
+  title: "Bookinger | PlayersHQ",
   description:
     "Dine coaching-bookinger. Se kommende og tidligere økter.",
   openGraph: {
-    title: "Bookinger | AK Golf Portal",
+    title: "Bookinger | PlayersHQ",
     description:
       "Dine coaching-bookinger. Se kommende og tidligere økter.",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bookinger | AK Golf Portal",
+    title: "Bookinger | PlayersHQ",
     description:
       "Dine coaching-bookinger. Se kommende og tidligere økter.",
   },

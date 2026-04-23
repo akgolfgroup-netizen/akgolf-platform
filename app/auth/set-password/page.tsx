@@ -203,7 +203,7 @@ function SetPasswordContent() {
               className="text-lg leading-relaxed text-surface/70 max-w-md"
             >
               Velg et passord for kontoen din, så tar vi deg rett inn i
-              spillerportalen og treningsplanen din.
+              PlayersHQ og treningsplanen din.
             </motion.p>
           </motion.div>
 
@@ -299,7 +299,7 @@ function SetPasswordContent() {
                     Velg passord
                   </h1>
                   <p className="text-[15px] text-muted">
-                    Sett et passord for å logge inn på spillerportalen.
+                    Sett et passord for å logge inn på PlayersHQ.
                   </p>
                 </motion.div>
 
@@ -420,7 +420,7 @@ function SetPasswordContent() {
                     Passord satt
                   </h1>
                   <p className="text-sm text-muted">
-                    Du blir nå sendt til spillerportalen...
+                    Du blir nå sendt til PlayersHQ...
                   </p>
                 </Card>
               </motion.div>

@@ -4,7 +4,7 @@ import { getKartleggingData } from "./actions";
 import { KartleggingClient } from "./kartlegging-client";
 
 export const metadata: Metadata = {
-  title: "Kartlegging | AK Golf Portal",
+  title: "Kartlegging | PlayersHQ",
   description:
     "Din samlede spillerprofil — nivå, styrker, gap og anbefalinger.",
 };

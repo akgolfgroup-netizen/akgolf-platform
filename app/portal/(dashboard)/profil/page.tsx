@@ -4,11 +4,11 @@ import { getMyProfile, getPlayerStats } from "./actions";
 import { ProfilePageClient } from "@/components/portal/profil/profile-page-client";
 
 export const metadata: Metadata = {
-  title: "Profil | AK Golf Portal",
+  title: "Profil | PlayersHQ",
   description:
     "Din spillerprofil. Oppdater innstillinger, se abonnement og personlig informasjon.",
   openGraph: {
-    title: "Profil | AK Golf Portal",
+    title: "Profil | PlayersHQ",
     description:
       "Din spillerprofil. Oppdater innstillinger, se abonnement og personlig informasjon.",
     type: "website",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Profil | AK Golf Portal",
+    title: "Profil | PlayersHQ",
     description:
       "Din spillerprofil. Oppdater innstillinger, se abonnement og personlig informasjon.",
   },

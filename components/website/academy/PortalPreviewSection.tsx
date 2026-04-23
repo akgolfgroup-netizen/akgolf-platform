@@ -45,12 +45,12 @@ export function PortalPreviewSection() {
       <div className="w-container">
         <RevealOnScroll>
           <div className="max-w-[640px] mx-auto text-center mb-16">
-            <SectionLabel>Spillerportalen</SectionLabel>
+            <SectionLabel>PlayersHQ</SectionLabel>
             <h2 className="w-heading-lg mt-4 mb-6">
               Alt du trenger mellom sesjonene
             </h2>
             <p className="text-text leading-relaxed">
-              Spillerportalen er treningsappen din. Her ser du treningsplanen,
+              PlayersHQ er treningsappen din. Her ser du treningsplanen,
               booker timer, følger progresjonen og har tilgang til alle øvelser
               med video. Treneren oppdaterer planen etter hver sesjon.
             </p>
@@ -63,7 +63,7 @@ export function PortalPreviewSection() {
             <div className="flex items-center justify-center gap-3 mb-2">
               <Icon name="smartphone" className="w-5 h-5 text-secondary-fixed" />
               <h3 className="font-semibold text-surface">
-                Spillerportalen er live
+                PlayersHQ er live
               </h3>
             </div>
             <p className="text-sm text-surface/70 max-w-md mx-auto">

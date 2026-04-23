@@ -5,7 +5,7 @@ import { getWeekEvents, createSessionForWeek } from "../treningsplan/actions";
 import { TimeplanClient, type TimeplanEvent } from "./timeplan-client";
 
 export const metadata: Metadata = {
-  title: "Min timeplan | AK Golf Portal",
+  title: "Min timeplan | PlayersHQ",
   description: "Din samlede timeplan med bookinger og treningsøkter.",
 };
 

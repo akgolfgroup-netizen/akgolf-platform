@@ -18,10 +18,10 @@ export default function LandingHomepage() {
         <div className="flex items-center gap-6">
           <a href="/portal/login" className="font-medium uppercase tracking-wider text-sm text-on-surface/70 hover:text-on-surface">Logg inn</a>
           <a 
-            href="/spillerportal"
+            href="/portal"
             className="bg-secondary-fixed text-on-surface px-6 py-2.5 rounded-lg font-medium uppercase tracking-wider text-sm scale-95 active:scale-90 transition-transform hover:opacity-80 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]"
           >
-            Spillerportal
+            PlayersHQ
           </a>
         </div>
       </nav>

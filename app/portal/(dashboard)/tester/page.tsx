@@ -4,7 +4,7 @@ import { TesterClient } from "./tester-client";
 
 import { MonoLabel, BentoGrid, BentoCard } from "@/components/portal/patterns";
 export const metadata = {
-  title: "DECADE Tester | AK Golf Portal",
+  title: "DECADE Tester | PlayersHQ",
 };
 
 export default async function TesterPage() {

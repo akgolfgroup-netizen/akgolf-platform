@@ -3,7 +3,7 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { TestProtocolList } from "./components/test-protocol-list";
 
 export const metadata = {
-  title: "Trackman Tester | AK Golf Portal",
+  title: "Trackman Tester | PlayersHQ",
 };
 
 // Fetch from Supabase directly since it's not in Prisma schema
