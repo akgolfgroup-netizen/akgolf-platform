@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Min Trening | PlayersHQ",
     description:
-      "Din treningsdagbok. Logg økter, følg planen og se utvikling over tid.",
+      "Din treningsdagbok i PlayersHQ. Logg økter, følg planen og se utvikling over tid.",
   },
 };
 
