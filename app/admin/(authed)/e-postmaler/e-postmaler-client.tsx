@@ -5,12 +5,12 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Variable } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminInput,
   AdminTextarea,
   AdminEmptyState,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MonoLabel, GlassPanel } from "@/components/portal/patterns";
@@ -72,7 +72,7 @@ function formatDate(dateStr: string): string {
 }
 
 export function EPostmalerClient({ templates }: EPostmalerClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -149,7 +149,7 @@ export function EPostmalerClient({ templates }: EPostmalerClientProps) {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="E-postmaler"
         subtitle="Opprett og rediger e-postmaler med dynamiske variabler"
         onMenuClick={toggle}

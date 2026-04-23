@@ -45,8 +45,8 @@ Inter via `next/font/google`. Ikke lokal font-fil.
 - Flex-tjenester: 3 uker (21 dager) i forveien
 - Konfigurert i `lib/portal/booking/subscription-quota.ts` (getSessionLimits) og `maxAdvanceDays` på ServiceType i databasen.
 
-## Mission Control
-- Admin: `/portal/admin/` med RBAC via `canAccessMissionControl()` og `canAccessMCPage()`.
+## CoachHQ
+- Admin: `/portal/admin/` med RBAC via `canAccessCoachHQ()` og `canAccessCoachHQPage()`.
 - Roller: ADMIN (alt), INSTRUCTOR (coaching), INVITED (begrenset).
 - All instruktør-funksjonalitet i Portal Admin. Ikke opprett separate dashboards.
 
@@ -81,7 +81,7 @@ STRIPE_SECRET_KEY=sk_live_xxx npx tsx scripts/diagnose-stripe-webhook.ts
 ```
 
 ### Health check
-Systemhelse vises i Mission Control dashboard via `WebhookHealthCard`.
+Systemhelse vises i CoachHQ dashboard via `WebhookHealthCard`.
 API-endepunkt: `GET /api/health/stripe`
 
 ## Prisma migrate mot Supabase
@@ -97,7 +97,7 @@ API-endepunkt: `GET /api/health/stripe`
 - Bruk `requireCapability(Capability.X)` i server actions og API.
 - Kritiske endringer (USERS_ASSIGN_CAPABILITIES, USERS_ASSIGN_ROLE, USERS_DEACTIVATE, FINANCE_REFUND, SYSTEM_SETTINGS, SYSTEM_RUN_CRON) må i tillegg kalle `requireSensitiveAuth()` — krever passord-bekreftelse siste 15 min.
 - Alle grant/revoke av kapabiliteter audit-logges automatisk i `CapabilityChangeLog` via team-actions. Ikke lag egne queries som omgår dette.
-- `defaultsForRole()` i `lib/portal/capabilities/check.ts` gir rolle-baserte defaults; eksisterende `canAccessMCPage()` er bakoverkompatibel midlertidig.
+- `defaultsForRole()` i `lib/portal/capabilities/check.ts` gir rolle-baserte defaults; eksisterende `canAccessCoachHQPage()` er bakoverkompatibel midlertidig.
 
 ## Heritage Grid design-migrering (2026-04-19)
 

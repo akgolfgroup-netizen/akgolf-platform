@@ -30,7 +30,7 @@ const missionBoardData = {
     quickActions: [
       { label: "Ny Booking", icon: "calendar", href: "/admin/bookinger/ny" },
       { label: "Send Melding", icon: "message", href: "/admin/meldinger" },
-      { label: "Legg til Elev", icon: "user-plus", href: "/admin/elever/ny" },
+      { label: "Legg til Elev", icon: "user-plus", href: "/admin/spillere/ny" },
       { label: "Se Rapport", icon: "chart", href: "/admin/rapporter" },
     ],
   },

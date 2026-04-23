@@ -2,7 +2,7 @@
 
 > 🚀 **START HER:** Les alltid `WORKLOG.md` først for å se hva som ble jobbet med sist. Deretter les `.claude/rules/design-system.md` hvis oppgaven involverer UI.
 
-Premium golfcoaching-plattform med markedsside, spillerportal og admin (Mission Control).
+Premium golfcoaching-plattform med markedsside, spillerportal og admin (CoachHQ).
 
 ## Tech Stack
 
@@ -30,7 +30,7 @@ npm run lint     # ESLint
 |--------|-------|---------|
 | Markedsside | `/`, `/academy`, `/junior-academy`, `/utvikling`, `/booking` | Åpen |
 | Portal | `/portal/(dashboard)/*` | `requirePortalUser()` |
-| Admin | `/portal/(dashboard)/admin/*` | `canAccessMissionControl()` |
+| Admin | `/portal/(dashboard)/admin/*` | `canAccessCoachHQ()` |
 | API | `/api/*` | Public: `/api/portal/public/*` |
 
 Auth: Supabase → `requirePortalUser()` i server components. `proxy.ts` for edge-redirects. Ingen middleware.ts.
@@ -60,7 +60,7 @@ Se `docs/status/` for oppdatert status:
 |-----|---------|
 | `BACKLOG.md` | Prioritert arbeidsliste (P1/P2/P3) |
 | `PORTAL_AUDIT.md` | Spillerportal — status per side |
-| `ADMIN_AUDIT.md` | Mission Control — status per side |
+| `ADMIN_AUDIT.md` | CoachHQ — status per side |
 | `BOOKING_AUDIT.md` | Booking-system og Stripe-integrering |
 
 ## Arbeidsflyt
@@ -93,7 +93,7 @@ Se `docs/status/` for oppdatert status:
 | `refactor` | Kodeendring uten ny funksjonalitet |
 | `docs` | Dokumentasjon |
 
-Format: `<prefix>: kort beskrivelse` — f.eks. `feat: booking reschedule i Mission Control`
+Format: `<prefix>: kort beskrivelse` — f.eks. `feat: booking reschedule i CoachHQ`
 
 ## Fortsett der du slapp
 
@@ -106,7 +106,7 @@ Siste arbeidslogg finnes i **`WORKLOG.md`** i rot-mappen. Les alltid denne førs
 | **Landingsside** | `app/landing/`, `app/page.tsx`, `components/website/` |
 | **Booking** | `app/booking/`, `components/booking/`, `lib/booking-config.ts` |
 | **Spillerportal** | `app/portal/(dashboard)/`, `components/portal/` |
-| **Mission Control (admin)** | `app/admin/`, `components/portal/mission-control/`, `components/portal/admin/` |
+| **CoachHQ (admin)** | `app/admin/`, `components/portal/coach-hq/`, `components/portal/admin/` |
 | **API** | `app/api/`, `lib/portal/` |
 | **Design-system** | `.claude/rules/design-system.md`, `app/globals.css`, `lib/design-tokens.ts` |
 | **Database** | `prisma/schema.prisma` |

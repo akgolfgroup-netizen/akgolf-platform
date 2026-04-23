@@ -4,7 +4,7 @@ import { Icon } from "@/components/ui/icon";
 import { useTransition } from "react";
 
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
 import {
@@ -38,7 +38,7 @@ interface AgenterClientProps {
 }
 
 export function AgenterClient({ agents, stats }: AgenterClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [isPending, startTransition] = useTransition();
 
   const handleToggle = (agentId: string, currentState: boolean) => {
@@ -59,7 +59,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="AI-agenter"
         subtitle="Administrer autonome AI-agenter"
         onMenuClick={toggle}
@@ -69,7 +69,7 @@ export function AgenterClient({ agents, stats }: AgenterClientProps) {
         {/* Heritage Grid Header */}
         <div className="space-y-2">
           <MonoLabel size="xs" uppercase className="block text-outline">
-            Mission Control
+            CoachHQ
           </MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">
             AI-agenter<span className="text-outline">.</span>

@@ -5,12 +5,12 @@ import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useEffect } from "react";
 
 import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminInput,
   AdminSelect,
   AdminPageHeader,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -87,7 +87,7 @@ export function NyPlanWizard({
   drills,
   preselectedStudentId,
 }: NyPlanWizardProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -286,7 +286,7 @@ export function NyPlanWizard({
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
-      <MCTopbar
+      <CoachHQTopbar
         title="Ny treningsplan"
         subtitle="Manuell opprettelse"
         onMenuClick={toggle}

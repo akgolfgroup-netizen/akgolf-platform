@@ -8,8 +8,8 @@ import { nb } from "date-fns/locale";
 import { cn } from "@/lib/portal/utils/cn";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AdminDropdown } from "@/components/portal/mission-control/ui";
-import type { AdminDropdownItem } from "@/components/portal/mission-control/ui";
+import { AdminDropdown } from "@/components/portal/coach-hq/ui";
+import type { AdminDropdownItem } from "@/components/portal/coach-hq/ui";
 import type { CalendarBooking } from "./actions";
 import {
   formatTime,

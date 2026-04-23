@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { UserCheck } from "lucide-react";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminStatCard,
   AdminPageHeader,
@@ -14,7 +14,7 @@ import {
   AdminDropdown,
   type AdminDataTableColumn,
   type AdminDataTableBulkAction,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Button, Badge } from "@/components/ui";
 import { type StudentListData, type StudentRow } from "./actions";
 
@@ -108,7 +108,7 @@ interface Props {
 }
 
 export function StudentsClient({ initialData }: Props) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [data] = useState(initialData);
   const [tierFilter, setTierFilter] = useState<"all" | string>("all");
   const [statusFilter, setStatusFilter] = useState<"all" | StudentStatus>("all");
@@ -178,9 +178,14 @@ export function StudentsClient({ initialData }: Props) {
       label: "Medlemskap",
       sortable: true,
       render: (row) => (
-        <Badge variant="info">
-          {TIER_LABEL[row.subscriptionTier] ?? row.subscriptionTier}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Badge variant="info">
+            {TIER_LABEL[row.subscriptionTier] ?? row.subscriptionTier}
+          </Badge>
+          {row.institution === "WANG" && (
+            <Badge variant="wang">WANG</Badge>
+          )}
+        </div>
       ),
     },
     {
@@ -290,7 +295,7 @@ export function StudentsClient({ initialData }: Props) {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Elever"
         subtitle="Administrer medlemskap og coaching-historikk"
         onMenuClick={toggle}
@@ -440,7 +445,7 @@ export function StudentsClient({ initialData }: Props) {
                 <Icon name="chat" className="w-4 h-4" />
                 Send melding
               </Button>
-              <Link href={`/admin/elever/${previewStudent.id}`}>
+              <Link href={`/admin/spillere/${previewStudent.id}`}>
                 <Button variant="accent">
                   <Icon name="description" className="w-4 h-4" />
                   Apne profil

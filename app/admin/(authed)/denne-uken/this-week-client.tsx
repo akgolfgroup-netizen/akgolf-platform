@@ -4,18 +4,18 @@
 import { Icon } from "@/components/ui/icon";
 import Image from "next/image";
 import { DollarSign } from "lucide-react";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminEmptyState,
   AdminTimeline,
   AdminProgressRing,
   AdminBarChart,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Badge } from "@/components/ui/badge";
 import type {
   AdminTimelineItem,
   AdminBarChartDatum,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { motion } from "framer-motion";
@@ -42,7 +42,7 @@ interface ThisWeekClientProps {
 }
 
 export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
 
   // Group bookings by date
   const byDate = new Map<string, WeekBooking[]>();
@@ -97,7 +97,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Denne uken"
         subtitle={"Bookinger for " + stats.weekLabel}
         onMenuClick={toggle}

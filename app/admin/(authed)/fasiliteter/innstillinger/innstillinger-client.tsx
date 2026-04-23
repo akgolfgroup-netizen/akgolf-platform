@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import { toggleFacilityActive, deleteInstructorDefault } from "../actions";
 
 // ── Types ──────────────────────────────────────────────────
@@ -35,7 +35,7 @@ interface Props {
 // ── Component ──────────────────────────────────────────────
 
 export function InnstillingerClient({ facilities, defaults }: Props) {
- const { toggle } = useMCSidebar();
+ const { toggle } = useCoachHQSidebar();
  const [isPending, startTransition] = useTransition();
 
  function handleToggle(facilityId: string) {
@@ -53,7 +53,7 @@ export function InnstillingerClient({ facilities, defaults }: Props) {
 
  return (
  <>
- <MCTopbar title="Fasilitetinnstillinger"subtitle="Administrer fasiliteter og standard innstillinger"onMenuClick={toggle} />
+ <CoachHQTopbar title="Fasilitetinnstillinger"subtitle="Administrer fasiliteter og standard innstillinger"onMenuClick={toggle} />
  <div className={cn("p-6 max-w-4xl mx-auto space-y-6", isPending && "opacity-60 pointer-events-none")}>
  <Link href="/admin/fasiliteter"className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface-variant transition-colors">
  <Icon name="arrow_back" className="w-4 h-4" />Tilbake til fasiliteter

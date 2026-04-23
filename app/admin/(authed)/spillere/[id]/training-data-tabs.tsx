@@ -15,7 +15,7 @@ import {
   AdminTableHeaderCell,
   AdminTableCell,
   AdminEmptyState,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Card, Button, Badge, Tabs, type TabItem } from "@/components/ui";
 import {
   getStudentTrainingPlan,

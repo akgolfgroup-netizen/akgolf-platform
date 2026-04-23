@@ -4,7 +4,7 @@
 import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 
-import { AdminDialog, AdminInput } from "@/components/portal/mission-control/ui";
+import { AdminDialog, AdminInput } from "@/components/portal/coach-hq/ui";
 import { Button } from "@/components/ui";
 import { confirmSensitiveAction } from "../actions";
 

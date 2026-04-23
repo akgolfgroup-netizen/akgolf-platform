@@ -6,7 +6,7 @@ import { useMemo, useState, useTransition } from "react";
 
 import Link from "next/link";
 import { UserRole, type Capability } from "@prisma/client";
-import { AdminPageHeader } from "@/components/portal/mission-control/ui";
+import { AdminPageHeader } from "@/components/portal/coach-hq/ui";
 import { Button, Badge } from "@/components/ui";
 import {
   inviteTeamMember,

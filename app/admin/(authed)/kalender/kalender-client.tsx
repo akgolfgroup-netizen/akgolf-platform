@@ -9,8 +9,8 @@ import {
   endOfWeek,
   addDays,
 } from "date-fns";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
-import { useToast } from "@/components/portal/mission-control/ui";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
+import { useToast } from "@/components/portal/coach-hq/ui";
 import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
 import type { CalendarBooking, CalendarBlockedTime, CalendarAvailability } from "./actions";
 import {
@@ -47,7 +47,7 @@ export default function KalenderClient({
   initialBookings,
   instructors,
 }: KalenderClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const { toast } = useToast();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<ViewMode>("month");
@@ -207,7 +207,7 @@ export default function KalenderClient({
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Kalender"
         subtitle="Full oversikt over alle bookinger og hendelser"
         onMenuClick={toggle}
@@ -217,7 +217,7 @@ export default function KalenderClient({
         {/* Heritage Grid Header */}
         <div className="space-y-2">
           <MonoLabel size="xs" uppercase className="block text-outline">
-            Mission Control
+            CoachHQ
           </MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">
             Kalender<span className="text-outline">.</span>

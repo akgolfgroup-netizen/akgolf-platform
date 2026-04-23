@@ -6,7 +6,7 @@ import { useState, useTransition } from "react";
 
 import Link from "next/link";
 import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
  AdminInput,
  AdminTextarea,
@@ -14,7 +14,7 @@ import {
  AdminStatCard,
  AdminPageHeader,
  AdminEmptyState,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -118,7 +118,7 @@ function PlanOverview({
 }: {
  initialPlans: ExistingPlanSummary[];
 }) {
- const { toggle } = useMCSidebar();
+ const { toggle } = useCoachHQSidebar();
  const [searchQuery, setSearchQuery] = useState("");
  const [filterActive, setFilterActive] = useState<
  "all"| "active"| "inactive"
@@ -146,7 +146,7 @@ function PlanOverview({
 
  return (
  <div className="flex-1 flex flex-col min-h-0">
- <MCTopbar
+ <CoachHQTopbar
  title="Treningsplaner"
  subtitle="Opprett og administrer treningsplaner"
  onMenuClick={toggle}
@@ -155,7 +155,7 @@ function PlanOverview({
  <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-surface">
  {/* Heritage Grid Header */}
  <div className="space-y-2">
- <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+ <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
  <h1 className="text-2xl font-bold tracking-tight text-on-surface">Treningsplaner<span className="text-outline">.</span></h1>
  <p className="text-on-surface-variant">Oversikt over alle aktive og tidligere treningsplaner</p>
  </div>
@@ -332,7 +332,7 @@ function StudentPlanEditor({
  student: StudentInfo | null;
  studentId: string;
 }) {
- const { toggle } = useMCSidebar();
+ const { toggle } = useCoachHQSidebar();
  const [activePlanId, setActivePlanId] = useState<string | null>(
  plans.find((p) => p.isActive)?.id ?? plans[0]?.id ?? null,
  );
@@ -386,7 +386,7 @@ function StudentPlanEditor({
 
  return (
  <>
- <MCTopbar
+ <CoachHQTopbar
  title="Treningsplan"
  subtitle={student?.name ?? "Elev"}
  onMenuClick={toggle}
@@ -397,15 +397,15 @@ function StudentPlanEditor({
  title={student?.name ?? "Treningsplan"}
  subtitle="Rediger uker, økter og fokus for eleven"
  breadcrumbs={[
- { label: "Elever", href: "/admin/elever"},
- { label: student?.name ?? "Elev", href: `/admin/elever/${studentId}` },
+ { label: "Elever", href: "/admin/spillere"},
+ { label: student?.name ?? "Elev", href: `/admin/spillere/${studentId}` },
  { label: "Treningsplan"},
  ]}
  />
 
  {/* Back link */}
  <Link
- href={`/admin/elever/${studentId}`}
+ href={`/admin/spillere/${studentId}`}
  className="inline-flex items-center gap-1 text-sm text-on-surface-variant/80 hover:text-text transition-colors"
  >
  <Icon name="arrow_back" className="w-4 h-4" />

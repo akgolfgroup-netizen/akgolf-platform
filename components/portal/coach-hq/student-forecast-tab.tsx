@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { ForecastForm, type ForecastFormData } from "./forecast-form";
 import { ForecastDisplay, type ForecastDisplayData } from "./forecast-display";
 import { ForecastHistory } from "./forecast-history";
-import { AdminEmptyState } from "@/components/portal/mission-control/ui";
+import { AdminEmptyState } from "@/components/portal/coach-hq/ui";
 
 interface StudentForecastTabProps {
   userId: string;

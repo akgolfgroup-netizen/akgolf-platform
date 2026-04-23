@@ -3,8 +3,8 @@
 import { useMemo } from "react";
 import { getHours } from "date-fns";
 import { Badge } from "@/components/ui/badge";
-import { AdminHeatmap } from "@/components/portal/mission-control/ui";
-import type { AdminHeatmapCell } from "@/components/portal/mission-control/ui";
+import { AdminHeatmap } from "@/components/portal/coach-hq/ui";
+import type { AdminHeatmapCell } from "@/components/portal/coach-hq/ui";
 import type { CalendarBooking } from "./actions";
 
 const HEATMAP_ROWS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];

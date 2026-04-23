@@ -719,7 +719,7 @@ interface TrainingLogExercise {
 
 ---
 
-### 4.3 Elever (`/portal/admin/elever`)
+### 4.3 Elever (`/portal/admin/spillere`)
 **Status:** `✅ IMPLEMENTED`
 
 **Listevisning:**
@@ -727,7 +727,7 @@ interface TrainingLogExercise {
 - Filter: aktive, nye, at-risk
 - Kolonner: navn, handicap, A-K-kategori, siste booking, neste booking, aktiv plan, økter denne måneden
 
-**Elev-detalj (`/portal/admin/elever/[id]`):**
+**Elev-detalj (`/portal/admin/spillere/[id]`):**
 - Profil-header med bilde, kontaktinfo, tier-badge
 - Tabs: Oversikt / Treningsdata / Bookinger / Treningsplan / Meldinger
 - Trener kan se all historikk, redigere plan, sende melding

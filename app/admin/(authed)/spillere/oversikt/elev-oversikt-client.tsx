@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
-import { AdminPageHeader } from "@/components/portal/mission-control/ui";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { AdminPageHeader } from "@/components/portal/coach-hq/ui";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminTable,
   AdminTableHead,
@@ -13,7 +13,7 @@ import {
   AdminTableRow,
   AdminTableHeaderCell,
   AdminTableCell,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { cn } from "@/lib/portal/utils/cn";
 import type { ElevOversiktRow } from "./actions";
 
@@ -67,7 +67,7 @@ function HcpDisplay({
 }
 
 export function ElevOversiktClient({ rows }: ElevOversiktClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [sortBy, setSortBy] = useState<"adherence" | "lastActivity" | "weeklyHours">("adherence");
 
   const sorted = [...rows].sort((a, b) => {
@@ -89,7 +89,7 @@ export function ElevOversiktClient({ rows }: ElevOversiktClientProps) {
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
-      <MCTopbar
+      <CoachHQTopbar
         title="Elev-oversikt"
         subtitle="Adherence, aktivitet og HCP-trend per elev"
         onMenuClick={toggle}
@@ -99,7 +99,7 @@ export function ElevOversiktClient({ rows }: ElevOversiktClientProps) {
         <AdminPageHeader
           title="Elev-oversikt"
           subtitle="Oversikt over alle dine elever med plan-adherence og progresjon"
-          breadcrumbs={[{ label: "Elever", href: "/admin/elever" }, { label: "Oversikt" }]}
+          breadcrumbs={[{ label: "Elever", href: "/admin/spillere" }, { label: "Oversikt" }]}
         />
 
         {/* Stat-kort */}
@@ -228,7 +228,7 @@ export function ElevOversiktClient({ rows }: ElevOversiktClientProps) {
                 </AdminTableCell>
                 <AdminTableCell className="text-right">
                   <div className="flex items-center justify-end gap-2">
-                    <Link href={`/admin/elever/${row.id}`}>
+                    <Link href={`/admin/spillere/${row.id}`}>
                       <Button size="sm" variant="ghost">
                         <Icon name="visibility" className="w-4 h-4" />
                       </Button>

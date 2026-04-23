@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   AdminStatCard, AdminDialog, AdminDrawer,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { adminCancelBooking, adminRescheduleBooking, type AdminBooking } from "./actions";
 
 // ── Types ──────────────────────────────────────────────────

@@ -8,17 +8,17 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { DollarSign, MessageSquare, UserPlus, FileText } from "lucide-react";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminAreaChart,
   AdminSparkline,
   AdminTimeline,
   AdminProgressRing,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import type {
   AdminAreaChartDatum,
   AdminTimelineItem,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Card, Button, Badge } from "@/components/ui";
 import { getMissionBoardCharts, type MissionBoardCharts } from "./actions";
 
@@ -111,7 +111,7 @@ function StatusBadge({ status }: { status: string }) {
 
 // Main Component
 export default function MissionBoardPage() {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const router = useRouter();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [charts, setCharts] = useState<MissionBoardCharts | null>(null);
@@ -150,7 +150,7 @@ export default function MissionBoardPage() {
   if (loading && !stats) {
     return (
       <>
-        <MCTopbar
+        <CoachHQTopbar
           title="Mission Board"
           subtitle="Oversikt over akademiet"
           onMenuClick={toggle}
@@ -170,7 +170,7 @@ export default function MissionBoardPage() {
   if (error) {
     return (
       <>
-        <MCTopbar
+        <CoachHQTopbar
           title="Mission Board"
           subtitle="Oversikt over akademiet"
           onMenuClick={toggle}
@@ -225,7 +225,7 @@ export default function MissionBoardPage() {
     {
       icon: UserPlus,
       label: "Ny elev",
-      href: "/admin/elever/ny",
+      href: "/admin/spillere/ny",
     },
     {
       icon: FileText,
@@ -236,7 +236,7 @@ export default function MissionBoardPage() {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Mission Board"
         subtitle="Oversikt over akademiet"
         onMenuClick={toggle}

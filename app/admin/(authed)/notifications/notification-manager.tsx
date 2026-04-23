@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import {
   AdminInput,
   AdminTextarea,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import {
   MonoLabel,
   BentoGrid,

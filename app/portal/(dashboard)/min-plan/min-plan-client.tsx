@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Map, Compass } from "lucide-react";
 import { Badge } from "@/components/ui";
 import { Button } from "@/components/ui/button";
-import { AdminProgressRing } from "@/components/portal/mission-control/ui";
+import { AdminProgressRing } from "@/components/portal/coach-hq/ui";
 
 import { MonoLabel } from "@/components/portal/patterns";
 import { generateWeekFromForecast } from "@/lib/ai/forecast-plan-allocator";

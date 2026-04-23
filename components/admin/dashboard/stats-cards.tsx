@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import React from "react";
 
 import { Card } from "@/components/ui/card";
-import { AdminSparkline } from "@/components/portal/mission-control/ui/charts/AdminSparkline";
+import { AdminSparkline } from "@/components/portal/coach-hq/ui/charts/AdminSparkline";
 import { cn } from "@/lib/utils";
 import { MonoLabel } from "@/components/portal/patterns";
 

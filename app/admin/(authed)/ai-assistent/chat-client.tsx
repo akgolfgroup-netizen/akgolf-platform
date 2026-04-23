@@ -4,7 +4,7 @@ import { Icon } from "@/components/ui/icon";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Send, TrendingUp, Users, Calendar, BarChart3, Lightbulb, ThumbsUp, ThumbsDown, Clock } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import { MonoLabel, GlassPanel } from "@/components/portal/patterns";
 
 const suggestedQuestions = [
@@ -48,7 +48,7 @@ const WELCOME_MESSAGE: Message = {
 };
 
 export function ChatClient() {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
@@ -159,7 +159,7 @@ export function ChatClient() {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="AI-assistent"
         subtitle="Still spørsmål om data, elever og analytikk"
         onMenuClick={toggle}
@@ -169,7 +169,7 @@ export function ChatClient() {
         {/* Heritage Grid Header */}
         <div className="space-y-2">
           <MonoLabel size="xs" uppercase className="block text-outline">
-            Mission Control
+            CoachHQ
           </MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">
             AI-assistent<span className="text-outline">.</span>

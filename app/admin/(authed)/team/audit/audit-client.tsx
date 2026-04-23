@@ -9,7 +9,7 @@ import { CapabilityChangeAction } from "@prisma/client";
 import {
   AdminPageHeader,
   AdminInput,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Badge } from "@/components/ui";
 import type { AuditLogRow } from "../actions";
 

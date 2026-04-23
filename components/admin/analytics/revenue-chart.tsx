@@ -4,8 +4,8 @@
 import { Icon } from "@/components/ui/icon";
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { AdminAreaChart } from "@/components/portal/mission-control/ui/charts/AdminAreaChart";
-import type { AdminAreaChartDatum } from "@/components/portal/mission-control/ui/charts/AdminAreaChart";
+import { AdminAreaChart } from "@/components/portal/coach-hq/ui/charts/AdminAreaChart";
+import type { AdminAreaChartDatum } from "@/components/portal/coach-hq/ui/charts/AdminAreaChart";
 
 import { cn } from "@/lib/utils";
 

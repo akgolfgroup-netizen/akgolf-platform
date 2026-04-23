@@ -188,7 +188,7 @@ export function PlayerListSection({ players }: PlayerListSectionProps) {
           return (
             <Link
               key={p.userId}
-              href={`/admin/elever/${p.userId}`}
+              href={`/admin/spillere/${p.userId}`}
               className="rounded-xl bg-surface-container-lowest shadow-card p-5 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200 group"
             >
               <div className="flex items-start justify-between gap-3 mb-3">

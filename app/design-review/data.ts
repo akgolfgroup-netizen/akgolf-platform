@@ -21,12 +21,12 @@ export const screens: Screen[] = [
   { route: "/portal/bookinger", heritageRef: "sessions_calendar_view", label: "Bookinger", sprint: "A", auth: "portal", status: "done" },
   { route: "/portal/profil", heritageRef: "settings_profile", label: "Profil", sprint: "A", auth: "portal", status: "done" },
 
-  // ─── Sprint B — Mission Control kjerne (DONE ✅) ───
+  // ─── Sprint B — CoachHQ kjerne (DONE ✅) ───
   { route: "/admin", heritageRef: "mission_control_command_center", label: "Hub-oversikt", sprint: "B", auth: "admin", status: "done" },
   { route: "/admin/mission-board", heritageRef: "dashboard_mission_control", label: "Mission Board", sprint: "B", auth: "admin", status: "done" },
   { route: "/admin/coaching-board", heritageRef: "coach_my_day", label: "Coaching Board", sprint: "B", auth: "admin", status: "done" },
-  { route: "/admin/elever", heritageRef: "admin_player_management", label: "Elever", sprint: "B", auth: "admin", status: "done" },
-  { route: "/admin/elever/demo", heritageRef: "admin_player_profile", label: "Elev-detalj", sprint: "B", auth: "admin", status: "done" },
+  { route: "/admin/spillere", heritageRef: "admin_player_management", label: "Elever", sprint: "B", auth: "admin", status: "done" },
+  { route: "/admin/spillere/demo", heritageRef: "admin_player_profile", label: "Elev-detalj", sprint: "B", auth: "admin", status: "done" },
   { route: "/admin/team", heritageRef: "team_setup", label: "Team + tilgang", sprint: "B", auth: "admin", status: "done" },
   { route: "/admin/bookinger", heritageRef: "booking_review_confirm", label: "Bookinger (admin)", sprint: "B", auth: "admin", status: "done" },
 
@@ -110,7 +110,7 @@ export const screens: Screen[] = [
 
 export const sprintNames: Record<string, string> = {
   A: "Sprint A — Spillerportal kjerne",
-  B: "Sprint B — Mission Control kjerne",
+  B: "Sprint B — CoachHQ kjerne",
   C: "Sprint C — Booking-system",
   D: "Sprint D — Landingpages",
   E: "Sprint E — Sekundær portal",

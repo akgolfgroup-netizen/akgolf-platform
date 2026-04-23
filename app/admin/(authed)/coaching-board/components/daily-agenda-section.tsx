@@ -133,7 +133,7 @@ export function DailyAgendaSection({ signals }: DailyAgendaSectionProps) {
               </div>
 
               <Link
-                href={`/admin/elever/${signal.userId}`}
+                href={`/admin/spillere/${signal.userId}`}
                 className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline shrink-0 ml-2 whitespace-nowrap"
               >
                 Åpne

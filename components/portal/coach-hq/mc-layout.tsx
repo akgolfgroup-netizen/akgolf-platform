@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, createContext, useContext } from "react";
-import { MCSidebar } from "./mc-sidebar";
+import { CoachHQSidebar } from "./mc-sidebar";
 
-interface MCLayoutProps {
+interface CoachHQLayoutProps {
   children: React.ReactNode;
   user: {
     id: string;
@@ -14,27 +14,27 @@ interface MCLayoutProps {
   };
 }
 
-interface MCSidebarContextType {
+interface CoachHQSidebarContextType {
   isOpen: boolean;
   open: () => void;
   close: () => void;
   toggle: () => void;
 }
 
-const MCSidebarContext = createContext<MCSidebarContextType | null>(null);
+const CoachHQSidebarContext = createContext<CoachHQSidebarContextType | null>(null);
 
-export function useMCSidebar() {
-  const context = useContext(MCSidebarContext);
+export function useCoachHQSidebar() {
+  const context = useContext(CoachHQSidebarContext);
   if (!context) {
-    throw new Error("useMCSidebar must be used within MCLayoutProvider");
+    throw new Error("useCoachHQSidebar must be used within CoachHQLayoutProvider");
   }
   return context;
 }
 
-export function MCLayout({ children, user }: MCLayoutProps) {
+export function CoachHQLayout({ children, user }: CoachHQLayoutProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const contextValue: MCSidebarContextType = {
+  const contextValue: CoachHQSidebarContextType = {
     isOpen,
     open: () => setIsOpen(true),
     close: () => setIsOpen(false),
@@ -42,13 +42,13 @@ export function MCLayout({ children, user }: MCLayoutProps) {
   };
 
   return (
-    <MCSidebarContext.Provider value={contextValue}>
+    <CoachHQSidebarContext.Provider value={contextValue}>
       <div className="min-h-screen flex bg-surface">
-        <MCSidebar user={user} isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        <CoachHQSidebar user={user} isOpen={isOpen} onClose={() => setIsOpen(false)} />
         <main className="flex-1 lg:ml-64 min-h-screen flex flex-col p-6 lg:p-8">
           {children}
         </main>
       </div>
-    </MCSidebarContext.Provider>
+    </CoachHQSidebarContext.Provider>
   );
 }

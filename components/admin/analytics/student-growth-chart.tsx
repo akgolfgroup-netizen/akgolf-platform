@@ -4,8 +4,8 @@
 import { Icon } from "@/components/ui/icon";
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { AdminBarChart } from "@/components/portal/mission-control/ui/charts/AdminBarChart";
-import type { AdminBarChartDatum } from "@/components/portal/mission-control/ui/charts/AdminBarChart";
+import { AdminBarChart } from "@/components/portal/coach-hq/ui/charts/AdminBarChart";
+import type { AdminBarChartDatum } from "@/components/portal/coach-hq/ui/charts/AdminBarChart";
 
 
 interface StudentGrowthChartProps {

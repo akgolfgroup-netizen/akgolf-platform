@@ -36,7 +36,7 @@ export interface NavGroup {
 }
 
 // Icon mapping for server-safe rendering
-export const MC_ICON_MAP: Record<string, LucideIcon> = {
+export const COACHHQ_ICON_MAP: Record<string, LucideIcon> = {
   target: Target,
   zap: Zap,
   calendar: Calendar,
@@ -61,7 +61,7 @@ export const MC_ICON_MAP: Record<string, LucideIcon> = {
   trophy: Trophy,
 };
 
-export const MC_NAV_CONFIG: NavGroup[] = [
+export const COACHHQ_NAV_CONFIG: NavGroup[] = [
   {
     label: "Hub",
     items: [
@@ -82,12 +82,12 @@ export const MC_NAV_CONFIG: NavGroup[] = [
     ],
   },
   {
-    label: "Elever & Coaching",
+    label: "Academy",
     items: [
       { href: "/admin/coaching-board", label: "Coaching Mission Board", iconName: "layout-dashboard" },
-      { href: "/admin/elever", label: "Elever", iconName: "users" },
-      { href: "/admin/elever/oversikt", label: "Elev-oversikt", iconName: "bar-chart" },
-      { href: "/admin/grupper", label: "Treningsgrupper", iconName: "users" },
+      { href: "/admin/spillere", label: "Spillere", iconName: "users" },
+      { href: "/admin/spillere/oversikt", label: "Spiller-oversikt", iconName: "bar-chart" },
+      { href: "/admin/grupper", label: "Grupper", iconName: "users" },
       { href: "/admin/okter", label: "Coaching-notater", iconName: "file-text" },
       { href: "/admin/treningsplan", label: "Treningsplaner", iconName: "notebook-pen" },
       { href: "/admin/turneringer", label: "Turneringer", iconName: "trophy" },

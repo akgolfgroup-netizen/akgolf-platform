@@ -5,12 +5,12 @@ import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { UserCheck, CalendarCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminStatCard,
   AdminPageHeader,
   AdminEmptyState,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Button } from "@/components/ui/button";
 import { exportBookingsCSV } from "./actions";
 import { MonoLabel } from "@/components/portal/patterns";
@@ -69,7 +69,7 @@ function downloadCsv(csv: string, filename: string) {
 }
 
 export function RapporterClient({ data }: RapporterClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [timeRange, setTimeRange] = useState<TimeRange>("30d");
 
   const maxBookings = Math.max(...data.bookingTrends.map((t) => t.count), 1);
@@ -80,7 +80,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Rapporter"
         subtitle="KPIer og analyse av akademiets ytelse"
         onMenuClick={toggle}

@@ -5,7 +5,7 @@ import { getServiceTypes, getInstructors } from "../create-actions";
 import { NyBookingClient } from "./ny-booking-client";
 
 export const metadata = {
-  title: "Ny Booking | AK Golf Mission Control",
+  title: "Ny Booking | AK Golf CoachHQ",
 };
 
 export default async function NyBookingPage() {

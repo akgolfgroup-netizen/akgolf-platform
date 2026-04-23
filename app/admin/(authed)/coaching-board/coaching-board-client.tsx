@@ -58,7 +58,7 @@ export function CoachingBoardClient({
           )}
           {permissions.canRegisterTest && (
             <Link
-              href="/admin/elever"
+              href="/admin/spillere"
               className="inline-flex items-center rounded-[20px] bg-primary px-4 py-2 text-sm font-medium text-surface hover:bg-primary-alt transition-colors"
             >
               Registrer test

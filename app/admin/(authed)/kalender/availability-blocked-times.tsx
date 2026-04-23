@@ -7,7 +7,7 @@ import { useState, useTransition } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
-import { AdminInput, AdminDialog, useToast } from "@/components/portal/mission-control/ui";
+import { AdminInput, AdminDialog, useToast } from "@/components/portal/coach-hq/ui";
 import type { CalendarBlockedTime } from "./actions";
 import { createBlockedTimePrisma, deleteBlockedTimePrisma } from "./actions";
 

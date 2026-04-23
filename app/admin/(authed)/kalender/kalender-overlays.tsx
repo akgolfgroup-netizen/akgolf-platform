@@ -10,7 +10,7 @@ import {
   AdminInput,
   AdminDialog,
   AdminDrawer,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { CalendarBooking } from "./actions";

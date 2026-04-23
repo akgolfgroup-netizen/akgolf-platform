@@ -86,7 +86,7 @@ export function PrioriterteEleverKort({ elever }: { elever: PrioritertElev[] }) 
           </h3>
         </div>
         <Link
-          href="/admin/elever/oversikt"
+          href="/admin/spillere/oversikt"
           className="text-xs text-on-surface-variant hover:text-on-surface font-medium inline-flex items-center gap-1 transition-colors"
         >
           Se alle

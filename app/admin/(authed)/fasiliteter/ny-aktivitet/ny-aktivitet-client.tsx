@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Calendar, Users, FileText } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import { createActivity } from "../actions";
 
 // ── Types ──────────────────────────────────────────────────
@@ -41,7 +41,7 @@ interface FormData {
 // ── Component ──────────────────────────────────────────────
 
 export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[] }) {
- const { toggle } = useMCSidebar();
+ const { toggle } = useCoachHQSidebar();
  const router = useRouter();
  const [loading, setLoading] = useState(false);
  const [success, setSuccess] = useState(false);
@@ -77,7 +77,7 @@ export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[]
  if (success) {
  return (
  <>
- <MCTopbar title="Ny aktivitet"subtitle=""onMenuClick={toggle} />
+ <CoachHQTopbar title="Ny aktivitet"subtitle=""onMenuClick={toggle} />
  <div className="p-6">
  <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl py-16 text-center max-w-md mx-auto">
  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
@@ -93,7 +93,7 @@ export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[]
 
  return (
  <>
- <MCTopbar title="Ny aktivitet"subtitle="Opprett en ny turnering, kurs eller aktivitet"onMenuClick={toggle} />
+ <CoachHQTopbar title="Ny aktivitet"subtitle="Opprett en ny turnering, kurs eller aktivitet"onMenuClick={toggle} />
  <div className="p-6 max-w-2xl mx-auto space-y-6">
  <Link href="/admin/fasiliteter"className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface-variant transition-colors">
  <Icon name="arrow_back" className="w-4 h-4" />Tilbake til fasiliteter

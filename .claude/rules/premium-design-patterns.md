@@ -224,7 +224,7 @@ Accent-lime brukes SPARSOMT. Maxregel: maks 2-3 elementer per skjerm.
 | Element | Eksempel |
 |---------|----------|
 | Primaer CTA-knapp | "Book time", "Kom i gang" |
-| Aktiv nav-tab (sidebar) | Aktivt menyvalg i Mission Control |
+| Aktiv nav-tab (sidebar) | Aktivt menyvalg i CoachHQ |
 | Fremhevet badge | "Ny personlig rekord", "Aktiv uke" |
 | Stolpediagram-topp | Beste dag i treningsdiagram |
 | Donut-segment | Primaer treningskategori |

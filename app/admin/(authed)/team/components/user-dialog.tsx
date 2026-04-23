@@ -6,7 +6,7 @@ import {
   AdminDialog,
   AdminInput,
   AdminSelect,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Button } from "@/components/ui";
 import { CAPABILITY_PRESETS } from "@/lib/portal/capabilities";
 import { CapabilityChecklist } from "./capability-checklist";

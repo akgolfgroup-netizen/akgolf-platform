@@ -6,7 +6,7 @@ import { Grid3X3, Filter } from "lucide-react";
 import { format, subMonths, addMonths, subWeeks, addWeeks } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
-import { AdminSelect } from "@/components/portal/mission-control/ui";
+import { AdminSelect } from "@/components/portal/coach-hq/ui";
 import { Tabs, type TabItem } from "@/components/ui/tabs";
 import type { Instructor } from "./actions";
 

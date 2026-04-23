@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
 import { Map } from "lucide-react";
 import { Badge } from "@/components/ui";
-import { AdminProgressRing } from "@/components/portal/mission-control/ui";
+import { AdminProgressRing } from "@/components/portal/coach-hq/ui";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 

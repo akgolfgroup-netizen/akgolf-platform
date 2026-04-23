@@ -492,7 +492,7 @@ Organisert etter MC-sidebar (`mc-nav-config.ts`).
 #### Elever (liste)
 | | |
 |---|---|
-| **Rute** | `/admin/elever` |
+| **Rute** | `/admin/spillere` |
 | **Skjermnavn** | Elev-oversikt |
 | **Hovedfunksjoner** | Se alle elever. Søk, filtrer, se progresjon. |
 | **Data som vises** | Elev-liste, USI, HCP, siste aktivitet, abonnement |
@@ -502,12 +502,12 @@ Organisert etter MC-sidebar (`mc-nav-config.ts`).
 #### Elev-detalj
 | | |
 |---|---|
-| **Rute** | `/admin/elever/[id]` |
+| **Rute** | `/admin/spillere/[id]` |
 | **Skjermnavn** | Elev-profil |
 | **Hovedfunksjoner** | Full profil per elev: progresjon, coaching-historikk, treningsdata, notater. |
 | **Data som vises** | All spillerdata: runder, TrackMan, dagbok, USI, bookinger, meldinger |
 | **Handlinger** | Se data, skriv notat, send melding, se treningsplan |
-| **Koblinger** | ← `/admin/elever`. → `/admin/meldinger`, `/admin/treningsplan` |
+| **Koblinger** | ← `/admin/spillere`. → `/admin/meldinger`, `/admin/treningsplan` |
 
 ### Kalender & Booking
 
@@ -571,7 +571,7 @@ Organisert etter MC-sidebar (`mc-nav-config.ts`).
 | **Hovedfunksjoner** | Opprette og administrere treningsplaner for elever. |
 | **Data som vises** | TrainingPlan, elev-liste |
 | **Handlinger** | Opprett plan, tilpass plan, tildel elev |
-| **Koblinger** | ← `/admin/elever` |
+| **Koblinger** | ← `/admin/spillere` |
 
 #### Turneringer (admin)
 | | |
@@ -738,7 +738,7 @@ Organisert etter MC-sidebar (`mc-nav-config.ts`).
 │  ├─ Bookinger (/admin/bookinger)
 │  └─ Tilgjengelighet (/admin/tilgjengelighet)
 ├─ ELVER & COACHING
-│  ├─ Elever (/admin/elever)
+│  ├─ Elever (/admin/spillere)
 │  ├─ Treningsplaner (/admin/treningsplan)
 │  └─ Økter (/admin/okter)
 ├─ OPERASJON

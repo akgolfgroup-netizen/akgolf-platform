@@ -4,8 +4,8 @@
 import { Icon } from "@/components/ui/icon";
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { AdminDonutChart } from "@/components/portal/mission-control/ui/charts/AdminDonutChart";
-import type { AdminDonutChartDatum } from "@/components/portal/mission-control/ui/charts/AdminDonutChart";
+import { AdminDonutChart } from "@/components/portal/coach-hq/ui/charts/AdminDonutChart";
+import type { AdminDonutChartDatum } from "@/components/portal/coach-hq/ui/charts/AdminDonutChart";
 import { Target, TrendingDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 

@@ -134,8 +134,8 @@ Layout: MCLayout (sidebar + topbar)
 ### Elever & Coaching
 | Rute | Formaal | Tilgang |
 |------|---------|---------|
-| `/portal/admin/elever` | Elevliste | Staff |
-| `/portal/admin/elever/[id]` | Elev-detaljer | Staff |
+| `/portal/admin/spillere` | Elevliste | Staff |
+| `/portal/admin/spillere/[id]` | Elev-detaljer | Staff |
 | `/portal/admin/okter` | Coaching-notater | Staff |
 
 ### Kommunikasjon

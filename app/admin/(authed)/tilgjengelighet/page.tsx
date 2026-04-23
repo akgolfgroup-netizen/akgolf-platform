@@ -5,14 +5,14 @@ import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Calendar } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminInput,
   AdminDialog,
   AdminDataTable,
   useToast,
-} from "@/components/portal/mission-control/ui";
-import type { AdminDataTableColumn } from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
+import type { AdminDataTableColumn } from "@/components/portal/coach-hq/ui";
 import { Card, Button, Tabs, Badge } from "@/components/ui";
 import type { TabItem } from "@/components/ui";
 import { format, startOfWeek, addDays } from "date-fns";
@@ -80,7 +80,7 @@ const tabItems: TabItem[] = [
 ];
 
 export default function TilgjengelighetPage() {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<string>("hours");
   const [instructors, setInstructors] = useState<Instructor[]>([]);
@@ -344,7 +344,7 @@ export default function TilgjengelighetPage() {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Tilgjengelighet"
         subtitle="Sett arbeidstider og unntak for instruktører"
         onMenuClick={toggle}
@@ -353,7 +353,7 @@ export default function TilgjengelighetPage() {
       <div className="p-6 space-y-6">
         {/* Heritage Grid Header */}
         <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+          <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">Tilgjengelighet<span className="text-outline">.</span></h1>
           <p className="text-on-surface-variant">Sett arbeidstider og unntak for instruktører</p>
         </div>

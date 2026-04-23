@@ -183,7 +183,7 @@ export async function updateCoachingNotes(
       .update({ instructorNotes: notes })
       .eq("id", sessionId);
 
-    revalidatePath("/admin/elever");
+    revalidatePath("/admin/spillere");
     return { success: true };
   } catch {
     return { success: false, error: "Kunne ikke oppdatere notater" };

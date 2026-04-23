@@ -5,9 +5,9 @@ import { Icon } from "@/components/ui/icon";
 import { useMemo } from "react";
 import { DollarSign } from "lucide-react";
 import {
-  MCTopbar,
-  useMCSidebar,
-} from "@/components/portal/mission-control";
+  CoachHQTopbar,
+  useCoachHQSidebar,
+} from "@/components/portal/coach-hq";
 import {
   AdminStatCard,
   AdminGauge,
@@ -16,7 +16,7 @@ import {
   AdminAreaChart,
   AdminHeatmap,
   AdminDataTable,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
 import { Badge } from "@/components/ui/badge";
 import type {
@@ -24,7 +24,7 @@ import type {
   AdminAreaChartDatum,
   AdminHeatmapCell,
   AdminDataTableColumn,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import type { CapacityData, CoachCapacity } from "./actions";
 
 interface KapasitetClientProps {
@@ -82,7 +82,7 @@ interface CoachRow {
 }
 
 export function KapasitetClient({ data }: KapasitetClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
 
   const { weeklyTotal, coaches, dailyBreakdown } = data;
   const occupancyPct = Math.round(weeklyTotal.occupancy * 100);
@@ -199,7 +199,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Kapasitet"
         subtitle={`${data.weekRange.from} – ${data.weekRange.to}`}
         onMenuClick={toggle}
@@ -208,7 +208,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
       <div className="p-6 space-y-6">
         {/* Heritage Grid Header */}
         <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+          <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">Kapasitet<span className="text-outline">.</span></h1>
           <p className="text-on-surface-variant">{data.weekRange.from} – {data.weekRange.to}</p>
         </div>

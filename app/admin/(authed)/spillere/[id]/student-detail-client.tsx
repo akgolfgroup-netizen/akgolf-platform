@@ -6,7 +6,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Edit3 } from "lucide-react";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminStatCard,
   AdminPageHeader,
@@ -17,13 +17,13 @@ import {
   type AdminTimelineItem,
   type AdminLineChartDatum,
   type AdminBarChartDatum,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Badge, Tabs } from "@/components/ui";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { getOrCreateConversation } from "@/app/admin/(authed)/meldinger/chat-actions";
 import { TrainingDataTabs } from "./training-data-tabs";
-import { StudentForecastTab } from "@/components/portal/mission-control/student-forecast-tab";
+import { StudentForecastTab } from "@/components/portal/coach-hq/student-forecast-tab";
 import type { getStudentProfile } from "./actions";
 
 // ---------------------------------------------------------------------------
@@ -59,7 +59,7 @@ function getInitials(name: string | null): string {
 // ---------------------------------------------------------------------------
 
 export function StudentDetailClient({ profile }: Props) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [activeTab, setActiveTab] = useState<string>("overview");
   const router = useRouter();
   const [isSendingMessage, startSendingMessage] = useTransition();
@@ -150,7 +150,7 @@ export function StudentDetailClient({ profile }: Props) {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Elev-profil"
         subtitle={profile.name ?? "Elev"}
         onMenuClick={toggle}
@@ -161,7 +161,7 @@ export function StudentDetailClient({ profile }: Props) {
           title={profile.name ?? "Elev"}
           subtitle="Coaching-historikk, malsettinger og kommunikasjon"
           breadcrumbs={[
-            { label: "Elever", href: "/admin/elever" },
+            { label: "Elever", href: "/admin/spillere" },
             { label: profile.name ?? "Elev" },
           ]}
           actions={

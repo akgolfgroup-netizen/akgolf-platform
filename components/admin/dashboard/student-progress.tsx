@@ -6,8 +6,8 @@ import React from "react";
 import Link from "next/link";
 
 import { Card } from "@/components/ui/card";
-import { AdminLineChart } from "@/components/portal/mission-control/ui/charts/AdminLineChart";
-import type { AdminLineChartDatum } from "@/components/portal/mission-control/ui/charts/AdminLineChart";
+import { AdminLineChart } from "@/components/portal/coach-hq/ui/charts/AdminLineChart";
+import type { AdminLineChartDatum } from "@/components/portal/coach-hq/ui/charts/AdminLineChart";
 import { cn } from "@/lib/utils";
 
 interface StudentProgressData {
@@ -108,7 +108,7 @@ function FollowUpItem({ student }: { student: StudentProgressData["needsFollowUp
         <p className="text-xs text-error mt-1">{student.reason}</p>
       </div>
       <Link
-        href={`/admin/elever/${student.id}`}
+        href={`/admin/spillere/${student.id}`}
         className="text-on-surface-variant hover:text-on-surface transition-colors"
       >
         <Icon name="chevron_right" className="w-4 h-4" />

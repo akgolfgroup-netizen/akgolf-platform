@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import {
   AdminDialog,
   AdminInput,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { format, addMinutes } from "date-fns";
 import { nb } from "date-fns/locale";
 import { adminRescheduleBooking } from "./actions";

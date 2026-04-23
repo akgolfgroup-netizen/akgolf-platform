@@ -14,6 +14,7 @@ export interface StudentRow {
   email: string | null;
   phone: string | null;
   subscriptionTier: string;
+  institution: string | null;
   isActive: boolean;
   lastActiveAt: string | null;
   createdAt: string;
@@ -210,6 +211,7 @@ export async function fetchStudents(
       email: s.email,
       phone: s.phone,
       subscriptionTier: s.subscriptionTier,
+      institution: (s as { institution?: string | null }).institution ?? null,
       isActive: s.isActive,
       lastActiveAt: s.lastActiveAt,
       createdAt: s.createdAt,

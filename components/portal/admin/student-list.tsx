@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import Link from "next/link";
 import { Search } from "lucide-react";
-import { searchStudents } from "@/app/admin/(authed)/elever/actions";
+import { searchStudents } from "@/app/admin/(authed)/spillere/actions";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Card } from "@/components/ui/card";
@@ -322,13 +322,13 @@ export function StudentList() {
                 {/* Actions */}
                 <div className="flex gap-2">
                   <Link
-                    href={`/admin/elever/${student.id}`}
+                    href={`/admin/spillere/${student.id}`}
                     className="w-8 h-8 rounded-lg border border-outline-variant/30 bg-surface-container-lowest flex items-center justify-center hover:border-black hover:bg-surface-container transition-colors group"
                   >
                     <Icon name="visibility" className="w-4 h-4 text-on-surface-variant group-hover:text-on-surface" />
                   </Link>
                   <button className="w-8 h-8 rounded-lg border border-outline-variant/30 bg-surface-container-lowest flex items-center justify-center hover:border-black hover:bg-surface-container transition-colors group">
-                    <Icon name="edit"2 className="w-4 h-4 text-on-surface-variant group-hover:text-on-surface" />
+                    <Icon name="edit" className="w-4 h-4 text-on-surface-variant group-hover:text-on-surface" />
                   </button>
                   <button className="w-8 h-8 rounded-lg border border-outline-variant/30 bg-surface-container-lowest flex items-center justify-center hover:border-black hover:bg-surface-container transition-colors group">
                     <Icon name="more_horiz" className="w-4 h-4 text-on-surface-variant group-hover:text-on-surface" />

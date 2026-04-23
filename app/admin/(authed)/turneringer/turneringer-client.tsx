@@ -6,14 +6,14 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
  AdminInput,
  AdminSelect,
  AdminStatCard,
  AdminPageHeader,
  AdminEmptyState,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -195,7 +195,7 @@ export function TurneringerClient({
  initialTournaments,
  stats,
 }: TurneringerClientProps) {
- const { toggle } = useMCSidebar();
+ const { toggle } = useCoachHQSidebar();
  const [filter, setFilter] = useState<StatusFilter>("all");
  const [showModal, setShowModal] = useState(false);
  const [isPending, startTransition] = useTransition();
@@ -230,7 +230,7 @@ export function TurneringerClient({
 
  return (
  <>
- <MCTopbar
+ <CoachHQTopbar
  title="Turneringer"
  subtitle="Administrer turneringer og spillerplaner"
  onMenuClick={toggle}
@@ -239,7 +239,7 @@ export function TurneringerClient({
  <div className="p-6 space-y-6">
  {/* Heritage Grid Header */}
  <div className="space-y-2">
- <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+ <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
  <h1 className="text-2xl font-bold tracking-tight text-on-surface">Turneringer<span className="text-outline">.</span></h1>
  <p className="text-on-surface-variant">Administrer turneringer og spillerplaner</p>
  </div>

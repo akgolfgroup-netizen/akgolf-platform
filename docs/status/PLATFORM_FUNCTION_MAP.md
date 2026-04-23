@@ -121,7 +121,7 @@ Ikke spiller-fase. Grupperes etter MC-sidebar (`components/portal/mission-contro
 |---|---|---|
 | **Hub** | `/admin`, `/admin/meldinger` | Dashboard, unified inbox |
 | **Kalender & Booking** | `/admin/bookinger`, `/admin/kalender`, `/admin/tilgjengelighet` | Sessions, ledighet, reschedule |
-| **Elever & Coaching** | `/admin/elever`, `/admin/elever/[id]`, `/admin/coaching-board`, `/admin/kartlegging` | Player-oversikt, Mission Board (priority signals), kartlegging |
+| **Elever & Coaching** | `/admin/spillere`, `/admin/spillere/[id]`, `/admin/coaching-board`, `/admin/kartlegging` | Player-oversikt, Mission Board (priority signals), kartlegging |
 | **Kommunikasjon** | `/admin/kommunikasjon`, `/admin/meldinger/[id]` | Chat, logs |
 | **AI & Agenter** | `/admin/ai`, `/admin/agenter` | AI-oversikt, agent-konfig |
 | **Analyse & Økonomi** | `/admin/analyse`, `/admin/finans`, `/admin/abonnement` | Performance, payments, subscriptions |
@@ -134,8 +134,8 @@ Ikke spiller-fase. Grupperes etter MC-sidebar (`components/portal/mission-contro
 |---|---|
 | `/admin` | `mission_control_command_center` |
 | `/admin/coaching-board` | `coach_my_day`, `coach_my_players` |
-| `/admin/elever` | `admin_player_management` |
-| `/admin/elever/[id]` | `coach_player_view` |
+| `/admin/spillere` | `admin_player_management` |
+| `/admin/spillere/[id]` | `coach_player_view` |
 | `/admin/team` | `team_setup`, `super_admin_dashboard` |
 | `/admin/bookinger` | `sessions_calendar_view` |
 | `/admin/meldinger` | `coach_messages`, `inbox_main` |
@@ -401,7 +401,7 @@ Basert på denne kartleggingen — før nye sider bygges, bør rewrites priorite
 | **A. EVALUERE-kjerne** | `/portal`, `/portal/statistikk`, `/portal/kartlegging` | 3 sider | Dette er daglige touchpoints. Gap mellom data og UI er størst her. |
 | **B. PLANLEGGE-kjerne** | `/portal/treningsplan`, `/portal/bookinger/*` | 5 sider | Bruker kommer hit for å handle — konverteringsflate. |
 | **C. GJENNOMFØRE-flyt** | `/portal/runde/*`, `/portal/dagbok` | 4 sider | Rask, tvangsfri logging gir mer data inn til EVALUERE. |
-| **D. Mission Board** | `/admin`, `/admin/coaching-board`, `/admin/elever/*` | 5 sider | Coach-opplevelsen driver intern effektivitet. |
+| **D. Mission Board** | `/admin`, `/admin/coaching-board`, `/admin/spillere/*` | 5 sider | Coach-opplevelsen driver intern effektivitet. |
 | **E. Booking-flyt (public + portal)** | `/booking`, `/portal/bookinger/ny` | 6 sider (wizard) | Stripe-konverteringskritisk. |
 | **F. Landing + Auth** | `/`, `/academy`, `/auth/*` | 10+ sider | Merkevare-uttrykk før Heritage-launch. |
 | **G. Rest** | Alt annet | Batch-rewrites med felleskomponenter. |

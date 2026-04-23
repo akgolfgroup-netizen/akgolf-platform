@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-type BadgeVariant = 'default' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'muted' | 'pro' | 'lime' | 'purple';
+type BadgeVariant = 'default' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'muted' | 'pro' | 'lime' | 'purple' | 'wang';
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
@@ -33,6 +33,7 @@ export const Badge: React.FC<BadgeProps> = ({
     pro: 'bg-secondary-fixed text-secondary-fixed-text',
     lime: 'bg-secondary-fixed text-secondary-fixed-text',
     purple: 'bg-ai-light text-ai-text',
+    wang: 'bg-[#2563eb] text-white',
   };
 
   return (

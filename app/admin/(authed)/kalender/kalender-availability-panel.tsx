@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useCallback, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/portal/mission-control/ui";
+import { useToast } from "@/components/portal/coach-hq/ui";
 import type { Instructor } from "./actions";
 import type { CalendarAvailability, CalendarBlockedTime } from "./actions";
 import {

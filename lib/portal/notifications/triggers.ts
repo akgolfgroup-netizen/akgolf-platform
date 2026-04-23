@@ -180,7 +180,7 @@ export async function notifyDiaryEntry(
       type: NotificationType.GENERAL,
       title: "Nytt dagbok-innlegg",
       message: `En elev logget en ny runde${entryData?.courseName ? ` på ${entryData.courseName}` : ""}${dateStr ? ` ${dateStr}` : ""}${scoreStr}`,
-      linkUrl: `/admin/elever/${userId}/dagbok`,
+      linkUrl: `/admin/spillere/${userId}/dagbok`,
       linkText: "Se dagbok",
       metadata,
       isAdminNotification: true,
@@ -543,7 +543,7 @@ export async function sendAdminDailySummary(
       title: "Dagens oppsummering",
       message: `Du har ${stats.todaysBookings} bookinger i dag. ${stats.pendingBookings > 0 ? `${stats.pendingBookings} venter på bekreftelse.` : ""}`,
       linkUrl: "/admin",
-      linkText: "Åpne Mission Control",
+      linkText: "Åpne CoachHQ",
       isAdminNotification: true,
       adminType: "system",
     });

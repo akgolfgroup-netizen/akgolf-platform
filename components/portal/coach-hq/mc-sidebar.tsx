@@ -13,7 +13,7 @@
  * - Active: bg-lime-400 text-emerald-950 font-bold rounded-lg px-4 py-3 text-sm uppercase tracking-tight
  * - Inactive: text-emerald-100/70 hover:text-surface hover:bg-emerald-900/50
  * - Bottom: mt-auto pt-6 border-t border-emerald-900/50 px-4
- * - Bruker beholder grupper (8 i MC_NAV_CONFIG) — Heritage har flat nav men vi må tilpasse
+ * - Bruker beholder grupper (8 i COACHHQ_NAV_CONFIG) — Heritage har flat nav men vi må tilpasse
  * - Gruppe-label: text-[10px] text-emerald-100/40 uppercase tracking-[0.12em]
  */
 
@@ -23,8 +23,8 @@ import { createBrowserClient } from "@supabase/ssr";
 import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/utils";
-import { MC_NAV_CONFIG, type NavGroup, type NavItem } from "./mc-nav-config";
-import { canAccessMCPage, isAdmin, isStaff } from "@/lib/portal/rbac";
+import { COACHHQ_NAV_CONFIG, type NavGroup, type NavItem } from "./mc-nav-config";
+import { canAccessCoachHQPage, isAdmin, isStaff } from "@/lib/portal/rbac";
 
 // Map iconName (lowercase hyphen) → Material Symbol navn (snake_case)
 const ICON_MAP: Record<string, string> = {
@@ -52,7 +52,7 @@ const ICON_MAP: Record<string, string> = {
   trophy: "emoji_events",
 };
 
-interface MCSidebarProps {
+interface CoachHQSidebarProps {
   user: {
     id: string;
     name?: string | null;
@@ -106,7 +106,7 @@ function NavGroupComponent({
 }) {
   const accessibleItems = group.items.filter((item) => {
     const pageName = item.href.split("/").pop() || "hub";
-    return canAccessMCPage(userRole, pageName as never);
+    return canAccessCoachHQPage(userRole, pageName as never);
   });
 
   if (accessibleItems.length === 0) return null;
@@ -140,7 +140,7 @@ function SidebarHeader() {
     <div className="mb-8 px-4">
       <h1 className="text-xl font-bold tracking-widest text-surface">AK Golf</h1>
       <p className="text-xs font-medium uppercase tracking-tight text-emerald-100/50 mt-1">
-        Mission Control
+        CoachHQ
       </p>
     </div>
   );
@@ -150,7 +150,7 @@ function SidebarBottom({
   user,
   onSignOut,
 }: {
-  user: MCSidebarProps["user"];
+  user: CoachHQSidebarProps["user"];
   onSignOut: () => void;
 }) {
   const initial = (user.name ?? user.email ?? "U")[0].toUpperCase();
@@ -203,7 +203,7 @@ function SidebarBody({
   onSignOut,
   onNavClick,
 }: {
-  user: MCSidebarProps["user"];
+  user: CoachHQSidebarProps["user"];
   pathname: string;
   onSignOut: () => void;
   onNavClick?: () => void;
@@ -212,7 +212,7 @@ function SidebarBody({
     <>
       <SidebarHeader />
       <nav className="flex-1 overflow-y-auto">
-        {MC_NAV_CONFIG.map((group) => (
+        {COACHHQ_NAV_CONFIG.map((group) => (
           <NavGroupComponent
             key={group.label}
             group={group}
@@ -227,7 +227,7 @@ function SidebarBody({
   );
 }
 
-export function MCSidebar({ user, isOpen, onClose }: MCSidebarProps) {
+export function CoachHQSidebar({ user, isOpen, onClose }: CoachHQSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
 

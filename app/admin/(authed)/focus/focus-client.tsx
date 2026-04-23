@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { Target, Users, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
@@ -55,7 +55,7 @@ interface Props {
 // ── Component ───────────────────────────────────────────────
 
 export function FocusClient({ initialTasks, initialStats, todayBookings }: Props) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [isPending, startTransition] = useTransition();
   const [division, setDivision] = useState<Division>("COACHING");
   const [tasks, setTasks] = useState(initialTasks);
@@ -97,12 +97,12 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
 
   return (
     <>
-      <MCTopbar title="Focus" subtitle="Oppgaver og dagsoversikt per divisjon" onMenuClick={toggle} />
+      <CoachHQTopbar title="Focus" subtitle="Oppgaver og dagsoversikt per divisjon" onMenuClick={toggle} />
 
       <div className="p-6 space-y-6">
         {/* Heritage Grid Header */}
         <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+          <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">Focus<span className="text-outline">.</span></h1>
           <p className="text-on-surface-variant">Oppgaver og dagsoversikt per divisjon</p>
         </div>

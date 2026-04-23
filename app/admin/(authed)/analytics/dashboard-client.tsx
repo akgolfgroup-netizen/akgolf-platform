@@ -4,13 +4,13 @@ import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { LineChart, PieChart } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminLineChart, AdminBarChart, AdminDonutChart,
   AdminHeatmap, AdminProgressRing,
   AdminTable, AdminTableHead, AdminTableBody, AdminTableRow,
   AdminTableHeaderCell, AdminTableCell,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, type TabItem } from "@/components/ui/tabs";
@@ -65,7 +65,7 @@ function formatKr(amount: number): string {
 // ── Component ──────────────────────────────────────────────
 
 export function DashboardClient({ initialData }: { initialData: DashboardData }) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [data, setData] = useState(initialData);
   const [activeTab, setActiveTab] = useState("overview");
   const [period, setPeriod] = useState<AnalyticsPeriod>("month");
@@ -83,13 +83,13 @@ export function DashboardClient({ initialData }: { initialData: DashboardData })
 
   return (
     <>
-      <MCTopbar title="Analytics" subtitle={data.periodLabel} onMenuClick={toggle} />
+      <CoachHQTopbar title="Analytics" subtitle={data.periodLabel} onMenuClick={toggle} />
 
       <div className={cn("p-6 space-y-6", isPending && "opacity-60 pointer-events-none transition-opacity")}>
         {/* Heritage Grid Header */}
         <div className="space-y-2">
           <MonoLabel size="xs" uppercase className="block text-outline">
-            Mission Control
+            CoachHQ
           </MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">
             Analytics<span className="text-outline">.</span>

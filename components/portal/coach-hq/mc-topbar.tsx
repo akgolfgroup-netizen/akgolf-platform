@@ -10,7 +10,7 @@ import { getWeek } from "date-fns";
 import { AdminNotificationBell } from "@/components/portal/admin/AdminNotificationBell";
 import { cn } from "@/lib/utils";
 
-interface MCTopbarProps {
+interface CoachHQTopbarProps {
   title: string;
   subtitle?: string;
   onMenuClick?: () => void;
@@ -25,7 +25,7 @@ interface MCTopbarProps {
   children?: React.ReactNode;
 }
 
-export function MCTopbar({
+export function CoachHQTopbar({
   title,
   subtitle,
   onMenuClick,
@@ -33,7 +33,7 @@ export function MCTopbar({
   showSearch = true,
   showNewBooking = true,
   children,
-}: MCTopbarProps) {
+}: CoachHQTopbarProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (

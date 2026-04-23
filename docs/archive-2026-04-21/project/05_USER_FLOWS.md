@@ -83,7 +83,7 @@ Markedsside (/)
     Divisjoner: Coaching | Junior | GFGK
 
   → Klikk pa sesjon
-    /portal/admin/elever/[id]
+    /portal/admin/spillere/[id]
     Ser elevprofil, historikk, notater
     Forbered seg til okten
 

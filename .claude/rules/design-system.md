@@ -17,7 +17,7 @@ Hver komponent/side i appen har en referanse-skjerm:
 | `/portal/statistikk` | `analytics_strokes_gained/` |
 | `/portal/kartlegging` | `coach_player_view/` |
 | `/admin/coaching-board` | `coach_my_day/` |
-| `/admin/elever` | `admin_player_management/` |
+| `/admin/spillere` | `admin_player_management/` |
 | `/admin/team` | `team_setup/`, `super_admin_dashboard/` |
 | `/portal/bookinger` | `booking_coach_selection/`, `booking_date_time/` |
 | `/portal/profil` | `settings_profile/` |

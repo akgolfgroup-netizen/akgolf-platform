@@ -5,20 +5,20 @@ import { Icon } from "@/components/ui/icon";
 import React from "react";
 import Link from "next/link";
 import {
-  MCTopbar,
-  useMCSidebar,
-} from "@/components/portal/mission-control";
-import { WebhookHealthCard } from "@/components/portal/mission-control";
+  CoachHQTopbar,
+  useCoachHQSidebar,
+} from "@/components/portal/coach-hq";
+import { WebhookHealthCard } from "@/components/portal/coach-hq";
 import {
   AdminGauge,
   AdminSparkline,
   AdminLineChart,
   AdminDonutChart,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import type {
   AdminLineChartDatum,
   AdminDonutChartDatum,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Plus, MessageSquare, UserPlus } from "lucide-react";
 import { MonoLabel } from "@/components/portal/patterns";
 import { PrioriterteEleverKort } from "./dashboard/prioriterte-elever-kort";
@@ -142,7 +142,7 @@ function Button({
 }
 
 export function HubOversiktClient({ data, user, prioriterteElever }: HubOversiktClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
 
   const today = new Date();
   const dateString = today.toLocaleDateString("nb-NO", {
@@ -199,7 +199,7 @@ export function HubOversiktClient({ data, user, prioriterteElever }: HubOversikt
     {
       label: "Legg til elev",
       icon: UserPlus,
-      href: "/admin/elever",
+      href: "/admin/spillere",
       variant: "secondary" as const,
     },
   ];
@@ -270,7 +270,7 @@ export function HubOversiktClient({ data, user, prioriterteElever }: HubOversikt
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Hub — Oversikt"
         subtitle={dateString.charAt(0).toUpperCase() + dateString.slice(1)}
         onMenuClick={toggle}

@@ -4,7 +4,7 @@
 import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
  ChannelFilter,
  type Channel,
@@ -29,7 +29,7 @@ export function MeldingerClient({
  initialMessages,
  channelCounts,
 }: MeldingerClientProps) {
- const { toggle } = useMCSidebar();
+ const { toggle } = useCoachHQSidebar();
  const [selectedChannel, setSelectedChannel] = useState<Channel | "ALL">(
  "ALL"
  );
@@ -81,7 +81,7 @@ export function MeldingerClient({
  if (messages.length === 0) {
  return (
  <>
- <MCTopbar
+ <CoachHQTopbar
  title="Meldingskø"
  subtitle="Ingen meldinger ennå"
  onMenuClick={toggle}
@@ -103,7 +103,7 @@ export function MeldingerClient({
 
  return (
  <>
- <MCTopbar
+ <CoachHQTopbar
  title="Meldingskø"
  subtitle={`${messages.length} meldinger`}
  onMenuClick={toggle}

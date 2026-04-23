@@ -2066,7 +2066,7 @@ Oversikt over kapasitetsutnyttelse og verktøy for å justere kapasiteten.
 
 ---
 
-## 4.11 Elever (`/admin/elever`)
+## 4.11 Elever (`/admin/spillere`)
 
 ### Hva er det?
 En fullstendig elevadministrasjon med søk, filtre, bulk-actions og hurtigvisning.
@@ -2104,14 +2104,14 @@ En fullstendig elevadministrasjon med søk, filtre, bulk-actions og hurtigvisnin
 - `StudentRow`-type: `id`, `name`, `email`, `phone`, `subscriptionTier`, `isActive`, `handicap`, `category`, `sessionsThisMonth`, `lastActiveAt`, `nextBookingDate`, `hasActivePlan`.
 
 ### Brukerflyt
-1. Admin går til `/admin/elever`.
+1. Admin går til `/admin/spillere`.
 2. Filtrerer på "Oppfølging" for å se elever som ikke har vært aktive på 30+ dager.
 3. Klikker på en elev for å se hurtigvisning.
 4. Klikker "Åpne profil" for full detalj.
 
 ---
 
-## 4.12 Elevprofil (`/admin/elever/[id]`)
+## 4.12 Elevprofil (`/admin/spillere/[id]`)
 
 ### Hva er det?
 En omfattende profilside for én enkelt elev, sett fra instruktørens/administratorens perspektiv.
@@ -2150,7 +2150,7 @@ En omfattende profilside for én enkelt elev, sett fra instruktørens/administra
 - `Profile`-type inkluderer: `User`, `HandicapEntry[]`, `Booking[]`, `CoachingSession[]`, `Goal[]`, `TrainingPlan[]`.
 
 ### Brukerflyt
-1. Admin går til `/admin/elever/[id]`.
+1. Admin går til `/admin/spillere/[id]`.
 2. Studerer handicap-trenden.
 3. Går til "Treningsdata"-tab for å se siste TrackMan-sesjon.
 4. Klikker "Send melding" for å følge opp eleven.

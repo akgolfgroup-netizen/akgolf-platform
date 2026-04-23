@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import {
   AdminDialog, AdminInput,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Button } from "@/components/ui/button";
 import { createTask } from "./actions";
 import type { AdminDivision, AdminPriority } from "@prisma/client";

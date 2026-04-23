@@ -6,11 +6,11 @@ import { useState, useCallback, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Briefcase } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import { Button } from "@/components/ui/button";
 import {
   AdminInput,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import Link from "next/link";
 import { format, addDays, startOfWeek } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -32,7 +32,7 @@ type Props = {
 
 export function NyBookingClient({ serviceTypes, instructors }: Props) {
   const router = useRouter();
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [isPending, startTransition] = useTransition();
 
   // Steg-state
@@ -162,7 +162,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Ny Booking"
         subtitle="Book en ny okt for en elev"
         onMenuClick={toggle}

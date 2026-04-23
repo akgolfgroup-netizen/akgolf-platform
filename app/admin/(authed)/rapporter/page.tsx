@@ -4,7 +4,7 @@ import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
 import { Calendar, TrendingUp, Users, DollarSign, FileSpreadsheet } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
   AdminSelect,
   AdminInput,
@@ -16,7 +16,7 @@ import {
   type AdminDataTableColumn,
   type AdminDateRange,
   type AdminDropdownItem,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -169,7 +169,7 @@ function downloadCsv(csv: string, filename: string) {
 }
 
 export default function RapporterPage() {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [selectedReport, setSelectedReport] = useState<ReportTypeId | null>(
     null,
   );
@@ -283,7 +283,7 @@ export default function RapporterPage() {
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Rapporter"
         subtitle="Generer og eksporter rapporter"
         onMenuClick={toggle}
@@ -293,7 +293,7 @@ export default function RapporterPage() {
         {/* Heritage Grid Header */}
         <div className="space-y-2">
           <MonoLabel size="xs" uppercase className="block text-outline">
-            Mission Control
+            CoachHQ
           </MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">
             Rapporter<span className="text-outline">.</span>

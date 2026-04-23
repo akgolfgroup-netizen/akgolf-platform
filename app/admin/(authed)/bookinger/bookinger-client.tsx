@@ -6,14 +6,14 @@ import { useState, useTransition, useCallback } from "react";
 import Link from "next/link";
 import { Calendar, List, User, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   AdminStatCard, AdminEmptyState,
   AdminInput, AdminDropdown, AdminDataTable,
   type AdminDataTableColumn, type AdminDataTableBulkAction,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { searchBookings, bulkCancelBookings, type AdminBooking, type SearchBookingsResult } from "./actions";
@@ -53,7 +53,7 @@ type ViewMode = "day" | "list";
 // ── Component ──────────────────────────────────────────────
 
 export function BookingerClient({ initialData }: { initialData: SearchBookingsResult }) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [isPending, startTransition] = useTransition();
   const [bookings, setBookings] = useState<AdminBooking[]>(initialData.bookings);
   const [total, setTotal] = useState(initialData.total);
@@ -114,7 +114,7 @@ export function BookingerClient({ initialData }: { initialData: SearchBookingsRe
 
   return (
     <>
-      <MCTopbar title="Bookinger" subtitle="Administrer alle bookinger og timeplan" onMenuClick={toggle} />
+      <CoachHQTopbar title="Bookinger" subtitle="Administrer alle bookinger og timeplan" onMenuClick={toggle} />
       <div className="p-6 space-y-6">
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

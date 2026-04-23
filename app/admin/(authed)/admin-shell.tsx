@@ -2,16 +2,16 @@
 
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
-import { MCLayout } from "@/components/portal/mission-control";
+import { CoachHQLayout } from "@/components/portal/coach-hq";
 import {
-  MC_NAV_CONFIG,
-  MC_ICON_MAP,
-} from "@/components/portal/mission-control/mc-nav-config";
+  COACHHQ_NAV_CONFIG,
+  COACHHQ_ICON_MAP,
+} from "@/components/portal/coach-hq/mc-nav-config";
 import {
   AdminToastProvider,
   AdminCommandPalette,
-} from "@/components/portal/mission-control/ui";
-import type { AdminCommandItem } from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
+import type { AdminCommandItem } from "@/components/portal/coach-hq/ui";
 
 interface AdminShellProps {
   user: {
@@ -29,9 +29,9 @@ export function AdminShell({ user, children }: AdminShellProps) {
 
   const commandItems = useMemo<AdminCommandItem[]>(() => {
     const items: AdminCommandItem[] = [];
-    for (const group of MC_NAV_CONFIG) {
+    for (const group of COACHHQ_NAV_CONFIG) {
       for (const navItem of group.items) {
-        const Icon = MC_ICON_MAP[navItem.iconName];
+        const Icon = COACHHQ_ICON_MAP[navItem.iconName];
         items.push({
           id: navItem.href,
           label: navItem.label,
@@ -48,7 +48,7 @@ export function AdminShell({ user, children }: AdminShellProps) {
 
   return (
     <AdminToastProvider>
-      <MCLayout user={user}>{children}</MCLayout>
+      <CoachHQLayout user={user}>{children}</CoachHQLayout>
       <AdminCommandPalette items={commandItems} shortcut="k" />
     </AdminToastProvider>
   );

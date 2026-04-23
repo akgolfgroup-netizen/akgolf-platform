@@ -305,8 +305,8 @@
 ### 4.3 Elever & Coaching
 | Funksjon | Beskrivelse | Rute |
 |----------|-------------|------|
-| Elever | DataTable med filtre (status, medlemskap). Stats: totalt, aktive, nye denne måneden, trenger oppfølging. Bulk actions: send e-post, eksporter valgte. Hurtigvisning-drawer. | `/admin/elever` |
-| Elevprofil | Full profil med handicap-trend, treningsvolum bar-chart, aktivitetstimeline, mål (progress rings), treningsdata-tabs. Send melding. | `/admin/elever/[id]` |
+| Elever | DataTable med filtre (status, medlemskap). Stats: totalt, aktive, nye denne måneden, trenger oppfølging. Bulk actions: send e-post, eksporter valgte. Hurtigvisning-drawer. | `/admin/spillere` |
+| Elevprofil | Full profil med handicap-trend, treningsvolum bar-chart, aktivitetstimeline, mål (progress rings), treningsdata-tabs. Send melding. | `/admin/spillere/[id]` |
 | Coaching-notater | Oversikt over coaching-økter og notater | `/admin/okter` |
 | Treningsplaner | Administrer elev-treningsplaner. Ny plan-wizard med drill-picker. | `/admin/treningsplan` |
 | Turneringer | Administrer turneringer. Add tournament form. Tournament admin list. | `/admin/turneringer` |

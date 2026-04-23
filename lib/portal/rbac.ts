@@ -24,10 +24,10 @@ export function isStaff(role?: string): boolean {
 }
 
 /**
- * Check if user can access Mission Control admin dashboard
+ * Check if user can access CoachHQ admin dashboard
  * ADMIN, INSTRUCTOR, and INVITED roles all have access
  */
-export function canAccessMissionControl(role?: string): boolean {
+export function canAccessCoachHQ(role?: string): boolean {
   return (
     role === UserRole.ADMIN ||
     role === UserRole.INSTRUCTOR ||
@@ -36,10 +36,10 @@ export function canAccessMissionControl(role?: string): boolean {
 }
 
 /**
- * Mission Control page access matrix
+ * CoachHQ page access matrix
  * Returns true if the role can access the specified page
  */
-export function canAccessMCPage(
+export function canAccessCoachHQPage(
   role: string | undefined,
   page: string
 ): boolean {
@@ -57,7 +57,7 @@ export function canAccessMCPage(
     "tilgjengelighet",
   ];
   if (publicPages.includes(page)) {
-    return canAccessMissionControl(role);
+    return canAccessCoachHQ(role);
   }
 
   // Pages accessible only to ADMIN and INSTRUCTOR
@@ -85,7 +85,7 @@ export function canAccessMCPage(
   }
 
   // Default: gi tilgang til alle MC-brukere for ukjente sider
-  return canAccessMissionControl(role);
+  return canAccessCoachHQ(role);
 }
 
 const TIER_RANK: Record<SubscriptionTier, number> = {
@@ -98,7 +98,7 @@ const TIER_RANK: Record<SubscriptionTier, number> = {
 
 /**
  * Mapping fra MC-side til kapabilitet som kreves.
- * Brukes av nye sider; eldre sider faller tilbake til canAccessMCPage().
+ * Brukes av nye sider; eldre sider faller tilbake til canAccessCoachHQPage().
  */
 export const MC_PAGE_CAPABILITY: Partial<Record<string, Capability>> = {
   "mission-board": Capability.MB_VIEW_OWN_PLAYERS,

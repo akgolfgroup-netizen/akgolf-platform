@@ -172,7 +172,7 @@ Regler:
 
 ## MISSION CONTROL (Admin) — Dark Sidebar Variant
 
-Mission Control bruker PORTALEN sin light-mode canvas (`bg-grey-50`) MED en mørk sidebar.
+CoachHQ bruker PORTALEN sin light-mode canvas (`bg-grey-50`) MED en mørk sidebar.
 
 ### Sidebar
 - Bredde: `w-[220px]` (var `--mc-sidebar-width`).
@@ -221,7 +221,7 @@ Mission Control bruker PORTALEN sin light-mode canvas (`bg-grey-50`) MED en mør
 - Aldri mer enn 2 ikoner synlig per kort.
 - Aldri fargede bakgrunner på hele kort — kun hvit/grey-50. Farge brukes i prikker, badges, barer, tekst.
 - Aldri skroll-snapping eller fancy scroll-effekter i portalen.
-- Aldri tabeller i portalen — bruk kort eller lister. Tabeller kun i Mission Control for data-tunge views.
+- Aldri tabeller i portalen — bruk kort eller lister. Tabeller kun i CoachHQ for data-tunge views.
 
 ### Alltid
 - Kort har `rounded-xl shadow-card`. Hover: `shadow-card-hover` med `transition-shadow duration-300`.

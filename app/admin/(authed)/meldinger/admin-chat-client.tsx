@@ -3,8 +3,8 @@
 import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useRef, useTransition } from "react";
 import { cn } from "@/lib/utils";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
-import { AdminEmptyState } from "@/components/portal/mission-control/ui";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
+import { AdminEmptyState } from "@/components/portal/coach-hq/ui";
 import { MonoLabel, GlassPanel } from "@/components/portal/patterns";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -33,7 +33,7 @@ export function AdminChatClient({
   conversations: initialConversations,
   currentUserId,
 }: AdminChatClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [conversations, setConversations] = useState(initialConversations);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -114,7 +114,7 @@ export function AdminChatClient({
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Meldinger"
         subtitle={
           totalUnread > 0

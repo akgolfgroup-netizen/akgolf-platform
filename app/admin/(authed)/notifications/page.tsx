@@ -1,7 +1,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { AdminPageHeader } from "@/components/portal/mission-control/ui";
+import { AdminPageHeader } from "@/components/portal/coach-hq/ui";
 import { NotificationManager } from "./notification-manager";
 
 export default async function AdminNotificationsPage() {

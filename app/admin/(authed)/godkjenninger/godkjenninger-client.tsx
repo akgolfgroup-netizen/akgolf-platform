@@ -6,7 +6,7 @@ import { useState, useMemo } from "react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
 import {
   AdminEmptyState,
@@ -14,7 +14,7 @@ import {
   AdminDialog,
   type AdminDataTableColumn,
   type AdminDataTableBulkAction,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs } from "@/components/ui/tabs";
@@ -46,7 +46,7 @@ interface GodkjenningerClientProps {
 type FilterTab = "all" | "booking" | "activity";
 
 export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [items, setItems] = useState<PendingItem[]>(pendingItems);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
@@ -242,14 +242,14 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
   if (items.length === 0) {
     return (
       <>
-        <MCTopbar
+        <CoachHQTopbar
           title="Godkjenninger"
           subtitle="Ingen ventende godkjenninger"
           onMenuClick={toggle}
         />
         <div className="p-6 space-y-6">
           <div className="space-y-2">
-            <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+            <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
             <h1 className="text-2xl font-bold tracking-tight text-on-surface">Godkjenninger<span className="text-outline">.</span></h1>
           </div>
           <AdminEmptyState
@@ -269,7 +269,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
 
   return (
     <>
-      <MCTopbar
+      <CoachHQTopbar
         title="Godkjenninger"
         subtitle={`${items.length} ventende godkjenning${items.length === 1 ? "" : "er"}`}
         onMenuClick={toggle}
@@ -278,7 +278,7 @@ export function GodkjenningerClient({ pendingItems }: GodkjenningerClientProps) 
       <div className="p-6 space-y-6">
         {/* Heritage Grid Header */}
         <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+          <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">Godkjenninger<span className="text-outline">.</span></h1>
           <p className="text-on-surface-variant">{items.length} ventende godkjenning{items.length === 1 ? "" : "er"}</p>
         </div>

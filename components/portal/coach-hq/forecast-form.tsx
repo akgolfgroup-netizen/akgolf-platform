@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-import { AdminInput } from "@/components/portal/mission-control/ui";
+import { AdminInput } from "@/components/portal/coach-hq/ui";
 
 export interface ForecastFormData {
   targetScoreAvg: number;

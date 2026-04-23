@@ -3,7 +3,7 @@
 import { Icon } from "@/components/ui/icon";
 import { useMemo, useState } from "react";
 import { DollarSign } from "lucide-react";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import {
  AdminDateRangePicker,
  AdminAreaChart,
@@ -15,7 +15,7 @@ import {
  type AdminDateRange,
  type AdminDataTableColumn,
  type AdminDonutChartDatum,
-} from "@/components/portal/mission-control/ui";
+} from "@/components/portal/coach-hq/ui";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { OkonomiData } from "./actions";
@@ -76,7 +76,7 @@ interface RefundRow {
 // ── Component ────────────────────────────────────────────────────────────────
 
 export function OkonomiClient({ data }: { data: OkonomiData }) {
- const { toggle } = useMCSidebar();
+ const { toggle } = useCoachHQSidebar();
  const [dateRange, setDateRange] = useState<AdminDateRange>({
  from: new Date(new Date().setDate(new Date().getDate() - 29)),
  to: new Date(),
@@ -212,7 +212,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
 
  return (
  <>
- <MCTopbar
+ <CoachHQTopbar
  title="Økonomi"
  subtitle="Oversikt over inntekter, fakturaer og refusjoner"
  onMenuClick={toggle}
@@ -222,7 +222,7 @@ export function OkonomiClient({ data }: { data: OkonomiData }) {
  {/* Heritage Grid Header */}
  <div className="space-y-2">
  <MonoLabel size="xs" uppercase className="block text-outline">
- Mission Control
+ CoachHQ
  </MonoLabel>
  <h1 className="text-2xl font-bold tracking-tight text-on-surface">
  Økonomi<span className="text-outline">.</span>

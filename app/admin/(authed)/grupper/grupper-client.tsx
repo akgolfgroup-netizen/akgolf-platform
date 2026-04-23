@@ -5,8 +5,8 @@ import { Icon } from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AdminPageHeader } from "@/components/portal/mission-control/ui";
-import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
+import { AdminPageHeader } from "@/components/portal/coach-hq/ui";
+import { CoachHQTopbar, useCoachHQSidebar } from "@/components/portal/coach-hq";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import {
@@ -46,7 +46,7 @@ interface GrupperClientProps {
 }
 
 export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientProps) {
-  const { toggle } = useMCSidebar();
+  const { toggle } = useCoachHQSidebar();
   const [groups, setGroups] = useState<GroupSummary[]>(initialGroups);
   const [players] = useState<PlayerOption[]>(initialPlayers);
   const [isPending, startTransition] = useTransition();
@@ -183,7 +183,7 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
-      <MCTopbar
+      <CoachHQTopbar
         title="Treningsgrupper"
         subtitle="Opprett og administrer grupper"
         onMenuClick={toggle}
