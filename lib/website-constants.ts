@@ -58,7 +58,7 @@ export const TEAM = [
     role: "Hovedcoach",
     division: "AK Golf Academy",
     image: "/images/team/anders-kristiansen.jpg",
-    bio: "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour. Utvikler av coaching-systemet og spillerportalen. Jobber med spillere som vil ha individuell teknisk veiledning og langsiktig utvikling.",
+    bio: "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour. Utvikler av coaching-systemet og PlayersHQ. Jobber med spillere som vil ha individuell teknisk veiledning og langsiktig utvikling.",
     prices: [
       { name: "Performance", price: "1 400", unit: "kr/mnd", detail: "2x20 min" },
       { name: "Performance Pro", price: "2 500", unit: "kr/mnd", detail: "4x20 min" },
@@ -89,8 +89,8 @@ export const DIVISIONS = [
   {
     id: "academy",
     title: "Academy",
-    description: "Treningsabonnement for voksne golfspillere. 1-til-1 coaching med TrackMan, spillerportal og personlig treningsplan.",
-    features: ["20-min fokuserte sesjoner", "TrackMan-analyse", "Personlig treningsplan", "Spillerportal"],
+    description: "Treningsabonnement for voksne golfspillere. 1-til-1 coaching med TrackMan, PlayersHQ og personlig treningsplan.",
+    features: ["20-min fokuserte sesjoner", "TrackMan-analyse", "Personlig treningsplan", "PlayersHQ"],
     href: "/academy",
     ctaLabel: "Se treningsabonnement",
     accent: "academy" as const,
@@ -107,7 +107,7 @@ export const DIVISIONS = [
   {
     id: "utvikling",
     title: "Utvikling & Teknologi",
-    description: "Spillerportal, treningsverktøy og sportslig rådgiving for golfklubber og trenere.",
+    description: "PlayersHQ, treningsverktøy og sportslig rådgiving for golfklubber og trenere.",
     features: ["Sportsplaner", "QR-treningsskilt", "IUP-plattform", "Trenerutvikling"],
     href: "/utvikling",
     ctaLabel: "Se løsninger for klubber",
@@ -123,7 +123,7 @@ export const HOW_IT_WORKS = {
   steps: [
     { number: "01", title: "Du booker en sesjon i appen", description: "Velg tid som passer deg. 20 minutter med trener — ingen fyllminutter." },
     { number: "02", title: "Treneren måler, filmer og veileder", description: "TrackMan registrerer data. Video fanger teknikken. Du jobber med én ting om gangen." },
-    { number: "03", title: "Treningsplanen din oppdateres", description: "Etter sesjonen legger treneren inn øvelser, notater og fokusområder i spillerportalen. Du ser det med én gang." },
+    { number: "03", title: "Treningsplanen din oppdateres", description: "Etter sesjonen legger treneren inn øvelser, notater og fokusområder i PlayersHQ. Du ser det med én gang." },
     { number: "04", title: "Du trener mellom sesjonene", description: "Treningsplanleggeren viser hva du skal gjøre, dag for dag. Du logger øktene dine og ser progresjonen over tid." },
     { number: "05", title: "Neste sesjon bygger videre", description: "Treneren ser hva du har trent på. Dere plukker opp der dere slapp. Ingen repetisjon, bare fremgang." },
   ],
@@ -643,18 +643,18 @@ export const PORTAL_PREVIEW_SCREENS = [
 // ─── Drop-in vs Abonnement ───
 export const DROPIN_VS_SUBSCRIPTION = {
   heading: "Trenger du binding? Nei. Men det lønner seg.",
-  description: "Flex gir deg coaching uten forpliktelser. Men du får kun coaching-notater — ikke spillerportalen. Ingen treningsplan mellom sesjonene, ingen statistikk, ingen progresjon.",
+  description: "Flex gir deg coaching uten forpliktelser. Men du får kun coaching-notater — ikke PlayersHQ. Ingen treningsplan mellom sesjonene, ingen statistikk, ingen progresjon.",
   conclusion: "Performance gir deg coaching OG systemet som gjør at treningen mellom sesjonene faktisk fungerer. Det er forskjellen mellom å ta en time og å utvikle seg.",
 } as const;
 
 // ─── Coaching FAQ ───
 export const COACHING_FAQ = [
-  { q: "Hva er et treningsabonnement?", a: "Du betaler en fast månedspris og booker 20-minutters coaching-sesjoner i appen. Mellom sesjonene har du tilgang til spillerportalen med treningsplan, øvelser og progresjon. Tenk på det som et treningsstudio-abonnement — men for golftrening med personlig trener." },
+  { q: "Hva er et treningsabonnement?", a: "Du betaler en fast månedspris og booker 20-minutters coaching-sesjoner i appen. Mellom sesjonene har du tilgang til PlayersHQ med treningsplan, øvelser og progresjon. Tenk på det som et treningsstudio-abonnement — men for golftrening med personlig trener." },
   { q: "Hvorfor 20 minutter?", a: "Fordi det er nok tid til å jobbe fokusert med én ting og bekrefte at endringen sitter. Korte sesjoner gjør at du kan trene oftere med trener — og frekvens gir raskere utvikling enn lange timer med lang tid mellom." },
-  { q: "Hva er forskjellen på Anders og Markus?", a: "Anders jobber med spillere som vil ha individuell teknisk utvikling og langsiktig oppfølging. Markus spesialiserer seg på nye golfere, grunnprinsipper og gruppetreninger. Begge bruker samme system og spillerportal." },
+  { q: "Hva er forskjellen på Anders og Markus?", a: "Anders jobber med spillere som vil ha individuell teknisk utvikling og langsiktig oppfølging. Markus spesialiserer seg på nye golfere, grunnprinsipper og gruppetreninger. Begge bruker samme system og PlayersHQ." },
   { q: "Trenger jeg et visst nivå for å starte?", a: "Nei. Systemet er bygget for alle nivåer. Er du helt ny, starter du hos Markus med grunnprinsippene. Har du spilt lenge, jobber du med Anders på teknikk og strategi." },
   { q: "Er det bindingstid?", a: "Nei. Abonnementet løper månedlig og kan sies opp når som helst." },
-  { q: "Hva er spillerportalen?", a: "En treningsapp der du ser treningsplanen din, logger økter, følger progresjonen din og har tilgang til øvelsesbank med video. Treneren oppdaterer planen din etter hver coaching-sesjon." },
+  { q: "Hva er PlayersHQ?", a: "En treningsapp der du ser treningsplanen din, logger økter, følger progresjonen din og har tilgang til øvelsesbank med video. Treneren oppdaterer planen din etter hver coaching-sesjon." },
   { q: "Hvor foregår treningen?", a: "Gamle Fredrikstad Golfklubb (GFGK). Vi bruker utendørsanlegget og TrackMan-simulator innendørs, avhengig av sesong." },
 ] as const;
 
@@ -748,7 +748,7 @@ export const TARGET_PROFILES = {
 export const PORTAL_SECTION = {
   eyebrow: "Inkludert i alle abonnement",
   heading: "Din treningsplan mellom sesjonene.",
-  description: "Spillerportalen er det som gjør at 20 minutter med trener gir effekt hele uken. Alt du trenger for å trene med retning — samlet på ett sted.",
+  description: "PlayersHQ er det som gjør at 20 minutter med trener gir effekt hele uken. Alt du trenger for å trene med retning — samlet på ett sted.",
   features: [
     { title: "Treningsplanlegger", description: "Visuell ukesplan der du ser hva du skal trene og når. Dra inn økter, legg til øvelser, tilpass uken din." },
     { title: "Treningsanalyse", description: "Strokes Gained, handicap-utvikling, score-trender og treningsvolum. Du ser nøyaktig hvor du vinner og taper slag." },
@@ -796,13 +796,13 @@ export const ACADEMY_FEATURES = [
 ] as const;
 
 export const ACADEMY_FAQ = [
-  { q: "Hva er et treningsabonnement?", a: "Du betaler en fast månedspris og booker 20-minutters coaching-sesjoner i appen. Mellom sesjonene har du tilgang til spillerportalen med treningsplan, øvelser og progresjon." },
+  { q: "Hva er et treningsabonnement?", a: "Du betaler en fast månedspris og booker 20-minutters coaching-sesjoner i appen. Mellom sesjonene har du tilgang til PlayersHQ med treningsplan, øvelser og progresjon." },
   { q: "Hvorfor 20 minutter?", a: "Fordi det er nok tid til å jobbe fokusert med én ting og bekrefte at endringen sitter. Korte sesjoner gjør at du kan trene oftere med trener — og frekvens gir raskere utvikling enn lange timer med lang tid mellom." },
-  { q: "Hva er forskjellen på Anders og Markus?", a: "Anders jobber med spillere som vil ha individuell teknisk utvikling og langsiktig oppfølging. Markus spesialiserer seg på nye golfere, grunnprinsipper og gruppetreninger. Begge bruker samme system og spillerportal." },
+  { q: "Hva er forskjellen på Anders og Markus?", a: "Anders jobber med spillere som vil ha individuell teknisk utvikling og langsiktig oppfølging. Markus spesialiserer seg på nye golfere, grunnprinsipper og gruppetreninger. Begge bruker samme system og PlayersHQ." },
   { q: "Trenger jeg et visst handicap for å starte?", a: "Nei. Systemet er bygget for alle nivåer. Er du helt ny, starter du hos Markus med grunnprinsippene. Har du spilt lenge, jobber du med Anders på teknikk og strategi." },
   { q: "Er det bindingstid?", a: "Nei. Abonnementet løper månedlig og kan sies opp når som helst." },
-  { q: "Hva er spillerportalen?", a: "En treningsapp der du ser treningsplanen din, logger økter, følger progresjonen din og har tilgang til øvelsesbank med video. Treneren oppdaterer planen din etter hver coaching-sesjon." },
-  { q: "Hva er forskjellen på abonnement og flex?", a: "Abonnement gir deg faste sesjoner, spillerportal med treningsplan og løpende oppfølging. Flex er enkeltsesjon uten portal — du får coaching-notater, men ingen treningsplan mellom sesjonene." },
+  { q: "Hva er PlayersHQ?", a: "En treningsapp der du ser treningsplanen din, logger økter, følger progresjonen din og har tilgang til øvelsesbank med video. Treneren oppdaterer planen din etter hver coaching-sesjon." },
+  { q: "Hva er forskjellen på abonnement og flex?", a: "Abonnement gir deg faste sesjoner, PlayersHQ med treningsplan og løpende oppfølging. Flex er enkeltsesjon uten portal — du får coaching-notater, men ingen treningsplan mellom sesjonene." },
   { q: "Kan jeg bytte mellom Anders og Markus?", a: "Ja. Du velger coach når du booker. Abonnementet er knyttet til én coach, men du kan endre ved neste faktureringsperiode." },
   { q: "Hva skjer om jeg ikke får brukt øktene mine?", a: "Ubrukte økter forfaller ved månedslutt. Vi minner deg på å booke i god tid." },
   { q: "Hvor foregår treningen?", a: "Gamle Fredrikstad Golfklubb (GFGK). Vi bruker utendørsanlegget og TrackMan-simulator innendørs, avhengig av sesong." },
@@ -831,7 +831,6 @@ export const JUNIOR_PROGRAMS = [
 ] as const;
 
 export const JUNIOR_FAQ = [
-  { q: "Hva koster det?", a: "AK Golf Junior Academy koster 3 500 kr/mnd. GFGK Junior har egen treningsavgift gjennom klubben." },
   { q: "Hva koster det?", a: "AK Golf Junior Academy koster 2 500 kr/mnd. GFGK Junior har egen treningsavgift gjennom klubben." },
   { q: "Hvor trener dere?", a: "På Gamle Fredrikstad Golfklubb." },
   { q: "Hvordan kommer jeg i gang?", a: "Ta kontakt så avtaler vi en samtale." },
@@ -1086,7 +1085,7 @@ export const ACADEMY_CONCEPT = {
   paragraphs: [
     "De fleste tar en golftime i ny og ne. Etterpå trener de på egenhånd — uten plan, uten oppfølging, uten måling. Resultatet er at de gjør de samme feilene om igjen.",
     "Med et treningsabonnement møter du trener 2 eller 4 ganger i måneden. Hver sesjon er 20 minutter — fokusert, målt med TrackMan og filmet for analyse. Treneren oppdaterer treningsplanen din etter hver sesjon, slik at du alltid vet nøyaktig hva du skal jobbe med på rangen.",
-    "I spillerportalen har du alt samlet: treningsplan med øvelser og video, statistikk over utviklingen din, Strokes Gained-analyse og coaching-historikk. Det er dette som gjør at trening mellom sesjonene faktisk fungerer — og at du utvikler deg raskere enn med enkelttimer alene.",
+    "I PlayersHQ har du alt samlet: treningsplan med øvelser og video, statistikk over utviklingen din, Strokes Gained-analyse og coaching-historikk. Det er dette som gjør at trening mellom sesjonene faktisk fungerer — og at du utvikler deg raskere enn med enkelttimer alene.",
   ],
 } as const;
 
@@ -1099,7 +1098,7 @@ export const ABO_VS_FLEX = {
     { feature: "1-til-1 coaching", abo: true, flex: true },
     { feature: "TrackMan-data", abo: true, flex: true },
     { feature: "Coaching-notater", abo: true, flex: true },
-    { feature: "Spillerportal", abo: true, flex: false },
+    { feature: "PlayersHQ", abo: true, flex: false },
     { feature: "Treningsplan mellom sesjoner", abo: true, flex: false },
     { feature: "Øvelsesbank med video", abo: true, flex: false },
     { feature: "Progresjonslogging", abo: true, flex: false },
@@ -1263,7 +1262,7 @@ export const JUNIOR_PACKAGES = [
       "8 × 20 min individuell coaching/mnd (2/uke)",
       "Faste tider tirsdag og torsdag",
       "TrackMan-analyse integrert i hver sesjon",
-      "Full tilgang til spillerportalen",
+      "Full tilgang til PlayersHQ",
       "Personlig treningsplan oppdatert etter hver sesjon",
       "Progresjonslogging synlig for junior og foreldre",
       "Øvelsesbank med video tilpasset juniorens nivå",
@@ -1329,7 +1328,7 @@ export const JUNIOR_PARENT_INFO = {
     {
       title: "Hvordan følge med på fremgang",
       items: [
-        "Spillerportalen gir sanntidsoversikt over treningsplan og progresjon",
+        "PlayersHQ gir sanntidsoversikt over treningsplan og progresjon",
         "Månedlige fremgangsrapporter sendes på e-post",
         "Kvartalsvise foreldremøter med gjennomgang av mål og utvikling",
         "Direkte kontakt med trener ved behov",
@@ -1338,7 +1337,7 @@ export const JUNIOR_PARENT_INFO = {
     {
       title: "Kommunikasjonskanaler",
       items: [
-        "Spillerportal — treningsplan, bookinger, fremgang",
+        "PlayersHQ — treningsplan, bookinger, fremgang",
         "E-post — rapporter og viktig informasjon",
         "Telefon/SMS — akutte endringer og påminnelser",
         "Foreldremøter — kvartalsvis gjennomgang",
@@ -1380,8 +1379,8 @@ export const UTVIKLING_SERVICES = {
       id: "software",
       title: "Software",
       subtitle: "Digitale treningsverktøy",
-      description: "Spillerportal, treningsplanlegger og statistikkverktøy som gir spillere og trenere full oversikt.",
-      features: ["Spillerportal med IUP", "AI-treningsplanlegger", "Strokes Gained-analyse", "QR-treningsskilt"],
+      description: "PlayersHQ, treningsplanlegger og statistikkverktøy som gir spillere og trenere full oversikt.",
+      features: ["PlayersHQ med IUP", "AI-treningsplanlegger", "Strokes Gained-analyse", "QR-treningsskilt"],
       accent: "software" as const,
     },
     {
@@ -1398,8 +1397,8 @@ export const UTVIKLING_SERVICES = {
 // ─── Utvikling Software Features (Detailed) ───
 export const UTVIKLING_SOFTWARE_FEATURES = [
   {
-    id: "spillerportal",
-    title: "Spillerportal",
+    id: "PlayersHQ",
+    title: "PlayersHQ",
     description: "Komplett digital plattform der spillere følger sin utvikling, ser treningsplaner og kommuniserer med trener.",
     details: ["Individuell utviklingsplan (IUP)", "Treningslogg og progresjon", "Coaching-notater", "Målsetting og oppfølging"],
   },
@@ -1451,8 +1450,8 @@ export const UTVIKLING_CTA = {
 // ─── Utvikling Products ───
 export const UTVIKLING_PRODUCTS = [
   {
-    id: "spillerportal",
-    title: "Spillerportalen",
+    id: "PlayersHQ",
+    title: "PlayersHQ",
     tagline: "Treningsplan, statistikk og coaching i én plattform",
     description: "Komplett digital plattform der spillere følger sin utvikling, ser treningsplaner og kommuniserer med trener. Brukes av alle våre spillere i dag.",
     features: [
@@ -1494,9 +1493,9 @@ export const UTVIKLING_PRODUCTS = [
   },
 ] as const;
 
-// ─── Detailed Product: Spillerportal ───
+// ─── Detailed Product: PlayersHQ ───
 export const PORTAL_PRODUCT = {
-  eyebrow: "Spillerportalen",
+  eyebrow: "PlayersHQ",
   heading: "Treningsverktøyet som gjør golftrening systematisk.",
   description: "Alt spilleren trenger for å trene med retning — samlet på ett sted. Brukes av alle spillere i AK Golf Academy.",
   features: [
@@ -1695,7 +1694,7 @@ export const FOUNDATION_METHOD_CONCEPT = {
   principles: [
     { title: "Fundament først", description: "Pyramiden: FYS → TEK → SLAG → SPILL → TURN" },
     { title: "Systematisk progresjon", description: "L-faser: KROPP → ARM → KØLLE → BALL → AUTO" },
-    { title: "Data erstatter følelser", description: "TrackMan + spillerportal" },
+    { title: "Data erstatter følelser", description: "TrackMan + PlayersHQ" },
     { title: "Hele spilleren", description: "Teknikk + strategi + fysisk + mental + livsmestring" },
     { title: "Individuell plan, felles standard", description: "Skreddersydd for deg, basert på bevist metodikk" },
   ],
@@ -1888,7 +1887,7 @@ export const JUNIOR_HERO_V2 = {
 export const JUNIOR_ACADEMY_PROGRAM = {
   label: "VART PROGRAM",
   heading: "AK Golf Junior Academy",
-  description: "Individuelt tilpasset coaching for juniorer som vil satse. Personlig treningsplan, spillerportal og oppfolging.",
+  description: "Individuelt tilpasset coaching for juniorer som vil satse. Personlig treningsplan, PlayersHQ og oppfolging.",
   price: "3 500 kr/mnd",
   capacity: "Maks 8 spillere",
   ctaLabel: "Sok opptak",
@@ -1976,7 +1975,7 @@ export const UTVIKLING_SERVICES_V2 = {
     {
       id: "programvare",
       label: "PROGRAMVARE",
-      title: "Spillerportalen",
+      title: "PlayersHQ",
       description: "Booking, coaching-notater, treningsplaner og progresjonslogging i en plattform. Brukes av alle vare spillere i dag.",
       expandedDescription: "Portalen gir spillere tilgang til treningshistorikk, Strokes Gained-analyse, AI-drevne anbefalinger og direkte kommunikasjon med coach. Trenere far oversikt over alle elever, kan lage periodiserte planer og folge opp progresjon.",
       span: "small" as const,
