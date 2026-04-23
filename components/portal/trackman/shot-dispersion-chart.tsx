@@ -162,7 +162,7 @@ export function ShotDispersionChart({ shots }: ShotDispersionChartProps) {
                 data={group.data}
                 fill={group.color}
                 stroke={group.color}
-                strokeWidth={1}
+               
               />
             ))}
           </ScatterChart>

@@ -60,15 +60,15 @@ export default function AcademyBookingPage() {
           <section className="py-12 bg-surface-container-lowest border-t border-outline-variant/30">
             <div className="w-container max-w-3xl">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <Icon name="info"Item
+                <InfoItem
                   icon={Mail}
                   title="Bekreftelse på e-post"
                   text="Du mottar umiddelbar bekreftelse på bookingen" />
-                <Icon name="info"Item
+                <InfoItem
                   icon={User}
                   title="Din profil"
                   text="Ved første booking opprettes en profil automatisk" />
-                <Icon name="info"Item
+                <InfoItem
                   icon={Calendar}
                   title="Enkel endring"
                   text="Endre eller avbestill enkelt via e-postlenken" />

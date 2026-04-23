@@ -72,7 +72,7 @@ export function PerformanceChart({ data, className }: PerformanceChartProps) {
             type="monotone"
             dataKey="handicap"
             stroke="#2A7D5A"
-            strokeWidth={2.5}
+           
             fill="url(#handicapGradient)"
             animationDuration={1500}
             animationEasing="ease-out"

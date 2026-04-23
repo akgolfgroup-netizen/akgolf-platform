@@ -168,7 +168,7 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
             value={probPct}
             max={100}
             size={100}
-            strokeWidth={8}
+           
             valueSuffix="%"
             label="sannsynlighet"
           />
@@ -274,7 +274,7 @@ export function ForecastDisplay({ forecast }: ForecastDisplayProps) {
         <ul className="space-y-2">
           {forecast.recommendationsJson.map((rec, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-text">
-              <Icon name="check"Circle2 className="w-4 h-4 text-success mt-0.5 shrink-0" />
+              <Icon name="check_circle" className="w-4 h-4 text-success mt-0.5 shrink-0" />
               {rec}
             </li>
           ))}

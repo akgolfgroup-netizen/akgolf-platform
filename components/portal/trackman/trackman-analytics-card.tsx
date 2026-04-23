@@ -190,9 +190,9 @@ export function TrackManAnalyticsCard({ analytics: initialAnalytics, showRegener
 
       {/* Klubb-statistikker */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <Icon name="sports_golf"StatsBars stats={analytics.driverStats} title="Driver" />
-        <Icon name="sports_golf"StatsBars stats={analytics.ironStats} title="Jern" />
-        <Icon name="sports_golf"StatsBars stats={analytics.wedgeStats} title="Wedge" />
+        <ClubStatsBars stats={analytics.driverStats} title="Driver" />
+        <ClubStatsBars stats={analytics.ironStats} title="Jern" />
+        <ClubStatsBars stats={analytics.wedgeStats} title="Wedge" />
       </div>
 
       {/* Shot shape + miss pattern */}

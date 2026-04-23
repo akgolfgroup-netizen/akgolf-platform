@@ -67,7 +67,7 @@ export function ForecastCard({ points }: ForecastCardProps) {
           d={pointsToPath("baseline")}
           fill="none"
           stroke="rgba(255,255,255,0.45)"
-          strokeWidth={2}
+         
           strokeDasharray="4 3"
           strokeLinecap="round"
         />
@@ -75,7 +75,7 @@ export function ForecastCard({ points }: ForecastCardProps) {
           d={pointsToPath("adjusted")}
           fill="none"
           stroke="#D1F843"
-          strokeWidth={2.5}
+         
           strokeLinecap="round"
         />
       </svg>

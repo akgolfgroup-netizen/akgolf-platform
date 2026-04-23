@@ -114,7 +114,7 @@ function CheckoutForm({ bookingId, serviceName, customerEmail }: CheckoutFormPro
           </>
         ) : (
           <>
-            <Icon name="shield"Check size={20} />
+            <Icon name="verified" size={20} />
             <span>Betal nå</span>
           </>
         )}
@@ -227,7 +227,7 @@ export function PublicStripePaymentPage({
               },
             }}
           >
-            <Icon name="check"outForm 
+            <CheckoutForm 
               bookingId={bookingId} 
               serviceName={serviceName} 
               customerEmail={customerEmail} />

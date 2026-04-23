@@ -363,11 +363,11 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
 
             {/* Filters */}
             <div className="flex items-center gap-2 px-4 py-2 border-b border-[var(--color-outline-variant)] overflow-x-auto">
-              <Icon name="filter_list"Button filter="all" label="Alle" />
-              <Icon name="filter_list"Button filter="booking" label="Bookinger" />
-              <Icon name="filter_list"Button filter="coaching" label="Coaching" />
-              <Icon name="filter_list"Button filter="video" label="Video" />
-              <Icon name="filter_list"Button filter="urgent" label="Haster" />
+              <FilterButton filter="all" label="Alle" />
+              <FilterButton filter="booking" label="Bookinger" />
+              <FilterButton filter="coaching" label="Coaching" />
+              <FilterButton filter="video" label="Video" />
+              <FilterButton filter="urgent" label="Haster" />
             </div>
 
             {/* Notification List */}

@@ -76,12 +76,12 @@ export function ForecastHistory({ forecasts }: ForecastHistoryProps) {
                   <Badge variant={fc.withinCi95 ? "success" : "error"}>
                     {fc.withinCi95 ? (
                       <span className="flex items-center gap-1">
-                        <Icon name="check"Circle2 className="w-3 h-3" />
+                        <Icon name="check_circle" className="w-3 h-3" />
                         Traff CI
                       </span>
                     ) : (
                       <span className="flex items-center gap-1">
-                        <Icon name="close"Circle className="w-3 h-3" />
+                        <Icon name="cancel" className="w-3 h-3" />
                         Utenfor CI
                       </span>
                     )}

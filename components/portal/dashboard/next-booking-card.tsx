@@ -39,7 +39,7 @@ export function NextBookingCard({ booking }: NextBookingCardProps) {
             className="flex h-12 w-12 items-center justify-center rounded-xl"
             style={{ backgroundColor: `${colors.data.coral}15` }}
           >
-            <Icon name="calendar_today"Plus className="h-6 w-6" style={{ color: colors.data.coral }} />
+            <Icon name="event_available" className="h-6 w-6" style={{ color: colors.data.coral }} />
           </div>
           <h3 className="mt-4 text-base font-semibold text-on-surface">
             Du har ingen kommende bookinger
@@ -82,7 +82,7 @@ export function NextBookingCard({ booking }: NextBookingCardProps) {
 
       <div className="mt-4 space-y-1.5">
         <div className="flex items-center gap-2 text-sm text-surface/90">
-          <Icon name="calendar_today"Plus className="h-4 w-4 text-surface/70" />
+          <Icon name="event_available" className="h-4 w-4 text-surface/70" />
           <span>
             {format(start, "EEEE d. MMMM 'kl' HH:mm", { locale: nb })}
           </span>

@@ -52,9 +52,9 @@ function StatCard({
                   )}
                 >
                   {trend.positive ? (
-                    <Icon name="arrow_upward"Right className="w-3.5 h-3.5" />
+                    <Icon name="arrow_outward" className="w-3.5 h-3.5" />
                   ) : (
-                    <Icon name="arrow_downward"Right className="w-3.5 h-3.5" />
+                    <Icon name="south_east" className="w-3.5 h-3.5" />
                   )}
                   {trend.value > 0 && "+"}
                   {trend.value}%
@@ -142,7 +142,7 @@ export function DashboardStats({ data }: DashboardStatsProps) {
         value={stats.activeStudents}
         subtitle={`+${stats.newStudentsThisMonth} denne måneden`}
         trend={{ value: stats.studentsTrend, positive: true, label: "vs forrige måned" }}
-        icon={<Icon name="person"s className="w-5 h-5" />}
+        icon={<Icon name="group" className="w-5 h-5" />}
         sparklineData={sparklineStudents}
         sparklineColor="var(--color-success)"
       />

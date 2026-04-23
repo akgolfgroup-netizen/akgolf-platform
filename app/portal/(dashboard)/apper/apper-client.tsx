@@ -441,7 +441,7 @@ export function ApperClient({
                   <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center">
                     <ModuleIcon
                       className="h-[18px] w-[18px] text-on-surface"
-                      strokeWidth={1.75}
+                     
                     />
                   </div>
                   {(active || isFree) && (

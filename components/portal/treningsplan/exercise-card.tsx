@@ -126,7 +126,7 @@ export function ExerciseCard({
                   lPhase={exercise.lPhase}
                   compact
                 />
-                <Icon name="sports_golf"SpeedTag cs={exercise.clubSpeed} />
+                <ClubSpeedTag cs={exercise.clubSpeed} />
                 <EnvironmentTag env={exercise.environment} />
                 <PressTag press={exercise.pressLevel} />
               </div>

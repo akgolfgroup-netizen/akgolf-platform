@@ -104,7 +104,7 @@ export function AdminAreaChart({
             dataKey="value"
             name={valueLabel}
             stroke={color}
-            strokeWidth={2.5}
+           
             fill={`url(#${gradientId})`}
           />
         </AreaChart>

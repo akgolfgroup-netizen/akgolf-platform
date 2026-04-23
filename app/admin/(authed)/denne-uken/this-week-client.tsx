@@ -157,7 +157,7 @@ export function ThisWeekClient({ bookings, stats }: ThisWeekClientProps) {
                     value={stats.totalBookings}
                     max={weeklyGoal}
                     size={160}
-                    strokeWidth={12}
+                   
                     label={stats.totalBookings + " av " + weeklyGoal + " bookinger"}
                   />
                 </div>

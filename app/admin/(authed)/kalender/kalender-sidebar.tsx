@@ -48,7 +48,7 @@ export default function KalenderSidebar({
     {
       id: "view",
       label: "Se detaljer",
-      icon: <Icon name="calendar_today"Icon className="w-4 h-4" />,
+      icon: <Icon name="calendar_today" className="w-4 h-4" />,
       onSelect: () => onBookingClick(booking),
     },
     {
@@ -78,7 +78,7 @@ export default function KalenderSidebar({
         </h3>
         {selectedDateBookings.length === 0 ? (
           <div className="py-8 text-center">
-            <Icon name="calendar_today"Icon className="w-10 h-10 text-on-surface-variant/60 mx-auto mb-2" />
+            <Icon name="calendar_today" className="w-10 h-10 text-on-surface-variant/60 mx-auto mb-2" />
             <span className="text-sm text-on-surface-variant">Ingen bookinger</span>
           </div>
         ) : (

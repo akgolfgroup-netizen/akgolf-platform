@@ -116,7 +116,7 @@ export function GPSDistance({
   if (state.status === "denied") {
     return (
       <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-error)]/5 text-[var(--color-error)] text-sm mt-2">
-        <Icon name="location_on"Off className="h-4 w-4" />
+        <Icon name="location_off" className="h-4 w-4" />
         GPS-tilgang avslatt. Aktiver i nettleserinnstillinger.
       </div>
     );
@@ -125,7 +125,7 @@ export function GPSDistance({
   if (state.status === "unavailable") {
     return (
       <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-grey-100)] text-[var(--color-grey-500)] text-sm mt-2">
-        <Icon name="location_on"Off className="h-4 w-4" />
+        <Icon name="location_off" className="h-4 w-4" />
         GPS ikke tilgjengelig.
       </div>
     );

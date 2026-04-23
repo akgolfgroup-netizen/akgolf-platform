@@ -81,7 +81,7 @@ export function NyAktivitetClient({ facilities }: { facilities: FacilityOption[]
  <div className="p-6">
  <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 rounded-xl py-16 text-center max-w-md mx-auto">
  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
- <Icon name="check"Circle2 className="w-8 h-8 text-green-600" />
+ <Icon name="check_circle" className="w-8 h-8 text-green-600" />
  </div>
  <h2 className="text-xl font-semibold text-on-surface">Aktivitet opprettet!</h2>
  <p className="text-on-surface-variant mt-2">Aktiviteten er lagt til i kalenderen.</p>

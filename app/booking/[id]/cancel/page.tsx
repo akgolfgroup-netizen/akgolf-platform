@@ -7,7 +7,7 @@ export default function BookingCancelPage() {
     <div className="min-h-screen bg-surface flex items-center justify-center p-4">
       <div className="bg-surface-container-lowest rounded-2xl p-8 max-w-md w-full text-center border border-primary/10">
         <div className="w-16 h-16 bg-error/10 rounded-full flex items-center justify-center mx-auto mb-6">
-          <Icon name="close"Circle className="w-8 h-8 text-error" />
+          <Icon name="cancel" className="w-8 h-8 text-error" />
         </div>
         <h1 className="text-2xl font-bold text-primary mb-2">Booking avbrutt</h1>
         <p className="text-on-surface text-sm mb-8">

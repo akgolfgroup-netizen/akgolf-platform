@@ -259,9 +259,9 @@ export function StudentsClient({ initialData }: Props) {
       align: "center",
       render: (row) =>
         row.hasActivePlan ? (
-          <Icon name="check"Circle className="w-4 h-4 text-success-text mx-auto" />
+          <Icon name="check_circle" className="w-4 h-4 text-success-text mx-auto" />
         ) : (
-          <Icon name="close"Circle className="w-4 h-4 text-surface-variant mx-auto" />
+          <Icon name="cancel" className="w-4 h-4 text-surface-variant mx-auto" />
         ),
     },
   ];
@@ -333,17 +333,17 @@ export function StudentsClient({ initialData }: Props) {
           <AdminStatCard
             label="Totalt"
             value={data.stats.total}
-            icon={<Icon name="person"s className="w-5 h-5" />}
+            icon={<Icon name="group" className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Aktive"
             value={data.stats.active}
-            icon={<Icon name="person"Check className="w-5 h-5" />}
+            icon={<Icon name="person_check" className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Nye denne maneden"
             value={data.stats.newThisMonth}
-            icon={<Icon name="person"Plus className="w-5 h-5" />}
+            icon={<Icon name="person_add" className="w-5 h-5" />}
           />
           <AdminStatCard
             label="Trenger oppfolging"
@@ -527,7 +527,7 @@ export function StudentsClient({ initialData }: Props) {
               <h4 className="text-sm font-semibold text-on-surface mb-2">Treningsplan</h4>
               {previewStudent.hasActivePlan ? (
                 <div className="flex items-center gap-2 text-sm text-success-text">
-                  <Icon name="check"Circle className="w-4 h-4" />
+                  <Icon name="check_circle" className="w-4 h-4" />
                   Aktiv treningsplan
                 </div>
               ) : (

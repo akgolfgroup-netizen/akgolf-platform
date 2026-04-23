@@ -90,7 +90,7 @@ export function StreakCard({ data }: StreakCardProps) {
                 "w-7 h-7",
                 isLongStreak ? "text-on-surface" : "text-on-surface-variant"
               )} 
-              strokeWidth={isLongStreak ? 2.5 : 2} />
+              />
           </motion.div>
         </div>
 

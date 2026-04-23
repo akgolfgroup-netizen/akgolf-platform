@@ -124,11 +124,11 @@ export function BookingDetailDrawer({ booking, onClose, onMutated }: BookingDeta
             <div className="flex items-center justify-end gap-2">
               <Button variant="secondary" onClick={handleClose}>Lukk</Button>
               <Button variant="secondary" onClick={() => setShowReschedule(!showReschedule)}>
-                <Icon name="calendar_today"Clock className="w-4 h-4" />
+                <Icon name="schedule" className="w-4 h-4" />
                 Endre tid
               </Button>
               <Button variant="accent" onClick={() => setShowCancel(true)}>
-                <Icon name="close"Circle className="w-4 h-4" />
+                <Icon name="cancel" className="w-4 h-4" />
                 Avbestill
               </Button>
             </div>

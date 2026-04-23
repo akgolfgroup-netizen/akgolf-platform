@@ -50,7 +50,7 @@ function Sparkline({ data, color }: { data: number[]; color: string }) {
         points={points}
         fill="none"
         stroke={color}
-        strokeWidth={1.5}
+       
         strokeLinecap="round"
         strokeLinejoin="round"
       />

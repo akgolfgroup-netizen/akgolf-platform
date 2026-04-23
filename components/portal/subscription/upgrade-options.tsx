@@ -46,7 +46,7 @@ export function UpgradeOptions({
     <div className="bg-surface-container-lowest rounded-2xl border border-primary/10 overflow-hidden">
       <div className="px-6 py-4 border-b border-surface">
         <h3 className="text-sm font-semibold text-text flex items-center gap-2">
-          <Icon name="arrow_upward"Right className="w-4 h-4 text-primary" />
+          <Icon name="arrow_outward" className="w-4 h-4 text-primary" />
           Tilgjengelige oppgraderinger
         </h3>
       </div>

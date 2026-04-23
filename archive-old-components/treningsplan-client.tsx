@@ -187,7 +187,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
             {isToggling ? (
               <Icon name="progress_activity" className="w-3.5 h-3.5 text-success animate-spin" />
             ) : (
-              <Icon name="check"Circle2 className="w-3.5 h-3.5 text-success" />
+              <Icon name="check_circle" className="w-3.5 h-3.5 text-success" />
             )}
             <span className="text-[11px] font-medium text-success">Fullfort</span>
           </button>
@@ -200,7 +200,7 @@ function TodaySessionCard({ day }: { day: DayData }) {
             {isToggling ? (
               <Icon name="progress_activity" className="w-3.5 h-3.5 animate-spin" />
             ) : (
-              <Icon name="check"Circle2 className="w-3.5 h-3.5" />
+              <Icon name="check_circle" className="w-3.5 h-3.5" />
             )}
             <span className="text-[11px] font-medium">Marker fullfort</span>
           </button>
@@ -383,7 +383,7 @@ function EmptyState({
       <PremiumCard className="text-center">
         <div className="py-8">
           <div className="w-16 h-16 rounded-2xl bg-surface flex items-center justify-center mx-auto mb-5">
-            <Icon name="calendar_today" className="w-8 h-8 text-on-surface-variant" strokeWidth={1.75} />
+            <Icon name="calendar_today" className="w-8 h-8 text-on-surface-variant" />
           </div>
           <h2 className="text-xl font-semibold text-on-surface mb-2">
             Din treningsplan er tom

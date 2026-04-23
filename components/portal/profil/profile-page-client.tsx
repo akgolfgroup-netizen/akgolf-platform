@@ -190,19 +190,19 @@ export function ProfilePageClient({ profile, stats }: ProfilePageClientProps) {
           Innstillinger
         </MonoLabel>
         <div className="divide-y divide-portal-border">
-          <Icon name="settings"Row
+          <SettingsRow
             href="/portal/profil/innstillinger"
             icon={<Icon name="person" className="h-4 w-4" />}
             label="Konto"
             description="Navn, e-post, telefon"
           />
-          <Icon name="settings"Row
+          <SettingsRow
             href="/portal/profil/varsler"
             icon={<Icon name="notifications" className="h-4 w-4" />}
             label="Varsler"
             description="Push og e-postvarsler"
           />
-          <Icon name="settings"Row
+          <SettingsRow
             href="/portal/profil/passord"
             icon={<Icon name="key" className="h-4 w-4" />}
             label="Passord"

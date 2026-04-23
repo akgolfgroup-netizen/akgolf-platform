@@ -97,7 +97,7 @@ export function HcpForecastInsight({ data }: HcpForecastInsightProps) {
           className="flex shrink-0 items-center gap-1.5 rounded-full border border-outline-variant/30 bg-surface-container-lowest px-3 py-1.5"
           style={{ color: trendColor }}
         >
-          <TrendIcon className="h-3.5 w-3.5" strokeWidth={2.5} />
+          <TrendIcon className="h-3.5 w-3.5" />
           <span className="text-[11px] font-bold uppercase tracking-wider">{trendLabel}</span>
         </div>
       </div>

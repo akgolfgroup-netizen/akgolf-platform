@@ -195,7 +195,7 @@ export function AddFriendDialog({
                         {sendingId === result.id ? (
                           <Icon name="progress_activity" className="w-3 h-3 animate-spin" />
                         ) : (
-                          <Icon name="person"Plus className="w-3 h-3" />
+                          <Icon name="person_add" className="w-3 h-3" />
                         )}
                         Legg til
                       </button>

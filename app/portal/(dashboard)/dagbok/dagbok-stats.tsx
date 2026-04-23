@@ -106,7 +106,7 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
         <PremiumCard glow="green">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center">
-              <Icon name="local_fire_department" className="w-5 h-5 text-primary" strokeWidth={1.75} />
+              <Icon name="local_fire_department" className="w-5 h-5 text-primary" />
             </div>
             <div>
               <h3 className="font-semibold text-on-surface text-sm">
@@ -157,7 +157,7 @@ export function DagbokStats({ logs }: DagbokStatsProps) {
                   className="flex items-center gap-3 p-4 rounded-2xl bg-surface-container border border-outline-variant hover:border-primary/20 transition-colors"
                 >
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-primary/10">
-                    <Icon name="my_location" className="w-5 h-5 text-primary" strokeWidth={1.75} />
+                    <Icon name="my_location" className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-on-surface truncate">

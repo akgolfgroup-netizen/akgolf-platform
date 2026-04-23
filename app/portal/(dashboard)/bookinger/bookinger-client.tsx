@@ -111,7 +111,7 @@ export function BookingerClient({
           >
             <Icon name="add"
               className="w-3.5 h-3.5 relative z-10"
-              strokeWidth={2.5} />
+              />
             <span className="relative z-10">Ny booking</span>
           </Link>
         </motion.div>
@@ -186,7 +186,7 @@ export function BookingerClient({
               <div className="w-14 h-14 rounded-2xl bg-on-surface/10 flex items-center justify-center">
                 <Icon name="calendar_today"
                   className="w-6 h-6 text-on-surface"
-                  strokeWidth={1.75} />
+                  />
               </div>
               <p className="text-[13px] text-on-surface-variant max-w-sm">{emptyMessage}</p>
               <Link

@@ -132,7 +132,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
 
           {/* Instruktør */}
           <DetailRow
-            icon={<Icon name="person"Icon className="w-4 h-4" />}
+            icon={<Icon name="person" className="w-4 h-4" />}
             label="Instruktør"
             value={
               booking.instructorTitle
@@ -186,7 +186,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
           {/* Kanselleringsgrunn */}
           {booking.cancelReason && (
             <DetailRow
-              icon={<Icon name="close"Circle className="w-4 h-4" />}
+              icon={<Icon name="cancel" className="w-4 h-4" />}
               label="Avbestillingsgrunn"
               value={booking.cancelReason}
             />
@@ -209,7 +209,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
               href={`/portal/bookinger/${booking.id}/endre`}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold hover:opacity-90 transition-opacity"
             >
-              <Icon name="calendar_today"Clock className="w-4 h-4" />
+              <Icon name="schedule" className="w-4 h-4" />
               Endre tidspunkt
             </Link>
           )}
@@ -219,7 +219,7 @@ export function BookingDetailClient({ booking }: { booking: BookingDetail }) {
               onClick={() => setShowCancelConfirm(true)}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-outline-variant/30 bg-surface-container-lowest text-on-surface text-[12px] font-bold hover:border-outline-variant/50 transition-colors cursor-pointer"
             >
-              <Icon name="close"Circle className="w-4 h-4" />
+              <Icon name="cancel" className="w-4 h-4" />
               Avbestill
             </button>
           )}

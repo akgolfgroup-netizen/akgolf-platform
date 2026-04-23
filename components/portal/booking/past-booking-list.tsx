@@ -20,11 +20,11 @@ function renderIconForType(
 ) {
   switch (type) {
     case "coaching":
-      return <Icon name="my_location" className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="my_location" className={className} />;
     case "tournament":
-      return <Icon name="emoji_events" className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="emoji_events" className={className} />;
     default:
-      return <Icon name="calendar_today" className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="calendar_today" className={className} />;
   }
 }
 

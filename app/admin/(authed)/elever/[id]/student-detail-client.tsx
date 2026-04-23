@@ -114,7 +114,7 @@ export function StudentDetailClient({ profile }: Props) {
       title: `${(b.ServiceType as { name?: string })?.name ?? "Booking"} gjennomfort`,
       description: extractInstructorName(b.Instructor),
       date: format(new Date(b.startTime), "d. MMM", { locale: nb }),
-      icon: <Icon name="check"Circle2 className="w-3 h-3" />,
+      icon: <Icon name="check_circle" className="w-3 h-3" />,
       color: "var(--color-success)",
     })),
     ...profile.CoachingSession.slice(0, 3).map((cs) => ({
@@ -290,7 +290,7 @@ export function StudentDetailClient({ profile }: Props) {
                   value={profile.sessionsThisMonth}
                   max={monthlyGoal}
                   size={84}
-                  strokeWidth={7}
+                 
                   valueSuffix=""
                   label={`av ${monthlyGoal}`}
                 />
@@ -377,7 +377,7 @@ export function StudentDetailClient({ profile }: Props) {
                   value={profile.sessionsThisMonth}
                   max={monthlyGoal}
                   size={140}
-                  strokeWidth={10}
+                 
                   valueSuffix=""
                   label={`av ${monthlyGoal} okter`}
                 />

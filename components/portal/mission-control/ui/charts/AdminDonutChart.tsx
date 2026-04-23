@@ -74,7 +74,7 @@ export function AdminDonutChart({
             outerRadius={outerRadius}
             paddingAngle={2}
             stroke="var(--color-surface)"
-            strokeWidth={2}
+           
           >
             {data.map((entry, index) => (
               <Cell

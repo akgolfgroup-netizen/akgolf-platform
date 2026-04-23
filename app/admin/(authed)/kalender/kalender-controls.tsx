@@ -14,7 +14,7 @@ type ViewMode = "month" | "week" | "availability";
 
 const viewTabs: TabItem[] = [
   { id: "month", label: "Måned", icon: <Grid3X3 className="w-3.5 h-3.5" /> },
-  { id: "week", label: "Uke", icon: <Icon name="calendar_today"Icon className="w-3.5 h-3.5" /> },
+  { id: "week", label: "Uke", icon: <Icon name="calendar_today" className="w-3.5 h-3.5" /> },
   {
     id: "availability",
     label: "Tilgjengelighet",

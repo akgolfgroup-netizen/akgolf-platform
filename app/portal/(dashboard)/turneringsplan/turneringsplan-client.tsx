@@ -154,7 +154,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
             <span className="mt-1.5 text-3xl font-extrabold tracking-tight text-on-surface tabular-nums">
               <NumberTicker value={stats.registered} />
             </span>
-            <Icon name="check"Circle2 className="mt-2 h-4 w-4 text-on-surface-variant" />
+            <Icon name="check_circle" className="mt-2 h-4 w-4 text-on-surface-variant" />
           </div>
         </PremiumCard>
 
@@ -280,7 +280,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                       </h3>
                       {t.isRegistered && (
                         <span className="inline-flex flex-shrink-0 items-center gap-1 rounded-full bg-success-light px-2 py-0.5 text-[10px] font-semibold text-success">
-                          <Icon name="check"Circle2 className="h-3 w-3" />
+                          <Icon name="check_circle" className="h-3 w-3" />
                           Påmeldt
                         </span>
                       )}
@@ -371,7 +371,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
                           disabled={registeringId === t.id}
                           className="inline-flex items-center gap-1.5 rounded-full bg-[accent-cta] px-4 py-2 text-[12px] font-bold text-on-surface transition-opacity hover:opacity-85 disabled:opacity-60"
                         >
-                          <Icon name="check"Circle2 className="h-3.5 w-3.5" />
+                          <Icon name="check_circle" className="h-3.5 w-3.5" />
                           {registeringId === t.id ? "Melder på..." : "Meld meg på"}
                         </button>
                       )}

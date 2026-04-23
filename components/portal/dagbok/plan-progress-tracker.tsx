@@ -60,7 +60,7 @@ export function PlanProgressTracker({
               </div>
             </div>
             {progress === 100 ? (
-              <Icon name="check"Circle2 className="h-5 w-5 shrink-0 text-success" />
+              <Icon name="check_circle" className="h-5 w-5 shrink-0 text-success" />
             ) : (
               <Icon name="calendar_today" className="h-5 w-5 shrink-0 text-on-surface-variant/60" />
             )}

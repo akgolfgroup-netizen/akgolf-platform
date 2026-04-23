@@ -80,7 +80,7 @@ export function ConfirmDrawer({
         <div className="text-[10px] font-bold uppercase tracking-[1.5px] text-on-surface-variant mb-2.5">
           Hva vil du jobbe med? (valgfritt)
         </div>
-        <Icon name="center_focus_strong"AreaChips selected={state.focusAreas} onToggle={toggleFocus} />
+        <FocusAreaChips selected={state.focusAreas} onToggle={toggleFocus} />
         <textarea
           rows={2}
           value={state.notes}
@@ -166,7 +166,7 @@ export function ConfirmDrawer({
         className="w-full mt-5 py-4 rounded-[14px] bg-secondary-fixed text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
       >
         Ga til betaling
-        <Icon name="chevron_right" className="w-4 h-4" strokeWidth={2.5} />
+        <Icon name="chevron_right" className="w-4 h-4" />
       </button>
     </Drawer>
   );

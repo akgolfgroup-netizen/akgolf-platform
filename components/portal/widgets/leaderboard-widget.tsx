@@ -55,9 +55,9 @@ export function LeaderboardWidget() {
               }
             >
               {p.trend < 0 ? (
-                <Icon name="arrow_downward"Right className="w-3 h-3" />
+                <Icon name="south_east" className="w-3 h-3" />
               ) : (
-                <Icon name="arrow_upward"Right className="w-3 h-3" />
+                <Icon name="arrow_outward" className="w-3 h-3" />
               )}
               {Math.abs(p.trend)}
             </span>

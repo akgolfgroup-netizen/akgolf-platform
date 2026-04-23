@@ -263,7 +263,7 @@ export function NyRundeClient() {
             {saving ? (
               <Icon name="progress_activity" className="h-3.5 w-3.5 animate-spin" />
             ) : (
-              <Icon name="save" className="h-3.5 w-3.5" strokeWidth={2.5} />
+              <Icon name="save" className="h-3.5 w-3.5" />
             )}
             <span>Lagre runde</span>
           </motion.button>

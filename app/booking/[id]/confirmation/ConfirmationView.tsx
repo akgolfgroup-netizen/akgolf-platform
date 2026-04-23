@@ -49,7 +49,7 @@ export function ConfirmationView({
             }}
             className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-6 bg-success/10 border-2 border-success/25"
           >
-            <Icon name="check"Circle2 size={48} className="text-success" />
+            <Icon name="check_circle" size={48} className="text-success" />
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 10 }}

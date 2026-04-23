@@ -105,7 +105,7 @@ export default async function AnalysePage() {
         <BentoCard variant="light" padding="lg">
           <div className="flex items-start gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-warning/10">
-              <Icon name="lightbulb" className="h-6 w-6 text-warning" strokeWidth={1.75} />
+              <Icon name="lightbulb" className="h-6 w-6 text-warning" />
             </div>
             <div className="flex-1">
               <MonoLabel size="xs" uppercase className="text-on-surface-variant block mb-1">
@@ -184,7 +184,7 @@ export default async function AnalysePage() {
         <BentoCard variant="light" padding="lg">
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-surface-container">
-              <Icon name="bar_chart" className="h-6 w-6 text-on-surface-variant" strokeWidth={1.75} />
+              <Icon name="bar_chart" className="h-6 w-6 text-on-surface-variant" />
             </div>
             <h3 className="mb-2 text-[14px] font-semibold text-on-surface">
               Ingen rundestatistikk ennå
@@ -347,7 +347,7 @@ export default async function AnalysePage() {
       <details className="group overflow-hidden rounded-3xl border border-outline-variant/10 bg-surface-container-lowest">
         <summary className="flex cursor-pointer list-none items-center gap-3 p-5 transition-colors hover:bg-surface">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
-            <Icon name="info" className="h-5 w-5 text-primary" strokeWidth={1.75} />
+            <Icon name="info" className="h-5 w-5 text-primary" />
           </div>
           <span className="text-[14px] font-semibold text-on-surface">
             Om Strokes Gained
@@ -442,7 +442,7 @@ function AnalyseQuickAction({
       className="group relative flex items-center gap-3 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-4 transition-all duration-300 will-change-transform hover:-translate-y-px hover:shadow-card-hover"
     >
       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 transition-transform group-hover:scale-110">
-        <IconLucide className="h-[18px] w-[18px] text-primary" strokeWidth={1.75} />
+        <IconLucide className="h-[18px] w-[18px] text-primary" />
       </div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-[13px] font-semibold text-on-surface">

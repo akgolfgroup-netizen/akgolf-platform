@@ -120,7 +120,7 @@ export default function KalenderAvailabilityPanel({
             </div>
           </div>
           <Button variant="accent" onClick={handleSave} isLoading={isSaving}>
-            <Icon name="check"Circle className="w-4 h-4" />
+            <Icon name="check_circle" className="w-4 h-4" />
             Lagre
           </Button>
         </div>

@@ -33,7 +33,7 @@ export function OverbookingAlert({
         animate={{ opacity: 1, y: 0 }}
         className="flex items-start gap-3 p-4 bg-success/10 rounded-xl border border-success/20"
       >
-        <Icon name="check"Circle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+        <Icon name="check_circle" className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
         <div>
           <p className="text-sm font-medium text-on-surface">
             God kapasitet

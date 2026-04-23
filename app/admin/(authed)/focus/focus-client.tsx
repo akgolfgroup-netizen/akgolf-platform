@@ -289,7 +289,7 @@ function TaskColumn({ title, tasks, isPending, onToggle, onDelete, headerAction 
                 title={STATUS_CONFIG[task.status].next ? `Flytt til ${STATUS_CONFIG[STATUS_CONFIG[task.status].next!].label}` : "Ferdig"}
               >
                 {task.status === "IN_PROGRESS" ? (
-                  <Icon name="check"Circle2 className="w-5 h-5" />
+                  <Icon name="check_circle" className="w-5 h-5" />
                 ) : (
                   <Icon name="circle" className="w-5 h-5" />
                 )}

@@ -253,7 +253,7 @@ export default function KalenderOverlays({
 
               {drawerBooking.instructor.user.name && (
                 <div className="flex items-start gap-3">
-                  <Icon name="check"Circle2 className="w-4 h-4 text-on-surface-variant mt-0.5" />
+                  <Icon name="check_circle" className="w-4 h-4 text-on-surface-variant mt-0.5" />
                   <div>
                     <div className="text-xs text-on-surface-variant">Instruktør</div>
                     <div className="text-sm text-on-surface font-medium">

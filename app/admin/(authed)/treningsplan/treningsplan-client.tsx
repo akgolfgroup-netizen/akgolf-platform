@@ -422,7 +422,7 @@ function StudentPlanEditor({
  : "bg-error/10 text-error border-error/20",
  )}
  >
- <Icon name="check"Circle className="w-4 h-4" />
+ <Icon name="check_circle" className="w-4 h-4" />
  {feedback.message}
  </div>
  )}

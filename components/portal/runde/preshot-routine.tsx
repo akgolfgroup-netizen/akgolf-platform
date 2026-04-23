@@ -168,7 +168,7 @@ export function PreShotRoutine({ onComplete, onClose, className }: PreShotRoutin
                     isCompleted ? "bg-purple-500" : "bg-surface-container"
                   )}>
                     {isCompleted ? (
-                      <Icon name="check"Circle2 className="w-5 h-5 text-surface" />
+                      <Icon name="check_circle" className="w-5 h-5 text-surface" />
                     ) : (
                       <Icon className="w-5 h-5 text-on-surface-variant" />
                     )}

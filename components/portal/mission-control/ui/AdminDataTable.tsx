@@ -234,7 +234,7 @@ export function AdminDataTable<T extends { id: string | number }>({
                           <Icon name="arrow_downward" className="w-3 h-3" />
                         )
                       ) : (
-                        <Icon name="arrow_upward"Down className="w-3 h-3 opacity-50" />
+                        <Icon name="swap_vert" className="w-3 h-3 opacity-50" />
                       )}
                     </button>
                   ) : (

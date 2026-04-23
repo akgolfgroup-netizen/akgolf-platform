@@ -74,7 +74,7 @@ export function PeerRadarChart({ myStats, peerStats, comparisonLabel = "Gruppe" 
             stroke={COLORS.info}
             fill={COLORS.info}
             fillOpacity={0.1}
-            strokeWidth={1.5}
+           
           />
           <Radar
             name="Du"
@@ -82,7 +82,7 @@ export function PeerRadarChart({ myStats, peerStats, comparisonLabel = "Gruppe" 
             stroke={COLORS.grey900}
             fill={COLORS.grey900}
             fillOpacity={0.2}
-            strokeWidth={2}
+           
             dot={{ fill: COLORS.grey900, r: 3 }}
           />
         </RadarChart>
