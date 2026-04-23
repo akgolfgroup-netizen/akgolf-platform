@@ -277,10 +277,7 @@ export function TrainingDiaryClient({
               {/* Bento Grid - Top Row: Streak + Weekly Stats */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <motion.div variants={itemVariants}>
-                  <StreakCard 
-                    data={streakData} 
-                    onUseFreeze={() => alert("Streak freeze brukt!")}
-                  />
+                  <StreakCard data={streakData} />
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <WeeklyStats sessions={sessionData} />
