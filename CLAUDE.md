@@ -71,12 +71,12 @@ All detaljert regelinformasjon ligger i `.claude/rules/`:
 | `prisma-auth.md` | Supabase ID vs Prisma ID, enum-verdier, create-regler |
 | `code-style.md` | TypeScript, komponent-organisering, styling, animasjoner |
 | `architecture.md` | Mappestruktur, auth-flyt, API-mønstre, roller, integrasjoner |
-| `design-system.md` | **ENESTE gjeldende design-system** — farger, typografi, spacing, knapper |
-| `ui-patterns.md` | Portal-kort, stat-kort, MC sidebar, markedsside-mønstre |
+| `design-system.md` | **ENESTE gjeldende design-system** — Heritage M3-tokens, DM Sans, Material Symbols, kildebilder |
+| `component-library.md` | Eksisterende komponenter — sjekk før du lager nye |
 
 **Ufravikelig:** Nye feil → legg til i `gotchas.md` umiddelbart.
 
-> ⚠️ **VIKTIG:** `docs/design-system.md`, `docs/project/04_DESIGN_SYSTEM.md`, `docs/DESIGN.md` og `docs/DESIGN-REFERENCE.md` er **arkivert/utdaterte**. Bruk KUN `.claude/rules/design-system.md`.
+> ⚠️ **VIKTIG:** Alle tidligere design-docs (`docs/DESIGN_SYSTEM.md`, `docs/design-system-v3.1.md`, `docs/DESIGN_REDIGN_PLAN_2026.md`, `docs/BRANDING-BOOKING.md`, `.claude/rules/ui-patterns.md`, `.claude/rules/premium-design-patterns.md`) er **arkivert** under `docs/archive-2026-04-24/` og `docs/archive-2026-04-21/`. Bruk KUN `.claude/rules/design-system.md` (Heritage).
 
 ## Prosjektstatus
 
@@ -107,7 +107,7 @@ Se `docs/status/` for oppdatert status:
 - Prisma singleton: `import { prisma } from "@/lib/portal/prisma"`
 - Prisma-relasjoner: PascalCase (`User`, `CoachingPackage`)
 - E-post: React Email i `lib/portal/email/templates/`
-- Design: "Sort. Hvit. Én grønn." — se `design-system.md` og `docs/ART-DIRECTION.md`
+- Design: Heritage M3 — se `.claude/rules/design-system.md`
 - Aldri emojier, aldri sertifiseringer, aldri MVA på kundesider
 
 ## Commit-konvensjoner

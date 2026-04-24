@@ -331,7 +331,7 @@ shadcn Dialog. Eksempler: `AddFriendDialog`, `LogSessionModal`, `UpgradeModal`. 
 
 `grid grid-cols-2 lg:grid-cols-4 gap-4` — 4 kort i rad, label øverst, stort tall dominerer, trend under.
 
-### Premium-prinsipper (`.claude/rules/premium-design-patterns.md`)
+### Premium-prinsipper (arkivert: `docs/archive-2026-04-24/premium-design-patterns.md`)
 
 - Layered shadows (min 2 lag)
 - Borders: rgba, ikke solid hex (`border-black/6` default)

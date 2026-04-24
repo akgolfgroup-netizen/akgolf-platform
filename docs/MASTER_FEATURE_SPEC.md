@@ -1090,10 +1090,9 @@ Følgende utdaterte dokumenter er fjernet eller arkivert:
 
 **Gyldige kilder som fortsatt eksisterer:**
 - `docs/MASTER_FEATURE_SPEC.md` (dette dokumentet)
-- `docs/DESIGN_REDIGN_PLAN_2026.md`
+- `.claude/rules/design-system.md` (Heritage M3 — eneste gjeldende design-kilde, erstattet `DESIGN_REDIGN_PLAN_2026.md` og `DESIGN_SYSTEM.md` per 2026-04-19)
 - `docs/project/02_SITEMAP.md`
 - `docs/project/05_USER_FLOWS.md`
-- `docs/DESIGN_SYSTEM.md`
 
 ---
 

@@ -116,7 +116,7 @@ API-endepunkt: `GET /api/health/stripe`
 
 **Arkivert:** `_archived/pre-heritage-2026-04-19/` inneholder gamle patterns (CourseHero, GlassPanel, osv.) og dashboard-views (FocusToday, DataRich, etc.).
 
-**Én kilde til sannhet:** `.claude/rules/design-system.md`. Alle andre design-docs (DESIGN_SYSTEM.md, design-system-v3.1.md, stitch-*.md) er droppet.
+**Én kilde til sannhet:** `.claude/rules/design-system.md`. Alle andre design-docs er arkivert under `docs/archive-2026-04-24/` (pre-Heritage) og `docs/archive-2026-04-21/` (eldre).
 
 ## Oppdater dokumentasjon ved strukturelle endringer
 Endre kode + oppdater docs = én atomisk operasjon.

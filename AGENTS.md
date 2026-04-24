@@ -31,8 +31,8 @@ Eksempel:
 Hvis Obsidian ikke er tilgjengelig, skriv direkte til `~/ak-brain/Arbeidslogg/`.
 
 ## Design & Frontend
-- `.claude/rules/design-system.md` er ENESTE autoritative kilde for farger, typografi, spacing, komponenter
-- Ikke bruk `docs/DESIGN_SYSTEM.md`, `docs/DESIGN.md` eller andre arkiverte filer
+- `.claude/rules/design-system.md` er ENESTE autoritative kilde for farger, typografi, spacing, komponenter (Heritage M3)
+- Ikke bruk noen filer under `docs/archive-2026-04-24/` eller `docs/archive-2026-04-21/` — de er arkivert pre-Heritage
 - Nye sider: sett sammen eksisterende komponenter fra `components/ui/` og `components/portal/`
 - Ingen hardkodede hex-koder. Bruk `--color-*` CSS-variabler eller Tailwind-tokens
 

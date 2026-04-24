@@ -77,30 +77,29 @@ prisma/
 
 ## Design System
 
-Se `docs/ART-DIRECTION.md` for komplett design-spesifikasjon.
+Se `.claude/rules/design-system.md` for komplett Heritage-spesifikasjon (kilde: `design-ref/stitch/heritage/`).
 
-### Farger (Brand Guide V2.0)
-- **Primary:** `#005840` (logo, nav, CTA)
-- **Accent:** `#D1F843` (CTA-knapper)
-- **Surface:** `#ECF0EF` (bakgrunn)
-- **Text:** `#324D45` (brodtekst)
-- **Grey:** `#ECF0EF`, `#D5DFDB`, `#5A6E66` (gronn-tonet skala)
-- **Success:** `#2A7D5A` | **Error:** `#B84233` | **Warning:** `#C48A32` | **AI:** `#AF52DE`
+### Farger (Heritage M3)
+- **Primary:** `#154212` (skogsgrønn)
+- **Primary container:** `#2d5a27` (portal-sidebar)
+- **Accent:** `#d2f000` (lime, `--color-secondary-fixed`)
+- **Surface:** `#fdf9f0` (kremhvit)
+- **On surface:** `#1c1c16` (brun-sort)
+- **MC-sidebar:** `emerald-950` / `#022c22`
 
 ### Typografi
-- **Font:** Inter (variable, 300-700)
-- **Headings:** Weight 700, tight letter-spacing
-- **Body:** Weight 400, 16px
+- **Body/Heading:** DM Sans via `next/font/google`
+- **Mono:** JetBrains Mono (tall, kode)
+- **Ikoner:** Material Symbols Outlined via `<Icon name="..." />`
 
 ## Dokumentasjon
 
 | Fil | Beskrivelse |
 |-----|-------------|
 | `CLAUDE.md` | Hoveddokumentasjon for utviklere |
-| `docs/ART-DIRECTION.md` | Visuell retning, farger, komponenter |
-| `docs/DESIGN-SYSTEM-CLAUDE.md` | Tekniske design-tokens |
-| `docs/claude-project-instructions.md` | Prosjektkontekst |
+| `.claude/rules/design-system.md` | Heritage design-system (eneste gjeldende) |
 | `.claude/rules/gotchas.md` | Kjente feller |
+| `.claude/rules/component-library.md` | Eksisterende komponenter |
 
 ## Oppsett
 

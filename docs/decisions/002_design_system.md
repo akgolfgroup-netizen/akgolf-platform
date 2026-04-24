@@ -1,7 +1,9 @@
 # ADR-002: Alle farger via Tailwind-tokens
 
 **Dato:** 11. april 2026
-**Status:** Implementert — 61 filer migrert
+**Status:** Superseded 2026-04-19 av Heritage-design-system — se `.claude/rules/design-system.md`
+
+> Historisk ADR. Prinsippet (ingen hardkodede hex-verdier) gjelder fortsatt, men de konkrete tokens (`bg-primary`, `text-accent-cta`, `var(--color-primary)` = #005840) er byttet ut med Heritage M3-tokens (`#154212`, `#d2f000`, DM Sans, Material Symbols).
 
 ## Beslutning
 

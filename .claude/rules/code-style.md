@@ -56,24 +56,22 @@ import { HERO_CONTENT } from "@/lib/website-constants";
 
 ## Styling
 
-### Design tokens (Brand Guide V2.0 · 2026)
+### Design tokens (Heritage M3 · 2026-04-19)
 
-Se `docs/ART-DIRECTION.md` for komplett visuell spesifikasjon.
+Se `.claude/rules/design-system.md` for komplett Heritage-spesifikasjon, kildebilder og pattern-bibliotek.
 
-Kjernefarger (Brand Guide V2.0):
-- Primary: #005840 (--color-primary) — hovedfarge, bakgrunner
-- Accent: #D1F843 (--color-accent-cta) — CTA-knapper, uthevinger
-- Surface: #ECF0EF (--color-surface) — bakgrunner, kort
-- Text: #324D45 (--color-text) — brodtekst, overskrifter
-- Muted: #A5B2AD (--color-muted) — hjelpetekst, rammer
+Kjernefarger (Heritage M3):
+- Primary: `#154212` (skogsgrønn) — `--color-primary`
+- Primary container: `#2d5a27` — portal-sidebar bg, `--color-primary-container`
+- Accent: `#d2f000` (lime) — `--color-secondary-fixed`
+- Surface: `#fdf9f0` (kremhvit) — `--color-surface`
+- On surface: `#1c1c16` (brun-sort) — `--color-on-surface`
+- Admin MC-sidebar: `emerald-950` / `#022c22`
 
-Semantikk: Success=#2A7D5A, Error=#B84233, Warning=#C48A32 (Brand Guide V2.0 §04).
-AI: Lilla #AF52DE (--color-ai).
-
-**ALDRI bruk:** `--color-gold`, `--apple-gold-*`, `#B07D4F`, `--color-ink-*`, `--hg-*`, #2D6A4F (gammel brand), #34C759 (gammel success), #FF3B30 (gammel error), #FF9500 (gammel warning), #1D1D1F (gammel svart)
+**ALDRI bruk:** `#005840`, `#D1F843`, `#ECF0EF`, `--color-accent-cta`, `--color-gold`, `--apple-gold-*`, `--color-ink-*`, `--hg-*`, `--color-portal-*`, `shadow-portal-*`, `#2D6A4F` (gammel brand), Inter-font, Lucide-ikoner.
 
 ### Font
-Inter via `next/font/google` — definert i `app/layout.tsx`.
+DM Sans (body/heading) + JetBrains Mono (tall) via `next/font/google`. Material Symbols Outlined for ikoner.
 
 ## Animasjoner
 
