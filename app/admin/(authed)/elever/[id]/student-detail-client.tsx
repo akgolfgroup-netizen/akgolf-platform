@@ -24,6 +24,7 @@ import { nb } from "date-fns/locale";
 import { getOrCreateConversation } from "@/app/admin/(authed)/meldinger/chat-actions";
 import { TrainingDataTabs } from "./training-data-tabs";
 import { StudentForecastTab } from "@/components/portal/mission-control/student-forecast-tab";
+import { StudentSummaryTab } from "@/components/portal/mission-control/student-summary-tab";
 import type { getStudentProfile } from "./actions";
 
 // ---------------------------------------------------------------------------
@@ -144,6 +145,7 @@ export function StudentDetailClient({ profile }: Props) {
   const tabs = [
     { id: "overview", label: "Oversikt" },
     { id: "training", label: "Trening" },
+    { id: "sammendrag", label: "Sammendrag" },
     { id: "forecast", label: "Forecast" },
     { id: "notes", label: "Notater og data" },
   ];
@@ -604,6 +606,14 @@ export function StudentDetailClient({ profile }: Props) {
               </div>
             )}
           </div>
+        )}
+
+        {/* Tab: Sammendrag */}
+        {activeTab === "sammendrag" && (
+          <StudentSummaryTab
+            studentId={profile.id}
+            studentName={profile.name ?? "Elev"}
+          />
         )}
 
         {/* Tab: Forecast */}

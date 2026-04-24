@@ -42,7 +42,13 @@ Regler:
 
 /**
  * POST /api/portal/trackman/upload-image — Last opp TrackMan screenshot for OCR
- * Body: { imageBase64: string, sessionDate?: string }
+ * Body: {
+ *   imageBase64: string,
+ *   sessionDate?: string,
+ *   preview?: boolean,            // hvis true: parser men lagrer ikke
+ *   studentId?: string,           // valgfritt - coach kan laste opp for en elev
+ *   coachingSessionId?: string,   // lenk til coaching-økt
+ * }
  */
 export async function POST(req: NextRequest) {
   const user = await getPortalUser();
@@ -51,7 +57,7 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { imageBase64, sessionDate } = body;
+  const { imageBase64, sessionDate, preview, studentId, coachingSessionId } = body;
 
   if (!imageBase64 || typeof imageBase64 !== "string") {
     return NextResponse.json(
