@@ -43,6 +43,33 @@
 
 ---
 
+## 2026-04-24 — PlayerHQ Dashboard (preview-rute) + design-docs arkivert
+
+**Jobbet med:** Ny parallell rute `/portal/playerhq` som implementerer Claude Design-prototypen "PlayerHQ — AK Golf Group" (Crextio-replika). Hentet layout/komponent-patterns fra PlayerHQ.html, men beholdt Heritage-fundamentet (DM Sans, Material Symbols, kremhvit #fdf9f0 bg, #154212 primary, #d2f000 accent). Deler samme `DashboardV3Props` og data-fetchers som `/portal`.
+
+- **Nye komponenter** (i `components/portal/playerhq/`):
+  - `hero.tsx` — `PlayerHQHero` med headline (56px/500, italic fragment) + 4 KPI-pills (dark/accent/hatch/outline) + 3 headline-stats (Runder/Økter/HCP↓)
+  - `row-one.tsx` — `ProfileCard` (foto-hero + navn/HCP-pill), `ProgressCard` (7-dagers bar chart + peak-badge), `TimeTrackerCard` (tick-ring + lime arc + play/pause/stop), `FormCard` (segmented progress + % per område)
+  - `row-two.tsx` — `ListCard` (accordion Statistikk/Utstyr/Mål/Helse), `CalendarCard` (ukestrimmel + event-pills med avatars), `TasksCard` (dark emerald-950 kort med sjekkbokser + lime CTA)
+  - `player-hq-dashboard.tsx` — main komponent som mapper `DashboardV3Props` til layouten (bruker `weekRings.completionPercent`, `trainingIndex.distribution`, `nextBooking` + demo-fallback for felt som ikke finnes i API ennå)
+- **Ny rute:** `app/portal/(dashboard)/playerhq/page.tsx` kjører samme `Promise.all` som `/portal` og sender props til `PlayerHQDashboard`.
+- **1240px design-width** i et card-on-canvas layout med `box-shadow: 0 30px 80px rgba(28,28,22,0.08)`.
+- **Design-docs ryddet:** 6 pre-Heritage filer flyttet til `docs/archive-2026-04-24/` (DESIGN_SYSTEM.md, design-system-v3.1.md, DESIGN_REDIGN_PLAN_2026.md, BRANDING-BOOKING.md, ui-patterns.md, premium-design-patterns.md). Referanser i CLAUDE.md, README.md, AGENTS.md, code-style.md, gotchas.md oppdatert til å peke kun på `.claude/rules/design-system.md` (Heritage). ADR-002 merket Superseded.
+- **Verifisert:** `GET /portal/playerhq 200 in 6.6s` — siden laster.
+
+**Status:** `/portal/playerhq` er eksperimentell preview-rute parallell med `/portal`. Ingenting erstattet — bruker må godkjenne visuelt før vi bytter hovedruten.
+
+**Neste steg:**
+1. **Bruker reviewer** `/portal/playerhq` side-om-side med Claude Design PlayerHQ.html.
+2. Tilpass data-mapping: legg til `todayPlannedMinutes` og `todayTasks` i `getDashboardTrainingIndex` slik at økt-tracker og dagens plan bruker ekte data.
+3. Avgjør: erstatt `/portal` helt, eller behold begge som valg-bar dashboard-variant?
+4. Mulige justeringer: mobil-responsivitet (1240px design er desktop-only), portrett-bilde for ProfileCard (mangler per nå).
+
+**Nøkkelfiler:**
+- Nye: `components/portal/playerhq/{hero,row-one,row-two,player-hq-dashboard}.tsx`, `app/portal/(dashboard)/playerhq/page.tsx`, `design-ref/player-hq/{PlayerHQ.html,PlayerHQ_src.html}`, `docs/archive-2026-04-24/*`
+- Oppdatert: `CLAUDE.md`, `README.md`, `AGENTS.md`, `.claude/rules/{code-style,gotchas}.md`, `docs/MASTER_FEATURE_SPEC.md`, `docs/decisions/002_design_system.md`, `wireframe/brain/design-context.md`, `WORKLOG.md`
+---
+
 ## 2026-04-24 — Treningsplan-wizard: spilleren velger selv (Manuell / Anbefalt / Standard)
 
 **Jobbet med:** Spilleren får nå selv velge hvordan en ny treningsplan skal lages. Tom-tilstand, 2-stegs (eller 3 ved mal-valg) wizard, og 5 hardkodede standardmaler. Hentet 3 komponenter fra 21st.dev og tilpasset Heritage-tokens (DM Sans, Material Symbols, Material 3-farger).
