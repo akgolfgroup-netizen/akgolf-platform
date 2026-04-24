@@ -292,6 +292,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           durationMinutes: Number(args.durationMinutes) || 30,
           rating: args.rating ? Number(args.rating) : null,
           date: new Date(),
+          updatedAt: new Date(),
         },
       });
       return {

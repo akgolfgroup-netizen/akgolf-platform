@@ -8,6 +8,41 @@
 
 ---
 
+## 2026-04-24 — CoachHQ AI-pipeline: sammendrag, drills, neste økt, TrackMan-vision, automasjon
+
+**Jobbet med:** Full 9-dagers implementasjon (alt i én økt) av CoachHQ AI-pipeline slik Anders planla — coach kan laste opp lyd fra mobil etter en time og systemet genererer komplett sammendrag, utkast til neste økt, og drills i én flyt.
+
+- **Dag 1 — Prisma:** `CoachingSession.rawTranscript/publishedToStudent/publishedAt`, `TrackmanSession.coachingSessionId+sourceType`, ny `PlayerGoals`-modell, `COACHING_SUMMARY_DRAFT` notification-type. Supabase Storage `coaching-audio`-bucket med RLS (staff kan laste opp, elev ser kun egen).
+- **Dag 2 — Del 1 (Post-session-pipeline):** `PostSessionUpload` (lyd + valgfritt TrackMan-bilde på iPhone), utvidet `/api/portal/ai/coaching-transcription` (Whisper → Claude-sammendrag 4-delt inkl. prosa, lagrer i Storage + DB, varsler coach). `SummaryEditor` (redigerbar, publish-knapp). `StudentSummaryTab` (historikk + opplasting). Ny tab "Sammendrag" i elev-detalj.
+- **Dag 3 — Del 4 (TrackMan-vision):** Utvidet `/api/portal/trackman/upload-image` med `preview`-modus + persistering til `TrackmanSession`+`TrackManShotData` linket til `CoachingSession`. `TrackmanImportWizard` med Claude Vision-OCR (les skjermbilde fra iPhone), preview-tabell, bekreft-og-lagre.
+- **Dag 4 — Del 2 (Drill-studio + test-register):** Nytt `/api/portal/ai/drill-pack` som genererer batch (1–5 per fokusområde) via Claude Sonnet 4.5 og persisterer til `ExerciseDefinition` + `UserExerciseBank`. `DrillStudio` (fokusområde-pills + vanskelighetsgrad + preview-kort med "Legg til elev"). `TestRegister` (Testprotokoll 2.0 med 8-ukers retest-kalender + historikk per T1–Tn).
+- **Dag 5 — Del 3 (Next-session-agent):** `next-session-orchestrator` (orkestrerer focus-recommendation + session-planner + henter siste 3 sesjoner, 14d trening, 30d TrackMan, mål, HCP). `/api/portal/ai/next-session`-route. `NextSessionPlanner`-UI med AI-Attribution (kildeteller) og strukturert plan.
+- **Dag 7 — Automasjon:** `lib/portal/agents/runner.ts` med `onBookingCompleted` + `onCoachingSessionPublished` (hver event logges i `AgentLog`). Publish-handling trigger next-session-utkast i bakgrunn. Ny CRON `/api/portal/cron/process-coaching-audio` hvert 15. min som prosesserer COMPLETED-bookinger med opplastet lyd men ingen sammendrag.
+- **Dag 8 — MCP-server:** `scripts/mcp-coach-hq/server.ts` med 6 tools (`list-students`, `get-student-context`, `get-session-transcript`, `generate-next-session`, `search-drills`, `log-training-note`). Klar til registrering i Claude Code / Kimi Claw.
+- **Dag 9 — Cowork + slash-commands:** `lib/portal/cowork/append-session.ts` skriver publiserte sammendrag til `~/Claude Cowork/ak-golf-academy/sessions/<elev>/<dato>.md` (kun når `COWORK_SYNC_PATH` satt). 3 slash-commands: `/coach-etter-okt`, `/coach-neste-okt`, `/coach-drill-pack`.
+- **5 nye tabs i elev-detaljside** (`/admin/elever/[id]`): Sammendrag, Drills, Tester, Planlegg neste, Forecast.
+
+**Commits:** `8b016f4 wip: sync 2026-04-24 09:05` (auto-sync commit har mesteparten) + ny commit med slash-commands + MCP-fiks.
+
+**Nøkkelfiler:**
+- Prisma: `prisma/schema.prisma`, 3 nye migrasjoner (`20260424_coach_ai_pipeline`, `20260424_coach_audio_storage`, `20260424_add_notification_types`)
+- API: `app/api/portal/ai/{coaching-transcription,drill-pack,next-session}/route.ts`, `app/api/portal/admin/coaching-session/{[id],route}.ts`, `app/api/portal/admin/test-register/route.ts`, `app/api/portal/trackman/upload-image/route.ts` (utvidet), `app/api/portal/cron/process-coaching-audio/route.ts`
+- Komponenter: `components/portal/mission-control/{post-session-upload,summary-editor,student-summary-tab,trackman-import-wizard,drill-studio,test-register,next-session-planner}.tsx`
+- Bibliotek: `lib/portal/ai/{coaching-summary,next-session-orchestrator}.ts`, `lib/portal/agents/runner.ts`, `lib/portal/cowork/append-session.ts`
+- Infra: `vercel.json` (ny CRON), `scripts/mcp-coach-hq/{server,README}.{ts,md}`
+- Slash-commands: `.claude/commands/{coach-etter-okt,coach-neste-okt,coach-drill-pack}.md`
+
+**Status:** Alle nye filer TS-rene. Lint-rene. Pre-eksisterende feil andre steder i repo ikke adressert. Plan-fil: `~/.claude/plans/script-som-automatisk-skriver-merry-salamander.md`.
+
+**Neste steg (Anders må utføre):**
+1. **Test end-to-end** i dev: last opp kort .m4a fra iPhone til en test-elevsession → verifiser at sammendrag fylles + redigerbar i "Sammendrag"-fanen → publiser → sjekk at elev får notification.
+2. **Installer MCP-SDK** hvis du vil bruke MCP-server fra Claude Code: `npm install @modelcontextprotocol/sdk` — register deretter i `~/.claude.json` (se `scripts/mcp-coach-hq/README.md`).
+3. **Sett `COWORK_SYNC_PATH=~/Claude Cowork`** i lokal `.env` hvis du vil ha automatisk markdown-eksport ved publisering.
+4. **Deploy til Vercel** — ny CRON `process-coaching-audio` kjører hvert 15. min; krever `CRON_SECRET` i env.
+5. **Valgfritt:** Kjør fra mobilen på akgolf.no — `<input capture="user">` støtter direkte lydopptak på iOS.
+
+---
+
 ## 2026-04-24 — Treningsplan-wizard: spilleren velger selv (Manuell / Anbefalt / Standard)
 
 **Jobbet med:** Spilleren får nå selv velge hvordan en ny treningsplan skal lages. Tom-tilstand, 2-stegs (eller 3 ved mal-valg) wizard, og 5 hardkodede standardmaler. Hentet 3 komponenter fra 21st.dev og tilpasset Heritage-tokens (DM Sans, Material Symbols, Material 3-farger).
