@@ -3,7 +3,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { prisma } from "@/lib/portal/prisma";
-import { endOfISOWeek, isWithinInterval, addWeeks, startOfISOWeek } from "date-fns";
+import { endOfISOWeek, isWithinInterval, addWeeks, startOfISOWeek, format } from "date-fns";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
@@ -665,6 +665,52 @@ export async function deleteSession(sessionId: string) {
 }
 
 // -------------------------------------------------------------------
+// Duplicate session — copy source session into same week
+// -------------------------------------------------------------------
+
+export async function duplicateSession(sessionId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const supabase = await createServerSupabase();
+
+  const { data: source } = await supabase
+    .from("TrainingPlanSession")
+    .select("weekId, dayOfWeek, title, description, durationMinutes, focusArea, exercises, sortOrder")
+    .eq("id", sessionId)
+    .single();
+
+  if (!source) throw new Error("Treningsøkten finnes ikke");
+
+  const rawExercises = Array.isArray(source.exercises)
+    ? (source.exercises as Record<string, unknown>[])
+    : [];
+  if (rawExercises.some((ex) => ex._groupSessionId)) {
+    throw new Error("Gruppeøkter kan ikke dupliseres. Kontakt coach for endringer.");
+  }
+
+  const newId = nanoid();
+  const { error: insertError } = await supabase.from("TrainingPlanSession").insert({
+    id: newId,
+    weekId: source.weekId,
+    dayOfWeek: source.dayOfWeek,
+    title: `${source.title} (kopi)`,
+    description: source.description ?? null,
+    durationMinutes: source.durationMinutes ?? null,
+    focusArea: source.focusArea ?? null,
+    exercises: rawExercises,
+    sortOrder: (source.sortOrder ?? 0) + 1,
+  });
+
+  if (insertError) {
+    throw new Error(`Kunne ikke duplisere økt: ${insertError.message}`);
+  }
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true, sessionId: newId };
+}
+
+// -------------------------------------------------------------------
 // Create single session for current week (B-1.2)
 // -------------------------------------------------------------------
 
@@ -1209,6 +1255,96 @@ import {
   getTemplate,
   type TemplateId,
 } from "@/lib/portal/training/standard-templates";
+import { analyzeWeakness } from "@/lib/portal/ai/weakness-analysis";
+import { generateTrainingPlan } from "@/lib/portal/ai/training-plan";
+
+interface RecommendedPlanInput {
+  userId: string;
+  durationWeeks: number;
+  startDate: string;
+}
+
+interface RecommendedPlanResult {
+  title: string;
+  description: string;
+  aiGenerated: boolean;
+  weeks: Array<{
+    weekNumber: number;
+    focus?: string;
+    volumeLabel?: string;
+    sessions: Array<{
+      dayOfWeek: number;
+      title: string;
+      description?: string;
+      durationMinutes?: number;
+      focusArea?: string;
+    }>;
+  }>;
+}
+
+async function buildRecommendedPlan(input: RecommendedPlanInput): Promise<RecommendedPlanResult> {
+  try {
+    const weakness = await analyzeWeakness(input.userId);
+
+    const goals = [
+      `Primær svakhet: ${weakness.primaryWeakness}.`,
+      weakness.recommendation,
+      weakness.supportingEvidence.length > 0
+        ? `Observasjoner: ${weakness.supportingEvidence.slice(0, 3).join("; ")}.`
+        : null,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+    const aiResult = await generateTrainingPlan({
+      goals,
+      periodType: "grunnperiode",
+      durationWeeks: input.durationWeeks,
+      startDate: input.startDate,
+    });
+
+    if (!aiResult.weeks?.length) {
+      throw new Error("AI returnerte tom plan");
+    }
+
+    return {
+      title: aiResult.title || "AI-anbefalt plan",
+      description: `AI-anbefaling med fokus på: ${weakness.primaryWeakness}.`,
+      aiGenerated: true,
+      weeks: aiResult.weeks.slice(0, input.durationWeeks).map((w, idx) => ({
+        weekNumber: idx + 1,
+        focus: w.focus,
+        volumeLabel: w.volumeLabel,
+        sessions: w.sessions.map((s) => ({
+          dayOfWeek: s.dayOfWeek,
+          title: s.title,
+          description: s.description,
+          durationMinutes: s.durationMinutes,
+          focusArea: s.focusArea,
+        })),
+      })),
+    };
+  } catch {
+    const fallback = getTemplate("allround");
+    if (!fallback) throw new Error("Manglende standard-mal for AI-fallback");
+
+    return {
+      title: "Anbefalt plan",
+      description: "Balansert standardplan. Kunne ikke generere tilpasset AI-plan — prøv igjen når du har flere loggførte økter.",
+      aiGenerated: false,
+      weeks: Array.from({ length: input.durationWeeks }, (_, i) => ({
+        weekNumber: i + 1,
+        focus: `Allround basis — uke ${i + 1}`,
+        sessions: fallback.weekPattern.map((s) => ({
+          dayOfWeek: s.dayOfWeek,
+          title: s.title,
+          durationMinutes: s.durationMinutes,
+          focusArea: s.focusArea,
+        })),
+      })),
+    };
+  }
+}
 
 export type PlanCreationMode = "MANUAL" | "RECOMMENDED" | "TEMPLATE";
 
@@ -1271,36 +1407,26 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
     });
   }
 
-  // ---- RECOMMENDED: AI-anbefalt (placeholder — bruker Allround-mal som basis) ----
-  // TODO v2: koble til ekte AI-flow basert på SG/HCP/svakheter
+  // ---- RECOMMENDED: AI-anbefalt basert på SG/svakhets-analyse ----
   if (input.mode === "RECOMMENDED") {
-    const fallback = getTemplate("allround");
-    if (!fallback) throw new Error("Manglende standard-mal for AI-fallback");
-
-    const weeks = Array.from({ length: input.durationWeeks }, (_, i) => ({
-      weekNumber: i + 1,
-      focus: `AI-anbefalt fokus — uke ${i + 1}`,
-      sessions: fallback.weekPattern.map((s) => ({
-        dayOfWeek: s.dayOfWeek,
-        title: s.title,
-        durationMinutes: s.durationMinutes,
-        focusArea: s.focusArea,
-      })),
-    }));
-
-    const result = await createManualPlan({
-      title: input.title ?? "AI-anbefalt plan",
-      description: "Generert basert på din profil. Juster fritt.",
-      periodType: "PREPARATION",
+    const aiPlan = await buildRecommendedPlan({
+      userId: user.id,
+      durationWeeks: input.durationWeeks,
       startDate: startDate.toISOString().slice(0, 10),
-      weeks,
     });
 
-    // Marker som AI-generert
+    const result = await createManualPlan({
+      title: input.title ?? aiPlan.title,
+      description: aiPlan.description,
+      periodType: "PREPARATION",
+      startDate: startDate.toISOString().slice(0, 10),
+      weeks: aiPlan.weeks,
+    });
+
     if (result.success && result.planId) {
       await prisma.trainingPlan.update({
         where: { id: result.planId },
-        data: { aiGenerated: true },
+        data: { aiGenerated: aiPlan.aiGenerated },
       });
     }
 

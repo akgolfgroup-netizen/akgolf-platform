@@ -16,9 +16,10 @@ import {
   BarChart,
   Bar,
 } from "recharts";
-import type { TrackManOverview, TrackManAnalyticsSummary } from "./actions";
+import type { TrackManOverview, TrackManAnalyticsSummary, AggregatedInsightsPayload } from "./actions";
 import { ShotDispersionChart } from "@/components/portal/trackman/shot-dispersion-chart";
 import { TrackManAnalyticsCard } from "@/components/portal/trackman/trackman-analytics-card";
+import { AggregatedInsightsCard } from "@/components/portal/trackman/aggregated-insights-card";
 import { MonoLabel, NightSurface } from "@/components/portal/patterns";
 
 // ── Design tokens as hex (for Recharts) ──────────────────
@@ -63,7 +64,7 @@ interface ApiShot {
 
 // ── Komponent ────────────────────────────────────────────
 
-export function TrackManClient({ data }: { data: TrackManOverview }) {
+export function TrackManClient({ data, aggregatedInsights }: { data: TrackManOverview; aggregatedInsights: AggregatedInsightsPayload }) {
   const [upload, setUpload] = useState<UploadState>({
     isOpen: false,
     mode: null,
@@ -376,6 +377,9 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
           />
         </div>
       </NightSurface>
+
+      {/* AI-innsikter (aggregert på tvers av sesjoner) */}
+      <AggregatedInsightsCard initial={aggregatedInsights} />
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

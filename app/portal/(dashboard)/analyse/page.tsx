@@ -19,6 +19,7 @@ import {
   BentoGrid,
 } from "@/components/portal/patterns";
 import { Icon } from "@/components/ui/icon";
+import { HCPTrendChart } from "@/components/portal/dashboard/hcp-trend-chart";
 
 export const metadata: Metadata = {
   title: "Analyse | PlayersHQ",
@@ -217,9 +218,13 @@ export default async function AnalysePage() {
               Handicap-trend
             </h3>
             {chartData.length > 0 ? (
-              <div className="h-[220px] flex items-center justify-center rounded-xl bg-surface-container">
-                <p className="text-[13px] text-on-surface-variant">Handicap-graf kommer snart.</p>
-              </div>
+              <HCPTrendChart
+                data={chartData.map((entry) => ({
+                  date: entry.date,
+                  hcp: entry.value,
+                }))}
+                showRounds={false}
+              />
             ) : (
               <p className="py-12 text-center text-[13px] text-on-surface-variant">
                 Ingen handicap-data registrert ennå.

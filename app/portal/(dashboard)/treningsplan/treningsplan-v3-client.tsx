@@ -14,7 +14,6 @@ import {
   WeekCalendarCompact,
   SessionCard,
   useDragAndDrop,
-  DAY_NAMES,
   SidePanel,
   SessionDetailModal,
   NewSessionModal,
@@ -26,6 +25,8 @@ import {
 import {
   updateSessionTime,
   deleteSession,
+  duplicateSession,
+  createSessionForWeek,
 } from "./actions";
 
 // Konvertering fra V2Event til TrainingSession
@@ -184,8 +185,13 @@ export function TrainingPlannerV3({
   );
 
   // Håndter duplisering
-  const handleDuplicate = useCallback((_session: TrainingSession) => {
-    // TODO: Implementer duplisering via server action
+  const handleDuplicate = useCallback(async (session: TrainingSession) => {
+    try {
+      await duplicateSession(session.id);
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to duplicate session:", error);
+    }
   }, []);
 
   // Håndter klikk på session (åpner detail modal)
@@ -240,9 +246,19 @@ export function TrainingPlannerV3({
 
   // Håndter legg til fra template
   const handleAddFromTemplate = useCallback(async (template: StandardTemplate, dayOfWeek: number) => {
-    // TODO: Implementere opprettelse av ny session fra template via server action
-    alert(`Økt "${template.title}" vil bli lagt til på ${DAY_NAMES[dayOfWeek].full}. Denne funksjonen krever backend-implementasjon.`);
-  }, []);
+    try {
+      await createSessionForWeek({
+        weekOffset,
+        dayOfWeek,
+        title: template.title,
+        durationMinutes: template.duration,
+        focusArea: template.focus,
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to add session from template:", error);
+    }
+  }, [weekOffset]);
 
   // Konverter V2 templates til StandardTemplate format
   const standardTemplates: StandardTemplate[] = useMemo(() => {
@@ -427,8 +443,46 @@ export function TrainingPlannerV3({
               />
             )}
             {view === "list" && (
-              <div className="bg-inverse-surface rounded-xl border border-inverse-on-surface/20 p-4">
-                <p className="text-inverse-on-surface/60 text-center">Listevisning kommer snart</p>
+              <div className="h-full overflow-y-auto rounded-xl border border-inverse-on-surface/20 bg-inverse-surface p-4">
+                {filteredSessions.length === 0 ? (
+                  <p className="py-12 text-center text-sm text-inverse-on-surface/60">
+                    Ingen økter planlagt denne uken.
+                  </p>
+                ) : (
+                  <div className="space-y-6">
+                    {[1, 2, 3, 4, 5, 6, 7].map((day) => {
+                      const dayLabels = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"];
+                      const daySessions = filteredSessions
+                        .filter((s) => s.dayOfWeek === day)
+                        .sort((a, b) => (a.startH * 60 + a.startM) - (b.startH * 60 + b.startM));
+                      if (daySessions.length === 0) return null;
+                      return (
+                        <div key={day}>
+                          <div className="mb-2 flex items-baseline gap-2">
+                            <h3 className="text-sm font-semibold text-inverse-on-surface">
+                              {dayLabels[day - 1]}
+                            </h3>
+                            <span className="text-xs text-inverse-on-surface/50">
+                              {daySessions.length} økt{daySessions.length !== 1 ? "er" : ""}
+                            </span>
+                          </div>
+                          <div className="space-y-2">
+                            {daySessions.map((session) => (
+                              <SessionCard
+                                key={session.id}
+                                session={session}
+                                onEdit={handleEdit}
+                                onDelete={handleDelete}
+                                onDuplicate={handleDuplicate}
+                                onClick={handleSessionClick}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             )}
           </div>

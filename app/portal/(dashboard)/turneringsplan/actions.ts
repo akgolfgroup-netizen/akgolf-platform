@@ -27,9 +27,23 @@ export interface TournamentStats {
   completed: number;
 }
 
+export interface CompletedTournament {
+  id: string;
+  name: string;
+  startDate: string;
+  endDate: string | null;
+  level: string;
+  course: string | null;
+  location: string | null;
+  goalType: string | null;
+  planNotes: string | null;
+  hadPrep: boolean;
+}
+
 export async function getPlayerTournaments(): Promise<{
   tournaments: PortalTournament[];
   stats: TournamentStats;
+  completedTournaments: CompletedTournament[];
 }> {
   const user = await requirePortalUser();
 
@@ -52,14 +66,42 @@ export async function getPlayerTournaments(): Promise<{
     take: 50,
   });
 
-  // Hent fullforte turneringer (for stats)
-  const completedCount = await prisma.tournament.count({
+  // Hent fullforte turneringer brukeren har vært tilknyttet
+  const completedRaw = await prisma.tournament.findMany({
     where: {
       startDate: { lt: now },
       PlayerTournamentPlan: {
         some: { studentId: user.id },
       },
     },
+    include: {
+      PlayerTournamentPlan: {
+        where: { studentId: user.id },
+        take: 1,
+      },
+      TournamentPrep: {
+        where: { userId: user.id },
+        take: 1,
+      },
+    },
+    orderBy: { startDate: "desc" },
+    take: 100,
+  });
+
+  const completedTournaments: CompletedTournament[] = completedRaw.map((t) => {
+    const plan = t.PlayerTournamentPlan[0] ?? null;
+    return {
+      id: t.id,
+      name: t.name,
+      startDate: t.startDate.toISOString(),
+      endDate: t.endDate?.toISOString() ?? null,
+      level: t.level,
+      course: t.course,
+      location: t.location,
+      goalType: plan?.goalType ?? null,
+      planNotes: plan?.notes ?? null,
+      hadPrep: t.TournamentPrep.length > 0,
+    };
   });
 
   const mapped: PortalTournament[] = tournaments.map((t) => {
@@ -89,8 +131,9 @@ export async function getPlayerTournaments(): Promise<{
     stats: {
       upcoming: mapped.length,
       registered: registeredCount,
-      completed: completedCount,
+      completed: completedTournaments.length,
     },
+    completedTournaments,
   };
 }
 

@@ -6,6 +6,10 @@ import {
   generateTrackManInsightsCore,
   type TrackManInsightResult,
 } from "@/lib/portal/trackman/ai-insights";
+import {
+  generateTrackManInsights as generateAggregated,
+  type TrackManInsightItem,
+} from "@/lib/portal/ai/trackman-insights";
 
 // ── Typer ────────────────────────────────────────────────
 
@@ -275,4 +279,66 @@ export async function generateTrackManInsights(
 ): Promise<TrackManInsightResult> {
   const user = await requirePortalUser();
   return generateTrackManInsightsCore(sessionId, user.id, user.name);
+}
+
+// ── Aggregerte innsikter (på tvers av siste 3 sesjoner) ─────
+
+export type AggregatedInsightsPayload = {
+  insights: TrackManInsightItem[];
+  cooldownUntil: string | null;
+  generatedAt: string | null;
+};
+
+export async function getLatestAggregatedInsights(): Promise<AggregatedInsightsPayload> {
+  const user = await requirePortalUser();
+  const latest = await prisma.trackManInsight.findFirst({
+    where: { userId: user.id },
+    orderBy: { generatedAt: "desc" },
+  });
+
+  if (!latest) {
+    return { insights: [], cooldownUntil: null, generatedAt: null };
+  }
+
+  return {
+    insights: latest.insights as unknown as TrackManInsightItem[],
+    cooldownUntil: latest.cooldownUntil.toISOString(),
+    generatedAt: latest.generatedAt.toISOString(),
+  };
+}
+
+export async function regenerateAggregatedInsights(): Promise<AggregatedInsightsPayload> {
+  const user = await requirePortalUser();
+  const now = new Date();
+
+  const latest = await prisma.trackManInsight.findFirst({
+    where: { userId: user.id },
+    orderBy: { generatedAt: "desc" },
+  });
+
+  if (latest && latest.cooldownUntil > now) {
+    return {
+      insights: latest.insights as unknown as TrackManInsightItem[],
+      cooldownUntil: latest.cooldownUntil.toISOString(),
+      generatedAt: latest.generatedAt.toISOString(),
+    };
+  }
+
+  const result = await generateAggregated(user.id);
+  const cooldownUntil = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+  const created = await prisma.trackManInsight.create({
+    data: {
+      userId: user.id,
+      insights: result.insights as unknown as object,
+      generatedAt: now,
+      cooldownUntil,
+    },
+  });
+
+  return {
+    insights: result.insights,
+    cooldownUntil: created.cooldownUntil.toISOString(),
+    generatedAt: created.generatedAt.toISOString(),
+  };
 }

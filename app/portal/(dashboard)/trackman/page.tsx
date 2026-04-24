@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
-import { getTrackManOverview } from "./actions";
+import { getTrackManOverview, getLatestAggregatedInsights } from "./actions";
 import { TrackManClient } from "./trackman-client";
 
 export const metadata: Metadata = {
@@ -25,7 +25,10 @@ export const metadata: Metadata = {
 export default async function TrackManPage() {
   await requirePortalUser();
 
-  const data = await getTrackManOverview();
+  const [data, aggregatedInsights] = await Promise.all([
+    getTrackManOverview(),
+    getLatestAggregatedInsights(),
+  ]);
 
-  return <TrackManClient data={data} />;
+  return <TrackManClient data={data} aggregatedInsights={aggregatedInsights} />;
 }

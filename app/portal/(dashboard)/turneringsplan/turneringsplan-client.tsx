@@ -9,7 +9,7 @@ import { nb } from "date-fns/locale";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { NumberTicker } from "@/components/portal/dashboard/number-ticker";
 import { AddTournamentModal } from "@/components/portal/turneringer/add-tournament-modal";
-import { registerForTournament, type PortalTournament, type TournamentStats } from "./actions";
+import { registerForTournament, type PortalTournament, type TournamentStats, type CompletedTournament } from "./actions";
 import {
   VerticalTimeline,
   MonoLabel,
@@ -47,9 +47,10 @@ type TabKey = "kommende" | "pameldt" | "resultater";
 interface Props {
   tournaments: PortalTournament[];
   stats: TournamentStats;
+  completedTournaments: CompletedTournament[];
 }
 
-export function TurneringsplanClient({ tournaments, stats }: Props) {
+export function TurneringsplanClient({ tournaments, stats, completedTournaments }: Props) {
   const [activeTab, setActiveTab] = useState<TabKey>("kommende");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [registeringId, setRegisteringId] = useState<string | null>(null);
@@ -203,7 +204,7 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
       </div>
 
       {/* ═══ TURNERINGSLISTE ═══ */}
-      {activeTab === "resultater" && stats.completed === 0 && (
+      {activeTab === "resultater" && completedTournaments.length === 0 && (
         <PremiumCard delay={0}>
           <div className="flex flex-col items-center py-12 text-center">
             <Icon name="emoji_events" className="mb-3 h-8 w-8 text-on-surface-variant opacity-40" />
@@ -217,18 +218,64 @@ export function TurneringsplanClient({ tournaments, stats }: Props) {
         </PremiumCard>
       )}
 
-      {activeTab === "resultater" && stats.completed > 0 && (
-        <PremiumCard delay={0}>
-          <div className="flex flex-col items-center py-12 text-center">
-            <Icon name="emoji_events" className="mb-3 h-8 w-8 text-on-surface opacity-60" />
-            <p className="text-sm font-medium text-on-surface-variant">
-              {stats.completed} fullførte turneringer
-            </p>
-            <p className="mt-1 text-xs text-on-surface-variant">
-              Detaljert resultatoversikt kommer snart
-            </p>
-          </div>
-        </PremiumCard>
+      {activeTab === "resultater" && completedTournaments.length > 0 && (
+        <div className="space-y-2">
+          {completedTournaments.map((t, i) => {
+            const date = new Date(t.startDate);
+            return (
+              <PremiumCard key={t.id} delay={i * 0.03} className="p-0">
+                <div className="flex items-start gap-4 p-5">
+                  <div className="flex h-12 w-12 flex-shrink-0 flex-col items-center justify-center rounded-xl bg-surface">
+                    <span className="text-[10px] font-semibold uppercase leading-none text-on-surface-variant">
+                      {format(date, "MMM", { locale: nb })}
+                    </span>
+                    <span className="text-lg font-bold leading-tight text-on-surface tabular-nums">
+                      {format(date, "d")}
+                    </span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="truncate text-[14px] font-semibold text-on-surface">
+                        {t.name}
+                      </h3>
+                      {t.hadPrep && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
+                          <Icon name="task_alt" className="h-3 w-3" />
+                          Forberedt
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-on-surface-variant">
+                      {(t.course ?? t.location) && (
+                        <span className="flex items-center gap-1">
+                          <Icon name="location_on" className="h-3 w-3" />
+                          {t.course ?? t.location}
+                        </span>
+                      )}
+                      <span className="flex items-center gap-1">
+                        <Icon name="calendar_today" className="h-3 w-3" />
+                        {format(date, "EEEE d. MMMM yyyy", { locale: nb })}
+                      </span>
+                      <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${getLevelColor(t.level)}`}>
+                        {t.level}
+                      </span>
+                    </div>
+                    {t.goalType && (
+                      <p className="mt-2 text-[12px] text-on-surface-variant">
+                        <span className="font-medium text-on-surface">Mål:</span> {t.goalType}
+                      </p>
+                    )}
+                    {t.planNotes && (
+                      <p className="mt-1 text-[12px] italic text-on-surface-variant">
+                        {t.planNotes}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </PremiumCard>
+            );
+          })}
+        </div>
       )}
 
       {activeTab !== "resultater" && displayList.length === 0 && (

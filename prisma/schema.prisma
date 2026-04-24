@@ -1044,6 +1044,18 @@ model TrackmanSession {
   @@index([coachingSessionId])
 }
 
+/// AI-genererte innsikter basert på TrackMan-sesjoner. Cachet med 24t cooldown per bruker.
+model TrackManInsight {
+  id            String   @id @default(cuid())
+  userId        String
+  insights      Json     // Array av { title, body, category, severity }
+  generatedAt   DateTime @default(now())
+  cooldownUntil DateTime
+  User          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, generatedAt])
+}
+
 /// TrackMan import metadata and raw data storage
 model TrackManImport {
   id            String    @id @default(cuid())
@@ -1941,6 +1953,7 @@ model User {
   TrackManImport                              TrackManImport[]
   TrackManShotData                            TrackManShotData[]
   TrackManSessionAnalytics                    TrackManSessionAnalytics[]
+  TrackManInsight                             TrackManInsight[]
   PlayerGoals                                 PlayerGoals[]
   PlayerMetrics                               PlayerMetrics?
   ClubDispersionData                          ClubDispersionData[]

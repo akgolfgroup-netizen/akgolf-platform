@@ -8,6 +8,41 @@
 
 ---
 
+## 2026-04-24 — Spillerportal: reelle kode-TODOs lukket + TrackMan AI-innsikter (aggregert)
+
+**Jobbet med:** Lukket 6 funksjonelle hull i spillerportalen (F1–F5) og la til aggregerte AI-innsikter på TrackMan-siden (F6). Fokus: få knapper til å faktisk gjøre noe, ikke design-rewrite.
+
+- **F1 — AI-anbefaling i treningsplan-wizard:** `createPlanFromChoice()` mode `RECOMMENDED` bruker nå `analyzeWeakness()` + `generateTrainingPlan()` fra eksisterende AI-bibliotek. Faller tilbake til "allround"-mal ved feil (markeres `aiGenerated: false`). Nytt `buildRecommendedPlan()`-hjelper i `app/portal/(dashboard)/treningsplan/actions.ts`.
+- **F2a — Økt-duplisering:** Ny `duplicateSession(sessionId)` server action kopierer kilde-økt (inkl. exercises-meta) inn i samme uke med "(kopi)"-suffix. Koblet til `handleDuplicate` i `treningsplan-v3-client.tsx`.
+- **F2b — Add-from-template:** Bytter ut `alert()` med kall til eksisterende `createSessionForWeek()` i `handleAddFromTemplate`. Sessions legges til umiddelbart.
+- **F2c — Listevisning:** "Listevisning kommer snart"-placeholder erstattet med gruppert per-dag-visning (`SessionCard` per økt, sortert på starttid).
+- **F3 — Handicap-graf:** "Handicap-graf kommer snart"-placeholder på `/portal/analyse` erstattet med eksisterende `HCPTrendChart` (mappet `{date, value}` → `{date, hcp}`).
+- **F4 — ManualPlanModal fjernet:** Slettet `manual-plan-modal.tsx` + `manual-plan-button.tsx` (utdatert stub med `TODO: implement manual plan creation`). Wizarden `PlanCreatorModal` dekker nå all opprettelse.
+- **F5 — Turneringsplan resultater:** "Detaljert resultatoversikt kommer snart"-placeholder erstattet. `getPlayerTournaments()` returnerer nå også `completedTournaments` (fullførte turneringer med plan-notater og prep-status). Ny tabelliste renders i "Resultater"-tab.
+- **F6 — TrackMan aggregerte AI-innsikter:** Ny `TrackManInsight` Prisma-modell (cuid-id, userId, insights JSON, generatedAt, cooldownUntil). Ny SQL-migrasjon `20260424_trackman_insights`. Nytt AI-bibliotek `lib/portal/ai/trackman-insights.ts` som analyserer 3 siste TrackmanSession via Claude Sonnet 4.5 og gir 3–5 innsikter (title/body/category/severity). To server actions (`getLatestAggregatedInsights`, `regenerateAggregatedInsights`) med 24t cooldown. Ny `AggregatedInsightsCard` rendres øverst på `/portal/trackman` etter NightSurface-hero. Eksisterende per-sesjon-innsikter i `TrackManAnalyticsCard` er urørt.
+
+**Nøkkelfiler:**
+- Endret: `app/portal/(dashboard)/treningsplan/actions.ts`, `app/portal/(dashboard)/treningsplan/treningsplan-v3-client.tsx`, `app/portal/(dashboard)/analyse/page.tsx`, `app/portal/(dashboard)/turneringsplan/{actions,page,turneringsplan-client}.ts(x)`, `app/portal/(dashboard)/trackman/{actions.ts,page.tsx,trackman-client.tsx}`, `tsconfig.json` (la til `archive-old-components` i exclude)
+- Nye: `components/portal/trackman/aggregated-insights-card.tsx`, `lib/portal/ai/trackman-insights.ts`, `prisma/migrations/20260424_trackman_insights/migration.sql`
+- Oppdatert: `prisma/schema.prisma` (ny `TrackManInsight`-modell + User-relasjon)
+- Slettet: `components/portal/treningsplan/manual-plan-modal.tsx`, `components/portal/treningsplan/manual-plan-button.tsx`
+
+**Status:** Alle nye og endrede filer TS-rene (`npx tsc --noEmit` treffer kun pre-eksisterende feil i `treningsplan-planner.tsx`, `analyzePlanDeviation`, og andre filer utenfor denne scopen). Lint har samme pre-eksisterende advarsler, ingen nye feil. `npx prisma generate` OK — `TrackManInsight` er i klienten.
+
+**Neste steg (Anders må utføre):**
+1. **Kjør migrasjon mot DB:** `DATABASE_URL="$DIRECT_URL" npx prisma migrate deploy` for å opprette `TrackManInsight`-tabellen.
+2. **Test end-to-end:**
+   - `/portal/treningsplan`: "Ny plan" → "Anbefalt for meg" → 4 uker → verifiser AI-generert ukesmønster og at plan er merket som `aiGenerated: true`.
+   - Øvelse-meny → "Dupliser" → kopi dukker opp.
+   - Sidepanel → dra mal til dag → ny økt lagres.
+   - Bytt til listevisning → sesjoner grupperes per dag.
+   - `/portal/analyse`: HCP-graf rendres (krever ≥1 HCP-entry).
+   - `/portal/turneringsplan` → "Resultater"-tab viser fullførte turneringer med prep-status.
+   - `/portal/trackman`: "AI-innsikter"-kort øverst → klikk "Generer" → 3–5 innsikter. Regenerer-knapp disablet i 24t.
+3. **Utsatte pre-eksisterende TS-feil** (ikke i min scope): `cn`-import + `onUpdateSession` i `treningsplan-planner.tsx`, `planSessionId` i `analyzePlanDeviation`.
+
+---
+
 ## 2026-04-24 — CoachHQ AI-pipeline: sammendrag, drills, neste økt, TrackMan-vision, automasjon
 
 **Jobbet med:** Full 9-dagers implementasjon (alt i én økt) av CoachHQ AI-pipeline slik Anders planla — coach kan laste opp lyd fra mobil etter en time og systemet genererer komplett sammendrag, utkast til neste økt, og drills i én flyt.

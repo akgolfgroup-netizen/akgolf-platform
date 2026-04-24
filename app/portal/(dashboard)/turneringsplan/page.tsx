@@ -9,12 +9,13 @@ export const metadata = {
 export default async function TurneringsplanPage() {
   await requirePortalUser();
 
-  const { tournaments, stats } = await getPlayerTournaments();
+  const { tournaments, stats, completedTournaments } = await getPlayerTournaments();
 
   return (
     <TurneringsplanClient
       tournaments={tournaments}
       stats={stats}
+      completedTournaments={completedTournaments}
     />
   );
 }
