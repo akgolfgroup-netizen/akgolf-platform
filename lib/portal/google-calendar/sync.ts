@@ -131,6 +131,27 @@ async function getValidAccessToken(
 }
 
 /**
+ * Hent liste over alle Google-kalendere brukeren har tilgang til
+ */
+export async function fetchCalendarList(
+  accessToken: string
+): Promise<Array<{ id: string; summary: string; primary?: boolean; backgroundColor?: string }>> {
+  const res = await fetch(`${GOOGLE_CALENDAR_API}/users/me/calendarList`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (!res.ok) {
+    throw new Error(`[Google Calendar] calendarList failed: ${res.status}`);
+  }
+  const data = await res.json();
+  return (data.items || []).map((c: { id: string; summary: string; primary?: boolean; backgroundColor?: string }) => ({
+    id: c.id,
+    summary: c.summary,
+    primary: c.primary,
+    backgroundColor: c.backgroundColor,
+  }));
+}
+
+/**
  * Hent events fra Google Calendar
  */
 async function fetchCalendarEvents(
@@ -291,13 +312,34 @@ export async function syncGoogleCalendar(
     const timeMin = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
     const timeMax = new Date(Date.now() + 180 * 24 * 60 * 60 * 1000);
 
-    // 3. Hent events fra Google Calendar
-    const events = await fetchCalendarEvents(
-      accessToken,
-      "primary",
-      timeMin,
-      timeMax
-    );
+    // 3. Hent valgte kalender-ID-er for brukeren (faller tilbake til primary hvis tabellen mangler)
+    let calendarIds: string[] = ["primary"];
+    try {
+      const { data: subscriptions } = await supabase
+        .from("UserCalendarSubscription")
+        .select("googleCalendarId")
+        .eq("userId", userData.id)
+        .eq("enabled", true);
+      if (subscriptions && subscriptions.length > 0) {
+        calendarIds = subscriptions.map((s) => s.googleCalendarId as string);
+      }
+    } catch (err) {
+      logger.warn("[Google Calendar Sync] UserCalendarSubscription ikke tilgjengelig, bruker primary", err instanceof Error ? { msg: err.message } : undefined);
+    }
+
+    // 4. Hent events fra alle valgte kalendere
+    const events: GoogleCalendarEvent[] = [];
+    for (const calId of calendarIds) {
+      try {
+        const calEvents = await fetchCalendarEvents(accessToken, calId, timeMin, timeMax);
+        // Prefix externalId med kalenderId for å unngå kollisjon
+        for (const ev of calEvents) {
+          events.push({ ...ev, id: `${calId}:${ev.id}` });
+        }
+      } catch (err) {
+        logger.error(`[Google Calendar Sync] Kalender ${calId} feilet:`, err);
+      }
+    }
 
     logger.info(
       `[Google Calendar Sync] Fetched ${events.length} events for instructor ${instructorId}`

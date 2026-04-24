@@ -304,15 +304,20 @@ model CoachingSession {
   aiActionItems     String[]        @default([])
   aiGeneratedAt     DateTime?
   uploadedFilePath  String?
+  rawTranscript     String?
+  publishedToStudent Boolean        @default(false)
+  publishedAt       DateTime?
   createdAt         DateTime        @default(now())
   updatedAt         DateTime
   notionPageId      String?
   Booking           Booking         @relation(fields: [bookingId], references: [id])
   Instructor        Instructor      @relation(fields: [instructorId], references: [id])
   User              User            @relation(fields: [studentId], references: [id])
+  TrackmanSession   TrackmanSession[]
 
   @@index([retentionStatus])
   @@index([studentId])
+  @@index([publishedToStudent, studentId])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1022,17 +1027,21 @@ model TournamentPrep {
 }
 
 model TrackmanSession {
-  id          String   @id
-  userId      String
-  sessionDate DateTime
-  club        String
-  shots       Json
-  averages    Json
-  createdAt   DateTime @default(now())
-  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                 String           @id
+  userId             String
+  sessionDate        DateTime
+  club               String
+  shots              Json
+  averages           Json
+  coachingSessionId  String?
+  sourceType         String           @default("manual") // manual, csv, image, api
+  createdAt          DateTime         @default(now())
+  User               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  CoachingSession    CoachingSession? @relation(fields: [coachingSessionId], references: [id], onDelete: SetNull)
 
   @@index([sessionDate])
   @@index([userId])
+  @@index([coachingSessionId])
 }
 
 /// TrackMan import metadata and raw data storage
@@ -1149,6 +1158,27 @@ model TrackManSessionAnalytics {
   user      User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
+}
+
+/// Player goals - long-term and short-term goals tied to a player
+model PlayerGoals {
+  id            String    @id
+  userId        String
+  goalType      String    // HCP, TOURNAMENT, SKILL, FITNESS, OTHER
+  title         String
+  description   String?
+  targetDate    DateTime?
+  targetValue   Float?
+  currentValue  Float?
+  priority      Int       @default(2) // 1=high, 2=medium, 3=low
+  isActive      Boolean   @default(true)
+  achievedAt    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime
+  User          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isActive])
+  @@index([targetDate])
 }
 
 /// Player rolling averages and benchmarks
@@ -1797,6 +1827,20 @@ model TrainingPlanWeek {
   @@index([planId])
 }
 
+model UserCalendarSubscription {
+  id               String   @id
+  userId           String
+  googleCalendarId String
+  displayName      String?
+  backgroundColor  String?
+  enabled          Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  User             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, googleCalendarId])
+  @@index([userId])
+}
+
 model TrainingSubscription {
   id                    String   @id
   userId                String   @unique
@@ -1897,6 +1941,7 @@ model User {
   TrackManImport                              TrackManImport[]
   TrackManShotData                            TrackManShotData[]
   TrackManSessionAnalytics                    TrackManSessionAnalytics[]
+  PlayerGoals                                 PlayerGoals[]
   PlayerMetrics                               PlayerMetrics?
   ClubDispersionData                          ClubDispersionData[]
   MentalScorecardEntry                        MentalScorecardEntry[]
@@ -1912,6 +1957,7 @@ model User {
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
   TrainingSubscription                        TrainingSubscription?
+  UserCalendarSubscription                    UserCalendarSubscription[]
   AssignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")
   UserExerciseBank                            UserExerciseBank[]
   UserGolfId                                  UserGolfId?
@@ -2576,6 +2622,7 @@ enum NotificationType {
   PLAN_READY
   TOURNAMENT_REMINDER
   COACHING_SUMMARY
+  COACHING_SUMMARY_DRAFT
   TRAINING_REMINDER
   ACHIEVEMENT_UNLOCKED
   GENERAL

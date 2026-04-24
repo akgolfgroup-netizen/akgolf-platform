@@ -8,6 +8,39 @@
 
 ---
 
+## 2026-04-24 — Booking-løft: fasiliteter, månedskalender, multi-Google-synk
+
+**Jobbet med:** Stor leveranse på booking-systemet. GFGK-fasiliteter på plass, admin får tidslinje-oversikt, coach får månedskalender for dato-spesifikk tilgjengelighet med kort-input ("10-18"), og Google Calendar-synk støtter nå flere kalendere.
+
+- **A — Fasiliteter & defaults:**
+  - Seed-script `scripts/seed-gfgk-facilities.ts` — 10 GFGK-fasiliteter (Performance Studio, Driving Range 1/2, Nærspillsområde, Puttinggreen, 9-hullsbanen, 9-hullsbanen treningsområde, Uteområde, Klubbrommet, Juniorrommet) + Anders → Performance Studio som default.
+  - `adminCreateBooking` (admin/bookinger/create-actions.ts) plukker opp `InstructorFacilityDefault` hvis `facilityId` ikke er satt.
+  - Ny-booking-wizard (Markus) har dropdown for fasilitet i oppsummeringssteget, auto-pre-velger defaulten for valgt coach/tjeneste.
+  - `TrainingPlanSession` støtter `facilityId` gjennom `addSession`/`updateSession` (UI-editor kan legge til velger senere).
+
+- **B — Fasilitetsoversikt:**
+  - `GET /api/portal/admin/facility-overview?from&to` henter alle aktive fasiliteter + normaliserte events fra `Booking`, `FacilityActivity`, `TrainingPlanSession`.
+  - Ny `FacilityTimeline`-komponent med Dag/Uke/Måned-switcher, 06-19 Gantt-bar for dag-view, liste for uke/måned, "Aktiv nå"-indikator og 60-sek auto-refresh på dag-view.
+  - Plassert øverst i `/admin/fasiliteter`.
+
+- **C — Coach-tilgjengelighet & Google-synk:**
+  - `lib/portal/availability/parse-time-range.ts` — parser "10-18", "10:30-17:45", "fri" etc.
+  - `POST/GET/DELETE /api/portal/admin/availability/date` — CRUD på `InstructorDateAvailability`.
+  - `AvailabilityMonthCalendar`-komponent i CoachHQ — klikk dato, tast "10-18", Enter = lagre. Viser ukentlig default under, override med grønn border.
+  - `lib/portal/google-calendar/sync.ts` leser nå `UserCalendarSubscription` og synker alle enabled kalendere (fallback til primary).
+  - Ny `UserCalendarSubscription`-modell + SQL-migrasjon `20260424_user_calendar_subscription`.
+  - `GET /api/portal/calendar/google/calendars` lister brukerens Google-kalendere; `GET/POST /api/portal/calendar/google/subscriptions` CRUD på valgte.
+  - `GoogleCalendarPicker`-komponent med checkbox-liste, toggle, "Synk nå".
+
+**Neste steg:**
+- Kjør SQL-migrasjon mot DB: `DATABASE_URL="$DIRECT_URL" npx prisma migrate deploy`
+- Seed fasiliteter: `npx tsx scripts/seed-gfgk-facilities.ts`
+- Verifiser end-to-end i browser: `/admin/fasiliteter` (timeline), `/admin/kalender` (månedsvisning + Google-picker), `/admin/bookinger/ny` (facility-dropdown).
+- Legg fasilitet-velger i TrainingPlanSession-editor (SessionCard).
+- "Fri"-dag support i månedskalender (trenger `isOff`-kolonne eller BlockedTime-integrasjon).
+
+---
+
 ## 2026-04-19 — v3.1 konsistens-runde (7 skjermer)
 
 **Jobbet med:** Propagert Fase 2-patterns (SG Ring, MonoLabel, NightSurface, Vertical Timeline, AI Attribution) til 7 gjenstående portal-skjermer slik at resten av portalen matcher visuelt språk fra /analyse, /statistikk, /bookinger osv.

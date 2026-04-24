@@ -14,11 +14,16 @@ import {
 import Link from "next/link";
 import { format, addDays, startOfWeek } from "date-fns";
 import { nb } from "date-fns/locale";
-import { adminCreateBooking, searchStudentsForBooking } from "../create-actions";
+import {
+  adminCreateBooking,
+  searchStudentsForBooking,
+  getInstructorDefaultFacility,
+} from "../create-actions";
 import type {
   ServiceTypeOption,
   InstructorOption,
   StudentOption,
+  FacilityOption,
 } from "../create-actions";
 
 // ── Props ──
@@ -26,11 +31,12 @@ import type {
 type Props = {
   serviceTypes: ServiceTypeOption[];
   instructors: InstructorOption[];
+  facilities: FacilityOption[];
 };
 
 // ── Component ──
 
-export function NyBookingClient({ serviceTypes, instructors }: Props) {
+export function NyBookingClient({ serviceTypes, instructors, facilities }: Props) {
   const router = useRouter();
   const { toggle } = useMCSidebar();
   const [isPending, startTransition] = useTransition();
@@ -59,8 +65,21 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
+  // Fasilitet
+  const [selectedFacilityId, setSelectedFacilityId] = useState<string>("");
+
   // Submit-feil
   const [error, setError] = useState<string | null>(null);
+
+  // Hent default-fasilitet når coach/tjeneste velges
+  useEffect(() => {
+    if (!selectedInstructor || !selectedService) return;
+    getInstructorDefaultFacility(selectedInstructor.id, selectedService.id)
+      .then((defaultId) => {
+        if (defaultId) setSelectedFacilityId(defaultId);
+      })
+      .catch(() => {});
+  }, [selectedInstructor, selectedService]);
 
   // ── Elevsøk med debounce ──
 
@@ -127,6 +146,7 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
           serviceTypeId: selectedService.id,
           instructorId: selectedInstructor.id,
           startTime: `${dateStr}T${selectedSlot.time}:00`,
+          facilityId: selectedFacilityId || null,
         });
         router.push("/admin/bookinger");
       } catch (err) {
@@ -534,6 +554,24 @@ export function NyBookingClient({ serviceTypes, instructors }: Props) {
                     {selectedSlot.time}
                   </span>
                 </div>
+              </div>
+
+              <div className="mb-4">
+                <label className="text-xs text-on-surface-variant block mb-1">
+                  Fasilitet
+                </label>
+                <select
+                  value={selectedFacilityId}
+                  onChange={(e) => setSelectedFacilityId(e.target.value)}
+                  className="w-full text-sm bg-surface border border-outline-variant/30 rounded-lg px-3 py-2 text-on-surface focus:outline-none focus:border-success-text"
+                >
+                  <option value="">— Ingen / bruk default —</option>
+                  {facilities.map((f) => (
+                    <option key={f.id} value={f.id}>
+                      {f.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="flex items-center justify-between pt-4 border-t border-outline-variant/30">

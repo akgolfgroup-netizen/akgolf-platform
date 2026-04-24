@@ -83,6 +83,7 @@ export type PlanSession = {
   focusArea: string | null;
   exercises: Prisma.JsonValue;
   sortOrder: number;
+  facilityId: string | null;
 };
 
 export type PlanWeek = {
@@ -185,6 +186,7 @@ export async function getStudentPlans(
         focusArea: s.focusArea,
         exercises: s.exercises,
         sortOrder: s.sortOrder,
+        facilityId: s.facilityId,
       })),
     })),
   }));
@@ -204,6 +206,7 @@ export async function updateSession(
     dayOfWeek?: number;
     description?: string;
     sortOrder?: number;
+    facilityId?: string | null;
   }
 ): Promise<{ success: boolean; error?: string }> {
   await requireStaff();
@@ -217,6 +220,7 @@ export async function updateSession(
     if (data.dayOfWeek !== undefined) updateData.dayOfWeek = data.dayOfWeek;
     if (data.description !== undefined) updateData.description = data.description;
     if (data.sortOrder !== undefined) updateData.sortOrder = data.sortOrder;
+    if (data.facilityId !== undefined) updateData.facilityId = data.facilityId;
 
     await prisma.trainingPlanSession.update({
       where: { id: sessionId },
@@ -256,6 +260,7 @@ export async function addSession(
     focusArea: string;
     exercises?: Prisma.JsonValue;
     description?: string;
+    facilityId?: string | null;
   }
 ): Promise<{ success: boolean; error?: string; sessionId?: string }> {
   await requireStaff();
@@ -283,6 +288,7 @@ export async function addSession(
         exercises: data.exercises ?? [],
         description: data.description ?? null,
         sortOrder: nextSort,
+        facilityId: data.facilityId ?? null,
       },
     });
 

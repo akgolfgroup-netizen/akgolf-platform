@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { format } from "date-fns";
 import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
+import FacilityTimeline from "./facility-timeline";
 
 // Types
 
@@ -166,6 +167,9 @@ export default function FasiliteterClient({
  </BentoCard>
  </BentoGrid>
 
+
+ {/* Tidslinje på tvers av alle fasiliteter */}
+ <FacilityTimeline />
 
  {/* Main Content */}
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

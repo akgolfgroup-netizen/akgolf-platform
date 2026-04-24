@@ -1,7 +1,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { getServiceTypes, getInstructors } from "../create-actions";
+import { getServiceTypes, getInstructors, getFacilities } from "../create-actions";
 import { NyBookingClient } from "./ny-booking-client";
 
 export const metadata = {
@@ -15,15 +15,17 @@ export default async function NyBookingPage() {
     redirect("/portal");
   }
 
-  const [serviceTypes, instructors] = await Promise.all([
+  const [serviceTypes, instructors, facilities] = await Promise.all([
     getServiceTypes(),
     getInstructors(),
+    getFacilities(),
   ]);
 
   return (
     <NyBookingClient
       serviceTypes={serviceTypes}
       instructors={instructors}
+      facilities={facilities}
     />
   );
 }
