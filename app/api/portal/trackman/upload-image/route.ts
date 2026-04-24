@@ -118,27 +118,55 @@ export async function POST(req: NextRequest) {
   const metricShots = rawShots.map(convertToMetric);
   const clubAggregates = aggregateByClub(metricShots);
 
+  // Combined averages across all clubs (useful as coaching-summary context)
+  const combinedAverages = {
+    totalShots: metricShots.length,
+    clubs: clubAggregates.map((a) => ({
+      club: a.club,
+      count: a.count,
+      avgCarry: a.avgCarry,
+      avgTotal: a.avgTotal,
+      avgBallSpeed: a.avgBallSpeed,
+      lateralStdDev: a.lateralStdDev,
+    })),
+  };
+
+  // Preview mode: return extracted data without persisting
+  if (preview) {
+    return NextResponse.json({
+      preview: true,
+      shots: metricShots,
+      averages: combinedAverages,
+      clubSummary: clubAggregates,
+    });
+  }
+
+  // Determine target userId (coach can upload for student)
+  const targetUserId = studentId ?? user.id;
+
   const supabase = await createServerSupabase();
 
-  // Lagre TrackmanSession per klubb
+  // Lagre TrackmanSession per klubb, lenk til CoachingSession hvis oppgitt
   const sessions = [];
   for (const agg of clubAggregates) {
     const clubShots = metricShots.filter((s) => s.club === agg.club);
     const { data: session, error } = await supabase
-      .from("TrackManSession")
+      .from("TrackmanSession")
       .insert({
         id: nanoid(),
-        userId: user.id,
+        userId: targetUserId,
         sessionDate: sessionDate ? new Date(sessionDate).toISOString() : new Date().toISOString(),
         club: agg.club,
         shots: clubShots,
         averages: agg,
+        coachingSessionId: coachingSessionId ?? null,
+        sourceType: "image",
       })
       .select()
       .single();
 
     if (error) {
-      return NextResponse.json({ error: "Kunne ikke lagre session" }, { status: 500 });
+      return NextResponse.json({ error: `Kunne ikke lagre session: ${error.message}` }, { status: 500 });
     }
     sessions.push(session);
   }
@@ -153,5 +181,6 @@ export async function POST(req: NextRequest) {
       avgTotal: a.avgTotal,
       lateralStdDev: a.lateralStdDev,
     })),
+    averages: combinedAverages,
   });
 }

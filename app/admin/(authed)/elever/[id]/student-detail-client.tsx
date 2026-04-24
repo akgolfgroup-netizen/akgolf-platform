@@ -25,6 +25,9 @@ import { getOrCreateConversation } from "@/app/admin/(authed)/meldinger/chat-act
 import { TrainingDataTabs } from "./training-data-tabs";
 import { StudentForecastTab } from "@/components/portal/mission-control/student-forecast-tab";
 import { StudentSummaryTab } from "@/components/portal/mission-control/student-summary-tab";
+import { DrillStudio } from "@/components/portal/mission-control/drill-studio";
+import { TestRegister } from "@/components/portal/mission-control/test-register";
+import { NextSessionPlanner } from "@/components/portal/mission-control/next-session-planner";
 import type { getStudentProfile } from "./actions";
 
 // ---------------------------------------------------------------------------
@@ -146,6 +149,9 @@ export function StudentDetailClient({ profile }: Props) {
     { id: "overview", label: "Oversikt" },
     { id: "training", label: "Trening" },
     { id: "sammendrag", label: "Sammendrag" },
+    { id: "drills", label: "Drills" },
+    { id: "tests", label: "Tester" },
+    { id: "neste", label: "Planlegg neste" },
     { id: "forecast", label: "Forecast" },
     { id: "notes", label: "Notater og data" },
   ];
@@ -611,6 +617,27 @@ export function StudentDetailClient({ profile }: Props) {
         {/* Tab: Sammendrag */}
         {activeTab === "sammendrag" && (
           <StudentSummaryTab
+            studentId={profile.id}
+            studentName={profile.name ?? "Elev"}
+          />
+        )}
+
+        {/* Tab: Drills */}
+        {activeTab === "drills" && (
+          <DrillStudio
+            studentId={profile.id}
+            studentName={profile.name ?? "Elev"}
+          />
+        )}
+
+        {/* Tab: Tester */}
+        {activeTab === "tests" && (
+          <TestRegister studentId={profile.id} />
+        )}
+
+        {/* Tab: Planlegg neste */}
+        {activeTab === "neste" && (
+          <NextSessionPlanner
             studentId={profile.id}
             studentName={profile.name ?? "Elev"}
           />

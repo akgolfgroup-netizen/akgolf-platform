@@ -101,7 +101,7 @@ export async function PATCH(
     data: updateData,
   });
 
-  // If newly published, notify the student
+  // If newly published, notify the student + kick off next-session auto-draft
   if (body.publish === true && !wasAlreadyPublished) {
     try {
       await prisma.notification.create({
@@ -117,6 +117,28 @@ export async function PATCH(
     } catch (err) {
       logger.error("[coaching-session/publish] notification failed", err);
     }
+
+    // Background: trigger next-session draft generation (best-effort)
+    import("@/lib/portal/agents/runner")
+      .then(({ onCoachingSessionPublished }) => onCoachingSessionPublished(id))
+      .catch((err) => logger.error("[coaching-session/publish] auto-next failed", err));
+
+    // Cowork-eksport (kun hvis COWORK_SYNC_PATH er satt, typisk lokal dev)
+    import("@/lib/portal/cowork/append-session")
+      .then(({ appendSessionToCowork }) =>
+        appendSessionToCowork({
+          studentName: session.User.name ?? "ukjent-elev",
+          sessionDate: session.sessionDate,
+          primaryFocus: updated.primaryFocus,
+          summary: updated.aiSummary,
+          keyPoints: updated.aiKeyPoints,
+          focusAreas: updated.aiFocusAreas,
+          actionItems: updated.aiActionItems,
+          rawTranscript: updated.rawTranscript,
+          sessionId: id,
+        })
+      )
+      .catch((err) => logger.error("[coaching-session/publish] cowork failed", err));
   }
 
   return NextResponse.json({ ok: true, session: updated });
