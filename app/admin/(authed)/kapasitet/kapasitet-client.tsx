@@ -280,7 +280,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
               <AdminProgressRing
                 value={occupancyPct}
                 size={160}
-                strokeWidth={14}
+               
                 label="denne uken"
               />
               <div className="text-center">
@@ -327,7 +327,7 @@ export function KapasitetClient({ data }: KapasitetClientProps) {
                     <AdminGauge
                       value={coachPct}
                       size={160}
-                      strokeWidth={14}
+                     
                       label={coach.name}
                     />
                     <div className="mt-2 text-center">

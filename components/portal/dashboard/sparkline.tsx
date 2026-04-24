@@ -121,7 +121,7 @@ export function SparklineCompact({
             type="monotone"
             dataKey="value"
             stroke={color}
-            strokeWidth={2}
+           
             dot={false}
             strokeLinecap="round"
             strokeLinejoin="round"

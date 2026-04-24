@@ -394,7 +394,7 @@ export function TurneringerClient({
  </span>
  )}
  <span className="flex items-center gap-1">
- <Icon name="person"s className="w-3.5 h-3.5" />
+ <Icon name="group" className="w-3.5 h-3.5" />
  {tournament.playerCount} spillere
  </span>
  </div>

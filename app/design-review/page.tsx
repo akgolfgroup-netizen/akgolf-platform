@@ -61,7 +61,7 @@ function ScreenCard({ screen }: { screen: Screen }) {
           className="inline-flex items-center gap-1 rounded-lg bg-primary-container px-3 py-1.5 text-[11px] font-bold text-surface hover:opacity-90 transition-opacity"
         >
           Open
-          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </a>
@@ -123,7 +123,7 @@ function SprintSection({
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          strokeWidth={2}
+         
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>

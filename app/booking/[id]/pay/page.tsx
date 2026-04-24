@@ -57,7 +57,7 @@ export default async function BookingPayPage({ params }: Props) {
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
         <div className="rounded-3xl p-10 max-w-md w-full text-center border border-outline-variant/30 bg-surface-container-lowest">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-surface">
-            <Icon name="shield"Check className="w-8 h-8 text-primary" />
+            <Icon name="verified" className="w-8 h-8 text-primary" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">
             Allerede betalt
@@ -115,7 +115,7 @@ export default async function BookingPayPage({ params }: Props) {
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
         <div className="rounded-3xl p-10 max-w-md w-full text-center border border-outline-variant/30 bg-surface-container-lowest">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-surface">
-            <Icon name="shield"Check className="w-8 h-8 text-primary" />
+            <Icon name="verified" className="w-8 h-8 text-primary" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">
             Betalingsfeil

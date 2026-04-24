@@ -148,7 +148,7 @@ export function SessionDetailModal({ session, isOpen, onClose, onSave, onDelete 
             </h2>
             {editedSession.completed && (
               <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs font-medium">
-                <Icon name="check"Circle className="w-3 h-3" />
+                <Icon name="check_circle" className="w-3 h-3" />
                 Fullført
               </span>
             )}

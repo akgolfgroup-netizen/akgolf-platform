@@ -1198,3 +1198,125 @@ export async function adjustPlanVolume(factor: number): Promise<{ success: boole
   revalidatePath("/portal/treningsplan");
   return { success: adjustedCount > 0, adjustedCount };
 }
+
+// -------------------------------------------------------------------
+// createPlanFromChoice — wizard-valg fra spilleren
+// (manual / recommended / template) + varighet
+// -------------------------------------------------------------------
+
+import {
+  STANDARD_TEMPLATES,
+  getTemplate,
+  type TemplateId,
+} from "@/lib/portal/training/standard-templates";
+
+export type PlanCreationMode = "MANUAL" | "RECOMMENDED" | "TEMPLATE";
+
+export interface CreatePlanFromChoiceInput {
+  mode: PlanCreationMode;
+  durationWeeks: 1 | 4 | 8 | 12;
+  templateId?: TemplateId;
+  title?: string;
+  startDate?: string;
+}
+
+export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const startDate = input.startDate
+    ? new Date(input.startDate)
+    : startOfISOWeek(new Date());
+
+  // ---- TEMPLATE: bygg plan fra forhåndsdefinert mal ----
+  if (input.mode === "TEMPLATE") {
+    if (!input.templateId) throw new Error("templateId mangler for TEMPLATE-mode");
+    const template = getTemplate(input.templateId);
+    if (!template) throw new Error(`Ukjent mal: ${input.templateId}`);
+
+    const weeks = Array.from({ length: input.durationWeeks }, (_, i) => ({
+      weekNumber: i + 1,
+      focus: template.weeklyFocusTemplate.replace("{n}", String(i + 1)),
+      sessions: template.weekPattern.map((s) => ({
+        dayOfWeek: s.dayOfWeek,
+        title: s.title,
+        durationMinutes: s.durationMinutes,
+        focusArea: s.focusArea,
+        description: s.description,
+      })),
+    }));
+
+    return createManualPlan({
+      title: input.title ?? template.title,
+      description: template.description,
+      periodType: template.periodType,
+      startDate: startDate.toISOString().slice(0, 10),
+      weeks,
+    });
+  }
+
+  // ---- MANUAL: tom plan med tomme uker ----
+  if (input.mode === "MANUAL") {
+    const weeks = Array.from({ length: input.durationWeeks }, (_, i) => ({
+      weekNumber: i + 1,
+      focus: undefined,
+      sessions: [],
+    }));
+
+    return createManualPlan({
+      title: input.title ?? `Min plan — ${input.durationWeeks} uker`,
+      periodType: "PREPARATION",
+      startDate: startDate.toISOString().slice(0, 10),
+      weeks,
+    });
+  }
+
+  // ---- RECOMMENDED: AI-anbefalt (placeholder — bruker Allround-mal som basis) ----
+  // TODO v2: koble til ekte AI-flow basert på SG/HCP/svakheter
+  if (input.mode === "RECOMMENDED") {
+    const fallback = getTemplate("allround");
+    if (!fallback) throw new Error("Manglende standard-mal for AI-fallback");
+
+    const weeks = Array.from({ length: input.durationWeeks }, (_, i) => ({
+      weekNumber: i + 1,
+      focus: `AI-anbefalt fokus — uke ${i + 1}`,
+      sessions: fallback.weekPattern.map((s) => ({
+        dayOfWeek: s.dayOfWeek,
+        title: s.title,
+        durationMinutes: s.durationMinutes,
+        focusArea: s.focusArea,
+      })),
+    }));
+
+    const result = await createManualPlan({
+      title: input.title ?? "AI-anbefalt plan",
+      description: "Generert basert på din profil. Juster fritt.",
+      periodType: "PREPARATION",
+      startDate: startDate.toISOString().slice(0, 10),
+      weeks,
+    });
+
+    // Marker som AI-generert
+    if (result.success && result.planId) {
+      await prisma.trainingPlan.update({
+        where: { id: result.planId },
+        data: { aiGenerated: true },
+      });
+    }
+
+    return result;
+  }
+
+  throw new Error(`Ukjent mode: ${input.mode}`);
+}
+
+export async function listStandardTemplates() {
+  return STANDARD_TEMPLATES.map((t) => ({
+    id: t.id,
+    title: t.title,
+    description: t.description,
+    iconName: t.iconName,
+    badge: t.badge,
+    sessionCount: t.weekPattern.length,
+  }));
+}

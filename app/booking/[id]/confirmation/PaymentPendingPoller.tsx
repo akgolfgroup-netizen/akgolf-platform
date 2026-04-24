@@ -91,7 +91,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
         <div className="rounded-3xl p-10 max-w-md w-full text-center border border-outline-variant/30 bg-surface-container-lowest">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-success/10">
-            <Icon name="check"Circle2 className="w-8 h-8 text-success" />
+            <Icon name="check_circle" className="w-8 h-8 text-success" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betaling mottatt</h2>
           <p className="text-on-surface-variant">Laster bekreftelsen din...</p>
@@ -122,7 +122,7 @@ export function PaymentPendingPoller({ bookingId }: PaymentPendingPollerProps) {
       <div className="min-h-screen flex items-center justify-center px-4 bg-surface">
         <div className="rounded-3xl p-10 max-w-md w-full text-center border border-outline-variant/30 bg-surface-container-lowest">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 bg-warning/10">
-            <Icon name="check"Circle2 className="w-8 h-8 text-warning" />
+            <Icon name="check_circle" className="w-8 h-8 text-warning" />
           </div>
           <h2 className="text-xl font-semibold mb-2 text-primary">Betalingen behandles</h2>
           <p className="text-on-surface-variant mb-6">Betalingen din er registrert, men bekreftelsen tar litt lenger enn vanlig. Du vil motta en bekreftelse pa e-post.</p>

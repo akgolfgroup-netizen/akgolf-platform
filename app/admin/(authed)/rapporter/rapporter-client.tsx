@@ -140,18 +140,18 @@ export function RapporterClient({ data }: RapporterClientProps) {
             <AdminStatCard
               label="Totalt"
               value={data.totalStudents}
-              icon={<Icon name="person"s className="w-5 h-5" />}
+              icon={<Icon name="group" className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Nye (30d)"
               value={`+${data.newStudents}`}
               change={{ value: 12, positive: true }}
-              icon={<Icon name="person"Plus className="w-5 h-5" />}
+              icon={<Icon name="person_add" className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Aktive (30d)"
               value={data.activeStudents}
-              icon={<Icon name="person"Check className="w-5 h-5" />}
+              icon={<Icon name="person_check" className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Retensjon"
@@ -171,13 +171,13 @@ export function RapporterClient({ data }: RapporterClientProps) {
               label="Fullførte"
               value={data.completedSessions}
               change={{ value: 8, positive: true }}
-              icon={<Icon name="calendar_today"Check className="w-5 h-5" />}
+              icon={<Icon name="event_available" className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Kansellerte"
               value={data.cancelledSessions}
               change={{ value: 5, positive: false }}
-              icon={<Icon name="close"Circle className="w-5 h-5" />}
+              icon={<Icon name="cancel" className="w-5 h-5" />}
             />
             <AdminStatCard
               label="Kanselleringsrate"
@@ -276,7 +276,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
                 })
               ) : (
                 <AdminEmptyState
-                  icon={<Icon name="person"s className="w-6 h-6" />}
+                  icon={<Icon name="group" className="w-6 h-6" />}
                   title="Ingen elever funnet"
                   description="Fordeling per tier vil vises når data er tilgjengelig."
                   className="border-0"
@@ -294,7 +294,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 rounded-xl bg-surface">
               <div className="flex items-center gap-2 mb-2">
-                <Icon name="person"s className="w-4 h-4 text-on-surface-variant/80" />
+                <Icon name="group" className="w-4 h-4 text-on-surface-variant/80" />
                 <span className="text-sm font-medium text-text">
                   Vekst
                 </span>
@@ -306,7 +306,7 @@ export function RapporterClient({ data }: RapporterClientProps) {
             </div>
             <div className="p-4 rounded-xl bg-surface">
               <div className="flex items-center gap-2 mb-2">
-                <Icon name="calendar_today"Check className="w-4 h-4 text-success-text" />
+                <Icon name="event_available" className="w-4 h-4 text-success-text" />
                 <span className="text-sm font-medium text-text">
                   Oppmøte
                 </span>

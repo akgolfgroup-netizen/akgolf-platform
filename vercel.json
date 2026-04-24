@@ -93,6 +93,10 @@
     {
       "path": "/api/portal/tournament-planner/sync",
       "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/portal/cron/process-coaching-audio",
+      "schedule": "*/15 * * * *"
     }
   ],
   "headers": [

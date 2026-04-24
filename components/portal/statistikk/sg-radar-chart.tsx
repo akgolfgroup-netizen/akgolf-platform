@@ -75,7 +75,7 @@ export function SGRadarChart({ playerSG, benchmark, showLegend = true }: SGRadar
                 stroke="var(--color-info)"
                 fill="var(--color-info)"
                 fillOpacity={0.15}
-                strokeWidth={2}
+               
                 strokeDasharray="5 5"
               />
             )}
@@ -85,7 +85,7 @@ export function SGRadarChart({ playerSG, benchmark, showLegend = true }: SGRadar
               stroke="var(--color-grey-900)"
               fill="var(--color-grey-900)"
               fillOpacity={0.25}
-              strokeWidth={2}
+             
               dot={{ fill: "var(--color-grey-900)", r: 4, strokeWidth: 2, stroke: "white" }}
             />
             {showLegend && (

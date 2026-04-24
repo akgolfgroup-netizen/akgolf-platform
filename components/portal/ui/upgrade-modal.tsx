@@ -302,7 +302,7 @@ export function UpgradeModal({
         {/* Social proof */}
         <div className="flex items-center justify-center gap-6 mt-6 pt-4 border-t border-[var(--color-grey-200)]">
           <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">
-            <Icon name="person"s className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
+            <Icon name="group" className="w-4 h-4 text-[var(--color-brand)]" aria-hidden="true" />
             <span>127 spillere oppgraderte denne maneden</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-[var(--color-grey-600)]">

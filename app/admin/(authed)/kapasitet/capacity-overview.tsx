@@ -219,7 +219,7 @@ export function CapacityOverview({ data }: { data: CapacityData }) {
       {/* Coach Cards */}
       <div>
         <h2 className="text-lg font-semibold text-on-surface mb-4 flex items-center gap-2">
-          <Icon name="person"s className="w-5 h-5 text-on-surface" />
+          <Icon name="group" className="w-5 h-5 text-on-surface" />
           Per trener
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

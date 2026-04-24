@@ -45,7 +45,7 @@ export function WeekSelector({ selectedWeek, onWeekChange }: WeekSelectorProps) 
       {/* Week Display */}
       <div className="flex-1 text-center">
         <div className="flex items-center justify-center gap-2">
-          <Icon name="calendar_today"Days className="w-4 h-4 text-on-surface-variant" />
+          <Icon name="calendar_today" className="w-4 h-4 text-on-surface-variant" />
           <span className="font-semibold text-on-surface">
             Uke {weekNumber}
           </span>

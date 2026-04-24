@@ -58,11 +58,11 @@ export function MentalTrendsWidget() {
                   }`}
                 >
                   {isPositive ? (
-                    <Icon name="arrow_upward"Right className="w-3 h-3" />
+                    <Icon name="arrow_outward" className="w-3 h-3" />
                   ) : isNeutral ? (
                     <Icon name="remove" className="w-3 h-3" />
                   ) : (
-                    <Icon name="arrow_downward"Right className="w-3 h-3" />
+                    <Icon name="south_east" className="w-3 h-3" />
                   )}
                   {Math.abs(m.trend)}
                 </span>

@@ -227,7 +227,7 @@ export function CourseHeroClient({
                       </MonoLabel>
                     </div>
                     <div className="flex items-center gap-1.5 mt-3 text-xs text-surface/55">
-                      <Icon name="calendar_today"Days className="w-3.5 h-3.5" />
+                      <Icon name="calendar_today" className="w-3.5 h-3.5" />
                       <span>{nextBookingDay}</span>
                     </div>
                   </div>

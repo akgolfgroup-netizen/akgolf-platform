@@ -46,7 +46,7 @@ export function DataConsentDialog({ open, onClose }: DataConsentDialogProps) {
       <div className="bg-surface-container-lowest rounded-xl shadow-xl max-w-lg w-full p-6">
         <div className="flex items-start gap-3 mb-4">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-success-light text-success-text shrink-0">
-            <Icon name="shield"Check className="w-5 h-5" />
+            <Icon name="verified" className="w-5 h-5" />
           </div>
           <div>
             <MonoLabel size="xs" uppercase className="text-primary block">

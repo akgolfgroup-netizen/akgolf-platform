@@ -37,7 +37,7 @@ export function SessionsDonut({ data = MOCK_DATA }: SessionsDonutProps) {
     <div className="flex h-full flex-col rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-5 shadow-card">
       <div className="mb-4 flex items-center justify-between">
         <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Økt-fordeling</MonoLabel>
-        <Icon name="circle"Dashed className="h-4 w-4 text-on-surface-variant/60" />
+        <Icon name="radio_button_unchecked" className="h-4 w-4 text-on-surface-variant/60" />
       </div>
 
       <div className="flex flex-1 items-center gap-4">

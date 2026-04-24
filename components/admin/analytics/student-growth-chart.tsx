@@ -47,7 +47,7 @@ export function StudentGrowthChart({
       <div className="flex items-start justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-success-light flex items-center justify-center">
-            <Icon name="person"s className="w-5 h-5 text-success" />
+            <Icon name="group" className="w-5 h-5 text-success" />
           </div>
           <div>
             <h3 className="text-sm font-medium text-on-surface-variant">Totale elever</h3>
@@ -56,7 +56,7 @@ export function StudentGrowthChart({
         </div>
         <div className="text-right">
           <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-success-light text-success">
-            <Icon name="person"Plus className="w-3.5 h-3.5" />
+            <Icon name="person_add" className="w-3.5 h-3.5" />
             +{newStudents}
           </span>
           <p className="text-xs text-on-surface-variant mt-1">Nye denne måneden</p>
@@ -75,14 +75,14 @@ export function StudentGrowthChart({
       <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-outline-variant/30">
         <div>
           <div className="flex items-center gap-2">
-            <Icon name="person"Plus className="w-4 h-4 text-success" />
+            <Icon name="person_add" className="w-4 h-4 text-success" />
             <span className="text-xs text-on-surface-variant">Nye</span>
           </div>
           <p className="text-lg font-semibold text-on-surface tabular-nums">{newStudents}</p>
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <Icon name="person"Minus className="w-4 h-4 text-error" />
+            <Icon name="person_remove" className="w-4 h-4 text-error" />
             <span className="text-xs text-on-surface-variant">Sluttet</span>
           </div>
           <p className="text-lg font-semibold text-on-surface tabular-nums">{churnedStudents}</p>

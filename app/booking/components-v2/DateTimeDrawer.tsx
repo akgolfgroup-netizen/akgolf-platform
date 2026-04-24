@@ -136,7 +136,7 @@ export function DateTimeDrawer({
             className="w-full mt-5 py-4 rounded-[14px] bg-secondary-fixed text-primary text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-95 hover:scale-[1.01] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             Bekreft tid
-            <Icon name="chevron_right" className="w-4 h-4" strokeWidth={2.5} />
+            <Icon name="chevron_right" className="w-4 h-4" />
           </button>
         </>
       )}

@@ -354,7 +354,7 @@ export default function MissionBoardPage() {
                   </p>
                 </div>
                 <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-success-light text-success">
-                  <Icon name="person"s className="w-5 h-5" />
+                  <Icon name="group" className="w-5 h-5" />
                 </div>
               </div>
               <AdminSparkline
@@ -406,7 +406,7 @@ export default function MissionBoardPage() {
                   value={monthlyCurrent}
                   max={monthlyGoal}
                   size={140}
-                  strokeWidth={12}
+                 
                   label={`${monthlyCurrent} / ${monthlyGoal} okter`}
                 />
               </div>
@@ -554,7 +554,7 @@ export default function MissionBoardPage() {
                     </div>
                   ) : (
                     <div className="px-6 py-8 text-center">
-                      <Icon name="check"Circle className="w-10 h-10 text-success mx-auto mb-3 opacity-50" />
+                      <Icon name="check_circle" className="w-10 h-10 text-success mx-auto mb-3 opacity-50" />
                       <p className="text-sm text-on-surface-variant/80">
                         Ingen aktive varsler
                       </p>

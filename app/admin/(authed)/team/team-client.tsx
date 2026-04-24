@@ -154,7 +154,7 @@ export function TeamClient({
                 Audit-logg
               </Link>
               <Button onClick={() => setInviteOpen(true)}>
-                <Icon name="person"Plus className="h-4 w-4" />
+                <Icon name="person_add" className="h-4 w-4" />
                 Inviter bruker
               </Button>
             </div>
@@ -269,7 +269,7 @@ export function TeamClient({
                       >
                         {m.isActive ? (
                           <>
-                            <Icon name="power"Off className="h-3.5 w-3.5" />
+                            <Icon name="power_off" className="h-3.5 w-3.5" />
                             Deaktiver
                           </>
                         ) : (

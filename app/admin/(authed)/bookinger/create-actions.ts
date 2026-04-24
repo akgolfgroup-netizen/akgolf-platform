@@ -32,6 +32,12 @@ export interface StudentOption {
   email: string;
 }
 
+export interface FacilityOption {
+  id: string;
+  name: string;
+  locationName: string | null;
+}
+
 // ── Helpers ────────────────────────────────────────────────
 
 function first<T>(val: unknown): T | null {
@@ -53,9 +59,24 @@ export async function adminCreateBooking(data: {
   serviceTypeId: string;
   instructorId: string;
   startTime: string;
+  facilityId?: string | null;
 }) {
   await requireStaffUser();
   const supabase = await createServerSupabase();
+
+  // Hvis fasilitet ikke spesifisert, bruk instruktørens default
+  let facilityId = data.facilityId ?? null;
+  if (!facilityId) {
+    const { data: def } = await supabase
+      .from("InstructorFacilityDefault")
+      .select("facilityId")
+      .eq("instructorId", data.instructorId)
+      .or(`serviceTypeId.eq.${data.serviceTypeId},serviceTypeId.is.null`)
+      .order("priority", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    facilityId = (def?.facilityId as string | undefined) ?? null;
+  }
 
   let { data: student } = await supabase.from("User").select("id").eq("email", data.studentEmail).single();
   if (!student) {
@@ -98,6 +119,7 @@ export async function adminCreateBooking(data: {
       startTime: start.toISOString(), endTime: end.toISOString(),
       status: "CONFIRMED", paymentMethod: "NONE", paymentStatus: "PENDING",
       amount: serviceType.price, vatAmount,
+      facilityId,
     })
     .select("id")
     .single();
@@ -189,6 +211,42 @@ export async function getInstructors(): Promise<InstructorOption[]> {
     const name = Array.isArray(userArr) ? userArr[0]?.name : (userArr as { name: string | null } | null)?.name;
     return { id: inst.id as string, name: name ?? "Ukjent", title: (inst.title as string | null) ?? null };
   });
+}
+
+export async function getFacilities(): Promise<FacilityOption[]> {
+  const supabase = await createServerSupabase();
+  const { data } = await supabase
+    .from("Facility")
+    .select("id, name, sortOrder, isActive, Location (name)")
+    .eq("isActive", true)
+    .order("sortOrder", { ascending: true });
+  return (data ?? []).map((f) => {
+    const loc = Array.isArray(f.Location) ? f.Location[0] : f.Location;
+    return {
+      id: f.id as string,
+      name: f.name as string,
+      locationName: (loc as { name: string | null } | null)?.name ?? null,
+    };
+  });
+}
+
+export async function getInstructorDefaultFacility(
+  instructorId: string,
+  serviceTypeId?: string
+): Promise<string | null> {
+  const supabase = await createServerSupabase();
+  let query = supabase
+    .from("InstructorFacilityDefault")
+    .select("facilityId, priority, serviceTypeId")
+    .eq("instructorId", instructorId);
+  if (serviceTypeId) {
+    query = query.or(`serviceTypeId.eq.${serviceTypeId},serviceTypeId.is.null`);
+  }
+  const { data } = await query
+    .order("priority", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  return (data?.facilityId as string | undefined) ?? null;
 }
 
 export async function searchStudentsForBooking(query: string): Promise<StudentOption[]> {

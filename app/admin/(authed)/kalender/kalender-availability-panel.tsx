@@ -14,6 +14,8 @@ import {
   getBlockedTimesForPeriod,
 } from "./actions";
 import AvailabilityBlockedTimes from "./availability-blocked-times";
+import AvailabilityMonthCalendar from "@/components/portal/admin/kalender/availability-month-calendar";
+import GoogleCalendarPicker from "@/components/portal/admin/kalender/google-calendar-picker";
 
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
 const DAY_INDICES = [1, 2, 3, 4, 5, 6, 0];
@@ -105,8 +107,23 @@ export default function KalenderAvailabilityPanel({
 
 
 
+  const weeklyDefaults = Object.entries(editingSlots).flatMap(([dow, slots]) =>
+    slots.map((s) => ({ dayOfWeek: parseInt(dow, 10), startTime: s.start, endTime: s.end }))
+  );
+
   return (
     <div className="space-y-6">
+      {/* Google Calendar-synk */}
+      <GoogleCalendarPicker />
+
+      {/* Månedsvisning — dato-spesifikke overstyringer */}
+      {selectedInstructorId && (
+        <AvailabilityMonthCalendar
+          instructorId={selectedInstructorId}
+          weeklyDefaults={weeklyDefaults}
+        />
+      )}
+
       {/* Recurring availability */}
       <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden">
         <div className="px-4 py-3 border-b border-outline-variant/30 flex items-center justify-between">
@@ -120,7 +137,7 @@ export default function KalenderAvailabilityPanel({
             </div>
           </div>
           <Button variant="accent" onClick={handleSave} isLoading={isSaving}>
-            <Icon name="check"Circle className="w-4 h-4" />
+            <Icon name="check_circle" className="w-4 h-4" />
             Lagre
           </Button>
         </div>

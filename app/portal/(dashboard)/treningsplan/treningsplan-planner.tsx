@@ -33,6 +33,8 @@ import {
   type AdjustmentSuggestion,
 } from "./components/plan-adjustment-banner";
 import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
+import { PlanCreatorModal } from "@/components/portal/treningsplan/plan-creator-modal";
+import { EmptyState } from "@/components/ui/empty-state";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -128,6 +130,9 @@ export function TreningsplanPlanner({
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editEvent, setEditEvent] = useState<V2Event | null>(null);
   const [adjustModalOpen, setAdjustModalOpen] = useState(false);
+  const [planCreatorOpen, setPlanCreatorOpen] = useState(false);
+
+  const showEmptyState = !planId;
 
   // Uke-navigasjon
   const baseMonday = startOfWeek(new Date(), { weekStartsOn: 1 });
@@ -247,8 +252,26 @@ export function TreningsplanPlanner({
             <Icon name="add" size={14} />
             Ny økt
           </button>
+          <button
+            onClick={() => setPlanCreatorOpen(true)}
+            className="flex items-center gap-2 rounded-lg border border-primary bg-primary px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-primary hover:bg-primary-container transition-colors"
+          >
+            <Icon name="auto_awesome" size={14} />
+            Ny plan
+          </button>
         </div>
       </header>
+
+      {showEmptyState && (
+        <EmptyState
+          iconName="event_note"
+          title="Du har ingen aktiv treningsplan"
+          description="Velg hvordan du vil starte: la AI lage en plan basert på din profil, velg en standardmal, eller bygg helt selv."
+          actionLabel="Lag treningsplan"
+          actionIconName="auto_awesome"
+          onAction={() => setPlanCreatorOpen(true)}
+        />
+      )}
 
       {/* Plan-justering banner + modal */}
       {adjustmentSuggestion && adjustmentSuggestion.recommendation !== "none" && (
@@ -277,7 +300,8 @@ export function TreningsplanPlanner({
         }}
       />
 
-      {/* Hovedgrid: ukes-scheduler + sidebar */}
+      {/* Hovedgrid: ukes-scheduler + sidebar (skjult ved tom-tilstand) */}
+      {!showEmptyState && (
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-0 lg:col-span-9">
           <WeekGrid
@@ -307,6 +331,13 @@ export function TreningsplanPlanner({
           />
         </div>
       </div>
+      )}
+
+      {/* Wizard-modal: lag ny plan */}
+      <PlanCreatorModal
+        open={planCreatorOpen}
+        onClose={() => setPlanCreatorOpen(false)}
+      />
 
       {/* Modal: Opprett økt */}
       {modalOpen && (

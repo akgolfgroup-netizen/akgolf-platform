@@ -24,6 +24,10 @@ import { nb } from "date-fns/locale";
 import { getOrCreateConversation } from "@/app/admin/(authed)/meldinger/chat-actions";
 import { TrainingDataTabs } from "./training-data-tabs";
 import { StudentForecastTab } from "@/components/portal/coach-hq/student-forecast-tab";
+import { StudentSummaryTab } from "@/components/portal/coach-hq/student-summary-tab";
+import { DrillStudio } from "@/components/portal/coach-hq/drill-studio";
+import { TestRegister } from "@/components/portal/coach-hq/test-register";
+import { NextSessionPlanner } from "@/components/portal/coach-hq/next-session-planner";
 import type { getStudentProfile } from "./actions";
 
 // ---------------------------------------------------------------------------
@@ -114,7 +118,7 @@ export function StudentDetailClient({ profile }: Props) {
       title: `${(b.ServiceType as { name?: string })?.name ?? "Booking"} gjennomfort`,
       description: extractInstructorName(b.Instructor),
       date: format(new Date(b.startTime), "d. MMM", { locale: nb }),
-      icon: <Icon name="check"Circle2 className="w-3 h-3" />,
+      icon: <Icon name="check_circle" className="w-3 h-3" />,
       color: "var(--color-success)",
     })),
     ...profile.CoachingSession.slice(0, 3).map((cs) => ({
@@ -144,6 +148,10 @@ export function StudentDetailClient({ profile }: Props) {
   const tabs = [
     { id: "overview", label: "Oversikt" },
     { id: "training", label: "Trening" },
+    { id: "sammendrag", label: "Sammendrag" },
+    { id: "drills", label: "Drills" },
+    { id: "tests", label: "Tester" },
+    { id: "neste", label: "Planlegg neste" },
     { id: "forecast", label: "Forecast" },
     { id: "notes", label: "Notater og data" },
   ];
@@ -290,7 +298,7 @@ export function StudentDetailClient({ profile }: Props) {
                   value={profile.sessionsThisMonth}
                   max={monthlyGoal}
                   size={84}
-                  strokeWidth={7}
+                 
                   valueSuffix=""
                   label={`av ${monthlyGoal}`}
                 />
@@ -377,7 +385,7 @@ export function StudentDetailClient({ profile }: Props) {
                   value={profile.sessionsThisMonth}
                   max={monthlyGoal}
                   size={140}
-                  strokeWidth={10}
+                 
                   valueSuffix=""
                   label={`av ${monthlyGoal} okter`}
                 />
@@ -604,6 +612,35 @@ export function StudentDetailClient({ profile }: Props) {
               </div>
             )}
           </div>
+        )}
+
+        {/* Tab: Sammendrag */}
+        {activeTab === "sammendrag" && (
+          <StudentSummaryTab
+            studentId={profile.id}
+            studentName={profile.name ?? "Elev"}
+          />
+        )}
+
+        {/* Tab: Drills */}
+        {activeTab === "drills" && (
+          <DrillStudio
+            studentId={profile.id}
+            studentName={profile.name ?? "Elev"}
+          />
+        )}
+
+        {/* Tab: Tester */}
+        {activeTab === "tests" && (
+          <TestRegister studentId={profile.id} />
+        )}
+
+        {/* Tab: Planlegg neste */}
+        {activeTab === "neste" && (
+          <NextSessionPlanner
+            studentId={profile.id}
+            studentName={profile.name ?? "Elev"}
+          />
         )}
 
         {/* Tab: Forecast */}

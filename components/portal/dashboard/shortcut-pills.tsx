@@ -30,7 +30,7 @@ export function ShortcutPills() {
             >
               <s.icon className="h-5 w-5" style={{ color: s.color }} />
             </div>
-            <Icon name="arrow_upward"Right className="h-4 w-4 text-on-surface-variant/60 transition-colors group-hover:text-on-surface-variant" />
+            <Icon name="arrow_outward" className="h-4 w-4 text-on-surface-variant/60 transition-colors group-hover:text-on-surface-variant" />
           </div>
           <div className="mt-3">
             <h4 className="text-sm font-semibold text-on-surface">{s.label}</h4>

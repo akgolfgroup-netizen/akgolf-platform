@@ -169,10 +169,10 @@ function TrendsTab({ data, loading }: { data: { date: string; focus: number; con
                   labelStyle={{ color: COLORS.onSurface, fontWeight: 600 }}
                 />
                 <Legend wrapperStyle={{ paddingTop: 8 }} />
-                <Line type="monotone" dataKey="focus" name="Fokus" stroke={COLORS.ai} strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="confidence" name="Selvtillit" stroke={COLORS.info} strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="commitment" name="Engasjement" stroke={COLORS.onSurface} strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="acceptance" name="Aksept" stroke={COLORS.success} strokeWidth={2} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="focus" name="Fokus" stroke={COLORS.ai} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="confidence" name="Selvtillit" stroke={COLORS.info} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="commitment" name="Engasjement" stroke={COLORS.onSurface} dot={{ r: 3 }} />
+                <Line type="monotone" dataKey="acceptance" name="Aksept" stroke={COLORS.success} dot={{ r: 3 }} />
               </LineChart>
             </ResponsiveContainer>
           )}

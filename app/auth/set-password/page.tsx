@@ -414,7 +414,7 @@ function SetPasswordContent() {
                     }}
                     className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-success/10"
                   >
-                    <Icon name="check"Circle2 className="w-7 h-7 text-success" />
+                    <Icon name="check_circle" className="w-7 h-7 text-success" />
                   </motion.div>
                   <h1 className="text-2xl font-semibold text-text mb-2">
                     Passord satt

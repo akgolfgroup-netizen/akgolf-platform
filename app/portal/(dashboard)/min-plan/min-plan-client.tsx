@@ -313,7 +313,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
           value={probPct}
           max={100}
           size={120}
-          strokeWidth={8}
+         
           valueSuffix="%"
           label="sannsynlighet"
         />

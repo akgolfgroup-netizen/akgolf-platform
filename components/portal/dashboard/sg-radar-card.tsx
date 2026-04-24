@@ -78,7 +78,7 @@ export function SGRadarCard({ data = PLACEHOLDER_DATA }: SGRadarCardProps) {
               stroke={colors.primary.main}
               fill={colors.primary.main}
               fillOpacity={0.15}
-              strokeWidth={2}
+             
             />
             <Radar
               name="target"
@@ -86,7 +86,7 @@ export function SGRadarCard({ data = PLACEHOLDER_DATA }: SGRadarCardProps) {
               stroke={colors.data.coral}
               fill={colors.data.coral}
               fillOpacity={0.08}
-              strokeWidth={2}
+             
               strokeDasharray="4 4"
             />
           </RadarChart>

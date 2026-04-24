@@ -30,7 +30,7 @@ export function SocialWidget({ data }: SocialWidgetProps) {
     return (
       <div className="rounded-2xl border border-slate-800 bg-inverse-surface/50 p-6">
         <div className="flex items-center gap-2 mb-4">
-          <Icon name="person"s className="w-5 h-5 text-amber-400" />
+          <Icon name="group" className="w-5 h-5 text-amber-400" />
           <h3 className="font-semibold text-inverse-on-surface">Sosialt</h3>
         </div>
         <p className="text-sm text-inverse-on-surface/60 mb-4">
@@ -55,7 +55,7 @@ export function SocialWidget({ data }: SocialWidgetProps) {
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Icon name="person"s className="w-5 h-5 text-amber-400" />
+          <Icon name="group" className="w-5 h-5 text-amber-400" />
           <h3 className="font-semibold text-inverse-on-surface">Sosialt</h3>
         </div>
         <Link

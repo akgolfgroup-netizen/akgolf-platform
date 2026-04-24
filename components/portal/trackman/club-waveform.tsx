@@ -222,7 +222,8 @@ export function ClubWaveform({ clubData, defaultClub }: ClubWaveformProps) {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-            <Icon name="close"Axis
+            
+            <XAxis
               dataKey="index"
               tick={{ fill: "#64748B", fontSize: 10 }}
               tickLine={false}
@@ -265,7 +266,7 @@ export function ClubWaveform({ clubData, defaultClub }: ClubWaveformProps) {
                 dataKey="carry"
                 name="Carry"
                 stroke={CLUB_COLORS.carry}
-                strokeWidth={2}
+               
                 fill="url(#carryGradient)"
                 activeDot={{ r: 5, stroke: CLUB_COLORS.carry, strokeWidth: 2, fill: "#1E293B" }}
               />
@@ -277,7 +278,7 @@ export function ClubWaveform({ clubData, defaultClub }: ClubWaveformProps) {
                 dataKey="ballSpeed"
                 name="Ball Speed"
                 stroke={CLUB_COLORS.ballSpeed}
-                strokeWidth={2}
+               
                 fill="url(#speedGradient)"
                 activeDot={{ r: 5, stroke: CLUB_COLORS.ballSpeed, strokeWidth: 2, fill: "#1E293B" }}
               />
@@ -289,7 +290,7 @@ export function ClubWaveform({ clubData, defaultClub }: ClubWaveformProps) {
                 dataKey="spin"
                 name="Spin"
                 stroke={CLUB_COLORS.spin}
-                strokeWidth={2}
+               
                 fill="url(#spinGradient)"
                 activeDot={{ r: 5, stroke: CLUB_COLORS.spin, strokeWidth: 2, fill: "#1E293B" }}
               />

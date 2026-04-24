@@ -44,7 +44,7 @@ export function RoryAugustaResult({
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <Icon name="person"s className="w-4 h-4 text-blue-500" />
+            <Icon name="group" className="w-4 h-4 text-blue-500" />
             <span className="text-inverse-on-surface/60 dark:text-inverse-on-surface/60">
               PGA Tour Gjennomsnitt
             </span>
@@ -74,7 +74,7 @@ export function RoryAugustaResult({
           {/* vs Tour Average */}
           <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-surface">
             <div className="flex items-center gap-2 mb-4">
-              <Icon name="person"s className="w-5 h-5" />
+              <Icon name="group" className="w-5 h-5" />
               <span className="font-semibold">vs PGA Tour Snitt</span>
             </div>
             <div className="text-center">
@@ -157,7 +157,7 @@ export function RoryAugustaResult({
             
             {/* vs Tour Avg */}
             <BenchmarkCard
-              icon={<Icon name="person"s className="w-4 h-4" />}
+              icon={<Icon name="group" className="w-4 h-4" />}
               title="vs PGA Tour Snitt"
               color="blue"
               playerValue={approachResult.averageProximity}
@@ -239,7 +239,7 @@ export function RoryAugustaResult({
             
             {/* vs Tour Avg */}
             <BenchmarkCard
-              icon={<Icon name="person"s className="w-4 h-4" />}
+              icon={<Icon name="group" className="w-4 h-4" />}
               title="vs PGA Tour Snitt"
               color="blue"
               playerValue={driverResult.fairwaysHit}
@@ -315,7 +315,7 @@ export function RoryAugustaResult({
                 </tr>
                 <tr>
                   <td className="py-1 flex items-center gap-1">
-                    <Icon name="person"s className="w-3 h-3 text-blue-500" />
+                    <Icon name="group" className="w-3 h-3 text-blue-500" />
                     PGA Tour Snitt
                   </td>
                   <td className="text-right font-medium">{BENCHMARKS.tourAverage.approach100m.averageProximity}m</td>
@@ -350,7 +350,7 @@ export function RoryAugustaResult({
                 </tr>
                 <tr>
                   <td className="py-1 flex items-center gap-1">
-                    <Icon name="person"s className="w-3 h-3 text-blue-500" />
+                    <Icon name="group" className="w-3 h-3 text-blue-500" />
                     PGA Tour Snitt
                   </td>
                   <td className="text-right font-medium">{BENCHMARKS.tourAverage.driver.fairways}/10</td>

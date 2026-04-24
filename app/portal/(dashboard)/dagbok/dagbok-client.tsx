@@ -144,7 +144,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
         onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
         className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
       >
-        <Icon name="add" className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
+        <Icon name="add" className="w-3.5 h-3.5 relative z-10" />
         <span className="relative z-10">Logg ny økt</span>
       </motion.button>
     </>
@@ -199,7 +199,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
         <PremiumCard variant="default" padding="lg" className="text-center py-16">
           <div className="flex flex-col items-center justify-center text-center">
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 bg-on-surface/10">
-              <NotebookPen className="w-8 h-8 text-on-surface" strokeWidth={1.75} />
+              <NotebookPen className="w-8 h-8 text-on-surface" />
             </div>
             <p className="text-[20px] font-semibold text-on-surface mb-2">Din treningsdagbok er tom</p>
             <p className="text-[13px] text-on-surface-variant mb-6 max-w-md leading-relaxed">
@@ -208,7 +208,7 @@ export function DagbokClient({ initialLogs, loggedSessionIds, lastSession, planP
             <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}
               onClick={() => { setEditingLog(null); setLogModalOpen(true); }}
               className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group">
-              <Icon name="add" className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
+              <Icon name="add" className="w-3.5 h-3.5 relative z-10" />
               <span className="relative z-10">Logg ny økt</span>
             </motion.button>
           </div>

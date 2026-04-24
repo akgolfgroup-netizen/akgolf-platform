@@ -89,7 +89,8 @@ export function HandicapTrendChart({ data }: HandicapTrendChartProps) {
               stroke={colors.grey[100]}
               vertical={false}
             />
-            <Icon name="close"Axis
+            
+            <XAxis
               dataKey="month"
               tick={{ fill: colors.grey[400], fontSize: 11 }}
               tickLine={false}
@@ -120,7 +121,7 @@ export function HandicapTrendChart({ data }: HandicapTrendChartProps) {
               type="monotone"
               dataKey="hcp"
               stroke={colors.primary.main}
-              strokeWidth={2.5}
+             
               fill="url(#trendFill)"
               activeDot={{
                 r: 5,

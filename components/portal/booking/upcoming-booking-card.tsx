@@ -18,14 +18,14 @@ function renderIconForType(
 ) {
   switch (type) {
     case "coaching":
-      return <Icon name="my_location" className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="my_location" className={className} />;
     case "training":
-      return <Icon name="calendar_today" className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="calendar_today" className={className} />;
     case "tournament":
-      return <Icon name="emoji_events" className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="emoji_events" className={className} />;
     case "booking":
     default:
-      return <Icon name="calendar_today" className={className} strokeWidth={strokeWidth} />;
+      return <Icon name="calendar_today" className={className} />;
   }
 }
 
@@ -74,17 +74,17 @@ export function UpcomingBookingCard({ booking }: UpcomingBookingCardProps) {
             </p>
             <div className="flex items-center gap-4 text-[11px] text-muted">
               <span className="flex items-center gap-1.5">
-                <Icon name="person"Icon className="w-3 h-3" strokeWidth={1.75} />
+                <Icon name="person" className="w-3 h-3" />
                 <span className="truncate">{booking.instructorName}</span>
               </span>
               {booking.location && (
                 <span className="flex items-center gap-1.5">
-                  <Icon name="location_on" className="w-3 h-3" strokeWidth={1.75} />
+                  <Icon name="location_on" className="w-3 h-3" />
                   <span className="truncate">{booking.location}</span>
                 </span>
               )}
               <span className="flex items-center gap-1.5">
-                <Icon name="schedule" className="w-3 h-3" strokeWidth={1.75} />
+                <Icon name="schedule" className="w-3 h-3" />
                 <span className="tabular-nums">{booking.duration} min</span>
               </span>
             </div>

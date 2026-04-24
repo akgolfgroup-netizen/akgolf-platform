@@ -81,17 +81,17 @@ export function NextBookingHero({ booking }: NextBookingHeroProps) {
             {/* Meta-info */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-surface/60">
               <span className="flex items-center gap-2">
-                <Icon name="person"Icon className="w-4 h-4" strokeWidth={1.5} />
+                <Icon name="person" className="w-4 h-4" />
                 {booking.instructorName}
               </span>
               {booking.location && (
                 <span className="flex items-center gap-2">
-                  <Icon name="location_on" className="w-4 h-4" strokeWidth={1.5} />
+                  <Icon name="location_on" className="w-4 h-4" />
                   {booking.location}
                 </span>
               )}
               <span className="flex items-center gap-2">
-                <Icon name="schedule" className="w-4 h-4" strokeWidth={1.5} />
+                <Icon name="schedule" className="w-4 h-4" />
                 <span className="tabular-nums">{booking.duration} min</span>
               </span>
             </div>

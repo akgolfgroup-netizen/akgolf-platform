@@ -174,7 +174,7 @@ export function WebhookHealthCard() {
           {/* Feil */}
           {health.stripe.error && (
             <div className="flex items-start gap-2 text-xs text-[var(--color-error)]">
-              <Icon name="close"Circle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+              <Icon name="cancel" className="w-3.5 h-3.5 shrink-0 mt-0.5" />
               <span>{health.stripe.error}</span>
             </div>
           )}

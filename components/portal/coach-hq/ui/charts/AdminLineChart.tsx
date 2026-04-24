@@ -96,7 +96,7 @@ export function AdminLineChart({
             dataKey="value"
             name={valueLabel}
             stroke={color}
-            strokeWidth={2.5}
+           
             dot={{ r: 3, fill: color, strokeWidth: 0 }}
             activeDot={{ r: 5, fill: color, strokeWidth: 2, stroke: "var(--color-surface)" }}
           />

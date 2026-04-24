@@ -105,7 +105,7 @@ export default async function TestDetailPage({ params }: Props) {
             <p className="text-sm text-on-surface-variant">Køller</p>
           </div>
           <div className="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-card">
-            <Icon name="check"Circle2 className="w-5 h-5 text-on-surface mb-2" />
+            <Icon name="check_circle" className="w-5 h-5 text-on-surface mb-2" />
             <p className="text-xl font-bold text-on-surface">
               {protocol.min_category}-{protocol.max_category}
             </p>

@@ -398,7 +398,7 @@ export function TrackManClient({ data }: { data: TrackManOverview }) {
                     type="monotone"
                     dataKey="speed"
                     stroke={COLORS.onSurface}
-                    strokeWidth={2}
+                   
                     dot={{ r: 4, fill: COLORS.onSurface, strokeWidth: 0 }}
                     activeDot={{ r: 6 }}
                   />

@@ -27,7 +27,7 @@ export function ShortcutCard({
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
           <Icon className="h-5 w-5 text-primary" />
         </div>
-        <Icon name="arrow_upward"Right className="h-4 w-4 text-on-surface-variant/60 transition-colors group-hover:text-primary" />
+        <Icon name="arrow_outward" className="h-4 w-4 text-on-surface-variant/60 transition-colors group-hover:text-primary" />
       </div>
       <div>
         <h4 className="text-sm font-semibold text-on-surface">{title}</h4>

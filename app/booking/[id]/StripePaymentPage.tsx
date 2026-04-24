@@ -94,7 +94,7 @@ function CheckoutForm({ bookingId, serviceName }: CheckoutFormProps) {
           </>
         ) : (
           <>
-            <Icon name="shield"Check size={20} />
+            <Icon name="verified" size={20} />
             <span>Betal nå</span>
           </>
         )}
@@ -185,7 +185,7 @@ export function StripePaymentPage({
               },
             }}
           >
-            <Icon name="check"outForm bookingId={bookingId} serviceName={serviceName} />
+            <CheckoutForm bookingId={bookingId} serviceName={serviceName} />
           </Elements>
         </motion.div>
       </motion.div>

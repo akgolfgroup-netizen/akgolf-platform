@@ -158,7 +158,7 @@ export function HCPTrendChart({
               type="monotone"
               dataKey="hcp"
               stroke={GOLD_COLOR}
-              strokeWidth={2.5}
+             
               fill="url(#hcpGradient)"
               activeDot={{ r: 6, stroke: GOLD_COLOR, strokeWidth: 2, fill: "#1E293B" }}
             />
@@ -167,7 +167,7 @@ export function HCPTrendChart({
                 data={scatterData}
                 fill={GOLD_COLOR}
                 stroke="#1E293B"
-                strokeWidth={1}
+               
                 shape={(props: { cx?: number; cy?: number }) => {
                   const { cx = 0, cy = 0 } = props;
                   return (
@@ -177,7 +177,7 @@ export function HCPTrendChart({
                       r={4}
                       fill={GOLD_COLOR}
                       stroke="#1E293B"
-                      strokeWidth={1.5}
+                     
                     />
                   );
                 }}

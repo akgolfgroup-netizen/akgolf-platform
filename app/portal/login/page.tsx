@@ -441,7 +441,7 @@ export default function LoginPage() {
                                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 cursor-pointer bg-transparent border-none text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors"
                               >
                                 {showPassword ? (
-                                  <Icon name="visibility"Off className="w-4 h-4" aria-hidden="true" />
+                                  <Icon name="visibility_off" className="w-4 h-4" aria-hidden="true" />
                                 ) : (
                                   <Icon name="visibility" className="w-4 h-4" aria-hidden="true" />
                                 )}

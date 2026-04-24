@@ -75,7 +75,7 @@ export function SessionHeader({
             </div>
             <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center">
               {progress === 100 ? (
-                <Icon name="check"Circle className="w-6 h-6 text-success" />
+                <Icon name="check_circle" className="w-6 h-6 text-success" />
               ) : (
                 <span className="text-sm font-semibold text-primary">{Math.round(progress)}%</span>
               )}
@@ -228,7 +228,7 @@ export function SessionCardCompact({
         <div className="flex items-center gap-3">
           {isCompleted ? (
             <div className="w-10 h-10 rounded-xl bg-success/20 flex items-center justify-center">
-              <Icon name="check"Circle className="w-5 h-5 text-success" />
+              <Icon name="check_circle" className="w-5 h-5 text-success" />
             </div>
           ) : (
             <div

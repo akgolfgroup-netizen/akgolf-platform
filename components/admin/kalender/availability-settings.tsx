@@ -121,7 +121,7 @@ function SpecialDateItem({
   return (
     <div className="flex items-center justify-between py-3 px-4 hover:bg-surface transition-colors group">
       <div className="flex items-center gap-3">
-        <Icon name="calendar_today"Days className="w-4 h-4 text-on-surface-variant" />
+        <Icon name="calendar_today" className="w-4 h-4 text-on-surface-variant" />
         <div>
           <p className="text-sm font-medium text-on-surface">{date.label}</p>
           <p className="text-xs text-on-surface-variant">
@@ -199,7 +199,7 @@ export function AvailabilitySettings() {
       <Card className="overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
           <div className="flex items-center gap-3">
-            <Icon name="calendar_today"Days className="w-5 h-5 text-on-surface-variant" />
+            <Icon name="calendar_today" className="w-5 h-5 text-on-surface-variant" />
             <h2 className="text-sm font-semibold text-on-surface">Spesielle datoer</h2>
           </div>
           <button className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg border border-outline-variant/30 text-on-surface-variant/90 hover:bg-surface transition-colors">

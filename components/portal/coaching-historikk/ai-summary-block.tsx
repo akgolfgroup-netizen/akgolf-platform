@@ -100,7 +100,7 @@ export function AISummaryBlock({
           <motion.ul variants={container} className="space-y-1.5">
             {actionItems.map((action, i) => (
               <motion.li key={i} variants={item} className="flex items-start gap-2">
-                <Icon name="check"Square className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <Icon name="check_box" className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                 <span className="text-sm text-on-surface">{action}</span>
               </motion.li>
             ))}

@@ -205,7 +205,7 @@ export function SkillRadar({
                   stroke="#D4AF37"
                   fill="#D4AF37"
                   fillOpacity={0.1}
-                  strokeWidth={1.5}
+                 
                   strokeDasharray="4 4"
                 />
                 <Radar
@@ -214,7 +214,7 @@ export function SkillRadar({
                   stroke="#94A3B8"
                   fill="#94A3B8"
                   fillOpacity={0.1}
-                  strokeWidth={1.5}
+                 
                   strokeDasharray="4 4"
                 />
               </>
@@ -225,7 +225,7 @@ export function SkillRadar({
               stroke="#2A7D5A"
               fill="#2A7D5A"
               fillOpacity={0.25}
-              strokeWidth={2.5}
+             
               dot={{ fill: "#2A7D5A", r: 4, strokeWidth: 2, stroke: "#1E293B" }}
             />
             <Legend

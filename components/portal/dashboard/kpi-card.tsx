@@ -59,9 +59,9 @@ export function KpiCard({
             }`}
           >
             {isPositive ? (
-              <Icon name="arrow_downward"Right className="h-3 w-3" />
+              <Icon name="south_east" className="h-3 w-3" />
             ) : isNegative ? (
-              <Icon name="arrow_upward"Right className="h-3 w-3" />
+              <Icon name="arrow_outward" className="h-3 w-3" />
             ) : null}
             {Math.abs(change).toFixed(decimalPlaces)}
           </span>

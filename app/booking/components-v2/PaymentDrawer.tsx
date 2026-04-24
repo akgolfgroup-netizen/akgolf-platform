@@ -109,7 +109,7 @@ export function PaymentDrawer({
         ) : (
           <>
             {ctaLabel}
-            <Icon name="chevron_right" className="w-4 h-4" strokeWidth={2.5} />
+            <Icon name="chevron_right" className="w-4 h-4" />
           </>
         )}
       </button>

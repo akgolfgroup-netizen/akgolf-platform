@@ -180,7 +180,7 @@ export default async function SessionDetailPage({ params }: Props) {
         {log.deviatedFromPlan && (
           <div className="pt-2 border-t border-outline-variant/50">
             <div className="flex items-center gap-2 text-warning mb-1">
-              <Icon name="close"Circle className="w-4 h-4" />
+              <Icon name="cancel" className="w-4 h-4" />
               <span className="text-sm font-medium">Avvik fra plan</span>
             </div>
             {log.deviationReason && (
@@ -299,7 +299,7 @@ export default async function SessionDetailPage({ params }: Props) {
       {log.TrainingPlanSession && (
         <div className="bg-surface-container rounded-2xl p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Icon name="check"Circle2 className="w-5 h-5 text-success" />
+            <Icon name="check_circle" className="w-5 h-5 text-success" />
             <div>
               <p className="text-xs text-on-surface-variant">Koblet til treningsplan</p>
               <p className="text-sm font-medium text-on-surface">{log.TrainingPlanSession.title}</p>

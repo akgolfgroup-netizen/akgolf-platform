@@ -649,7 +649,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                       stroke={COLORS.blue}
                       fill={COLORS.blue}
                       fillOpacity={0.15}
-                      strokeWidth={2}
+                     
                       strokeDasharray="5 5"
                     />
                     <Radar
@@ -658,7 +658,7 @@ export function BenchmarkClient({ profile }: BenchmarkClientProps) {
                       stroke={COLORS.grey900}
                       fill={COLORS.grey900}
                       fillOpacity={0.25}
-                      strokeWidth={2}
+                     
                       dot={{
                         fill: COLORS.grey900,
                         r: 4,

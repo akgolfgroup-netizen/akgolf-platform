@@ -168,7 +168,7 @@ export function ScoreTrendChart({
               type="monotone"
               dataKey="score"
               stroke="var(--color-grey-900)"
-              strokeWidth={2}
+             
               dot={{ fill: "var(--color-grey-900)", r: 4, strokeWidth: 2, stroke: "white" }}
               activeDot={{ r: 6, stroke: "var(--color-grey-900)", strokeWidth: 2 }}
             />
@@ -177,7 +177,7 @@ export function ScoreTrendChart({
                 type="monotone"
                 dataKey="movingAvg"
                 stroke="var(--color-success)"
-                strokeWidth={2}
+               
                 strokeDasharray="5 5"
                 dot={false}
                 connectNulls

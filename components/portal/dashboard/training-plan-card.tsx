@@ -95,7 +95,7 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
               <item.icon
                 className="h-3 w-3"
                 style={{ color: item.iconColor }}
-                strokeWidth={2}
+               
               />
             </div>
 
@@ -122,7 +122,7 @@ export function TrainingPlanCard({ delay = 0 }: TrainingPlanCardProps) {
                   : "border-outline-variant/30"
               }`}
             >
-              {item.done && <Icon name="check" className="h-2.5 w-2.5" strokeWidth={3} />}
+              {item.done && <Icon name="check" className="h-2.5 w-2.5" />}
             </div>
           </div>
         ))}

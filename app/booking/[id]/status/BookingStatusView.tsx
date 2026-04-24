@@ -56,7 +56,7 @@ const statusConfig: Record<BookingStatus, {
   CONFIRMED: {
     label: "Bekreftet",
     description: "Din booking er bekreftet og klar",
-    icon: <Icon name="check"Circle2 className="w-5 h-5" />,
+    icon: <Icon name="check_circle" className="w-5 h-5" />,
     color: "text-[var(--color-success-text)]",
     bgColor: "bg-[var(--color-success-light)]",
     borderColor: "border-[var(--color-success)]/20",
@@ -64,7 +64,7 @@ const statusConfig: Record<BookingStatus, {
   CANCELLED: {
     label: "Avbestilt",
     description: "Booking har blitt avbestilt",
-    icon: <Icon name="close"Circle className="w-5 h-5" />,
+    icon: <Icon name="cancel" className="w-5 h-5" />,
     color: "text-[var(--color-error-text)]",
     bgColor: "bg-[var(--color-error-light)]",
     borderColor: "border-[var(--color-error)]/20",
@@ -80,7 +80,7 @@ const statusConfig: Record<BookingStatus, {
   COMPLETED: {
     label: "Gjennomført",
     description: "Timen er fullført",
-    icon: <Icon name="check"Circle2 className="w-5 h-5" />,
+    icon: <Icon name="check_circle" className="w-5 h-5" />,
     color: "text-[var(--color-brand)]",
     bgColor: "bg-[var(--color-brand-light)]",
     borderColor: "border-[var(--color-brand)]/20",
@@ -209,13 +209,13 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
       label: "Booking bekreftet",
       date: booking.status !== "PENDING" ? booking.createdAt : null,
       completed: booking.status === "CONFIRMED" || booking.status === "COMPLETED" || booking.status === "NO_SHOW",
-      icon: <Icon name="check"Circle2 className="w-4 h-4" />,
+      icon: <Icon name="check_circle" className="w-4 h-4" />,
     },
     {
       label: "Timen gjennomført",
       date: booking.status === "COMPLETED" || booking.status === "NO_SHOW" ? booking.date : null,
       completed: booking.status === "COMPLETED",
-      icon: booking.status === "NO_SHOW" ? <Icon name="close"Circle className="w-4 h-4" /> : <Icon name="check"Circle2 className="w-4 h-4" />,
+      icon: booking.status === "NO_SHOW" ? <Icon name="cancel" className="w-4 h-4" /> : <Icon name="check_circle" className="w-4 h-4" />,
       isNoShow: booking.status === "NO_SHOW",
     },
   ];
@@ -225,7 +225,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
       label: "Booking avbestilt",
       date: booking.cancelledAt ?? null,
       completed: true,
-      icon: <Icon name="close"Circle className="w-4 h-4" />,
+      icon: <Icon name="cancel" className="w-4 h-4" />,
       isCancelled: true,
     };
     timelineSteps.pop();
@@ -436,7 +436,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                       {isCancelling ? (
                         <Icon name="progress_activity" className="w-4 h-4 animate-spin" />
                       ) : (
-                        <Icon name="close"Circle className="w-4 h-4" />
+                        <Icon name="cancel" className="w-4 h-4" />
                       )}
                       Avbestill
                     </button>
@@ -478,7 +478,7 @@ export function BookingStatusView({ booking, isAuthenticated }: BookingStatusVie
                       }`}
                     >
                       {step.completed && !step.isNoShow && !step.isCancelled ? (
-                        <Icon name="check"Circle2 className="w-5 h-5" />
+                        <Icon name="check_circle" className="w-5 h-5" />
                       ) : (
                         step.icon
                       )}
