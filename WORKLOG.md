@@ -8,6 +8,37 @@
 
 ---
 
+## 2026-04-24 — Treningsplan-wizard: spilleren velger selv (Manuell / Anbefalt / Standard)
+
+**Jobbet med:** Spilleren får nå selv velge hvordan en ny treningsplan skal lages. Tom-tilstand, 2-stegs (eller 3 ved mal-valg) wizard, og 5 hardkodede standardmaler. Hentet 3 komponenter fra 21st.dev og tilpasset Heritage-tokens (DM Sans, Material Symbols, Material 3-farger).
+
+- **Nye ui-primitiver** (Heritage-tokens fra start):
+  - `components/ui/choicebox.tsx` — radio-cards med ikon + tittel + beskrivelse + valgfri badge
+  - `components/ui/segmented-button-group.tsx` — pill-toggle for tidsperspektiv
+  - `components/ui/empty-state.tsx` — tom-tilstand med ikon, tekst og CTA
+- **Standard treningsmaler:** `lib/portal/training/standard-templates.ts` — 5 maler (Putting-fokus, Kort spill, Allround basis, Konkurranseforberedelse, Off-season styrke). Hver mal definerer ukesmønster (1-7 økter) som repeteres for valgt varighet.
+- **Server action:** `createPlanFromChoice({ mode, durationWeeks, templateId? })` i `actions.ts` — mapper MANUAL/RECOMMENDED/TEMPLATE til eksisterende `createManualPlan()`. RECOMMENDED bruker foreløpig Allround-mal som AI-fallback (markeres `aiGenerated: true`); ekte AI-flow er TODO v2.
+- **Wizard-modal:** `components/portal/treningsplan/plan-creator-modal.tsx` — 2 eller 3 steg avhengig av valg. Steg 1: Modus. Steg 2 (kun TEMPLATE): Velg mal. Siste steg: Varighet (1/4/8/12 uker) + sammendrag.
+- **Tom-tilstand i planner:** Når spilleren ikke har aktiv plan, vises `EmptyState` med "Lag treningsplan"-CTA i stedet for grid+sidebar. "+ Ny plan"-knapp lagt i header (ved siden av "Ny økt") for å åpne wizardene fra eksisterende planer.
+- **Verifisert i browser:** Alle 3 stegene rendres korrekt, mode-valg ↔ totalSteps justeres dynamisk, AI/POPULÆR/ANBEFALT FOR NYE-badges vises i lime, valgte kort har grønn ramme + grønt ikon-badge.
+
+**Commit:** `bc0d4a8` (auto-sync)
+
+**Nøkkelfiler:**
+- Nye: `components/ui/{choicebox,segmented-button-group,empty-state}.tsx`, `components/portal/treningsplan/plan-creator-modal.tsx`, `lib/portal/training/standard-templates.ts`, `.claude/launch.json`
+- Oppdatert: `app/portal/(dashboard)/treningsplan/{actions.ts,treningsplan-planner.tsx}`
+
+**Status:** Wizard fungerer end-to-end visuelt. Pre-eksisterende TS-feil i `treningsplan-planner.tsx` (manglende `cn`-import, `onUpdateSession`-destructuring) ble ikke berørt av mine endringer. Ingen Prisma-migrasjon — maler er hardkodet. Templates kan v2-migreres til DB-tabell når admin skal kunne lage egne.
+
+**Neste steg:**
+1. **Test "Opprett plan"-knappen** med ekte data — verifiser at MANUAL/RECOMMENDED/TEMPLATE alle lager korrekt plan-struktur og redirecter til ferdig planner-view.
+2. **Erstatt RECOMMENDED-fallback** med ekte AI-anbefaling basert på SG/HCP/svakheter (kall til Anthropic via eksisterende `analyzePlanDeviation`-mønster).
+3. **Migrer maler til `TrainingPlanTemplate`-tabell** i Prisma + admin-UI for å opprette/redigere maler.
+4. **Treningsanalyse:** koble `/portal/analyse` SG-data inn i RECOMMENDED-flow så AI faktisk vekter etter spillerens svakeste områder.
+5. **Fiks pre-eksisterende TS-feil** i `treningsplan-planner.tsx` (`cn`-import, `onUpdateSession`).
+
+---
+
 ## 2026-04-24 — Booking-løft: fasiliteter, månedskalender, multi-Google-synk
 
 **Jobbet med:** Stor leveranse på booking-systemet. GFGK-fasiliteter på plass, admin får tidslinje-oversikt, coach får månedskalender for dato-spesifikk tilgjengelighet med kort-input ("10-18"), og Google Calendar-synk støtter nå flere kalendere.
