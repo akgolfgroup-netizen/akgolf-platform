@@ -41,7 +41,7 @@ export function NameList({ liveSessions }: NameListProps) {
           className="text-[10px] font-mono uppercase tracking-[0.18em] mb-0.5"
           style={{ color: "var(--color-sidebar-muted)" }}
         >
-          Workspace
+          AK Golf
         </div>
         <div className="flex items-center gap-1.5">
           <div className="text-sm font-display font-semibold">CoachHQ</div>
@@ -52,7 +52,7 @@ export function NameList({ liveSessions }: NameListProps) {
               color: "var(--color-accent)",
             }}
           >
-            live
+            aktiv
           </span>
         </div>
       </div>

@@ -51,7 +51,7 @@ export function LiveStatusFooter({
       <div className="font-display text-[20px] font-bold leading-none flex items-baseline gap-1.5">
         <span style={{ color: "var(--color-accent)" }}>{count}</span>
         <span className="text-white text-[13px] font-medium">
-          {count === 1 ? "økt live" : "økter live"}
+          {count === 1 ? "aktiv økt" : "aktive økter"}
         </span>
       </div>
       <div

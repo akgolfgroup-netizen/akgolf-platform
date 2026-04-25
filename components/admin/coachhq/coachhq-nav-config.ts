@@ -29,9 +29,9 @@ export interface CoachHQNavSection {
  * Matcher public/design-reference/coachhq-reference.html.
  */
 export const COACHHQ_PRIMARY_NAV: CoachHQNavItem[] = [
-  { href: "/admin", label: "Mission Board", icon: LayoutDashboard, shortcut: "1" },
+  { href: "/admin", label: "Dagens fokus", icon: LayoutDashboard, shortcut: "1" },
   { href: "/admin/elever", label: "Elever", icon: Users, shortcut: "2" },
-  { href: "/admin/coaching-board", label: "Coaching Board", icon: Kanban, shortcut: "3" },
+  { href: "/admin/coaching-board", label: "Aktive økter", icon: Kanban, shortcut: "3" },
   { href: "/admin/bookinger", label: "Bookinger", icon: CalendarDays, shortcut: "4" },
   { href: "/admin/analytics", label: "Analyse", icon: BarChart3, shortcut: "5" },
   { href: "/admin/okonomi", label: "Økonomi", icon: Wallet, shortcut: "6" },
@@ -40,7 +40,7 @@ export const COACHHQ_PRIMARY_NAV: CoachHQNavItem[] = [
 ];
 
 export const COACHHQ_TOOLS_NAV: CoachHQNavItem[] = [
-  { href: "/admin/agenter", label: "Agenter", icon: Bot },
+  { href: "/admin/agenter", label: "AI Coach", icon: Bot },
   { href: "/admin/treningsplan", label: "Treningsplaner", icon: Bookmark },
 ];
 
