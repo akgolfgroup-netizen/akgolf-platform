@@ -60,3 +60,23 @@ Registrer nye komponenter i docs/component-library.md
 Oppdater WORKLOG.md etter ferdig arbeid
 Commit: [feat/fix/refactor]: [beskrivelse]
 ```
+
+## UI-ressurser
+
+Bruk disse kildene aktivt ved UI-arbeid:
+- **21st-dev MCP**: Sok komponenter med `use 21st-dev`
+- **context7**: Bruk for oppdatert shadcn/Next.js-docs
+- **vibeui.online**: Layout-monstre (Split hero, Bento grid, Sidebar + main, etc.)
+- **ui.aceternity.com**: Animasjoner og wow-effekter
+- **tremor.so**: Dashboard-charts
+- **magicui.design**: Landing page-komponenter
+- **fontshare.com**: General Sans, Satoshi (premium-alternativer til Inter)
+
+## Utvidet prompt-mal (med MCP-verktoy)
+
+```
+Bruk 21st-dev MCP til a soke etter [komponenttype].
+Bruk context7 for a verifisere shadcn/Next.js API.
+Folg .claude/rules/design-system.md og .claude/skills/ui-ux-pro-max/SKILL.md.
+Bygg [feature].
+```
