@@ -28,6 +28,7 @@ import {
   createUserExercise,
   type ExerciseSearchResult,
 } from "@/lib/portal/training/exercise-actions";
+import type { TemplateId } from "@/lib/portal/training/standard-templates";
 import {
   PlanAdjustmentBanner,
   type AdjustmentSuggestion,
@@ -35,6 +36,7 @@ import {
 import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
 import { PlanCreatorModal } from "@/components/portal/treningsplan/plan-creator-modal";
 import { EmptyState } from "@/components/ui/empty-state";
+import { cn } from "@/lib/portal/utils/cn";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -60,6 +62,15 @@ interface PeriodizationInfo {
   weekNumber: number;
   totalWeeks: number;
   focusAllocation: Record<string, number> | null;
+}
+
+interface TemplateSummary {
+  id: TemplateId;
+  title: string;
+  description: string;
+  iconName: string;
+  badge?: string;
+  sessionCount: number;
 }
 
 interface TreningsplanPlannerProps {
@@ -101,8 +112,20 @@ interface TreningsplanPlannerProps {
       focusArea?: string;
     }
   ) => Promise<{ success: boolean }>;
+  onMoveEvent?: (
+    eventId: string,
+    date: string,
+    startH: number,
+    startM: number,
+  ) => Promise<void>;
+  onResizeEvent?: (eventId: string, durationMinutes: number) => Promise<void>;
   adjustmentSuggestion?: AdjustmentSuggestion | null;
   onAdjustPlan?: (factor: number) => Promise<{ success: boolean; adjustedCount?: number; error?: string }>;
+  templates?: TemplateSummary[];
+  onApplyTemplate?: (
+    templateId: TemplateId,
+    weekOffset: number,
+  ) => Promise<{ success: boolean; createdCount: number; error?: string }>;
 }
 
 export function TreningsplanPlanner({
@@ -116,8 +139,13 @@ export function TreningsplanPlanner({
   historyEvents,
   onCreateSession,
   onAddExerciseToSession,
+  onUpdateSession,
+  onMoveEvent,
+  onResizeEvent,
   adjustmentSuggestion,
   onAdjustPlan,
+  templates = [],
+  onApplyTemplate,
 }: TreningsplanPlannerProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -284,7 +312,7 @@ export function TreningsplanPlanner({
       <PlanAdjustmentModal
         isOpen={adjustModalOpen}
         onClose={() => setAdjustModalOpen(false)}
-        suggestion={adjustmentSuggestion}
+        suggestion={adjustmentSuggestion ?? null}
         onApprove={async (factor) => {
           if (onAdjustPlan) {
             const result = await onAdjustPlan(factor);
@@ -307,6 +335,7 @@ export function TreningsplanPlanner({
           <WeekGrid
             weekDates={weekDates}
             events={events}
+            weekOffset={weekOffset}
             onCellClick={(dayIndex, hour) => {
               setModalDay(dayIndex);
               setModalHour(hour);
@@ -321,6 +350,9 @@ export function TreningsplanPlanner({
               setEditModalOpen(true);
             }}
             onAddExerciseToSession={onAddExerciseToSession}
+            onMoveEvent={onMoveEvent}
+            onResizeEvent={onResizeEvent}
+            onApplyTemplate={onApplyTemplate}
           />
         </div>
         <div className="col-span-12 lg:col-span-3">
@@ -328,6 +360,9 @@ export function TreningsplanPlanner({
             activeTab={activeTab}
             onTabChange={setActiveTab}
             historyEvents={historyEvents}
+            templates={templates}
+            weekOffset={weekOffset}
+            onApplyTemplate={onApplyTemplate}
           />
         </div>
       </div>
@@ -406,15 +441,23 @@ export function TreningsplanPlanner({
 function WeekGrid({
   weekDates,
   events,
+  weekOffset,
   onCellClick,
   onEventClick,
   onAddExerciseToSession,
+  onMoveEvent,
+  onResizeEvent,
+  onApplyTemplate,
 }: {
   weekDates: Date[];
   events: V2Event[];
+  weekOffset: number;
   onCellClick: (dayIndex: number, hour: number) => void;
   onEventClick: (event: V2Event) => void;
   onAddExerciseToSession: TreningsplanPlannerProps["onAddExerciseToSession"];
+  onMoveEvent?: TreningsplanPlannerProps["onMoveEvent"];
+  onResizeEvent?: TreningsplanPlannerProps["onResizeEvent"];
+  onApplyTemplate?: TreningsplanPlannerProps["onApplyTemplate"];
 }) {
   const today = new Date();
   const todayISO = format(today, "yyyy-MM-dd");
@@ -477,14 +520,39 @@ function WeekGrid({
                   {String(h).padStart(2, "0")}:00
                 </span>
               </div>
-              {weekDates.map((_, dayIndex) => {
+              {weekDates.map((d, dayIndex) => {
                 const key = `${dayIndex}-${h}`;
                 const slotEvents = eventMap.get(key) ?? [];
+                const cellDateISO = format(d, "yyyy-MM-dd");
                 return (
                   <div
                     key={dayIndex}
                     onClick={() => {
                       if (slotEvents.length === 0) onCellClick(dayIndex, h);
+                    }}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={async (e) => {
+                      const raw = e.dataTransfer.getData("application/json");
+                      if (!raw) return;
+                      try {
+                        const payload = JSON.parse(raw);
+                        if (payload?.kind === "template" && onApplyTemplate) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          await onApplyTemplate(payload.templateId, weekOffset);
+                          window.location.reload();
+                          return;
+                        }
+                        if (payload?.kind === "session" && onMoveEvent) {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          await onMoveEvent(payload.id, cellDateISO, h, 0);
+                          window.location.reload();
+                          return;
+                        }
+                      } catch {
+                        // fall through to event-level drop for legacy exercise payloads
+                      }
                     }}
                     className={`relative h-14 border-r border-outline-variant/5 transition-colors ${
                       slotEvents.length === 0
@@ -495,6 +563,18 @@ function WeekGrid({
                     {slotEvents.map((ev) => (
                       <div
                         key={ev.id}
+                        draggable={!ev.isGroupSession}
+                        onDragStart={(e) => {
+                          if (ev.isGroupSession) {
+                            e.preventDefault();
+                            return;
+                          }
+                          e.dataTransfer.setData(
+                            "application/json",
+                            JSON.stringify({ kind: "session", id: ev.id }),
+                          );
+                          e.dataTransfer.effectAllowed = "move";
+                        }}
                         onClick={(e) => {
                           e.stopPropagation();
                           onEventClick(ev);
@@ -506,19 +586,32 @@ function WeekGrid({
                           const raw = e.dataTransfer.getData("application/json");
                           if (!raw) return;
                           try {
-                            const exercise = JSON.parse(raw);
-                            await onAddExerciseToSession(ev.id, exercise);
+                            const payload = JSON.parse(raw);
+                            if (payload?.kind === "session" && onMoveEvent) {
+                              await onMoveEvent(payload.id, cellDateISO, h, 0);
+                              window.location.reload();
+                              return;
+                            }
+                            if (payload?.kind === "template" && onApplyTemplate) {
+                              await onApplyTemplate(payload.templateId, weekOffset);
+                              window.location.reload();
+                              return;
+                            }
+                            // Default: behandle som øvelse (legacy + nytt format)
+                            await onAddExerciseToSession(ev.id, payload);
                             window.location.reload();
                           } catch {
                             // ignore
                           }
                         }}
-                        className={`absolute inset-1 cursor-pointer rounded-lg px-2 py-1 text-[10px] font-bold leading-tight shadow-sm ${
+                        className={`absolute inset-1 rounded-lg px-2 py-1 text-[10px] font-bold leading-tight shadow-sm ${
+                          ev.isGroupSession ? "cursor-default" : "cursor-grab active:cursor-grabbing"
+                        } ${
                           ev.done
                             ? "bg-primary/20 text-primary/70 line-through"
                             : eventColorClass(ev.focus)
                         }`}
-                        title={`${ev.title} · ${ev.dur}m · ${ev.focus}${ev.isGroupSession ? " — Gruppeøkt (ikke redigerbar)" : " — Klikk for å redigere, dropp øvelse her"}`}
+                        title={`${ev.title} · ${ev.dur}m · ${ev.focus}${ev.isGroupSession ? " — Gruppeøkt (ikke redigerbar)" : " — Klikk for å redigere, dra for å flytte, dropp øvelse her"}`}
                       >
                         <span className="block truncate">
                           {ev.isGroupSession && (
@@ -532,6 +625,12 @@ function WeekGrid({
                             <span className="ml-1 text-info">· {ev.groupName}</span>
                           )}
                         </span>
+                        {!ev.isGroupSession && onResizeEvent && (
+                          <ResizeHandle
+                            currentDuration={ev.dur}
+                            onResize={(newDur) => onResizeEvent(ev.id, newDur)}
+                          />
+                        )}
                       </div>
                     ))}
                   </div>
@@ -807,7 +906,7 @@ function EditSessionModal({
       focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
     });
 
-    if ("error" in result) {
+    if (result && "error" in result && typeof result.error === "string") {
       setError(result.error);
       return;
     }
@@ -955,10 +1054,16 @@ function PlannerSidebar({
   activeTab,
   onTabChange,
   historyEvents,
+  templates,
+  weekOffset,
+  onApplyTemplate,
 }: {
   activeTab: SidebarTab;
   onTabChange: (tab: SidebarTab) => void;
   historyEvents: V2Event[];
+  templates: TemplateSummary[];
+  weekOffset: number;
+  onApplyTemplate?: TreningsplanPlannerProps["onApplyTemplate"];
 }) {
   const tabs: { id: SidebarTab; label: string; icon: string }[] = [
     { id: "exercises", label: "Øvelser", icon: "sports_golf" },
@@ -989,7 +1094,13 @@ function PlannerSidebar({
       </div>
       <div className="p-4">
         {activeTab === "exercises" && <ExercisesPlaceholder />}
-        {activeTab === "templates" && <TemplatesPlaceholder />}
+        {activeTab === "templates" && (
+          <TemplatesList
+            templates={templates}
+            weekOffset={weekOffset}
+            onApplyTemplate={onApplyTemplate}
+          />
+        )}
         {activeTab === "history" && <HistoryList events={historyEvents} />}
       </div>
     </div>
@@ -1506,13 +1617,111 @@ function FilterSection({
   );
 }
 
-function TemplatesPlaceholder() {
+function TemplatesList({
+  templates,
+  weekOffset,
+  onApplyTemplate,
+}: {
+  templates: TemplateSummary[];
+  weekOffset: number;
+  onApplyTemplate?: TreningsplanPlannerProps["onApplyTemplate"];
+}) {
+  const [applyingId, setApplyingId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  if (templates.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-outline-variant/40 p-6 text-center">
+        <Icon name="dashboard_customize" size={28} className="text-primary/20" />
+        <p className="mt-2 text-xs text-on-surface-variant">Ingen maler tilgjengelig</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="rounded-2xl border border-dashed border-outline-variant/40 p-6 text-center">
-      <Icon name="dashboard_customize" size={28} className="text-primary/20" />
-      <p className="mt-2 text-xs text-on-surface-variant">
-        Ukes- og øktsmaler kommer i B-1.6
+    <div className="space-y-2">
+      <p className="font-mono text-[9px] font-bold uppercase tracking-widest text-primary/50">
+        {templates.length} maler
       </p>
+      {error && (
+        <div className="rounded-lg bg-error-container px-3 py-2 text-[11px] text-error">
+          {error}
+        </div>
+      )}
+      {templates.map((tpl) => (
+        <div
+          key={tpl.id}
+          draggable
+          onDragStart={(e) => {
+            e.dataTransfer.setData(
+              "application/json",
+              JSON.stringify({ kind: "template", templateId: tpl.id }),
+            );
+            e.dataTransfer.effectAllowed = "copy";
+          }}
+          className="group cursor-grab rounded-lg border border-outline-variant/20 bg-surface p-2.5 transition-all hover:border-primary/30 hover:bg-surface-container active:cursor-grabbing"
+        >
+          <div className="flex items-start gap-2">
+            <span
+              className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary/10"
+            >
+              <Icon name={tpl.iconName} size={14} className="text-primary" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5">
+                <p className="truncate text-xs font-bold text-primary">{tpl.title}</p>
+                {tpl.badge && (
+                  <span className="rounded-full bg-secondary-fixed px-1.5 py-0.5 font-mono text-[8px] font-bold text-on-secondary-fixed">
+                    {tpl.badge}
+                  </span>
+                )}
+              </div>
+              <p className="mt-1 line-clamp-2 text-[10px] text-on-surface-variant">
+                {tpl.description}
+              </p>
+              <p className="mt-1.5 font-mono text-[9px] text-on-surface-variant/70">
+                {tpl.sessionCount} økter/uke
+              </p>
+            </div>
+          </div>
+          {onApplyTemplate && (
+            <button
+              type="button"
+              disabled={applyingId === tpl.id}
+              onClick={async (e) => {
+                e.stopPropagation();
+                setError(null);
+                setApplyingId(tpl.id);
+                try {
+                  const res = await onApplyTemplate(tpl.id, weekOffset);
+                  if (res.success) {
+                    window.location.reload();
+                  } else {
+                    setError(res.error ?? "Kunne ikke påføre malen");
+                  }
+                } catch (err) {
+                  setError(err instanceof Error ? err.message : "Ukjent feil");
+                } finally {
+                  setApplyingId(null);
+                }
+              }}
+              className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-md bg-primary px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-surface hover:bg-primary-container disabled:opacity-50"
+            >
+              {applyingId === tpl.id ? (
+                <>
+                  <Icon name="progress_activity" size={11} className="animate-spin" />
+                  Påfører…
+                </>
+              ) : (
+                <>
+                  <Icon name="add" size={11} />
+                  Påfør på uken
+                </>
+              )}
+            </button>
+          )}
+        </div>
+      ))}
     </div>
   );
 }
@@ -1583,6 +1792,52 @@ function HistoryList({ events }: { events: V2Event[] }) {
         </div>
       ))}
     </div>
+  );
+}
+
+/* ── Resize handle for økt-pille (P1.3) ── */
+
+function ResizeHandle({
+  currentDuration,
+  onResize,
+}: {
+  currentDuration: number;
+  onResize: (newDuration: number) => Promise<void> | void;
+}) {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const startY = e.clientY;
+    const startDur = currentDuration;
+    let liveDur = startDur;
+
+    const onMove = (ev: PointerEvent) => {
+      const deltaY = ev.clientY - startY;
+      const minutesDelta = Math.round(deltaY / 4) * 15; // ~4px per minute, snap til 15
+      liveDur = Math.max(15, Math.min(240, startDur + minutesDelta));
+    };
+
+    const onUp = async () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      if (liveDur !== startDur) {
+        await onResize(liveDur);
+        window.location.reload();
+      }
+    };
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  };
+
+  return (
+    <div
+      draggable={false}
+      onMouseDown={handleMouseDown}
+      onClick={(e) => e.stopPropagation()}
+      className="absolute inset-x-0 bottom-0 h-1.5 cursor-ns-resize bg-primary/0 hover:bg-primary/30"
+      title="Dra for å endre varighet"
+    />
   );
 }
 
