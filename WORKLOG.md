@@ -8,114 +8,77 @@
 
 ---
 
-## 2026-04-25 — Booking-systemet: P2, P3, waitlist-UI og reconcile-CRON
+## 2026-04-25 — Treningsplaner: 4 sprints (bug-fiks → polish, ferdig)
 
-**Jobbet med:** Fullført alle åpne saker fra `docs/status/BOOKING_AUDIT.md` + to BACKLOG-saker (waitlist-UI og webhook redundancy CRON). Acuity-flyten beholdes til siden lanseres — derfor ikke wired dagens slot-helper inn ennå.
+**Jobbet med:** Komplett gjennomgang og videreutvikling av treningsplaneren. Startet med kartlegging og 7 bug-fikser, deretter 4 sprints (13 epics) som dekket alt fra konsolidering og AI-kobling til PDF-eksport, mobil-responsivitet og test-dekning. Plan-fil: `~/.claude/plans/lag-n-en-plan-mellow-fern.md`.
 
-- **Sak 1 (P3 quota race):** Ny `supabase/migrations/20260425_subscription_quota_rpcs.sql` med atomiske `increment_sessions_used` / `decrement_sessions_used` RPC-funksjoner. Tidligere falt koden alltid tilbake til en SELECT+UPDATE uten lås, og to samtidige bookinger kunne overskride kvota. Postgres serialiserer UPDATE på samme rad, så ett kall garanterer atomisk telling. La også til warning-logg i fallback for å se hvis RPC fortsatt feiler i prod. Commit `ef86cd2`.
-- **Sak 2 (P2 refund idempotency):** Erstattet tidsbasert `Date.now()`-key med deterministisk SHA256-hash i ny `lib/portal/booking/refund-idempotency.ts`. Refund-funksjonen gjenbruker eksisterende `refundIdempotencyKey` fra DB hvis den finnes, slik at Stripe deduperer korrekt ved webhook-retries. 5 unit-tester passerer. Commit `c00075d`.
-- **Sak 4 (Stripe reconcile-CRON):** Ny `/api/portal/cron/reconcile-stripe-bookings` kjører hver 30. min. Henter PENDING-bookinger eldre enn 1t med `stripePaymentId` og synker status mot Stripe (succeeded → CONFIRMED, canceled → CANCELLED). Logger sammendrag til `AgentLog`. Vercel CRON registrert i `vercel.json`. Commit `a317739`.
-- **Sak 3 (waitlist student-UI):** Ny side `/portal/bookinger/venteliste` viser egne `WaitlistEntry` (WAITING + NOTIFIED) med posisjon, tjeneste, trener, ønsket tid og "Meld av"-knapp. NOTIFIED-state utheves med "Plass tilgjengelig" + expiry-info. Lenke fra hovedsiden `/portal/bookinger`. Commit `d980ce8`.
+### Pre-sprint — Bug-fiks (7 stk)
+- **`cn`-import** lagt til i `treningsplan-planner.tsx` (krasjet ved Periodization-banner).
+- **`format`-import** lagt til i `actions.ts` (krasjet ved opprettelse av økt i ny uke).
+- **`useDragAndDrop.ts:157`** — `useState(...)` byttet til `useEffect(..., [sessions])`.
+- **Lucide `Search`** fjernet fra `ExerciseBank.tsx`.
+- **`onUpdateSession`** destructurert i `TreningsplanPlanner` (ReferenceError ved redigering).
+- **3 dead-code-filer slettet:** `manual-plan-button.tsx`, `manual-plan-modal.tsx`, `generate-plan-button.tsx`.
+- **`PyramidFilter`** tar nå `progressByLevel` + `periodLabel` som props i stedet for hardkodet 60%.
 
-**Status:** Lint OK på alle nye filer. Tsc OK (én pre-eksisterende warning på `refund.ts` linje 82 og pre-eksisterende error på `getRefundStatus` linje 238 fra Stripe-types-oppdatering — urelatert til denne committen). 13/13 tester passerer i nye testfiler.
+### Sprint 1 — Opprydding + AI + taxonomi (Epic 1, 2, 11)
+- **Slettet 14 filer:** TrainingPlannerV3, TrainingPlanViewer + alle V3-eksklusive komponenter (WeekCalendar, SessionCard, SessionDetailModal, NewSessionModal, SidePanel, StandardSessions, PyramidFilter, ExerciseBank, useDragAndDrop, types) + `archive-old-components/treningsplan-*`.
+- **Forenklet `page.tsx`** — kun én view (`TreningsplanPlanner`), fjernet `?view=`-routing.
+- **`createPlanFromChoice` RECOMMENDED-modus** kobles nå til ekte AI: henter `TrainingPrescription`, `User.handicap`, `PlayerGoals` → bygger goals-string → kaller `generateTrainingPlan` (Claude Sonnet 4.5) → lagrer plan i transaksjon. Rate-limit per bruker (`AI_ENDPOINTS`).
+- **`PlanCreatorModal`** viser "Genererer din personlige plan…" + "Generer plan med AI"-knapp i RECOMMENDED.
+- **Konsolidert taxonomi:** `TEMPLATE_FOCUS` flyttet fra `standard-templates.ts` til `ak-taxonomy.ts` som autoritativ kilde.
+
+### Sprint 2 — CRUD + smart funksjonalitet (Epic 3, 4, 10)
+- **Prisma-migrasjon** `20260425_training_extensions`: `TrainingPlanWeek.restDays Int[]` + ny modell `DismissedAdjustment`.
+- **Plan-CRUD server actions:** `listMyPlans`, `archivePlan`, `activatePlan`, `deletePlan`, `duplicateOwnPlan`, `duplicateSession`, `reorderSessionsInDay`.
+- **Fasilitet:** `createSessionForWeek` + `updateSession` tar nå `facilityId`. `listAvailableFacilities` server action.
+- **Konflikt-detektor:** ny `lib/portal/training/conflict-detector.ts` — sjekker `Booking` (CONFIRMED/PENDING) + andre `TrainingPlanSession` samme uke/dag. `checkSessionConflicts` server action.
+- **Hviledager:** `toggleRestDay(weekId, dayOfWeek)` server action.
+- **Avvis-persistering:** `dismissPlanAdjustment(planId)` setter `expiresAt = +7d`. `analyzePlanDeviation` returnerer `null` ved aktiv dismiss.
+- **UI-utvidelser i `TreningsplanPlanner`:** facility-dropdown i Create/EditSessionModal, automatisk konfliktsjekk med "Lagre likevel"-bekreftelse, "Dupliser"-knapp i EditSessionModal, ny `PlansMenu`-dropdown i header (Aktiver/Arkiver/Dupliser/Slett per plan), banner-dismiss persisterer.
+
+### Sprint 3 — Maler + notifikasjoner + goal-tracking (Epic 5, 6, 7)
+- **Prisma-migrasjon** `20260425_training_plan_template`: ny modell `TrainingPlanTemplate` (admin-redigerbare maler).
+- **`scripts/migrate-templates-to-db.ts`** — engangs-script som flytter de 5 hardkodede malene til DB. Idempotent.
+- **`lib/portal/training/template-service.ts`** — `getActiveTemplates`, `getTemplateById`, `getAllTemplatesForAdmin` med fallback til hardkodet liste.
+- **Wizard kobler til DB:** `createPlanFromChoice (TEMPLATE)` og `listStandardTemplates` leser fra DB.
+- **Admin-UI** på `/admin/treningsplan/maler`: full CRUD-editor med dynamisk ukesmønster (legg til/fjern økter, dayOfWeek, varighet, fokus, badge, sortering, isActive/isPublic).
+- **CRON `training-reminders`:** to moduser via `?mode=morning|evening` (07:00 + 19:00 UTC). Skipper hviledager + dedup på (userId, type, linkUrl, dato). 2 nye entries i `vercel.json`.
+- **Goal-tracking:** `getPlanGoalsProgress()` beregner `progressPct` per goalType (HCP, DRIVER_SPEED, DRIVER_CARRY, generisk). Ny `PlanGoalsCard`-komponent vises over ukesgrid.
+
+### Sprint 4 — Polish (Epic 8, 9, 12, 13)
+- **Prisma-migrasjon** `20260425_plan_coach_feedback`: `TrainingPlan.coachFeedback` + `coachFeedbackAt` + `coachFeedbackById`.
+- **Coach-kommentar:** `setPlanCoachFeedback` server action (staff-only). `CoachFeedbackEditor` i admin-UI med Rediger/Slett. Banner med dato på spillerside.
+- **PDF-eksport:** `lib/portal/training/pdf-export.tsx` (A4 med `@react-pdf/renderer`) — cover, coach-kommentar, mål, sammendrag, ukentlige 7-dagers grid med "Hviledag" og økter, footer med sidenummerering. API-rute `/api/portal/training/export-pdf/[planId]` med RBAC. "PDF"-knapp i header.
+- **Mobil-responsivitet:** ny `MobileWeekView` (under `md`-breakpoint) — vertikal liste med 44px touch-targets, sortert etter starttid, fargekoding.
+- **Test-dekning:**
+  - Vitest: `__tests__/training/standard-templates.test.ts` (7), `conflict-detector.test.ts` (5 m/Prisma-mock), `template-service.test.ts` (6).
+  - Playwright: `e2e/treningsplan.spec.ts` — auth, MANUAL-wizard, TEMPLATE-wizard, modal-åpning, PDF-eksport.
+
+**Migrasjoner som må kjøres ved deploy:**
+1. `DATABASE_URL="$DIRECT_URL" npx prisma migrate deploy` (3 nye migrasjoner)
+2. `npx prisma generate`
+3. `npx tsx scripts/migrate-templates-to-db.ts`
 
 **Nøkkelfiler:**
-- Nye: `supabase/migrations/20260425_subscription_quota_rpcs.sql`, `lib/portal/booking/refund-idempotency.ts`, `__tests__/booking/refund-idempotency.test.ts`, `app/api/portal/cron/reconcile-stripe-bookings/route.ts`, `app/portal/(dashboard)/bookinger/venteliste/{page,actions,waitlist-card}.{tsx,ts}`
-- Endret: `lib/portal/booking/refund.ts`, `lib/portal/booking/subscription-quota.ts`, `vercel.json`, `app/portal/(dashboard)/bookinger/bookinger-client.tsx`, `.claude/rules/component-library.md`
+- Prisma: `prisma/schema.prisma`, 3 nye migrasjoner
+- Server actions: `app/portal/(dashboard)/treningsplan/actions.ts` (utvidet med ~14 nye funksjoner), `app/admin/(authed)/treningsplan/actions.ts` (`setPlanCoachFeedback`), `app/admin/(authed)/treningsplan/maler/actions.ts` (ny)
+- Komponenter: `treningsplan-planner.tsx` (utvidet med `PlansMenu`, `MobileWeekView`, conflict-advarsel, facility-dropdown), `components/plan-goals-card.tsx` (ny), `templates-client.tsx` (ny admin-UI)
+- Bibliotek: `lib/portal/training/{conflict-detector,template-service,pdf-export}.{ts,tsx}` (3 nye)
+- API: `/api/portal/cron/training-reminders/route.ts`, `/api/portal/training/export-pdf/[planId]/route.ts`
+- Tester: `__tests__/training/*.test.ts` (3 nye), `e2e/treningsplan.spec.ts` (ny)
+- Konfig: `vercel.json` (2 nye CRONs)
+- Plan: `~/.claude/plans/lag-n-en-plan-mellow-fern.md`
 
-**Neste steg (Anders må utføre):**
-1. **Deploy SQL-migrasjon** mot Supabase (DIRECT_URL): `psql "$DIRECT_URL" -f supabase/migrations/20260425_subscription_quota_rpcs.sql`
-2. **Verifiser i prod-logger** etter deploy at `[Quota] increment_sessions_used RPC unavailable`-warningen forsvinner.
-3. **Test reconcile-CRON manuelt:** `curl -H "Authorization: Bearer $CRON_SECRET" https://akgolf.no/api/portal/cron/reconcile-stripe-bookings`
-4. **Test waitlist-UI** ved å opprette en `WaitlistEntry` via Prisma Studio og navigere til `/portal/bookinger/venteliste`.
-5. PR mot `main` når alt er verifisert.
-
----
-
-## 2026-04-25 — Dynamisk slot-telling i booking (P1 fra BOOKING_AUDIT)
-
-**Jobbet med:** Fjernet legacy hardkodet `availableSlotsThisWeek: 8` ved å legge til en Prisma-basert helper som beregner faktisk antall ledige slots for inneværende uke (now → søndag 23:59), og en unit-test som verifiserer at verdien er dynamisk.
-
-- **Søk:** Hardkodet `: 8` ble opprinnelig fjernet i commit `27de794` (P1-P3 backlog). Senere ble `app/booking/page.tsx` rewrittet til Acuity-redirect (commits `698f90b`, `c972965`), så feltet `availableSlotsThisWeek` på `TrainerService` har vært ubrukt siden. Helperen er nå klar for når den interne booking-flyten reaktiveres.
-- **Ny helper:** `lib/portal/booking/available-slots.ts` med `countAvailableSlotsThisWeek({ instructorId, durationMinutes, now? })` som henter `InstructorAvailability`, `Booking` (PENDING/CONFIRMED) og `BlockedTime` via Prisma, deretter delegerer til en ren beregningsfunksjon.
-- **Ren beregning:** `lib/portal/booking/available-slots-compute.ts` — `computeRemainingSlots()` itererer fra now til ukens slutt, plukker ut tilgjengelighetsvinduer per ukedag, genererer 30-min-intervall slot-starter, og trekker fra de som overlapper med booking eller blokkert tid. Splittet ut for å være testbar uten databasekobling.
-- **Test:** `__tests__/booking/available-slots.test.ts` med 8 tester. Verifiserer at verdien er dynamisk (varierer med antall bookinger, varighet, blokkerte tider) og aldri returnerer den gamle hardkodede 8-verdien.
-
-**Status:** Lint OK. Tsc OK. 8/8 tester passerer.
-
-**Nøkkelfiler:**
-- Nye: `lib/portal/booking/available-slots.ts`, `lib/portal/booking/available-slots-compute.ts`, `__tests__/booking/available-slots.test.ts`
-- Oppdatert: `lib/portal/booking/index.ts` (eksporterer ny helper)
+**Status:** Alle 13 epics ferdig. 21 mangler fra kartleggingsrapporten dekket. Treningsplaneren har nå én konsolidert view, ekte AI-modus, full plan-CRUD, fasilitet/konflikt-håndtering, admin-redigerbare maler, daglige påminnelser, goal-tracking mot HCP/TrackMan, PDF-eksport, coach-kommentar, mobil-versjon og test-dekning.
 
 **Neste steg:**
-1. Når booking-flyten med `BookingClient`/`ServiceRow` reaktiveres, kall `countAvailableSlotsThisWeek` server-side per (instructorId, duration) og send som `availableSlotsThisWeek` i `TrainerService`.
-2. Vurder å eksponere som API-endepunkt `/api/booking/available-slots` hvis SSR-kall ikke passer.
-
----
-
-## 2026-04-25 — Treningsplan: AI-RECOMMENDED, øvelses-metadata, maler-fane, drag-resize, coach-feedback
-
-**Jobbet med:** Bygget de 5 gjenstående treningsplan-funksjonene fra plan-fil `lag-en-plan-for-harmonic-quail.md`. Alle TS-feil i `treningsplan/`-modulen ryddet (også 3 pre-eksisterende i `actions.ts` og `treningsplan-planner.tsx`).
-
-- **P1.2 — Persistert øvelses-metadata:** `addExerciseToSession()` lagrer nå strukturert objekt `{id, name, pyramid, area, lPhase, description, addedAt, exerciseId}` i stedet for bare `name`-string. `getWeekEvents()` parser begge formater (string + objekt) for bakoverkompatibilitet. `deleteSession`/`updateSession`/`toggleSessionComplete` håndterer også blandet format trygt.
-- **P1.1 — AI-RECOMMENDED ekte flow:** `createPlanFromChoice("RECOMMENDED")` kaller nå `generateTrainingPlan()` med siste `TrainingPrescription` (samme mønster som AI-routen). Persisterer AI-genererte øvelser som strukturerte objekter via direkte Supabase-UPDATE av `TrainingPlanSession.exercises`. Try/catch wrapping — fall-back til Allround-mal ved AI-feil.
-- **P2.4 — Maler-fane med drag-til-grid:** Erstattet `TemplatesPlaceholder` med `TemplatesList` som viser de 5 standardmalene som drag-bar kort med "Påfør på uken"-knapp. Ny `applyTemplateToWeek(weekOffset, templateId)` server action looper `weekPattern` og kaller `createSessionForWeek` per økt. Cell-level drop-handler i `WeekGrid` håndterer både `kind: "template"` og `kind: "session"` payloads.
-- **P1.3 — Drag-resize/flytt for økt-pillene:** Native HTML5 drag på økt-pillen (`draggable={!isGroupSession}`, `onDragStart` med `kind: "session"` payload). `WeekGrid` celle-`onDrop` kaller `onMoveEvent`. Ny `ResizeHandle`-komponent med `pointermove`-listener for varighets-justering (snap til 15-min). Gruppeøkter forblir read-only (`pointer-events: none` på handle, ingen drag).
-- **P2.5 — Coach-feedback skriv-UI:** Refaktorert `TrainingLogsTab` i `training-data-tabs.tsx`: textarea + "Lagre"/"Avbryt"-knapper. "Rediger"-link når feedback er satt. Lokal state oppdateres uten reload via `setLogs(prev => prev.map(...))`. `AdminInput` erstattet med `<textarea>` (3 rader).
-
-**Bonus-fix (pre-eksisterende):**
-- `format` importert fra `date-fns` i `actions.ts` (linje 737).
-- `planSessionId` lagt til select-listen i `analyzePlanDeviation` (linje 1101).
-- `cn` importert i `treningsplan-planner.tsx` (linje 39).
-- `onUpdateSession` lagt til destructure-listen.
-- `adjustmentSuggestion ?? null` for type-safe pass til `PlanAdjustmentModal`.
-
-**Nøkkelfiler:**
-- `app/portal/(dashboard)/treningsplan/actions.ts` (+~180 linjer: `applyTemplateToWeek`, AI-flow, exercise-objekt-format)
-- `app/portal/(dashboard)/treningsplan/page.tsx` (passer `templates`, `onApplyTemplate`, `onMoveEvent`, `onResizeEvent`)
-- `app/portal/(dashboard)/treningsplan/treningsplan-planner.tsx` (`TemplatesList`, `ResizeHandle`, drag-handlers i `WeekGrid`, props-utvidelse)
-- `app/admin/(authed)/elever/[id]/training-data-tabs.tsx` (coach-feedback editor med edit/cancel)
-
-**Status:** Alle endrede filer TS-rene. Pre-eksisterende feil i 3 andre treningsplan-filer ryddet som bonus. Lokal Supabase-env mangler → kan ikke verifisere visuelt i preview, men ingen build-feil ved navigasjon til `/portal/treningsplan`.
-
-**Neste steg:**
-1. **End-to-end-test lokalt** når Supabase-env er på plass:
-   - Wizard → "Anbefalt for meg" → 4 uker → bekreft AI-tittel/varierte ukesfokus
-   - Drag øvelse til økt → reload → modal viser pyramid/area-chips
-   - Sidebar → "Maler" → "Påfør på uken" → grid får 4 økter
-   - Drag økt fra mandag til onsdag → flytter; dra nederste kant → varighet endres
-   - Coach skriver feedback → spilleren ser den på sin side
-2. **P3-backlog:** Periodisering-admin-CRUD, `TrainingPlanTemplate` DB-tabell, iCal-eksport, CRON-status-dashboard, `TrainingPlanSession.facilityId`-velger.
-
----
-
-## 2026-04-25 — Heritage design-rewrite av delvis-sider
-
-**Jobbet med:** Ryddet alle "Delvis"-sider fra FEATURE_INVENTORY-listen — fjernet demo-fallbacks, slettet eksperimentelle sider med arkiverte patterns, splittet store filer.
-
-- **`/portal/playerhq`:** Fjernet alle demo-fallbacks. La til to nye server actions: `getRoundAggregateMetrics()` (fairway%, GIR%, scrambling%, scoring avg fra `RoundStats` siste 30 dager) og `getTodayTasks()` (kobler `TrainingPlanSession` for dagens ukedag + dagens `Booking` + ferdig-status fra `TrainingLog`). KPI-pills i hero, dagens tasks i TasksCard, og statistikk-listen i ListCard bruker nå reelle data. Tom-tilstand for tasks når ingen plan finnes.
-- **`/portal/design-preview`:** Forenklet til kun de 6 Heritage-godkjente patterns: SGRing, MonoLabel, NightSurface, AKPyramide, VerticalTimeline, BentoCard. Fjernet alle arkiverte patterns (CourseHero, GlassPanel, GlassButton, HeroLabel, FloatingCrumbs, FloatingSegmented, AIAttribution).
-- **`/portal/dashboard/hero` slettet:** Brukte arkiverte patterns (CourseHero, BentoCard, GlassButton, FloatingTopbar) og duplikerte dashboard-funksjonalitet. Hadde også feil prop-shape mot `getDashboardStats`.
-- **`/portal/demo` slettet:** Brukte gamle tokens (`var(--color-grey-*)`, `var(--color-brand)`, `var(--color-ai)`), emojier, og mock-data uten produksjonsverdi.
-- **`/portal-preview` slettet:** Mock-duplikat av `/portal` med ugyldig type-shape mot `DashboardClientV3`. Fjernet også `proxy.ts`-referansen.
-- **`/admin/grupper`:** Splittet 564-linjers client-fil i 4 mindre filer alle under 300 linjer:
-  - `grupper-client.tsx` (238 linjer) — hovedkomponent + gruppeliste
-  - `create-group-modal.tsx` (116 linjer) — opprett-modal
-  - `group-detail-modal.tsx` (222 linjer) — detalj-modal med medlemmer
-  - `sync-section.tsx` (144 linjer) — synk-plan og resultatpanel
-  - Fjernet emojier (`✅⚠️❌`) fra sync-resultater. Heritage-tokens (`bg-on-surface/50`, `border-outline-variant`, `font-headline`) erstattet pre-Heritage utility-classes.
-
-**Nøkkelfiler:**
-- Endret: `app/portal/(dashboard)/dashboard-actions.ts` (+~190 linjer), `app/portal/(dashboard)/dashboard-types.ts` (+19 linjer for nye typer), `app/portal/(dashboard)/playerhq/page.tsx`, `components/portal/playerhq/player-hq-dashboard.tsx`, `components/portal/playerhq/row-two.tsx`, `app/portal/(dashboard)/design-preview/design-preview-client.tsx`, `proxy.ts`
-- Nye: `app/admin/(authed)/grupper/{create-group-modal,group-detail-modal,sync-section}.tsx`
-- Slettet: `app/portal/(dashboard)/dashboard/hero/`, `app/portal/demo/`, `app/portal-preview/`
-
-**Status:** TypeScript-rent for alle endrede filer (gjenværende TS-feil i repoet er pre-eksisterende). Lint-config ikke kjørt grunnet manglende node_modules ved start; npm install kjørt for tsc-verifisering.
-
-**Neste steg:**
-1. Kjør `npm run dev` lokalt og verifiser `/portal/playerhq` med ekte bruker (krever Supabase env).
-2. Vurder om `/portal/playerhq` skal erstatte standard `/portal`-dashboard, eller forbli en parallell variant.
-3. Adresser pre-eksisterende TS-feil i `app/portal/(dashboard)/dagbok/`, `app/portal/(dashboard)/min-plan/`, `app/portal/(dashboard)/runde/[id]/` (separate oppgaver).
+1. **Kjør migrasjoner mot Supabase** (3 stk via `DIRECT_URL`).
+2. **Migrer maler til DB:** `npx tsx scripts/migrate-templates-to-db.ts`.
+3. **Test end-to-end:** wizard (alle 3 modus), plan-meny (arkiver/dupliser/slett), PDF-nedlasting, mobil-visning på 375px.
+4. **Verifiser cron i prod:** `curl -H "Authorization: Bearer $CRON_SECRET" https://akgolf.no/api/portal/cron/training-reminders?mode=morning`.
+5. **Sett opp test-bruker** i `.env.local` (`TEST_STUDENT_EMAIL`, `TEST_STUDENT_PASSWORD`) for Playwright.
+6. **Vurder design-pass** på de nye komponentene (PlansMenu, MobileWeekView, PlanGoalsCard, CoachFeedbackEditor) når design-terminalen tar tak i treningsplan-siden.
 
 ---
 

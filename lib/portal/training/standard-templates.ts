@@ -4,18 +4,12 @@
  * via createManualPlan(). For v2 kan disse migreres til database-tabell.
  *
  * Skala: 1, 4, 8, eller 12 uker. Mal definerer ukesmønster som repeteres.
+ *
+ * Fokuskoder importeres fra ak-taxonomy.ts (TEMPLATE_FOCUS) for å unngå
+ * duplikate konstanter på tvers av kodebasen.
  */
 
-// focusArea er fri tekst på TrainingPlanSession — bruker AK-områder direkte.
-const FOCUS = {
-  PUTTING: "PUTTING",
-  CHIPPING: "CHIPPING",
-  PITCHING: "PITCHING",
-  JERN: "JERN",
-  DRIVE: "DRIVE",
-  SPILL: "SPILL",
-  FYS: "FYS",
-} as const;
+import { TEMPLATE_FOCUS as FOCUS } from "./ak-taxonomy";
 
 export type TemplateId =
   | "putting-fokus"
