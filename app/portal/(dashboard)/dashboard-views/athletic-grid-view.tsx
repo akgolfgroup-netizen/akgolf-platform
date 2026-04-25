@@ -11,6 +11,8 @@ import type {
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { QuickOnboardingBanner } from "../onboarding/components/quick-onboarding-banner";
+import { DrillOfTheDayCard } from "@/components/portal/dashboard/drill-of-the-day-card";
+import { NewSummaryBanner } from "@/components/portal/dashboard/new-summary-banner";
 
 const TIER_LABEL: Record<string, string> = {
   VISITOR: "Gratis",
@@ -55,6 +57,8 @@ export function AthleticGridView({
   sgSummary,
   trainingIndex,
   testProgress,
+  drillOfTheDay,
+  unreadSummary,
   needsOnboarding,
 }: DashboardV3Props) {
   const firstName = userName?.split(" ")[0] ?? "Spiller";
@@ -82,6 +86,9 @@ export function AthleticGridView({
     <section className="space-y-6">
       {/* Rask onboarding for nye spillere */}
       {needsOnboarding && <QuickOnboardingBanner />}
+
+      {/* Nytt sammendrag fra coach */}
+      <NewSummaryBanner summary={unreadSummary} />
 
       {/* Velkomst-header */}
       <header className="flex flex-wrap items-end justify-between gap-4 pb-2">
@@ -161,6 +168,11 @@ export function AthleticGridView({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Rad 1.5: Dagens drill */}
+      <div className="grid grid-cols-12 gap-6">
+        <DrillOfTheDayCard drill={drillOfTheDay} />
       </div>
 
       {/* Rad 2: Fremdrift — Trening (col-6) + Test (col-6) */}

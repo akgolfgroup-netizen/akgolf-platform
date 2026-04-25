@@ -23,12 +23,17 @@ self.addEventListener("notificationclick", (event) => {
 
   if (event.action === "dismiss") return;
 
-  const url = event.notification.data?.url || "/coach/inbox";
+  const url = event.notification.data?.url || "/portal";
+  const targetSection = url.startsWith("/coach")
+    ? "/coach"
+    : url.startsWith("/admin")
+    ? "/admin"
+    : "/portal";
 
   event.waitUntil(
     clients.matchAll({ type: "window" }).then((clientList) => {
       for (const client of clientList) {
-        if (client.url.includes("/coach") && "focus" in client) {
+        if (client.url.includes(targetSection) && "focus" in client) {
           client.navigate(url);
           return client.focus();
         }

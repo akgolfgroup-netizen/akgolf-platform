@@ -4,6 +4,7 @@ import { getPortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { prisma } from "@/lib/portal/prisma";
 import { logger } from "@/lib/logger";
+import { sendPushToUser } from "@/lib/portal/push/send-push";
 
 /**
  * GET /api/portal/admin/coaching-session/[id]
@@ -117,6 +118,13 @@ export async function PATCH(
     } catch (err) {
       logger.error("[coaching-session/publish] notification failed", err);
     }
+
+    sendPushToUser({
+      userId: session.studentId,
+      title: "Nytt sammendrag fra coachen",
+      body: `Sammendrag fra økten ${session.sessionDate.toLocaleDateString("no-NO")} er klart.`,
+      url: `/portal/coaching-historikk?session=${id}`,
+    }).catch((err) => logger.error("[coaching-session/publish] push failed", err));
 
     // Background: trigger next-session draft generation (best-effort)
     import("@/lib/portal/agents/runner")

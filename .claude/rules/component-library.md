@@ -33,6 +33,8 @@ Gjenbruk eksisterende — aldri bygg duplikater.
 | SGFocusCard | components/portal/dashboard/sg-focus-card.tsx | Fokusomrade med prioritet og anbefalinger |
 | PlayerCategoryCard | components/portal/dashboard/player-category-card.tsx | Spillerkategori: kode, snitt, HCP, total SG |
 | TrainingDistributionCard | components/portal/dashboard/training-distribution-card.tsx | Treningspyramide bar chart per periode |
+| DrillOfTheDayCard | components/portal/dashboard/drill-of-the-day-card.tsx | Dagens drill fra UserExerciseBank med "marker som gjort" |
+| NewSummaryBanner | components/portal/dashboard/new-summary-banner.tsx | Banner som viser nytt publisert coaching-sammendrag |
 
 ## Portal Booking-komponenter
 | Komponent | Fil | Bruk |

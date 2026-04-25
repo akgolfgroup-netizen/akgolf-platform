@@ -2,6 +2,10 @@
 
 import { createServerSupabase } from "@/lib/supabase/server";
 import { prisma } from "@/lib/portal/prisma";
+import { requirePortalUser } from "@/lib/portal/auth";
+import { nanoid } from "nanoid";
+import { revalidatePath } from "next/cache";
+import type { DrillOfTheDay, UnreadCoachingSummary } from "./dashboard-types";
 import { getTrainingIndex } from "@/lib/portal/kartlegging/training-index";
 import type { TrainingIndex } from "@/lib/portal/kartlegging/types";
 import {
@@ -846,4 +850,106 @@ export async function getAchievements(userId: string): Promise<{
     achievements: allAchievements,
     totalAchievements: allAchievements.length,
   };
+}
+
+export async function getDrillOfTheDay(userId: string): Promise<DrillOfTheDay | null> {
+  const bank = await prisma.userExerciseBank.findMany({
+    where: { userId },
+    include: { ExerciseDefinition: true },
+    orderBy: [
+      { isFavorite: "desc" },
+      { lastUsedAt: { sort: "asc", nulls: "first" } },
+    ],
+    take: 5,
+  });
+
+  if (bank.length > 0) {
+    const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+    const pick = bank[dayIndex % bank.length];
+    const e = pick.ExerciseDefinition;
+    return {
+      id: e.id,
+      bankEntryId: pick.id,
+      name: e.name,
+      description: e.description,
+      area: e.area,
+      pyramid: e.pyramid,
+      durationMinutes: Math.round((e.minDurationMinutes + e.maxDurationMinutes) / 2),
+      difficulty: e.difficulty,
+      equipment: e.equipment,
+      isFavorite: pick.isFavorite,
+      lastUsedAt: pick.lastUsedAt?.toISOString() ?? null,
+    };
+  }
+
+  const fallback = await prisma.exerciseDefinition.findFirst({
+    where: { isPublic: true },
+    orderBy: { createdAt: "desc" },
+  });
+  if (!fallback) return null;
+  return {
+    id: fallback.id,
+    bankEntryId: null,
+    name: fallback.name,
+    description: fallback.description,
+    area: fallback.area,
+    pyramid: fallback.pyramid,
+    durationMinutes: Math.round(
+      (fallback.minDurationMinutes + fallback.maxDurationMinutes) / 2
+    ),
+    difficulty: fallback.difficulty,
+    equipment: fallback.equipment,
+    isFavorite: false,
+    lastUsedAt: null,
+  };
+}
+
+export async function getUnreadCoachingSummary(
+  userId: string
+): Promise<UnreadCoachingSummary | null> {
+  const notification = await prisma.notification.findFirst({
+    where: { userId, read: false, type: "COACHING_SUMMARY" },
+    orderBy: { createdAt: "desc" },
+  });
+  if (!notification) return null;
+  return {
+    notificationId: notification.id,
+    title: notification.title,
+    message: notification.message,
+    linkUrl: notification.linkUrl,
+    createdAt: notification.createdAt.toISOString(),
+  };
+}
+
+export async function markDrillCompleted(exerciseId: string) {
+  const user = await requirePortalUser();
+  const existing = await prisma.userExerciseBank.findUnique({
+    where: { userId_exerciseId: { userId: user.id, exerciseId } },
+  });
+  if (existing) {
+    await prisma.userExerciseBank.update({
+      where: { id: existing.id },
+      data: { usageCount: { increment: 1 }, lastUsedAt: new Date() },
+    });
+  } else {
+    await prisma.userExerciseBank.create({
+      data: {
+        id: nanoid(),
+        userId: user.id,
+        exerciseId,
+        usageCount: 1,
+        lastUsedAt: new Date(),
+      },
+    });
+  }
+  revalidatePath("/portal");
+}
+
+export async function dismissCoachingSummary(notificationId: string) {
+  const user = await requirePortalUser();
+  await prisma.notification.updateMany({
+    where: { id: notificationId, userId: user.id },
+    data: { read: true },
+  });
+  revalidatePath("/portal");
 }

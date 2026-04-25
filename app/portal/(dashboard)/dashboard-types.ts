@@ -118,6 +118,28 @@ export interface TestProgress {
   missingCount: number;
 }
 
+export interface DrillOfTheDay {
+  id: string;
+  bankEntryId: string | null;
+  name: string;
+  description: string | null;
+  area: string;
+  pyramid: string;
+  durationMinutes: number;
+  difficulty: number;
+  equipment: string[];
+  isFavorite: boolean;
+  lastUsedAt: string | null;
+}
+
+export interface UnreadCoachingSummary {
+  notificationId: string;
+  title: string;
+  message: string;
+  linkUrl: string | null;
+  createdAt: string;
+}
+
 export interface DashboardV3Props {
   userName: string | null;
   tier: string;
@@ -137,5 +159,7 @@ export interface DashboardV3Props {
   sgSummary: SgSummary;
   trainingIndex: TrainingIndexData | null;
   testProgress: TestProgress;
+  drillOfTheDay: DrillOfTheDay | null;
+  unreadSummary: UnreadCoachingSummary | null;
   needsOnboarding?: boolean;
 }

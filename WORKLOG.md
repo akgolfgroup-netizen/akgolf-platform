@@ -8,6 +8,30 @@
 
 ---
 
+## 2026-04-25 — Plan A: Lukk player-loopen rundt CoachHQ-AI (A1–A3)
+
+**Jobbet med:** Første tre steg av "Plan A" — gjøre CoachHQ-pipelinen synlig og handlingsdrivende på spillersiden. Nå ser eleven straks når et nytt sammendrag publiseres, får dagens drill servert på dashbordet, og mottar push-varsel på mobilen.
+
+- **A1 — Drill-of-the-day-widget** (`components/portal/dashboard/drill-of-the-day-card.tsx`): Henter en daglig roterende drill fra `UserExerciseBank` (favoritter først, deretter eldste `lastUsedAt`). Fallback til offentlig `ExerciseDefinition` hvis banken er tom. "Marker som gjort"-knapp øker `usageCount` og oppdaterer `lastUsedAt` via server action.
+- **A2 — Nytt-sammendrag-banner** (`components/portal/dashboard/new-summary-banner.tsx`): Vises øverst på dashboard når det finnes en uleste `COACHING_SUMMARY`-notification. Klikk → coaching-historikk; X → marker som lest. Lenker til `linkUrl` (typisk `/portal/coaching-historikk?session=<id>`).
+- **A3 — Web-push for publiserte sammendrag** (`lib/portal/push/send-push.ts`): Ny server-side helper `sendPushToUser({ userId, title, body, url })` som leser `PushSubscription` direkte fra Prisma og bruker VAPID-konfigurert `web-push`. Plugges inn i `PATCH /api/portal/admin/coaching-session/[id]` i samme blokk som in-app `Notification.create`. Service worker oppdatert (`public/sw.js`) til å rute notifikasjoner per seksjon (`/coach`, `/admin`, `/portal`) i stedet for hardkodet `/coach`-fallback.
+- **Server actions / typer:** Utvidet `app/portal/(dashboard)/dashboard-actions.ts` med `getDrillOfTheDay`, `getUnreadCoachingSummary`, `markDrillCompleted`, `dismissCoachingSummary`. Lagt til `DrillOfTheDay` + `UnreadCoachingSummary` i `dashboard-types.ts` og 2 nye props i `DashboardV3Props`. `page.tsx` henter dem parallelt med eksisterende data.
+- **Komponentbibliotek:** `.claude/rules/component-library.md` oppdatert med de to nye dashboard-komponentene.
+
+**Nøkkelfiler:**
+- Nye: `components/portal/dashboard/{drill-of-the-day-card,new-summary-banner}.tsx`, `lib/portal/push/send-push.ts`
+- Endret: `app/portal/(dashboard)/{page.tsx,dashboard-types.ts,dashboard-actions.ts}`, `app/portal/(dashboard)/dashboard-views/athletic-grid-view.tsx`, `app/api/portal/admin/coaching-session/[id]/route.ts`, `public/sw.js`, `.claude/rules/component-library.md`
+
+**Status:** Kode kompilerer logisk (kunne ikke kjøre `tsc`/`lint` i denne worktreen — `node_modules` ikke installert). Anders må verifisere lokalt: `npm install && npm run lint && npm run build`.
+
+**Neste steg:**
+1. **A4 — Adaptiv treningsplan-regenerator:** Lag `generateAdaptiveWeeklyPlan(userId)` som leser publiserte sammendrag (siste 14d), SG-data og drill-banken, og produserer en 7-dagers `TrainingPlan`-draft via Anthropic. Trigger fra `onCoachingSessionPublished` i `lib/portal/agents/runner.ts` som best-effort bakgrunnsjobb.
+2. **A5 — "Spør coachen din"-chat:** RAG over publiserte `CoachingSession.aiSummary` + `aiKeyPoints` + `UserExerciseBank`. Trenger pgvector eller embedding-tabell + `/api/portal/ai/coach-chat`.
+3. **Player onboarding for push:** Legg til en Settings-toggle eller første-gangs-prompt for å aktivere notifikasjoner (ServiceWorkerRegistration ber kun om tillatelse på første klikk i `Notification.permission === "default"`-state — brukere som har avslått får ingen second chance).
+4. **Resterende fra opprinnelig plan:** P1 #6 (ekte AI i RECOMMENDED-modus), P2 #9 (TS-feil i treningsplan-planner.tsx), P2 #10 (facility-velger i SessionCard), P2 #11 (templates til DB), P3 #12 (SG-data → RECOMMENDED), P3 #13 (Fri-dag i kalender).
+
+---
+
 ## 2026-04-24 — CoachHQ AI-pipeline: sammendrag, drills, neste økt, TrackMan-vision, automasjon
 
 **Jobbet med:** Full 9-dagers implementasjon (alt i én økt) av CoachHQ AI-pipeline slik Anders planla — coach kan laste opp lyd fra mobil etter en time og systemet genererer komplett sammendrag, utkast til neste økt, og drills i én flyt.

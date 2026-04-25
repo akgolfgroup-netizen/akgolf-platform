@@ -35,6 +35,8 @@ import {
   getSgSummary,
   getDashboardTrainingIndex,
   getTestProgress,
+  getDrillOfTheDay,
+  getUnreadCoachingSummary,
 } from "./dashboard-actions";
 import { DashboardClientV3 } from "./dashboard-client-v3";
 
@@ -67,6 +69,8 @@ export default async function DashboardPage() {
     sgSummary,
     trainingIndex,
     testProgress,
+    drillOfTheDay,
+    unreadSummary,
   ] = await Promise.all([
     getDashboardStats(user.id),
     getHandicapData(user.id),
@@ -82,6 +86,8 @@ export default async function DashboardPage() {
     getSgSummary(user.id),
     getDashboardTrainingIndex(user.id),
     getTestProgress(user.id),
+    getDrillOfTheDay(user.id),
+    getUnreadCoachingSummary(user.id),
   ]);
 
   const memberSince = userData?.createdAt
@@ -108,6 +114,8 @@ export default async function DashboardPage() {
       sgSummary={sgSummary}
       trainingIndex={trainingIndex}
       testProgress={testProgress}
+      drillOfTheDay={drillOfTheDay}
+      unreadSummary={unreadSummary}
       needsOnboarding={needsOnboarding}
     />
   );
