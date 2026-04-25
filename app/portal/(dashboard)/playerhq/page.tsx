@@ -16,6 +16,8 @@ import {
   getSgSummary,
   getDashboardTrainingIndex,
   getTestProgress,
+  getRoundAggregateMetrics,
+  getTodayTasks,
 } from "../dashboard-actions";
 import { PlayerHQDashboard } from "@/components/portal/playerhq/player-hq-dashboard";
 
@@ -51,6 +53,8 @@ export default async function PlayerHQPreviewPage() {
     sgSummary,
     trainingIndex,
     testProgress,
+    roundMetrics,
+    todayTasks,
   ] = await Promise.all([
     getDashboardStats(user.id),
     getHandicapData(user.id),
@@ -66,6 +70,8 @@ export default async function PlayerHQPreviewPage() {
     getSgSummary(user.id),
     getDashboardTrainingIndex(user.id),
     getTestProgress(user.id),
+    getRoundAggregateMetrics(user.id),
+    getTodayTasks(user.id),
   ]);
 
   const memberSince = userData?.createdAt
@@ -93,6 +99,8 @@ export default async function PlayerHQPreviewPage() {
       trainingIndex={trainingIndex}
       testProgress={testProgress}
       needsOnboarding={needsOnboarding}
+      roundMetrics={roundMetrics}
+      todayTasks={todayTasks}
     />
   );
 }

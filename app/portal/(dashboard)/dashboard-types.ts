@@ -118,6 +118,24 @@ export interface TestProgress {
   missingCount: number;
 }
 
+export interface RoundAggregateMetrics {
+  fairwayPct: number | null;
+  girPct: number | null;
+  scramblingPct: number | null;
+  scoringAvg: number | null;
+  roundCount: number;
+}
+
+export interface TodayTask {
+  id: string;
+  icon: string;
+  label: string;
+  time: string;
+  durationMinutes: number;
+  done: boolean;
+  source: "session" | "booking" | "log";
+}
+
 export interface DashboardV3Props {
   userName: string | null;
   tier: string;

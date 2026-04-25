@@ -4,6 +4,10 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { prisma } from "@/lib/portal/prisma";
 import { getTrainingIndex } from "@/lib/portal/kartlegging/training-index";
 import type { TrainingIndex } from "@/lib/portal/kartlegging/types";
+import type {
+  RoundAggregateMetrics,
+  TodayTask,
+} from "./dashboard-types";
 import {
   subDays,
   startOfDay,
@@ -846,4 +850,173 @@ export async function getAchievements(userId: string): Promise<{
     achievements: allAchievements,
     totalAchievements: allAchievements.length,
   };
+}
+
+export async function getRoundAggregateMetrics(
+  userId: string,
+): Promise<RoundAggregateMetrics> {
+  const since = subDays(new Date(), 30);
+  const rounds = await prisma.roundStats.findMany({
+    where: { userId, date: { gte: since } },
+    select: {
+      fairwaysHit: true,
+      fairwaysTotal: true,
+      gir: true,
+      girTotal: true,
+      upAndDownMade: true,
+      upAndDownTotal: true,
+      totalScore: true,
+    },
+  });
+
+  if (rounds.length === 0) {
+    return {
+      fairwayPct: null,
+      girPct: null,
+      scramblingPct: null,
+      scoringAvg: null,
+      roundCount: 0,
+    };
+  }
+
+  const sumRatio = (
+    num: keyof (typeof rounds)[number],
+    denom: keyof (typeof rounds)[number],
+  ) => {
+    let totalNum = 0;
+    let totalDenom = 0;
+    for (const r of rounds) {
+      const n = r[num];
+      const d = r[denom];
+      if (typeof n === "number" && typeof d === "number" && d > 0) {
+        totalNum += n;
+        totalDenom += d;
+      }
+    }
+    return totalDenom > 0 ? (totalNum / totalDenom) * 100 : null;
+  };
+
+  const validScores = rounds.filter(
+    (r): r is typeof r & { totalScore: number } => typeof r.totalScore === "number",
+  );
+  const scoringAvg =
+    validScores.length > 0
+      ? validScores.reduce((s, r) => s + r.totalScore, 0) / validScores.length
+      : null;
+
+  return {
+    fairwayPct: sumRatio("fairwaysHit", "fairwaysTotal"),
+    girPct: sumRatio("gir", "girTotal"),
+    scramblingPct: sumRatio("upAndDownMade", "upAndDownTotal"),
+    scoringAvg,
+    roundCount: rounds.length,
+  };
+}
+
+export async function getTodayTasks(userId: string): Promise<TodayTask[]> {
+  const now = new Date();
+  const todayStart = startOfDay(now);
+  const todayEnd = new Date(todayStart);
+  todayEnd.setDate(todayEnd.getDate() + 1);
+  const dayOfWeek = ((now.getDay() + 6) % 7) + 1; // 1=Mon ... 7=Sun
+
+  const [activePlan, todayBookings, todayLogs] = await Promise.all([
+    prisma.trainingPlan.findFirst({
+      where: { studentId: userId, isActive: true },
+      include: {
+        TrainingPlanWeek: {
+          orderBy: { weekStart: "desc" },
+          take: 4,
+          include: {
+            TrainingPlanSession: {
+              where: { dayOfWeek },
+              orderBy: { sortOrder: "asc" },
+            },
+          },
+        },
+      },
+    }),
+    prisma.booking.findMany({
+      where: {
+        studentId: userId,
+        startTime: { gte: todayStart, lt: todayEnd },
+        status: { in: ["CONFIRMED", "COMPLETED"] },
+      },
+      include: {
+        ServiceType: { select: { name: true, duration: true } },
+        Instructor: {
+          select: { id: true, User: { select: { name: true } } },
+        },
+      },
+      orderBy: { startTime: "asc" },
+    }),
+    prisma.trainingLog.findMany({
+      where: {
+        userId,
+        date: { gte: todayStart, lt: todayEnd },
+      },
+      select: { planSessionId: true },
+    }),
+  ]);
+
+  const completedSessionIds = new Set(
+    todayLogs.map((l) => l.planSessionId).filter(Boolean) as string[],
+  );
+
+  const tasks: TodayTask[] = [];
+
+  if (activePlan) {
+    const matchingWeek = activePlan.TrainingPlanWeek.find((w) => {
+      const start = new Date(w.weekStart);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 7);
+      return now >= start && now < end;
+    });
+    if (matchingWeek) {
+      for (const s of matchingWeek.TrainingPlanSession) {
+        const focus = (s.focusArea ?? "").toLowerCase();
+        const icon = pickFocusIcon(focus);
+        const startMinute = 8 * 60 + s.sortOrder * 90;
+        const hh = String(Math.floor(startMinute / 60)).padStart(2, "0");
+        const mm = String(startMinute % 60).padStart(2, "0");
+        tasks.push({
+          id: s.id,
+          icon,
+          label: s.title,
+          time: `${hh}:${mm}`,
+          durationMinutes: s.durationMinutes ?? 30,
+          done: completedSessionIds.has(s.id),
+          source: "session",
+        });
+      }
+    }
+  }
+
+  for (const b of todayBookings) {
+    const start = new Date(b.startTime);
+    tasks.push({
+      id: b.id,
+      icon: "videocam",
+      label: `Coaching · ${b.Instructor?.User?.name ?? "Trener"}`,
+      time: `${String(start.getHours()).padStart(2, "0")}:${String(start.getMinutes()).padStart(2, "0")}`,
+      durationMinutes: b.ServiceType?.duration ?? 60,
+      done: b.status === "COMPLETED",
+      source: "booking",
+    });
+  }
+
+  return tasks.sort((a, b) => a.time.localeCompare(b.time));
+}
+
+function pickFocusIcon(focus: string): string {
+  if (focus.includes("putt")) return "sports_golf";
+  if (focus.includes("kort") || focus.includes("chip") || focus.includes("wedge"))
+    return "golf_course";
+  if (focus.includes("driver") || focus.includes("drive")) return "sports_golf";
+  if (focus.includes("fys") || focus.includes("styrke")) return "fitness_center";
+  if (focus.includes("mental") || focus.includes("fokus")) return "psychology";
+  if (focus.includes("oppvarm") || focus.includes("warm"))
+    return "local_fire_department";
+  if (focus.includes("runde") || focus.includes("hull")) return "flag";
+  return "exercise";
 }
