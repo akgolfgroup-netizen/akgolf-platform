@@ -28,12 +28,12 @@ interface Zone {
   labelY: number;
 }
 
-// Koordinater (viewBox 0-100) for GFGK-treningsområdet
+// Koordinater (viewBox 0-100) for GFGK-treningsområdet — drone fra sør mot nord
 const ZONES: Zone[] = [
-  { name: "Putting Green", points: "8,20 42,18 46,52 10,55", labelX: 27, labelY: 36 },
-  { name: "Short Game Area", points: "20,62 56,60 58,88 22,90", labelX: 39, labelY: 75 },
-  { name: "Driving Range", points: "60,8 92,10 94,64 62,65", labelX: 77, labelY: 35 },
-  { name: "Performance Studio", points: "62,68 92,68 92,90 64,90", labelX: 77, labelY: 79 },
+  { name: "Putting Green", points: "20,30 52,28 54,62 22,64", labelX: 37, labelY: 46 },
+  { name: "Short Game Area", points: "57,35 82,32 84,68 60,72", labelX: 71, labelY: 51 },
+  { name: "Driving Range", points: "32,76 72,74 74,98 35,99", labelX: 53, labelY: 87 },
+  { name: "Performance Studio", points: "5,80 32,78 35,99 7,99", labelX: 19, labelY: 90 },
 ];
 
 interface FacilityMapProps {
@@ -92,14 +92,18 @@ export function FacilityMap({
     <div className="space-y-4">
       <div className="relative overflow-hidden rounded-3xl border border-outline-variant/30 bg-on-surface shadow-card-hover">
         <div className="relative aspect-[16/10] w-full">
-          <picture>
-            <source srcSet="/admin/gfgk-aerial.jpg" type="image/jpeg" />
-            <img
-              src="/admin/gfgk-aerial-placeholder.svg"
-              alt="GFGK treningsområde flyfoto"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          </picture>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/admin/gfgk-aerial.jpg"
+            alt="GFGK treningsområde flyfoto"
+            className="absolute inset-0 h-full w-full object-cover"
+            onError={(e) => {
+              const img = e.currentTarget;
+              if (!img.src.endsWith("gfgk-aerial-fallback.svg")) {
+                img.src = "/admin/gfgk-aerial-fallback.svg";
+              }
+            }}
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-on-surface/10 via-transparent to-on-surface/40" />
 
           <svg
