@@ -110,14 +110,14 @@
     <div class="w-6 h-px bg-sidebar-divider my-5"></div>
 
     <nav class="flex flex-col gap-1.5 flex-1 items-center">
-      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Mission Board">
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Dagens fokus">
         <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i>
       </button>
       <button class="relative w-9 h-9 rounded-lg text-accent bg-sidebar-hover flex items-center justify-center cursor-pointer" title="Elever" aria-current="page">
         <span class="absolute -left-3 top-1.5 bottom-1.5 w-[3px] rounded-r bg-accent"></span>
         <i data-lucide="users" class="w-[18px] h-[18px]"></i>
       </button>
-      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Coaching Board">
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Aktive økter">
         <i data-lucide="kanban" class="w-[18px] h-[18px]"></i>
       </button>
       <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Bookinger">
@@ -152,7 +152,7 @@
       </div>
       <div class="flex items-center gap-1.5">
         <div class="text-sm font-display font-semibold">Elever</div>
-        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-accent/15 text-accent text-[9px] font-mono uppercase tracking-widest">live</span>
+        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-accent/15 text-accent text-[9px] font-mono uppercase tracking-widest">aktiv</span>
       </div>
     </div>
 
@@ -292,11 +292,11 @@
     <div class="mt-3 mx-3 p-3 rounded-xl bg-sidebar-hover border border-sidebar-divider">
       <div class="flex items-center gap-2 mb-2">
         <span class="pulse-dot live w-1.5 h-1.5 rounded-full bg-success"></span>
-        <span class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">Pågår nå</span>
+        <span class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">Aktiv nå</span>
       </div>
       <div class="font-display text-[20px] font-bold leading-none">
         <span class="text-accent">3</span>
-        <span class="text-white text-[13px] font-medium">økter live</span>
+        <span class="text-white text-[13px] font-medium">aktive økter</span>
       </div>
       <div class="text-[10px] font-mono text-sidebar-muted mt-2">på Bossum + WANG</div>
     </div>
@@ -385,7 +385,7 @@
             <div class="relative">
               <div class="flex items-center gap-2 mb-3">
                 <span class="pulse-dot w-1.5 h-1.5 rounded-full bg-accent"></span>
-                <div class="text-[10px] font-mono uppercase tracking-widest text-accent">Live · 14:30</div>
+                <div class="text-[10px] font-mono uppercase tracking-widest text-accent">Aktiv · 14:30</div>
               </div>
               <div class="font-display text-[22px] font-semibold leading-tight">Martin Røen</div>
               <div class="text-[12px] text-sidebar-muted mt-1">Performance Pro · 20 min</div>
@@ -394,7 +394,7 @@
               </div>
               <div class="mt-2 flex items-center justify-between text-[10px] font-mono uppercase tracking-widest">
                 <span class="text-sidebar-muted">8 / 20 min</span>
-                <span class="text-accent">live</span>
+                <span class="text-accent">aktiv</span>
               </div>
             </div>
           </div>
@@ -448,7 +448,7 @@
 
         <article class="lift bg-card rounded-xl shadow-card hover:shadow-cardHover p-5 cursor-pointer border border-transparent hover:border-line">
           <div class="flex items-start justify-between mb-3">
-            <span class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">MRR</span>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Fast inntekt</span>
             <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-success-soft text-success text-[10px] font-mono">
               <i data-lucide="trending-up" class="w-3 h-3"></i>+12%
             </span>
@@ -469,7 +469,7 @@
         <article class="lift bg-sidebar text-white rounded-xl p-5 cursor-pointer relative overflow-hidden grain border border-sidebar-divider hover:border-accent/40">
           <div class="absolute -right-10 -top-10 w-36 h-36 rounded-full bg-accent/15 blur-3xl"></div>
           <div class="flex items-start justify-between mb-3 relative">
-            <span class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">NPS</span>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">Anbefaling-score</span>
             <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-accent/15 text-accent text-[10px] font-mono">
               <i data-lucide="trending-up" class="w-3 h-3"></i>+6
             </span>
@@ -491,7 +491,7 @@
             <div class="flex-1 h-1.5 rounded bg-accent/30"></div>
             <div class="flex-1 h-1.5 rounded bg-accent/30"></div>
           </div>
-          <div class="mt-2 text-[10px] font-mono text-sidebar-muted text-right relative">verdensklasse > 70</div>
+          <div class="mt-2 text-[10px] font-mono text-sidebar-muted text-right relative">over 70 = verdensklasse</div>
         </article>
       </section>
 
@@ -502,7 +502,7 @@
         <div class="col-span-5 bg-card rounded-2xl shadow-card overflow-hidden">
           <header class="px-6 pt-6 pb-4 flex items-end justify-between">
             <div>
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Pipeline</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Aktive økter</div>
               <h2 class="font-display text-[22px] font-semibold tracking-tight leading-none">Aktive elever</h2>
               <div class="text-[12px] text-ink-muted mt-1.5">Sortert etter siste aktivitet</div>
             </div>
@@ -542,7 +542,7 @@
                 <div class="w-9 h-9 rounded-full bg-primary text-white font-bold text-[12px] flex items-center justify-center font-mono shrink-0">MR</div>
                 <div class="min-w-0">
                   <div class="text-[14px] font-semibold text-ink truncate">Martin Røen</div>
-                  <div class="text-[11px] text-ink-muted truncate">Wedge 40-90m · Live nå</div>
+                  <div class="text-[11px] text-ink-muted truncate">Wedge 40-90m · Aktiv nå</div>
                 </div>
               </div>
               <div class="font-mono text-[13px] font-semibold text-ink text-right">6.1</div>
@@ -619,7 +619,7 @@
               <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Inntekt</div>
               <button class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle hover:text-primary cursor-pointer transition-colors">12 mnd</button>
             </div>
-            <h2 class="font-display text-[22px] font-semibold tracking-tight leading-none">MRR · 184 500 kr</h2>
+            <h2 class="font-display text-[22px] font-semibold tracking-tight leading-none">Fast inntekt · 184 500 kr/mnd</h2>
             <div class="mt-2 flex items-center gap-2 text-[12px]">
               <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-success-soft text-success font-mono text-[11px]">
                 <i data-lucide="trending-up" class="w-3 h-3"></i>+12%
@@ -726,7 +726,7 @@
       <section class="bg-card rounded-2xl shadow-card p-6 mb-12">
         <header class="flex items-end justify-between mb-5">
           <div>
-            <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Coaching Board</div>
+            <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Aktive økter</div>
             <h2 class="font-display text-[22px] font-semibold tracking-tight leading-none">Dagens flyt</h2>
           </div>
           <button class="text-[12px] font-semibold text-primary hover:text-primary-hover cursor-pointer transition-colors inline-flex items-center gap-1">
@@ -762,7 +762,7 @@
             <div class="flex items-center justify-between mb-2.5">
               <div class="flex items-center gap-2">
                 <span class="pulse-dot w-1.5 h-1.5 rounded-full bg-accent"></span>
-                <span class="text-[10px] font-mono uppercase tracking-widest text-primary font-semibold">Live nå</span>
+                <span class="text-[10px] font-mono uppercase tracking-widest text-primary font-semibold">Aktiv nå</span>
               </div>
               <span class="text-[10px] font-mono text-primary">1</span>
             </div>
@@ -853,7 +853,7 @@
     data: {
       labels: ['mai','jun','jul','aug','sep','okt','nov','des','jan','feb','mar','apr'],
       datasets: [{
-        label: 'MRR (kr)',
+        label: 'Fast inntekt (kr)',
         data: [98000, 102000, 95000, 88000, 124000, 138000, 142000, 151000, 159000, 162000, 164700, 184500],
         borderColor: '#005840',
         backgroundColor: gradient,
@@ -884,7 +884,7 @@
           bodyFont:  { family: 'JetBrains Mono', size: 12 },
           displayColors: false,
           callbacks: {
-            label: (ctx) => 'MRR: ' + ctx.parsed.y.toLocaleString('nb-NO') + ' kr',
+            label: (ctx) => 'Fast inntekt: ' + ctx.parsed.y.toLocaleString('nb-NO') + ' kr',
           },
         },
       },

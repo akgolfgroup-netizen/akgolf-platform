@@ -86,7 +86,7 @@
     background: conic-gradient(#005840 0deg, #005840 var(--ring-deg, 240deg), #EDF1EE var(--ring-deg, 240deg));
   }
 
-  /* USI A-K colorscale (10 grader fra grønn til rød) */
+  /* Ferdighetsnivå A-K colorscale (10 grader fra grønn til rød) */
   .usi-a { background: #1A6B47; color: #fff; }
   .usi-b { background: #2A7D5A; color: #fff; }
   .usi-c { background: #4D9670; color: #fff; }
@@ -113,14 +113,14 @@
     <div class="w-9 h-9 rounded-lg bg-accent text-sidebar flex items-center justify-center font-display font-bold text-[13px] cursor-pointer">AK</div>
     <div class="w-6 h-px bg-sidebar-divider my-5"></div>
     <nav class="flex flex-col gap-1.5 flex-1 items-center">
-      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Mission Board">
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Dagens fokus">
         <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i>
       </button>
       <button class="relative w-9 h-9 rounded-lg text-accent bg-sidebar-hover flex items-center justify-center cursor-pointer" title="Elever" aria-current="page">
         <span class="absolute -left-3 top-1.5 bottom-1.5 w-[3px] rounded-r bg-accent"></span>
         <i data-lucide="users" class="w-[18px] h-[18px]"></i>
       </button>
-      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Coaching Board">
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Aktive økter">
         <i data-lucide="kanban" class="w-[18px] h-[18px]"></i>
       </button>
       <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Bookinger">
@@ -147,7 +147,7 @@
     <div class="px-4 mb-3">
       <div class="text-[10px] font-mono uppercase tracking-[0.18em] text-sidebar-muted">Elev</div>
       <div class="text-sm font-display font-semibold mt-0.5">Erik Hansen</div>
-      <div class="text-[11px] font-mono text-accent mt-0.5">Profil 360°</div>
+      <div class="text-[11px] font-mono text-accent mt-0.5">Spillerprofil 360°</div>
     </div>
     <div class="px-3 mb-2">
       <button class="w-full inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] font-medium text-sidebar-muted hover:text-white hover:bg-sidebar-hover cursor-pointer transition-colors">
@@ -157,11 +157,11 @@
     </div>
     <nav class="flex-1 px-2 space-y-0.5 overflow-y-auto scroll-thin">
       <a href="#hero" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] bg-sidebar-hover text-accent">Oversikt</a>
-      <a href="#identity" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Identitet</a>
-      <a href="#golf" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Golf</a>
-      <a href="#coaching" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Coaching</a>
+      <a href="#identity" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Kontaktinfo</a>
+      <a href="#golf" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Golf-statistikk</a>
+      <a href="#coaching" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Coaching-historikk</a>
       <a href="#training" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Trening</a>
-      <a href="#mental" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Mental + Forecast</a>
+      <a href="#mental" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Mental og prognose</a>
       <a href="#tests" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Tester</a>
       <a href="#economy" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Økonomi</a>
       <a href="#signals" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[12px] text-white/65 hover:text-white hover:bg-sidebar-hover">Signaler</a>
@@ -235,7 +235,7 @@
               <div class="text-[10px] text-success mt-1">↓ 0.8 siste 30d</div>
             </div>
             <div class="bg-card rounded-xl shadow-card p-4">
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">USI</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Ferdighetsnivå</div>
               <div class="font-mono font-semibold text-[24px] text-ink leading-none mt-1">D</div>
               <div class="text-[10px] text-success mt-1">+2 nivåer / 6 mnd</div>
             </div>
@@ -266,8 +266,8 @@
         <div id="identity" class="col-span-5 bg-card rounded-2xl shadow-card p-6">
           <header class="flex items-end justify-between mb-5">
             <div>
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Identitet</div>
-              <h2 class="font-display text-[20px] font-semibold tracking-tight">Kontakt + abo</h2>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Kontaktinfo</div>
+              <h2 class="font-display text-[20px] font-semibold tracking-tight">Kontakt og abonnement</h2>
             </div>
             <button class="text-[11px] font-mono uppercase tracking-widest text-primary hover:text-primary-hover cursor-pointer">Rediger</button>
           </header>
@@ -308,16 +308,16 @@
         <div id="golf" class="col-span-7 bg-card rounded-2xl shadow-card p-6">
           <header class="flex items-end justify-between mb-5">
             <div>
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Golf-attributter</div>
-              <h2 class="font-display text-[20px] font-semibold tracking-tight">HCP + USI A–K + SG</h2>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Golf-statistikk</div>
+              <h2 class="font-display text-[20px] font-semibold tracking-tight">HCP + Ferdighetsnivå A–K + SG</h2>
             </div>
             <button class="text-[11px] font-mono uppercase tracking-widest text-primary hover:text-primary-hover cursor-pointer">Detaljer</button>
           </header>
 
-          <!-- USI A-K visualization -->
+          <!-- Ferdighetsnivå A-K visualization -->
           <div class="mb-5">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-[11px] font-mono uppercase tracking-widest text-ink-muted">USI nå: <span class="text-ink font-bold text-[14px] ml-1">D</span></span>
+              <span class="text-[11px] font-mono uppercase tracking-widest text-ink-muted">Ferdighetsnivå nå: <span class="text-ink font-bold text-[14px] ml-1">D</span></span>
               <span class="text-[11px] font-mono text-success">↑ B → D over 6 mnd</span>
             </div>
             <div class="flex gap-1">
@@ -349,14 +349,14 @@
           <!-- HCP sparkline + SG breakdown -->
           <div class="grid grid-cols-2 gap-5">
             <div class="border border-line-soft rounded-xl p-4">
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">HCP siste 6 mnd</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Handicap siste 6 mnd</div>
               <div class="h-[80px]"><canvas id="hcpChart"></canvas></div>
               <div class="flex justify-between mt-2 text-[10px] font-mono text-ink-subtle">
                 <span>nov 24</span><span>apr 26</span>
               </div>
             </div>
             <div class="border border-line-soft rounded-xl p-4">
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-2">SG-fordeling</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-2">Slag spart per område</div>
               <ul class="space-y-2 text-[12px]">
                 <li class="flex items-center gap-2">
                   <span class="w-12 text-ink-muted font-mono uppercase text-[10px]">DR</span>
@@ -386,7 +386,7 @@
           <div class="mt-5 p-3 rounded-xl bg-primary-soft border border-primary/15 flex items-start gap-3">
             <i data-lucide="trending-up" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>
             <div class="flex-1">
-              <div class="text-[12px] font-semibold text-primary">DataGolf-benchmark</div>
+              <div class="text-[12px] font-semibold text-primary">Sammenligning med PGA-spillere</div>
               <div class="text-[11px] text-ink-muted mt-0.5">Eriks SG-profil ligner mest <span class="font-mono text-ink">Wyndham Clark (PGA Tour)</span> — sterk approach + putt, svak around-green. Anbefaling: ekstra wedge-fokus.</div>
             </div>
           </div>
@@ -480,17 +480,17 @@
             <li class="flex items-center gap-2 p-2 -mx-1 rounded hover:bg-surface cursor-pointer">
               <i data-lucide="bookmark" class="w-3.5 h-3.5 text-primary"></i>
               <span class="flex-1 text-ink">6 fot putting drill</span>
-              <span class="font-mono text-[10px] text-ink-muted">L3</span>
+              <span class="font-mono text-[10px] text-ink-muted">Steg 3</span>
             </li>
             <li class="flex items-center gap-2 p-2 -mx-1 rounded hover:bg-surface cursor-pointer">
               <i data-lucide="bookmark" class="w-3.5 h-3.5 text-primary"></i>
               <span class="flex-1 text-ink">Wedge 50 m presisjon</span>
-              <span class="font-mono text-[10px] text-warning">L2</span>
+              <span class="font-mono text-[10px] text-warning">Steg 2</span>
             </li>
             <li class="flex items-center gap-2 p-2 -mx-1 rounded hover:bg-surface cursor-pointer">
               <i data-lucide="bookmark" class="w-3.5 h-3.5 text-primary"></i>
               <span class="flex-1 text-ink">7-jern dispersion</span>
-              <span class="font-mono text-[10px] text-ink-muted">L4</span>
+              <span class="font-mono text-[10px] text-ink-muted">Steg 4</span>
             </li>
           </ul>
         </div>
@@ -505,26 +505,26 @@
           <header class="mb-5 relative">
             <div class="flex items-center gap-2 mb-1.5">
               <i data-lucide="sparkles" class="w-3.5 h-3.5 text-accent"></i>
-              <div class="text-[10px] font-mono uppercase tracking-widest text-accent">Forecast + Mental</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-accent">Prognose + mentalt</div>
             </div>
-            <h2 class="font-display text-[20px] font-semibold tracking-tight">12-mnd prognose med CI95</h2>
+            <h2 class="font-display text-[20px] font-semibold tracking-tight">Prognose 12 mnd</h2>
           </header>
 
           <div class="grid grid-cols-3 gap-3 mb-5 relative">
             <div class="p-3 rounded-lg bg-sidebar-hover border border-sidebar-divider">
               <div class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">Neste runde</div>
               <div class="font-mono font-semibold text-[18px] text-accent mt-1">76.4</div>
-              <div class="text-[10px] font-mono text-sidebar-muted mt-0.5">CI95: 73 — 80</div>
+              <div class="text-[10px] font-mono text-sidebar-muted mt-0.5">Anslag: 73 — 80</div>
             </div>
             <div class="p-3 rounded-lg bg-sidebar-hover border border-sidebar-divider">
               <div class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">HCP 6 mnd</div>
               <div class="font-mono font-semibold text-[18px] text-accent mt-1">10.2</div>
-              <div class="text-[10px] font-mono text-sidebar-muted mt-0.5">CI95: 8.8 — 11.6</div>
+              <div class="text-[10px] font-mono text-sidebar-muted mt-0.5">Anslag: 8.8 — 11.6</div>
             </div>
             <div class="p-3 rounded-lg bg-sidebar-hover border border-sidebar-divider">
-              <div class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">Talent-score</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">Utviklingspotensial</div>
               <div class="font-mono font-semibold text-[18px] text-accent mt-1">87</div>
-              <div class="text-[10px] font-mono text-sidebar-muted mt-0.5">/100 · top 12% i NO</div>
+              <div class="text-[10px] font-mono text-sidebar-muted mt-0.5">/100 · topp 12% i Norge</div>
             </div>
           </div>
 
@@ -545,7 +545,7 @@
               </div>
             </li>
             <li class="flex items-center justify-between">
-              <span class="text-white/85">Aksept (fra MentalScorecard)</span>
+              <span class="text-white/85">Aksept (fra mentale notater)</span>
               <div class="flex items-center gap-2">
                 <div class="w-32 h-1.5 bg-sidebar-divider rounded-full overflow-hidden"><div class="h-full bg-warning rounded-full" style="width:48%"></div></div>
                 <span class="font-mono text-[11px] text-warning w-8 text-right">48</span>
@@ -565,7 +565,7 @@
         <div id="tests" class="col-span-5 bg-card rounded-2xl shadow-card p-6">
           <header class="flex items-end justify-between mb-5">
             <div>
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Tester (DECADE)</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Tester (DECADE-protokoll)</div>
               <h2 class="font-display text-[20px] font-semibold tracking-tight">Resultater + retest</h2>
             </div>
             <button class="text-[11px] font-mono uppercase tracking-widest text-primary hover:text-primary-hover cursor-pointer">Alle</button>
@@ -612,26 +612,26 @@
         <div id="economy" class="col-span-5 bg-card rounded-2xl shadow-card p-6">
           <header class="mb-5">
             <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Økonomi</div>
-            <h2 class="font-display text-[20px] font-semibold tracking-tight">LTV + margin</h2>
+            <h2 class="font-display text-[20px] font-semibold tracking-tight">Forventet verdi og fortjeneste</h2>
           </header>
           <div class="grid grid-cols-2 gap-3 mb-5">
             <div class="p-3 rounded-lg bg-primary-soft">
-              <div class="text-[10px] font-mono uppercase tracking-widest text-primary">LTV</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-primary">Forventet verdi</div>
               <div class="font-mono font-semibold text-[22px] text-primary mt-1">52 800</div>
               <div class="text-[10px] text-primary-deep mt-0.5">26 mnd · prognose</div>
             </div>
             <div class="p-3 rounded-lg bg-surface">
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">MRR-bidrag</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Bidrag til fast inntekt</div>
               <div class="font-mono font-semibold text-[22px] text-ink mt-1">2 000</div>
-              <div class="text-[10px] text-ink-muted mt-0.5">1.1% av total MRR</div>
+              <div class="text-[10px] text-ink-muted mt-0.5">1.1% av total fast inntekt</div>
             </div>
             <div class="p-3 rounded-lg bg-surface">
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Margin / økt</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Fortjeneste / økt</div>
               <div class="font-mono font-semibold text-[22px] text-success mt-1">340</div>
               <div class="text-[10px] text-ink-muted mt-0.5">68% etter kost</div>
             </div>
             <div class="p-3 rounded-lg bg-surface">
-              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Churn-risiko</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Risiko for å slutte</div>
               <div class="font-mono font-semibold text-[22px] text-success mt-1">Lav</div>
               <div class="text-[10px] text-ink-muted mt-0.5">12% modell-score</div>
             </div>
@@ -650,7 +650,7 @@
           <header class="flex items-end justify-between mb-5">
             <div>
               <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Coaching-signaler</div>
-              <h2 class="font-display text-[20px] font-semibold tracking-tight">Mission Board flagg</h2>
+              <h2 class="font-display text-[20px] font-semibold tracking-tight">Dagens fokus — varsler</h2>
             </div>
             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-success-soft text-success text-[11px] font-mono uppercase tracking-widest">2 signaler</span>
           </header>
@@ -660,7 +660,7 @@
                 <i data-lucide="trending-up" class="w-4 h-4"></i>
               </span>
               <div class="flex-1">
-                <div class="text-[13px] font-semibold text-ink">Recent improvement — putting</div>
+                <div class="text-[13px] font-semibold text-ink">Eleven er i framgang — putting</div>
                 <div class="text-[12px] text-ink-muted mt-0.5">+0.4 SG på putting siste 5 runder. Hold momentum med 6 fot drill 3x/uke.</div>
                 <div class="text-[10px] font-mono uppercase tracking-widest text-success mt-1.5">Oppdaget 23. apr · av AI Coach</div>
               </div>
@@ -671,9 +671,9 @@
                 <i data-lucide="alert-triangle" class="w-4 h-4"></i>
               </span>
               <div class="flex-1">
-                <div class="text-[13px] font-semibold text-ink">Wedge 50–80 m — degradation flagged</div>
+                <div class="text-[13px] font-semibold text-ink">Wedge 50–80 m — tilbakegang oppdaget</div>
                 <div class="text-[12px] text-ink-muted mt-0.5">SG −0.6 over siste 5 runder. Anbefal ekstra wedge-fokus i neste økt.</div>
-                <div class="text-[10px] font-mono uppercase tracking-widest text-warning mt-1.5">Oppdaget 21. apr · DegradationTracking</div>
+                <div class="text-[10px] font-mono uppercase tracking-widest text-warning mt-1.5">Oppdaget 21. apr · Sporing av tilbakegang</div>
               </div>
               <button class="text-[11px] font-mono uppercase tracking-widest text-primary hover:text-primary-hover cursor-pointer">Lag drill</button>
             </li>
@@ -686,7 +686,7 @@
         <span>AK Golf Platform · Spillerprofil 360° · v2026.04</span>
         <span class="flex items-center gap-2">
           <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
-          USI · TrackMan · GolfBox · DataGolf — alle synket
+          Ferdighetsnivå · TrackMan · GolfBox · DataGolf — alle synket
         </span>
       </footer>
     </div>
