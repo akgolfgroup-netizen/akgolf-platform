@@ -104,17 +104,24 @@ export function BookingerClient({
           </span>{" "}
           tidligere økter.
         </p>
-        <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+        <div className="flex flex-wrap gap-2">
+          <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+            <Link
+              href="/portal/bookinger/ny"
+              className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
+            >
+              <Icon name="add" className="w-3.5 h-3.5 relative z-10" />
+              <span className="relative z-10">Ny booking</span>
+            </Link>
+          </motion.div>
           <Link
-            href="/portal/bookinger/ny"
-            className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
+            href="/portal/bookinger/venteliste"
+            className="h-11 px-5 rounded-full border border-outline-variant/40 text-on-surface text-[12px] font-medium inline-flex items-center gap-2 transition-colors hover:bg-surface-variant"
           >
-            <Icon name="add"
-              className="w-3.5 h-3.5 relative z-10"
-              />
-            <span className="relative z-10">Ny booking</span>
+            <Icon name="hourglass_empty" className="w-3.5 h-3.5" />
+            <span>Venteliste</span>
           </Link>
-        </motion.div>
+        </div>
       </div>
 
       {/* ═══ NESTE BOOKING (uthevet) ═══ */}

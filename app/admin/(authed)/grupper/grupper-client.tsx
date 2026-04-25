@@ -7,23 +7,21 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AdminPageHeader } from "@/components/portal/mission-control/ui";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import {
   createGroup,
   deleteGroup,
-  addMember,
-  removeMember,
   getGroupMembers,
   listAvailablePlayers,
   getGroupPlan,
-  syncGroupPlanToMembers,
   type GroupSummary,
   type GroupMember,
   type PlayerOption,
   type GroupPlanDetail,
-  type SyncResult,
 } from "./actions";
+import { GroupDetailModal } from "./group-detail-modal";
+import { CreateGroupModal } from "./create-group-modal";
 
 const PERIOD_LABELS: Record<string, string> = {
   grunnperiode: "Grunnperiode",
@@ -37,39 +35,32 @@ const PERIOD_COLORS: Record<string, string> = {
   turneringsperiode: "bg-error/10 text-error",
 };
 
-const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
-
 interface GrupperClientProps {
   initialGroups: GroupSummary[];
   initialPlayers: PlayerOption[];
 }
 
-export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientProps) {
+export function GrupperClient({
+  initialGroups,
+  initialPlayers,
+}: GrupperClientProps) {
   const { toggle } = useMCSidebar();
   const [groups, setGroups] = useState<GroupSummary[]>(initialGroups);
-  const [players] = useState<PlayerOption[]>(initialPlayers);
   const [isPending, startTransition] = useTransition();
 
-  // Modals
   const [createOpen, setCreateOpen] = useState(false);
   const [detailGroup, setDetailGroup] = useState<GroupSummary | null>(null);
   const [members, setMembers] = useState<GroupMember[]>([]);
-  const [availableForDetail, setAvailableForDetail] = useState<PlayerOption[]>([]);
-  const [selectedPlayerId, setSelectedPlayerId] = useState("");
-
-  // Sync state
+  const [availableForDetail, setAvailableForDetail] = useState<PlayerOption[]>(
+    [],
+  );
   const [groupPlan, setGroupPlan] = useState<GroupPlanDetail | null>(null);
-  const [syncWeekOffset, setSyncWeekOffset] = useState(0);
-  const [syncConflictStrategy, setSyncConflictStrategy] = useState<"skip" | "keep" | "overwrite">("skip");
-  const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
-  const [syncOpen, setSyncOpen] = useState(false);
 
-  // Create form
   const [newName, setNewName] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const [newPeriod, setNewPeriod] = useState("grunnperiode");
 
-  async function handleCreate() {
+  function handleCreate() {
     if (!newName.trim()) return;
     startTransition(async () => {
       const result = await createGroup({
@@ -98,7 +89,7 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
     });
   }
 
-  async function handleDelete(groupId: string) {
+  function handleDelete(groupId: string) {
     if (!confirm("Er du sikker på at du vil slette denne gruppen?")) return;
     startTransition(async () => {
       const result = await deleteGroup(groupId);
@@ -107,6 +98,20 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
         if (detailGroup?.id === groupId) setDetailGroup(null);
       }
     });
+  }
+
+  async function refreshMembers(groupId: string) {
+    const [ms, av] = await Promise.all([
+      getGroupMembers(groupId),
+      listAvailablePlayers(groupId),
+    ]);
+    setMembers(ms);
+    setAvailableForDetail(av);
+    setGroups((prev) =>
+      prev.map((g) =>
+        g.id === groupId ? { ...g, memberCount: ms.length } : g,
+      ),
+    );
   }
 
   async function openDetail(group: GroupSummary) {
@@ -118,66 +123,7 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
     ]);
     setMembers(ms);
     setAvailableForDetail(av);
-    setSelectedPlayerId("");
     setGroupPlan(plan);
-    setSyncResult(null);
-  }
-
-  async function handleSync() {
-    if (!detailGroup) return;
-    startTransition(async () => {
-      const result = await syncGroupPlanToMembers(
-        detailGroup.id,
-        syncWeekOffset,
-        syncConflictStrategy
-      );
-      setSyncResult(result);
-      if (result.success && result.syncedCount > 0) {
-        // Refresh group data
-        const plan = await getGroupPlan(detailGroup.id);
-        setGroupPlan(plan);
-      }
-    });
-  }
-
-  async function handleAddMember() {
-    if (!detailGroup || !selectedPlayerId) return;
-    startTransition(async () => {
-      const result = await addMember(detailGroup.id, selectedPlayerId);
-      if (result.success) {
-        const [ms, av] = await Promise.all([
-          getGroupMembers(detailGroup.id),
-          listAvailablePlayers(detailGroup.id),
-        ]);
-        setMembers(ms);
-        setAvailableForDetail(av);
-        setSelectedPlayerId("");
-        setGroups((prev) =>
-          prev.map((g) =>
-            g.id === detailGroup.id ? { ...g, memberCount: g.memberCount + 1 } : g
-          )
-        );
-      }
-    });
-  }
-
-  async function handleRemoveMember(userId: string) {
-    if (!detailGroup) return;
-    startTransition(async () => {
-      const result = await removeMember(detailGroup.id, userId);
-      if (result.success) {
-        setMembers((prev) => prev.filter((m) => m.userId !== userId));
-        setAvailableForDetail((prev) => [
-          ...prev,
-          players.find((p) => p.id === userId)!,
-        ].filter(Boolean));
-        setGroups((prev) =>
-          prev.map((g) =>
-            g.id === detailGroup.id ? { ...g, memberCount: g.memberCount - 1 } : g
-          )
-        );
-      }
-    });
   }
 
   return (
@@ -197,12 +143,11 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
 
         <div className="mt-6 flex justify-between items-center">
           <Button onClick={() => setCreateOpen(true)}>
-            <Icon name="add" className="w-4 h-4 mr-2" />
+            <Icon name="add" size={16} className="mr-2" />
             Ny gruppe
           </Button>
         </div>
 
-        {/* Group list */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {groups.map((group) => (
             <Card
@@ -220,18 +165,21 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
                   )}
                 </div>
                 <Badge
-                  className={cn("text-[10px] uppercase", PERIOD_COLORS[group.periodType])}
+                  className={cn(
+                    "text-[10px] uppercase",
+                    PERIOD_COLORS[group.periodType],
+                  )}
                 >
                   {PERIOD_LABELS[group.periodType] ?? group.periodType}
                 </Badge>
               </div>
               <div className="mt-4 flex items-center gap-4 text-sm text-on-surface-variant">
                 <span className="flex items-center gap-1">
-                  <Icon name="people" className="w-4 h-4" />
+                  <Icon name="people" size={16} />
                   {group.memberCount} medlemmer
                 </span>
                 <span className="flex items-center gap-1">
-                  <Icon name="notebook" className="w-4 h-4" />
+                  <Icon name="menu_book" size={16} />
                   {group.planCount} planer
                 </span>
               </div>
@@ -241,7 +189,11 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
 
         {groups.length === 0 && (
           <div className="mt-12 text-center">
-            <Icon name="groups" className="w-12 h-12 text-on-surface-variant/40 mx-auto mb-3" />
+            <Icon
+              name="groups"
+              size={48}
+              className="text-on-surface-variant/40 mx-auto mb-3"
+            />
             <p className="text-on-surface-variant">Ingen grupper ennå.</p>
             <p className="text-sm text-on-surface-variant/70 mt-1">
               Klikk &quot;Ny gruppe&quot; for å komme i gang.
@@ -250,313 +202,37 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
         )}
       </div>
 
-      {/* Create modal */}
       <AnimatePresence>
         {createOpen && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div className="absolute inset-0 bg-black/50" onClick={() => setCreateOpen(false)} />
-            <motion.div
-              className="relative bg-surface-container-lowest border border-outline-variant/30 rounded-2xl w-full max-w-md p-6 shadow-2xl"
-              initial={{ scale: 0.95, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
-            >
-              <h2 className="text-lg font-bold text-on-surface mb-4">Ny treningsgruppe</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm text-on-surface-variant block mb-1">Navn</label>
-                  <input
-                    type="text"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/30 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="F.eks. Junior Elite 2026"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-on-surface-variant block mb-1">Beskrivelse</label>
-                  <textarea
-                    value={newDesc}
-                    onChange={(e) => setNewDesc(e.target.value)}
-                    rows={2}
-                    className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/30 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                    placeholder="Valgfri beskrivelse"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm text-on-surface-variant block mb-1">Periode</label>
-                  <div className="flex gap-2">
-                    {["grunnperiode", "spesialiseringsperiode", "turneringsperiode"].map((p) => (
-                      <button
-                        key={p}
-                        type="button"
-                        onClick={() => setNewPeriod(p)}
-                        className={cn(
-                          "px-3 py-2 rounded-lg text-sm font-medium transition-colors border flex-1",
-                          newPeriod === p
-                            ? "bg-on-surface text-surface border-black"
-                            : "bg-surface-container-lowest border-outline-variant/30 text-on-surface hover:bg-surface-container",
-                        )}
-                      >
-                        {PERIOD_LABELS[p]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="mt-6 flex gap-3">
-                <Button className="flex-1" onClick={handleCreate} isLoading={isPending}>
-                  Opprett
-                </Button>
-                <Button
-                  className="flex-1"
-                  variant="secondary"
-                  onClick={() => setCreateOpen(false)}
-                >
-                  Avbryt
-                </Button>
-              </div>
-            </motion.div>
-          </motion.div>
+          <CreateGroupModal
+            name={newName}
+            setName={setNewName}
+            desc={newDesc}
+            setDesc={setNewDesc}
+            period={newPeriod}
+            setPeriod={setNewPeriod}
+            isPending={isPending}
+            onCreate={handleCreate}
+            onClose={() => setCreateOpen(false)}
+          />
         )}
       </AnimatePresence>
 
-      {/* Detail modal */}
       <AnimatePresence>
         {detailGroup && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div className="absolute inset-0 bg-black/50" onClick={() => setDetailGroup(null)} />
-            <motion.div
-              className="relative bg-surface-container-lowest border border-outline-variant/30 rounded-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl p-6"
-              initial={{ scale: 0.95, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
-            >
-              <div className="flex items-start justify-between">
-                <div>
-                  <h2 className="text-lg font-bold text-on-surface">{detailGroup.name}</h2>
-                  <Badge className={cn("mt-1 text-[10px] uppercase", PERIOD_COLORS[detailGroup.periodType])}>
-                    {PERIOD_LABELS[detailGroup.periodType]}
-                  </Badge>
-                </div>
-                <button
-                  onClick={() => handleDelete(detailGroup.id)}
-                  className="p-2 rounded-lg hover:bg-error/10 text-error transition-colors"
-                  title="Slett gruppe"
-                >
-                  <Icon name="delete" className="w-4 h-4" />
-                </button>
-              </div>
-
-              {detailGroup.description && (
-                <p className="text-sm text-on-surface-variant mt-3">{detailGroup.description}</p>
-              )}
-
-              {/* Add member */}
-              <div className="mt-6">
-                <h3 className="text-sm font-semibold text-on-surface mb-2">Legg til spiller</h3>
-                <div className="flex gap-2">
-                  <select
-                    value={selectedPlayerId}
-                    onChange={(e) => setSelectedPlayerId(e.target.value)}
-                    className="flex-1 px-3 py-2 rounded-lg bg-surface border border-outline-variant/30 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
-                  >
-                    <option value="">Velg spiller...</option>
-                    {availableForDetail.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.name ?? p.email ?? p.id}
-                      </option>
-                    ))}
-                  </select>
-                  <Button
-                    size="sm"
-                    onClick={handleAddMember}
-                    disabled={!selectedPlayerId || isPending}
-                  >
-                    <Icon name="person_add" className="w-4 h-4 mr-1" />
-                    Legg til
-                  </Button>
-                </div>
-              </div>
-
-              {/* Members list */}
-              <div className="mt-6">
-                <h3 className="text-sm font-semibold text-on-surface mb-2">
-                  Medlemmer ({members.length})
-                </h3>
-                <div className="space-y-2">
-                  {members.map((m) => (
-                    <div
-                      key={m.id}
-                      className="flex items-center justify-between bg-surface-container-low rounded-lg px-3 py-2"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Icon name="person" className="w-4 h-4 text-on-surface-variant" />
-                        <span className="text-sm text-on-surface">
-                          {m.name ?? m.email ?? m.userId}
-                        </span>
-                        <span className="text-[10px] uppercase px-1.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant">
-                          {m.role}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => handleRemoveMember(m.userId)}
-                        className="p-1.5 rounded-md hover:bg-error/10 text-error transition-colors"
-                      >
-                        <Icon name="close" className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                {members.length === 0 && (
-                  <p className="text-sm text-on-surface-variant">Ingen medlemmer ennå.</p>
-                )}
-              </div>
-
-              {/* Sync plan */}
-              {groupPlan && (
-                <div className="mt-6 border-t border-outline-variant/20 pt-6">
-                  <h3 className="text-sm font-semibold text-on-surface mb-2">
-                    Synkroniser plan til medlemmer
-                  </h3>
-
-                  <div className="space-y-3">
-                    <div>
-                      <label className="text-[11px] text-on-surface-variant block mb-1">Uke</label>
-                      <div className="flex gap-2">
-                        {[0, 1, 2, 3].map((offset) => (
-                          <button
-                            key={offset}
-                            type="button"
-                            onClick={() => setSyncWeekOffset(offset)}
-                            className={cn(
-                              "px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors flex-1",
-                              syncWeekOffset === offset
-                                ? "bg-on-surface text-surface border-black"
-                                : "bg-surface-container-lowest border-outline-variant/30 text-on-surface hover:bg-surface-container"
-                            )}
-                          >
-                            {offset === 0 ? "Denne uken" : `+${offset} uker`}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-[11px] text-on-surface-variant block mb-1">
-                        Ved konflikt (spiller har egen økt samme dag)
-                      </label>
-                      <select
-                        value={syncConflictStrategy}
-                        onChange={(e) => setSyncConflictStrategy(e.target.value as "skip" | "keep" | "overwrite")}
-                        className="w-full px-3 py-2 rounded-lg bg-surface border border-outline-variant/30 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary"
-                      >
-                        <option value="skip">Hopp over (behold begge)</option>
-                        <option value="keep">Behold spillerens økt</option>
-                        <option value="overwrite">Overskriv med gruppeøkt</option>
-                      </select>
-                    </div>
-
-                    <div className="text-xs text-on-surface-variant">
-                      {(() => {
-                        const targetWeek = groupPlan.weeks.find((w) => {
-                          const now = new Date();
-                          const target = new Date(now);
-                          target.setDate(target.getDate() + syncWeekOffset * 7);
-                          // Approximate week match
-                          const startOfYear = new Date(target.getFullYear(), 0, 1);
-                          const weekNum = Math.ceil(((target.getTime() - startOfYear.getTime()) / 86400000 + startOfYear.getDay() + 1) / 7);
-                          return w.weekNumber === weekNum;
-                        });
-                        if (targetWeek) {
-                          return (
-                            <span>
-                              Gruppeplan uke {targetWeek.weekNumber}: {targetWeek.sessions.length} økter
-                            </span>
-                          );
-                        }
-                        return <span>Ingen gruppeøkter for valgt uke</span>;
-                      })()}
-                    </div>
-
-                    <Button
-                      onClick={handleSync}
-                      isLoading={isPending}
-                      className="w-full"
-                    >
-                      <Icon name="sync" className="w-4 h-4 mr-2" />
-                      Synkroniser nå
-                    </Button>
-                  </div>
-
-                  {/* Sync result */}
-                  {syncResult && (
-                    <div className="mt-3 space-y-2">
-                      {syncResult.success ? (
-                        <div className="rounded-lg bg-success/10 px-3 py-2 text-xs text-success">
-                          ✅ {syncResult.syncedCount} økter synkronisert til {members.length} medlemmer
-                        </div>
-                      ) : syncResult.syncedCount > 0 ? (
-                        <div className="rounded-lg bg-warning/10 px-3 py-2 text-xs text-warning">
-                          ⚠️ {syncResult.syncedCount} økter synkronisert, men {syncResult.conflictCount} konflikter funnet
-                        </div>
-                      ) : (
-                        <div className="rounded-lg bg-error/10 px-3 py-2 text-xs text-error">
-                          ❌ Ingen økter synkronisert. {syncResult.errors[0]?.message ?? "Sjekk konflikter."}
-                        </div>
-                      )}
-
-                      {syncResult.conflicts.length > 0 && (
-                        <div className="rounded-lg bg-surface-container-low px-3 py-2">
-                          <p className="text-[11px] font-semibold text-on-surface mb-1">Konflikter:</p>
-                          <div className="space-y-1 max-h-32 overflow-y-auto">
-                            {syncResult.conflicts.map((c, i) => (
-                              <p key={i} className="text-[11px] text-on-surface-variant">
-                                {c.userName ?? c.userId}: {c.groupSessionTitle} vs {c.existingSessionTitle} ({DAYS[c.dayOfWeek - 1]})
-                              </p>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {syncResult.errors.length > 0 && (
-                        <div className="rounded-lg bg-error/5 px-3 py-2">
-                          <p className="text-[11px] font-semibold text-error mb-1">Feil:</p>
-                          {syncResult.errors.map((e, i) => (
-                            <p key={i} className="text-[11px] text-error/80">
-                              {e.message}
-                            </p>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              <div className="mt-6">
-                <Button
-                  variant="secondary"
-                  className="w-full"
-                  onClick={() => setDetailGroup(null)}
-                >
-                  Lukk
-                </Button>
-              </div>
-            </motion.div>
-          </motion.div>
+          <GroupDetailModal
+            group={detailGroup}
+            members={members}
+            availablePlayers={availableForDetail}
+            groupPlan={groupPlan}
+            onClose={() => setDetailGroup(null)}
+            onDelete={handleDelete}
+            onMembersChanged={() => refreshMembers(detailGroup.id)}
+          />
         )}
       </AnimatePresence>
     </div>
   );
 }
+
+

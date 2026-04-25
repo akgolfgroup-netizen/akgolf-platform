@@ -2,6 +2,9 @@ import { stripe } from "@/lib/portal/stripe";
 import { PaymentMethod } from "@prisma/client";
 import { logger } from "@/lib/logger";
 import { prisma } from "@/lib/portal/prisma";
+import { buildRefundIdempotencyKey } from "./refund-idempotency";
+
+export { buildRefundIdempotencyKey };
 
 interface RefundResult {
   success: boolean;
@@ -122,15 +125,19 @@ async function refundStripe({
       };
     }
 
-    // Generer idempotency-key
-    const timestamp = Date.now();
-    const idempotencyKey = `refund-${bookingId}-${timestamp}`;
+    // Deterministisk idempotency-key — gjenbruk eksisterende hvis den finnes,
+    // ellers generer ny basert på bookingId + amount.
+    const idempotencyKey =
+      existingBooking?.refundIdempotencyKey ??
+      buildRefundIdempotencyKey(bookingId, amount);
 
     // Lagre idempotency-key før API-kall (for å kunne spore pågående refunds)
-    await prisma.booking.update({
-      where: { id: bookingId },
-      data: { refundIdempotencyKey: idempotencyKey },
-    });
+    if (!existingBooking?.refundIdempotencyKey) {
+      await prisma.booking.update({
+        where: { id: bookingId },
+        data: { refundIdempotencyKey: idempotencyKey },
+      });
+    }
 
     // Utfør refund via Stripe
     const refund = await stripe.refunds.create(

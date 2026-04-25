@@ -20,28 +20,5 @@ export { ExerciseCard } from "./exercise-card";
 export { SessionHeader, SessionCardCompact } from "./session-header";
 export { SessionView } from "./session-view";
 
-// Drag & Drop komponenter
-export { SessionCard, SessionCardStatic } from "./SessionCard";
-export { WeekCalendar, WeekCalendarCompact, DragOverlayWrapper } from "./WeekCalendar";
-
-// Modaler
-export { SessionDetailModal } from "./SessionDetailModal";
-export { NewSessionModal } from "./NewSessionModal";
-
-// Sidepanel
-export { SidePanel } from "./SidePanel";
-export { StandardSessions } from "./StandardSessions";
-export { PyramidFilter } from "./PyramidFilter";
-export { ExerciseBank } from "./ExerciseBank";
-export {
-  useDragAndDrop,
-  useSortableDay,
-  groupSessionsByDay,
-  DAY_NAMES,
-  TIME_CONFIG,
-  calculatePositionFromTime,
-  calculateHeightFromDuration,
-} from "./useDragAndDrop";
-
-// Typer
-export type { TrainingSession, Exercise, StandardTemplate, WeekDay } from "./types";
+// Wizard for å lage ny plan
+export { PlanCreatorModal } from "./plan-creator-modal";

@@ -6,7 +6,6 @@ import { useState, useEffect, useTransition } from "react";
 import { Calendar, BookOpen, BarChart3, TrendingDown, Target, Zap } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import {
-  AdminInput,
   AdminSelect,
   AdminTable,
   AdminTableHead,
@@ -247,7 +246,7 @@ function DagbokTab({
   const [feedbackId, setFeedbackId] = useState<string | null>(null);
   const [feedbackText, setFeedbackText] = useState("");
 
-  const logs = (data ?? []) as Array<{
+  type LogEntry = {
     id: string;
     date: string;
     durationMinutes: number | null;
@@ -259,11 +258,29 @@ function DagbokTab({
     primaryEnvironment: string | null;
     primaryPressLevel: string | null;
     coachFeedback: string | null;
-  }>;
+  };
+
+  const initialLogs = (data ?? []) as LogEntry[];
+  const [logs, setLogs] = useState<LogEntry[]>(initialLogs);
+
+  function startEditing(log: LogEntry) {
+    setFeedbackId(log.id);
+    setFeedbackText(log.coachFeedback ?? "");
+  }
+
+  function cancelEditing() {
+    setFeedbackId(null);
+    setFeedbackText("");
+  }
 
   function handleSaveFeedback(logId: string) {
+    const note = feedbackText.trim();
+    if (!note) return;
     startTransition(async () => {
-      await addCoachNote(studentId, logId, feedbackText);
+      await addCoachNote(studentId, logId, note);
+      setLogs((prev) =>
+        prev.map((l) => (l.id === logId ? { ...l, coachFeedback: note } : l)),
+      );
       setFeedbackId(null);
       setFeedbackText("");
     });
@@ -321,37 +338,57 @@ function DagbokTab({
             <p className="text-sm text-on-surface mt-2">{log.notes}</p>
           )}
 
-          {log.coachFeedback && (
+          {log.coachFeedback && feedbackId !== log.id && (
             <div className="mt-2 p-2 rounded bg-on-surface/5 text-sm text-on-surface flex items-start gap-1.5">
               <Icon name="chat_bubble" className="h-3.5 w-3.5 mt-0.5 shrink-0" />
-              <span>{log.coachFeedback}</span>
+              <span className="flex-1">{log.coachFeedback}</span>
+              <button
+                type="button"
+                onClick={() => startEditing(log)}
+                className="text-[10px] uppercase tracking-wider text-on-surface-variant hover:text-on-surface"
+              >
+                Rediger
+              </button>
             </div>
           )}
 
           {feedbackId === log.id ? (
-            <div className="mt-3 flex gap-2">
-              <AdminInput
-                type="text"
+            <div className="mt-3 space-y-2">
+              <textarea
                 value={feedbackText}
                 onChange={(e) => setFeedbackText(e.target.value)}
                 placeholder="Skriv tilbakemelding..."
-                containerClassName="flex-1"
+                rows={3}
+                className="w-full rounded-lg border border-outline-variant bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:outline-none resize-none"
+                autoFocus
               />
-              <Button
-                onClick={() => handleSaveFeedback(log.id)}
-                disabled={isPending || !feedbackText}
-                isLoading={isPending}
-              >
-                Lagre
-              </Button>
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={cancelEditing}
+                  className="rounded-lg border border-outline-variant px-3 py-1.5 text-xs font-medium text-on-surface hover:bg-surface-container"
+                >
+                  Avbryt
+                </button>
+                <Button
+                  onClick={() => handleSaveFeedback(log.id)}
+                  disabled={isPending || !feedbackText.trim()}
+                  isLoading={isPending}
+                  size="sm"
+                >
+                  Lagre
+                </Button>
+              </div>
             </div>
           ) : (
-            <button
-              onClick={() => setFeedbackId(log.id)}
-              className="mt-2 text-xs text-on-surface hover:underline"
-            >
-              Legg til tilbakemelding
-            </button>
+            !log.coachFeedback && (
+              <button
+                onClick={() => startEditing(log)}
+                className="mt-2 text-xs text-on-surface hover:underline"
+              >
+                Legg til tilbakemelding
+              </button>
+            )
           )}
         </div>
       ))}

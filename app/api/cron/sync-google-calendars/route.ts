@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { syncAllGoogleCalendars } from "@/lib/portal/google-calendar/sync";
 import { verifyCronAuth } from "@/lib/cron-auth";
 
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/cron/sync-google-calendars
  * 

@@ -11,6 +11,7 @@
 import { createServiceClient } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
 import { CoachingSubscriptionTier } from "@prisma/client";
+import { logger } from "@/lib/logger";
 
 export interface QuotaCheckResult {
   hasQuota: boolean;
@@ -198,6 +199,10 @@ export async function consumeSession(userId: string): Promise<boolean> {
     });
 
     if (error) {
+      logger.warn(
+        `[Quota] increment_sessions_used RPC unavailable for user ${userId} — bruker non-atomic fallback (race condition mulig). Migrasjon 20260425_subscription_quota_rpcs.sql må deployes.`,
+        { error: error.message },
+      );
       // Fallback: manual update with check
       const { data: quota } = await supabase
         .from("SubscriptionQuota")
@@ -240,6 +245,10 @@ export async function releaseSession(userId: string): Promise<boolean> {
     });
 
     if (error) {
+      logger.warn(
+        `[Quota] decrement_sessions_used RPC unavailable for user ${userId} — bruker non-atomic fallback (race condition mulig). Migrasjon 20260425_subscription_quota_rpcs.sql må deployes.`,
+        { error: error.message },
+      );
       // Fallback: manual update with check
       const { data: quota } = await supabase
         .from("SubscriptionQuota")

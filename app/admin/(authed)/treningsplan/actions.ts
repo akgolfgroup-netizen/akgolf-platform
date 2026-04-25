@@ -109,6 +109,8 @@ export type StudentPlan = {
   isActive: boolean;
   aiGenerated: boolean;
   createdAt: Date;
+  coachFeedback: string | null;
+  coachFeedbackAt: Date | null;
   weeks: PlanWeek[];
 };
 
@@ -169,6 +171,8 @@ export async function getStudentPlans(
     isActive: p.isActive,
     aiGenerated: p.aiGenerated,
     createdAt: p.createdAt,
+    coachFeedback: p.coachFeedback ?? null,
+    coachFeedbackAt: p.coachFeedbackAt ?? null,
     weeks: p.TrainingPlanWeek.map((w) => ({
       id: w.id,
       planId: w.planId,
@@ -547,4 +551,44 @@ export async function createManualPlan(
     console.error("[createManualPlan]", error);
     return { success: false, error: "Kunne ikke opprette treningsplan" };
   }
+}
+
+// -------------------------------------------------------------------
+// Sprint 4 / Epic 9: Coach-kommentar på plan-nivå
+// -------------------------------------------------------------------
+
+/**
+ * Sett eller oppdater coach-kommentar på en plan. Vises til spilleren
+ * under plan-tittelen. Kun staff kan kalle.
+ */
+export async function setPlanCoachFeedback(
+  planId: string,
+  feedback: string | null
+): Promise<{ success: boolean; error?: string }> {
+  const user = await requirePortalUser();
+  if (!user || !isStaff(user.role)) {
+    return { success: false, error: "Kun staff kan legge til kommentar" };
+  }
+
+  const plan = await prisma.trainingPlan.findUnique({
+    where: { id: planId },
+    select: { studentId: true },
+  });
+  if (!plan) return { success: false, error: "Plan ikke funnet" };
+
+  const trimmed = feedback?.trim() ?? "";
+
+  await prisma.trainingPlan.update({
+    where: { id: planId },
+    data: {
+      coachFeedback: trimmed || null,
+      coachFeedbackAt: trimmed ? new Date() : null,
+      coachFeedbackById: trimmed ? user.id : null,
+      updatedAt: new Date(),
+    },
+  });
+
+  revalidatePath("/admin/treningsplan");
+  revalidatePath("/portal/treningsplan");
+  return { success: true };
 }

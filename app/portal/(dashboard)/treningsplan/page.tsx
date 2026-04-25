@@ -2,18 +2,25 @@ import {
   getWeekEvents,
   getActivePlan,
   getCurrentPeriodization,
-  updateSessionTime,
   moveSessionToDay,
-  deleteSession,
-  logLiveSession,
   createSessionForWeek,
   addExerciseToSession,
   updateSession,
   analyzePlanDeviation,
   adjustPlanVolume,
+  listAvailableFacilities,
+  listMyPlans,
+  archivePlan,
+  activatePlan,
+  deletePlan,
+  duplicateOwnPlan,
+  duplicateSession,
+  reorderSessionsInDay,
+  toggleRestDay,
+  dismissPlanAdjustment,
+  checkSessionConflicts,
+  getPlanGoalsProgress,
 } from "./actions";
-import { TrainingPlannerV3 } from "./treningsplan-v3-client";
-import { TrainingPlanViewer } from "./training-plan-viewer";
 import { TreningsplanPlanner } from "./treningsplan-planner";
 
 // ---------------------------------------------------------------------
@@ -21,75 +28,35 @@ import { TreningsplanPlanner } from "./treningsplan-planner";
 // ---------------------------------------------------------------------
 
 interface TreningsplanPageProps {
-  searchParams: Promise<{ week?: string; view?: string }>;
+  searchParams: Promise<{ week?: string }>;
 }
 
 export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
-  const { week, view } = await searchParams;
+  const { week } = await searchParams;
   const weekOffset = parseInt(week ?? "0", 10) || 0;
-  const activeView = view ?? "planner";
 
   const plan = await getActivePlan();
   const periodization = await getCurrentPeriodization();
   const events = await getWeekEvents(weekOffset);
   const historyEvents = await getWeekEvents(weekOffset - 1);
+  const facilities = await listAvailableFacilities();
+  const myPlans = await listMyPlans();
+  const goalsSummary = await getPlanGoalsProgress();
+
+  const coachFeedback = plan?.coachFeedback
+    ? {
+        text: plan.coachFeedback as string,
+        at: plan.coachFeedbackAt ? new Date(plan.coachFeedbackAt).toISOString() : null,
+      }
+    : null;
 
   // Server action wrappers bound to the user context
-  async function handleSaveEvent(event: {
-    id: string;
-    date: string;
-    startH: number;
-    startM: number;
-    dur: number;
-    title: string;
-    focus: string;
-    exercises: unknown[];
-    done: boolean;
-  }) {
-    "use server";
-    await updateSessionTime(event.id, event.startH, event.startM, event.dur);
-  }
-
-  async function handleDeleteEvent(eventId: string) {
-    "use server";
-    await deleteSession(eventId);
-  }
-
   async function handleMoveEvent(eventId: string, date: string, startH: number, startM: number) {
     "use server";
     const d = new Date(date);
     const day = d.getDay();
     const dayOfWeek = day === 0 ? 7 : day;
     await moveSessionToDay(eventId, dayOfWeek, startH, startM);
-  }
-
-  async function handleResizeEvent(eventId: string, durationMinutes: number) {
-    "use server";
-    const ev = events.find((e) => e.id === eventId);
-    await updateSessionTime(eventId, ev?.startH ?? 9, ev?.startM ?? 0, durationMinutes);
-  }
-
-  async function handleSaveLiveSession(data: {
-    durationMinutes: number;
-    focusArea: string | null;
-    exercises: {
-      id: string;
-      name: string;
-      pyramid: string;
-      area: string;
-      lPhase: string | null;
-      cs: string | null;
-      m: string | null;
-      pr: string | null;
-      pFrom: string | null;
-      pTo: string | null;
-      slagFocus: string[];
-      baller: number;
-      bevegelser: number;
-    }[];
-  }) {
-    "use server";
-    await logLiveSession(data);
   }
 
   async function handleCreateSession(data: {
@@ -139,14 +106,60 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     return adjustPlanVolume(factor);
   }
 
-  const templates = [
-    { id: "t1", title: "Putting-drill", dur: 20, focus: "TEK", exercises: [] },
-    { id: "t2", title: "Short game", dur: 30, focus: "SLAG", exercises: [] },
-    { id: "t3", title: "Driving range", dur: 45, focus: "SLAG", exercises: [] },
-    { id: "t4", title: "Styrke-okt", dur: 50, focus: "FYS", exercises: [] },
-    { id: "t5", title: "Spill 9 hull", dur: 120, focus: "SPILL", exercises: [] },
-    { id: "t6", title: "Svinganalyse", dur: 40, focus: "TEK", exercises: [] },
-  ];
+  async function handleArchivePlan(planId: string) {
+    "use server";
+    return archivePlan(planId);
+  }
+
+  async function handleActivatePlan(planId: string) {
+    "use server";
+    return activatePlan(planId);
+  }
+
+  async function handleDeletePlan(planId: string) {
+    "use server";
+    return deletePlan(planId);
+  }
+
+  async function handleDuplicatePlan(planId: string) {
+    "use server";
+    return duplicateOwnPlan(planId);
+  }
+
+  async function handleDuplicateSession(sessionId: string) {
+    "use server";
+    return duplicateSession(sessionId);
+  }
+
+  async function handleReorderSessions(
+    weekId: string,
+    dayOfWeek: number,
+    sessionIds: string[]
+  ) {
+    "use server";
+    return reorderSessionsInDay(weekId, dayOfWeek, sessionIds);
+  }
+
+  async function handleToggleRestDay(weekId: string, dayOfWeek: number) {
+    "use server";
+    return toggleRestDay(weekId, dayOfWeek);
+  }
+
+  async function handleDismissAdjustment(planId: string) {
+    "use server";
+    return dismissPlanAdjustment(planId);
+  }
+
+  async function handleCheckConflicts(input: {
+    date: string;
+    startH: number;
+    startM: number;
+    durationMinutes: number;
+    excludeSessionId?: string;
+  }) {
+    "use server";
+    return checkSessionConflicts(input);
+  }
 
   const sessionCount = events.length;
   const totalMinutes = events.reduce((sum, e) => sum + (e.dur ?? 0), 0);
@@ -155,47 +168,34 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
 
   const adjustmentSuggestion = await analyzePlanDeviation();
 
-  if (activeView === "planner") {
-    return (
-      <TreningsplanPlanner
-        weekOffset={weekOffset}
-        planId={plan?.id ?? null}
-        sessionCount={sessionCount}
-        totalMinutes={totalMinutes}
-        adherencePct={adherencePct}
-        periodization={periodization}
-        events={events}
-        historyEvents={historyEvents}
-        onCreateSession={handleCreateSession}
-        onAddExerciseToSession={handleAddExerciseToSession}
-        onUpdateSession={handleUpdateSession}
-        adjustmentSuggestion={adjustmentSuggestion}
-        onAdjustPlan={handleAdjustPlan}
-      />
-    );
-  }
-
   return (
-    <div className="space-y-6">
-      {activeView === "calendar" ? (
-        <TrainingPlannerV3
-          events={events}
-          templates={templates}
-          planId={plan?.id ?? null}
-          weekOffset={weekOffset}
-          onSaveEvent={handleSaveEvent}
-          onDeleteEvent={handleDeleteEvent}
-          onMoveEvent={handleMoveEvent}
-          onResizeEvent={handleResizeEvent}
-          onSaveLiveSession={handleSaveLiveSession}
-        />
-      ) : (
-        <TrainingPlanViewer
-          events={events}
-          weekOffset={weekOffset}
-          planId={plan?.id ?? null}
-        />
-      )}
-    </div>
+    <TreningsplanPlanner
+      weekOffset={weekOffset}
+      planId={plan?.id ?? null}
+      sessionCount={sessionCount}
+      totalMinutes={totalMinutes}
+      adherencePct={adherencePct}
+      periodization={periodization}
+      events={events}
+      historyEvents={historyEvents}
+      facilities={facilities}
+      myPlans={myPlans}
+      goalsSummary={goalsSummary}
+      coachFeedback={coachFeedback}
+      onCreateSession={handleCreateSession}
+      onAddExerciseToSession={handleAddExerciseToSession}
+      onUpdateSession={handleUpdateSession}
+      adjustmentSuggestion={adjustmentSuggestion}
+      onAdjustPlan={handleAdjustPlan}
+      onArchivePlan={handleArchivePlan}
+      onActivatePlan={handleActivatePlan}
+      onDeletePlan={handleDeletePlan}
+      onDuplicatePlan={handleDuplicatePlan}
+      onDuplicateSession={handleDuplicateSession}
+      onReorderSessions={handleReorderSessions}
+      onToggleRestDay={handleToggleRestDay}
+      onDismissAdjustment={handleDismissAdjustment}
+      onCheckConflicts={handleCheckConflicts}
+    />
   );
 }
