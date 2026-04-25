@@ -1,0 +1,2881 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Account {
+  id                String  @id
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model AchievementDefinition {
+  id                String              @id
+  key               String              @unique
+  title             String
+  description       String
+  icon              String              @default("trophy")
+  category          String
+  threshold         Int                 @default(1)
+  tierRequired      String              @default("ACADEMY")
+  sortOrder         Int                 @default(0)
+  createdAt         DateTime            @default(now())
+  PlayerAchievement PlayerAchievement[]
+}
+
+model Agent {
+  id          String        @id
+  name        String        @unique
+  displayName String
+  description String
+  team        AgentTeam
+  model       String
+  tools       String[]
+  skills      String[]      @default([])
+  avatarPath  String
+  status      AgentStatus   @default(ACTIVE)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime
+  AgentConfig AgentConfig[]
+  AgentLog    AgentLog[]
+
+  @@index([status])
+  @@index([team])
+}
+
+model AgentConfig {
+  id        String   @id @default(cuid())
+  userId    String
+  agentId   String
+  isActive  Boolean  @default(true)
+  scope     String[] @default([])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, agentId])
+  @@index([userId])
+  @@index([agentId])
+}
+
+model AgentLog {
+  id        String   @id
+  agentType String
+  model     String
+  status    String   @default("running")
+  duration  Int?
+  cost      Float?
+  input     String?
+  output    String?
+  error     String?
+  createdAt DateTime @default(now())
+  agentId   String?
+  Agent     Agent?   @relation(fields: [agentId], references: [id])
+
+  @@index([agentId])
+  @@index([agentType])
+  @@index([createdAt])
+  @@index([status])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model AppBundle {
+  id                  String            @id
+  slug                String            @unique
+  name                String
+  description         String?
+  monthlyPriceNok     Int               @default(0)
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean           @default(true)
+  sortOrder           Int               @default(0)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime
+  AppSubscription     AppSubscription[]
+  BundleItem          BundleItem[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model AppModule {
+  id                  String            @id
+  slug                String            @unique
+  name                String
+  description         String?
+  icon                String?
+  monthlyPriceNok     Int               @default(0)
+  yearlyPriceNok      Int?
+  stripePriceId       String?
+  stripeYearlyPriceId String?
+  isActive            Boolean           @default(true)
+  sortOrder           Int               @default(0)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime
+  AppSubscription     AppSubscription[]
+  BundleItem          BundleItem[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model AppSubscription {
+  id                   String     @id
+  userId               String
+  moduleId             String?
+  bundleId             String?
+  stripeSubscriptionId String?    @unique
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  cancelAtPeriodEnd    Boolean    @default(false)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime
+  status               String     @default("ACTIVE")
+  AppBundle            AppBundle? @relation(fields: [bundleId], references: [id])
+  AppModule            AppModule? @relation(fields: [moduleId], references: [id])
+  User                 User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model BlockedTime {
+  id           String   @id
+  instructorId String?
+  startTime    DateTime
+  endTime      DateTime
+  reason       String?
+  isRecurring  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Booking {
+  id                    String               @id
+  studentId             String
+  instructorId          String
+  serviceTypeId         String
+  locationId            String?
+  resourceId            String?
+  startTime             DateTime
+  endTime               DateTime
+  status                BookingStatus        @default(PENDING)
+  paymentMethod         PaymentMethod        @default(NONE)
+  paymentStatus         PaymentStatus        @default(PENDING)
+  amount                Int                  @default(0)
+  vatAmount             Int                  @default(0)
+  stripePaymentId       String?
+  stripeRefundId        String?
+  refundIdempotencyKey  String?
+  vippsOrderId          String?
+  invoiceId             String?
+  isGroupBooking        Boolean              @default(false)
+  studentNotes          String?
+  adminNotes            String?
+  cancelledAt           DateTime?
+  cancelReason          String?
+  reminderSentAt        DateTime?
+  smsReminderSentAt     DateTime?
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime
+  facilityId            String?
+  guestEmail            String?
+  guestName             String?
+  guestPhone            String?
+  focusArea             FocusArea?
+  playerNotes           String?
+  googleCalendarEventId String?
+  Facility              Facility?            @relation(fields: [facilityId], references: [id])
+  Instructor            Instructor           @relation(fields: [instructorId], references: [id])
+  Location              Location?            @relation(fields: [locationId], references: [id])
+  Resource              Resource?            @relation(fields: [resourceId], references: [id])
+  ServiceType           ServiceType          @relation(fields: [serviceTypeId], references: [id])
+  User                  User                 @relation(fields: [studentId], references: [id])
+  CoachingSession       CoachingSession?
+  GroupParticipant      GroupParticipant[]
+  PaymentTransaction    PaymentTransaction[]
+  WaitlistEntry         WaitlistEntry[]
+
+  @@index([instructorId])
+  @@index([startTime])
+  @@index([status])
+  @@index([studentId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model BundleItem {
+  id        String    @id
+  bundleId  String
+  moduleId  String
+  AppBundle AppBundle @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  AppModule AppModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([bundleId, moduleId])
+}
+
+model CategoryRequirement {
+  id          String @id @default(dbgenerated("(gen_random_uuid())::text"))
+  testNumber  Int
+  category    String
+  gender      String
+  requirement Float
+
+  @@unique([testNumber, category, gender])
+}
+
+model CoachingAvailability {
+  id          String   @id
+  dayOfWeek   Int
+  startTime   String
+  endTime     String
+  isActive    Boolean  @default(true)
+  reservedFor String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+
+  @@index([dayOfWeek, isActive])
+}
+
+model CoachingPackage {
+  id                 String              @id
+  name               String
+  slug               String              @unique
+  priceNok           Int
+  billingType        BillingType
+  bookingType        CoachingBookingType
+  sessionsPerMonth   Int?
+  sessionDurationMin Int                 @default(20)
+  bookingWindowDays  Int?
+  bookingWindowHours Int?
+  maxPlayersPerSlot  Int                 @default(1)
+  maxBookingsPerWeek Int?
+  slotsRequired      Int                 @default(1)
+  isActive           Boolean             @default(true)
+  sortOrder          Int                 @default(0)
+  description        String?
+  features           String[]            @default([])
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime
+  vatRate            Int                 @default(25)
+  portalAccessDays   Int?
+  instructorId       String?
+  Instructor         Instructor?         @relation(fields: [instructorId], references: [id])
+  UserSubscription   UserSubscription[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model CoachingSession {
+  id                String          @id
+  bookingId         String          @unique
+  studentId         String
+  instructorId      String
+  sessionDate       DateTime
+  primaryFocus      String?
+  secondaryFocus    String?
+  techniquesCovered String[]
+  drillsAssigned    String[]
+  instructorNotes   String?
+  studentNotes      String?
+  videoUrls         String[]
+  homework          String?
+  progressRating    Int?
+  followUpSent      Boolean         @default(false)
+  followUpDate      DateTime?
+  nextBookingId     String?
+  retentionStatus   RetentionStatus @default(ACTIVE)
+  aiSummary         String?
+  aiKeyPoints       String[]        @default([])
+  aiFocusAreas      String[]        @default([])
+  aiActionItems     String[]        @default([])
+  aiGeneratedAt     DateTime?
+  uploadedFilePath  String?
+  rawTranscript     String?
+  publishedToStudent Boolean        @default(false)
+  publishedAt       DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime
+  notionPageId      String?
+  Booking           Booking         @relation(fields: [bookingId], references: [id])
+  Instructor        Instructor      @relation(fields: [instructorId], references: [id])
+  User              User            @relation(fields: [studentId], references: [id])
+  TrackmanSession   TrackmanSession[]
+
+  @@index([retentionStatus])
+  @@index([studentId])
+  @@index([publishedToStudent, studentId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model CommunicationLog {
+  id           String            @id
+  studentId    String?
+  instructorId String?
+  type         CommunicationType @default(NOTE)
+  subject      String?
+  content      String?
+  sentAt       DateTime          @default(now())
+  body         String?
+  channel      String?
+  direction    String?
+  metadata     Json?
+  sentBy       String?
+  status       String?
+  Instructor   Instructor?       @relation(fields: [instructorId], references: [id])
+  User         User?             @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ContentItem {
+  id           String        @id
+  type         ContentType
+  status       ContentStatus @default(DRAFT)
+  title        String
+  slug         String?       @unique
+  body         String
+  bodyHtml     String?
+  excerpt      String?
+  platform     String?
+  hashtags     String[]
+  imageUrl     String?
+  scheduledAt  DateTime?
+  publishedAt  DateTime?
+  aiGenerated  Boolean       @default(false)
+  aiModel      String?
+  notionPageId String?       @unique
+  segment      String?
+  createdBy    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime
+
+  @@index([scheduledAt])
+  @@index([slug])
+  @@index([type, status])
+}
+
+model Conversation {
+  id        String    @id
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+  Message   Message[]
+  User      User[]    @relation("ConversationParticipants")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model CustomerPaymentPreference {
+  id              String        @id
+  userId          String        @unique
+  customerType    CustomerType  @default(PRIVATE)
+  preferredMethod PaymentMethod @default(NONE)
+  companyName     String?
+  orgNumber       String?
+  invoiceEmail    String?
+  invoiceAddress  String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime
+  User            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model DashboardAccess {
+  id        String        @id
+  email     String        @unique
+  role      DashboardRole
+  name      String?
+  active    Boolean       @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime
+}
+
+model DataGolfApproachSkill {
+  id         String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  dgId       Int
+  distance   String
+  proxToHole Float
+  sgApp      Float
+  updatedAt  DateTime @default(now())
+
+  @@unique([dgId, distance])
+}
+
+model DataGolfCache {
+  id         String   @id @default(dbgenerated("(gen_random_uuid())::text"))
+  dgId       Int      @unique
+  playerName String
+  sgTotal    Float
+  sgOtt      Float
+  sgApp      Float
+  sgArg      Float
+  sgPutt     Float
+  dgRank     Int?
+  owgrRank   Int?
+  updatedAt  DateTime @default(now())
+
+  @@index([dgRank])
+}
+
+model EmailSequence {
+  id                String              @id
+  name              String
+  description       String?
+  trigger           String
+  isActive          Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime
+  EmailSequenceStep EmailSequenceStep[]
+}
+
+model EmailSequenceExec {
+  id                String            @id
+  stepId            String
+  studentId         String
+  status            String            @default("pending")
+  sentAt            DateTime?
+  errorMsg          String?
+  createdAt         DateTime          @default(now())
+  EmailSequenceStep EmailSequenceStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+
+  @@unique([stepId, studentId])
+  @@index([status])
+  @@index([studentId])
+}
+
+model EmailSequenceStep {
+  id                String              @id
+  sequenceId        String
+  stepOrder         Int
+  delayHours        Int                 @default(0)
+  subject           String
+  body              String
+  bodyHtml          String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime
+  EmailSequenceExec EmailSequenceExec[]
+  EmailSequence     EmailSequence       @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+
+  @@index([sequenceId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model EmailTemplate {
+  id          String   @id
+  name        String   @unique
+  subject     String
+  htmlContent String
+  variables   String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ExerciseDefinition {
+  id                 String             @id
+  name               String
+  description        String?
+  instructions       String?
+  videoUrl           String?
+  imageUrl           String?
+  pyramid            String
+  area               String
+  lPhase             String?
+  pPositionStart     String?
+  pPositionEnd       String?
+  equipment          String[]
+  minDurationMinutes Int                @default(5)
+  maxDurationMinutes Int                @default(30)
+  difficulty         Int                @default(2)
+  isPublic           Boolean            @default(false)
+  isSystemDrill      Boolean            @default(false)
+  createdById        String?
+  tags               String[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime
+  User               User?              @relation(fields: [createdById], references: [id])
+  UserExerciseBank   UserExerciseBank[]
+
+  @@index([area])
+  @@index([isPublic])
+  @@index([pyramid])
+}
+
+model GapOffer {
+  id            String         @id
+  instructorId  String
+  serviceTypeId String
+  startTime     DateTime
+  endTime       DateTime
+  discountPct   Int            @default(20)
+  status        GapOfferStatus
+  claimedBy     String?
+  expiresAt     DateTime
+  createdAt     DateTime       @default(now())
+
+  @@index([expiresAt])
+  @@index([instructorId])
+  @@index([status])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Goal {
+  id           String       @id
+  userId       String
+  title        String
+  description  String?
+  targetValue  Float?
+  currentValue Float?       @default(0)
+  unit         String?
+  targetDate   DateTime?    @db.Date
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime
+  status       GoalStatus   @default(ACTIVE)
+  category     GoalCategory
+  User         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model GroupParticipant {
+  id        String   @id
+  bookingId String
+  name      String
+  email     String
+  phone     String?
+  createdAt DateTime @default(now())
+  Booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model HandicapEntry {
+  id            String   @id
+  userId        String
+  date          DateTime
+  handicapIndex Float
+  source        String   @default("MANUAL")
+  createdAt     DateTime @default(now())
+  User          User     @relation(fields: [userId], references: [id])
+
+  @@index([userId, date])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Instructor {
+  id                         String                       @id
+  userId                     String                       @unique
+  bio                        String?
+  specialization             String?
+  title                      String?
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime
+  Booking                    Booking[]
+  CoachingSession            CoachingSession[]
+  CommunicationLog           CommunicationLog[]
+  User                       User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  InstructorAvailability     InstructorAvailability[]
+  InstructorDateAvailability InstructorDateAvailability[]
+  InstructorFacilityDefault  InstructorFacilityDefault[]
+  CoachingPackage            CoachingPackage[]
+  ServiceType                ServiceType[]                @relation("InstructorToServiceType")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model InstructorAvailability {
+  id           String     @id
+  instructorId String
+  dayOfWeek    Int
+  startTime    String
+  endTime      String
+  Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+
+  @@unique([instructorId, dayOfWeek, startTime])
+}
+
+model InstructorDateAvailability {
+  id           String     @id
+  instructorId String
+  date         DateTime
+  startTime    String
+  endTime      String
+  locationId   String?
+  createdAt    DateTime   @default(now())
+  Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  Location     Location?  @relation(fields: [locationId], references: [id])
+
+  @@index([instructorId, date])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Location {
+  id                         String                       @id
+  name                       String
+  address                    String?
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime
+  Booking                    Booking[]
+  Facility                   Facility[]
+  InstructorDateAvailability InstructorDateAvailability[]
+  Resource                   Resource[]
+}
+
+model Message {
+  id             String       @id
+  conversationId String
+  senderId       String
+  content        String
+  readAt         DateTime?
+  createdAt      DateTime     @default(now())
+  Conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  User           User         @relation(fields: [senderId], references: [id])
+
+  @@index([conversationId])
+  @@index([senderId])
+}
+
+model Notification {
+  id        String           @id
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  read      Boolean          @default(false)
+  linkUrl   String?
+  createdAt DateTime         @default(now())
+  User      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model PaymentTransaction {
+  id            String        @id
+  bookingId     String
+  paymentMethod PaymentMethod
+  grossAmount   Int
+  vatAmount     Int
+  vatRate       Int
+  feeAmount     Int           @default(0)
+  netAmount     Int
+  providerRef   String?
+  status        PaymentStatus @default(PENDING)
+  paidAt        DateTime?
+  refundedAt    DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime
+  Booking       Booking       @relation(fields: [bookingId], references: [id])
+
+  @@unique([providerRef])
+  @@index([paidAt])
+  @@index([paymentMethod])
+  @@index([status])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model PeriodizationPeriod {
+  id               String         @id
+  studentId        String?
+  periodType       String
+  startDate        DateTime       @db.Date
+  endDate          DateTime       @db.Date
+  label            String?
+  createdById      String?
+  focusAllocation  Json?          @default("{}")
+  createdAt        DateTime       @default(now())
+  User             User?          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  TrainingPlan     TrainingPlan[]
+
+  @@index([studentId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model PlayerAchievement {
+  id                      String                @id
+  userId                  String
+  unlockedAt              DateTime              @default(now())
+  achievementDefinitionId String
+  AchievementDefinition   AchievementDefinition @relation(fields: [achievementDefinitionId], references: [id], onDelete: Cascade)
+  User                    User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementDefinitionId])
+  @@index([userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model PlayerTournamentPlan {
+  id           String     @id
+  studentId    String
+  tournamentId String
+  planLevel    String
+  goalType     String
+  notes        String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime
+  isRegistered Boolean    @default(false)
+  User         User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  Tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, tournamentId])
+  @@index([studentId])
+}
+
+model PricingRule {
+  id            String          @id
+  name          String
+  ruleType      PricingRuleType
+  adjustmentPct Int
+  conditions    Json
+  priority      Int             @default(0)
+  isActive      Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime
+
+  @@index([isActive])
+}
+
+model PromoCode {
+  id             String           @id
+  code           String           @unique
+  discountType   DiscountType
+  discountValue  Int
+  maxUses        Int?
+  usedCount      Int              @default(0)
+  validFrom      DateTime?
+  validUntil     DateTime?
+  serviceTypeIds String[]
+  isActive       Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  PromoCodeUsage PromoCodeUsage[]
+}
+
+model PromoCodeUsage {
+  id             String    @id
+  promoCodeId    String
+  userId         String
+  bookingId      String
+  discountAmount Int
+  createdAt      DateTime  @default(now())
+  PromoCode      PromoCode @relation(fields: [promoCodeId], references: [id], onDelete: Cascade)
+
+  @@unique([promoCodeId, userId])
+  @@index([bookingId])
+}
+
+model PushSubscription {
+  id         String   @id
+  userId     String
+  endpoint   String   @unique
+  p256dh     String
+  auth       String
+  createdAt  DateTime @default(now())
+  deviceType String?
+
+  @@index([userId])
+}
+
+model RecurringBooking {
+  id             String         @id
+  studentId      String
+  instructorId   String
+  serviceTypeId  String
+  dayOfWeek      Int
+  startTime      String
+  recurrenceType RecurrenceType
+  startDate      DateTime       @db.Date
+  endDate        DateTime?      @db.Date
+  isActive       Boolean        @default(true)
+  autoCharge     Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime
+
+  @@index([instructorId])
+  @@index([isActive])
+  @@index([studentId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Resource {
+  id         String    @id
+  locationId String
+  name       String
+  type       String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime
+  Booking    Booking[]
+  Location   Location  @relation(fields: [locationId], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model RoundStats {
+  id                  String      @id
+  userId              String
+  date                DateTime
+  courseName          String?
+  source              RoundSource @default(MANUAL)
+  totalScore          Int?
+  scoreToPar          Int?
+  par3Average         Float?
+  par4Average         Float?
+  par5Average         Float?
+  eagleCount          Int?
+  birdieCount         Int?
+  parCount            Int?
+  bogeyCount          Int?
+  doublePlusCount     Int?
+  bounceBackCount     Int?
+  sgTotal             Float?
+  sgOffTheTee         Float?
+  sgApproach          Float?
+  sgAroundTheGreen    Float?
+  sgPutting           Float?
+  drivingDistance     Float?
+  fairwaysHit         Int?
+  fairwaysTotal       Int?
+  dispersion          Float?
+  gir                 Int?
+  girTotal            Int?
+  proximityToHole     Float?
+  approach100         Float?
+  approach150         Float?
+  approach200         Float?
+  approach200Plus     Float?
+  upAndDownMade       Int?
+  upAndDownTotal      Int?
+  sandSaveMade        Int?
+  sandSaveTotal       Int?
+  scrambleProximity   Float?
+  totalPutts          Int?
+  puttsPerGir         Float?
+  onePuttCount        Int?
+  threePuttCount      Int?
+  makePct3ft          Float?
+  makePct6ft          Float?
+  makePct10ft         Float?
+  speedRatio          Float?
+  mentalProcessRating Int?
+  notes               String?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime
+  User                User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ServiceType {
+  id                        String                      @id
+  name                      String
+  description               String?
+  category                  ServiceCategory
+  duration                  Int
+  price                     Int
+  maxStudents               Int                         @default(1)
+  isActive                  Boolean                     @default(true)
+  isPublic                  Boolean                     @default(true)
+  color                     String?
+  image                     String?
+  sortOrder                 Int                         @default(0)
+  vatRate                   Int                         @default(0)
+  bufferBefore              Int                         @default(0)
+  bufferAfter               Int                         @default(15)
+  minNoticeHours            Int                         @default(24)
+  maxAdvanceDays            Int                         @default(60)
+  allowStripe               Boolean                     @default(true)
+  allowVipps                Boolean                     @default(true)
+  allowInvoice              Boolean                     @default(false)
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime
+  Booking                   Booking[]
+  InstructorFacilityDefault InstructorFacilityDefault[]
+  Instructor                Instructor[]                @relation("InstructorToServiceType")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Session {
+  id           String   @id
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model SubscriptionQuota {
+  id                String                   @id
+  userId            String                   @unique
+  subscriptionId    String?
+  tier              CoachingSubscriptionTier
+  sessionsAllowed   Int
+  sessionsUsed      Int                      @default(0)
+  periodStart       DateTime
+  periodEnd         DateTime
+  bookingWindowDays Int                      @default(7)
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime
+  minutesAllowed    Int                      @default(40)
+  minutesUsed       Int                      @default(0)
+  User              User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SwingVideo {
+  id           String   @id
+  userId       String
+  url          String
+  thumbnailUrl String?
+  fileSize     BigInt
+  title        String?
+  coachNotes   String?
+  aiAnalysis   Json?
+  sessionId    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model TestDefinition {
+  id         String       @id @default(dbgenerated("(gen_random_uuid())::text"))
+  testNumber Int          @unique
+  name       String
+  category   String
+  unit       String
+  formula    String
+  inputCount Int
+  comparison String
+  TestResult TestResult[]
+}
+
+model TestResult {
+  id             String         @id @default(dbgenerated("(gen_random_uuid())::text"))
+  userId         String
+  testNumber     Int
+  value          Float
+  rawInput       Json
+  metadata       Json?
+  passed         Boolean
+  categoryReq    Float
+  createdAt      DateTime       @default(now())
+  TestDefinition TestDefinition @relation(fields: [testNumber], references: [testNumber], onDelete: NoAction, onUpdate: NoAction)
+  User           User           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId, testNumber])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Tournament {
+  id                   String                 @id
+  name                 String
+  startDate            DateTime               @db.Date
+  endDate              DateTime?              @db.Date
+  level                String
+  course               String?
+  location             String?
+  registrationDeadline DateTime?              @db.Date
+  seriesUrl            String?
+  externalUrl          String?
+  createdById          String?
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime
+  golfboxId            Int?                   @unique
+  numberOfHoles        Int?
+  series               String?
+  source               String?
+  sourceId             String?
+  isPrivate            Boolean                @default(false)
+  PlayerTournamentPlan PlayerTournamentPlan[]
+  User                 User?                  @relation(fields: [createdById], references: [id])
+  TournamentPrep       TournamentPrep[]
+
+  @@unique([source, sourceId])
+  @@index([startDate])
+  @@index([createdById])
+  @@index([isPrivate])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model TournamentPrep {
+  id              String     @id
+  tournamentId    String
+  readinessScore  Int?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime
+  checklist       Json?
+  mentalPrepNotes String?
+  userId          String
+  warmupPlan      String?
+  courseStrategy  Json?
+  Tournament      Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  User            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tournamentId, userId])
+  @@index([userId])
+}
+
+model TrackmanSession {
+  id                 String           @id
+  userId             String
+  sessionDate        DateTime
+  club               String
+  shots              Json
+  averages           Json
+  coachingSessionId  String?
+  sourceType         String           @default("manual") // manual, csv, image, api
+  createdAt          DateTime         @default(now())
+  User               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  CoachingSession    CoachingSession? @relation(fields: [coachingSessionId], references: [id], onDelete: SetNull)
+
+  @@index([sessionDate])
+  @@index([userId])
+  @@index([coachingSessionId])
+}
+
+/// TrackMan import metadata and raw data storage
+model TrackManImport {
+  id            String    @id @default(cuid())
+  playerId      String
+  importDate    DateTime  @default(now())
+  source        String // CSV_UPLOAD, API_SYNC, MULLIGAN_DIRECT
+  fileName      String?
+  rawData       Json
+  processed     Boolean   @default(false)
+  processedAt   DateTime?
+  context       String    @default("TRAINING") // TRAINING, CASUAL, COMPETITION
+  pressureLevel Int       @default(1) // PR1-PR5
+
+  User User @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+}
+
+/// Per-shot TrackMan data with full metrics
+model TrackManShotData {
+  id           String  @id @default(cuid())
+  sessionId    String
+  userId       String
+  shotNumber   Int
+  club         String
+  clubCategory String?
+
+  // Ball data
+  ballSpeed       Float?
+  launchAngle     Float?
+  launchDirection Float?
+  spinRate        Float?
+  spinAxis        Float?
+
+  // Flight data (stored in meters)
+  carryDistance Float?
+  totalDistance Float?
+  maxHeight     Float?
+  landingAngle  Float?
+  hangTime      Float?
+
+  // Dispersion
+  offlineDistance Float?
+  curveDistance   Float?
+
+  // Strike quality
+  smashFactor Float?
+
+  // Club data
+  clubSpeed   Float?
+  attackAngle Float?
+  clubPath    Float?
+  faceAngle   Float?
+  faceToPath  Float?
+  dynamicLoft Float?
+
+  // Classification
+  shotQuality String?
+  shotShape   String?
+  missType    String?
+
+  // Context
+  context       String  @default("TRAINING")
+  pressureLevel Int     @default(1)
+  notes         String?
+
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([sessionId])
+  @@index([userId, club])
+  @@index([userId, context])
+}
+
+/// Computed analytics per TrackMan session
+model TrackManSessionAnalytics {
+  id        String @id @default(cuid())
+  sessionId String @unique
+  userId    String
+
+  // Aggregates by club category (JSON)
+  driverStats Json?
+  ironStats   Json?
+  wedgeStats  Json?
+
+  // Overall metrics
+  avgBallSpeed     Float?
+  maxBallSpeed     Float?
+  avgCarryDistance Float?
+  maxCarryDistance Float?
+
+  // Consistency
+  ballSpeedConsistency Float?
+  distanceConsistency  Float?
+
+  // Pattern analysis
+  shotShapeDistribution Json?
+  missPattern           Json?
+  sweetSpotPercentage   Float?
+
+  // Trends
+  trendBallSpeed   String?
+  trendDistance    String?
+  trendConsistency String?
+
+  // AI insights
+  generatedInsights String[] @default([])
+  recommendedFocus  String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+/// Player goals - long-term and short-term goals tied to a player
+model PlayerGoals {
+  id            String    @id
+  userId        String
+  goalType      String    // HCP, TOURNAMENT, SKILL, FITNESS, OTHER
+  title         String
+  description   String?
+  targetDate    DateTime?
+  targetValue   Float?
+  currentValue  Float?
+  priority      Int       @default(2) // 1=high, 2=medium, 3=low
+  isActive      Boolean   @default(true)
+  achievedAt    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime
+  User          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isActive])
+  @@index([targetDate])
+}
+
+/// Player rolling averages and benchmarks
+model PlayerMetrics {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  last10DriverSpeed    Float?
+  last10DriverCarry    Float?
+  last10SevenIronSpeed Float?
+  last10SevenIronCarry Float?
+
+  pbBallSpeed      Float?
+  pbCarryDistance  Float?
+  pbDriverDistance Float?
+
+  expectedDriverSpeed    Float?
+  expectedSevenIronCarry Float?
+  speedGapToPotential    Float?
+  consistencyScore       Int?
+
+  updatedAt DateTime @updatedAt
+
+  User            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  metricSnapshots MetricSnapshot[]
+}
+
+/// Historical snapshots of player metrics
+model MetricSnapshot {
+  id              String   @id @default(cuid())
+  playerMetricsId String
+  snapshotDate    DateTime
+
+  driverSpeed      Float?
+  driverCarry      Float?
+  sevenIronCarry   Float?
+  consistencyScore Int?
+
+  PlayerMetrics PlayerMetrics @relation(fields: [playerMetricsId], references: [id], onDelete: Cascade)
+
+  @@index([playerMetricsId, snapshotDate])
+}
+
+/// Club dispersion per context (training/casual/competition)
+model ClubDispersionData {
+  id      String @id @default(cuid())
+  userId  String
+  club    String
+  context String @default("TRAINING") // TRAINING, CASUAL, COMPETITION
+
+  carryDistance  Float
+  totalDistance  Float
+  lateralStdDev  Float
+  distanceStdDev Float
+  lateral95      Float
+  distance95     Float
+
+  typicalShape String?
+  shapeBias    Float?
+  sampleSize   Int
+
+  lastCalculated DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, club, context])
+  @@index([userId])
+}
+
+/// Mental scorecard per shot in a round
+model MentalScorecardEntry {
+  id         String   @id @default(cuid())
+  roundId    String
+  userId     String
+  hole       Int
+  shotNumber Int
+  timestamp  DateTime @default(now())
+
+  // Pre-shot
+  plannedShot          String?
+  targetDescription    String?
+  focusLevel           Int?
+  focusQuality         String?
+  confidence           Int?
+  pressureLevel        Int      @default(1)
+  pressureSources      String[] @default([])
+  routineCompleted     Boolean  @default(false)
+  routineDuration      Float?
+  visualizationQuality Int?
+  sawShotClearly       Boolean  @default(false)
+
+  // Post-shot
+  outcome          String?
+  processScore     Int?
+  emotion          String?
+  emotionIntensity Int?
+  committedToShot  Boolean @default(false)
+  lastMinuteDoubt  Boolean @default(false)
+  acceptedResult   Boolean @default(false)
+  dwelling         Boolean @default(false)
+
+  // Context
+  situation     String?
+  scoreAtMoment Int?
+  position      String?
+  user          User    @relation(fields: [userId], references: [id])
+
+  @@index([roundId])
+  @@index([userId])
+}
+
+/// Mental profile baseline and trends per player
+model MentalProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  baselineConfidence Int?
+  pressureTolerance  Int  @default(3)
+  focusBaseline      Int?
+
+  focusTrend     Float?
+  commitmentRate Float?
+  acceptanceRate Float?
+
+  pr1Performance Float?
+  pr2Performance Float?
+  pr3Performance Float?
+  pr4Performance Float?
+  pr5Performance Float?
+
+  updatedAt DateTime @updatedAt
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// Course notes and prep-round data
+model CourseNotes {
+  id         String @id @default(cuid())
+  userId     String
+  courseId   String
+  holeNumber Int
+
+  // Tee notes
+  fairwayCondition  String?
+  dryFairwayRoll    Float?
+  teeNotes          String?
+  primaryAimLat     Float?
+  primaryAimLng     Float?
+  alternativeAimLat Float?
+  alternativeAimLng Float?
+  dangerArea        Json?
+  clubSelection     String?
+
+  // Approach
+  pinLocations     Json? // Array of {lat, lng, color, source, date}
+  elevationToGreen Float?
+  greenDepth       Float?
+  greenWidth       Float?
+  missStrategy     Json? // {optimalMiss, dangerMiss}
+  approachZones    Json? // {safeZone, dangerZone, pinZone}
+
+  // Layup (par 5)
+  layupMaxDistance Float?
+  layupTarget      Json?
+
+  // General
+  windImpact          String?
+  mentalNote          String?
+  previousRoundsNotes String?
+
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, courseId, holeNumber])
+  @@index([userId, courseId])
+}
+
+/// Reference courses for score estimation
+model ReferenceCourse {
+  id              String  @id @default(cuid())
+  name            String
+  location        String?
+  lengthMeter     Int
+  par             Int
+  courseRating    Float
+  slopeRating     Int
+  difficulty      String?
+  characteristics Json?
+
+  @@index([name])
+}
+
+/// Score estimation cache per player per course
+model ScoreEstimate {
+  id             String   @id @default(cuid())
+  userId         String
+  courseId       String
+  expectedScore  Int
+  scoreRangeLow  Int
+  scoreRangeHigh Int
+  confidence     Int
+  breakdown      Json?
+  reasoning      String[] @default([])
+  generatedAt    DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, courseId])
+  @@index([userId])
+}
+
+/// Unified Skill Index cache per player
+model UnifiedSkillIndex {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  // Core SG dimensions
+  sgOtt  Float
+  sgApp  Float
+  sgArg  Float
+  sgPutt Float
+
+  // Biomechanical
+  ballSpeedScore   Float
+  consistencyScore Float
+
+  // Mental / contextual
+  pressureScore      Float
+  trainingEfficiency Float
+  trendMomentum      Float
+
+  // Composite
+  totalUsi          Float
+  estimatedHandicap Float
+  estimatedCategory String
+
+  // Uncertainty (JSON object with std dev per dimension)
+  uncertaintyJson Json
+
+  // External comparison
+  vsTourAvgPct Float
+  dataGolfDgId Int?
+
+  updatedAt DateTime               @updatedAt
+  User      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  snapshots UnifiedSkillSnapshot[]
+}
+
+/// Historical USI snapshots for trend analysis
+model UnifiedSkillSnapshot {
+  id        String   @id @default(cuid())
+  userId    String
+  createdAt DateTime @default(now())
+
+  // Core SG dimensions
+  sgOtt  Float
+  sgApp  Float
+  sgArg  Float
+  sgPutt Float
+
+  // Biomechanical
+  ballSpeedScore   Float
+  consistencyScore Float
+
+  // Mental / contextual
+  pressureScore      Float
+  trainingEfficiency Float
+  trendMomentum      Float
+
+  // Composite
+  totalUsi          Float
+  estimatedHandicap Float
+  estimatedCategory String
+
+  vsTourAvgPct Float
+
+  UnifiedSkillIndex   UnifiedSkillIndex? @relation(fields: [unifiedSkillIndexId], references: [id], onDelete: Cascade)
+  unifiedSkillIndexId String?
+  User                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+/// Learned regression coefficients: TrackMan / tests → SG prediction
+model SkillMapping {
+  id                     String @id @default(cuid())
+  category               String // OTT, APP, ARG, PUTT
+  intercept              Float
+  ballSpeedCoeff         Float?
+  offlineStdDevCoeff     Float?
+  smashFactorCoeff       Float?
+  spinConsistencyCoeff   Float?
+  launchConsistencyCoeff Float?
+
+  rSquared   Float
+  sampleSize Int
+  updatedAt  DateTime @updatedAt
+}
+
+/// AI-generated training prescription
+model TrainingPrescription {
+  id          String   @id @default(cuid())
+  userId      String
+  generatedAt DateTime @default(now())
+
+  focusAreas          String[]
+  weeklyHours         Float
+  suggestedFormulaIds String[]
+
+  predictedHcpChange Float
+  confidence         Float
+
+  gradientJson    Json
+  gapAnalysisJson Json
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, generatedAt])
+}
+
+/// Coaching Forecast — matematisk prognose for spillerutvikling.
+/// Hver forecast lagres ved opprettelse og kan senere sammenlignes mot faktisk
+/// utfall (backtesting). Full metodologi: docs/strategy/COACHING_FORECAST_METHODOLOGY.md.
+model CoachingForecast {
+  id          String   @id @default(cuid())
+  userId      String
+  generatedAt DateTime @default(now())
+
+  /// Versjon av metodologi/kalibreringstabell brukt ved generering.
+  /// Eksempel: "methodology-1.0/hoursTable-1.0.0"
+  modelVersion String
+
+  // ── Input: nåværende tilstand ────────────────────────────────────
+  currentScoreAvg   Float // snitt-score på Srixon-Tour-lignende baner
+  currentSgTotal    Float // bane-justert
+  currentSgOtt      Float?
+  currentSgApp      Float?
+  currentSgArg      Float?
+  currentSgPutt     Float?
+  currentCategory   String // A–K
+  currentAge        Int
+  currentHoursPerWk Float
+
+  // ── Input: mål ───────────────────────────────────────────────────
+  targetScoreAvg  Float
+  targetCategory  String // A–K
+  deadline        DateTime
+  avgCourseRating Float // for score↔SG-konvertering
+  avgSlopeRating  Int
+
+  // ── Output: SG-delta og fordeling ────────────────────────────────
+  requiredSgDelta     Float
+  deltaAllocationJson Json // { OTT: 0.6, APP: 1.2, ARG: 0.4, PUTT: 0.1 }
+
+  // ── Output: tidsbruk ─────────────────────────────────────────────
+  estimatedTotalHours    Float
+  estimatedHoursCi95Low  Float
+  estimatedHoursCi95High Float
+  estimatedHoursPerWeek  Float
+  hoursPerCategoryJson   Json // { OTT: { hours, ci95Low, ci95High }, ... }
+
+  // ── Output: Tek/Tak/Mental/Fys-fordeling ────────────────────────
+  /// Nested JSON: { OTT: { tek: 0.65, tak: 0.10, mental: 0.10, fys: 0.15 }, ... }
+  techTactMentalPhysJson Json
+
+  // ── Output: sannsynlighet ────────────────────────────────────────
+  probabilityOfSuccess Float // 0–1, Monte-Carlo-estimert
+  confidenceInterval95 Json // [lowerBound_sgDelta, upperBound_sgDelta]
+  monteCarloRuns       Int   @default(10000)
+
+  // ── Output: forklaring (for coach/spiller) ───────────────────────
+  primaryFocusCategory String // "APP" / "OTT" / etc.
+  rootCauseJson        Json // { APP: "blandet_tek_mental", ... }
+  recommendationsJson  Json // liste med konkrete øvelsestyper/økt-IDer
+
+  // ── Antakelser (eksplisitt lagret for audit) ─────────────────────
+  assumptionsJson Json // array av antakelser som ble aktive
+
+  // ── Backtesting (fylles inn ved deadline) ────────────────────────
+  actualScoreAvg          Float?
+  actualSgTotal           Float?
+  actualHoursSpent        Float?
+  actualOutcomeMeasuredAt DateTime?
+  withinCi95              Boolean? // traff forecast innenfor 95%-CI?
+  predictionErrorSg       Float? // actual − predicted, for kalibrering
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, generatedAt])
+  @@index([deadline])
+  @@index([actualOutcomeMeasuredAt])
+}
+
+/// Nasjonal skills-benchmark per segment (alder, kjønn, region, A–K-kategori).
+/// Aggregeres nattlig fra UnifiedSkillIndex for alle aktive norske spillere.
+/// Gir AK Golf Platform en unik nasjonal skills-atlas som ingen andre i Norge har.
+model NorwegianSkillBenchmark {
+  id       String            @id @default(cuid())
+  ageGroup NorwegianAgeGroup
+  gender   NorwegianGender
+  region   NorwegianRegion
+  category String // A–K fra masterdokumentet
+
+  /// Antall unike spillere som ligger bak dette benchmarket
+  sampleSize Int
+
+  /// SG-snitt per kategori
+  sgOttMean   Float
+  sgAppMean   Float
+  sgArgMean   Float
+  sgPuttMean  Float
+  sgTotalMean Float
+
+  /// Percentiler (p10/p25/p50/p75/p90) som JSON per SG-kategori
+  sgOttPercentiles   Json
+  sgAppPercentiles   Json
+  sgArgPercentiles   Json
+  sgPuttPercentiles  Json
+  sgTotalPercentiles Json
+
+  /// TrackMan-snitt (biomekanikk) — nullable dersom få i segmentet har TrackMan
+  ballSpeedMean     Float?
+  ballSpeedStdDev   Float?
+  driverCarryMean   Float?
+  ironCarryMean     Float?
+  clubSpeedMean     Float?
+  smashFactorMean   Float?
+  offlineStdDevMean Float?
+
+  /// 20 standardtester fra masterdokument seksjon 16
+  /// Format: { testId: { mean, stdDev, p50, p90, sampleSize } }
+  testResultsJson Json
+
+  /// Mental-score snitt (fra MentalScorecardEntry)
+  mentalScoreMean Float?
+
+  /// Metadata
+  dataAsOf  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  TalentScore TalentScore[]
+
+  @@unique([ageGroup, gender, region, category])
+  @@index([ageGroup, category])
+  @@index([region, category])
+}
+
+/// Talent-score per spiller — normalisert 0–100-score som kombinerer
+/// USI, progresjon, biomekanisk potensial, mental og kontekst.
+/// Brukes til talent-ID, landslagsutvelgelse og nasjonal ranking.
+model TalentScore {
+  id     String @id @default(cuid())
+  userId String @unique
+
+  /// Delkomponenter (alle 0–100, høyere = bedre)
+  currentUsiScore   Float
+  progressionScore  Float // forbedringsrate siste 90 dager
+  ceilingProjection Float // estimert maksnivå basert på lignende spillere
+  biomechanicScore  Float // TrackMan-baserte potensial-indikatorer
+  physicalScore     Float // alder, høyde, stabilitet
+  mentalScore       Float
+  contextScore      Float // treningstid + fasilitetstilgang
+
+  /// Samlet vektet score (0–100)
+  totalScore Float
+
+  /// Ranking
+  nationalRank Int?
+  ageGroupRank Int?
+  percentile   Float? // 0–100 i sitt segment
+
+  /// Prediksjoner
+  projectedHcp1Year  Float?
+  projectedHcp3Years Float?
+  projectedPeakHcp   Float?
+  projectedPeakAge   Int?
+
+  /// «Lignende spillere»-match (topp 5 userIds)
+  similarPlayerUserIds String[]
+  /// Format: { userId: similarity (0–1) }
+  similarityJson       Json
+
+  /// Top-3 styrker og svakheter (for UI)
+  strengthsJson       Json
+  weaknessesJson      Json
+  recommendationsJson Json
+
+  /// Referanse til segment-benchmark
+  benchmarkId String?
+
+  computedAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  User                    User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  NorwegianSkillBenchmark NorwegianSkillBenchmark? @relation(fields: [benchmarkId], references: [id])
+
+  @@index([totalScore, computedAt])
+  @@index([nationalRank])
+  @@index([ageGroupRank])
+}
+
+enum NorwegianAgeGroup {
+  U10
+  U12
+  U14
+  U16
+  U18
+  U21
+  SENIOR
+  VETERAN
+}
+
+enum NorwegianGender {
+  MALE
+  FEMALE
+  MIXED
+}
+
+/// Regioner basert på NGFs regioninndeling (forenklet)
+enum NorwegianRegion {
+  OST // Oslo/Viken
+  VEST // Vestland/Rogaland
+  MIDT // Trøndelag/Møre og Romsdal
+  NORD // Nordland/Troms/Finnmark
+  SOR // Agder/Telemark
+  ALL // Nasjonalt aggregat
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model TrainingLog {
+  id                   String                @id
+  userId               String
+  planSessionId        String?
+  date                 DateTime
+  completedAt          DateTime              @default(now())
+  durationMinutes      Int?
+  focusArea            String?
+  exercises            Json                  @default("[]")
+  notes                String?
+  rating               Int?
+  deviatedFromPlan     Boolean               @default(false)
+  deviationReason      String?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime
+  coachFeedback        String?
+  coachId              String?
+  primaryEnvironment   Int?
+  primaryLPhase        String?
+  primaryPressLevel    Int?
+  TrainingPlanSession  TrainingPlanSession?  @relation(fields: [planSessionId], references: [id])
+  User                 User                  @relation(fields: [userId], references: [id])
+  TrainingLogExercises TrainingLogExercise[]
+
+  @@index([planSessionId])
+  @@index([userId, date])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model TrainingPlan {
+  id                                  String               @id
+  studentId                           String
+  createdById                         String
+  title                               String
+  description                         String?
+  goals                               String?
+  periodType                          String
+  startDate                           DateTime             @db.Date
+  endDate                             DateTime             @db.Date
+  isActive                            Boolean              @default(true)
+  aiGenerated                         Boolean              @default(false)
+  periodizationPeriodId               String?
+  createdAt                           DateTime             @default(now())
+  updatedAt                           DateTime
+  groupId                             String?
+  User_TrainingPlan_createdByIdToUser User                 @relation("TrainingPlan_createdByIdToUser", fields: [createdById], references: [id])
+  User_TrainingPlan_studentIdToUser   User                 @relation("TrainingPlan_studentIdToUser", fields: [studentId], references: [id])
+  PeriodizationPeriod                 PeriodizationPeriod? @relation(fields: [periodizationPeriodId], references: [id], onDelete: SetNull)
+  TrainingGroup                       TrainingGroup?       @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  TrainingPlanWeek                    TrainingPlanWeek[]
+
+  @@index([studentId])
+  @@index([periodizationPeriodId])
+  @@index([groupId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model TrainingGroup {
+  id          String            @id
+  name        String
+  coachId     String
+  description String?
+  periodType  String            @default("grunnperiode")
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  Coach       User              @relation("TrainingGroupCoach", fields: [coachId], references: [id], onDelete: Cascade)
+  members     GroupMembership[]
+  plans       TrainingPlan[]
+
+  @@index([coachId])
+}
+
+model GroupMembership {
+  id            String        @id
+  groupId       String
+  userId        String
+  role          String        @default("PLAYER")
+  joinedAt      DateTime      @default(now())
+  TrainingGroup TrainingGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  User          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
+  @@index([groupId])
+  @@index([userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model TrainingPlanSession {
+  id               String           @id
+  weekId           String
+  dayOfWeek        Int
+  title            String
+  description      String?
+  durationMinutes  Int?
+  focusArea        String?
+  exercises        Json             @default("[]")
+  sortOrder        Int              @default(0)
+  createdAt        DateTime         @default(now())
+  facilityId       String?
+  TrainingLog      TrainingLog[]
+  Facility         Facility?        @relation(fields: [facilityId], references: [id])
+  TrainingPlanWeek TrainingPlanWeek @relation(fields: [weekId], references: [id], onDelete: Cascade)
+
+  @@index([weekId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model TrainingPlanWeek {
+  id                  String                @id
+  planId              String
+  weekNumber          Int
+  weekStart           DateTime              @db.Date
+  focus               String?
+  volumeLabel         String?
+  createdAt           DateTime              @default(now())
+  TrainingPlanSession TrainingPlanSession[]
+  TrainingPlan        TrainingPlan          @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId])
+}
+
+model UserCalendarSubscription {
+  id               String   @id
+  userId           String
+  googleCalendarId String
+  displayName      String?
+  backgroundColor  String?
+  enabled          Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  User             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, googleCalendarId])
+  @@index([userId])
+}
+
+model TrainingSubscription {
+  id                    String   @id
+  userId                String   @unique
+  stripeSubscriptionId  String   @unique
+  status                String
+  currentPeriodStart    DateTime
+  currentPeriodEnd      DateTime
+  sessionsPerMonth      Int      @default(4)
+  sessionsUsedThisMonth Int      @default(0)
+  lastResetAt           DateTime @default(now())
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime
+  User                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model User {
+  id                                          String                     @id
+  supabaseId                                  String?                    @unique
+  name                                        String?
+  email                                       String?                    @unique
+  emailVerified                               DateTime?
+  image                                       String?
+  phone                                       String?
+  role                                        UserRole                   @default(STUDENT)
+  calendarToken                               String?                    @unique
+  googleCalendarTokens                        Json?
+  googleCalendarId                            String?
+  password                                    String?
+  notionPageId                                String?
+  createdAt                                   DateTime                   @default(now())
+  updatedAt                                   DateTime
+  activeCoachingCustomer                      Boolean                    @default(false)
+  stripeCustomerId                            String?                    @unique
+  stripeSubscriptionId                        String?
+  subscriptionExpiresAt                       DateTime?
+  subscriptionSource                          SubscriptionSource?
+  subscriptionTier                            SubscriptionTier           @default(VISITOR)
+  isActive                                    Boolean                    @default(true)
+  videoStorageLimit                           BigInt                     @default(2147483648)
+  videoStorageUsed                            BigInt                     @default(0)
+  noShowCount                                 Int                        @default(0)
+  noShowBlockedUntil                          DateTime?
+  defaultPaymentMethodId                      String?
+  smsOptIn                                    Boolean                    @default(false)
+  lastActiveAt                                DateTime?
+  onboardingGoals                             Json?
+  weeklyEmailSentAt                           DateTime?
+  winBackEmailStep                            Int                        @default(0)
+  onboardingCompletedAt                       DateTime?
+  welcomeEmailStep                            Int                        @default(0)
+  checkoutAbandonedAt                         DateTime?
+  portalMonthlyAiCount                        Int                        @default(0)
+  portalMonthlyLogCount                       Int                        @default(0)
+  portalUsageResetDate                        DateTime?
+  aiInsightGeneratedAt                        DateTime?
+  lastCheckoutSessionId                       String?
+  latestAiInsight                             Json?
+  unitPreference                              UnitSystem                 @default(METRIC)
+  AILearning                                  AILearning[]
+  ApprovedResponses                           AIResponse[]               @relation("ApprovedResponses")
+  Account                                     Account[]
+  AgentConfig                                 AgentConfig[]
+  AppSubscription                             AppSubscription[]
+  Booking                                     Booking[]
+  Challenge                                   Challenge[]
+  ChallengeParticipant                        ChallengeParticipant[]
+  CoachingSession                             CoachingSession[]
+  CommunicationLog                            CommunicationLog[]
+  CustomerPaymentPreference                   CustomerPaymentPreference?
+  DegradationTracking                         DegradationTracking[]
+  ExerciseDefinition                          ExerciseDefinition[]
+  FacilityActivityApprovedBy                  FacilityActivity[]         @relation("FacilityActivityApprovedBy")
+  FacilityActivityCreatedBy                   FacilityActivity[]         @relation("FacilityActivityCreatedBy")
+  Friendship_FriendOf                         Friendship[]               @relation("FriendOf")
+  Friendship_UserFriends                      Friendship[]               @relation("UserFriends")
+  GamePlayer                                  GamePlayer[]
+  GameSessionCreator                          GameSession[]              @relation("GameSessionCreator")
+  Goal                                        Goal[]
+  HandicapEntry                               HandicapEntry[]
+  Instructor                                  Instructor?
+  Message                                     Message[]
+  Notification                                Notification[]
+  PeriodizationPeriod                         PeriodizationPeriod[]
+  PlayerAchievement                           PlayerAchievement[]
+  PlayerBag                                   PlayerBag?
+  PlayerTournamentPlan                        PlayerTournamentPlan[]
+  Round                                       Round[]
+  RoundStats                                  RoundStats[]
+  Session                                     Session[]
+  ShotTypeLPhase                              ShotTypeLPhase[]
+  SubscriptionQuota                           SubscriptionQuota?
+  SwingVideo                                  SwingVideo[]
+  TestResult                                  TestResult[]
+  Tournament                                  Tournament[]
+  TournamentPrep                              TournamentPrep[]
+  TrackmanSession                             TrackmanSession[]
+  TrackManImport                              TrackManImport[]
+  TrackManShotData                            TrackManShotData[]
+  TrackManSessionAnalytics                    TrackManSessionAnalytics[]
+  PlayerGoals                                 PlayerGoals[]
+  PlayerMetrics                               PlayerMetrics?
+  ClubDispersionData                          ClubDispersionData[]
+  MentalScorecardEntry                        MentalScorecardEntry[]
+  MentalProfile                               MentalProfile?
+  CourseNotes                                 CourseNotes[]
+  ScoreEstimate                               ScoreEstimate[]
+  UnifiedSkillIndex                           UnifiedSkillIndex?
+  UnifiedSkillSnapshot                        UnifiedSkillSnapshot[]
+  TrainingPrescription                        TrainingPrescription[]
+  CoachingForecast                            CoachingForecast[]
+  TalentScore                                 TalentScore?
+  TrainingLog                                 TrainingLog[]
+  TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
+  TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
+  TrainingSubscription                        TrainingSubscription?
+  UserCalendarSubscription                    UserCalendarSubscription[]
+  AssignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")
+  UserExerciseBank                            UserExerciseBank[]
+  UserGolfId                                  UserGolfId?
+  UserSubscription                            UserSubscription[]
+  WaitlistEntry                               WaitlistEntry[]
+  Conversation                                Conversation[]             @relation("ConversationParticipants")
+  AdminTaskCreated                            AdminTask[]                @relation("AdminTaskCreator")
+  UserPreferences                             UserPreferences?
+  UserCapability                              UserCapability[]
+  CoachRelations                              CoachPlayerRelation[]      @relation("CoachRelations")
+  PlayerRelations                             CoachPlayerRelation[]      @relation("PlayerRelations")
+  TrainingGroups                              TrainingGroup[]            @relation("TrainingGroupCoach")
+  GroupMemberships                            GroupMembership[]
+  dataConsentAt                               DateTime?
+  dataConsentScope                            Json?
+}
+
+model UserCapability {
+  id         String     @id @default(cuid())
+  userId     String
+  capability Capability
+  grantedBy  String
+  grantedAt  DateTime   @default(now())
+  expiresAt  DateTime?
+  note       String?
+  User       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, capability])
+  @@index([userId])
+  @@index([capability])
+}
+
+enum CoachPlayerStatus {
+  ACTIVE
+  PAUSED
+  ENDED
+}
+
+model CoachPlayerRelation {
+  id           String            @id @default(cuid())
+  coachUserId  String
+  playerUserId String
+  status       CoachPlayerStatus @default(ACTIVE)
+  startedAt    DateTime          @default(now())
+  endedAt      DateTime?
+  note         String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  Coach        User              @relation("CoachRelations", fields: [coachUserId], references: [id], onDelete: Cascade)
+  Player       User              @relation("PlayerRelations", fields: [playerUserId], references: [id], onDelete: Cascade)
+
+  @@unique([coachUserId, playerUserId])
+  @@index([coachUserId, status])
+  @@index([playerUserId, status])
+}
+
+model CapabilityChangeLog {
+  id          String                 @id @default(cuid())
+  userId      String
+  capability  Capability
+  action      CapabilityChangeAction
+  performedBy String
+  performedAt DateTime               @default(now())
+  reason      String?
+
+  @@index([userId, performedAt])
+  @@index([performedBy])
+}
+
+model UserPreferences {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  defaultViewPerScreen  Json     @default("{}")
+  dashboardWidgetLayout Json     @default("{}")
+  hiddenWidgets         Json     @default("[]")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  User                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model UserExerciseBank {
+  id                 String             @id
+  userId             String
+  exerciseId         String
+  isFavorite         Boolean            @default(false)
+  usageCount         Int                @default(0)
+  lastUsedAt         DateTime?
+  personalNotes      String?
+  createdAt          DateTime           @default(now())
+  ExerciseDefinition ExerciseDefinition @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  User               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, exerciseId])
+  @@index([userId])
+}
+
+model UserSubscription {
+  id                    String             @id
+  userId                String
+  packageId             String
+  stripeSubscriptionId  String?            @unique
+  status                SubscriptionStatus @default(ACTIVE)
+  sessionsUsedThisMonth Int                @default(0)
+  billingPeriodStart    DateTime?
+  billingPeriodEnd      DateTime?
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime
+  CoachingPackage       CoachingPackage    @relation(fields: [packageId], references: [id])
+  User                  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([userId])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model WaitlistEntry {
+  id         String         @id
+  bookingId  String
+  studentId  String
+  position   Int
+  status     WaitlistStatus @default(WAITING)
+  notifiedAt DateTime?
+  expiresAt  DateTime?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime
+  Booking    Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  User       User           @relation(fields: [studentId], references: [id])
+
+  @@unique([bookingId, studentId])
+  @@index([status])
+}
+
+model ShotTypeLPhase {
+  id       String   @id @default(cuid())
+  userId   String
+  shotType String
+  lPhase   String
+  setAt    DateTime @default(now())
+  setBy    String?
+  notes    String?
+  User     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, shotType])
+}
+
+model TrainingLogExercise {
+  id            String      @id @default(cuid())
+  trainingLogId String
+  exerciseId    String?
+  name          String
+  plannedSets   Int?
+  plannedReps   Int?
+  actualSets    Int?
+  actualReps    Int?
+  lPhase        String?
+  clubSpeed     Int?
+  environment   Int?
+  pressLevel    Int?
+  successRate   Float?
+  score         Int?
+  notes         String?
+  coachFeedback String?
+  sortOrder     Int         @default(0)
+  TrainingLog   TrainingLog @relation(fields: [trainingLogId], references: [id], onDelete: Cascade)
+
+  @@index([trainingLogId])
+}
+
+model DegradationTracking {
+  id              String   @id @default(cuid())
+  userId          String
+  shotType        String
+  technicalChange String
+  tekScore        Float?
+  slagScore       Float?
+  spillScore      Float?
+  m0Score         Float?
+  m1Score         Float?
+  m2Score         Float?
+  m3Score         Float?
+  startedAt       DateTime @default(now())
+  lastUpdated     DateTime @updatedAt
+  User            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, shotType])
+}
+
+/// Coach Hub: Unified inbox for all communication channels
+model UnifiedMessage {
+  id           String       @id @default(cuid())
+  channel      String
+  direction    String
+  externalId   String?
+  senderName   String?
+  senderHandle String?
+  subject      String?
+  content      String
+  receivedAt   DateTime     @default(now())
+  threadId     String?
+  assignedToId String?
+  status       String       @default("PENDING")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  AIResponses  AIResponse[]
+  AssignedTo   User?        @relation("AssignedMessages", fields: [assignedToId], references: [id])
+
+  @@index([status])
+  @@index([assignedToId])
+}
+
+/// Coach Hub: AI-generated responses for unified inbox
+model AIResponse {
+  id           String         @id @default(cuid())
+  messageId    String
+  draftContent String
+  finalContent String?
+  confidence   Float?
+  category     String?
+  modelUsed    String?
+  autoSent     Boolean        @default(false)
+  wasEdited    Boolean        @default(false)
+  approvedById String?
+  approvedAt   DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  ApprovedBy   User?          @relation("ApprovedResponses", fields: [approvedById], references: [id])
+  Message      UnifiedMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@index([messageId])
+}
+
+/// Coach Hub: AI learning patterns from user interactions
+model AILearning {
+  id         String    @id @default(cuid())
+  userId     String
+  category   String
+  pattern    String
+  response   String
+  confidence Float     @default(0.5)
+  usageCount Int       @default(0)
+  lastUsed   DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  User       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, category])
+}
+
+model Facility {
+  id                        String                      @id @default(cuid())
+  locationId                String
+  name                      String
+  slug                      String                      @unique
+  description               String?
+  capacity                  Int?
+  sortOrder                 Int                         @default(0)
+  isActive                  Boolean                     @default(true)
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  Booking                   Booking[]
+  Location                  Location                    @relation(fields: [locationId], references: [id])
+  FacilityActivity          FacilityActivity[]
+  InstructorFacilityDefault InstructorFacilityDefault[]
+  TrainingPlanSession       TrainingPlanSession[]
+}
+
+model FacilityActivity {
+  id             String                 @id @default(cuid())
+  facilityId     String
+  title          String
+  description    String?
+  activityType   FacilityActivityType
+  startTime      DateTime
+  endTime        DateTime
+  isRecurring    Boolean                @default(false)
+  recurrenceRule String?
+  createdById    String
+  approvedById   String?
+  status         FacilityActivityStatus @default(CONFIRMED)
+  conflictNote   String?
+  color          String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  ApprovedBy     User?                  @relation("FacilityActivityApprovedBy", fields: [approvedById], references: [id])
+  CreatedBy      User                   @relation("FacilityActivityCreatedBy", fields: [createdById], references: [id])
+  Facility       Facility               @relation(fields: [facilityId], references: [id])
+
+  @@index([facilityId, startTime])
+  @@index([status])
+}
+
+model InstructorFacilityDefault {
+  id            String       @id @default(cuid())
+  instructorId  String
+  facilityId    String
+  serviceTypeId String?
+  priority      Int          @default(0)
+  Facility      Facility     @relation(fields: [facilityId], references: [id])
+  Instructor    Instructor   @relation(fields: [instructorId], references: [id])
+  ServiceType   ServiceType? @relation(fields: [serviceTypeId], references: [id])
+
+  @@unique([instructorId, facilityId, serviceTypeId])
+}
+
+model Course {
+  id           String        @id
+  name         String
+  location     String?
+  country      String        @default("NO")
+  par          Int
+  totalLength  Int?
+  courseRating Float?
+  slopeRating  Int?
+  latitude     Float?
+  longitude    Float?
+  gpsData      Json?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime
+  GameSession  GameSession[]
+  Hole         Hole[]
+  Round        Round[]
+
+  @@index([name])
+  @@index([country])
+}
+
+model Hole {
+  id          String       @id
+  courseId    String
+  holeNumber  Int
+  par         Int
+  handicap    Int?
+  lengthMeter Int
+  teeColor    String       @default("yellow")
+  latitude    Float?
+  longitude   Float?
+  greenLat    Float?
+  greenLon    Float?
+  strategy    Json?
+  Course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  HoleResult  HoleResult[]
+  Shot        Shot[]
+
+  @@unique([courseId, holeNumber, teeColor])
+  @@index([courseId])
+}
+
+model Round {
+  id              String       @id
+  userId          String
+  courseId        String
+  date            DateTime
+  startTime       DateTime?
+  endTime         DateTime?
+  teeColor        String       @default("yellow")
+  weather         String?
+  windSpeed       Int?
+  windDir         String?
+  temperature     Int?
+  totalScore      Int?
+  scoreToPar      Int?
+  sgTotal         Float?
+  sgOffTheTee     Float?
+  sgApproach      Float?
+  sgShortGame     Float?
+  sgPutting       Float?
+  fairwaysHit     Int?
+  fairwaysTotal   Int?
+  girCount        Int?
+  totalPutts      Int?
+  decadeScore     Float?
+  preRoutineScore Float?
+  pressureLevel   Int?
+  isComplete      Boolean      @default(false)
+  source          String       @default("MANUAL")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime
+  gameSessionId   String?
+  HoleResult      HoleResult[]
+  Course          Course       @relation(fields: [courseId], references: [id])
+  GameSession     GameSession? @relation(fields: [gameSessionId], references: [id])
+  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+  @@index([courseId])
+}
+
+model GameSession {
+  id          String       @id
+  name        String?
+  courseId    String
+  date        DateTime
+  teeColor    String       @default("yellow")
+  format      GameFormat   @default(STROKEPLAY)
+  createdById String
+  joinCode    String       @unique
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime
+  Players     GamePlayer[]
+  Course      Course       @relation(fields: [courseId], references: [id])
+  CreatedBy   User         @relation("GameSessionCreator", fields: [createdById], references: [id])
+  Rounds      Round[]
+}
+
+model GamePlayer {
+  id              String      @id
+  gameSessionId   String
+  userId          String
+  displayName     String?
+  playingHandicap Int?
+  joinedAt        DateTime    @default(now())
+  GameSession     GameSession @relation(fields: [gameSessionId], references: [id], onDelete: Cascade)
+  User            User        @relation(fields: [userId], references: [id])
+
+  @@unique([gameSessionId, userId])
+}
+
+model HoleResult {
+  id                   String   @id
+  roundId              String
+  holeId               String
+  holeNumber           Int
+  par                  Int
+  score                Int
+  scoreToPar           Int
+  putts                Int
+  fairwayHit           Boolean?
+  gir                  Boolean
+  upAndDown            Boolean?
+  sandSave             Boolean?
+  penalty              Int      @default(0)
+  sgTotal              Float?
+  sgTee                Float?
+  sgApproach           Float?
+  sgShortGame          Float?
+  sgPutting            Float?
+  decadeTargetScore    Float?
+  decadeActualVsTarget Float?
+  strategyFollowed     Boolean?
+  Hole                 Hole     @relation(fields: [holeId], references: [id])
+  Round                Round    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  Shot                 Shot[]
+
+  @@unique([roundId, holeNumber])
+  @@index([roundId])
+}
+
+model Shot {
+  id                  String     @id
+  holeResultId        String
+  holeId              String
+  shotNumber          Int
+  fromLie             String
+  fromDistance        Float
+  toLie               String
+  toDistance          Float
+  club                String
+  offline             Float?
+  carryDistance       Float?
+  totalDistance       Float?
+  expectedBefore      Float
+  expectedAfter       Float
+  strokesGained       Float
+  sgCategory          String
+  targetDirection     String?
+  actualDirection     String?
+  decadeDecision      String?
+  preRoutineCompleted Boolean?
+  confidenceLevel     Int?
+  trackmanShotId      String?    @unique
+  Hole                Hole       @relation(fields: [holeId], references: [id])
+  HoleResult          HoleResult @relation(fields: [holeResultId], references: [id], onDelete: Cascade)
+
+  @@index([holeResultId])
+  @@index([sgCategory])
+}
+
+model PlayerBag {
+  id     String       @id
+  userId String       @unique
+  User   User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clubs  PlayerClub[]
+}
+
+model PlayerClub {
+  id         String    @id
+  bagId      String
+  name       String
+  brand      String?
+  model      String?
+  loft       Float?
+  avgCarry   Float?
+  avgTotal   Float?
+  avgOffline Float?
+  shotCount  Int       @default(0)
+  sortOrder  Int       @default(0)
+  PlayerBag  PlayerBag @relation(fields: [bagId], references: [id], onDelete: Cascade)
+
+  @@index([bagId])
+}
+
+model Friendship {
+  id        String           @id
+  userId    String
+  friendId  String
+  status    FriendshipStatus @default(PENDING)
+  createdAt DateTime         @default(now())
+  Friend    User             @relation("FriendOf", fields: [friendId], references: [id], onDelete: Cascade)
+  User      User             @relation("UserFriends", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, friendId])
+}
+
+model Challenge {
+  id           String                 @id
+  createdById  String
+  title        String
+  type         ChallengeType
+  metric       String
+  startDate    DateTime
+  endDate      DateTime
+  isPublic     Boolean                @default(false)
+  createdAt    DateTime               @default(now())
+  Creator      User                   @relation(fields: [createdById], references: [id])
+  Participants ChallengeParticipant[]
+}
+
+model ChallengeParticipant {
+  id           String    @id
+  challengeId  String
+  userId       String
+  currentValue Float?
+  rank         Int?
+  Challenge    Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  User         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([challengeId, userId])
+}
+
+model UserGolfId {
+  id        String  @id
+  userId    String  @unique
+  golfboxId String?
+  clubName  String?
+  handicap  Float?
+  User      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum AgentStatus {
+  ACTIVE
+  INACTIVE
+  DEPRECATED
+}
+
+enum AgentTeam {
+  LEADERSHIP
+  DEV
+  OPS
+  COACHING
+  CONTENT
+}
+
+enum BillingType {
+  RECURRING
+  ONE_TIME
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  NO_SHOW
+  COMPLETED
+}
+
+enum CoachingBookingType {
+  FIXED
+  SELF_BOOK
+  DROP_IN
+  NO_BOOKING
+}
+
+enum CoachingSubscriptionTier {
+  PERFORMANCE_PRO
+  PERFORMANCE
+  START
+  PORTAL
+}
+
+enum CommunicationType {
+  EMAIL
+  SMS
+  NOTE
+  CALL
+}
+
+enum ContentStatus {
+  DRAFT
+  REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContentType {
+  SOME_POST
+  NEWSLETTER
+  ARTICLE
+}
+
+enum CustomerType {
+  PRIVATE
+  BUSINESS
+}
+
+enum DashboardRole {
+  ADMIN
+  INSTRUCTOR
+  VOLUNTEER
+  CLUB_REP
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+}
+
+enum GapOfferStatus {
+  OPEN
+  CLAIMED
+  EXPIRED
+}
+
+enum GoalCategory {
+  SCORE
+  PHYSICAL
+  MENTAL
+  TOURNAMENT
+  PROCESS
+}
+
+enum GoalStatus {
+  ACTIVE
+  COMPLETED
+  PAUSED
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_CANCELLED
+  PLAN_READY
+  TOURNAMENT_REMINDER
+  COACHING_SUMMARY
+  COACHING_SUMMARY_DRAFT
+  TRAINING_REMINDER
+  ACHIEVEMENT_UNLOCKED
+  GENERAL
+  BOOKING_REMINDER
+  PLAN_GENERATED
+  AI_INSIGHT
+}
+
+enum FocusArea {
+  TEE_TOTAL
+  APPROACH
+  SHORT_GAME
+  PUTTING
+}
+
+enum PaymentMethod {
+  STRIPE
+  VIPPS
+  INVOICE
+  NONE
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  PARTIALLY_REFUNDED
+  FAILED
+}
+
+enum PricingRuleType {
+  LAST_MINUTE
+  PEAK_HOURS
+  SEASONAL
+  GAP_FILLER
+}
+
+enum RecurrenceType {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+enum RetentionStatus {
+  ACTIVE
+  AT_RISK
+  CHURNED
+}
+
+enum RoundSource {
+  MANUAL
+  UPGAME
+  ARCCOS
+}
+
+enum ServiceCategory {
+  INDIVIDUAL
+  GROUP
+  VTG_COURSE
+  SIMULATOR
+  PLAYING_LESSON
+  DIGITAL
+}
+
+enum SubscriptionSource {
+  COACHING
+  STRIPE
+  MANUAL
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+  TRIALING
+  CANCELLED
+  EXPIRED
+}
+
+enum SubscriptionTier {
+  VISITOR
+  ACADEMY
+  STARTER
+  PRO
+  ELITE
+}
+
+enum UserRole {
+  ADMIN
+  INSTRUCTOR
+  STUDENT
+  INVITED
+}
+
+enum CapabilityChangeAction {
+  GRANT
+  REVOKE
+  EXPIRE
+}
+
+enum Capability {
+  // Mission Board og coaching
+  MB_VIEW_OWN_PLAYERS
+  MB_VIEW_ALL_PLAYERS
+  MB_EDIT_TRAINING_PLAN
+  MB_REGISTER_TEST_RESULT
+  MB_APPROVE_CATEGORY_PROMOTION
+  MB_CREATE_COACHING_SESSION
+  MB_VIEW_COACHING_SIGNALS
+
+  // Intern scouting-pool
+  SCOUTING_VIEW
+  SCOUTING_VIEW_JUNIORS
+  SCOUTING_LINK_TO_USER
+  SCOUTING_EXPORT_AGGREGATED
+
+  // Spillerkartlegging
+  KARTLEGGING_VIEW_OWN_PROFILE
+  KARTLEGGING_VIEW_ANY_AK_PLAYER
+  KARTLEGGING_EDIT_ASSIGNMENTS
+
+  // Turneringer
+  TOURNAMENT_VIEW
+  TOURNAMENT_CREATE
+  TOURNAMENT_MANAGE_PREP
+
+  // Booking og kalender
+  BOOKING_VIEW_OWN
+  BOOKING_VIEW_ALL
+  BOOKING_MANAGE
+  BOOKING_RESCHEDULE_OTHER_COACHES
+
+  // Innhold (markedsside)
+  CONTENT_VIEW
+  CONTENT_EDIT
+  CONTENT_PUBLISH
+
+  // Økonomi
+  FINANCE_VIEW
+  FINANCE_EXPORT
+  FINANCE_REFUND
+
+  // Brukeradministrasjon
+  USERS_VIEW
+  USERS_INVITE
+  USERS_ASSIGN_ROLE
+  USERS_ASSIGN_CAPABILITIES
+  USERS_DEACTIVATE
+
+  // GDPR og compliance
+  GDPR_VIEW_REQUESTS
+  GDPR_HANDLE_REQUESTS
+  GDPR_VIEW_AUDIT_LOG
+  GDPR_EXPORT_USER_DATA
+
+  // System
+  SYSTEM_SETTINGS
+  SYSTEM_VIEW_LOGS
+  SYSTEM_RUN_CRON
+}
+
+enum UnitSystem {
+  IMPERIAL
+  METRIC
+}
+
+enum WaitlistStatus {
+  WAITING
+  NOTIFIED
+  CONFIRMED
+  EXPIRED
+  CANCELLED
+}
+
+enum FacilityActivityType {
+  TOURNAMENT_CLUB
+  TOURNAMENT_REGION
+  TOURNAMENT_JUNIOR
+  VTG_COURSE
+  GFGK_JUNIOR
+  AK_GOLF
+  AK_GOLF_JUNIOR_ACADEMY
+  SPONSOR_EVENT
+  INTERNAL
+  CLOSURE
+  OTHER
+}
+
+enum FacilityActivityStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum GameFormat {
+  STROKEPLAY
+  STABLEFORD
+  MATCHPLAY
+  BESTBALL
+  SCRAMBLE
+}
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  BLOCKED
+}
+
+enum ChallengeType {
+  HANDICAP
+  PUTTING
+  SG
+  DECADE
+  ROUNDS
+  STREAK
+  CUSTOM
+}
+
+// ── Admin Focus Tasks ──────────────────────────────────────
+
+model AdminTask {
+  id          String          @id
+  title       String
+  description String?
+  division    AdminDivision
+  status      AdminTaskStatus @default(TODO)
+  priority    AdminPriority   @default(NORMAL)
+  dueDate     DateTime?
+  createdById String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime
+
+  CreatedBy User @relation("AdminTaskCreator", fields: [createdById], references: [id])
+
+  @@index([division])
+  @@index([status])
+}
+
+enum AdminDivision {
+  COACHING
+  JUNIOR
+  GFGK
+}
+
+enum AdminTaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum AdminPriority {
+  URGENT
+  IMPORTANT
+  NORMAL
+}

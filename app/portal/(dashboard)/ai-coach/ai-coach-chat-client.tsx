@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 
 import { ChatInterface, ContextPanel, ChatHistory, type ChatSession, type Message } from "@/components/portal/ai-coach";
 import type { ChatContext } from "./actions";
-import { MonoLabel, GlassPanel } from "@/components/portal/patterns";
 
 interface AiCoachChatClientProps {
   context: ChatContext;
