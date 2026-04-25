@@ -8,6 +8,37 @@
 
 ---
 
+## 2026-04-25 — Fasilitets-bookingkart GFGK (Kart/Kalender/Liste-visninger)
+
+**Jobbet med:** Tre nye visninger på `/admin/fasiliteter` for booking-oversikt: interaktivt flyfoto-kart, ukekalender og bookingliste — alle bygd på den eksisterende `FacilityActivity`/`Booking`-datamodellen og det eksisterende `/api/portal/admin/facility-overview`-endepunktet.
+
+- **`FacilityMap`** — flyfoto av GFGK med 5 SVG-polygon-soner (Driving Range, Puttinggreen, Nærspillsområde, Klubbhus, 9-hullsbanen). Fargekoding pr belegg (lime = ledig, oransje = nesten fullt, rød = fullt). Klikk åpner mørkt glass-detaljpanel med dagens bookinger + Book-nå-knapp.
+- **`FacilityCalendar`** — venstre dagvelger (7 dager fra i dag) + høyre timeplan 08-20 med fasiliteter som kolonner og bookinger som absolutt-posisjonerte blokker (kilde-fargede: BOOKING/ACTIVITY/TRAINING_PLAN).
+- **`FacilityList`** — bookinger gruppert per fasilitet med tid-range, tittel og kilde-badge (Coaching/Aktivitet/Gruppeplan).
+- **`AddActivityModal`** — modal med felter Fasilitet, Person/Gruppe, Type-pills, Dato, Starttid, Varighet-pills. Kaller eksisterende `createActivity`-server action. Mappe-typer: Coaching → LESSON, Trening → PRACTICE, Gruppetime → EVENT, Junior → OTHER, Runde → TOURNAMENT.
+- **`fasiliteter-client.tsx`** rebygd: pill-tab Kart/Kalender/Liste øverst, beholder MCTopbar + stats-grid. Modal styres globalt fra klienten.
+
+**Beslutninger som avviker fra opprinnelig spec:**
+- Sti: `app/admin/(authed)/fasiliteter/` (ikke `app/portal/(dashboard)/admin/fasiliteter/` — sistnevnte er ikke en gyldig rute).
+- Datamodell: gjenbrukte eksisterende `Facility` + `FacilityActivity` (ingen ny `FacilityBooking`-modell, ingen ny migrasjon — domenet finnes allerede).
+- Design: Heritage (Material Symbols, `#fdf9f0`, `#154212`, `#d2f000`) per `.claude/rules/design-system.md` — ikke Lucide / `#F5F7F5`.
+- Komponenter i `components/portal/admin/facility/` (ikke `components/admin/`) per CLAUDE.md-konvensjon.
+
+**Nøkkelfiler:**
+- `components/portal/admin/facility/{FacilityMap,FacilityCalendar,FacilityList,AddActivityModal,types}.tsx` + `index.ts`
+- `app/admin/(authed)/fasiliteter/fasiliteter-client.tsx` (omskrevet med tab-navigasjon)
+- `.claude/rules/component-library.md` (ny seksjon: Mission Control Fasilitet)
+
+**Verifisering:** `tsc --noEmit` rent for alle nye filer. `eslint` rent. Pre-eksisterende feil andre steder i repo ikke adressert.
+
+**Neste steg:**
+1. **Anders må manuelt plassere flyfotoet** — lagre `IMG_3470.jpeg` til `public/admin/gfgk-aerial.jpg`. Uten dette viser kartet bare grønt overlay.
+2. Test mot dev-server: `npm run dev` → `/admin/fasiliteter`. Sjekk at sone-belegg-tellinger stemmer mot `getTodayBookingCounts`.
+3. Vurder å justere SVG-polygon-koordinater i `types.ts` (`GFGK_MAP_ZONES`) hvis sonene ikke matcher fotografiet pikselperfekt.
+4. **Pre-eksisterende bug:** `actions.ts` validerer `activityType` mot `["PRACTICE","LESSON",...]` mens Prisma-enum bruker `AK_GOLF, TOURNAMENT_CLUB, ...`. Bør harmoniseres separat.
+
+---
+
 ## 2026-04-25 — FEATURE_INVENTORY.md + git-opprydding
 
 **Jobbet med:** Komplett kartlegging av alle sider, API-ruter og backend-moduler i plattformen.

@@ -44,6 +44,14 @@ Gjenbruk eksisterende — aldri bygg duplikater.
 | PastBookingList | components/portal/booking/past-booking-list.tsx | Tidligere bookinger |
 | CancellationRulesCard | components/portal/booking/cancellation-rules-card.tsx | Avbestillingsregler |
 
+## Mission Control Fasilitet-komponenter
+| Komponent | Fil | Bruk |
+|---|---|---|
+| FacilityMap | components/portal/admin/facility/FacilityMap.tsx | Interaktivt GFGK-flyfoto med klikkbare SVG-soner og glass-detaljpanel |
+| FacilityCalendar | components/portal/admin/facility/FacilityCalendar.tsx | 7-dagers velger + timeplan 08-20 per fasilitet |
+| FacilityList | components/portal/admin/facility/FacilityList.tsx | Bookinger gruppert per fasilitet med kilde-badges |
+| AddActivityModal | components/portal/admin/facility/AddActivityModal.tsx | Modal for ny aktivitet (Fasilitet, Person, Type, Dato, Tid, Varighet) |
+
 ## Portal Layout-komponenter
 | Komponent | Fil | Bruk |
 |---|---|---|
