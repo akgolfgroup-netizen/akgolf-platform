@@ -71,7 +71,9 @@ Gjenbruk eksisterende — aldri bygg duplikater.
 ## Admin Fasiliteter-komponenter (CoachHQ — GFGK fasilitets-bookingkart)
 | Komponent | Fil | Bruk |
 |---|---|---|
-| FacilityMap | components/admin/FacilityMap.tsx | Flyfoto-kart med klikkbare SVG-soner per fasilitet, kapasitets-fargekoding, glasspanel for booking-detaljer |
+| FacilityMap | components/admin/FacilityMap.tsx | Flyfoto-kart med 4 klikkbare SVG-soner (Driving Range, Performance Studio, Putting Green, Short Game Area), kapasitets-fargekoding og pulserende live-indikator når booking pågår nå |
+| ZoneDetailPanel | components/admin/facility-map/zone-detail-panel.tsx | Mørkt glasspanel som åpner fra kart-sone — viser dagens bookinger, live-status, "Book nå"-knapp |
+| OffMapStrip | components/admin/facility-map/off-map-strip.tsx | Pille-rad under kartet for fasiliteter som ikke er synlige (Korthullsbane), med samme klikk-til-glasspanel-flyt |
 | FacilityCalendar | components/admin/FacilityCalendar.tsx | Dagvelger (7 dager) + 08-20 timeplan med fargede booking-blokker per fasilitet |
 | FacilityList | components/admin/FacilityList.tsx | Bookinger gruppert per fasilitet med status-badge per type |
 | AddActivityModal | components/admin/AddActivityModal.tsx | Modal for å legge til ny FacilityBooking (fasilitet, person, type, dato, tid, varighet) |

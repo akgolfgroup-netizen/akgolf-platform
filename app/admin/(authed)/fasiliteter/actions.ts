@@ -7,13 +7,21 @@ import { prisma } from "@/lib/portal/prisma";
 
 export const FACILITIES = [
   "Driving Range",
+  "Performance Studio",
   "Putting Green",
   "Short Game Area",
-  "Klubbhus",
   "Korthullsbane",
 ] as const;
 
 export type FacilityName = (typeof FACILITIES)[number];
+
+/** Soner synlige som klikkbare polygoner på flyfoto-kartet. Korthullsbane vises off-map. */
+export const ON_MAP_FACILITIES: FacilityName[] = [
+  "Driving Range",
+  "Performance Studio",
+  "Putting Green",
+  "Short Game Area",
+];
 
 export const ACTIVITY_TYPES = [
   "Trening",
@@ -27,9 +35,9 @@ export type ActivityType = (typeof ACTIVITY_TYPES)[number];
 
 export const FACILITY_CAPACITY: Record<FacilityName, number> = {
   "Driving Range": 14,
+  "Performance Studio": 4,
   "Putting Green": 8,
   "Short Game Area": 6,
-  Klubbhus: 30,
   Korthullsbane: 12,
 };
 
@@ -72,6 +80,51 @@ function addMinutes(time: string, minutes: number): string {
   const hh = Math.floor(total / 60) % 24;
   const mm = total % 60;
   return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
+}
+
+export interface LiveStatus {
+  facility: FacilityName;
+  activeNow: number;
+  nextStart: string | null;
+  nextPerson: string | null;
+}
+
+export async function getLiveStatus(): Promise<LiveStatus[]> {
+  const user = await requirePortalUser();
+  assertAdmin(user.role);
+
+  const now = new Date();
+  const today = startOfDay(now);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const todays = await prisma.facilityBooking.findMany({
+    where: { date: { gte: today, lt: tomorrow } },
+    orderBy: { startTime: "asc" },
+  });
+
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+  return FACILITIES.map((facility) => {
+    const items = todays.filter((b) => b.facility === facility);
+    const activeNow = items.filter((b) => {
+      const s = parseTimeMinutes(b.startTime);
+      const e = parseTimeMinutes(b.endTime);
+      return s <= nowMinutes && nowMinutes < e;
+    }).length;
+    const next = items.find((b) => parseTimeMinutes(b.startTime) > nowMinutes);
+    return {
+      facility,
+      activeNow,
+      nextStart: next ? next.startTime : null,
+      nextPerson: next ? next.person : null,
+    };
+  });
+}
+
+function parseTimeMinutes(time: string): number {
+  const [h, m] = time.split(":").map(Number);
+  return h * 60 + m;
 }
 
 export async function getWeekBookings(): Promise<FacilityBookingDTO[]> {

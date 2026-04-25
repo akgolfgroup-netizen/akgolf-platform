@@ -8,6 +8,40 @@
 
 ---
 
+## 2026-04-25 — Fasilitets-bookingkart GFGK: ekte soner + live-feed
+
+**Jobbet med:** Tilpasset kartet til ekte GFGK-treningsområde basert på drone-video Anders delte, og lagt til live-indikator drevet av booking-tider.
+
+- **Ekte fasilitets-liste:** Erstattet "Klubbhus" med "Performance Studio" (ligger nederst på Driving Range-bygningen). Korthullsbanen er IKKE synlig på treningsområde-flyfotoet, så den er off-map (`ON_MAP_FACILITIES`-konstant skiller).
+- **Nye sone-koordinater** matcher video-layouten:
+  - Putting Green: oppe venstre stor oval
+  - Short Game Area: nederst sentrum
+  - Driving Range: høyre side øvre 2/3 (lang vertikal bygning)
+  - Performance Studio: nederste del av range-bygningen
+- **Live-indikator** (auto fra bookinger):
+  - `getLiveStatus()` server action returnerer `{ activeNow, nextStart, nextPerson }` per fasilitet basert på `startTime ≤ nå < endTime`
+  - Pulserende lime-grønn ring rundt sone i SVG (animate stroke-opacity 2s loop)
+  - "LIVE n"-badge på sonen når `activeNow > 0`
+  - Pulserende ping-prikk i glasspanel + "n aktive nå" eller "Neste: HH:MM · Person"
+  - Klient poller hvert 30s for ferske live-tall
+- **Off-map-pille:** Korthullsbane vises som pille under kartet med samme klikk-til-glasspanel-flyt og live-badge
+- **Splittet FacilityMap** i `components/admin/facility-map/` (zone-detail-panel + off-map-strip) for å holde under 300-linjers regelen
+- **Updated docs:** `component-library.md` + `WORKLOG.md`
+
+**Status:** Lint og TS-rene. Migrasjonen er fortsatt ikke kjørt mot Supabase.
+
+**Neste steg:**
+1. Bytt ut `public/admin/gfgk-aerial.jpg` med ekte stillbilde fra GFGK-droneklipp (Anders).
+2. Kjør Prisma migrate mot Supabase.
+3. Finjuster polygon-koordinater visuelt etter at ekte bilde er på plass.
+4. Vurder QR check-in (alternativ D) i en oppfølger for å fange aktivitet uten booking.
+
+**Nøkkelfiler:**
+- Endret: `app/admin/(authed)/fasiliteter/{actions,page,fasiliteter-client}.{ts,tsx}`, `components/admin/FacilityMap.tsx`, `.claude/rules/component-library.md`
+- Nye: `components/admin/facility-map/{zone-detail-panel,off-map-strip}.tsx`
+
+---
+
 ## 2026-04-25 — Fasilitets-bookingkart GFGK (CoachHQ)
 
 **Jobbet med:** Ny fasilitets-bookingside for CoachHQ med tre visninger (Kart, Kalender, Liste) og modal for å legge til aktivitet, basert på ny `FacilityBooking`-modell. Branch `feature/facility-booking`.

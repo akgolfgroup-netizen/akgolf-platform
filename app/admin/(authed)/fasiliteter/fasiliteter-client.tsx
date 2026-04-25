@@ -11,6 +11,7 @@ import {
   deleteFacilityBooking,
   type FacilityBookingDTO,
   type FacilityName,
+  type LiveStatus,
 } from "./actions";
 
 type ViewKey = "map" | "calendar" | "list";
@@ -23,9 +24,10 @@ const VIEWS: { key: ViewKey; label: string; icon: string }[] = [
 
 interface Props {
   bookings: FacilityBookingDTO[];
+  initialLive: LiveStatus[];
 }
 
-export default function FasiliteterClient({ bookings }: Props) {
+export default function FasiliteterClient({ bookings, initialLive }: Props) {
   const router = useRouter();
   const [view, setView] = useState<ViewKey>("map");
   const [selectedDate, setSelectedDate] = useState<string>(todayISO());
@@ -81,6 +83,7 @@ export default function FasiliteterClient({ bookings }: Props) {
           bookings={bookings}
           selectedDate={selectedDate}
           onAddBooking={openAdd}
+          initialLive={initialLive}
         />
       )}
 

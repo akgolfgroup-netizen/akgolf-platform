@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { canAccessMissionControl } from "@/lib/portal/rbac";
 import FasiliteterClient from "./fasiliteter-client";
-import { getWeekBookings } from "./actions";
+import { getWeekBookings, getLiveStatus } from "./actions";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Fasiliteter — CoachHQ" };
@@ -13,7 +13,10 @@ export default async function FasiliteterPage() {
     redirect("/admin/login");
   }
 
-  const bookings = await getWeekBookings();
+  const [bookings, liveStatus] = await Promise.all([
+    getWeekBookings(),
+    getLiveStatus(),
+  ]);
 
-  return <FasiliteterClient bookings={bookings} />;
+  return <FasiliteterClient bookings={bookings} initialLive={liveStatus} />;
 }

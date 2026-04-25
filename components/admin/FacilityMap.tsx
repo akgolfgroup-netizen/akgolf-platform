@@ -1,13 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Icon } from "@/components/ui/icon";
+import { useEffect, useMemo, useState } from "react";
 import {
   FACILITIES,
   FACILITY_CAPACITY,
+  ON_MAP_FACILITIES,
+  getLiveStatus,
   type FacilityBookingDTO,
   type FacilityName,
+  type LiveStatus,
 } from "@/app/admin/(authed)/fasiliteter/actions";
+import { ZoneDetailPanel } from "./facility-map/zone-detail-panel";
+import { OffMapStrip } from "./facility-map/off-map-strip";
 
 const STATUS_COLORS = {
   free: "#2A7D5A",
@@ -22,51 +26,21 @@ interface Zone {
   points: string;
   labelX: number;
   labelY: number;
-  icon: string;
 }
 
+// Koordinater (viewBox 0-100) for GFGK-treningsområdet
 const ZONES: Zone[] = [
-  {
-    name: "Driving Range",
-    points: "8,38 52,30 56,58 12,66",
-    labelX: 30,
-    labelY: 49,
-    icon: "sports_golf",
-  },
-  {
-    name: "Putting Green",
-    points: "62,28 78,26 82,40 64,42",
-    labelX: 72,
-    labelY: 34,
-    icon: "golf_course",
-  },
-  {
-    name: "Short Game Area",
-    points: "60,46 84,44 88,60 62,62",
-    labelX: 74,
-    labelY: 53,
-    icon: "flag",
-  },
-  {
-    name: "Klubbhus",
-    points: "70,68 88,66 90,82 72,84",
-    labelX: 80,
-    labelY: 75,
-    icon: "home",
-  },
-  {
-    name: "Korthullsbane",
-    points: "10,72 56,68 60,90 14,92",
-    labelX: 33,
-    labelY: 81,
-    icon: "park",
-  },
+  { name: "Putting Green", points: "8,20 42,18 46,52 10,55", labelX: 27, labelY: 36 },
+  { name: "Short Game Area", points: "20,62 56,60 58,88 22,90", labelX: 39, labelY: 75 },
+  { name: "Driving Range", points: "60,8 92,10 94,64 62,65", labelX: 77, labelY: 35 },
+  { name: "Performance Studio", points: "62,68 92,68 92,90 64,90", labelX: 77, labelY: 79 },
 ];
 
 interface FacilityMapProps {
   bookings: FacilityBookingDTO[];
   onAddBooking: (facility: FacilityName) => void;
   selectedDate: string;
+  initialLive: LiveStatus[];
 }
 
 function statusFromLoad(load: number, capacity: number): ZoneStatus {
@@ -76,10 +50,34 @@ function statusFromLoad(load: number, capacity: number): ZoneStatus {
   return "free";
 }
 
-export function FacilityMap({ bookings, onAddBooking, selectedDate }: FacilityMapProps) {
+export function FacilityMap({
+  bookings,
+  onAddBooking,
+  selectedDate,
+  initialLive,
+}: FacilityMapProps) {
   const [selected, setSelected] = useState<FacilityName | null>(null);
+  const [liveStatus, setLiveStatus] = useState<LiveStatus[]>(initialLive);
 
-  const loadByFacility = useMemo(() => {
+  useEffect(() => {
+    const id = setInterval(async () => {
+      try {
+        const next = await getLiveStatus();
+        setLiveStatus(next);
+      } catch {
+        // ignorer feil — neste tick prøver igjen
+      }
+    }, 30000);
+    return () => clearInterval(id);
+  }, []);
+
+  const liveByFacility = useMemo(() => {
+    const map: Record<string, LiveStatus> = {};
+    for (const s of liveStatus) map[s.facility] = s;
+    return map;
+  }, [liveStatus]);
+
+  const dayByFacility = useMemo(() => {
     const map: Record<string, FacilityBookingDTO[]> = {};
     for (const f of FACILITIES) map[f] = [];
     for (const b of bookings) {
@@ -90,149 +88,156 @@ export function FacilityMap({ bookings, onAddBooking, selectedDate }: FacilityMa
     return map;
   }, [bookings, selectedDate]);
 
-  const selectedZone = ZONES.find((z) => z.name === selected);
-  const selectedBookings = selected ? loadByFacility[selected] ?? [] : [];
-  const selectedCapacity = selected ? FACILITY_CAPACITY[selected] : 0;
-
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-outline-variant/30 bg-on-surface shadow-card-hover">
-      <div className="relative aspect-[16/10] w-full">
-        <picture>
-          <source srcSet="/admin/gfgk-aerial.jpg" type="image/jpeg" />
-          <img
-            src="/admin/gfgk-aerial-placeholder.svg"
-            alt="GFGK flyfoto"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        </picture>
-        <div className="absolute inset-0 bg-gradient-to-b from-on-surface/10 via-transparent to-on-surface/40" />
+    <div className="space-y-4">
+      <div className="relative overflow-hidden rounded-3xl border border-outline-variant/30 bg-on-surface shadow-card-hover">
+        <div className="relative aspect-[16/10] w-full">
+          <picture>
+            <source srcSet="/admin/gfgk-aerial.jpg" type="image/jpeg" />
+            <img
+              src="/admin/gfgk-aerial-placeholder.svg"
+              alt="GFGK treningsområde flyfoto"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </picture>
+          <div className="absolute inset-0 bg-gradient-to-b from-on-surface/10 via-transparent to-on-surface/40" />
 
-        <svg
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          className="absolute inset-0 h-full w-full"
-        >
-          {ZONES.map((zone) => {
-            const load = loadByFacility[zone.name]?.length ?? 0;
-            const capacity = FACILITY_CAPACITY[zone.name];
-            const status = statusFromLoad(load, capacity);
-            const fill = STATUS_COLORS[status];
-            const isActive = selected === zone.name;
-            return (
-              <g
+          <svg
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            className="absolute inset-0 h-full w-full"
+          >
+            {ZONES.map((zone) => (
+              <ZonePolygon
                 key={zone.name}
-                className="cursor-pointer transition-opacity"
+                zone={zone}
+                day={dayByFacility[zone.name] ?? []}
+                live={liveByFacility[zone.name]}
+                isActive={selected === zone.name}
                 onClick={() => setSelected(zone.name)}
-              >
-                <polygon
-                  points={zone.points}
-                  fill={fill}
-                  fillOpacity={isActive ? 0.7 : 0.42}
-                  stroke={fill}
-                  strokeWidth={isActive ? 0.6 : 0.3}
-                  strokeLinejoin="round"
-                />
-                <text
-                  x={zone.labelX}
-                  y={zone.labelY}
-                  textAnchor="middle"
-                  className="pointer-events-none fill-surface font-headline"
-                  fontSize="2.2"
-                  fontWeight="600"
-                  style={{ paintOrder: "stroke", stroke: "rgba(28,28,22,0.6)", strokeWidth: 0.4 }}
-                >
-                  {zone.name}
-                </text>
-                <text
-                  x={zone.labelX}
-                  y={zone.labelY + 3}
-                  textAnchor="middle"
-                  className="pointer-events-none fill-surface font-mono"
-                  fontSize="1.7"
-                  style={{ paintOrder: "stroke", stroke: "rgba(28,28,22,0.6)", strokeWidth: 0.3 }}
-                >
-                  {load}/{capacity}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-
-        <Legend />
-      </div>
-
-      {selected && selectedZone && (
-        <button
-          type="button"
-          aria-label="Lukk panel"
-          className="absolute inset-0 cursor-default bg-on-surface/40 backdrop-blur-sm"
-          onClick={() => setSelected(null)}
-        />
-      )}
-
-      {selected && selectedZone && (
-        <div
-          className="absolute right-6 top-6 z-10 w-full max-w-sm rounded-2xl border border-outline-variant/20 bg-on-surface/85 p-5 text-surface shadow-card-hover backdrop-blur-md"
-          onClick={(e) => e.stopPropagation()}
-          role="dialog"
-          aria-label={`Detaljer for ${selected}`}
-        >
-          <div className="mb-3 flex items-start justify-between gap-3">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-surface/60">
-                Fasilitet
-              </p>
-              <h3 className="mt-1 text-xl font-semibold tracking-tight">{selected}</h3>
-              <p className="mt-1 text-xs text-surface/70">
-                {selectedBookings.length} bookinger · kapasitet {selectedCapacity}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setSelected(null)}
-              className="rounded-full p-1 text-surface/70 hover:bg-surface/10 hover:text-surface"
-              aria-label="Lukk"
-            >
-              <Icon name="close" size={18} />
-            </button>
-          </div>
-
-          <div className="mb-4 max-h-56 space-y-2 overflow-y-auto pr-1">
-            {selectedBookings.length === 0 && (
-              <p className="rounded-xl bg-surface/5 px-3 py-3 text-xs text-surface/60">
-                Ingen bookinger på {formatDate(selectedDate)}.
-              </p>
-            )}
-            {selectedBookings.map((b) => (
-              <div
-                key={b.id}
-                className="flex items-center justify-between rounded-xl bg-surface/8 px-3 py-2"
-              >
-                <div>
-                  <p className="text-sm font-medium">{b.person}</p>
-                  <p className="font-mono text-[11px] uppercase tracking-wider text-surface/60">
-                    {b.startTime}–{b.endTime} · {b.type}
-                  </p>
-                </div>
-              </div>
+              />
             ))}
-          </div>
+          </svg>
 
+          <Legend />
+        </div>
+
+        {selected && (
           <button
             type="button"
-            onClick={() => {
-              const facility = selected;
+            aria-label="Lukk panel"
+            className="absolute inset-0 cursor-default bg-on-surface/40 backdrop-blur-sm"
+            onClick={() => setSelected(null)}
+          />
+        )}
+
+        {selected && (
+          <ZoneDetailPanel
+            name={selected}
+            bookings={dayByFacility[selected] ?? []}
+            capacity={FACILITY_CAPACITY[selected]}
+            live={liveByFacility[selected] ?? null}
+            selectedDate={selectedDate}
+            onClose={() => setSelected(null)}
+            onAdd={() => {
+              const f = selected;
               setSelected(null);
-              onAddBooking(facility);
+              onAddBooking(f);
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-secondary-fixed px-4 py-2.5 text-sm font-semibold text-secondary-fixed-text hover:brightness-95"
-          >
-            <Icon name="add" size={18} />
-            Book nå
-          </button>
-        </div>
-      )}
+          />
+        )}
+      </div>
+
+      <OffMapStrip
+        facilities={FACILITIES.filter((f) => !ON_MAP_FACILITIES.includes(f))}
+        liveByFacility={liveByFacility}
+        dayByFacility={dayByFacility}
+        onSelect={setSelected}
+      />
     </div>
+  );
+}
+
+function ZonePolygon({
+  zone,
+  day,
+  live,
+  isActive,
+  onClick,
+}: {
+  zone: Zone;
+  day: FacilityBookingDTO[];
+  live: LiveStatus | undefined;
+  isActive: boolean;
+  onClick: () => void;
+}) {
+  const capacity = FACILITY_CAPACITY[zone.name];
+  const status = statusFromLoad(day.length, capacity);
+  const isLive = (live?.activeNow ?? 0) > 0;
+  const fill = STATUS_COLORS[status];
+  const textStyle = {
+    paintOrder: "stroke" as const,
+    stroke: "rgba(28,28,22,0.6)",
+    strokeWidth: 0.4,
+  };
+
+  return (
+    <g className="cursor-pointer" onClick={onClick}>
+      <polygon
+        points={zone.points}
+        fill={fill}
+        fillOpacity={isActive ? 0.7 : 0.42}
+        stroke={isLive ? "#d2f000" : fill}
+        strokeWidth={isLive ? 0.7 : isActive ? 0.6 : 0.3}
+        strokeLinejoin="round"
+      >
+        {isLive && (
+          <animate
+            attributeName="stroke-opacity"
+            values="1;0.4;1"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        )}
+      </polygon>
+      <text
+        x={zone.labelX}
+        y={zone.labelY}
+        textAnchor="middle"
+        className="pointer-events-none fill-surface font-headline"
+        fontSize="2.2"
+        fontWeight="600"
+        style={textStyle}
+      >
+        {zone.name}
+      </text>
+      <text
+        x={zone.labelX}
+        y={zone.labelY + 3}
+        textAnchor="middle"
+        className="pointer-events-none fill-surface font-mono"
+        fontSize="1.7"
+        style={{ ...textStyle, strokeWidth: 0.3 }}
+      >
+        {day.length}/{capacity}
+      </text>
+      {isLive && (
+        <g transform={`translate(${zone.labelX + 6}, ${zone.labelY - 5})`}>
+          <rect x={-4} y={-2} width={8} height={3} rx={1.5} fill="#d2f000" />
+          <text
+            x={0}
+            y={0.4}
+            textAnchor="middle"
+            fontSize="1.5"
+            fontWeight="700"
+            fill="#191e00"
+            className="font-mono"
+          >
+            LIVE {live?.activeNow}
+          </text>
+        </g>
+      )}
+    </g>
   );
 }
 
@@ -254,15 +259,13 @@ function Legend() {
           {item.label}
         </span>
       ))}
+      <span className="flex items-center gap-1.5 border-l border-surface/30 pl-3">
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary-fixed/70" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-secondary-fixed" />
+        </span>
+        Live nå
+      </span>
     </div>
   );
-}
-
-function formatDate(iso: string) {
-  const d = new Date(`${iso}T00:00:00`);
-  return new Intl.DateTimeFormat("nb-NO", {
-    weekday: "short",
-    day: "2-digit",
-    month: "short",
-  }).format(d);
 }
