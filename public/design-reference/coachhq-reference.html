@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CoachHQ — AK Golf Platform · Design Reference</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+/>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary:    { DEFAULT: '#005840', hover: '#00472f', soft: '#E8F0EC', deep: '#003B2A' },
+          accent:     { DEFAULT: '#D1F843', soft: '#ECFCC0', deep: '#A6C734' },
+          surface:    '#F4F6F4',
+          card:       '#FFFFFF',
+          sidebar:    { DEFAULT: '#0F1F18', hover: '#172B22', divider: '#1F3329', muted: '#A4B1AA' },
+          success:    { DEFAULT: '#2A7D5A', soft: '#E0EFE7' },
+          warning:    { DEFAULT: '#C48A32', soft: '#F6ECD9' },
+          danger:     { DEFAULT: '#B84233', soft: '#F4DAD5' },
+          ink:        { DEFAULT: '#0A1F18', muted: '#5C6B62', subtle: '#8A958E' },
+          line:       { DEFAULT: '#E4EAE6', soft: '#EDF1EE' },
+        },
+        fontFamily: {
+          sans:    ['Inter', 'system-ui', 'sans-serif'],
+          display: ['"Inter Tight"', 'sans-serif'],
+          mono:    ['"JetBrains Mono"', 'monospace'],
+        },
+        boxShadow: {
+          card:      '0 1px 2px rgba(15,31,24,0.04), 0 4px 12px rgba(15,31,24,0.04)',
+          cardHover: '0 1px 2px rgba(15,31,24,0.06), 0 14px 32px rgba(15,31,24,0.08)',
+          rim:       'inset 0 0 0 1px rgba(15,31,24,0.06)',
+          glowAccent:'0 0 0 1px rgba(209,248,67,0.5), 0 8px 24px rgba(209,248,67,0.18)',
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html, body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #0A1F18;
+    background: #F4F6F4;
+    font-feature-settings: 'ss01','cv11','ss03';
+  }
+  .font-display { font-family: 'Inter Tight', sans-serif; letter-spacing: -0.024em; }
+  .font-mono    { font-family: 'JetBrains Mono', monospace; }
+
+  *:focus-visible { outline: 2px solid #005840; outline-offset: 2px; border-radius: 6px; }
+
+  .pulse-dot { position: relative; }
+  .pulse-dot::before {
+    content: ''; position: absolute; inset: -4px; border-radius: 9999px;
+    background: #D1F843; opacity: 0.45; animation: pulse 1.8s ease-in-out infinite;
+  }
+  .pulse-dot.live::before { background: #2A7D5A; opacity: 0.55; }
+  @keyframes pulse { 0%,100% { transform: scale(1);   opacity: 0.55; }
+                     50%      { transform: scale(1.6); opacity: 0; } }
+
+  .scroll-thin::-webkit-scrollbar      { width: 6px; height: 6px; }
+  .scroll-thin::-webkit-scrollbar-thumb { background: rgba(15,31,24,0.10); border-radius: 999px; }
+  .scroll-thin::-webkit-scrollbar-thumb:hover { background: rgba(15,31,24,0.22); }
+
+  .scroll-thin-dark::-webkit-scrollbar      { width: 6px; }
+  .scroll-thin-dark::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); border-radius: 999px; }
+  .scroll-thin-dark::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.20); }
+
+  .lift     { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .lift:hover { transform: translateY(-2px); }
+
+  .nav-item { transition: background .15s ease, color .15s ease; }
+
+  .grain {
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(209,248,67,0.06), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(0,88,64,0.06), transparent 40%);
+  }
+
+  .selected-row {
+    background: linear-gradient(90deg, rgba(209,248,67,0.18), rgba(209,248,67,0.04) 60%, transparent);
+    border-left: 3px solid #D1F843;
+  }
+</style>
+</head>
+
+<body class="overflow-hidden">
+
+<!-- ====================================================================== -->
+<!-- App container — three-panel layout (icon rail · student list · main)  -->
+<!-- ====================================================================== -->
+<div class="flex h-screen min-w-[1280px]">
+
+  <!-- ──────────────────────────────────────────────────────────────────── -->
+  <!-- 1. ICON RAIL · 56px                                                 -->
+  <!-- ──────────────────────────────────────────────────────────────────── -->
+  <aside class="w-14 shrink-0 bg-sidebar flex flex-col items-center py-5 border-r border-sidebar-divider">
+    <div class="w-9 h-9 rounded-lg bg-accent text-sidebar flex items-center justify-center font-display font-bold text-[13px] tracking-tight cursor-pointer select-none">AK</div>
+    <div class="w-6 h-px bg-sidebar-divider my-5"></div>
+
+    <nav class="flex flex-col gap-1.5 flex-1 items-center">
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Mission Board">
+        <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i>
+      </button>
+      <button class="relative w-9 h-9 rounded-lg text-accent bg-sidebar-hover flex items-center justify-center cursor-pointer" title="Elever" aria-current="page">
+        <span class="absolute -left-3 top-1.5 bottom-1.5 w-[3px] rounded-r bg-accent"></span>
+        <i data-lucide="users" class="w-[18px] h-[18px]"></i>
+      </button>
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Coaching Board">
+        <i data-lucide="kanban" class="w-[18px] h-[18px]"></i>
+      </button>
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Bookinger">
+        <i data-lucide="calendar-days" class="w-[18px] h-[18px]"></i>
+      </button>
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Analyse">
+        <i data-lucide="bar-chart-3" class="w-[18px] h-[18px]"></i>
+      </button>
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Økonomi">
+        <i data-lucide="wallet" class="w-[18px] h-[18px]"></i>
+      </button>
+      <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors" title="Fasiliteter">
+        <i data-lucide="building-2" class="w-[18px] h-[18px]"></i>
+      </button>
+    </nav>
+
+    <button class="w-9 h-9 rounded-lg text-sidebar-muted hover:text-white hover:bg-sidebar-hover flex items-center justify-center cursor-pointer transition-colors mb-2" title="Innstillinger">
+      <i data-lucide="settings" class="w-[18px] h-[18px]"></i>
+    </button>
+    <button class="w-9 h-9 rounded-full bg-primary text-accent font-bold text-[11px] font-display flex items-center justify-center cursor-pointer ring-2 ring-sidebar-hover" title="Anders Kristiansen">AK</button>
+  </aside>
+
+  <!-- ──────────────────────────────────────────────────────────────────── -->
+  <!-- 2. STUDENT LIST · 200px                                             -->
+  <!-- ──────────────────────────────────────────────────────────────────── -->
+  <aside class="w-[200px] shrink-0 bg-sidebar text-white flex flex-col py-5 border-r border-sidebar-divider">
+    <!-- Header -->
+    <div class="px-4 mb-4">
+      <div class="flex items-center justify-between mb-1">
+        <div class="text-[10px] font-mono uppercase tracking-[0.18em] text-sidebar-muted">Aktive elever</div>
+        <span class="text-[10px] font-mono text-accent">47</span>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <div class="text-sm font-display font-semibold">Elever</div>
+        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-accent/15 text-accent text-[9px] font-mono uppercase tracking-widest">live</span>
+      </div>
+    </div>
+
+    <!-- Search + filter row -->
+    <div class="px-3 mb-3 space-y-2">
+      <div class="relative">
+        <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-sidebar-muted"></i>
+        <input type="text" placeholder="Søk elev..." class="pl-8 pr-2 py-1.5 w-full text-[12px] rounded-md bg-sidebar-hover border border-sidebar-divider placeholder:text-sidebar-muted text-white focus:outline-none focus:border-accent/50 transition-colors" />
+      </div>
+      <div class="flex items-center gap-1">
+        <button class="flex-1 px-2 py-1 rounded text-[10px] font-mono uppercase tracking-widest bg-accent text-sidebar font-bold cursor-pointer">Alle</button>
+        <button class="flex-1 px-2 py-1 rounded text-[10px] font-mono uppercase tracking-widest text-sidebar-muted hover:text-white hover:bg-sidebar-hover cursor-pointer transition-colors">I dag</button>
+        <button class="flex-1 px-2 py-1 rounded text-[10px] font-mono uppercase tracking-widest text-sidebar-muted hover:text-white hover:bg-sidebar-hover cursor-pointer transition-colors">Mine</button>
+      </div>
+    </div>
+
+    <!-- Section: I dag -->
+    <div class="px-4 pt-2 pb-1 flex items-center justify-between">
+      <span class="text-[10px] font-mono uppercase tracking-[0.16em] text-sidebar-muted">I dag · 4</span>
+      <i data-lucide="chevron-down" class="w-3 h-3 text-sidebar-muted"></i>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto scroll-thin-dark px-2 space-y-0.5">
+      <!-- Selected -->
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md selected-row cursor-pointer">
+        <div class="relative shrink-0">
+          <div class="w-7 h-7 rounded-full bg-gradient-to-br from-accent to-accent-deep text-sidebar font-bold text-[10px] flex items-center justify-center font-mono">EH</div>
+          <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-success border-2 border-sidebar"></span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Erik Hansen</div>
+          <div class="text-[10px] font-mono text-sidebar-muted">HCP 12.4 · 16:00</div>
+        </div>
+      </button>
+
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md hover:bg-sidebar-hover cursor-pointer transition-colors">
+        <div class="relative shrink-0">
+          <div class="w-7 h-7 rounded-full bg-primary text-white font-bold text-[10px] flex items-center justify-center font-mono">MR</div>
+          <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-warning border-2 border-sidebar"></span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Martin R.</div>
+          <div class="text-[10px] font-mono text-sidebar-muted">HCP 6.1 · 14:30</div>
+        </div>
+      </button>
+
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md hover:bg-sidebar-hover cursor-pointer transition-colors">
+        <div class="relative shrink-0">
+          <div class="w-7 h-7 rounded-full bg-warning text-white font-bold text-[10px] flex items-center justify-center font-mono">SL</div>
+          <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-success border-2 border-sidebar"></span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Sofie L.</div>
+          <div class="text-[10px] font-mono text-sidebar-muted">HCP 18.0 · 11:00</div>
+        </div>
+      </button>
+
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md hover:bg-sidebar-hover cursor-pointer transition-colors">
+        <div class="relative shrink-0">
+          <div class="w-7 h-7 rounded-full bg-danger text-white font-bold text-[10px] flex items-center justify-center font-mono">JK</div>
+          <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-sidebar-muted border-2 border-sidebar"></span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Jonas K.</div>
+          <div class="text-[10px] font-mono text-sidebar-muted">HCP 22.3 · 09:30</div>
+        </div>
+      </button>
+
+      <!-- Section: Denne uken -->
+      <div class="px-2 pt-4 pb-1 flex items-center justify-between">
+        <span class="text-[10px] font-mono uppercase tracking-[0.16em] text-sidebar-muted">Denne uken · 12</span>
+        <i data-lucide="chevron-down" class="w-3 h-3 text-sidebar-muted"></i>
+      </div>
+
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md hover:bg-sidebar-hover cursor-pointer transition-colors">
+        <div class="w-7 h-7 rounded-full bg-success text-white font-bold text-[10px] flex items-center justify-center font-mono shrink-0">IB</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Ida Bjørn</div>
+          <div class="text-[10px] font-mono text-sidebar-muted">HCP 9.8 · tor</div>
+        </div>
+      </button>
+
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md hover:bg-sidebar-hover cursor-pointer transition-colors">
+        <div class="w-7 h-7 rounded-full bg-primary text-white font-bold text-[10px] flex items-center justify-center font-mono shrink-0">PK</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Per Kvist</div>
+          <div class="text-[10px] font-mono text-sidebar-muted">HCP 14.2 · tor</div>
+        </div>
+      </button>
+
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md hover:bg-sidebar-hover cursor-pointer transition-colors">
+        <div class="w-7 h-7 rounded-full bg-warning text-white font-bold text-[10px] flex items-center justify-center font-mono shrink-0">EM</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Eva Mo</div>
+          <div class="text-[10px] font-mono text-sidebar-muted">HCP 11.0 · fre</div>
+        </div>
+      </button>
+
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md hover:bg-sidebar-hover cursor-pointer transition-colors">
+        <div class="w-7 h-7 rounded-full bg-danger text-white font-bold text-[10px] flex items-center justify-center font-mono shrink-0">TN</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Tom Nilsen</div>
+          <div class="text-[10px] font-mono text-sidebar-muted">HCP 8.5 · fre</div>
+        </div>
+      </button>
+
+      <!-- Section: Trenger oppfølging -->
+      <div class="px-2 pt-4 pb-1 flex items-center justify-between">
+        <span class="text-[10px] font-mono uppercase tracking-[0.16em] text-warning">Oppfølging · 3</span>
+        <i data-lucide="chevron-down" class="w-3 h-3 text-sidebar-muted"></i>
+      </div>
+
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md hover:bg-sidebar-hover cursor-pointer transition-colors">
+        <div class="relative shrink-0">
+          <div class="w-7 h-7 rounded-full bg-sidebar-divider text-white/60 font-bold text-[10px] flex items-center justify-center font-mono">AS</div>
+          <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-warning border-2 border-sidebar"></span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Anne S.</div>
+          <div class="text-[10px] font-mono text-warning">14 dgr stille</div>
+        </div>
+      </button>
+
+      <button class="w-full text-left flex items-center gap-2.5 pl-2 pr-2 py-2 rounded-md hover:bg-sidebar-hover cursor-pointer transition-colors">
+        <div class="relative shrink-0">
+          <div class="w-7 h-7 rounded-full bg-sidebar-divider text-white/60 font-bold text-[10px] flex items-center justify-center font-mono">RB</div>
+          <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-warning border-2 border-sidebar"></span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-semibold text-white truncate">Roar B.</div>
+          <div class="text-[10px] font-mono text-warning">savnet økt</div>
+        </div>
+      </button>
+    </nav>
+
+    <!-- Live status footer -->
+    <div class="mt-3 mx-3 p-3 rounded-xl bg-sidebar-hover border border-sidebar-divider">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="pulse-dot live w-1.5 h-1.5 rounded-full bg-success"></span>
+        <span class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">Pågår nå</span>
+      </div>
+      <div class="font-display text-[20px] font-bold leading-none">
+        <span class="text-accent">3</span>
+        <span class="text-white text-[13px] font-medium">økter live</span>
+      </div>
+      <div class="text-[10px] font-mono text-sidebar-muted mt-2">på Bossum + WANG</div>
+    </div>
+  </aside>
+
+  <!-- ──────────────────────────────────────────────────────────────────── -->
+  <!-- 3. MAIN CONTENT                                                     -->
+  <!-- ──────────────────────────────────────────────────────────────────── -->
+  <main class="flex-1 bg-surface overflow-y-auto scroll-thin">
+
+    <!-- Topbar -->
+    <header class="sticky top-0 z-20 bg-surface/85 backdrop-blur-md border-b border-line/70">
+      <div class="flex items-center justify-between px-10 py-4">
+        <div class="flex items-center gap-3 text-[13px]">
+          <span class="text-ink-subtle">CoachHQ</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-ink-subtle"></i>
+          <span class="text-ink-muted font-medium">Elever</span>
+          <span class="ml-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary-soft text-primary text-[11px] font-mono uppercase tracking-widest cursor-pointer hover:bg-primary/10 transition-colors">
+            <i data-lucide="map-pin" class="w-3 h-3"></i>
+            Bossum + WANG
+            <i data-lucide="chevrons-up-down" class="w-3 h-3 opacity-60"></i>
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-card border border-line text-ink-muted text-[11px] font-mono uppercase tracking-widest">
+            <i data-lucide="git-branch" class="w-3 h-3"></i>
+            main
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-line shadow-rim text-[12px] font-medium text-ink hover:border-primary cursor-pointer transition-colors">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            Ny økt
+          </button>
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-ink-subtle pointer-events-none"></i>
+            <input type="text" placeholder="Søk elev, økt, drill..." class="pl-9 pr-12 py-2 w-64 text-[13px] rounded-lg bg-card border border-line shadow-rim placeholder:text-ink-subtle focus:outline-none focus:border-primary transition-colors" />
+            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-line-soft text-ink-subtle">⌘K</span>
+          </div>
+          <button class="relative w-9 h-9 rounded-lg bg-card border border-line shadow-rim text-ink-muted hover:text-primary hover:border-primary cursor-pointer flex items-center justify-center transition-colors">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-danger"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Inner -->
+    <div class="px-10 py-9 max-w-[1200px]">
+
+      <!-- ───────────── HERO ───────────── -->
+      <section class="mb-10">
+        <div class="text-[11px] font-mono uppercase tracking-[0.22em] text-ink-subtle mb-4">UKE 17 · ONSDAG 25. APRIL</div>
+
+        <div class="flex items-end justify-between gap-10 flex-wrap">
+          <div class="flex-1 min-w-0">
+            <h1 class="font-display font-bold text-[80px] leading-[0.92] tracking-tighter text-ink">
+              Coach<span class="italic font-medium text-primary">HQ.</span>
+            </h1>
+            <p class="mt-5 text-[15px] text-ink-muted max-w-2xl leading-relaxed">
+              <span class="text-ink font-semibold">Anders Kristiansen</span> · 47 aktive elever
+              <span class="text-ink-subtle mx-2">·</span>
+              <span class="text-ink font-semibold">4 økter</span> i dag
+              <span class="text-ink-subtle mx-2">·</span>
+              <span class="text-warning font-semibold">2 venter</span> på sammendrag
+            </p>
+
+            <div class="mt-6 flex items-center gap-3">
+              <button class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary-hover cursor-pointer transition-colors shadow-rim">
+                Start dagens første økt
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+              <button class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-card border border-line shadow-rim text-ink text-sm font-semibold hover:border-primary hover:text-primary cursor-pointer transition-colors">
+                <i data-lucide="mic" class="w-4 h-4"></i>
+                Last opp opptak
+              </button>
+              <button class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-card border border-line shadow-rim text-ink text-sm font-semibold hover:border-primary hover:text-primary cursor-pointer transition-colors">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                Generer dagsbrief
+              </button>
+            </div>
+          </div>
+
+          <!-- Today schedule mini -->
+          <div class="w-[260px] shrink-0 rounded-2xl bg-sidebar text-white p-5 relative overflow-hidden grain">
+            <div class="absolute -right-12 -top-12 w-40 h-40 rounded-full bg-accent/10 blur-3xl"></div>
+            <div class="relative">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="pulse-dot w-1.5 h-1.5 rounded-full bg-accent"></span>
+                <div class="text-[10px] font-mono uppercase tracking-widest text-accent">Live · 14:30</div>
+              </div>
+              <div class="font-display text-[22px] font-semibold leading-tight">Martin Røen</div>
+              <div class="text-[12px] text-sidebar-muted mt-1">Performance Pro · 20 min</div>
+              <div class="mt-4 h-1.5 bg-sidebar-divider rounded-full overflow-hidden">
+                <div class="h-full bg-accent rounded-full" style="width:40%"></div>
+              </div>
+              <div class="mt-2 flex items-center justify-between text-[10px] font-mono uppercase tracking-widest">
+                <span class="text-sidebar-muted">8 / 20 min</span>
+                <span class="text-accent">live</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────── KPI ROW ───────────── -->
+      <section class="grid grid-cols-4 gap-4 mb-10">
+        <article class="lift bg-card rounded-xl shadow-card hover:shadow-cardHover p-5 cursor-pointer border border-transparent hover:border-line">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Aktive elever</span>
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-success-soft text-success text-[10px] font-mono">
+              <i data-lucide="trending-up" class="w-3 h-3"></i>+4
+            </span>
+          </div>
+          <div class="font-mono font-semibold text-[36px] tracking-tight text-ink leading-none">47</div>
+          <div class="text-[11px] text-ink-subtle mt-2">+4 i april · 3 prøvetimer</div>
+          <div class="mt-4 flex items-center gap-1">
+            <div class="flex-1 h-1.5 rounded bg-primary"></div>
+            <div class="flex-1 h-1.5 rounded bg-primary"></div>
+            <div class="flex-1 h-1.5 rounded bg-primary"></div>
+            <div class="flex-1 h-1.5 rounded bg-primary"></div>
+            <div class="flex-1 h-1.5 rounded bg-primary/60"></div>
+            <div class="flex-1 h-1.5 rounded bg-line-soft"></div>
+          </div>
+          <div class="mt-2 text-[10px] font-mono text-ink-subtle text-right">kapasitet 60</div>
+        </article>
+
+        <article class="lift bg-card rounded-xl shadow-card hover:shadow-cardHover p-5 cursor-pointer border border-transparent hover:border-line">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Økter / uke</span>
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-success-soft text-success text-[10px] font-mono">
+              <i data-lucide="trending-up" class="w-3 h-3"></i>+8%
+            </span>
+          </div>
+          <div class="font-mono font-semibold text-[36px] tracking-tight text-ink leading-none">28</div>
+          <div class="text-[11px] text-ink-subtle mt-2">19 t 30 min belegg</div>
+          <div class="mt-4 grid grid-cols-7 gap-1">
+            <div class="h-5 rounded bg-primary/80" title="Man"></div>
+            <div class="h-5 rounded bg-primary" title="Tir"></div>
+            <div class="h-5 rounded bg-primary/60" title="Ons"></div>
+            <div class="h-5 rounded bg-primary/90" title="Tor"></div>
+            <div class="h-5 rounded bg-primary" title="Fre"></div>
+            <div class="h-5 rounded bg-primary/40" title="Lør"></div>
+            <div class="h-5 rounded bg-line-soft" title="Søn"></div>
+          </div>
+          <div class="mt-2 grid grid-cols-7 gap-1 text-[9px] font-mono text-ink-subtle uppercase tracking-widest text-center">
+            <span>M</span><span>T</span><span>O</span><span>T</span><span>F</span><span>L</span><span>S</span>
+          </div>
+        </article>
+
+        <article class="lift bg-card rounded-xl shadow-card hover:shadow-cardHover p-5 cursor-pointer border border-transparent hover:border-line">
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">MRR</span>
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-success-soft text-success text-[10px] font-mono">
+              <i data-lucide="trending-up" class="w-3 h-3"></i>+12%
+            </span>
+          </div>
+          <div class="font-mono font-semibold text-[36px] tracking-tight text-ink leading-none">
+            184<span class="text-ink-subtle text-[18px] font-medium"> 500 kr</span>
+          </div>
+          <div class="text-[11px] text-ink-subtle mt-2">+19 800 vs forrige mnd</div>
+          <div class="mt-4 h-1.5 bg-line-soft rounded-full overflow-hidden">
+            <div class="h-full bg-primary rounded-full" style="width:74%"></div>
+          </div>
+          <div class="mt-2 flex justify-between text-[10px] font-mono text-ink-subtle">
+            <span>mål 250 000</span>
+            <span>74%</span>
+          </div>
+        </article>
+
+        <article class="lift bg-sidebar text-white rounded-xl p-5 cursor-pointer relative overflow-hidden grain border border-sidebar-divider hover:border-accent/40">
+          <div class="absolute -right-10 -top-10 w-36 h-36 rounded-full bg-accent/15 blur-3xl"></div>
+          <div class="flex items-start justify-between mb-3 relative">
+            <span class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted">NPS</span>
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-accent/15 text-accent text-[10px] font-mono">
+              <i data-lucide="trending-up" class="w-3 h-3"></i>+6
+            </span>
+          </div>
+          <div class="font-mono font-semibold text-[36px] tracking-tight leading-none relative">
+            <span class="text-accent">71</span>
+            <span class="text-white/60 text-[18px] font-medium">/ 100</span>
+          </div>
+          <div class="text-[11px] text-sidebar-muted mt-2 relative">42 svar siste 30 dager</div>
+          <div class="mt-4 flex gap-1 relative">
+            <div class="flex-1 h-1.5 rounded bg-accent"></div>
+            <div class="flex-1 h-1.5 rounded bg-accent"></div>
+            <div class="flex-1 h-1.5 rounded bg-accent"></div>
+            <div class="flex-1 h-1.5 rounded bg-accent"></div>
+            <div class="flex-1 h-1.5 rounded bg-accent"></div>
+            <div class="flex-1 h-1.5 rounded bg-accent"></div>
+            <div class="flex-1 h-1.5 rounded bg-accent"></div>
+            <div class="flex-1 h-1.5 rounded bg-accent/30"></div>
+            <div class="flex-1 h-1.5 rounded bg-accent/30"></div>
+            <div class="flex-1 h-1.5 rounded bg-accent/30"></div>
+          </div>
+          <div class="mt-2 text-[10px] font-mono text-sidebar-muted text-right relative">verdensklasse > 70</div>
+        </article>
+      </section>
+
+      <!-- ───────────── THREE-PANEL: list · revenue · detail ───────────── -->
+      <section class="grid grid-cols-12 gap-5 mb-10">
+
+        <!-- Panel A — Student list (5/12) -->
+        <div class="col-span-5 bg-card rounded-2xl shadow-card overflow-hidden">
+          <header class="px-6 pt-6 pb-4 flex items-end justify-between">
+            <div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Pipeline</div>
+              <h2 class="font-display text-[22px] font-semibold tracking-tight leading-none">Aktive elever</h2>
+              <div class="text-[12px] text-ink-muted mt-1.5">Sortert etter siste aktivitet</div>
+            </div>
+            <div class="flex items-center gap-1 p-1 rounded-lg bg-surface border border-line">
+              <button class="px-2.5 py-1 rounded text-[11px] font-mono font-semibold bg-card text-ink shadow-sm cursor-pointer">Alle</button>
+              <button class="px-2.5 py-1 rounded text-[11px] font-mono text-ink-muted hover:text-ink cursor-pointer transition-colors">Pro</button>
+              <button class="px-2.5 py-1 rounded text-[11px] font-mono text-ink-muted hover:text-ink cursor-pointer transition-colors">Junior</button>
+            </div>
+          </header>
+
+          <!-- Column header -->
+          <div class="grid grid-cols-[1fr_60px_60px_24px] gap-3 px-6 py-2 border-y border-line-soft bg-surface/60 text-[10px] font-mono uppercase tracking-widest text-ink-subtle">
+            <span>Elev / fokus</span>
+            <span class="text-right">HCP</span>
+            <span class="text-right">SG</span>
+            <span></span>
+          </div>
+
+          <!-- Rows -->
+          <div class="divide-y divide-line-soft">
+            <!-- Selected row -->
+            <button class="w-full text-left grid grid-cols-[1fr_60px_60px_24px] gap-3 px-6 py-3.5 bg-accent/8 hover:bg-accent/12 cursor-pointer transition-colors items-center">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-accent to-accent-deep text-sidebar font-bold text-[12px] flex items-center justify-center font-mono shrink-0">EH</div>
+                <div class="min-w-0">
+                  <div class="text-[14px] font-bold text-ink truncate">Erik Hansen</div>
+                  <div class="text-[11px] text-ink-muted truncate">Driver setup · I dag 16:00</div>
+                </div>
+              </div>
+              <div class="font-mono text-[13px] font-semibold text-ink text-right">12.4</div>
+              <div class="font-mono text-[13px] font-semibold text-success text-right">+1.8</div>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-primary"></i>
+            </button>
+
+            <button class="w-full text-left grid grid-cols-[1fr_60px_60px_24px] gap-3 px-6 py-3.5 hover:bg-surface cursor-pointer transition-colors items-center">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-full bg-primary text-white font-bold text-[12px] flex items-center justify-center font-mono shrink-0">MR</div>
+                <div class="min-w-0">
+                  <div class="text-[14px] font-semibold text-ink truncate">Martin Røen</div>
+                  <div class="text-[11px] text-ink-muted truncate">Wedge 40-90m · Live nå</div>
+                </div>
+              </div>
+              <div class="font-mono text-[13px] font-semibold text-ink text-right">6.1</div>
+              <div class="font-mono text-[13px] font-semibold text-success text-right">+2.4</div>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-ink-subtle"></i>
+            </button>
+
+            <button class="w-full text-left grid grid-cols-[1fr_60px_60px_24px] gap-3 px-6 py-3.5 hover:bg-surface cursor-pointer transition-colors items-center">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-full bg-warning text-white font-bold text-[12px] flex items-center justify-center font-mono shrink-0">SL</div>
+                <div class="min-w-0">
+                  <div class="text-[14px] font-semibold text-ink truncate">Sofie Larsen</div>
+                  <div class="text-[11px] text-ink-muted truncate">Putting · 11:00 ferdig</div>
+                </div>
+              </div>
+              <div class="font-mono text-[13px] font-semibold text-ink text-right">18.0</div>
+              <div class="font-mono text-[13px] font-semibold text-success text-right">+0.7</div>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-ink-subtle"></i>
+            </button>
+
+            <button class="w-full text-left grid grid-cols-[1fr_60px_60px_24px] gap-3 px-6 py-3.5 hover:bg-surface cursor-pointer transition-colors items-center">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-full bg-danger text-white font-bold text-[12px] flex items-center justify-center font-mono shrink-0">JK</div>
+                <div class="min-w-0">
+                  <div class="text-[14px] font-semibold text-ink truncate">Jonas Kvist</div>
+                  <div class="text-[11px] text-ink-muted truncate">Iron mid-range · 09:30</div>
+                </div>
+              </div>
+              <div class="font-mono text-[13px] font-semibold text-ink text-right">22.3</div>
+              <div class="font-mono text-[13px] font-semibold text-warning text-right">−0.4</div>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-ink-subtle"></i>
+            </button>
+
+            <button class="w-full text-left grid grid-cols-[1fr_60px_60px_24px] gap-3 px-6 py-3.5 hover:bg-surface cursor-pointer transition-colors items-center">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-full bg-success text-white font-bold text-[12px] flex items-center justify-center font-mono shrink-0">IB</div>
+                <div class="min-w-0">
+                  <div class="text-[14px] font-semibold text-ink truncate">Ida Bjørn</div>
+                  <div class="text-[11px] text-ink-muted truncate">Kort spill rundt grønt · tor</div>
+                </div>
+              </div>
+              <div class="font-mono text-[13px] font-semibold text-ink text-right">9.8</div>
+              <div class="font-mono text-[13px] font-semibold text-success text-right">+1.2</div>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-ink-subtle"></i>
+            </button>
+
+            <button class="w-full text-left grid grid-cols-[1fr_60px_60px_24px] gap-3 px-6 py-3.5 hover:bg-surface cursor-pointer transition-colors items-center">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-full bg-primary text-white font-bold text-[12px] flex items-center justify-center font-mono shrink-0">PK</div>
+                <div class="min-w-0">
+                  <div class="text-[14px] font-semibold text-ink truncate">Per Kvist</div>
+                  <div class="text-[11px] text-ink-muted truncate">Driver dispersion · tor</div>
+                </div>
+              </div>
+              <div class="font-mono text-[13px] font-semibold text-ink text-right">14.2</div>
+              <div class="font-mono text-[13px] font-semibold text-success text-right">+0.3</div>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-ink-subtle"></i>
+            </button>
+          </div>
+
+          <footer class="px-6 py-4 border-t border-line-soft flex items-center justify-between">
+            <div class="text-[12px] text-ink-muted">Viser 6 av 47 elever</div>
+            <button class="text-[12px] font-semibold text-primary hover:text-primary-hover cursor-pointer transition-colors inline-flex items-center gap-1">
+              Se alle
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </footer>
+        </div>
+
+        <!-- Panel B — Revenue chart (4/12) -->
+        <div class="col-span-4 bg-card rounded-2xl shadow-card p-6 flex flex-col">
+          <header class="mb-5">
+            <div class="flex items-start justify-between mb-1">
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Inntekt</div>
+              <button class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle hover:text-primary cursor-pointer transition-colors">12 mnd</button>
+            </div>
+            <h2 class="font-display text-[22px] font-semibold tracking-tight leading-none">MRR · 184 500 kr</h2>
+            <div class="mt-2 flex items-center gap-2 text-[12px]">
+              <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-success-soft text-success font-mono text-[11px]">
+                <i data-lucide="trending-up" class="w-3 h-3"></i>+12%
+              </span>
+              <span class="text-ink-muted">vs mars · +19 800 kr</span>
+            </div>
+          </header>
+
+          <div class="flex-1 min-h-[180px]">
+            <canvas id="revenueChart"></canvas>
+          </div>
+
+          <footer class="mt-4 pt-4 border-t border-line-soft grid grid-cols-3 gap-3">
+            <div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Abonnement</div>
+              <div class="font-mono text-[14px] font-semibold text-ink mt-0.5">142 800</div>
+              <div class="text-[10px] text-ink-subtle">38 elever</div>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Flex</div>
+              <div class="font-mono text-[14px] font-semibold text-ink mt-0.5">28 200</div>
+              <div class="text-[10px] text-ink-subtle">62 økter</div>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle">Kurs</div>
+              <div class="font-mono text-[14px] font-semibold text-ink mt-0.5">13 500</div>
+              <div class="text-[10px] text-ink-subtle">3 grupper</div>
+            </div>
+          </footer>
+        </div>
+
+        <!-- Panel C — Selected detail (3/12) -->
+        <div class="col-span-3 bg-sidebar text-white rounded-2xl p-6 relative overflow-hidden grain flex flex-col">
+          <div class="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-accent/8 blur-3xl"></div>
+          <div class="absolute -left-10 -bottom-10 w-32 h-32 rounded-full bg-primary/30 blur-3xl"></div>
+
+          <header class="relative mb-5">
+            <div class="flex items-center gap-2 mb-1.5">
+              <i data-lucide="user" class="w-3.5 h-3.5 text-accent"></i>
+              <div class="text-[10px] font-mono uppercase tracking-widest text-accent">Valgt elev</div>
+            </div>
+            <div class="flex items-center gap-3 mt-3">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-accent-deep text-sidebar font-bold text-[16px] flex items-center justify-center font-display">EH</div>
+              <div class="min-w-0">
+                <div class="font-display text-[18px] font-bold leading-tight">Erik Hansen</div>
+                <div class="text-[11px] text-sidebar-muted font-mono">HCP 12.4 · Performance Pro</div>
+              </div>
+            </div>
+          </header>
+
+          <!-- Mini stats -->
+          <div class="grid grid-cols-3 gap-2 mb-5 relative">
+            <div class="p-2.5 rounded-lg bg-sidebar-hover border border-sidebar-divider">
+              <div class="text-[9px] font-mono uppercase tracking-widest text-sidebar-muted">Økter</div>
+              <div class="font-mono text-[16px] font-semibold mt-0.5">14</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-sidebar-hover border border-sidebar-divider">
+              <div class="text-[9px] font-mono uppercase tracking-widest text-sidebar-muted">Streak</div>
+              <div class="font-mono text-[16px] font-semibold text-accent mt-0.5">12</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-sidebar-hover border border-sidebar-divider">
+              <div class="text-[9px] font-mono uppercase tracking-widest text-sidebar-muted">SG</div>
+              <div class="font-mono text-[16px] font-semibold text-success mt-0.5">+1.8</div>
+            </div>
+          </div>
+
+          <!-- Today session -->
+          <div class="p-3.5 rounded-xl border border-accent/30 bg-accent/8 relative mb-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="pulse-dot w-1.5 h-1.5 rounded-full bg-accent"></span>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-accent">Neste · 16:00</span>
+            </div>
+            <div class="text-[14px] font-display font-semibold leading-tight">Driver setup</div>
+            <div class="text-[11px] text-sidebar-muted mt-1">Bossum range · 60 min</div>
+          </div>
+
+          <!-- Focus areas -->
+          <div class="relative flex-1">
+            <div class="text-[10px] font-mono uppercase tracking-widest text-sidebar-muted mb-2.5">Fokusområder</div>
+            <ul class="space-y-2">
+              <li class="flex items-center justify-between text-[12px]">
+                <span class="text-white/85">Driver dispersion</span>
+                <span class="font-mono text-[11px] text-accent">Høy</span>
+              </li>
+              <li class="flex items-center justify-between text-[12px]">
+                <span class="text-white/85">Wedge 50–80 m</span>
+                <span class="font-mono text-[11px] text-warning">Medium</span>
+              </li>
+              <li class="flex items-center justify-between text-[12px]">
+                <span class="text-white/85">Putting holdover</span>
+                <span class="font-mono text-[11px] text-success">Stabil</span>
+              </li>
+            </ul>
+          </div>
+
+          <button class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-sidebar text-[13px] font-bold hover:bg-accent-deep cursor-pointer transition-colors relative">
+            Åpne elevprofil
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ───────────── COACHING BOARD STRIP ───────────── -->
+      <section class="bg-card rounded-2xl shadow-card p-6 mb-12">
+        <header class="flex items-end justify-between mb-5">
+          <div>
+            <div class="text-[10px] font-mono uppercase tracking-widest text-ink-subtle mb-1">Coaching Board</div>
+            <h2 class="font-display text-[22px] font-semibold tracking-tight leading-none">Dagens flyt</h2>
+          </div>
+          <button class="text-[12px] font-semibold text-primary hover:text-primary-hover cursor-pointer transition-colors inline-flex items-center gap-1">
+            Åpne fullt board
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </header>
+
+        <div class="grid grid-cols-4 gap-3">
+          <!-- Column: Forberedt -->
+          <div class="rounded-xl bg-surface/70 border border-line-soft p-3">
+            <div class="flex items-center justify-between mb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-ink-subtle"></span>
+                <span class="text-[10px] font-mono uppercase tracking-widest text-ink-muted">Forberedt</span>
+              </div>
+              <span class="text-[10px] font-mono text-ink-subtle">2</span>
+            </div>
+            <div class="space-y-2">
+              <div class="p-2.5 rounded-lg bg-card border border-line shadow-rim cursor-pointer hover:border-primary transition-colors">
+                <div class="text-[12px] font-semibold text-ink">Per Kvist · 17:00</div>
+                <div class="text-[10px] text-ink-muted mt-0.5 font-mono">Driver dispersion</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-card border border-line shadow-rim cursor-pointer hover:border-primary transition-colors">
+                <div class="text-[12px] font-semibold text-ink">Eva Mo · 18:00</div>
+                <div class="text-[10px] text-ink-muted mt-0.5 font-mono">Iron mid-range</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column: Live -->
+          <div class="rounded-xl bg-accent/8 border border-accent/40 p-3 relative">
+            <div class="flex items-center justify-between mb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="pulse-dot w-1.5 h-1.5 rounded-full bg-accent"></span>
+                <span class="text-[10px] font-mono uppercase tracking-widest text-primary font-semibold">Live nå</span>
+              </div>
+              <span class="text-[10px] font-mono text-primary">1</span>
+            </div>
+            <div class="space-y-2">
+              <div class="p-2.5 rounded-lg bg-card border border-accent shadow-glowAccent cursor-pointer">
+                <div class="text-[12px] font-bold text-ink">Martin Røen · 14:30</div>
+                <div class="text-[10px] text-ink-muted mt-0.5 font-mono">Wedge 40-90m · 8/20 min</div>
+                <div class="mt-2 h-1 bg-line-soft rounded-full overflow-hidden">
+                  <div class="h-full bg-primary rounded-full" style="width:40%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column: Sammendrag -->
+          <div class="rounded-xl bg-surface/70 border border-line-soft p-3">
+            <div class="flex items-center justify-between mb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-warning"></span>
+                <span class="text-[10px] font-mono uppercase tracking-widest text-warning">Venter sammendrag</span>
+              </div>
+              <span class="text-[10px] font-mono text-warning">2</span>
+            </div>
+            <div class="space-y-2">
+              <div class="p-2.5 rounded-lg bg-card border border-line shadow-rim cursor-pointer hover:border-warning transition-colors">
+                <div class="text-[12px] font-semibold text-ink">Sofie Larsen · 11:00</div>
+                <div class="text-[10px] text-warning mt-0.5 font-mono">Lyd lastet opp · AI tenker</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-card border border-line shadow-rim cursor-pointer hover:border-warning transition-colors">
+                <div class="text-[12px] font-semibold text-ink">Jonas Kvist · 09:30</div>
+                <div class="text-[10px] text-warning mt-0.5 font-mono">Mangler opplasting</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column: Publisert -->
+          <div class="rounded-xl bg-surface/70 border border-line-soft p-3">
+            <div class="flex items-center justify-between mb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                <span class="text-[10px] font-mono uppercase tracking-widest text-success">Publisert</span>
+              </div>
+              <span class="text-[10px] font-mono text-success">3</span>
+            </div>
+            <div class="space-y-2">
+              <div class="p-2.5 rounded-lg bg-card border border-line shadow-rim cursor-pointer hover:border-success transition-colors opacity-90">
+                <div class="text-[12px] font-semibold text-ink">Ida Bjørn · 08:00</div>
+                <div class="text-[10px] text-success mt-0.5 font-mono">Sammendrag sendt</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-card border border-line shadow-rim cursor-pointer hover:border-success transition-colors opacity-90">
+                <div class="text-[12px] font-semibold text-ink">Tom Nilsen · 07:30</div>
+                <div class="text-[10px] text-success mt-0.5 font-mono">+ neste plan klar</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-card border border-line shadow-rim cursor-pointer hover:border-success transition-colors opacity-90">
+                <div class="text-[12px] font-semibold text-ink">Anne S. · 06:00</div>
+                <div class="text-[10px] text-success mt-0.5 font-mono">Vinn-tilbake påbegynt</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiet footer -->
+      <footer class="pb-12 flex items-center justify-between text-[11px] font-mono uppercase tracking-widest text-ink-subtle">
+        <span>AK Golf Platform · CoachHQ · v2026.04</span>
+        <span class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+          Live · 3 økter pågår nå
+        </span>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Revenue line chart
+  const revCtx = document.getElementById('revenueChart').getContext('2d');
+
+  const gradient = revCtx.createLinearGradient(0, 0, 0, 220);
+  gradient.addColorStop(0, 'rgba(0, 88, 64, 0.30)');
+  gradient.addColorStop(1, 'rgba(0, 88, 64, 0.00)');
+
+  new Chart(revCtx, {
+    type: 'line',
+    data: {
+      labels: ['mai','jun','jul','aug','sep','okt','nov','des','jan','feb','mar','apr'],
+      datasets: [{
+        label: 'MRR (kr)',
+        data: [98000, 102000, 95000, 88000, 124000, 138000, 142000, 151000, 159000, 162000, 164700, 184500],
+        borderColor: '#005840',
+        backgroundColor: gradient,
+        borderWidth: 2.5,
+        tension: 0.35,
+        fill: true,
+        pointBackgroundColor: '#FFFFFF',
+        pointBorderColor: '#005840',
+        pointBorderWidth: 2,
+        pointRadius: 0,
+        pointHoverRadius: 6,
+        pointHoverBackgroundColor: '#D1F843',
+        pointHoverBorderColor: '#005840',
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 600, easing: 'easeOutCubic' },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0F1F18',
+          padding: 12,
+          cornerRadius: 8,
+          titleFont: { family: 'Inter Tight', size: 13, weight: 600 },
+          bodyFont:  { family: 'JetBrains Mono', size: 12 },
+          displayColors: false,
+          callbacks: {
+            label: (ctx) => 'MRR: ' + ctx.parsed.y.toLocaleString('nb-NO') + ' kr',
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          border: { color: '#E4EAE6' },
+          ticks: {
+            color: '#5C6B62',
+            font: { family: 'JetBrains Mono', size: 10 },
+          },
+        },
+        y: {
+          grid: { color: '#EDF1EE', drawBorder: false },
+          border: { display: false },
+          ticks: {
+            color: '#5C6B62',
+            font: { family: 'JetBrains Mono', size: 10 },
+            callback: (v) => (v / 1000) + 'k',
+            maxTicksLimit: 4,
+          },
+        },
+      },
+    },
+  });
+</script>
+
+</body>
+</html>
