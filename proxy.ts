@@ -108,8 +108,7 @@ export default async function proxy(request: NextRequest) {
   const isPublicAuthRoute =
     pathname.startsWith("/auth") ||
     pathname.startsWith("/portal/login") ||
-    pathname.startsWith("/admin/login") ||
-    pathname.startsWith("/portal-preview");
+    pathname.startsWith("/admin/login");
 
   if (isProtectedRoute && !isPublicAuthRoute && !user) {
     // Admin-ruter redirecter til /admin/login, portal-ruter til /portal/login

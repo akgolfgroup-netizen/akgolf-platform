@@ -11,7 +11,10 @@ import {
   updateSession,
   analyzePlanDeviation,
   adjustPlanVolume,
+  applyTemplateToWeek,
+  listStandardTemplates,
 } from "./actions";
+import type { TemplateId } from "@/lib/portal/training/standard-templates";
 import { TrainingPlannerV3 } from "./treningsplan-v3-client";
 import { TrainingPlanViewer } from "./training-plan-viewer";
 import { TreningsplanPlanner } from "./treningsplan-planner";
@@ -139,6 +142,13 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     return adjustPlanVolume(factor);
   }
 
+  async function handleApplyTemplate(templateId: TemplateId, woffset: number) {
+    "use server";
+    return applyTemplateToWeek(woffset, templateId);
+  }
+
+  const standardTemplates = await listStandardTemplates();
+
   const templates = [
     { id: "t1", title: "Putting-drill", dur: 20, focus: "TEK", exercises: [] },
     { id: "t2", title: "Short game", dur: 30, focus: "SLAG", exercises: [] },
@@ -169,8 +179,12 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         onCreateSession={handleCreateSession}
         onAddExerciseToSession={handleAddExerciseToSession}
         onUpdateSession={handleUpdateSession}
+        onMoveEvent={handleMoveEvent}
+        onResizeEvent={handleResizeEvent}
         adjustmentSuggestion={adjustmentSuggestion}
         onAdjustPlan={handleAdjustPlan}
+        templates={standardTemplates}
+        onApplyTemplate={handleApplyTemplate}
       />
     );
   }

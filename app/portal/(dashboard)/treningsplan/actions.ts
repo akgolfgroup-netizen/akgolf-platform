@@ -3,7 +3,13 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { prisma } from "@/lib/portal/prisma";
-import { endOfISOWeek, isWithinInterval, addWeeks, startOfISOWeek } from "date-fns";
+import {
+  endOfISOWeek,
+  isWithinInterval,
+  addWeeks,
+  startOfISOWeek,
+  format,
+} from "date-fns";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
@@ -170,11 +176,21 @@ export async function addExerciseToSession(
   if (!session) throw new Error("Treningsokten finnes ikke");
 
   const currentExercises = Array.isArray(session.exercises)
-    ? (session.exercises as string[])
+    ? (session.exercises as Array<string | Record<string, unknown>>)
     : [];
 
-  // Add new exercise name to the list
-  const updatedExercises = [...currentExercises, exercise.name];
+  const newExerciseEntry: Record<string, unknown> = {
+    id: nanoid(),
+    exerciseId: exercise.id,
+    name: exercise.name,
+    pyramid: exercise.pyramid,
+    area: exercise.area,
+    lPhase: exercise.lPhase ?? null,
+    description: exercise.description ?? null,
+    addedAt: new Date().toISOString(),
+  };
+
+  const updatedExercises = [...currentExercises, newExerciseEntry];
 
   await supabase
     .from("TrainingPlanSession")
@@ -491,11 +507,17 @@ export async function toggleSessionComplete(sessionId: string) {
     durationMinutes: session.durationMinutes,
     focusArea: session.focusArea,
     exercises: JSON.stringify(
-      exerciseData.map((name: unknown, i: number) => ({
-        id: `ex-${i}`,
-        name: typeof name === "string" ? name : `Ovelse ${i + 1}`,
-        completed: true,
-      }))
+      exerciseData.map((entry: unknown, i: number) => {
+        if (typeof entry === "string") {
+          return { id: `ex-${i}`, name: entry, completed: true };
+        }
+        if (entry && typeof entry === "object") {
+          const obj = entry as Record<string, unknown>;
+          const name = typeof obj.name === "string" ? obj.name : `Ovelse ${i + 1}`;
+          return { id: `ex-${i}`, name, completed: true };
+        }
+        return { id: `ex-${i}`, name: `Ovelse ${i + 1}`, completed: true };
+      })
     ),
     updatedAt: now.toISOString(),
   });
@@ -629,9 +651,13 @@ export async function deleteSession(sessionId: string) {
 
   if (sessionCheck?.exercises) {
     const exercises = Array.isArray(sessionCheck.exercises)
-      ? (sessionCheck.exercises as Record<string, unknown>[])
+      ? (sessionCheck.exercises as Array<string | Record<string, unknown>>)
       : [];
-    if (exercises.some((ex) => ex._groupSessionId)) {
+    if (
+      exercises.some(
+        (ex) => typeof ex === "object" && ex !== null && "_groupSessionId" in ex,
+      )
+    ) {
       throw new Error("Gruppeøkter kan ikke slettes. Kontakt coach for endringer.");
     }
   }
@@ -783,9 +809,13 @@ export async function updateSession(
 
   // Check if this is a group session
   const exercises = Array.isArray(session.exercises)
-    ? (session.exercises as Record<string, unknown>[])
+    ? (session.exercises as Array<string | Record<string, unknown>>)
     : [];
-  if (exercises.some((ex) => ex._groupSessionId)) {
+  if (
+    exercises.some(
+      (ex) => typeof ex === "object" && ex !== null && "_groupSessionId" in ex,
+    )
+  ) {
     throw new Error("Gruppeøkter kan ikke endres. Kontakt coach for endringer.");
   }
 
@@ -900,9 +930,10 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
     sessionDate.setDate(sessionDate.getDate() + session.dayOfWeek - 1);
     const dateStr = `${sessionDate.getFullYear()}-${String(sessionDate.getMonth() + 1).padStart(2, "0")}-${String(sessionDate.getDate()).padStart(2, "0")}`;
 
-    // Parse exercises JSON for start time metadata and exercise data
+    // Parse exercises JSON for start time metadata and exercise data.
+    // Format kan være string (legacy) eller objekt (nytt fra P1.2).
     const rawExercises = Array.isArray(session.exercises)
-      ? (session.exercises as Record<string, unknown>[])
+      ? (session.exercises as Array<string | Record<string, unknown>>)
       : [];
 
     let startH = 9;
@@ -910,6 +941,24 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
     const v2Exercises: V2ExerciseData[] = [];
 
     for (const ex of rawExercises) {
+      if (typeof ex === "string") {
+        v2Exercises.push({
+          id: Math.random().toString(36).slice(2, 9),
+          name: ex,
+          pyramid: inferPyramidFromFocus(session.focusArea),
+          area: "",
+          lPhase: null,
+          cs: null,
+          m: null,
+          pr: null,
+          pFrom: null,
+          pTo: null,
+          slagFocus: [],
+          baller: 0,
+          bevegelser: 0,
+        });
+        continue;
+      }
       if (ex._startH !== undefined) {
         startH = Number(ex._startH);
         startM = Number(ex._startM) || 0;
@@ -933,8 +982,11 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
       }
     }
 
-    // Check if this is a group session
-    const groupMeta = rawExercises.find((ex) => ex._groupSessionId);
+    // Check if this is a group session (kun objekt-format)
+    const groupMeta = rawExercises.find(
+      (ex): ex is Record<string, unknown> =>
+        typeof ex === "object" && ex !== null && "_groupSessionId" in ex,
+    );
     const isGroupSession = !!groupMeta;
     const groupName = groupMeta?._groupName as string | undefined;
 
@@ -1046,7 +1098,7 @@ export async function analyzePlanDeviation(): Promise<PlanDeviationAnalysis | nu
   // Fetch TrainingLog for last 14 days
   const { data: logs } = await supabase
     .from("TrainingLog")
-    .select("durationMinutes, rating, deviatedFromPlan, date")
+    .select("durationMinutes, rating, deviatedFromPlan, date, planSessionId")
     .eq("userId", user.id)
     .gte("date", since.toISOString())
     .order("date", { ascending: false });
@@ -1209,6 +1261,8 @@ import {
   getTemplate,
   type TemplateId,
 } from "@/lib/portal/training/standard-templates";
+import { generateTrainingPlan } from "@/lib/portal/ai/training-plan";
+import type { TrainingPrescriptionResult } from "@/lib/portal/usi/generate-prescription";
 
 export type PlanCreationMode = "MANUAL" | "RECOMMENDED" | "TEMPLATE";
 
@@ -1271,43 +1325,190 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
     });
   }
 
-  // ---- RECOMMENDED: AI-anbefalt (placeholder — bruker Allround-mal som basis) ----
-  // TODO v2: koble til ekte AI-flow basert på SG/HCP/svakheter
+  // ---- RECOMMENDED: AI-anbefalt basert på siste TrainingPrescription ----
   if (input.mode === "RECOMMENDED") {
-    const fallback = getTemplate("allround");
-    if (!fallback) throw new Error("Manglende standard-mal for AI-fallback");
-
-    const weeks = Array.from({ length: input.durationWeeks }, (_, i) => ({
-      weekNumber: i + 1,
-      focus: `AI-anbefalt fokus — uke ${i + 1}`,
-      sessions: fallback.weekPattern.map((s) => ({
-        dayOfWeek: s.dayOfWeek,
-        title: s.title,
-        durationMinutes: s.durationMinutes,
-        focusArea: s.focusArea,
-      })),
-    }));
-
-    const result = await createManualPlan({
-      title: input.title ?? "AI-anbefalt plan",
-      description: "Generert basert på din profil. Juster fritt.",
-      periodType: "PREPARATION",
-      startDate: startDate.toISOString().slice(0, 10),
-      weeks,
-    });
-
-    // Marker som AI-generert
-    if (result.success && result.planId) {
-      await prisma.trainingPlan.update({
-        where: { id: result.planId },
-        data: { aiGenerated: true },
+    try {
+      const latestPrescription = await prisma.trainingPrescription.findFirst({
+        where: { userId: user.id },
+        orderBy: { generatedAt: "desc" },
       });
-    }
 
-    return result;
+      const prescription: TrainingPrescriptionResult | undefined =
+        latestPrescription
+          ? {
+              focusAreas: latestPrescription.focusAreas,
+              weeklyHours: latestPrescription.weeklyHours,
+              suggestedFormulaIds: latestPrescription.suggestedFormulaIds,
+              predictedHcpChange: latestPrescription.predictedHcpChange,
+              confidence: latestPrescription.confidence,
+              gradientJson: (latestPrescription.gradientJson ?? {}) as Record<
+                string,
+                unknown
+              >,
+              gapAnalysisJson: (latestPrescription.gapAnalysisJson ?? {}) as Record<
+                string,
+                unknown
+              >,
+              reasoning: "",
+            }
+          : undefined;
+
+      const goals = prescription?.focusAreas.length
+        ? prescription.focusAreas.join(", ")
+        : "Helhetlig progresjon med vekt på svakheter i runde-data";
+
+      const aiResult = await generateTrainingPlan(
+        {
+          goals,
+          periodType: "grunnperiode",
+          durationWeeks: input.durationWeeks,
+          startDate: startDate.toISOString().slice(0, 10),
+        },
+        prescription,
+      );
+
+      const aiWeeks = aiResult.weeks.map((w) => ({
+        weekNumber: w.weekNumber,
+        focus: w.focus,
+        volumeLabel: w.volumeLabel,
+        sessions: w.sessions.map((s) => ({
+          dayOfWeek: s.dayOfWeek,
+          title: s.title,
+          description: s.description,
+          durationMinutes: s.durationMinutes,
+          focusArea: s.focusArea,
+        })),
+      }));
+
+      const result = await createManualPlan({
+        title: input.title ?? aiResult.title,
+        description: "Generert med AI basert på siste preskripsjon. Juster fritt.",
+        periodType: "PREPARATION",
+        startDate: startDate.toISOString().slice(0, 10),
+        weeks: aiWeeks,
+      });
+
+      if (result.success && result.planId) {
+        // Persistér AI-genererte øvelser som strukturerte objekter
+        for (let weekIdx = 0; weekIdx < aiResult.weeks.length; weekIdx++) {
+          const aiWeek = aiResult.weeks[weekIdx];
+          for (const aiSession of aiWeek.sessions) {
+            if (!aiSession.exercises || aiSession.exercises.length === 0) continue;
+            const supabaseClient = await createServerSupabase();
+            const { data: dbWeek } = await supabaseClient
+              .from("TrainingPlanWeek")
+              .select("id")
+              .eq("planId", result.planId)
+              .eq("weekNumber", aiWeek.weekNumber)
+              .single();
+            if (!dbWeek) continue;
+            const { data: dbSession } = await supabaseClient
+              .from("TrainingPlanSession")
+              .select("id")
+              .eq("weekId", dbWeek.id)
+              .eq("dayOfWeek", aiSession.dayOfWeek)
+              .eq("title", aiSession.title)
+              .single();
+            if (!dbSession) continue;
+            const exerciseObjects = aiSession.exercises.map((name: string) => ({
+              id: nanoid(),
+              name,
+              pyramid: inferPyramidFromFocus(aiSession.focusArea ?? null),
+              area: "",
+              lPhase: null,
+              description: null,
+              addedAt: new Date().toISOString(),
+            }));
+            await supabaseClient
+              .from("TrainingPlanSession")
+              .update({ exercises: JSON.stringify(exerciseObjects) })
+              .eq("id", dbSession.id);
+          }
+        }
+
+        await prisma.trainingPlan.update({
+          where: { id: result.planId },
+          data: { aiGenerated: true },
+        });
+      }
+
+      return result;
+    } catch (error) {
+      console.error("[createPlanFromChoice] AI-flow feilet, fallback til Allround:", error);
+      const fallback = getTemplate("allround");
+      if (!fallback) throw new Error("Manglende standard-mal for AI-fallback");
+
+      const weeks = Array.from({ length: input.durationWeeks }, (_, i) => ({
+        weekNumber: i + 1,
+        focus: `AI-fallback fokus — uke ${i + 1}`,
+        sessions: fallback.weekPattern.map((s) => ({
+          dayOfWeek: s.dayOfWeek,
+          title: s.title,
+          durationMinutes: s.durationMinutes,
+          focusArea: s.focusArea,
+        })),
+      }));
+
+      const result = await createManualPlan({
+        title: input.title ?? "AI-anbefalt plan (fallback)",
+        description: "Generert som fallback. AI-tjenesten var utilgjengelig.",
+        periodType: "PREPARATION",
+        startDate: startDate.toISOString().slice(0, 10),
+        weeks,
+      });
+
+      if (result.success && result.planId) {
+        await prisma.trainingPlan.update({
+          where: { id: result.planId },
+          data: { aiGenerated: true },
+        });
+      }
+
+      return result;
+    }
   }
 
   throw new Error(`Ukjent mode: ${input.mode}`);
+}
+
+export async function applyTemplateToWeek(
+  weekOffset: number,
+  templateId: TemplateId,
+): Promise<{ success: boolean; createdCount: number; error?: string }> {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const template = getTemplate(templateId);
+  if (!template) {
+    return { success: false, createdCount: 0, error: `Ukjent mal: ${templateId}` };
+  }
+
+  let createdCount = 0;
+  const errors: string[] = [];
+
+  for (const tplSession of template.weekPattern) {
+    try {
+      await createSessionForWeek({
+        weekOffset,
+        dayOfWeek: tplSession.dayOfWeek,
+        title: tplSession.title,
+        description: tplSession.description,
+        durationMinutes: tplSession.durationMinutes,
+        focusArea: tplSession.focusArea,
+        startH: 9 + tplSession.dayOfWeek - 1,
+        startM: 0,
+      });
+      createdCount++;
+    } catch (err) {
+      errors.push(err instanceof Error ? err.message : String(err));
+    }
+  }
+
+  revalidatePath("/portal/treningsplan");
+  if (errors.length > 0 && createdCount === 0) {
+    return { success: false, createdCount, error: errors[0] };
+  }
+  return { success: true, createdCount };
 }
 
 export async function listStandardTemplates() {

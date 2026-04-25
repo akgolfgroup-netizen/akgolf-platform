@@ -53,6 +53,72 @@
 
 ---
 
+## 2026-04-25 — Treningsplan: AI-RECOMMENDED, øvelses-metadata, maler-fane, drag-resize, coach-feedback
+
+**Jobbet med:** Bygget de 5 gjenstående treningsplan-funksjonene fra plan-fil `lag-en-plan-for-harmonic-quail.md`. Alle TS-feil i `treningsplan/`-modulen ryddet (også 3 pre-eksisterende i `actions.ts` og `treningsplan-planner.tsx`).
+
+- **P1.2 — Persistert øvelses-metadata:** `addExerciseToSession()` lagrer nå strukturert objekt `{id, name, pyramid, area, lPhase, description, addedAt, exerciseId}` i stedet for bare `name`-string. `getWeekEvents()` parser begge formater (string + objekt) for bakoverkompatibilitet. `deleteSession`/`updateSession`/`toggleSessionComplete` håndterer også blandet format trygt.
+- **P1.1 — AI-RECOMMENDED ekte flow:** `createPlanFromChoice("RECOMMENDED")` kaller nå `generateTrainingPlan()` med siste `TrainingPrescription` (samme mønster som AI-routen). Persisterer AI-genererte øvelser som strukturerte objekter via direkte Supabase-UPDATE av `TrainingPlanSession.exercises`. Try/catch wrapping — fall-back til Allround-mal ved AI-feil.
+- **P2.4 — Maler-fane med drag-til-grid:** Erstattet `TemplatesPlaceholder` med `TemplatesList` som viser de 5 standardmalene som drag-bar kort med "Påfør på uken"-knapp. Ny `applyTemplateToWeek(weekOffset, templateId)` server action looper `weekPattern` og kaller `createSessionForWeek` per økt. Cell-level drop-handler i `WeekGrid` håndterer både `kind: "template"` og `kind: "session"` payloads.
+- **P1.3 — Drag-resize/flytt for økt-pillene:** Native HTML5 drag på økt-pillen (`draggable={!isGroupSession}`, `onDragStart` med `kind: "session"` payload). `WeekGrid` celle-`onDrop` kaller `onMoveEvent`. Ny `ResizeHandle`-komponent med `pointermove`-listener for varighets-justering (snap til 15-min). Gruppeøkter forblir read-only (`pointer-events: none` på handle, ingen drag).
+- **P2.5 — Coach-feedback skriv-UI:** Refaktorert `TrainingLogsTab` i `training-data-tabs.tsx`: textarea + "Lagre"/"Avbryt"-knapper. "Rediger"-link når feedback er satt. Lokal state oppdateres uten reload via `setLogs(prev => prev.map(...))`. `AdminInput` erstattet med `<textarea>` (3 rader).
+
+**Bonus-fix (pre-eksisterende):**
+- `format` importert fra `date-fns` i `actions.ts` (linje 737).
+- `planSessionId` lagt til select-listen i `analyzePlanDeviation` (linje 1101).
+- `cn` importert i `treningsplan-planner.tsx` (linje 39).
+- `onUpdateSession` lagt til destructure-listen.
+- `adjustmentSuggestion ?? null` for type-safe pass til `PlanAdjustmentModal`.
+
+**Nøkkelfiler:**
+- `app/portal/(dashboard)/treningsplan/actions.ts` (+~180 linjer: `applyTemplateToWeek`, AI-flow, exercise-objekt-format)
+- `app/portal/(dashboard)/treningsplan/page.tsx` (passer `templates`, `onApplyTemplate`, `onMoveEvent`, `onResizeEvent`)
+- `app/portal/(dashboard)/treningsplan/treningsplan-planner.tsx` (`TemplatesList`, `ResizeHandle`, drag-handlers i `WeekGrid`, props-utvidelse)
+- `app/admin/(authed)/elever/[id]/training-data-tabs.tsx` (coach-feedback editor med edit/cancel)
+
+**Status:** Alle endrede filer TS-rene. Pre-eksisterende feil i 3 andre treningsplan-filer ryddet som bonus. Lokal Supabase-env mangler → kan ikke verifisere visuelt i preview, men ingen build-feil ved navigasjon til `/portal/treningsplan`.
+
+**Neste steg:**
+1. **End-to-end-test lokalt** når Supabase-env er på plass:
+   - Wizard → "Anbefalt for meg" → 4 uker → bekreft AI-tittel/varierte ukesfokus
+   - Drag øvelse til økt → reload → modal viser pyramid/area-chips
+   - Sidebar → "Maler" → "Påfør på uken" → grid får 4 økter
+   - Drag økt fra mandag til onsdag → flytter; dra nederste kant → varighet endres
+   - Coach skriver feedback → spilleren ser den på sin side
+2. **P3-backlog:** Periodisering-admin-CRUD, `TrainingPlanTemplate` DB-tabell, iCal-eksport, CRON-status-dashboard, `TrainingPlanSession.facilityId`-velger.
+
+---
+
+## 2026-04-25 — Heritage design-rewrite av delvis-sider
+
+**Jobbet med:** Ryddet alle "Delvis"-sider fra FEATURE_INVENTORY-listen — fjernet demo-fallbacks, slettet eksperimentelle sider med arkiverte patterns, splittet store filer.
+
+- **`/portal/playerhq`:** Fjernet alle demo-fallbacks. La til to nye server actions: `getRoundAggregateMetrics()` (fairway%, GIR%, scrambling%, scoring avg fra `RoundStats` siste 30 dager) og `getTodayTasks()` (kobler `TrainingPlanSession` for dagens ukedag + dagens `Booking` + ferdig-status fra `TrainingLog`). KPI-pills i hero, dagens tasks i TasksCard, og statistikk-listen i ListCard bruker nå reelle data. Tom-tilstand for tasks når ingen plan finnes.
+- **`/portal/design-preview`:** Forenklet til kun de 6 Heritage-godkjente patterns: SGRing, MonoLabel, NightSurface, AKPyramide, VerticalTimeline, BentoCard. Fjernet alle arkiverte patterns (CourseHero, GlassPanel, GlassButton, HeroLabel, FloatingCrumbs, FloatingSegmented, AIAttribution).
+- **`/portal/dashboard/hero` slettet:** Brukte arkiverte patterns (CourseHero, BentoCard, GlassButton, FloatingTopbar) og duplikerte dashboard-funksjonalitet. Hadde også feil prop-shape mot `getDashboardStats`.
+- **`/portal/demo` slettet:** Brukte gamle tokens (`var(--color-grey-*)`, `var(--color-brand)`, `var(--color-ai)`), emojier, og mock-data uten produksjonsverdi.
+- **`/portal-preview` slettet:** Mock-duplikat av `/portal` med ugyldig type-shape mot `DashboardClientV3`. Fjernet også `proxy.ts`-referansen.
+- **`/admin/grupper`:** Splittet 564-linjers client-fil i 4 mindre filer alle under 300 linjer:
+  - `grupper-client.tsx` (238 linjer) — hovedkomponent + gruppeliste
+  - `create-group-modal.tsx` (116 linjer) — opprett-modal
+  - `group-detail-modal.tsx` (222 linjer) — detalj-modal med medlemmer
+  - `sync-section.tsx` (144 linjer) — synk-plan og resultatpanel
+  - Fjernet emojier (`✅⚠️❌`) fra sync-resultater. Heritage-tokens (`bg-on-surface/50`, `border-outline-variant`, `font-headline`) erstattet pre-Heritage utility-classes.
+
+**Nøkkelfiler:**
+- Endret: `app/portal/(dashboard)/dashboard-actions.ts` (+~190 linjer), `app/portal/(dashboard)/dashboard-types.ts` (+19 linjer for nye typer), `app/portal/(dashboard)/playerhq/page.tsx`, `components/portal/playerhq/player-hq-dashboard.tsx`, `components/portal/playerhq/row-two.tsx`, `app/portal/(dashboard)/design-preview/design-preview-client.tsx`, `proxy.ts`
+- Nye: `app/admin/(authed)/grupper/{create-group-modal,group-detail-modal,sync-section}.tsx`
+- Slettet: `app/portal/(dashboard)/dashboard/hero/`, `app/portal/demo/`, `app/portal-preview/`
+
+**Status:** TypeScript-rent for alle endrede filer (gjenværende TS-feil i repoet er pre-eksisterende). Lint-config ikke kjørt grunnet manglende node_modules ved start; npm install kjørt for tsc-verifisering.
+
+**Neste steg:**
+1. Kjør `npm run dev` lokalt og verifiser `/portal/playerhq` med ekte bruker (krever Supabase env).
+2. Vurder om `/portal/playerhq` skal erstatte standard `/portal`-dashboard, eller forbli en parallell variant.
+3. Adresser pre-eksisterende TS-feil i `app/portal/(dashboard)/dagbok/`, `app/portal/(dashboard)/min-plan/`, `app/portal/(dashboard)/runde/[id]/` (separate oppgaver).
+
+---
+
 ## 2026-04-25 — FEATURE_INVENTORY.md + git-opprydding
 
 **Jobbet med:** Komplett kartlegging av alle sider, API-ruter og backend-moduler i plattformen.

@@ -9,6 +9,7 @@ import {
  AdminAreaChart,
  AdminBarChart,
  AdminDonutChart,
+ AdminLineChart,
  AdminDataTable,
  AdminGauge,
  AdminSparkline,

@@ -18,7 +18,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
+import { MonoLabel, BentoGrid, BentoCard } from "@/components/portal/patterns";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import type {
