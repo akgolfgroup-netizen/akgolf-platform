@@ -33,6 +33,10 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
+# Temp env-pull files (forhindrer at ak-sync committer secrets)
+*_env*.tmp
+*env*.tmp
+_portal_env.*
 
 # vercel
 .vercel
