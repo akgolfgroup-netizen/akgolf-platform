@@ -8,6 +8,38 @@
 
 ---
 
+## 2026-04-25 — Go-live sjekkliste verifisert mot kode (branch: feature/go-live-checklist)
+
+**Jobbet med:** Komplett go-live sjekkliste med ja/nei/verifiser-statuser per punkt, basert på faktisk kartlegging av kodebasen (ikke skjønn).
+
+- **Ny fil:** `docs/GO_LIVE_CHECKLIST.md` (14 seksjoner) erstatter foreldet `docs/status/GO_LIVE_CHECKLIST.md` (2026-04-18, hadde bl.a. 19 crons mens vercel.json nå har 22).
+- **Env-variabler kartlagt:** 57 unike `process.env.X`-referanser i kode. Sammenlignet mot `.env.example` — fant **12 manglende variabler** (DIRECT_URL, OPENAI_API_KEY, INTEGRATION_SECRET, TOURNAMENT_SYNC_SECRET, alle 4 VAPID-vars, 4 NEXT_PUBLIC_*_URL-varianter) og **3 navn-mismatcher** (Stripe-priser PERFORMANCE/PERFORMANCE_PRO/FLEX vs eksempel TRAINING_ABO/PRO/FLEX50/FLEX90, og TWILIO_FROM_NUMBER vs TWILIO_PHONE_NUMBER).
+- **Prisma-migrasjoner:** 21 stk (eldste 2025-04-06, nyeste 2026-04-24 `user_calendar_subscription`). RLS-migrasjon (20260326) må kjøres separat i Supabase SQL Editor — Prisma bypasser RLS via service_role.
+- **Vercel-config:** vercel.json verifisert (22 cron-paths, alle har route.ts-fil). `next.config.ts` har `typescript.ignoreBuildErrors: true` flagget som risiko.
+- **Stripe webhook:** endpoint-fil `app/api/portal/webhooks/stripe/route.ts` finnes med try/catch og idempotency. Krever Stripe Dashboard-konfig (signing secret, 6 events, prod-URL).
+- **Supabase:** `proxy.ts` håndterer auth (ingen middleware.ts). Auth redirect URLs må settes til `https://akgolf.no/auth/callback` i Supabase Dashboard.
+- **DNS:** Krever apex A-record / nameservers til Vercel + bevart MX/SPF/DKIM for e-post.
+
+**Kritiske mangler før deploy:**
+1. Oppdater `.env.example` med 12 manglende vars + 3 navn-mismatcher
+2. RLS-migrasjon må kjøres manuelt i Supabase SQL Editor
+3. Stripe må veksles til Live (`sk_live_...`, `pk_live_...`)
+4. Verifiser DNS, Stripe webhook-konfig og Supabase Auth URLs (alle krever ekstern dashboard-tilgang)
+
+**Estimert deploy-tid:** ~2 timer aktivt + opp til 24t DNS-propagering.
+
+**Nøkkelfiler:** `docs/GO_LIVE_CHECKLIST.md` (ny), `WORKLOG.md` (denne)
+
+**Neste steg:**
+1. Anders fikser `.env.example` (15 min) basert på diff i §1.B
+2. Sett alle 57 env-vars i Vercel Dashboard (45 min)
+3. Kjør RLS-migrasjon i Supabase SQL Editor (5 min)
+4. Verifiser Stripe + Supabase + DNS før deploy (30 min)
+5. Pre-deploy lokalt: `npm run lint && npm run test && npm run build && npm run pre-deploy`
+6. Push til main → Vercel auto-deploy
+
+---
+
 ## 2026-04-25 — FEATURE_INVENTORY.md + git-opprydding
 
 **Jobbet med:** Komplett kartlegging av alle sider, API-ruter og backend-moduler i plattformen.
