@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+  <defs>
+    <radialGradient id="sky" cx="50%" cy="0%" r="100%">
+      <stop offset="0%" stop-color="#9dd090" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#154212" stop-opacity="0.1" />
+    </radialGradient>
+    <linearGradient id="grass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d5a27" />
+      <stop offset="100%" stop-color="#154212" />
+    </linearGradient>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1" fill="#9dd090" fill-opacity="0.15" />
+    </pattern>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#grass)" />
+  <rect width="1600" height="1000" fill="url(#dots)" />
+  <ellipse cx="320" cy="640" rx="180" ry="110" fill="#1c3a14" opacity="0.55" />
+  <ellipse cx="800" cy="380" rx="240" ry="160" fill="#1c3a14" opacity="0.45" />
+  <ellipse cx="1180" cy="620" rx="200" ry="130" fill="#1c3a14" opacity="0.5" />
+  <ellipse cx="540" cy="820" rx="220" ry="80" fill="#1c3a14" opacity="0.4" />
+  <ellipse cx="1320" cy="200" rx="160" ry="100" fill="#1c3a14" opacity="0.5" />
+  <rect width="1600" height="1000" fill="url(#sky)" />
+  <text x="800" y="540" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="32" font-weight="500" fill="#fdf9f0" opacity="0.7" letter-spacing="3">GFGK AERIAL — PLACEHOLDER</text>
+  <text x="800" y="580" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="16" fill="#fdf9f0" opacity="0.5">Bytt ut public/admin/gfgk-aerial.jpg med ekte flyfoto</text>
+</svg>

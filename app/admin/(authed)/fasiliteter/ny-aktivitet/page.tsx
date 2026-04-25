@@ -1,7 +1,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
-import { getFacilities } from "../actions";
+import { getFacilities } from "../actions-legacy";
 import { NyAktivitetClient } from "./ny-aktivitet-client";
 
 export default async function NyAktivitetPage() {

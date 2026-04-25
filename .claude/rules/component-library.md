@@ -68,6 +68,14 @@ Gjenbruk eksisterende — aldri bygg duplikater.
 |---|---|---|
 | UpgradeOptions | components/portal/subscription/upgrade-options.tsx | Oppgraderingskort med planer |
 
+## Admin Fasiliteter-komponenter (CoachHQ — GFGK fasilitets-bookingkart)
+| Komponent | Fil | Bruk |
+|---|---|---|
+| FacilityMap | components/admin/FacilityMap.tsx | Flyfoto-kart med klikkbare SVG-soner per fasilitet, kapasitets-fargekoding, glasspanel for booking-detaljer |
+| FacilityCalendar | components/admin/FacilityCalendar.tsx | Dagvelger (7 dager) + 08-20 timeplan med fargede booking-blokker per fasilitet |
+| FacilityList | components/admin/FacilityList.tsx | Bookinger gruppert per fasilitet med status-badge per type |
+| AddActivityModal | components/admin/AddActivityModal.tsx | Modal for å legge til ny FacilityBooking (fasilitet, person, type, dato, tid, varighet) |
+
 ## Delte UI-komponenter (shadcn/ui)
 Se components/ui/ for shadcn primitiver (Button, Dialog, Card, etc.)
 

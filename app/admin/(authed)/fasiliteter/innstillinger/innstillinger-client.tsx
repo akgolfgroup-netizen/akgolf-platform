@@ -7,7 +7,7 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
-import { toggleFacilityActive, deleteInstructorDefault } from "../actions";
+import { toggleFacilityActive, deleteInstructorDefault } from "../actions-legacy";
 
 // ── Types ──────────────────────────────────────────────────
 

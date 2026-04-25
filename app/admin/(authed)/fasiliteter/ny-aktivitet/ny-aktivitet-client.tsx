@@ -8,7 +8,7 @@ import { Calendar, Users, FileText } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
-import { createActivity } from "../actions";
+import { createActivity } from "../actions-legacy";
 
 // ── Types ──────────────────────────────────────────────────
 
