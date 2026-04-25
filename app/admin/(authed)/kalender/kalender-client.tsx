@@ -19,6 +19,7 @@ import {
   getBlockedTimesForPeriod,
   getInstructorAvailabilityPrisma,
   markNoShow,
+  markBookingCompleted,
   addAdminNote,
   createBlockedTimePrisma,
 } from "./actions";
@@ -59,6 +60,7 @@ export default function KalenderClient({
   const [isPending, startTransition] = useTransition();
   const [isNotePending, startNoteTransition] = useTransition();
   const [isNoShowPending, startNoShowTransition] = useTransition();
+  const [isCompletePending, startCompleteTransition] = useTransition();
 
   // Overlays
   const [drawerBooking, setDrawerBooking] = useState<CalendarBooking | null>(null);
@@ -138,6 +140,26 @@ export default function KalenderClient({
       await markNoShow(bookingId);
       toast({ variant: "warning", title: "Merket som ikke møtt", description: "Bookingen er oppdatert." });
       fetchData(currentDate, viewMode, selectedInstructorId);
+    });
+  };
+
+  const handleMarkCompleted = (bookingId: string) => {
+    startCompleteTransition(async () => {
+      try {
+        await markBookingCompleted(bookingId);
+        toast({
+          variant: "success",
+          title: "Marker fullført",
+          description: "AI-pipeline starter automatisk hvis lyd er lastet opp.",
+        });
+        fetchData(currentDate, viewMode, selectedInstructorId);
+      } catch (err) {
+        toast({
+          variant: "error",
+          title: "Kunne ikke markere fullført",
+          description: err instanceof Error ? err.message : "Ukjent feil",
+        });
+      }
     });
   };
 
@@ -320,6 +342,8 @@ export default function KalenderClient({
         isPending={isPending}
         isNoShowPending={isNoShowPending}
         onMarkNoShow={handleMarkNoShow}
+        isCompletePending={isCompletePending}
+        onMarkCompleted={handleMarkCompleted}
         onOpenNoteModal={handleOpenNoteModal}
       />
     </>
