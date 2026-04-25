@@ -37,3 +37,26 @@ Ved UI-komponenter, bruk relevante layout-mønstre fra https://vibeui.online/
 | Realtime dashboard | feature/realtime-mission-board |
 
 ## Prompt-format
+
+```
+Les WORKLOG.md og docs/component-library.md.
+Du er i [branch-navn].
+[Kontekst: hvilken overflate, hva som eksisterer]
+Mål: [Hva skal bygges. Hva er "ferdig".]
+VibeUI-mønster: [Relevant mønster fra vibeui.online]
+Design: Følg .claude/rules/design-system.md strengt.
+Auth: [requirePortalUser() / canAccessMissionControl() / åpen]
+Database: [Prisma-modeller eller "ingen endringer"]
+Server Actions: app/[rute]/actions.ts
+Output:
+
+[fil 1]
+[fil 2]
+
+Regler:
+
+Maks 300 linjer per fil
+Registrer nye komponenter i docs/component-library.md
+Oppdater WORKLOG.md etter ferdig arbeid
+Commit: [feat/fix/refactor]: [beskrivelse]
+```
