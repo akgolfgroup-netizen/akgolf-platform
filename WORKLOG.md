@@ -8,6 +8,27 @@
 
 ---
 
+## 2026-04-25 — Dynamisk slot-telling i booking (P1 fra BOOKING_AUDIT)
+
+**Jobbet med:** Fjernet legacy hardkodet `availableSlotsThisWeek: 8` ved å legge til en Prisma-basert helper som beregner faktisk antall ledige slots for inneværende uke (now → søndag 23:59), og en unit-test som verifiserer at verdien er dynamisk.
+
+- **Søk:** Hardkodet `: 8` ble opprinnelig fjernet i commit `27de794` (P1-P3 backlog). Senere ble `app/booking/page.tsx` rewrittet til Acuity-redirect (commits `698f90b`, `c972965`), så feltet `availableSlotsThisWeek` på `TrainerService` har vært ubrukt siden. Helperen er nå klar for når den interne booking-flyten reaktiveres.
+- **Ny helper:** `lib/portal/booking/available-slots.ts` med `countAvailableSlotsThisWeek({ instructorId, durationMinutes, now? })` som henter `InstructorAvailability`, `Booking` (PENDING/CONFIRMED) og `BlockedTime` via Prisma, deretter delegerer til en ren beregningsfunksjon.
+- **Ren beregning:** `lib/portal/booking/available-slots-compute.ts` — `computeRemainingSlots()` itererer fra now til ukens slutt, plukker ut tilgjengelighetsvinduer per ukedag, genererer 30-min-intervall slot-starter, og trekker fra de som overlapper med booking eller blokkert tid. Splittet ut for å være testbar uten databasekobling.
+- **Test:** `__tests__/booking/available-slots.test.ts` med 8 tester. Verifiserer at verdien er dynamisk (varierer med antall bookinger, varighet, blokkerte tider) og aldri returnerer den gamle hardkodede 8-verdien.
+
+**Status:** Lint OK. Tsc OK. 8/8 tester passerer.
+
+**Nøkkelfiler:**
+- Nye: `lib/portal/booking/available-slots.ts`, `lib/portal/booking/available-slots-compute.ts`, `__tests__/booking/available-slots.test.ts`
+- Oppdatert: `lib/portal/booking/index.ts` (eksporterer ny helper)
+
+**Neste steg:**
+1. Når booking-flyten med `BookingClient`/`ServiceRow` reaktiveres, kall `countAvailableSlotsThisWeek` server-side per (instructorId, duration) og send som `availableSlotsThisWeek` i `TrainerService`.
+2. Vurder å eksponere som API-endepunkt `/api/booking/available-slots` hvis SSR-kall ikke passer.
+
+---
+
 ## 2026-04-25 — FEATURE_INVENTORY.md + git-opprydding
 
 **Jobbet med:** Komplett kartlegging av alle sider, API-ruter og backend-moduler i plattformen.
