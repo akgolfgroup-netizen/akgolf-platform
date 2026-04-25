@@ -38,6 +38,16 @@ export {
 // Auto-opprett bruker
 export { autoCreateUser } from "./auto-create-user";
 
+// Dynamisk slot-telling for inneværende uke
+export {
+  countAvailableSlotsThisWeek,
+  computeRemainingSlots,
+  type CountAvailableSlotsOptions,
+  type AvailabilityWindow,
+  type BookingWindow,
+  type ComputeRemainingSlotsInput,
+} from "./available-slots";
+
 // Annullering og refusjon (eksisterende)
 export * from "./refund";
 export * from "./cancellation-policy";

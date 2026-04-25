@@ -8,6 +8,8 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/portal/prisma";
+
+export const dynamic = "force-dynamic";
 import { onBookingCompleted } from "@/lib/portal/agents/runner";
 import { logger } from "@/lib/logger";
 
