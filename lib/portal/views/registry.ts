@@ -51,7 +51,7 @@ export type ScreenId =
   | "portal-trackman-tester"
   | "portal-turneringer"
   | "portal-turneringsplan"
-  // Mission Control — strategiske
+  // CoachHQ — strategiske
   | "mc-dashboard"
   | "mc-kalender"
   | "mc-bookinger"
@@ -60,7 +60,7 @@ export type ScreenId =
   | "mc-rapporter"
   | "mc-fasiliteter"
   | "mc-tilgjengelighet"
-  // Mission Control — bonus
+  // CoachHQ — bonus
   | "mc-agenter"
   | "mc-ai-assistent"
   | "mc-analytics"
@@ -318,7 +318,7 @@ export const VIEW_REGISTRY: Record<ScreenId, ScreenViews> = {
     views: DEFAULT_VIEWS,
   },
 
-  // Mission Control — Dashboard
+  // CoachHQ — Dashboard
   "mc-dashboard": {
     screenId: "mc-dashboard",
     label: "MC Dashboard",
@@ -331,7 +331,7 @@ export const VIEW_REGISTRY: Record<ScreenId, ScreenViews> = {
     ],
   },
 
-  // Mission Control — Kalender
+  // CoachHQ — Kalender
   "mc-kalender": {
     screenId: "mc-kalender",
     label: "MC Kalender",
@@ -344,7 +344,7 @@ export const VIEW_REGISTRY: Record<ScreenId, ScreenViews> = {
     ],
   },
 
-  // Mission Control — Bookinger
+  // CoachHQ — Bookinger
   "mc-bookinger": {
     screenId: "mc-bookinger",
     label: "MC Bookinger",
@@ -357,7 +357,7 @@ export const VIEW_REGISTRY: Record<ScreenId, ScreenViews> = {
     ],
   },
 
-  // Mission Control — Elever
+  // CoachHQ — Elever
   "mc-elever": {
     screenId: "mc-elever",
     label: "MC Elever",
@@ -370,35 +370,35 @@ export const VIEW_REGISTRY: Record<ScreenId, ScreenViews> = {
     ],
   },
 
-  // Mission Control — Elev-detalj
+  // CoachHQ — Elev-detalj
   "mc-elev-detalj": {
     screenId: "mc-elev-detalj",
     label: "MC Elev-detalj",
     views: DEFAULT_VIEWS,
   },
 
-  // Mission Control — Rapporter
+  // CoachHQ — Rapporter
   "mc-rapporter": {
     screenId: "mc-rapporter",
     label: "MC Rapporter",
     views: DEFAULT_VIEWS,
   },
 
-  // Mission Control — Fasiliteter
+  // CoachHQ — Fasiliteter
   "mc-fasiliteter": {
     screenId: "mc-fasiliteter",
     label: "MC Fasiliteter",
     views: DEFAULT_VIEWS,
   },
 
-  // Mission Control — Tilgjengelighet
+  // CoachHQ — Tilgjengelighet
   "mc-tilgjengelighet": {
     screenId: "mc-tilgjengelighet",
     label: "MC Tilgjengelighet",
     views: DEFAULT_VIEWS,
   },
 
-  // Mission Control — bonus
+  // CoachHQ — bonus
   "mc-agenter": {
     screenId: "mc-agenter",
     label: "MC Agenter",

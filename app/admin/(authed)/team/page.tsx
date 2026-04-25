@@ -6,7 +6,7 @@ import { fetchTeamMembers, listPresets } from "./actions";
 import { TeamClient } from "./team-client";
 
 export const metadata = {
-  title: "Team | AK Golf Mission Control",
+  title: "Team | AK Golf CoachHQ",
 };
 export const dynamic = "force-dynamic";
 

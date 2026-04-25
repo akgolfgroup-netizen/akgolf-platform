@@ -85,7 +85,7 @@ export function DesignPreviewClient() {
       </PatternSection>
 
       {/* P-03 Night Surface */}
-      <PatternSection id="p-03" code="P-03" title="Night Surface" description="Kontekstuell dark mode for data-first-skjermer (TrackMan, Mission Control, V2).">
+      <PatternSection id="p-03" code="P-03" title="Night Surface" description="Kontekstuell dark mode for data-first-skjermer (TrackMan, CoachHQ, V2).">
         <NightSurface variant="ambient" className="rounded-2xl p-10 min-h-[200px] flex items-center justify-center">
           <div className="text-center">
             <MonoLabel size="xs" uppercase className="text-secondary-fixed">

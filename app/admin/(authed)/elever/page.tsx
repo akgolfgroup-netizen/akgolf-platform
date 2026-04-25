@@ -5,7 +5,7 @@ import { fetchStudents } from "./actions";
 import { StudentsClient } from "./students-client";
 
 export const metadata = {
-  title: "Elever | AK Golf Mission Control",
+  title: "Elever | AK Golf CoachHQ",
 };
 
 export default async function StudentsPage() {

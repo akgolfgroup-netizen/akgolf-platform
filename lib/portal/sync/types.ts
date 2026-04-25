@@ -1,6 +1,6 @@
 /**
  * TypeScript types for Real-time Sync System
- * Spillerportal <-> Mission Control
+ * Spillerportal <-> CoachHQ
  */
 
 // SyncEventType and SyncEventStatus are not in Prisma schema — define locally

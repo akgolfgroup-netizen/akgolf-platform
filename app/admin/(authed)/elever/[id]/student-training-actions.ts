@@ -228,7 +228,7 @@ export async function setStudentLPhase(
     shotType as ShotType,
     lPhase as LPhase,
     user.id,
-    `Satt av coach via Mission Control`
+    `Satt av coach via CoachHQ`
   );
 
   return { success: true };

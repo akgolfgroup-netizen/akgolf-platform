@@ -4,7 +4,7 @@
  * CourseHero — Pattern P-07 (v3.1 Course Hero v4)
  *
  * Wrapper for hero-skjermer med foto-bakgrunn + dark canvas + gradient overlay.
- * Brukes på Dashboard V6, Runde live, Statistikk V2, TrackMan, Mission Control.
+ * Brukes på Dashboard V6, Runde live, Statistikk V2, TrackMan, CoachHQ.
  *
  * Kilde: /tmp/ak-golf-design/screens/_course-hero.css + dashboard-v6-hero.html
  */

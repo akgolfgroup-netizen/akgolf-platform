@@ -12,7 +12,7 @@ interface ChatMessage {
   content: string;
 }
 
-const ADMIN_SYSTEM_PROMPT = `Du er AI-assistent for AK Golf Academy sitt administrasjonspanel (Mission Control). Du hjelper instruktorer og administratorer med:
+const ADMIN_SYSTEM_PROMPT = `Du er AI-assistent for AK Golf Academy sitt administrasjonspanel (CoachHQ). Du hjelper instruktorer og administratorer med:
 
 - Sporsmal om elever, bookinger, kapasitet og inntekt
 - Analyse av trender og statistikk

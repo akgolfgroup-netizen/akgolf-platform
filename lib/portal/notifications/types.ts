@@ -1,10 +1,10 @@
 /**
- * Notifikasjons-typer for Spillerportal og Mission Control
+ * Notifikasjons-typer for Spillerportal og CoachHQ
  * 
- * Spillerportal → Mission Control (Admin ser)
+ * Spillerportal → CoachHQ (Admin ser)
  * - Ny booking, avbestilling, video opplastet, dagbok-innlegg, spørsmål
  * 
- * Mission Control → Spillerportal (Elev ser)
+ * CoachHQ → Spillerportal (Elev ser)
  * - Booking bekreftet/endret, coaching-notater, treningsplan klar, påminnelser, mål oppnådd
  */
 
