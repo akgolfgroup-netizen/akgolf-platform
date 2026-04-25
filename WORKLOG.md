@@ -8,6 +8,23 @@
 
 ---
 
+## 2026-04-25 — FEATURE_INVENTORY.md + git-opprydding
+
+**Jobbet med:** Komplett kartlegging av alle sider, API-ruter og backend-moduler i plattformen.
+
+- **FEATURE_INVENTORY.md** generert med 9 seksjoner: landingsside (14 sider), spillerportal (37 sider), Mission Control (29 sider), booking (5 sider), auth (7 sider), 150 API-ruter, backend-moduler, og gap-analyse.
+- **Status:** 237 av 242 sider/ruter er ferdig implementert. 5 er delvis (interne preview-sider).
+- **Git-opprydding:** Pushet 2 lokale commits til main. Arkivert 1 upushet commit fra gammel kopi som `archive/dev-tools-dashboard`-branch. Identifisert 10 remote branches med halvferdig arbeid.
+- **Duplikater identifisert:** `~/Developer/arkiv/akgolf-platform-clone` og `~/slette/fra-rot/akgolf-platform` — klare for sletting.
+
+**Neste steg:**
+1. Slett alle lokale duplikater og klon prosjektet nytt fra GitHub
+2. Implementer feature flags (`lib/portal/feature-flags.ts`) for a kontrollere hva som er synlig
+3. Slett gamle remote branches etter beslutning
+4. Heritage design-matching av prioriterte sider
+
+---
+
 ## 2026-04-24 — CoachHQ AI-pipeline: sammendrag, drills, neste økt, TrackMan-vision, automasjon
 
 **Jobbet med:** Full 9-dagers implementasjon (alt i én økt) av CoachHQ AI-pipeline slik Anders planla — coach kan laste opp lyd fra mobil etter en time og systemet genererer komplett sammendrag, utkast til neste økt, og drills i én flyt.
