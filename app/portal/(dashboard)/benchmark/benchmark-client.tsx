@@ -2,7 +2,7 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useCallback } from "react";
-import { Search, Layers } from "lucide-react";
+import { Layers } from "lucide-react";
 import {
   RadarChart,
   PolarGrid,
@@ -40,7 +40,6 @@ import {
   NightSurface,
   SGRing,
   BentoCard,
-  BentoGrid,
 } from "@/components/portal/patterns";
 
 // ── Design tokens as hex (for Recharts which doesn't støtter CSS vars) ──

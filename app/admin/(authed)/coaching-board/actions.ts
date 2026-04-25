@@ -72,7 +72,7 @@ export async function fetchCoachingBoardData(): Promise<CoachingBoardData> {
   const viewMode: "own" | "all" = hasAll ? "all" : "own";
 
   let userIds: string[] = [];
-  let coachName: string | null = user.name ?? null;
+  const coachName: string | null = user.name ?? null;
 
   if (viewMode === "all") {
     const students = await prisma.user.findMany({

@@ -1,7 +1,6 @@
 import { Icon } from "@/components/ui/icon";
 import { prisma } from "@/lib/portal/prisma";
 import { requirePortalUser } from "@/lib/portal/auth";
-import { PYRAMIDE } from "@/lib/portal/training/ak-taxonomy";
 
 export const metadata = {
   title: "Øvelser | PlayersHQ",

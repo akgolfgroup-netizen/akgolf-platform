@@ -3,7 +3,6 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { UserCheck, CalendarCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {

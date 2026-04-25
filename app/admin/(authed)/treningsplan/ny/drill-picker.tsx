@@ -3,7 +3,6 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { Search } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { AdminInput } from "@/components/portal/mission-control/ui";
 import { Button } from "@/components/ui/button";

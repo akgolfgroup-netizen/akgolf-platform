@@ -2,7 +2,7 @@
 
 
 import { Icon } from "@/components/ui/icon";
-import { Grid3X3, Filter } from "lucide-react";
+import { Grid3X3 } from "lucide-react";
 import { format, subMonths, addMonths, subWeeks, addWeeks } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Button } from "@/components/ui/button";

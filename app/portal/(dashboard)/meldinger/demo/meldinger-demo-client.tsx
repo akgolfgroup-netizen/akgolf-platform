@@ -6,7 +6,6 @@ import {
   MonoLabel,
   BentoGrid,
   BentoCard,
-  BentoEyebrow,
   NightSurface,
   GlassPanel,
 } from "@/components/portal/patterns";
