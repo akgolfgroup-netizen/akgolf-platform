@@ -1,7 +1,6 @@
 import "server-only";
 import { prisma } from "@/lib/portal/prisma";
 import {
-  SG_DIMENSIONS,
   SG_DIMENSION_LABEL,
   type SGDimension,
 } from "@/lib/portal/golf/sg-benchmarks";

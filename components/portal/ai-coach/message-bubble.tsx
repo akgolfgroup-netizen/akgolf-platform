@@ -3,7 +3,6 @@
 
 import { Icon } from "@/components/ui/icon";
 import { motion } from "framer-motion";
-import { User } from "lucide-react";
 import type { Message } from "./chat-interface";
 import {
   AIAttribution,

@@ -4,7 +4,7 @@
 import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Brain, Wind, Zap, Pause, Focus } from "lucide-react";
+import { Brain, Wind, Zap, Pause } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 
