@@ -27,6 +27,10 @@
       "schedule": "5 0 * * *"
     },
     {
+      "path": "/api/portal/cron/reconcile-stripe-bookings",
+      "schedule": "*/30 * * * *"
+    },
+    {
       "path": "/api/portal/cron/session-expiry-reminder",
       "schedule": "0 9 * * *"
     },
