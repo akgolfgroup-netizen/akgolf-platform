@@ -8,8 +8,6 @@ import type {
   RoundAggregateMetrics,
   TodayTask,
 } from "./dashboard-types";
-
-export type { RoundAggregateMetrics, TodayTask };
 import {
   subDays,
   startOfDay,
