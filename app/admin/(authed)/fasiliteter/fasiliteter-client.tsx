@@ -7,12 +7,8 @@ import { FacilityMap } from "@/components/admin/FacilityMap";
 import { FacilityCalendar } from "@/components/admin/FacilityCalendar";
 import { FacilityList } from "@/components/admin/FacilityList";
 import { AddActivityModal } from "@/components/admin/AddActivityModal";
-import {
-  deleteFacilityBooking,
-  type FacilityBookingDTO,
-  type FacilityName,
-  type LiveStatus,
-} from "./actions";
+import { deleteFacilityBooking } from "./actions";
+import type { FacilityBookingDTO, FacilityName, LiveStatus } from "./constants";
 
 type ViewKey = "map" | "calendar" | "list";
 

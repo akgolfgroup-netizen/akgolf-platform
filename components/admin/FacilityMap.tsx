@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { getLiveStatus } from "@/app/admin/(authed)/fasiliteter/actions";
 import {
   FACILITIES,
   FACILITY_CAPACITY,
   ON_MAP_FACILITIES,
-  getLiveStatus,
   type FacilityBookingDTO,
   type FacilityName,
   type LiveStatus,
-} from "@/app/admin/(authed)/fasiliteter/actions";
+} from "@/app/admin/(authed)/fasiliteter/constants";
 import { ZoneDetailPanel } from "./facility-map/zone-detail-panel";
 import { OffMapStrip } from "./facility-map/off-map-strip";
 

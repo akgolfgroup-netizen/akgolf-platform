@@ -4,63 +4,13 @@ import { revalidatePath } from "next/cache";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { canAccessMissionControl } from "@/lib/portal/rbac";
 import { prisma } from "@/lib/portal/prisma";
-
-export const FACILITIES = [
-  "Driving Range",
-  "Performance Studio",
-  "Putting Green",
-  "Short Game Area",
-  "Korthullsbane",
-] as const;
-
-export type FacilityName = (typeof FACILITIES)[number];
-
-/** Soner synlige som klikkbare polygoner på flyfoto-kartet. Korthullsbane vises off-map. */
-export const ON_MAP_FACILITIES: FacilityName[] = [
-  "Driving Range",
-  "Performance Studio",
-  "Putting Green",
-  "Short Game Area",
-];
-
-export const ACTIVITY_TYPES = [
-  "Trening",
-  "Coaching",
-  "Turnering",
-  "Event",
-  "Vedlikehold",
-] as const;
-
-export type ActivityType = (typeof ACTIVITY_TYPES)[number];
-
-export const FACILITY_CAPACITY: Record<FacilityName, number> = {
-  "Driving Range": 14,
-  "Performance Studio": 4,
-  "Putting Green": 8,
-  "Short Game Area": 6,
-  Korthullsbane: 12,
-};
-
-export interface FacilityBookingDTO {
-  id: string;
-  facility: string;
-  person: string;
-  type: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  userId: string | null;
-  createdAt: string;
-}
-
-export interface CreateFacilityBookingInput {
-  facility: FacilityName;
-  person: string;
-  type: ActivityType;
-  date: string;
-  startTime: string;
-  durationMinutes: number;
-}
+import {
+  FACILITIES,
+  ACTIVITY_TYPES,
+  type CreateFacilityBookingInput,
+  type FacilityBookingDTO,
+  type LiveStatus,
+} from "./constants";
 
 function assertAdmin(role?: string) {
   if (!canAccessMissionControl(role)) {
@@ -80,13 +30,6 @@ function addMinutes(time: string, minutes: number): string {
   const hh = Math.floor(total / 60) % 24;
   const mm = total % 60;
   return `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
-}
-
-export interface LiveStatus {
-  facility: FacilityName;
-  activeNow: number;
-  nextStart: string | null;
-  nextPerson: string | null;
 }
 
 export async function getLiveStatus(): Promise<LiveStatus[]> {

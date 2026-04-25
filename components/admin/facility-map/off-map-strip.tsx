@@ -6,7 +6,7 @@ import {
   type FacilityBookingDTO,
   type FacilityName,
   type LiveStatus,
-} from "@/app/admin/(authed)/fasiliteter/actions";
+} from "@/app/admin/(authed)/fasiliteter/constants";
 
 interface Props {
   facilities: FacilityName[];

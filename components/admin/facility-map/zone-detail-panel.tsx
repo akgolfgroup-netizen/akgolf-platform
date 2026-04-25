@@ -5,7 +5,7 @@ import type {
   FacilityBookingDTO,
   FacilityName,
   LiveStatus,
-} from "@/app/admin/(authed)/fasiliteter/actions";
+} from "@/app/admin/(authed)/fasiliteter/constants";
 
 interface Props {
   name: FacilityName;

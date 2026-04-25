@@ -2,13 +2,13 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { Icon } from "@/components/ui/icon";
+import { createFacilityBooking } from "@/app/admin/(authed)/fasiliteter/actions";
 import {
   ACTIVITY_TYPES,
   FACILITIES,
-  createFacilityBooking,
   type ActivityType,
   type FacilityName,
-} from "@/app/admin/(authed)/fasiliteter/actions";
+} from "@/app/admin/(authed)/fasiliteter/constants";
 
 interface AddActivityModalProps {
   open: boolean;
