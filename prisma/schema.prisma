@@ -1751,8 +1751,13 @@ model TrainingPlan {
   createdAt                           DateTime             @default(now())
   updatedAt                           DateTime
   groupId                             String?
+  /// Coach-kommentar på plan-nivå (skrevet av staff). Vises til spilleren under tittelen.
+  coachFeedback                       String?
+  coachFeedbackAt                     DateTime?
+  coachFeedbackById                   String?
   User_TrainingPlan_createdByIdToUser User                 @relation("TrainingPlan_createdByIdToUser", fields: [createdById], references: [id])
   User_TrainingPlan_studentIdToUser   User                 @relation("TrainingPlan_studentIdToUser", fields: [studentId], references: [id])
+  User_TrainingPlan_coachFeedbackById User?                @relation("TrainingPlan_coachFeedbackById", fields: [coachFeedbackById], references: [id], onDelete: SetNull)
   PeriodizationPeriod                 PeriodizationPeriod? @relation(fields: [periodizationPeriodId], references: [id], onDelete: SetNull)
   TrainingGroup                       TrainingGroup?       @relation(fields: [groupId], references: [id], onDelete: SetNull)
   TrainingPlanWeek                    TrainingPlanWeek[]
@@ -1761,6 +1766,7 @@ model TrainingPlan {
   @@index([studentId])
   @@index([periodizationPeriodId])
   @@index([groupId])
+  @@index([coachFeedbackById])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -1828,6 +1834,31 @@ model TrainingPlanWeek {
   TrainingPlan        TrainingPlan          @relation(fields: [planId], references: [id], onDelete: Cascade)
 
   @@index([planId])
+}
+
+/// Admin-redigerbare treningsplan-maler. Tidligere hardkodet i
+/// lib/portal/training/standard-templates.ts. Wizard og admin leser
+/// fra denne tabellen med fallback til de hardkodede malene.
+model TrainingPlanTemplate {
+  id                  String   @id
+  title               String
+  description         String?
+  iconName            String?
+  badge               String?
+  periodType          String
+  /// Array av TemplateSession ({ dayOfWeek, title, durationMinutes, focusArea, description? })
+  weekPattern         Json     @default("[]")
+  weeklyFocusTemplate String?
+  isPublic            Boolean  @default(true)
+  isActive            Boolean  @default(true)
+  sortOrder           Int      @default(0)
+  createdById         String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  CreatedBy           User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([isActive, isPublic])
+  @@index([createdById])
 }
 
 /// Persisterer at en bruker har avvist plan-deviation-forslag for en plan.
@@ -1974,7 +2005,9 @@ model User {
   TrainingLog                                 TrainingLog[]
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
+  TrainingPlan_TrainingPlan_coachFeedbackById TrainingPlan[]             @relation("TrainingPlan_coachFeedbackById")
   DismissedAdjustment                         DismissedAdjustment[]
+  TrainingPlanTemplate                        TrainingPlanTemplate[]
   TrainingSubscription                        TrainingSubscription?
   UserCalendarSubscription                    UserCalendarSubscription[]
   AssignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")

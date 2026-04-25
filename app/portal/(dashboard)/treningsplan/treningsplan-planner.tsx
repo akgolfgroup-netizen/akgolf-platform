@@ -35,6 +35,8 @@ import {
 import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
 import { PlanCreatorModal } from "@/components/portal/treningsplan/plan-creator-modal";
 import { EmptyState } from "@/components/ui/empty-state";
+import { PlanGoalsCard } from "./components/plan-goals-card";
+import type { PlanGoalsSummary } from "./actions";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -62,6 +64,29 @@ interface PeriodizationInfo {
   focusAllocation: Record<string, number> | null;
 }
 
+export interface FacilityOption {
+  id: string;
+  name: string;
+  slug: string;
+  locationName: string | null;
+}
+
+export interface MyPlanSummary {
+  id: string;
+  title: string;
+  isActive: boolean;
+  aiGenerated: boolean;
+  startDate: string;
+  endDate: string;
+  weekCount: number;
+}
+
+export interface ConflictDetailUI {
+  kind: "BOOKING" | "TRAINING_SESSION";
+  title: string;
+  message: string;
+}
+
 interface TreningsplanPlannerProps {
   weekOffset: number;
   planId: string | null;
@@ -71,6 +96,10 @@ interface TreningsplanPlannerProps {
   periodization?: PeriodizationInfo | null;
   events: V2Event[];
   historyEvents: V2Event[];
+  facilities?: FacilityOption[];
+  myPlans?: MyPlanSummary[];
+  goalsSummary?: PlanGoalsSummary | null;
+  coachFeedback?: { text: string; at: string | null } | null;
   onCreateSession: (data: {
     weekOffset: number;
     dayOfWeek: number;
@@ -80,6 +109,7 @@ interface TreningsplanPlannerProps {
     focusArea?: string;
     startH?: number;
     startM?: number;
+    facilityId?: string;
   }) => Promise<{ success: boolean; sessionId?: string } | { error: string }>;
   onAddExerciseToSession: (
     sessionId: string,
@@ -99,10 +129,30 @@ interface TreningsplanPlannerProps {
       description?: string;
       durationMinutes?: number;
       focusArea?: string;
+      facilityId?: string | null;
     }
   ) => Promise<{ success: boolean }>;
   adjustmentSuggestion?: AdjustmentSuggestion | null;
   onAdjustPlan?: (factor: number) => Promise<{ success: boolean; adjustedCount?: number; error?: string }>;
+  onArchivePlan?: (planId: string) => Promise<{ success: boolean }>;
+  onActivatePlan?: (planId: string) => Promise<{ success: boolean }>;
+  onDeletePlan?: (planId: string) => Promise<{ success: boolean }>;
+  onDuplicatePlan?: (planId: string) => Promise<{ success: boolean; planId?: string }>;
+  onDuplicateSession?: (sessionId: string) => Promise<{ success: boolean; sessionId?: string }>;
+  onReorderSessions?: (
+    weekId: string,
+    dayOfWeek: number,
+    sessionIds: string[]
+  ) => Promise<{ success: boolean }>;
+  onToggleRestDay?: (weekId: string, dayOfWeek: number) => Promise<{ success: boolean; isRest: boolean }>;
+  onDismissAdjustment?: (planId: string) => Promise<{ success: boolean; expiresAt?: string }>;
+  onCheckConflicts?: (input: {
+    date: string;
+    startH: number;
+    startM: number;
+    durationMinutes: number;
+    excludeSessionId?: string;
+  }) => Promise<{ hasConflict: boolean; conflicts: ConflictDetailUI[] }>;
 }
 
 export function TreningsplanPlanner({
@@ -114,11 +164,22 @@ export function TreningsplanPlanner({
   periodization,
   events,
   historyEvents,
+  facilities = [],
+  myPlans = [],
+  goalsSummary,
+  coachFeedback,
   onCreateSession,
   onAddExerciseToSession,
   onUpdateSession,
   adjustmentSuggestion,
   onAdjustPlan,
+  onArchivePlan,
+  onActivatePlan,
+  onDeletePlan,
+  onDuplicatePlan,
+  onDuplicateSession,
+  onDismissAdjustment,
+  onCheckConflicts,
 }: TreningsplanPlannerProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -260,6 +321,25 @@ export function TreningsplanPlanner({
             <Icon name="auto_awesome" size={14} />
             Ny plan
           </button>
+          {planId && (
+            <a
+              href={`/api/portal/training/export-pdf/${planId}`}
+              className="flex items-center gap-2 rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:bg-surface-container transition-colors"
+              title="Last ned PDF"
+            >
+              <Icon name="picture_as_pdf" size={14} />
+              PDF
+            </a>
+          )}
+          {myPlans.length > 0 && (
+            <PlansMenu
+              plans={myPlans}
+              onArchive={onArchivePlan}
+              onActivate={onActivatePlan}
+              onDelete={onDeletePlan}
+              onDuplicate={onDuplicatePlan}
+            />
+          )}
         </div>
       </header>
 
@@ -278,7 +358,11 @@ export function TreningsplanPlanner({
       {adjustmentSuggestion && adjustmentSuggestion.recommendation !== "none" && (
         <PlanAdjustmentBanner
           suggestion={adjustmentSuggestion}
-          onDismiss={() => {}}
+          onDismiss={async () => {
+            if (planId && onDismissAdjustment) {
+              await onDismissAdjustment(planId);
+            }
+          }}
           onAdjust={() => setAdjustModalOpen(true)}
         />
       )}
@@ -301,28 +385,76 @@ export function TreningsplanPlanner({
         }}
       />
 
+      {/* Coach-kommentar på plan-nivå (Epic 9) */}
+      {!showEmptyState && coachFeedback && coachFeedback.text && (
+        <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4">
+          <div className="flex items-start gap-3">
+            <Icon name="comment" size={18} className="mt-0.5 text-primary" />
+            <div className="flex-1">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-primary">
+                Kommentar fra coach
+              </p>
+              <p className="mt-1 text-sm text-on-surface whitespace-pre-wrap">
+                {coachFeedback.text}
+              </p>
+              {coachFeedback.at && (
+                <p className="mt-1 font-mono text-[10px] text-on-surface-variant">
+                  {format(new Date(coachFeedback.at), "d. MMM yyyy", { locale: nb })}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Plan-mål med progress (Epic 7) */}
+      {!showEmptyState && goalsSummary && goalsSummary.totalCount > 0 && (
+        <PlanGoalsCard summary={goalsSummary} />
+      )}
+
       {/* Hovedgrid: ukes-scheduler + sidebar (skjult ved tom-tilstand) */}
       {!showEmptyState && (
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 rounded-3xl border border-outline-variant/10 bg-surface-container-lowest p-0 lg:col-span-9">
-          <WeekGrid
-            weekDates={weekDates}
-            events={events}
-            onCellClick={(dayIndex, hour) => {
-              setModalDay(dayIndex);
-              setModalHour(hour);
-              setModalOpen(true);
-            }}
-            onEventClick={(ev) => {
-              if (ev.isGroupSession) {
-                // Group sessions are read-only for players
-                return;
-              }
-              setEditEvent(ev);
-              setEditModalOpen(true);
-            }}
-            onAddExerciseToSession={onAddExerciseToSession}
-          />
+          {/* Desktop-grid (md og opp) */}
+          <div className="hidden md:block">
+            <WeekGrid
+              weekDates={weekDates}
+              events={events}
+              onCellClick={(dayIndex, hour) => {
+                setModalDay(dayIndex);
+                setModalHour(hour);
+                setModalOpen(true);
+              }}
+              onEventClick={(ev) => {
+                if (ev.isGroupSession) {
+                  return;
+                }
+                setEditEvent(ev);
+                setEditModalOpen(true);
+              }}
+              onAddExerciseToSession={onAddExerciseToSession}
+            />
+          </div>
+          {/* Mobil-liste (under md) */}
+          <div className="md:hidden">
+            <MobileWeekView
+              weekDates={weekDates}
+              events={events}
+              onAddSession={(dayIndex) => {
+                setModalDay(dayIndex);
+                setModalHour(9);
+                setModalOpen(true);
+              }}
+              onEventClick={(ev) => {
+                if (ev.isGroupSession) {
+                  return;
+                }
+                setEditEvent(ev);
+                setEditModalOpen(true);
+              }}
+            />
+          </div>
         </div>
         <div className="col-span-12 lg:col-span-3">
           <PlannerSidebar
@@ -347,8 +479,10 @@ export function TreningsplanPlanner({
           dayIndex={modalDay}
           startHour={modalHour}
           weekDates={weekDates}
+          facilities={facilities}
           onClose={() => setModalOpen(false)}
           onCreate={onCreateSession}
+          onCheckConflicts={onCheckConflicts}
           isPending={isPending}
         />
       )}
@@ -357,11 +491,13 @@ export function TreningsplanPlanner({
       {editModalOpen && editEvent && (
         <EditSessionModal
           event={editEvent}
+          facilities={facilities}
           onClose={() => {
             setEditModalOpen(false);
             setEditEvent(null);
           }}
           onUpdate={onUpdateSession}
+          onDuplicate={onDuplicateSession}
           isPending={isPending}
         />
       )}
@@ -573,16 +709,20 @@ function CreateSessionModal({
   dayIndex,
   startHour,
   weekDates,
+  facilities,
   onClose,
   onCreate,
+  onCheckConflicts,
   isPending,
 }: {
   weekOffset: number;
   dayIndex: number;
   startHour: number;
   weekDates: Date[];
+  facilities: FacilityOption[];
   onClose: () => void;
   onCreate: TreningsplanPlannerProps["onCreateSession"];
+  onCheckConflicts?: TreningsplanPlannerProps["onCheckConflicts"];
   isPending: boolean;
 }) {
   const router = useRouter();
@@ -590,16 +730,44 @@ function CreateSessionModal({
   const [duration, setDuration] = useState(60);
   const [focus, setFocus] = useState<string>("TEK");
   const [notes, setNotes] = useState("");
+  const [facilityId, setFacilityId] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const [conflicts, setConflicts] = useState<ConflictDetailUI[]>([]);
+  const [conflictsAcknowledged, setConflictsAcknowledged] = useState(false);
 
   const date = weekDates[dayIndex];
   const dayOfWeek = dayIndex + 1; // 1 = Man, 7 = Søn
+  const dateStr = format(date, "yyyy-MM-dd");
+
+  // Sjekk konflikter når relevant felt endres
+  useEffect(() => {
+    if (!onCheckConflicts) return;
+    let cancelled = false;
+    onCheckConflicts({
+      date: dateStr,
+      startH: startHour,
+      startM: 0,
+      durationMinutes: duration,
+    }).then((result) => {
+      if (!cancelled) {
+        setConflicts(result.conflicts ?? []);
+        setConflictsAcknowledged(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [onCheckConflicts, dateStr, startHour, duration]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     if (!title.trim()) {
       setError("Tittel er påkrevd");
+      return;
+    }
+    if (conflicts.length > 0 && !conflictsAcknowledged) {
+      setConflictsAcknowledged(true);
       return;
     }
 
@@ -612,6 +780,7 @@ function CreateSessionModal({
       focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
       startH: startHour,
       startM: 0,
+      facilityId: facilityId || undefined,
     });
 
     if (result && "error" in result) {
@@ -715,6 +884,28 @@ function CreateSessionModal({
             </div>
           </div>
 
+          {/* Fasilitet */}
+          {facilities.length > 0 && (
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Fasilitet (valgfri)
+              </label>
+              <select
+                value={facilityId}
+                onChange={(e) => setFacilityId(e.target.value)}
+                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+              >
+                <option value="">Ingen valgt</option>
+                {facilities.map((f) => (
+                  <option key={f.id} value={f.id}>
+                    {f.name}
+                    {f.locationName ? ` · ${f.locationName}` : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           {/* Notater */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
@@ -728,6 +919,25 @@ function CreateSessionModal({
               className="mt-1 w-full resize-none rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
             />
           </div>
+
+          {/* Konfliktadvarsel */}
+          {conflicts.length > 0 && (
+            <div className="rounded-lg border border-warning/30 bg-warning/5 p-3">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-warning">
+                {conflictsAcknowledged ? "Bekreft for å lagre" : "Konflikt"}
+              </p>
+              <ul className="mt-1 space-y-1 text-xs text-on-surface">
+                {conflicts.map((c, i) => (
+                  <li key={i}>• {c.message}</li>
+                ))}
+              </ul>
+              {!conflictsAcknowledged && (
+                <p className="mt-2 text-[11px] text-on-surface-variant">
+                  Trykk «Opprett økt» igjen for å lagre uansett.
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Knapper */}
           <div className="flex items-center justify-end gap-3 pt-2">
@@ -755,7 +965,9 @@ function CreateSessionModal({
               ) : (
                 <>
                   <Icon name="add" size={14} />
-                  Opprett økt
+                  {conflicts.length > 0 && conflictsAcknowledged
+                    ? "Lagre likevel"
+                    : "Opprett økt"}
                 </>
               )}
             </button>
@@ -770,13 +982,17 @@ function CreateSessionModal({
 
 function EditSessionModal({
   event,
+  facilities,
   onClose,
   onUpdate,
+  onDuplicate,
   isPending,
 }: {
   event: V2Event;
+  facilities: FacilityOption[];
   onClose: () => void;
   onUpdate: TreningsplanPlannerProps["onUpdateSession"];
+  onDuplicate?: TreningsplanPlannerProps["onDuplicateSession"];
   isPending: boolean;
 }) {
   const router = useRouter();
@@ -784,7 +1000,9 @@ function EditSessionModal({
   const [duration, setDuration] = useState(event.dur);
   const [focus, setFocus] = useState<string>(event.focus);
   const [notes, setNotes] = useState("");
+  const [facilityId, setFacilityId] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const [duplicating, setDuplicating] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -799,6 +1017,7 @@ function EditSessionModal({
       description: notes.trim() || undefined,
       durationMinutes: duration,
       focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
+      facilityId: facilityId || null,
     });
 
     if ("error" in result) {
@@ -898,6 +1117,27 @@ function EditSessionModal({
             </div>
           </div>
 
+          {facilities.length > 0 && (
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Fasilitet (valgfri)
+              </label>
+              <select
+                value={facilityId}
+                onChange={(e) => setFacilityId(e.target.value)}
+                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+              >
+                <option value="">Ingen valgt</option>
+                {facilities.map((f) => (
+                  <option key={f.id} value={f.id}>
+                    {f.name}
+                    {f.locationName ? ` · ${f.locationName}` : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
               Notater
@@ -911,31 +1151,58 @@ function EditSessionModal({
             />
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface-container"
-            >
-              Avbryt
-            </button>
-            <button
-              type="submit"
-              disabled={isPending || !title.trim()}
-              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-surface hover:bg-primary-container disabled:opacity-50"
-            >
-              {isPending ? (
-                <>
+          <div className="flex items-center justify-between gap-3 pt-2">
+            {onDuplicate ? (
+              <button
+                type="button"
+                disabled={duplicating || isPending}
+                onClick={async () => {
+                  setDuplicating(true);
+                  const result = await onDuplicate(event.id);
+                  setDuplicating(false);
+                  if (result.success) {
+                    router.refresh();
+                    onClose();
+                  }
+                }}
+                className="flex items-center gap-2 rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-surface hover:bg-surface-container disabled:opacity-50"
+              >
+                {duplicating ? (
                   <Icon name="progress_activity" size={14} className="animate-spin" />
-                  Lagrer…
-                </>
-              ) : (
-                <>
-                  <Icon name="save" size={14} />
-                  Oppdater
-                </>
-              )}
-            </button>
+                ) : (
+                  <Icon name="content_copy" size={14} />
+                )}
+                Dupliser
+              </button>
+            ) : (
+              <span />
+            )}
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface-container"
+              >
+                Avbryt
+              </button>
+              <button
+                type="submit"
+                disabled={isPending || !title.trim()}
+                className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-surface hover:bg-primary-container disabled:opacity-50"
+              >
+                {isPending ? (
+                  <>
+                    <Icon name="progress_activity" size={14} className="animate-spin" />
+                    Lagrer…
+                  </>
+                ) : (
+                  <>
+                    <Icon name="save" size={14} />
+                    Oppdater
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -1580,6 +1847,113 @@ function HistoryList({ events }: { events: V2Event[] }) {
   );
 }
 
+/* ── Mobile week view (Epic 12) ── */
+
+function MobileWeekView({
+  weekDates,
+  events,
+  onAddSession,
+  onEventClick,
+}: {
+  weekDates: Date[];
+  events: V2Event[];
+  onAddSession: (dayIndex: number) => void;
+  onEventClick: (ev: V2Event) => void;
+}) {
+  const today = new Date();
+  const todayISO = format(today, "yyyy-MM-dd");
+
+  const eventsByDay = new Map<number, V2Event[]>();
+  for (const ev of events) {
+    const idx = weekDates.findIndex((d) => format(d, "yyyy-MM-dd") === ev.date);
+    if (idx === -1) continue;
+    const list = eventsByDay.get(idx) ?? [];
+    list.push(ev);
+    eventsByDay.set(idx, list);
+  }
+
+  return (
+    <div className="divide-y divide-outline-variant/10">
+      {weekDates.map((date, idx) => {
+        const dateISO = format(date, "yyyy-MM-dd");
+        const isToday = dateISO === todayISO;
+        const dayEvents = (eventsByDay.get(idx) ?? []).sort(
+          (a, b) => a.startH * 60 + a.startM - (b.startH * 60 + b.startM)
+        );
+
+        return (
+          <div
+            key={idx}
+            className={`p-4 ${isToday ? "bg-secondary-fixed/10" : ""}`}
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                  {DAYS[idx]}
+                </p>
+                <p
+                  className={`text-lg font-bold ${isToday ? "text-primary" : "text-on-surface"}`}
+                >
+                  {format(date, "d. MMM", { locale: nb })}
+                </p>
+              </div>
+              <button
+                onClick={() => onAddSession(idx)}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant text-primary hover:bg-surface-container active:scale-95"
+                aria-label="Legg til økt"
+              >
+                <Icon name="add" size={18} />
+              </button>
+            </div>
+
+            {dayEvents.length === 0 ? (
+              <p className="mt-2 text-xs text-on-surface-variant/70">Ingen økter</p>
+            ) : (
+              <div className="mt-3 space-y-2">
+                {dayEvents.map((ev) => (
+                  <button
+                    key={ev.id}
+                    onClick={() => onEventClick(ev)}
+                    className={`w-full rounded-xl px-3 py-2.5 text-left transition-colors ${
+                      ev.done
+                        ? "bg-primary/15 text-primary line-through"
+                        : eventColorClass(ev.focus)
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="truncate text-sm font-bold">
+                        {ev.isGroupSession && (
+                          <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-info align-middle" />
+                        )}
+                        {ev.title}
+                      </span>
+                      <span className="font-mono text-[10px] tabular-nums">
+                        {String(ev.startH).padStart(2, "0")}:
+                        {String(ev.startM).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <div className="mt-1 flex items-center gap-2 text-[10px] opacity-80">
+                      <span>{ev.dur} min</span>
+                      <span>·</span>
+                      <span>{ev.focus}</span>
+                      {ev.isGroupSession && ev.groupName && (
+                        <>
+                          <span>·</span>
+                          <span>{ev.groupName}</span>
+                        </>
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 /* ── Stats ── */
 
 function Stat({
@@ -1599,6 +1973,151 @@ function Stat({
       <p className={`text-sm font-bold ${colorClass ?? "text-primary"}`}>
         {value}
       </p>
+    </div>
+  );
+}
+
+/* ── Mine planer-meny ── */
+
+function PlansMenu({
+  plans,
+  onArchive,
+  onActivate,
+  onDelete,
+  onDuplicate,
+}: {
+  plans: MyPlanSummary[];
+  onArchive?: (planId: string) => Promise<{ success: boolean }>;
+  onActivate?: (planId: string) => Promise<{ success: boolean }>;
+  onDelete?: (planId: string) => Promise<{ success: boolean }>;
+  onDuplicate?: (planId: string) => Promise<{ success: boolean; planId?: string }>;
+}) {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [busy, setBusy] = useState<string | null>(null);
+
+  const run = async (
+    label: string,
+    action?: (planId: string) => Promise<{ success: boolean }>,
+    planId?: string,
+    confirmMsg?: string
+  ) => {
+    if (!action || !planId) return;
+    if (confirmMsg && !window.confirm(confirmMsg)) return;
+    setBusy(`${label}-${planId}`);
+    try {
+      const result = await action(planId);
+      if (result.success) {
+        setOpen(false);
+        router.refresh();
+      }
+    } catch (err) {
+      window.alert(err instanceof Error ? err.message : "Handling feilet");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-2 rounded-lg border border-outline-variant px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:bg-surface-container transition-colors"
+      >
+        <Icon name="folder" size={14} />
+        Mine planer
+        <Icon name={open ? "expand_less" : "expand_more"} size={14} />
+      </button>
+      {open && (
+        <div
+          className="absolute right-0 top-full z-30 mt-2 w-80 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-2 shadow-card-hover"
+          onMouseLeave={() => setOpen(false)}
+        >
+          {plans.length === 0 && (
+            <p className="px-3 py-2 text-xs text-on-surface-variant">Ingen planer</p>
+          )}
+          {plans.map((p) => (
+            <div
+              key={p.id}
+              className="flex flex-col gap-1 rounded-lg p-2 hover:bg-surface-container"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="truncate text-sm font-semibold text-on-surface">
+                  {p.title}
+                </span>
+                {p.isActive ? (
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-success">
+                    AKTIV
+                  </span>
+                ) : (
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-on-surface-variant">
+                    ARKIV
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center gap-2 text-[10px] text-on-surface-variant">
+                <span>{p.weekCount} uker</span>
+                <span>·</span>
+                <span>{p.startDate}</span>
+                {p.aiGenerated && (
+                  <>
+                    <span>·</span>
+                    <span className="text-primary">AI</span>
+                  </>
+                )}
+              </div>
+              <div className="mt-1 flex items-center gap-2">
+                {p.isActive ? (
+                  <button
+                    type="button"
+                    disabled={busy === `archive-${p.id}`}
+                    onClick={() =>
+                      run("archive", onArchive, p.id, "Arkiver planen?")
+                    }
+                    className="rounded-md border border-outline-variant px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface disabled:opacity-50"
+                  >
+                    Arkiver
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={busy === `activate-${p.id}`}
+                    onClick={() => run("activate", onActivate, p.id)}
+                    className="rounded-md border border-primary bg-primary px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-on-primary hover:bg-primary-container disabled:opacity-50"
+                  >
+                    Aktiver
+                  </button>
+                )}
+                <button
+                  type="button"
+                  disabled={busy === `duplicate-${p.id}`}
+                  onClick={() => run("duplicate", onDuplicate, p.id)}
+                  className="rounded-md border border-outline-variant px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant hover:bg-surface disabled:opacity-50"
+                >
+                  Dupliser
+                </button>
+                {!p.isActive && (
+                  <button
+                    type="button"
+                    disabled={busy === `delete-${p.id}`}
+                    onClick={() =>
+                      run(
+                        "delete",
+                        onDelete,
+                        p.id,
+                        "Slette planen permanent? Dette kan ikke angres."
+                      )
+                    }
+                    className="ml-auto rounded-md border border-error px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-error hover:bg-error-container disabled:opacity-50"
+                  >
+                    Slett
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

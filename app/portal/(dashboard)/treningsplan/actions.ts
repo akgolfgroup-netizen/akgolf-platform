@@ -1222,10 +1222,12 @@ export async function adjustPlanVolume(factor: number): Promise<{ success: boole
 // -------------------------------------------------------------------
 
 import {
-  STANDARD_TEMPLATES,
-  getTemplate,
   type TemplateId,
 } from "@/lib/portal/training/standard-templates";
+import {
+  getActiveTemplates,
+  getTemplateById,
+} from "@/lib/portal/training/template-service";
 import { generateTrainingPlan } from "@/lib/portal/ai/training-plan";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { detectSessionConflicts } from "@/lib/portal/training/conflict-detector";
@@ -1251,12 +1253,12 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
   // ---- TEMPLATE: bygg plan fra forhåndsdefinert mal ----
   if (input.mode === "TEMPLATE") {
     if (!input.templateId) throw new Error("templateId mangler for TEMPLATE-mode");
-    const template = getTemplate(input.templateId);
+    const template = await getTemplateById(input.templateId);
     if (!template) throw new Error(`Ukjent mal: ${input.templateId}`);
 
     const weeks = Array.from({ length: input.durationWeeks }, (_, i) => ({
       weekNumber: i + 1,
-      focus: template.weeklyFocusTemplate.replace("{n}", String(i + 1)),
+      focus: (template.weeklyFocusTemplate ?? "").replace("{n}", String(i + 1)),
       sessions: template.weekPattern.map((s) => ({
         dayOfWeek: s.dayOfWeek,
         title: s.title,
@@ -1442,7 +1444,8 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
 }
 
 export async function listStandardTemplates() {
-  return STANDARD_TEMPLATES.map((t) => ({
+  const templates = await getActiveTemplates();
+  return templates.map((t) => ({
     id: t.id,
     title: t.title,
     description: t.description,
@@ -1838,6 +1841,141 @@ export async function checkSessionConflicts(input: {
     durationMinutes: input.durationMinutes,
     excludeSessionId: input.excludeSessionId,
   });
+}
+
+// -------------------------------------------------------------------
+// Epic 7: Goal-tracking på plan-nivå
+// -------------------------------------------------------------------
+
+export interface PlanGoalProgress {
+  id: string;
+  goalType: string;
+  title: string;
+  description: string | null;
+  targetDate: string | null;
+  targetValue: number | null;
+  currentValue: number | null;
+  /** 0-100, eller null hvis ikke beregnbart */
+  progressPct: number | null;
+  /** Dager igjen til targetDate, negativ hvis utløpt */
+  daysRemaining: number | null;
+  achievedAt: string | null;
+  priority: number;
+}
+
+export interface PlanGoalsSummary {
+  goals: PlanGoalProgress[];
+  /** Antall mål oppnådd */
+  achievedCount: number;
+  /** Total antall aktive mål */
+  totalCount: number;
+}
+
+/**
+ * Hent mål for innlogget bruker og beregn progress mot HCP / TrackMan-data.
+ * Brukes til å vise mål-kort på treningsplan-siden.
+ */
+export async function getPlanGoalsProgress(): Promise<PlanGoalsSummary> {
+  const user = await requirePortalUser();
+  if (!user?.id) return { goals: [], achievedCount: 0, totalCount: 0 };
+
+  const [goals, profile, metrics] = await Promise.all([
+    prisma.playerGoals.findMany({
+      where: { userId: user.id, isActive: true },
+      orderBy: [{ priority: "asc" }, { targetDate: "asc" }],
+    }),
+    prisma.user.findUnique({
+      where: { id: user.id },
+      select: { handicap: true },
+    }),
+    prisma.playerMetrics.findUnique({
+      where: { userId: user.id },
+      select: {
+        last10DriverCarry: true,
+        last10DriverSpeed: true,
+        last10SevenIronCarry: true,
+      },
+    }),
+  ]);
+
+  const now = new Date();
+
+  const result: PlanGoalProgress[] = goals.map((g) => {
+    let currentValue = g.currentValue;
+    let progressPct: number | null = null;
+
+    // Beregn current basert på goalType
+    if (g.goalType === "HCP" && profile?.handicap != null) {
+      currentValue = profile.handicap;
+      // For HCP: lavere er bedre. progressPct beregnes fra startverdi (currentValue lagret) → target
+      if (g.targetValue != null && g.currentValue != null) {
+        const start = g.currentValue;
+        const target = g.targetValue;
+        if (start > target) {
+          progressPct = Math.round(
+            Math.max(0, Math.min(100, ((start - profile.handicap) / (start - target)) * 100))
+          );
+        }
+      }
+    } else if (g.goalType === "DRIVER_SPEED" && metrics?.last10DriverSpeed != null) {
+      currentValue = metrics.last10DriverSpeed;
+      if (g.targetValue != null && g.currentValue != null) {
+        const start = g.currentValue;
+        const target = g.targetValue;
+        if (target > start) {
+          progressPct = Math.round(
+            Math.max(0, Math.min(100, ((metrics.last10DriverSpeed - start) / (target - start)) * 100))
+          );
+        }
+      }
+    } else if (g.goalType === "DRIVER_CARRY" && metrics?.last10DriverCarry != null) {
+      currentValue = metrics.last10DriverCarry;
+      if (g.targetValue != null && g.currentValue != null) {
+        const start = g.currentValue;
+        const target = g.targetValue;
+        if (target > start) {
+          progressPct = Math.round(
+            Math.max(0, Math.min(100, ((metrics.last10DriverCarry - start) / (target - start)) * 100))
+          );
+        }
+      }
+    } else if (g.targetValue != null && g.currentValue != null && g.targetValue !== g.currentValue) {
+      // Generisk: fra currentValue mot targetValue
+      const start = g.currentValue;
+      const target = g.targetValue;
+      const range = Math.abs(target - start);
+      if (range > 0 && currentValue != null) {
+        const closed = Math.abs(currentValue - start);
+        progressPct = Math.round(Math.max(0, Math.min(100, (closed / range) * 100)));
+      }
+    }
+
+    const daysRemaining = g.targetDate
+      ? Math.ceil((g.targetDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+      : null;
+
+    return {
+      id: g.id,
+      goalType: g.goalType,
+      title: g.title,
+      description: g.description,
+      targetDate: g.targetDate?.toISOString().slice(0, 10) ?? null,
+      targetValue: g.targetValue,
+      currentValue,
+      progressPct,
+      daysRemaining,
+      achievedAt: g.achievedAt?.toISOString() ?? null,
+      priority: g.priority,
+    };
+  });
+
+  const achievedCount = result.filter((g) => g.achievedAt !== null).length;
+
+  return {
+    goals: result,
+    achievedCount,
+    totalCount: result.length,
+  };
 }
 
 export async function dismissPlanAdjustment(planId: string) {

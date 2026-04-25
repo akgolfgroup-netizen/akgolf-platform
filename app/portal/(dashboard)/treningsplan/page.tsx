@@ -19,6 +19,7 @@ import {
   toggleRestDay,
   dismissPlanAdjustment,
   checkSessionConflicts,
+  getPlanGoalsProgress,
 } from "./actions";
 import { TreningsplanPlanner } from "./treningsplan-planner";
 
@@ -40,6 +41,14 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   const historyEvents = await getWeekEvents(weekOffset - 1);
   const facilities = await listAvailableFacilities();
   const myPlans = await listMyPlans();
+  const goalsSummary = await getPlanGoalsProgress();
+
+  const coachFeedback = plan?.coachFeedback
+    ? {
+        text: plan.coachFeedback as string,
+        at: plan.coachFeedbackAt ? new Date(plan.coachFeedbackAt).toISOString() : null,
+      }
+    : null;
 
   // Server action wrappers bound to the user context
   async function handleMoveEvent(eventId: string, date: string, startH: number, startM: number) {
@@ -171,6 +180,8 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       historyEvents={historyEvents}
       facilities={facilities}
       myPlans={myPlans}
+      goalsSummary={goalsSummary}
+      coachFeedback={coachFeedback}
       onCreateSession={handleCreateSession}
       onAddExerciseToSession={handleAddExerciseToSession}
       onUpdateSession={handleUpdateSession}
