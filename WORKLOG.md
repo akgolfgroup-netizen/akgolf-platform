@@ -8,6 +8,36 @@
 
 ---
 
+## 2026-04-25 — Heritage design-rewrite av delvis-sider
+
+**Jobbet med:** Ryddet alle "Delvis"-sider fra FEATURE_INVENTORY-listen — fjernet demo-fallbacks, slettet eksperimentelle sider med arkiverte patterns, splittet store filer.
+
+- **`/portal/playerhq`:** Fjernet alle demo-fallbacks. La til to nye server actions: `getRoundAggregateMetrics()` (fairway%, GIR%, scrambling%, scoring avg fra `RoundStats` siste 30 dager) og `getTodayTasks()` (kobler `TrainingPlanSession` for dagens ukedag + dagens `Booking` + ferdig-status fra `TrainingLog`). KPI-pills i hero, dagens tasks i TasksCard, og statistikk-listen i ListCard bruker nå reelle data. Tom-tilstand for tasks når ingen plan finnes.
+- **`/portal/design-preview`:** Forenklet til kun de 6 Heritage-godkjente patterns: SGRing, MonoLabel, NightSurface, AKPyramide, VerticalTimeline, BentoCard. Fjernet alle arkiverte patterns (CourseHero, GlassPanel, GlassButton, HeroLabel, FloatingCrumbs, FloatingSegmented, AIAttribution).
+- **`/portal/dashboard/hero` slettet:** Brukte arkiverte patterns (CourseHero, BentoCard, GlassButton, FloatingTopbar) og duplikerte dashboard-funksjonalitet. Hadde også feil prop-shape mot `getDashboardStats`.
+- **`/portal/demo` slettet:** Brukte gamle tokens (`var(--color-grey-*)`, `var(--color-brand)`, `var(--color-ai)`), emojier, og mock-data uten produksjonsverdi.
+- **`/portal-preview` slettet:** Mock-duplikat av `/portal` med ugyldig type-shape mot `DashboardClientV3`. Fjernet også `proxy.ts`-referansen.
+- **`/admin/grupper`:** Splittet 564-linjers client-fil i 4 mindre filer alle under 300 linjer:
+  - `grupper-client.tsx` (238 linjer) — hovedkomponent + gruppeliste
+  - `create-group-modal.tsx` (116 linjer) — opprett-modal
+  - `group-detail-modal.tsx` (222 linjer) — detalj-modal med medlemmer
+  - `sync-section.tsx` (144 linjer) — synk-plan og resultatpanel
+  - Fjernet emojier (`✅⚠️❌`) fra sync-resultater. Heritage-tokens (`bg-on-surface/50`, `border-outline-variant`, `font-headline`) erstattet pre-Heritage utility-classes.
+
+**Nøkkelfiler:**
+- Endret: `app/portal/(dashboard)/dashboard-actions.ts` (+~190 linjer), `app/portal/(dashboard)/dashboard-types.ts` (+19 linjer for nye typer), `app/portal/(dashboard)/playerhq/page.tsx`, `components/portal/playerhq/player-hq-dashboard.tsx`, `components/portal/playerhq/row-two.tsx`, `app/portal/(dashboard)/design-preview/design-preview-client.tsx`, `proxy.ts`
+- Nye: `app/admin/(authed)/grupper/{create-group-modal,group-detail-modal,sync-section}.tsx`
+- Slettet: `app/portal/(dashboard)/dashboard/hero/`, `app/portal/demo/`, `app/portal-preview/`
+
+**Status:** TypeScript-rent for alle endrede filer (gjenværende TS-feil i repoet er pre-eksisterende). Lint-config ikke kjørt grunnet manglende node_modules ved start; npm install kjørt for tsc-verifisering.
+
+**Neste steg:**
+1. Kjør `npm run dev` lokalt og verifiser `/portal/playerhq` med ekte bruker (krever Supabase env).
+2. Vurder om `/portal/playerhq` skal erstatte standard `/portal`-dashboard, eller forbli en parallell variant.
+3. Adresser pre-eksisterende TS-feil i `app/portal/(dashboard)/dagbok/`, `app/portal/(dashboard)/min-plan/`, `app/portal/(dashboard)/runde/[id]/` (separate oppgaver).
+
+---
+
 ## 2026-04-25 — FEATURE_INVENTORY.md + git-opprydding
 
 **Jobbet med:** Komplett kartlegging av alle sider, API-ruter og backend-moduler i plattformen.
