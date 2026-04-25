@@ -8,7 +8,7 @@ import { Building2, Wrench, AlertCircle, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { format } from "date-fns";
-import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
+import { MonoLabel, BentoGrid, BentoCard } from "@/components/portal/patterns";
 import FacilityTimeline from "./facility-timeline";
 
 // Types

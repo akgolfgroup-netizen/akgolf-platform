@@ -37,6 +37,7 @@ export default function GlobalError() {
                   <Icon name="refresh" size={18} />
                   Last siden på nytt
                 </button>
+                {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- global-error must work even if Link is broken */}
                 <a
                   href="/"
                   className="inline-flex items-center justify-center gap-2 w-full bg-secondary-fixed hover:bg-secondary-fixed/90 text-on-secondary-fixed font-bold py-3 rounded-xl transition-all"

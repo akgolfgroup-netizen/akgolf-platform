@@ -11,6 +11,7 @@ import {
  AdminDonutChart,
  AdminDataTable,
  AdminGauge,
+ AdminLineChart,
  AdminSparkline,
  type AdminDateRange,
  type AdminDataTableColumn,

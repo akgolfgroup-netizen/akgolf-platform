@@ -175,7 +175,7 @@ export function generateWeekFromForecast(
 
   const sessions: ForecastPlanSession[] = [];
   let dayIdx = 0;
-  let seed = Math.floor(Math.random() * 100);
+  const seed = Math.floor(Math.random() * 100);
 
   // --- Primary focus sessions (2) ---
   for (let i = 0; i < primaryCount; i++) {

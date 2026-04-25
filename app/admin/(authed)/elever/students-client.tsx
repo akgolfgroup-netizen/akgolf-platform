@@ -4,7 +4,6 @@
 import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { UserCheck } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminStatCard,

@@ -1,7 +1,6 @@
 "use client";
 
 
-import { Icon } from "@/components/ui/icon";
 import { useRouter } from "next/navigation";
 import { WebsiteNav } from "@/components/website/WebsiteNav";
 import { WebsiteFooter } from "@/components/website/WebsiteFooter";
