@@ -8,6 +8,35 @@
 
 ---
 
+## 2026-04-25 — CoachHQ Foundation Sprint 1 (Blokk A + B + C1)
+
+**Jobbet med:** Foundation-arbeid for CoachHQ-rebrand. Brand Guide V2.0 erstatter Heritage som eneste designsystem. Ny tre-panel-sidebar bygget. Tre designfasit-mockups klare. Per godkjent plan i `~/.claude/plans/lag-en-plan-for-wiggly-crown.md`.
+
+- **Designsystem omskrevet** (Blokk A1-A4): `.claude/rules/design-system.md` komplett omskrevet med Brand Guide V2.0 (#005840 / #D1F843 / #F4F6F4 / #0F1F18 + Inter Tight + Lucide). `.claude/rules/gotchas.md` snudd så Heritage er merket legacy. `app/globals.css` har Brand Guide V2.0-tokens i `:root`, Heritage som `--legacy-*`. `app/layout.tsx` har Inter Tight + Inter + JetBrains Mono via `next/font/google`. DM Sans beholdt som legacy.
+- **Rebrand** (Blokk A5): "Mission Control" → "CoachHQ" i 34 filer (synlig UI-tekst). Ingen endringer i filnavn / ruter / DB-felter. Kun historiske sprint-navn på `/design-review` beholdt.
+- **CoachHQ Sidebar** (Blokk B): Ny tre-panel-sidebar bygget i `components/admin/CoachHQSidebar.tsx` (samler `IconRail`, `NameList`, `LiveStatusFooter` + `coachhq-nav-config`). 56px ikonrad + 200px navnliste med live-status-pill nederst. Lucide-ikoner. Integrert i `mc-layout.tsx` (beholder `useMCSidebar()`-API for bakoverkompatibilitet). Erstatter visuelt den gamle MCSidebar på alle admin-sider.
+- **Student 360° mockup** (Blokk C1): `public/design-reference/student-360-reference.html` — tredje designfasit med 9 datagrupper (Hero, Identity, Golf m/USI A-K, Coaching, Training, Mental+Forecast, Tests, Economy, Signals). Brukes som visuell sannhet for Blokk C2 (React-implementering).
+- **Statisk verifisert:** TypeScript passerer for alle nye filer. Visuell verifikasjon krever `.env` (mangler i denne worktreen) — Anders må kjøre lokalt.
+
+**Status:** Blokk A + B + C1 av 6 ferdig. Gjenstående: C2 (Spillerprofil 360° React, ~16t), D (auto-AI events, ~8t), E (verifikasjon + commits, ~4t).
+
+**Neste steg (når Sprint 1 fortsetter):**
+1. Anders verifiserer ny CoachHQ-sidebar lokalt (krever `.env`)
+2. Anders sjekker `student-360-reference.html` i preview-panelet før vi bygger React
+3. Bygg Blokk C2: `/admin/elever/[id]/v2` med server action `getStudent360()` + 8 React-komponenter
+4. Bygg Blokk D: utvid `lib/portal/agents/runner.ts` med 3 nye events + "Marker fullført"-knapper på kalender og økter
+5. Bygg Blokk E: `npm run lint`, `npm run build`, oppdater `.claude/rules/component-library.md`, push
+
+**Nøkkelfiler:**
+- Docs: `.claude/rules/design-system.md` (omskrevet), `.claude/rules/gotchas.md` (oppdatert)
+- Tokens + fonts: `app/globals.css` (Brand Guide V2.0 i `:root`), `app/layout.tsx` (Inter Tight)
+- Sidebar: `components/admin/CoachHQSidebar.tsx`, `components/admin/coachhq/{IconRail,NameList,LiveStatusFooter,coachhq-nav-config}.tsx`
+- Layout-bytte: `components/portal/mission-control/mc-layout.tsx` (bruker nå `CoachHQSidebar`)
+- Mockup: `public/design-reference/student-360-reference.html` (ny)
+- Plan: `~/.claude/plans/lag-en-plan-for-wiggly-crown.md`
+
+---
+
 ## 2026-04-25 — FEATURE_INVENTORY.md + git-opprydding
 
 **Jobbet med:** Komplett kartlegging av alle sider, API-ruter og backend-moduler i plattformen.
