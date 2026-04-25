@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useTransition, type MouseEvent } from "react";
 import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { dismissCoachingSummary } from "@/app/portal/(dashboard)/dashboard-actions";
@@ -17,7 +17,7 @@ export function NewSummaryBanner({ summary }: Props) {
 
   const href = summary.linkUrl ?? "/portal/coaching-historikk";
 
-  const handleDismiss = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDismiss = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
     startTransition(async () => {

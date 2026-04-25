@@ -858,7 +858,7 @@ export async function getDrillOfTheDay(userId: string): Promise<DrillOfTheDay | 
     include: { ExerciseDefinition: true },
     orderBy: [
       { isFavorite: "desc" },
-      { lastUsedAt: { sort: "asc", nulls: "first" } },
+      { lastUsedAt: "asc" },
     ],
     take: 5,
   });
