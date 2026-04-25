@@ -8,6 +8,30 @@
 
 ---
 
+## 2026-04-25 — Booking-systemet: P2, P3, waitlist-UI og reconcile-CRON
+
+**Jobbet med:** Fullført alle åpne saker fra `docs/status/BOOKING_AUDIT.md` + to BACKLOG-saker (waitlist-UI og webhook redundancy CRON). Acuity-flyten beholdes til siden lanseres — derfor ikke wired dagens slot-helper inn ennå.
+
+- **Sak 1 (P3 quota race):** Ny `supabase/migrations/20260425_subscription_quota_rpcs.sql` med atomiske `increment_sessions_used` / `decrement_sessions_used` RPC-funksjoner. Tidligere falt koden alltid tilbake til en SELECT+UPDATE uten lås, og to samtidige bookinger kunne overskride kvota. Postgres serialiserer UPDATE på samme rad, så ett kall garanterer atomisk telling. La også til warning-logg i fallback for å se hvis RPC fortsatt feiler i prod. Commit `ef86cd2`.
+- **Sak 2 (P2 refund idempotency):** Erstattet tidsbasert `Date.now()`-key med deterministisk SHA256-hash i ny `lib/portal/booking/refund-idempotency.ts`. Refund-funksjonen gjenbruker eksisterende `refundIdempotencyKey` fra DB hvis den finnes, slik at Stripe deduperer korrekt ved webhook-retries. 5 unit-tester passerer. Commit `c00075d`.
+- **Sak 4 (Stripe reconcile-CRON):** Ny `/api/portal/cron/reconcile-stripe-bookings` kjører hver 30. min. Henter PENDING-bookinger eldre enn 1t med `stripePaymentId` og synker status mot Stripe (succeeded → CONFIRMED, canceled → CANCELLED). Logger sammendrag til `AgentLog`. Vercel CRON registrert i `vercel.json`. Commit `a317739`.
+- **Sak 3 (waitlist student-UI):** Ny side `/portal/bookinger/venteliste` viser egne `WaitlistEntry` (WAITING + NOTIFIED) med posisjon, tjeneste, trener, ønsket tid og "Meld av"-knapp. NOTIFIED-state utheves med "Plass tilgjengelig" + expiry-info. Lenke fra hovedsiden `/portal/bookinger`. Commit `d980ce8`.
+
+**Status:** Lint OK på alle nye filer. Tsc OK (én pre-eksisterende warning på `refund.ts` linje 82 og pre-eksisterende error på `getRefundStatus` linje 238 fra Stripe-types-oppdatering — urelatert til denne committen). 13/13 tester passerer i nye testfiler.
+
+**Nøkkelfiler:**
+- Nye: `supabase/migrations/20260425_subscription_quota_rpcs.sql`, `lib/portal/booking/refund-idempotency.ts`, `__tests__/booking/refund-idempotency.test.ts`, `app/api/portal/cron/reconcile-stripe-bookings/route.ts`, `app/portal/(dashboard)/bookinger/venteliste/{page,actions,waitlist-card}.{tsx,ts}`
+- Endret: `lib/portal/booking/refund.ts`, `lib/portal/booking/subscription-quota.ts`, `vercel.json`, `app/portal/(dashboard)/bookinger/bookinger-client.tsx`, `.claude/rules/component-library.md`
+
+**Neste steg (Anders må utføre):**
+1. **Deploy SQL-migrasjon** mot Supabase (DIRECT_URL): `psql "$DIRECT_URL" -f supabase/migrations/20260425_subscription_quota_rpcs.sql`
+2. **Verifiser i prod-logger** etter deploy at `[Quota] increment_sessions_used RPC unavailable`-warningen forsvinner.
+3. **Test reconcile-CRON manuelt:** `curl -H "Authorization: Bearer $CRON_SECRET" https://akgolf.no/api/portal/cron/reconcile-stripe-bookings`
+4. **Test waitlist-UI** ved å opprette en `WaitlistEntry` via Prisma Studio og navigere til `/portal/bookinger/venteliste`.
+5. PR mot `main` når alt er verifisert.
+
+---
+
 ## 2026-04-25 — Dynamisk slot-telling i booking (P1 fra BOOKING_AUDIT)
 
 **Jobbet med:** Fjernet legacy hardkodet `availableSlotsThisWeek: 8` ved å legge til en Prisma-basert helper som beregner faktisk antall ledige slots for inneværende uke (now → søndag 23:59), og en unit-test som verifiserer at verdien er dynamisk.
