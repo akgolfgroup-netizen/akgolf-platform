@@ -4,7 +4,7 @@
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition, useCallback } from "react";
 import Link from "next/link";
-import { Calendar, List, User, CheckCircle, XCircle, AlertCircle } from "lucide-react";
+import { Calendar, List, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { Button } from "@/components/ui/button";

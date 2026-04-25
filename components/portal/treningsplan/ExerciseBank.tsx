@@ -3,7 +3,6 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
-import { Search } from "lucide-react";
 import { StandardTemplate } from "./types";
 import { PyramidLevel } from "@/lib/portal/golf/ak-formula";
 

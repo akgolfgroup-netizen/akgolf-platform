@@ -3,7 +3,7 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
-import { User, Clock, XCircle, CheckCircle, AlertCircle } from "lucide-react";
+import { XCircle, CheckCircle, AlertCircle } from "lucide-react";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Card } from "@/components/ui/card";

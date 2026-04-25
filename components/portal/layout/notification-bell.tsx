@@ -3,7 +3,6 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import Link from "next/link";

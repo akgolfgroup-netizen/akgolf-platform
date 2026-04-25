@@ -4,7 +4,6 @@
 import { Icon } from "@/components/ui/icon";
 import { useState } from "react";
 import Link from "next/link";
-import { Search } from "lucide-react";
 import { searchStudents } from "@/app/admin/(authed)/elever/actions";
 import { formatDistanceToNow } from "date-fns";
 import { nb } from "date-fns/locale";

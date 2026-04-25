@@ -11,7 +11,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/portal/utils/cn";
 import {
   createGroup,
-  updateGroup,
   deleteGroup,
   addMember,
   removeMember,
@@ -245,7 +244,7 @@ export function GrupperClient({ initialGroups, initialPlayers }: GrupperClientPr
             <Icon name="groups" className="w-12 h-12 text-on-surface-variant/40 mx-auto mb-3" />
             <p className="text-on-surface-variant">Ingen grupper ennå.</p>
             <p className="text-sm text-on-surface-variant/70 mt-1">
-              Klikk "Ny gruppe" for å komme i gang.
+              Klikk &quot;Ny gruppe&quot; for å komme i gang.
             </p>
           </div>
         )}

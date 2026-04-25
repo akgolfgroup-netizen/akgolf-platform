@@ -3,7 +3,6 @@
 
 import { Icon } from "@/components/ui/icon";
 import Image from "next/image";
-import { DollarSign } from "lucide-react";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {
   AdminEmptyState,

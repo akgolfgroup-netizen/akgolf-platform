@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { GlassPanel } from "@/components/portal/patterns/glass-panel";
 import { MonoLabel } from "@/components/portal/patterns/mono-label";
@@ -37,13 +38,13 @@ export default function GlobalError() {
                   <Icon name="refresh" size={18} />
                   Last siden på nytt
                 </button>
-                <a
+                <Link
                   href="/"
                   className="inline-flex items-center justify-center gap-2 w-full bg-secondary-fixed hover:bg-secondary-fixed/90 text-on-secondary-fixed font-bold py-3 rounded-xl transition-all"
                 >
                   <Icon name="home" size={18} />
                   Til forsiden
-                </a>
+                </Link>
               </div>
             </GlassPanel>
           </div>

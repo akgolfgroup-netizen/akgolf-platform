@@ -2,7 +2,7 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Send, TrendingUp, Users, Calendar, BarChart3, Lightbulb, ThumbsUp, ThumbsDown, Clock } from "lucide-react";
+import { TrendingUp, Users, Calendar, BarChart3, Lightbulb, ThumbsUp, ThumbsDown, Clock } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { MonoLabel, GlassPanel } from "@/components/portal/patterns";
