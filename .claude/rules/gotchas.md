@@ -11,21 +11,26 @@
 - API-ruter MÅ ha `getPortalUser()` + `checkRateLimit()`. Aldri reflekter brukerinput i feilmeldinger.
 
 ## Font
-Inter via `next/font/google`. Ikke lokal font-fil.
+Inter Tight (headlines) + Inter (body) + JetBrains Mono (tall) via `next/font/google`. Ikke lokal font-fil. DM Sans er legacy og fjernes i Sprint 2.
 
 ## Priser
 - Database lagrer **kroner** (ikke øre). Vis direkte, aldri del på 100.
 - Stripe forventer øre: `service.price * 100`.
 - Aldri vis MVA på kundevendte sider.
 
-## CSS / Design — Brand Guide V2.0
+## CSS / Design — Brand Guide V2.0 (eneste gjeldende, etter rebrand 2026-04-25)
 - Én `app/globals.css` for hele appen. Aldri lag globals.css i undermapper.
-- Bruk kun offisielle tokens. Aldri `--color-gold`, `--apple-gold-*`, `--color-ink-*`.
-- Grey-skala: `--color-grey-100` (#ECF0EF) til `--color-grey-900` (#0A1F18). Grønn-tonet, ikke nøytral.
-- Primary: #005840 (--color-primary). Accent/CTA: #D1F843 (--color-accent-cta). Aldri bruk gamle #2D6A4F.
-- Success: `--color-success` (#2A7D5A). Error: `--color-error` (#B84233). Warning: `--color-warning` (#C48A32). AI: `--color-ai` (#AF52DE).
-- Heritage Grid er DROPPET. Aldri bruk `--hg-*` variabler. Aldri dark mode.
-- Aldri bruk emojier. Bruk Lucide-ikoner.
+- Designfasit: `public/design-reference/*.html` — kopier Tailwind-tokens 1:1.
+- **Primary:** `#005840` (--color-primary). **Accent/CTA:** `#D1F843` (--color-accent).
+- **Surface:** `#F4F6F4` (--color-surface). **Card:** `#FFFFFF` (--color-card).
+- **Sidebar:** `#0F1F18` (--color-sidebar) — admin og dark contrast cards.
+- **Tekst:** `#0A1F18` (--color-ink), muted `#5C6B62`, subtle `#8A958E`.
+- **Status:** success `#2A7D5A`, warning `#C48A32`, danger `#B84233`.
+- **Border:** `--color-line` (#E4EAE6), soft `--color-line-soft` (#EDF1EE).
+- **Fonts:** Inter Tight + Inter + JetBrains Mono. Aldri DM Sans i ny kode.
+- **Ikoner:** `lucide-react`. Aldri Material Symbols i ny kode. Aldri emojier.
+- **Heritage-tokens er LEGACY** — beholdes som `--legacy-*` aliaser i globals.css. Mass-migrering i Sprint 2.
+- Se `.claude/rules/design-system.md` for full token-liste.
 
 ## Komponenter
 - Lucide icons kan ikke sendes som props fra Server → Client Components. Bruk `iconName` string + ICON_MAP.
@@ -45,10 +50,12 @@ Inter via `next/font/google`. Ikke lokal font-fil.
 - Flex-tjenester: 3 uker (21 dager) i forveien
 - Konfigurert i `lib/portal/booking/subscription-quota.ts` (getSessionLimits) og `maxAdvanceDays` på ServiceType i databasen.
 
-## Mission Control
-- Admin: `/portal/admin/` med RBAC via `canAccessMissionControl()` og `canAccessMCPage()`.
+## CoachHQ (admin-flate, omdøpt fra Mission Control 2026-04-25)
+- Rute: `/admin/` (under `(authed)`-gruppe). RBAC via `canAccessMissionControl()` og `canAccessMCPage()` (funksjonsnavn beholdes for bakoverkompatibilitet).
 - Roller: ADMIN (alt), INSTRUCTOR (coaching), INVITED (begrenset).
-- All instruktør-funksjonalitet i Portal Admin. Ikke opprett separate dashboards.
+- All instruktør-funksjonalitet i CoachHQ. Ikke opprett separate dashboards.
+- Komponenter: `components/admin/CoachHQSidebar.tsx` (ny). Gammel `components/portal/mission-control/mc-sidebar.tsx` er legacy — slettes i Sprint 2.
+- Synlig UI-tekst sier "CoachHQ", men filnavn / mappenavn / DB-felter beholder "mission-control" / "MC" inntil videre.
 
 ## Git
 - ALDRI bruk `git add -A` eller `git add .` for commit. Bruk `git add <spesifikke filer>` for å unngå utilsiktet inkludering av slettinger eller endringer.
@@ -81,7 +88,7 @@ STRIPE_SECRET_KEY=sk_live_xxx npx tsx scripts/diagnose-stripe-webhook.ts
 ```
 
 ### Health check
-Systemhelse vises i Mission Control dashboard via `WebhookHealthCard`.
+Systemhelse vises i CoachHQ dashboard via `WebhookHealthCard`.
 API-endepunkt: `GET /api/health/stripe`
 
 ## Prisma migrate mot Supabase
@@ -99,24 +106,24 @@ API-endepunkt: `GET /api/health/stripe`
 - Alle grant/revoke av kapabiliteter audit-logges automatisk i `CapabilityChangeLog` via team-actions. Ikke lag egne queries som omgår dette.
 - `defaultsForRole()` i `lib/portal/capabilities/check.ts` gir rolle-baserte defaults; eksisterende `canAccessMCPage()` er bakoverkompatibel midlertidig.
 
-## Heritage Grid design-migrering (2026-04-19)
+## Heritage Grid (LEGACY — DEPRECATED 2026-04-25)
 
-**Kildebilde:** `design-ref/stitch/heritage/` (195 Stitch-skjermer godkjent av bruker). Alle nye komponenter skal kopiere Tailwind-klasser 1:1 fra relevant `code.html`.
+Heritage Grid (M3) var gjeldende fra 2026-04-19 til 2026-04-25. Erstattet av Brand Guide V2.0 i CoachHQ-rebrand.
 
-- **Font:** DM Sans (body/heading), JetBrains Mono (numerisk). Aldri Inter.
-- **Ikoner:** Material Symbols Outlined via `<Icon name="..." />` fra `components/ui/icon.tsx`. Aldri Lucide.
-- **Primary:** `#154212` (skogsgrønn, varm). `--color-primary`.
-- **Accent:** `#d2f000` (olivengul lime). `--color-secondary-fixed`.
-- **Surface:** `#fdf9f0` (kremhvit). `--color-surface`.
-- **Tekst:** `#1c1c16` (brun-sort). `--color-on-surface`.
-- **MC-sidebar:** `bg-[#022c22]` (emerald-950, veldig mørk grønn).
-- **Portal-sidebar:** `#2d5a27` (primary-container, mellommørk grønn).
+**Heritage-tokens som er DEPRECATED og merket `--legacy-*` i `app/globals.css`:**
+- `#154212` (Heritage primary) → bruk `#005840`
+- `#d2f000` (Heritage accent) → bruk `#D1F843`
+- `#fdf9f0` (Heritage surface) → bruk `#F4F6F4`
+- `#1c1c16` (Heritage on-surface) → bruk `#0A1F18`
+- `bg-emerald-950` / `#022c22` (MC-sidebar) → bruk `bg-sidebar` (#0F1F18)
+- DM Sans → bruk Inter / Inter Tight
+- Material Symbols → bruk lucide-react
 
-**Forbudte tokens:** `bg-portal-*`, `--hg-*`, `shadow-portal-*`, `Inter` font, `Lucide` ikoner. Alle migrert via `scripts/migrate-to-heritage.sh` + `scripts/migrate-lucide-to-material.js`.
+**Eksisterende kode** som bruker Heritage-tokens fortsetter å fungere via `--legacy-*`-aliaser. Mass-migrering planlagt i Sprint 2 (script-basert + manuell touch-up).
 
-**Arkivert:** `_archived/pre-heritage-2026-04-19/` inneholder gamle patterns (CourseHero, GlassPanel, osv.) og dashboard-views (FocusToday, DataRich, etc.).
+**ALDRI bruk Heritage-tokens i ny kode.** Se `.claude/rules/design-system.md` for gjeldende tokens.
 
-**Én kilde til sannhet:** `.claude/rules/design-system.md`. Alle andre design-docs er arkivert under `docs/archive-2026-04-24/` (pre-Heritage) og `docs/archive-2026-04-21/` (eldre).
+**Stitch-referanseskjermer** under `design-ref/stitch/heritage/` er nå historisk referanse — ikke bruk dem som kildebilde for ny kode. Bruk `public/design-reference/*.html` i stedet.
 
 ## Oppdater dokumentasjon ved strukturelle endringer
 Endre kode + oppdater docs = én atomisk operasjon.
