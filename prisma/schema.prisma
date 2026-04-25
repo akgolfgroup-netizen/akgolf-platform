@@ -1756,6 +1756,7 @@ model TrainingPlan {
   PeriodizationPeriod                 PeriodizationPeriod? @relation(fields: [periodizationPeriodId], references: [id], onDelete: SetNull)
   TrainingGroup                       TrainingGroup?       @relation(fields: [groupId], references: [id], onDelete: SetNull)
   TrainingPlanWeek                    TrainingPlanWeek[]
+  DismissedAdjustment                 DismissedAdjustment[]
 
   @@index([studentId])
   @@index([periodizationPeriodId])
@@ -1820,11 +1821,28 @@ model TrainingPlanWeek {
   weekStart           DateTime              @db.Date
   focus               String?
   volumeLabel         String?
+  /// Hviledager (1=mandag, 7=søndag). Tomt array = ingen hviledager.
+  restDays            Int[]                 @default([])
   createdAt           DateTime              @default(now())
   TrainingPlanSession TrainingPlanSession[]
   TrainingPlan        TrainingPlan          @relation(fields: [planId], references: [id], onDelete: Cascade)
 
   @@index([planId])
+}
+
+/// Persisterer at en bruker har avvist plan-deviation-forslag for en plan.
+/// Brukes til å skjule banneren i 7 dager.
+model DismissedAdjustment {
+  id          String   @id
+  userId      String
+  planId      String
+  dismissedAt DateTime @default(now())
+  expiresAt   DateTime
+  User        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  TrainingPlan TrainingPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([userId, planId])
+  @@index([expiresAt])
 }
 
 model UserCalendarSubscription {
@@ -1956,6 +1974,7 @@ model User {
   TrainingLog                                 TrainingLog[]
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
+  DismissedAdjustment                         DismissedAdjustment[]
   TrainingSubscription                        TrainingSubscription?
   UserCalendarSubscription                    UserCalendarSubscription[]
   AssignedMessages                            UnifiedMessage[]           @relation("AssignedMessages")

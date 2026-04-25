@@ -11,11 +11,11 @@
  */
 
 import { useState, useEffect, useTransition } from "react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { addWeeks, format, startOfWeek } from "date-fns";
 import { nb } from "date-fns/locale";
+import { cn } from "@/lib/portal/utils/cn";
 import {
   PYRAMIDE,
   TRENINGSOMRADER,
@@ -116,6 +116,7 @@ export function TreningsplanPlanner({
   historyEvents,
   onCreateSession,
   onAddExerciseToSession,
+  onUpdateSession,
   adjustmentSuggestion,
   onAdjustPlan,
 }: TreningsplanPlannerProps) {
@@ -383,14 +384,7 @@ export function TreningsplanPlanner({
           />
         </div>
         <div className="flex items-center gap-3">
-          {planId ? (
-            <Link
-              href={`/portal/treningsplan?view=viewer&week=${weekOffset}`}
-              className="font-mono text-[11px] uppercase tracking-widest text-primary/60 hover:text-primary"
-            >
-              Vis som liste →
-            </Link>
-          ) : (
+          {!planId && (
             <span className="font-mono text-[11px] uppercase tracking-widest text-primary/40">
               Ingen aktiv plan
             </span>
