@@ -7,6 +7,8 @@ import { WelcomeDay0Email } from "@/lib/portal/email/templates/welcome-day0";
 import { WelcomeDay1Email } from "@/lib/portal/email/templates/welcome-day1";
 import { WelcomeDay3Email } from "@/lib/portal/email/templates/welcome-day3";
 
+export const dynamic = "force-dynamic";
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function GET(request: NextRequest) {
