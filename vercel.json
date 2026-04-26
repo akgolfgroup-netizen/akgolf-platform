@@ -101,6 +101,14 @@
     {
       "path": "/api/portal/cron/process-coaching-audio",
       "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/portal/cron/training-reminders?mode=morning",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/portal/cron/training-reminders?mode=evening",
+      "schedule": "0 19 * * *"
     }
   ],
   "headers": [

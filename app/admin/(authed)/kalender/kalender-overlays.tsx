@@ -47,6 +47,8 @@ interface KalenderOverlaysProps {
   isPending: boolean;
   isNoShowPending: boolean;
   onMarkNoShow: (id: string) => void;
+  isCompletePending: boolean;
+  onMarkCompleted: (id: string) => void;
   onOpenNoteModal: (booking: CalendarBooking) => void;
 }
 
@@ -67,6 +69,8 @@ export default function KalenderOverlays({
   isPending,
   isNoShowPending,
   onMarkNoShow,
+  isCompletePending,
+  onMarkCompleted,
   onOpenNoteModal,
 }: KalenderOverlaysProps) {
   return (
@@ -200,14 +204,24 @@ export default function KalenderOverlays({
               </Button>
               {drawerBooking.status !== "NO_SHOW" &&
                 drawerBooking.status !== "COMPLETED" && (
-                  <Button
-                    variant="secondary"
-                    isLoading={isNoShowPending}
-                    onClick={() => onMarkNoShow(drawerBooking.id)}
-                  >
-                    <Icon name="warning" className="w-4 h-4" />
-                    Ikke møtt
-                  </Button>
+                  <>
+                    <Button
+                      variant="secondary"
+                      isLoading={isNoShowPending}
+                      onClick={() => onMarkNoShow(drawerBooking.id)}
+                    >
+                      <Icon name="warning" className="w-4 h-4" />
+                      Ikke møtt
+                    </Button>
+                    <Button
+                      variant="primary"
+                      isLoading={isCompletePending}
+                      onClick={() => onMarkCompleted(drawerBooking.id)}
+                    >
+                      <Icon name="check_circle" className="w-4 h-4" />
+                      Marker fullført
+                    </Button>
+                  </>
                 )}
             </div>
           )

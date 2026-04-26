@@ -3,7 +3,7 @@ import { canAccessMissionControl } from "@/lib/portal/rbac";
 import { redirect } from "next/navigation";
 import { AdminShell } from "./admin-shell";
 
-export const metadata = { title: "AK Golf — Mission Control" };
+export const metadata = { title: "AK Golf — CoachHQ" };
 export const dynamic = "force-dynamic";
 
 export default async function AdminLayout({

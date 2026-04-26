@@ -262,3 +262,32 @@ export function labelForOmraade(code: string): string {
 export function labelForLFase(code: string): string {
   return L_FASER.find((f) => f.code === code)?.label ?? code;
 }
+
+// ─── TEMPLATE-FOKUS (alias for ak-taxonomy-koder brukt i standard-maler) ─
+//
+// `TrainingPlanSession.focusArea` lagres som fri tekst i DB (se Prisma).
+// For maler bruker vi disse aliasene som faller direkte inn i AK-taxonomy:
+// pyramide-koder (FYS, SPILL) og treningsområde-aliaser (PUTTING/CHIPPING/...).
+// Single source of truth — alle nye maler skal bruke disse i stedet for å
+// hardkode strings.
+//
+// Mapping mot ak-taxonomy:
+//   PUTTING  → gruppe "putting" (PUTT0-3 ... PUTT40+)
+//   CHIPPING → kode "CHIP"
+//   PITCHING → kode "PITCH"
+//   JERN     → kode "INN150" (default for jernspill 150–200 m)
+//   DRIVE    → kode "TEE"
+//   SPILL    → pyramide-kode "SPILL"
+//   FYS      → pyramide-kode "FYS"
+
+export const TEMPLATE_FOCUS = {
+  PUTTING: "PUTTING",
+  CHIPPING: "CHIPPING",
+  PITCHING: "PITCHING",
+  JERN: "JERN",
+  DRIVE: "DRIVE",
+  SPILL: "SPILL",
+  FYS: "FYS",
+} as const;
+
+export type TemplateFocus = (typeof TEMPLATE_FOCUS)[keyof typeof TEMPLATE_FOCUS];

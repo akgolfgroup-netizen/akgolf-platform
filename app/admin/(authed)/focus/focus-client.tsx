@@ -102,7 +102,7 @@ export function FocusClient({ initialTasks, initialStats, todayBookings }: Props
       <div className="p-6 space-y-6">
         {/* Heritage Grid Header */}
         <div className="space-y-2">
-          <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+          <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">Focus<span className="text-outline">.</span></h1>
           <p className="text-on-surface-variant">Oppgaver og dagsoversikt per divisjon</p>
         </div>

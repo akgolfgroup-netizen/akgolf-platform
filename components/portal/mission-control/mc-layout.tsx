@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, createContext, useContext } from "react";
-import { MCSidebar } from "./mc-sidebar";
+import { CoachHQSidebar } from "@/components/admin/CoachHQSidebar";
 
 interface MCLayoutProps {
   children: React.ReactNode;
@@ -31,6 +31,10 @@ export function useMCSidebar() {
   return context;
 }
 
+/**
+ * MCLayout — beholdt navn for bakoverkompatibilitet, men bruker nå CoachHQSidebar.
+ * Brand Guide V2.0 (2026-04-25). Sidebar er inline (flex), ikke fixed.
+ */
 export function MCLayout({ children, user }: MCLayoutProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,9 +47,15 @@ export function MCLayout({ children, user }: MCLayoutProps) {
 
   return (
     <MCSidebarContext.Provider value={contextValue}>
-      <div className="min-h-screen flex bg-surface">
-        <MCSidebar user={user} isOpen={isOpen} onClose={() => setIsOpen(false)} />
-        <main className="flex-1 lg:ml-64 min-h-screen flex flex-col p-6 lg:p-8">
+      <div
+        className="min-h-screen flex"
+        style={{ background: "var(--color-surface)" }}
+      >
+        {/* CoachHQ-sidebar — desktop kun (1280px+) per Sprint 1-spec */}
+        <div className="hidden lg:flex">
+          <CoachHQSidebar user={user} />
+        </div>
+        <main className="flex-1 min-h-screen flex flex-col p-6 lg:p-8 overflow-x-hidden">
           {children}
         </main>
       </div>

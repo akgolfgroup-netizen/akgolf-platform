@@ -19,14 +19,6 @@
       "env": {
         "API_KEY": "${TWENTYFIRST_API_KEY}"
       }
-    },
-    "21st-dev": {
-      "type": "http",
-      "url": "https://mcp.21st.dev/mcp"
-    },
-    "context7": {
-      "type": "http",
-      "url": "https://mcp.context7.io/mcp"
     }
   }
 }

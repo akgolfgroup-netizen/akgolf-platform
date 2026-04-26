@@ -9,8 +9,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const profile = await getStudentProfile(id);
   return {
     title: profile
-      ? `${profile.name ?? "Elev"} | AK Golf Mission Control`
-      : "Elev | AK Golf Mission Control",
+      ? `${profile.name ?? "Elev"} | AK Golf CoachHQ`
+      : "Elev | AK Golf CoachHQ",
   };
 }
 
