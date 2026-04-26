@@ -1755,6 +1755,9 @@ model TrainingPlan {
   coachFeedback                       String?
   coachFeedbackAt                     DateTime?
   coachFeedbackById                   String?
+  /// Spiller-kommentar på plan-nivå. Vises i samtaletråd ved siden av coach-feedback.
+  playerComment                       String?
+  playerCommentAt                     DateTime?
   User_TrainingPlan_createdByIdToUser User                 @relation("TrainingPlan_createdByIdToUser", fields: [createdById], references: [id])
   User_TrainingPlan_studentIdToUser   User                 @relation("TrainingPlan_studentIdToUser", fields: [studentId], references: [id])
   User_TrainingPlan_coachFeedbackById User?                @relation("TrainingPlan_coachFeedbackById", fields: [coachFeedbackById], references: [id], onDelete: SetNull)
@@ -2681,6 +2684,7 @@ enum NotificationType {
   BOOKING_REMINDER
   PLAN_GENERATED
   AI_INSIGHT
+  TRAINING_PLAN_PLAYER_COMMENT
 }
 
 enum FocusArea {

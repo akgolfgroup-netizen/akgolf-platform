@@ -572,7 +572,7 @@ export async function setPlanCoachFeedback(
 
   const plan = await prisma.trainingPlan.findUnique({
     where: { id: planId },
-    select: { studentId: true },
+    select: { studentId: true, title: true },
   });
   if (!plan) return { success: false, error: "Plan ikke funnet" };
 
@@ -587,6 +587,20 @@ export async function setPlanCoachFeedback(
       updatedAt: new Date(),
     },
   });
+
+  if (trimmed && plan.studentId !== user.id) {
+    const { notifyPlanCoachFeedback } = await import(
+      "@/lib/portal/notifications/triggers"
+    );
+    await notifyPlanCoachFeedback({
+      planId,
+      planTitle: plan.title,
+      studentId: plan.studentId,
+      coachId: user.id,
+      coachName: user.name ?? null,
+      feedbackPreview: trimmed,
+    });
+  }
 
   revalidatePath("/admin/treningsplan");
   revalidatePath("/portal/treningsplan");

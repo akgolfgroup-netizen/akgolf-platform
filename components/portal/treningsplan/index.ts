@@ -22,3 +22,10 @@ export { SessionView } from "./session-view";
 
 // Wizard for å lage ny plan
 export { PlanCreatorModal } from "./plan-creator-modal";
+
+// Samtale (coach-feedback + spiller-kommentar)
+export { PlanConversationCard } from "./plan-conversation-card";
+export type {
+  PlanConversationMessage,
+  PlanConversationCardProps,
+} from "./plan-conversation-card";

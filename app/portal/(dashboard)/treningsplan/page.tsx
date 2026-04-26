@@ -20,6 +20,7 @@ import {
   dismissPlanAdjustment,
   checkSessionConflicts,
   getPlanGoalsProgress,
+  setPlanPlayerComment,
 } from "./actions";
 import { TreningsplanPlanner } from "./treningsplan-planner";
 
@@ -47,6 +48,13 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     ? {
         text: plan.coachFeedback as string,
         at: plan.coachFeedbackAt ? new Date(plan.coachFeedbackAt).toISOString() : null,
+      }
+    : null;
+
+  const playerComment = plan?.playerComment
+    ? {
+        text: plan.playerComment as string,
+        at: plan.playerCommentAt ? new Date(plan.playerCommentAt).toISOString() : null,
       }
     : null;
 
@@ -161,6 +169,12 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     return checkSessionConflicts(input);
   }
 
+  async function handleSavePlayerComment(text: string | null) {
+    "use server";
+    if (!plan?.id) return { success: false, error: "Ingen aktiv plan" };
+    return setPlanPlayerComment(plan.id, text);
+  }
+
   const sessionCount = events.length;
   const totalMinutes = events.reduce((sum, e) => sum + (e.dur ?? 0), 0);
   const doneCount = events.filter((e) => e.done).length;
@@ -182,6 +196,8 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       myPlans={myPlans}
       goalsSummary={goalsSummary}
       coachFeedback={coachFeedback}
+      playerComment={playerComment}
+      onSavePlayerComment={handleSavePlayerComment}
       onCreateSession={handleCreateSession}
       onAddExerciseToSession={handleAddExerciseToSession}
       onUpdateSession={handleUpdateSession}

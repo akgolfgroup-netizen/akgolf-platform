@@ -8,6 +8,35 @@
 
 ---
 
+## 2026-04-26 — Treningsplan: Sprint 1 — symmetri coach/spiller (kommentar + varsling)
+
+**Jobbet med:** Bidireksjonal samtaletråd på treningsplan-nivå. Spilleren kan nå kommentere på egen plan (speil av coach-feedback), og begge parter får varsling når den andre legger inn ny tekst. Branch: `claude/add-workout-summary-j6qWr`.
+
+- **Prisma:** Ny migrasjon `20260426_player_comment_on_plan` — `TrainingPlan.playerComment` + `playerCommentAt`, ny `NotificationType.TRAINING_PLAN_PLAYER_COMMENT`.
+- **Tilgangshelper** `lib/portal/training/plan-access.ts` — `canAccessPlan(plan, user)` returnerer `"owner" | "coach" | "admin" | null`. Klar til Sprint 2 når coach skal redigere spillerens plan via felles flyt.
+- **Server actions:**
+  - `setPlanPlayerComment` (i portal `actions.ts`) — kun plan-eier; varsler `createdById` (coach) ved ny/oppdatert kommentar.
+  - `setPlanCoachFeedback` (i admin `actions.ts`) utvidet — varsler nå spilleren via ny `notifyPlanCoachFeedback`-trigger.
+- **Notifikasjons-triggers** (`lib/portal/notifications/triggers.ts`):
+  - `notifyPlanCoachFeedback` → spiller mottar `PLAN_READY`-varsling med kommentar-preview, link til `/portal/treningsplan`.
+  - `notifyPlanPlayerComment` → coach mottar `TRAINING_PLAN_PLAYER_COMMENT` (admin-notifikasjon, type `coaching`), link til `/admin/treningsplan?planId=...`.
+- **UI:** Ny `PlanConversationCard` i `components/portal/treningsplan/plan-conversation-card.tsx` — Heritage-tokens (DM Sans, Material Symbols, primary/secondary-fixed), erstatter den gamle inline coach-feedback-boksen i `treningsplan-planner.tsx`. Spiller kan skrive/redigere/slette egen kommentar inline med 2000 tegns grense.
+
+**Nøkkelfiler:**
+- Nye: `prisma/migrations/20260426_player_comment_on_plan/migration.sql`, `lib/portal/training/plan-access.ts`, `components/portal/treningsplan/plan-conversation-card.tsx`
+- Oppdatert: `prisma/schema.prisma`, `lib/portal/notifications/triggers.ts`, `app/admin/(authed)/treningsplan/actions.ts`, `app/portal/(dashboard)/treningsplan/{actions,page,treningsplan-planner}.tsx`, `components/portal/treningsplan/index.ts`
+
+**Status:** TS-rent for Sprint 1 (ingen nye feil). Lint OK (kun pre-eksisterende warning om ubrukt `handleMoveEvent` i `page.tsx`). Migrasjon må kjøres mot Supabase via `DIRECT_URL`.
+
+**Neste steg (Sprint 2 — forslags-modus):**
+1. Prisma: `PlanSuggestion`-modell (PENDING/ACCEPTED/REJECTED + diffJson).
+2. Mode-toggle i header («Rediger direkte» / «Foreslå endringer»).
+3. `proposeSessionEdit` + `acceptSuggestion` + `rejectSuggestion` server actions.
+4. `PlanSuggestionInbox`-komponent med diff-visning.
+5. Utvide eksisterende `updateSession`/`createSessionForWeek` med `mode: "DIRECT" | "SUGGEST"` og bruke `canAccessPlan` for coach-tilgang.
+
+---
+
 ## 2026-04-25 — Treningsplaner: 4 sprints (bug-fiks → polish, ferdig)
 
 **Jobbet med:** Komplett gjennomgang og videreutvikling av treningsplaneren. Startet med kartlegging og 7 bug-fikser, deretter 4 sprints (13 epics) som dekket alt fra konsolidering og AI-kobling til PDF-eksport, mobil-responsivitet og test-dekning. Plan-fil: `~/.claude/plans/lag-n-en-plan-mellow-fern.md`.

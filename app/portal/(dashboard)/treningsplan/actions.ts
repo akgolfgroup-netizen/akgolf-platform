@@ -2009,3 +2009,67 @@ export async function dismissPlanAdjustment(planId: string) {
   revalidatePath("/portal/treningsplan");
   return { success: true, expiresAt: expires.toISOString() };
 }
+
+// -------------------------------------------------------------------
+// Sprint 1 / Symmetri: Spiller-kommentar på plan
+// -------------------------------------------------------------------
+
+const PLAYER_COMMENT_MAX = 2000;
+
+/**
+ * Sett eller oppdater spiller-kommentaren på en plan. Kun plan-eier kan
+ * kalle. Speiler `setPlanCoachFeedback` i admin-actions, men varsler
+ * coachen som opprettet planen når kommentaren er ikke-tom.
+ */
+export async function setPlanPlayerComment(
+  planId: string,
+  comment: string | null
+): Promise<{ success: boolean; error?: string }> {
+  const user = await requirePortalUser();
+  if (!user?.id) return { success: false, error: "Ikke autentisert" };
+
+  const plan = await prisma.trainingPlan.findUnique({
+    where: { id: planId },
+    select: {
+      id: true,
+      title: true,
+      studentId: true,
+      createdById: true,
+      User_TrainingPlan_studentIdToUser: { select: { name: true } },
+    },
+  });
+  if (!plan) return { success: false, error: "Plan ikke funnet" };
+  if (plan.studentId !== user.id) {
+    return { success: false, error: "Kun plan-eier kan kommentere" };
+  }
+
+  const trimmed = (comment ?? "").trim().slice(0, PLAYER_COMMENT_MAX);
+  const isClearing = trimmed.length === 0;
+
+  await prisma.trainingPlan.update({
+    where: { id: planId },
+    data: {
+      playerComment: isClearing ? null : trimmed,
+      playerCommentAt: isClearing ? null : new Date(),
+      updatedAt: new Date(),
+    },
+  });
+
+  if (!isClearing && plan.createdById && plan.createdById !== user.id) {
+    const { notifyPlanPlayerComment } = await import(
+      "@/lib/portal/notifications/triggers"
+    );
+    await notifyPlanPlayerComment({
+      planId: plan.id,
+      planTitle: plan.title,
+      coachId: plan.createdById,
+      studentId: plan.studentId,
+      studentName: plan.User_TrainingPlan_studentIdToUser?.name ?? null,
+      commentPreview: trimmed,
+    });
+  }
+
+  revalidatePath("/portal/treningsplan");
+  revalidatePath("/admin/treningsplan");
+  return { success: true };
+}

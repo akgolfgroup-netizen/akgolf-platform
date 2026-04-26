@@ -34,6 +34,7 @@ import {
 } from "./components/plan-adjustment-banner";
 import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
 import { PlanCreatorModal } from "@/components/portal/treningsplan/plan-creator-modal";
+import { PlanConversationCard } from "@/components/portal/treningsplan/plan-conversation-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PlanGoalsCard } from "./components/plan-goals-card";
 import type { PlanGoalsSummary } from "./actions";
@@ -100,6 +101,10 @@ interface TreningsplanPlannerProps {
   myPlans?: MyPlanSummary[];
   goalsSummary?: PlanGoalsSummary | null;
   coachFeedback?: { text: string; at: string | null } | null;
+  playerComment?: { text: string; at: string | null } | null;
+  onSavePlayerComment?: (
+    text: string | null
+  ) => Promise<{ success: boolean; error?: string }>;
   onCreateSession: (data: {
     weekOffset: number;
     dayOfWeek: number;
@@ -168,6 +173,8 @@ export function TreningsplanPlanner({
   myPlans = [],
   goalsSummary,
   coachFeedback,
+  playerComment,
+  onSavePlayerComment,
   onCreateSession,
   onAddExerciseToSession,
   onUpdateSession,
@@ -385,26 +392,14 @@ export function TreningsplanPlanner({
         }}
       />
 
-      {/* Coach-kommentar på plan-nivå (Epic 9) */}
-      {!showEmptyState && coachFeedback && coachFeedback.text && (
-        <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4">
-          <div className="flex items-start gap-3">
-            <Icon name="comment" size={18} className="mt-0.5 text-primary" />
-            <div className="flex-1">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-primary">
-                Kommentar fra coach
-              </p>
-              <p className="mt-1 text-sm text-on-surface whitespace-pre-wrap">
-                {coachFeedback.text}
-              </p>
-              {coachFeedback.at && (
-                <p className="mt-1 font-mono text-[10px] text-on-surface-variant">
-                  {format(new Date(coachFeedback.at), "d. MMM yyyy", { locale: nb })}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
+      {/* Samtale: coach-feedback + spiller-kommentar (Sprint 1) */}
+      {!showEmptyState && (
+        <PlanConversationCard
+          coachFeedback={coachFeedback}
+          playerComment={playerComment}
+          canEdit={Boolean(planId && onSavePlayerComment)}
+          onSavePlayerComment={onSavePlayerComment}
+        />
       )}
 
       {/* Plan-mål med progress (Epic 7) */}

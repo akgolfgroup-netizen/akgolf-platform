@@ -234,6 +234,49 @@ export async function notifyPlayerQuestion(
   }
 }
 
+/**
+ * Spiller har kommentert på treningsplan — varsle coachen som opprettet planen.
+ */
+export async function notifyPlanPlayerComment(params: {
+  planId: string;
+  planTitle: string;
+  coachId: string;
+  studentId: string;
+  studentName: string | null;
+  commentPreview: string;
+}): Promise<void> {
+  try {
+    const preview = params.commentPreview.slice(0, 80) +
+      (params.commentPreview.length > 80 ? "…" : "");
+    const studentName = params.studentName ?? "En spiller";
+
+    const metadata: TrainingPlanMetadata & { commentPreview: string } = {
+      planId: params.planId,
+      planTitle: params.planTitle,
+      startDate: "",
+      endDate: "",
+      commentPreview: preview,
+    };
+
+    await createNotification({
+      userId: params.coachId,
+      senderId: params.studentId,
+      type: NotificationType.TRAINING_PLAN_PLAYER_COMMENT,
+      title: `${studentName} kommenterte på treningsplanen`,
+      message: preview ? `«${preview}»` : "Ny kommentar fra spilleren",
+      linkUrl: `/admin/treningsplan?planId=${params.planId}`,
+      linkText: "Se kommentar",
+      metadata,
+      isAdminNotification: true,
+      adminType: "coaching",
+    });
+
+    logger.info(`[notifyPlanPlayerComment] Sent to coach ${params.coachId}`);
+  } catch (error) {
+    logger.error("[notifyPlanPlayerComment] Failed:", error);
+  }
+}
+
 // ============================================================================
 // MISSION CONTROL → SPILLERPORTAL (Elev ser)
 // ============================================================================
@@ -369,6 +412,47 @@ export async function notifyCoachingNotesAdded(
     logger.info(`[notifyCoachingNotesAdded] Sent to student ${session.studentId}`);
   } catch (error) {
     logger.error("[notifyCoachingNotesAdded] Failed:", error);
+  }
+}
+
+/**
+ * Coach har lagt til/oppdatert feedback på treningsplan — varsle spilleren.
+ */
+export async function notifyPlanCoachFeedback(params: {
+  planId: string;
+  planTitle: string;
+  studentId: string;
+  coachId: string;
+  coachName: string | null;
+  feedbackPreview: string;
+}): Promise<void> {
+  try {
+    const preview = params.feedbackPreview.slice(0, 80) +
+      (params.feedbackPreview.length > 80 ? "…" : "");
+    const coachName = params.coachName ?? "Din coach";
+
+    const metadata: TrainingPlanMetadata & { feedbackPreview: string } = {
+      planId: params.planId,
+      planTitle: params.planTitle,
+      startDate: "",
+      endDate: "",
+      feedbackPreview: preview,
+    };
+
+    await createNotification({
+      userId: params.studentId,
+      senderId: params.coachId,
+      type: NotificationType.PLAN_READY,
+      title: `${coachName} har kommentert på treningsplanen`,
+      message: preview ? `«${preview}»` : "Ny kommentar fra coachen",
+      linkUrl: "/portal/treningsplan",
+      linkText: "Se kommentar",
+      metadata,
+    });
+
+    logger.info(`[notifyPlanCoachFeedback] Sent to student ${params.studentId}`);
+  } catch (error) {
+    logger.error("[notifyPlanCoachFeedback] Failed:", error);
   }
 }
 
