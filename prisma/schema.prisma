@@ -2931,3 +2931,21 @@ enum AdminPriority {
   IMPORTANT
   NORMAL
 }
+
+// ── Facility Booking (CoachHQ — fasilitets-bookingkart GFGK) ──────────────────
+
+model FacilityBooking {
+  id        String   @id @default(cuid())
+  facility  String
+  person    String
+  type      String
+  date      DateTime
+  startTime String
+  endTime   String
+  userId    String?
+  createdAt DateTime @default(now())
+
+  @@index([facility])
+  @@index([date])
+  @@index([userId])
+}
