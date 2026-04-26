@@ -147,6 +147,97 @@
 - Layout-bytte: `components/portal/mission-control/mc-layout.tsx` (bruker nå `CoachHQSidebar`)
 - Mockup: `public/design-reference/student-360-reference.html` (ny)
 - Plan: `~/.claude/plans/lag-en-plan-for-wiggly-crown.md`
+## 2026-04-26 — Treningsplan: Sprint 2 — forslags-modus (backend + spiller-godkjenning)
+
+**Jobbet med:** Coach kan nå sende forslag til endring på en treningsplan-økt; spilleren ser forslaget i en Inbox på sin plan-side og kan godta eller avslå (med valgfri begrunnelse). Begge parter får varsling. Branch: `claude/add-workout-summary-j6qWr` (samme PR som Sprint 1 + spillerstyrt fordeling).
+
+- **Prisma:** Ny modell `PlanSuggestion` (PENDING/ACCEPTED/REJECTED) med `targetType`, `targetId`, `diffJson`, `rationale`, `resolvedAt`, `rejectionReason`. Migrasjon `20260426_plan_suggestion`. To nye `NotificationType`-verdier: `TRAINING_PLAN_SUGGESTION` og `TRAINING_PLAN_SUGGESTION_RESOLVED`.
+- **Service-lag** (`lib/portal/training/plan-suggestion-service.ts`):
+  - `buildSessionDiff` — beregner kun feltene som faktisk endres.
+  - `createSuggestion` — opprett PENDING-rad.
+  - `listPendingSuggestionsForPlan` — beriker med proposer + targetLabel (henter sesjons-titler i bulk).
+  - `applySessionDiff` — applies session-diff på TrainingPlanSession.
+- **Felles typer** (`lib/portal/training/plan-suggestion-types.ts`): `PlanSuggestionView`, `SessionEditDiff`, `SessionSuggestionPayload`, `SuggestionStatus`. Trygg for client-side import.
+- **Server actions:**
+  - `proposeSessionEdit(sessionId, proposed, rationale?)` (admin) — kun staff; varsler spilleren via `notifyPlanSuggestionCreated`.
+  - `listMyPendingSuggestions()` (portal) — for spillerens aktive plan.
+  - `acceptSuggestion(id)` (portal) — applies diff, markerer ACCEPTED, varsler coach via `notifyPlanSuggestionResolved`.
+  - `rejectSuggestion(id, reason?)` (portal) — markerer REJECTED med begrunnelse, varsler coach.
+- **Notify-triggers** (`lib/portal/notifications/triggers.ts`):
+  - `notifyPlanSuggestionCreated` → spiller mottar `TRAINING_PLAN_SUGGESTION` med target-label + rationale-preview, link til `/portal/treningsplan`.
+  - `notifyPlanSuggestionResolved` → coach mottar admin-notifikasjon (type `coaching`) med status (godtok/avslo) + valgfri begrunnelse, link til `/admin/treningsplan?planId=...`.
+- **UI:** `PlanSuggestionInbox` (`components/portal/treningsplan/plan-suggestion-inbox.tsx`) — lime-accent-kort med før/etter-diff per felt (Tittel, Varighet, Fokus, Fasilitet, Ukedag), Material Symbols `arrow_forward`-piler, godta/avslå-knapper med inline begrunnelse-textarea (maks 500 tegn). Vises automatisk i planner-headeren under coach-feedback.
+
+**Ikke i denne PR-en (Sprint 2B follow-up):**
+- Coach-UI for å trigge `proposeSessionEdit` — i dag må forslag opprettes via direkte server-action-kall (testbart, men ingen «Foreslå endring»-knapp i admin/treningsplan-grid). Neste PR: legg til en «Foreslå i stedet»-knapp på SessionCard i `treningsplan-client.tsx` som åpner samme form som «Rediger» men ruter til `proposeSessionEdit`.
+- Targets utover `session` (week / plan / distribution) — service-laget er forberedt med `targetType`-felt, men `applySessionDiff` håndterer kun session i dag.
+
+**Nøkkelfiler:**
+- Nye: `prisma/migrations/20260426_plan_suggestion/migration.sql`, `lib/portal/training/plan-suggestion-{types,service}.ts`, `components/portal/treningsplan/plan-suggestion-inbox.tsx`
+- Oppdatert: `prisma/schema.prisma`, `lib/portal/notifications/triggers.ts`, `app/admin/(authed)/treningsplan/actions.ts`, `app/portal/(dashboard)/treningsplan/{actions,page,treningsplan-planner}.tsx`, `components/portal/treningsplan/index.ts`
+
+**Status:** TS-rent + lint-rent for nye/endrede filer. Migrasjon må kjøres mot Supabase via `DIRECT_URL`.
+
+---
+
+## 2026-04-26 — Treningsplan: Spillerstyrt AK-pyramide-fordeling
+
+**Jobbet med:** Spilleren kan nå selv bestemme fordelingen av treningstid mellom de 5 nivåene i AK-pyramiden (FYS/TEK/SLAG/SPILL/TURN). Fordelingen sendes til Claude i RECOMMENDED-modus og lagres på planen for senere visning. Branch: `claude/add-workout-summary-j6qWr` (samme PR som Sprint 1).
+
+- **Prisma:** Ny migrasjon `20260426_pyramid_distribution_on_plan` — `TrainingPlan.pyramidDistribution Json?` (valgfritt felt, sum 100 %).
+- **`PyramidDistributionEditor`** i `components/portal/treningsplan/pyramid-distribution-editor.tsx`:
+  - 5 slidere (FYS/TEK/SLAG/SPILL/TURN) med Heritage-farger fra `ak-taxonomy.ts`.
+  - Proporsjonal auto-justering — flyttes én slider, skaleres de andre slik at sum forblir 100 % (5 %-trinn).
+  - 3 hurtigvalg-presets fra `PERIOD_TYPES` (Grunnperiode 30/35/20/10/5, Spesialiseringsperiode 20/25/30/20/5, Turneringsperiode 10/10/20/30/30) + Tilbakestill (allround 20/25/25/20/10).
+  - Helpers: `sumDistribution`, `isValidDistribution`, `adjustDistribution`.
+- **Wizard-integrasjon (`PlanCreatorModal`):**
+  - Nytt steg «Din AK-fordeling» som vises etter «Hvor lang skal planen være?» i RECOMMENDED-modus.
+  - TEMPLATE bruker malens innebygde fordeling; MANUAL har ikke AI som trenger den.
+  - 100 %-validering før innsending.
+- **AI-flyt:**
+  - `CreatePlanFromChoiceInput.pyramidDistribution` (valgfritt) sendes til `createPlanFromChoice`.
+  - `generateTrainingPlan` (i `lib/portal/ai/training-plan.ts`) tar nå imot `pyramidDistribution` og legger til en eksplisitt instruks i prompten: «Fordel total øktvarighet per uke slik at minuttene per pyramide-nivå matcher prosentene over (±5 %)».
+  - Lagres på `TrainingPlan.pyramidDistribution` ved oppretting.
+
+**Nøkkelfiler:**
+- Nye: `prisma/migrations/20260426_pyramid_distribution_on_plan/migration.sql`, `components/portal/treningsplan/pyramid-distribution-editor.tsx`
+- Oppdatert: `prisma/schema.prisma`, `components/portal/treningsplan/{plan-creator-modal,index}.tsx`, `app/portal/(dashboard)/treningsplan/actions.ts`, `lib/portal/ai/training-plan.ts`
+
+**Status:** TS-rent + lint-rent for nye/endrede filer. Migrasjon må kjøres via `DIRECT_URL`.
+
+**Neste steg (delvis dekket):**
+1. **PyramidActuals**-komponent i header — viser planlagt vs. faktisk fordeling basert på øktenes `focusArea` × `durationMinutes`. Ikke med i denne PR-en — kan tas i ny PR uten avhengigheter.
+2. **Dynamisk `periodType`** til AI-kall — fjern hardkodet `"grunnperiode"` i `actions.ts:1379` og bruk aktiv `PeriodizationPeriod`.
+3. **Spesialiserings-mal** i `standard-templates.ts`.
+
+---
+
+## 2026-04-26 — Treningsplan: Sprint 1 — symmetri coach/spiller (kommentar + varsling)
+
+**Jobbet med:** Bidireksjonal samtaletråd på treningsplan-nivå. Spilleren kan nå kommentere på egen plan (speil av coach-feedback), og begge parter får varsling når den andre legger inn ny tekst. Branch: `claude/add-workout-summary-j6qWr`.
+
+- **Prisma:** Ny migrasjon `20260426_player_comment_on_plan` — `TrainingPlan.playerComment` + `playerCommentAt`, ny `NotificationType.TRAINING_PLAN_PLAYER_COMMENT`.
+- **Tilgangshelper** `lib/portal/training/plan-access.ts` — `canAccessPlan(plan, user)` returnerer `"owner" | "coach" | "admin" | null`. Klar til Sprint 2 når coach skal redigere spillerens plan via felles flyt.
+- **Server actions:**
+  - `setPlanPlayerComment` (i portal `actions.ts`) — kun plan-eier; varsler `createdById` (coach) ved ny/oppdatert kommentar.
+  - `setPlanCoachFeedback` (i admin `actions.ts`) utvidet — varsler nå spilleren via ny `notifyPlanCoachFeedback`-trigger.
+- **Notifikasjons-triggers** (`lib/portal/notifications/triggers.ts`):
+  - `notifyPlanCoachFeedback` → spiller mottar `PLAN_READY`-varsling med kommentar-preview, link til `/portal/treningsplan`.
+  - `notifyPlanPlayerComment` → coach mottar `TRAINING_PLAN_PLAYER_COMMENT` (admin-notifikasjon, type `coaching`), link til `/admin/treningsplan?planId=...`.
+- **UI:** Ny `PlanConversationCard` i `components/portal/treningsplan/plan-conversation-card.tsx` — Heritage-tokens (DM Sans, Material Symbols, primary/secondary-fixed), erstatter den gamle inline coach-feedback-boksen i `treningsplan-planner.tsx`. Spiller kan skrive/redigere/slette egen kommentar inline med 2000 tegns grense.
+
+**Nøkkelfiler:**
+- Nye: `prisma/migrations/20260426_player_comment_on_plan/migration.sql`, `lib/portal/training/plan-access.ts`, `components/portal/treningsplan/plan-conversation-card.tsx`
+- Oppdatert: `prisma/schema.prisma`, `lib/portal/notifications/triggers.ts`, `app/admin/(authed)/treningsplan/actions.ts`, `app/portal/(dashboard)/treningsplan/{actions,page,treningsplan-planner}.tsx`, `components/portal/treningsplan/index.ts`
+
+**Status:** TS-rent for Sprint 1 (ingen nye feil). Lint OK (kun pre-eksisterende warning om ubrukt `handleMoveEvent` i `page.tsx`). Migrasjon må kjøres mot Supabase via `DIRECT_URL`.
+
+**Neste steg (Sprint 2 — forslags-modus):**
+1. Prisma: `PlanSuggestion`-modell (PENDING/ACCEPTED/REJECTED + diffJson).
+2. Mode-toggle i header («Rediger direkte» / «Foreslå endringer»).
+3. `proposeSessionEdit` + `acceptSuggestion` + `rejectSuggestion` server actions.
+4. `PlanSuggestionInbox`-komponent med diff-visning.
+5. Utvide eksisterende `updateSession`/`createSessionForWeek` med `mode: "DIRECT" | "SUGGEST"` og bruke `canAccessPlan` for coach-tilgang.
 
 ---
 

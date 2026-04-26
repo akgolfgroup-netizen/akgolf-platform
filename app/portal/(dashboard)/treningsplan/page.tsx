@@ -20,6 +20,10 @@ import {
   dismissPlanAdjustment,
   checkSessionConflicts,
   getPlanGoalsProgress,
+  setPlanPlayerComment,
+  listMyPendingSuggestions,
+  acceptSuggestion,
+  rejectSuggestion,
 } from "./actions";
 import { TreningsplanPlanner } from "./treningsplan-planner";
 
@@ -49,6 +53,15 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
         at: plan.coachFeedbackAt ? new Date(plan.coachFeedbackAt).toISOString() : null,
       }
     : null;
+
+  const playerComment = plan?.playerComment
+    ? {
+        text: plan.playerComment as string,
+        at: plan.playerCommentAt ? new Date(plan.playerCommentAt).toISOString() : null,
+      }
+    : null;
+
+  const pendingSuggestions = await listMyPendingSuggestions();
 
   // Server action wrappers bound to the user context
   async function handleMoveEvent(eventId: string, date: string, startH: number, startM: number) {
@@ -161,6 +174,22 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     return checkSessionConflicts(input);
   }
 
+  async function handleSavePlayerComment(text: string | null) {
+    "use server";
+    if (!plan?.id) return { success: false, error: "Ingen aktiv plan" };
+    return setPlanPlayerComment(plan.id, text);
+  }
+
+  async function handleAcceptSuggestion(suggestionId: string) {
+    "use server";
+    return acceptSuggestion(suggestionId);
+  }
+
+  async function handleRejectSuggestion(suggestionId: string, reason?: string) {
+    "use server";
+    return rejectSuggestion(suggestionId, reason);
+  }
+
   const sessionCount = events.length;
   const totalMinutes = events.reduce((sum, e) => sum + (e.dur ?? 0), 0);
   const doneCount = events.filter((e) => e.done).length;
@@ -182,6 +211,11 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       myPlans={myPlans}
       goalsSummary={goalsSummary}
       coachFeedback={coachFeedback}
+      playerComment={playerComment}
+      onSavePlayerComment={handleSavePlayerComment}
+      pendingSuggestions={pendingSuggestions}
+      onAcceptSuggestion={handleAcceptSuggestion}
+      onRejectSuggestion={handleRejectSuggestion}
       onCreateSession={handleCreateSession}
       onAddExerciseToSession={handleAddExerciseToSession}
       onUpdateSession={handleUpdateSession}

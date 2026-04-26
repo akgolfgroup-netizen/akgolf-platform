@@ -234,6 +234,49 @@ export async function notifyPlayerQuestion(
   }
 }
 
+/**
+ * Spiller har kommentert på treningsplan — varsle coachen som opprettet planen.
+ */
+export async function notifyPlanPlayerComment(params: {
+  planId: string;
+  planTitle: string;
+  coachId: string;
+  studentId: string;
+  studentName: string | null;
+  commentPreview: string;
+}): Promise<void> {
+  try {
+    const preview = params.commentPreview.slice(0, 80) +
+      (params.commentPreview.length > 80 ? "…" : "");
+    const studentName = params.studentName ?? "En spiller";
+
+    const metadata: TrainingPlanMetadata & { commentPreview: string } = {
+      planId: params.planId,
+      planTitle: params.planTitle,
+      startDate: "",
+      endDate: "",
+      commentPreview: preview,
+    };
+
+    await createNotification({
+      userId: params.coachId,
+      senderId: params.studentId,
+      type: NotificationType.TRAINING_PLAN_PLAYER_COMMENT,
+      title: `${studentName} kommenterte på treningsplanen`,
+      message: preview ? `«${preview}»` : "Ny kommentar fra spilleren",
+      linkUrl: `/admin/treningsplan?planId=${params.planId}`,
+      linkText: "Se kommentar",
+      metadata,
+      isAdminNotification: true,
+      adminType: "coaching",
+    });
+
+    logger.info(`[notifyPlanPlayerComment] Sent to coach ${params.coachId}`);
+  } catch (error) {
+    logger.error("[notifyPlanPlayerComment] Failed:", error);
+  }
+}
+
 // ============================================================================
 // MISSION CONTROL → SPILLERPORTAL (Elev ser)
 // ============================================================================
@@ -369,6 +412,141 @@ export async function notifyCoachingNotesAdded(
     logger.info(`[notifyCoachingNotesAdded] Sent to student ${session.studentId}`);
   } catch (error) {
     logger.error("[notifyCoachingNotesAdded] Failed:", error);
+  }
+}
+
+/**
+ * Coach har sendt et forslag til endring på treningsplan — varsle spilleren.
+ */
+export async function notifyPlanSuggestionCreated(params: {
+  planId: string;
+  planTitle: string;
+  studentId: string;
+  coachId: string;
+  coachName: string | null;
+  targetLabel: string;
+  rationale: string | null;
+}): Promise<void> {
+  try {
+    const coachName = params.coachName ?? "Din coach";
+    const message = params.rationale
+      ? `${coachName} foreslår en endring på «${params.targetLabel}»: ${params.rationale.slice(0, 140)}`
+      : `${coachName} foreslår en endring på «${params.targetLabel}».`;
+
+    const metadata: TrainingPlanMetadata & { targetLabel: string } = {
+      planId: params.planId,
+      planTitle: params.planTitle,
+      startDate: "",
+      endDate: "",
+      targetLabel: params.targetLabel,
+    };
+
+    await createNotification({
+      userId: params.studentId,
+      senderId: params.coachId,
+      type: NotificationType.TRAINING_PLAN_SUGGESTION,
+      title: "Nytt forslag fra coachen",
+      message,
+      linkUrl: "/portal/treningsplan",
+      linkText: "Se forslag",
+      metadata,
+    });
+
+    logger.info(`[notifyPlanSuggestionCreated] Sent to student ${params.studentId}`);
+  } catch (error) {
+    logger.error("[notifyPlanSuggestionCreated] Failed:", error);
+  }
+}
+
+/**
+ * Spilleren har godkjent/avslått et forslag — varsle coachen.
+ */
+export async function notifyPlanSuggestionResolved(params: {
+  planId: string;
+  planTitle: string;
+  coachId: string;
+  studentId: string;
+  studentName: string | null;
+  targetLabel: string;
+  status: "ACCEPTED" | "REJECTED";
+  rejectionReason: string | null;
+}): Promise<void> {
+  try {
+    const studentName = params.studentName ?? "Spilleren";
+    const verb = params.status === "ACCEPTED" ? "godtok" : "avslo";
+    const reasonText = params.status === "REJECTED" && params.rejectionReason
+      ? ` Begrunnelse: ${params.rejectionReason.slice(0, 140)}`
+      : "";
+
+    const metadata: TrainingPlanMetadata & {
+      targetLabel: string;
+      status: string;
+    } = {
+      planId: params.planId,
+      planTitle: params.planTitle,
+      startDate: "",
+      endDate: "",
+      targetLabel: params.targetLabel,
+      status: params.status,
+    };
+
+    await createNotification({
+      userId: params.coachId,
+      senderId: params.studentId,
+      type: NotificationType.TRAINING_PLAN_SUGGESTION_RESOLVED,
+      title: `${studentName} ${verb} forslaget`,
+      message: `${studentName} ${verb} forslaget på «${params.targetLabel}».${reasonText}`,
+      linkUrl: `/admin/treningsplan?planId=${params.planId}`,
+      linkText: "Åpne planen",
+      metadata,
+      isAdminNotification: true,
+      adminType: "coaching",
+    });
+
+    logger.info(`[notifyPlanSuggestionResolved] Sent to coach ${params.coachId}`);
+  } catch (error) {
+    logger.error("[notifyPlanSuggestionResolved] Failed:", error);
+  }
+}
+
+/**
+ * Coach har lagt til/oppdatert feedback på treningsplan — varsle spilleren.
+ */
+export async function notifyPlanCoachFeedback(params: {
+  planId: string;
+  planTitle: string;
+  studentId: string;
+  coachId: string;
+  coachName: string | null;
+  feedbackPreview: string;
+}): Promise<void> {
+  try {
+    const preview = params.feedbackPreview.slice(0, 80) +
+      (params.feedbackPreview.length > 80 ? "…" : "");
+    const coachName = params.coachName ?? "Din coach";
+
+    const metadata: TrainingPlanMetadata & { feedbackPreview: string } = {
+      planId: params.planId,
+      planTitle: params.planTitle,
+      startDate: "",
+      endDate: "",
+      feedbackPreview: preview,
+    };
+
+    await createNotification({
+      userId: params.studentId,
+      senderId: params.coachId,
+      type: NotificationType.PLAN_READY,
+      title: `${coachName} har kommentert på treningsplanen`,
+      message: preview ? `«${preview}»` : "Ny kommentar fra coachen",
+      linkUrl: "/portal/treningsplan",
+      linkText: "Se kommentar",
+      metadata,
+    });
+
+    logger.info(`[notifyPlanCoachFeedback] Sent to student ${params.studentId}`);
+  } catch (error) {
+    logger.error("[notifyPlanCoachFeedback] Failed:", error);
   }
 }
 

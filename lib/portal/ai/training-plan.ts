@@ -86,12 +86,21 @@ Regler:
 - Tilpass til periodiseringsfasen
 - Skriv på norsk bokmål`;
 
+export interface PyramidDistributionInput {
+  FYS: number;
+  TEK: number;
+  SLAG: number;
+  SPILL: number;
+  TURN: number;
+}
+
 export async function generateTrainingPlan(
   input: {
     goals: string;
     periodType: string;
     durationWeeks: number;
     startDate: string;
+    pyramidDistribution?: PyramidDistributionInput;
   },
   prescription?: TrainingPrescriptionResult
 ): Promise<TrainingPlanResult> {
@@ -99,6 +108,17 @@ export async function generateTrainingPlan(
 
   const prescriptionText = prescription
     ? `\nUSI-basert treningspreskripsjon: Fokuser pa ${prescription.focusAreas.join(", ")}. Anbefalt volum: ${prescription.weeklyHours.toFixed(1)} timer/uke. Forventet HCP-endring pa 12 uker: ${prescription.predictedHcpChange.toFixed(1)} slag.`
+    : "";
+
+  const pyramidText = input.pyramidDistribution
+    ? `\n\nSpillerstyrt AK-fordeling per uke (sum 100 %):
+- FYS (Fysisk): ${input.pyramidDistribution.FYS}%
+- TEK (Teknikk): ${input.pyramidDistribution.TEK}%
+- SLAG (Slagtrening): ${input.pyramidDistribution.SLAG}%
+- SPILL (Spilltrening): ${input.pyramidDistribution.SPILL}%
+- TURN (Turnering): ${input.pyramidDistribution.TURN}%
+
+VIKTIG: Fordel total øktvarighet per uke slik at minuttene per pyramide-nivå matcher prosentene over (±5 %). Bruk feltet "focusArea" på hver økt for å speile ett av nivåene (eller et område innenfor et nivå, f.eks. putting/naerspill/range/styrke). En 0 %-andel betyr at nivået skal utelates helt.`
     : "";
 
   const message = await getClient().messages.create({
@@ -113,7 +133,7 @@ export async function generateTrainingPlan(
 Periode: ${input.periodType}
 ${periodGuidance}
 
-Spillerens mal: ${input.goals}${prescriptionText}
+Spillerens mal: ${input.goals}${prescriptionText}${pyramidText}
 
 Startdato: ${input.startDate}
 

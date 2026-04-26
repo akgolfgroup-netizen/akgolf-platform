@@ -22,8 +22,14 @@ import {
   createPlanFromChoice,
   type PlanCreationMode,
 } from "@/app/portal/(dashboard)/treningsplan/actions";
+import {
+  PyramidDistributionEditor,
+  DEFAULT_DISTRIBUTION,
+  isValidDistribution,
+  type PyramidDistribution,
+} from "./pyramid-distribution-editor";
 
-type Step = "mode" | "template" | "duration";
+type Step = "mode" | "template" | "duration" | "distribution";
 
 interface Props {
   open: boolean;
@@ -68,6 +74,9 @@ export function PlanCreatorModal({ open, onClose }: Props) {
   const [mode, setMode] = useState<PlanCreationMode>("RECOMMENDED");
   const [templateId, setTemplateId] = useState<TemplateId>("allround");
   const [duration, setDuration] = useState<string>("4");
+  const [distribution, setDistribution] = useState<PyramidDistribution>(
+    DEFAULT_DISTRIBUTION
+  );
   const [error, setError] = useState<string | null>(null);
 
   if (!open) return null;
@@ -77,8 +86,13 @@ export function PlanCreatorModal({ open, onClose }: Props) {
     setMode("RECOMMENDED");
     setTemplateId("allround");
     setDuration("4");
+    setDistribution(DEFAULT_DISTRIBUTION);
     setError(null);
   };
+
+  // Bare RECOMMENDED-modus tilbyr pyramide-fordelings-steget.
+  // TEMPLATE bruker malens innebygde fordeling; MANUAL har ingen AI som trenger den.
+  const usesDistribution = mode === "RECOMMENDED";
 
   const handleClose = () => {
     reset();
@@ -92,12 +106,16 @@ export function PlanCreatorModal({ open, onClose }: Props) {
       else setStep("duration");
     } else if (step === "template") {
       setStep("duration");
+    } else if (step === "duration" && usesDistribution) {
+      setStep("distribution");
     }
   };
 
   const handleBack = () => {
     setError(null);
-    if (step === "duration") {
+    if (step === "distribution") {
+      setStep("duration");
+    } else if (step === "duration") {
       if (mode === "TEMPLATE") setStep("template");
       else setStep("mode");
     } else if (step === "template") {
@@ -107,12 +125,17 @@ export function PlanCreatorModal({ open, onClose }: Props) {
 
   const handleConfirm = () => {
     setError(null);
+    if (usesDistribution && !isValidDistribution(distribution)) {
+      setError("AK-fordelingen må summere til 100 %.");
+      return;
+    }
     startTransition(async () => {
       try {
         const result = await createPlanFromChoice({
           mode,
           durationWeeks: Number(duration) as 1 | 4 | 8 | 12,
           templateId: mode === "TEMPLATE" ? templateId : undefined,
+          pyramidDistribution: usesDistribution ? distribution : undefined,
         });
         if (result.success) {
           handleClose();
@@ -130,10 +153,25 @@ export function PlanCreatorModal({ open, onClose }: Props) {
     mode: "Hvordan vil du lage planen?",
     template: "Velg en standardplan",
     duration: "Hvor lang skal planen være?",
+    distribution: "Din AK-fordeling",
   }[step];
 
-  const stepNumber = step === "mode" ? 1 : step === "template" ? 2 : mode === "TEMPLATE" ? 3 : 2;
-  const totalSteps = mode === "TEMPLATE" ? 3 : 2;
+  // Steg-nummerering:
+  //   RECOMMENDED: mode (1) → duration (2) → distribution (3)              — 3 steg
+  //   TEMPLATE:    mode (1) → template (2) → duration (3)                  — 3 steg
+  //   MANUAL:      mode (1) → duration (2)                                  — 2 steg
+  const stepNumber =
+    step === "mode"
+      ? 1
+      : step === "template"
+        ? 2
+        : step === "duration"
+          ? mode === "TEMPLATE"
+            ? 3
+            : 2
+          : 3; // distribution
+
+  const totalSteps = mode === "MANUAL" ? 2 : 3;
 
   return (
     <div
@@ -244,6 +282,20 @@ export function PlanCreatorModal({ open, onClose }: Props) {
             </div>
           )}
 
+          {step === "distribution" && (
+            <div className="space-y-4">
+              <p className="font-body text-sm text-on-surface-variant">
+                Bestem hvor stor andel hver del av AK-pyramiden skal ha av
+                planlagt treningstid. AI bygger økter slik at de samlede
+                minuttene matcher fordelingen din.
+              </p>
+              <PyramidDistributionEditor
+                value={distribution}
+                onChange={setDistribution}
+              />
+            </div>
+          )}
+
           {error && (
             <p className="mt-4 rounded-xl bg-error-container/30 p-3 text-sm text-error">
               {error}
@@ -267,7 +319,7 @@ export function PlanCreatorModal({ open, onClose }: Props) {
             <span />
           )}
 
-          {step === "duration" ? (
+          {(step === "distribution" || (step === "duration" && !usesDistribution)) ? (
             <button
               type="button"
               onClick={handleConfirm}
