@@ -1,5 +1,8 @@
 "use server";
 
+import { generateSlotsWithOverrides } from "@/lib/portal/slots";
+import { prisma } from "@/lib/portal/prisma";
+
 /**
  * Booking V2 server actions.
  *
@@ -14,7 +17,69 @@
  * - joinWaitlist   → lib/portal/booking/waitlist.ts
  *
  * Aldri dupliser denne logikken her — importer den når wiring skjer.
+ *
+ * getAvailableSlots ER ferdig wired — bruker generateSlotsWithOverrides
+ * med strategy="compact" for smart packing.
  */
+
+/**
+ * Henter ledige slots for et gitt service+trainer+date med smart packing.
+ * Returnerer ISO-strings, sortert kronologisk.
+ *
+ * Hvis trainerId mangler, slår vi opp default-trener på ServiceType
+ * (første aktive Instructor knyttet til ServiceType).
+ */
+export async function getAvailableSlots({
+  serviceTypeId,
+  instructorId,
+  date,
+}: {
+  serviceTypeId: string;
+  instructorId?: string;
+  date: string; // YYYY-MM-DD
+}): Promise<string[]> {
+  if (!serviceTypeId || !date) return [];
+
+  const [year, month, day] = date.split("-").map(Number);
+  const targetDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+
+  // Finn ServiceType for varighet/buffer
+  const serviceType = await prisma.serviceType.findUnique({
+    where: { id: serviceTypeId },
+    select: {
+      id: true,
+      duration: true,
+      bufferAfter: true,
+      bufferBefore: true,
+      minNoticeHours: true,
+      isActive: true,
+    },
+  });
+
+  if (!serviceType || !serviceType.isActive) return [];
+
+  // Hvis ingen trener spesifisert, finn første tilknyttet
+  let resolvedInstructorId = instructorId;
+  if (!resolvedInstructorId) {
+    const trainerResult = await prisma.serviceType.findUnique({
+      where: { id: serviceTypeId },
+      select: { Instructor: { select: { id: true }, take: 1 } },
+    });
+    resolvedInstructorId = trainerResult?.Instructor?.[0]?.id;
+  }
+  if (!resolvedInstructorId) return [];
+
+  return generateSlotsWithOverrides({
+    instructorId: resolvedInstructorId,
+    date: targetDate,
+    duration: serviceType.duration,
+    bufferAfter: serviceType.bufferAfter,
+    bufferBefore: serviceType.bufferBefore,
+    minNoticeHours: serviceType.minNoticeHours,
+    strategy: "compact",
+    serviceTypeId,
+  });
+}
 
 export interface BookingPayload {
   serviceId: string;

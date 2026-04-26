@@ -3,15 +3,23 @@ import { Calendar } from "@/components/booking-v2/Calendar";
 import { SlotPicker } from "@/components/booking-v2/SlotPicker";
 import { SummaryFooter } from "@/components/booking-v2/SummaryFooter";
 import { SERVICES, TRAINERS } from "@/components/booking-v2/copy";
+import { getAvailableSlots } from "../actions";
 
 interface PageProps {
-  searchParams: Promise<{ service?: string; trainer?: string }>;
+  searchParams: Promise<{
+    service?: string;
+    trainer?: string;
+    date?: string;
+    serviceTypeId?: string;
+    instructorId?: string;
+  }>;
 }
 
 export default async function TidPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const serviceId = params.service ?? "performance";
   const trainerId = params.trainer ?? "anders";
+  const dateParam = params.date ?? "2026-04-28";
 
   const service = SERVICES.find((s) => s.id === serviceId);
   const trainer = TRAINERS.find((t) => t.id === trainerId);
@@ -21,10 +29,26 @@ export default async function TidPage({ searchParams }: PageProps) {
       ? "Performance-abonnement kan booke 4 uker frem."
       : "Flex-tjenester kan bookes 3 uker frem.";
 
+  // Hvis URL-en inneholder ekte ServiceType.id (cuid) — hent ekte slots med smart packing.
+  // Ellers: SlotPicker faller tilbake til placeholder-data.
+  let realSlots: string[] = [];
+  if (params.serviceTypeId) {
+    try {
+      realSlots = await getAvailableSlots({
+        serviceTypeId: params.serviceTypeId,
+        instructorId: params.instructorId,
+        date: dateParam,
+      });
+    } catch {
+      // Stille feil — placeholder-data overtar i SlotPicker
+      realSlots = [];
+    }
+  }
+
   const next = new URLSearchParams();
   next.set("service", serviceId);
   next.set("trainer", trainerId);
-  next.set("date", "2026-04-28");
+  next.set("date", dateParam);
   next.set("time", "14:30");
 
   return (
@@ -42,7 +66,7 @@ export default async function TidPage({ searchParams }: PageProps) {
 
         <div className="dt-grid">
           <Calendar />
-          <SlotPicker />
+          <SlotPicker slots={realSlots.length > 0 ? realSlots : undefined} />
         </div>
 
         <SummaryFooter
