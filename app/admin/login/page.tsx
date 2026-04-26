@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
             <Icon name="shield"
               className="w-4 h-4 text-primary"
               aria-hidden="true" />
-            <h1 className="text-2xl font-bold text-on-surface tracking-tight">Mission Control</h1>
+            <h1 className="text-2xl font-bold text-on-surface tracking-tight">CoachHQ</h1>
           </div>
           <p className="text-sm text-muted">
             Kun for staff

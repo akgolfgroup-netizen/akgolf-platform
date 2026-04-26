@@ -156,7 +156,7 @@ function PlanOverview({
  <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-surface">
  {/* Heritage Grid Header */}
  <div className="space-y-2">
- <MonoLabel size="xs" uppercase className="block text-outline">Mission Control</MonoLabel>
+ <MonoLabel size="xs" uppercase className="block text-outline">CoachHQ</MonoLabel>
  <h1 className="text-2xl font-bold tracking-tight text-on-surface">Treningsplaner<span className="text-outline">.</span></h1>
  <p className="text-on-surface-variant">Oversikt over alle aktive og tidligere treningsplaner</p>
  </div>

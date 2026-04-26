@@ -5,7 +5,7 @@ import { getMyConversations } from "./chat-actions";
 import { AdminChatClient } from "./admin-chat-client";
 
 export const metadata = {
-  title: "Meldinger | Mission Control",
+  title: "Meldinger | CoachHQ",
 };
 
 export default async function MeldingerPage() {

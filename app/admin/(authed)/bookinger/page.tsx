@@ -5,7 +5,7 @@ import { searchBookings } from "./actions";
 import { BookingerClient } from "./bookinger-client";
 
 export const metadata = {
-  title: "Bookinger | AK Golf Mission Control",
+  title: "Bookinger | AK Golf CoachHQ",
 };
 
 export default async function AdminBookingerPage() {

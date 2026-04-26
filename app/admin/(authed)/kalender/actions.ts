@@ -147,6 +147,39 @@ export async function markNoShow(bookingId: string) {
     .eq("id", bookingId);
 }
 
+/**
+ * Marker en booking som fullført. Trigger automatisk:
+ *  - onBookingCompleted-event (transkripsjon + AI-sammendrag hvis lyd er lastet opp)
+ *  - Stripe payment-collect (Sprint 2 — kommer)
+ *
+ * Dette er flaskehalsen i dag — bookinger fullføres manuelt fra kalender/økter.
+ */
+export async function markBookingCompleted(bookingId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id || !isStaff(user.role)) {
+    throw new Error("Ikke autorisert");
+  }
+
+  const supabase = await createServerSupabase();
+
+  const { error } = await supabase
+    .from("Booking")
+    .update({ status: "COMPLETED" })
+    .eq("id", bookingId);
+
+  if (error) throw new Error(`Kunne ikke markere fullført: ${error.message}`);
+
+  // Fire-and-forget: trigger automatisk AI-pipeline i bakgrunn.
+  // Hvis lyd er lastet opp, transkriberes og oppsummeres innen kort tid.
+  const { onBookingCompleted } = await import("@/lib/portal/agents/runner");
+  void onBookingCompleted(bookingId).catch((err) => {
+    // Logget i agent-runner; vi ønsker ikke å feile selve markeringen
+    console.error("[markBookingCompleted] runner failed", err);
+  });
+
+  return { ok: true };
+}
+
 export async function addAdminNote(bookingId: string, note: string) {
   const user = await requirePortalUser();
   if (!user?.id || !isStaff(user.role)) {

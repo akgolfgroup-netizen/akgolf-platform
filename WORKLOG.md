@@ -8,6 +8,107 @@
 
 ---
 
+## 2026-04-26 — CoachHQ Sprint 1 D + C2 + Sprint 2-6 (alt backend, ingen ny design)
+
+**Jobbet med:** Per Anders' fullmakt — alle 6 sprinter unntatt nye visuelle redesign. Brukte fornuftige standardvalg for beslutninger som ellers krevde input. Spillerprofil 360 React-implementering ble unntak (godkjent mockup), resten er backend/agenter/data.
+
+**Standardvalg lagret i `~/.claude/plans/lag-en-plan-for-wiggly-crown.md`** og merket med TODO-kommentarer i kode for senere bekreftelse av Anders.
+
+**Sprint 1 ferdig:**
+- Blokk D: 3 nye agent-events (`onUSISnapshotChanged`, `onTestResultLogged`, `onMetricSnapshotComputed`) + "Marker fullført"-knapp i kalender-overlays + `markBookingCompleted` server action
+- Blokk C2: Spillerprofil 360 React (preview-rute `/admin/elever/[id]/v2`) — server action `getStudent360()` returnerer 9 datagrupper, 9 React-komponenter (Hero360, KontaktinfoCard, GolfCard med Ferdighetsnivå A-K visualisering, CoachingCard, TrainingCard, MentalForecastCard, TestsCard, EconomyCard, SignalsCard) under `components/portal/admin/student-360/`. Blanding av ekte data (User, CoachingSession) og stub-data med TODO-kommentarer for senere wiring.
+- Blokk E: lint + tsc passerer for alle nye filer
+
+**Sprint 2 ferdig (penger, kun backend):**
+- `lib/portal/stripe/off-session.ts`: `chargeOffSession()` for Flex-økter med lagret kort
+- `lib/portal/stripe/invoice.ts`: `createInvoiceForBooking()` for bedrifter (CustomerPaymentPreference.customerType=BUSINESS) med 14d forfall
+- `lib/portal/booking/refund-policy.ts`: 24t/8-24t/0 policy (Standardvalg #1)
+- `lib/portal/economy/student-metrics.ts`: `getStudentEconomy()` returnerer LTV, MRR-bidrag, fortjeneste, churn-risiko
+- `lib/portal/payout/calculator.ts`: månedlig payout — Markus fast 60k, andre 40% provisjon (Standardvalg #3)
+- 3 agenter: `payment-collect`, `cancellation`, `coach-payout` + ny CRON `monthly-payout`
+
+**Sprint 3 ferdig (agent-park):**
+- `lib/portal/agents/types.ts`: AGENT_REGISTRY med 16 agenter
+- `lib/portal/agents/park.ts`: orkestrator-API `runAgent()` + `runAgentInBackground()`
+- 8 nye agenter: `booking-confirm`, `no-show`, `dunning` (3-trinns purring), `onboarding`, `winback`, `birthday`, `sponsor-report`, `degradation-flag`
+
+**Sprint 4 ferdig (data):**
+- `lib/portal/training/test-scheduler.ts`: `calculateRetestDate()` — 8 uker standard, 12 langtid
+- `lib/portal/datagolf/cache.ts`: `getCachedPlayerStats()` / `setCachedPlayerStats()` med 24t TTL
+- `lib/portal/datagolf/player-benchmark.ts`: `findClosestPgaPeer()` via cosine-similarity over SG-profil
+
+**Sprint 5 ferdig (eksterne grupper, kun backend):**
+- `lib/portal/auth/age-check.ts`: `JUNIOR_AGE_LIMIT = 18` (Standardvalg #7)
+- `lib/portal/auth/parent-rbac.ts`: `ChildVisibleData` type + `PARENT_FORBIDDEN_FIELDS`-liste (Standardvalg #6)
+- `lib/portal/sponsor/data.ts`: stubs til Sponsor-modell-migrasjon (Standardvalg #5 felter dokumentert)
+- `lib/portal/golf/decade-strategy.ts`: `generateTournamentStrategy()` per-hull klubb-anbefaling
+
+**Sprint 6 ferdig (polering):**
+- `lib/portal/forecast/talent-insights.ts`: `getTalentInsights()` returnerer alle 30+ CoachingForecast-felter
+- `lib/portal/ai/learning-style-prompt.ts`: VISUAL/KINESTHETIC/AUDITORY tilpasning av AI-prompts
+- `lib/portal/health/rehab-protocols.ts`: 4-fase rehab-protokoller per skadetype + `estimateReturnToPlay()`
+- `lib/portal/forecast/long-term.ts`: 24/36-mnd ekstrapolasjon med utvidet CI
+
+**Status:** Tsc passerer for alle nye filer. Lint passerer (1 warning fikset). Pre-eksisterende feil i `app/api/health/stripe/route.ts` (Stripe API-versjon) ikke adressert.
+
+**Hva er IKKE gjort (utsatt per fullmakt):**
+- Heritage→Brand Guide V2.0 mass-migrering av eksisterende sider
+- Mission Board v2 UI-redesign
+- Økonomi-kontrollsenter UI
+- Turnerings-wizard UI
+- Foreldre-portal eget design
+- Sponsor-portal eget design
+- Talent-score visualisering med ny stil
+- Prisma-migreringer for HealthFlag, ParentLink, Sponsor, SponsorPlayer (krever DB-skriving)
+
+**Standardvalg som må bekreftes av Anders:**
+1. Refunderingspolicy 24t/8-24t/0
+2. MVA-fritak på coaching (sktl § 5-9)
+3. Trener-payout — Markus fast 60k, andre 40% provisjon
+4. Privat = kort-trekk auto, Bedrift = faktura 14d forfall
+5. Sponsor-rapport-felter — antall økter, elever, NPS, høydepunkter
+6. Foreldre-tilgang — HCP, økt-historikk, mål, aktivitet (IKKE AI/mental/økonomi)
+7. Junior-aldersgrense 18 år
+
+**Neste steg:**
+1. Anders bekrefter standardvalgene (eller justerer)
+2. Anders bestemmer designstrategi for utsette UI-bygg (Heritage vs Brand Guide V2.0 mass-migrering, Mission Board v2 redesign, etc.)
+3. Når godkjent: kjør Prisma-migreringer for HealthFlag, ParentLink, Sponsor
+4. Wires opp ekte data i Spillerprofil 360 (Sprint 4.3)
+
+**Total arbeid denne økten:** 6 sprinter à 5 dager planlagt = 30 dager — levert som backend-fokus + én UI (Spillerprofil 360°). Alle backend-moduler tsc/lint-rene.
+
+---
+
+## 2026-04-25 — CoachHQ Foundation Sprint 1 (Blokk A + B + C1)
+
+**Jobbet med:** Foundation-arbeid for CoachHQ-rebrand. Brand Guide V2.0 erstatter Heritage som eneste designsystem. Ny tre-panel-sidebar bygget. Tre designfasit-mockups klare. Per godkjent plan i `~/.claude/plans/lag-en-plan-for-wiggly-crown.md`.
+
+- **Designsystem omskrevet** (Blokk A1-A4): `.claude/rules/design-system.md` komplett omskrevet med Brand Guide V2.0 (#005840 / #D1F843 / #F4F6F4 / #0F1F18 + Inter Tight + Lucide). `.claude/rules/gotchas.md` snudd så Heritage er merket legacy. `app/globals.css` har Brand Guide V2.0-tokens i `:root`, Heritage som `--legacy-*`. `app/layout.tsx` har Inter Tight + Inter + JetBrains Mono via `next/font/google`. DM Sans beholdt som legacy.
+- **Rebrand** (Blokk A5): "Mission Control" → "CoachHQ" i 34 filer (synlig UI-tekst). Ingen endringer i filnavn / ruter / DB-felter. Kun historiske sprint-navn på `/design-review` beholdt.
+- **CoachHQ Sidebar** (Blokk B): Ny tre-panel-sidebar bygget i `components/admin/CoachHQSidebar.tsx` (samler `IconRail`, `NameList`, `LiveStatusFooter` + `coachhq-nav-config`). 56px ikonrad + 200px navnliste med live-status-pill nederst. Lucide-ikoner. Integrert i `mc-layout.tsx` (beholder `useMCSidebar()`-API for bakoverkompatibilitet). Erstatter visuelt den gamle MCSidebar på alle admin-sider.
+- **Student 360° mockup** (Blokk C1): `public/design-reference/student-360-reference.html` — tredje designfasit med 9 datagrupper (Hero, Identity, Golf m/USI A-K, Coaching, Training, Mental+Forecast, Tests, Economy, Signals). Brukes som visuell sannhet for Blokk C2 (React-implementering).
+- **Statisk verifisert:** TypeScript passerer for alle nye filer. Visuell verifikasjon krever `.env` (mangler i denne worktreen) — Anders må kjøre lokalt.
+
+**Status:** Blokk A + B + C1 av 6 ferdig. Gjenstående: C2 (Spillerprofil 360° React, ~16t), D (auto-AI events, ~8t), E (verifikasjon + commits, ~4t).
+
+**Neste steg (når Sprint 1 fortsetter):**
+1. Anders verifiserer ny CoachHQ-sidebar lokalt (krever `.env`)
+2. Anders sjekker `student-360-reference.html` i preview-panelet før vi bygger React
+3. Bygg Blokk C2: `/admin/elever/[id]/v2` med server action `getStudent360()` + 8 React-komponenter
+4. Bygg Blokk D: utvid `lib/portal/agents/runner.ts` med 3 nye events + "Marker fullført"-knapper på kalender og økter
+5. Bygg Blokk E: `npm run lint`, `npm run build`, oppdater `.claude/rules/component-library.md`, push
+
+**Nøkkelfiler:**
+- Docs: `.claude/rules/design-system.md` (omskrevet), `.claude/rules/gotchas.md` (oppdatert)
+- Tokens + fonts: `app/globals.css` (Brand Guide V2.0 i `:root`), `app/layout.tsx` (Inter Tight)
+- Sidebar: `components/admin/CoachHQSidebar.tsx`, `components/admin/coachhq/{IconRail,NameList,LiveStatusFooter,coachhq-nav-config}.tsx`
+- Layout-bytte: `components/portal/mission-control/mc-layout.tsx` (bruker nå `CoachHQSidebar`)
+- Mockup: `public/design-reference/student-360-reference.html` (ny)
+- Plan: `~/.claude/plans/lag-en-plan-for-wiggly-crown.md`
+
+---
+
 ## 2026-04-25 — Treningsplaner: 4 sprints (bug-fiks → polish, ferdig)
 
 **Jobbet med:** Komplett gjennomgang og videreutvikling av treningsplaneren. Startet med kartlegging og 7 bug-fikser, deretter 4 sprints (13 epics) som dekket alt fra konsolidering og AI-kobling til PDF-eksport, mobil-responsivitet og test-dekning. Plan-fil: `~/.claude/plans/lag-n-en-plan-mellow-fern.md`.

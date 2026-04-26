@@ -24,7 +24,7 @@ export function isStaff(role?: string): boolean {
 }
 
 /**
- * Check if user can access Mission Control admin dashboard
+ * Check if user can access CoachHQ admin dashboard
  * ADMIN, INSTRUCTOR, and INVITED roles all have access
  */
 export function canAccessMissionControl(role?: string): boolean {
@@ -36,7 +36,7 @@ export function canAccessMissionControl(role?: string): boolean {
 }
 
 /**
- * Mission Control page access matrix
+ * CoachHQ page access matrix
  * Returns true if the role can access the specified page
  */
 export function canAccessMCPage(

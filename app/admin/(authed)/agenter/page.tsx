@@ -5,7 +5,7 @@ import { getAgents, getAgentStats } from "./actions";
 import { AgenterClient } from "./agenter-client";
 
 export const metadata = {
-  title: "AI Agenter | AK Golf Mission Control",
+  title: "AI Agenter | AK Golf CoachHQ",
 };
 
 export default async function AgenterPage() {

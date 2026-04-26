@@ -5,7 +5,7 @@ import { HubOversiktClient } from "./hub-oversikt-client";
 import type { PrioritertElev } from "./dashboard/prioriterte-elever-kort";
 
 export const metadata = {
-  title: "Dashboard — AK Golf Mission Control",
+  title: "Dashboard — AK Golf CoachHQ",
 };
 
 async function getDashboardData() {

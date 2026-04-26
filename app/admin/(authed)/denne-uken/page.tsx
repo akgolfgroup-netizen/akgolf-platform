@@ -5,7 +5,7 @@ import { getThisWeekBookings, getWeekStats } from "./actions";
 import { ThisWeekClient } from "./this-week-client";
 
 export const metadata = {
-  title: "Denne uken | AK Golf Mission Control",
+  title: "Denne uken | AK Golf CoachHQ",
 };
 
 export default async function DenneUkenPage() {
