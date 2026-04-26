@@ -1,7 +1,7 @@
 // RapportAgent — kvartalsvise spiller-rapporter
 // Spec: software/dokumenter/ai-system/agents-spec.md sek 9
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 
 const SYSTEM_PROMPT_TRAINER = `
 Du genererer kvartalsrapport for trener-versjon (faglig, full detalj).

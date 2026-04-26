@@ -1,7 +1,7 @@
 // Skill: analyser-runde
 // Strokes Gained-analyse + AI-genererte insights
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 import { analyzeRound, calculateUSI } from "@/lib/mcp-client";
 
 const SYSTEM_PROMPT = `
