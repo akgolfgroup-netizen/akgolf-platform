@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body { background: #FAFAF7; }
+  .screen { grid-template-columns: 1fr; background: #FAFAF7; }
+
+  .onb-wrap {
+    display:grid; grid-template-columns: 1.1fr 1fr; min-height:100vh;
+  }
+  .onb-left {
+    padding: 40px 60px;
+    background: linear-gradient(180deg, #FAFAF7, #F5F8F7);
+    position: relative; overflow: hidden;
+  }
+  .onb-brand {
+    display:flex; align-items:center; gap:10px; font-weight:700; font-size:15px;
+    letter-spacing:-0.02em; color:#0A1F18;
+  }
+  .onb-brand .logo {
+    width:32px;height:32px;background:#0A1F18;color:#D1F843;border-radius:9px;
+    display:grid;place-items:center;font-weight:800;font-size:13px;
+  }
+
+  .progress-ring-wrap { display:flex; align-items:center; gap:16px; margin: 50px 0 40px; }
+  .progress-ring {
+    width: 80px; height: 80px; position: relative;
+  }
+  .progress-ring svg { transform: rotate(-90deg); width:100%; height:100%; }
+  .progress-ring circle { fill: none; stroke-width: 6; }
+  .progress-ring .bg { stroke: #ECF0EF; }
+  .progress-ring .fg { stroke: #D1F843; stroke-linecap: round; }
+  .progress-ring .t { position:absolute; inset:0; display:grid; place-items:center; font-weight:700; font-size:22px; letter-spacing:-0.02em; color:#0A1F18; }
+  .progress-ring .t small { font-size:10px; color:#7A8C85; font-family:'JetBrains Mono',monospace; letter-spacing:0.14em; display:block; margin-top:-2px; }
+
+  .onb-kicker { font-family:'JetBrains Mono',monospace; font-size:11px; color:#2A7D5A; letter-spacing:0.18em; text-transform:uppercase; }
+  .onb-title { font-size: 42px; font-weight:700; letter-spacing:-0.03em; line-height:1.1; margin: 10px 0 14px; color:#0A1F18; }
+  .onb-lede { font-size:15px; color:#5A6E66; line-height:1.6; max-width:500px; }
+
+  .steps-list { margin-top: 60px; display:flex; flex-direction:column; gap:2px; }
+  .step-item {
+    display:grid; grid-template-columns: 32px 1fr; gap:14px; padding:14px 0;
+    border-top: 1px solid #ECF0EF; align-items:center;
+  }
+  .step-num {
+    width:28px; height:28px; border-radius:999px;
+    display:grid; place-items:center;
+    font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700;
+    background:#ECF0EF; color:#7A8C85;
+  }
+  .step-item.done .step-num { background:#2A7D5A; color:#fff; }
+  .step-item.active .step-num { background:#D1F843; color:#0A1F18; box-shadow: 0 0 0 3px rgba(209,248,67,0.3); }
+  .step-item .step-ttl { font-weight:600; font-size:14px; color:#0A1F18; }
+  .step-item .step-ttl small { display:block; font-size:11px; color:#7A8C85; font-weight:400; margin-top:2px; }
+  .step-item.done .step-ttl { color:#5A6E66; }
+  .step-item.pending { opacity:0.5; }
+
+  .ai-say {
+    position: absolute; bottom: 40px; left: 60px; right: 60px;
+    background: #0A1F18; color: #fff; padding: 16px 18px; border-radius: 14px;
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .ai-av { width:36px;height:36px;border-radius:10px;background:#AF52DE;color:#fff;display:grid;place-items:center;font-weight:700;font-size:12px;flex-shrink:0; }
+  .ai-say .t { font-family:'JetBrains Mono',monospace;font-size:9px;color:#D1F843;letter-spacing:0.14em; }
+  .ai-say p { margin:2px 0 0; font-size:13px; line-height:1.5; color:#E6EAE8; }
+
+  /* Right: step panel */
+  .onb-right {
+    padding: 40px 60px;
+    background: #fff;
+    border-left: 1px solid #ECF0EF;
+    overflow-y: auto;
+  }
+
+  .card-q {
+    border:1px solid #ECF0EF; border-radius:16px; padding:24px;
+    background:#FAFAF7; margin-bottom: 18px;
+  }
+  .card-q h4 { margin:0 0 4px; font-size: 17px; font-weight:700; letter-spacing:-0.01em; }
+  .card-q .qsub { font-size:12px; color:#5A6E66; margin-bottom:16px; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em; }
+
+  /* HCP slider */
+  .hcp-slider {
+    position:relative; height:60px; margin: 20px 0;
+  }
+  .hcp-track {
+    position:absolute; left:0; right:0; top:30px; height:4px;
+    background: linear-gradient(to right, #D1F843, #7FB88F, #2A7D5A, #AF52DE);
+    border-radius:2px;
+  }
+  .hcp-handle {
+    position:absolute; left:18%; top:18px; width:28px; height:28px;
+    background:#0A1F18; border-radius:50%; border:3px solid #D1F843;
+    display:grid; place-items:center; color:#D1F843; font-weight:700; font-size:11px;
+    font-family:'JetBrains Mono',monospace;
+    transform: translateX(-50%);
+    cursor:grab;
+  }
+  .hcp-labels {
+    display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono',monospace; font-size:10px;
+    color:#7A8C85; letter-spacing:0.1em; padding-top: 50px;
+  }
+  .hcp-tier {
+    font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em;
+    color:#D1F843; background:#0A1F18; padding:3px 8px; border-radius:4px;
+    display:inline-block; margin-top:8px;
+  }
+
+  /* goals chips */
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip-g {
+    padding:10px 16px; border:1.5px solid #ECF0EF; border-radius:999px;
+    font-size:13px; font-weight:500; color:#324D45; cursor:pointer;
+    background:#fff; transition: all 0.15s;
+  }
+  .chip-g:hover { border-color:#0A1F18; }
+  .chip-g.on { background:#0A1F18; color:#D1F843; border-color:#0A1F18; font-weight:600; }
+  .chip-g .n { font-family:'JetBrains Mono',monospace; font-size:9px; color:#7A8C85; margin-right:6px; letter-spacing:0.1em; }
+  .chip-g.on .n { color:rgba(209,248,67,0.5); }
+
+  /* integrations */
+  .integ-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .integ {
+    display:flex; gap:12px; padding:14px; border:1px solid #ECF0EF; border-radius:10px;
+    align-items:center; background:#fff;
+  }
+  .integ .i-logo {
+    width:40px;height:40px;border-radius:8px; display:grid;place-items:center;
+    font-weight:700;font-size:11px; color:#fff;
+    font-family:'JetBrains Mono',monospace; letter-spacing:0.08em;
+  }
+  .integ .i-ttl { font-size:13px; font-weight:600; color:#0A1F18; }
+  .integ .i-st { font-family:'JetBrains Mono',monospace; font-size:9px; color:#7A8C85; letter-spacing:0.12em; margin-top:2px; }
+  .integ.on .i-st { color:#2A7D5A; }
+  .integ-toggle {
+    margin-left:auto;
+    width:34px; height:20px; border-radius:99px; background:#ECF0EF;
+    position:relative; transition:all 0.2s;
+  }
+  .integ-toggle::after { content:''; position:absolute; width:16px; height:16px; background:#fff; border-radius:50%; top:2px; left:2px; transition:all 0.2s; }
+  .integ.on .integ-toggle { background:#2A7D5A; }
+  .integ.on .integ-toggle::after { left:16px; }
+
+  .onb-foot {
+    display:flex; justify-content:space-between; margin-top: 24px;
+    padding-top:20px; border-top:1px solid #ECF0EF;
+  }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="onb-wrap">
+    <div class="onb-left">
+      <div class="onb-brand">
+        <div class="logo">AK</div>
+        <span>AK Golf Portal</span>
+      </div>
+
+      <div class="progress-ring-wrap">
+        <div class="progress-ring">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="42" class="bg"/>
+            <circle cx="50" cy="50" r="42" class="fg" stroke-dasharray="264" stroke-dashoffset="105"/>
+          </svg>
+          <div class="t">3<small>AV 5</small></div>
+        </div>
+        <div>
+          <div class="onb-kicker">◉ STEG 3 · KALIBRERING</div>
+          <div style="font-weight:700;font-size:15px;color:#0A1F18;margin-top:2px;">60% fullført · 2 minutter igjen</div>
+        </div>
+      </div>
+
+      <h1 class="onb-title">La oss kalibrere AI-coachen.</h1>
+      <p class="onb-lede">
+        Jo mer presis du er her, jo bedre blir anbefalingene. Svarene brukes kun til å tilpasse planen din — de deles ikke utenfor teamet ditt.
+      </p>
+
+      <div class="steps-list">
+        <div class="step-item done">
+          <div class="step-num">✓</div>
+          <div><div class="step-ttl">Velkommen & profil<small>Navn, alder, klubb</small></div></div>
+        </div>
+        <div class="step-item done">
+          <div class="step-num">✓</div>
+          <div><div class="step-ttl">Rolle & coach-team<small>Elite-spor · Thomas Berg</small></div></div>
+        </div>
+        <div class="step-item active">
+          <div class="step-num">03</div>
+          <div><div class="step-ttl">Kalibrering<small>Nivå, mål, utstyr</small></div></div>
+        </div>
+        <div class="step-item pending">
+          <div class="step-num">04</div>
+          <div><div class="step-ttl">Integrasjoner<small>TrackMan, Arccos, Whoop</small></div></div>
+        </div>
+        <div class="step-item pending">
+          <div class="step-num">05</div>
+          <div><div class="step-ttl">Første plan<small>AI genererer uke 18</small></div></div>
+        </div>
+      </div>
+
+      <div class="ai-say">
+        <div class="ai-av">AI</div>
+        <div>
+          <div class="t">◈ AI COACH</div>
+          <p>Hei Marius. Basert på svarene dine så langt foreslår jeg <b>Elite-spor</b> med fokus på korspill. Sjekk at handicap og mål stemmer — jeg bruker dette til å foreslå treningsintensitet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="onb-right">
+      <div class="row-between" style="margin-bottom:20px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#7A8C85;letter-spacing:0.14em;">SPØRSMÅL 1 AV 4 · KALIBRERING</div>
+        <button class="btn btn-ghost" style="font-size:11px;">Hopp over &times;</button>
+      </div>
+
+      <div class="card-q">
+        <h4>Hva er ditt nåværende handicap?</h4>
+        <div class="qsub">DRA SKALAEN · AI VELGER INTENSITET</div>
+        <div class="hcp-slider">
+          <div class="hcp-track"></div>
+          <div class="hcp-handle">3.4</div>
+        </div>
+        <div class="hcp-labels">
+          <div>+2</div><div>5</div><div>10</div><div>18</div><div>28</div><div>36</div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:16px;align-items:center;">
+          <div class="hcp-tier">◉ ELITE · HCP 0–5</div>
+          <div style="font-size:12px;color:#5A6E66;">Fokus: Strokes Gained, short game, turnering</div>
+        </div>
+      </div>
+
+      <div class="card-q">
+        <h4>Hva er dine mål i 2026?</h4>
+        <div class="qsub">VELG 1–3 · KAN JUSTERES SENERE</div>
+        <div class="chips">
+          <div class="chip-g on"><span class="n">A</span>Senke HCP til 1</div>
+          <div class="chip-g on"><span class="n">B</span>Kvalifisering NM</div>
+          <div class="chip-g"><span class="n">C</span>Klubbmesterskap</div>
+          <div class="chip-g on"><span class="n">D</span>Chip-SG positiv</div>
+          <div class="chip-g"><span class="n">E</span>Øke carry driver</div>
+          <div class="chip-g"><span class="n">F</span>Bedre mental rutine</div>
+          <div class="chip-g"><span class="n">G</span>Fysisk · hofterotasjon</div>
+          <div class="chip-g"><span class="n">+</span>Eget mål</div>
+        </div>
+      </div>
+
+      <div class="card-q">
+        <h4>Hvor mye tid har du til trening per uke?</h4>
+        <div class="qsub">INKLUDERER SPILL, COACHING, FYS</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;">
+          <button class="btn btn-outline" style="padding:14px 4px;flex-direction:column;font-size:11px;">&lt; 5t<br><small style="color:#7A8C85;">Fritid</small></button>
+          <button class="btn btn-outline" style="padding:14px 4px;flex-direction:column;font-size:11px;">5–10t<br><small style="color:#7A8C85;">Seriøs amatør</small></button>
+          <button class="btn btn-outline" style="padding:14px 4px;flex-direction:column;font-size:11px;background:#0A1F18;color:#D1F843;border-color:#0A1F18;font-weight:700;">10–20t<br><small style="color:rgba(209,248,67,0.6);">Elite ✓</small></button>
+          <button class="btn btn-outline" style="padding:14px 4px;flex-direction:column;font-size:11px;">20t+<br><small style="color:#7A8C85;">Tour</small></button>
+        </div>
+      </div>
+
+      <div class="card-q">
+        <h4>Koble dataenheter</h4>
+        <div class="qsub">INTEGRASJONER · 4 OPPDAGET I NETTVERK</div>
+        <div class="integ-grid">
+          <div class="integ on">
+            <div class="i-logo" style="background:#FF6B00;">TM</div>
+            <div><div class="i-ttl">TrackMan</div><div class="i-st">◉ TILKOBLET · BAY 3</div></div>
+            <div class="integ-toggle"></div>
+          </div>
+          <div class="integ on">
+            <div class="i-logo" style="background:#0A1F18;">ARC</div>
+            <div><div class="i-ttl">Arccos Caddie</div><div class="i-st">◉ TILKOBLET · 18 BRIKKER</div></div>
+            <div class="integ-toggle"></div>
+          </div>
+          <div class="integ">
+            <div class="i-logo" style="background:#00BCD4;">WH</div>
+            <div><div class="i-ttl">Whoop</div><div class="i-st">IKKE TILKOBLET</div></div>
+            <div class="integ-toggle"></div>
+          </div>
+          <div class="integ">
+            <div class="i-logo" style="background:#AF52DE;">SAM</div>
+            <div><div class="i-ttl">SAM PuttLab</div><div class="i-st">IKKE TILKOBLET</div></div>
+            <div class="integ-toggle"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="onb-foot">
+        <button class="btn btn-ghost">← Tilbake</button>
+        <button class="btn btn-accent" style="padding:12px 24px;font-size:14px;">Neste · Integrasjoner →</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

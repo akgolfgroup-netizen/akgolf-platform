@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><title>Colors — Semantic</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;font-family:var(--font-body);color:var(--ak-text)}
+  .wrap{padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .row{border:1px solid #e8edec;border-radius:12px;overflow:hidden}
+  .fg{height:60px;display:flex;align-items:center;padding:0 16px;color:#fff;font-weight:600;font-size:14px}
+  .bg{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+  .bg .name{font-weight:700;color:var(--ak-text)}
+  .bg .hex{font-family:var(--font-mono);font-size:10px;color:var(--ak-muted);text-transform:uppercase}
+  .ex{padding:8px 16px;background:#fff;font-size:11px;color:var(--ak-muted);border-top:1px solid #f0f3f2}
+</style></head><body>
+<div class="wrap">
+  <div class="row">
+    <div class="fg" style="background:#2A7D5A">Success</div>
+    <div class="bg" style="background:#E8F5EF;color:#2A7D5A"><span class="name">#2A7D5A</span><span class="hex">bg #E8F5EF</span></div>
+    <div class="ex">+5% GIR · -1.4 HCP</div>
+  </div>
+  <div class="row">
+    <div class="fg" style="background:#C48A32">Warning</div>
+    <div class="bg" style="background:#FDF4E4;color:#C48A32"><span class="name">#C48A32</span><span class="hex">bg #FDF4E4</span></div>
+    <div class="ex">65% short game · "Middels"</div>
+  </div>
+  <div class="row">
+    <div class="fg" style="background:#B84233">Danger</div>
+    <div class="bg" style="background:#FCEAE8;color:#B84233"><span class="name">#B84233</span><span class="hex">bg #FCEAE8</span></div>
+    <div class="ex">58% jern · +0.4 HCP · "Svak"</div>
+  </div>
+</div>
+</body></html>

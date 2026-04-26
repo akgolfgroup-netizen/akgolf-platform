@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>AK Golf Platform — Design Referanse Index</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #005840;
+    --accent: #D1F843;
+    --surface: #F4F6F4;
+    --card: #FFFFFF;
+    --ink: #0A1F18;
+    --ink-muted: #5C6B62;
+    --line: #E4EAE6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--surface); color: var(--ink); padding: 64px 32px 96px; line-height: 1.5; }
+  .wrap { max-width: 960px; margin: 0 auto; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: var(--ink-muted); text-transform: uppercase; }
+  h1 { font-family: 'Inter Tight', sans-serif; font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin: 12px 0 16px; }
+  h1 em { font-style: italic; color: var(--primary); font-weight: 600; }
+  .lede { font-size: 17px; color: var(--ink-muted); max-width: 640px; margin-bottom: 56px; }
+  .group { margin-bottom: 48px; }
+  .group h2 { font-family: 'Inter Tight', sans-serif; font-size: 22px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  a.card {
+    display: block; padding: 24px; background: var(--card); border-radius: 14px;
+    border: 1px solid var(--line); text-decoration: none; color: inherit;
+    box-shadow: 0 1px 2px rgba(15,31,24,0.04), 0 4px 12px rgba(15,31,24,0.04);
+    transition: all 0.15s;
+  }
+  a.card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 1px 2px rgba(15,31,24,0.06), 0 14px 32px rgba(15,31,24,0.08); }
+  a.card .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-muted); letter-spacing: 0.08em; }
+  a.card h3 { font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 600; margin: 6px 0 6px; }
+  a.card p { font-size: 13px; color: var(--ink-muted); }
+  a.card.featured { background: var(--primary); color: white; border-color: var(--primary); }
+  a.card.featured h3 { color: white; }
+  a.card.featured p { color: rgba(255,255,255,0.7); }
+  a.card.featured .num { color: var(--accent); }
+  a.card.accent { background: var(--accent); }
+  a.card.accent .num { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">AK Golf Platform · Design referanse</div>
+  <h1>Velg <em>retning</em>.</h1>
+  <p class="lede">Alle design-referansene som er aktive i prosjektet. Klikk for å åpne. Bruk dette som beslutningsgrunnlag for å låse designsystem.</p>
+
+  <div class="group">
+    <h2>Design Canvas (Claude Design — handoff-bundle)</h2>
+    <div class="grid">
+      <a class="card featured" href="claude-design/project/AK Golf Portal.html">
+        <div class="num">CANVAS</div>
+        <h3>AK Golf Portal — Canvas</h3>
+        <p>27 skjermer, 5 dashboard-varianter, mobil-versjoner, system-notater. Innfellbart panel for tetthet/aksentfarge/persona.</p>
+      </a>
+      <a class="card" href="claude-design/project/screens/dashboard-v6-hero.html">
+        <div class="num">H1</div>
+        <h3>Course Hero — Dashboard</h3>
+        <p>Foto-hero av banen + glassmorph bento. Ny visuell retning.</p>
+      </a>
+      <a class="card" href="claude-design/project/screens/dashboard-e2-academy.html">
+        <div class="num">E2</div>
+        <h3>AK Academy — Editorial Light</h3>
+        <p>Lys + grønn aksent, KPI-rad, online-liste, tabell.</p>
+      </a>
+      <a class="card" href="claude-design/project/screens/dashboard-v1-bento.html">
+        <div class="num">V1</div>
+        <h3>Bento Clean</h3>
+        <p>Tydelig hierarki, Apple-ro. Den "trygge" retningen.</p>
+      </a>
+      <a class="card" href="claude-design/project/screens/missioncontrol.html">
+        <div class="num">S.10</div>
+        <h3>Mission Control / CoachHQ</h3>
+        <p>Mørk sidebar, 24 elever, belastningsgraf.</p>
+      </a>
+      <a class="card" href="claude-design/project/screens/booking.html">
+        <div class="num">S.08</div>
+        <h3>Booking — Apple Calendar</h3>
+        <p>Uke-visning, neste-booking-hero, avbestillingsregler.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>PlayerHQ Plattform (handoff-bundle, stor)</h2>
+    <div class="grid">
+      <a class="card" href="playerhq-bundle/project/PlayerHQ - AK Golf.html">
+        <div class="num">PLAYERHQ</div>
+        <h3>PlayerHQ — AK Golf</h3>
+        <p>Hovedfil for plattformen.</p>
+      </a>
+      <a class="card" href="playerhq-bundle/project/Spillerportal Dashboard.html">
+        <div class="num">DASH</div>
+        <h3>Spillerportal Dashboard</h3>
+        <p>Spiller-dashboard.</p>
+      </a>
+      <a class="card" href="playerhq-bundle/project/Treningskalender.html">
+        <div class="num">KAL</div>
+        <h3>Treningskalender</h3>
+        <p>Kalender-versjon.</p>
+      </a>
+      <a class="card" href="playerhq-bundle/project/PlayerHQ.html">
+        <div class="num">HQ</div>
+        <h3>PlayerHQ (canvas)</h3>
+        <p>Canvas-versjon.</p>
+      </a>
+      <a class="card" href="playerhq-bundle/project/PlayerHQ_standalone_src.html">
+        <div class="num">SRC</div>
+        <h3>PlayerHQ standalone src</h3>
+        <p>Standalone source.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Landing V2 (handoff-bundle)</h2>
+    <div class="grid">
+      <a class="card" href="landing-v2/project/Landing.html">
+        <div class="num">LANDING-V2</div>
+        <h3>Landing — phone mockup</h3>
+        <p>Landingside med phone-mockup og app-screens.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Spillerportalen Sales Deck (handoff-bundle)</h2>
+    <div class="grid">
+      <a class="card" href="sales-deck/project/Spillerportalen Sales Deck.html">
+        <div class="num">DECK</div>
+        <h3>Spillerportalen — Sales Deck</h3>
+        <p>Pitch / sales deck for spillerportalen.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Markedsside + Booking V2 (handoff-bundle)</h2>
+    <div class="grid">
+      <a class="card" href="markedsside/project/AK Golf Landing.html">
+        <div class="num">LANDING</div>
+        <h3>AK Golf Landing</h3>
+        <p>Markedsside / forsiden.</p>
+      </a>
+      <a class="card" href="markedsside/project/AK Golf Booking V2.html">
+        <div class="num">BOOKING</div>
+        <h3>AK Golf Booking V2</h3>
+        <p>Booking-flow.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Treningsplanlegger (handoff-bundle)</h2>
+    <div class="grid">
+      <a class="card" href="treningsplanlegger/project/Treningsplanlegger.html">
+        <div class="num">PLAN</div>
+        <h3>Treningsplanlegger Dashboard</h3>
+        <p>Kalender, øvelsesbank, AK-pyramide, AI-foreslåtte økter, drag-and-drop.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Golf Talent Dashboard (skal flyttes inn — handoff-bundle)</h2>
+    <div class="grid">
+      <a class="card" href="golf-talent-dashboard/project/Landing Dashboard - Wireframes.html">
+        <div class="num">LANDING</div>
+        <h3>Landing Dashboard — Wireframes</h3>
+        <p>Landingside for plattformens data + funksjoner. AK Golf-logo.</p>
+      </a>
+      <a class="card" href="golf-talent-dashboard/project/Golf Talent Dashboard - Full.html">
+        <div class="num">FULL</div>
+        <h3>Talent Dashboard — Full</h3>
+        <p>Komplett interaktiv pipeline-dashboard.</p>
+      </a>
+      <a class="card" href="golf-talent-dashboard/project/Golf Talent Dashboard - Pipeline.html">
+        <div class="num">PIPELINE</div>
+        <h3>Talent Dashboard — Pipeline</h3>
+        <p>Pipeline-visning av talenter.</p>
+      </a>
+      <a class="card" href="golf-talent-dashboard/project/Golf Talent Dashboard - Konsepter.html">
+        <div class="num">KONSEPT</div>
+        <h3>Talent Dashboard — Konsepter</h3>
+        <p>Konsept-iterasjoner.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Brand Showcase (visuell guide)</h2>
+    <div class="grid">
+      <a class="card accent" href="brand-guide-showcase.html">
+        <div class="num">SHOWCASE</div>
+        <h3>Brand Guide V2.0 — visuell</h3>
+        <p>Farger, typografi, ikoner, kort, knapper, skygger, radius. Én side, alt på.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Eksisterende referanse-mockups (Brand V2.0 godkjent)</h2>
+    <div class="grid">
+      <a class="card" href="playerhq-reference.html">
+        <div class="num">REF</div>
+        <h3>PlayerHQ Dashboard</h3>
+        <p>Spillerportal — gjeldende referanse.</p>
+      </a>
+      <a class="card" href="coachhq-reference.html">
+        <div class="num">REF</div>
+        <h3>CoachHQ Dashboard</h3>
+        <p>Coach-flate — gjeldende referanse.</p>
+      </a>
+      <a class="card" href="student-360-reference.html">
+        <div class="num">REF</div>
+        <h3>Student 360°</h3>
+        <p>Spillerprofil — gjeldende referanse.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Booking V2 (booking-flow)</h2>
+    <div class="grid">
+      <a class="card" href="booking-v2/">
+        <div class="num">FLOW</div>
+        <h3>Booking V2 — wizard</h3>
+        <p>7-stegs wizard. Egen mappe.</p>
+      </a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

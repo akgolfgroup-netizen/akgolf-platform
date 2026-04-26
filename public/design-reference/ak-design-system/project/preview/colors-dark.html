@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><title>Colors — Dark</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#0A1F18;font-family:var(--font-body);color:#fff}
+  .wrap{padding:16px 18px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .sw{border-radius:10px;overflow:hidden;border:1px solid #1a4a3a;background:#0D2E23}
+  .chip{height:76px;display:flex;align-items:flex-end;padding:8px;position:relative}
+  .meta{padding:7px 10px;display:flex;justify-content:space-between;align-items:baseline;gap:6px;background:#0D2E23}
+  .name{font-weight:700;font-size:11px;color:#fff;letter-spacing:-.01em}
+  .hex{font-family:ui-monospace,monospace;font-size:9px;color:#7a9a8e;text-transform:uppercase}
+  .label{font-size:9px;color:#fff;font-weight:600;opacity:.92;letter-spacing:.02em}
+  .label-dark{color:#0A1F18}
+  /* active-card glow, shown on the accent swatch to demonstrate the treatment */
+  .glow{border:1.5px solid rgba(209,248,67,.35);box-shadow:0 0 24px rgba(209,248,67,.15)}
+  .row2{grid-column:span 4;font-size:9px;color:#7a9a8e;font-family:ui-monospace,monospace;text-transform:uppercase;letter-spacing:.08em;padding:4px 2px 0}
+</style></head><body>
+<div class="wrap">
+  <div class="row2">Surfaces</div>
+  <div class="sw"><div class="chip" style="background:#0A1F18"><span class="label">Dark bg</span></div><div class="meta"><span class="name">Dark bg</span><span class="hex">#0A1F18</span></div></div>
+  <div class="sw"><div class="chip" style="background:#0D2E23"><span class="label">Card dark</span></div><div class="meta"><span class="name">Card dark</span><span class="hex">#0D2E23</span></div></div>
+  <div class="sw"><div class="chip" style="background:#133A2D"><span class="label">Card hover</span></div><div class="meta"><span class="name">Card hover</span><span class="hex">#133A2D</span></div></div>
+  <div class="sw"><div class="chip" style="background:#1a4a3a"><span class="label">Border dark</span></div><div class="meta"><span class="name">Border dark</span><span class="hex">#1A4A3A</span></div></div>
+
+  <div class="row2">Foreground</div>
+  <div class="sw"><div class="chip" style="background:#FFFFFF"><span class="label label-dark">On-dark fg</span></div><div class="meta"><span class="name">On-dark fg</span><span class="hex">#FFFFFF</span></div></div>
+  <div class="sw"><div class="chip" style="background:#B8D4CC"><span class="label label-dark">Primary-light</span></div><div class="meta"><span class="name">Primary-light</span><span class="hex">#B8D4CC</span></div></div>
+  <div class="sw"><div class="chip" style="background:#7a9a8e"><span class="label">Muted-dark</span></div><div class="meta"><span class="name">Muted-dark</span><span class="hex">#7A9A8E</span></div></div>
+  <div class="sw"><div class="chip" style="background:#A5B2AD"><span class="label label-dark">Muted-light</span></div><div class="meta"><span class="name">Muted-light</span><span class="hex">#A5B2AD</span></div></div>
+
+  <div class="row2">Accent (lime) &amp; active treatments</div>
+  <div class="sw glow"><div class="chip" style="background:#D1F843"><span class="label label-dark">Accent</span></div><div class="meta"><span class="name">Accent</span><span class="hex">#D1F843</span></div></div>
+  <div class="sw"><div class="chip" style="background:rgba(209,248,67,.25)"><span class="label">Accent 25%</span></div><div class="meta"><span class="name">Glow/border</span><span class="hex">#D1F843 · 25%</span></div></div>
+  <div class="sw"><div class="chip" style="background:rgba(209,248,67,.12)"><span class="label">Accent 12%</span></div><div class="meta"><span class="name">Tint bg</span><span class="hex">#D1F843 · 12%</span></div></div>
+  <div class="sw"><div class="chip" style="background:rgba(209,248,67,.08)"><span class="label">Accent 8%</span></div><div class="meta"><span class="name">Glow shadow</span><span class="hex">#D1F843 · 08%</span></div></div>
+
+  <div class="row2">Semantic (dark-mode backgrounds)</div>
+  <div class="sw"><div class="chip" style="background:#1A3D2E"><span class="label" style="color:#4ADE80">Success bg</span></div><div class="meta"><span class="name">Success bg</span><span class="hex">#1A3D2E</span></div></div>
+  <div class="sw"><div class="chip" style="background:#3D2E14"><span class="label" style="color:#FACC15">Warning bg</span></div><div class="meta"><span class="name">Warning bg</span><span class="hex">#3D2E14</span></div></div>
+  <div class="sw"><div class="chip" style="background:#3D1A14"><span class="label" style="color:#E85D4A">Danger bg</span></div><div class="meta"><span class="name">Danger bg</span><span class="hex">#3D1A14</span></div></div>
+  <div class="sw"><div class="chip" style="background:linear-gradient(160deg,#D1F84340 0%,#005840 50%,#0A1F18 100%)"><span class="label">Hero gradient</span></div><div class="meta"><span class="name">Hero gradient</span><span class="hex">Lime→Primary→Bg</span></div></div>
+</div>
+</body></html>

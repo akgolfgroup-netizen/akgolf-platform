@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>AI Coach</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body { background: #FAFAF7; }
+  .main { padding: 0; display: grid; grid-template-columns: 260px 1fr; background: #FAFAF7; overflow: hidden; }
+  .ctx { border-right: 1px solid #ECF0EF; padding: 20px 16px; overflow-y: auto; background: #F5F8F7; }
+  .ctx h4 { margin: 0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#7A8C85; text-transform:uppercase; }
+  .ctx-item { padding: 10px; background:#fff; border-radius:8px; margin-bottom:8px; border:1px solid #ECF0EF; cursor:pointer; transition: all 0.15s; }
+  .ctx-item:hover { border-color:#AF52DE; }
+  .ctx-item.active { border-color:#AF52DE; background:#FAF5FF; }
+  .ctx-item .n { font-size:12px; font-weight:600; color:#0A1F18; }
+  .ctx-item .m { font-family:'JetBrains Mono',monospace; font-size:10px; color:#5A6E66; margin-top:2px; }
+
+  .chat { display:flex; flex-direction:column; height:100vh; }
+  .chat-h { padding:14px 24px; border-bottom:1px solid #ECF0EF; display:flex; justify-content:space-between; align-items:center; background:#fff; }
+  .chat-h h1 { margin:0; font-size:18px; font-weight:700; letter-spacing:-0.02em; display:flex; align-items:center; gap:10px; }
+  .ai-dot { width:10px; height:10px; border-radius:50%; background:#AF52DE; box-shadow:0 0 12px #AF52DE; }
+  .chat-h .sub { font-family:'JetBrains Mono',monospace; font-size:10px; color:#5A6E66; letter-spacing:0.1em; margin-top:2px; }
+
+  .chat-body { flex:1; overflow-y:auto; padding: 24px 32px; display:flex; flex-direction:column; gap:20px; }
+  .msg { display:flex; gap:12px; max-width:780px; }
+  .msg.user { margin-left: auto; flex-direction: row-reverse; }
+  .av { width:32px; height:32px; border-radius:8px; flex-shrink:0; display:grid; place-items:center; font-weight:700; font-size:11px; }
+  .av.ai { background:#AF52DE; color:#fff; }
+  .av.me { background:#0A1F18; color:#D1F843; }
+  .bubble { padding: 14px 18px; border-radius:14px; font-size:14px; line-height:1.6; color:#0A1F18; background:#fff; border:1px solid #ECF0EF; }
+  .msg.user .bubble { background:#0A1F18; color:#fff; border:none; }
+  .bubble em { font-style:normal; font-weight:600; color:#005840; background:rgba(209,248,67,0.35); padding:0 3px; border-radius:3px; }
+  .msg.user .bubble em { color:#D1F843; background:rgba(209,248,67,0.15); }
+
+  .sources { display:flex; flex-wrap:wrap; gap:4px; margin-top:10px; }
+  .sources .src {
+    font-family:'JetBrains Mono',monospace; font-size:10px;
+    padding:3px 7px; border-radius:4px;
+    background:rgba(175,82,222,0.08);
+    color:#AF52DE; font-weight:500; letter-spacing:0.04em;
+    cursor:pointer;
+    border:1px solid rgba(175,82,222,0.2);
+  }
+
+  .rich-answer { margin-top:12px; padding:14px; background:#F5F8F7; border-radius:10px; }
+  .rich-answer .steps { display:flex; flex-direction:column; gap:8px; }
+  .rich-answer .step { display:flex; gap:10px; padding:8px 0; border-bottom:1px dashed #D5DFDB; }
+  .rich-answer .step:last-child { border-bottom:none; }
+  .rich-answer .step .n { font-family:'JetBrains Mono',monospace; font-size:10px; color:#AF52DE; font-weight:700; padding-top:2px; }
+  .rich-answer .step .t { font-weight:600; color:#0A1F18; font-size:13px; }
+  .rich-answer .step .s { font-size:12px; color:#5A6E66; margin-top:2px; }
+
+  .data-chart { margin-top:12px; background:#F5F8F7; border-radius:10px; padding:14px; }
+  .data-chart svg { width:100%; }
+
+  .actions { display:flex; gap:6px; margin-top:10px; }
+  .actions button {
+    font-size:12px; padding:6px 12px;
+    border:1px solid #ECF0EF; background:#fff; border-radius:7px;
+    color:#324D45; font-weight:500;
+  }
+  .actions button:hover { border-color:#AF52DE; color:#AF52DE; }
+  .actions button.prim { background:#D1F843; color:#0A1F18; border:none; font-weight:600; }
+
+  .composer { padding: 16px 24px 20px; border-top:1px solid #ECF0EF; background:#fff; }
+  .composer .suggest { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+  .composer .sug {
+    font-size:12px; padding:6px 12px;
+    background:#F5F8F7; border:1px solid #ECF0EF; border-radius:999px;
+    color:#324D45; cursor:pointer;
+  }
+  .composer .sug:hover { background:#fff; border-color:#AF52DE; color:#AF52DE; }
+  .composer-box { display:flex; gap:10px; align-items:flex-end; padding:10px; background:#F5F8F7; border:1px solid #ECF0EF; border-radius:12px; }
+  .composer textarea { flex:1; border:none; background:transparent; outline:none; font-size:14px; resize:none; min-height:36px; font-family:inherit; }
+  .composer button.send { background:#0A1F18; color:#D1F843; border:none; padding:8px 16px; border-radius:8px; font-weight:600; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">AK</div>
+      <div><div class="title">AK Golf</div><div class="sub">Elite</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item">⌂ Oversikt</div>
+      <div class="nav-item">◱ Planlegg</div>
+      <div class="nav-item">◎ Tren</div>
+      <div class="nav-item">⚑ Spill</div>
+      <div class="nav-item">△ Analyse</div>
+      <div style="height:14px;"></div>
+      <div class="nav-item active">◈ AI Coach</div>
+      <div class="nav-item">⊙ TrackMan</div>
+      <div class="nav-item">◉ Dagbok</div>
+      <div class="nav-item">☰ Bookinger</div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar">MA</div>
+      <div><div class="name">Marius A.</div><div class="tier">Elite</div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <aside class="ctx">
+      <h4>◉ Kontekst · aktiv</h4>
+      <div class="ctx-item active">
+        <div class="n">Runder · siste 10</div>
+        <div class="m">OSL-GK · 72–76 · ✓ lest</div>
+      </div>
+      <div class="ctx-item active">
+        <div class="n">TrackMan · 04-18</div>
+        <div class="m">162 slag · 7J · ✓ lest</div>
+      </div>
+      <div class="ctx-item active">
+        <div class="n">Video · 04-17</div>
+        <div class="m">Chip · 12 klipp · ✓ lest</div>
+      </div>
+      <div class="ctx-item">
+        <div class="n">Coach-notater · Thomas</div>
+        <div class="m">6 notater · 30d</div>
+      </div>
+      <div class="ctx-item">
+        <div class="n">Treningsplan · uke 17</div>
+        <div class="m">6 økter · 92% fullført</div>
+      </div>
+
+      <h4 style="margin-top:20px;">⌕ HURTIGSPØRSMÅL</h4>
+      <div class="ctx-item" style="background:#FAF5FF; border-color:rgba(175,82,222,0.2);">
+        <div class="n">Hvorfor er chip-SG ned?</div>
+      </div>
+      <div class="ctx-item" style="background:#FAF5FF; border-color:rgba(175,82,222,0.2);">
+        <div class="n">Lag ukesplan for uke 18</div>
+      </div>
+      <div class="ctx-item" style="background:#FAF5FF; border-color:rgba(175,82,222,0.2);">
+        <div class="n">Beste drill for impact?</div>
+      </div>
+      <div class="ctx-item" style="background:#FAF5FF; border-color:rgba(175,82,222,0.2);">
+        <div class="n">Sammenlign vs HCP 3 peer</div>
+      </div>
+      <div class="ctx-item" style="background:#FAF5FF; border-color:rgba(175,82,222,0.2);">
+        <div class="n">Klar for klubbmatch lør?</div>
+      </div>
+    </aside>
+
+    <div class="chat">
+      <div class="chat-h">
+        <div>
+          <h1><span class="ai-dot"></span> AI Coach</h1>
+          <div class="sub">GROUNDED · 5 KILDER · OPPDATERT 06:12</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-outline" style="font-size:12px;">Ny samtale</button>
+          <button class="btn btn-outline" style="font-size:12px;">Del med Thomas</button>
+        </div>
+      </div>
+
+      <div class="chat-body">
+        <!-- User -->
+        <div class="msg user">
+          <div class="av me">MA</div>
+          <div class="bubble">Hva er den største svakheten min akkurat nå, og hva gjør jeg med det?</div>
+        </div>
+        <!-- AI -->
+        <div class="msg">
+          <div class="av ai">AI</div>
+          <div>
+            <div class="bubble">
+              Din største svakhet er <em>chip fra 10–25m</em>. Over de siste 10 rundene mister du <em>0.31 SG per runde</em> her, mens approach-spillet er elite (+0.82). Rotårsak er en konsistent <em>åpen skulderlinje i impact</em> — synlig i 3 av 4 videoklipp fra 17. april, og bekreftet i coach-notatet samme dag.
+              <div class="sources">
+                <span class="src">round/018</span>
+                <span class="src">round/015</span>
+                <span class="src">round/011</span>
+                <span class="src">trackman/04-18</span>
+                <span class="src">video/04-17-chip</span>
+                <span class="src">coach/thomas-04-17</span>
+              </div>
+              <div class="data-chart">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5A6E66;margin-bottom:6px;letter-spacing:0.1em;">SG · CHIP · 10 SISTE RUNDER</div>
+                <svg viewBox="0 0 400 80">
+                  <line x1="0" y1="40" x2="400" y2="40" stroke="#324D45" stroke-dasharray="3,3"/>
+                  <path d="M10,42 L50,48 L90,45 L130,52 L170,55 L210,48 L250,58 L290,52 L330,62 L370,55" fill="none" stroke="#E85D4E" stroke-width="2"/>
+                  <g fill="#E85D4E">
+                    <circle cx="10" cy="42" r="3"/><circle cx="50" cy="48" r="3"/><circle cx="90" cy="45" r="3"/><circle cx="130" cy="52" r="3"/><circle cx="170" cy="55" r="3"/><circle cx="210" cy="48" r="3"/><circle cx="250" cy="58" r="3"/><circle cx="290" cy="52" r="3"/><circle cx="330" cy="62" r="3"/><circle cx="370" cy="55" r="3"/>
+                  </g>
+                  <text x="4" y="12" font-size="9" fill="#2A7D5A" font-family="JetBrains Mono">+0.5</text>
+                  <text x="4" y="78" font-size="9" fill="#B84233" font-family="JetBrains Mono">−0.8</text>
+                  <text x="398" y="52" text-anchor="end" font-size="10" fill="#B84233" font-weight="700" font-family="JetBrains Mono">−0.31</text>
+                </svg>
+              </div>
+              <div class="rich-answer">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#AF52DE;margin-bottom:8px;letter-spacing:0.1em;">◈ ANBEFALT PLAN · 3 UKER</div>
+                <div class="steps">
+                  <div class="step"><div class="n">01</div><div><div class="t">Clock drill · onsdager 17:00</div><div class="s">15 min · 4 posisjoner rundt hull · 3 baller per posisjon · mål 9/12 innenfor 2m.</div></div></div>
+                  <div class="step"><div class="n">02</div><div><div class="t">Video-review · fredager med Thomas</div><div class="s">15 min · fokus skulderlinje · sammenlign uke-for-uke.</div></div></div>
+                  <div class="step"><div class="n">03</div><div><div class="t">Test · 50-100-150 hver 2. uke</div><div class="s">Standardisert scoring · log til dagbok.</div></div></div>
+                </div>
+              </div>
+              <div style="margin-top:12px;font-size:12px;color:#5A6E66;">
+                <strong style="color:#0A1F18;">Forventet gevinst:</strong> +0.22 SG over 3 uker — ≈ 0.5 slag per runde. Konfidens: 87%.
+              </div>
+              <div class="actions">
+                <button class="prim">+ Legg til i plan</button>
+                <button>Bok Thomas fredag</button>
+                <button>Se video-klipp</button>
+                <button>Del med coach</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User follow -->
+        <div class="msg user">
+          <div class="av me">MA</div>
+          <div class="bubble">Er jeg klar for klubbmatchen på lørdag?</div>
+        </div>
+        <div class="msg">
+          <div class="av ai">AI</div>
+          <div class="bubble">
+            Ja — med ett forbehold. Approach og putting er over peer-snitt, og de siste 3 rundene har du holdt <em>+1.6 SG total</em>. Risikoen er chip fra 10–25m (spesielt rundt greens på hull 5, 12, 17 på Oslo GK). Spilletaktikk: <em>sikt på fet side av flagg</em> for approach når chip-avstand er sannsynlig. Wedge-avstand 90–110m er din beste scoring-sone — plassér deg der.
+            <div class="sources">
+              <span class="src">course/oslo-gk/layout</span>
+              <span class="src">round/018 · 015 · 011</span>
+              <span class="src">wedge-matrix</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="composer">
+        <div class="suggest">
+          <div class="sug">→ Vis meg 50-100-150-testen</div>
+          <div class="sug">→ Sammenlign min Approach vs peer</div>
+          <div class="sug">→ Hvilke øvelser gir mest SG?</div>
+          <div class="sug">→ Lag mental-strategi for lørdag</div>
+        </div>
+        <div class="composer-box">
+          <textarea placeholder="Spør om data, drills, plan eller taktikk..."></textarea>
+          <button class="send">Send →</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

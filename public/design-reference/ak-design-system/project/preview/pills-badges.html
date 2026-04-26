@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><title>Pills &amp; badges</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#0A1F18;font-family:var(--font-body);color:#fff;padding:24px}
+  .row{display:flex;gap:6px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
+  .pillset{display:flex;gap:4px;background:#0D2E23;border-radius:24px;padding:3px}
+  .pill{padding:6px 14px;border-radius:20px;font:600 11px Inter;cursor:pointer;color:#7a9a8e}
+  .pill.active{background:#D1F843;color:#0A1F18}
+  .pill.nav-active{background:#005840;color:#fff}
+  .badge{padding:2px 10px;border-radius:10px;font:700 10px Inter;display:inline-block}
+  .b-accent{background:rgba(209,248,67,.18);color:#D1F843}
+  .b-success{background:#1A3D2E;color:#4ADE80}
+  .b-warning{background:#3D2E14;color:#FACC15}
+  .b-danger{background:#3D1A14;color:#E85D4A}
+  .cap{font-size:10px;color:#7a9a8e;font-family:var(--font-mono);text-transform:uppercase;width:90px}
+</style></head><body>
+<div class="row"><span class="cap">Periode</span>
+  <div class="pillset">
+    <span class="pill active">Uke</span><span class="pill">Måned</span><span class="pill">År</span><span class="pill">Totalt</span>
+  </div>
+</div>
+<div class="row"><span class="cap">Nav</span>
+  <div class="pillset">
+    <span class="pill nav-active">⊞ Hjem</span><span class="pill">⛳ Aktiviteter</span><span class="pill">♥ Helsestatus</span>
+  </div>
+</div>
+<div class="row"><span class="cap">Badges</span>
+  <span class="badge b-accent">4t 15m</span>
+  <span class="badge b-success">+5%</span>
+  <span class="badge b-warning">3 haster</span>
+  <span class="badge b-danger">Svak</span>
+</div>
+</body></html>

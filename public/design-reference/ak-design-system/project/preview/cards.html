@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><title>Cards</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#ECF0EF;font-family:Inter,sans-serif;color:#324D45;padding:20px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .card{background:#fff;border:1px solid #e0e8e5;border-radius:16px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .card.dark{background:#0D2E23;border-color:#1a4a3a;color:#fff}
+  .card.glow{border:1.5px solid rgba(209,248,67,.35);box-shadow:0 0 24px rgba(209,248,67,.15)}
+  .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .title{font-weight:600;font-size:13px}
+  .kpi{font-size:36px;font-weight:800;line-height:1;letter-spacing:-.02em}
+  .unit{font-size:12px;font-weight:400;color:#7a9a8e;margin-left:4px}
+  .dot{width:8px;height:8px;border-radius:50%;background:#D1F843;display:inline-block;margin-right:8px}
+  .accent{color:#D1F843}
+  .muted{color:#7a9a8e;font-size:11px}
+</style></head><body>
+<div class="row">
+  <div class="card">
+    <div class="h"><span class="title">Handicap</span><span class="muted">↗</span></div>
+    <div class="kpi" style="color:#005840">15.9<span class="unit">HCP</span></div>
+    <div class="muted" style="margin-top:6px">-1.4 siden januar</div>
+  </div>
+  <div class="card dark glow">
+    <div class="h"><span class="title"><span class="dot"></span>Aktiviteter</span><span class="muted">⋯</span></div>
+    <div class="kpi" style="color:#fff">68<span class="unit">slag</span></div>
+    <div class="muted" style="color:#D1F843;margin-top:6px">⭐ 12-dagers streak</div>
+  </div>
+</div>
+</body></html>

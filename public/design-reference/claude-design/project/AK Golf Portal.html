@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>AK Golf Portal — Design Canvas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { background: #0b0d0c; }
+  .canvas-root {
+    min-height: 100vh;
+    padding: 48px 40px 120px;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(0, 88, 64, 0.25), transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(209, 248, 67, 0.08), transparent 50%),
+      #0b0d0c;
+    color: #E6EAE8;
+  }
+  .canvas-header {
+    max-width: 1600px;
+    margin: 0 auto 56px;
+  }
+  .canvas-kicker {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(209, 248, 67, 0.12);
+    border: 1px solid rgba(209, 248, 67, 0.25);
+    color: #D1F843;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .canvas-title {
+    font-size: 56px; font-weight: 700; letter-spacing: -0.03em;
+    margin: 18px 0 14px; color: #F7FAF8;
+    line-height: 1.05;
+  }
+  .canvas-lede {
+    font-size: 17px; color: #A5B2AD; max-width: 780px; line-height: 1.55;
+  }
+  .canvas-meta {
+    display: flex; gap: 36px; margin-top: 32px;
+    padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .canvas-meta-item .eyebrow { color: #7A8C85; }
+  .canvas-meta-item .val {
+    font-size: 22px; font-weight: 600; color: #F7FAF8; margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .canvas-meta-item .val .accent { color: #D1F843; }
+
+  .section-header {
+    max-width: 1600px; margin: 0 auto 24px;
+    display: flex; align-items: baseline; gap: 18px;
+    padding-top: 56px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 500; color: #5A6E66;
+    letter-spacing: 0.08em;
+  }
+  .section-title {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.02em; color: #F7FAF8;
+  }
+  .section-desc {
+    margin-left: auto; font-size: 13px; color: #7A8C85; max-width: 440px; text-align: right;
+  }
+
+  .variant-grid {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: grid;
+    gap: 28px;
+  }
+
+  .variant-card {
+    background: #F5F5F7;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04);
+    position: relative;
+  }
+  .variant-card.dark {
+    background: #0A1F18;
+  }
+  .variant-label {
+    position: absolute; top: 20px; left: 20px; z-index: 10;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(10, 31, 24, 0.85);
+    backdrop-filter: blur(8px);
+    color: #D1F843;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+  }
+  .variant-label .num { color: rgba(255,255,255,0.5); }
+
+  .viz-frame {
+    width: 100%;
+    height: 860px;
+    border: none;
+    display: block;
+    background: transparent;
+  }
+
+  /* TWEAKS PANEL */
+  .tweaks-fab {
+    position: fixed; right: 20px; bottom: 20px; z-index: 100;
+    width: 56px; height: 56px;
+    border-radius: 999px;
+    background: #D1F843;
+    color: #0A1F18;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 12px 40px rgba(209, 248, 67, 0.35), 0 0 0 1px rgba(0,0,0,0.1);
+    font-size: 20px;
+    transition: transform 0.3s var(--ak-ease-spring);
+  }
+  .tweaks-fab:hover { transform: scale(1.08) rotate(30deg); }
+  .tweaks-panel {
+    position: fixed; right: 20px; bottom: 90px; z-index: 100;
+    width: 320px;
+    background: #0A1F18;
+    color: #F7FAF8;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    display: none;
+  }
+  .tweaks-panel.open { display: block; }
+  .tweaks-panel h3 { margin: 0 0 16px; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+  .tweak-row { margin-bottom: 14px; }
+  .tweak-row label {
+    display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #7A8C85; margin-bottom: 6px;
+  }
+  .tweak-opts { display: flex; gap: 4px; background: rgba(255,255,255,0.04); padding: 3px; border-radius: 8px; }
+  .tweak-opts button {
+    flex: 1; padding: 6px 8px; font-size: 11px; font-weight: 500;
+    border-radius: 6px; color: #A5B2AD;
+    transition: all 0.15s var(--ak-ease);
+  }
+  .tweak-opts button.active { background: #D1F843; color: #0A1F18; font-weight: 600; }
+  .tweak-opts button:not(.active):hover { background: rgba(255,255,255,0.05); color: #F7FAF8; }
+
+  /* Density modifiers */
+  .d-compact { --ak-density: 0.75; --ak-font-base: 13px; }
+  .d-comfortable { --ak-density: 1; --ak-font-base: 14px; }
+  .d-spacious { --ak-density: 1.2; --ak-font-base: 15px; }
+
+  /* Accent modifiers */
+  .a-lime { --ak-accent: #D1F843; --ak-accent-soft: rgba(209, 248, 67, 0.18); }
+  .a-forest { --ak-accent: #005840; --ak-accent-soft: rgba(0, 88, 64, 0.12); }
+  .a-neutral { --ak-accent: #0A1F18; --ak-accent-soft: rgba(10, 31, 24, 0.08); }
+
+  /* TOC */
+  .toc {
+    max-width: 1600px; margin: 40px auto 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  }
+  .toc a {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    color: #A5B2AD; font-size: 12px;
+    transition: all 0.2s var(--ak-ease);
+  }
+  .toc a:hover { background: rgba(209, 248, 67, 0.08); border-color: rgba(209, 248, 67, 0.2); color: #D1F843; }
+  .toc a .n { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #5A6E66; }
+  .toc a .t { font-size: 13px; color: inherit; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="canvas-root">
+  <header class="canvas-header">
+    <div class="canvas-kicker">
+      <span style="width: 6px; height: 6px; background: #D1F843; border-radius: 50%; box-shadow: 0 0 12px #D1F843;"></span>
+      Design Canvas · 2026 · v3.1
+    </div>
+    <h1 class="canvas-title">AK Golf Portal<br><span style="color: #5A6E66;">— Redesign workspace for elite-persona.</span><br><span style="color: #F27A3E; font-size: 0.58em;">v5 · Editorial Light + Course Hero retning</span></h1>
+    <p class="canvas-lede">
+      13 skjermer · 5 varianter av kjernedashbordet · inspirert av Linear (tetthet), Whoop (data-tyngde) og Apple Fitness (rolig). Alle varianter følger AK Golf Design System v3.0 — skoggrønn, lime, Apple-grå — men pusher systemet med nye mønstre: mission-control-topbar, vertikal tidslinje, dark surface, data-cockpit.
+    </p>
+    <div class="canvas-meta">
+      <div class="canvas-meta-item">
+        <div class="eyebrow">Persona</div>
+        <div class="val">Elite · <span class="accent">HCP 3.4</span></div>
+      </div>
+      <div class="canvas-meta-item">
+        <div class="eyebrow">Bredde</div>
+        <div class="val">1440 px</div>
+      </div>
+      <div class="canvas-meta-item">
+        <div class="eyebrow">Varianter</div>
+        <div class="val">5 · Dashboard</div>
+      </div>
+      <div class="canvas-meta-item">
+        <div class="eyebrow">Skjermer</div>
+        <div class="val">13 total</div>
+      </div>
+      <div class="canvas-meta-item">
+        <div class="eyebrow">Designsystem</div>
+        <div class="val">v3.0 · <span style="color:#D1F843">holdt</span></div>
+      </div>
+    </div>
+
+    <nav class="toc">
+      <a href="#hero" style="border-color: rgba(209, 248, 67, 0.35); background: rgba(209, 248, 67, 0.06);"><span class="n" style="color:#D1F843;">00 · NY</span><span class="t" style="color:#D1F843;">Course Hero v4</span></a>
+      <a href="#editorial" style="border-color: rgba(242, 122, 62, 0.4); background: rgba(242, 122, 62, 0.08);"><span class="n" style="color:#F27A3E;">00B · NY</span><span class="t" style="color:#F27A3E;">Editorial Light v5</span></a>
+      <a href="#dashboard"><span class="n">01</span><span class="t">Dashboard · 5 varianter</span></a>
+      <a href="#plan"><span class="n">02</span><span class="t">Treningsplanlegger</span></a>
+      <a href="#stats"><span class="n">03</span><span class="t">Statistikk</span></a>
+      <a href="#aicoach"><span class="n">04</span><span class="t">AI Coach</span></a>
+      <a href="#runde"><span class="n">05</span><span class="t">Runde-tracking</span></a>
+      <a href="#dagbok"><span class="n">06</span><span class="t">Dagbok</span></a>
+      <a href="#trackman"><span class="n">07</span><span class="t">TrackMan</span></a>
+      <a href="#booking"><span class="n">08</span><span class="t">Bookinger / Kalender</span></a>
+      <a href="#onboard"><span class="n">09</span><span class="t">Onboarding</span></a>
+      <a href="#mc"><span class="n">10</span><span class="t">Mission Control</span></a>
+      <a href="#mobile"><span class="n">11</span><span class="t">Mobil · Runde</span></a>
+      <a href="#sys"><span class="n">12</span><span class="t">Systemnotater</span></a>
+    </nav>
+  </header>
+
+  <!-- ======= 00 COURSE HERO V4 (NY) ======= -->
+  <div class="section-header" id="hero">
+    <div class="section-num">S.00</div>
+    <div class="section-title">Course Hero v4 — ny visuell retning</div>
+    <div class="section-desc">Foto-hero av banen + glassmorph-paneler + shot-tracking-overlay. Inspirert av nye referanser. Redesigner Dashboard, Runde, Stats og Mobil i ett felles språk.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card dark">
+      <div class="variant-label"><span class="num">H1</span> · Dashboard · foto-hero + glass bento</div>
+      <iframe class="viz-frame" src="screens/dashboard-v6-hero.html" title="Dashboard Course Hero" style="height: 900px;"></iframe>
+    </div>
+    <div class="variant-card dark">
+      <div class="variant-label"><span class="num">H2</span> · Runde · shot-tracking + caddie glass-panel</div>
+      <iframe class="viz-frame" src="screens/runde-v2.html" title="Runde Course Hero" style="height: 900px;"></iframe>
+    </div>
+    <div class="variant-card dark">
+      <div class="variant-label"><span class="num">H3</span> · Statistikk · tiltet hero + glass drawer</div>
+      <iframe class="viz-frame" src="screens/stats-v2.html" title="Stats Course Hero" style="height: 900px;"></iframe>
+    </div>
+    <div class="variant-card" style="background: #1a1a1d; padding: 40px 0; display:flex; justify-content:center;">
+      <div class="variant-label"><span class="num">H4</span> · Mobil Runde · samme språk</div>
+      <div style="width:430px; height:880px; background:#000; border-radius:54px; padding:12px; box-shadow:0 30px 80px rgba(0,0,0,0.5);">
+        <div style="width:100%; height:100%; border-radius:42px; overflow:hidden; position:relative; background:#0a0f0c;">
+          <div style="position:absolute; top:14px; left:50%; transform:translateX(-50%); width:120px; height:32px; background:#000; border-radius:20px; z-index:20;"></div>
+          <iframe src="screens/mobile-runde-v2.html" title="Mobile Runde Hero" style="width:100%; height:100%; border:none; background:transparent;"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= 00B EDITORIAL LIGHT V5 (NY) ======= -->
+  <div class="section-header" id="editorial">
+    <div class="section-num">S.00B</div>
+    <div class="section-title">Reference Remix v5 — 3 ulike retninger fra samlingen</div>
+    <div class="section-desc">Bygget direkte på screenshots: Sharpen Every Step (mørk burgunder + action-foto), SkillSphere Academy (lys + grønn + tabell), Harvesta Field (bane-foto + chips + drawer). Samme AK-data, tre helt ulike stiler.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card dark">
+      <div class="variant-label"><span class="num">E1</span> · Sharpen Every Step · mørk burgunder + action-hero + bento</div>
+      <iframe class="viz-frame" src="screens/dashboard-e1-sharpen.html" title="E1 Sharpen" style="height: 1000px;"></iframe>
+    </div>
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">E2</span> · AK Academy · lys + grønn aksent + KPI + tabell</div>
+      <iframe class="viz-frame" src="screens/dashboard-e2-academy.html" title="E2 Academy" style="height: 1100px;"></iframe>
+    </div>
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">E3</span> · Course View · bane-foto hero + chips + SG-drawer</div>
+      <iframe class="viz-frame" src="screens/dashboard-e3-field.html" title="E3 Field" style="height: 900px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 01 DASHBOARD ======= -->
+  <div class="section-header" id="dashboard">
+    <div class="section-num">S.01</div>
+    <div class="section-title">Dashboard — 5 distinkte retninger</div>
+    <div class="section-desc">Fra trygg (V1: ren bento) til modig (V5: cockpit). Alle holder tokens, men utforsker tetthet, hierarki og dataviz ulikt.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V1</span> · Bento Clean — tydelig hierarki, Apple-ro</div>
+      <iframe class="viz-frame" src="screens/dashboard-v1-bento.html" title="Dashboard V1"></iframe>
+    </div>
+    <div class="variant-card dark">
+      <div class="variant-label"><span class="num">V2</span> · Night Ops — Whoop-tett, dark surface, ring-metaforer</div>
+      <iframe class="viz-frame" src="screens/dashboard-v2-night.html" title="Dashboard V2"></iframe>
+    </div>
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V3</span> · Editorial — magasin-layout, store tall, typografisk rytme</div>
+      <iframe class="viz-frame" src="screens/dashboard-v3-editorial.html" title="Dashboard V3"></iframe>
+    </div>
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V4</span> · Linear Dense — funksjonstetthet, hurtig navigasjon, lite pynt</div>
+      <iframe class="viz-frame" src="screens/dashboard-v4-linear.html" title="Dashboard V4"></iframe>
+    </div>
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V5</span> · Cockpit — datatung, mission-control-vibe, monospace-aksent</div>
+      <iframe class="viz-frame" src="screens/dashboard-v5-cockpit.html" title="Dashboard V5"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 02 TRENINGSPLANLEGGER ======= -->
+  <div class="section-header" id="plan">
+    <div class="section-num">S.02</div>
+    <div class="section-title">Treningsplanlegger</div>
+    <div class="section-desc">Notion-Calendar-inspirert. Drag-and-drop, AK-pyramiden som persistent sidepanel, L-M-PR logging.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V1</span> · Kalender-grid med sidemeny</div>
+      <iframe class="viz-frame" src="screens/plan.html" title="Planlegger" style="height: 920px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 03 STATISTIKK ======= -->
+  <div class="section-header" id="stats">
+    <div class="section-num">S.03</div>
+    <div class="section-title">Statistikk — SG, trender, radar, heatmap</div>
+    <div class="section-desc">Strokes Gained-vektet for elite. Radar + horizontal bars + konsistensheatmap + AI-narrativ.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V1</span> · Performance Report</div>
+      <iframe class="viz-frame" src="screens/stats.html" title="Statistikk" style="height: 980px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 04 AI COACH ======= -->
+  <div class="section-header" id="aicoach">
+    <div class="section-num">S.04</div>
+    <div class="section-title">AI Coach</div>
+    <div class="section-desc">Chat med venstre data-kontekst + hurtigspørsmål. Bobler viser hvilke datapunkter AI-en bruker for hvert svar.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V1</span> · Context-grounded chat</div>
+      <iframe class="viz-frame" src="screens/aicoach.html" title="AI Coach" style="height: 860px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 05 RUNDE ======= -->
+  <div class="section-header" id="runde">
+    <div class="section-num">S.05</div>
+    <div class="section-title">Runde-tracking</div>
+    <div class="section-desc">Desktop-view av aktiv runde: scorecard + hull-navigator + pre-shot decade-panel + post-runde SG-estimat.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V1</span> · Aktiv runde · Hull 8</div>
+      <iframe class="viz-frame" src="screens/runde.html" title="Runde" style="height: 920px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 06 DAGBOK ======= -->
+  <div class="section-header" id="dagbok">
+    <div class="section-num">S.06</div>
+    <div class="section-title">Dagbok — heatmap, streak, volum</div>
+    <div class="section-desc">GitHub-style kalenderheatmap over 90 dager. Streak-card med milepælskurve. Pyramidefordeling av volum.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V1</span> · Konsistensvisualisering</div>
+      <iframe class="viz-frame" src="screens/dagbok.html" title="Dagbok" style="height: 880px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 07 TRACKMAN ======= -->
+  <div class="section-header" id="trackman">
+    <div class="section-num">S.07</div>
+    <div class="section-title">TrackMan — waveforms, klubbe-sammenligning</div>
+    <div class="section-desc">Klubbe-radar + dispersion-plot + carry-waveform + last session summary. Data-cockpit-estetikk.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card dark">
+      <div class="variant-label"><span class="num">V1</span> · Lab mode · dark</div>
+      <iframe class="viz-frame" src="screens/trackman.html" title="TrackMan" style="height: 920px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 08 BOOKING ======= -->
+  <div class="section-header" id="booking">
+    <div class="section-num">S.08</div>
+    <div class="section-title">Bookinger / Kalender</div>
+    <div class="section-desc">Apple Calendar-tilnærming: uke-visning, neste-booking-hero, avbestillingsregler som rolige kort.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V1</span> · Uke 17 · Apr 27 – Mai 3</div>
+      <iframe class="viz-frame" src="screens/booking.html" title="Booking" style="height: 900px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 09 ONBOARDING ======= -->
+  <div class="section-header" id="onboard">
+    <div class="section-num">S.09</div>
+    <div class="section-title">Onboarding — første gangs opplevelse</div>
+    <div class="section-desc">Steg 3/5. Skillnivå, mål, utstyr, tid, integrasjoner. Vertical rhythm, lime fremdriftsring, AI-snakker.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card">
+      <div class="variant-label"><span class="num">V1</span> · Steg 3 av 5 · Kalibrering</div>
+      <iframe class="viz-frame" src="screens/onboarding.html" title="Onboarding" style="height: 880px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 10 MISSION CONTROL ======= -->
+  <div class="section-header" id="mc">
+    <div class="section-num">S.10</div>
+    <div class="section-title">Mission Control — coach/admin</div>
+    <div class="section-desc">Mørk sidebar, oversikt over elever, belastningsgraf, innkommende meldinger, ledige kapasitetstimer.</div>
+  </div>
+  <div class="variant-grid">
+    <div class="variant-card dark">
+      <div class="variant-label"><span class="num">V1</span> · Coach Thomas · 24 aktive elever</div>
+      <iframe class="viz-frame" src="screens/missioncontrol.html" title="Mission Control" style="height: 920px;"></iframe>
+    </div>
+  </div>
+
+  <!-- ======= 11 MOBIL ======= -->
+  <div class="section-header" id="mobile">
+    <div class="section-num">S.11</div>
+    <div class="section-title">Mobil — Runde-tracking (iPhone 14 Pro)</div>
+    <div class="section-desc">Den mest mobilkritiske flaten. Bonus: Mission-Control-oversikt og Dashboard-mobil som referanse.</div>
+  </div>
+  <div class="variant-grid" style="grid-template-columns: repeat(3, 1fr); align-items: start;">
+    <div class="variant-card" style="background: #1a1a1d; padding: 40px 0; display:flex; justify-content:center;">
+      <div class="variant-label"><span class="num">M1</span> · Runde · hull 8</div>
+      <div style="width:430px; height:880px; background:#000; border-radius:54px; padding:12px; box-shadow:0 30px 80px rgba(0,0,0,0.5);">
+        <div style="width:100%; height:100%; border-radius:42px; overflow:hidden; position:relative; background:#0A1F18;">
+          <div style="position:absolute; top:14px; left:50%; transform:translateX(-50%); width:120px; height:32px; background:#000; border-radius:20px; z-index:5;"></div>
+          <iframe src="screens/mobile-runde.html" title="Mobile runde" style="width:100%; height:100%; border:none; background:transparent;"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="variant-card" style="background: #1a1a1d; padding: 40px 0; display:flex; justify-content:center;">
+      <div class="variant-label"><span class="num">M2</span> · Dashboard</div>
+      <div style="width:430px; height:880px; background:#000; border-radius:54px; padding:12px; box-shadow:0 30px 80px rgba(0,0,0,0.5);">
+        <div style="width:100%; height:100%; border-radius:42px; overflow:hidden; position:relative; background:#FAFAF7;">
+          <div style="position:absolute; top:14px; left:50%; transform:translateX(-50%); width:120px; height:32px; background:#000; border-radius:20px; z-index:5;"></div>
+          <iframe src="screens/mobile-dashboard.html" title="Mobile dashboard" style="width:100%; height:100%; border:none; background:transparent;"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="variant-card" style="background: #1a1a1d; padding: 40px 0; display:flex; justify-content:center;">
+      <div class="variant-label"><span class="num">M3</span> · AI Coach</div>
+      <div style="width:430px; height:880px; background:#000; border-radius:54px; padding:12px; box-shadow:0 30px 80px rgba(0,0,0,0.5);">
+        <div style="width:100%; height:100%; border-radius:42px; overflow:hidden; position:relative; background:#FAFAF7;">
+          <div style="position:absolute; top:14px; left:50%; transform:translateX(-50%); width:120px; height:32px; background:#000; border-radius:20px; z-index:5;"></div>
+          <iframe src="screens/mobile-aicoach.html" title="Mobile AI Coach" style="width:100%; height:100%; border:none; background:transparent;"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= 12 SYSTEM ======= -->
+  <div class="section-header" id="sys">
+    <div class="section-num">S.12</div>
+    <div class="section-title">Systemnotater</div>
+    <div class="section-desc">Nye patterns som er introdusert og bør vurderes for design system v3.1.</div>
+  </div>
+  <div class="variant-grid" style="grid-template-columns: repeat(3, 1fr); gap: 16px;">
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; color: #E6EAE8;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D1F843; letter-spacing: 0.08em;">P-01 — SG RING</div>
+      <h4 style="margin: 10px 0 8px; font-size: 16px; font-weight: 600;">Strokes Gained som ring-metafor</h4>
+      <p style="margin: 0; font-size: 13px; color: #A5B2AD; line-height: 1.55;">Erstatter stacked bar på dashboards. 4 konsentriske ringer (Off-tee, Approach, Short, Putt). Brukes i V2, V5, Mobil.</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; color: #E6EAE8;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D1F843; letter-spacing: 0.08em;">P-02 — MONO-LABEL</div>
+      <h4 style="margin: 10px 0 8px; font-size: 16px; font-weight: 600;">JetBrains Mono for metadata</h4>
+      <p style="margin: 0; font-size: 13px; color: #A5B2AD; line-height: 1.55;">Tidsstempler, IDer, prosentverdier, tabellheaders. Gir lab-følelse uten å stjele fokus fra Inter.</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; color: #E6EAE8;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D1F843; letter-spacing: 0.08em;">P-03 — NIGHT SURFACE</div>
+      <h4 style="margin: 10px 0 8px; font-size: 16px; font-weight: 600;">Dark mode som egen flate</h4>
+      <p style="margin: 0; font-size: 13px; color: #A5B2AD; line-height: 1.55;">Ikke global dark mode — brukt kontekstuelt på TrackMan, Mission Control, Night Ops-dashboard. Grunn: data-first-skjermer har andre krav.</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; color: #E6EAE8;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D1F843; letter-spacing: 0.08em;">P-04 — AK-PYRAMIDE</div>
+      <h4 style="margin: 10px 0 8px; font-size: 16px; font-weight: 600;">Horisontal 5-lags bar</h4>
+      <p style="margin: 0; font-size: 13px; color: #A5B2AD; line-height: 1.55;">FYS / TEK / SLAG / SPILL / TURN. Persistent i planlegger-sidemeny. Klikkbar for filtrering av øvelser.</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; color: #E6EAE8;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D1F843; letter-spacing: 0.08em;">P-05 — AI-ATTRIBUTION</div>
+      <h4 style="margin: 10px 0 8px; font-size: 16px; font-weight: 600;">Context-chip i AI-svar</h4>
+      <p style="margin: 0; font-size: 13px; color: #A5B2AD; line-height: 1.55;">Hver AI-melding viser hvilke datakilder som ble brukt (runde-ID, TrackMan-sesjon, coach-notat). Bygger tillit hos elite.</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; color: #E6EAE8;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #D1F843; letter-spacing: 0.08em;">P-06 — TIDSLINJE</div>
+      <h4 style="margin: 10px 0 8px; font-size: 16px; font-weight: 600;">Vertikal dag-tidslinje</h4>
+      <p style="margin: 0; font-size: 13px; color: #A5B2AD; line-height: 1.55;">Erstatter "hva skjer i dag"-lister. Brukt i V3 Editorial og Booking-flaten. Gir rolig rytme.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- TWEAKS PANEL -->
+<button class="tweaks-fab" id="tweaksFab" aria-label="Tweaks">⚙</button>
+<div class="tweaks-panel" id="tweaksPanel">
+  <h3>🎛 Tweaks</h3>
+  <div class="tweak-row">
+    <label>Tetthet</label>
+    <div class="tweak-opts" data-tweak="density">
+      <button data-val="compact">Compact</button>
+      <button data-val="comfortable" class="active">Comfort</button>
+      <button data-val="spacious">Spacious</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Aksentfarge</label>
+    <div class="tweak-opts" data-tweak="accent">
+      <button data-val="lime" class="active">Lime</button>
+      <button data-val="forest">Forest</button>
+      <button data-val="neutral">Nøytral</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Skriftstørrelse</label>
+    <div class="tweak-opts" data-tweak="font">
+      <button data-val="sm">Liten</button>
+      <button data-val="md" class="active">Standard</button>
+      <button data-val="lg">Stor</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Layout</label>
+    <div class="tweak-opts" data-tweak="layout">
+      <button data-val="canvas" class="active">Canvas</button>
+      <button data-val="solo">Fokus</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Persona</label>
+    <div class="tweak-opts" data-tweak="persona">
+      <button data-val="junior">Junior</button>
+      <button data-val="adult">Voksen</button>
+      <button data-val="elite" class="active">Elite</button>
+    </div>
+  </div>
+  <p style="margin: 14px 0 0; font-size: 11px; color: #7A8C85; line-height: 1.5;">
+    Tweaks propagerer til alle iframes via postMessage. Persona-bytte gjenspeiles i dashboard-V1.
+  </p>
+</div>
+
+<script>
+  // Tweaks panel
+  const fab = document.getElementById('tweaksFab');
+  const panel = document.getElementById('tweaksPanel');
+  fab.addEventListener('click', () => panel.classList.toggle('open'));
+
+  const state = {
+    density: 'comfortable',
+    accent: 'lime',
+    font: 'md',
+    layout: 'canvas',
+    persona: 'elite',
+  };
+
+  function propagate() {
+    const iframes = document.querySelectorAll('iframe');
+    iframes.forEach(f => {
+      try { f.contentWindow.postMessage({ type: 'ak-tweaks', state }, '*'); } catch(e) {}
+    });
+    // Solo layout hides chrome
+    document.body.classList.toggle('solo', state.layout === 'solo');
+  }
+
+  document.querySelectorAll('.tweak-opts').forEach(group => {
+    group.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state[group.dataset.tweak] = btn.dataset.val;
+      propagate();
+    });
+  });
+
+  // Re-propagate when iframe loads
+  document.querySelectorAll('iframe').forEach(f => {
+    f.addEventListener('load', () => {
+      try { f.contentWindow.postMessage({ type: 'ak-tweaks', state }, '*'); } catch(e) {}
+    });
+  });
+
+  // Solo layout CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    body.solo .canvas-header, body.solo .section-header, body.solo .toc { display: none; }
+    body.solo .canvas-root { padding: 20px; }
+  `;
+  document.head.appendChild(style);
+</script>
+
+</body>
+</html>

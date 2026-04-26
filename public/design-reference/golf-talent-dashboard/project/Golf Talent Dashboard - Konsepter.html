@@ -1,0 +1,1500 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Golf Talent Dashboard — 3 konsepter</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF7F1;
+    --paper-edge: #EFEAE0;
+    --ink: #1c2a26;
+    --ink-2: #5b6e67;
+    --ink-3: #97a59f;
+    --rule: #cdd2cb;
+    --rule-soft: #e3e6df;
+    --pine: #005840;
+    --pine-soft: #0d6b51;
+    --lime: #D1F843;
+    --warm: #C48A32;
+    --danger: #B84233;
+    --hand: 'Caveat', 'Inter', cursive;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(0,88,64,0.025), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(196,138,50,0.025), transparent 50%);
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 56px 64px 96px;
+  }
+
+  /* ── Header ─────────────────────────────── */
+  .doc-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1.5px solid var(--ink);
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .doc-head::after {
+    content: "";
+    position: absolute; left: 0; right: 0; bottom: -5px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin: 0 0 12px;
+  }
+  h1.doc-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 56px;
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0;
+    color: var(--ink);
+  }
+  h1.doc-title em {
+    font-family: var(--hand);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 64px;
+    color: var(--pine);
+    letter-spacing: 0;
+  }
+  .meta {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .meta b { color: var(--ink); font-weight: 600; }
+
+  .preamble {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    margin: 32px 0 64px;
+    padding-bottom: 40px;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .preamble p {
+    margin: 0 0 12px;
+    color: var(--ink-2);
+    font-size: 15px;
+    max-width: 60ch;
+  }
+  .preamble p strong { color: var(--ink); font-weight: 600; }
+  .premise-card {
+    background: var(--paper-edge);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 18px 20px;
+    font-size: 13.5px;
+  }
+  .premise-card h4 {
+    margin: 0 0 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-2);
+    font-weight: 600;
+  }
+  .premise-card ul { margin: 0; padding-left: 18px; color: var(--ink); }
+  .premise-card li { margin-bottom: 4px; }
+  .premise-card li b { color: var(--pine); }
+
+  /* ── Concept ─────────────────────────────── */
+  .concept {
+    margin-bottom: 96px;
+    position: relative;
+  }
+  .concept-head {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 24px;
+    align-items: start;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 32px;
+  }
+  .concept-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 88px;
+    font-weight: 200;
+    line-height: 0.85;
+    color: var(--pine);
+    letter-spacing: -0.04em;
+  }
+  .concept-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 6px 0 8px;
+    color: var(--ink);
+  }
+  .concept-pitch {
+    font-family: var(--hand);
+    font-size: 26px;
+    line-height: 1.3;
+    color: var(--pine);
+    max-width: 56ch;
+    margin: 0;
+    font-weight: 600;
+  }
+  .concept-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+    color: var(--ink);
+    background: var(--paper);
+    white-space: nowrap;
+    transform: rotate(2deg);
+    margin-top: 14px;
+  }
+
+  /* ── Section grid ─────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+  .grid.thirds {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .block {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 20px 22px;
+    background: rgba(255,255,255,0.6);
+  }
+  .block h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--pine);
+    margin: 0 0 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .block h3::before {
+    content: attr(data-step);
+    font-family: var(--mono);
+    font-size: 10px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+  .block p, .block li { font-size: 14px; line-height: 1.55; color: var(--ink); margin: 0 0 8px; }
+  .block ul { padding-left: 18px; margin: 0; }
+  .block .hand-note {
+    font-family: var(--hand);
+    font-size: 18px;
+    color: var(--pine-soft);
+    line-height: 1.25;
+    margin-top: 8px;
+  }
+
+  /* ── Inspiration thumbs ─────────────────────────────── */
+  .insp {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .insp-card {
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 10px 10px 12px;
+    background: var(--paper);
+    text-align: center;
+  }
+  .insp-thumb {
+    height: 70px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  .insp-name { font-size: 12px; font-weight: 600; color: var(--ink); margin: 0; }
+  .insp-why { font-size: 11px; color: var(--ink-2); margin: 2px 0 0; line-height: 1.35; }
+
+  /* ── Color philosophy strip ─────────────────────────────── */
+  .palette {
+    display: flex;
+    height: 56px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    margin: 8px 0 12px;
+  }
+  .swatch {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    padding: 6px 8px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.85);
+  }
+  .swatch.dark-text { color: rgba(0,0,0,0.7); }
+
+  /* ── IA diagram ─────────────────────────────── */
+  .ia-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .ia-svg text { font-family: 'Inter', sans-serif; font-size: 11px; fill: var(--ink); }
+  .ia-svg .hand { font-family: var(--hand); font-size: 14px; fill: var(--ink-2); }
+  .ia-svg .pill {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.2;
+  }
+  .ia-svg .pill.primary { fill: var(--pine); stroke: var(--pine); }
+  .ia-svg .pill.primary text { fill: white; }
+  .ia-svg .pill.accent { fill: var(--lime); stroke: var(--ink); }
+  .ia-svg path.flow { fill: none; stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 3 2; }
+  .ia-svg path.flow.solid { stroke-dasharray: none; stroke: var(--pine); stroke-width: 2; }
+
+  /* ── Wireframe mockup ─────────────────────────────── */
+  .mock-wrap {
+    border: 1.5px solid var(--ink);
+    border-radius: 14px;
+    background: var(--paper);
+    padding: 0;
+    margin: 8px 0 20px;
+    box-shadow: 4px 4px 0 var(--ink);
+    overflow: hidden;
+  }
+  .mock-wrap.dark { background: #0A1F18; border-color: #1a4a3a; box-shadow: 4px 4px 0 #1a4a3a; }
+  .mock-bar {
+    display: flex; gap: 6px;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: center;
+  }
+  .mock-wrap.dark .mock-bar { border-bottom-color: #1a4a3a; }
+  .mock-bar span.dot { width: 8px; height: 8px; border-radius: 50%; background: #d1d6cf; }
+  .mock-bar .url {
+    margin-left: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-3);
+  }
+  .mock-wrap.dark .mock-bar .url { color: #7a9a8e; }
+  .mock-wrap.dark .mock-bar span.dot { background: #1a4a3a; }
+  .mock-svg { display: block; width: 100%; height: auto; }
+
+  /* ── Signature elements ─────────────────────────────── */
+  .sig-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .sig {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .sig-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--paper);
+    background: var(--pine);
+    border-radius: 4px;
+    padding: 3px 0;
+    text-align: center;
+    line-height: 1;
+  }
+  .sig-body { font-size: 13.5px; line-height: 1.5; }
+  .sig-body b { color: var(--pine); font-weight: 700; }
+
+  /* ── Risk block ─────────────────────────────── */
+  .risk {
+    border: 1px dashed var(--danger);
+    border-radius: 10px;
+    background: rgba(184, 66, 51, 0.04);
+    padding: 16px 18px;
+    margin-top: 16px;
+  }
+  .risk h4 {
+    margin: 0 0 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--danger);
+    font-weight: 700;
+  }
+  .risk ul { margin: 0; padding-left: 18px; }
+  .risk li { font-size: 13.5px; color: var(--ink); margin-bottom: 4px; }
+
+  /* ── Recommendation ─────────────────────────────── */
+  .recommendation {
+    margin-top: 56px;
+    background: var(--pine);
+    color: white;
+    border-radius: 18px;
+    padding: 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .recommendation::before {
+    content: "";
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--lime) 0%, transparent 70%);
+    opacity: 0.18;
+  }
+  .recommendation .eyebrow { color: var(--lime); }
+  .recommendation h2 {
+    font-size: 36px; font-weight: 800; line-height: 1.05;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+  }
+  .recommendation h2 em {
+    font-family: var(--hand);
+    font-style: normal;
+    color: var(--lime);
+    font-size: 44px;
+    font-weight: 700;
+  }
+  .recommendation p { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.85); max-width: 70ch; }
+  .recommendation p strong { color: white; font-weight: 600; }
+  .recommendation .why {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 28px;
+  }
+  .recommendation .why-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(209,248,67,0.2);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .recommendation .why-card h5 {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--lime);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .recommendation .why-card p { font-size: 13.5px; margin: 0; color: rgba(255,255,255,0.92); }
+
+  /* ── Annotation arrows ─────────────────────────────── */
+  .annotate {
+    position: relative;
+  }
+  .annotate-tag {
+    position: absolute;
+    font-family: var(--hand);
+    font-size: 16px;
+    color: var(--pine-soft);
+    line-height: 1.15;
+    pointer-events: none;
+  }
+
+  /* ── TOC ─────────────────────────────── */
+  .toc {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 32px 0 64px;
+  }
+  .toc a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: 16px 18px;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--paper-edge);
+    transition: all 150ms ease;
+  }
+  .toc a:hover {
+    border-color: var(--pine);
+    background: white;
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 var(--pine);
+  }
+  .toc-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+    letter-spacing: 0.1em;
+  }
+  .toc-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 4px 0 2px;
+    color: var(--ink);
+  }
+  .toc-pitch {
+    font-family: var(--hand);
+    font-size: 17px;
+    color: var(--pine);
+    line-height: 1.2;
+  }
+
+  /* ── Footer ─────────────────────────────── */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ─────────────────────────── HEADER ─────────────────────────── -->
+  <header class="doc-head">
+    <div>
+      <p class="eyebrow">Spillerutvikling · Designnotat 01 · Wireframe-fidelity</p>
+      <h1 class="doc-title">Tre veier inn i <em>talent-pipelinen</em></h1>
+    </div>
+    <div class="meta">
+      <b>AK Golf Group AS</b><br>
+      Internt verktøy · Ikke offentlig<br>
+      Trenere, scouts, klubbledelse<br>
+      26.04.2026 · v0.1
+    </div>
+  </header>
+
+  <!-- ─────────────────────────── PREAMBLE ─────────────────────────── -->
+  <section class="preamble">
+    <div>
+      <p class="eyebrow">Lesestøtte</p>
+      <p><strong>Hva dette dokumentet er.</strong> Tre uavhengige design-konsepter for redesignet av Golf Talent Dashboard. Hvert konsept tar et standpunkt — om hva verktøyet egentlig <em>er</em>, og hvilken jobb det skal gjøre best. De er <strong>ikke variasjoner</strong> av samme idé; de er tre forskjellige produkter.</p>
+      <p><strong>Hvorfor lavfi.</strong> Dette er strukturarbeid. Vi vil bestemme hierarki, jobs-to-be-done og navigasjons­paradigme før vi piksler. Visjonen er forankret i AK-paletten (dyp gran + lime), men formspråket lever først når retningen er valgt.</p>
+      <p><strong>Hva det <em>ikke</em> er.</strong> Ikke en faseplan. Ikke en estimering. Ikke en endelig anbefaling om alle 10 seksjoner — heller en provokasjon: <em>kanskje 10 like­vektige seksjoner ikke er riktig modell for AK Golfs unike pipeline-problem.</em></p>
+    </div>
+    <aside class="premise-card">
+      <h4>Premiss vi designer mot</h4>
+      <ul>
+        <li>~93 000 turneringsresultater fra <b>5 kilder</b></li>
+        <li>~58 000 OLYO juniorresultater alene</li>
+        <li>~700 norske juniorer på Srixon Tour</li>
+        <li>60 college-spillere, WAGR-rangering</li>
+        <li>En <b>6-trinns utviklingsstige</b> — junior → PGA</li>
+        <li>Brukerne er <b>ikke</b> dataanalytikere — det er trenere og scouts som trenger svar, ikke spørsmål</li>
+      </ul>
+    </aside>
+  </section>
+
+  <!-- ─────────────────────────── TOC ─────────────────────────── -->
+  <nav class="toc">
+    <a href="#k1">
+      <div class="toc-num">KONSEPT 01</div>
+      <div class="toc-name">Pipeline</div>
+      <div class="toc-pitch">"verktøyet ER stigen"</div>
+    </a>
+    <a href="#k2">
+      <div class="toc-num">KONSEPT 02</div>
+      <div class="toc-name">Scoutbenken</div>
+      <div class="toc-pitch">"alt er en sammenligning"</div>
+    </a>
+    <a href="#k3">
+      <div class="toc-num">KONSEPT 03</div>
+      <div class="toc-name">Spillerlogg</div>
+      <div class="toc-pitch">"karrieren som fortelling"</div>
+    </a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       KONSEPT 1 — PIPELINE
+       ═══════════════════════════════════════════════════════════════ -->
+  <article class="concept" id="k1">
+    <header class="concept-head">
+      <div class="concept-num">01</div>
+      <div>
+        <h2 class="concept-name">Pipeline</h2>
+        <p class="concept-pitch">Verktøyet <em>er</em> stigen. Hver spiller er en kule som beveger seg mellom de seks trinnene fra junior til PGA — alt annet er supplerende info.</p>
+      </div>
+      <span class="concept-tag">Recommended ★</span>
+    </header>
+
+    <!-- Inspiration -->
+    <div class="grid thirds">
+      <div class="block">
+        <h3 data-step="02">Inspirasjons­referanser</h3>
+        <div class="insp">
+          <div class="insp-card">
+            <div class="insp-thumb" style="background: linear-gradient(135deg, #0A1F18, #005840);">
+              <svg viewBox="0 0 100 70" class="ia-svg" style="height:100%">
+                <circle cx="20" cy="35" r="6" fill="#D1F843"/>
+                <circle cx="40" cy="35" r="4" fill="#D1F843" opacity=".5"/>
+                <circle cx="60" cy="35" r="3" fill="#D1F843" opacity=".3"/>
+                <circle cx="80" cy="35" r="2" fill="#D1F843" opacity=".2"/>
+                <line x1="14" y1="35" x2="86" y2="35" stroke="#D1F843" stroke-width="0.5" opacity=".3"/>
+              </svg>
+            </div>
+            <p class="insp-name">StatsBomb IQ</p>
+            <p class="insp-why">Compact data, høy tetthet, profesjonell tone</p>
+          </div>
+          <div class="insp-card">
+            <div class="insp-thumb" style="background: #f4f4f0;">
+              <svg viewBox="0 0 100 70" class="ia-svg" style="height:100%">
+                <rect x="10" y="20" width="15" height="35" rx="2" fill="#005840"/>
+                <rect x="30" y="30" width="15" height="25" rx="2" fill="#005840" opacity=".7"/>
+                <rect x="50" y="15" width="15" height="40" rx="2" fill="#005840" opacity=".5"/>
+                <rect x="70" y="35" width="15" height="20" rx="2" fill="#005840" opacity=".3"/>
+              </svg>
+            </div>
+            <p class="insp-name">FiveThirtyEight NBA Draft</p>
+            <p class="insp-why">Pipeline-tracking med utviklings­bane</p>
+          </div>
+          <div class="insp-card">
+            <div class="insp-thumb" style="background:#0A1F18;">
+              <svg viewBox="0 0 100 70" class="ia-svg" style="height:100%">
+                <path d="M 10 50 Q 30 40, 50 30 T 90 15" stroke="#D1F843" stroke-width="2" fill="none"/>
+                <path d="M 10 55 Q 30 50, 50 45 T 90 35" stroke="#D1F843" stroke-width="1" fill="none" opacity=".4"/>
+                <circle cx="90" cy="15" r="3" fill="#D1F843"/>
+              </svg>
+            </div>
+            <p class="insp-name">Linear (project pipeline)</p>
+            <p class="insp-why">Stadier som førsteklasses navigasjon</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layout -->
+      <div class="block">
+        <h3 data-step="04">Layout-paradigme</h3>
+        <p><b>Vertikal pipeline-rail</b> til venstre (de 6 trinnene), pluss en kontekst-panel til høyre. Hovedvisningen er en <b>horisontal kanban</b> der hver kolonne er et trinn, og hver "kort" er en spiller.</p>
+        <p>Overgangen mellom trinn er førsteklasses — du kan dra en spiller, eller systemet flagger automatisk når benchmarks tilsier opprykk/nedrykk.</p>
+        <p class="hand-note">→ "talent-pipelinen blir verktøyets metafor"</p>
+      </div>
+
+      <!-- Color philosophy -->
+      <div class="block">
+        <h3 data-step="05">Color philosophy</h3>
+        <p><b>Dark mode primary.</b> Mirror dagens Spillerportal — dyp <code style="font-family:var(--mono);font-size:12px">#0A1F18</code> som lerret.</p>
+        <div class="palette">
+          <div class="swatch" style="background:#0A1F18">#0A1F18 · canvas</div>
+          <div class="swatch" style="background:#005840">#005840 · trinn-fyll</div>
+          <div class="swatch" style="background:#0D2E23">#0D2E23 · kort</div>
+          <div class="swatch dark-text" style="background:#D1F843">#D1F843 · ALERT</div>
+          <div class="swatch dark-text" style="background:#ECF0EF">#ECF0EF · light alt</div>
+        </div>
+        <p style="font-size:13px;margin-top:6px;">Lime brukes <b>kun</b> som signal: spiller flagget for opprykk, benchmark passert, ny WAGR-topp. Aldri dekorativt.</p>
+      </div>
+    </div>
+
+    <!-- IA + Mockup -->
+    <div class="grid">
+      <!-- IA diagram -->
+      <div class="block">
+        <h3 data-step="03">Information architecture</h3>
+        <p style="font-size:13.5px;margin-bottom:14px;">10 seksjoner kollapser til <b>3 jobbs</b> + 1 utforskningsmodus.</p>
+        <svg viewBox="0 0 520 320" class="ia-svg" preserveAspectRatio="xMidYMid meet" aria-label="IA-diagram konsept 1">
+          <!-- Old IA on left -->
+          <text x="20" y="20" class="hand">før: 10 seksjoner</text>
+          <g transform="translate(10, 30)" font-size="10" fill="#97a59f">
+            <text y="14">· Oversikt</text>
+            <text y="28">· Spillere</text>
+            <text y="42">· Scouting</text>
+            <text y="56">· Benchmarks</text>
+            <text y="70">· College</text>
+            <text y="84">· Proff</text>
+            <text y="98">· Talent</text>
+            <text y="112">· Rekruttering</text>
+            <text y="126">· Historikk</text>
+            <text y="140">· Filer</text>
+          </g>
+          <line x1="130" y1="80" x2="180" y2="80" stroke="#005840" stroke-width="1.5" marker-end="url(#arr1)"/>
+          <defs>
+            <marker id="arr1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8" fill="#005840"/>
+            </marker>
+          </defs>
+
+          <!-- New IA: pipeline rail -->
+          <text x="200" y="20" class="hand">etter: pipeline + 3 jobs</text>
+
+          <!-- Pipeline rail -->
+          <g transform="translate(200, 35)">
+            <rect width="160" height="240" rx="10" fill="#005840" opacity=".06" stroke="#005840" stroke-width="0.5"/>
+            <text x="80" y="18" text-anchor="middle" font-weight="600" fill="#005840">PIPELINE</text>
+
+            <!-- 6 stages -->
+            <g font-size="10">
+              <rect x="10" y="30" width="140" height="26" rx="4" fill="white" stroke="#005840"/>
+              <text x="20" y="46">6 · PGA Tour</text>
+              <text x="135" y="46" text-anchor="end" fill="#97a59f">3</text>
+
+              <rect x="10" y="62" width="140" height="26" rx="4" fill="white" stroke="#005840"/>
+              <text x="20" y="78">5 · Korn Ferry</text>
+              <text x="135" y="78" text-anchor="end" fill="#97a59f">7</text>
+
+              <rect x="10" y="94" width="140" height="26" rx="4" fill="white" stroke="#005840"/>
+              <text x="20" y="110">4 · Challenge/Nordic</text>
+              <text x="135" y="110" text-anchor="end" fill="#97a59f">12</text>
+
+              <rect x="10" y="126" width="140" height="26" rx="4" fill="#D1F843" stroke="#005840" stroke-width="1.5"/>
+              <text x="20" y="142" font-weight="600">3 · College/Amatør</text>
+              <text x="135" y="142" text-anchor="end" font-weight="700">60</text>
+
+              <rect x="10" y="158" width="140" height="26" rx="4" fill="white" stroke="#005840"/>
+              <text x="20" y="174">2 · Norgescup/Elite</text>
+              <text x="135" y="174" text-anchor="end" fill="#97a59f">142</text>
+
+              <rect x="10" y="190" width="140" height="26" rx="4" fill="white" stroke="#005840"/>
+              <text x="20" y="206">1 · Junior (OLYO/Srixon)</text>
+              <text x="135" y="206" text-anchor="end" fill="#97a59f">701</text>
+            </g>
+          </g>
+
+          <!-- 3 jobs at right -->
+          <g transform="translate(385, 50)">
+            <rect class="pill primary" x="0" y="0" width="130" height="28" rx="6"/>
+            <text x="65" y="18" text-anchor="middle" fill="white" font-weight="600">Identifiser</text>
+            <text class="hand" x="65" y="44" text-anchor="middle" fill="#5b6e67">finn neste</text>
+
+            <rect class="pill primary" x="0" y="64" width="130" height="28" rx="6"/>
+            <text x="65" y="82" text-anchor="middle" fill="white" font-weight="600">Spor</text>
+            <text class="hand" x="65" y="108" text-anchor="middle" fill="#5b6e67">se progresjon</text>
+
+            <rect class="pill primary" x="0" y="128" width="130" height="28" rx="6"/>
+            <text x="65" y="146" text-anchor="middle" fill="white" font-weight="600">Sammenlign</text>
+            <text class="hand" x="65" y="172" text-anchor="middle" fill="#5b6e67">benchmark</text>
+
+            <rect class="pill accent" x="0" y="200" width="130" height="28" rx="6" stroke-dasharray="3 2"/>
+            <text x="65" y="218" text-anchor="middle" font-weight="600">Utforsk (DataGolf)</text>
+          </g>
+
+          <!-- Connecting flows -->
+          <path class="flow" d="M 360 65 Q 380 65, 385 65"/>
+          <path class="flow" d="M 360 130 Q 380 130, 385 130"/>
+          <path class="flow" d="M 360 200 Q 380 200, 385 200"/>
+        </svg>
+      </div>
+
+      <!-- Mockup column -->
+      <div>
+        <h3 style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--pine);margin:0 0 12px;font-weight:600;display:flex;align-items:center;gap:8px;"><span style="font-family:var(--mono);font-size:10px;background:var(--ink);color:var(--paper);padding:2px 6px;border-radius:3px;letter-spacing:0.05em;">07</span> Hovedkomponent — pipeline-view</h3>
+        <div class="mock-wrap dark">
+          <div class="mock-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="url">talent.akgolf.no/pipeline</span>
+          </div>
+          <svg viewBox="0 0 600 380" class="mock-svg" aria-label="Pipeline mockup">
+            <!-- Sidebar -->
+            <rect x="0" y="0" width="48" height="380" fill="#0D2E23"/>
+            <circle cx="24" cy="24" r="6" fill="#D1F843"/>
+            <g fill="#7a9a8e">
+              <rect x="18" y="56" width="12" height="2"/>
+              <rect x="18" y="62" width="12" height="2"/>
+              <rect x="16" y="92" width="16" height="16" rx="3" fill="#1a4a3a"/>
+              <rect x="18" y="124" width="12" height="2"/>
+              <rect x="18" y="130" width="12" height="2"/>
+            </g>
+
+            <!-- Top bar -->
+            <rect x="48" y="0" width="552" height="40" fill="#0A1F18"/>
+            <text x="64" y="25" fill="#fff" font-size="13" font-weight="700">Pipeline</text>
+            <text x="120" y="25" fill="#7a9a8e" font-size="11">Norske talenter · 925 spillere</text>
+            <rect x="430" y="12" width="80" height="18" rx="9" fill="#1a4a3a"/>
+            <text x="470" y="24" text-anchor="middle" fill="#fff" font-size="9.5">2026 ▾</text>
+            <rect x="518" y="12" width="68" height="18" rx="9" fill="#D1F843"/>
+            <text x="552" y="24" text-anchor="middle" fill="#0A1F18" font-size="9.5" font-weight="600">Eksporter</text>
+
+            <!-- Pipeline rail (left) -->
+            <g transform="translate(60, 56)">
+              <text x="0" y="0" fill="#7a9a8e" font-size="9" letter-spacing="1.4">TRINN</text>
+
+              <g font-size="10" fill="#fff">
+                <rect x="0" y="10" width="120" height="28" rx="6" fill="#0D2E23" stroke="#1a4a3a"/>
+                <text x="10" y="28">6 · PGA</text>
+                <text x="110" y="28" text-anchor="end" fill="#7a9a8e">3</text>
+
+                <rect x="0" y="44" width="120" height="28" rx="6" fill="#0D2E23" stroke="#1a4a3a"/>
+                <text x="10" y="62">5 · Korn Ferry</text>
+                <text x="110" y="62" text-anchor="end" fill="#7a9a8e">7</text>
+
+                <rect x="0" y="78" width="120" height="28" rx="6" fill="#0D2E23" stroke="#1a4a3a"/>
+                <text x="10" y="96">4 · Challenge</text>
+                <text x="110" y="96" text-anchor="end" fill="#7a9a8e">12</text>
+
+                <rect x="0" y="112" width="120" height="28" rx="6" fill="#133A2D" stroke="#D1F843" stroke-width="1.5"/>
+                <text x="10" y="130" font-weight="600">3 · College</text>
+                <text x="110" y="130" text-anchor="end" fill="#D1F843" font-weight="700">60</text>
+
+                <rect x="0" y="146" width="120" height="28" rx="6" fill="#0D2E23" stroke="#1a4a3a"/>
+                <text x="10" y="164">2 · Elite/Norgescup</text>
+                <text x="110" y="164" text-anchor="end" fill="#7a9a8e">142</text>
+
+                <rect x="0" y="180" width="120" height="28" rx="6" fill="#0D2E23" stroke="#1a4a3a"/>
+                <text x="10" y="198">1 · Junior</text>
+                <text x="110" y="198" text-anchor="end" fill="#7a9a8e">701</text>
+              </g>
+
+              <!-- vertical track -->
+              <line x1="-12" y1="22" x2="-12" y2="194" stroke="#1a4a3a" stroke-width="2"/>
+              <circle cx="-12" cy="124" r="4" fill="#D1F843"/>
+            </g>
+
+            <!-- Player cards for selected stage -->
+            <g transform="translate(210, 56)">
+              <text x="0" y="0" fill="#7a9a8e" font-size="9" letter-spacing="1.4">TRINN 3 — COLLEGE/AMATØR · 60 SPILLERE</text>
+
+              <!-- Card 1 (focal) -->
+              <g transform="translate(0,12)">
+                <rect width="180" height="86" rx="10" fill="#133A2D" stroke="#D1F843" stroke-width="1.5"/>
+                <circle cx="20" cy="22" r="10" fill="#1a4a3a"/>
+                <text x="38" y="20" fill="#fff" font-size="11" font-weight="600">Magnus K.</text>
+                <text x="38" y="32" fill="#7a9a8e" font-size="9">Arizona State · 21 år</text>
+
+                <!-- mini progress -->
+                <text x="12" y="52" fill="#7a9a8e" font-size="8">PROGRESJON</text>
+                <rect x="12" y="56" width="156" height="3" rx="1.5" fill="#1a4a3a"/>
+                <rect x="12" y="56" width="98" height="3" rx="1.5" fill="#D1F843"/>
+                <text x="12" y="74" fill="#fff" font-size="9">WAGR <tspan font-weight="700">#147</tspan></text>
+                <text x="80" y="74" fill="#fff" font-size="9">SG: <tspan fill="#D1F843" font-weight="700">+1.2</tspan></text>
+                <text x="140" y="74" fill="#7a9a8e" font-size="9">↑ 22</text>
+              </g>
+
+              <g transform="translate(196,12)">
+                <rect width="180" height="86" rx="10" fill="#0D2E23" stroke="#1a4a3a"/>
+                <circle cx="20" cy="22" r="10" fill="#1a4a3a"/>
+                <text x="38" y="20" fill="#fff" font-size="11" font-weight="600">Sondre L.</text>
+                <text x="38" y="32" fill="#7a9a8e" font-size="9">Texas A&amp;M · 20 år</text>
+                <rect x="12" y="56" width="156" height="3" rx="1.5" fill="#1a4a3a"/>
+                <rect x="12" y="56" width="62" height="3" rx="1.5" fill="#005840"/>
+                <text x="12" y="74" fill="#fff" font-size="9">WAGR <tspan font-weight="700">#312</tspan></text>
+                <text x="80" y="74" fill="#fff" font-size="9">SG: <tspan font-weight="700">+0.4</tspan></text>
+                <text x="140" y="74" fill="#7a9a8e" font-size="9">→ 0</text>
+              </g>
+
+              <g transform="translate(0,108)">
+                <rect width="180" height="86" rx="10" fill="#0D2E23" stroke="#1a4a3a"/>
+                <circle cx="20" cy="22" r="10" fill="#1a4a3a"/>
+                <text x="38" y="20" fill="#fff" font-size="11" font-weight="600">Ingrid B.</text>
+                <text x="38" y="32" fill="#7a9a8e" font-size="9">Stanford · 19 år · LPGA-spor</text>
+                <rect x="12" y="56" width="156" height="3" rx="1.5" fill="#1a4a3a"/>
+                <rect x="12" y="56" width="120" height="3" rx="1.5" fill="#005840"/>
+                <text x="12" y="74" fill="#fff" font-size="9">WAGR <tspan font-weight="700">#84</tspan></text>
+                <text x="80" y="74" fill="#fff" font-size="9">SG: <tspan font-weight="700">+0.9</tspan></text>
+                <text x="140" y="74" fill="#7a9a8e" font-size="9">↑ 8</text>
+              </g>
+
+              <g transform="translate(196,108)">
+                <rect width="180" height="86" rx="10" fill="#0D2E23" stroke="#1a4a3a" stroke-dasharray="3 2"/>
+                <text x="90" y="50" text-anchor="middle" fill="#7a9a8e" font-size="10">+ 57 til</text>
+              </g>
+
+              <!-- "ready to promote" callout -->
+              <g transform="translate(0, 210)">
+                <rect width="376" height="44" rx="10" fill="#005840"/>
+                <circle cx="22" cy="22" r="6" fill="#D1F843"/>
+                <text x="38" y="20" fill="#fff" font-size="11" font-weight="600">2 spillere klare for opprykk →</text>
+                <text x="38" y="34" fill="#B8D4CC" font-size="9.5">Magnus K. · Ingrid B. · benchmarks passert</text>
+              </g>
+            </g>
+
+            <!-- Annotations -->
+            <text x="492" y="60" font-family="Caveat, cursive" font-size="14" fill="#D1F843">aktivt</text>
+            <text x="492" y="74" font-family="Caveat, cursive" font-size="14" fill="#D1F843">trinn</text>
+            <line x1="488" y1="76" x2="372" y2="120" stroke="#D1F843" stroke-width="1" stroke-dasharray="2 2"/>
+
+            <text x="492" y="244" font-family="Caveat, cursive" font-size="14" fill="#D1F843">ML-flagg</text>
+            <text x="492" y="258" font-family="Caveat, cursive" font-size="14" fill="#D1F843">— ikke regel</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signature elements + risk -->
+    <div class="grid">
+      <div class="block">
+        <h3 data-step="06">Signature visual elements</h3>
+        <div class="sig-list">
+          <div class="sig">
+            <div class="sig-num">1</div>
+            <div class="sig-body">Hver spiller bærer alltid sin <b>pipeline-progress­bar</b> — en 6-stegs liten linje øverst på kortet, med fyllt segment der spilleren er nå.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">2</div>
+            <div class="sig-body">Strokes Gained vises <b>alltid med dynamisk delta</b> mot referansen for trinnet (PGA-snitt for trinn 6, college-snitt for trinn 3, osv.) — aldri som rå tall.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">3</div>
+            <div class="sig-body">Lime-aksenten dukker opp <b>kun ved trinn-overgang­begivenheter</b>: opprykksvarsel, ny WAGR-topp, benchmark passert. Det gjør lime til et signal man kan stole på.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">4</div>
+            <div class="sig-body">Spillere kan <b>dras manuelt</b> mellom trinn — men det er bare en overstyring av algoritmen. Standard er at trinn følger turnerings­data.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">5</div>
+            <div class="sig-body">Kohort-sammenligning innebygd: filtrer pipelinen til "alder 18–20" eller "fødselsår 2007" og sammenlign hvor de er <b>relativt til kohorten</b>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="block">
+          <h3 data-step="01">I én setning</h3>
+          <p>Et pipeline-management-verktøy for talent som tilfeldigvis har et golf-domene — der spillerens posisjon i den 6-trinns utviklings­stigen <b>er</b> primær­navigasjonen.</p>
+          <p class="hand-note">som Linear, men for golfkarrierer</p>
+        </div>
+        <div class="risk">
+          <h4>Risiko + tradeoff</h4>
+          <ul>
+            <li><b>Foreldre forvirres:</b> de tenker ikke "trinn 3" om sønnen — de tenker "han spiller på Stanford".</li>
+            <li><b>Klubbledelse savner roll-up</b>: pipeline gir ikke umiddelbart svar på "hvordan går det <em>totalt</em>?"</li>
+            <li>Den 6-trinns modellen blir <b>sentral kontrakt</b>. Endringer i stigen krever migrasjon.</li>
+            <li>Risiko for at lime <b>aldri</b> dukker opp i lange perioder → kan oppleves som flat.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       KONSEPT 2 — SCOUTBENKEN
+       ═══════════════════════════════════════════════════════════════ -->
+  <article class="concept" id="k2">
+    <header class="concept-head">
+      <div class="concept-num">02</div>
+      <div>
+        <h2 class="concept-name">Scoutbenken</h2>
+        <p class="concept-pitch">Alt er en sammenligning. Verktøyet er en arbeidsflate der scouter drar 2–6 spillere ved siden av hverandre og data-lagene snakker.</p>
+      </div>
+      <span class="concept-tag">Density-first</span>
+    </header>
+
+    <div class="grid thirds">
+      <div class="block">
+        <h3 data-step="02">Inspirasjons­referanser</h3>
+        <div class="insp">
+          <div class="insp-card">
+            <div class="insp-thumb" style="background:#1a1a1a;">
+              <svg viewBox="0 0 100 70" class="ia-svg" style="height:100%">
+                <rect x="6" y="10" width="22" height="50" rx="2" fill="#005840"/>
+                <rect x="32" y="10" width="22" height="50" rx="2" fill="#005840" opacity=".7"/>
+                <rect x="58" y="10" width="22" height="50" rx="2" fill="#D1F843" opacity=".5"/>
+                <line x1="6" y1="35" x2="80" y2="35" stroke="#fff" stroke-width="0.3" opacity=".4"/>
+              </svg>
+            </div>
+            <p class="insp-name">Bloomberg Terminal</p>
+            <p class="insp-why">Multi-pane, høy informasjons­tetthet, profesjonelt</p>
+          </div>
+          <div class="insp-card">
+            <div class="insp-thumb" style="background:#f4f4f0;">
+              <svg viewBox="0 0 100 70" class="ia-svg" style="height:100%">
+                <circle cx="25" cy="35" r="15" fill="none" stroke="#005840" stroke-width="2"/>
+                <circle cx="50" cy="35" r="15" fill="none" stroke="#005840" stroke-width="2"/>
+                <circle cx="75" cy="35" r="15" fill="none" stroke="#005840" stroke-width="2"/>
+                <circle cx="50" cy="35" r="3" fill="#D1F843"/>
+              </svg>
+            </div>
+            <p class="insp-name">The Pudding (sports vis)</p>
+            <p class="insp-why">Sammenligningsbaserte data­fortellinger</p>
+          </div>
+          <div class="insp-card">
+            <div class="insp-thumb" style="background:#0A1F18;">
+              <svg viewBox="0 0 100 70" class="ia-svg" style="height:100%">
+                <g stroke="#D1F843" stroke-width="1" fill="none">
+                  <path d="M 10 50 L 25 30 L 40 40 L 55 20 L 70 35 L 90 25"/>
+                </g>
+                <g stroke="#005840" stroke-width="1" fill="none" opacity=".6">
+                  <path d="M 10 55 L 25 45 L 40 50 L 55 35 L 70 45 L 90 38"/>
+                </g>
+              </svg>
+            </div>
+            <p class="insp-name">PGA Tour ShotLink</p>
+            <p class="insp-why">Strokes Gained-vokabular vist riktig</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3 data-step="04">Layout-paradigme</h3>
+        <p><b>Drag-and-drop kolonner</b>. Toppnav med global søk + spiller-shelf nederst. Hovedflaten er 1–6 vertikale spaltepaner; hver spalte er én spiller. Dataraden er horisontal og synkronisert: rull til "putting" i én spalte, rull i alle.</p>
+        <p>Scouter "bygger" en sammenligning ved å dra spillere fra shelfen inn i flaten. Kan lagres som "bench" — gjenbrukbar arbeidsflate.</p>
+        <p class="hand-note">→ minus pipeline-narrativ, pluss rå analytisk kraft</p>
+      </div>
+
+      <div class="block">
+        <h3 data-step="05">Color philosophy</h3>
+        <p><b>Begge moduser likestilte</b>, men dark er default for konsentrerte arbeidsøkter. Hver spiller-spalte får sitt eget <b>aksent-bånd</b> i en avdempet variant.</p>
+        <div class="palette">
+          <div class="swatch" style="background:#0A1F18">#0A1F18 · canvas</div>
+          <div class="swatch" style="background:#005840">#005840 · spiller A</div>
+          <div class="swatch" style="background:#0d6b51">#0d6b51 · spiller B</div>
+          <div class="swatch dark-text" style="background:#B8D4CC">#B8D4CC · spiller C</div>
+          <div class="swatch dark-text" style="background:#D1F843">#D1F843 · diff/leder</div>
+        </div>
+        <p style="font-size:13px;margin-top:6px;">Lime brukes <b>kun til å markere differansen</b> mellom spillere — den vinner­indikerer ikke en spiller, den fremhever forskjellen.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="block">
+        <h3 data-step="03">Information architecture</h3>
+        <p style="font-size:13.5px;margin-bottom:14px;">Seksjonene løses opp og blir <b>data­lag</b> som er like relevante for én eller seks spillere.</p>
+        <svg viewBox="0 0 520 320" class="ia-svg" preserveAspectRatio="xMidYMid meet">
+          <text x="20" y="20" class="hand">10 seksjoner → 4 lag + søk</text>
+
+          <!-- Top: search bar -->
+          <g transform="translate(20, 36)">
+            <rect width="480" height="32" rx="16" fill="white" stroke="#005840" stroke-width="1.5"/>
+            <circle cx="20" cy="16" r="5" fill="none" stroke="#005840" stroke-width="1.2"/>
+            <line x1="24" y1="20" x2="28" y2="24" stroke="#005840" stroke-width="1.2"/>
+            <text x="38" y="20">Søk spillere · WAGR · klubb · fødselsår · turnering…</text>
+          </g>
+
+          <!-- 4 data layers as horizontal rails -->
+          <g transform="translate(20, 84)">
+            <text x="0" y="-2" font-size="9" fill="#97a59f" letter-spacing="1.4">DATALAG (PER SPILLER)</text>
+
+            <rect x="0" y="6" width="480" height="32" rx="6" fill="#005840" opacity=".08"/>
+            <rect x="0" y="6" width="6" height="32" rx="3" fill="#005840"/>
+            <text x="20" y="26" font-weight="600" fill="#005840">Resultater</text>
+            <text x="120" y="26" fill="#5b6e67">DataGolf · Srixon · OLYO · SGF · Norgescup</text>
+
+            <rect x="0" y="44" width="480" height="32" rx="6" fill="#005840" opacity=".08"/>
+            <rect x="0" y="44" width="6" height="32" rx="3" fill="#005840"/>
+            <text x="20" y="64" font-weight="600" fill="#005840">Strokes Gained</text>
+            <text x="120" y="64" fill="#5b6e67">Putting · Approach · Tee · Around-green</text>
+
+            <rect x="0" y="82" width="480" height="32" rx="6" fill="#005840" opacity=".08"/>
+            <rect x="0" y="82" width="6" height="32" rx="3" fill="#005840"/>
+            <text x="20" y="102" font-weight="600" fill="#005840">Pipeline</text>
+            <text x="120" y="102" fill="#5b6e67">Trinn · WAGR · alder vs kohort · college-status</text>
+
+            <rect x="0" y="120" width="480" height="32" rx="6" fill="#005840" opacity=".08"/>
+            <rect x="0" y="120" width="6" height="32" rx="3" fill="#005840"/>
+            <text x="20" y="140" font-weight="600" fill="#005840">Kontekst</text>
+            <text x="120" y="140" fill="#5b6e67">Notater · klubb · scouting-tagger · filer</text>
+          </g>
+
+          <!-- Bottom: bench -->
+          <g transform="translate(20, 252)">
+            <rect width="480" height="48" rx="8" fill="#D1F843" opacity=".15" stroke="#005840" stroke-dasharray="3 3"/>
+            <text x="240" y="22" text-anchor="middle" font-weight="600" fill="#005840">Spiller-shelf · benken</text>
+            <text x="240" y="38" text-anchor="middle" fill="#5b6e67" font-size="10">dra inn for å bygge sammenligning · 2–6 om gangen</text>
+          </g>
+        </svg>
+      </div>
+
+      <div>
+        <h3 style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--pine);margin:0 0 12px;font-weight:600;display:flex;align-items:center;gap:8px;"><span style="font-family:var(--mono);font-size:10px;background:var(--ink);color:var(--paper);padding:2px 6px;border-radius:3px;letter-spacing:0.05em;">07</span> Hovedkomponent — sammenlignings­benk</h3>
+        <div class="mock-wrap dark">
+          <div class="mock-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="url">talent.akgolf.no/benk/college-2007</span>
+          </div>
+          <svg viewBox="0 0 600 380" class="mock-svg">
+            <!-- Top -->
+            <rect x="0" y="0" width="600" height="32" fill="#0A1F18"/>
+            <rect x="14" y="8" width="200" height="16" rx="8" fill="#0D2E23" stroke="#1a4a3a"/>
+            <text x="22" y="20" fill="#7a9a8e" font-size="9">Søk spillere…</text>
+            <text x="240" y="20" fill="#fff" font-size="11" font-weight="600">Benk: College 2007-kullet</text>
+            <rect x="538" y="8" width="48" height="16" rx="8" fill="#1a4a3a"/>
+            <text x="562" y="20" text-anchor="middle" fill="#fff" font-size="9">Lagre</text>
+
+            <!-- 3 columns -->
+            <g transform="translate(12, 44)">
+              <!-- Col A -->
+              <rect width="186" height="280" rx="10" fill="#0D2E23" stroke="#1a4a3a"/>
+              <rect width="186" height="3" rx="1.5" fill="#005840"/>
+              <circle cx="20" cy="22" r="10" fill="#1a4a3a"/>
+              <text x="38" y="20" fill="#fff" font-size="11" font-weight="600">Magnus K.</text>
+              <text x="38" y="32" fill="#7a9a8e" font-size="9">19 år · Arizona State</text>
+
+              <text x="14" y="58" fill="#7a9a8e" font-size="8" letter-spacing="1.2">SG TOTAL</text>
+              <text x="14" y="78" fill="#D1F843" font-size="20" font-weight="800">+1.24</text>
+              <text x="80" y="78" fill="#7a9a8e" font-size="9">vs PGA</text>
+
+              <text x="14" y="104" fill="#7a9a8e" font-size="8" letter-spacing="1.2">PUTTING</text>
+              <rect x="14" y="110" width="158" height="6" rx="3" fill="#1a4a3a"/>
+              <rect x="14" y="110" width="120" height="6" rx="3" fill="#005840"/>
+              <text x="14" y="130" fill="#fff" font-size="10">+0.42</text>
+
+              <text x="14" y="154" fill="#7a9a8e" font-size="8" letter-spacing="1.2">APPROACH</text>
+              <rect x="14" y="160" width="158" height="6" rx="3" fill="#1a4a3a"/>
+              <rect x="14" y="160" width="98" height="6" rx="3" fill="#005840"/>
+              <text x="14" y="180" fill="#fff" font-size="10">+0.31</text>
+
+              <text x="14" y="204" fill="#7a9a8e" font-size="8" letter-spacing="1.2">TRINN</text>
+              <rect x="14" y="210" width="158" height="14" rx="3" fill="#1a4a3a"/>
+              <rect x="14" y="210" width="79" height="14" rx="3" fill="#005840"/>
+              <text x="14" y="240" fill="#fff" font-size="9.5">3/6 · College</text>
+              <text x="14" y="262" fill="#7a9a8e" font-size="9">WAGR #147 ↑22</text>
+
+              <!-- pin -->
+              <circle cx="172" cy="14" r="3" fill="#D1F843"/>
+            </g>
+
+            <g transform="translate(208, 44)">
+              <rect width="186" height="280" rx="10" fill="#0D2E23" stroke="#1a4a3a"/>
+              <rect width="186" height="3" rx="1.5" fill="#0d6b51"/>
+              <circle cx="20" cy="22" r="10" fill="#1a4a3a"/>
+              <text x="38" y="20" fill="#fff" font-size="11" font-weight="600">Sondre L.</text>
+              <text x="38" y="32" fill="#7a9a8e" font-size="9">19 år · Texas A&amp;M</text>
+
+              <text x="14" y="58" fill="#7a9a8e" font-size="8" letter-spacing="1.2">SG TOTAL</text>
+              <text x="14" y="78" fill="#fff" font-size="20" font-weight="800">+0.44</text>
+              <text x="80" y="78" fill="#7a9a8e" font-size="9">vs PGA</text>
+
+              <text x="14" y="104" fill="#7a9a8e" font-size="8" letter-spacing="1.2">PUTTING</text>
+              <rect x="14" y="110" width="158" height="6" rx="3" fill="#1a4a3a"/>
+              <rect x="14" y="110" width="60" height="6" rx="3" fill="#0d6b51"/>
+              <text x="14" y="130" fill="#fff" font-size="10">+0.08</text>
+
+              <text x="14" y="154" fill="#7a9a8e" font-size="8" letter-spacing="1.2">APPROACH</text>
+              <rect x="14" y="160" width="158" height="6" rx="3" fill="#1a4a3a"/>
+              <rect x="14" y="160" width="138" height="6" rx="3" fill="#0d6b51"/>
+              <text x="14" y="180" fill="#fff" font-size="10">+0.51</text>
+
+              <text x="14" y="204" fill="#7a9a8e" font-size="8" letter-spacing="1.2">TRINN</text>
+              <rect x="14" y="210" width="158" height="14" rx="3" fill="#1a4a3a"/>
+              <rect x="14" y="210" width="79" height="14" rx="3" fill="#0d6b51"/>
+              <text x="14" y="240" fill="#fff" font-size="9.5">3/6 · College</text>
+              <text x="14" y="262" fill="#7a9a8e" font-size="9">WAGR #312 →0</text>
+            </g>
+
+            <g transform="translate(404, 44)">
+              <rect width="186" height="280" rx="10" fill="#0D2E23" stroke="#1a4a3a"/>
+              <rect width="186" height="3" rx="1.5" fill="#B8D4CC"/>
+              <circle cx="20" cy="22" r="10" fill="#1a4a3a"/>
+              <text x="38" y="20" fill="#fff" font-size="11" font-weight="600">Ingrid B.</text>
+              <text x="38" y="32" fill="#7a9a8e" font-size="9">18 år · Stanford</text>
+
+              <text x="14" y="58" fill="#7a9a8e" font-size="8" letter-spacing="1.2">SG TOTAL</text>
+              <text x="14" y="78" fill="#fff" font-size="20" font-weight="800">+0.91</text>
+              <text x="80" y="78" fill="#7a9a8e" font-size="9">vs PGA</text>
+
+              <text x="14" y="104" fill="#7a9a8e" font-size="8" letter-spacing="1.2">PUTTING</text>
+              <rect x="14" y="110" width="158" height="6" rx="3" fill="#1a4a3a"/>
+              <rect x="14" y="110" width="148" height="6" rx="3" fill="#B8D4CC"/>
+              <text x="14" y="130" fill="#fff" font-size="10">+0.62 <tspan fill="#D1F843" font-weight="700">★</tspan></text>
+
+              <text x="14" y="154" fill="#7a9a8e" font-size="8" letter-spacing="1.2">APPROACH</text>
+              <rect x="14" y="160" width="158" height="6" rx="3" fill="#1a4a3a"/>
+              <rect x="14" y="160" width="84" height="6" rx="3" fill="#B8D4CC"/>
+              <text x="14" y="180" fill="#fff" font-size="10">+0.18</text>
+
+              <text x="14" y="204" fill="#7a9a8e" font-size="8" letter-spacing="1.2">TRINN</text>
+              <rect x="14" y="210" width="158" height="14" rx="3" fill="#1a4a3a"/>
+              <rect x="14" y="210" width="79" height="14" rx="3" fill="#B8D4CC"/>
+              <text x="14" y="240" fill="#fff" font-size="9.5">3/6 · College</text>
+              <text x="14" y="262" fill="#7a9a8e" font-size="9">WAGR #84 ↑8</text>
+            </g>
+
+            <!-- Bench shelf -->
+            <g transform="translate(12, 336)">
+              <rect width="576" height="32" rx="8" fill="#0D2E23" stroke="#1a4a3a" stroke-dasharray="3 2"/>
+              <text x="14" y="20" fill="#7a9a8e" font-size="9" letter-spacing="1.4">SHELF</text>
+              <g font-size="9">
+                <rect x="60" y="8" width="76" height="16" rx="8" fill="#1a4a3a"/>
+                <text x="98" y="20" text-anchor="middle" fill="#fff">Eirik H.</text>
+                <rect x="142" y="8" width="76" height="16" rx="8" fill="#1a4a3a"/>
+                <text x="180" y="20" text-anchor="middle" fill="#fff">Tobias S.</text>
+                <rect x="224" y="8" width="76" height="16" rx="8" fill="#1a4a3a"/>
+                <text x="262" y="20" text-anchor="middle" fill="#fff">Anna E.</text>
+                <text x="312" y="20" fill="#7a9a8e">+ 12 til</text>
+              </g>
+            </g>
+
+            <text x="380" y="52" font-family="Caveat, cursive" font-size="13" fill="#D1F843">★ leder per metrikk</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="block">
+        <h3 data-step="06">Signature visual elements</h3>
+        <div class="sig-list">
+          <div class="sig">
+            <div class="sig-num">1</div>
+            <div class="sig-body">Hver spaltepan har et <b>3px aksent-bånd på toppen</b> i sin egen avdempede grønn-variant — du finner igjen "Magnus' farge" på tvers av alle visualisering­er.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">2</div>
+            <div class="sig-body"><b>Lederstjerne (★ i lime)</b> markerer pr. metrikk hvilken spiller som leder. Lime brukes aldri til å rangere spillere — bare til å peke på vinnerlinjen.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">3</div>
+            <div class="sig-body"><b>Synkronisert scroll</b> mellom kolonnene — dyttet lengst ned, og du sammenligner samme datalag uansett hvilke 6 spillere du ser på.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">4</div>
+            <div class="sig-body"><b>"Benker" er førsteklasses entiteter.</b> "College 2007-kullet", "Mine talenter", "Korn Ferry-kandidater" — lagres, deles, eksporteres som PDF/CSV.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">5</div>
+            <div class="sig-body">Datakilde-badge på hvert tall: liten <code style="font-family:var(--mono);font-size:11px;background:#0d6b51;color:#fff;padding:1px 4px;border-radius:3px">DG</code> / <code style="font-family:var(--mono);font-size:11px;background:#0d6b51;color:#fff;padding:1px 4px;border-radius:3px">SR</code> / <code style="font-family:var(--mono);font-size:11px;background:#0d6b51;color:#fff;padding:1px 4px;border-radius:3px">OLYO</code> så du <b>aldri</b> sammenligner usammenlignbart.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="block">
+          <h3 data-step="01">I én setning</h3>
+          <p>Et Bloomberg-Terminal-aktig analytisk verktøy der scouter bygger og lagrer "benker" — sammenligninger av 2–6 spillere på tvers av alle datalag.</p>
+          <p class="hand-note">arbeidsflate, ikke dashbord</p>
+        </div>
+        <div class="risk">
+          <h4>Risiko + tradeoff</h4>
+          <ul>
+            <li><b>Foreldre er tapt</b>. Dette er for proffer.</li>
+            <li><b>Kald første-runde-opplevelse</b>: tom benk = tom skjerm. Krever onboarding eller "din siste benk"-state.</li>
+            <li><b>Dårlig på "fortelling"</b> — viser status, ikke utvikling. Trinn-overgang­er er bare et tall.</li>
+            <li>Klubbledelse trenger ofte <b>én tall, én kontekst</b> — ikke 6 kolonner.</li>
+            <li>Tunge interaksjoner på mobil; primært desktop-verktøy.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       KONSEPT 3 — SPILLERLOGG
+       ═══════════════════════════════════════════════════════════════ -->
+  <article class="concept" id="k3">
+    <header class="concept-head">
+      <div class="concept-num">03</div>
+      <div>
+        <h2 class="concept-name">Spillerlogg</h2>
+        <p class="concept-pitch">Karrieren som fortelling. Spilleren er enheten — én lang scroll-narrativ som veves sammen av turneringer, milepæler og benchmark-skift over år.</p>
+      </div>
+      <span class="concept-tag">Storytelling-led</span>
+    </header>
+
+    <div class="grid thirds">
+      <div class="block">
+        <h3 data-step="02">Inspirasjons­referanser</h3>
+        <div class="insp">
+          <div class="insp-card">
+            <div class="insp-thumb" style="background:#fff;border:1px solid #ccc;">
+              <svg viewBox="0 0 100 70" class="ia-svg" style="height:100%">
+                <line x1="10" y1="10" x2="10" y2="60" stroke="#005840" stroke-width="1.5"/>
+                <circle cx="10" cy="20" r="3" fill="#005840"/>
+                <circle cx="10" cy="35" r="3" fill="#D1F843"/>
+                <circle cx="10" cy="50" r="3" fill="#005840"/>
+                <line x1="13" y1="20" x2="60" y2="20" stroke="#ccc"/>
+                <line x1="13" y1="35" x2="80" y2="35" stroke="#ccc"/>
+                <line x1="13" y1="50" x2="50" y2="50" stroke="#ccc"/>
+              </svg>
+            </div>
+            <p class="insp-name">The Pudding · "Career"</p>
+            <p class="insp-why">Tidsakse-narrativ med data-vignetter</p>
+          </div>
+          <div class="insp-card">
+            <div class="insp-thumb" style="background:#fafaf7;">
+              <svg viewBox="0 0 100 70" class="ia-svg" style="height:100%">
+                <rect x="10" y="10" width="80" height="20" rx="3" fill="#005840" opacity=".15"/>
+                <rect x="10" y="36" width="80" height="20" rx="3" fill="#005840" opacity=".15"/>
+                <text x="50" y="24" text-anchor="middle" font-size="8" fill="#005840">2024</text>
+                <text x="50" y="50" text-anchor="middle" font-size="8" fill="#005840">2025</text>
+              </svg>
+            </div>
+            <p class="insp-name">Strava årsoppsummering</p>
+            <p class="insp-why">Personlig fortelling, milepæl-fokus</p>
+          </div>
+          <div class="insp-card">
+            <div class="insp-thumb" style="background:#0A1F18;">
+              <svg viewBox="0 0 100 70" class="ia-svg" style="height:100%">
+                <text x="50" y="35" text-anchor="middle" font-size="9" fill="#D1F843" font-weight="700">SG +1.2</text>
+                <text x="50" y="48" text-anchor="middle" font-size="6" fill="#7a9a8e">vs PGA</text>
+                <line x1="20" y1="55" x2="80" y2="55" stroke="#005840"/>
+              </svg>
+            </div>
+            <p class="insp-name">FiveThirtyEight · QB careers</p>
+            <p class="insp-why">Karrierebue som primær­visualisering</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3 data-step="04">Layout-paradigme</h3>
+        <p><b>Scroll-narrativ.</b> Topnav er minimal, ingen sidebar. Hovedsiden er et søk → lander på spiller-siden → der vertikal scroll er karrierens tidsakse: året over, året under, milepæler annoterte i margin.</p>
+        <p>Liste/oversikts-views finnes (de må), men er mindre primære. Verktøyets hjerte er <b>én spiller, ett dypdykk</b>.</p>
+        <p class="hand-note">→ "spilleren er heltinnen, vi er publikum"</p>
+      </div>
+
+      <div class="block">
+        <h3 data-step="05">Color philosophy</h3>
+        <p><b>Light primary</b> — <code style="font-family:var(--mono);font-size:12px">#ECF0EF</code> som papir-aktig lerret. Dyp gran for tekst og rammer; lime kun til milepæl-markører på tidsaksen.</p>
+        <div class="palette">
+          <div class="swatch dark-text" style="background:#ECF0EF">#ECF0EF · papir</div>
+          <div class="swatch" style="background:#324D45">#324D45 · tekst</div>
+          <div class="swatch" style="background:#005840">#005840 · linje/rammer</div>
+          <div class="swatch dark-text" style="background:#D1F843">#D1F843 · milepæl</div>
+          <div class="swatch" style="background:#0A1F18">#0A1F18 · dark alt</div>
+        </div>
+        <p style="font-size:13px;margin-top:6px;">Konseptet bryter "dark er primær" — bevisst. Et fortellings­verktøy fortjener et lett papir.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="block">
+        <h3 data-step="03">Information architecture</h3>
+        <p style="font-size:13.5px;margin-bottom:14px;">10 seksjoner blir <b>ett spiller-objekt</b> + 3 "rooms" rundt det.</p>
+        <svg viewBox="0 0 520 320" class="ia-svg" preserveAspectRatio="xMidYMid meet">
+          <text x="20" y="20" class="hand">spiller-først arkitektur</text>
+
+          <!-- Center: spillerprofil -->
+          <g transform="translate(180, 100)">
+            <circle cx="80" cy="60" r="70" fill="#005840" opacity=".08" stroke="#005840" stroke-width="1.5"/>
+            <text x="80" y="55" text-anchor="middle" font-weight="700" fill="#005840" font-size="14">Spiller-logg</text>
+            <text x="80" y="72" text-anchor="middle" fill="#5b6e67" font-size="10">scroll-narrativ</text>
+            <text x="80" y="88" text-anchor="middle" fill="#5b6e67" font-size="10">2018 → i dag</text>
+          </g>
+
+          <!-- 3 rooms -->
+          <g transform="translate(40, 60)">
+            <rect width="100" height="40" rx="8" fill="white" stroke="#005840"/>
+            <text x="50" y="18" text-anchor="middle" font-size="10" font-weight="600">Spillerne</text>
+            <text x="50" y="32" text-anchor="middle" font-size="9" fill="#5b6e67">søk · liste · pipeline</text>
+          </g>
+          <g transform="translate(40, 220)">
+            <rect width="100" height="40" rx="8" fill="white" stroke="#005840"/>
+            <text x="50" y="18" text-anchor="middle" font-size="10" font-weight="600">Felles­bilde</text>
+            <text x="50" y="32" text-anchor="middle" font-size="9" fill="#5b6e67">benchmarks · kohort</text>
+          </g>
+          <g transform="translate(380, 140)">
+            <rect width="100" height="40" rx="8" fill="white" stroke="#005840"/>
+            <text x="50" y="18" text-anchor="middle" font-size="10" font-weight="600">Utforsk</text>
+            <text x="50" y="32" text-anchor="middle" font-size="9" fill="#5b6e67">DataGolf · proff-tour</text>
+          </g>
+
+          <path class="flow solid" d="M 140 80 Q 175 100, 195 130"/>
+          <path class="flow solid" d="M 140 240 Q 175 220, 195 195"/>
+          <path class="flow solid" d="M 380 160 Q 350 160, 320 160"/>
+
+          <!-- Annotations -->
+          <text x="20" y="120" class="hand">søk</text>
+          <text x="20" y="280" class="hand">kart</text>
+          <text x="430" y="115" class="hand">kontekst</text>
+        </svg>
+      </div>
+
+      <div>
+        <h3 style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:var(--pine);margin:0 0 12px;font-weight:600;display:flex;align-items:center;gap:8px;"><span style="font-family:var(--mono);font-size:10px;background:var(--ink);color:var(--paper);padding:2px 6px;border-radius:3px;letter-spacing:0.05em;">07</span> Hovedkomponent — spiller-narrativ</h3>
+        <div class="mock-wrap">
+          <div class="mock-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="url">talent.akgolf.no/spiller/magnus-kristoffersen</span>
+          </div>
+          <svg viewBox="0 0 600 380" class="mock-svg">
+            <rect x="0" y="0" width="600" height="380" fill="#ECF0EF"/>
+
+            <!-- Top minimal nav -->
+            <text x="20" y="22" font-size="11" font-weight="700" fill="#324D45">ak. Spillerlogg</text>
+            <text x="500" y="22" font-size="10" fill="#324D45">Søk · Felles · Utforsk</text>
+
+            <!-- Hero header -->
+            <g transform="translate(20, 40)">
+              <rect width="560" height="80" rx="10" fill="white" stroke="#e0e8e5"/>
+              <circle cx="40" cy="40" r="22" fill="#005840"/>
+              <text x="76" y="32" font-size="18" font-weight="800" fill="#324D45">Magnus Kristoffersen</text>
+              <text x="76" y="50" font-size="11" fill="#5b6e67">21 år · Arizona State University · WAGR #147</text>
+
+              <!-- pipeline progress -->
+              <text x="280" y="68" font-size="9" fill="#5b6e67" letter-spacing="1.2">PIPELINE</text>
+              <g transform="translate(330, 60)">
+                <rect x="0" y="0" width="14" height="10" rx="2" fill="#005840"/>
+                <rect x="18" y="0" width="14" height="10" rx="2" fill="#005840"/>
+                <rect x="36" y="0" width="14" height="10" rx="2" fill="#D1F843" stroke="#005840" stroke-width="1.5"/>
+                <rect x="54" y="0" width="14" height="10" rx="2" fill="white" stroke="#e0e8e5"/>
+                <rect x="72" y="0" width="14" height="10" rx="2" fill="white" stroke="#e0e8e5"/>
+                <rect x="90" y="0" width="14" height="10" rx="2" fill="white" stroke="#e0e8e5"/>
+              </g>
+              <text x="450" y="68" font-size="10" fill="#005840" font-weight="600">3/6 · College</text>
+            </g>
+
+            <!-- Timeline rail -->
+            <g transform="translate(60, 140)">
+              <line x1="0" y1="0" x2="0" y2="220" stroke="#005840" stroke-width="2"/>
+
+              <!-- Year markers -->
+              <g font-size="10" fill="#5b6e67" font-weight="600">
+                <circle cx="0" cy="6" r="5" fill="#005840"/>
+                <text x="14" y="10" fill="#324D45" font-weight="700">2026</text>
+                <text x="60" y="10">— I dag · WAGR #147 (↑22 fra ifjor)</text>
+
+                <circle cx="0" cy="56" r="5" fill="#D1F843" stroke="#005840" stroke-width="1.5"/>
+                <text x="14" y="60" fill="#324D45" font-weight="700">2024</text>
+                <text x="60" y="60">★ Trinn 2 → 3 · debut college</text>
+
+                <circle cx="0" cy="106" r="5" fill="#005840"/>
+                <text x="14" y="110" fill="#324D45" font-weight="700">2022</text>
+                <text x="60" y="110">— Norgescup-vinner · SG +0.6 vs Norge</text>
+
+                <circle cx="0" cy="156" r="5" fill="#D1F843" stroke="#005840" stroke-width="1.5"/>
+                <text x="14" y="160" fill="#324D45" font-weight="700">2020</text>
+                <text x="60" y="160">★ Trinn 1 → 2 · Srixon Tour-debut</text>
+
+                <circle cx="0" cy="206" r="5" fill="#005840"/>
+                <text x="14" y="210" fill="#324D45" font-weight="700">2018</text>
+                <text x="60" y="210">— 13 år, OLYO Region Øst</text>
+              </g>
+
+              <!-- Inline mini-chart -->
+              <g transform="translate(360, -10)">
+                <rect width="160" height="220" rx="6" fill="white" stroke="#e0e8e5"/>
+                <text x="12" y="18" font-size="9" fill="#5b6e67" letter-spacing="1.2">SG TOTAL · KARRIERE</text>
+                <!-- chart -->
+                <g stroke="#005840" stroke-width="1.5" fill="none">
+                  <polyline points="14,180 40,160 66,150 92,120 118,100 144,80"/>
+                </g>
+                <g fill="#D1F843">
+                  <circle cx="40" cy="160" r="3"/>
+                  <circle cx="92" cy="120" r="3"/>
+                </g>
+                <line x1="14" y1="200" x2="148" y2="200" stroke="#e0e8e5"/>
+                <text x="14" y="212" font-size="8" fill="#97a59f">'18</text>
+                <text x="76" y="212" font-size="8" fill="#97a59f">'22</text>
+                <text x="138" y="212" font-size="8" fill="#97a59f">'26</text>
+                <text x="14" y="38" font-size="14" font-weight="800" fill="#324D45">+1,24</text>
+                <text x="58" y="36" font-size="8" fill="#5b6e67">vs PGA</text>
+              </g>
+            </g>
+
+            <!-- Annotation -->
+            <text x="280" y="220" font-family="Caveat, cursive" font-size="13" fill="#005840">★ = trinn-overgang</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="block">
+        <h3 data-step="06">Signature visual elements</h3>
+        <div class="sig-list">
+          <div class="sig">
+            <div class="sig-num">1</div>
+            <div class="sig-body">Vertikal <b>karriere-tidsakse</b> som primær­navigasjon på spillersiden — år som ankerpunkter, milepæler i margen.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">2</div>
+            <div class="sig-body"><b>Lime-stjernen markerer trinn-overganger</b> — den ene momentane begivenheten i en spillers karriere som faktisk endrer alt.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">3</div>
+            <div class="sig-body"><b>SG-deltaer alltid kontekstualisert mot riktig referanse</b> — junior-snitt for trinn 1, college-snitt for trinn 3. Aldri sammenligne junior med PGA-snitt.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">4</div>
+            <div class="sig-body"><b>Kohort-spøkelse</b> — alle karriere­diagrammer har en grå "median for kullet"-linje bak. Du ser umiddelbart om spilleren er over eller under.</div>
+          </div>
+          <div class="sig">
+            <div class="sig-num">5</div>
+            <div class="sig-body"><b>Genererte sammendragstekster</b> i bokmål: "Magnus rykket opp fra Trinn 2 i 2024 etter to sesonger på Srixon Tour med SG +0,4 vs norsk junior­snitt." Lett-å-dele, lett-å-eksportere.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="block">
+          <h3 data-step="01">I én setning</h3>
+          <p>The Pudding møter Strava. En karriereformat-app der hver spillers historie kan leses som en fortelling — og deles med foreldre, klubb, forbund.</p>
+          <p class="hand-note">"verktøyet har en sjel"</p>
+        </div>
+        <div class="risk">
+          <h4>Risiko + tradeoff</h4>
+          <ul>
+            <li><b>Scouter savner densitet.</b> Én spiller om gangen er sakte når du screener 60.</li>
+            <li><b>Bryter med mørke-modus-arven</b> fra Spillerportalen — gir to visuelle språk i AK-suiten.</li>
+            <li>Risikerer å være "smukt" men <b>ikke handlingsorientert</b> — hvor er <em>"hva gjør jeg nå?"</em></li>
+            <li>Tunge generative tekster må kvalitets­sikres — ellers blir de pinlige.</li>
+            <li>For 700+ junior-spillere kan listen være kjedelig før du kommer til narrativet.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       RECOMMENDATION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="recommendation">
+    <p class="eyebrow">Anbefaling</p>
+    <h2>Bygg <em>Pipeline</em>. Stjel det beste fra de andre.</h2>
+    <p>AK Golfs unike situasjon er <strong>ikke</strong> at de har mye golfdata — det er at de har en <strong>eksplisitt 6-trinns utviklingsstige</strong> som spillere beveger seg gjennom over år. Det er differensiatoren mot enhver generisk golf-stats-app. Konsept 01 gjør stigen til selve produktet, og det er den eneste ideen her som blir <em>vanskelig å kopiere</em> fordi den krever AK Golfs domene­forståelse for å eksistere.</p>
+
+    <div class="why">
+      <div class="why-card">
+        <h5>01 · Hvorfor pipeline</h5>
+        <p>Stigen er allerede mental modell for trenere og scouts. Verktøyet bør reflektere hvordan de tenker — ikke tvinge dem inn i 10 likevektige seksjoner.</p>
+      </div>
+      <div class="why-card">
+        <h5>02 · Steal fra Scoutbenken</h5>
+        <p>Når en scout klikker "sammenlign 3" på et trinn → åpne en mini-versjon av benken som overlay. Densitet på forespørsel, ikke som default.</p>
+      </div>
+      <div class="why-card">
+        <h5>03 · Steal fra Spillerlogg</h5>
+        <p>Spillerprofil-siden (når du klikker en kule) bør være Spillerlogg-narrativet. Pipeline gir oversikten — narrativet gir svaret på hvorfor.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:24px;font-family:var(--hand);font-size:22px;color:var(--lime);line-height:1.3;">
+      → ett produkt, tre lag: <strong style="color:white;font-family:'Inter';font-weight:600;font-size:15px;letter-spacing:0;">Pipeline</strong> (oversikt) · <strong style="color:white;font-family:'Inter';font-weight:600;font-size:15px;letter-spacing:0;">Spillerlogg</strong> (dybde) · <strong style="color:white;font-family:'Inter';font-weight:600;font-size:15px;letter-spacing:0;">Benk</strong> (sammenligning på forespørsel).
+    </p>
+  </section>
+
+  <footer>
+    <span>AK Golf Group AS · Spillerutvikling-plattform · designnotat 01</span>
+    <span>v0.1 · 26.04.2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

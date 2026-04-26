@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><title>Colors — Core</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;font-family:var(--font-body);color:var(--ak-text)}
+  .wrap{padding:16px 18px;display:flex;flex-direction:column;gap:14px}
+  .group{display:flex;flex-direction:column;gap:6px}
+  .glabel{font-size:9px;color:var(--ak-muted);font-family:ui-monospace,monospace;text-transform:uppercase;letter-spacing:.08em;padding-left:2px}
+  .row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .sw{border-radius:10px;overflow:hidden;border:1px solid #e8edec}
+  .chip{height:64px;display:flex;align-items:flex-end;padding:8px}
+  .meta{padding:7px 10px;background:#fff;display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+  .name{font-weight:700;font-size:11px;color:var(--ak-text);letter-spacing:-.01em}
+  .hex{font-family:ui-monospace,monospace;font-size:9px;color:var(--ak-muted);text-transform:uppercase}
+  .label{font-size:9px;color:#fff;font-weight:600;opacity:.9;letter-spacing:.02em}
+  .label-dark{color:var(--ak-dark-bg)}
+</style></head><body>
+<div class="wrap">
+
+  <div class="group">
+    <div class="glabel">Brand · 60 / 10</div>
+    <div class="row">
+      <div class="sw"><div class="chip" style="background:#005840"><span class="label">Primary</span></div><div class="meta"><span class="name">Primary</span><span class="hex">#005840</span></div></div>
+      <div class="sw"><div class="chip" style="background:#D1F843"><span class="label label-dark">Accent</span></div><div class="meta"><span class="name">Accent</span><span class="hex">#D1F843</span></div></div>
+      <div class="sw"><div class="chip" style="background:#0A1F18"><span class="label">Dark bg</span></div><div class="meta"><span class="name">Dark bg</span><span class="hex">#0A1F18</span></div></div>
+      <div class="sw"><div class="chip" style="background:#ECF0EF;border-bottom:1px solid #e0e8e5"><span class="label label-dark">Surface</span></div><div class="meta"><span class="name">Surface</span><span class="hex">#ECF0EF</span></div></div>
+      <div class="sw"><div class="chip" style="background:#B8D4CC"><span class="label label-dark">Primary-light</span></div><div class="meta"><span class="name">Primary-light</span><span class="hex">#B8D4CC</span></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="glabel">Text · 30</div>
+    <div class="row">
+      <div class="sw"><div class="chip" style="background:#324D45"><span class="label">Text</span></div><div class="meta"><span class="name">Text</span><span class="hex">#324D45</span></div></div>
+      <div class="sw"><div class="chip" style="background:#A5B2AD"><span class="label">Muted</span></div><div class="meta"><span class="name">Muted</span><span class="hex">#A5B2AD</span></div></div>
+      <div class="sw"><div class="chip" style="background:#7a9a8e"><span class="label">Muted-dark</span></div><div class="meta"><span class="name">Muted-dark</span><span class="hex">#7A9A8E</span></div></div>
+      <div class="sw"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid #e0e8e5"><span class="label label-dark">On-dark fg</span></div><div class="meta"><span class="name">On-dark fg</span><span class="hex">#FFFFFF</span></div></div>
+      <div class="sw"><div class="chip" style="background:#0D2E23"><span class="label">Card dark</span></div><div class="meta"><span class="name">Card dark</span><span class="hex">#0D2E23</span></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="glabel">Semantic fg · use sparingly</div>
+    <div class="row">
+      <div class="sw"><div class="chip" style="background:#2A7D5A"><span class="label">Success</span></div><div class="meta"><span class="name">Success</span><span class="hex">#2A7D5A</span></div></div>
+      <div class="sw"><div class="chip" style="background:#C48A32"><span class="label">Warning</span></div><div class="meta"><span class="name">Warning</span><span class="hex">#C48A32</span></div></div>
+      <div class="sw"><div class="chip" style="background:#B84233"><span class="label">Danger</span></div><div class="meta"><span class="name">Danger</span><span class="hex">#B84233</span></div></div>
+      <div class="sw"><div class="chip" style="background:#4ADE80"><span class="label label-dark">Data-green</span></div><div class="meta"><span class="name">Data-green</span><span class="hex">#4ADE80</span></div></div>
+      <div class="sw"><div class="chip" style="background:#E85D4A"><span class="label">Data-red</span></div><div class="meta"><span class="name">Data-red</span><span class="hex">#E85D4A</span></div></div>
+    </div>
+  </div>
+
+</div>
+</body></html>

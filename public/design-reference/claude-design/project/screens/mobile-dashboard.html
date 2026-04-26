@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Mobil · Dashboard</title>
+<meta name="viewport" content="width=390, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; font-family:'Inter',sans-serif; background:#FAFAF7; overflow:hidden; color:#0A1F18; }
+  .mv { width:390px; height:100vh; min-height:820px; margin:0 auto; background:#FAFAF7; overflow:hidden; display:flex; flex-direction:column; }
+  .sb { display:flex; justify-content:space-between; padding: 14px 24px 8px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; }
+  .sb .r { font-size:11px; }
+
+  .hd { padding: 8px 20px 14px; display:flex; justify-content:space-between; align-items:center; }
+  .hd .gr { font-family:'JetBrains Mono',monospace; font-size:10px; color:#7A8C85; letter-spacing:0.14em; }
+  .hd h1 { margin:2px 0 0; font-size:26px; font-weight:700; letter-spacing:-0.03em; }
+  .av { width:40px;height:40px;border-radius:50%;background:#0A1F18;color:#D1F843; display:grid;place-items:center;font-weight:700;font-size:13px; position:relative; }
+  .av::after { content:''; position:absolute; top:-2px; right:-2px; width:10px; height:10px; background:#D1F843; border-radius:50%; border:2px solid #FAFAF7; }
+
+  .scroll { flex:1; overflow-y:auto; padding: 0 16px 100px; }
+
+  .hero-card {
+    background: linear-gradient(135deg, #0A1F18, #005840);
+    color: #fff; border-radius: 20px; padding: 20px;
+    margin-bottom: 14px; position:relative; overflow:hidden;
+  }
+  .hero-card::before {
+    content:''; position:absolute; right:-40px; top:-40px;
+    width:180px; height:180px; border-radius:50%;
+    background: radial-gradient(circle, rgba(209,248,67,0.2), transparent 70%);
+  }
+  .hero-card .lbl { font-family:'JetBrains Mono',monospace; font-size:9px; color:#D1F843; letter-spacing:0.18em; }
+  .hero-card h2 { margin:4px 0 2px; font-size:24px; font-weight:700; letter-spacing:-0.02em; }
+  .hero-card p { margin:0; font-size:13px; color:#A5B2AD; line-height:1.4; }
+
+  .ring-row { display:flex; gap: 16px; align-items:center; margin-top: 16px; }
+  .ring {
+    position:relative; width:72px; height:72px;
+  }
+  .ring svg { transform: rotate(-90deg); width:100%;height:100%; }
+  .ring .t { position:absolute; inset:0; display:grid; place-items:center; text-align:center; }
+  .ring .t .v { font-size:15px; font-weight:700; color:#fff; letter-spacing:-0.01em; line-height:1; }
+  .ring .t .l { font-family:'JetBrains Mono',monospace; font-size:8px; color:#A5B2AD; letter-spacing:0.14em; margin-top:1px; }
+
+  .quick { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .q-card {
+    background:#fff; border:1px solid #ECF0EF; border-radius:14px; padding:14px;
+  }
+  .q-card .l { font-family:'JetBrains Mono',monospace; font-size:9px; color:#7A8C85; letter-spacing:0.14em; text-transform:uppercase; }
+  .q-card .v { font-size:24px; font-weight:700; letter-spacing:-0.02em; margin-top:3px; font-variant-numeric:tabular-nums; }
+  .q-card .v small { font-size:11px; color:#2A7D5A; font-weight:500; margin-left:3px; }
+  .q-card .sub { font-size:11px; color:#5A6E66; margin-top:2px; }
+
+  .section-t { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; color:#5A6E66; margin: 8px 4px 10px; font-weight:700; display:flex; justify-content:space-between; }
+
+  .today {
+    background:#fff; border:1px solid #ECF0EF; border-radius:14px; overflow:hidden;
+    margin-bottom: 14px;
+  }
+  .today-row {
+    display:grid; grid-template-columns: 60px 1fr auto; gap:10px;
+    padding: 14px 16px; border-bottom:1px solid #F0F0EC; align-items:center;
+  }
+  .today-row:last-child { border-bottom:none; }
+  .today-row .t { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; color:#0A1F18; }
+  .today-row .t small { display:block; font-size:9px; color:#7A8C85; letter-spacing:0.14em; }
+  .today-row .ttl { font-size:13px; font-weight:600; }
+  .today-row .meta { font-size:11px; color:#7A8C85; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em; margin-top:1px; }
+  .today-row.active { background:rgba(209,248,67,0.08); }
+  .today-row.active .t { color:#0A1F18; }
+
+  .ai-hint {
+    background: #0A1F18; color:#fff; border-radius:14px; padding:14px;
+    display:flex; gap:12px; margin-bottom: 14px;
+  }
+  .ai-hint .a { width:32px;height:32px;background:#AF52DE;border-radius:8px;display:grid;place-items:center;font-weight:700;font-size:11px;flex-shrink:0; }
+  .ai-hint .lbl { font-family:'JetBrains Mono',monospace; font-size:9px; color:#D1F843; letter-spacing:0.14em; }
+  .ai-hint p { margin:2px 0 8px; font-size:13px; line-height:1.4; }
+  .ai-hint button { background:#D1F843; color:#0A1F18; border:none; padding:6px 14px; border-radius:999px; font-weight:600; font-size:11px; }
+
+  .tab-bar {
+    display:flex; justify-content:space-around; padding: 10px 0 20px;
+    background: #fff; border-top: 1px solid #ECF0EF;
+  }
+  .tab-bar .tb { text-align:center; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.1em; color:#7A8C85; }
+  .tab-bar .tb.on { color:#0A1F18; font-weight:700; }
+  .tab-bar .tb .i { font-size: 20px; display:block; }
+</style>
+</head>
+<body>
+<div class="mv">
+  <div class="sb">
+    <span>09:14</span>
+    <span class="r">◉ ··· ▂▄▆ 87%</span>
+  </div>
+  <div class="hd">
+    <div>
+      <div class="gr">TORSDAG · 18. APRIL</div>
+      <h1>God morgen, Marius.</h1>
+    </div>
+    <div class="av">MA</div>
+  </div>
+
+  <div class="scroll">
+    <div class="hero-card">
+      <div class="lbl">◉ FORMKURVE · SISTE 10 RUNDER</div>
+      <h2>Du er i form.</h2>
+      <p>HCP-trend: 3.4 → 3.1 · Approach er elite · Chip trenger fokus.</p>
+      <div class="ring-row">
+        <div class="ring">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#D1F843" stroke-width="8" stroke-linecap="round" stroke-dasharray="180 240"/>
+          </svg>
+          <div class="t"><div class="v">+1.8</div><div class="l">SG TOTAL</div></div>
+        </div>
+        <div style="font-size:11px;color:#A5B2AD;line-height:1.4;flex:1;">
+          <b style="color:#D1F843;">+0.4 SG</b> vs HCP 3-peer.<br>
+          Topp 12% i elite-spor denne måneden.
+        </div>
+      </div>
+    </div>
+
+    <div class="quick">
+      <div class="q-card">
+        <div class="l">STREAK</div>
+        <div class="v">41<small>d</small></div>
+        <div class="sub">Lengste i 2026</div>
+      </div>
+      <div class="q-card">
+        <div class="l">NESTE MÅL</div>
+        <div class="v">HCP 1</div>
+        <div class="sub">2.1 poeng unna</div>
+      </div>
+      <div class="q-card">
+        <div class="l">UKE 17 · ØKTER</div>
+        <div class="v">4<small style="color:#7A8C85;">/6</small></div>
+        <div class="sub">2 igjen denne uken</div>
+      </div>
+      <div class="q-card">
+        <div class="l">LØR · MATCH</div>
+        <div class="v" style="font-size:18px;">08:00</div>
+        <div class="sub">Klubbmatch · Oslo GK</div>
+      </div>
+    </div>
+
+    <div class="ai-hint">
+      <div class="a">AI</div>
+      <div style="flex:1;">
+        <div class="lbl">◈ DAGENS FOKUS</div>
+        <p>Chip-drill med Thomas i dag 15:00. Vær forberedt: se video-review først (5 min).</p>
+        <div style="display:flex;gap:6px;">
+          <button>Åpne review</button>
+          <button style="background:rgba(255,255,255,0.08);color:#fff;">Senere</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-t">
+      <span>I DAG · 3 AVTALER</span>
+      <span style="color:#AF52DE;">SE ALLE →</span>
+    </div>
+
+    <div class="today">
+      <div class="today-row">
+        <div class="t">07:30<small>FERDIG</small></div>
+        <div><div class="ttl">TrackMan · 7J-9J</div><div class="meta">✓ 162 SLAG · CARRY +2.1m</div></div>
+        <div style="color:#2A7D5A;font-size:18px;">✓</div>
+      </div>
+      <div class="today-row active">
+        <div class="t" style="color:#0A1F18;">15:00<small style="color:#0A1F18;">OM 5t 46m</small></div>
+        <div><div class="ttl">Chip med Thomas</div><div class="meta">OSLO GK · 60 MIN · FOKUS</div></div>
+        <div style="font-size:18px;">→</div>
+      </div>
+      <div class="today-row">
+        <div class="t">18:00<small>KVELD</small></div>
+        <div><div class="ttl">Video-review</div><div class="meta">SELVSTUDIE · 15 MIN</div></div>
+        <div style="font-size:18px;color:#7A8C85;">→</div>
+      </div>
+    </div>
+
+    <div class="section-t">
+      <span>HURTIG</span>
+    </div>
+
+    <div class="quick">
+      <div class="q-card" style="background:#0A1F18;color:#fff;">
+        <div class="l" style="color:#D1F843;">+ LOGG</div>
+        <div class="v" style="color:#fff;font-size:15px;margin-top:6px;">Runde</div>
+      </div>
+      <div class="q-card">
+        <div class="l">+ LOGG</div>
+        <div class="v" style="font-size:15px;margin-top:6px;">Økt</div>
+      </div>
+      <div class="q-card" style="background:#D1F843;">
+        <div class="l">◈</div>
+        <div class="v" style="font-size:15px;margin-top:6px;">Spør AI</div>
+      </div>
+      <div class="q-card">
+        <div class="l">△</div>
+        <div class="v" style="font-size:15px;margin-top:6px;">Stats</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tb on"><span class="i">⌂</span>Hjem</div>
+    <div class="tb"><span class="i">⚑</span>Runde</div>
+    <div class="tb"><span class="i">◱</span>Plan</div>
+    <div class="tb"><span class="i">△</span>Stats</div>
+    <div class="tb"><span class="i">◈</span>Coach</div>
+  </div>
+</div>
+</body>
+</html>

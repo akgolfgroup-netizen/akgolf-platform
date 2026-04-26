@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Mobil · AI Coach</title>
+<meta name="viewport" content="width=390, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; font-family:'Inter',sans-serif; background:#FAFAF7; overflow:hidden; color:#0A1F18; }
+  .mv { width:390px; height:100vh; min-height:820px; margin:0 auto; background:#FAFAF7; overflow:hidden; display:flex; flex-direction:column; }
+  .sb { display:flex; justify-content:space-between; padding: 14px 24px 8px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; }
+  .sb .r { font-size:11px; }
+
+  .hd {
+    padding: 8px 20px 14px;
+    display:flex; justify-content:space-between; align-items:center;
+    border-bottom: 1px solid #ECF0EF;
+  }
+  .hd .back { font-size: 22px; color: #5A6E66; }
+  .hd-ttl { text-align:center; flex:1; }
+  .hd-ttl h1 { margin:0; font-size: 16px; font-weight: 700; display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:8px; height:8px; background:#AF52DE; border-radius:50%; box-shadow:0 0 8px #AF52DE; }
+  .hd-ttl .sub { font-family:'JetBrains Mono',monospace; font-size:9px; color:#7A8C85; letter-spacing:0.14em; margin-top:1px; }
+
+  .scroll { flex:1; overflow-y:auto; padding: 16px; display:flex; flex-direction:column; gap: 14px; }
+
+  .msg { display:flex; gap: 8px; max-width: 85%; }
+  .msg.me { margin-left: auto; flex-direction: row-reverse; }
+  .msg .a { width:28px;height:28px;border-radius:7px;flex-shrink:0;display:grid;place-items:center; font-size:10px; font-weight:700; }
+  .msg .a.ai { background:#AF52DE; color:#fff; }
+  .msg .a.me { background:#0A1F18; color:#D1F843; }
+  .msg .b {
+    padding: 10px 14px; border-radius: 14px;
+    font-size: 13px; line-height: 1.5;
+    background: #fff; border: 1px solid #ECF0EF;
+  }
+  .msg.me .b { background:#0A1F18; color:#fff; border:none; }
+  .msg .b b, .msg .b em { font-style:normal; font-weight:700; color:#005840; background:rgba(209,248,67,0.3); padding:0 3px; border-radius:3px; }
+  .msg.me .b b, .msg.me .b em { color:#D1F843; background:rgba(209,248,67,0.12); }
+
+  .chart-m { margin-top:10px; padding: 10px; background:#F5F8F7; border-radius:10px; }
+  .chart-m .l { font-family:'JetBrains Mono',monospace; font-size:9px; color:#5A6E66; letter-spacing:0.14em; margin-bottom: 4px; }
+
+  .sources { display:flex; flex-wrap:wrap; gap:3px; margin-top: 8px; }
+  .sources .s {
+    font-family:'JetBrains Mono',monospace; font-size:9px;
+    padding:2px 6px; border-radius:4px;
+    background:rgba(175,82,222,0.1); color:#AF52DE;
+    letter-spacing:0.04em;
+  }
+
+  .msg-actions { display:flex; gap: 6px; margin-top: 8px; }
+  .msg-actions .a-btn {
+    font-size:11px; padding:6px 10px; border-radius:8px;
+    background:#F5F8F7; color:#324D45; font-weight:500;
+  }
+  .msg-actions .a-btn.pri { background:#D1F843; color:#0A1F18; font-weight:700; }
+
+  .sugg {
+    padding: 0 16px 8px; display:flex; gap:6px; overflow-x:auto;
+  }
+  .sugg .s {
+    flex-shrink:0;
+    padding: 8px 14px; background:#fff; border:1px solid #ECF0EF; border-radius:999px;
+    font-size: 12px; color: #324D45; white-space: nowrap;
+  }
+
+  .composer {
+    display:flex; gap:8px; align-items:center;
+    padding: 10px 16px 24px;
+    background:#fff; border-top: 1px solid #ECF0EF;
+  }
+  .composer .ibox {
+    flex:1; background:#F5F8F7; border-radius:999px;
+    padding: 10px 16px; font-size:13px; color:#7A8C85;
+  }
+  .composer .mic { width:42px; height:42px; background:#0A1F18; color:#D1F843; border-radius:50%; display:grid; place-items:center; font-size:16px; }
+</style>
+</head>
+<body>
+<div class="mv">
+  <div class="sb">
+    <span>09:14</span>
+    <span class="r">◉ ··· ▂▄▆ 87%</span>
+  </div>
+  <div class="hd">
+    <div class="back">←</div>
+    <div class="hd-ttl">
+      <h1><span class="dot"></span> AI Coach</h1>
+      <div class="sub">GROUNDED · 5 KILDER</div>
+    </div>
+    <div style="font-size:18px;color:#5A6E66;">⋯</div>
+  </div>
+
+  <div class="scroll">
+    <div class="msg me">
+      <div class="a me">MA</div>
+      <div class="b">Hva er svakheten min akkurat nå?</div>
+    </div>
+    <div class="msg">
+      <div class="a ai">AI</div>
+      <div>
+        <div class="b">
+          Største svakhet: <b>chip fra 10–25m</b>. Du mister <b>0.31 SG/runde</b> her de siste 10 rundene. Rotårsak: åpen skulderlinje i impact — synlig i 3 av 4 videoklipp.
+          <div class="chart-m">
+            <div class="l">SG CHIP · 10 SISTE</div>
+            <svg viewBox="0 0 200 40" style="width:100%;">
+              <line x1="0" y1="20" x2="200" y2="20" stroke="#324D45" stroke-dasharray="2,2" stroke-width="0.5"/>
+              <path d="M5,22 L25,26 L45,23 L65,28 L85,30 L105,26 L125,32 L145,28 L165,34 L185,30" fill="none" stroke="#E85D4E" stroke-width="1.5"/>
+              <g fill="#E85D4E">
+                <circle cx="5" cy="22" r="2"/><circle cx="25" cy="26" r="2"/><circle cx="45" cy="23" r="2"/><circle cx="65" cy="28" r="2"/><circle cx="85" cy="30" r="2"/><circle cx="105" cy="26" r="2"/><circle cx="125" cy="32" r="2"/><circle cx="145" cy="28" r="2"/><circle cx="165" cy="34" r="2"/><circle cx="185" cy="30" r="2"/>
+              </g>
+            </svg>
+          </div>
+          <div class="sources">
+            <span class="s">runde/018</span>
+            <span class="s">runde/015</span>
+            <span class="s">trackman/04-18</span>
+            <span class="s">video/04-17</span>
+            <span class="s">coach/thomas</span>
+          </div>
+        </div>
+        <div class="msg-actions">
+          <div class="a-btn pri">+ Legg til i plan</div>
+          <div class="a-btn">Se video</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="msg me">
+      <div class="a me">MA</div>
+      <div class="b">Hva skal jeg gjøre i dag?</div>
+    </div>
+    <div class="msg">
+      <div class="a ai">AI</div>
+      <div>
+        <div class="b">
+          I dag 15:00 har du <em>chip-coaching med Thomas</em>. Forberedelse:
+          <br><br>
+          <b>1.</b> Se video-review (5 min) — fokus skulderlinje.<br>
+          <b>2.</b> Varm opp med clock drill — 3 pos × 3 baller.<br>
+          <b>3.</b> HRV 48 i morges → lav-intensitet fys i stedet.
+          <div class="sources">
+            <span class="s">booking/04-18</span>
+            <span class="s">whoop/HRV</span>
+            <span class="s">plan/uke-17</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="msg me">
+      <div class="a me">MA</div>
+      <div class="b">Er jeg klar for lørdag?</div>
+    </div>
+    <div class="msg">
+      <div class="a ai">AI</div>
+      <div class="b">
+        Ja — Approach og putting er over peer. Eneste risiko: chip rundt green (hull 5, 12, 17). <b>Taktikk:</b> sikt på fet side av flagg når chip-avstand er sannsynlig.
+      </div>
+    </div>
+  </div>
+
+  <div class="sugg">
+    <div class="s">Forklar SG</div>
+    <div class="s">Beste drill for impact?</div>
+    <div class="s">Lag plan for uke 18</div>
+    <div class="s">Sammenlign med peer</div>
+  </div>
+
+  <div class="composer">
+    <div class="ibox">Spør om data, drills, plan...</div>
+    <div class="mic">🎤</div>
+  </div>
+</div>
+</body>
+</html>

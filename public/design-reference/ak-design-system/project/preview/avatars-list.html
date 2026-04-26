@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="no"><head><meta charset="utf-8"><title>Avatars &amp; list rows</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;background:#fff;color:#324D45;font-family:Inter,sans-serif;padding:20px}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:4px;transition:background .15s}
+  .row + .row{border-top:1px solid #F0F3F2}
+  .av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;background:#ECF0EF;color:#005840}
+  .av.active{background:#005840;color:#fff}
+  .av.inactive{background:#FCEAE8;color:#B84233}
+  .name{font-weight:600;font-size:13px;color:#324D45}
+  .meta{font-size:11px;color:#A5B2AD;margin-top:1px}
+  .badge{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:8px;font-size:10px;font-weight:600;background:#ECF0EF;color:#005840;vertical-align:1px}
+  .badge.streak{background:#D1F843;color:#0A1F18}
+  .hcp{margin-left:auto;text-align:right}
+  .hcp .v{font-weight:700;font-size:14px;color:#324D45;letter-spacing:-.01em}
+  .hcp .l{font-size:9px;color:#A5B2AD;text-transform:uppercase;letter-spacing:.06em;font-family:ui-monospace,monospace}
+  .trend{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:600;margin-top:2px}
+  .trend.pos{color:#2A7D5A}
+  .trend.neg{color:#B84233}
+</style></head><body>
+<div class="row">
+  <div class="av active">MK</div>
+  <div><div class="name">Magnus K. <span class="badge streak">⭐ 12d</span></div><div class="meta">23 økter</div></div>
+  <div class="hcp"><div class="l">HCP</div><div class="v">15,9</div><div class="trend pos">↓ 2,3</div></div>
+</div>
+<div class="row">
+  <div class="av">ES</div>
+  <div><div class="name">Emilie S. <span class="badge">5d</span></div><div class="meta">18 økter</div></div>
+  <div class="hcp"><div class="l">HCP</div><div class="v">22,4</div><div class="trend pos">↓ 0,8</div></div>
+</div>
+<div class="row">
+  <div class="av">OR</div>
+  <div><div class="name">Oliver R. <span class="badge">9d</span></div><div class="meta">31 økter</div></div>
+  <div class="hcp"><div class="l">HCP</div><div class="v">8,1</div><div class="trend pos">↓ 0,3</div></div>
+</div>
+<div class="row">
+  <div class="av inactive">JT</div>
+  <div><div class="name">Jakob T.</div><div class="meta">7 økter · inaktiv 14d</div></div>
+  <div class="hcp"><div class="l">HCP</div><div class="v">12,5</div><div class="trend neg">↑ 0,4</div></div>
+</div>
+</body></html>

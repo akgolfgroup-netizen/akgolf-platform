@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>AK Golf Brand Guide V2.0 — Visuell Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  :root {
+    /* Brand Guide V2.0 — Core */
+    --primary: #005840;
+    --primary-hover: #00472f;
+    --primary-soft: #E8F0EC;
+    --primary-deep: #003B2A;
+
+    --accent: #D1F843;
+    --accent-soft: #ECFCC0;
+    --accent-deep: #A6C734;
+
+    --surface: #F4F6F4;
+    --card: #FFFFFF;
+    --surface-soft: #EDF1EE;
+
+    --sidebar: #0F1F18;
+    --sidebar-hover: #172B22;
+    --sidebar-divider: #1F3329;
+    --sidebar-muted: #A4B1AA;
+
+    --ink: #0A1F18;
+    --ink-muted: #5C6B62;
+    --ink-subtle: #8A958E;
+
+    --line: #E4EAE6;
+    --line-soft: #EDF1EE;
+
+    --success: #2A7D5A;
+    --success-soft: #E0EFE7;
+    --warning: #C48A32;
+    --warning-soft: #F6ECD9;
+    --danger: #B84233;
+    --danger-soft: #F4DAD5;
+
+    --shadow-card: 0 1px 2px rgba(15,31,24,0.04), 0 4px 12px rgba(15,31,24,0.04);
+    --shadow-card-hover: 0 1px 2px rgba(15,31,24,0.06), 0 14px 32px rgba(15,31,24,0.08);
+    --shadow-rim: inset 0 0 0 1px rgba(15,31,24,0.06);
+    --shadow-accent-glow: 0 0 0 1px rgba(209,248,67,0.5), 0 8px 24px rgba(209,248,67,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.5;
+    padding: 48px 24px 96px;
+  }
+
+  .container { max-width: 1240px; margin: 0 auto; }
+
+  /* Header */
+  .hero {
+    margin-bottom: 64px;
+    padding: 48px 40px;
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--line);
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink-muted);
+    max-width: 600px;
+  }
+
+  /* Section */
+  section { margin-bottom: 56px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-header h2 {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .section-header .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-subtle);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Color swatches */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .swatch {
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--line);
+  }
+  .swatch-color { height: 96px; }
+  .swatch-info { padding: 12px 14px; }
+  .swatch-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .swatch-hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+  .swatch-token {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-subtle);
+    margin-top: 4px;
+  }
+
+  /* Typography */
+  .typo-grid {
+    display: grid;
+    gap: 20px;
+  }
+  .typo-row {
+    background: var(--card);
+    padding: 24px 28px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .typo-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .typo-label-name { color: var(--ink); font-weight: 600; }
+  .typo-label-meta { display: block; margin-top: 6px; color: var(--ink-subtle); }
+  .typo-display { color: var(--ink); }
+  .display-1 { font-family: 'Inter Tight', sans-serif; font-size: 72px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+  .display-2 { font-family: 'Inter Tight', sans-serif; font-size: 48px; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+  .heading-1 { font-family: 'Inter Tight', sans-serif; font-size: 32px; font-weight: 600; letter-spacing: -0.02em; }
+  .heading-2 { font-family: 'Inter Tight', sans-serif; font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+  .body-lg { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 400; }
+  .body { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400; }
+  .body-sm { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 400; color: var(--ink-muted); }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; }
+  .stat { font-family: 'JetBrains Mono', monospace; font-size: 36px; font-weight: 600; color: var(--primary); }
+
+  /* Buttons */
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: var(--card);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: var(--primary-hover); }
+  .btn-accent { background: var(--accent); color: var(--ink); }
+  .btn-accent:hover { box-shadow: var(--shadow-accent-glow); }
+  .btn-outline { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-ghost { background: transparent; color: var(--ink-muted); }
+  .btn-ghost:hover { background: var(--surface-soft); color: var(--ink); }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-sm { padding: 6px 12px; font-size: 13px; }
+  .btn-lg { padding: 14px 24px; font-size: 16px; }
+
+  /* Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .demo-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+  }
+  .demo-card-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .demo-card-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .demo-card-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 8px;
+  }
+  .demo-card-stat .delta { font-size: 16px; color: var(--success); margin-left: 8px; }
+
+  .card-dark {
+    background: var(--sidebar);
+    color: white;
+  }
+  .card-dark .demo-card-eyebrow { color: var(--sidebar-muted); }
+  .card-dark .demo-card-stat { color: var(--accent); }
+
+  .card-accent {
+    background: var(--accent);
+    color: var(--ink);
+    box-shadow: var(--shadow-accent-glow);
+  }
+  .card-accent .demo-card-eyebrow { color: var(--primary-deep); }
+
+  /* Badges */
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: var(--card);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .badge-primary { background: var(--primary-soft); color: var(--primary-deep); }
+  .badge-accent { background: var(--accent-soft); color: #5d6d12; }
+  .badge-success { background: var(--success-soft); color: var(--success); }
+  .badge-warning { background: var(--warning-soft); color: var(--warning); }
+  .badge-danger { background: var(--danger-soft); color: var(--danger); }
+  .badge-neutral { background: var(--surface-soft); color: var(--ink-muted); }
+  .badge-dot::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* Shadows */
+  .shadow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .shadow-demo {
+    background: var(--card);
+    height: 120px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .shadow-card-demo { box-shadow: var(--shadow-card); }
+  .shadow-hover-demo { box-shadow: var(--shadow-card-hover); }
+  .shadow-rim-demo { box-shadow: var(--shadow-rim); }
+  .shadow-accent-demo { box-shadow: var(--shadow-accent-glow); }
+
+  /* Radius */
+  .radius-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .radius-demo {
+    background: var(--primary);
+    color: white;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .r-md { border-radius: 6px; }
+  .r-lg { border-radius: 8px; }
+  .r-xl { border-radius: 12px; }
+  .r-2xl { border-radius: 16px; }
+  .r-3xl { border-radius: 24px; }
+  .r-full { border-radius: 9999px; }
+
+  /* Icons */
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
+    background: var(--card);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+  }
+  .icon-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 8px;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .icon-cell:hover { background: var(--surface-soft); }
+  .icon-cell svg { color: var(--ink); width: 22px; height: 22px; }
+  .icon-cell .icon-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-muted);
+    text-align: center;
+  }
+
+  /* Layout demo (3-panel) */
+  .layout-demo {
+    display: grid;
+    grid-template-columns: 56px 200px 1fr;
+    background: var(--card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--line);
+    height: 360px;
+  }
+  .layout-rail {
+    background: var(--sidebar);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+    gap: 12px;
+  }
+  .layout-rail-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--sidebar-muted);
+  }
+  .layout-rail-icon.active { background: var(--sidebar-hover); color: var(--accent); }
+  .layout-rail-icon svg { width: 18px; height: 18px; }
+  .layout-nav {
+    background: var(--sidebar);
+    color: var(--sidebar-muted);
+    padding: 24px 16px;
+    border-left: 1px solid var(--sidebar-divider);
+  }
+  .layout-nav-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sidebar-muted);
+    margin-bottom: 16px;
+  }
+  .layout-nav-item {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    color: white;
+    margin-bottom: 4px;
+    cursor: pointer;
+  }
+  .layout-nav-item.active { background: var(--sidebar-hover); }
+  .layout-content {
+    background: var(--surface);
+    padding: 32px;
+  }
+  .layout-content h3 {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  .layout-content p { color: var(--ink-muted); font-size: 14px; margin-bottom: 24px; }
+  .mini-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .mini-stat {
+    background: var(--card);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+  }
+  .mini-stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .mini-stat-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 80px;
+    padding: 32px;
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    text-align: center;
+  }
+  .footer-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .footer h4 {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 20px;
+    margin: 12px 0 8px;
+  }
+  .footer p { color: var(--ink-muted); font-size: 14px; }
+
+  /* Status pills row */
+  .status-row {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    background: var(--card);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+  }
+  .pulse {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    background: var(--primary-soft);
+    color: var(--primary-deep);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .pulse-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 0 rgba(0,88,64,0.5);
+    animation: pulseAnim 1.8s infinite;
+  }
+  @keyframes pulseAnim {
+    0% { box-shadow: 0 0 0 0 rgba(0,88,64,0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(0,88,64,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,88,64,0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">AK Golf Group · Brand Guide V2.0 · 2026-04-25</div>
+    <h1>Visuell <em>brand-guide</em><br>for hele plattformen.</h1>
+    <p class="hero-sub">Én sannhetskilde for farger, typografi, ikoner, kort, knapper og layout-mønstre. Bruk denne siden som referanse når du tar designvalget.</p>
+  </div>
+
+  <!-- COLORS -->
+  <section>
+    <div class="section-header">
+      <h2>Farger</h2>
+      <span class="meta">brand v2.0 · 2026</span>
+    </div>
+
+    <h3 style="font-family: 'Inter Tight'; font-size: 18px; margin: 20px 0 12px;">Primary (skogsgrønn)</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: #005840;"></div><div class="swatch-info"><div class="swatch-name">Primary</div><div class="swatch-hex">#005840</div><div class="swatch-token">--color-primary</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #00472f;"></div><div class="swatch-info"><div class="swatch-name">Primary Hover</div><div class="swatch-hex">#00472f</div><div class="swatch-token">--color-primary-hover</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #003B2A;"></div><div class="swatch-info"><div class="swatch-name">Primary Deep</div><div class="swatch-hex">#003B2A</div><div class="swatch-token">--color-primary-deep</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #E8F0EC;"></div><div class="swatch-info"><div class="swatch-name">Primary Soft</div><div class="swatch-hex">#E8F0EC</div><div class="swatch-token">--color-primary-soft</div></div></div>
+    </div>
+
+    <h3 style="font-family: 'Inter Tight'; font-size: 18px; margin: 28px 0 12px;">Accent / CTA (high-energy lime)</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: #D1F843;"></div><div class="swatch-info"><div class="swatch-name">Accent</div><div class="swatch-hex">#D1F843</div><div class="swatch-token">--color-accent</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #A6C734;"></div><div class="swatch-info"><div class="swatch-name">Accent Deep</div><div class="swatch-hex">#A6C734</div><div class="swatch-token">--color-accent-deep</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #ECFCC0;"></div><div class="swatch-info"><div class="swatch-name">Accent Soft</div><div class="swatch-hex">#ECFCC0</div><div class="swatch-token">--color-accent-soft</div></div></div>
+    </div>
+
+    <h3 style="font-family: 'Inter Tight'; font-size: 18px; margin: 28px 0 12px;">Surface (varm cream)</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: #F4F6F4;"></div><div class="swatch-info"><div class="swatch-name">Surface</div><div class="swatch-hex">#F4F6F4</div><div class="swatch-token">--color-surface</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #FFFFFF; border-bottom: 1px solid var(--line);"></div><div class="swatch-info"><div class="swatch-name">Card</div><div class="swatch-hex">#FFFFFF</div><div class="swatch-token">--color-card</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #EDF1EE;"></div><div class="swatch-info"><div class="swatch-name">Surface Soft</div><div class="swatch-hex">#EDF1EE</div><div class="swatch-token">--color-surface-soft</div></div></div>
+    </div>
+
+    <h3 style="font-family: 'Inter Tight'; font-size: 18px; margin: 28px 0 12px;">Sidebar (mørk kontrast)</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: #0F1F18;"></div><div class="swatch-info"><div class="swatch-name">Sidebar</div><div class="swatch-hex">#0F1F18</div><div class="swatch-token">--color-sidebar</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #172B22;"></div><div class="swatch-info"><div class="swatch-name">Sidebar Hover</div><div class="swatch-hex">#172B22</div><div class="swatch-token">--color-sidebar-hover</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #1F3329;"></div><div class="swatch-info"><div class="swatch-name">Sidebar Divider</div><div class="swatch-hex">#1F3329</div><div class="swatch-token">--color-sidebar-divider</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #A4B1AA;"></div><div class="swatch-info"><div class="swatch-name">Sidebar Muted</div><div class="swatch-hex">#A4B1AA</div><div class="swatch-token">--color-sidebar-muted</div></div></div>
+    </div>
+
+    <h3 style="font-family: 'Inter Tight'; font-size: 18px; margin: 28px 0 12px;">Tekst (ink)</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: #0A1F18;"></div><div class="swatch-info"><div class="swatch-name">Ink</div><div class="swatch-hex">#0A1F18</div><div class="swatch-token">--color-ink</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #5C6B62;"></div><div class="swatch-info"><div class="swatch-name">Ink Muted</div><div class="swatch-hex">#5C6B62</div><div class="swatch-token">--color-ink-muted</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #8A958E;"></div><div class="swatch-info"><div class="swatch-name">Ink Subtle</div><div class="swatch-hex">#8A958E</div><div class="swatch-token">--color-ink-subtle</div></div></div>
+    </div>
+
+    <h3 style="font-family: 'Inter Tight'; font-size: 18px; margin: 28px 0 12px;">Status</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: #2A7D5A;"></div><div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-hex">#2A7D5A</div><div class="swatch-token">--color-success</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #C48A32;"></div><div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-hex">#C48A32</div><div class="swatch-token">--color-warning</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #B84233;"></div><div class="swatch-info"><div class="swatch-name">Danger</div><div class="swatch-hex">#B84233</div><div class="swatch-token">--color-danger</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #E0EFE7;"></div><div class="swatch-info"><div class="swatch-name">Success Soft</div><div class="swatch-hex">#E0EFE7</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #F6ECD9;"></div><div class="swatch-info"><div class="swatch-name">Warning Soft</div><div class="swatch-hex">#F6ECD9</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #F4DAD5;"></div><div class="swatch-info"><div class="swatch-name">Danger Soft</div><div class="swatch-hex">#F4DAD5</div></div></div>
+    </div>
+
+    <h3 style="font-family: 'Inter Tight'; font-size: 18px; margin: 28px 0 12px;">Borders</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background: #E4EAE6;"></div><div class="swatch-info"><div class="swatch-name">Line</div><div class="swatch-hex">#E4EAE6</div><div class="swatch-token">--color-line</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background: #EDF1EE;"></div><div class="swatch-info"><div class="swatch-name">Line Soft</div><div class="swatch-hex">#EDF1EE</div><div class="swatch-token">--color-line-soft</div></div></div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section>
+    <div class="section-header">
+      <h2>Typografi</h2>
+      <span class="meta">inter tight · inter · jetbrains mono</span>
+    </div>
+    <div class="typo-grid">
+      <div class="typo-row">
+        <div class="typo-label"><span class="typo-label-name">Display 1</span><span class="typo-label-meta">Inter Tight 72/700</span></div>
+        <div class="typo-display display-1">Bli en bedre <em style="font-style:italic; color:var(--primary); font-weight:600;">golfer</em>.</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label"><span class="typo-label-name">Display 2</span><span class="typo-label-meta">Inter Tight 48/600</span></div>
+        <div class="typo-display display-2">Premium golfcoaching.</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label"><span class="typo-label-name">Heading 1</span><span class="typo-label-meta">Inter Tight 32/600</span></div>
+        <div class="typo-display heading-1">Dagens fokus</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label"><span class="typo-label-name">Heading 2</span><span class="typo-label-meta">Inter Tight 24/600</span></div>
+        <div class="typo-display heading-2">Aktive økter denne uken</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label"><span class="typo-label-name">Body Large</span><span class="typo-label-meta">Inter 18/400</span></div>
+        <div class="typo-display body-lg">Eleven har vist tydelig framgang siden forrige økt — særlig på Approach.</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label"><span class="typo-label-name">Body</span><span class="typo-label-meta">Inter 15/400</span></div>
+        <div class="typo-display body">Standardtekst i UI: kort-innhold, beskrivelser, lister, brødtekst.</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label"><span class="typo-label-name">Body Small</span><span class="typo-label-meta">Inter 13/400 muted</span></div>
+        <div class="typo-display body-sm">Sekundær tekst, captions, tooltip-innhold, meta-informasjon.</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label"><span class="typo-label-name">Mono Label</span><span class="typo-label-meta">JetBrains Mono 14/500</span></div>
+        <div class="typo-display mono">SG · APP · DR · ARG · PT</div>
+      </div>
+      <div class="typo-row">
+        <div class="typo-label"><span class="typo-label-name">Stat / KPI</span><span class="typo-label-meta">JetBrains Mono 36/600</span></div>
+        <div class="typo-display stat">+2,4</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUTTONS -->
+  <section>
+    <div class="section-header">
+      <h2>Knapper</h2>
+      <span class="meta">primary · accent · outline · ghost</span>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary"><i data-lucide="check"></i>Primary</button>
+      <button class="btn btn-accent"><i data-lucide="zap"></i>Accent CTA</button>
+      <button class="btn btn-outline"><i data-lucide="settings"></i>Outline</button>
+      <button class="btn btn-ghost"><i data-lucide="x"></i>Ghost</button>
+      <button class="btn btn-danger"><i data-lucide="trash-2"></i>Danger</button>
+    </div>
+    <div style="height: 16px;"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-primary">Default</button>
+      <button class="btn btn-primary btn-lg">Large</button>
+    </div>
+  </section>
+
+  <!-- BADGES -->
+  <section>
+    <div class="section-header">
+      <h2>Badges & status-pills</h2>
+      <span class="meta">soft tones</span>
+    </div>
+    <div class="badge-row">
+      <span class="badge badge-primary badge-dot">Primary</span>
+      <span class="badge badge-accent">Accent</span>
+      <span class="badge badge-success badge-dot">Bekreftet</span>
+      <span class="badge badge-warning badge-dot">Venter</span>
+      <span class="badge badge-danger badge-dot">Avbrutt</span>
+      <span class="badge badge-neutral">Nøytral</span>
+    </div>
+    <div style="height: 16px;"></div>
+    <div class="status-row">
+      <div class="pulse"><span class="pulse-dot"></span>Aktiv nå · Studio 1</div>
+      <span class="badge badge-success badge-dot">Møtt opp</span>
+      <span class="badge badge-warning badge-dot">Påminnelse sendt</span>
+      <span class="badge badge-danger badge-dot">Møtte ikke opp</span>
+    </div>
+  </section>
+
+  <!-- CARDS -->
+  <section>
+    <div class="section-header">
+      <h2>Kort-varianter</h2>
+      <span class="meta">light · dark contrast · accent glow</span>
+    </div>
+    <div class="card-grid">
+      <div class="demo-card">
+        <div class="demo-card-eyebrow">SG · denne måneden</div>
+        <div class="demo-card-title">Strokes Gained</div>
+        <div class="demo-card-stat">+2,4 <span class="delta">↑ 0,6</span></div>
+      </div>
+      <div class="demo-card card-dark">
+        <div class="demo-card-eyebrow">Aktive økter</div>
+        <div class="demo-card-title" style="color:white;">Denne uken</div>
+        <div class="demo-card-stat">12</div>
+      </div>
+      <div class="demo-card card-accent">
+        <div class="demo-card-eyebrow">Achievement</div>
+        <div class="demo-card-title">12 dager på rad</div>
+        <div class="demo-card-stat" style="color:var(--primary-deep);">+3</div>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-eyebrow">HCP</div>
+        <div class="demo-card-title">Handicap-trend</div>
+        <div class="demo-card-stat">8,4 <span class="delta">↓ 0,3</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHADOWS -->
+  <section>
+    <div class="section-header">
+      <h2>Skygger</h2>
+      <span class="meta">subtle dual-shadow</span>
+    </div>
+    <div class="shadow-grid">
+      <div class="shadow-demo shadow-card-demo">card</div>
+      <div class="shadow-demo shadow-hover-demo">card-hover (lift)</div>
+      <div class="shadow-demo shadow-rim-demo">rim (inset)</div>
+      <div class="shadow-demo shadow-accent-demo">accent-glow</div>
+    </div>
+  </section>
+
+  <!-- RADIUS -->
+  <section>
+    <div class="section-header">
+      <h2>Radius</h2>
+      <span class="meta">md · lg · xl · 2xl · 3xl · full</span>
+    </div>
+    <div class="radius-grid">
+      <div class="radius-demo r-md">md · 6px</div>
+      <div class="radius-demo r-lg">lg · 8px</div>
+      <div class="radius-demo r-xl">xl · 12px</div>
+      <div class="radius-demo r-2xl">2xl · 16px</div>
+      <div class="radius-demo r-3xl">3xl · 24px</div>
+      <div class="radius-demo r-full">full</div>
+    </div>
+  </section>
+
+  <!-- ICONS -->
+  <section>
+    <div class="section-header">
+      <h2>Ikoner</h2>
+      <span class="meta">lucide-react · 18–22px standard</span>
+    </div>
+    <div class="icon-grid">
+      <div class="icon-cell"><i data-lucide="calendar"></i><span class="icon-name">calendar</span></div>
+      <div class="icon-cell"><i data-lucide="users"></i><span class="icon-name">users</span></div>
+      <div class="icon-cell"><i data-lucide="bell"></i><span class="icon-name">bell</span></div>
+      <div class="icon-cell"><i data-lucide="trending-up"></i><span class="icon-name">trending-up</span></div>
+      <div class="icon-cell"><i data-lucide="target"></i><span class="icon-name">target</span></div>
+      <div class="icon-cell"><i data-lucide="check-circle"></i><span class="icon-name">check-circle</span></div>
+      <div class="icon-cell"><i data-lucide="settings"></i><span class="icon-name">settings</span></div>
+      <div class="icon-cell"><i data-lucide="search"></i><span class="icon-name">search</span></div>
+      <div class="icon-cell"><i data-lucide="play"></i><span class="icon-name">play</span></div>
+      <div class="icon-cell"><i data-lucide="zap"></i><span class="icon-name">zap</span></div>
+      <div class="icon-cell"><i data-lucide="flag"></i><span class="icon-name">flag</span></div>
+      <div class="icon-cell"><i data-lucide="bar-chart-3"></i><span class="icon-name">bar-chart-3</span></div>
+      <div class="icon-cell"><i data-lucide="dollar-sign"></i><span class="icon-name">dollar-sign</span></div>
+      <div class="icon-cell"><i data-lucide="message-circle"></i><span class="icon-name">message-circle</span></div>
+      <div class="icon-cell"><i data-lucide="map-pin"></i><span class="icon-name">map-pin</span></div>
+      <div class="icon-cell"><i data-lucide="clock"></i><span class="icon-name">clock</span></div>
+    </div>
+  </section>
+
+  <!-- LAYOUT DEMO -->
+  <section>
+    <div class="section-header">
+      <h2>Layout-mønster (CoachHQ tre-panel)</h2>
+      <span class="meta">56px rail · 200px nav · innhold</span>
+    </div>
+    <div class="layout-demo">
+      <div class="layout-rail">
+        <div class="layout-rail-icon active"><i data-lucide="target"></i></div>
+        <div class="layout-rail-icon"><i data-lucide="users"></i></div>
+        <div class="layout-rail-icon"><i data-lucide="calendar"></i></div>
+        <div class="layout-rail-icon"><i data-lucide="bar-chart-3"></i></div>
+        <div class="layout-rail-icon"><i data-lucide="dollar-sign"></i></div>
+        <div class="layout-rail-icon"><i data-lucide="settings"></i></div>
+      </div>
+      <div class="layout-nav">
+        <div class="layout-nav-title">Coach HQ</div>
+        <div class="layout-nav-item active">Dagens fokus</div>
+        <div class="layout-nav-item">Aktive økter</div>
+        <div class="layout-nav-item">Elever</div>
+        <div class="layout-nav-item">Bookinger</div>
+        <div class="layout-nav-item">Analyse</div>
+        <div class="layout-nav-item">Økonomi</div>
+      </div>
+      <div class="layout-content">
+        <h3>Dagens fokus</h3>
+        <p>Tre signaler trenger handling i dag.</p>
+        <div class="mini-stats">
+          <div class="mini-stat">
+            <div class="mini-stat-label">Møter i dag</div>
+            <div class="mini-stat-val">4</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-label">Signaler</div>
+            <div class="mini-stat-val" style="color: var(--warning);">3</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-label">SG snitt</div>
+            <div class="mini-stat-val" style="color: var(--success);">+1,8</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESTHETICS -->
+  <section>
+    <div class="section-header">
+      <h2>Estetikk-prinsipper</h2>
+      <span class="meta">inspirasjoner</span>
+    </div>
+    <div class="card-grid">
+      <div class="demo-card">
+        <div class="demo-card-eyebrow">Do.app</div>
+        <div class="demo-card-title">Stor fet heading med italic-aksent</div>
+        <p class="body-sm" style="margin-top: 8px;">Varm off-white bg, sparsam fargebruk, primary-fragmenter i italic.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-eyebrow">Flux</div>
+        <div class="demo-card-title">Hvite kort på surface</div>
+        <p class="body-sm" style="margin-top: 8px;">Subtle dual-shadow, tett data, klar hierarki.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-eyebrow">Celoxis</div>
+        <div class="demo-card-title">Tre-panel-layout</div>
+        <p class="body-sm" style="margin-top: 8px;">Profesjonell tetthet, mono-labels for KPI-er.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-eyebrow">Job Match</div>
+        <div class="demo-card-title">Dramatic typography</div>
+        <p class="body-sm" style="margin-top: 8px;">72–80px Inter Tight, bold med italic-aksent.</p>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-eyebrow">Cosmo</div>
+        <div class="demo-card-title">Ett dark-contrast-kort</div>
+        <p class="body-sm" style="margin-top: 8px;">Per seksjon for sterk kontrast og rytme.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-meta">authoritative source</div>
+    <h4>.claude/rules/design-system.md</h4>
+    <p>Dette er den eneste sannhetskilden for design. Alle tokens, fonter, ikoner og prinsipper på denne siden er definert der.</p>
+  </div>
+
+</div>
+<script>
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

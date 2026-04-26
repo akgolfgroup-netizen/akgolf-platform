@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Bookinger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_shared.css">
+<style>
+  body { background: #FAFAF7; }
+  .hero-book {
+    background: linear-gradient(135deg, #005840 0%, #0A1F18 100%);
+    color: #fff; border-radius: 18px; padding: 24px 28px;
+    display: grid; grid-template-columns: 1.3fr 1fr 180px; gap: 24px;
+    margin-bottom: 20px; align-items: center;
+  }
+  .hero-book .lbl { font-family:'JetBrains Mono',monospace; font-size:10px; color:#D1F843; letter-spacing:0.14em; }
+  .hero-book h2 { margin:6px 0 4px; font-size:26px; font-weight:700; letter-spacing:-0.02em; }
+  .hero-book .meta { color:#A5B2AD; font-size:13px; }
+  .hero-book .meta-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; }
+  .hero-book .meta-grid .i { background:rgba(255,255,255,0.06); padding:10px 12px; border-radius:8px; }
+  .hero-book .meta-grid .i .l { font-family:'JetBrains Mono',monospace; font-size:9px; color:#A5B2AD; letter-spacing:0.14em; text-transform:uppercase; }
+  .hero-book .meta-grid .i .v { font-size:13px; font-weight:600; color:#fff; margin-top:2px; }
+  .hero-cta { display:flex; flex-direction:column; gap:8px; }
+  .hero-cta .btn { justify-content:center; }
+
+  /* Week view */
+  .week-head { display:grid; grid-template-columns: 60px repeat(7, 1fr); gap:2px; margin-bottom:4px; }
+  .week-head .d { text-align:center; padding:10px 0; background:#fff; border-radius:6px 6px 0 0; }
+  .week-head .d .day { font-family:'JetBrains Mono',monospace; font-size:10px; color:#7A8C85; letter-spacing:0.14em; }
+  .week-head .d .date { font-size:18px; font-weight:700; color:#0A1F18; letter-spacing:-0.02em; }
+  .week-head .d.today { background:#D1F843; }
+  .week-head .d.today .day { color:#0A1F18; }
+
+  .week-grid { display:grid; grid-template-columns: 60px repeat(7, 1fr); gap:2px; background:#ECF0EF; border-radius:0 0 12px 12px; overflow:hidden; }
+  .hr-col { background:#fff; padding:8px 4px 0 8px; position:relative; }
+  .hr-col .hr { font-family:'JetBrains Mono',monospace; font-size:10px; color:#7A8C85; padding: 0 0 60px 0; letter-spacing:0.08em; }
+  .day-col { background:#fff; position:relative; min-height:600px; padding:4px; }
+  .day-col .hline { position:absolute; left:0; right:0; height:1px; background:#F5F8F7; }
+
+  .evt {
+    position:absolute; left:4px; right:4px; padding:6px 8px;
+    border-radius:6px; font-size:11px; line-height:1.3;
+    overflow:hidden;
+    border-left:3px solid;
+  }
+  .evt.coach { background:#E8F5EF; border-color:#2A7D5A; color:#1A4D36; }
+  .evt.range { background:#FFF8E8; border-color:#C48A32; color:#7A5520; }
+  .evt.round { background:#0A1F18; border-color:#D1F843; color:#D1F843; }
+  .evt.mem { background:#FAF5FF; border-color:#AF52DE; color:#6B21A8; }
+  .evt.gym { background:#F0F4F8; border-color:#1E40AF; color:#1E40AF; }
+  .evt .t { font-weight:700; }
+  .evt .m { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.08em; margin-top:2px; opacity:0.7; }
+
+  .rules {
+    background:#FFF7E8; border:1px solid #F0E2B5; border-radius:12px;
+    padding:14px 18px; display:flex; gap:14px; align-items:flex-start; margin-top:16px;
+  }
+  .rules-icon { width:32px; height:32px; background:#C48A32; color:#fff; border-radius:8px; display:grid; place-items:center; font-weight:700; flex-shrink:0; }
+
+  .upcoming { display:flex; flex-direction:column; gap:10px; }
+  .u-row { display:grid; grid-template-columns: 60px 1fr auto; gap:12px; padding:12px 14px; background:#fff; border:1px solid #ECF0EF; border-radius:10px; align-items:center; }
+  .u-row .when { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; color:#0A1F18; letter-spacing:0.08em; text-align:center; }
+  .u-row .when .day { font-size:9px; color:#7A8C85; letter-spacing:0.14em; display:block; }
+  .u-row .title { font-weight:600; font-size:13px; }
+  .u-row .meta { font-size:11px; color:#5A6E66; font-family:'JetBrains Mono',monospace; letter-spacing:0.06em; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">AK</div>
+      <div><div class="title">AK Golf</div><div class="sub">Elite</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item">⌂ Oversikt</div>
+      <div class="nav-item">◱ Planlegg</div>
+      <div class="nav-item">◎ Tren</div>
+      <div class="nav-item">⚑ Spill</div>
+      <div class="nav-item">△ Analyse</div>
+      <div style="height:14px;"></div>
+      <div class="nav-item">◈ AI Coach</div>
+      <div class="nav-item">⊙ TrackMan</div>
+      <div class="nav-item">◉ Dagbok</div>
+      <div class="nav-item active">☰ Bookinger</div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar">MA</div>
+      <div><div class="name">Marius A.</div><div class="tier">Elite</div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Bookinger</div>
+        <div class="topbar-sub">Uke 17 · 27. april – 3. mai · 6 aktive bookinger</div>
+      </div>
+      <div class="topbar-right">
+        <div class="pill"><span class="dot" style="background:#2A7D5A;"></span> Alt bekreftet</div>
+        <button class="btn btn-outline">← Uke 16</button>
+        <button class="btn btn-outline">Uke 18 →</button>
+        <button class="btn btn-accent">+ Ny booking</button>
+      </div>
+    </div>
+
+    <div class="hero-book">
+      <div>
+        <div class="lbl">◉ NESTE · OM 2 TIMER 34 MIN</div>
+        <h2>Chip-coaching med Thomas</h2>
+        <div class="meta">Oslo GK · Korthull-område · fokus på 10–25m chip og skulderlinje</div>
+      </div>
+      <div class="meta-grid">
+        <div class="i"><div class="l">NÅR</div><div class="v">I dag · 15:00 – 16:00</div></div>
+        <div class="i"><div class="l">HVOR</div><div class="v">Oslo GK · Short Game</div></div>
+        <div class="i"><div class="l">COACH</div><div class="v">Thomas Berg</div></div>
+        <div class="i"><div class="l">FORBEREDELSE</div><div class="v">Video-review sendt</div></div>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-accent">Kart & kjørerute</button>
+        <button class="btn" style="background:rgba(255,255,255,0.1);color:#fff;">Forbered</button>
+        <button class="btn" style="background:transparent;color:#E85D4E;border:1px solid rgba(232,93,78,0.3);">Avbestill</button>
+      </div>
+    </div>
+
+    <div class="week-head">
+      <div class="d" style="background:transparent;"></div>
+      <div class="d"><div class="day">MAN</div><div class="date">28</div></div>
+      <div class="d"><div class="day">TIR</div><div class="date">29</div></div>
+      <div class="d today"><div class="day">ONS · I DAG</div><div class="date">30</div></div>
+      <div class="d"><div class="day">TOR</div><div class="date">1</div></div>
+      <div class="d"><div class="day">FRE</div><div class="date">2</div></div>
+      <div class="d"><div class="day">LØR</div><div class="date">3</div></div>
+      <div class="d"><div class="day">SØN</div><div class="date">4</div></div>
+    </div>
+
+    <div class="week-grid">
+      <div class="hr-col">
+        <div class="hr">07:00</div>
+        <div class="hr">09:00</div>
+        <div class="hr">11:00</div>
+        <div class="hr">13:00</div>
+        <div class="hr">15:00</div>
+        <div class="hr">17:00</div>
+        <div class="hr">19:00</div>
+      </div>
+      <!-- MAN -->
+      <div class="day-col">
+        <div class="evt gym" style="top:70px;height:50px;"><div class="t">Gym · styrke</div><div class="m">08:00–09:30</div></div>
+        <div class="evt range" style="top:280px;height:60px;"><div class="t">Range · 120 slag</div><div class="m">13:00–14:30</div></div>
+      </div>
+      <!-- TIR -->
+      <div class="day-col">
+        <div class="evt mem" style="top:150px;height:70px;"><div class="t">Mental · Marte</div><div class="m">10:30–11:45 · Zoom</div></div>
+      </div>
+      <!-- ONS (today) -->
+      <div class="day-col" style="background:#FAFDF0;">
+        <div class="evt range" style="top:60px;height:70px;"><div class="t">TrackMan · 7J-9J</div><div class="m">07:30–09:00 · ✓ fullført</div></div>
+        <div class="evt coach" style="top:340px;height:60px; box-shadow: 0 4px 12px rgba(42,125,90,0.25);"><div class="t">◉ Chip med Thomas</div><div class="m">15:00–16:00 · Oslo GK</div></div>
+        <div class="evt mem" style="top:500px;height:35px;"><div class="t">Video-review</div><div class="m">18:00 · 15 min</div></div>
+      </div>
+      <!-- TOR -->
+      <div class="day-col">
+        <div class="evt gym" style="top:50px;height:50px;"><div class="t">Rotasjon</div><div class="m">07:30–09:00</div></div>
+        <div class="evt range" style="top:270px;height:90px;"><div class="t">Putt · SAM lab</div><div class="m">12:30–14:30</div></div>
+      </div>
+      <!-- FRE -->
+      <div class="day-col">
+        <div class="evt coach" style="top:230px;height:60px;"><div class="t">Swing-review</div><div class="m">11:30–12:30 · Thomas</div></div>
+        <div class="evt range" style="top:410px;height:55px;"><div class="t">Full swing</div><div class="m">16:00–17:30</div></div>
+      </div>
+      <!-- LØR -->
+      <div class="day-col">
+        <div class="evt round" style="top:50px;height:260px; box-shadow: 0 6px 16px rgba(10,31,24,0.25);"><div class="t">⚑ KLUBBMATCH</div><div class="m" style="color:rgba(209,248,67,0.7);">08:00–13:30 · Oslo GK</div><div style="margin-top:10px;font-size:11px;color:#fff;font-family:Inter;line-height:1.4;">Gul tee · start hull 1 · 4-ball med Henrik, Jonas, Trond</div></div>
+      </div>
+      <!-- SØN -->
+      <div class="day-col">
+        <div class="evt" style="top:90px;height:40px;background:#F5F8F7; color:#5A6E66; border-color:#7FB88F;"><div class="t">Restitusjon</div><div class="m">09:00–10:00 · yoga</div></div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;">
+      <div>
+        <h3 style="margin:0 0 10px; font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#5A6E66;">Kommende · Neste 14 dager</h3>
+        <div class="upcoming">
+          <div class="u-row">
+            <div class="when"><span class="day">ONS</span>15:00</div>
+            <div>
+              <div class="title">Chip-coaching med Thomas</div>
+              <div class="meta">OSLO GK · 60 MIN · BEKREFTET</div>
+            </div>
+            <div><span class="badge sage">I dag</span></div>
+          </div>
+          <div class="u-row">
+            <div class="when"><span class="day">LØR</span>08:00</div>
+            <div>
+              <div class="title">Klubbmatch · 4-ball</div>
+              <div class="meta">OSLO GK · 5.5t · START HULL 1</div>
+            </div>
+            <div><span class="badge lime">Runde</span></div>
+          </div>
+          <div class="u-row">
+            <div class="when"><span class="day">TIR</span>10:30</div>
+            <div>
+              <div class="title">Mental · Marte Aarsheim</div>
+              <div class="meta">ZOOM · 75 MIN · REGULERT</div>
+            </div>
+            <div><span class="badge ai">AI-forberedelse</span></div>
+          </div>
+          <div class="u-row">
+            <div class="when"><span class="day">FRE</span>11:30</div>
+            <div>
+              <div class="title">Swing-review med Thomas</div>
+              <div class="meta">OSLO GK · 60 MIN · BEKREFTET</div>
+            </div>
+            <div><span class="badge sage">Coach</span></div>
+          </div>
+          <div class="u-row" style="opacity:0.6;">
+            <div class="when"><span class="day">SØN</span>09:00</div>
+            <div>
+              <div class="title">Yoga · restitusjon</div>
+              <div class="meta">HJEMME · 60 MIN · VALGFRITT</div>
+            </div>
+            <div><span class="badge outline">Valgfri</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 10px; font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#5A6E66;">Tilgjengelige tider</h3>
+        <div style="background:#fff;border:1px solid #ECF0EF;border-radius:12px;padding:18px;">
+          <div class="row-between" style="margin-bottom:12px;">
+            <div style="font-weight:700; font-size:14px;">Thomas Berg · Coach</div>
+            <span class="badge sage">5 ledige slots</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px;">
+            <button class="btn btn-outline" style="padding:10px 4px;font-size:11px;flex-direction:column;">Tor 1.<br><b style="color:#0A1F18;font-size:12px;">14:00</b></button>
+            <button class="btn btn-outline" style="padding:10px 4px;font-size:11px;flex-direction:column;">Tor 1.<br><b style="color:#0A1F18;font-size:12px;">16:00</b></button>
+            <button class="btn btn-outline" style="padding:10px 4px;font-size:11px;flex-direction:column;">Man 5.<br><b style="color:#0A1F18;font-size:12px;">09:00</b></button>
+            <button class="btn btn-outline" style="padding:10px 4px;font-size:11px;flex-direction:column;background:#D1F843;border-color:#D1F843;">Man 5.<br><b style="color:#0A1F18;font-size:12px;">15:00</b></button>
+          </div>
+          <h4 style="margin:0 0 8px;font-size:12px;font-weight:700;">TrackMan bay</h4>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+            <button class="btn btn-outline" style="padding:10px 4px;font-size:11px;flex-direction:column;">Tor<br><b style="color:#0A1F18;font-size:12px;">Bay 2</b></button>
+            <button class="btn btn-outline" style="padding:10px 4px;font-size:11px;flex-direction:column;">Fre<br><b style="color:#0A1F18;font-size:12px;">Bay 3</b></button>
+            <button class="btn btn-outline" style="padding:10px 4px;font-size:11px;flex-direction:column;">Søn<br><b style="color:#0A1F18;font-size:12px;">Bay 1</b></button>
+            <button class="btn btn-outline" style="padding:10px 4px;font-size:11px;flex-direction:column;">Søn<br><b style="color:#0A1F18;font-size:12px;">Bay 4</b></button>
+          </div>
+        </div>
+
+        <div class="rules">
+          <div class="rules-icon">!</div>
+          <div>
+            <div style="font-weight:700;font-size:13px;color:#7A5520;">Avbestilling</div>
+            <div style="font-size:12px; color:#7A5520; line-height:1.5; margin-top:3px;">
+              Avbestill senest <b>24t før</b> for full refusjon. Senere avbestilling: 50% fra treningskonto. AI Coach varsler deg hvis værprognose tilsier behov for omrokkering.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    
+    <radialGradient id="rough" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#3a5a3a"></stop>
+      <stop offset="60%" stop-color="#2a4228"></stop>
+      <stop offset="100%" stop-color="#1a2e1a"></stop>
+    </radialGradient>
+    
+    <linearGradient id="fairway" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8bb56a"></stop>
+      <stop offset="50%" stop-color="#769e59"></stop>
+      <stop offset="100%" stop-color="#638848"></stop>
+    </linearGradient>
+    
+    <radialGradient id="green" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#9ec976"></stop>
+      <stop offset="100%" stop-color="#6e9a4d"></stop>
+    </radialGradient>
+    
+    <radialGradient id="sand" cx="40%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#efe2b8"></stop>
+      <stop offset="100%" stop-color="#cfbd85"></stop>
+    </radialGradient>
+    
+    <radialGradient id="water" cx="40%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#5ba8b0"></stop>
+      <stop offset="50%" stop-color="#3a7c85"></stop>
+      <stop offset="100%" stop-color="#1f4d55"></stop>
+    </radialGradient>
+    
+    <radialGradient id="tree" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#3e6a3a"></stop>
+      <stop offset="60%" stop-color="#23421f"></stop>
+      <stop offset="100%" stop-color="#132710"></stop>
+    </radialGradient>
+    
+    <pattern id="stripes" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(18)">
+      <rect width="28" height="28" fill="url(#fairway)"></rect>
+      <rect width="28" height="14" fill="#6e9555" opacity="0.35"></rect>
+    </pattern>
+    
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6"></feGaussianBlur>
+    </filter>
+    <filter id="softer" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14"></feGaussianBlur>
+    </filter>
+  </defs>
+
+  
+  <rect width="1600" height="1000" fill="url(#rough)"></rect>
+
+  
+  <g filter="url(#softer)" opacity="0.85">
+    <ellipse cx="120" cy="140" rx="180" ry="120" fill="url(#tree)"></ellipse>
+    <ellipse cx="300" cy="60" rx="140" ry="90" fill="url(#tree)"></ellipse>
+    <ellipse cx="1480" cy="160" rx="200" ry="130" fill="url(#tree)"></ellipse>
+    <ellipse cx="1380" cy="860" rx="180" ry="120" fill="url(#tree)"></ellipse>
+    <ellipse cx="160" cy="860" rx="160" ry="110" fill="url(#tree)"></ellipse>
+    <ellipse cx="700" cy="40" rx="200" ry="70" fill="url(#tree)"></ellipse>
+    <ellipse cx="1100" cy="960" rx="220" ry="70" fill="url(#tree)"></ellipse>
+  </g>
+
+  
+  <g opacity="0.92">
+    <circle cx="80" cy="300" r="42" fill="url(#tree)"></circle>
+    <circle cx="140" cy="420" r="36" fill="url(#tree)"></circle>
+    <circle cx="60" cy="560" r="44" fill="url(#tree)"></circle>
+    <circle cx="180" cy="700" r="38" fill="url(#tree)"></circle>
+    <circle cx="1520" cy="340" r="40" fill="url(#tree)"></circle>
+    <circle cx="1460" cy="460" r="44" fill="url(#tree)"></circle>
+    <circle cx="1540" cy="600" r="36" fill="url(#tree)"></circle>
+    <circle cx="1480" cy="740" r="42" fill="url(#tree)"></circle>
+    <circle cx="260" cy="200" r="28" fill="url(#tree)"></circle>
+    <circle cx="1320" cy="260" r="30" fill="url(#tree)"></circle>
+    <circle cx="1280" cy="780" r="32" fill="url(#tree)"></circle>
+    <circle cx="320" cy="820" r="30" fill="url(#tree)"></circle>
+  </g>
+
+  
+  <path d="M 100 620 Q 180 540 320 560 Q 440 580 480 680 Q 500 780 400 830 Q 260 870 160 820 Q 80 760 100 620 Z" fill="url(#water)" opacity="0.95"></path>
+  
+  <g opacity="0.3" stroke="#fff" stroke-width="1" fill="none">
+    <path d="M 180 660 Q 240 650 310 670"></path>
+    <path d="M 200 720 Q 280 710 360 730"></path>
+    <path d="M 220 780 Q 300 770 380 790"></path>
+  </g>
+
+  
+  <g opacity="0.6">
+    <circle cx="150" cy="640" r="5" fill="#8a8275"></circle>
+    <circle cx="180" cy="620" r="4" fill="#9e9683"></circle>
+    <circle cx="220" cy="580" r="5" fill="#8a8275"></circle>
+    <circle cx="290" cy="560" r="4" fill="#9e9683"></circle>
+    <circle cx="360" cy="570" r="5" fill="#8a8275"></circle>
+    <circle cx="420" cy="600" r="4" fill="#9e9683"></circle>
+    <circle cx="470" cy="680" r="5" fill="#8a8275"></circle>
+    <circle cx="475" cy="750" r="4" fill="#9e9683"></circle>
+  </g>
+
+  
+  <path d="M 680 900&#xA;           C 600 820 580 720 620 620&#xA;           C 660 520 760 450 880 430&#xA;           C 1000 410 1100 440 1180 510&#xA;           C 1240 560 1250 620 1220 660&#xA;           C 1190 700 1120 710 1060 680&#xA;           L 900 600&#xA;           C 830 565 780 560 740 600&#xA;           C 700 640 700 720 740 820&#xA;           C 770 890 760 920 680 900 Z" fill="url(#stripes)" opacity="0.95"></path>
+
+  
+  <path d="M 680 900&#xA;           C 600 820 580 720 620 620&#xA;           C 660 520 760 450 880 430&#xA;           C 1000 410 1100 440 1180 510" stroke="#2a4228" stroke-width="14" fill="none" opacity="0.35" filter="url(#soft)"></path>
+
+  
+  <ellipse cx="740" cy="500" rx="58" ry="34" fill="url(#sand)" transform="rotate(-20 740 500)"></ellipse>
+  <ellipse cx="1040" cy="460" rx="48" ry="26" fill="url(#sand)" transform="rotate(15 1040 460)"></ellipse>
+  <ellipse cx="1140" cy="560" rx="42" ry="24" fill="url(#sand)" transform="rotate(30 1140 560)"></ellipse>
+  <ellipse cx="830" cy="770" rx="38" ry="22" fill="url(#sand)" transform="rotate(-30 830 770)"></ellipse>
+  <ellipse cx="660" cy="760" rx="34" ry="20" fill="url(#sand)"></ellipse>
+
+  
+  <ellipse cx="1130" cy="470" rx="80" ry="54" fill="url(#green)"></ellipse>
+  <ellipse cx="1130" cy="470" rx="80" ry="54" fill="none" stroke="#2a4228" stroke-width="2" opacity="0.4"></ellipse>
+
+  
+  <rect x="700" y="870" width="60" height="22" rx="4" fill="#6e9555" opacity="0.8"></rect>
+
+  
+  <path d="M 760 890 Q 720 760 760 650 Q 820 540 920 500 Q 1020 470 1100 470" stroke="#b8a886" stroke-width="4" fill="none" opacity="0.5" stroke-dasharray="0"></path>
+
+  
+  <g opacity="0.15">
+    <circle cx="400" cy="200" r="2" fill="#4a6a3e"></circle>
+    <circle cx="500" cy="250" r="2" fill="#4a6a3e"></circle>
+    <circle cx="380" cy="340" r="2" fill="#4a6a3e"></circle>
+    <circle cx="1280" cy="200" r="2" fill="#4a6a3e"></circle>
+    <circle cx="1350" cy="340" r="2" fill="#4a6a3e"></circle>
+    <circle cx="1400" cy="880" r="2" fill="#4a6a3e"></circle>
+    <circle cx="520" cy="900" r="2" fill="#4a6a3e"></circle>
+  </g>
+</svg>
