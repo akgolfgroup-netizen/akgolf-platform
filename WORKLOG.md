@@ -8,6 +8,47 @@
 
 ---
 
+## 2026-04-26 (kveld) — Branch-konsolidering Fase 1 + turneringskalender
+
+**Jobbet med:** MBA→main-konsolidering. Verifisert at MBA-arbeid var trygt sikret, kartlagt 14 branches med ikke-merget arbeid, merget 4 av dem til main, dokumentert resten i triage-rapport.
+
+**Sikret MBA-arbeid:**
+- 4 lokale branches uten remote-spor pushet til `origin/audit/*` som backup (coachhq-v2, kimi-snapshot, ai-coach-backend, ai-coach-frontend)
+
+**Merget til main (PR squash):**
+- **PR #14** `feature/booking-slot-fix` — P1/P2/P3-fixer, deterministisk Stripe-idempotency, atomisk SQL-RPC for quota, dynamisk slot-telling, waitlist-UI, reconcile-CRON, lazy Prisma-init, dynamic CRON-routes (12 commits)
+- **PR #12** `claude/frontend-design-TQRoN` — booking-v2 7-stegs wizard, smart packing-algoritme, edge-skjermer, server-actions-stubs (11 commits)
+- **PR #7** `feature/facility-booking` — GFGK fasilitets-bookingkart med map/calendar/list-views, AddActivityModal, FacilityMap-komponent (8 commits)
+- Cherry-pick fra `feature/go-live-checklist` — `docs/GO_LIVE_CHECKLIST.md`
+
+**Slettet stale lokale branches:**
+- `cleanup-backup-20260415-004137`, `worktree-agent-*` (×6), `feat/ai-coach-*` (×2), `feature/coachhq-v2`, `backup/kimi-uncommitted-snapshot-2026-04-23` — alle dekket av audit/* eller foreldet
+
+**Utsatt (krever manuell konflikthåndtering):**
+- **PR #13** `claude/add-workout-summary-j6qWr` — treningsplan forslag-modus, AK-pyramide, samtaletråd. 7 konfliktfiler inkl. `prisma/schema.prisma`. Verdifullt arbeid (4 real commits + 3 Prisma-migrasjoner) — må løses i frisk sesjon
+- `fix/revert-destructive-sync` — 31 commits bak main, sannsynligvis foreldet. Triage anbefaler sletting
+- `feature/heritage-design-rewrite` — Heritage er DEPRECATED etter Brand Guide V2.0-rebrand
+- 13 andre branches dokumentert i `docs/status/BRANCH_TRIAGE_2026-04-26.md`
+
+**Turneringskalender:**
+- Kjørt `scripts/run-tournament-sync-now.ts 2026` — **204 turneringer** importert/oppdatert i prod-DB
+- Bonus-funn: Global Junior Tour (32 turneringer) og JMI Sweden (39 turneringer) **fungerer faktisk** — spec'en er utdatert
+- Generert `docs/TURNERINGSKALENDER.md` (Dato, Turnering, Serie, Sted, Nivå, Hull, Kilde) sortert per år
+- Lagret kopi i Google Drive inbox: `AK Golf Group/inbox/turneringskalender-2026-04-26.md`
+- Nytt script: `scripts/export-tournaments-md.ts`
+
+**Status main etter konsolidering:**
+- Main har nå booking-v2 wizard + GFGK fasilitetskart + alle P1-fixer + waitlist + reconcile + go-live-checklist
+- Vercel auto-deploy SUCCESS for både akgolf-platform og akgolf-website på alle 3 PR
+- Pre-eksisterende TS-feil (`trainingPlanTemplate` mangler i schema) gjelder fortsatt — fikses i PR #13 når den merges
+
+**Neste steg:**
+1. Anders løser konflikter i PR #13 (treningsplan) — eller ber meg gjøre det i frisk sesjon
+2. Slett `fix/revert-destructive-sync` og `feature/heritage-design-rewrite` etter bekreftelse
+3. Fortsett med Fase 2 (multi-lokasjon for booking, CoachHQ booking-innstillinger, manuelle bookinger med repetisjon)
+
+---
+
 ## 2026-04-26 — CoachHQ Sprint 1 D + C2 + Sprint 2-6 (alt backend, ingen ny design)
 
 **Jobbet med:** Per Anders' fullmakt — alle 6 sprinter unntatt nye visuelle redesign. Brukte fornuftige standardvalg for beslutninger som ellers krevde input. Spillerprofil 360 React-implementering ble unntak (godkjent mockup), resten er backend/agenter/data.
