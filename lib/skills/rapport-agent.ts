@@ -1,7 +1,7 @@
 // RapportAgent — kvartalsvise spiller-rapporter
 // Spec: software/dokumenter/ai-system/agents-spec.md sek 9
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 
 const SYSTEM_PROMPT_TRAINER = `
 Du genererer kvartalsrapport for trener-versjon (faglig, full detalj).
@@ -103,7 +103,7 @@ export interface RapportAgentOutput {
 export async function generateQuarterlyReport(
   input: RapportAgentInput
 ): Promise<RapportAgentOutput> {
-  let totalUsage = { inputTokens: 0, outputTokens: 0, estimatedCostNOK: 0 };
+  const totalUsage = { inputTokens: 0, outputTokens: 0, estimatedCostNOK: 0 };
   let totalDuration = 0;
   let trainerReport: string | undefined;
   let parentReport: string | undefined;

@@ -1,7 +1,7 @@
 // Skill: forklar-konsept
 // Spør om et AK Golf-konsept, få forklaring fra metodikk-master
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 import { getMcpResource } from "@/lib/mcp-client";
 
 const SYSTEM_PROMPT = `

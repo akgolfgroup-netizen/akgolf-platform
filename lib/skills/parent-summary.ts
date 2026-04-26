@@ -1,7 +1,7 @@
 // Foreldre-summary skill
 // Empatisk, ikke-teknisk oversettelse av spilllerens utvikling
 
-import { runSkill } from "./anthropic.js";
+import { runSkill } from "./anthropic";
 
 const SYSTEM_PROMPT = `
 Du oversetter teknisk fagspråk til foreldre-vennlig kommunikasjon for AK Golf Academy.

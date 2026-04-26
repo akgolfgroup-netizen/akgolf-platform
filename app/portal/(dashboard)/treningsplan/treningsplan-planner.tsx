@@ -28,7 +28,6 @@ import {
   createUserExercise,
   type ExerciseSearchResult,
 } from "@/lib/portal/training/exercise-actions";
-import type { TemplateId } from "@/lib/portal/training/standard-templates";
 import {
   PlanAdjustmentBanner,
   type AdjustmentSuggestion,
@@ -731,12 +730,8 @@ function WeekGrid({
                             <span className="ml-1 text-info">· {ev.groupName}</span>
                           )}
                         </span>
-                        {!ev.isGroupSession && onResizeEvent && (
-                          <ResizeHandle
-                            currentDuration={ev.dur}
-                            onResize={(newDur) => onResizeEvent(ev.id, newDur)}
-                          />
-                        )}
+                        {/* TODO: ResizeHandle-komponent ikke implementert enda. onResizeEvent-prop er klar når UI bygges. */}
+                        {!ev.isGroupSession && onResizeEvent && null}
                       </div>
                     ))}
                   </div>

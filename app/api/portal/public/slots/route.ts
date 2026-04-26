@@ -15,7 +15,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase/server";
 import {
   generateSlots,
+  generateSmartSlotsForWindow,
   getAvailabilityForDate,
+  type ServiceDuration,
+  type SlotStrategy,
 } from "@/lib/portal/slots";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { unstable_cache, revalidateTag } from "next/cache";
@@ -28,12 +31,13 @@ const CACHE_MAX_AGE = 30; // sekunder
 const STALE_WHILE_REVALIDATE = 60; // sekunder
 const CACHE_TAG_PREFIX = "slots";
 
-// Cache key generator
+// Cache key generator (inkluderer strategy så compact og all caches separat)
 const getSlotsCacheKey = (
   instructorId: string,
   dateStr: string,
-  serviceTypeId: string
-) => `${CACHE_TAG_PREFIX}:${instructorId}:${dateStr}:${serviceTypeId}`;
+  serviceTypeId: string,
+  strategy: SlotStrategy = "all"
+) => `${CACHE_TAG_PREFIX}:${instructorId}:${dateStr}:${serviceTypeId}:${strategy}`;
 
 // Cached slot generation with Next.js unstable_cache
 const getCachedSlotsData = unstable_cache(
@@ -41,13 +45,14 @@ const getCachedSlotsData = unstable_cache(
     instructorId: string,
     date: Date,
     nextDay: Date,
-    serviceTypeId: string
+    serviceTypeId: string,
+    strategy: SlotStrategy
   ): Promise<{ slots: string[]; source: string }> => {
     const startTime = Date.now();
     const supabase = await createServerSupabase();
 
     // Hent tilgjengelighet med støtte for date-overrides
-    const [serviceTypeResult, availabilityWindows, existingBookingsResult, blockedTimesResult] =
+    const [serviceTypeResult, availabilityWindows, existingBookingsResult, blockedTimesResult, allServiceTypesResult] =
       await Promise.all([
         supabase
           .from("ServiceType")
@@ -57,7 +62,7 @@ const getCachedSlotsData = unstable_cache(
         getAvailabilityForDate(instructorId, date),
         supabase
           .from("Booking")
-          .select("startTime, endTime")
+          .select("startTime, endTime, serviceTypeId")
           .eq("instructorId", instructorId)
           .gte("startTime", date.toISOString())
           .lt("startTime", nextDay.toISOString())
@@ -68,11 +73,22 @@ const getCachedSlotsData = unstable_cache(
           .or(`instructorId.eq.${instructorId},instructorId.is.null`)
           .lt("startTime", nextDay.toISOString())
           .gt("endTime", date.toISOString()),
+        // Kun nødvendig for compact-strategi (orphan-sjekk)
+        strategy === "compact"
+          ? supabase
+              .from("ServiceType")
+              .select("duration, bufferAfter")
+              .eq("isActive", true)
+          : Promise.resolve({ data: [] as { duration: number; bufferAfter: number }[] }),
       ]);
 
     const serviceType = serviceTypeResult.data;
-    const existingBookings = existingBookingsResult.data || [];
-    const blockedTimes = blockedTimesResult.data || [];
+    const existingBookingsRaw = existingBookingsResult.data || [];
+    const blockedTimesRaw = blockedTimesResult.data || [];
+    const allDurations: ServiceDuration[] = (allServiceTypesResult.data || []).map((d) => ({
+      duration: d.duration as number,
+      bufferAfter: d.bufferAfter as number,
+    }));
 
     if (!serviceType || !serviceType.isActive) {
       return { slots: [], source: "error" };
@@ -82,27 +98,56 @@ const getCachedSlotsData = unstable_cache(
       return { slots: [], source: "no-availability" };
     }
 
+    const existingBookings = existingBookingsRaw.map((b) => ({
+      startTime: new Date(b.startTime as string),
+      endTime: new Date(b.endTime as string),
+      serviceTypeId: (b as { serviceTypeId?: string | null }).serviceTypeId ?? null,
+    }));
+    const blockedTimes = blockedTimesRaw.map((b) => ({
+      startTime: new Date(b.startTime as string),
+      endTime: new Date(b.endTime as string),
+    }));
+
     const allSlots: string[] = [];
     for (const window of availabilityWindows) {
-      const windowSlots = generateSlots({
-        availStart: window.startTime,
-        availEnd: window.endTime,
-        duration: serviceType.duration,
-        bufferAfter: serviceType.bufferAfter,
-        bufferBefore: serviceType.bufferBefore,
-        date,
-        existingBookings,
-        blockedTimes,
-        minNoticeHours: serviceType.minNoticeHours,
-      });
-      allSlots.push(...windowSlots);
+      if (strategy === "compact") {
+        const windowSlots = generateSmartSlotsForWindow({
+          availStart: window.startTime,
+          availEnd: window.endTime,
+          date,
+          request: {
+            duration: serviceType.duration,
+            bufferBefore: serviceType.bufferBefore,
+            bufferAfter: serviceType.bufferAfter,
+            serviceTypeId,
+          },
+          existingBookings,
+          blockedTimes,
+          minNoticeHours: serviceType.minNoticeHours,
+          allDurations,
+        });
+        allSlots.push(...windowSlots);
+      } else {
+        const windowSlots = generateSlots({
+          availStart: window.startTime,
+          availEnd: window.endTime,
+          duration: serviceType.duration,
+          bufferAfter: serviceType.bufferAfter,
+          bufferBefore: serviceType.bufferBefore,
+          date,
+          existingBookings,
+          blockedTimes,
+          minNoticeHours: serviceType.minNoticeHours,
+        });
+        allSlots.push(...windowSlots);
+      }
     }
 
     // Sorter kronologisk
     allSlots.sort();
 
     logger.debug(
-      `[slots-cache] Generated ${allSlots.length} slots for ${instructorId} ${date.toISOString().split("T")[0]} (${Date.now() - startTime}ms)`
+      `[slots-cache] Generated ${allSlots.length} slots (${strategy}) for ${instructorId} ${date.toISOString().split("T")[0]} (${Date.now() - startTime}ms)`
     );
 
     return { slots: allSlots, source: "cache" };
@@ -139,6 +184,8 @@ export async function GET(req: NextRequest) {
   const instructorId = searchParams.get("instructorId");
   const dateStr = searchParams.get("date"); // YYYY-MM-DD
   const nocache = searchParams.get("nocache") === "true"; // Force refresh
+  const strategyParam = searchParams.get("strategy"); // "compact" | "all" | null
+  const strategy: SlotStrategy = strategyParam === "compact" ? "compact" : "all";
 
   if (!serviceTypeId || !instructorId || !dateStr) {
     return NextResponse.json(
@@ -210,7 +257,8 @@ export async function GET(req: NextRequest) {
         instructorId,
         date,
         nextDay,
-        serviceTypeId
+        serviceTypeId,
+        strategy
       );
       slots = cached.slots;
       source = cached.source;
@@ -227,7 +275,8 @@ export async function GET(req: NextRequest) {
         instructorId,
         date,
         nextDay,
-        serviceTypeId
+        serviceTypeId,
+        strategy
       );
       slots = fresh.slots;
       source = "fresh";
