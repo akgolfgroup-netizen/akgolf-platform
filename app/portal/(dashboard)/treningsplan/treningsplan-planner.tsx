@@ -34,9 +34,12 @@ import {
 } from "./components/plan-adjustment-banner";
 import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
 import { PlanCreatorModal } from "@/components/portal/treningsplan/plan-creator-modal";
+import { PlanConversationCard } from "@/components/portal/treningsplan/plan-conversation-card";
+import { PlanSuggestionInbox } from "@/components/portal/treningsplan/plan-suggestion-inbox";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PlanGoalsCard } from "./components/plan-goals-card";
 import type { PlanGoalsSummary } from "./actions";
+import type { PlanSuggestionView } from "@/lib/portal/training/plan-suggestion-types";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -100,6 +103,18 @@ interface TreningsplanPlannerProps {
   myPlans?: MyPlanSummary[];
   goalsSummary?: PlanGoalsSummary | null;
   coachFeedback?: { text: string; at: string | null } | null;
+  playerComment?: { text: string; at: string | null } | null;
+  onSavePlayerComment?: (
+    text: string | null
+  ) => Promise<{ success: boolean; error?: string }>;
+  pendingSuggestions?: PlanSuggestionView[];
+  onAcceptSuggestion?: (
+    suggestionId: string
+  ) => Promise<{ success: boolean; error?: string }>;
+  onRejectSuggestion?: (
+    suggestionId: string,
+    reason?: string
+  ) => Promise<{ success: boolean; error?: string }>;
   onCreateSession: (data: {
     weekOffset: number;
     dayOfWeek: number;
@@ -175,6 +190,11 @@ export function TreningsplanPlanner({
   myPlans = [],
   goalsSummary,
   coachFeedback,
+  playerComment,
+  onSavePlayerComment,
+  pendingSuggestions = [],
+  onAcceptSuggestion,
+  onRejectSuggestion,
   onCreateSession,
   onAddExerciseToSession,
   onUpdateSession,
@@ -392,27 +412,27 @@ export function TreningsplanPlanner({
         }}
       />
 
-      {/* Coach-kommentar på plan-nivå (Epic 9) */}
-      {!showEmptyState && coachFeedback && coachFeedback.text && (
-        <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4">
-          <div className="flex items-start gap-3">
-            <Icon name="comment" size={18} className="mt-0.5 text-primary" />
-            <div className="flex-1">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-primary">
-                Kommentar fra coach
-              </p>
-              <p className="mt-1 text-sm text-on-surface whitespace-pre-wrap">
-                {coachFeedback.text}
-              </p>
-              {coachFeedback.at && (
-                <p className="mt-1 font-mono text-[10px] text-on-surface-variant">
-                  {format(new Date(coachFeedback.at), "d. MMM yyyy", { locale: nb })}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
+      {/* Samtale: coach-feedback + spiller-kommentar (Sprint 1) */}
+      {!showEmptyState && (
+        <PlanConversationCard
+          coachFeedback={coachFeedback}
+          playerComment={playerComment}
+          canEdit={Boolean(planId && onSavePlayerComment)}
+          onSavePlayerComment={onSavePlayerComment}
+        />
       )}
+
+      {/* Forslag fra coach (Sprint 2) */}
+      {!showEmptyState &&
+        pendingSuggestions.length > 0 &&
+        onAcceptSuggestion &&
+        onRejectSuggestion && (
+          <PlanSuggestionInbox
+            suggestions={pendingSuggestions}
+            onAccept={onAcceptSuggestion}
+            onReject={onRejectSuggestion}
+          />
+        )}
 
       {/* Plan-mål med progress (Epic 7) */}
       {!showEmptyState && goalsSummary && goalsSummary.totalCount > 0 && (
