@@ -1768,11 +1768,41 @@ model TrainingPlan {
   TrainingGroup                       TrainingGroup?       @relation(fields: [groupId], references: [id], onDelete: SetNull)
   TrainingPlanWeek                    TrainingPlanWeek[]
   DismissedAdjustment                 DismissedAdjustment[]
+  PlanSuggestion                      PlanSuggestion[]
 
   @@index([studentId])
   @@index([periodizationPeriodId])
   @@index([groupId])
   @@index([coachFeedbackById])
+}
+
+/// Forslag fra coach om endring på en plan/uke/økt.
+/// Spilleren godkjenner eller avslår forslaget. Sprint 2 — forslags-modus.
+model PlanSuggestion {
+  id              String    @id
+  planId          String
+  proposedById    String
+  /// "session" | "week" | "plan" | "distribution"
+  targetType      String
+  /// SessionId / weekId / planId. Null for "plan"/"distribution".
+  targetId        String?
+  /// { before: {...}, after: {...} } — fri JSON, men typet i kode.
+  diffJson        Json
+  /// Valgfri begrunnelse fra coachen.
+  rationale       String?
+  /// PENDING | ACCEPTED | REJECTED
+  status          String    @default("PENDING")
+  createdAt       DateTime  @default(now())
+  resolvedAt      DateTime?
+  resolvedById    String?
+  rejectionReason String?
+
+  TrainingPlan        TrainingPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  User_proposedBy     User         @relation("PlanSuggestion_proposedBy", fields: [proposedById], references: [id], onDelete: Cascade)
+  User_resolvedBy     User?        @relation("PlanSuggestion_resolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
+
+  @@index([planId, status])
+  @@index([proposedById])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -2012,6 +2042,8 @@ model User {
   TrainingPlan_TrainingPlan_createdByIdToUser TrainingPlan[]             @relation("TrainingPlan_createdByIdToUser")
   TrainingPlan_TrainingPlan_studentIdToUser   TrainingPlan[]             @relation("TrainingPlan_studentIdToUser")
   TrainingPlan_TrainingPlan_coachFeedbackById TrainingPlan[]             @relation("TrainingPlan_coachFeedbackById")
+  PlanSuggestion_proposedBy                   PlanSuggestion[]           @relation("PlanSuggestion_proposedBy")
+  PlanSuggestion_resolvedBy                   PlanSuggestion[]           @relation("PlanSuggestion_resolvedBy")
   DismissedAdjustment                         DismissedAdjustment[]
   TrainingPlanTemplate                        TrainingPlanTemplate[]
   TrainingSubscription                        TrainingSubscription?
@@ -2688,6 +2720,8 @@ enum NotificationType {
   PLAN_GENERATED
   AI_INSIGHT
   TRAINING_PLAN_PLAYER_COMMENT
+  TRAINING_PLAN_SUGGESTION
+  TRAINING_PLAN_SUGGESTION_RESOLVED
 }
 
 enum FocusArea {

@@ -40,3 +40,7 @@ export {
   adjustDistribution,
 } from "./pyramid-distribution-editor";
 export type { PyramidDistribution, PyramidPreset } from "./pyramid-distribution-editor";
+
+// Forslags-modus (Sprint 2): coach foreslår, spiller godkjenner
+export { PlanSuggestionInbox } from "./plan-suggestion-inbox";
+export type { PlanSuggestionInboxProps } from "./plan-suggestion-inbox";

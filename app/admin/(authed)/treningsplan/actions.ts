@@ -6,6 +6,11 @@ import { isStaff } from "@/lib/portal/rbac";
 import { revalidatePath } from "next/cache";
 import { nanoid } from "nanoid";
 import type { Prisma } from "@prisma/client";
+import {
+  buildSessionDiff,
+  createSuggestion,
+} from "@/lib/portal/training/plan-suggestion-service";
+import type { SessionEditDiff } from "@/lib/portal/training/plan-suggestion-types";
 
 // ---------- Types (manual plan) ----------
 
@@ -605,4 +610,93 @@ export async function setPlanCoachFeedback(
   revalidatePath("/admin/treningsplan");
   revalidatePath("/portal/treningsplan");
   return { success: true };
+}
+
+// -------------------------------------------------------------------
+// Sprint 2 / Forslags-modus: coach foreslår endring som spilleren godkjenner
+// -------------------------------------------------------------------
+
+/**
+ * Coach foreslår endring på en treningsplan-økt.
+ * Lagres som PENDING PlanSuggestion; spilleren godkjenner via portal.
+ */
+export async function proposeSessionEdit(
+  sessionId: string,
+  proposed: SessionEditDiff,
+  rationale?: string
+): Promise<{ success: boolean; error?: string; suggestionId?: string }> {
+  const user = await requirePortalUser();
+  if (!user || !isStaff(user.role)) {
+    return { success: false, error: "Kun staff kan foreslå endringer" };
+  }
+
+  const session = await prisma.trainingPlanSession.findUnique({
+    where: { id: sessionId },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      durationMinutes: true,
+      focusArea: true,
+      facilityId: true,
+      dayOfWeek: true,
+      TrainingPlanWeek: {
+        select: {
+          TrainingPlan: {
+            select: {
+              id: true,
+              title: true,
+              studentId: true,
+              User_TrainingPlan_studentIdToUser: { select: { name: true } },
+            },
+          },
+        },
+      },
+    },
+  });
+  if (!session) return { success: false, error: "Økt ikke funnet" };
+
+  const plan = session.TrainingPlanWeek.TrainingPlan;
+  const current: SessionEditDiff = {
+    title: session.title,
+    description: session.description ?? undefined,
+    durationMinutes: session.durationMinutes ?? undefined,
+    focusArea: session.focusArea ?? undefined,
+    facilityId: session.facilityId,
+    dayOfWeek: session.dayOfWeek,
+  };
+
+  const diff = buildSessionDiff(current, proposed);
+  if (Object.keys(diff.after).length === 0) {
+    return { success: false, error: "Ingen endringer å foreslå" };
+  }
+
+  const { id: suggestionId } = await createSuggestion({
+    planId: plan.id,
+    proposedById: user.id,
+    targetType: "session",
+    targetId: sessionId,
+    diffJson: diff,
+    rationale: rationale ?? null,
+  });
+
+  // Varsle spilleren
+  if (plan.studentId !== user.id) {
+    const { notifyPlanSuggestionCreated } = await import(
+      "@/lib/portal/notifications/triggers"
+    );
+    await notifyPlanSuggestionCreated({
+      planId: plan.id,
+      planTitle: plan.title,
+      studentId: plan.studentId,
+      coachId: user.id,
+      coachName: user.name ?? null,
+      targetLabel: session.title,
+      rationale: rationale ?? null,
+    });
+  }
+
+  revalidatePath("/admin/treningsplan");
+  revalidatePath("/portal/treningsplan");
+  return { success: true, suggestionId };
 }

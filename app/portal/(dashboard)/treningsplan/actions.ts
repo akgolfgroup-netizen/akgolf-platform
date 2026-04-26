@@ -2098,3 +2098,173 @@ export async function setPlanPlayerComment(
   revalidatePath("/admin/treningsplan");
   return { success: true };
 }
+
+// -------------------------------------------------------------------
+// Sprint 2 / Forslags-modus: spilleren godkjenner/avslår forslag
+// -------------------------------------------------------------------
+
+/**
+ * Hent ventende forslag for spillerens aktive plan.
+ */
+export async function listMyPendingSuggestions() {
+  const user = await requirePortalUser();
+  if (!user?.id) return [];
+
+  const plan = await prisma.trainingPlan.findFirst({
+    where: { studentId: user.id, isActive: true },
+    select: { id: true },
+  });
+  if (!plan) return [];
+
+  const { listPendingSuggestionsForPlan } = await import(
+    "@/lib/portal/training/plan-suggestion-service"
+  );
+  return listPendingSuggestionsForPlan(plan.id);
+}
+
+/**
+ * Spilleren godtar et forslag — diff appliseres på target og forslaget markeres ACCEPTED.
+ */
+export async function acceptSuggestion(
+  suggestionId: string
+): Promise<{ success: boolean; error?: string }> {
+  const user = await requirePortalUser();
+  if (!user?.id) return { success: false, error: "Ikke autentisert" };
+
+  const suggestion = await prisma.planSuggestion.findUnique({
+    where: { id: suggestionId },
+    include: {
+      TrainingPlan: {
+        select: {
+          id: true,
+          title: true,
+          studentId: true,
+        },
+      },
+    },
+  });
+  if (!suggestion) return { success: false, error: "Forslag ikke funnet" };
+  if (suggestion.TrainingPlan.studentId !== user.id) {
+    return { success: false, error: "Kun plan-eier kan godta forslag" };
+  }
+  if (suggestion.status !== "PENDING") {
+    return { success: false, error: "Forslaget er allerede behandlet" };
+  }
+
+  const { applySessionDiff } = await import(
+    "@/lib/portal/training/plan-suggestion-service"
+  );
+  const diff = suggestion.diffJson as {
+    after: Record<string, unknown>;
+  };
+
+  let targetLabel = "Treningsplanen";
+  if (suggestion.targetType === "session" && suggestion.targetId) {
+    const session = await prisma.trainingPlanSession.findUnique({
+      where: { id: suggestion.targetId },
+      select: { title: true },
+    });
+    if (session) targetLabel = session.title;
+
+    await applySessionDiff(
+      suggestion.targetId,
+      diff.after as Record<string, never>
+    );
+  }
+  // TODO Sprint 3: implementer "week", "plan", "distribution" targets
+
+  await prisma.planSuggestion.update({
+    where: { id: suggestionId },
+    data: {
+      status: "ACCEPTED",
+      resolvedAt: new Date(),
+      resolvedById: user.id,
+    },
+  });
+
+  if (suggestion.proposedById !== user.id) {
+    const { notifyPlanSuggestionResolved } = await import(
+      "@/lib/portal/notifications/triggers"
+    );
+    await notifyPlanSuggestionResolved({
+      planId: suggestion.planId,
+      planTitle: suggestion.TrainingPlan.title,
+      coachId: suggestion.proposedById,
+      studentId: user.id,
+      studentName: user.name ?? null,
+      targetLabel,
+      status: "ACCEPTED",
+      rejectionReason: null,
+    });
+  }
+
+  revalidatePath("/portal/treningsplan");
+  revalidatePath("/admin/treningsplan");
+  return { success: true };
+}
+
+/**
+ * Spilleren avslår et forslag — markeres REJECTED med valgfri begrunnelse.
+ */
+export async function rejectSuggestion(
+  suggestionId: string,
+  reason?: string
+): Promise<{ success: boolean; error?: string }> {
+  const user = await requirePortalUser();
+  if (!user?.id) return { success: false, error: "Ikke autentisert" };
+
+  const suggestion = await prisma.planSuggestion.findUnique({
+    where: { id: suggestionId },
+    include: {
+      TrainingPlan: { select: { id: true, title: true, studentId: true } },
+    },
+  });
+  if (!suggestion) return { success: false, error: "Forslag ikke funnet" };
+  if (suggestion.TrainingPlan.studentId !== user.id) {
+    return { success: false, error: "Kun plan-eier kan avslå forslag" };
+  }
+  if (suggestion.status !== "PENDING") {
+    return { success: false, error: "Forslaget er allerede behandlet" };
+  }
+
+  const trimmed = reason?.trim().slice(0, 500) || null;
+
+  await prisma.planSuggestion.update({
+    where: { id: suggestionId },
+    data: {
+      status: "REJECTED",
+      resolvedAt: new Date(),
+      resolvedById: user.id,
+      rejectionReason: trimmed,
+    },
+  });
+
+  let targetLabel = "Treningsplanen";
+  if (suggestion.targetType === "session" && suggestion.targetId) {
+    const session = await prisma.trainingPlanSession.findUnique({
+      where: { id: suggestion.targetId },
+      select: { title: true },
+    });
+    if (session) targetLabel = session.title;
+  }
+
+  if (suggestion.proposedById !== user.id) {
+    const { notifyPlanSuggestionResolved } = await import(
+      "@/lib/portal/notifications/triggers"
+    );
+    await notifyPlanSuggestionResolved({
+      planId: suggestion.planId,
+      planTitle: suggestion.TrainingPlan.title,
+      coachId: suggestion.proposedById,
+      studentId: user.id,
+      studentName: user.name ?? null,
+      targetLabel,
+      status: "REJECTED",
+      rejectionReason: trimmed,
+    });
+  }
+
+  revalidatePath("/portal/treningsplan");
+  revalidatePath("/admin/treningsplan");
+  return { success: true };
+}

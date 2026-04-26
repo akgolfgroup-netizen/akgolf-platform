@@ -35,9 +35,11 @@ import {
 import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
 import { PlanCreatorModal } from "@/components/portal/treningsplan/plan-creator-modal";
 import { PlanConversationCard } from "@/components/portal/treningsplan/plan-conversation-card";
+import { PlanSuggestionInbox } from "@/components/portal/treningsplan/plan-suggestion-inbox";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PlanGoalsCard } from "./components/plan-goals-card";
 import type { PlanGoalsSummary } from "./actions";
+import type { PlanSuggestionView } from "@/lib/portal/training/plan-suggestion-types";
 
 const HOURS = Array.from({ length: 16 }, (_, i) => i + 6); // 06:00–21:00
 const DAYS = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"];
@@ -104,6 +106,14 @@ interface TreningsplanPlannerProps {
   playerComment?: { text: string; at: string | null } | null;
   onSavePlayerComment?: (
     text: string | null
+  ) => Promise<{ success: boolean; error?: string }>;
+  pendingSuggestions?: PlanSuggestionView[];
+  onAcceptSuggestion?: (
+    suggestionId: string
+  ) => Promise<{ success: boolean; error?: string }>;
+  onRejectSuggestion?: (
+    suggestionId: string,
+    reason?: string
   ) => Promise<{ success: boolean; error?: string }>;
   onCreateSession: (data: {
     weekOffset: number;
@@ -175,6 +185,9 @@ export function TreningsplanPlanner({
   coachFeedback,
   playerComment,
   onSavePlayerComment,
+  pendingSuggestions = [],
+  onAcceptSuggestion,
+  onRejectSuggestion,
   onCreateSession,
   onAddExerciseToSession,
   onUpdateSession,
@@ -401,6 +414,18 @@ export function TreningsplanPlanner({
           onSavePlayerComment={onSavePlayerComment}
         />
       )}
+
+      {/* Forslag fra coach (Sprint 2) */}
+      {!showEmptyState &&
+        pendingSuggestions.length > 0 &&
+        onAcceptSuggestion &&
+        onRejectSuggestion && (
+          <PlanSuggestionInbox
+            suggestions={pendingSuggestions}
+            onAccept={onAcceptSuggestion}
+            onReject={onRejectSuggestion}
+          />
+        )}
 
       {/* Plan-mål med progress (Epic 7) */}
       {!showEmptyState && goalsSummary && goalsSummary.totalCount > 0 && (
