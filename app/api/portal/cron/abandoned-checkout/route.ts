@@ -6,6 +6,8 @@ import { render } from "@react-email/components";
 import { AbandonedCheckoutEmail } from "@/lib/portal/email/templates/abandoned-checkout";
 import { stripe } from "@/lib/portal/stripe";
 
+export const dynamic = "force-dynamic";
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function GET(request: NextRequest) {

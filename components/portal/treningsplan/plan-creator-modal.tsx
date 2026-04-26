@@ -277,11 +277,11 @@ export function PlanCreatorModal({ open, onClose }: Props) {
               {isPending ? (
                 <>
                   <Icon name="progress_activity" size={18} className="animate-spin" />
-                  Oppretter...
+                  {mode === "RECOMMENDED" ? "Genererer din personlige plan…" : "Oppretter…"}
                 </>
               ) : (
                 <>
-                  Opprett plan
+                  {mode === "RECOMMENDED" ? "Generer plan med AI" : "Opprett plan"}
                   <Icon name="arrow_forward" size={18} />
                 </>
               )}

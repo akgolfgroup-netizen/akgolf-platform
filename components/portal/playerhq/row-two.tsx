@@ -226,6 +226,18 @@ export function TasksCard({ title, tasks, ctaLabel, ctaHref }: TasksCardProps) {
       </div>
 
       <div className="flex flex-col gap-1.5">
+        {tasks.length === 0 && (
+          <div
+            className="rounded-xl px-3 py-4 text-[12px]"
+            style={{
+              background: "rgba(210,240,0,0.04)",
+              color: "rgba(237,245,218,0.7)",
+            }}
+          >
+            Ingen planlagte økter i dag. Lag en treningsplan for å se dagens
+            program her.
+          </div>
+        )}
         {tasks.map((t) => (
           <div
             key={t.id}

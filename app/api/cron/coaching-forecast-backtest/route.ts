@@ -24,6 +24,8 @@ import {
   predictScoreFromSg,
 } from "@/lib/portal/golf/calculate-sg-from-rounds";
 
+export const dynamic = "force-dynamic";
+
 const CRON_SECRET = process.env.CRON_SECRET;
 
 const DAYS_WINDOW = 90;

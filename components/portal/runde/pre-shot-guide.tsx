@@ -3,7 +3,6 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Timer } from "lucide-react";
 import type { PreShotRoutine } from "@/lib/portal/golf/decade-caddy";
 
 interface PreShotGuideProps {

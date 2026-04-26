@@ -3,7 +3,7 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState, useTransition } from "react";
-import { Search, CheckCircle, XCircle, AlertCircle, Edit3 } from "lucide-react";
+import { CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import { format } from "date-fns";

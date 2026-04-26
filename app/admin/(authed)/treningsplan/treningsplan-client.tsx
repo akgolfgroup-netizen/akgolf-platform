@@ -18,7 +18,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
+import { MonoLabel, BentoGrid, BentoCard } from "@/components/portal/patterns";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import type {
@@ -34,6 +34,7 @@ import {
  addSession,
  updateWeekFocus,
  duplicatePlan,
+ setPlanCoachFeedback,
 } from "./actions";
 
 // ---------- Constants ----------
@@ -520,6 +521,14 @@ function StudentPlanEditor({
  {isPending ? "Kopierer...": "Kopier plan"}
  </Button>
  </div>
+
+ {/* Coach-kommentar (Epic 9) */}
+ <CoachFeedbackEditor
+   planId={activePlan.id}
+   currentFeedback={activePlan.coachFeedback}
+   currentFeedbackAt={activePlan.coachFeedbackAt}
+   showFeedback={showFeedback}
+ />
  </div>
  )}
 
@@ -1001,5 +1010,144 @@ function AddSessionForm({ isPending, onSave, onCancel }: AddSessionFormProps) {
  </button>
  </div>
  </div>
+ );
+}
+
+// ==========================================================
+// Coach-kommentar editor (Epic 9)
+// ==========================================================
+
+function CoachFeedbackEditor({
+ planId,
+ currentFeedback,
+ currentFeedbackAt,
+ showFeedback,
+}: {
+ planId: string;
+ currentFeedback: string | null;
+ currentFeedbackAt: Date | null;
+ showFeedback: (type: "success" | "error", msg: string) => void;
+}) {
+ const [editing, setEditing] = useState(false);
+ const [text, setText] = useState(currentFeedback ?? "");
+ const [isPending, startTransition] = useTransition();
+
+ const handleSave = () => {
+   startTransition(async () => {
+     try {
+       const result = await setPlanCoachFeedback(planId, text);
+       if (result.success) {
+         showFeedback("success", "Kommentar lagret");
+         setEditing(false);
+       } else {
+         showFeedback("error", result.error ?? "Kunne ikke lagre");
+       }
+     } catch {
+       showFeedback("error", "Kunne ikke lagre kommentar");
+     }
+   });
+ };
+
+ const handleClear = () => {
+   if (!window.confirm("Slett kommentaren?")) return;
+   startTransition(async () => {
+     await setPlanCoachFeedback(planId, "");
+     setText("");
+     setEditing(false);
+     showFeedback("success", "Kommentar slettet");
+   });
+ };
+
+ if (!editing) {
+   return (
+     <div className="mt-4 pt-4 border-t border-outline-variant/30">
+       {currentFeedback ? (
+         <div>
+           <div className="flex items-center justify-between gap-2 mb-2">
+             <span className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+               Coach-kommentar
+               {currentFeedbackAt && (
+                 <span className="ml-2 text-on-surface-variant/60">
+                   · {format(new Date(currentFeedbackAt), "d. MMM yyyy", { locale: nb })}
+                 </span>
+               )}
+             </span>
+             <div className="flex items-center gap-1">
+               <button
+                 type="button"
+                 onClick={() => {
+                   setText(currentFeedback);
+                   setEditing(true);
+                 }}
+                 className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant hover:text-on-surface"
+               >
+                 Rediger
+               </button>
+               <span className="text-on-surface-variant/40">·</span>
+               <button
+                 type="button"
+                 onClick={handleClear}
+                 disabled={isPending}
+                 className="text-[10px] font-bold uppercase tracking-widest text-error hover:underline disabled:opacity-50"
+               >
+                 Slett
+               </button>
+             </div>
+           </div>
+           <p className="text-sm text-on-surface whitespace-pre-wrap">{currentFeedback}</p>
+         </div>
+       ) : (
+         <button
+           type="button"
+           onClick={() => setEditing(true)}
+           className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-primary hover:underline"
+         >
+           <Icon name="add_comment" className="w-3.5 h-3.5" />
+           Legg til kommentar til spilleren
+         </button>
+       )}
+     </div>
+   );
+ }
+
+ return (
+   <div className="mt-4 pt-4 border-t border-outline-variant/30">
+     <span className="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">
+       Coach-kommentar (synlig for spilleren)
+     </span>
+     <textarea
+       value={text}
+       onChange={(e) => setText(e.target.value)}
+       rows={3}
+       maxLength={1000}
+       placeholder="Skriv en personlig kommentar til spilleren..."
+       className="w-full rounded-lg border border-outline-variant/30 bg-surface-container-lowest px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none resize-none"
+       autoFocus
+     />
+     <div className="mt-2 flex items-center justify-between">
+       <span className="text-[10px] text-on-surface-variant">{text.length}/1000</span>
+       <div className="flex items-center gap-2">
+         <button
+           type="button"
+           onClick={() => {
+             setText(currentFeedback ?? "");
+             setEditing(false);
+           }}
+           disabled={isPending}
+           className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant hover:text-on-surface disabled:opacity-50"
+         >
+           Avbryt
+         </button>
+         <button
+           type="button"
+           onClick={handleSave}
+           disabled={isPending || !text.trim()}
+           className="px-3 py-1.5 rounded-md bg-primary text-on-primary text-[10px] font-bold uppercase tracking-widest hover:bg-primary-container disabled:opacity-50"
+         >
+           {isPending ? "Lagrer..." : "Lagre"}
+         </button>
+       </div>
+     </div>
+   </div>
  );
 }

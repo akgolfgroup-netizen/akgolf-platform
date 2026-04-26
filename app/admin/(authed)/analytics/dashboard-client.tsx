@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, type TabItem } from "@/components/ui/tabs";
 import { getDashboardData, type DashboardData, type AnalyticsPeriod } from "./actions";
-import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
+import { MonoLabel, BentoGrid, BentoCard } from "@/components/portal/patterns";
 
 // ── Constants ──────────────────────────────────────────────
 

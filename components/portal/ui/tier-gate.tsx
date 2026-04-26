@@ -2,7 +2,6 @@
 
 
 import { Icon } from "@/components/ui/icon";
-import { Lock } from "lucide-react";
 import { SubscriptionTier } from "@prisma/client";
 import { hasTierAccess } from "@/lib/portal/rbac";
 import Link from "next/link";

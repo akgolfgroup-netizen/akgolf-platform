@@ -82,3 +82,9 @@ cleanup-data.js
 *.backup
 tmp_*.mjs
 tmp_*.ts
+
+# Supabase CLI cache (lokal state, ikke shared)
+supabase/.temp/
+
+# Vercel env-pulled per-environment (kan inneholde secrets)
+.env.production

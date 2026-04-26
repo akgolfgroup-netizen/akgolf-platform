@@ -4,7 +4,7 @@ import { Icon } from "@/components/ui/icon";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-import { MonoLabel, BentoCard, BentoGrid, GlassPanel } from "@/components/portal/patterns";
+import { MonoLabel, BentoCard } from "@/components/portal/patterns";
 
 const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 

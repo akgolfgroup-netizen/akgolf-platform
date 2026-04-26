@@ -1,7 +1,6 @@
 "use client";
 
 
-import { Icon } from "@/components/ui/icon";
 import { useEffect, useState } from "react";
 import { CheckCircle2, AlertCircle, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";

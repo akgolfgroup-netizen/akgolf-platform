@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { Icon } from "@/components/ui/icon";
 import { cn } from "@/lib/portal/utils/cn";
 import type { AdjustmentSuggestion } from "./plan-adjustment-banner";

@@ -4,7 +4,7 @@
 import { Icon } from "@/components/ui/icon";
 import Link from "next/link";
 import { useState } from "react";
-import { Target, Compass } from "lucide-react";
+import { Compass } from "lucide-react";
 import {
   CourseHero,
   GlassPanel,

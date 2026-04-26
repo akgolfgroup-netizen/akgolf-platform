@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Clock } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { BookingStatusBadge } from "@/components/portal/booking/booking-status-badge";
 import type { BookingStatusVariant } from "@/components/portal/booking/booking-types";

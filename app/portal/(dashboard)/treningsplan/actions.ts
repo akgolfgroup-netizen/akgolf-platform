@@ -3,7 +3,7 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { prisma } from "@/lib/portal/prisma";
-import { endOfISOWeek, isWithinInterval, addWeeks, startOfISOWeek } from "date-fns";
+import { endOfISOWeek, isWithinInterval, addWeeks, startOfISOWeek, format, addDays } from "date-fns";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
@@ -170,11 +170,21 @@ export async function addExerciseToSession(
   if (!session) throw new Error("Treningsokten finnes ikke");
 
   const currentExercises = Array.isArray(session.exercises)
-    ? (session.exercises as string[])
+    ? (session.exercises as Array<string | Record<string, unknown>>)
     : [];
 
-  // Add new exercise name to the list
-  const updatedExercises = [...currentExercises, exercise.name];
+  const newExerciseEntry: Record<string, unknown> = {
+    id: nanoid(),
+    exerciseId: exercise.id,
+    name: exercise.name,
+    pyramid: exercise.pyramid,
+    area: exercise.area,
+    lPhase: exercise.lPhase ?? null,
+    description: exercise.description ?? null,
+    addedAt: new Date().toISOString(),
+  };
+
+  const updatedExercises = [...currentExercises, newExerciseEntry];
 
   await supabase
     .from("TrainingPlanSession")
@@ -491,11 +501,17 @@ export async function toggleSessionComplete(sessionId: string) {
     durationMinutes: session.durationMinutes,
     focusArea: session.focusArea,
     exercises: JSON.stringify(
-      exerciseData.map((name: unknown, i: number) => ({
-        id: `ex-${i}`,
-        name: typeof name === "string" ? name : `Ovelse ${i + 1}`,
-        completed: true,
-      }))
+      exerciseData.map((entry: unknown, i: number) => {
+        if (typeof entry === "string") {
+          return { id: `ex-${i}`, name: entry, completed: true };
+        }
+        if (entry && typeof entry === "object") {
+          const obj = entry as Record<string, unknown>;
+          const name = typeof obj.name === "string" ? obj.name : `Ovelse ${i + 1}`;
+          return { id: `ex-${i}`, name, completed: true };
+        }
+        return { id: `ex-${i}`, name: `Ovelse ${i + 1}`, completed: true };
+      })
     ),
     updatedAt: now.toISOString(),
   });
@@ -629,9 +645,13 @@ export async function deleteSession(sessionId: string) {
 
   if (sessionCheck?.exercises) {
     const exercises = Array.isArray(sessionCheck.exercises)
-      ? (sessionCheck.exercises as Record<string, unknown>[])
+      ? (sessionCheck.exercises as Array<string | Record<string, unknown>>)
       : [];
-    if (exercises.some((ex) => ex._groupSessionId)) {
+    if (
+      exercises.some(
+        (ex) => typeof ex === "object" && ex !== null && "_groupSessionId" in ex,
+      )
+    ) {
       throw new Error("Gruppeøkter kan ikke slettes. Kontakt coach for endringer.");
     }
   }
@@ -677,6 +697,7 @@ export async function createSessionForWeek(data: {
   focusArea?: string;
   startH?: number;
   startM?: number;
+  facilityId?: string;
 }) {
   const user = await requirePortalUser();
   if (!user?.id) throw new Error("Ikke autentisert");
@@ -743,6 +764,7 @@ export async function createSessionForWeek(data: {
       description: data.description ?? null,
       durationMinutes: data.durationMinutes ?? 60,
       focusArea: data.focusArea ?? null,
+      facilityId: data.facilityId ?? null,
       exercises,
       sortOrder: 0,
     });
@@ -766,6 +788,7 @@ export async function updateSession(
     description?: string;
     durationMinutes?: number;
     focusArea?: string;
+    facilityId?: string | null;
   }
 ) {
   const user = await requirePortalUser();
@@ -783,9 +806,13 @@ export async function updateSession(
 
   // Check if this is a group session
   const exercises = Array.isArray(session.exercises)
-    ? (session.exercises as Record<string, unknown>[])
+    ? (session.exercises as Array<string | Record<string, unknown>>)
     : [];
-  if (exercises.some((ex) => ex._groupSessionId)) {
+  if (
+    exercises.some(
+      (ex) => typeof ex === "object" && ex !== null && "_groupSessionId" in ex,
+    )
+  ) {
     throw new Error("Gruppeøkter kan ikke endres. Kontakt coach for endringer.");
   }
 
@@ -795,6 +822,7 @@ export async function updateSession(
   if (data.durationMinutes !== undefined)
     updateData.durationMinutes = data.durationMinutes;
   if (data.focusArea !== undefined) updateData.focusArea = data.focusArea;
+  if (data.facilityId !== undefined) updateData.facilityId = data.facilityId;
 
   await supabase
     .from("TrainingPlanSession")
@@ -900,9 +928,10 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
     sessionDate.setDate(sessionDate.getDate() + session.dayOfWeek - 1);
     const dateStr = `${sessionDate.getFullYear()}-${String(sessionDate.getMonth() + 1).padStart(2, "0")}-${String(sessionDate.getDate()).padStart(2, "0")}`;
 
-    // Parse exercises JSON for start time metadata and exercise data
+    // Parse exercises JSON for start time metadata and exercise data.
+    // Format kan være string (legacy) eller objekt (nytt fra P1.2).
     const rawExercises = Array.isArray(session.exercises)
-      ? (session.exercises as Record<string, unknown>[])
+      ? (session.exercises as Array<string | Record<string, unknown>>)
       : [];
 
     let startH = 9;
@@ -910,6 +939,24 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
     const v2Exercises: V2ExerciseData[] = [];
 
     for (const ex of rawExercises) {
+      if (typeof ex === "string") {
+        v2Exercises.push({
+          id: Math.random().toString(36).slice(2, 9),
+          name: ex,
+          pyramid: inferPyramidFromFocus(session.focusArea),
+          area: "",
+          lPhase: null,
+          cs: null,
+          m: null,
+          pr: null,
+          pFrom: null,
+          pTo: null,
+          slagFocus: [],
+          baller: 0,
+          bevegelser: 0,
+        });
+        continue;
+      }
       if (ex._startH !== undefined) {
         startH = Number(ex._startH);
         startM = Number(ex._startM) || 0;
@@ -933,8 +980,11 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
       }
     }
 
-    // Check if this is a group session
-    const groupMeta = rawExercises.find((ex) => ex._groupSessionId);
+    // Check if this is a group session (kun objekt-format)
+    const groupMeta = rawExercises.find(
+      (ex): ex is Record<string, unknown> =>
+        typeof ex === "object" && ex !== null && "_groupSessionId" in ex,
+    );
     const isGroupSession = !!groupMeta;
     const groupName = groupMeta?._groupName as string | undefined;
 
@@ -1046,7 +1096,7 @@ export async function analyzePlanDeviation(): Promise<PlanDeviationAnalysis | nu
   // Fetch TrainingLog for last 14 days
   const { data: logs } = await supabase
     .from("TrainingLog")
-    .select("durationMinutes, rating, deviatedFromPlan, date")
+    .select("durationMinutes, rating, deviatedFromPlan, date, planSessionId")
     .eq("userId", user.id)
     .gte("date", since.toISOString())
     .order("date", { ascending: false });
@@ -1060,6 +1110,19 @@ export async function analyzePlanDeviation(): Promise<PlanDeviationAnalysis | nu
     .single();
 
   if (!plan) return null;
+
+  // Sjekk om bruker har avvist forslaget for denne planen (Epic 10)
+  const activeDismiss = await prisma.dismissedAdjustment.findFirst({
+    where: {
+      userId: user.id,
+      planId: plan.id,
+      expiresAt: { gt: new Date() },
+    },
+    select: { id: true },
+  });
+  if (activeDismiss) {
+    return null;
+  }
 
   // Calculate actual hours from logs
   const actualMinutes = (logs ?? []).reduce((sum, log) => sum + (log.durationMinutes ?? 0), 0);
@@ -1205,10 +1268,15 @@ export async function adjustPlanVolume(factor: number): Promise<{ success: boole
 // -------------------------------------------------------------------
 
 import {
-  STANDARD_TEMPLATES,
-  getTemplate,
   type TemplateId,
 } from "@/lib/portal/training/standard-templates";
+import {
+  getActiveTemplates,
+  getTemplateById,
+} from "@/lib/portal/training/template-service";
+import { generateTrainingPlan } from "@/lib/portal/ai/training-plan";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/portal/rate-limit";
+import { detectSessionConflicts } from "@/lib/portal/training/conflict-detector";
 
 export type PlanCreationMode = "MANUAL" | "RECOMMENDED" | "TEMPLATE";
 
@@ -1231,12 +1299,12 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
   // ---- TEMPLATE: bygg plan fra forhåndsdefinert mal ----
   if (input.mode === "TEMPLATE") {
     if (!input.templateId) throw new Error("templateId mangler for TEMPLATE-mode");
-    const template = getTemplate(input.templateId);
+    const template = await getTemplateById(input.templateId);
     if (!template) throw new Error(`Ukjent mal: ${input.templateId}`);
 
     const weeks = Array.from({ length: input.durationWeeks }, (_, i) => ({
       weekNumber: i + 1,
-      focus: template.weeklyFocusTemplate.replace("{n}", String(i + 1)),
+      focus: (template.weeklyFocusTemplate ?? "").replace("{n}", String(i + 1)),
       sessions: template.weekPattern.map((s) => ({
         dayOfWeek: s.dayOfWeek,
         title: s.title,
@@ -1271,47 +1339,199 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
     });
   }
 
-  // ---- RECOMMENDED: AI-anbefalt (placeholder — bruker Allround-mal som basis) ----
-  // TODO v2: koble til ekte AI-flow basert på SG/HCP/svakheter
+  // ---- RECOMMENDED: AI-generert plan basert på USI-prescription, HCP og mål ----
   if (input.mode === "RECOMMENDED") {
-    const fallback = getTemplate("allround");
-    if (!fallback) throw new Error("Manglende standard-mal for AI-fallback");
-
-    const weeks = Array.from({ length: input.durationWeeks }, (_, i) => ({
-      weekNumber: i + 1,
-      focus: `AI-anbefalt fokus — uke ${i + 1}`,
-      sessions: fallback.weekPattern.map((s) => ({
-        dayOfWeek: s.dayOfWeek,
-        title: s.title,
-        durationMinutes: s.durationMinutes,
-        focusArea: s.focusArea,
-      })),
-    }));
-
-    const result = await createManualPlan({
-      title: input.title ?? "AI-anbefalt plan",
-      description: "Generert basert på din profil. Juster fritt.",
-      periodType: "PREPARATION",
-      startDate: startDate.toISOString().slice(0, 10),
-      weeks,
-    });
-
-    // Marker som AI-generert
-    if (result.success && result.planId) {
-      await prisma.trainingPlan.update({
-        where: { id: result.planId },
-        data: { aiGenerated: true },
-      });
+    // Rate-limit per bruker (AI er kostbart)
+    const rateLimit = checkRateLimit(`ai:plan:${user.id}`, RATE_LIMITS.AI_ENDPOINTS);
+    if (!rateLimit.allowed) {
+      throw new Error("For mange AI-forespørsler. Vent litt og prøv igjen.");
     }
 
-    return result;
+    // Hent kontekst: prescription (USI), HCP, aktive mål
+    const [prescription, profile, goals] = await Promise.all([
+      prisma.trainingPrescription.findFirst({
+        where: { userId: user.id },
+        orderBy: { generatedAt: "desc" },
+      }),
+      prisma.user.findUnique({
+        where: { id: user.id },
+        select: { name: true, handicap: true },
+      }),
+      prisma.playerGoals.findMany({
+        where: { userId: user.id, isActive: true },
+        orderBy: { priority: "asc" },
+        take: 5,
+      }),
+    ]);
+
+    // Bygg goals-string
+    const goalLines: string[] = [];
+    if (profile?.handicap != null) {
+      goalLines.push(`Nåværende handicap: ${profile.handicap}.`);
+    }
+    if (goals.length > 0) {
+      goalLines.push("Aktive mål:");
+      for (const g of goals) {
+        const target = g.targetValue != null ? ` (mål: ${g.targetValue})` : "";
+        const deadline = g.targetDate ? ` innen ${g.targetDate.toISOString().slice(0, 10)}` : "";
+        goalLines.push(`- ${g.title}${target}${deadline}`);
+      }
+    }
+    if (prescription?.focusAreas?.length) {
+      goalLines.push(`Fokusområder fra USI-analyse: ${prescription.focusAreas.join(", ")}.`);
+    }
+    if (prescription?.weeklyHours) {
+      goalLines.push(`Anbefalt volum: ${prescription.weeklyHours.toFixed(1)} timer/uke.`);
+    }
+    if (goalLines.length === 0) {
+      goalLines.push("Bygg en balansert plan for generell golfutvikling.");
+    }
+    const goalsText = goalLines.join("\n");
+
+    // Bygg prescription-input til AI
+    const aiPrescription = prescription
+      ? {
+          focusAreas: prescription.focusAreas,
+          weeklyHours: prescription.weeklyHours,
+          suggestedFormulaIds: prescription.suggestedFormulaIds,
+          predictedHcpChange: prescription.predictedHcpChange,
+          confidence: prescription.confidence,
+          gradientJson: (prescription.gradientJson ?? {}) as Record<string, unknown>,
+          gapAnalysisJson: (prescription.gapAnalysisJson ?? {}) as Record<string, unknown>,
+          reasoning: "",
+        }
+      : undefined;
+
+    // Kall AI
+    let aiResult;
+    try {
+      aiResult = await generateTrainingPlan(
+        {
+          goals: goalsText,
+          periodType: "grunnperiode",
+          durationWeeks: input.durationWeeks,
+          startDate: startDate.toISOString().slice(0, 10),
+        },
+        aiPrescription
+      );
+    } catch (err) {
+      throw new Error(
+        `AI-generering feilet: ${err instanceof Error ? err.message : "ukjent feil"}`
+      );
+    }
+
+    // Deaktiver eksisterende aktive planer
+    await prisma.trainingPlan.updateMany({
+      where: { studentId: user.id, isActive: true },
+      data: { isActive: false, updatedAt: new Date() },
+    });
+
+    // Bygg plan + uker + økter i en transaksjon
+    const planId = nanoid();
+    const planEnd = addDays(startDate, input.durationWeeks * 7 - 1);
+
+    await prisma.$transaction(async (tx) => {
+      await tx.trainingPlan.create({
+        data: {
+          id: planId,
+          studentId: user.id,
+          createdById: user.id,
+          title: input.title ?? aiResult.title,
+          description: "Generert av AI basert på din profil og USI-data. Juster fritt.",
+          goals: goalsText,
+          periodType: "PREPARATION",
+          startDate: startDate,
+          endDate: planEnd,
+          isActive: true,
+          aiGenerated: true,
+          updatedAt: new Date(),
+        },
+      });
+
+      for (const w of aiResult.weeks) {
+        const weekId = nanoid();
+        const weekStart = addDays(startDate, (w.weekNumber - 1) * 7);
+
+        await tx.trainingPlanWeek.create({
+          data: {
+            id: weekId,
+            planId,
+            weekNumber: w.weekNumber,
+            weekStart,
+            focus: w.focus,
+            volumeLabel: w.volumeLabel,
+          },
+        });
+
+        for (let idx = 0; idx < w.sessions.length; idx++) {
+          const s = w.sessions[idx];
+          await tx.trainingPlanSession.create({
+            data: {
+              id: nanoid(),
+              weekId,
+              dayOfWeek: s.dayOfWeek,
+              title: s.title,
+              description: s.description,
+              durationMinutes: s.durationMinutes,
+              focusArea: s.focusArea,
+              exercises: s.exercises,
+              sortOrder: idx,
+            },
+          });
+        }
+      }
+    });
+
+    revalidatePath("/portal/treningsplan");
+    return { success: true, planId };
   }
 
   throw new Error(`Ukjent mode: ${input.mode}`);
 }
 
+export async function applyTemplateToWeek(
+  weekOffset: number,
+  templateId: TemplateId,
+): Promise<{ success: boolean; createdCount: number; error?: string }> {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const template = getTemplate(templateId);
+  if (!template) {
+    return { success: false, createdCount: 0, error: `Ukjent mal: ${templateId}` };
+  }
+
+  let createdCount = 0;
+  const errors: string[] = [];
+
+  for (const tplSession of template.weekPattern) {
+    try {
+      await createSessionForWeek({
+        weekOffset,
+        dayOfWeek: tplSession.dayOfWeek,
+        title: tplSession.title,
+        description: tplSession.description,
+        durationMinutes: tplSession.durationMinutes,
+        focusArea: tplSession.focusArea,
+        startH: 9 + tplSession.dayOfWeek - 1,
+        startM: 0,
+      });
+      createdCount++;
+    } catch (err) {
+      errors.push(err instanceof Error ? err.message : String(err));
+    }
+  }
+
+  revalidatePath("/portal/treningsplan");
+  if (errors.length > 0 && createdCount === 0) {
+    return { success: false, createdCount, error: errors[0] };
+  }
+  return { success: true, createdCount };
+}
+
 export async function listStandardTemplates() {
-  return STANDARD_TEMPLATES.map((t) => ({
+  const templates = await getActiveTemplates();
+  return templates.map((t) => ({
     id: t.id,
     title: t.title,
     description: t.description,
@@ -1319,4 +1539,559 @@ export async function listStandardTemplates() {
     badge: t.badge,
     sessionCount: t.weekPattern.length,
   }));
+}
+
+// -------------------------------------------------------------------
+// Epic 3: Plan- og økt-CRUD (sprint 2)
+// -------------------------------------------------------------------
+
+/**
+ * Liste over alle planer for innlogget bruker (aktiv + inaktive).
+ * Brukes i "Mine planer"-meny.
+ */
+export async function listMyPlans() {
+  const user = await requirePortalUser();
+  if (!user?.id) return [];
+
+  const plans = await prisma.trainingPlan.findMany({
+    where: { studentId: user.id },
+    select: {
+      id: true,
+      title: true,
+      isActive: true,
+      aiGenerated: true,
+      startDate: true,
+      endDate: true,
+      createdAt: true,
+      _count: { select: { TrainingPlanWeek: true } },
+    },
+    orderBy: [{ isActive: "desc" }, { createdAt: "desc" }],
+  });
+
+  return plans.map((p) => ({
+    id: p.id,
+    title: p.title,
+    isActive: p.isActive,
+    aiGenerated: p.aiGenerated,
+    startDate: p.startDate.toISOString().slice(0, 10),
+    endDate: p.endDate.toISOString().slice(0, 10),
+    weekCount: p._count.TrainingPlanWeek,
+  }));
+}
+
+/**
+ * Arkiver plan (myk sletting via isActive: false).
+ * Spilleren kan arkivere både aktive og inaktive planer.
+ */
+export async function archivePlan(planId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const plan = await prisma.trainingPlan.findFirst({
+    where: { id: planId, studentId: user.id },
+    select: { id: true },
+  });
+  if (!plan) throw new Error("Plan ikke funnet");
+
+  await prisma.trainingPlan.update({
+    where: { id: planId },
+    data: { isActive: false, updatedAt: new Date() },
+  });
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true };
+}
+
+/**
+ * Aktiver en arkivert plan. Deaktiverer eventuell annen aktiv plan.
+ */
+export async function activatePlan(planId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const plan = await prisma.trainingPlan.findFirst({
+    where: { id: planId, studentId: user.id },
+    select: { id: true },
+  });
+  if (!plan) throw new Error("Plan ikke funnet");
+
+  await prisma.$transaction([
+    prisma.trainingPlan.updateMany({
+      where: { studentId: user.id, isActive: true },
+      data: { isActive: false, updatedAt: new Date() },
+    }),
+    prisma.trainingPlan.update({
+      where: { id: planId },
+      data: { isActive: true, updatedAt: new Date() },
+    }),
+  ]);
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true };
+}
+
+/**
+ * Hard-slett plan (cascade fjerner uker + økter + logs).
+ * Krever at planen er inaktiv.
+ */
+export async function deletePlan(planId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const plan = await prisma.trainingPlan.findFirst({
+    where: { id: planId, studentId: user.id },
+    select: { id: true, isActive: true },
+  });
+  if (!plan) throw new Error("Plan ikke funnet");
+  if (plan.isActive) {
+    throw new Error("Arkiver planen først før du sletter den.");
+  }
+
+  await prisma.trainingPlan.delete({ where: { id: planId } });
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true };
+}
+
+/**
+ * Spilleren kopierer egen plan til ny. Beholder alle uker og økter.
+ * Den nye planen blir aktiv hvis spilleren ikke har en aktiv plan,
+ * ellers inaktiv (kan aktiveres senere).
+ */
+export async function duplicateOwnPlan(sourcePlanId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const source = await prisma.trainingPlan.findFirst({
+    where: { id: sourcePlanId, studentId: user.id },
+    include: {
+      TrainingPlanWeek: {
+        include: { TrainingPlanSession: true },
+        orderBy: { weekNumber: "asc" },
+      },
+    },
+  });
+  if (!source) throw new Error("Plan ikke funnet");
+
+  const hasActive = await prisma.trainingPlan.count({
+    where: { studentId: user.id, isActive: true },
+  });
+
+  const newPlanId = nanoid();
+  const now = new Date();
+
+  await prisma.$transaction(async (tx) => {
+    await tx.trainingPlan.create({
+      data: {
+        id: newPlanId,
+        studentId: user.id,
+        createdById: user.id,
+        title: `${source.title} (kopi)`,
+        description: source.description,
+        goals: source.goals,
+        periodType: source.periodType,
+        startDate: source.startDate,
+        endDate: source.endDate,
+        isActive: hasActive === 0,
+        aiGenerated: source.aiGenerated,
+        updatedAt: now,
+      },
+    });
+
+    for (const week of source.TrainingPlanWeek) {
+      const newWeekId = nanoid();
+      await tx.trainingPlanWeek.create({
+        data: {
+          id: newWeekId,
+          planId: newPlanId,
+          weekNumber: week.weekNumber,
+          weekStart: week.weekStart,
+          focus: week.focus,
+          volumeLabel: week.volumeLabel,
+          restDays: week.restDays,
+        },
+      });
+
+      for (const session of week.TrainingPlanSession) {
+        await tx.trainingPlanSession.create({
+          data: {
+            id: nanoid(),
+            weekId: newWeekId,
+            dayOfWeek: session.dayOfWeek,
+            title: session.title,
+            description: session.description,
+            durationMinutes: session.durationMinutes,
+            focusArea: session.focusArea,
+            facilityId: session.facilityId,
+            exercises: session.exercises ?? [],
+            sortOrder: session.sortOrder,
+          },
+        });
+      }
+    }
+  });
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true, planId: newPlanId };
+}
+
+/**
+ * Dupliser én økt innen samme uke. Ny økt får tittel + " (kopi)" og legges
+ * til på slutten av samme dag (sortOrder = max + 1).
+ */
+export async function duplicateSession(sessionId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const source = await prisma.trainingPlanSession.findUnique({
+    where: { id: sessionId },
+    include: {
+      TrainingPlanWeek: {
+        select: {
+          id: true,
+          TrainingPlan: { select: { studentId: true } },
+        },
+      },
+    },
+  });
+  if (!source) throw new Error("Økt ikke funnet");
+  if (source.TrainingPlanWeek.TrainingPlan.studentId !== user.id) {
+    throw new Error("Du eier ikke denne økten");
+  }
+
+  // Sjekk gruppeøkt
+  const exercises = Array.isArray(source.exercises)
+    ? (source.exercises as Record<string, unknown>[])
+    : [];
+  if (exercises.some((ex) => ex._groupSessionId)) {
+    throw new Error("Gruppeøkter kan ikke dupliseres.");
+  }
+
+  // Beregn neste sortOrder
+  const maxSortOrder = await prisma.trainingPlanSession.aggregate({
+    where: {
+      weekId: source.weekId,
+      dayOfWeek: source.dayOfWeek,
+    },
+    _max: { sortOrder: true },
+  });
+
+  const newId = nanoid();
+  await prisma.trainingPlanSession.create({
+    data: {
+      id: newId,
+      weekId: source.weekId,
+      dayOfWeek: source.dayOfWeek,
+      title: `${source.title} (kopi)`,
+      description: source.description,
+      durationMinutes: source.durationMinutes,
+      focusArea: source.focusArea,
+      facilityId: source.facilityId,
+      exercises: source.exercises ?? [],
+      sortOrder: (maxSortOrder._max.sortOrder ?? 0) + 1,
+    },
+  });
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true, sessionId: newId };
+}
+
+/**
+ * Reorder økter innen samme dag. `sessionIds` er listen i ønsket rekkefølge.
+ */
+export async function reorderSessionsInDay(
+  weekId: string,
+  dayOfWeek: number,
+  sessionIds: string[]
+) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  // Verifiser eierskap
+  const week = await prisma.trainingPlanWeek.findUnique({
+    where: { id: weekId },
+    include: { TrainingPlan: { select: { studentId: true } } },
+  });
+  if (!week) throw new Error("Uke ikke funnet");
+  if (week.TrainingPlan.studentId !== user.id) {
+    throw new Error("Du eier ikke denne planen");
+  }
+
+  // Verifiser at alle sessionIds tilhører riktig uke + dag
+  const sessions = await prisma.trainingPlanSession.findMany({
+    where: { id: { in: sessionIds }, weekId, dayOfWeek },
+    select: { id: true },
+  });
+  if (sessions.length !== sessionIds.length) {
+    throw new Error("Noen økter tilhører ikke denne uken/dagen");
+  }
+
+  await prisma.$transaction(
+    sessionIds.map((id, idx) =>
+      prisma.trainingPlanSession.update({
+        where: { id },
+        data: { sortOrder: idx },
+      })
+    )
+  );
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true };
+}
+
+// -------------------------------------------------------------------
+// Epic 4.1: Fasilitet — hent tilgjengelige fasiliteter for spilleren
+// -------------------------------------------------------------------
+
+export async function listAvailableFacilities() {
+  const user = await requirePortalUser();
+  if (!user?.id) return [];
+
+  const facilities = await prisma.facility.findMany({
+    where: { isActive: true },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      Location: { select: { name: true } },
+    },
+    orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
+  });
+
+  return facilities.map((f) => ({
+    id: f.id,
+    name: f.name,
+    slug: f.slug,
+    locationName: f.Location?.name ?? null,
+  }));
+}
+
+// -------------------------------------------------------------------
+// Epic 4.3: Fri-dager — toggle hviledag for ukens dag
+// -------------------------------------------------------------------
+
+export async function toggleRestDay(weekId: string, dayOfWeek: number) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+  if (dayOfWeek < 1 || dayOfWeek > 7) throw new Error("Ugyldig dag");
+
+  const week = await prisma.trainingPlanWeek.findUnique({
+    where: { id: weekId },
+    include: { TrainingPlan: { select: { studentId: true } } },
+  });
+  if (!week) throw new Error("Uke ikke funnet");
+  if (week.TrainingPlan.studentId !== user.id) {
+    throw new Error("Du eier ikke denne planen");
+  }
+
+  const current = week.restDays ?? [];
+  const isRest = current.includes(dayOfWeek);
+  const next = isRest
+    ? current.filter((d) => d !== dayOfWeek)
+    : [...current, dayOfWeek].sort((a, b) => a - b);
+
+  await prisma.trainingPlanWeek.update({
+    where: { id: weekId },
+    data: { restDays: next },
+  });
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true, isRest: !isRest };
+}
+
+// -------------------------------------------------------------------
+// Epic 10: Avvis plan-justeringsforslag (persisteres i 7 dager)
+// -------------------------------------------------------------------
+
+const DISMISS_DURATION_DAYS = 7;
+
+// -------------------------------------------------------------------
+// Epic 4.2: Konflikt-sjekk for ny/oppdatert økt
+// -------------------------------------------------------------------
+
+export async function checkSessionConflicts(input: {
+  date: string;
+  startH: number;
+  startM: number;
+  durationMinutes: number;
+  excludeSessionId?: string;
+}) {
+  const user = await requirePortalUser();
+  if (!user?.id) return { hasConflict: false, conflicts: [] };
+
+  return detectSessionConflicts({
+    userId: user.id,
+    date: input.date,
+    startH: input.startH,
+    startM: input.startM,
+    durationMinutes: input.durationMinutes,
+    excludeSessionId: input.excludeSessionId,
+  });
+}
+
+// -------------------------------------------------------------------
+// Epic 7: Goal-tracking på plan-nivå
+// -------------------------------------------------------------------
+
+export interface PlanGoalProgress {
+  id: string;
+  goalType: string;
+  title: string;
+  description: string | null;
+  targetDate: string | null;
+  targetValue: number | null;
+  currentValue: number | null;
+  /** 0-100, eller null hvis ikke beregnbart */
+  progressPct: number | null;
+  /** Dager igjen til targetDate, negativ hvis utløpt */
+  daysRemaining: number | null;
+  achievedAt: string | null;
+  priority: number;
+}
+
+export interface PlanGoalsSummary {
+  goals: PlanGoalProgress[];
+  /** Antall mål oppnådd */
+  achievedCount: number;
+  /** Total antall aktive mål */
+  totalCount: number;
+}
+
+/**
+ * Hent mål for innlogget bruker og beregn progress mot HCP / TrackMan-data.
+ * Brukes til å vise mål-kort på treningsplan-siden.
+ */
+export async function getPlanGoalsProgress(): Promise<PlanGoalsSummary> {
+  const user = await requirePortalUser();
+  if (!user?.id) return { goals: [], achievedCount: 0, totalCount: 0 };
+
+  const [goals, profile, metrics] = await Promise.all([
+    prisma.playerGoals.findMany({
+      where: { userId: user.id, isActive: true },
+      orderBy: [{ priority: "asc" }, { targetDate: "asc" }],
+    }),
+    prisma.user.findUnique({
+      where: { id: user.id },
+      select: { handicap: true },
+    }),
+    prisma.playerMetrics.findUnique({
+      where: { userId: user.id },
+      select: {
+        last10DriverCarry: true,
+        last10DriverSpeed: true,
+        last10SevenIronCarry: true,
+      },
+    }),
+  ]);
+
+  const now = new Date();
+
+  const result: PlanGoalProgress[] = goals.map((g) => {
+    let currentValue = g.currentValue;
+    let progressPct: number | null = null;
+
+    // Beregn current basert på goalType
+    if (g.goalType === "HCP" && profile?.handicap != null) {
+      currentValue = profile.handicap;
+      // For HCP: lavere er bedre. progressPct beregnes fra startverdi (currentValue lagret) → target
+      if (g.targetValue != null && g.currentValue != null) {
+        const start = g.currentValue;
+        const target = g.targetValue;
+        if (start > target) {
+          progressPct = Math.round(
+            Math.max(0, Math.min(100, ((start - profile.handicap) / (start - target)) * 100))
+          );
+        }
+      }
+    } else if (g.goalType === "DRIVER_SPEED" && metrics?.last10DriverSpeed != null) {
+      currentValue = metrics.last10DriverSpeed;
+      if (g.targetValue != null && g.currentValue != null) {
+        const start = g.currentValue;
+        const target = g.targetValue;
+        if (target > start) {
+          progressPct = Math.round(
+            Math.max(0, Math.min(100, ((metrics.last10DriverSpeed - start) / (target - start)) * 100))
+          );
+        }
+      }
+    } else if (g.goalType === "DRIVER_CARRY" && metrics?.last10DriverCarry != null) {
+      currentValue = metrics.last10DriverCarry;
+      if (g.targetValue != null && g.currentValue != null) {
+        const start = g.currentValue;
+        const target = g.targetValue;
+        if (target > start) {
+          progressPct = Math.round(
+            Math.max(0, Math.min(100, ((metrics.last10DriverCarry - start) / (target - start)) * 100))
+          );
+        }
+      }
+    } else if (g.targetValue != null && g.currentValue != null && g.targetValue !== g.currentValue) {
+      // Generisk: fra currentValue mot targetValue
+      const start = g.currentValue;
+      const target = g.targetValue;
+      const range = Math.abs(target - start);
+      if (range > 0 && currentValue != null) {
+        const closed = Math.abs(currentValue - start);
+        progressPct = Math.round(Math.max(0, Math.min(100, (closed / range) * 100)));
+      }
+    }
+
+    const daysRemaining = g.targetDate
+      ? Math.ceil((g.targetDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+      : null;
+
+    return {
+      id: g.id,
+      goalType: g.goalType,
+      title: g.title,
+      description: g.description,
+      targetDate: g.targetDate?.toISOString().slice(0, 10) ?? null,
+      targetValue: g.targetValue,
+      currentValue,
+      progressPct,
+      daysRemaining,
+      achievedAt: g.achievedAt?.toISOString() ?? null,
+      priority: g.priority,
+    };
+  });
+
+  const achievedCount = result.filter((g) => g.achievedAt !== null).length;
+
+  return {
+    goals: result,
+    achievedCount,
+    totalCount: result.length,
+  };
+}
+
+export async function dismissPlanAdjustment(planId: string) {
+  const user = await requirePortalUser();
+  if (!user?.id) throw new Error("Ikke autentisert");
+
+  const plan = await prisma.trainingPlan.findFirst({
+    where: { id: planId, studentId: user.id },
+    select: { id: true },
+  });
+  if (!plan) throw new Error("Plan ikke funnet");
+
+  const now = new Date();
+  const expires = addDays(now, DISMISS_DURATION_DAYS);
+
+  // Slett gamle dismiss-rader for samme bruker/plan
+  await prisma.dismissedAdjustment.deleteMany({
+    where: { userId: user.id, planId },
+  });
+
+  await prisma.dismissedAdjustment.create({
+    data: {
+      id: nanoid(),
+      userId: user.id,
+      planId,
+      dismissedAt: now,
+      expiresAt: expires,
+    },
+  });
+
+  revalidatePath("/portal/treningsplan");
+  return { success: true, expiresAt: expires.toISOString() };
 }

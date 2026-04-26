@@ -1,6 +1,10 @@
 "use client";
 
-import type { DashboardV3Props } from "@/app/portal/(dashboard)/dashboard-types";
+import type {
+  DashboardV3Props,
+  RoundAggregateMetrics,
+  TodayTask,
+} from "@/app/portal/(dashboard)/dashboard-types";
 import { PlayerHQHero } from "./hero";
 import { PlayerHQRowOne } from "./row-one";
 import { PlayerHQRowTwo } from "./row-two";
@@ -21,7 +25,12 @@ const MONTH_LABELS = [
   "Desember",
 ];
 
-export function PlayerHQDashboard(props: DashboardV3Props) {
+interface PlayerHQDashboardProps extends DashboardV3Props {
+  roundMetrics: RoundAggregateMetrics;
+  todayTasks: TodayTask[];
+}
+
+export function PlayerHQDashboard(props: PlayerHQDashboardProps) {
   const {
     userName,
     stats,
@@ -31,9 +40,10 @@ export function PlayerHQDashboard(props: DashboardV3Props) {
     trainingIndex,
     tier,
     memberSince,
+    roundMetrics,
+    todayTasks,
   } = props;
 
-  // Week bars from completionPercent (0-100). Peak is the max day.
   const weekPct = weekRings.days.map((d) => (d.completionPercent ?? 0) / 100);
   const peakVal = Math.max(...weekPct, 0);
   const peakIdx = weekPct.indexOf(peakVal);
@@ -50,19 +60,14 @@ export function PlayerHQDashboard(props: DashboardV3Props) {
 
   const weeklyHours = trainingIndex?.weeklyHours ?? 0;
 
-  // KPI pills — demo placeholders (real SG metrics need additional server fetchers)
-  const fairwayPct = 58;
-  const girPct = 52;
-  const scramblingPct = 41;
-  const scoringAvg: number | null = null;
+  const planMinutes = todayTasks.reduce(
+    (sum, t) => sum + (t.durationMinutes ?? 0),
+    0,
+  );
+  const todayMinutes = todayTasks
+    .filter((t) => t.done)
+    .reduce((sum, t) => sum + (t.durationMinutes ?? 0), 0);
 
-  // Time tracker — dagens progresjon estimert fra weekRings + trainingIndex
-  const todayIdx = new Date().getDay();
-  const todayPct = weekPct[todayIdx] ?? 0;
-  const planMinutes = 240;
-  const todayMinutes = Math.round(planMinutes * todayPct);
-
-  // Form segments — bruker trainingIndex.distribution hvis tilgjengelig, ellers demo
   const dist = trainingIndex?.distribution;
   const formSegments = dist
     ? [
@@ -83,30 +88,54 @@ export function PlayerHQDashboard(props: DashboardV3Props) {
         },
       ]
     : [
-        { label: "Fysisk", pct: 0.82, tone: "accent" as const },
-        { label: "Mental", pct: 0.64, tone: "dark" as const },
-        { label: "Teknisk", pct: 0.41, tone: "muted" as const },
+        { label: "Fysisk", pct: 0, tone: "accent" as const },
+        { label: "Mental", pct: 0, tone: "dark" as const },
+        { label: "Teknisk", pct: 0, tone: "muted" as const },
       ];
-  const formPct = formSegments.reduce((s, seg) => s + seg.pct, 0) / formSegments.length;
+  const formPct =
+    formSegments.reduce((s, seg) => s + seg.pct, 0) / formSegments.length;
 
-  // List card — static groups with equipment
   const listGroups = [
-    { label: "Statistikk-sammendrag" },
     {
-      label: "Utstyr",
-      defaultOpen: true,
-      items: [
-        { icon: "sports_golf", name: "Driver", detail: "Ping G430 LST" },
-        { icon: "sports_golf", name: "Putter", detail: "Scotty Cameron Phantom X" },
-      ],
+      label: "Statistikk siste 30 dager",
+      defaultOpen: false,
+      items: roundMetrics.roundCount > 0
+        ? [
+            {
+              icon: "flag",
+              name: "Runder logget",
+              detail: `${roundMetrics.roundCount} runder`,
+            },
+            roundMetrics.scoringAvg != null
+              ? {
+                  icon: "stadia_controller",
+                  name: "Snitt-score",
+                  detail: roundMetrics.scoringAvg.toFixed(1),
+                }
+              : null,
+            roundMetrics.fairwayPct != null
+              ? {
+                  icon: "golf_course",
+                  name: "Fairways",
+                  detail: `${Math.round(roundMetrics.fairwayPct)}%`,
+                }
+              : null,
+            roundMetrics.girPct != null
+              ? {
+                  icon: "filter_center_focus",
+                  name: "GIR",
+                  detail: `${Math.round(roundMetrics.girPct)}%`,
+                }
+              : null,
+          ].filter((x): x is NonNullable<typeof x> => x !== null)
+        : undefined,
     },
-    { label: "Mål & milepæler" },
+    { label: "Mål og milepæler" },
     { label: "Helsestatus" },
   ];
 
-  // Calendar — week of today with next booking
   const today = new Date();
-  const dayOfWeek = today.getDay(); // 0 = sunday
+  const dayOfWeek = today.getDay();
   const monday = new Date(today);
   monday.setDate(today.getDate() - ((dayOfWeek + 6) % 7));
   const days = Array.from({ length: 6 }).map((_, i) => {
@@ -139,15 +168,15 @@ export function PlayerHQDashboard(props: DashboardV3Props) {
       ]
     : [];
 
-  // Tasks — demo (skal kobles til TrainingPlanSession når getDashboardTrainingIndex returnerer todayTasks)
   const dayLabel = `${today.getDate()}. ${MONTH_LABELS[today.getMonth()]?.toLowerCase()}`;
-  const tasks = [
-    { id: "1", icon: "local_fire_department", label: "Oppvarming", time: "08:00", done: true },
-    { id: "2", icon: "fitness_center", label: "Styrke · underkropp", time: "08:15", done: true },
-    { id: "3", icon: "sports_golf", label: "Putting · 2–4 meter", time: "11:00", done: false },
-    { id: "4", icon: "videocam", label: "Coaching — Andreas", time: "14:30", done: false },
-    { id: "5", icon: "golf_course", label: "9 hull · oppvarming", time: "16:00", done: false },
-  ].map((t) => ({ ...t, date: dayLabel }));
+  const tasks = todayTasks.map((t) => ({
+    id: t.id,
+    icon: t.icon,
+    label: t.label,
+    time: t.time,
+    done: t.done,
+    date: dayLabel,
+  }));
 
   const role =
     tier === "PRO" || tier === "ELITE"
@@ -173,10 +202,10 @@ export function PlayerHQDashboard(props: DashboardV3Props) {
         >
           <PlayerHQHero
             userName={userName}
-            fairwayPct={fairwayPct}
-            girPct={girPct}
-            scramblingPct={scramblingPct}
-            scoringAvg={scoringAvg}
+            fairwayPct={roundMetrics.fairwayPct ?? undefined}
+            girPct={roundMetrics.girPct ?? undefined}
+            scramblingPct={roundMetrics.scramblingPct ?? undefined}
+            scoringAvg={roundMetrics.scoringAvg}
             roundsCount={stats.roundsCount}
             sessionsCount={stats.sessionsCount}
             handicapTrend={handicap.trend}
@@ -190,7 +219,7 @@ export function PlayerHQDashboard(props: DashboardV3Props) {
             weeklyHours={weeklyHours}
             weekBars={weekBars}
             doneMinutes={todayMinutes}
-            planMinutes={planMinutes}
+            planMinutes={planMinutes > 0 ? planMinutes : 240}
             formPct={formPct}
             formSegments={formSegments}
           />
@@ -208,7 +237,7 @@ export function PlayerHQDashboard(props: DashboardV3Props) {
             tasks={{
               title: "Dagens plan",
               tasks,
-              ctaLabel: "Start første økt",
+              ctaLabel: tasks.length > 0 ? "Start neste økt" : "Lag treningsplan",
               ctaHref: "/portal/treningsplan",
             }}
           />

@@ -109,6 +109,80 @@
 
 ---
 
+## 2026-04-25 — Treningsplaner: 4 sprints (bug-fiks → polish, ferdig)
+
+**Jobbet med:** Komplett gjennomgang og videreutvikling av treningsplaneren. Startet med kartlegging og 7 bug-fikser, deretter 4 sprints (13 epics) som dekket alt fra konsolidering og AI-kobling til PDF-eksport, mobil-responsivitet og test-dekning. Plan-fil: `~/.claude/plans/lag-n-en-plan-mellow-fern.md`.
+
+### Pre-sprint — Bug-fiks (7 stk)
+- **`cn`-import** lagt til i `treningsplan-planner.tsx` (krasjet ved Periodization-banner).
+- **`format`-import** lagt til i `actions.ts` (krasjet ved opprettelse av økt i ny uke).
+- **`useDragAndDrop.ts:157`** — `useState(...)` byttet til `useEffect(..., [sessions])`.
+- **Lucide `Search`** fjernet fra `ExerciseBank.tsx`.
+- **`onUpdateSession`** destructurert i `TreningsplanPlanner` (ReferenceError ved redigering).
+- **3 dead-code-filer slettet:** `manual-plan-button.tsx`, `manual-plan-modal.tsx`, `generate-plan-button.tsx`.
+- **`PyramidFilter`** tar nå `progressByLevel` + `periodLabel` som props i stedet for hardkodet 60%.
+
+### Sprint 1 — Opprydding + AI + taxonomi (Epic 1, 2, 11)
+- **Slettet 14 filer:** TrainingPlannerV3, TrainingPlanViewer + alle V3-eksklusive komponenter (WeekCalendar, SessionCard, SessionDetailModal, NewSessionModal, SidePanel, StandardSessions, PyramidFilter, ExerciseBank, useDragAndDrop, types) + `archive-old-components/treningsplan-*`.
+- **Forenklet `page.tsx`** — kun én view (`TreningsplanPlanner`), fjernet `?view=`-routing.
+- **`createPlanFromChoice` RECOMMENDED-modus** kobles nå til ekte AI: henter `TrainingPrescription`, `User.handicap`, `PlayerGoals` → bygger goals-string → kaller `generateTrainingPlan` (Claude Sonnet 4.5) → lagrer plan i transaksjon. Rate-limit per bruker (`AI_ENDPOINTS`).
+- **`PlanCreatorModal`** viser "Genererer din personlige plan…" + "Generer plan med AI"-knapp i RECOMMENDED.
+- **Konsolidert taxonomi:** `TEMPLATE_FOCUS` flyttet fra `standard-templates.ts` til `ak-taxonomy.ts` som autoritativ kilde.
+
+### Sprint 2 — CRUD + smart funksjonalitet (Epic 3, 4, 10)
+- **Prisma-migrasjon** `20260425_training_extensions`: `TrainingPlanWeek.restDays Int[]` + ny modell `DismissedAdjustment`.
+- **Plan-CRUD server actions:** `listMyPlans`, `archivePlan`, `activatePlan`, `deletePlan`, `duplicateOwnPlan`, `duplicateSession`, `reorderSessionsInDay`.
+- **Fasilitet:** `createSessionForWeek` + `updateSession` tar nå `facilityId`. `listAvailableFacilities` server action.
+- **Konflikt-detektor:** ny `lib/portal/training/conflict-detector.ts` — sjekker `Booking` (CONFIRMED/PENDING) + andre `TrainingPlanSession` samme uke/dag. `checkSessionConflicts` server action.
+- **Hviledager:** `toggleRestDay(weekId, dayOfWeek)` server action.
+- **Avvis-persistering:** `dismissPlanAdjustment(planId)` setter `expiresAt = +7d`. `analyzePlanDeviation` returnerer `null` ved aktiv dismiss.
+- **UI-utvidelser i `TreningsplanPlanner`:** facility-dropdown i Create/EditSessionModal, automatisk konfliktsjekk med "Lagre likevel"-bekreftelse, "Dupliser"-knapp i EditSessionModal, ny `PlansMenu`-dropdown i header (Aktiver/Arkiver/Dupliser/Slett per plan), banner-dismiss persisterer.
+
+### Sprint 3 — Maler + notifikasjoner + goal-tracking (Epic 5, 6, 7)
+- **Prisma-migrasjon** `20260425_training_plan_template`: ny modell `TrainingPlanTemplate` (admin-redigerbare maler).
+- **`scripts/migrate-templates-to-db.ts`** — engangs-script som flytter de 5 hardkodede malene til DB. Idempotent.
+- **`lib/portal/training/template-service.ts`** — `getActiveTemplates`, `getTemplateById`, `getAllTemplatesForAdmin` med fallback til hardkodet liste.
+- **Wizard kobler til DB:** `createPlanFromChoice (TEMPLATE)` og `listStandardTemplates` leser fra DB.
+- **Admin-UI** på `/admin/treningsplan/maler`: full CRUD-editor med dynamisk ukesmønster (legg til/fjern økter, dayOfWeek, varighet, fokus, badge, sortering, isActive/isPublic).
+- **CRON `training-reminders`:** to moduser via `?mode=morning|evening` (07:00 + 19:00 UTC). Skipper hviledager + dedup på (userId, type, linkUrl, dato). 2 nye entries i `vercel.json`.
+- **Goal-tracking:** `getPlanGoalsProgress()` beregner `progressPct` per goalType (HCP, DRIVER_SPEED, DRIVER_CARRY, generisk). Ny `PlanGoalsCard`-komponent vises over ukesgrid.
+
+### Sprint 4 — Polish (Epic 8, 9, 12, 13)
+- **Prisma-migrasjon** `20260425_plan_coach_feedback`: `TrainingPlan.coachFeedback` + `coachFeedbackAt` + `coachFeedbackById`.
+- **Coach-kommentar:** `setPlanCoachFeedback` server action (staff-only). `CoachFeedbackEditor` i admin-UI med Rediger/Slett. Banner med dato på spillerside.
+- **PDF-eksport:** `lib/portal/training/pdf-export.tsx` (A4 med `@react-pdf/renderer`) — cover, coach-kommentar, mål, sammendrag, ukentlige 7-dagers grid med "Hviledag" og økter, footer med sidenummerering. API-rute `/api/portal/training/export-pdf/[planId]` med RBAC. "PDF"-knapp i header.
+- **Mobil-responsivitet:** ny `MobileWeekView` (under `md`-breakpoint) — vertikal liste med 44px touch-targets, sortert etter starttid, fargekoding.
+- **Test-dekning:**
+  - Vitest: `__tests__/training/standard-templates.test.ts` (7), `conflict-detector.test.ts` (5 m/Prisma-mock), `template-service.test.ts` (6).
+  - Playwright: `e2e/treningsplan.spec.ts` — auth, MANUAL-wizard, TEMPLATE-wizard, modal-åpning, PDF-eksport.
+
+**Migrasjoner som må kjøres ved deploy:**
+1. `DATABASE_URL="$DIRECT_URL" npx prisma migrate deploy` (3 nye migrasjoner)
+2. `npx prisma generate`
+3. `npx tsx scripts/migrate-templates-to-db.ts`
+
+**Nøkkelfiler:**
+- Prisma: `prisma/schema.prisma`, 3 nye migrasjoner
+- Server actions: `app/portal/(dashboard)/treningsplan/actions.ts` (utvidet med ~14 nye funksjoner), `app/admin/(authed)/treningsplan/actions.ts` (`setPlanCoachFeedback`), `app/admin/(authed)/treningsplan/maler/actions.ts` (ny)
+- Komponenter: `treningsplan-planner.tsx` (utvidet med `PlansMenu`, `MobileWeekView`, conflict-advarsel, facility-dropdown), `components/plan-goals-card.tsx` (ny), `templates-client.tsx` (ny admin-UI)
+- Bibliotek: `lib/portal/training/{conflict-detector,template-service,pdf-export}.{ts,tsx}` (3 nye)
+- API: `/api/portal/cron/training-reminders/route.ts`, `/api/portal/training/export-pdf/[planId]/route.ts`
+- Tester: `__tests__/training/*.test.ts` (3 nye), `e2e/treningsplan.spec.ts` (ny)
+- Konfig: `vercel.json` (2 nye CRONs)
+- Plan: `~/.claude/plans/lag-n-en-plan-mellow-fern.md`
+
+**Status:** Alle 13 epics ferdig. 21 mangler fra kartleggingsrapporten dekket. Treningsplaneren har nå én konsolidert view, ekte AI-modus, full plan-CRUD, fasilitet/konflikt-håndtering, admin-redigerbare maler, daglige påminnelser, goal-tracking mot HCP/TrackMan, PDF-eksport, coach-kommentar, mobil-versjon og test-dekning.
+
+**Neste steg:**
+1. **Kjør migrasjoner mot Supabase** (3 stk via `DIRECT_URL`).
+2. **Migrer maler til DB:** `npx tsx scripts/migrate-templates-to-db.ts`.
+3. **Test end-to-end:** wizard (alle 3 modus), plan-meny (arkiver/dupliser/slett), PDF-nedlasting, mobil-visning på 375px.
+4. **Verifiser cron i prod:** `curl -H "Authorization: Bearer $CRON_SECRET" https://akgolf.no/api/portal/cron/training-reminders?mode=morning`.
+5. **Sett opp test-bruker** i `.env.local` (`TEST_STUDENT_EMAIL`, `TEST_STUDENT_PASSWORD`) for Playwright.
+6. **Vurder design-pass** på de nye komponentene (PlansMenu, MobileWeekView, PlanGoalsCard, CoachFeedbackEditor) når design-terminalen tar tak i treningsplan-siden.
+
+---
+
 ## 2026-04-25 — FEATURE_INVENTORY.md + git-opprydding
 
 **Jobbet med:** Komplett kartlegging av alle sider, API-ruter og backend-moduler i plattformen.

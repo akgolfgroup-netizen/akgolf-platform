@@ -4,7 +4,6 @@
 import { Icon } from "@/components/ui/icon";
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Filter } from "lucide-react";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { cn } from "@/lib/utils";
 import { 

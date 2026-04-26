@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
-import { MonoLabel, BentoGrid, BentoCard, NightSurface, GlassPanel } from "@/components/portal/patterns";
+import { MonoLabel, BentoGrid, BentoCard, NightSurface } from "@/components/portal/patterns";
 import type { TournamentItem, TournamentStats } from "./actions";
 import { deleteTournament } from "./actions";
 

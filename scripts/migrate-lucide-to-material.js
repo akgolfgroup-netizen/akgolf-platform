@@ -11,6 +11,7 @@
  *
  * Link/LucideIcon mappes IKKE — kan konflikte med Next.js Link / TypeScript.
  */
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require("fs");
 const path = require("path");
 

@@ -3,7 +3,6 @@
 
 import { Icon } from "@/components/ui/icon";
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { Calendar } from "lucide-react";
 import { cn } from "@/lib/portal/utils/cn";
 import { MCTopbar, useMCSidebar } from "@/components/portal/mission-control";
 import {

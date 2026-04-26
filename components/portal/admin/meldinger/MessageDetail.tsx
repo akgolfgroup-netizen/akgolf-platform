@@ -5,7 +5,6 @@ import { Icon } from "@/components/ui/icon";
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
 import { useState, useEffect } from "react";
 import type { Channel } from "./ChannelFilter";
 import type { MessageStatus } from "./MessageList";
