@@ -140,7 +140,7 @@ function SidebarHeader() {
     <div className="mb-8 px-4">
       <h1 className="text-xl font-bold tracking-widest text-surface">AK Golf</h1>
       <p className="text-xs font-medium uppercase tracking-tight text-emerald-100/50 mt-1">
-        Mission Control
+        CoachHQ
       </p>
     </div>
   );

@@ -19,6 +19,7 @@ import {
   getBlockedTimesForPeriod,
   getInstructorAvailabilityPrisma,
   markNoShow,
+  markBookingCompleted,
   addAdminNote,
   createBlockedTimePrisma,
 } from "./actions";
@@ -59,6 +60,7 @@ export default function KalenderClient({
   const [isPending, startTransition] = useTransition();
   const [isNotePending, startNoteTransition] = useTransition();
   const [isNoShowPending, startNoShowTransition] = useTransition();
+  const [isCompletePending, startCompleteTransition] = useTransition();
 
   // Overlays
   const [drawerBooking, setDrawerBooking] = useState<CalendarBooking | null>(null);
@@ -141,6 +143,26 @@ export default function KalenderClient({
     });
   };
 
+  const handleMarkCompleted = (bookingId: string) => {
+    startCompleteTransition(async () => {
+      try {
+        await markBookingCompleted(bookingId);
+        toast({
+          variant: "success",
+          title: "Marker fullført",
+          description: "AI-pipeline starter automatisk hvis lyd er lastet opp.",
+        });
+        fetchData(currentDate, viewMode, selectedInstructorId);
+      } catch (err) {
+        toast({
+          variant: "error",
+          title: "Kunne ikke markere fullført",
+          description: err instanceof Error ? err.message : "Ukjent feil",
+        });
+      }
+    });
+  };
+
   const handleAddNote = () => {
     if (!noteModalBookingId || !noteText.trim()) return;
     const id = noteModalBookingId;
@@ -217,7 +239,7 @@ export default function KalenderClient({
         {/* Heritage Grid Header */}
         <div className="space-y-2">
           <MonoLabel size="xs" uppercase className="block text-outline">
-            Mission Control
+            CoachHQ
           </MonoLabel>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">
             Kalender<span className="text-outline">.</span>
@@ -320,6 +342,8 @@ export default function KalenderClient({
         isPending={isPending}
         isNoShowPending={isNoShowPending}
         onMarkNoShow={handleMarkNoShow}
+        isCompletePending={isCompletePending}
+        onMarkCompleted={handleMarkCompleted}
         onOpenNoteModal={handleOpenNoteModal}
       />
     </>

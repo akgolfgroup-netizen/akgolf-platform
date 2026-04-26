@@ -1,19 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Inter, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CookieConsent } from "@/components/website/CookieConsent";
 import "./globals.css";
 
-// Heritage Grid — DM Sans er hovedfont for hele appen
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-  weight: ["300", "400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
-// Inter beholdes for bakoverkompatibilitet under migrering (fjernes i Steg 7)
+// Brand Guide V2.0 — Inter er hovedfont for hele appen (fra 2026-04-25)
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -21,10 +13,27 @@ const inter = Inter({
   display: "swap",
 });
 
+// Inter Tight — display/headlines (Brand Guide V2.0)
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-inter-tight",
+  weight: ["400", "500", "600", "700", "800"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+// LEGACY — DM Sans beholdes for bakoverkompatibilitet til Sprint 2-migrering er ferdig
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -108,7 +117,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
         />
       </head>
-      <body className={`${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable} h-full`}>
+      <body className={`${inter.variable} ${interTight.variable} ${jetbrainsMono.variable} ${dmSans.variable} font-sans h-full`}>
         {/* Skip-to-content link for tilgjengelighet */}
         <a
           href="#main-content"

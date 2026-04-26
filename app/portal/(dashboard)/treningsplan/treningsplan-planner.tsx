@@ -730,6 +730,7 @@ function WeekGrid({
                             <span className="ml-1 text-info">· {ev.groupName}</span>
                           )}
                         </span>
+                        {/* TODO: ResizeHandle-komponent ikke implementert enda. onResizeEvent-prop er klar når UI bygges. */}
                         {!ev.isGroupSession && onResizeEvent && null}
                       </div>
                     ))}

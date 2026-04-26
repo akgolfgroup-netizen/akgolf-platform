@@ -4,7 +4,7 @@
  * NightSurface — Pattern P-03 (v3.1)
  *
  * Kontekstuell dark mode — IKKE global. Brukes på data-first-skjermer:
- * TrackMan, Mission Control, dashboard V2 Night Ops.
+ * TrackMan, CoachHQ, dashboard V2 Night Ops.
  *
  * Setter dark-kontekst for barn via CSS-variabler, slik at komponenter
  * kan tilpasse seg via `.night-surface &`-selector i egen CSS.

@@ -5,7 +5,7 @@ import { getTasks, getDivisionStats, getTodayBookingsByDivision } from "./action
 import { FocusClient } from "./focus-client";
 
 export const metadata = {
-  title: "Focus | AK Golf Mission Control",
+  title: "Focus | AK Golf CoachHQ",
 };
 
 export default async function FocusPage() {

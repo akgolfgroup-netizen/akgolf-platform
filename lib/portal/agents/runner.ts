@@ -2,8 +2,11 @@
  * Agent runner - event-triggered automation for CoachHQ.
  *
  * Events:
- *   - BookingCompleted: runs post-session pipeline if audio is available
- *   - CoachingSessionPublished: schedules next-session draft for the upcoming booking
+ *   - onBookingCompleted          — post-session pipeline (transcribe + summarize)
+ *   - onCoachingSessionPublished  — auto-draft next session
+ *   - onUSISnapshotChanged        — ny: oppdater fokus-anbefaling ved delta > 0.5
+ *   - onTestResultLogged          — ny: auto-skeduler retest 8/12 uker frem
+ *   - onMetricSnapshotComputed    — ny: oppdater Mission Board ved tilbakegang
  *
  * Each run is logged in AgentLog for observability.
  */
@@ -17,6 +20,14 @@ import { createServiceClient } from "@/lib/supabase/server";
 
 const AGENT_AUDIO = "post-session-transcriber";
 const AGENT_NEXT_SESSION = "next-session-planner";
+const AGENT_USI_FOCUS = "usi-focus-updater";
+const AGENT_TEST_SCHEDULER = "test-retest-scheduler";
+const AGENT_DEGRADATION = "degradation-flagger";
+
+// Standardvalg #USI: significant delta = 0.5
+const USI_DELTA_THRESHOLD = 0.5;
+// Standardvalg #Test: retest 8 uker for kortsiktig tester, 12 uker for langtid
+const TEST_RETEST_DAYS_DEFAULT = 56; // 8 uker
 
 async function logRun(params: {
   agentType: string;
@@ -233,6 +244,286 @@ export async function onCoachingSessionPublished(sessionId: string): Promise<{
       error: err instanceof Error ? err.message : String(err),
     });
     logger.error("[agent-runner] onCoachingSessionPublished failed", err);
+    return { ran: false, reason: "error" };
+  }
+}
+
+/**
+ * Event: USI-snapshot for spilleren har endret seg.
+ * Hvis delta er over USI_DELTA_THRESHOLD (Standardvalg: 0.5),
+ * trigger oppdatering av fokus-anbefaling og varsle coach.
+ *
+ * TODO: Bekreft USI_DELTA_THRESHOLD med Anders.
+ */
+export async function onUSISnapshotChanged(
+  userId: string,
+  oldUSI: number | null,
+  newUSI: number,
+): Promise<{ ran: boolean; reason?: string; delta?: number }> {
+  const started = Date.now();
+  try {
+    const delta = oldUSI !== null ? Math.abs(newUSI - oldUSI) : USI_DELTA_THRESHOLD;
+    if (oldUSI !== null && delta < USI_DELTA_THRESHOLD) {
+      await logRun({
+        agentType: AGENT_USI_FOCUS,
+        model: "rule-based",
+        status: "skipped",
+        input: JSON.stringify({ userId, oldUSI, newUSI, delta }),
+        output: `delta ${delta.toFixed(3)} below threshold ${USI_DELTA_THRESHOLD}`,
+      });
+      return { ran: false, reason: "below-threshold", delta };
+    }
+
+    // Find aktiv coach for spilleren
+    const relation = await prisma.coachPlayerRelation.findFirst({
+      where: { playerUserId: userId, status: "ACTIVE" },
+      include: {
+        Coach: { select: { id: true, name: true } },
+        Player: { select: { name: true } },
+      },
+    });
+
+    if (!relation?.Coach?.id) {
+      await logRun({
+        agentType: AGENT_USI_FOCUS,
+        model: "rule-based",
+        status: "skipped",
+        input: JSON.stringify({ userId, oldUSI, newUSI }),
+        output: "no active coach",
+      });
+      return { ran: false, reason: "no-coach", delta };
+    }
+
+    const direction = oldUSI === null
+      ? "førstegangs-snapshot"
+      : newUSI > oldUSI
+      ? "framgang"
+      : "tilbakegang";
+
+    const studentName = relation.Player?.name ?? "Eleven";
+
+    await prisma.notification.create({
+      data: {
+        id: nanoid(),
+        userId: relation.Coach.id,
+        type: "AI_INSIGHT",
+        title: `${studentName} — ${direction} i ferdighetsnivå`,
+        message: `USI endret med ${delta.toFixed(2)} (fra ${oldUSI?.toFixed(2) ?? "—"} til ${newUSI.toFixed(2)}). Vurder ny fokusanbefaling.`,
+        linkUrl: `/admin/elever/${userId}?tab=forecast`,
+      },
+    });
+
+    await logRun({
+      agentType: AGENT_USI_FOCUS,
+      model: "rule-based",
+      status: "success",
+      duration: Date.now() - started,
+      input: JSON.stringify({ userId, oldUSI, newUSI, delta }),
+      output: `notified coach ${relation.Coach.id} about ${direction}`,
+    });
+
+    return { ran: true, delta };
+  } catch (err) {
+    await logRun({
+      agentType: AGENT_USI_FOCUS,
+      model: "rule-based",
+      status: "error",
+      duration: Date.now() - started,
+      input: JSON.stringify({ userId, oldUSI, newUSI }),
+      error: err instanceof Error ? err.message : String(err),
+    });
+    logger.error("[agent-runner] onUSISnapshotChanged failed", err);
+    return { ran: false, reason: "error" };
+  }
+}
+
+/**
+ * Event: TestResult lagret.
+ * Auto-skedulering av neste retest 8 uker (Standardvalg) eller 12 uker (langtid)
+ * frem i tid. Sender varsel til coach + elev.
+ *
+ * TODO: Bekreft retest-intervaller (8/12 uker) med Anders.
+ */
+export async function onTestResultLogged(
+  testResultId: string,
+): Promise<{ ran: boolean; reason?: string; nextRetestDate?: Date }> {
+  const started = Date.now();
+  try {
+    const test = await prisma.testResult.findUnique({
+      where: { id: testResultId },
+      include: {
+        TestDefinition: { select: { name: true, category: true } },
+        User: { select: { id: true, name: true } },
+      },
+    });
+
+    if (!test) {
+      await logRun({
+        agentType: AGENT_TEST_SCHEDULER,
+        model: "rule-based",
+        status: "skipped",
+        input: testResultId,
+        output: "test not found",
+      });
+      return { ran: false, reason: "no-test" };
+    }
+
+    // 8 uker for de fleste; lag stub for 12-ukers test-typer (kan utvides senere)
+    const retestDays = TEST_RETEST_DAYS_DEFAULT;
+    const nextRetestDate = new Date();
+    nextRetestDate.setDate(nextRetestDate.getDate() + retestDays);
+
+    // Finn coach
+    const relation = await prisma.coachPlayerRelation.findFirst({
+      where: { playerUserId: test.User.id, status: "ACTIVE" },
+      select: { coachUserId: true },
+    });
+
+    // Notify spilleren
+    await prisma.notification.create({
+      data: {
+        id: nanoid(),
+        userId: test.User.id,
+        type: "AI_INSIGHT",
+        title: `Retest planlagt: ${test.TestDefinition?.name ?? "test"}`,
+        message: `Neste gjennomføring anbefales ${nextRetestDate.toLocaleDateString("nb-NO")} (${retestDays / 7} uker frem). Vi minner deg uken før.`,
+        linkUrl: `/portal/statistikk`,
+      },
+    });
+
+    // Notify coach (hvis finnes)
+    if (relation?.coachUserId) {
+      await prisma.notification.create({
+        data: {
+          id: nanoid(),
+          userId: relation.coachUserId,
+          type: "AI_INSIGHT",
+          title: `${test.User.name ?? "Elev"} — retest skedulert`,
+          message: `${test.TestDefinition?.name ?? "Test"} skedulert til ${nextRetestDate.toLocaleDateString("nb-NO")}.`,
+          linkUrl: `/admin/elever/${test.User.id}?tab=tests`,
+        },
+      });
+    }
+
+    await logRun({
+      agentType: AGENT_TEST_SCHEDULER,
+      model: "rule-based",
+      status: "success",
+      duration: Date.now() - started,
+      input: testResultId,
+      output: `scheduled retest at ${nextRetestDate.toISOString().slice(0, 10)}`,
+    });
+
+    return { ran: true, nextRetestDate };
+  } catch (err) {
+    await logRun({
+      agentType: AGENT_TEST_SCHEDULER,
+      model: "rule-based",
+      status: "error",
+      duration: Date.now() - started,
+      input: testResultId,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    logger.error("[agent-runner] onTestResultLogged failed", err);
+    return { ran: false, reason: "error" };
+  }
+}
+
+/**
+ * Event: MetricSnapshot beregnet (typisk fra compute-usi-CRON).
+ * Sjekker DegradationTracking — hvis tilbakegang oppdaget, trigger
+ * oppdatering av Dagens fokus (Mission Board) og varsle coach.
+ */
+export async function onMetricSnapshotComputed(
+  snapshotId: string,
+): Promise<{ ran: boolean; reason?: string; degradationFound?: boolean }> {
+  const started = Date.now();
+  try {
+    const snapshot = await prisma.metricSnapshot.findUnique({
+      where: { id: snapshotId },
+      include: {
+        PlayerMetrics: {
+          select: {
+            userId: true,
+            User: { select: { id: true, name: true } },
+          },
+        },
+      },
+    });
+
+    if (!snapshot?.PlayerMetrics) {
+      await logRun({
+        agentType: AGENT_DEGRADATION,
+        model: "rule-based",
+        status: "skipped",
+        input: snapshotId,
+        output: "snapshot not found",
+      });
+      return { ran: false, reason: "no-snapshot" };
+    }
+
+    const userId = snapshot.PlayerMetrics.userId;
+    const user = snapshot.PlayerMetrics.User;
+
+    // Sjekk om det finnes nylig DegradationTracking for spilleren
+    const recentDegradation = await prisma.degradationTracking.findFirst({
+      where: {
+        userId,
+        startedAt: { gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7) }, // siste 7 dager
+      },
+      orderBy: { startedAt: "desc" },
+    });
+
+    if (!recentDegradation) {
+      await logRun({
+        agentType: AGENT_DEGRADATION,
+        model: "rule-based",
+        status: "skipped",
+        input: snapshotId,
+        output: "no recent degradation",
+      });
+      return { ran: false, reason: "no-degradation", degradationFound: false };
+    }
+
+    // Finn coach
+    const relation = await prisma.coachPlayerRelation.findFirst({
+      where: { playerUserId: userId, status: "ACTIVE" },
+      select: { coachUserId: true },
+    });
+
+    if (relation?.coachUserId) {
+      await prisma.notification.create({
+        data: {
+          id: nanoid(),
+          userId: relation.coachUserId,
+          type: "AI_INSIGHT",
+          title: `${user?.name ?? "Elev"} — tilbakegang oppdaget`,
+          message: `Sporing av tilbakegang er aktiv. Vurder å justere fokus eller booke ekstra økt.`,
+          linkUrl: `/admin/elever/${userId}?tab=signaler`,
+        },
+      });
+    }
+
+    await logRun({
+      agentType: AGENT_DEGRADATION,
+      model: "rule-based",
+      status: "success",
+      duration: Date.now() - started,
+      input: snapshotId,
+      output: `flagged degradation for ${userId}`,
+    });
+
+    return { ran: true, degradationFound: true };
+  } catch (err) {
+    await logRun({
+      agentType: AGENT_DEGRADATION,
+      model: "rule-based",
+      status: "error",
+      duration: Date.now() - started,
+      input: snapshotId,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    logger.error("[agent-runner] onMetricSnapshotComputed failed", err);
     return { ran: false, reason: "error" };
   }
 }

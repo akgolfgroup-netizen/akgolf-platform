@@ -6,7 +6,7 @@ import { fetchAuditLog } from "../actions";
 import { AuditClient } from "./audit-client";
 
 export const metadata = {
-  title: "Audit-logg | AK Golf Mission Control",
+  title: "Audit-logg | AK Golf CoachHQ",
 };
 export const dynamic = "force-dynamic";
 

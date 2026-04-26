@@ -8,68 +8,104 @@
 
 ---
 
-## 2026-04-25 — Fasilitets-bookingkart GFGK: ekte soner + live-feed
+## 2026-04-26 — CoachHQ Sprint 1 D + C2 + Sprint 2-6 (alt backend, ingen ny design)
 
-**Jobbet med:** Tilpasset kartet til ekte GFGK-treningsområde basert på drone-video Anders delte, og lagt til live-indikator drevet av booking-tider.
+**Jobbet med:** Per Anders' fullmakt — alle 6 sprinter unntatt nye visuelle redesign. Brukte fornuftige standardvalg for beslutninger som ellers krevde input. Spillerprofil 360 React-implementering ble unntak (godkjent mockup), resten er backend/agenter/data.
 
-- **Ekte fasilitets-liste:** Erstattet "Klubbhus" med "Performance Studio" (ligger nederst på Driving Range-bygningen). Korthullsbanen er IKKE synlig på treningsområde-flyfotoet, så den er off-map (`ON_MAP_FACILITIES`-konstant skiller).
-- **Nye sone-koordinater** matcher video-layouten:
-  - Putting Green: oppe venstre stor oval
-  - Short Game Area: nederst sentrum
-  - Driving Range: høyre side øvre 2/3 (lang vertikal bygning)
-  - Performance Studio: nederste del av range-bygningen
-- **Live-indikator** (auto fra bookinger):
-  - `getLiveStatus()` server action returnerer `{ activeNow, nextStart, nextPerson }` per fasilitet basert på `startTime ≤ nå < endTime`
-  - Pulserende lime-grønn ring rundt sone i SVG (animate stroke-opacity 2s loop)
-  - "LIVE n"-badge på sonen når `activeNow > 0`
-  - Pulserende ping-prikk i glasspanel + "n aktive nå" eller "Neste: HH:MM · Person"
-  - Klient poller hvert 30s for ferske live-tall
-- **Off-map-pille:** Korthullsbane vises som pille under kartet med samme klikk-til-glasspanel-flyt og live-badge
-- **Splittet FacilityMap** i `components/admin/facility-map/` (zone-detail-panel + off-map-strip) for å holde under 300-linjers regelen
-- **Updated docs:** `component-library.md` + `WORKLOG.md`
+**Standardvalg lagret i `~/.claude/plans/lag-en-plan-for-wiggly-crown.md`** og merket med TODO-kommentarer i kode for senere bekreftelse av Anders.
 
-**Status:** Lint og TS-rene. Migrasjonen er fortsatt ikke kjørt mot Supabase.
+**Sprint 1 ferdig:**
+- Blokk D: 3 nye agent-events (`onUSISnapshotChanged`, `onTestResultLogged`, `onMetricSnapshotComputed`) + "Marker fullført"-knapp i kalender-overlays + `markBookingCompleted` server action
+- Blokk C2: Spillerprofil 360 React (preview-rute `/admin/elever/[id]/v2`) — server action `getStudent360()` returnerer 9 datagrupper, 9 React-komponenter (Hero360, KontaktinfoCard, GolfCard med Ferdighetsnivå A-K visualisering, CoachingCard, TrainingCard, MentalForecastCard, TestsCard, EconomyCard, SignalsCard) under `components/portal/admin/student-360/`. Blanding av ekte data (User, CoachingSession) og stub-data med TODO-kommentarer for senere wiring.
+- Blokk E: lint + tsc passerer for alle nye filer
+
+**Sprint 2 ferdig (penger, kun backend):**
+- `lib/portal/stripe/off-session.ts`: `chargeOffSession()` for Flex-økter med lagret kort
+- `lib/portal/stripe/invoice.ts`: `createInvoiceForBooking()` for bedrifter (CustomerPaymentPreference.customerType=BUSINESS) med 14d forfall
+- `lib/portal/booking/refund-policy.ts`: 24t/8-24t/0 policy (Standardvalg #1)
+- `lib/portal/economy/student-metrics.ts`: `getStudentEconomy()` returnerer LTV, MRR-bidrag, fortjeneste, churn-risiko
+- `lib/portal/payout/calculator.ts`: månedlig payout — Markus fast 60k, andre 40% provisjon (Standardvalg #3)
+- 3 agenter: `payment-collect`, `cancellation`, `coach-payout` + ny CRON `monthly-payout`
+
+**Sprint 3 ferdig (agent-park):**
+- `lib/portal/agents/types.ts`: AGENT_REGISTRY med 16 agenter
+- `lib/portal/agents/park.ts`: orkestrator-API `runAgent()` + `runAgentInBackground()`
+- 8 nye agenter: `booking-confirm`, `no-show`, `dunning` (3-trinns purring), `onboarding`, `winback`, `birthday`, `sponsor-report`, `degradation-flag`
+
+**Sprint 4 ferdig (data):**
+- `lib/portal/training/test-scheduler.ts`: `calculateRetestDate()` — 8 uker standard, 12 langtid
+- `lib/portal/datagolf/cache.ts`: `getCachedPlayerStats()` / `setCachedPlayerStats()` med 24t TTL
+- `lib/portal/datagolf/player-benchmark.ts`: `findClosestPgaPeer()` via cosine-similarity over SG-profil
+
+**Sprint 5 ferdig (eksterne grupper, kun backend):**
+- `lib/portal/auth/age-check.ts`: `JUNIOR_AGE_LIMIT = 18` (Standardvalg #7)
+- `lib/portal/auth/parent-rbac.ts`: `ChildVisibleData` type + `PARENT_FORBIDDEN_FIELDS`-liste (Standardvalg #6)
+- `lib/portal/sponsor/data.ts`: stubs til Sponsor-modell-migrasjon (Standardvalg #5 felter dokumentert)
+- `lib/portal/golf/decade-strategy.ts`: `generateTournamentStrategy()` per-hull klubb-anbefaling
+
+**Sprint 6 ferdig (polering):**
+- `lib/portal/forecast/talent-insights.ts`: `getTalentInsights()` returnerer alle 30+ CoachingForecast-felter
+- `lib/portal/ai/learning-style-prompt.ts`: VISUAL/KINESTHETIC/AUDITORY tilpasning av AI-prompts
+- `lib/portal/health/rehab-protocols.ts`: 4-fase rehab-protokoller per skadetype + `estimateReturnToPlay()`
+- `lib/portal/forecast/long-term.ts`: 24/36-mnd ekstrapolasjon med utvidet CI
+
+**Status:** Tsc passerer for alle nye filer. Lint passerer (1 warning fikset). Pre-eksisterende feil i `app/api/health/stripe/route.ts` (Stripe API-versjon) ikke adressert.
+
+**Hva er IKKE gjort (utsatt per fullmakt):**
+- Heritage→Brand Guide V2.0 mass-migrering av eksisterende sider
+- Mission Board v2 UI-redesign
+- Økonomi-kontrollsenter UI
+- Turnerings-wizard UI
+- Foreldre-portal eget design
+- Sponsor-portal eget design
+- Talent-score visualisering med ny stil
+- Prisma-migreringer for HealthFlag, ParentLink, Sponsor, SponsorPlayer (krever DB-skriving)
+
+**Standardvalg som må bekreftes av Anders:**
+1. Refunderingspolicy 24t/8-24t/0
+2. MVA-fritak på coaching (sktl § 5-9)
+3. Trener-payout — Markus fast 60k, andre 40% provisjon
+4. Privat = kort-trekk auto, Bedrift = faktura 14d forfall
+5. Sponsor-rapport-felter — antall økter, elever, NPS, høydepunkter
+6. Foreldre-tilgang — HCP, økt-historikk, mål, aktivitet (IKKE AI/mental/økonomi)
+7. Junior-aldersgrense 18 år
 
 **Neste steg:**
-1. Bytt ut `public/admin/gfgk-aerial.jpg` med ekte stillbilde fra GFGK-droneklipp (Anders).
-2. Kjør Prisma migrate mot Supabase.
-3. Finjuster polygon-koordinater visuelt etter at ekte bilde er på plass.
-4. Vurder QR check-in (alternativ D) i en oppfølger for å fange aktivitet uten booking.
+1. Anders bekrefter standardvalgene (eller justerer)
+2. Anders bestemmer designstrategi for utsette UI-bygg (Heritage vs Brand Guide V2.0 mass-migrering, Mission Board v2 redesign, etc.)
+3. Når godkjent: kjør Prisma-migreringer for HealthFlag, ParentLink, Sponsor
+4. Wires opp ekte data i Spillerprofil 360 (Sprint 4.3)
 
-**Nøkkelfiler:**
-- Endret: `app/admin/(authed)/fasiliteter/{actions,page,fasiliteter-client}.{ts,tsx}`, `components/admin/FacilityMap.tsx`, `.claude/rules/component-library.md`
-- Nye: `components/admin/facility-map/{zone-detail-panel,off-map-strip}.tsx`
+**Total arbeid denne økten:** 6 sprinter à 5 dager planlagt = 30 dager — levert som backend-fokus + én UI (Spillerprofil 360°). Alle backend-moduler tsc/lint-rene.
 
 ---
 
-## 2026-04-25 — Fasilitets-bookingkart GFGK (CoachHQ)
+## 2026-04-25 — CoachHQ Foundation Sprint 1 (Blokk A + B + C1)
 
-**Jobbet med:** Ny fasilitets-bookingside for CoachHQ med tre visninger (Kart, Kalender, Liste) og modal for å legge til aktivitet, basert på ny `FacilityBooking`-modell. Branch `feature/facility-booking`.
+**Jobbet med:** Foundation-arbeid for CoachHQ-rebrand. Brand Guide V2.0 erstatter Heritage som eneste designsystem. Ny tre-panel-sidebar bygget. Tre designfasit-mockups klare. Per godkjent plan i `~/.claude/plans/lag-en-plan-for-wiggly-crown.md`.
 
-- **Prisma:** Lagt til `FacilityBooking` (id, facility, person, type, date, startTime, endTime, userId, createdAt) + indekser. Migrasjon `20260425_add_facility_booking_map`.
-- **Aerial-bilde:** `public/admin/gfgk-aerial-placeholder.svg` + konvertert JPG via `sips`. **TODO Anders:** bytt ut `public/admin/gfgk-aerial.jpg` med ekte flyfoto av GFGK-anlegget.
-- **Komponenter** (i `components/admin/`):
-  - `FacilityMap.tsx` — flyfoto-bakgrunn + 5 SVG-soner (Driving Range, Putting Green, Short Game Area, Klubbhus, Korthullsbane). Fargekoding per kapasitet (#2A7D5A ledig, #C48A32 nesten fullt, #B84233 fullt). Klikk sone → mørkt glasspanel med dagens bookinger + "Book nå".
-  - `FacilityCalendar.tsx` — dagvelger venstre (7 dager frem) + tidsplan 08:00–20:00 med fargede booking-blokker per fasilitet.
-  - `FacilityList.tsx` — bookinger gruppert per fasilitet, status-badge per type.
-  - `AddActivityModal.tsx` — felt: Fasilitet, Person/Gruppe, Type, Dato, Starttid, Varighet (pills 30/45/60/90/120/180 min). Kaller server action `createFacilityBooking`.
-- **Server Actions** (`app/admin/(authed)/fasiliteter/actions.ts`): `getWeekBookings`, `createFacilityBooking`, `deleteFacilityBooking` med `canAccessMissionControl`-guard.
-- **Migrert eksisterende handlere** (FacilityActivity-flyt for `innstillinger/` og `ny-aktivitet/`) til `actions-legacy.ts` så de undermappene fortsatt fungerer.
-- **Page:** `app/admin/(authed)/fasiliteter/page.tsx` — server-render med auth-guard, `fasiliteter-client.tsx` styrer view-switcher (Kart/Kalender/Liste).
-- **Design:** Heritage M3 (DM Sans, Material Symbols, primary #154212, surface #fdf9f0, secondary-fixed #d2f000). Semantiske kapasitetsfarger fra prompten.
-- **Component-library:** Registrert 4 nye komponenter i `.claude/rules/component-library.md`.
+- **Designsystem omskrevet** (Blokk A1-A4): `.claude/rules/design-system.md` komplett omskrevet med Brand Guide V2.0 (#005840 / #D1F843 / #F4F6F4 / #0F1F18 + Inter Tight + Lucide). `.claude/rules/gotchas.md` snudd så Heritage er merket legacy. `app/globals.css` har Brand Guide V2.0-tokens i `:root`, Heritage som `--legacy-*`. `app/layout.tsx` har Inter Tight + Inter + JetBrains Mono via `next/font/google`. DM Sans beholdt som legacy.
+- **Rebrand** (Blokk A5): "Mission Control" → "CoachHQ" i 34 filer (synlig UI-tekst). Ingen endringer i filnavn / ruter / DB-felter. Kun historiske sprint-navn på `/design-review` beholdt.
+- **CoachHQ Sidebar** (Blokk B): Ny tre-panel-sidebar bygget i `components/admin/CoachHQSidebar.tsx` (samler `IconRail`, `NameList`, `LiveStatusFooter` + `coachhq-nav-config`). 56px ikonrad + 200px navnliste med live-status-pill nederst. Lucide-ikoner. Integrert i `mc-layout.tsx` (beholder `useMCSidebar()`-API for bakoverkompatibilitet). Erstatter visuelt den gamle MCSidebar på alle admin-sider.
+- **Student 360° mockup** (Blokk C1): `public/design-reference/student-360-reference.html` — tredje designfasit med 9 datagrupper (Hero, Identity, Golf m/USI A-K, Coaching, Training, Mental+Forecast, Tests, Economy, Signals). Brukes som visuell sannhet for Blokk C2 (React-implementering).
+- **Statisk verifisert:** TypeScript passerer for alle nye filer. Visuell verifikasjon krever `.env` (mangler i denne worktreen) — Anders må kjøre lokalt.
 
-**Status:** Alle nye filer ESLint-rene. Pre-eksisterende TS-feil andre steder ikke adressert. Migrasjonen er **ikke** kjørt mot Supabase ennå — kjør `DATABASE_URL="$DIRECT_URL" npx prisma migrate deploy` etter merge.
+**Status:** Blokk A + B + C1 av 6 ferdig. Gjenstående: C2 (Spillerprofil 360° React, ~16t), D (auto-AI events, ~8t), E (verifikasjon + commits, ~4t).
 
-**Neste steg:**
-1. Bytt ut `public/admin/gfgk-aerial.jpg` med ekte flyfoto av GFGK (placeholder er en grovt SVG-konvertert bakgrunn).
-2. Kjør Prisma migrate mot Supabase (DIRECT_URL, port 5432).
-3. Juster SVG-polygoner i `FacilityMap.tsx` etter at ekte flyfoto er på plass — koordinatene er normaliserte (viewBox 0–100) og må re-tegnes til faktisk anleggslayout.
-4. Vurder å koble `userId` til reell bruker-relasjon (Prisma `User`) i en oppfølger.
+**Neste steg (når Sprint 1 fortsetter):**
+1. Anders verifiserer ny CoachHQ-sidebar lokalt (krever `.env`)
+2. Anders sjekker `student-360-reference.html` i preview-panelet før vi bygger React
+3. Bygg Blokk C2: `/admin/elever/[id]/v2` med server action `getStudent360()` + 8 React-komponenter
+4. Bygg Blokk D: utvid `lib/portal/agents/runner.ts` med 3 nye events + "Marker fullført"-knapper på kalender og økter
+5. Bygg Blokk E: `npm run lint`, `npm run build`, oppdater `.claude/rules/component-library.md`, push
 
 **Nøkkelfiler:**
-- Nye: `app/admin/(authed)/fasiliteter/{page,actions,actions-legacy,fasiliteter-client}.tsx`/`.ts`, `components/admin/{FacilityMap,FacilityCalendar,FacilityList,AddActivityModal}.tsx`, `prisma/migrations/20260425_add_facility_booking_map/migration.sql`, `public/admin/{gfgk-aerial.jpg,gfgk-aerial-placeholder.svg}`.
-- Endret: `prisma/schema.prisma` (ny model), `.claude/rules/component-library.md`, `app/admin/(authed)/fasiliteter/innstillinger/{page,innstillinger-client}.tsx`, `app/admin/(authed)/fasiliteter/ny-aktivitet/{page,ny-aktivitet-client}.tsx` (importer fra actions-legacy).
+- Docs: `.claude/rules/design-system.md` (omskrevet), `.claude/rules/gotchas.md` (oppdatert)
+- Tokens + fonts: `app/globals.css` (Brand Guide V2.0 i `:root`), `app/layout.tsx` (Inter Tight)
+- Sidebar: `components/admin/CoachHQSidebar.tsx`, `components/admin/coachhq/{IconRail,NameList,LiveStatusFooter,coachhq-nav-config}.tsx`
+- Layout-bytte: `components/portal/mission-control/mc-layout.tsx` (bruker nå `CoachHQSidebar`)
+- Mockup: `public/design-reference/student-360-reference.html` (ny)
+- Plan: `~/.claude/plans/lag-en-plan-for-wiggly-crown.md`
 
 ---
 

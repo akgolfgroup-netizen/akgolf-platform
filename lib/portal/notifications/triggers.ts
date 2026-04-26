@@ -543,7 +543,7 @@ export async function sendAdminDailySummary(
       title: "Dagens oppsummering",
       message: `Du har ${stats.todaysBookings} bookinger i dag. ${stats.pendingBookings > 0 ? `${stats.pendingBookings} venter på bekreftelse.` : ""}`,
       linkUrl: "/admin",
-      linkText: "Åpne Mission Control",
+      linkText: "Åpne CoachHQ",
       isAdminNotification: true,
       adminType: "system",
     });

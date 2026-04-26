@@ -12,26 +12,52 @@
   /* ═══════════════════════════════════════════════════════════════════════════ */
 
   /* ═══════════════════════════════════════════════════════════════════════════
-   * AK GOLF BRAND — Design System: "The Curated Laboratory"
-   * Fra design.md: The Alabaster Precision
+   * AK GOLF BRAND — Brand Guide V2.0 (gjeldende fra 2026-04-25)
+   * Heritage-tokens er DEPRECATED og merket --legacy-*
+   * Se .claude/rules/design-system.md for dokumentasjon
    * ═══════════════════════════════════════════════════════════════════════════ */
-  
-  /* Core Brand Colors — Design.md v2.0 */
-  --color-alabaster: #fdf9f0;        /* Hovedbakgrunn - varm, organisk */
-  --color-forest: #154212;           /* Primær - autoritær skoggrønn */
-  --color-lime: #d2f000;             /* Sekundær - energisk lime */
-  --color-on-surface: #1c1c16;       /* Tekst - aldri ren svart */
-  
-  /* Legacy aliases (for kompatibilitet) */
-  --color-primary: #154212;
-  --color-primary-alt: #154212;
-  --color-primary-soft: #E6F3F1;
-  --color-secondary: #d2f000;
-  --color-accent: #d2f000;
-  --color-surface: #f7f3ea;
-  --color-background-beige: #fdf9f0;
-  --color-text: #1c1c16;
-  --color-muted: #A5B2AD;
+
+  /* Core Brand — Brand Guide V2.0 */
+  --color-primary: #005840;            /* Skogsgrønn — primær brand */
+  --color-primary-hover: #00472f;
+  --color-primary-soft: #E8F0EC;
+  --color-primary-deep: #003B2A;
+  --color-primary-alt: #005840;
+
+  --color-accent: #D1F843;             /* High-energy lime — CTA */
+  --color-accent-soft: #ECFCC0;
+  --color-accent-deep: #A6C734;
+  --color-secondary: #D1F843;
+
+  --color-surface: #F4F6F4;            /* Varm cream-bakgrunn */
+  --color-card: #FFFFFF;
+  --color-surface-soft: #EDF1EE;
+  --color-background-beige: #F4F6F4;
+
+  --color-sidebar: #0F1F18;            /* Mørk admin-sidebar / dark contrast */
+  --color-sidebar-hover: #172B22;
+  --color-sidebar-divider: #1F3329;
+  --color-sidebar-muted: #A4B1AA;
+
+  --color-ink: #0A1F18;                /* Primærtekst — warm dark */
+  --color-ink-muted: #5C6B62;
+  --color-ink-subtle: #8A958E;
+  --color-text: #0A1F18;               /* Alias */
+  --color-on-surface: #0A1F18;         /* Alias */
+  --color-muted: #5C6B62;
+
+  --color-line: #E4EAE6;               /* Standard border */
+  --color-line-soft: #EDF1EE;
+
+  /* LEGACY — Heritage-tokens, beholdt for bakoverkompatibilitet (Sprint 2-migrering) */
+  --legacy-color-forest: #154212;      /* Heritage primary (gammel) */
+  --legacy-color-lime: #d2f000;        /* Heritage accent (gammel) */
+  --legacy-color-alabaster: #fdf9f0;   /* Heritage surface (gammel) */
+  --legacy-color-on-surface: #1c1c16;  /* Heritage tekst (gammel) */
+  --legacy-color-mc-sidebar: #022c22;  /* Heritage MC-sidebar emerald-950 (gammel) */
+  --color-forest: var(--legacy-color-forest);
+  --color-lime: var(--legacy-color-lime);
+  --color-alabaster: var(--legacy-color-alabaster);
 
   /* ═══════════════════════════════════════════════════════════════════════════
    * PERFORMANCE DESIGN SYSTEM — Brand Guide V2.0 + Performance Accent
@@ -443,35 +469,40 @@
   --color-on-error: #ffffff;
   --color-on-error-container: #93000a;
 
-  /* Surface — kremhvit */
-  --color-surface: #fdf9f0;
-  --color-surface-bright: #fdf9f0;
-  --color-surface-dim: #dddad1;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f7f3ea;
-  --color-surface-container: #f1eee5;
-  --color-surface-container-high: #ece8df;
-  --color-surface-container-highest: #e6e2d9;
-  --color-surface-variant: #e6e2d9;
-  --color-surface-tint: #3b6934;
-  --color-on-surface: #1c1c16;
-  --color-on-surface-variant: #42493e;
-  --color-inverse-surface: #31302b;
-  --color-inverse-on-surface: #f4f0e7;
+  /* Surface — Brand Guide V2.0 overstyring (var Heritage kremhvit, nå BG V2.0 cool cream) */
+  --color-surface: #F4F6F4;
+  --color-surface-bright: #FFFFFF;
+  --color-surface-dim: #E4EAE6;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-low: #EDF1EE;
+  --color-surface-container: #E4EAE6;
+  --color-surface-container-high: #DCE3DE;
+  --color-surface-container-highest: #D2DCD7;
+  --color-surface-variant: #DCE3DE;
+  --color-surface-tint: #005840;
+  --color-on-surface: #0A1F18;
+  --color-on-surface-variant: #5C6B62;
+  --color-inverse-surface: #0F1F18;
+  --color-inverse-on-surface: #F4F6F4;
 
   /* Background + outline */
-  --color-background: #fdf9f0;
-  --color-outline: #72796e;
-  --color-outline-variant: #c2c9bb;
+  --color-background: #F4F6F4;
+  --color-outline: #72796E;
+  --color-outline-variant: #C2C9BB;
+  /* LEGACY (Heritage-verdier som var her) */
+  --legacy-color-surface-cream: #fdf9f0;
+  --legacy-color-on-surface-brown: #1c1c16;
 
-  /* Typography — DM Sans + JetBrains Mono */
-  --font-headline: var(--font-dm-sans), "DM Sans", sans-serif;
-  --font-body: var(--font-dm-sans), "DM Sans", sans-serif;
-  --font-label: var(--font-dm-sans), "DM Sans", sans-serif;
-  --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
-  --font-display: var(--font-dm-sans), "DM Sans", sans-serif;
+  /* Typography — Brand Guide V2.0 (Inter Tight + Inter + JetBrains Mono) */
+  --font-headline: var(--font-inter-tight), "Inter Tight", "Inter", sans-serif;
+  --font-body: var(--font-inter), "Inter", sans-serif;
+  --font-label: var(--font-inter), "Inter", sans-serif;
+  --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), "Inter Tight", "Inter", sans-serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
-  --font-stats: var(--font-dm-sans), "DM Sans", sans-serif;
+  --font-stats: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  /* LEGACY — DM Sans-aliaser, fjernes i Sprint 2 */
+  --font-dm-sans-legacy: var(--font-dm-sans), "DM Sans", sans-serif;
 
   /* Heritage shadows */
   --shadow-card: 0 4px 16px rgba(45, 90, 39, 0.06);

@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>AK Golf — Booking V2 (designreferanse)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="design-tokens.css"/>
+<link rel="stylesheet" href="booking-v2.css"/>
+</head>
+<body data-flow="abo" data-edge="none">
+
+<div class="proto-bar">
+  <div class="proto-bar-inner">
+    <span class="lbl">Flyt</span>
+    <div class="seg" id="flow-seg">
+      <button data-flow="abo" aria-pressed="true">Abonnement</button>
+      <button data-flow="flex">Flex</button>
+      <button data-flow="bane">Banecoaching</button>
+      <button data-flow="bedrift">Bedrift</button>
+    </div>
+    <span class="lbl">Edge</span>
+    <div class="seg" id="edge-seg">
+      <button data-edge="none" aria-pressed="true">Ingen</button>
+      <button data-edge="taken">Slot tatt</button>
+      <button data-edge="abandon">Avbrutt</button>
+      <button data-edge="quota">Kvota</button>
+      <button data-edge="empty">Ingen ledige</button>
+    </div>
+    <div class="step-jump" id="step-jump">
+      <button data-step="1" aria-pressed="true">1</button><button data-step="2">2</button><button data-step="3">3</button><button data-step="4">4</button><button data-step="5">5</button><button data-step="6">6</button><button data-step="7">7</button>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <header class="top">
+    <a class="brand" href="#">
+      <span class="brand-mark">AK</span>
+      <span class="brand-name">AK Golf<small>Booking · v2</small></span>
+    </a>
+    <div class="top-meta"><a href="#">Min side</a><span>·</span><a href="#">NO / EN</a><span>·</span><a href="#">Hjelp</a></div>
+  </header>
+
+  <nav class="stepper" id="stepper">
+    <div class="step" data-step="1"><span class="step-num">01</span><span class="step-label">Velg type</span></div>
+    <div class="step" data-step="2"><span class="step-num">02</span><span class="step-label">Tjeneste</span></div>
+    <div class="step" data-step="3"><span class="step-num">03</span><span class="step-label">Trener</span></div>
+    <div class="step" data-step="4"><span class="step-num">04</span><span class="step-label">Tid</span></div>
+    <div class="step" data-step="5"><span class="step-num">05</span><span class="step-label">Detaljer</span></div>
+    <div class="step" data-step="6"><span class="step-num">06</span><span class="step-label">Betaling</span></div>
+    <div class="step" data-step="7"><span class="step-num">07</span><span class="step-label">Bekreftelse</span></div>
+  </nav>
+
+  <!-- STEP 1 — ENTRY -->
+  <section class="step-page active" data-step="1" data-screen-label="01 Entry">
+    <div class="entry-grid">
+      <div>
+        <p class="eyebrow"><span class="num">01 / 07</span>Booking</p>
+        <h1 class="t-hero">Tren golf med <em>system</em>.</h1>
+        <p class="lede">Velg det som passer deg — fast abonnement, enkeltsesjon, eller en runde på banen. Hele bookingen tar omtrent to minutter.</p>
+        <div class="entry-cta-row">
+          <button class="btn btn-accent" data-go="2">Se alle tjenester &rarr;</button>
+          <button class="btn btn-secondary" data-go="3">Velg trener først</button>
+        </div>
+        <div class="quick-list">
+          <h3>Vanligste valg</h3>
+          <div class="quick-row" data-go="3" data-pick="performance"><span class="tag">2 &times; 20 min / mnd</span><div class="name">Performance<small>Anders Kristiansen &middot; treningsabonnement</small></div><div class="price">1 400 kr<small>/mnd</small></div><div class="arr-circle">&rarr;</div></div>
+          <div class="quick-row" data-go="3" data-pick="performance-pro"><span class="tag">4 &times; 20 min / mnd</span><div class="name">Performance Pro<small>Anders Kristiansen &middot; for de som vil mer</small></div><div class="price">2 500 kr<small>/mnd</small></div><div class="arr-circle">&rarr;</div></div>
+          <div class="quick-row" data-go="3" data-pick="flex-50"><span class="tag">50 min &middot; enkeltsesjon</span><div class="name">Flex 50<small>en enkelt time uten binding</small></div><div class="price">800 – 1 500 kr</div><div class="arr-circle">&rarr;</div></div>
+          <div class="quick-row" data-go="3" data-pick="banecoaching"><span class="tag">9 hull &middot; p&aring; bane</span><div class="name">Banecoaching<small>strategi, beslutning og kursledelse</small></div><div class="price">3 000 kr<small>/spiller</small></div><div class="arr-circle">&rarr;</div></div>
+        </div>
+      </div>
+      <aside>
+        <div class="entry-figure">
+          <div class="entry-figure-meta">
+            <p class="quote">&laquo;Etter et &aring;r med Anders gikk jeg fra 14 til 6 i HCP. Forskjellen var at jeg endelig visste hva jeg skulle trene p&aring;.&raquo;</p>
+            <span class="credit">Spiller, AK Golf Academy<br/><!-- VERIFY: bytt til ekte sitat fra elev --></span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- STEP 2 — SERVICE -->
+  <section class="step-page" data-step="2" data-screen-label="02 Tjeneste">
+    <p class="eyebrow"><span class="num">02 / 07</span>Velg tjeneste</p>
+    <h1 class="t-section">Hva skal vi <em>jobbe</em> med?</h1>
+    <p class="lede">Filtrer p&aring; type eller trener. Abonnement gir lavere pris per &oslash;kt.</p>
+
+    <div class="filter-bar">
+      <button class="chip" aria-pressed="true">Alle <span class="count">8</span></button>
+      <button class="chip">Abonnement <span class="count">4</span></button>
+      <button class="chip">Flex <span class="count">3</span></button>
+      <button class="chip">P&aring; bane <span class="count">1</span></button>
+      <span style="flex:1"></span>
+      <button class="chip">Anders</button>
+      <button class="chip">Markus</button>
+    </div>
+
+    <div class="service-list">
+      <div class="service-row" data-go="3" data-pick="performance"><span class="idx">01</span><div class="head"><h3 class="title">Performance <em>1:1</em></h3><div class="meta"><span>2 &times; 20 min / mnd</span><span>Anders</span><span>L&oslash;pende</span></div></div><p class="desc">Faste &oslash;kter to ganger i m&aring;neden. TrackMan-analyse, video og personlig plan i appen mellom &oslash;ktene.</p><div class="price">1 400 kr<small>/mnd</small></div><div class="arr-circle">&rarr;</div></div>
+      <div class="service-row" data-go="3" data-pick="performance-pro"><span class="idx">02</span><div class="head"><h3 class="title">Performance <em>Pro</em></h3><div class="meta"><span>4 &times; 20 min / mnd</span><span>Anders</span><span>L&oslash;pende</span></div></div><p class="desc">Dobbel frekvens for raskere utvikling. Samme metodikk &mdash; bare med tettere oppf&oslash;lging.</p><div class="price">2 500 kr<small>/mnd</small></div><div class="arr-circle">&rarr;</div></div>
+      <div class="service-row" data-go="3" data-pick="express"><span class="idx">03</span><div class="head"><h3 class="title">Express</h3><div class="meta"><span>2 &times; 20 min / mnd</span><span>Markus</span><span>3 mnd</span></div></div><p class="desc">Treningsabonnement med Markus &mdash; ideelt for de som vil ha grunnprinsippene p&aring; plass.</p><div class="price">800 kr<small>/mnd</small></div><div class="arr-circle">&rarr;</div></div>
+      <div class="service-row" data-go="3" data-pick="express-pro"><span class="idx">04</span><div class="head"><h3 class="title">Express <em>Pro</em></h3><div class="meta"><span>4 &times; 20 min / mnd</span><span>Markus</span><span>3 mnd</span></div></div><p class="desc">Tettere progresjon med Markus, samme tilnaerming som Express.</p><div class="price">1 400 kr<small>/mnd</small></div><div class="arr-circle">&rarr;</div></div>
+      <div class="service-row" data-go="3" data-pick="flex-20"><span class="idx">05</span><div class="head"><h3 class="title">Flex 20</h3><div class="meta"><span>20 min</span><span>Enkeltsesjon</span><span>Ingen binding</span></div></div><p class="desc">En kort fokusert &oslash;kt p&aring; ett konkret tema &mdash; for eksempel putt, chip eller wedge.</p><div class="price">450 kr</div><div class="arr-circle">&rarr;</div></div>
+      <div class="service-row" data-go="3" data-pick="flex-50"><span class="idx">06</span><div class="head"><h3 class="title">Flex 50</h3><div class="meta"><span>50 min</span><span>Enkeltsesjon</span><span>TrackMan</span></div></div><p class="desc">Full enkelttime med video og analyse. Du f&aring;r en skriftlig plan i etterkant.</p><div class="price">800 – 1 500 kr<small>etter trener</small></div><div class="arr-circle">&rarr;</div></div>
+      <div class="service-row" data-go="3" data-pick="banecoaching"><span class="idx">07</span><div class="head"><h3 class="title">Banecoaching <em>9 hull</em></h3><div class="meta"><span>~3 t</span><span>P&aring; bane</span><span>Strategi</span></div></div><p class="desc">Vi spiller, jeg coacher. Beslutninger, klubbvalg og miss-management &mdash; alt det rangen ikke kan laere deg.</p><div class="price">3 000 kr<small>/spiller</small></div><div class="arr-circle">&rarr;</div></div>
+      <div class="service-row" data-go="3" data-pick="first-tee"><span class="idx">08</span><div class="head"><h3 class="title">First Tee</h3><div class="meta"><span>VTG-kurs</span><span>Markus</span><span>Begynner</span></div></div><p class="desc">Veien til golf for nye spillere &mdash; teori, regler og f&oslash;rste sving p&aring; range.</p><div class="price">1 295 kr</div><div class="arr-circle">&rarr;</div></div>
+    </div>
+  </section>
+
+  <!-- STEP 3 — INSTRUCTOR -->
+  <section class="step-page" data-step="3" data-screen-label="03 Trener">
+    <p class="eyebrow"><span class="num">03 / 07</span>Velg trener</p>
+    <h1 class="t-section">Med hvem vil <em>du</em> trene?</h1>
+    <p class="lede">Anders f&oslash;lger spillere som vil ha langsiktig utvikling. Markus f&oslash;lger nye golfere, juniorer og gruppetrening.</p>
+
+    <div class="inst-grid">
+      <div class="inst-card selected" data-pick="anders" data-go="4">
+        <div class="inst-portrait" style="background-image: url('/images/team/anders-kristiansen.jpg')">
+          <span class="badge">Hovedcoach</span>
+          <span class="availability">5 ledige denne uken</span>
+        </div>
+        <div class="inst-body">
+          <div><h3 class="inst-name">Anders Kristiansen</h3><p class="inst-role">Hovedcoach &middot; AK Golf Academy</p></div>
+          <p class="inst-bio">15 &aring;rs erfaring med spillerutvikling fra nybegynner til PGA Tour. Utvikler av coaching-systemet og PlayersHQ. Jobber med spillere som vil ha individuell teknisk veiledning.</p>
+          <div class="inst-stats">
+            <div class="s"><div class="v">15 &aring;r</div><div class="l">Erfaring</div></div>
+            <div class="s"><div class="v">2&times;20</div><div class="l">Min per &oslash;kt</div></div>
+            <div class="s"><div class="v">PlayersHQ</div><div class="l">Egen app</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="inst-card" data-pick="markus" data-go="4">
+        <div class="inst-portrait" style="background-color:#2A5340">
+          <span class="badge">Coach &middot; junior &amp; nye spillere</span>
+          <span class="availability">3 ledige denne uken</span>
+        </div>
+        <div class="inst-body">
+          <div><h3 class="inst-name">Markus R. Pedersen</h3><p class="inst-role">Coach &middot; AK Golf Academy</p></div>
+          <p class="inst-bio">College-golf fra USA. Ansvarlig for VTG-kurs, gruppetreninger og juniorer. Sikrer at du laerer riktige grunnprinsipper fra starten.</p>
+          <div class="inst-stats">
+            <div class="s"><div class="v">VTG</div><div class="l">First Tee-kurs</div></div>
+            <div class="s"><div class="v">Junior</div><div class="l">Spesialist</div></div>
+            <div class="s"><div class="v">Gruppe</div><div class="l">Express-pakker</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="inst-noprefer" data-pick="any" data-go="4">
+      <span><b>Ingen preferanse</b> &mdash; vis tider for begge trenere.</span>
+      <span class="arr-circle">&rarr;</span>
+    </button>
+  </section>
+
+  <!-- STEP 4 — DATE & TIME -->
+  <section class="step-page" data-step="4" data-screen-label="04 Tid">
+    <p class="eyebrow"><span class="num">04 / 07</span>Velg dato og tid</p>
+    <h1 class="t-section">N&aring;r <em>passer</em> det?</h1>
+    <p class="lede">Tider vises i din lokale tidssone (Europe/Oslo). Performance-abonnement kan booke 4 uker frem &middot; Flex 3 uker frem.</p>
+
+    <div class="dt-grid">
+      <div class="cal">
+        <div class="cal-head">
+          <div class="cal-month"><em>April</em> 2026</div>
+          <div class="cal-nav"><button disabled>&larr;</button><button>&rarr;</button></div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-legend">
+          <span><span class="dot"></span> Ledig</span>
+          <span><span class="dot full"></span> Fullbooket</span>
+          <span>&middot; I dag: 26. apr</span>
+        </div>
+      </div>
+
+      <div id="slots-region">
+        <div id="slots-normal">
+          <div class="slots-head">
+            <div class="day"><em>Tirsdag</em> 28. apr</div>
+            <div class="meta">8 ledige</div>
+          </div>
+          <div class="slot-section"><div class="head">Morgen</div><div class="slot-grid"><button class="slot">07:30</button><button class="slot">08:00</button><button class="slot taken" disabled>09:00</button><button class="slot">10:30</button></div></div>
+          <div class="slot-section"><div class="head">Ettermiddag</div><div class="slot-grid"><button class="slot">12:30</button><button class="slot taken" disabled>13:30</button><button class="slot selected" id="slot-1430">14:30</button><button class="slot">15:30</button><button class="slot">16:30</button></div></div>
+          <div class="slot-section"><div class="head">Kveld</div><div class="slot-grid"><button class="slot">17:30</button><button class="slot">18:30</button><button class="slot taken" disabled>19:30</button><button class="slot">20:00</button></div></div>
+        </div>
+
+        <div id="slots-empty-state" style="display:none">
+          <div class="slots-head"><div class="day"><em>Tirsdag</em> 28. apr</div><div class="meta">Ingen ledige</div></div>
+          <div class="slots-empty">
+            <h4>Alle tider er borte denne dagen.</h4>
+            <p>F&aring; varsel n&aring;r noen avbestiller &mdash; eller velg en annen dag.</p>
+            <form class="waitlist-form" onsubmit="event.preventDefault();"><input type="email" placeholder="din@epost.no" required/><button type="submit">Sett meg p&aring; venteliste &rarr;</button></form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-foot">
+      <div class="recap">
+        <div class="item"><span class="l">Tjeneste</span><span class="v" id="recap-svc-1">Performance 1:1</span></div>
+        <div class="item"><span class="l">Trener</span><span class="v" id="recap-inst-1">Anders Kristiansen</span></div>
+        <div class="item"><span class="l">Tid</span><span class="v">28. apr &middot; 14:30</span></div>
+        <div class="item"><span class="l">Pris</span><span class="v">1 400 kr/mnd</span></div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-secondary" data-go="3">&larr; Tilbake</button>
+        <button class="btn btn-primary" data-go="5">Fortsett &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 5 — DETAILS -->
+  <section class="step-page" data-step="5" data-screen-label="05 Detaljer">
+    <p class="eyebrow"><span class="num">05 / 07</span>Detaljer</p>
+    <h1 class="t-section">Litt om <em>deg</em>.</h1>
+    <p class="lede">Logger du inn, fyller vi inn alt automatisk. Er dette f&oslash;rste gang, sender vi en innloggingslenke etter at bookingen er bekreftet.</p>
+
+    <div class="details-grid">
+      <div>
+        <div class="auth-toggle" id="auth-toggle">
+          <button aria-pressed="true" data-auth="new">Ny kunde</button>
+          <button data-auth="returning">Har konto</button>
+        </div>
+
+        <div id="form-new">
+          <div class="form-grid">
+            <div class="field"><label>Fornavn</label><input type="text" value="Marie"/></div>
+            <div class="field"><label>Etternavn</label><input type="text" value="Berg"/></div>
+            <div class="field span2"><label>E-post</label><input type="email" value="marie@example.no"/></div>
+            <div class="field"><label>Mobil</label><input type="tel" value="+47 412 33 901"/></div>
+            <div class="field"><label>HCP (valgfritt)</label><input type="text" value="14,2"/></div>
+            <div class="field span2"><label>Notat til trener</label><textarea rows="3" placeholder="Eks: vil jobbe med wedge-distanser, h&oslash;yreknesmerter"></textarea></div>
+          </div>
+          <label class="consent"><input type="checkbox" checked/><span>Jeg godtar <a href="#">vilk&aring;rene</a> og <a href="#">avbestillingsreglene</a>. AK Golf kan sende p&aring;minnelser til e-posten min.</span></label>
+        </div>
+
+        <div id="form-returning" style="display:none">
+          <h3 class="t-card-title" style="margin:0 0 16px">Logg inn for raskere booking</h3>
+          <p style="color:var(--ink-muted);margin:0 0 24px;font-size:15px">Vi sender en sikker innloggingslenke til e-posten din &mdash; ingen passord &aring; huske.</p>
+          <div class="magic-row">
+            <div class="field"><label>E-post</label><input type="email" value="anders@example.no"/></div>
+            <button class="btn btn-primary">Send lenke &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="recap-card">
+        <h4>Din booking</h4>
+        <div class="line"><span class="l">Tjeneste</span><span class="v" id="recap-svc-2">Performance 1:1<small>2 &times; 20 min / mnd</small></span></div>
+        <div class="line"><span class="l">Trener</span><span class="v" id="recap-inst-2">Anders Kristiansen<small>Hovedcoach</small></span></div>
+        <div class="line"><span class="l">F&oslash;rste &oslash;kt</span><span class="v">Ti 28. apr 2026<small>14:30 – 14:50</small></span></div>
+        <div class="line"><span class="l">Sted</span><span class="v">AK Golf studio<small>Oslo</small></span></div>
+        <div class="total"><span class="l">M&aring;nedlig</span><span class="v">1 400 kr</span></div>
+        <p class="policy">Gratis avbestilling inntil 24 t f&oslash;r &oslash;kten. 8&ndash;24 t: 50 % gebyr. Mindre enn 8 t: full betaling.</p>
+      </aside>
+    </div>
+
+    <div class="summary-foot">
+      <div class="recap"><div class="item"><span class="l">Steg</span><span class="v">05 av 07</span></div></div>
+      <div class="actions"><button class="btn btn-secondary" data-go="4">&larr; Tilbake</button><button class="btn btn-primary" data-go="6">Til betaling &rarr;</button></div>
+    </div>
+  </section>
+
+  <!-- STEP 6 — PAYMENT -->
+  <section class="step-page" data-step="6" data-screen-label="06 Betaling">
+    <p class="eyebrow"><span class="num">06 / 07</span>Betaling</p>
+    <h1 class="t-section">Bekreft og <em>betal</em>.</h1>
+    <p class="lede">Vi reserverer slottet ditt s&aring; snart betalingen g&aring;r gjennom. Du blir ikke trukket to ganger.</p>
+
+    <div class="alert warn" id="alert-abandon" style="display:none">
+      <span class="ic">!</span>
+      <div><b>Betalingen ble ikke fullf&oslash;rt.</b><p>Slottet ditt er reservert i 9 minutter til. Pr&oslash;v en annen kortmetode, eller velg ny tid om du vil.</p></div>
+    </div>
+
+    <div class="details-grid">
+      <div>
+        <div class="pay-list" id="pay-list">
+          <div class="pay-row selected" data-pay="card"><span class="radio"></span><span class="pay-icon">CARD</span><span class="pay-text"><span class="l1">Bankkort</span><span class="l2">Visa, Mastercard &mdash; kryptert via Stripe</span></span><span class="pay-tag">Standard</span></div>
+          <div class="pay-row" data-pay="apple"><span class="radio"></span><span class="pay-icon apple"></span><span class="pay-text"><span class="l1">Apple Pay</span><span class="l2">Bekreft med Touch ID eller Face ID</span></span></div>
+          <div class="pay-row" data-pay="gpay"><span class="radio"></span><span class="pay-icon gpay">G Pay</span><span class="pay-text"><span class="l1">Google Pay</span><span class="l2">Bruk det som ligger i nettleseren din</span></span></div>
+          <div class="pay-row" data-pay="invoice"><span class="radio"></span><span class="pay-icon invoice">FAKT</span><span class="pay-text"><span class="l1">Faktura (bedrift)</span><span class="l2">EHF-faktura med 14 dagers forfall</span></span><span class="pay-tag">Bedrift</span></div>
+        </div>
+
+        <div class="card-fields" id="card-fields">
+          <div class="field span3"><label>Kortnummer</label><input type="text" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;"/></div>
+          <div class="field"><label>Utl&oslash;p</label><input type="text" placeholder="MM / &Aring;&Aring;"/></div>
+          <div class="field"><label>CVC</label><input type="text" placeholder="&bull;&bull;&bull;"/></div>
+          <div class="field"><label>Postnr.</label><input type="text" placeholder="0150"/></div>
+        </div>
+      </div>
+
+      <aside class="recap-card">
+        <h4>Oppsummering</h4>
+        <div class="line"><span class="l">Tjeneste</span><span class="v" id="recap-svc-3">Performance 1:1</span></div>
+        <div class="line"><span class="l">F&oslash;rste &oslash;kt</span><span class="v">28. apr &middot; 14:30</span></div>
+        <div class="line"><span class="l">Trener</span><span class="v">Anders Kristiansen</span></div>
+        <div class="total"><span class="l">&Aring; betale n&aring;</span><span class="v">1 400 kr</span></div>
+        <p class="policy">L&oslash;pende abonnement &mdash; trekkes hver 30. dag. Du kan si opp n&aring;r som helst fra Min side. Bel&oslash;pet vises som <span class="t-mono">AK&nbsp;GOLF&nbsp;OSLO</span> p&aring; kontoutskriften.</p>
+      </aside>
+    </div>
+
+    <div class="summary-foot">
+      <div class="recap"><div class="item"><span class="l">Steg</span><span class="v">06 av 07</span></div></div>
+      <div class="actions"><button class="btn btn-secondary" data-go="5">&larr; Tilbake</button><button class="btn btn-accent" data-go="7">Bekreft og betal &rarr;</button></div>
+    </div>
+  </section>
+
+  <!-- STEP 7 — CONFIRMATION -->
+  <section class="step-page" data-step="7" data-screen-label="07 Bekreftelse">
+    <div class="confirm-grid">
+      <div>
+        <div class="confirm-mark">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="eyebrow"><span class="num">AK-2026-04-1430</span>Bekreftet</p>
+        <h1 class="t-section">Vi sees <em>tirsdag</em>.</h1>
+        <p class="lede">Bekreftelse er sendt til <b style="color:var(--ink)">marie@example.no</b>. Du f&aring;r en p&aring;minnelse 24 t f&oslash;r &oslash;kten, og en SMS &eacute;n time f&oslash;r.</p>
+
+        <div class="confirm-meta">
+          <div class="cell dark"><div class="l">N&aring;r</div><div class="v">14:30<small>Ti 28. apr &middot; 20 minutter</small></div></div>
+          <div class="cell"><div class="l">Med</div><div class="v">Anders Kristiansen<small>Hovedcoach</small></div></div>
+          <div class="cell"><div class="l">Hvor</div><div class="v">AK Golf studio<small>Oslo</small></div></div>
+          <div class="cell"><div class="l">Betalt</div><div class="v">1 400 kr<small>Visa **** 4422 &middot; kvittering p&aring; e-post</small></div></div>
+        </div>
+
+        <div class="add-cal">
+          <a class="btn btn-primary" href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0AVERSION%3A2.0%0APRODID%3A-%2F%2FAK%20Golf%2F%2FBooking%20V2%2F%2FNO%0ABEGIN%3AVEVENT%0ASUMMARY%3APerformance%201%3A1%20med%20Anders%0ADTSTART%3A20260428T123000Z%0ADTEND%3A20260428T125000Z%0ALOCATION%3AAK%20Golf%20studio%2C%20Oslo%0AEND%3AVEVENT%0AEND%3AVCALENDAR" download="ak-golf-booking.ics">Last ned .ics</a>
+          <a class="btn btn-secondary" href="#">Legg til i Google</a>
+          <a class="btn btn-secondary" href="#">Legg til i Apple</a>
+        </div>
+
+        <div class="what-next">
+          <h3>Hva skjer n&aring;</h3>
+          <ol>
+            <li><span class="n">01</span><div><b>I dag</b><p>Bekreftelses-e-post med et kort sp&oslash;rreskjema (3 sp&oslash;rsm&aring;l) &mdash; s&aring; Anders kan forberede seg.</p></div></li>
+            <li><span class="n">02</span><div><b>27. apr &middot; 14:30</b><p>P&aring;minnelse p&aring; e-post med veibeskrivelse, parkering og hva du skal ha med.</p></div></li>
+            <li><span class="n">03</span><div><b>28. apr &middot; 13:30</b><p>SMS med direktelink til treneren om noe skulle dukke opp.</p></div></li>
+            <li><span class="n">04</span><div><b>Etter &oslash;kten</b><p>Du f&aring;r TrackMan-rapporten og en skriftlig hjemmeplan i appen &mdash; innen 24 timer.</p></div></li>
+          </ol>
+        </div>
+      </div>
+
+      <aside class="policy-card">
+        <h4>Avbestillingsregler</h4>
+        <div class="rule"><span class="when">&gt; 24 t</span><div><b class="free">Gratis</b>Full refusjon, ingen sp&oslash;rsm&aring;l. Du gj&oslash;r det selv p&aring; Min side.</div></div>
+        <div class="rule"><span class="when">8 – 24 t</span><div><b>50 % gebyr</b>Med mindre noen tar slottet ditt fra ventelisten &mdash; da refunderer vi alt automatisk.</div></div>
+        <div class="rule"><span class="when">&lt; 8 t</span><div><b class="full">Full betaling</b>Vi kan ikke fylle slottet p&aring; s&aring; kort varsel. Kontakt oss om noe ekstraordin&aelig;rt skjer.</div></div>
+        <div class="rule"><span class="when">Sykdom</span><div><b>Vi er rause</b>Send oss en melding s&aring; finner vi en ny tid uten kostnad. Bare v&aelig;r &aelig;rlig.</div></div>
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-secondary" style="font-size:13px">Avbestill</button>
+          <button class="btn btn-secondary" style="font-size:13px">Endre tid</button>
+          <button class="btn btn-secondary" style="font-size:13px">Min side &rarr;</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- EDGE — Kvota -->
+  <section class="step-page" data-step="quota" data-screen-label="EDGE Kvota">
+    <p class="eyebrow"><span class="num">!</span>Abonnement</p>
+    <h1 class="t-section">Du har brukt <em>m&aring;nedens</em> &oslash;kter.</h1>
+    <p class="lede">Performance Pro gir deg fire 1:1-&oslash;kter per m&aring;ned. Du har booket alle fire i april. Du kan velge en Flex-time som ekstrapris, eller vente til neste periode.</p>
+
+    <div class="alert warn" style="max-width:680px">
+      <span class="ic">i</span>
+      <div><b>Neste periode starter onsdag 1. mai.</b><p>Da nullstilles kvoten din til fire &oslash;kter. Vi sender deg en p&aring;minnelse natten f&oslash;r.</p></div>
+    </div>
+
+    <div class="confirm-meta" style="max-width:680px;margin:32px 0">
+      <div class="cell dark"><div class="l">Brukt i april</div><div class="v">4 / 4<small>03.04 &middot; 09.04 &middot; 14.04 &middot; 22.04</small></div></div>
+      <div class="cell"><div class="l">Tilgjengelig 1. mai</div><div class="v">4 nye &oslash;kter<small>Inkludert i Performance Pro</small></div></div>
+    </div>
+
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-primary" data-go="2">Book Flex-time i tillegg</button>
+      <button class="btn btn-secondary">Sett p&aring;minnelse til 1. mai</button>
+    </div>
+  </section>
+
+  <!-- EDGE — Empty waitlist -->
+  <section class="step-page" data-step="empty" data-screen-label="EDGE Ingen ledige">
+    <p class="eyebrow"><span class="num">04 / 07</span>Velg dato og tid</p>
+    <h1 class="t-section">Ikke en eneste <em>ledig</em> tid neste 14 dager.</h1>
+    <p class="lede">Anders er fullbooket til og med 12. mai. La oss sette deg p&aring; ventelisten &mdash; du blir varslet i samme sekund noen avbestiller.</p>
+
+    <div class="empty-figure"><span class="glyph">&middot;</span></div>
+
+    <div class="dt-grid">
+      <div>
+        <h3 class="t-card-title" style="margin:0 0 24px">Sett meg p&aring; ventelisten</h3>
+        <div class="form-grid">
+          <div class="field span2"><label>E-post</label><input type="email" value="marie@example.no"/></div>
+          <div class="field"><label>Mobil</label><input type="tel" placeholder="+47"/></div>
+          <div class="field"><label>Foretrukket dag</label><select><option>Hvilken som helst</option><option>Bare hverdager</option><option>Bare helg</option></select></div>
+          <div class="field span2"><label>Tidsvindu</label><select><option>Hvilken som helst tid</option><option>Morgen (07–11)</option><option>Ettermiddag (11–17)</option><option>Kveld (17–21)</option></select></div>
+        </div>
+        <button class="btn btn-accent" style="margin-top:32px">Bli varslet ved f&oslash;rste ledige &rarr;</button>
+      </div>
+      <aside class="recap-card">
+        <h4>Andre alternativer</h4>
+        <div class="line"><span class="l">Markus</span><span class="v">3 ledige denne uken</span></div>
+        <div class="line"><span class="l">Banecoaching</span><span class="v">12. mai &middot; ledig</span></div>
+        <div class="line"><span class="l">Flex 20</span><span class="v">Drop-in s&oslash;n 09:00</span></div>
+        <p class="policy" style="margin-top:18px">Ingen forpliktelse &mdash; varselet kommer som SMS eller e-post, og du takker bare ja om det passer.</p>
+        <button class="btn btn-secondary" data-go="3" style="margin-top:18px">Bytt trener &rarr;</button>
+      </aside>
+    </div>
+  </section>
+
+  <div class="footer-fine">
+    <span>AK Golf Group &middot; Org. 925 110 887 &middot; <!-- VERIFY org.nr --></span>
+    <span>Booking V2 &middot; Designreferanse</span>
+  </div>
+</div>
+
+<script src="booking-v2.js"></script>
+</body>
+</html>

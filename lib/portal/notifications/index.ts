@@ -1,5 +1,5 @@
 /**
- * Notifikasjons-system for Spillerportal og Mission Control
+ * Notifikasjons-system for Spillerportal og CoachHQ
  * 
  * Eksporterer alle typer, funksjoner og triggere for notifikasjoner
  */
@@ -20,14 +20,14 @@ export {
 
 // Triggere for spesifikke hendelser
 export {
-  // Spillerportal → Mission Control
+  // Spillerportal → CoachHQ
   notifyNewBooking,
   notifyBookingCancelled,
   notifyVideoUploaded,
   notifyDiaryEntry,
   notifyPlayerQuestion,
   
-  // Mission Control → Spillerportal
+  // CoachHQ → Spillerportal
   notifyBookingConfirmed,
   notifyBookingRescheduled,
   notifyCoachingNotesAdded,

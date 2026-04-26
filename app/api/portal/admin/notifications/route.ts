@@ -1,6 +1,6 @@
 /**
  * GET /api/portal/admin/notifications
- * Hent admin-notifikasjoner for Mission Control
+ * Hent admin-notifikasjoner for CoachHQ
  */
 
 import { NextRequest, NextResponse } from "next/server";
