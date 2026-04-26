@@ -103,7 +103,7 @@ export interface RapportAgentOutput {
 export async function generateQuarterlyReport(
   input: RapportAgentInput
 ): Promise<RapportAgentOutput> {
-  let totalUsage = { inputTokens: 0, outputTokens: 0, estimatedCostNOK: 0 };
+  const totalUsage = { inputTokens: 0, outputTokens: 0, estimatedCostNOK: 0 };
   let totalDuration = 0;
   let trainerReport: string | undefined;
   let parentReport: string | undefined;
