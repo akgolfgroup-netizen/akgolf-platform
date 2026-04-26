@@ -1,5 +1,5 @@
 import type { IdentityGroup } from "@/app/admin/(authed)/elever/[id]/v2/get-student-360";
-import { CardShell, MonoLabel } from "./shell";
+import { CardShell } from "./shell";
 
 interface KontaktinfoCardProps {
   identity: IdentityGroup;

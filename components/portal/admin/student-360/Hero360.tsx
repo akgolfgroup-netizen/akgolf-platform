@@ -1,4 +1,4 @@
-import { TrendingDown, TrendingUp, Flame, MessageSquare, Plus } from "lucide-react";
+import { TrendingDown, Flame, MessageSquare, Plus } from "lucide-react";
 import type {
   IdentityGroup,
   GolfGroup,
