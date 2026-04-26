@@ -8,6 +8,38 @@
 
 ---
 
+## 2026-04-26 — Treningsplan: Spillerstyrt AK-pyramide-fordeling
+
+**Jobbet med:** Spilleren kan nå selv bestemme fordelingen av treningstid mellom de 5 nivåene i AK-pyramiden (FYS/TEK/SLAG/SPILL/TURN). Fordelingen sendes til Claude i RECOMMENDED-modus og lagres på planen for senere visning. Branch: `claude/add-workout-summary-j6qWr` (samme PR som Sprint 1).
+
+- **Prisma:** Ny migrasjon `20260426_pyramid_distribution_on_plan` — `TrainingPlan.pyramidDistribution Json?` (valgfritt felt, sum 100 %).
+- **`PyramidDistributionEditor`** i `components/portal/treningsplan/pyramid-distribution-editor.tsx`:
+  - 5 slidere (FYS/TEK/SLAG/SPILL/TURN) med Heritage-farger fra `ak-taxonomy.ts`.
+  - Proporsjonal auto-justering — flyttes én slider, skaleres de andre slik at sum forblir 100 % (5 %-trinn).
+  - 3 hurtigvalg-presets fra `PERIOD_TYPES` (Grunnperiode 30/35/20/10/5, Spesialiseringsperiode 20/25/30/20/5, Turneringsperiode 10/10/20/30/30) + Tilbakestill (allround 20/25/25/20/10).
+  - Helpers: `sumDistribution`, `isValidDistribution`, `adjustDistribution`.
+- **Wizard-integrasjon (`PlanCreatorModal`):**
+  - Nytt steg «Din AK-fordeling» som vises etter «Hvor lang skal planen være?» i RECOMMENDED-modus.
+  - TEMPLATE bruker malens innebygde fordeling; MANUAL har ikke AI som trenger den.
+  - 100 %-validering før innsending.
+- **AI-flyt:**
+  - `CreatePlanFromChoiceInput.pyramidDistribution` (valgfritt) sendes til `createPlanFromChoice`.
+  - `generateTrainingPlan` (i `lib/portal/ai/training-plan.ts`) tar nå imot `pyramidDistribution` og legger til en eksplisitt instruks i prompten: «Fordel total øktvarighet per uke slik at minuttene per pyramide-nivå matcher prosentene over (±5 %)».
+  - Lagres på `TrainingPlan.pyramidDistribution` ved oppretting.
+
+**Nøkkelfiler:**
+- Nye: `prisma/migrations/20260426_pyramid_distribution_on_plan/migration.sql`, `components/portal/treningsplan/pyramid-distribution-editor.tsx`
+- Oppdatert: `prisma/schema.prisma`, `components/portal/treningsplan/{plan-creator-modal,index}.tsx`, `app/portal/(dashboard)/treningsplan/actions.ts`, `lib/portal/ai/training-plan.ts`
+
+**Status:** TS-rent + lint-rent for nye/endrede filer. Migrasjon må kjøres via `DIRECT_URL`.
+
+**Neste steg (delvis dekket):**
+1. **PyramidActuals**-komponent i header — viser planlagt vs. faktisk fordeling basert på øktenes `focusArea` × `durationMinutes`. Ikke med i denne PR-en — kan tas i ny PR uten avhengigheter.
+2. **Dynamisk `periodType`** til AI-kall — fjern hardkodet `"grunnperiode"` i `actions.ts:1379` og bruk aktiv `PeriodizationPeriod`.
+3. **Spesialiserings-mal** i `standard-templates.ts`.
+
+---
+
 ## 2026-04-26 — Treningsplan: Sprint 1 — symmetri coach/spiller (kommentar + varsling)
 
 **Jobbet med:** Bidireksjonal samtaletråd på treningsplan-nivå. Spilleren kan nå kommentere på egen plan (speil av coach-feedback), og begge parter får varsling når den andre legger inn ny tekst. Branch: `claude/add-workout-summary-j6qWr`.

@@ -29,3 +29,14 @@ export type {
   PlanConversationMessage,
   PlanConversationCardProps,
 } from "./plan-conversation-card";
+
+// Pyramide-fordeling (FYS/TEK/SLAG/SPILL/TURN-slidere)
+export {
+  PyramidDistributionEditor,
+  DEFAULT_DISTRIBUTION,
+  PYRAMID_PRESETS,
+  sumDistribution,
+  isValidDistribution,
+  adjustDistribution,
+} from "./pyramid-distribution-editor";
+export type { PyramidDistribution, PyramidPreset } from "./pyramid-distribution-editor";

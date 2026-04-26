@@ -1234,12 +1234,26 @@ import { detectSessionConflicts } from "@/lib/portal/training/conflict-detector"
 
 export type PlanCreationMode = "MANUAL" | "RECOMMENDED" | "TEMPLATE";
 
+/**
+ * AK-pyramide-fordeling i prosent (sum 100). Spillerstyrt — sendes til AI
+ * som overstyrt fordeling og lagres på TrainingPlan.pyramidDistribution.
+ */
+export type PyramidDistributionInput = {
+  FYS: number;
+  TEK: number;
+  SLAG: number;
+  SPILL: number;
+  TURN: number;
+};
+
 export interface CreatePlanFromChoiceInput {
   mode: PlanCreationMode;
   durationWeeks: 1 | 4 | 8 | 12;
   templateId?: TemplateId;
   title?: string;
   startDate?: string;
+  /** Plan-spesifikk pyramide-fordeling (kun for RECOMMENDED). */
+  pyramidDistribution?: PyramidDistributionInput;
 }
 
 export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
@@ -1356,6 +1370,15 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
         }
       : undefined;
 
+    // Valider spillerstyrt pyramide-fordeling
+    const pyramid = input.pyramidDistribution;
+    if (pyramid) {
+      const total = pyramid.FYS + pyramid.TEK + pyramid.SLAG + pyramid.SPILL + pyramid.TURN;
+      if (total !== 100) {
+        throw new Error("AK-fordelingen må summere til 100 %.");
+      }
+    }
+
     // Kall AI
     let aiResult;
     try {
@@ -1365,6 +1388,7 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
           periodType: "grunnperiode",
           durationWeeks: input.durationWeeks,
           startDate: startDate.toISOString().slice(0, 10),
+          pyramidDistribution: pyramid,
         },
         aiPrescription
       );
@@ -1393,6 +1417,7 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
           title: input.title ?? aiResult.title,
           description: "Generert av AI basert på din profil og USI-data. Juster fritt.",
           goals: goalsText,
+          pyramidDistribution: pyramid ?? undefined,
           periodType: "PREPARATION",
           startDate: startDate,
           endDate: planEnd,

@@ -1758,6 +1758,9 @@ model TrainingPlan {
   /// Spiller-kommentar på plan-nivå. Vises i samtaletråd ved siden av coach-feedback.
   playerComment                       String?
   playerCommentAt                     DateTime?
+  /// Plan-spesifikk pyramide-fordeling (FYS/TEK/SLAG/SPILL/TURN i prosent, sum 100).
+  /// Overstyrer kategori-default fra category-engine når satt.
+  pyramidDistribution                 Json?
   User_TrainingPlan_createdByIdToUser User                 @relation("TrainingPlan_createdByIdToUser", fields: [createdById], references: [id])
   User_TrainingPlan_studentIdToUser   User                 @relation("TrainingPlan_studentIdToUser", fields: [studentId], references: [id])
   User_TrainingPlan_coachFeedbackById User?                @relation("TrainingPlan_coachFeedbackById", fields: [coachFeedbackById], references: [id], onDelete: SetNull)
