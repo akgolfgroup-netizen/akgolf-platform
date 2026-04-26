@@ -82,7 +82,7 @@ function cosineSimilarity(a: number[], b: number[]): number {
   return dot / (magA * magB);
 }
 
-function describeProfile(player: PlayerSgProfile, peer: PlayerSgProfile): string {
+function describeProfile(player: PlayerSgProfile, _peer: PlayerSgProfile): string {
   // Finn sterkeste og svakeste område for player
   const areas: Array<{ name: string; value: number }> = [
     { name: "approach", value: player.sgApp },
