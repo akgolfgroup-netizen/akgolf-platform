@@ -2063,6 +2063,7 @@ model User {
   GroupMemberships                            GroupMembership[]
   dataConsentAt                               DateTime?
   dataConsentScope                            Json?
+  TalentPlayerLink                            TalentPlayer?              @relation("TalentPlayerLinkedUser")
 }
 
 model UserCapability {
@@ -2989,4 +2990,107 @@ model FacilityBooking {
   @@index([facility])
   @@index([date])
   @@index([userId])
+}
+
+// ── Talent Dashboard ──────────────────────────────────────────────────────────
+//
+// Aggregerer turneringsdata fra OLYO Juniortour, Srixon Tour, Titleist
+// Østlandstour, Garmin Norges Cup og DataGolf for scouting og talent-utvikling.
+// Frittstående fra coaching-systemets `User`-tabell — disse er nordiske
+// junior-/proff-spillere som ikke nødvendigvis er AK Golf-kunder. Bro til
+// `User` via `linkedUser` når en spiller også er kunde i plattformen.
+
+enum TalentSource {
+  OLYO
+  SRIXON
+  OSTLANDSTOUR
+  NORGESCUP
+  DATAGOLF
+  WAGR
+  COLLEGE_NCAA
+}
+
+enum BirthYearSource {
+  MANUAL
+  ESTIMATED
+  SCRAPED
+}
+
+model TalentPlayer {
+  id                  String                   @id @default(cuid())
+  ngfId               String?                  @unique
+  firstName           String
+  lastName            String
+  gender              NorwegianGender?
+  birthYear           Int?
+  birthYearSource     BirthYearSource          @default(SCRAPED)
+  birthYearConfidence Float?
+  club                String?
+  region              NorwegianRegion?
+  wagrId              Int?
+  wagrRank            Int?
+  collegeId           String?
+  collegeRank         Int?
+  coach               String?
+  photoUrl            String?
+  notes               String?
+  lastActiveAt        DateTime?
+  linkedUserId        String?                  @unique
+  linkedUser          User?                    @relation("TalentPlayerLinkedUser", fields: [linkedUserId], references: [id])
+  results             TalentTournamentResult[]
+  stats               TalentPlayerStats[]
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+
+  @@index([lastName, firstName])
+  @@index([club])
+  @@index([region])
+  @@index([birthYear])
+}
+
+model TalentTournamentResult {
+  id                 String       @id @default(cuid())
+  playerId           String
+  player             TalentPlayer @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  source             TalentSource
+  tournamentName     String
+  tournamentDate     DateTime
+  classCode          String
+  holes              Int          // 9 eller 18 — kritisk for å unngå mix
+  par                Int
+  position           Int?
+  totalScore         Int?
+  toPar              Int?
+  rounds             Int[]
+  region             String?
+  rawSourceId        String?
+  scoreReconstructed Boolean      @default(false)
+  excludeFromUi      Boolean      @default(false)
+  createdAt          DateTime     @default(now())
+
+  @@unique([playerId, source, tournamentDate, tournamentName, classCode], name: "uniq_result")
+  @@index([source, tournamentDate])
+  @@index([playerId, tournamentDate])
+}
+
+model TalentPlayerStats {
+  id                  String       @id @default(cuid())
+  playerId            String
+  player              TalentPlayer @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  year                Int
+  holesSegment        Int          // 9 eller 18 — aldri bland
+  totalResults        Int
+  totalRounds         Int
+  avgRound            Float?       // null hvis totalRounds < 3
+  bestRound           Int?
+  worstRound          Int?
+  top3Count           Int          @default(0)
+  top10Count          Int          @default(0)
+  cutsMade            Int          @default(0)
+  improvementPerYear  Float?
+  dataConfidenceScore Float        // 0-1
+  computedAt          DateTime     @default(now())
+
+  @@unique([playerId, year, holesSegment], name: "uniq_stats")
+  @@index([year, holesSegment])
 }
