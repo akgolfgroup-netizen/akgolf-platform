@@ -35,10 +35,15 @@ interface Hole {
   strategy?: Strategy | null;
 }
 
-// Fallback strategy generator when no persisted strategy exists
-function getFallbackStrategy(hole: Hole): Strategy {
+// Heuristisk forslag når ingen persistert strategi finnes — returnerer
+// både strategien og en flagg som forteller om det er et auto-forslag,
+// slik at UI kan markere det tydelig.
+function getFallbackStrategy(hole: Hole): {
+  strategy: Strategy;
+  isAutoSuggestion: boolean;
+} {
   if (hole.strategy) {
-    return hole.strategy;
+    return { strategy: hole.strategy, isAutoSuggestion: false };
   }
 
   const recommendedClub =
@@ -58,7 +63,10 @@ function getFallbackStrategy(hole: Hole): Strategy {
       : "Fairway -> green";
   const dangerAreas = hole.handicap <= 5 ? ["Bunkere", "Rough"] : ["Venstre rough"];
 
-  return { recommendedClub, aimPoint, targetZone, dangerAreas };
+  return {
+    strategy: { recommendedClub, aimPoint, targetZone, dangerAreas },
+    isAutoSuggestion: true,
+  };
 }
 
 export default function StrategiPage() {
@@ -109,7 +117,9 @@ export default function StrategiPage() {
 
   const course = courses.find((c) => c.id === selectedCourseId);
   const hole = holes.find((h) => h.holeNumber === selectedHole) || holes[0];
-  const strategy = hole ? getFallbackStrategy(hole) : null;
+  const strategyResult = hole ? getFallbackStrategy(hole) : null;
+  const strategy = strategyResult?.strategy ?? null;
+  const isAutoSuggestion = strategyResult?.isAutoSuggestion ?? false;
 
   return (
     <section className="space-y-6">
@@ -259,6 +269,11 @@ export default function StrategiPage() {
                     <Icon name="my_location" className="w-4 h-4 text-success" />
                   </div>
                   <h3 className="text-base font-semibold text-on-surface">DECADE Strategi</h3>
+                  {isAutoSuggestion && (
+                    <span className="ml-auto rounded-full bg-warning/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-warning">
+                      Auto-forslag
+                    </span>
+                  )}
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-4">

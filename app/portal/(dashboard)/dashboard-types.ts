@@ -58,7 +58,8 @@ export interface TrackManData {
 }
 
 export interface SocialData {
-  rank: number;
+  /** null inntil vi har en faktisk ranking-pipeline. */
+  rank: number | null;
   totalPlayers: number;
   challenges: {
     id: string;
@@ -67,7 +68,8 @@ export interface SocialData {
     endDate: string;
   }[];
   streak: number;
-  friendsOnline: number;
+  /** null inntil vi har online-status på venner. */
+  friendsOnline: number | null;
 }
 
 export interface Achievement {

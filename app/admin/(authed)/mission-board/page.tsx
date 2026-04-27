@@ -486,30 +486,6 @@ export default function MissionBoardPage() {
 
             {/* Sidebar */}
             <div className="space-y-6">
-              {/* AI Insights Card */}
-              <motion.div variants={itemVariants}>
-                <Card padding="sm" className="border-l-4 border-l-ai">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Icon name="auto_awesome" className="w-5 h-5 text-ai" />
-                    <h3 className="text-base font-semibold text-on-surface">AI-innsikt</h3>
-                  </div>
-
-                  <p className="text-sm text-on-surface-variant/80 mb-4 leading-relaxed">
-                    Basert pa monsteret denne uken, anbefales det a legge
-                    til en ekstra &quot;Quick Fix&quot;-slot pa fredag
-                    ettermiddag. Etterspurselen er hoy.
-                  </p>
-
-                  <Button
-                    variant="secondary"
-                    onClick={() => router.push("/admin/analytics")}
-                    className="w-full"
-                  >
-                    Se detaljert analyse
-                  </Button>
-                </Card>
-              </motion.div>
-
               {/* Alerts */}
               <motion.div variants={itemVariants}>
                 <Card padding="none" className="overflow-hidden">
