@@ -590,6 +590,8 @@ model Instructor {
   InstructorAvailability     InstructorAvailability[]
   InstructorDateAvailability InstructorDateAvailability[]
   InstructorFacilityDefault  InstructorFacilityDefault[]
+  InstructorLocation         InstructorLocation[]
+  InstructorLocationService  InstructorLocationService[]
   CoachingPackage            CoachingPackage[]
   ServiceType                ServiceType[]                @relation("InstructorToServiceType")
 }
@@ -630,7 +632,36 @@ model Location {
   Booking                    Booking[]
   Facility                   Facility[]
   InstructorDateAvailability InstructorDateAvailability[]
+  InstructorLocation         InstructorLocation[]
+  InstructorLocationService  InstructorLocationService[]
   Resource                   Resource[]
+}
+
+model InstructorLocation {
+  id           String   @id
+  instructorId String
+  locationId   String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  Instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  Location     Location   @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([instructorId, locationId])
+  @@index([locationId])
+}
+
+model InstructorLocationService {
+  id            String      @id
+  instructorId  String
+  locationId    String
+  serviceTypeId String
+  createdAt     DateTime    @default(now())
+  Instructor    Instructor  @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  Location      Location    @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  ServiceType   ServiceType @relation(fields: [serviceTypeId], references: [id], onDelete: Cascade)
+
+  @@unique([instructorId, locationId, serviceTypeId])
+  @@index([locationId, serviceTypeId])
 }
 
 model Message {
@@ -901,6 +932,7 @@ model ServiceType {
   updatedAt                 DateTime
   Booking                   Booking[]
   InstructorFacilityDefault InstructorFacilityDefault[]
+  InstructorLocationService InstructorLocationService[]
   Instructor                Instructor[]                @relation("InstructorToServiceType")
 }
 

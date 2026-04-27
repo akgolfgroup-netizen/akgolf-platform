@@ -140,3 +140,75 @@ export async function getBookingV2InstructorsForService(
   const all = await getBookingV2Instructors();
   return all.filter((i) => i.serviceIds.includes(serviceId));
 }
+
+/**
+ * BOOKING-V2 LOKASJONS-HELPERS (Fase B)
+ *
+ * Etter at multi-location er på plass, filtreres tjenester og instruktører
+ * basert på valgt lokasjon. Wizard-flyten (Fase D) blir:
+ *   Lokasjon → Trener → Tjeneste → Tid
+ *
+ * Disse helperne brukes av `velg-trener`- og `velg-tjeneste`-sidene.
+ */
+
+export interface BookingV2Location {
+  id: string;
+  name: string;
+  address: string | null;
+}
+
+/**
+ * Henter alle lokasjoner som har minst én aktiv coach koblet til seg.
+ */
+export async function getBookingV2Locations(): Promise<BookingV2Location[]> {
+  const links = await prisma.instructorLocation.findMany({
+    where: { isActive: true },
+    select: { locationId: true, Location: { select: { id: true, name: true, address: true } } },
+  });
+
+  // Dedupe per locationId
+  const map = new Map<string, BookingV2Location>();
+  for (const l of links) {
+    if (!map.has(l.locationId) && l.Location) {
+      map.set(l.locationId, {
+        id: l.Location.id,
+        name: l.Location.name,
+        address: l.Location.address,
+      });
+    }
+  }
+  return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * Coacher som er aktive på en spesifikk lokasjon.
+ */
+export async function getBookingV2InstructorsAtLocation(
+  locationId: string,
+): Promise<BookingV2Instructor[]> {
+  const all = await getBookingV2Instructors();
+  const links = await prisma.instructorLocation.findMany({
+    where: { locationId, isActive: true },
+    select: { instructorId: true },
+  });
+  const allowed = new Set(links.map((l) => l.instructorId));
+  return all.filter((i) => allowed.has(i.id));
+}
+
+/**
+ * Tjenester som tilbys av en coach på en spesifikk lokasjon.
+ */
+export async function getBookingV2ServicesAtLocation(
+  locationId: string,
+  instructorId: string,
+): Promise<BookingV2Service[]> {
+  const links = await prisma.instructorLocationService.findMany({
+    where: { locationId, instructorId },
+    select: { serviceTypeId: true },
+  });
+  const allowedIds = new Set(links.map((l) => l.serviceTypeId));
+  if (allowedIds.size === 0) return [];
+
+  const all = await getBookingV2Services();
+  return all.filter((s) => allowedIds.has(s.id));
+}

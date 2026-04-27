@@ -81,7 +81,7 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
-**Coach-funksjoner — Fase A ferdig (1/8):**
+**Coach-funksjoner — Fase A+B ferdig (2/8):**
 - Beslutninger fastsatt og lagret i `docs/status/COACH_FUNCTIONS_PLAN.md` (10 spørsmål → 10 beslutninger; 8 faser; ~60-94t totalt-estimat).
 - **Fase A ✅ — Coach-tilgjengelighet:**
   - **Kritisk bug-fix:** Eksisterende `tilgjengelighet/actions.ts` skrev til `AvailabilityWindow`-tabellen som IKKE finnes i DB. Booking-validering har alltid lest fra `InstructorAvailability` (39 rader). "Lagre arbeidstider" i CoachHQ gjorde derfor ingenting i prod. Byttet alle queries til `InstructorAvailability`.
@@ -90,7 +90,14 @@
   - **Ny feature: Steng periode** — `createClosedPeriod({ instructorId, startDate, endDate, reason })` lager én `BlockedTime`-record per dag i intervallet. Ny `ClosedPeriodDialog` i `components/admin/tilgjengelighet/closed-period-dialog.tsx` med presets (Ferie/Kurs/Sykdom/Privat) eller egen tekst. Knapp "Steng periode" lagt til i `tilgjengelighet/page.tsx` ved siden av eksisterende "Legg til unntak".
   - **Utsatt til polish-runde:** A2-A5 (full UI-refaktor, drag-grid, månedsvisning) — eksisterende UI er funksjonell og leverer verdi nå. Risiko/nytte tilsa at vi prioriterte bug-fix + ferie-feature.
   - Verifisert: lint + typecheck rene; siden rendrer 200 OK; begge knapper synlige. Dialog-funksjonalitet krever innlogget admin (manuell test i samlet røykprøve etter Fase H).
-- **Resterende:** Fase B (multi-location), C (Stripe-katalog), D (wizard-ombygging), E (manuell booking), F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~50–80t igjen.
+- **Fase B ✅ — Multi-location per coach + per tjeneste:**
+  - **DB:** Ny migrasjon `20260427_add_instructor_location` med to join-tabeller: `InstructorLocation` (M:N coach×lokasjon, isActive-flag, unique på (instructorId, locationId)) og `InstructorLocationService` (3-veis coach×lokasjon×tjeneste, unique på alle tre). Schema oppdatert med relasjoner på Instructor, Location, ServiceType.
+  - **Server actions** i `app/admin/(authed)/lokasjoner/actions.ts`: `getLocationsConfigData()` (henter alt UI trenger med RBAC-filter — INSTRUCTOR ser bare seg selv), `setInstructorLocation` (toggle aktiv/inaktiv per lokasjon, kaskaderer rydding av tjenester ved deaktivering), `setLocationServices` (diff-basert oppdatering av tjenester for en coach×lokasjon), `createLocation` (kun ADMIN, for å legge til ny klubb).
+  - **Admin-UI** i `app/admin/(authed)/lokasjoner/`: server-component page + lokasjoner-client.tsx med coach-velger (kun ADMIN), KPI-kort (lokasjoner totalt, aktive for meg, tjenester totalt), kort per lokasjon med aktiver-knapp + tjeneste-pills. `useTransition` for optimistic updates.
+  - **Booking-v2-helpers** i `lib/booking-v2/services.ts`: `getBookingV2Locations()` (lokasjoner med minst én aktiv coach), `getBookingV2InstructorsAtLocation(locationId)`, `getBookingV2ServicesAtLocation(locationId, instructorId)`. Klar for Fase D wizard-ombygging (Lokasjon → Trener → Tjeneste → Tid).
+  - **Seed:** Anders Kristiansen (12 tjenester) + Markus Røinås Pedersen (4 tjenester) automatisk koblet til GFGK. Totalt 2 InstructorLocation + 16 InstructorLocationService records.
+  - Verifisert: lint + typecheck rene, side rendrer 6 lokasjoner, GFGK vises som aktiv med 12 tjeneste-pills, andre lokasjoner som "+ Aktiver".
+- **Resterende:** Fase C (Stripe-katalog), D (wizard-ombygging), E (manuell booking), F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~44–74t igjen.
 
 ---
 
