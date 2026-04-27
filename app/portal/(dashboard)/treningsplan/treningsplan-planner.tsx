@@ -52,7 +52,14 @@ interface V2Event {
   startM: number;
   dur: number;
   title: string;
+  /** Pyramide-kode (FYS/TEK/SLAG/SPILL/TURN) */
   focus: string;
+  /** Treningsområde (PUTT, CHIP, IRON_50_100, ...) */
+  area?: string | null;
+  /** Total reps for økten */
+  repsTotal?: number | null;
+  description?: string | null;
+  facilityId?: string | null;
   exercises: unknown[];
   done: boolean;
   isGroupSession?: boolean;
@@ -136,6 +143,8 @@ interface TreningsplanPlannerProps {
     description?: string;
     durationMinutes?: number;
     focusArea?: string;
+    area?: string;
+    repsTotal?: number;
     startH?: number;
     startM?: number;
     facilityId?: string;
@@ -158,6 +167,8 @@ interface TreningsplanPlannerProps {
       description?: string;
       durationMinutes?: number;
       focusArea?: string;
+      area?: string | null;
+      repsTotal?: number | null;
       facilityId?: string | null;
     }
   ) => Promise<{ success: boolean }>;
@@ -835,7 +846,11 @@ function CreateSessionModal({
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState(60);
+  const [reps, setReps] = useState<string>("");
   const [focus, setFocus] = useState<string>("TEK");
+  const [area, setArea] = useState<string>("");
+  const [startH, setStartH] = useState(startHour);
+  const [startM, setStartM] = useState(0);
   const [notes, setNotes] = useState("");
   const [facilityId, setFacilityId] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -852,8 +867,8 @@ function CreateSessionModal({
     let cancelled = false;
     onCheckConflicts({
       date: dateStr,
-      startH: startHour,
-      startM: 0,
+      startH,
+      startM,
       durationMinutes: duration,
     }).then((result) => {
       if (!cancelled) {
@@ -864,7 +879,7 @@ function CreateSessionModal({
     return () => {
       cancelled = true;
     };
-  }, [onCheckConflicts, dateStr, startHour, duration]);
+  }, [onCheckConflicts, dateStr, startH, startM, duration]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -878,6 +893,8 @@ function CreateSessionModal({
       return;
     }
 
+    const repsTotal = reps.trim() ? parseInt(reps.trim(), 10) : undefined;
+
     const result = await onCreate({
       weekOffset,
       dayOfWeek,
@@ -885,8 +902,10 @@ function CreateSessionModal({
       description: notes.trim() || undefined,
       durationMinutes: duration,
       focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
-      startH: startHour,
-      startM: 0,
+      area: area || undefined,
+      repsTotal: Number.isFinite(repsTotal) ? repsTotal : undefined,
+      startH,
+      startM,
       facilityId: facilityId || undefined,
     });
 
@@ -918,8 +937,7 @@ function CreateSessionModal({
         </div>
 
         <p className="mt-1 font-mono text-[11px] text-on-surface-variant">
-          {DAYS[dayIndex]} {format(date, "d. MMMM", { locale: nb })} · kl{" "}
-          {String(startHour).padStart(2, "0")}:00
+          {DAYS[dayIndex]} {format(date, "d. MMMM", { locale: nb })}
         </p>
 
         {error && (
@@ -944,33 +962,81 @@ function CreateSessionModal({
             />
           </div>
 
-          {/* Varighet */}
+          {/* Tidspunkt (15-min intervaller) */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Varighet
+              Tidspunkt
             </label>
-            <div className="mt-1 flex flex-wrap gap-2">
-              {[15, 30, 45, 60, 90, 120].map((m) => (
-                <button
-                  key={m}
-                  type="button"
-                  onClick={() => setDuration(m)}
-                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
-                    duration === m
-                      ? "bg-primary text-surface"
-                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
-                  }`}
-                >
-                  {m}m
-                </button>
-              ))}
+            <div className="mt-1 flex items-center gap-2">
+              <select
+                value={startH}
+                onChange={(e) => setStartH(parseInt(e.target.value, 10))}
+                className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+              >
+                {Array.from({ length: 17 }, (_, i) => i + 6).map((h) => (
+                  <option key={h} value={h}>
+                    {String(h).padStart(2, "0")}
+                  </option>
+                ))}
+              </select>
+              <span className="text-sm text-on-surface-variant">:</span>
+              <select
+                value={startM}
+                onChange={(e) => setStartM(parseInt(e.target.value, 10))}
+                className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+              >
+                {[0, 15, 30, 45].map((m) => (
+                  <option key={m} value={m}>
+                    {String(m).padStart(2, "0")}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Varighet og Reps */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Varighet
+              </label>
+              <div className="mt-1 flex flex-wrap gap-1.5">
+                {[15, 30, 45, 60, 90, 120].map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setDuration(m)}
+                    className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                      duration === m
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                  >
+                    {m}m
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Reps (valgfri)
+              </label>
+              <input
+                type="number"
+                inputMode="numeric"
+                min={0}
+                value={reps}
+                onChange={(e) => setReps(e.target.value)}
+                placeholder="f.eks. 50"
+                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+              />
             </div>
           </div>
 
           {/* Pyramide-fokus */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Fokus
+              Pyramide
             </label>
             <div className="mt-1 flex flex-wrap gap-2">
               {PYRAMIDE.map((p) => (
@@ -989,6 +1055,29 @@ function CreateSessionModal({
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Treningsområde (valgfri) */}
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Treningsområde (valgfri)
+            </label>
+            <select
+              value={area}
+              onChange={(e) => setArea(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+            >
+              <option value="">Ingen valgt</option>
+              {OMRADE_GRUPPER.map((gruppe) => (
+                <optgroup key={gruppe.code} label={gruppe.label}>
+                  {TRENINGSOMRADER.filter((o) => o.gruppe === gruppe.code).map((o) => (
+                    <option key={o.code} value={o.code}>
+                      {o.label}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
           </div>
 
           {/* Fasilitet */}
@@ -1105,9 +1194,13 @@ function EditSessionModal({
   const router = useRouter();
   const [title, setTitle] = useState(event.title);
   const [duration, setDuration] = useState(event.dur);
+  const [reps, setReps] = useState<string>(
+    event.repsTotal != null ? String(event.repsTotal) : ""
+  );
   const [focus, setFocus] = useState<string>(event.focus);
-  const [notes, setNotes] = useState("");
-  const [facilityId, setFacilityId] = useState<string>("");
+  const [area, setArea] = useState<string>(event.area ?? "");
+  const [notes, setNotes] = useState(event.description ?? "");
+  const [facilityId, setFacilityId] = useState<string>(event.facilityId ?? "");
   const [error, setError] = useState<string | null>(null);
   const [duplicating, setDuplicating] = useState(false);
 
@@ -1119,11 +1212,15 @@ function EditSessionModal({
       return;
     }
 
+    const repsTotal = reps.trim() ? parseInt(reps.trim(), 10) : null;
+
     const result = await onUpdate(event.id, {
       title: title.trim(),
       description: notes.trim() || undefined,
       durationMinutes: duration,
       focusArea: PYRAMIDE.find((p) => p.code === focus)?.label ?? focus,
+      area: area || null,
+      repsTotal: Number.isFinite(repsTotal) ? repsTotal : null,
       facilityId: facilityId || null,
     });
 
@@ -1179,31 +1276,47 @@ function EditSessionModal({
             />
           </div>
 
-          <div>
-            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Varighet
-            </label>
-            <div className="mt-1 flex flex-wrap gap-2">
-              {[15, 30, 45, 60, 90, 120].map((m) => (
-                <button
-                  key={m}
-                  type="button"
-                  onClick={() => setDuration(m)}
-                  className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
-                    duration === m
-                      ? "bg-primary text-surface"
-                      : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
-                  }`}
-                >
-                  {m}m
-                </button>
-              ))}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Varighet
+              </label>
+              <div className="mt-1 flex flex-wrap gap-1.5">
+                {[15, 30, 45, 60, 90, 120].map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setDuration(m)}
+                    className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                      duration === m
+                        ? "bg-primary text-surface"
+                        : "border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container"
+                    }`}
+                  >
+                    {m}m
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                Reps (valgfri)
+              </label>
+              <input
+                type="number"
+                inputMode="numeric"
+                min={0}
+                value={reps}
+                onChange={(e) => setReps(e.target.value)}
+                placeholder="f.eks. 50"
+                className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
+              />
             </div>
           </div>
 
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Fokus
+              Pyramide
             </label>
             <div className="mt-1 flex flex-wrap gap-2">
               {PYRAMIDE.map((p) => (
@@ -1222,6 +1335,28 @@ function EditSessionModal({
                 </button>
               ))}
             </div>
+          </div>
+
+          <div>
+            <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+              Treningsområde (valgfri)
+            </label>
+            <select
+              value={area}
+              onChange={(e) => setArea(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface focus:border-primary focus:outline-none"
+            >
+              <option value="">Ingen valgt</option>
+              {OMRADE_GRUPPER.map((gruppe) => (
+                <optgroup key={gruppe.code} label={gruppe.label}>
+                  {TRENINGSOMRADER.filter((o) => o.gruppe === gruppe.code).map((o) => (
+                    <option key={o.code} value={o.code}>
+                      {o.label}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
           </div>
 
           {facilities.length > 0 && (

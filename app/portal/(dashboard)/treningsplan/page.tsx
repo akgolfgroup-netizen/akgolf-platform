@@ -84,8 +84,11 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     description?: string;
     durationMinutes?: number;
     focusArea?: string;
+    area?: string;
+    repsTotal?: number;
     startH?: number;
     startM?: number;
+    facilityId?: string;
   }) {
     "use server";
     return createSessionForWeek(data);
@@ -113,6 +116,9 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       description?: string;
       durationMinutes?: number;
       focusArea?: string;
+      area?: string | null;
+      repsTotal?: number | null;
+      facilityId?: string | null;
     }
   ) {
     "use server";

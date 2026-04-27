@@ -1843,7 +1843,12 @@ model TrainingPlanSession {
   title            String
   description      String?
   durationMinutes  Int?
+  /// Pyramide (FYS/TEK/SLAG/SPILL/TURN) — historisk navn, beholdt for kompatibilitet.
   focusArea        String?
+  /// Treningsområde fra TRENINGSOMRADER (PUTT, CHIP, IRON_50_100, etc.)
+  area             String?
+  /// Total reps for hele økten (valgfri). Reps per øvelse ligger i exercises-JSON.
+  repsTotal        Int?
   exercises        Json             @default("[]")
   sortOrder        Int              @default(0)
   createdAt        DateTime         @default(now())

@@ -695,6 +695,8 @@ export async function createSessionForWeek(data: {
   description?: string;
   durationMinutes?: number;
   focusArea?: string;
+  area?: string;
+  repsTotal?: number;
   startH?: number;
   startM?: number;
   facilityId?: string;
@@ -764,6 +766,8 @@ export async function createSessionForWeek(data: {
       description: data.description ?? null,
       durationMinutes: data.durationMinutes ?? 60,
       focusArea: data.focusArea ?? null,
+      area: data.area ?? null,
+      repsTotal: data.repsTotal ?? null,
       facilityId: data.facilityId ?? null,
       exercises,
       sortOrder: 0,
@@ -788,6 +792,8 @@ export async function updateSession(
     description?: string;
     durationMinutes?: number;
     focusArea?: string;
+    area?: string | null;
+    repsTotal?: number | null;
     facilityId?: string | null;
   }
 ) {
@@ -822,6 +828,8 @@ export async function updateSession(
   if (data.durationMinutes !== undefined)
     updateData.durationMinutes = data.durationMinutes;
   if (data.focusArea !== undefined) updateData.focusArea = data.focusArea;
+  if (data.area !== undefined) updateData.area = data.area;
+  if (data.repsTotal !== undefined) updateData.repsTotal = data.repsTotal;
   if (data.facilityId !== undefined) updateData.facilityId = data.facilityId;
 
   await supabase
@@ -844,7 +852,14 @@ interface V2Event {
   startM: number;
   dur: number;
   title: string;
+  /** Pyramide-kode */
   focus: string;
+  /** Treningsområde-kode */
+  area?: string | null;
+  /** Total reps for økten */
+  repsTotal?: number | null;
+  description?: string | null;
+  facilityId?: string | null;
   exercises: V2ExerciseData[];
   done: boolean;
   isGroupSession?: boolean;
@@ -898,8 +913,12 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
     id: string;
     dayOfWeek: number;
     title: string;
+    description: string | null;
     durationMinutes: number | null;
     focusArea: string | null;
+    area: string | null;
+    repsTotal: number | null;
+    facilityId: string | null;
     exercises: unknown;
     TrainingLog: { id: string }[];
   }
@@ -996,6 +1015,10 @@ export async function getWeekEvents(weekOffset = 0): Promise<V2Event[]> {
       dur: session.durationMinutes || 60,
       title: session.title,
       focus: inferPyramidFromFocus(session.focusArea),
+      area: session.area,
+      repsTotal: session.repsTotal,
+      description: session.description,
+      facilityId: session.facilityId,
       exercises: v2Exercises,
       done: session.TrainingLog?.length > 0,
       isGroupSession,
