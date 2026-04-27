@@ -1998,6 +1998,9 @@ model User {
   CustomerPaymentPreference                   CustomerPaymentPreference?
   DegradationTracking                         DegradationTracking[]
   ExerciseDefinition                          ExerciseDefinition[]
+  LibraryItemApprovedBy                       LibraryItem[]              @relation("LibraryItemApprovedBy")
+  LibraryItemRejectedBy                       LibraryItem[]              @relation("LibraryItemRejectedBy")
+  LibraryItemCreatedBy                        LibraryItem[]              @relation("LibraryItemCreatedBy")
   FacilityActivityApprovedBy                  FacilityActivity[]         @relation("FacilityActivityApprovedBy")
   FacilityActivityCreatedBy                   FacilityActivity[]         @relation("FacilityActivityCreatedBy")
   Friendship_FriendOf                         Friendship[]               @relation("FriendOf")
@@ -2877,6 +2880,88 @@ enum Capability {
   SYSTEM_SETTINGS
   SYSTEM_VIEW_LOGS
   SYSTEM_RUN_CRON
+
+  // Innholds-bibliotek (drills, exercises, tests, activities, competition prep)
+  LIBRARY_VIEW
+  LIBRARY_GENERATE
+  LIBRARY_APPROVE
+}
+
+enum LibraryItemType {
+  DRILL
+  EXERCISE
+  TEST
+  ACTIVITY
+  COMPETITION_PREP
+}
+
+enum LibraryItemStatus {
+  DRAFT
+  APPROVED
+  REJECTED
+  ARCHIVED
+}
+
+enum LibraryItemSource {
+  AK_METHODOLOGY
+  WEB_INSPIRED
+  MANUAL
+}
+
+model LibraryItem {
+  id      String            @id
+  type    LibraryItemType
+  status  LibraryItemStatus @default(DRAFT)
+  source  LibraryItemSource @default(AK_METHODOLOGY)
+
+  title   String
+  summary String
+
+  // Taksonomi (speiler lib/portal/training/ak-taxonomy.ts)
+  pyramid      String
+  area         String
+  subArea      String?
+  lPhase       String?
+  playerLevels String[] @default([])
+
+  difficulty         Int      @default(2)
+  minDurationMinutes Int      @default(5)
+  maxDurationMinutes Int      @default(30)
+  equipment          String[] @default([])
+
+  setup        String?
+  execution    String?
+  scoring      String?
+  variations   String?
+  coachingCues String?
+
+  generatedBy     String?
+  generatedPrompt String?
+  sourceUrl       String?
+  generatedAt     DateTime?
+
+  approvedById    String?
+  approvedAt      DateTime?
+  rejectedById    String?
+  rejectedAt      DateTime?
+  rejectionReason String?
+  createdById     String?
+
+  usageCount Int      @default(0)
+  rating     Float?
+  tags       String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ApprovedBy User? @relation("LibraryItemApprovedBy", fields: [approvedById], references: [id], onDelete: SetNull)
+  RejectedBy User? @relation("LibraryItemRejectedBy", fields: [rejectedById], references: [id], onDelete: SetNull)
+  CreatedBy  User? @relation("LibraryItemCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([status, type])
+  @@index([type, pyramid, area])
+  @@index([status])
+  @@index([area])
 }
 
 enum UnitSystem {
@@ -3016,6 +3101,28 @@ enum BirthYearSource {
   SCRAPED
 }
 
+// NGF-kompatible aldersgrupper. Spillerens alder = aaret de fyller (ikke
+// faktisk dato). Standard runde for alle klasser er 18 hull.
+enum TalentAgeGroup {
+  G12
+  G15
+  G19
+  J12
+  J15
+  J19
+  HERR
+  DAME
+  // Legacy-verdier (ikke i bruk i ny ingest, beholdes for skjemakompatibilitet):
+  M5
+  M8
+  M10
+  M12
+  HERR_SENIOR
+  DAME_SENIOR
+  MIX
+  UKJENT
+}
+
 model TalentPlayer {
   id                  String                   @id @default(cuid())
   ngfId               String?                  @unique
@@ -3055,8 +3162,9 @@ model TalentTournamentResult {
   source             TalentSource
   tournamentName     String
   tournamentDate     DateTime
-  classCode          String
-  holes              Int          // 9 eller 18 — kritisk for å unngå mix
+  classCode          String         // raadata-klassekode for sporbarhet
+  ageGroup           TalentAgeGroup @default(UKJENT)
+  holes              Int            // 9 eller 18 — kritisk for å unngå mix
   par                Int
   position           Int?
   totalScore         Int?

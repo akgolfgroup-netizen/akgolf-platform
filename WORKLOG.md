@@ -8,6 +8,49 @@
 
 ---
 
+## 2026-04-27 — Innholdsbibliotek (LibraryItem) MVP
+
+**Jobbet med:** Bygget godkjenningsdrevet AI-bibliotek for drills, øvelser, tester, aktiviteter og konkurranseforberedelse. Master-DB i Postgres (akgolf-platform), ikke Notion. Klargjort for kobling til treningsplanlegger.
+
+**Datamodell:**
+- Ny `LibraryItem`-tabell + 3 enums (`LibraryItemType`, `LibraryItemStatus`, `LibraryItemSource`)
+- Utvidet `Capability`-enum med `LIBRARY_VIEW`, `LIBRARY_GENERATE`, `LIBRARY_APPROVE` (ADMIN får automatisk; coach-standard fikk `LIBRARY_VIEW`)
+- Migrasjon: `prisma/migrations/20260427_add_library_items/migration.sql` (kjørt mot Supabase)
+
+**Backend:**
+- `lib/portal/library/types.ts` — labels, konstanter, GeneratedItem-type
+- `lib/portal/library/prompts.ts` — system + user prompt fra `ak-taxonomy.ts`
+- `lib/portal/library/generator.ts` — Claude-kall med JSON-skjema, persisterer som DRAFT
+- `lib/portal/library/queries.ts` — list, get, `findApprovedForPlanner()`, `incrementUsage()`
+- `lib/portal/library/README.md` — full integrasjons-dokumentasjon
+
+**API-routes (alle med `requireCapability`, 403 verifisert i preview):**
+- `POST /api/admin/library/generate` — rate-limit 10/time
+- `POST /api/admin/library` — manuell create
+- `PATCH/DELETE /api/admin/library/[id]`
+- `POST /api/admin/library/[id]/approve|reject`
+
+**Admin-UI under `/admin/library`:**
+- Liste-side med 4 status-tabs (Utkast/Godkjent/Avvist/Arkivert), søk, filter på type/område
+- "Lag nye"-panel: type, område, antall, vanskelighet, spillerkategorier (A–K), ekstra føringer
+- Detail-side: rediger alle felt, godkjenn/avvis, audit-info
+- Lagt til i CoachHQ-sidebar (Verktøy → Innholdsbibliotek)
+
+**Verifisering:**
+- `npx prisma migrate deploy` mot Supabase: OK
+- tsc og lint på alle nye filer: rene
+- Alle 5 API-routes svarer 403 uten capability, ingen 500
+- ADMIN-rolle bekreftet på `anders@akgolf.no`
+
+**Neste steg (lagt i Notion Projects-DB):**
+1. Mate inn AK Masterdokument-utdrag i system-prompten
+2. Hent godkjente items som few-shot examples
+3. Curated web-kilder (Firecrawl + omformulering) — etter juridisk avklaring
+
+Notion-prosjekt: `34f35a45-535a-814f-b11c-f469ea28b7b3` "AK Golf Innholdsbibliotek — fase 2 forbedringer".
+
+---
+
 ## 2026-04-26 (kveld) — Branch-konsolidering Fase 1 + turneringskalender
 
 **Jobbet med:** MBA→main-konsolidering. Verifisert at MBA-arbeid var trygt sikret, kartlagt 14 branches med ikke-merget arbeid, merget 4 av dem til main, dokumentert resten i triage-rapport.

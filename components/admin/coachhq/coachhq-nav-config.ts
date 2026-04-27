@@ -9,6 +9,7 @@ import {
   Settings,
   Bookmark,
   Bot,
+  BookOpen,
   type LucideIcon,
 } from "lucide-react";
 
@@ -42,6 +43,7 @@ export const COACHHQ_PRIMARY_NAV: CoachHQNavItem[] = [
 export const COACHHQ_TOOLS_NAV: CoachHQNavItem[] = [
   { href: "/admin/agenter", label: "AI Coach", icon: Bot },
   { href: "/admin/treningsplan", label: "Treningsplaner", icon: Bookmark },
+  { href: "/admin/library", label: "Innholdsbibliotek", icon: BookOpen },
 ];
 
 /**

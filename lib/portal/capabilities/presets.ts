@@ -16,6 +16,7 @@ export const CAPABILITY_PRESETS: CapabilityPreset[] = [
       Capability.TOURNAMENT_MANAGE_PREP,
       Capability.BOOKING_VIEW_OWN,
       Capability.BOOKING_MANAGE,
+      Capability.LIBRARY_VIEW,
     ],
   },
   {
