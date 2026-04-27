@@ -1,6 +1,45 @@
 # Backlog — Prioritert gjenstående arbeid
 
-Sist oppdatert: 2026-04-26
+Sist oppdatert: 2026-04-27
+
+---
+
+## P1+ — Trening: rask flow + session card (post-lansering)
+
+**Status:** Designet og spec godkjent. **Ikke i scope for dagens lansering.** Dagens versjon er manuell + standardmaler + «Kopier uke». Utvides etter at platformen er live.
+
+**Spec:** [`docs/superpowers/specs/2026-04-27-trening-fast-flow-design.md`](../superpowers/specs/2026-04-27-trening-fast-flow-design.md)
+
+### Hva som skal bygges (5 faser)
+
+| Fase | Innhold | Effekt |
+|---|---|---|
+| **1 — Quick-Add Bar** | Sticky bar med natural-language-input («Tee 60min tor 14») + pyramide-pills | Reduserer 30 sek → 5 sek per økt |
+| **2 — Session Card / Live Workout** | Full-screen mobil-modus: per-øvelse countdown, start/pause/ferdig, rate-modal ved avslutning, lagrer til TrainingLog | Kjerneopplevelsen «under treningen» |
+| **3 — Pakker** | Ny `SessionPackage`-modell + sidebar-fane. Drag pakke = hele økt + alle øvelser opprettes på én gang. System-pakker + brukerens egne + coach-tildelte | 1 drag = full økt klar |
+| **4 — Multi-select øvelser** | Toggle i Øvelser-fanen + floating bottom-bar med batch-add til valgt økt | Halvert klikk vs én-og-én drag |
+| **5 — User-preferanse** | `User.defaultSessionFlow`-enum (Quick-Add/Modal/Pakker) + settings-side. «Ny økt»-CTA dispatcher til valgt modus | Power-user kan velge sin standard |
+
+### Database-endringer
+
+- Ny modell: `SessionPackage` (id, ownerId?, targetUserId?, name, iconName?, defaultDurationMinutes, focusArea, area?, exercisesJson, createdAt)
+- Ny kolonne: `User.defaultSessionFlow` (enum QUICK_ADD | MODAL | PACKAGES)
+- 2 nye Prisma-migrasjoner
+
+### Hva som er tilgjengelig allerede (i dag)
+
+- ✅ Standardmal i wizard → hele 1/4/8/12 ukers plan klar
+- ✅ Drag mal til spesifikk uke
+- ✅ «Kopier uke»-knapp i topplinje
+- ✅ Drag øvelse fra sidebar → økt-popover med tid/reps
+
+### Avhengigheter
+
+- Fase 2 (Session Card) krever Service Worker for bakgrunns-timer
+- Fase 5 trenger settings-side i `/portal/profil/innstillinger`
+- AI-foreslått måned-plan venter på AI-pipeline (skills/agenter) — separat feature
+
+---
 
 > **Les først:** [`PLATFORM_FUNCTION_MAP.md`](./PLATFORM_FUNCTION_MAP.md) — komplett funksjonskartlegging per spiller-fase (PLANLEGGE → GJENNOMFØRE → EVALUERE → ADMINISTRERE), 112 Prisma-modeller, 10 integrasjoner, 21 CRON-jobs, 25 MCP-verktøy og gap-analyse. Sprint-rekkefølgen nedenfor er begrunnet i kartets seksjon 9.
 
