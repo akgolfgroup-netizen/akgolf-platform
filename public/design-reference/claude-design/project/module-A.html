@@ -18,17 +18,24 @@
   const Frame = ({ src }) => <iframe src={src} style={{ width: "100%", height: "100%", border: "none", display: "block" }} />;
 
   const App = () => (
-    <DesignCanvas title="Modul A — PlayerHQ Spiller" subtitle="5 skjermer · V2 Cockpit dark · Erik Kvist · Performance 12 mnd">
-      <DCSection id="profile" title="Min side — identitet og innstillinger">
+    <DesignCanvas title="Modul A — PlayerHQ Spiller" subtitle="10 skjermer · V2 Cockpit dark · Erik Kvist · Performance 12 mnd">
+      <DCSection id="onboard" title="Onboarding — første gang inn">
+        <DCArtboard id="a7" label="A7 — Onboarding 5-steg" width={1440} height={1700}><Frame src="screens/a7-onboarding.html"/></DCArtboard>
+        <DCArtboard id="a8" label="A8 — Kartlegging" width={1440} height={1900}><Frame src="screens/a8-kartlegging.html"/></DCArtboard>
+      </DCSection>
+      <DCSection id="profile" title="Min side — identitet og 360°">
         <DCArtboard id="a1" label="A1 — Min profil" width={1440} height={1500}><Frame src="screens/a1-min-profil.html"/></DCArtboard>
         <DCArtboard id="a2" label="A2 — Innstillinger" width={1440} height={1700}><Frame src="screens/a2-profil-innstillinger.html"/></DCArtboard>
+        <DCArtboard id="a10" label="A10 — PlayerHQ 360°" width={1440} height={2400}><Frame src="screens/a10-playerhq-360.html"/></DCArtboard>
       </DCSection>
       <DCSection id="plan" title="Plan — nordstjerne og uke">
         <DCArtboard id="a3" label="A3 — Min plan" width={1440} height={1700}><Frame src="screens/a3-min-plan.html"/></DCArtboard>
         <DCArtboard id="a5" label="A5 — Treningsplan" width={1440} height={1800}><Frame src="screens/a5-treningsplan.html"/></DCArtboard>
+        <DCArtboard id="a6" label="A6 — Treningsplan detalj" width={1440} height={1800}><Frame src="screens/a6-treningsplan-detalj.html"/></DCArtboard>
       </DCSection>
-      <DCSection id="cal" title="Kalender — bookinger">
+      <DCSection id="cal" title="Kalender — bookinger og planlegger">
         <DCArtboard id="a4" label="A4 — Mine bookinger" width={1440} height={1500}><Frame src="screens/a4-mine-bookinger.html"/></DCArtboard>
+        <DCArtboard id="a9" label="A9 — Treningsplanlegger" width={1600} height={1700}><Frame src="screens/a9-kalender.html"/></DCArtboard>
       </DCSection>
     </DesignCanvas>
   );
