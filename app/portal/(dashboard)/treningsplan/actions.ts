@@ -153,6 +153,16 @@ export async function addExerciseToSession(
     pyramid: string;
     area: string;
     lPhase?: string;
+    /** Tid avsatt i minutter (per-økt SessionExercise). */
+    durationMinutes?: number;
+    /** Antall slag/repetisjoner med ball. */
+    repsWithBall?: number;
+    /** Antall tørre svinger / repetisjoner uten ball. */
+    repsWithoutBall?: number;
+    /** Fokus-stikkord under øvelsen. */
+    focus?: string;
+    /** Fri kommentar. */
+    notes?: string;
   }
 ) {
   const user = await requirePortalUser();
@@ -175,12 +185,17 @@ export async function addExerciseToSession(
 
   const newExerciseEntry: Record<string, unknown> = {
     id: nanoid(),
-    exerciseId: exercise.id,
+    exerciseDefinitionId: exercise.id,
     name: exercise.name,
     pyramid: exercise.pyramid,
     area: exercise.area,
     lPhase: exercise.lPhase ?? null,
     description: exercise.description ?? null,
+    durationMinutes: exercise.durationMinutes ?? null,
+    repsWithBall: exercise.repsWithBall ?? null,
+    repsWithoutBall: exercise.repsWithoutBall ?? null,
+    focus: exercise.focus ?? null,
+    notes: exercise.notes ?? null,
     addedAt: new Date().toISOString(),
   };
 
@@ -191,6 +206,7 @@ export async function addExerciseToSession(
     .update({ exercises: JSON.stringify(updatedExercises) })
     .eq("id", sessionId);
 
+  revalidatePath("/portal/treningsplan");
   return { success: true };
 }
 

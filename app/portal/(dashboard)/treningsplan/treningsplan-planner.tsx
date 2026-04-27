@@ -36,6 +36,11 @@ import { PlanAdjustmentModal } from "./components/plan-adjustment-modal";
 import { PlanCreatorModal } from "@/components/portal/treningsplan/plan-creator-modal";
 import { PlanConversationCard } from "@/components/portal/treningsplan/plan-conversation-card";
 import { PlanSuggestionInbox } from "@/components/portal/treningsplan/plan-suggestion-inbox";
+import {
+  ExerciseConfigPopover,
+  type ExerciseConfigDraft,
+  type ExerciseConfigResult,
+} from "@/components/portal/treningsplan/exercise-config-popover";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PlanGoalsCard } from "./components/plan-goals-card";
 import type { PlanGoalsSummary } from "./actions";
@@ -158,6 +163,11 @@ interface TreningsplanPlannerProps {
       pyramid: string;
       area: string;
       lPhase?: string;
+      durationMinutes?: number;
+      repsWithBall?: number;
+      repsWithoutBall?: number;
+      focus?: string;
+      notes?: string;
     }
   ) => Promise<{ success: boolean }>;
   onUpdateSession: (
@@ -247,6 +257,32 @@ export function TreningsplanPlanner({
   const [editEvent, setEditEvent] = useState<V2Event | null>(null);
   const [adjustModalOpen, setAdjustModalOpen] = useState(false);
   const [planCreatorOpen, setPlanCreatorOpen] = useState(false);
+
+  // Drag-drop popover for konfigurasjon av nye øvelser på en økt
+  const [exerciseConfig, setExerciseConfig] = useState<{
+    sessionId: string;
+    draft: ExerciseConfigDraft;
+  } | null>(null);
+
+  const handleConfirmExerciseConfig = async (config: ExerciseConfigResult) => {
+    if (!exerciseConfig) return;
+    const { sessionId, draft } = exerciseConfig;
+    await onAddExerciseToSession(sessionId, {
+      id: draft.id,
+      name: draft.name,
+      description: draft.description,
+      pyramid: draft.pyramid,
+      area: draft.area,
+      lPhase: draft.lPhase,
+      durationMinutes: config.durationMinutes,
+      repsWithBall: config.repsWithBall,
+      repsWithoutBall: config.repsWithoutBall,
+      focus: config.focus,
+      notes: config.notes,
+    });
+    setExerciseConfig(null);
+    window.location.reload();
+  };
 
   const showEmptyState = !planId;
 
@@ -489,6 +525,9 @@ export function TreningsplanPlanner({
                 setEditModalOpen(true);
               }}
               onAddExerciseToSession={onAddExerciseToSession}
+              onRequestExerciseConfig={(sessionId, draft) =>
+                setExerciseConfig({ sessionId, draft })
+              }
             />
           </div>
           {/* Mobil-liste (under md) */}
@@ -560,6 +599,14 @@ export function TreningsplanPlanner({
         />
       )}
 
+      {/* Popover: konfigurer øvelse ved drag-drop */}
+      <ExerciseConfigPopover
+        open={exerciseConfig !== null}
+        draft={exerciseConfig?.draft ?? null}
+        onConfirm={handleConfirmExerciseConfig}
+        onCancel={() => setExerciseConfig(null)}
+      />
+
       {/* Stats-stripe */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-t border-outline-variant/10 pt-6">
         <div className="flex gap-8">
@@ -598,6 +645,7 @@ function WeekGrid({
   onCellClick,
   onEventClick,
   onAddExerciseToSession,
+  onRequestExerciseConfig,
   onMoveEvent,
   onResizeEvent,
   onApplyTemplate,
@@ -608,6 +656,8 @@ function WeekGrid({
   onCellClick: (dayIndex: number, hour: number) => void;
   onEventClick: (event: V2Event) => void;
   onAddExerciseToSession: TreningsplanPlannerProps["onAddExerciseToSession"];
+  /** Åpner popover for å konfigurere reps/tid før øvelsen lagres på økten. */
+  onRequestExerciseConfig?: (sessionId: string, draft: ExerciseConfigDraft) => void;
   onMoveEvent?: TreningsplanPlannerProps["onMoveEvent"];
   onResizeEvent?: TreningsplanPlannerProps["onResizeEvent"];
   onApplyTemplate?: TreningsplanPlannerProps["onApplyTemplate"];
@@ -750,7 +800,21 @@ function WeekGrid({
                               window.location.reload();
                               return;
                             }
-                            // Default: behandle som øvelse (legacy + nytt format)
+                            // Default: åpne konfigurasjons-popover for øvelsen
+                            // slik at spilleren kan sette tid + reps før lagring.
+                            if (onRequestExerciseConfig && payload?.id && payload?.name) {
+                              onRequestExerciseConfig(ev.id, {
+                                id: payload.id,
+                                name: payload.name,
+                                description: payload.description,
+                                pyramid: payload.pyramid,
+                                area: payload.area,
+                                lPhase: payload.lPhase,
+                                defaultDurationMinutes: payload.defaultDurationMinutes,
+                              });
+                              return;
+                            }
+                            // Fallback (legacy): lagre direkte uten config
                             await onAddExerciseToSession(ev.id, payload);
                             window.location.reload();
                           } catch {
@@ -1969,6 +2033,7 @@ function ExerciseCard({ exercise }: { exercise: ExerciseSearchResult }) {
             pyramid: exercise.pyramid,
             area: exercise.area,
             lPhase: exercise.lPhase ?? undefined,
+            defaultDurationMinutes: exercise.minDurationMinutes,
           })
         );
         e.dataTransfer.effectAllowed = "copy";

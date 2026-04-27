@@ -103,6 +103,11 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       pyramid: string;
       area: string;
       lPhase?: string;
+      durationMinutes?: number;
+      repsWithBall?: number;
+      repsWithoutBall?: number;
+      focus?: string;
+      notes?: string;
     }
   ) {
     "use server";
