@@ -42,7 +42,9 @@ export async function getMyProfile() {
       image,
       role,
       subscriptionTier,
-      Instructor (specialization, title, bio)
+      createdAt,
+      Instructor (specialization, title, bio),
+      UserGolfId (golfboxId, clubName, handicap)
     `)
     .eq("id", user.id)
     .single();
