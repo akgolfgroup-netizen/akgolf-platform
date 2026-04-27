@@ -29,18 +29,21 @@ import {
 } from "./actions";
 import type { TemplateId } from "@/lib/portal/training/standard-templates";
 import { TreningsplanPlanner } from "./treningsplan-planner";
+import { TreningsplanOverview } from "./treningsplan-overview";
+import { buildLibraryItems, computeWeeklyTargets, getActiveCoachName } from "./overview-helpers";
 
 // ---------------------------------------------------------------------
 // Server component
 // ---------------------------------------------------------------------
 
 interface TreningsplanPageProps {
-  searchParams: Promise<{ week?: string }>;
+  searchParams: Promise<{ week?: string; modus?: string }>;
 }
 
 export default async function TreningsplanPage({ searchParams }: TreningsplanPageProps) {
-  const { week } = await searchParams;
+  const { week, modus } = await searchParams;
   const weekOffset = parseInt(week ?? "0", 10) || 0;
+  const isEditor = modus === "editor";
 
   const plan = await getActivePlan();
   const planId = plan?.id ?? null;
@@ -218,6 +221,28 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
 
   const adjustmentSuggestion = await analyzePlanDeviation();
 
+  // ─── Default: ny lese-modus (Brand Guide V2.0) ────────────────────
+  if (!isEditor) {
+    const targets = computeWeeklyTargets(periodization);
+    const library = buildLibraryItems(events);
+    const coachName = await getActiveCoachName();
+    return (
+      <TreningsplanOverview
+        weekOffset={weekOffset}
+        hasPlan={!!planId}
+        events={events}
+        totalMinutes={totalMinutes}
+        weeklyVolumeTargetMinutes={targets.volumeMinutes}
+        sessionCount={sessionCount}
+        weeklySessionTarget={targets.sessions}
+        doneCount={doneCount}
+        coachName={coachName}
+        library={library}
+      />
+    );
+  }
+
+  // ─── Editor (?modus=editor) ───────────────────────────────────────
   return (
     <TreningsplanPlanner
       weekOffset={weekOffset}
