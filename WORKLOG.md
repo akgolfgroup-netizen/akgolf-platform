@@ -81,7 +81,7 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
-**Coach-funksjoner — Fase A+B+C+D+E+F+G ferdig (7/8):**
+**Coach-funksjoner — Fase A–H ferdig (8/8) — KJERNEPAKKE LEVERT:**
 - Beslutninger fastsatt og lagret i `docs/status/COACH_FUNCTIONS_PLAN.md` (10 spørsmål → 10 beslutninger; 8 faser; ~60-94t totalt-estimat).
 - **Fase A ✅ — Coach-tilgjengelighet:**
   - **Kritisk bug-fix:** Eksisterende `tilgjengelighet/actions.ts` skrev til `AvailabilityWindow`-tabellen som IKKE finnes i DB. Booking-validering har alltid lest fra `InstructorAvailability` (39 rader). "Lagre arbeidstider" i CoachHQ gjorde derfor ingenting i prod. Byttet alle queries til `InstructorAvailability`.
@@ -142,7 +142,22 @@
   - **Admin-UI** i `components/admin/grupper/group-plan-panel.tsx`: liste med radio-knapp per mal (badges, beskrivelse, antall økter per uke), antall uker (1/4/8/12), startdato (default neste mandag), egen tittel-felt valgfritt. Knapp endrer tekst basert på om gruppen har aktiv plan ("Lag plan" / "Erstatt plan"). Integrert i `group-detail-modal.tsx` ved siden av `GroupSessionsPanel`.
   - **Distribusjon til medlemmer** håndteres av eksisterende `syncGroupPlanToMembers` (allerede ferdig fra tidligere — Fase H bygger videre på dette med per-trening RSVP).
   - Verifisert: lint + typecheck rene, /admin/grupper rendrer uten feil. Modal-flyt verifiseres i samlet røykprøve etter Fase H.
-- **Resterende:** Fase H (auto-sync gruppeplan → spiller med RSVP). ~6–10t igjen.
+- **Fase H ✅ — Per-trening RSVP for gruppe-økter:**
+  - **DB:** Ny migrasjon `20260427_add_group_session_rsvp` med modell `GroupSessionRSVP { sessionId, userId, occurrenceDate, status: "GOING"/"DECLINED"/"PENDING", respondedAt, note }`. Unique på `(sessionId, userId, occurrenceDate)` — én rad per spiller per forekomst. Default-status uten rad = GOING (forventet deltakelse).
+  - **Helper** `lib/booking-v2/group-rsvp.ts`:
+    - `getUpcomingGroupSessionsForUser(userId, from, to)` ekspanderer alle gruppe-økter spilleren er medlem i mot et datovindu, slår sammen med eksisterende RSVPs.
+    - `setGroupSessionRSVP({ userId, sessionId, occurrenceDate, status })` — upsert med medlems-validering.
+  - **Spiller-actions** i `app/portal/(dashboard)/treningsplan/group-rsvp-actions.ts`: `listMyUpcomingGroupSessions` (4 uker fram, serialisert for klient), `respondToGroupSession`.
+  - **UI-komponent** `components/portal/group-sessions/upcoming-group-sessions.tsx` — drop-in liste med "Ja takk" / "Nei"-knapper per økt. Avlyste forekomster vises grå/dimmet, declined-økter har soft-bg. Optimistic state-oppdatering ved klikk.
+  - Verifisert: lint + typecheck rene, /portal/treningsplan rendrer uten feil. UI-komponenten er ikke wired til en spesifikk side ennå — kan plasseres på dashboard, treningsplan eller dagbok i polish-runde.
+
+---
+
+**Status:** Coach-funksjons-pakken (Fase A–H) er KOMPLETT. Klar for samlet røykprøve og cutover.
+
+**Gjenstående utvidelser (egne faser):**
+- Fase I — Foreldre/foresatte til juniorspillere (avklart med Anders 2026-04-27): User-konto med ParentChildRelation, 2 foreldre per spiller, foreldre kan se barnets trening + turneringsplan + betalinger. Egen sesjon.
+- Cutover-røykprøve (4 brukerklasser) → `BOOKING_V2_ENABLED=true` i prod.
 
 ---
 
