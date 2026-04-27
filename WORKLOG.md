@@ -8,6 +8,64 @@
 
 ---
 
+## 2026-04-27 (kveld) — Handoff-bunt + Dashboard Bento (v1) bak feature-flag
+
+**Jobbet med:** Mottok komplett design-handoff fra Claude Design (96 HTML-skjermer
++ tokens.css + Brand Guide V2.0 PDF). Versjonerte hele bunten under
+`public/design-reference/handoff-2026-04-27/`. Anders valgte deretter dashboard-v1-bento
+som vinner blant 9 utforskninger. Bygd pixel-nær Next.js-implementasjon bak
+feature-flag (`?dashboard=bento` eller cookie `dashboard=bento`).
+
+**Handoff-import (commit 6233656 på main):**
+- 109 nye filer, 43 513 linjer (mest HTML/CSS-mockups)
+- Mappe: `public/design-reference/handoff-2026-04-27/{screens,assets,tokens.css,*.html}`
+- 22 PlayerHQ-skjermer (a1–a22), 30 CoachHQ-skjermer (d1–d30), 15 markedsside
+  (g1–g15), 9 dashboard-utforskninger, 7 mobile, 13 standalone (aicoach, dagbok,
+  runde, stats, trackman m.fl.)
+- README slettet ikke — `cp -R` beholdt struktur 1:1 fra Claude Design-eksport.
+
+**Dashboard Bento — feature/dashboard-bento:**
+- Ny client `app/portal/(dashboard)/dashboard-bento-client.tsx` (orchestrator)
+- 8 nye komponenter under `components/portal/dashboard-bento/`:
+  - `hero-card.tsx` — mørk gradient + animert lime-prikk + 4 hero-stats
+  - `next-session-card.tsx` — hvit kort, fokus-pill (lime), "Åpne økt"/"Flytt"
+  - `kpi-card.tsx` — gjenbrukbar (line/bars sparkline), accent-variant
+  - `sg-card.tsx` — Strokes Gained-barer med +/- visualisering rundt 0-linje
+  - `trend-card.tsx` — handicap 12-mnd SVG-graf med gradient + dot på siste punkt
+  - `ai-insight-card.tsx` — lilla AI-card med kilder, rec-bullets, fokus-pills
+  - `streak-card.tsx` — mørk gradient med streak-prikker (siste 14 dager)
+  - `shortcuts-row.tsx` — 6 hurtighandlinger med lucide-ikoner
+- Feature-flag i `app/portal/(dashboard)/page.tsx`: `?dashboard=bento` eller
+  cookie. Default = `DashboardClientV3` (uendret), så ingen risiko for prod.
+- All data hentes fra eksisterende `dashboard-actions.ts` — ingen DB-endringer.
+
+**Tom-states:**
+- Ingen booking → "Bestill økt"-CTA
+- Ingen SG-data → "Logg runder for å se SG"
+- Ingen handicap-historikk → tekstfallback
+- Ingen AI-insight → onboarding-tekst
+
+**Verifikasjon:**
+- `npx tsc --noEmit` = 0 feil i bento-koden (de 2 pre-eksisterende `PARENT`-rolle-
+  feilene i team-client.tsx er urørt)
+- Preview på `/portal?dashboard=bento` rendrer alle 11 kort med riktige tom-states
+- Ingen runtime-feil
+
+**Filer endret:**
+- `app/portal/(dashboard)/page.tsx` (feature-flag-wiring)
+- `app/portal/(dashboard)/dashboard-bento-client.tsx` (ny)
+- `components/portal/dashboard-bento/{hero,next-session,kpi,sg,trend,ai-insight,streak,shortcuts}-{card,row}.tsx` (8 nye)
+
+**Neste steg:**
+- Anders verifiserer i Chrome via `https://akgolf.no/portal?dashboard=bento`
+  (etter deploy) eller localhost
+- Hvis OK: bytt default-client i page.tsx (fjern feature-flag)
+- Registrer 8 nye komponenter i `.claude/rules/component-library.md`
+- Re-skin de andre PlayerHQ-skjermene (a1–a4, a7–a9) med samme bento-mønster
+- Vurdere om CoachHQ-utforskningene (e1–e3) skal bygges parallelt
+
+---
+
 ## 2026-04-27 (sent kveld) — TS-rydding + audit-løgner ferdig (41 → 0 feil)
 
 **Jobbet med:** Etter PR #13-merge (treningsplan symmetri/forslag/AK-pyramide) krasjet `/portal/treningsplan` to ganger. Fikset begge, deretter ryddet alle resterende TS-feil i hele kodebasen og fjernet 6 av 8 funksjonelle løgner identifisert i forrige audit. 5 nye commits, fra `npx tsc --noEmit` = 41 feil til 0.

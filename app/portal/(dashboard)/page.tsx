@@ -37,9 +37,19 @@ import {
   getTestProgress,
 } from "./dashboard-actions";
 import { DashboardClientV3 } from "./dashboard-client-v3";
+import { DashboardBentoClient } from "./dashboard-bento-client";
+import { cookies } from "next/headers";
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ dashboard?: string }>;
+}) {
   const user = await requirePortalUser();
+  const sp = (await searchParams) ?? {};
+  const cookieStore = await cookies();
+  const wantsBento =
+    sp.dashboard === "bento" || cookieStore.get("dashboard")?.value === "bento";
 
   // Check if onboarding is completed
   const supabase = await createServerSupabase();
@@ -88,8 +98,10 @@ export default async function DashboardPage() {
     ? new Date(userData.createdAt as string).getFullYear().toString()
     : null;
 
+  const Client = wantsBento ? DashboardBentoClient : DashboardClientV3;
+
   return (
-    <DashboardClientV3
+    <Client
       userName={user.name}
       tier={user.subscriptionTier}
       memberSince={memberSince}
