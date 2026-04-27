@@ -1,8 +1,15 @@
+import { redirect } from "next/navigation";
 import { Stepper } from "@/components/booking-v2/Stepper";
 import { Calendar } from "@/components/booking-v2/Calendar";
 import { SlotPicker } from "@/components/booking-v2/SlotPicker";
 import { SummaryFooter } from "@/components/booking-v2/SummaryFooter";
 import { SERVICES, TRAINERS } from "@/components/booking-v2/copy";
+import {
+  getBookingV2Service,
+  getBookingV2Instructor,
+} from "@/lib/booking-v2/services";
+import { getQuotaSnapshot, isQuotaExhausted } from "@/lib/booking-v2/quota-gate";
+import { getPortalUser } from "@/lib/portal/auth";
 import { getAvailableSlots } from "../actions";
 
 interface PageProps {
@@ -10,27 +17,108 @@ interface PageProps {
     service?: string;
     trainer?: string;
     date?: string;
+    time?: string;
     serviceTypeId?: string;
     instructorId?: string;
   }>;
 }
 
+const MONTHS_NB_SHORT = [
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "mai",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "okt",
+  "nov",
+  "des",
+];
+const DOWS_NB_LONG = [
+  "Søndag",
+  "Mandag",
+  "Tirsdag",
+  "Onsdag",
+  "Torsdag",
+  "Fredag",
+  "Lørdag",
+];
+
+function isoToday(): string {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function formatDayLabel(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
+  const dow = DOWS_NB_LONG[date.getDay()];
+  const monthShort = MONTHS_NB_SHORT[m - 1];
+  return `${dow} ${d}. ${monthShort}`;
+}
+
+function formatTimeLabel(iso: string, time: string | undefined): string {
+  if (!time) return "Velg tid";
+  const [, m, d] = iso.split("-").map(Number);
+  const monthShort = MONTHS_NB_SHORT[m - 1];
+  return `${d}. ${monthShort} · ${time}`;
+}
+
 export default async function TidPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const serviceId = params.service ?? "performance";
-  const trainerId = params.trainer ?? "anders";
-  const dateParam = params.date ?? "2026-04-28";
 
-  const service = SERVICES.find((s) => s.id === serviceId);
-  const trainer = TRAINERS.find((t) => t.id === trainerId);
+  // Slug-baserte fallbacks for visning (gjelder helt til velg-tjeneste/velg-trener er DB-koblet).
+  const serviceSlug = params.service ?? "performance";
+  const trainerSlug = params.trainer ?? "anders";
+  const sluggedService = SERVICES.find((s) => s.id === serviceSlug);
+  const sluggedTrainer = TRAINERS.find((t) => t.id === trainerSlug);
+
+  // DB-baserte oppslag for ekte data (når serviceTypeId/instructorId er satt).
+  const dbService = params.serviceTypeId
+    ? await getBookingV2Service(params.serviceTypeId)
+    : null;
+  const dbInstructor = params.instructorId
+    ? await getBookingV2Instructor(params.instructorId)
+    : null;
+
+  // Kvota-gate: innloggede abonnement-brukere uten ledige økter sendes til kvota-siden.
+  const isSubscriptionService =
+    dbService?.category === "abonnement" || sluggedService?.category === "abonnement";
+  if (isSubscriptionService) {
+    const portalUser = await getPortalUser();
+    if (portalUser) {
+      const snap = await getQuotaSnapshot(portalUser.id);
+      if (snap && isQuotaExhausted(snap)) {
+        redirect("/booking-v2/kvota");
+      }
+    }
+  }
+
+  const serviceName = dbService?.name ?? sluggedService?.name ?? "";
+  const serviceNameEm = sluggedService?.nameEm ?? "";
+  const servicePriceLabel =
+    dbService?.priceLabel ??
+    `${sluggedService?.price ?? ""}${sluggedService?.priceUnit ?? ""}`;
+  const trainerName = dbInstructor?.name ?? sluggedTrainer?.name ?? "Begge";
+  const maxAdvanceDays =
+    dbService?.maxAdvanceDays ?? sluggedService?.maxAdvanceDays ?? 28;
 
   const advanceText =
-    service?.maxAdvanceDays === 28
+    maxAdvanceDays >= 28
       ? "Performance-abonnement kan booke 4 uker frem."
       : "Flex-tjenester kan bookes 3 uker frem.";
 
-  // Hvis URL-en inneholder ekte ServiceType.id (cuid) — hent ekte slots med smart packing.
-  // Ellers: SlotPicker faller tilbake til placeholder-data.
+  // Default dato = i dag. Brukeren må aktivt klikke en dag for å velge.
+  const dateParam = params.date ?? isoToday();
+  const timeParam = params.time;
+
+  // Hent slots kun når vi har ekte serviceTypeId. Ellers viser SlotPicker placeholder.
   let realSlots: string[] = [];
   if (params.serviceTypeId) {
     try {
@@ -40,16 +128,22 @@ export default async function TidPage({ searchParams }: PageProps) {
         date: dateParam,
       });
     } catch {
-      // Stille feil — placeholder-data overtar i SlotPicker
       realSlots = [];
     }
   }
 
-  const next = new URLSearchParams();
-  next.set("service", serviceId);
-  next.set("trainer", trainerId);
-  next.set("date", dateParam);
-  next.set("time", "14:30");
+  // Beholder slug-baserte params i back/next-href til wizard-state-cookien er på plass (Steg 3).
+  const carryOver = new URLSearchParams();
+  carryOver.set("service", serviceSlug);
+  carryOver.set("trainer", trainerSlug);
+  if (params.serviceTypeId) carryOver.set("serviceTypeId", params.serviceTypeId);
+  if (params.instructorId) carryOver.set("instructorId", params.instructorId);
+  carryOver.set("date", dateParam);
+  if (timeParam) carryOver.set("time", timeParam);
+
+  const backParams = new URLSearchParams();
+  backParams.set("service", serviceSlug);
+  if (params.serviceTypeId) backParams.set("serviceTypeId", params.serviceTypeId);
 
   return (
     <>
@@ -62,21 +156,34 @@ export default async function TidPage({ searchParams }: PageProps) {
         <h1 className="t-section">
           Når <em>passer</em> det?
         </h1>
-        <p className="lede">Tider vises i din lokale tidssone (Europe/Oslo). {advanceText}</p>
+        <p className="lede">
+          Tider vises i din lokale tidssone (Europe/Oslo). {advanceText}
+        </p>
 
         <div className="dt-grid">
-          <Calendar />
-          <SlotPicker slots={realSlots.length > 0 ? realSlots : undefined} />
+          <Calendar
+            selectedDate={dateParam}
+            maxAdvanceDays={maxAdvanceDays}
+          />
+          <SlotPicker
+            slots={realSlots.length > 0 ? realSlots : undefined}
+            selectedTime={timeParam}
+            dayLabel={formatDayLabel(dateParam)}
+          />
         </div>
 
         <SummaryFooter
-          backHref={`/booking-v2/velg-trener?service=${serviceId}`}
-          nextHref={`/booking-v2/dine-detaljer?${next.toString()}`}
+          backHref={`/booking-v2/velg-trener?${backParams.toString()}`}
+          nextHref={`/booking-v2/dine-detaljer?${carryOver.toString()}`}
+          nextDisabled={!timeParam}
           items={[
-            { label: "Tjeneste", value: `${service?.name ?? ""}${service?.nameEm ? " " + service.nameEm : ""}` },
-            { label: "Trener", value: trainer?.name ?? "Begge" },
-            { label: "Tid", value: "28. apr · 14:30" },
-            { label: "Pris", value: `${service?.price ?? ""}${service?.priceUnit ?? ""}` },
+            {
+              label: "Tjeneste",
+              value: `${serviceName}${serviceNameEm ? " " + serviceNameEm : ""}`,
+            },
+            { label: "Trener", value: trainerName },
+            { label: "Tid", value: formatTimeLabel(dateParam, timeParam) },
+            { label: "Pris", value: servicePriceLabel },
           ]}
         />
       </section>

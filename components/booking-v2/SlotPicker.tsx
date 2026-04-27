@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 interface Slot {
   time: string;
@@ -51,9 +51,10 @@ const PLACEHOLDER_SLOTS: { iso: string; time: string }[] = [
 interface SlotPickerProps {
   /** ISO-strings fra getAvailableSlots(). Hvis tom — viser placeholder. */
   slots?: string[];
-  initialTime?: string;
+  /** Valgt tid (HH:mm) fra URL. */
+  selectedTime?: string;
+  /** Beskrivelse av valgt dag, f.eks. "Tirsdag 28. apr". */
   dayLabel?: string;
-  onChange?: (time: string) => void;
 }
 
 function groupByPeriod(slots: { iso: string; time: string }[]) {
@@ -71,11 +72,12 @@ function groupByPeriod(slots: { iso: string; time: string }[]) {
 
 export function SlotPicker({
   slots,
-  initialTime,
-  dayLabel = "Tirsdag 28. apr",
-  onChange,
+  selectedTime,
+  dayLabel = "Velg dag",
 }: SlotPickerProps) {
-  const [selected, setSelected] = useState<string | null>(initialTime ?? null);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // Konverter ISO-strings til { iso, time } eller bruk placeholder
   const normalized: { iso: string; time: string }[] =
@@ -90,18 +92,21 @@ export function SlotPicker({
 
   const { morning, afternoon, evening } = groupByPeriod(normalized);
   const total = normalized.length;
+  const selected = selectedTime ?? null;
 
   function pick(t: string) {
-    setSelected(t);
-    onChange?.(t);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("time", t);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
   if (total === 0) {
+    const [first, ...rest] = dayLabel.split(" ");
     return (
       <div>
         <div className="slots-head">
           <div className="day">
-            <em>{dayLabel.split(" ")[0]}</em> {dayLabel.split(" ").slice(1).join(" ")}
+            <em>{first}</em> {rest.join(" ")}
           </div>
           <div className="meta">Ingen ledige</div>
         </div>

@@ -11,6 +11,8 @@ interface SummaryFooterProps {
   nextHref: string;
   nextLabel?: string;
   nextVariant?: "primary" | "accent";
+  /** Hvis true: render "Fortsett" som disabled button, ikke Link. */
+  nextDisabled?: boolean;
 }
 
 export function SummaryFooter({
@@ -19,6 +21,7 @@ export function SummaryFooter({
   nextHref,
   nextLabel = "Fortsett",
   nextVariant = "primary",
+  nextDisabled = false,
 }: SummaryFooterProps) {
   return (
     <div className="summary-foot">
@@ -34,9 +37,20 @@ export function SummaryFooter({
         <Link href={backHref} className="btn btn-secondary">
           ← Tilbake
         </Link>
-        <Link href={nextHref} className={`btn btn-${nextVariant}`}>
-          {nextLabel} →
-        </Link>
+        {nextDisabled ? (
+          <button
+            type="button"
+            disabled
+            className={`btn btn-${nextVariant}`}
+            aria-disabled="true"
+          >
+            {nextLabel} →
+          </button>
+        ) : (
+          <Link href={nextHref} className={`btn btn-${nextVariant}`}>
+            {nextLabel} →
+          </Link>
+        )}
       </div>
     </div>
   );
