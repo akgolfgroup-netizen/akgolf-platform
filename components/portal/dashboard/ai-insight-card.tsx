@@ -39,7 +39,7 @@ export function AiInsightCard({
             style={{ color: colors.ai.primary }}
           >
             <Icon name="auto_awesome" className="h-3 w-3" />
-            AI-innsikt
+            Anbefalt
           </div>
           <p className="line-clamp-3 text-sm font-semibold" style={{ color: colors.primary.dark }}>
             {summary}

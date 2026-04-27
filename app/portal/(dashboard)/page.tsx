@@ -5,11 +5,11 @@ import { createServerSupabase } from "@/lib/supabase/server";
 export const metadata: Metadata = {
   title: "Dashboard | PlayersHQ",
   description:
-    "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
+    "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
   openGraph: {
     title: "Dashboard | PlayersHQ",
     description:
-      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
+      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
     type: "website",
     locale: "nb_NO",
   },
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Dashboard | PlayersHQ",
     description:
-      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og AI-innsikter.",
+      "Din personlige golf-dashboard. Se progresjon, kommende bookinger og anbefalinger.",
   },
 };
 import {
