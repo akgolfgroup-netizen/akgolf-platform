@@ -1,5 +1,7 @@
-import { UnderConstruction } from "@/components/admin/under-construction";
+import { BookingerClient } from "@/components/admin/bookinger/bookinger-client";
+
+export const metadata = { title: "Bookinger · CoachHQ" };
 
 export default function BookingerPage() {
-  return <UnderConstruction title="Bookinger" />;
+  return <BookingerClient />;
 }

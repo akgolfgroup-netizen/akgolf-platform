@@ -1,5 +1,7 @@
-import { UnderConstruction } from "@/components/admin/under-construction";
+import { NyBookingClient } from "@/components/admin/bookinger/ny-booking-client";
+
+export const metadata = { title: "Ny booking · CoachHQ" };
 
 export default function NyBookingPage() {
-  return <UnderConstruction title="Ny booking" />;
+  return <NyBookingClient />;
 }

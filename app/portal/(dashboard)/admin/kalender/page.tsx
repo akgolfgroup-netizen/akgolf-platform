@@ -1,5 +1,7 @@
-import { UnderConstruction } from "@/components/admin/under-construction";
+import { KalenderClient } from "@/components/admin/kalender/kalender-client";
+
+export const metadata = { title: "Kalender · CoachHQ" };
 
 export default function KalenderPage() {
-  return <UnderConstruction title="Kalender" />;
+  return <KalenderClient />;
 }
