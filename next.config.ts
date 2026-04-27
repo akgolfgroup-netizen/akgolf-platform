@@ -26,7 +26,15 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/(.*)",
+        // Design-reference: ingen X-Frame-Options (statiske mockups, kun for preview)
+        source: "/design-reference/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+        ],
+      },
+      {
+        // Alt annet: DENY iframes (ekskluderer design-reference via negative lookahead)
+        source: "/((?!design-reference).*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "DENY" },

@@ -7,6 +7,27 @@
 
 ---
 
+## ⚠ TERMINOLOGI-LÅS (2026-04-27)
+
+**Spiller, aldri elev.**
+
+Brukervendt tekst i AK Golf Platform skal alltid bruke **spiller** — aldri "elev" eller "student". Dette gjelder UI, e-poster, varsler, dokumenter, mockups og markedsmateriell.
+
+| Forbudt | Bruk i stedet |
+|---|---|
+| Elev | Spiller |
+| Elever | Spillere |
+| Min elevliste | Spillere (sidebar) / Mine spillere |
+| Elevprofil | Spillerprofil |
+| Elev-data | Spiller-data |
+| Student | Spiller |
+
+Begrunnelse: AK Golf har spillere som vi coacher — ikke elever. Spiller er det riktige ordet for relasjon mellom coach og utøver i golf.
+
+**Unntak:** Tekniske felt i kode (DB-relasjoner, variabler) kan beholde "user" eller liknende. Det er kun **brukervendt tekst** som er låst.
+
+---
+
 ## 1. UNNTAKENE — disse beholdes på engelsk / som fagord
 
 Disse er etablerte i golfverdenen eller AK Golfs interne språk og **skal ikke oversettes**:
