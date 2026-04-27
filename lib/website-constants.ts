@@ -60,8 +60,8 @@ export const TEAM = [
     image: "/images/team/anders-kristiansen.jpg",
     bio: "15 års erfaring med spillerutvikling fra nybegynner til PGA Tour. Utvikler av coaching-systemet og PlayersHQ. Jobber med spillere som vil ha individuell teknisk veiledning og langsiktig utvikling.",
     prices: [
-      { name: "Performance", price: "1 400", unit: "kr/mnd", detail: "2x20 min" },
-      { name: "Performance Pro", price: "2 500", unit: "kr/mnd", detail: "4x20 min" },
+      { name: "Performance", price: "1 200", unit: "kr/mnd", detail: "2x20 min" },
+      { name: "Performance Pro", price: "2 200", unit: "kr/mnd", detail: "4x20 min" },
       { name: "Enkeltsesjon 50 min", price: "1 500", unit: "kr" },
       { name: "Banecoaching 9 hull", price: "3 000", unit: "kr/spiller" },
     ],
@@ -74,8 +74,7 @@ export const TEAM = [
     image: null,
     bio: "College-golf fra USA. Ansvarlig for VTG-kurs, gruppetreninger og juniorer. Sikrer at du lærer riktige grunnprinsipper fra starten.",
     prices: [
-      { name: "Performance", price: "800", unit: "kr/mnd", detail: "2x20 min" },
-      { name: "Performance Pro", price: "1 400", unit: "kr/mnd", detail: "4x20 min" },
+      { name: "Performance", price: "1 000", unit: "kr/mnd", detail: "2x20 min" },
       { name: "Enkeltsesjon 50 min", price: "800", unit: "kr" },
       { name: "Drop-in 20 min", price: "300", unit: "kr" },
       { name: "Korthullsbane-økt", price: "TBD", unit: "", detail: "4 spillere" },
@@ -134,7 +133,7 @@ export const COACHING_PACKAGES = [
   {
     name: "Performance",
     coach: "Anders",
-    price: "1 400",
+    price: "1 200",
     period: "kr/mnd",
     tagline: "For deg som ønsker struktur og jevnlig oppfølging.",
     description: "2 x 20 min 1-til-1 coaching per måned. TrackMan og videoanalyse. Full portaltilgang og treningsplan.",
@@ -158,7 +157,7 @@ export const COACHING_PACKAGES = [
   {
     name: "Performance Pro",
     coach: "Anders",
-    price: "2 500",
+    price: "2 200",
     period: "kr/mnd",
     tagline: "For den ambisiøse som vil ha raskere fremgang.",
     description: "4 x 20 min 1-til-1 coaching per måned. TrackMan og videoanalyse. Full portaltilgang og treningsplan.",
@@ -182,9 +181,9 @@ export const COACHING_PACKAGES = [
   {
     name: "Performance",
     coach: "Markus",
-    price: "800",
+    price: "1 000",
     period: "kr/mnd",
-    tagline: "For deg som ønsker struktur med Markus.",
+    tagline: "Klubbcoaching med Markus.",
     description: "2 x 20 min 1-til-1 coaching per måned med Markus. Full portaltilgang og treningsplan.",
     whoIsItFor: "For deg som ønsker struktur med Markus.",
     features: [
