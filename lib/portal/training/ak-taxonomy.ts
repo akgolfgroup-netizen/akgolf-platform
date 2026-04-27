@@ -33,18 +33,22 @@ export type PyramideCode = (typeof PYRAMIDE)[number]["code"];
 export interface Treningsomraade {
   code: string;
   label: string;
-  gruppe: "fullSwing" | "narspill" | "putting";
+  gruppe: "tee" | "innspill" | "narspill" | "putting";
   csRelevant: boolean;
   pSystem: boolean;
 }
 
+// Rekkefølge: Tee Total → Innspill → Nærspill → Putting
+// Tee og Innspill er begge full swing, men splittet i to grupper for
+// klarere navigasjon i UI. "fullSwing" som samlegruppe er fjernet.
 export const TRENINGSOMRADER: readonly Treningsomraade[] = [
-  // Full swing
-  { code: "TEE", label: "Tee Total", gruppe: "fullSwing", csRelevant: true, pSystem: true },
-  { code: "INN200", label: "Innspill 200+ m", gruppe: "fullSwing", csRelevant: true, pSystem: true },
-  { code: "INN150", label: "Innspill 150–200 m", gruppe: "fullSwing", csRelevant: true, pSystem: true },
-  { code: "INN100", label: "Innspill 100–150 m", gruppe: "fullSwing", csRelevant: true, pSystem: true },
-  { code: "INN50", label: "Innspill 50–100 m", gruppe: "fullSwing", csRelevant: true, pSystem: true },
+  // Tee
+  { code: "TEE", label: "Tee Total", gruppe: "tee", csRelevant: true, pSystem: true },
+  // Innspill (full swing fra ulik avstand)
+  { code: "INN200", label: "Innspill 200+ m", gruppe: "innspill", csRelevant: true, pSystem: true },
+  { code: "INN150", label: "Innspill 150–200 m", gruppe: "innspill", csRelevant: true, pSystem: true },
+  { code: "INN100", label: "Innspill 100–150 m", gruppe: "innspill", csRelevant: true, pSystem: true },
+  { code: "INN50", label: "Innspill 50–100 m", gruppe: "innspill", csRelevant: true, pSystem: true },
   // Nærspill
   { code: "CHIP", label: "Chip", gruppe: "narspill", csRelevant: false, pSystem: true },
   { code: "PITCH", label: "Pitch", gruppe: "narspill", csRelevant: false, pSystem: true },
@@ -63,7 +67,8 @@ export const TRENINGSOMRADER: readonly Treningsomraade[] = [
 export type TreningsomraadeCode = (typeof TRENINGSOMRADER)[number]["code"];
 
 export const OMRADE_GRUPPER = [
-  { code: "fullSwing", label: "Full sving" },
+  { code: "tee", label: "Tee Total" },
+  { code: "innspill", label: "Innspill" },
   { code: "narspill", label: "Nærspill" },
   { code: "putting", label: "Putting" },
 ] as const;

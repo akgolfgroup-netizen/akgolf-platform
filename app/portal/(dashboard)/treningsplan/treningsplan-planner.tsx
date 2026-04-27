@@ -26,6 +26,7 @@ import {
 import {
   searchExercises,
   createUserExercise,
+  toggleFavoriteExercise,
   type ExerciseSearchResult,
 } from "@/lib/portal/training/exercise-actions";
 import {
@@ -1139,7 +1140,7 @@ function CreateSessionModal({
             >
               <option value="">Ingen valgt</option>
               {OMRADE_GRUPPER.map((gruppe) => (
-                <optgroup key={gruppe.code} label={gruppe.code === "narspill" ? "Kort spill" : gruppe.label}>
+                <optgroup key={gruppe.code} label={gruppe.label}>
                   {TRENINGSOMRADER.filter((o) => o.gruppe === gruppe.code).map((o) => (
                     <option key={o.code} value={o.code}>
                       {o.label}
@@ -1424,7 +1425,7 @@ function EditSessionModal({
             >
               <option value="">Ingen valgt</option>
               {OMRADE_GRUPPER.map((gruppe) => (
-                <optgroup key={gruppe.code} label={gruppe.code === "narspill" ? "Kort spill" : gruppe.label}>
+                <optgroup key={gruppe.code} label={gruppe.label}>
                   {TRENINGSOMRADER.filter((o) => o.gruppe === gruppe.code).map((o) => (
                     <option key={o.code} value={o.code}>
                       {o.label}
@@ -1594,6 +1595,7 @@ function ExercisesPlaceholder() {
   const [lFase, setLFase] = useState<string | null>(null);
   const [life, setLife] = useState<string | null>(null);
   const [sok, setSok] = useState("");
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [results, setResults] = useState<ExerciseSearchResult[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -1618,10 +1620,30 @@ function ExercisesPlaceholder() {
     setLFase(null);
     setLife(null);
     setSok("");
+    setFavoritesOnly(false);
   };
 
   const hasFilters =
-    pyramide || omraadeGruppe || omraadeCode || lFase || life || sok;
+    pyramide || omraadeGruppe || omraadeCode || lFase || life || sok || favoritesOnly;
+
+  const handleToggleFavorite = async (exerciseId: string) => {
+    // Optimistisk oppdatering
+    setResults((prev) =>
+      prev.map((r) =>
+        r.id === exerciseId ? { ...r, isFavorite: !r.isFavorite } : r
+      )
+    );
+    try {
+      await toggleFavoriteExercise(exerciseId);
+    } catch {
+      // Rull tilbake hvis serveren feiler
+      setResults((prev) =>
+        prev.map((r) =>
+          r.id === exerciseId ? { ...r, isFavorite: !r.isFavorite } : r
+        )
+      );
+    }
+  };
 
   const doSearch = async () => {
     setLoading(true);
@@ -1632,6 +1654,7 @@ function ExercisesPlaceholder() {
         area: omraadeCode ?? undefined,
         lPhase: lFase ?? undefined,
         lifeCode: life ?? undefined,
+        onlyFavorites: favoritesOnly || undefined,
         limit: 30,
       });
       setResults(data);
@@ -1654,6 +1677,7 @@ function ExercisesPlaceholder() {
           area: omraadeCode ?? undefined,
           lPhase: lFase ?? undefined,
           lifeCode: life ?? undefined,
+          onlyFavorites: favoritesOnly || undefined,
           limit: 30,
         });
         if (!cancelled) setResults(data);
@@ -1667,7 +1691,7 @@ function ExercisesPlaceholder() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [sok, pyramide, omraadeCode, lFase, life]);
+  }, [sok, pyramide, omraadeCode, lFase, life, favoritesOnly]);
 
   const handleCreateExercise = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1718,6 +1742,32 @@ function ExercisesPlaceholder() {
         )}
       </div>
 
+      {/* Favoritt-filter — vis kun lagrede favoritter */}
+      <button
+        type="button"
+        onClick={() => setFavoritesOnly((v) => !v)}
+        className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 transition-colors ${
+          favoritesOnly
+            ? "border-secondary-fixed bg-secondary-fixed/15 text-primary"
+            : "border-outline-variant/30 bg-surface text-on-surface-variant hover:bg-surface-container"
+        }`}
+      >
+        <span className="flex items-center gap-2">
+          <Icon
+            name="star"
+            filled={favoritesOnly}
+            size={14}
+            className={favoritesOnly ? "text-secondary-fixed-dim" : "text-on-surface-variant"}
+          />
+          <span className="text-[11px] font-bold uppercase tracking-wide">
+            Mine favoritter
+          </span>
+        </span>
+        <span className="font-mono text-[10px] text-on-surface-variant">
+          {favoritesOnly ? "Vises" : "Skjult"}
+        </span>
+      </button>
+
       {/* Type trening (Pyramide) */}
       <FilterSection label="Type">
         <div className="flex flex-wrap gap-1">
@@ -1746,7 +1796,6 @@ function ExercisesPlaceholder() {
         <div className="flex flex-wrap gap-1">
           {OMRADE_GRUPPER.map((g) => {
             const active = omraadeGruppe === g.code;
-            const visningsLabel = g.code === "narspill" ? "Kort spill" : g.label;
             return (
               <button
                 key={g.code}
@@ -1765,7 +1814,7 @@ function ExercisesPlaceholder() {
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
                 }`}
               >
-                {visningsLabel}
+                {g.label}
               </button>
             );
           })}
@@ -1841,7 +1890,12 @@ function ExercisesPlaceholder() {
       </FilterSection>
 
       {/* Resultater */}
-      <ExerciseList results={results} loading={loading} hasFilters={Boolean(hasFilters)} />
+      <ExerciseList
+        results={results}
+        loading={loading}
+        hasFilters={Boolean(hasFilters)}
+        onToggleFavorite={handleToggleFavorite}
+      />
 
       {/* X-6: Opprett egen øvelse */}
       {!showCreateForm ? (
@@ -1978,10 +2032,12 @@ function ExerciseList({
   results,
   loading,
   hasFilters,
+  onToggleFavorite,
 }: {
   results: ExerciseSearchResult[];
   loading: boolean;
   hasFilters: boolean;
+  onToggleFavorite?: (exerciseId: string) => void;
 }) {
   if (loading) {
     return (
@@ -2022,13 +2078,23 @@ function ExerciseList({
         {results.length} treff
       </p>
       {results.map((r) => (
-        <ExerciseCard key={r.id} exercise={r} />
+        <ExerciseCard
+          key={r.id}
+          exercise={r}
+          onToggleFavorite={onToggleFavorite}
+        />
       ))}
     </div>
   );
 }
 
-function ExerciseCard({ exercise }: { exercise: ExerciseSearchResult }) {
+function ExerciseCard({
+  exercise,
+  onToggleFavorite,
+}: {
+  exercise: ExerciseSearchResult;
+  onToggleFavorite?: (exerciseId: string) => void;
+}) {
   const durationLabel =
     exercise.minDurationMinutes === exercise.maxDurationMinutes
       ? `${exercise.minDurationMinutes}m`
@@ -2058,9 +2124,27 @@ function ExerciseCard({ exercise }: { exercise: ExerciseSearchResult }) {
         <p className="flex-1 text-xs font-bold text-primary leading-tight">
           {exercise.name}
         </p>
-        {exercise.isFavorite && (
-          <Icon name="star" filled size={12} className="text-secondary-fixed-dim flex-shrink-0" />
-        )}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            onToggleFavorite?.(exercise.id);
+          }}
+          className="flex-shrink-0 rounded p-0.5 transition-colors hover:bg-secondary-fixed/20"
+          title={exercise.isFavorite ? "Fjern fra favoritter" : "Lagre som favoritt"}
+        >
+          <Icon
+            name="star"
+            filled={exercise.isFavorite}
+            size={14}
+            className={
+              exercise.isFavorite
+                ? "text-secondary-fixed-dim"
+                : "text-on-surface-variant/40 hover:text-secondary-fixed-dim"
+            }
+          />
+        </button>
       </div>
       <div className="mt-1.5 flex flex-wrap items-center gap-1">
         <span className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-tight text-primary">
