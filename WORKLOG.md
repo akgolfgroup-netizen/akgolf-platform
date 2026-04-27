@@ -81,7 +81,7 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
-**Coach-funksjoner — Fase A+B+C ferdig (3/8):**
+**Coach-funksjoner — Fase A+B+C+D ferdig (4/8):**
 - Beslutninger fastsatt og lagret i `docs/status/COACH_FUNCTIONS_PLAN.md` (10 spørsmål → 10 beslutninger; 8 faser; ~60-94t totalt-estimat).
 - **Fase A ✅ — Coach-tilgjengelighet:**
   - **Kritisk bug-fix:** Eksisterende `tilgjengelighet/actions.ts` skrev til `AvailabilityWindow`-tabellen som IKKE finnes i DB. Booking-validering har alltid lest fra `InstructorAvailability` (39 rader). "Lagre arbeidstider" i CoachHQ gjorde derfor ingenting i prod. Byttet alle queries til `InstructorAvailability`.
@@ -105,7 +105,17 @@
   - **Backfill-script** i `scripts/backfill-stripe-services.ts`: kjøres ÉN gang i prod etter ekte STRIPE_SECRET_KEY er satt. Looper alle ServiceType uten stripePriceId, oppretter Stripe-produkter, lagrer ID-er.
   - Verifisert: lint + typecheck rene. /admin/tjenester rendrer 26 tjenester, 2 recurring, 26 "Ikke i Stripe" (forventet — backfill ikke kjørt i dev pga `sk_test_xxx` placeholder).
   - **ENV-krav før prod:** Ekte `STRIPE_SECRET_KEY` i Vercel + kjør backfill-script én gang.
-- **Resterende:** Fase D (wizard-ombygging), E (manuell booking), F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~32–58t igjen.
+- **Fase D ✅ — Wizard-ombygging (Lokasjon-først):**
+  - Ny rekkefølge: `Lokasjon → Trener → Tjeneste → Tid → Detaljer → Betal → Bekreftelse`. Brukeren velger nå klubb/anlegg FØRST, og påfølgende valg filtreres deretter.
+  - **Ny side** `app/booking-v2/lokasjon/page.tsx` (steg 01) henter `getBookingV2Locations()` (lokasjoner med minst én aktiv coach) og rendrer som klikkbar liste.
+  - **Stepper-rekkefølge** i `components/booking-v2/copy.ts` oppdatert: 01 Lokasjon, 02 Trener, 03 Tjeneste, 04 Tid, 05 Detaljer, 06 Betaling, 07 Bekreftelse.
+  - **velg-trener** (steg 02) krever `?locationId` (redirecter til /lokasjon hvis mangler). Bruker `getBookingV2InstructorsAtLocation` for å filtrere på koblede coacher.
+  - **velg-tjeneste** (steg 03) krever `?locationId&instructorId`. Bruker `getBookingV2ServicesAtLocation` for å vise kun tjenester aktivert for `(coach × lokasjon)`.
+  - **tid** (steg 04) videreforer `locationId` i alle URL-params + tilbake-href peker nå til /velg-tjeneste (ikke velg-trener).
+  - **BookingDraft** utvidet med `locationId?: string`. Validering oppdatert. `submitDetails` leser hidden input `locationId` og lagrer i draft. `DetailsForm` har nytt hidden field for `locationId`. dine-detaljer/page.tsx leser/videreforer locationId.
+  - **/booking-v2** (landing) oppdatert: cta peker til /lokasjon, slug-baserte snarveier (Performance/Flex 50 etc.) erstattet med "Slik fungerer det" 5-stegs forklaring. Quick-rows fjernet siden de hopper over lokasjon-valg.
+  - Verifisert ende-til-ende i preview: /lokasjon viser GFGK → /velg-trener?locationId=gfgk-main viser Anders + Markus → /velg-tjeneste?locationId&instructorId viser 12 Anders-tjenester → /tid carry-over inkluderer locationId, back-href til velg-tjeneste, next-href til dine-detaljer med alle params.
+- **Resterende:** Fase E (manuell booking), F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~28–52t igjen.
 
 ---
 

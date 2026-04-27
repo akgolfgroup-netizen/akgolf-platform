@@ -6,6 +6,7 @@ import { submitDetails } from "@/app/booking-v2/actions";
 export interface DetailsFormHidden {
   serviceTypeId?: string;
   instructorId?: string;
+  locationId?: string;
   service: string;
   trainer: string;
   date: string;
@@ -69,6 +70,9 @@ export function DetailsForm({ hidden, prefill, error }: DetailsFormProps) {
           ) : null}
           {hidden.instructorId ? (
             <input type="hidden" name="instructorId" value={hidden.instructorId} />
+          ) : null}
+          {hidden.locationId ? (
+            <input type="hidden" name="locationId" value={hidden.locationId} />
           ) : null}
           <input type="hidden" name="service" value={hidden.service} />
           <input type="hidden" name="trainer" value={hidden.trainer} />

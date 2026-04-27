@@ -17,6 +17,7 @@ interface PageProps {
     time?: string;
     serviceTypeId?: string;
     instructorId?: string;
+    locationId?: string;
     error?: string;
   }>;
 }
@@ -90,6 +91,7 @@ export default async function DineDetaljerPage({ searchParams }: PageProps) {
   const time = params.time ?? draft?.time ?? "";
   const serviceTypeId = params.serviceTypeId ?? draft?.serviceTypeId;
   const instructorId = params.instructorId ?? draft?.instructorId;
+  const locationId = params.locationId ?? draft?.locationId;
 
   const serviceName = dbService?.name ?? sluggedService?.name ?? "";
   const serviceNameEm = sluggedService?.nameEm ?? "";
@@ -114,6 +116,7 @@ export default async function DineDetaljerPage({ searchParams }: PageProps) {
   backParams.set("trainer", trainerSlug);
   if (serviceTypeId) backParams.set("serviceTypeId", serviceTypeId);
   if (instructorId) backParams.set("instructorId", instructorId);
+  if (locationId) backParams.set("locationId", locationId);
   if (date) backParams.set("date", date);
   if (time) backParams.set("time", time);
 
@@ -138,6 +141,7 @@ export default async function DineDetaljerPage({ searchParams }: PageProps) {
             hidden={{
               serviceTypeId,
               instructorId,
+              locationId,
               service: serviceSlug,
               trainer: trainerSlug,
               date,
