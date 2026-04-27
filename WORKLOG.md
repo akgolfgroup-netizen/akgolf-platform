@@ -8,6 +8,50 @@
 
 ---
 
+## 2026-04-27 (sent kveld) — TS-rydding + audit-løgner ferdig (41 → 0 feil)
+
+**Jobbet med:** Etter PR #13-merge (treningsplan symmetri/forslag/AK-pyramide) krasjet `/portal/treningsplan` to ganger. Fikset begge, deretter ryddet alle resterende TS-feil i hele kodebasen og fjernet 6 av 8 funksjonelle løgner identifisert i forrige audit. 5 nye commits, fra `npx tsc --noEmit` = 41 feil til 0.
+
+**Fase A — treningsplan stabilisert (commit a5a0289):**
+- `User.handicap` finnes ikke lenger som direkte felt — flyttet til `User.UserGolfId.handicap`. Oppdatert 3 select-statements + bruksteder i `treningsplan/actions.ts`
+- RSC-serialisering snublet over `plan?.id` i closure. Trakk `planId` ut som primitiv variabel slik at server actions lukker over en string|null istedenfor hele plan-objektet
+- Templates-fanen i PlannerSidebar manglet glue: la til `TemplateSummary`-type, koblet `listStandardTemplates()` + `applyTemplateToWeek()` (begge fantes allerede) og wiret props gjennom page.tsx → planner. Importerte også `getTemplate` fra standard-templates som actions.ts brukte uten import
+
+**Fase B — TS-rydding (commits 8e25dc8, df6ce6e, 84a24ec):**
+- API: Stripe API-versjon `2025-02-24.acacia` → `2026-02-25.clover`, fjernet ubrukt `getApiField`. `revalidateTag(tag)` → `updateTag(tag)` etter Next.js 16-signatur. Cast til `Prisma.InputJsonValue` for gruppe-syncs JSON-felt
+- Lib: Slettet `lib/feedback-collector.ts` (dead code mot fjernet `AIAuditLog`-modell). Eksporterte `SgCategory` fra `generate-coaching-forecast`. Fallback `"unknown"` for `refund.status` (string|null fra Stripe). La til `TournamentPrepData` i tournament-planner imports
+- UI: BentoGrid utvidet til `cols=1`, BentoCard fikk `span`-prop. MonoLabel åpner for `htmlFor` via Pick<LabelHTMLAttributes>. AdminToast lukk-ikon byttet til lucide `<X />`. Dagbok handleSelectSession reduserte til `{ id: string }`. min-plan caster `rootCauseJson` til `Record<string, RootCause>`. live-round-client fjernet `scramble + notes` fra saveHoleResult-call (feltene finnes ikke i HoleResult-modellen)
+
+**Fase C — funksjonelle løgner (commit 8f21582):**
+- `getSocialData()` rank+friendsOnline `Math.random()` → null. Henter ekte aktive challenges fra ChallengeParticipant
+- Mission Board AI-innsikt-kort fjernet (100% hardkodet «Quick Fix på fredag»)
+- Rapporter: PDF/Excel/CSV-velger fjernet (ignorerte alltid valg → CSV). Tittel-input fjernet (ble aldri lest). «Nylig genererte» + «Planlagte» rapporter byttet fra hardkodede til tomme arrays
+- Økonomi-KPI Dag/Uke/Måned/År: fjernet hardkodede prosentdeltaer + mock-sparklines
+- Strategi: heuristisk forslag merkes nå med «Auto-forslag»-badge istedenfor å fremstilles som ekte coachet strategi
+- Beholdt: `getLatestAiInsight()` (faktisk databasert heuristikk, ikke mock — bare feilbenevnt som «AI» i UI)
+
+**Filer endret (5 commits):**
+- `app/portal/(dashboard)/treningsplan/{page,actions,treningsplan-planner,components/plan-adjustment-banner}.tsx`
+- `app/api/health/stripe/route.ts`, `app/api/portal/public/slots/route.ts`, `app/admin/(authed)/grupper/actions.ts`
+- `lib/portal/booking/refund.ts`, `lib/portal/predictions/generate-coaching-forecast.ts`, `modules/tournament-planner/actions.ts`, slettet `lib/feedback-collector.ts`
+- `components/portal/patterns/{bento-card,mono-label}.tsx`, `components/portal/mission-control/ui/AdminToast.tsx`
+- `app/portal/(dashboard)/{dagbok,min-plan,runde,strategi}/...`
+- `app/portal/(dashboard)/{dashboard-actions,dashboard-types}.ts`
+- `app/admin/(authed)/{mission-board,rapporter,okonomi}/...`
+
+**Verifikasjon:**
+- `npx tsc --noEmit` = 0 feil (var 41 ved sesjonsstart)
+- `/portal/treningsplan` returnerer 200 i preview-server
+- Dev-server logger ingen runtime-feil for treningsplan etter HMR
+
+**Neste steg:**
+- Anders må refreshe `/portal/treningsplan` i Chrome og verifisere visuelt at templates-fanen, samtaletråden og AK-pyramide-justering fungerer
+- Vurdere `getLatestAiInsight()` — bytte UI-tekst fra «AI-innsikt» til «Anbefalinger» eller bygge en ekte AI-pipeline
+- `getSocialData.challenges.progress` returnerer alltid 0 — trenger target-verdier for å beregne ekte progress
+- Mass-migrere Heritage-tokens til Brand Guide V2.0 (Sprint 2 per design-system.md)
+
+---
+
 ## 2026-04-27 (kveld) — Audit-runde + krasj-fixer + booking-v2 grunnmur
 
 **Jobbet med:** Komplett audit av alle PlayerHQ + CoachHQ + Booking-ruter. Fikset 4 krasj-bugs, 5 sikkerhetsflagg og 6 småfeil. Ryddet ServiceType-tabellen i Supabase. Lagt grunnmur for booking-v2-utbygging.
