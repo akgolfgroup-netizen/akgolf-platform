@@ -9,6 +9,7 @@ import type {
   TournamentWithPlayers,
   HoleStrategy,
   PrepChecklist,
+  TournamentPrepData,
 } from "./types";
 import { fetchAllSources } from "./sources";
 
