@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { WebsiteNav } from "@/components/website/WebsiteNav";
-import { WebsiteFooter } from "@/components/website/WebsiteFooter";
+import { WebNav } from "@/components/website-v2/web-nav";
+import { WebFooter } from "@/components/website-v2/web-footer";
 import { SectionLabel } from "@/components/website/SectionLabel";
 import { RevealOnScroll } from "@/components/website/RevealOnScroll";
 import { BackToTop } from "@/components/website/BackToTop";
@@ -110,7 +110,7 @@ export default function UtviklingPage() {
       >
         Hopp til hovedinnhold
       </a>
-      <WebsiteNav />
+      <WebNav />
 
       <main id="main-content">
         <script
@@ -310,7 +310,7 @@ export default function UtviklingPage() {
       </main>
 
       <BackToTop />
-      <WebsiteFooter />
+      <WebFooter />
     </>
   );
 }
