@@ -81,7 +81,7 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
-**Coach-funksjoner — Fase A+B ferdig (2/8):**
+**Coach-funksjoner — Fase A+B+C ferdig (3/8):**
 - Beslutninger fastsatt og lagret i `docs/status/COACH_FUNCTIONS_PLAN.md` (10 spørsmål → 10 beslutninger; 8 faser; ~60-94t totalt-estimat).
 - **Fase A ✅ — Coach-tilgjengelighet:**
   - **Kritisk bug-fix:** Eksisterende `tilgjengelighet/actions.ts` skrev til `AvailabilityWindow`-tabellen som IKKE finnes i DB. Booking-validering har alltid lest fra `InstructorAvailability` (39 rader). "Lagre arbeidstider" i CoachHQ gjorde derfor ingenting i prod. Byttet alle queries til `InstructorAvailability`.
@@ -97,7 +97,15 @@
   - **Booking-v2-helpers** i `lib/booking-v2/services.ts`: `getBookingV2Locations()` (lokasjoner med minst én aktiv coach), `getBookingV2InstructorsAtLocation(locationId)`, `getBookingV2ServicesAtLocation(locationId, instructorId)`. Klar for Fase D wizard-ombygging (Lokasjon → Trener → Tjeneste → Tid).
   - **Seed:** Anders Kristiansen (12 tjenester) + Markus Røinås Pedersen (4 tjenester) automatisk koblet til GFGK. Totalt 2 InstructorLocation + 16 InstructorLocationService records.
   - Verifisert: lint + typecheck rene, side rendrer 6 lokasjoner, GFGK vises som aktiv med 12 tjeneste-pills, andre lokasjoner som "+ Aktiver".
-- **Resterende:** Fase C (Stripe-katalog), D (wizard-ombygging), E (manuell booking), F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~44–74t igjen.
+- **Fase C ✅ — Coaching-tjeneste-bygger + Stripe-katalog:**
+  - **DB:** Ny migrasjon `20260427_add_servicetype_stripe` legger `stripeProductId`, `stripePriceId`, `isRecurring`, `recurringInterval` på `ServiceType`. Markerte Performance + Performance Pro som recurring=true (per Anders' beslutning).
+  - **Stripe-helper** i `lib/portal/stripe/catalog.ts`: `createStripeServiceProduct({ name, priceKr, isRecurring, recurringInterval })` → `{ productId, priceId }`. Idempotent på navn (gjenbruker eksisterende Product), lager alltid ny Price (bevarer historikk-amounts ved prisendring). Plus `archiveStripePrice` og `archiveStripeProduct` for cleanup.
+  - **Server actions** i `app/admin/(authed)/tjenester/actions.ts`: `listServiceTypes`, `createServiceType` (atomisk: Stripe først, så DB), `updateServiceType` (arkiverer gammel Price + lager ny ved prisendring). RBAC: kun ADMIN kan opprette/endre.
+  - **Admin-UI** i `app/admin/(authed)/tjenester/`: page + tjenester-client.tsx med filter (Aktive/Alle/Inaktive), KPI-kort (Tjenester, Recurring, Mangler Stripe), kort per tjeneste med badges (Aktiv/Inaktiv, Abonnement/month, Skjult, Ikke i Stripe), aktiver/deaktiver-knapp. Ny `NyTjenesteDialog` med felter: navn, beskrivelse, kategori (6 valg), varighet, pris, isRecurring (checkbox), isPublic.
+  - **Backfill-script** i `scripts/backfill-stripe-services.ts`: kjøres ÉN gang i prod etter ekte STRIPE_SECRET_KEY er satt. Looper alle ServiceType uten stripePriceId, oppretter Stripe-produkter, lagrer ID-er.
+  - Verifisert: lint + typecheck rene. /admin/tjenester rendrer 26 tjenester, 2 recurring, 26 "Ikke i Stripe" (forventet — backfill ikke kjørt i dev pga `sk_test_xxx` placeholder).
+  - **ENV-krav før prod:** Ekte `STRIPE_SECRET_KEY` i Vercel + kjør backfill-script én gang.
+- **Resterende:** Fase D (wizard-ombygging), E (manuell booking), F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~32–58t igjen.
 
 ---
 
