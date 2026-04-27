@@ -12,9 +12,9 @@ export const BRAND = {
 };
 
 export const STEPS = [
-  { num: "01", label: "Velg type", path: "/booking-v2" },
-  { num: "02", label: "Tjeneste", path: "/booking-v2/velg-tjeneste" },
-  { num: "03", label: "Trener", path: "/booking-v2/velg-trener" },
+  { num: "01", label: "Lokasjon", path: "/booking-v2/lokasjon" },
+  { num: "02", label: "Trener", path: "/booking-v2/velg-trener" },
+  { num: "03", label: "Tjeneste", path: "/booking-v2/velg-tjeneste" },
   { num: "04", label: "Tid", path: "/booking-v2/tid" },
   { num: "05", label: "Detaljer", path: "/booking-v2/dine-detaljer" },
   { num: "06", label: "Betaling", path: "/booking-v2/betal" },

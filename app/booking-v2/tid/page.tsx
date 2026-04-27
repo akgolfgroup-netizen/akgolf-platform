@@ -20,6 +20,7 @@ interface PageProps {
     time?: string;
     serviceTypeId?: string;
     instructorId?: string;
+    locationId?: string;
   }>;
 }
 
@@ -138,10 +139,15 @@ export default async function TidPage({ searchParams }: PageProps) {
   carryOver.set("trainer", trainerSlug);
   if (params.serviceTypeId) carryOver.set("serviceTypeId", params.serviceTypeId);
   if (params.instructorId) carryOver.set("instructorId", params.instructorId);
+  if (params.locationId) carryOver.set("locationId", params.locationId);
   carryOver.set("date", dateParam);
   if (timeParam) carryOver.set("time", timeParam);
 
+  // Tilbake til velg-tjeneste — krever locationId + instructorId i den nye flyten
   const backParams = new URLSearchParams();
+  if (params.locationId) backParams.set("locationId", params.locationId);
+  if (params.instructorId) backParams.set("instructorId", params.instructorId);
+  // Beholder gamle slug-baserte for bakoverkompatibilitet
   backParams.set("service", serviceSlug);
   if (params.serviceTypeId) backParams.set("serviceTypeId", params.serviceTypeId);
 
@@ -173,7 +179,7 @@ export default async function TidPage({ searchParams }: PageProps) {
         </div>
 
         <SummaryFooter
-          backHref={`/booking-v2/velg-trener?${backParams.toString()}`}
+          backHref={`/booking-v2/velg-tjeneste?${backParams.toString()}`}
           nextHref={`/booking-v2/dine-detaljer?${carryOver.toString()}`}
           nextDisabled={!timeParam}
           items={[

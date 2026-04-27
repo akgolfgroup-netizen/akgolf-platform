@@ -1,71 +1,93 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Stepper } from "@/components/booking-v2/Stepper";
-import { InstructorCard } from "@/components/booking-v2/InstructorCard";
-import { TRAINERS, SERVICES } from "@/components/booking-v2/copy";
+import {
+  getBookingV2InstructorsAtLocation,
+  getBookingV2Locations,
+} from "@/lib/booking-v2/services";
+
+export const dynamic = "force-dynamic";
 
 interface PageProps {
-  searchParams: Promise<{ service?: string }>;
+  searchParams: Promise<{ locationId?: string }>;
 }
 
 export default async function VelgTrenerPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const serviceId = params.service ?? "performance";
-  const service = SERVICES.find((s) => s.id === serviceId);
+  const locationId = params.locationId;
 
-  // Pre-select trainer if the service is locked to one
-  const lockedTrainer = service && service.trainer !== "begge" ? service.trainer : null;
+  if (!locationId) {
+    redirect("/booking-v2/lokasjon");
+  }
 
-  const tidParams = new URLSearchParams();
-  tidParams.set("service", serviceId);
+  const [instructors, locations] = await Promise.all([
+    getBookingV2InstructorsAtLocation(locationId),
+    getBookingV2Locations(),
+  ]);
+  const location = locations.find((l) => l.id === locationId);
 
-  const baseHref = `/booking-v2/tid?${tidParams.toString()}`;
+  if (!location) {
+    redirect("/booking-v2/lokasjon");
+  }
 
   return (
     <>
-      <Stepper current={3} />
-      <section className="step-page active" data-step={3}>
+      <Stepper current={2} />
+      <section className="step-page active" data-step={2}>
         <p className="eyebrow">
-          <span className="num">03 / 07</span>
+          <span className="num">02 / 07</span>
           Velg trener
         </p>
         <h1 className="t-section">
           Med hvem vil <em>du</em> trene?
         </h1>
         <p className="lede">
-          Anders følger spillere som vil ha langsiktig utvikling. Markus følger nye golfere,
-          juniorer og gruppetrening.
+          Trenere som er tilgjengelige på <strong>{location.name}</strong>.
+          Hver trener har sine egne tjenester og tider.
         </p>
 
-        <div className="inst-grid">
-          {TRAINERS.map((t) => (
-            <InstructorCard
-              key={t.id}
-              id={t.id}
-              name={t.name}
-              role={t.role}
-              badge={t.badge}
-              bio={t.bio}
-              image={t.image}
-              fallbackBg={t.fallbackBg}
-              stats={t.stats}
-              availability={t.id === "anders" ? "5 ledige denne uken" : "3 ledige denne uken"}
-              selected={lockedTrainer === t.id}
-              hrefBase={baseHref}
-            />
-          ))}
-        </div>
-
-        {!lockedTrainer && (
-          <Link
-            href={`${baseHref}&trainer=any`}
-            className="inst-noprefer"
-          >
-            <span>
-              <b>Ingen preferanse</b> — vis tider for begge trenere.
-            </span>
-            <span className="arr-circle">→</span>
-          </Link>
+        {instructors.length === 0 ? (
+          <div className="alert warn" style={{ maxWidth: 680, marginTop: 24 }}>
+            <span className="ic">i</span>
+            <div>
+              <b>Ingen trenere på denne lokasjonen ennå.</b>
+              <p>
+                Velg en annen lokasjon, eller kontakt oss på{" "}
+                <a href="mailto:hei@akgolf.no">hei@akgolf.no</a>.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="svc-list" style={{ marginTop: 24 }}>
+            {instructors.map((i) => {
+              const carry = new URLSearchParams();
+              carry.set("locationId", locationId);
+              carry.set("instructorId", i.id);
+              return (
+                <Link
+                  key={i.id}
+                  href={`/booking-v2/velg-tjeneste?${carry.toString()}`}
+                  className="svc-row"
+                >
+                  <span className="num">→</span>
+                  <div style={{ flex: 1 }}>
+                    <h3>{i.name}</h3>
+                    {i.title ? <p>{i.title}</p> : null}
+                    {i.bio ? (
+                      <p style={{ opacity: 0.7, fontSize: 13 }}>{i.bio.slice(0, 140)}</p>
+                    ) : null}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         )}
+
+        <div style={{ marginTop: 24 }}>
+          <Link href="/booking-v2/lokasjon" className="btn btn-secondary">
+            ← Tilbake
+          </Link>
+        </div>
       </section>
     </>
   );

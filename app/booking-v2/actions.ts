@@ -239,6 +239,7 @@ export async function submitDetails(formData: FormData): Promise<void> {
 
   const serviceTypeId = get("serviceTypeId");
   const instructorIdRaw = get("instructorId");
+  const locationIdRaw = get("locationId");
   const serviceSlug = get("service") || "performance";
   const trainerSlug = get("trainer") || "anders";
   const date = get("date");
@@ -256,6 +257,7 @@ export async function submitDetails(formData: FormData): Promise<void> {
   const carry = new URLSearchParams();
   if (serviceTypeId) carry.set("serviceTypeId", serviceTypeId);
   if (instructorIdRaw) carry.set("instructorId", instructorIdRaw);
+  if (locationIdRaw) carry.set("locationId", locationIdRaw);
   carry.set("service", serviceSlug);
   carry.set("trainer", trainerSlug);
   if (date) carry.set("date", date);
@@ -277,6 +279,7 @@ export async function submitDetails(formData: FormData): Promise<void> {
   const draft: BookingDraft = {
     serviceTypeId,
     instructorId: instructorIdRaw || undefined,
+    locationId: locationIdRaw || undefined,
     serviceSlug,
     trainerSlug,
     date,

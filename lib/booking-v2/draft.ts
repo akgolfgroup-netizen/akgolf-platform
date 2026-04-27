@@ -31,6 +31,8 @@ export interface BookingDraft {
   serviceTypeId: string;
   /** Instructor.id (cuid) — valgfri når brukeren ikke har preferanse */
   instructorId?: string;
+  /** Location.id — settes fra og med Fase D (lokasjon-først-wizard) */
+  locationId?: string;
   /** Slug fra wizard-copy.ts — beholdt for visning til vi flytter trener-/tjenestevalg til DB-data fullt ut */
   serviceSlug: string;
   trainerSlug: string;
@@ -97,6 +99,7 @@ function isValidDraft(value: unknown): value is BookingDraft {
   const v = value as Record<string, unknown>;
   if (typeof v.serviceTypeId !== "string" || !v.serviceTypeId) return false;
   if (v.instructorId !== undefined && typeof v.instructorId !== "string") return false;
+  if (v.locationId !== undefined && typeof v.locationId !== "string") return false;
   if (typeof v.serviceSlug !== "string" || typeof v.trainerSlug !== "string") return false;
   if (typeof v.date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(v.date)) return false;
   if (typeof v.time !== "string" || !/^\d{2}:\d{2}$/.test(v.time)) return false;
