@@ -2885,6 +2885,9 @@ enum Capability {
   LIBRARY_VIEW
   LIBRARY_GENERATE
   LIBRARY_APPROVE
+
+  // Talent-dashboardet (scouting av norske/nordiske turneringsdata)
+  TALENT_DASHBOARD_VIEW
 }
 
 enum LibraryItemType {

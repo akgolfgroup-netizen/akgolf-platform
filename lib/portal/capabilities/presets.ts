@@ -125,8 +125,10 @@ export const STUDENT_DEFAULT_CAPABILITIES: Capability[] = [
   Capability.BOOKING_VIEW_OWN,
 ];
 
-export const INSTRUCTOR_DEFAULT_CAPABILITIES: Capability[] =
-  getPreset("coach-standard")?.capabilities ?? [];
+export const INSTRUCTOR_DEFAULT_CAPABILITIES: Capability[] = [
+  ...(getPreset("coach-standard")?.capabilities ?? []),
+  Capability.TALENT_DASHBOARD_VIEW,
+];
 
 export const ADMIN_DEFAULT_CAPABILITIES: Capability[] = Object.values(Capability);
 
