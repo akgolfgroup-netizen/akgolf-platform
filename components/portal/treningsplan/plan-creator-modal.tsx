@@ -36,6 +36,11 @@ interface Props {
   onClose: () => void;
 }
 
+// "Anbefalt for meg" (RECOMMENDED) er midlertidig skjult inntil
+// AI-pipelinen for plan-generering er ferdig (skills/agenter). Behold
+// MODE_OPTIONS som kun TEMPLATE og MANUAL — server-action
+// createPlanFromChoice() støtter fortsatt alle 3, så reaktivering er
+// kun en UI-endring.
 const MODE_OPTIONS: Array<{
   value: PlanCreationMode;
   title: string;
@@ -43,14 +48,6 @@ const MODE_OPTIONS: Array<{
   iconName: string;
   badge?: string;
 }> = [
-  {
-    value: "RECOMMENDED",
-    title: "Anbefalt for meg",
-    description:
-      "Vi lager en plan basert på din spillerprofil, handicap og fokusområder.",
-    iconName: "auto_awesome",
-    badge: "AI",
-  },
   {
     value: "TEMPLATE",
     title: "Velg en standardplan",
@@ -71,7 +68,7 @@ export function PlanCreatorModal({ open, onClose }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [step, setStep] = useState<Step>("mode");
-  const [mode, setMode] = useState<PlanCreationMode>("RECOMMENDED");
+  const [mode, setMode] = useState<PlanCreationMode>("TEMPLATE");
   const [templateId, setTemplateId] = useState<TemplateId>("allround");
   const [duration, setDuration] = useState<string>("4");
   const [distribution, setDistribution] = useState<PyramidDistribution>(
@@ -83,7 +80,7 @@ export function PlanCreatorModal({ open, onClose }: Props) {
 
   const reset = () => {
     setStep("mode");
-    setMode("RECOMMENDED");
+    setMode("TEMPLATE");
     setTemplateId("allround");
     setDuration("4");
     setDistribution(DEFAULT_DISTRIBUTION);

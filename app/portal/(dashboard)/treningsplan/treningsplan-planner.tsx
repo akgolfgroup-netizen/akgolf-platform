@@ -390,9 +390,9 @@ export function TreningsplanPlanner({
         <EmptyState
           iconName="event_note"
           title="Du har ingen aktiv treningsplan"
-          description="Velg hvordan du vil starte: la AI lage en plan basert på din profil, velg en standardmal, eller bygg helt selv."
+          description="Velg en standardmal eller bygg planen din helt selv."
           actionLabel="Lag treningsplan"
-          actionIconName="auto_awesome"
+          actionIconName="add"
           onAction={() => setPlanCreatorOpen(true)}
         />
       )}
