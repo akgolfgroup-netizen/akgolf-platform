@@ -2,27 +2,24 @@
 
 import {
   ArrowRight,
-  Award,
   Bot,
   Calendar,
   Check,
+  Clock,
   Layers,
   Play,
+  Sparkles,
   Star,
   Target,
-  TrendingDown,
   Users,
 } from "lucide-react";
 import { WebNav } from "./web-nav";
 import { WebFooter } from "./web-footer";
 import { WebPhoto } from "./web-photo";
 import { WebButton } from "./web-button";
+import { HERO } from "@/lib/website-constants";
 
-const HERO_STATS = [
-  { label: "Aktive medlemmer", value: "487", Icon: Users },
-  { label: "HCP-fall · gjennomsnitt", value: "−3.2", Icon: TrendingDown },
-  { label: "Coacher i team", value: "12", Icon: Award },
-];
+const HERO_STAT_ICONS = [Users, Clock, Sparkles] as const;
 
 const SERVICES = [
   {
@@ -146,7 +143,7 @@ export function HomeV2Client() {
         className="relative flex min-h-screen items-end overflow-hidden pb-20"
         style={{
           backgroundImage:
-            "linear-gradient(180deg, rgba(10,31,24,0.45) 0%, rgba(10,31,24,0.20) 30%, rgba(10,31,24,0.30) 60%, rgba(10,31,24,0.85) 100%), url('/design-reference/handoff-2026-04-27/assets/hero-golf-divot.jpg')",
+            "linear-gradient(180deg, rgba(10,31,24,0.45) 0%, rgba(10,31,24,0.20) 30%, rgba(10,31,24,0.30) 60%, rgba(10,31,24,0.85) 100%), url('/images/hero/forside.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center 30%",
         }}
@@ -168,13 +165,13 @@ export function HomeV2Client() {
                     boxShadow: "0 0 0 4px rgba(209,248,67,0.20)",
                   }}
                 />
-                Bærum · Holtsmark · Pinx
+                {HERO.eyebrow}
               </div>
               <h1
                 className="mb-7 text-[clamp(56px,8vw,104px)] font-extrabold leading-[0.96] tracking-[-0.04em] text-white text-balance"
                 style={{ textShadow: "0 4px 30px rgba(0,0,0,0.4)" }}
               >
-                Spill bedre golf{" "}
+                {HERO.heading.replace(HERO.greenWord, "")}
                 <em
                   className="font-medium not-italic"
                   style={{
@@ -184,62 +181,73 @@ export function HomeV2Client() {
                     letterSpacing: "-0.025em",
                   }}
                 >
-                  med mening.
+                  {HERO.greenWord}
                 </em>
               </h1>
               <p
                 className="mb-7 max-w-[60ch] text-[19px] leading-[1.55] font-normal text-white/[0.92]"
                 style={{ textShadow: "0 2px 14px rgba(0,0,0,0.35)" }}
               >
-                AK Golf forener bane, akademi og personlig coaching i én
-                sammenhengende reise — fra første grep til fast handicap-
-                utvikling.
+                {HERO.subheading}
               </p>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/85 backdrop-blur-md">
+                <span
+                  className="inline-block h-1.5 w-1.5 rounded-full"
+                  style={{
+                    background: "var(--akgolf-accent, #D1F843)",
+                    boxShadow: "0 0 0 3px rgba(209,248,67,0.20)",
+                  }}
+                />
+                {HERO.statusBadge}
+              </div>
               <div className="flex flex-wrap items-center gap-3.5">
                 <WebButton href="/booking-v2" variant="primary" size="lg">
-                  Bli medlem
+                  {HERO.ctaPrimary}
                   <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
                 </WebButton>
                 <WebButton href="#services" variant="ghost" size="lg">
-                  Se tjenestene
+                  {HERO.ctaSecondary}
                   <Play className="h-4 w-4" strokeWidth={2.4} />
                 </WebButton>
               </div>
             </div>
 
             <div className="flex flex-col gap-3 self-end">
-              {HERO_STATS.map(({ label, value, Icon }) => (
-                <div
-                  key={label}
-                  className="grid grid-cols-[1fr_auto] items-center gap-4 rounded-[20px] border border-white/20 bg-white/10 p-[22px_26px] backdrop-blur-xl"
-                >
-                  <div>
+              {HERO.stats.map((s, i) => {
+                const Icon = HERO_STAT_ICONS[i] ?? Sparkles;
+                return (
+                  <div
+                    key={s.label}
+                    className="grid grid-cols-[1fr_auto] items-center gap-4 rounded-[20px] border border-white/20 bg-white/10 p-[22px_26px] backdrop-blur-xl"
+                  >
+                    <div>
+                      <div
+                        className="text-[10px] uppercase tracking-[0.14em] text-white/65"
+                        style={{
+                          fontFamily: "var(--font-jetbrains-mono), monospace",
+                        }}
+                      >
+                        {s.label}
+                      </div>
+                      <div
+                        className="mt-1.5 text-[36px] font-extrabold leading-none tracking-[-0.03em] text-white"
+                        style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                      >
+                        {s.value}
+                      </div>
+                    </div>
                     <div
-                      className="text-[10px] uppercase tracking-[0.14em] text-white/65"
+                      className="grid h-11 w-11 place-items-center rounded-xl"
                       style={{
-                        fontFamily: "var(--font-jetbrains-mono), monospace",
+                        background: "rgba(209,248,67,0.18)",
+                        color: "var(--akgolf-accent, #D1F843)",
                       }}
                     >
-                      {label}
-                    </div>
-                    <div
-                      className="mt-1.5 text-[36px] font-extrabold leading-none tracking-[-0.03em] text-white"
-                      style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                    >
-                      {value}
+                      <Icon className="h-5 w-5" />
                     </div>
                   </div>
-                  <div
-                    className="grid h-11 w-11 place-items-center rounded-xl"
-                    style={{
-                      background: "rgba(209,248,67,0.18)",
-                      color: "var(--akgolf-accent, #D1F843)",
-                    }}
-                  >
-                    <Icon className="h-5 w-5" />
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
