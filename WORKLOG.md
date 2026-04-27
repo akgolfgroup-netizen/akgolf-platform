@@ -8,6 +8,129 @@
 
 ---
 
+## 2026-04-27 (kveld) — Audit-runde + krasj-fixer + booking-v2 grunnmur
+
+**Jobbet med:** Komplett audit av alle PlayerHQ + CoachHQ + Booking-ruter. Fikset 4 krasj-bugs, 5 sikkerhetsflagg og 6 småfeil. Ryddet ServiceType-tabellen i Supabase. Lagt grunnmur for booking-v2-utbygging.
+
+**Audit-funn (alle tre auditer ferdig):**
+- 88 ruter kartlagt i `docs/status/ROUTE_INVENTORY.md` (TODO: lagre rapporten)
+- Alle "missing auth"-flagg var falske alarmer — `app/portal/(dashboard)/layout.tsx` og `app/admin/(authed)/layout.tsx` gater alle ruter
+- Reelle krasj-bugs (alle fikset): 5x `.single()` → `.maybeSingle()` (dashboard handicap, treningsplan log+session, dagbok, bookinger/endre, playerhq), framer-motion i server component (runde/[id]/oppsummering), MOCK_COURSES med ugyldige IDs (runde/ny), `.toISOString()` på string (tilgjengelighet), null-deref på Booking-relasjoner (rapporter)
+- Sikkerhet: booking/[id]/status manglet auth-filter (info-leak), slots POST manglet auth (cache-DOS) — begge fikset
+- Småfeil: 3x `revalidateTag(tag, {})` (ugyldig 2. arg), library redirect til ikke-eksisterende rute, coaching-board sidetittel "Mission Board" (forbudt iflg sprak.md)
+
+**Funksjonelle løgner identifisert (IKKE fikset enda — krever beslutning):**
+- Dashboard `getSocialData()` bruker `Math.random()` for rank
+- Dashboard `getLatestAiInsight()` returnerer hardkodet tekst
+- Mission Board "AI-innsikt" er statisk
+- Rapporter format-velger (PDF/Excel/CSV) ignoreres — alltid CSV
+- Rapporter "Tittel"-input mangler value/onChange
+- Rapporter "Nylig genererte" + "Planlagte" hardkodet
+- Økonomi-client.tsx sparklines er mock-tall
+- Strategi-side viser fallback-strategi som om den var ekte
+
+**DB-cleanup (Supabase prod via MCP):**
+- Renamed `Markus 20 min` → `Flex 20 Markus`
+- Opprettet `Flex 20 Anders` (600 kr) + `First Tee` (1295 kr, VTG_COURSE)
+- Slettet 18 inaktive duplikater (alle med 0 bookinger)
+- Verifisert at `increment_sessions_used` + `decrement_sessions_used` RPCs er deployet
+- Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
+- `gotchas.md` oppdatert med ny pakke-liste
+
+**Booking-v2 — pågår (steg 1 ferdig):**
+- Plan: 10 steg, ~16t fokusert arbeid (se under)
+- Steg 1 ✅ — `lib/booking-v2/services.ts` med `getBookingV2Services()`, `getBookingV2Service(id)`, `getBookingV2Instructors()`, `getBookingV2InstructorsForService(id)`. Henter ekte data fra Prisma. Bruker DB-cuid direkte i URL-params — ingen slug-mapping nødvendig.
+
+**Filer endret:**
+- `app/admin/(authed)/coaching-board/page.tsx`, `library/page.tsx`, `library/[id]/page.tsx`, `rapporter/actions.ts`, `tilgjengelighet/page.tsx`
+- `app/api/portal/public/slots/route.ts`
+- `app/booking/[id]/status/page.tsx`
+- `app/portal/(dashboard)/`: `bookinger/[id]/endre/`, `dagbok/[sessionId]/`, `dashboard-actions.ts`, `playerhq/`, `runde/[id]/oppsummering/`, `runde/ny/`, `treningsplan/[sessionId]/`, `treningsplan/actions.ts`
+- `lib/booking-v2/services.ts` (ny)
+- `.claude/rules/gotchas.md`
+
+**Commits:**
+- `89dd28f` feat(talent): TalentPlayer-modeller (tidligere økt)
+- `54b99d9` docs(design): final design 2026 + nye HTML-prototyper
+- `2114220` feat(talent): WAGR + COLLEGE_NCAA TalentSource-verdier
+- `dcb1bec` fix(audit): krasj-fixer + DB-cleanup + auth-hårdening (16 filer)
+- (booking-v2 steg 1 — ikke committet ennå)
+
+**Designarbeid skjer parallelt:**
+- All ny PlayerHQ-design ligger i `app/portal/(dashboard)/playerhq/` + `components/portal/playerhq/`
+- IKKE rør produksjons-dashboard (`app/portal/(dashboard)/page.tsx` + `dashboard-client-v3.tsx`)
+
+---
+
+## NESTE STEG — Booking-v2 build-out (steg 2-10)
+
+**Forutsetning:** Les denne planen først. Hele backend-infrastrukturen finnes fra PR #14 i `lib/portal/booking/*` — wizard-skallene fra PR #12. Vi kobler dem sammen.
+
+**Steg 2 — `tid/page.tsx` med ekte slot-binding (~2t)**
+- Calendar-komponent → Client Component med `useRouter` som setter `?date=YYYY-MM-DD`
+- SlotPicker → Client Component som setter `?time=HH:mm` ved klikk
+- Server-rendering henter `getAvailableSlots()` med `serviceTypeId` + `instructorId` fra URL-params (DB-cuid direkte fra steg 1)
+- Fjerner hardkodet `2026-04-28` og `14:30`
+
+**Steg 3 — Wizard-state via signert cookie (~2t)**
+- Lag `lib/booking-v2/draft.ts` med `getDraft()`, `setDraft()`, `clearDraft()`
+- Bruk Next.js `cookies()` API + `iron-session`-style signering
+- Schema: `{ serviceId, instructorId, date, time, customer: { name, email, phone, hcp, notes } }`
+- `dine-detaljer/page.tsx` Form posts → server action → setDraft cookie
+- `betal/page.tsx` leser draft fra cookie
+
+**Steg 4 — Kvota-gate (~1t)**
+- I `tid/page.tsx`: hvis bruker er logget inn + service er abonnement → kall `getSessionLimits()` fra `lib/portal/booking/subscription-quota.ts`
+- Hvis kvote oppbrukt → `redirect('/booking-v2/kvota')`
+- `kvota/page.tsx`: hent ekte data (`sessionsUsed/sessionLimit/periodEnd`) i stedet for hardkodet april/4-av-4
+
+**Steg 5 — `createBooking()` server action (~3t)**
+- Erstatt stub i `app/booking-v2/actions.ts` med ekte versjon
+- Kall `createBookingWithConflictCheck()` fra `lib/portal/booking/conflict-check.ts`
+- Stripe-integrasjon basert på `service.prismaCategory`:
+  - `INDIVIDUAL` + name starter med "Performance" → Stripe Checkout subscription mode (recurring)
+  - Alt annet → Payment Intent (one-time)
+- Returner `{ bookingId, paymentUrl }`
+- Gjenbruk eksisterende Stripe-helpers fra `lib/portal/stripe/*` (sjekk hva som finnes)
+
+**Steg 6 — `betal/page.tsx` ekte Stripe-flyt (~2t)**
+- Bekreft-knappen kaller `createBooking()`
+- Ved suksess: `redirect(paymentUrl)` til Stripe Checkout
+- Stripe sender bruker tilbake til `/booking/[id]/confirmation` (eksisterende side fungerer allerede)
+- Fjern hardkodet `nextHref="/bekreftelse"`
+
+**Steg 7 — `bekreftelse/page.tsx` dynamisk + komms (~1.5t)**
+- Erstatt hardkodet `"AK-2026-04-1430"` med `bookingId` fra URL
+- Hent ekte booking via `prisma.booking.findUnique`
+- Trigger e-post via `lib/portal/email/templates/booking-confirmation.tsx` (sjekk om finnes)
+- Trigger SMS via Twilio (sjekk `lib/portal/sms/*`)
+- ICS-fil generert fra ekte data (`lib/portal/calendar/ics.ts` — finnes?)
+
+**Steg 8 — Venteliste-koble til (~1t)**
+- `WaitlistForm` kaller `joinWaitlist()` som bruker `addToWaitlist()` fra `lib/portal/booking/waitlist.ts`
+- Posisjon vises etter submit
+- Alternativ-kort fjernes (kommer senere)
+
+**Steg 9 — (allerede ferdig i `dcb1bec`) — småfixer**
+
+**Steg 10 — Feature-flag + cutover-test (~2t)**
+- Legg til env-var `ENABLE_BOOKING_V2=true/false` (default false)
+- I `app/booking/page.tsx`: hvis flag = true OG bruker er Anders → render booking-v2-flow eller redirect
+- Manuell røykprøve via Vercel preview: full flyt for abonnement-bruker, flex-bruker, ny bruker uten konto, full-kvota
+- Verifiser webhook mottatt + e-post/SMS sendt
+- Når OK: skru på flag i prod for kun Anders først → senere alle
+
+**Estimat totalt:** ~14 timer fra steg 2.
+
+**Hvordan starte ny økt:**
+```
+Les WORKLOG.md, deretter docs/status/BACKLOG.md.
+Fortsett booking-v2 fra steg 2. Designterminal jobber i samme repo
+på /portal/(dashboard)/playerhq — ikke rør de filene.
+```
+
+---
+
 ## 2026-04-27 — Innholdsbibliotek (LibraryItem) MVP
 
 **Jobbet med:** Bygget godkjenningsdrevet AI-bibliotek for drills, øvelser, tester, aktiviteter og konkurranseforberedelse. Master-DB i Postgres (akgolf-platform), ikke Notion. Klargjort for kobling til treningsplanlegger.
