@@ -14,7 +14,22 @@ Gjenbruk eksisterende — aldri bygg duplikater.
 | useBookingWizard | components/booking/use-booking-wizard.ts | Hook med all booking-state og logikk |
 | booking-types | components/booking/booking-types.ts | Felles typer og hjelpefunksjoner |
 
-## Portal Dashboard-komponenter
+## Portal Dashboard Bento (v1 — Brand Guide V2.0, valgt 2026-04-27)
+Pixel-nær implementasjon av `public/design-reference/handoff-2026-04-27/screens/dashboard-v1-bento.html`.
+Aktiveres via `?dashboard=bento` eller cookie `dashboard=bento`. Default fortsatt `DashboardClientV3`.
+| Komponent | Fil | Bruk |
+|---|---|---|
+| DashboardBentoClient | app/portal/(dashboard)/dashboard-bento-client.tsx | Orchestrator: 12-kolonne grid + alle bento-kort |
+| HeroCard | components/portal/dashboard-bento/hero-card.tsx | Mørk gradient + animert lime-prikk + headline + 4 hero-stats |
+| NextSessionCard | components/portal/dashboard-bento/next-session-card.tsx | Hvit kort, fokus-pill (lime), "Åpne økt"/"Flytt"-knapper |
+| KpiCard | components/portal/dashboard-bento/kpi-card.tsx | Gjenbrukbar KPI med line/bars sparkline + accent-variant (lime bakgrunn) |
+| SgCard | components/portal/dashboard-bento/sg-card.tsx | Strokes Gained-barer +/- rundt 0-linje (Tee/Approach/Around green/Putting) |
+| TrendCard | components/portal/dashboard-bento/trend-card.tsx | Handicap 12-mnd SVG med gradient-fill + dot på siste punkt |
+| AiInsightCard | components/portal/dashboard-bento/ai-insight-card.tsx | Lilla AI-card med rec-bullets, fokus-pills og kilder |
+| StreakCard | components/portal/dashboard-bento/streak-card.tsx | Mørk gradient med 14-dagers streak-prikker + personlig rekord |
+| ShortcutsRow | components/portal/dashboard-bento/shortcuts-row.tsx | 6 hurtighandlinger med lucide-ikoner (Logg runde, Ukesplan, etc.) |
+
+## Portal Dashboard-komponenter (legacy v3)
 | Komponent | Fil | Bruk |
 |---|---|---|
 | NumberTicker | components/portal/dashboard/number-ticker.tsx | Animert tall som teller opp |
