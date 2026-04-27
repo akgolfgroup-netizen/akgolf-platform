@@ -541,7 +541,7 @@ export async function getPlayerLevel(userId: string): Promise<"beginner" | "inte
       .eq("userId", userId)
       .order("date", { ascending: false })
       .limit(1)
-      .single(),
+      .maybeSingle(),
     supabase
       .from("RoundStats")
       .select("id", { count: "exact", head: true })

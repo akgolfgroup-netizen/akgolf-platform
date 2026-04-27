@@ -34,7 +34,7 @@ export default async function PlayerHQPreviewPage() {
     .from("User")
     .select("onboardingCompletedAt, createdAt")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
   const needsOnboarding = !userData?.onboardingCompletedAt;
 

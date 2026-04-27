@@ -57,7 +57,7 @@ export async function saveSessionProgress(
     .select("id")
     .eq("planSessionId", sessionId)
     .eq("userId", user.id)
-    .single();
+    .maybeSingle();
 
   const completedCount = exercises.filter((e) => e.completed).length;
   const now = new Date();
@@ -1369,7 +1369,7 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
       }),
       prisma.user.findUnique({
         where: { id: user.id },
-        select: { name: true, handicap: true },
+        select: { name: true, UserGolfId: { select: { handicap: true } } },
       }),
       prisma.playerGoals.findMany({
         where: { userId: user.id, isActive: true },
@@ -1380,8 +1380,8 @@ export async function createPlanFromChoice(input: CreatePlanFromChoiceInput) {
 
     // Bygg goals-string
     const goalLines: string[] = [];
-    if (profile?.handicap != null) {
-      goalLines.push(`Nåværende handicap: ${profile.handicap}.`);
+    if (profile?.UserGolfId?.handicap != null) {
+      goalLines.push(`Nåværende handicap: ${profile.UserGolfId.handicap}.`);
     }
     if (goals.length > 0) {
       goalLines.push("Aktive mål:");
@@ -1997,7 +1997,7 @@ export async function getPlanGoalsProgress(): Promise<PlanGoalsSummary> {
     }),
     prisma.user.findUnique({
       where: { id: user.id },
-      select: { handicap: true },
+      select: { UserGolfId: { select: { handicap: true } } },
     }),
     prisma.playerMetrics.findUnique({
       where: { userId: user.id },
@@ -2016,15 +2016,15 @@ export async function getPlanGoalsProgress(): Promise<PlanGoalsSummary> {
     let progressPct: number | null = null;
 
     // Beregn current basert på goalType
-    if (g.goalType === "HCP" && profile?.handicap != null) {
-      currentValue = profile.handicap;
+    if (g.goalType === "HCP" && profile?.UserGolfId?.handicap != null) {
+      currentValue = profile.UserGolfId.handicap;
       // For HCP: lavere er bedre. progressPct beregnes fra startverdi (currentValue lagret) → target
       if (g.targetValue != null && g.currentValue != null) {
         const start = g.currentValue;
         const target = g.targetValue;
         if (start > target) {
           progressPct = Math.round(
-            Math.max(0, Math.min(100, ((start - profile.handicap) / (start - target)) * 100))
+            Math.max(0, Math.min(100, ((start - profile.UserGolfId.handicap) / (start - target)) * 100))
           );
         }
       }

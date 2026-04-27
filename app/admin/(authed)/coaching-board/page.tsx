@@ -6,7 +6,7 @@ import { fetchCoachingBoardData } from "./actions";
 import { CoachingBoardClient } from "./coaching-board-client";
 
 export const metadata = {
-  title: "Coaching Mission Board | AK Golf",
+  title: "Aktive økter | AK Golf CoachHQ",
 };
 export const dynamic = "force-dynamic";
 

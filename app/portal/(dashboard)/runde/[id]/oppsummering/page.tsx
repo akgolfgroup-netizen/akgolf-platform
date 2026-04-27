@@ -6,7 +6,6 @@ import Link from "next/link";
 import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import { Flag, Target, Circle, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 export const dynamic = "force-dynamic";
 
@@ -101,15 +100,11 @@ export default async function RoundSummaryPage({ params }: Props) {
         <div className="relative">
           <p className="text-sm text-on-surface-variant">{courseName}</p>
           
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="my-4"
-          >
+          <div className="my-4">
             <span className={cn("text-7xl font-bold tabular-nums tracking-tight", scoreColor)}>
               {round.totalScore ?? "–"}
             </span>
-          </motion.div>
+          </div>
           
           <div className="flex items-center justify-center gap-2">
             <span className={cn("text-xl font-medium", scoreColor)}>
@@ -216,12 +211,9 @@ export default async function RoundSummaryPage({ params }: Props) {
             return (
               <div key={item.label} className="flex flex-col items-center gap-2 flex-1">
                 <div className="relative w-full flex justify-center">
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={{ height: `${height}%` }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
+                  <div
                     className={cn("w-full max-w-[50px] rounded-t-lg", item.color)}
-                    style={{ minHeight: item.count > 0 ? 8 : 4 }}
+                    style={{ height: `${height}%`, minHeight: item.count > 0 ? 8 : 4 }}
                   />
                   {item.count > 0 && (
                     <span className="absolute -top-5 text-xs font-bold text-on-surface">
@@ -335,11 +327,9 @@ export default async function RoundSummaryPage({ params }: Props) {
             {round.decadeScore}/100
           </div>
           <div className="h-3 bg-surface-container rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${round.decadeScore}%` }}
-              transition={{ duration: 1, delay: 0.3 }}
+            <div
               className="h-full rounded-full bg-secondary-fixed"
+              style={{ width: `${round.decadeScore}%` }}
             />
           </div>
           <p className="text-xs text-on-surface-variant mt-2">

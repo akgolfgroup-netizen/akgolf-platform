@@ -23,6 +23,8 @@ import {
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
 import { unstable_cache, revalidateTag } from "next/cache";
 import { logger } from "@/lib/logger";
+import { getPortalUser } from "@/lib/portal/auth";
+import { canAccessMissionControl } from "@/lib/portal/rbac";
 
 export const dynamic = "force-dynamic";
 
@@ -306,11 +308,16 @@ export async function GET(req: NextRequest) {
 }
 
 /**
- * POST for å manuelt invalidere cache (brukes av admin etter endringer)
+ * POST for å manuelt invalidere cache (kun admin/coach).
  */
 export async function POST(req: NextRequest) {
+  const user = await getPortalUser();
+  if (!user || !canAccessMissionControl(user.role)) {
+    return NextResponse.json({ error: "Ikke tilgang" }, { status: 403 });
+  }
+
   const rateLimit = checkRateLimit(
-    `public:${getClientIp(req)}`,
+    `slots-invalidate:${user.id}`,
     RATE_LIMITS.API_GENERAL
   );
   if (!rateLimit.allowed) {
@@ -334,13 +341,13 @@ export async function POST(req: NextRequest) {
     }
 
     // Revalidate cache tags
-    revalidateTag(CACHE_TAG_PREFIX, {});
+    revalidateTag(CACHE_TAG_PREFIX);
     if (date) {
-      revalidateTag(getSlotsCacheKey(instructorId, date, ""), {});
+      revalidateTag(getSlotsCacheKey(instructorId, date, ""));
     }
 
     // Also invalidate general availability
-    revalidateTag(`availability:${instructorId}`, {});
+    revalidateTag(`availability:${instructorId}`);
 
     return NextResponse.json({
       success: true,

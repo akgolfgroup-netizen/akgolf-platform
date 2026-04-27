@@ -14,7 +14,7 @@ export default async function LibraryDetailPage({ params }: PageProps) {
   if (!user) redirect("/portal/login");
 
   const allowed = await hasCapability(user.id, Capability.LIBRARY_VIEW);
-  if (!allowed) redirect("/admin/dashboard");
+  if (!allowed) redirect("/admin");
 
   const { id } = await params;
   const item = await getLibraryItem(id);

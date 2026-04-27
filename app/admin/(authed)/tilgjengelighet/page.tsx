@@ -124,8 +124,14 @@ export default function TilgjengelighetPage() {
       setBlockedTimes(
         blockedData.map((bt) => ({
           ...bt,
-          startTime: bt.startTime.toISOString(),
-          endTime: bt.endTime.toISOString(),
+          startTime:
+            bt.startTime instanceof Date
+              ? bt.startTime.toISOString()
+              : String(bt.startTime),
+          endTime:
+            bt.endTime instanceof Date
+              ? bt.endTime.toISOString()
+              : String(bt.endTime),
         })),
       );
 

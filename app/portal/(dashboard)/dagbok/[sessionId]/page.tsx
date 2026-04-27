@@ -56,7 +56,7 @@ export default async function SessionDetailPage({ params }: Props) {
       TrainingPlanSession:planSessionId(id, title, focusArea)
     `)
     .eq("id", sessionId)
-    .single();
+    .maybeSingle();
 
   if (!log) {
     notFound();

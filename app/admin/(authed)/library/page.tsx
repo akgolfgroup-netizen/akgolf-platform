@@ -34,7 +34,7 @@ export default async function LibraryPage({ searchParams }: PageProps) {
   if (!user) redirect("/portal/login");
 
   const allowed = await hasCapability(user.id, Capability.LIBRARY_VIEW);
-  if (!allowed) redirect("/admin/dashboard");
+  if (!allowed) redirect("/admin");
 
   const params = await searchParams;
   const status = VALID_STATUSES.includes(params.status as LibraryItemStatus)
