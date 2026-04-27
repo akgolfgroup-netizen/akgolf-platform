@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { WebsiteNav } from "@/components/website/WebsiteNav";
-import { WebsiteFooter } from "@/components/website/WebsiteFooter";
+import { WebNav } from "@/components/website-v2/web-nav";
+import { WebFooter } from "@/components/website-v2/web-footer";
 
 export default function PersonvernPage() {
   return (
@@ -13,7 +13,7 @@ export default function PersonvernPage() {
       >
         Hopp til hovedinnhold
       </a>
-      <WebsiteNav />
+      <WebNav />
 
       <main className="pt-[52px]" id="main-content">
         <section className="w-section-lg">
@@ -256,7 +256,7 @@ export default function PersonvernPage() {
         </section>
       </main>
 
-      <WebsiteFooter />
+      <WebFooter />
     </>
   );
 }

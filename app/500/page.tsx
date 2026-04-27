@@ -1,57 +1,83 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-
-import { Icon } from "@/components/ui/icon";
-import { GlassPanel } from "@/components/portal/patterns/glass-panel";
-import { MonoLabel } from "@/components/portal/patterns/mono-label";
-import { NightSurface } from "@/components/portal/patterns/night-surface";
+import { ArrowRight, RefreshCw, AlertTriangle } from "lucide-react";
+import { WebNav } from "@/components/website-v2/web-nav";
+import { WebFooter } from "@/components/website-v2/web-footer";
 
 export const dynamic = "force-dynamic";
 
 export default function ServerErrorPage() {
   return (
-    <NightSurface variant="ambient" className="min-h-screen flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md"
-      >
-        <GlassPanel variant="dark" padding="lg" className="text-center">
-          <div className="w-16 h-16 bg-error/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Icon name="error" size={32} className="text-error-container" />
+    <div
+      className="min-h-screen flex flex-col"
+      style={{
+        background: "var(--akgolf-surface, #ECF0EF)",
+        color: "var(--akgolf-text, #324D45)",
+        fontFamily: "var(--font-inter), Inter, sans-serif",
+      }}
+    >
+      <WebNav />
+      <main className="flex flex-1 items-center justify-center px-10 py-[140px]">
+        <div className="mx-auto max-w-[720px] text-center">
+          <div
+            className="mx-auto mb-8 grid h-16 w-16 place-items-center rounded-2xl"
+            style={{
+              background: "rgba(184,66,51,0.12)",
+              color: "var(--akgolf-danger, #B84233)",
+            }}
+          >
+            <AlertTriangle className="h-7 w-7" />
           </div>
-
-          <MonoLabel size="xs" uppercase className="text-[#F2F5F1]/40 block mb-2">
-            500 — Server Error
-          </MonoLabel>
-
-          <h1 className="text-2xl font-bold text-[#F2F5F1] mb-2">
-            Noe gikk galt
+          <div
+            className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em]"
+            style={{
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              color: "var(--akgolf-danger, #B84233)",
+            }}
+          >
+            500 · SERVERFEIL
+          </div>
+          <h1
+            className="mb-5 text-[clamp(40px,5.5vw,68px)] font-extrabold leading-[1.05] tracking-[-0.035em] text-[var(--akgolf-ink,#0A1F18)] text-balance"
+            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+          >
+            Noe gikk{" "}
+            <em
+              className="font-medium not-italic"
+              style={{
+                fontFamily: "var(--font-fraunces), Georgia, serif",
+                fontStyle: "italic",
+                color: "var(--akgolf-primary, #005840)",
+              }}
+            >
+              galt
+            </em>
+            .
           </h1>
-          <p className="text-[#F2F5F1]/60 mb-8">
-            Beklager, det oppstod en uventet feil på serveren. Prøv å laste siden på nytt, eller gå tilbake til forsiden.
+          <p className="mx-auto mb-9 max-w-[50ch] text-[17px] leading-[1.55] text-[var(--akgolf-text,#324D45)]">
+            Beklager, det oppstod en uventet feil på serveren. Prøv å laste
+            siden på nytt, eller gå tilbake til forsiden.
           </p>
-
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3.5">
             <button
               onClick={() => window.location.reload()}
-              className="inline-flex items-center justify-center gap-2 w-full bg-[#F2F5F1]/5 hover:bg-[#F2F5F1]/10 text-[#F2F5F1] font-semibold py-3 rounded-xl border border-white/[0.10] transition-all"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--akgolf-accent,#D1F843)] px-6 py-3.5 text-sm font-bold text-[var(--akgolf-ink,#0A1F18)] transition-all hover:-translate-y-px hover:shadow-[0_12px_28px_rgba(209,248,67,0.35)]"
             >
-              <Icon name="refresh" size={18} />
+              <RefreshCw className="h-4 w-4" strokeWidth={2.4} />
               Last siden på nytt
             </button>
             <Link
               href="/"
-              className="inline-flex items-center justify-center gap-2 w-full bg-secondary-fixed hover:bg-secondary-fixed/90 text-on-secondary-fixed font-bold py-3 rounded-xl transition-all"
+              className="inline-flex items-center gap-2 rounded-full border border-[rgba(10,31,24,0.20)] bg-transparent px-6 py-3.5 text-sm font-bold text-[var(--akgolf-ink,#0A1F18)] transition-all hover:bg-[var(--akgolf-ink,#0A1F18)] hover:text-white"
             >
-              <Icon name="home" size={18} />
-              Til forsiden
+              Tilbake til forsiden
+              <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
             </Link>
           </div>
-        </GlassPanel>
-      </motion.div>
-    </NightSurface>
+        </div>
+      </main>
+      <WebFooter />
+    </div>
   );
 }
