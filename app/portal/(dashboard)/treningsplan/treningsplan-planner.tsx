@@ -1097,12 +1097,15 @@ function CreateSessionModal({
             </div>
           </div>
 
-          {/* Pyramide-fokus */}
+          {/* Type trening (Pyramide) */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Pyramide
+              Type trening
             </label>
-            <div className="mt-1 flex flex-wrap gap-2">
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              Hva slags økt er dette? Velg én hovedtype.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
               {PYRAMIDE.map((p) => (
                 <button
                   key={p.code}
@@ -1121,11 +1124,14 @@ function CreateSessionModal({
             </div>
           </div>
 
-          {/* Treningsområde (valgfri) */}
+          {/* Hva øver du på (Treningsområde) */}
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Treningsområde (valgfri)
+              Hva øver du på (valgfri)
             </label>
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              F.eks. innspill 50–100 m, chip eller putt 5–10 ft.
+            </p>
             <select
               value={area}
               onChange={(e) => setArea(e.target.value)}
@@ -1133,7 +1139,7 @@ function CreateSessionModal({
             >
               <option value="">Ingen valgt</option>
               {OMRADE_GRUPPER.map((gruppe) => (
-                <optgroup key={gruppe.code} label={gruppe.label}>
+                <optgroup key={gruppe.code} label={gruppe.code === "narspill" ? "Kort spill" : gruppe.label}>
                   {TRENINGSOMRADER.filter((o) => o.gruppe === gruppe.code).map((o) => (
                     <option key={o.code} value={o.code}>
                       {o.label}
@@ -1380,9 +1386,12 @@ function EditSessionModal({
 
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Pyramide
+              Type trening
             </label>
-            <div className="mt-1 flex flex-wrap gap-2">
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              Hva slags økt er dette? Velg én hovedtype.
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
               {PYRAMIDE.map((p) => (
                 <button
                   key={p.code}
@@ -1403,8 +1412,11 @@ function EditSessionModal({
 
           <div>
             <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
-              Treningsområde (valgfri)
+              Hva øver du på (valgfri)
             </label>
+            <p className="mt-1 text-[11px] text-on-surface-variant">
+              F.eks. innspill 50–100 m, chip eller putt 5–10 ft.
+            </p>
             <select
               value={area}
               onChange={(e) => setArea(e.target.value)}
@@ -1412,7 +1424,7 @@ function EditSessionModal({
             >
               <option value="">Ingen valgt</option>
               {OMRADE_GRUPPER.map((gruppe) => (
-                <optgroup key={gruppe.code} label={gruppe.label}>
+                <optgroup key={gruppe.code} label={gruppe.code === "narspill" ? "Kort spill" : gruppe.label}>
                   {TRENINGSOMRADER.filter((o) => o.gruppe === gruppe.code).map((o) => (
                     <option key={o.code} value={o.code}>
                       {o.label}
@@ -1706,8 +1718,8 @@ function ExercisesPlaceholder() {
         )}
       </div>
 
-      {/* Pyramide */}
-      <FilterSection label="Pyramide">
+      {/* Type trening (Pyramide) */}
+      <FilterSection label="Type">
         <div className="flex flex-wrap gap-1">
           {PYRAMIDE.map((p) => {
             const active = pyramide === p.code;
@@ -1715,25 +1727,26 @@ function ExercisesPlaceholder() {
               <button
                 key={p.code}
                 onClick={() => setPyramide(active ? null : p.code)}
-                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                className={`rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide transition-colors ${
                   active
                     ? "bg-primary text-surface"
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
                 }`}
                 title={p.description}
               >
-                {p.code}
+                {p.label}
               </button>
             );
           })}
         </div>
       </FilterSection>
 
-      {/* Område */}
-      <FilterSection label="Område">
+      {/* Hva øver du på (Treningsområde) */}
+      <FilterSection label="Hva øver du på">
         <div className="flex flex-wrap gap-1">
           {OMRADE_GRUPPER.map((g) => {
             const active = omraadeGruppe === g.code;
+            const visningsLabel = g.code === "narspill" ? "Kort spill" : g.label;
             return (
               <button
                 key={g.code}
@@ -1746,13 +1759,13 @@ function ExercisesPlaceholder() {
                     setOmraadeCode(null);
                   }
                 }}
-                className={`rounded px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                className={`rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wide transition-colors ${
                   active
                     ? "bg-primary text-surface"
                     : "bg-surface text-on-surface-variant hover:bg-surface-container"
                 }`}
               >
-                {g.label}
+                {visningsLabel}
               </button>
             );
           })}
@@ -1765,14 +1778,14 @@ function ExercisesPlaceholder() {
                 <button
                   key={o.code}
                   onClick={() => setOmraadeCode(active ? null : o.code)}
-                  className={`rounded px-2 py-0.5 font-mono text-[9px] uppercase tracking-tight transition-colors ${
+                  className={`rounded px-2 py-0.5 text-[10px] tracking-tight transition-colors ${
                     active
                       ? "bg-secondary-fixed text-primary"
                       : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container"
                   }`}
                   title={o.label}
                 >
-                  {o.code}
+                  {o.label}
                 </button>
               );
             })}
@@ -1780,8 +1793,8 @@ function ExercisesPlaceholder() {
         )}
       </FilterSection>
 
-      {/* L-fase */}
-      <FilterSection label="L-fase">
+      {/* Bevegelse (L-fase, fagord — beholdt for treneres behov) */}
+      <FilterSection label="Bevegelse">
         <div className="flex flex-wrap gap-1">
           {L_FASER.map((f) => {
             const active = lFase === f.code;

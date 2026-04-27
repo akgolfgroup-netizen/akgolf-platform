@@ -114,13 +114,18 @@ export function ExerciseConfigPopover({
           <p className="mt-1 text-xs text-on-surface-variant">{draft.description}</p>
         )}
 
+        <p className="mt-3 text-[11px] text-on-surface-variant">
+          Sett tid og antall slag for denne øvelsen. Reps er valgfritt — fyll
+          ut det som er relevant for deg.
+        </p>
+
         <div className="mt-4 grid grid-cols-2 gap-3">
           <div>
             <label
               htmlFor="ex-duration"
               className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60"
             >
-              Tid (min)
+              Tid (minutter)
             </label>
             <input
               id="ex-duration"
@@ -139,14 +144,14 @@ export function ExerciseConfigPopover({
               htmlFor="ex-focus"
               className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60"
             >
-              Fokus
+              Stikkord
             </label>
             <input
               id="ex-focus"
               type="text"
               value={focus}
               onChange={(e) => setFocus(e.target.value)}
-              placeholder="f.eks. Tempo"
+              placeholder="f.eks. Tempo, balanse"
               className="mt-1 w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
             />
           </div>
@@ -155,7 +160,7 @@ export function ExerciseConfigPopover({
               htmlFor="ex-reps-ball"
               className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60"
             >
-              Reps med ball
+              Antall slag (med ball)
             </label>
             <input
               id="ex-reps-ball"
@@ -173,7 +178,7 @@ export function ExerciseConfigPopover({
               htmlFor="ex-reps-noball"
               className="block font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60"
             >
-              Reps uten ball
+              Tørre svinger (uten ball)
             </label>
             <input
               id="ex-reps-noball"
@@ -200,7 +205,7 @@ export function ExerciseConfigPopover({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={2}
-            placeholder="f.eks. Bruk SuperSpeed-køller for første 20 reps"
+            placeholder="f.eks. Bruk SuperSpeed-køller for første 20 slag"
             className="mt-1 w-full resize-none rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none"
           />
         </div>
