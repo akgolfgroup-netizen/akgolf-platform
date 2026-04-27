@@ -1,35 +1,25 @@
 "use client";
 
-
-import { Icon } from "@/components/ui/icon";
 import * as React from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-
-import {
-  fadeInUp,
-  staggerContainer,
-} from "@/components/portal/premium";
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
 import type {
   BookingViewModel,
   CancellationRule,
 } from "@/components/portal/booking/booking-types";
-import { NextBookingHero } from "@/components/portal/booking/next-booking-hero";
-import { UpcomingBookingCard } from "@/components/portal/booking/upcoming-booking-card";
-import { PastBookingList } from "@/components/portal/booking/past-booking-list";
-import { CancellationRulesCard } from "@/components/portal/booking/cancellation-rules-card";
+import { BookingShell } from "@/components/portal/bookinger/v2/booking-shell";
+import { PageHeader } from "@/components/portal/bookinger/v2/page-header";
+import { NextBookingHero } from "@/components/portal/bookinger/v2/next-booking-hero";
 import {
-  BookingHoverCardGroup,
-  BookingHoverCard,
-} from "@/components/portal/booking/booking-hover-card";
-import {
-  VerticalTimeline,
-  MonoLabel,
-  type TimelineItem,
-} from "@/components/portal/patterns";
+  BookingTabs,
+  type BookingTab,
+} from "@/components/portal/bookinger/v2/booking-tabs";
+import { DaySeparator } from "@/components/portal/bookinger/v2/day-separator";
+import { BookingRow } from "@/components/portal/bookinger/v2/booking-row";
+import { CancellationRules } from "@/components/portal/bookinger/v2/cancellation-rules";
+import { EmptyState } from "@/components/portal/bookinger/v2/empty-state";
+import { groupByDay } from "@/components/portal/bookinger/v2/booking-utils";
+import { cancelBooking } from "./actions";
 
-// Re-eksporter typer som page.tsx trenger
+// Re-eksporter typer som page.tsx eventuelt importerer
 export type { BookingViewModel, CancellationRule };
 
 interface BookingerClientProps {
@@ -46,170 +36,170 @@ export function BookingerClient({
   emptyMessage,
 }: BookingerClientProps) {
   const upcomingCount = upcoming.length;
-  const pastCount = past.length;
+  const completed = React.useMemo(
+    () => past.filter((b) => b.status === "completed"),
+    [past],
+  );
+  const cancelled = React.useMemo(
+    () => past.filter((b) => b.status === "cancelled"),
+    [past],
+  );
 
-  // Splitt: neste booking (hero) + resten
+  const [activeTab, setActiveTab] = React.useState<BookingTab>("upcoming");
+  const [pendingId, setPendingId] = React.useState<string | null>(null);
+
   const nextBooking = upcoming[0] ?? null;
   const restUpcoming = upcoming.slice(1);
+  const upcomingGroups = React.useMemo(
+    () => groupByDay(restUpcoming),
+    [restUpcoming],
+  );
+  const completedGroups = React.useMemo(
+    () => groupByDay(completed),
+    [completed],
+  );
+  const cancelledGroups = React.useMemo(
+    () => groupByDay(cancelled),
+    [cancelled],
+  );
 
-  // v3.1: Bygg timeline for kommende 7 dager
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const oneWeekFromNow = new Date(today);
-  oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
-
-  const timelineItems: TimelineItem[] = upcoming
-    .filter((b) => {
-      const d = new Date(b.startTime);
-      return d >= today && d <= oneWeekFromNow;
-    })
-    .slice(0, 8)
-    .map((b) => {
-      const d = new Date(b.startTime);
-      const timeStr = `${d.getHours().toString().padStart(2, "0")}:${d
-        .getMinutes()
-        .toString()
-        .padStart(2, "0")}`;
-      const dayLabel = d.toLocaleDateString("nb-NO", { weekday: "short" });
-      return {
-        id: b.id,
-        time: timeStr,
-        title: b.serviceName,
-        meta: `${dayLabel.toUpperCase()} · ${b.instructorName}`,
-        dotColor: b.id === nextBooking?.id ? "lime" : "sage",
-        active: b.id === nextBooking?.id,
-        href: `/portal/bookinger/${b.id}`,
-      };
-    });
+  async function handleCancel(id: string) {
+    if (pendingId) return;
+    const ok = window.confirm(
+      "Er du sikker på at du vil avbestille denne bookingen?",
+    );
+    if (!ok) return;
+    setPendingId(id);
+    try {
+      const result = await cancelBooking(id);
+      if (!result.success) {
+        window.alert(result.error ?? "Avbestilling feilet");
+      }
+    } catch (err) {
+      window.alert(
+        err instanceof Error ? err.message : "Avbestilling feilet",
+      );
+    } finally {
+      setPendingId(null);
+    }
+  }
 
   return (
-    <div className="space-y-6">
-      {/* ═══ HERO ═══ */}
-      <div className="space-y-3">
-        <MonoLabel as="p" size="xs" uppercase className="text-on-surface-variant block">Mine bookinger</MonoLabel>
-        <h1 className="text-2xl font-bold text-on-surface">
-          Dine{" "}
-          <span className="font-serif italic text-on-surface font-normal">
-            bookinger
-          </span>
-          <span className="text-secondary-fixed">.</span>
-        </h1>
-        <p className="text-[13px] text-on-surface-variant max-w-xl">
-          <span className="font-semibold text-on-surface tabular-nums">
-            {upcomingCount}
-          </span>{" "}
-          kommende og{" "}
-          <span className="font-semibold text-on-surface tabular-nums">
-            {pastCount}
-          </span>{" "}
-          tidligere økter.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
-            <Link
-              href="/portal/bookinger/ny"
-              className="relative h-11 px-6 rounded-full bg-secondary-fixed text-on-surface text-[12px] font-bold inline-flex items-center gap-2 shadow-[0_8px_24px_rgba(10,31,24,0.12)] hover:shadow-[0_12px_32px_rgba(10,31,24,0.16)] transition-shadow overflow-hidden group"
-            >
-              <Icon name="add" className="w-3.5 h-3.5 relative z-10" />
-              <span className="relative z-10">Ny booking</span>
-            </Link>
-          </motion.div>
-          <Link
-            href="/portal/bookinger/venteliste"
-            className="h-11 px-5 rounded-full border border-outline-variant/40 text-on-surface text-[12px] font-medium inline-flex items-center gap-2 transition-colors hover:bg-surface-variant"
-          >
-            <Icon name="hourglass_empty" className="w-3.5 h-3.5" />
-            <span>Venteliste</span>
-          </Link>
-        </div>
-      </div>
+    <BookingShell>
+      <PageHeader upcomingCount={upcomingCount} pastCount={past.length} />
 
-      {/* ═══ NESTE BOOKING (uthevet) ═══ */}
-      {nextBooking && <NextBookingHero booking={nextBooking} />}
-
-      {/* ═══ 7-DAGERS TIDSLINJE (v3.1 — P-06) ═══ */}
-      {timelineItems.length > 0 && (
-        <motion.section
-          variants={fadeInUp}
-          initial="hidden"
-          animate="visible"
-          className="bg-surface-container-lowest rounded-xl shadow-card p-6"
-        >
-          <div className="mb-4 flex items-center justify-between">
-            <MonoLabel size="xs" uppercase className="text-on-surface-variant">
-              Neste 7 dager
-            </MonoLabel>
-            <MonoLabel size="xs" className="text-on-surface-variant">
-              {timelineItems.length} planlagt
-            </MonoLabel>
-          </div>
-          <VerticalTimeline items={timelineItems} compact />
-        </motion.section>
+      {nextBooking && (
+        <NextBookingHero booking={nextBooking} onCancel={handleCancel} />
       )}
 
-      {/* ═══ AVBESTILLINGSREGLER ═══ */}
-      <motion.div variants={fadeInUp} initial="hidden" animate="visible">
-        <CancellationRulesCard rules={cancellationRules} />
-      </motion.div>
+      <BookingTabs
+        active={activeTab}
+        onChange={setActiveTab}
+        tabs={[
+          { id: "upcoming", label: "Kommende", count: upcomingCount },
+          { id: "completed", label: "Gjennomførte", count: completed.length },
+          { id: "cancelled", label: "Avlyste", count: cancelled.length },
+        ]}
+      />
 
-      {/* ═══ KOMMENDE (resten) ═══ */}
-      {restUpcoming.length > 0 && (
-        <motion.section
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="space-y-4"
-        >
-          <div className="flex items-center justify-between">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant flex items-center gap-2">
-              <span className="w-6 h-px bg-on-surface-variant" />
-              Kommende
-            </p>
-            <span className="text-[11px] text-on-surface-variant tabular-nums">
-              {restUpcoming.length} planlagt
-            </span>
-          </div>
-
-          <BookingHoverCardGroup>
-            {restUpcoming.map((booking, i) => (
-              <BookingHoverCard key={booking.id} index={i}>
-                <motion.div
-                  variants={fadeInUp}
-                  transition={{ delay: i * 0.05 }}
+      {activeTab === "upcoming" && (
+        <>
+          {upcomingCount === 0 ? (
+            <EmptyState message={emptyMessage} />
+          ) : (
+            <>
+              <CancellationRules rules={cancellationRules} />
+              {nextBooking && upcomingGroups.length === 0 ? (
+                <p
+                  style={{
+                    fontSize: 13,
+                    color: "rgba(255,255,255,0.55)",
+                    textAlign: "center",
+                    padding: "24px 0",
+                  }}
                 >
-                  <UpcomingBookingCard booking={booking} />
-                </motion.div>
-              </BookingHoverCard>
-            ))}
-          </BookingHoverCardGroup>
-        </motion.section>
+                  Ingen flere kommende bookinger etter den neste.
+                </p>
+              ) : (
+                upcomingGroups.map((group) => (
+                  <div key={group.key}>
+                    <DaySeparator
+                      label={group.label}
+                      count={group.bookings.length}
+                    />
+                    {group.bookings.map((b) => (
+                      <BookingRow
+                        key={b.id}
+                        booking={b}
+                        variant="upcoming"
+                        onCancel={handleCancel}
+                      />
+                    ))}
+                  </div>
+                ))
+              )}
+            </>
+          )}
+        </>
       )}
 
-      {/* ═══ TOM TILSTAND ═══ */}
-      {upcomingCount === 0 && (
-        <motion.div variants={fadeInUp} initial="hidden" animate="visible">
-          <PremiumCard className="text-center">
-            <div className="flex flex-col items-center gap-4 py-6">
-              <div className="w-14 h-14 rounded-2xl bg-on-surface/10 flex items-center justify-center">
-                <Icon name="calendar_today"
-                  className="w-6 h-6 text-on-surface"
-                  />
+      {activeTab === "completed" && (
+        <>
+          {completed.length === 0 ? (
+            <p
+              style={{
+                fontSize: 13,
+                color: "rgba(255,255,255,0.55)",
+                textAlign: "center",
+                padding: "32px 0",
+              }}
+            >
+              Ingen gjennomførte økter ennå.
+            </p>
+          ) : (
+            completedGroups.map((group) => (
+              <div key={group.key}>
+                <DaySeparator
+                  label={group.label}
+                  count={group.bookings.length}
+                />
+                {group.bookings.map((b) => (
+                  <BookingRow key={b.id} booking={b} variant="past" />
+                ))}
               </div>
-              <p className="text-[13px] text-on-surface-variant max-w-sm">{emptyMessage}</p>
-              <Link
-                href="/portal/bookinger/ny"
-                className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-on-surface hover:gap-2 transition-all"
-              >
-                <Icon name="add" className="w-3.5 h-3.5" />
-                Book din første time
-              </Link>
-            </div>
-          </PremiumCard>
-        </motion.div>
+            ))
+          )}
+        </>
       )}
 
-      {/* ═══ TIDLIGERE ═══ */}
-      <PastBookingList bookings={past} />
-    </div>
+      {activeTab === "cancelled" && (
+        <>
+          {cancelled.length === 0 ? (
+            <p
+              style={{
+                fontSize: 13,
+                color: "rgba(255,255,255,0.55)",
+                textAlign: "center",
+                padding: "32px 0",
+              }}
+            >
+              Ingen avlyste bookinger.
+            </p>
+          ) : (
+            cancelledGroups.map((group) => (
+              <div key={group.key}>
+                <DaySeparator
+                  label={group.label}
+                  count={group.bookings.length}
+                />
+                {group.bookings.map((b) => (
+                  <BookingRow key={b.id} booking={b} variant="cancelled" />
+                ))}
+              </div>
+            ))
+          )}
+        </>
+      )}
+    </BookingShell>
   );
 }
