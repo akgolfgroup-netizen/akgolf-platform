@@ -11,6 +11,7 @@ import { AdminProgressRing } from "@/components/portal/mission-control/ui";
 import { MonoLabel } from "@/components/portal/patterns";
 import { generateWeekFromForecast } from "@/lib/ai/forecast-plan-allocator";
 import type { ForecastPlanSession } from "@/lib/ai/forecast-plan-allocator";
+import type { RootCause } from "@/lib/portal/predictions/generate-coaching-forecast";
 import { GenerateWeekModal } from "./components/generate-week-modal";
 interface CategoryHours {
   hours: number;
@@ -167,7 +168,7 @@ export function MinPlanClient({ forecast, userName }: MinPlanClientProps) {
         probabilityOfSuccess: forecast.probabilityOfSuccess,
         confidenceInterval95: forecast.confidenceInterval95,
         monteCarloRuns: forecast.monteCarloRuns,
-        rootCauseSummary: forecast.rootCauseJson,
+        rootCauseSummary: forecast.rootCauseJson as Record<string, RootCause>,
         assumptions: forecast.assumptionsJson,
         recommendations: forecast.recommendationsJson,
       }

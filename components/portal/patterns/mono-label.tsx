@@ -8,16 +8,18 @@
  */
 
 import { cn } from "@/lib/utils";
-import type { ReactNode, HTMLAttributes, ElementType } from "react";
+import type { ReactNode, HTMLAttributes, ElementType, LabelHTMLAttributes } from "react";
 
 type MonoLabelSize = "xs" | "sm" | "md" | "lg";
 
-interface MonoLabelProps extends HTMLAttributes<HTMLElement> {
+interface MonoLabelProps
+  extends HTMLAttributes<HTMLElement>,
+    Pick<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor"> {
   children: ReactNode;
   size?: MonoLabelSize;
   uppercase?: boolean;
   tabular?: boolean;
-  /** HTML-tag (default "span"). Bruk "p" for blokk-elementer. */
+  /** HTML-tag (default "span"). Bruk "p" for blokk-elementer eller "label" for skjema-labels. */
   as?: ElementType;
 }
 

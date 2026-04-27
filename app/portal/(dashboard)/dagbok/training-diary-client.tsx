@@ -107,7 +107,7 @@ export function TrainingDiaryClient({
     return logs.map(log => ({
       date: new Date(log.date),
       minutes: log.durationMinutes || 0,
-      type: log.type,
+      type: log.focusArea ?? "OTHER",
     }));
   }, [logs]);
 
@@ -136,7 +136,7 @@ export function TrainingDiaryClient({
     }
   };
 
-  const handleSelectSession = (session: TrainingLogEntry) => {
+  const handleSelectSession = (session: { id: string }) => {
     const log = logs.find(l => l.id === session.id);
     if (log) {
       setEditingLog(log);

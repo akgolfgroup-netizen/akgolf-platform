@@ -15,6 +15,8 @@ interface BentoCardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: "glass" | "accent" | "light";
   interactive?: boolean;
   padding?: "none" | "sm" | "md" | "lg";
+  /** Antall kolonner kortet spenner over i en BentoGrid (1-4). */
+  span?: 1 | 2 | 3 | 4;
 }
 
 const PADDING_MAP = {
@@ -22,6 +24,13 @@ const PADDING_MAP = {
   sm: "p-3",
   md: "p-5",
   lg: "p-7",
+};
+
+const SPAN_MAP = {
+  1: "col-span-1",
+  2: "md:col-span-2",
+  3: "md:col-span-3",
+  4: "md:col-span-4",
 };
 
 const VARIANT_CLASSES = {
@@ -38,6 +47,7 @@ export function BentoCard({
   variant = "glass",
   interactive = false,
   padding = "md",
+  span,
   className,
   ...props
 }: BentoCardProps) {
@@ -47,6 +57,7 @@ export function BentoCard({
         "rounded-[20px]",
         VARIANT_CLASSES[variant],
         PADDING_MAP[padding],
+        span && SPAN_MAP[span],
         interactive &&
           "transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:border-secondary-fixed/30",
         className
@@ -63,11 +74,12 @@ export function BentoCard({
  */
 interface BentoGridProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
-  cols?: 2 | 3 | 4;
+  cols?: 1 | 2 | 3 | 4;
   gap?: "sm" | "md" | "lg";
 }
 
 const COLS_MAP = {
+  1: "grid-cols-1",
   2: "grid-cols-1 md:grid-cols-2",
   3: "grid-cols-1 md:grid-cols-3",
   4: "grid-cols-2 md:grid-cols-4",

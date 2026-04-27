@@ -2,7 +2,7 @@
 
 
 import * as React from "react";
-import { AlertTriangle, CheckCircle2, Info, XCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Info, X, XCircle } from "lucide-react";
 
 export type AdminToastVariant = "success" | "error" | "warning" | "info";
 
@@ -107,7 +107,7 @@ export function AdminToastProvider({
                 className="shrink-0 p-0.5 rounded hover:bg-on-surface/5"
                 aria-label="Lukk varsel"
               >
-                <Icon name="close" className="w-4 h-4 text-on-surface-variant" />
+                <X className="w-4 h-4 text-on-surface-variant" />
               </button>
             </div>
           );
