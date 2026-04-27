@@ -58,8 +58,9 @@ export async function GET() {
   }
 
   try {
+    const apiVersion = "2026-02-25.clover" as const;
     const stripe = new Stripe(stripeKey, {
-      apiVersion: "2025-02-24.acacia",
+      apiVersion,
     });
 
     // Test API-tilkobling ved å hente produkter
@@ -88,7 +89,7 @@ export async function GET() {
       stripe: {
         configured: true,
         mode: isLiveKey ? "live" : "test",
-        apiVersion: stripe.getApiField("version") || "2025-02-24.acacia",
+        apiVersion,
         responseTimeMs,
         products: products.data.length,
         warnings: warnings.length > 0 ? warnings : undefined,

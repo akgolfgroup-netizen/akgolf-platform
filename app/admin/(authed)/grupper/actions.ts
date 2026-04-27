@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/portal/prisma";
+import { Prisma } from "@prisma/client";
 import { requireAuth } from "@/lib/portal/auth";
 import { isStaff } from "@/lib/portal/rbac";
 import { revalidatePath } from "next/cache";
@@ -561,7 +562,7 @@ export async function syncGroupPlanToMembers(
             exercises: [
               ...exercises,
               { _groupSessionId: gs.id, _groupName: group.name },
-            ],
+            ] as Prisma.InputJsonValue,
             sortOrder: gs.sortOrder,
           },
         });

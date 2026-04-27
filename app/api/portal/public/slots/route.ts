@@ -21,7 +21,7 @@ import {
   type SlotStrategy,
 } from "@/lib/portal/slots";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/portal/rate-limit";
-import { unstable_cache, revalidateTag } from "next/cache";
+import { unstable_cache, updateTag } from "next/cache";
 import { logger } from "@/lib/logger";
 import { getPortalUser } from "@/lib/portal/auth";
 import { canAccessMissionControl } from "@/lib/portal/rbac";
@@ -341,13 +341,13 @@ export async function POST(req: NextRequest) {
     }
 
     // Revalidate cache tags
-    revalidateTag(CACHE_TAG_PREFIX);
+    updateTag(CACHE_TAG_PREFIX);
     if (date) {
-      revalidateTag(getSlotsCacheKey(instructorId, date, ""));
+      updateTag(getSlotsCacheKey(instructorId, date, ""));
     }
 
     // Also invalidate general availability
-    revalidateTag(`availability:${instructorId}`);
+    updateTag(`availability:${instructorId}`);
 
     return NextResponse.json({
       success: true,
