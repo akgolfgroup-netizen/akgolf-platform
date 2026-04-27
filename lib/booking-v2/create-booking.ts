@@ -26,6 +26,7 @@ import {
   invalidateBookingsCache,
 } from "@/lib/portal/booking/cache";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
+import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
 import { logger } from "@/lib/logger";
 import { createClient } from "@supabase/supabase-js";
 import type { BookingDraft } from "./draft";
@@ -167,7 +168,7 @@ export async function createBookingV2(input: {
       category: true,
       isActive: true,
       isPublic: true,
-      Instructor: { select: { id: true, userId: true, User: { select: { name: true, email: true } } } },
+      Instructor: { select: { id: true, userId: true, User: { select: { name: true, email: true, phone: true } } } },
     },
   });
 
@@ -320,7 +321,7 @@ export async function createBookingV2(input: {
     invalidateBookingsCache(instructorId).catch(() => null),
   ]);
 
-  // Subscription-covered: send confirmation-mail + redirect direkte til /confirmation
+  // Subscription-covered: send confirmation-mail + SMS til trener + redirect til bekreftelse
   if (subscriptionCovered) {
     const studentName = `${draft.customer.firstName} ${draft.customer.lastName}`.trim() || user.name || "Kunde";
     sendBookingConfirmation({
@@ -338,6 +339,21 @@ export async function createBookingV2(input: {
     }).catch((err: unknown) =>
       logger.error("[booking-v2/create] confirmation email failed", err),
     );
+
+    // SMS til instruktør (best effort — feiler stille hvis Twilio ikke er konfigurert
+    // eller treneren mangler telefonnummer).
+    if (instructor.User?.phone) {
+      sendBookingConfirmationSms({
+        instructorPhone: instructor.User.phone,
+        instructorName: instructor.User.name ?? "Instruktør",
+        studentName,
+        serviceName: service.name,
+        startTime,
+        duration: service.duration,
+      }).catch((err: unknown) =>
+        logger.error("[booking-v2/create] confirmation SMS failed", err),
+      );
+    }
 
     return {
       ok: true,

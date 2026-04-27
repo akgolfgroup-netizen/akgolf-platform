@@ -5,6 +5,7 @@ import { nb } from "date-fns/locale";
 import { Stepper } from "@/components/booking-v2/Stepper";
 import { POLICY } from "@/components/booking-v2/copy";
 import { prisma } from "@/lib/portal/prisma";
+import { generateIcal } from "@/lib/portal/calendar/ical";
 import { ClearDraftOnMount } from "./clear-draft-on-mount";
 
 interface PageProps {
@@ -28,7 +29,7 @@ const NB_MONTHS_SHORT = [
 ];
 
 /**
- * Bygg ICS-fil fra ekte booking-data. Returner som data: URI.
+ * Bygg ICS-fil fra ekte booking-data via shared generator. Returner som data: URI.
  */
 function buildIcsDataUrl(booking: {
   id: string;
@@ -37,28 +38,22 @@ function buildIcsDataUrl(booking: {
   ServiceType: { name: string } | null;
   Instructor: { User: { name: string | null } | null } | null;
 }): string {
-  const fmt = (d: Date) =>
-    d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
   const summary = `${booking.ServiceType?.name ?? "Coaching-økt"} med ${
     booking.Instructor?.User?.name ?? "AK Golf"
   }`;
-  const lines = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//AK Golf//Booking V2//NO",
-    "BEGIN:VEVENT",
-    `UID:${booking.id}@akgolf.no`,
-    `SUMMARY:${summary}`,
-    `DTSTART:${fmt(booking.startTime)}`,
-    `DTEND:${fmt(booking.endTime)}`,
-    "LOCATION:AK Golf studio, Oslo",
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ];
-  return (
-    "data:text/calendar;charset=utf-8," +
-    encodeURIComponent(lines.join("\n"))
+  const ics = generateIcal(
+    [
+      {
+        uid: `${booking.id}@akgolf.no`,
+        summary,
+        dtstart: booking.startTime,
+        dtend: booking.endTime,
+        location: "AK Golf studio, Oslo",
+      },
+    ],
+    "AK Golf Booking",
   );
+  return "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
 }
 
 export default async function BekreftelsePage({ searchParams }: PageProps) {

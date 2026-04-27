@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Stepper } from "@/components/booking-v2/Stepper";
 import { WaitlistForm } from "@/components/booking-v2/WaitlistForm";
 
@@ -9,48 +8,41 @@ export default function VentelistePage() {
       <section className="step-page active" data-step="empty">
         <p className="eyebrow">
           <span className="num">04 / 07</span>
-          Velg dato og tid
+          Venteliste
         </p>
         <h1 className="t-section">
-          Ikke en eneste <em>ledig</em> tid neste 14 dager.
+          Få beskjed når en <em>tid</em> blir ledig.
         </h1>
         <p className="lede">
-          Anders er fullbooket til og med 12. mai. La oss sette deg på ventelisten — du blir
-          varslet i samme sekund noen avbestiller.
+          Når noen avbestiller, sender vi et varsel — og du kan ta tiden på sekundet.
+          Ingen forpliktelse, du takker bare ja om det passer.
         </p>
-
-        <div className="empty-figure">
-          <span className="glyph">·</span>
-        </div>
 
         <div className="dt-grid">
           <WaitlistForm />
 
           <aside className="recap-card">
-            <h4>Andre alternativer</h4>
+            <h4>Slik fungerer ventelisten</h4>
             <div className="line">
-              <span className="l">Markus</span>
-              <span className="v">3 ledige denne uken</span>
+              <span className="l">01 · Avbestilling</span>
+              <span className="v">Vi får varsel</span>
             </div>
             <div className="line">
-              <span className="l">Banecoaching</span>
-              <span className="v">12. mai · ledig</span>
+              <span className="l">02 · Varsel</span>
+              <span className="v">Du får SMS + e-post</span>
             </div>
             <div className="line">
-              <span className="l">Flex 20</span>
-              <span className="v">Drop-in søn 09:00</span>
+              <span className="l">03 · Bekreft</span>
+              <span className="v">Klikk for å ta plassen</span>
+            </div>
+            <div className="line">
+              <span className="l">04 · Ferdig</span>
+              <span className="v">Bekreftelse + ICS</span>
             </div>
             <p className="policy" style={{ marginTop: 18 }}>
-              Ingen forpliktelse — varselet kommer som SMS eller e-post, og du takker bare ja om det
-              passer.
+              Vi prioriterer i kø-rekkefølge. Du står på listen til du takker ja eller melder deg av —
+              ingen automatisk fjerning.
             </p>
-            <Link
-              href="/booking-v2/velg-trener?service=performance&trainer=markus"
-              className="btn btn-secondary"
-              style={{ marginTop: 18 }}
-            >
-              Bytt trener →
-            </Link>
           </aside>
         </div>
       </section>

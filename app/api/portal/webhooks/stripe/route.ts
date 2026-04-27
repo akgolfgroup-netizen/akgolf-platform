@@ -5,6 +5,7 @@ import { logger } from "@/lib/logger";
 import { stripe } from "@/lib/portal/stripe";
 import { createServiceClient } from "@/lib/supabase/server";
 import { sendBookingConfirmation } from "@/lib/portal/email/send-booking-email";
+import { sendBookingConfirmationSms } from "@/lib/portal/sms/send-booking-sms";
 import { nanoid } from "nanoid";
 import {
   createQuotaForNewSubscription,
@@ -81,7 +82,7 @@ async function handleStripeEvent(
         startTime,
         ServiceType:serviceTypeId (name, duration, vatRate),
         User:studentId (name, email),
-        Instructor:instructorId (User:userId (name, email)),
+        Instructor:instructorId (User:userId (name, email, phone)),
         Location:locationId (name)
       `;
 
@@ -163,10 +164,11 @@ async function handleStripeEvent(
       // Type assertions for nested data
       const userArray = booking.User as unknown as Array<{ name?: string; email?: string }>;
       const user = userArray?.[0] ?? null;
-      const instructorArray = booking.Instructor as unknown as Array<{ 
-        User?: Array<{ name?: string; email?: string }> 
+      const instructorArray = booking.Instructor as unknown as Array<{
+        User?: Array<{ name?: string; email?: string; phone?: string }>
       }>;
       const instructor = instructorArray?.[0] ?? null;
+      const instructorUser = instructor?.User?.[0] ?? null;
       const locationArray = booking.Location as unknown as Array<{ name?: string }>;
       const location = locationArray?.[0] ?? null;
 
@@ -175,8 +177,8 @@ async function handleStripeEvent(
         bookingId: booking.id,
         studentName: user?.name ?? "Golfer",
         studentEmail: user?.email ?? "",
-        instructorName: instructor?.User?.[0]?.name ?? "Trener",
-        instructorEmail: instructor?.User?.[0]?.email ?? "",
+        instructorName: instructorUser?.name ?? "Trener",
+        instructorEmail: instructorUser?.email ?? "",
         serviceName: serviceType?.name ?? "Coaching",
         startTime: booking.startTime,
         duration: serviceType?.duration ?? 60,
@@ -184,6 +186,18 @@ async function handleStripeEvent(
         vatAmount: booking.vatAmount,
         location: location?.name ?? "Gamle Fredrikstad Golfklubb",
       }).catch((err) => logger.error("[Stripe Webhook] Email send failed", err));
+
+      // Send SMS to instructor (best effort — silent if Twilio missing or no phone)
+      if (instructorUser?.phone) {
+        sendBookingConfirmationSms({
+          instructorPhone: instructorUser.phone,
+          instructorName: instructorUser.name ?? "Instruktør",
+          studentName: user?.name ?? "Golfer",
+          serviceName: serviceType?.name ?? "Coaching",
+          startTime: new Date(booking.startTime),
+          duration: serviceType?.duration ?? 60,
+        }).catch((err) => logger.error("[Stripe Webhook] SMS send failed", err));
+      }
     }
   } else if (event.type === "payment_intent.payment_failed") {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;

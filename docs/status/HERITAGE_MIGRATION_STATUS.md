@@ -30,13 +30,13 @@ Appen er migrert fra 3 parallelle design-systemer (`--hg-*`, `--color-portal-*`,
 - Dev-server kjører uten build-errors
 
 ### Visuelt migrert:
-- ✅ Tokens (40+ Material 3-farger, radius, shadows)
-- ✅ Fonter (DM Sans + JetBrains Mono + Material Symbols)
-- ✅ Portal-sidebar (mørk grønn, lime-aktiv)
-- ✅ MC-sidebar (emerald-950, lime-aktiv, AK Golf header)
-- ✅ Landing-nav (uppercase, lime-accent)
-- ✅ Dashboard (én layout, ingen view-tabs)
-- ✅ Alle `bg-portal-*`, `text-portal-*`, `--hg-*` erstattet
+- Tokens (40+ Material 3-farger, radius, shadows)
+- Fonter (DM Sans + JetBrains Mono + Material Symbols)
+- Portal-sidebar (mørk grønn, lime-aktiv)
+- MC-sidebar (emerald-950, lime-aktiv, AK Golf header)
+- Landing-nav (uppercase, lime-accent)
+- Dashboard (én layout, ingen view-tabs)
+- Alle `bg-portal-*`, `text-portal-*`, `--hg-*` erstattet
 
 ### Gjenværende arbeid (ikke kritisk):
 
