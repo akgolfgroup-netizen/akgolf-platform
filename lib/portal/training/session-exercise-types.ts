@@ -40,7 +40,7 @@ export interface SessionExercise {
   area?: TreningsomraadeCode;
   lPhase?: LFaseCode;
 
-  /** CS-nivå ("CS0" til "CS100") — optional for øvelser uten CS */
+  /** CS-nivå ("CS50"–"CS100", min 50 % av maks). Optional for L-KROPP/L-ARM. */
   cs?: string;
 
   /** Miljø ("M0"–"M5") */

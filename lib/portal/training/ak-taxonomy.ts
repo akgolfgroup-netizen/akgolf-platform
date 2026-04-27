@@ -79,10 +79,10 @@ export interface LFase {
 }
 
 export const L_FASER: readonly LFase[] = [
-  { code: "L-KROPP", label: "Kropp", description: "Kun kroppsbevegelse", equipment: "Ingen", csAnbefalt: "CS0" },
-  { code: "L-ARM", label: "Arm", description: "Kropp + armer", equipment: "Ingen kølle/ball", csAnbefalt: "CS0" },
-  { code: "L-KØLLE", label: "Kølle", description: "Kropp + armer + kølle", equipment: "Ingen ball", csAnbefalt: "CS20–40" },
-  { code: "L-BALL", label: "Ball", description: "Alt inkludert, lav hastighet", equipment: "Ball", csAnbefalt: "CS40–60" },
+  { code: "L-KROPP", label: "Kropp", description: "Kun kroppsbevegelse", equipment: "Ingen", csAnbefalt: "—" },
+  { code: "L-ARM", label: "Arm", description: "Kropp + armer", equipment: "Ingen kølle/ball", csAnbefalt: "—" },
+  { code: "L-KØLLE", label: "Kølle", description: "Kropp + armer + kølle", equipment: "Ingen ball", csAnbefalt: "CS50" },
+  { code: "L-BALL", label: "Ball", description: "Alt inkludert, lav hastighet", equipment: "Ball", csAnbefalt: "CS50–60" },
   { code: "L-AUTO", label: "Auto", description: "Full hastighet, automatisert", equipment: "Alt", csAnbefalt: "CS70–100" },
 ] as const;
 
@@ -96,11 +96,12 @@ export interface CSNivaa {
   description: string;
 }
 
+// CS-skalaen starter på 50 % av maks innsats — CS-nivåer under 50
+// brukes ikke i ny treningsplan. Eldre AI-pipeline (AGE_GROUP_TABLE
+// for de yngste aldersgruppene) refererer fortsatt til CS20/CS40
+// som historiske aldersbegrensninger; de oppdateres når AI-pipelinen
+// reaktiveres.
 export const CS_NIVAER: readonly CSNivaa[] = [
-  { code: "CS0", percent: 0, description: "Ingen sving (FYS, L-KROPP, L-ARM)" },
-  { code: "CS20", percent: 20, description: "Posisjonskontroll, L-KØLLE" },
-  { code: "CS30", percent: 30, description: "Langsom øving" },
-  { code: "CS40", percent: 40, description: "Koordinasjon, L-BALL start" },
   { code: "CS50", percent: 50, description: "Minimum for balltrening" },
   { code: "CS60", percent: 60, description: "Konsistens" },
   { code: "CS70", percent: 70, description: "Konkurranselignende" },
