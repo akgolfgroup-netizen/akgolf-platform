@@ -70,7 +70,9 @@ export default async function BetalPage({ searchParams }: PageProps) {
   const serviceName = dbService?.name ?? sluggedService?.name ?? "";
   const serviceNameEm = sluggedService?.nameEm ?? "";
   const trainerName = dbInstructor?.name ?? sluggedTrainer?.name ?? "Begge";
-  const isSubscription = sluggedService?.category === "abonnement";
+  const isSubscription =
+    dbService?.category === "abonnement" ||
+    sluggedService?.category === "abonnement";
   const priceLabel =
     dbService?.priceLabel ??
     `${sluggedService?.price ?? ""}${sluggedService?.priceUnit ?? ""}`;
