@@ -72,6 +72,11 @@ const NAV_ITEMS: NavItem[] = [
       "/portal/kartlegging",
     ],
   },
+  {
+    href: "/portal/talent",
+    label: "Talenter",
+    iconName: "auto_awesome",
+  },
 ];
 
 function NavLink({
