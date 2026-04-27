@@ -37,9 +37,18 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
-**Booking-v2 — pågår (steg 1 ferdig):**
+**Booking-v2 — pågår (steg 1–6 ferdig):**
 - Plan: 10 steg, ~16t fokusert arbeid (se under)
 - Steg 1 ✅ — `lib/booking-v2/services.ts` med `getBookingV2Services()`, `getBookingV2Service(id)`, `getBookingV2Instructors()`, `getBookingV2InstructorsForService(id)`. Henter ekte data fra Prisma. Bruker DB-cuid direkte i URL-params — ingen slug-mapping nødvendig.
+- Steg 2 ✅ — `tid/page.tsx` med ekte slot-binding. Calendar refaktorert til URL-aware client component med dynamisk månedsbygger (ikke hardkodet april) + maxAdvanceDays-vindu fra service. SlotPicker er nå URL-aware (selected fra `?time=`, klikk pusher URL). SummaryFooter utvidet med `nextDisabled` — Fortsett-knappen er disabled `<button>` til tid er valgt, deretter `<a>`. Default dato = i dag (ikke 28. apr). Real slots fra DB hentes via `getAvailableSlots()` når `serviceTypeId` ligger i URL. Verifisert i preview: dato-klikk → URL+SlotPicker oppdateres, slot-klikk → URL+summary+next-knapp oppdateres, måneds-nav respekterer vindu, carry-over til neste steg har alle params (service, trainer, serviceTypeId, instructorId, date, time).
+- Steg 3 ✅ — Wizard-state via signert cookie. `lib/booking-v2/draft.ts` med `getDraft()`, `setDraft()`, `clearDraft()` — HMAC-SHA256-signert (node:crypto) cookie `__bv2_draft` (HttpOnly, SameSite=Lax, Secure i prod, Path=/booking-v2, 30 min TTL). `BookingDraft`-skjema = `{ serviceTypeId, instructorId?, serviceSlug, trainerSlug, date, time, customer: {firstName, lastName, email, phone, handicap?, note?, consent} }`. Server action `submitDetails(formData)` validerer + setter cookie + redirect til /betal. DetailsForm refaktorert til ekte `<form action={submitDetails}>` med hidden inputs for wizard-context, named inputs for kundedata, og feilmelding-render fra `?error=`. dine-detaljer/page.tsx pre-fyller fra eksisterende draft (tilbake-flow) og henter ekte service/trener fra DB. betal/page.tsx leser draft via `getDraft()` — redirect til /dine-detaljer hvis mangler. Env: `BOOKING_DRAFT_SECRET` (≥16 tegn) kreves i prod (must add før cutover steg 10). Verifisert i preview: form-submit → cookie set → redirect til /betal med ekte kundenavn/epost i recap, tilbake-flow pre-fyller alle felter, `?error=missing-name` rendrer feilmelding.
+- Steg 4 ✅ — Kvota-gate. `lib/booking-v2/quota-gate.ts` med `getQuotaSnapshot(userId)` (Prisma-spørring mot SubscriptionQuota + bookings i perioden) og `isQuotaExhausted(snap)`. tid/page.tsx kaller `getPortalUser()` + `getQuotaSnapshot` for abonnement-tjenester — redirect til /booking-v2/kvota hvis bruker er innlogget med oppbrukt kvote. kvota/page.tsx refaktorert: redirect til login hvis ikke innlogget, redirect til velg-tjeneste hvis ingen aktiv abo, ellers vis ekte tier+sessionsUsed/sessionsAllowed+periodEnd+bookings i perioden. Hardkodet "april / 4 av 4 / 03.04 · 09.04 · 14.04 · 22.04 / 1. mai" erstattet med dynamiske verdier. Verifisert: ikke-innlogget /kvota → 307 redirect til /velg-tjeneste, /tid uten subscription rendrer normalt, DB-test bekreftet `getQuotaSnapshot`+`isQuotaExhausted` returnerer riktige tall for testbruker med 4/4 quota.
+- Steg 5 ✅ — `createBooking()` server action koblet til ekte logikk. `lib/booking-v2/create-booking.ts` med `createBookingV2({ draft, loggedInUser, origin })` som klassifiserer flyt og returnerer `{ ok, bookingId, paymentUrl }`. Tre flyt: **Flow A** (innlogget + quota + Performance med pris 0): conflict-check via `createBookingWithConflictCheck` → `consumeSession` → Booking CONFIRMED → `sendBookingConfirmation` → `paymentUrl=/booking/{id}/confirmation`. **Flow B** (engangs Stripe, alle Flex/Bane/Kurs): conflict-check → Booking PENDING → Stripe Checkout `mode=payment` med `unit_amount=price*100` + `setup_future_usage=off_session` → `paymentUrl=session.url`. **Flow C** (Performance uten quota): returnerer `{ ok: false, reason: 'subscription-required' }`. Server-action `createBooking()` i actions.ts leser draft fra cookie, henter `getPortalUser()`, bygger `origin` fra `headers()`, delegerer til core-helper, og redirecter til `paymentUrl` ved suksess eller `/booking-v2/betal?error=...` ved feil. betal/page.tsx erstattet `<SummaryFooter>` med `<form action={createBooking}>` + submit-knapp; viser feilmelding fra `?error=`. Gjeste-flyt: `findOrCreateUserByEmail` (kopiert mønster fra `/api/booking/create`). Verifisert i preview: Flow C → "Performance krever et aktivt abonnement..." vises korrekt; Flow B → conflict-check passerer, booking opprettes (ryddet etterpå), Stripe-feil fanges (forventet pga `sk_test_xxx` placeholder i dev — i prod redirecter til ekte Checkout-URL).
+
+  **Ikke implementert (egen ticket):** Stripe subscription-mode for nytt Performance-abo via booking-flyten. Krever `stripePriceId` på ServiceType eller egen Stripe-katalog-mapping. Brukere må starte abo via eksisterende `/api/portal/subscriptions/checkout` først.
+
+  **ENV-krav før prod-cutover:** `BOOKING_DRAFT_SECRET` (≥16 tegn) i Vercel.
+- Steg 6 ✅ — Betal-side polish (commit 7ee9c26). `PaymentMethodPicker` omskrevet: fjernet villedende kortnummer-felter (Stripe Checkout håndterer all faktisk betaling), erstattet med informativ preview "Du velger metode på neste skjerm". Vipps lagt til, Faktura fjernet for forbruker-flyten. Komponenten er nå statisk (ingen `useState`/`onClick`). `isSubscription` i `betal/page.tsx` sjekker nå både `dbService.category` og `sluggedService.category`. Form-action `createBooking()` var allerede wired i steg 5; redirect til `paymentUrl` (Stripe Checkout for engangs, `/booking/{id}/confirmation` for abo-dekket) er på plass. Hardkodet `nextHref="/bekreftelse"` er fjernet.
 
 **Filer endret:**
 - `app/admin/(authed)/coaching-board/page.tsx`, `library/page.tsx`, `library/[id]/page.tsx`, `rapporter/actions.ts`, `tilgjengelighet/page.tsx`
@@ -47,6 +56,17 @@
 - `app/booking/[id]/status/page.tsx`
 - `app/portal/(dashboard)/`: `bookinger/[id]/endre/`, `dagbok/[sessionId]/`, `dashboard-actions.ts`, `playerhq/`, `runde/[id]/oppsummering/`, `runde/ny/`, `treningsplan/[sessionId]/`, `treningsplan/actions.ts`
 - `lib/booking-v2/services.ts` (ny)
+- `components/booking-v2/Calendar.tsx`, `SlotPicker.tsx`, `SummaryFooter.tsx` (steg 2)
+- `app/booking-v2/tid/page.tsx` (steg 2)
+- `lib/booking-v2/draft.ts` (ny — steg 3)
+- `app/booking-v2/actions.ts` (steg 3 — `submitDetails`, `abandonDraft`)
+- `components/booking-v2/DetailsForm.tsx` (steg 3 — ekte form)
+- `app/booking-v2/dine-detaljer/page.tsx`, `betal/page.tsx` (steg 3)
+- `lib/booking-v2/quota-gate.ts` (ny — steg 4)
+- `app/booking-v2/tid/page.tsx`, `kvota/page.tsx` (steg 4)
+- `lib/booking-v2/create-booking.ts` (ny — steg 5)
+- `app/booking-v2/actions.ts` (steg 5 — ekte `createBooking`)
+- `app/booking-v2/betal/page.tsx` (steg 5 — `<form action={createBooking}>`)
 - `.claude/rules/gotchas.md`
 
 **Commits:**
