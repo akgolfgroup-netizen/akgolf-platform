@@ -1876,9 +1876,25 @@ model GroupSession {
   Group           TrainingGroup             @relation(fields: [groupId], references: [id], onDelete: Cascade)
   Location        Location?                 @relation("GroupSessionLocation", fields: [locationId], references: [id], onDelete: SetNull)
   occurrences     GroupSessionOccurrence[]
+  rsvps           GroupSessionRSVP[]
 
   @@index([groupId])
   @@index([startTime])
+}
+
+model GroupSessionRSVP {
+  id              String       @id
+  sessionId       String
+  userId          String
+  occurrenceDate  DateTime     @db.Date
+  status          String       @default("GOING")
+  respondedAt     DateTime     @default(now())
+  note            String?
+  GroupSession    GroupSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, userId, occurrenceDate])
+  @@index([userId])
 }
 
 model GroupSessionOccurrence {
@@ -2145,6 +2161,7 @@ model User {
   PlayerRelations                             CoachPlayerRelation[]      @relation("PlayerRelations")
   TrainingGroups                              TrainingGroup[]            @relation("TrainingGroupCoach")
   GroupMemberships                            GroupMembership[]
+  GroupSessionRSVP                            GroupSessionRSVP[]
   dataConsentAt                               DateTime?
   dataConsentScope                            Json?
   TalentPlayerLink                            TalentPlayer?              @relation("TalentPlayerLinkedUser")
