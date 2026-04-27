@@ -3205,3 +3205,22 @@ model TalentPlayerStats {
   @@unique([playerId, year, holesSegment], name: "uniq_stats")
   @@index([year, holesSegment])
 }
+
+// Booking V2 — generell venteliste uten kobling til en spesifikk Booking.
+// Brukere som ikke finner ledig tid i wizard-flyten registrerer interesse her;
+// admin følger opp manuelt eller via varsling når slot åpner seg.
+model BookingV2WaitlistSignup {
+  id            String    @id @default(cuid())
+  email         String
+  phone         String?
+  preferredDay  String?   // any | weekday | weekend
+  preferredTime String?   // any | morning | afternoon | evening
+  serviceTypeId String?
+  trainerId     String?
+  status        String    @default("WAITING") // WAITING | NOTIFIED | CONVERTED | EXPIRED
+  notifiedAt    DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([status, createdAt])
+  @@index([email])
+}

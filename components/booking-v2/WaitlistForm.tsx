@@ -1,76 +1,83 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
+import { joinWaitlist, type JoinWaitlistResult } from "../../app/booking-v2/actions";
+
+const INITIAL: JoinWaitlistResult = { ok: false };
 
 export function WaitlistForm() {
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [state, formAction, pending] = useActionState<
+    JoinWaitlistResult,
+    FormData
+  >(joinWaitlist, INITIAL);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    // TODO: kall server action joinWaitlist (lib/portal/booking/waitlist.ts)
-    setSubmitted(true);
-  }
-
-  if (submitted) {
+  if (state.ok) {
     return (
       <div>
         <h3 className="t-card-title" style={{ margin: "0 0 16px" }}>
           Du er på ventelisten.
         </h3>
         <p style={{ color: "var(--ink-muted)" }}>
-          Vi varsler deg på <b style={{ color: "var(--ink)" }}>{email || phone}</b> så snart noen
-          avbestiller. Du takker bare ja om det passer.
+          Du er nummer{" "}
+          <b style={{ color: "var(--ink)" }}>{state.position ?? "?"}</b> i
+          køen. Vi varsler deg så snart noen avbestiller — du takker bare ja
+          om det passer.
         </p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form action={formAction}>
       <h3 className="t-card-title" style={{ margin: "0 0 24px" }}>
         Sett meg på ventelisten
       </h3>
+
+      {state.error ? (
+        <div role="alert" className="form-error" style={{ marginBottom: 16 }}>
+          {state.error}
+        </div>
+      ) : null}
+
       <div className="form-grid">
         <div className="field span2">
           <label>E-post</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
             placeholder="din@epost.no"
+            required
           />
         </div>
         <div className="field">
           <label>Mobil</label>
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="+47"
-          />
+          <input type="tel" name="phone" placeholder="+47" />
         </div>
         <div className="field">
           <label>Foretrukket dag</label>
-          <select defaultValue="hvilken">
-            <option value="hvilken">Hvilken som helst</option>
-            <option value="hverdag">Bare hverdager</option>
-            <option value="helg">Bare helg</option>
+          <select name="preferredDay" defaultValue="any">
+            <option value="any">Hvilken som helst</option>
+            <option value="weekday">Bare hverdager</option>
+            <option value="weekend">Bare helg</option>
           </select>
         </div>
         <div className="field span2">
           <label>Tidsvindu</label>
-          <select defaultValue="hvilken">
-            <option value="hvilken">Hvilken som helst tid</option>
-            <option value="morgen">Morgen (07–11)</option>
-            <option value="ettermiddag">Ettermiddag (11–17)</option>
-            <option value="kveld">Kveld (17–21)</option>
+          <select name="preferredTime" defaultValue="any">
+            <option value="any">Hvilken som helst tid</option>
+            <option value="morning">Morgen (07–11)</option>
+            <option value="afternoon">Ettermiddag (11–17)</option>
+            <option value="evening">Kveld (17–21)</option>
           </select>
         </div>
       </div>
-      <button type="submit" className="btn btn-accent" style={{ marginTop: 32 }}>
-        Bli varslet ved første ledige →
+      <button
+        type="submit"
+        className="btn btn-accent"
+        style={{ marginTop: 32 }}
+        disabled={pending}
+      >
+        {pending ? "Sender …" : "Bli varslet ved første ledige →"}
       </button>
     </form>
   );

@@ -155,22 +155,72 @@ export async function releaseSlot(_holdId: string): Promise<{ ok: boolean }> {
   return { ok: true };
 }
 
-export interface WaitlistPayload {
-  email: string;
-  phone?: string;
-  preferredDay?: "any" | "weekday" | "weekend";
-  preferredWindow?: "any" | "morning" | "afternoon" | "evening";
-  trainerId?: "anders" | "markus" | "any";
+/**
+ * joinWaitlist — generell venteliste for booking-v2.
+ *
+ * Lagrer interesse i BookingV2WaitlistSignup-tabellen (ikke koblet til
+ * spesifikk Booking — det er WaitlistEntry-modellen for). Admin følger opp
+ * manuelt eller via varsling når slot åpner seg.
+ *
+ * Returnerer posisjon basert på antall andre WAITING-signups (synthetic — ikke
+ * en garantert kø-rekkefølge).
+ */
+export interface JoinWaitlistResult {
+  ok: boolean;
+  position?: number;
+  error?: string;
 }
 
 export async function joinWaitlist(
-  payload: WaitlistPayload
-): Promise<{ ok: boolean; position?: number }> {
-  if (!payload.email) {
-    return { ok: false };
+  _prevState: JoinWaitlistResult,
+  formData: FormData,
+): Promise<JoinWaitlistResult> {
+  const get = (key: string): string => {
+    const v = formData.get(key);
+    return typeof v === "string" ? v.trim() : "";
+  };
+
+  const email = get("email").toLowerCase();
+  const phone = get("phone");
+  const preferredDay = get("preferredDay") || null;
+  const preferredTime = get("preferredTime") || null;
+  const serviceTypeId = get("serviceTypeId") || null;
+  const trainerId = get("trainerId") || null;
+
+  // Minimumsvalidering — minst e-post eller telefon.
+  if (!email && !phone) {
+    return { ok: false, error: "Skriv inn e-post eller mobil." };
   }
-  // TODO: kall lib/portal/booking/waitlist.ts → opprett WaitlistEntry
-  return { ok: true, position: 3 };
+
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return { ok: false, error: "Ugyldig e-postadresse." };
+  }
+
+  try {
+    await prisma.bookingV2WaitlistSignup.create({
+      data: {
+        email,
+        phone: phone || null,
+        preferredDay,
+        preferredTime,
+        serviceTypeId,
+        trainerId,
+        status: "WAITING",
+      },
+    });
+
+    // Posisjon = antall WAITING-signups inkludert oss selv (svak proxy for kø).
+    const position = await prisma.bookingV2WaitlistSignup.count({
+      where: { status: "WAITING" },
+    });
+
+    return { ok: true, position };
+  } catch {
+    return {
+      ok: false,
+      error: "Vi klarte ikke å registrere deg. Prøv igjen om litt.",
+    };
+  }
 }
 
 /**
