@@ -81,7 +81,7 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
-**Coach-funksjoner — Fase A+B+C+D+E ferdig (5/8):**
+**Coach-funksjoner — Fase A+B+C+D+E+F ferdig (6/8):**
 - Beslutninger fastsatt og lagret i `docs/status/COACH_FUNCTIONS_PLAN.md` (10 spørsmål → 10 beslutninger; 8 faser; ~60-94t totalt-estimat).
 - **Fase A ✅ — Coach-tilgjengelighet:**
   - **Kritisk bug-fix:** Eksisterende `tilgjengelighet/actions.ts` skrev til `AvailabilityWindow`-tabellen som IKKE finnes i DB. Booking-validering har alltid lest fra `InstructorAvailability` (39 rader). "Lagre arbeidstider" i CoachHQ gjorde derfor ingenting i prod. Byttet alle queries til `InstructorAvailability`.
@@ -125,7 +125,18 @@
   - **UI-utvidelse** i `ny-booking-client.tsx`: tre radio-knapper for betalingsmodus i steg 4 (oppsummering), telefon-input ved payment-link, suksess-melding etter submit (forteller om SMS+e-post ble sendt). Bytter fra `adminCreateBooking` til `adminCreateBookingWithPayment`.
   - Verifisert: lint + typecheck rene, /admin/bookinger/ny rendrer (UI-test krever innlogget admin for full flyt — del av samlet røykprøve etter Fase H).
   - **ENV-krav før prod:** Ekte Stripe + Twilio + Resend keys + kjør `backfill-stripe-services.ts` (Fase C) for at `stripePriceId` skal være satt på alle ServiceType.
-- **Resterende:** Fase F (gruppe+RRULE), G (gruppe-treningsplan), H (sync+RSVP). Totalt ~22–42t igjen.
+- **Fase F ✅ — Gruppe-booking + RRULE:**
+  - **DB:** Ny migrasjon `20260427_add_group_sessions` med to nye modeller:
+    - `GroupSession` — selve serien (mal): groupId, title, description, locationId, startTime, endTime, recurrenceRule (RFC 5545-streng), recurrenceUntil, isActive
+    - `GroupSessionOccurrence` — kun for kanselleringer/flyttinger av enkeltforekomster (avlys 18. nov uten å påvirke serien). Unique på `(sessionId, originalDate)`.
+    - Normale gjentakelser ekspanderes on-demand via RRULE — ingen DB-rad per uke.
+  - **RRULE-bibliotek:** Installert `rrule@^2.8.1` (npm de-facto-standard for RFC 5545).
+  - **Ekspansjon-helper** i `lib/booking-v2/group-rrule.ts`: `expandGroupSession(sessionId, from, to)` returnerer `{ sessionId, title, occurrences: [...] }` med `scheduledStart`, `start`, `end`, `isCancelled`, `hasOverride`, `note`. Ren beregningsfunksjon `expandDates` testbar uten DB.
+  - **Server actions** i `app/admin/(authed)/grupper/session-actions.ts`: `listGroupSessions`, `createGroupSession`, `updateGroupSession`, `deleteGroupSession`, `setOccurrenceOverride` (avlys/flytt enkelt forekomst), `getExpandedGroupSessions`. RBAC: ADMIN ser alle, coach kun egne grupper (validering via `assertCanEditGroup`).
+  - **Admin-UI** i `components/admin/grupper/group-sessions-panel.tsx`: lister + lag form. 9 RRULE-presets (Hver mandag, Hver tirsdag, ..., Annenhver onsdag, Første mandag i måneden, Engang). Sluttdato valgfri. Integrert i `group-detail-modal.tsx`.
+  - **Seed:** 6 grupper opprettet i DB: WANG Toppidrett Fredrikstad, GFGK Junior, Mini, Basis, Utvikling, Elite (alle med Anders som default coach).
+  - Verifisert: lint + typecheck rene, /admin/grupper rendrer alle 6 grupper.
+- **Resterende:** Fase G (gruppe-treningsplan-mal), H (sync+RSVP). Totalt ~14–22t igjen.
 
 ---
 

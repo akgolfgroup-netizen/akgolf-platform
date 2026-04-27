@@ -17,6 +17,7 @@ import {
   type SyncResult,
 } from "./actions";
 import { SyncSection } from "./sync-section";
+import { GroupSessionsPanel } from "@/components/admin/grupper/group-sessions-panel";
 
 const PERIOD_LABELS: Record<string, string> = {
   grunnperiode: "Grunnperiode",
@@ -210,6 +211,10 @@ export function GroupDetailModal({
             onSync={handleSync}
           />
         )}
+
+        <div className="mt-6 pt-6 border-t border-outline-variant/30">
+          <GroupSessionsPanel groupId={group.id} />
+        </div>
 
         <div className="mt-6">
           <Button variant="secondary" className="w-full" onClick={onClose}>

@@ -634,6 +634,8 @@ model Location {
   InstructorDateAvailability InstructorDateAvailability[]
   InstructorLocation         InstructorLocation[]
   InstructorLocationService  InstructorLocationService[]
+  GroupSession               GroupSession[]               @relation("GroupSessionLocation")
+  GroupSessionOccurrence     GroupSessionOccurrence[]     @relation("GroupOccurrenceLocation")
   Resource                   Resource[]
 }
 
@@ -1853,8 +1855,46 @@ model TrainingGroup {
   Coach       User              @relation("TrainingGroupCoach", fields: [coachId], references: [id], onDelete: Cascade)
   members     GroupMembership[]
   plans       TrainingPlan[]
+  sessions    GroupSession[]
 
   @@index([coachId])
+}
+
+model GroupSession {
+  id              String                    @id
+  groupId         String
+  title           String
+  description     String?
+  locationId      String?
+  startTime       DateTime
+  endTime         DateTime
+  recurrenceRule  String?
+  recurrenceUntil DateTime?
+  isActive        Boolean                   @default(true)
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @default(now()) @updatedAt
+  Group           TrainingGroup             @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  Location        Location?                 @relation("GroupSessionLocation", fields: [locationId], references: [id], onDelete: SetNull)
+  occurrences     GroupSessionOccurrence[]
+
+  @@index([groupId])
+  @@index([startTime])
+}
+
+model GroupSessionOccurrence {
+  id                  String       @id
+  sessionId           String
+  originalDate        DateTime     @db.Date
+  isCancelled         Boolean      @default(false)
+  overrideStartTime   DateTime?
+  overrideEndTime     DateTime?
+  overrideLocationId  String?
+  note                String?
+  createdAt           DateTime     @default(now())
+  GroupSession        GroupSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  OverrideLocation    Location?    @relation("GroupOccurrenceLocation", fields: [overrideLocationId], references: [id], onDelete: SetNull)
+
+  @@unique([sessionId, originalDate])
 }
 
 model GroupMembership {
