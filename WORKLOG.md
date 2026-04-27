@@ -165,7 +165,12 @@
   - **Admin-UI** i `components/admin/elever/parent-link-panel.tsx`: liste over koblede foreldre med relasjonstype (Forelder/Foresatt) og link-off-knapp; "Søk" eller "Ny forelder"-modus med debounced søk eller create-form (navn/epost/telefon + relasjonstype). Begrenset til 2 foreldre per spiller — knappene skjules når grensen er nådd.
   - **Foreldre-portal** i `app/portal/(dashboard)/foreldre/page.tsx`: oversikt over alle barn forelderen er koblet til. Per barn vises 3 stat-kort med klikkbare lenker: kommende økter (Booking), påmeldte turneringer (PlayerTournamentPlan), ventende betalinger (Booking PENDING). Tom-state med kontakt-info hvis ingen barn er koblet.
   - Verifisert: lint + typecheck rene, /portal/foreldre rendrer uten feil. Fullstendig flyt (admin kobler forelder → forelder ser barnets data) krever innlogget bruker for full verifikasjon (samlet røykprøve).
-  - **Følge-arbeid (egne ticket):** Underroutene `/portal/foreldre/[childId]/trening|turneringer|betalinger` er stub-lenker — implementeres når Anders har testet hovedflyten i samlet røykprøve.
+  - **Fase I follow-up ✅ — Foreldre-detail-routene + admin-tab:**
+    - `[childId]/layout.tsx` — RBAC via `canViewPlayerData` (barnet selv, ADMIN/INSTRUCTOR, eller koblet forelder). Tilbake-lenke + tabs (Trening / Turneringer / Betalinger). Redirect til /portal/foreldre hvis ikke autorisert.
+    - `[childId]/trening` — kommende booking + aktiv treningsplan med uker og økter (4 uker fram).
+    - `[childId]/turneringer` — `PlayerTournamentPlan` med Tournament-info, isRegistered-badge.
+    - `[childId]/betalinger` — alle bookinger med pris + paymentStatus, KPI-kort for "Betalt" og "Venter".
+    - **Admin-elever-tab:** Ny "Foreldre"-tab i `/admin/elever/[id]` integrerer `ParentLinkPanel` for kobling.
 
 ---
 
