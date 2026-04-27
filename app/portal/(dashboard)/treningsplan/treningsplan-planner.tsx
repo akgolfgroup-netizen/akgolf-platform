@@ -90,9 +90,23 @@ export interface ConflictDetailUI {
   message: string;
 }
 
+export interface TemplateSummary {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
+  badge?: string;
+  sessionCount: number;
+}
+
 interface TreningsplanPlannerProps {
   weekOffset: number;
   planId: string | null;
+  templates?: TemplateSummary[];
+  onApplyTemplate?: (
+    templateId: string,
+    weekOffset: number
+  ) => Promise<{ success: boolean; createdCount?: number; error?: string }>;
   sessionCount?: number;
   totalMinutes?: number;
   adherencePct?: number;
@@ -180,6 +194,8 @@ interface TreningsplanPlannerProps {
 export function TreningsplanPlanner({
   weekOffset,
   planId,
+  templates = [],
+  onApplyTemplate,
   sessionCount = 0,
   totalMinutes = 0,
   adherencePct = 0,
@@ -448,6 +464,7 @@ export function TreningsplanPlanner({
             <WeekGrid
               weekDates={weekDates}
               events={events}
+              weekOffset={weekOffset}
               onCellClick={(dayIndex, hour) => {
                 setModalDay(dayIndex);
                 setModalHour(hour);

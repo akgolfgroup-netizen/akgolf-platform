@@ -24,7 +24,10 @@ import {
   listMyPendingSuggestions,
   acceptSuggestion,
   rejectSuggestion,
+  listStandardTemplates,
+  applyTemplateToWeek,
 } from "./actions";
+import type { TemplateId } from "@/lib/portal/training/standard-templates";
 import { TreningsplanPlanner } from "./treningsplan-planner";
 
 // ---------------------------------------------------------------------
@@ -40,6 +43,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   const weekOffset = parseInt(week ?? "0", 10) || 0;
 
   const plan = await getActivePlan();
+  const planId = plan?.id ?? null;
   const periodization = await getCurrentPeriodization();
   const events = await getWeekEvents(weekOffset);
   const historyEvents = await getWeekEvents(weekOffset - 1);
@@ -62,6 +66,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     : null;
 
   const pendingSuggestions = await listMyPendingSuggestions();
+  const templates = await listStandardTemplates();
 
   // Server action wrappers bound to the user context
   async function handleMoveEvent(eventId: string, date: string, startH: number, startM: number) {
@@ -176,8 +181,8 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
 
   async function handleSavePlayerComment(text: string | null) {
     "use server";
-    if (!plan?.id) return { success: false, error: "Ingen aktiv plan" };
-    return setPlanPlayerComment(plan.id, text);
+    if (!planId) return { success: false, error: "Ingen aktiv plan" };
+    return setPlanPlayerComment(planId, text);
   }
 
   async function handleAcceptSuggestion(suggestionId: string) {
@@ -190,6 +195,11 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
     return rejectSuggestion(suggestionId, reason);
   }
 
+  async function handleApplyTemplate(templateId: string, offset: number) {
+    "use server";
+    return applyTemplateToWeek(offset, templateId as TemplateId);
+  }
+
   const sessionCount = events.length;
   const totalMinutes = events.reduce((sum, e) => sum + (e.dur ?? 0), 0);
   const doneCount = events.filter((e) => e.done).length;
@@ -200,7 +210,7 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
   return (
     <TreningsplanPlanner
       weekOffset={weekOffset}
-      planId={plan?.id ?? null}
+      planId={planId}
       sessionCount={sessionCount}
       totalMinutes={totalMinutes}
       adherencePct={adherencePct}
@@ -216,6 +226,8 @@ export default async function TreningsplanPage({ searchParams }: TreningsplanPag
       pendingSuggestions={pendingSuggestions}
       onAcceptSuggestion={handleAcceptSuggestion}
       onRejectSuggestion={handleRejectSuggestion}
+      templates={templates}
+      onApplyTemplate={handleApplyTemplate}
       onCreateSession={handleCreateSession}
       onAddExerciseToSession={handleAddExerciseToSession}
       onUpdateSession={handleUpdateSession}
