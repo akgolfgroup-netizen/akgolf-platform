@@ -1897,6 +1897,20 @@ model GroupSessionRSVP {
   @@index([userId])
 }
 
+model ParentChildRelation {
+  id           String   @id
+  parentId     String
+  childId      String
+  relationType String   @default("PARENT")
+  createdAt    DateTime @default(now())
+  Parent       User     @relation("ParentRelations", fields: [parentId], references: [id], onDelete: Cascade)
+  Child        User     @relation("ChildRelations", fields: [childId], references: [id], onDelete: Cascade)
+
+  @@unique([parentId, childId])
+  @@index([childId])
+  @@index([parentId])
+}
+
 model GroupSessionOccurrence {
   id                  String       @id
   sessionId           String
@@ -2162,6 +2176,8 @@ model User {
   TrainingGroups                              TrainingGroup[]            @relation("TrainingGroupCoach")
   GroupMemberships                            GroupMembership[]
   GroupSessionRSVP                            GroupSessionRSVP[]
+  ParentRelations                             ParentChildRelation[]      @relation("ParentRelations")
+  ChildRelations                              ParentChildRelation[]      @relation("ChildRelations")
   dataConsentAt                               DateTime?
   dataConsentScope                            Json?
   TalentPlayerLink                            TalentPlayer?              @relation("TalentPlayerLinkedUser")
@@ -2911,6 +2927,7 @@ enum UserRole {
   INSTRUCTOR
   STUDENT
   INVITED
+  PARENT
 }
 
 enum CapabilityChangeAction {

@@ -81,7 +81,7 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
-**Coach-funksjoner — Fase A–H ferdig (8/8) — KJERNEPAKKE LEVERT:**
+**Coach-funksjoner — Fase A–I ferdig (9/9) — KJERNEPAKKE + FORELDRE LEVERT:**
 - Beslutninger fastsatt og lagret i `docs/status/COACH_FUNCTIONS_PLAN.md` (10 spørsmål → 10 beslutninger; 8 faser; ~60-94t totalt-estimat).
 - **Fase A ✅ — Coach-tilgjengelighet:**
   - **Kritisk bug-fix:** Eksisterende `tilgjengelighet/actions.ts` skrev til `AvailabilityWindow`-tabellen som IKKE finnes i DB. Booking-validering har alltid lest fra `InstructorAvailability` (39 rader). "Lagre arbeidstider" i CoachHQ gjorde derfor ingenting i prod. Byttet alle queries til `InstructorAvailability`.
@@ -156,8 +156,16 @@
 **Status:** Coach-funksjons-pakken (Fase A–H) er KOMPLETT. Klar for samlet røykprøve og cutover.
 
 **Gjenstående utvidelser (egne faser):**
-- Fase I — Foreldre/foresatte til juniorspillere (avklart med Anders 2026-04-27): User-konto med ParentChildRelation, 2 foreldre per spiller, foreldre kan se barnets trening + turneringsplan + betalinger. Egen sesjon.
 - Cutover-røykprøve (4 brukerklasser) → `BOOKING_V2_ENABLED=true` i prod.
+
+- **Fase I ✅ — Foreldre/foresatte til juniorspillere:**
+  - **DB:** Migrasjon `20260427_add_parent_child_relation` legger til `PARENT` i UserRole-enum og ny modell `ParentChildRelation { parentId, childId, relationType: "PARENT"/"GUARDIAN" }`. Unique på (parentId, childId), CHECK-constraint hindrer self-reference. Maks 2 foreldre per barn håndheves i app-lag.
+  - **Helper** i `lib/portal/parent/relations.ts`: `getParentsForChild`, `getChildrenForParent`, `linkParentToChild` (validerer maks 2 + duplikat), `unlinkParentFromChild`, `canViewPlayerData(viewer, player, role)` for RBAC.
+  - **Admin server-actions** i `app/admin/(authed)/elever/parent-actions.ts`: `listParentsForChild`, `searchPotentialParents` (debounced søk på navn/email, ekskluderer eksisterende koblinger), `createParentAndLink` (oppretter ny User med PARENT-rolle hvis email ikke eksisterer, ellers gjenbruker), `linkExistingParent`, `removeParentLink`. Alle krever staff-rolle.
+  - **Admin-UI** i `components/admin/elever/parent-link-panel.tsx`: liste over koblede foreldre med relasjonstype (Forelder/Foresatt) og link-off-knapp; "Søk" eller "Ny forelder"-modus med debounced søk eller create-form (navn/epost/telefon + relasjonstype). Begrenset til 2 foreldre per spiller — knappene skjules når grensen er nådd.
+  - **Foreldre-portal** i `app/portal/(dashboard)/foreldre/page.tsx`: oversikt over alle barn forelderen er koblet til. Per barn vises 3 stat-kort med klikkbare lenker: kommende økter (Booking), påmeldte turneringer (PlayerTournamentPlan), ventende betalinger (Booking PENDING). Tom-state med kontakt-info hvis ingen barn er koblet.
+  - Verifisert: lint + typecheck rene, /portal/foreldre rendrer uten feil. Fullstendig flyt (admin kobler forelder → forelder ser barnets data) krever innlogget bruker for full verifikasjon (samlet røykprøve).
+  - **Følge-arbeid (egne ticket):** Underroutene `/portal/foreldre/[childId]/trening|turneringer|betalinger` er stub-lenker — implementeres når Anders har testet hovedflyten i samlet røykprøve.
 
 ---
 
