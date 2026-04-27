@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getTrackManOverview } from "./actions";
-import { TrackManClient } from "./trackman-client";
+import { TrackManLabClient } from "@/components/portal/trackman/v2/trackman-lab-client";
 
 export const metadata: Metadata = {
   title: "TrackMan | PlayersHQ",
@@ -27,5 +27,5 @@ export default async function TrackManPage() {
 
   const data = await getTrackManOverview();
 
-  return <TrackManClient data={data} />;
+  return <TrackManLabClient data={data} />;
 }

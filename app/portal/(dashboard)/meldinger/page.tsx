@@ -1,15 +1,6 @@
 import { requirePortalUser } from "@/lib/portal/auth";
 import { getMyConversations } from "./actions";
-import { MeldingerChatClient } from "./meldinger-chat-client";
-import { Icon } from "@/components/ui/icon";
-import {
-  MonoLabel,
-  BentoGrid,
-  BentoCard,
-  BentoEyebrow,
-  NightSurface,
-  GlassPanel,
-} from "@/components/portal/patterns";
+import { MeldingerV2Client } from "@/components/portal/meldinger/v2/meldinger-v2-client";
 
 export const metadata = {
   title: "Meldinger | AK Golf",
@@ -18,72 +9,34 @@ export const metadata = {
 export default async function MeldingerPage() {
   const user = await requirePortalUser();
   const conversations = await getMyConversations();
-
-  const totalUnread = conversations.reduce((sum, c) => sum + c.unreadCount, 0);
+  const totalUnread = conversations.reduce((s, c) => s + c.unreadCount, 0);
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="space-y-2">
-        <MonoLabel size="xs" uppercase className="block text-outline">
-          Kommunikasjon
-        </MonoLabel>
-        <h1 className="text-2xl font-bold tracking-tight text-on-surface">
+    <div className="mx-auto w-full max-w-[1400px] space-y-5 pb-12">
+      <header className="space-y-1.5">
+        <div
+          className="font-mono text-[11px] font-semibold uppercase"
+          style={{ color: "#D1F843", letterSpacing: "0.16em" }}
+        >
+          Min side · Meldinger
+        </div>
+        <h1 className="text-3xl font-bold tracking-tight text-on-surface">
           Meldinger
         </h1>
-        <p className="text-sm text-outline">
-          Direkte meldinger med treneren din
+        <p className="text-sm text-on-surface-variant">
+          {totalUnread > 0
+            ? `${totalUnread} ulest${totalUnread === 1 ? "" : "e"} · ${conversations.length} aktive tråder`
+            : `${conversations.length} aktive tråder`}
         </p>
-      </div>
+      </header>
 
-      {/* Data-visualisering */}
-      <NightSurface variant="ambient" className="rounded-2xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <MonoLabel size="xs" uppercase>Inbox-statistikk</MonoLabel>
-          <Icon name="analytics" size={20} className="text-on-surface" />
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="text-center">
-            <MonoLabel size="lg" className="text-primary font-bold">
-              {conversations.length}
-            </MonoLabel>
-            <p className="text-xs text-surface/60 mt-1">Samtaler</p>
-          </div>
-          <div className="text-center">
-            <MonoLabel size="lg" className="text-primary font-bold">
-              {totalUnread}
-            </MonoLabel>
-            <p className="text-xs text-surface/60 mt-1">Uleste</p>
-          </div>
-        </div>
-      </NightSurface>
-
-      {/* Hovedinnhold */}
-      <BentoGrid cols={1} gap="md">
-        <BentoCard variant="light" padding="none" className="overflow-hidden">
-          <div className="p-4 border-b border-outline-variant/10 flex items-center justify-between">
-            <BentoEyebrow>Inbox</BentoEyebrow>
-            <Icon name="chat" size={18} className="text-on-surface-variant" />
-          </div>
-          <MeldingerChatClient
-            conversations={conversations}
-            currentUserId={user.id}
-          />
-        </BentoCard>
-      </BentoGrid>
-
-      {/* Handlinger */}
-      <GlassPanel variant="light" padding="md">
-        <div className="flex items-center gap-4">
-          <Icon name="info" size={24} className="text-primary" />
-          <div>
-            <h3 className="font-semibold text-on-surface">Meldinger</h3>
-            <p className="text-sm text-outline">
-              Svarer vanligvis innen 24 timer
-            </p>
-          </div>
-        </div>
-      </GlassPanel>
+      <MeldingerV2Client
+        conversations={conversations.map((c) => ({
+          ...c,
+          lastMessageAt: c.lastMessageAt ?? null,
+        }))}
+        currentUserId={user.id}
+      />
     </div>
   );
 }

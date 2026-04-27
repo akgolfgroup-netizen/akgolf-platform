@@ -2,7 +2,7 @@ import { requirePortalUser } from "@/lib/portal/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { getTournamentsWithPlans } from "@/modules/tournament-planner";
 import { getTourSchedule } from "@/lib/portal/datagolf/client";
-import { TurneringerClient } from "./turneringer-client";
+import { TurneringerClientV2 } from "@/components/portal/turneringer/v2/turneringer-client-v2";
 
 export const maxDuration = 30;
 
@@ -19,7 +19,7 @@ export default async function TurneringerPage() {
   ]);
 
   return (
-    <TurneringerClient
+    <TurneringerClientV2
       tournaments={JSON.parse(JSON.stringify(tournaments))}
       pgaSchedule={JSON.parse(JSON.stringify(pgaSchedule))}
       euroSchedule={JSON.parse(JSON.stringify(euroSchedule))}

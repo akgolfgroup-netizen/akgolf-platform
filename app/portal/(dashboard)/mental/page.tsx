@@ -1,69 +1,84 @@
 "use client";
 
-import { Icon } from "@/components/ui/icon";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 
-import { PremiumCard } from "@/components/portal/dashboard/premium-card";
-import { Button } from "@/components/ui/button";
-import { Tabs } from "@/components/ui/tabs";
-import Link from "next/link";
+import { MentalShell } from "@/components/portal/mental/v2/mental-shell";
+import { MentalPageHeader } from "@/components/portal/mental/v2/mental-page-header";
+import { IzofHero } from "@/components/portal/mental/v2/izof-hero";
+import { RoutineCard } from "@/components/portal/mental/v2/routine-card";
+import { DrillCard } from "@/components/portal/mental/v2/drill-card";
+import { MoodWeek } from "@/components/portal/mental/v2/mood-week";
+import { MentalTabs } from "@/components/portal/mental/v2/mental-tabs";
+import { MentalEmptyRounds } from "@/components/portal/mental/v2/mental-empty-rounds";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+  TrendsChart,
+  type TrendPoint,
+} from "@/components/portal/mental/v2/trends-chart";
 
-import { MonoLabel, BentoGrid, BentoCard } from "@/components/portal/patterns";
+const NORWEGIAN_DAYS = ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"];
 
-// ── Design tokens as hex (for Recharts) ──────────────────
-const COLORS = {
-  outlineVariant: "#D5DFDB",
-  onSurfaceVariant: "#7A8C85",
-  onSurface: "#0A1F18",
-  ai: "#AF52DE",
-  info: "#007AFF",
-  success: "#1A4D36",
-};
-
-const EASE_APPLE: [number, number, number, number] = [0.4, 0, 0.2, 1];
+function buildEmptyMoodWeek() {
+  const today = new Date();
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(today);
+    d.setDate(today.getDate() - (6 - i));
+    return {
+      day: NORWEGIAN_DAYS[d.getDay()],
+      num: d.getDate(),
+      score: null as number | null,
+      isToday: i === 6,
+    };
+  });
+  return days;
+}
 
 export default function MentalPage() {
-  const [activeTab, setActiveTab] = useState<string>("runder");
-  const [trendData, setTrendData] = useState<{ date: string; focus: number; confidence: number; commitment: number; acceptance: number }[]>([]);
+  const [tab, setTab] = useState<"runder" | "trends">("runder");
+  const [trendData, setTrendData] = useState<TrendPoint[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
     async function load() {
       try {
-        const trendsRes = await fetch("/api/portal/ai/mental/trends");
-
-        // We don't have a list-all-rounds endpoint, so we can't fetch rounds directly.
-        // For now, show empty rounds tab and real trends.
-        if (trendsRes.ok) {
-          const trends = await trendsRes.json();
+        const res = await fetch("/api/portal/ai/mental/trends");
+        if (cancelled) return;
+        if (res.ok) {
+          const trends = await res.json();
           const focus = trends.focus ?? [];
           const confidence = trends.confidence ?? [];
           const commitment = trends.commitment ?? [];
           const acceptance = trends.acceptance ?? [];
 
-          const dates = Array.from(new Set([
-            ...focus.map((d: { date: string }) => d.date.slice(0, 10)),
-            ...confidence.map((d: { date: string }) => d.date.slice(0, 10)),
-          ])).sort();
+          const dates = Array.from(
+            new Set([
+              ...focus.map((d: { date: string }) => d.date.slice(0, 10)),
+              ...confidence.map((d: { date: string }) => d.date.slice(0, 10)),
+            ]),
+          ).sort();
 
-          const data = dates.map((date) => {
-            const f = focus.find((d: { date: string; value: number }) => d.date.slice(0, 10) === date);
-            const c = confidence.find((d: { date: string; value: number }) => d.date.slice(0, 10) === date);
-            const com = commitment.find((d: { date: string; value: number }) => d.date.slice(0, 10) === date);
-            const a = acceptance.find((d: { date: string; value: number }) => d.date.slice(0, 10) === date);
+          const data: TrendPoint[] = dates.map((date) => {
+            const f = focus.find(
+              (d: { date: string; value: number }) =>
+                d.date.slice(0, 10) === date,
+            );
+            const c = confidence.find(
+              (d: { date: string; value: number }) =>
+                d.date.slice(0, 10) === date,
+            );
+            const com = commitment.find(
+              (d: { date: string; value: number }) =>
+                d.date.slice(0, 10) === date,
+            );
+            const a = acceptance.find(
+              (d: { date: string; value: number }) =>
+                d.date.slice(0, 10) === date,
+            );
             return {
-              date: new Date(date).toLocaleDateString("nb-NO", { day: "numeric", month: "short" }),
+              date: new Date(date).toLocaleDateString("nb-NO", {
+                day: "numeric",
+                month: "short",
+              }),
               focus: f?.value ?? 0,
               confidence: c?.value ?? 0,
               commitment: com ? Math.round(com.value * 10) : 0,
@@ -74,157 +89,103 @@ export default function MentalPage() {
           setTrendData(data);
         }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
     load();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  return (
-    <div className="space-y-6">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: EASE_APPLE }}
-        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-      >
-        <div>
-          <MonoLabel size="xs" uppercase className="mb-2 block text-on-surface-variant">
-            Mental trening
-          </MonoLabel>
-          <h1 className="text-2xl font-bold text-on-surface">Mental scorecard</h1>
-          <p className="text-on-surface-variant mt-1">Spor fokus, selvtillit og rutiner</p>
-        </div>
-        <Button variant="primary" asChild>
-          <Link href="/portal/mental/ny">
-            <Icon name="add" className="w-4 h-4 mr-2" />
-            Ny runde
-          </Link>
-        </Button>
-      </motion.div>
+  const focusAvg =
+    trendData.length > 0
+      ? trendData.reduce((s, p) => s + p.focus, 0) / trendData.length
+      : 0;
+  const confidenceAvg =
+    trendData.length > 0
+      ? trendData.reduce((s, p) => s + p.confidence, 0) / trendData.length
+      : 0;
 
-      {/* Tabs */}
-      <Tabs
-        items={[
-          { id: "runder", label: "Runder" },
-          { id: "trends", label: "Trends" },
-        ]}
-        value={activeTab}
-        onValueChange={setActiveTab}
+  const moodDays = buildEmptyMoodWeek();
+
+  return (
+    <MentalShell>
+      <MentalPageHeader />
+
+      <IzofHero
+        focusAvg={focusAvg}
+        confidenceAvg={confidenceAvg}
+        totalRounds={trendData.length}
       />
 
-      {/* Content */}
-      <motion.div
-        key={activeTab}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, ease: EASE_APPLE }}
-      >
-        {activeTab === "runder" ? (
-          <EmptyRoundsTab />
-        ) : (
-          <TrendsTab data={trendData} loading={loading} />
-        )}
-      </motion.div>
-    </div>
-  );
-}
+      <RoutineCard />
 
-function EmptyRoundsTab() {
-  return (
-    <PremiumCard padding="lg" radius="large">
-      <div className="text-center py-8">
-        <Icon name="psychology" className="w-10 h-10 text-on-surface-variant mx-auto mb-4" />
-        <p className="text-sm text-on-surface-variant">Ingen runder registrert ennå.</p>
-        <p className="text-xs text-on-surface-variant/60 mt-1">Start din første mental scorecard-runde.</p>
+      <MentalTabs value={tab} onChange={setTab} />
+
+      {tab === "runder" ? (
+        <MentalEmptyRounds />
+      ) : (
+        <TrendsChart data={trendData} loading={loading} />
+      )}
+
+      <div className="grid gap-4.5 mt-6" style={{ gridTemplateColumns: "1.2fr 1fr" }}>
+        <DrillCard />
+        <div
+          className="rounded-2xl"
+          style={{
+            background: "#0F2E23",
+            border: "1px solid rgba(255,255,255,0.06)",
+            padding: "22px 24px",
+          }}
+        >
+          <h4
+            style={{
+              margin: 0,
+              fontSize: 15,
+              color: "#fff",
+              fontWeight: 700,
+              letterSpacing: "-0.01em",
+              marginBottom: 12,
+            }}
+          >
+            Privat journal · 28d
+          </h4>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.55 }}>
+            Journalen er privat. Treneren din ser kun det du eksplisitt deler.
+            Når du logger en runde under «Ny runde» kan du legge til tanker som
+            havner her.
+          </p>
+        </div>
       </div>
-    </PremiumCard>
-  );
-}
 
-function TrendsTab({ data, loading }: { data: { date: string; focus: number; confidence: number; commitment: number; acceptance: number }[]; loading: boolean }) {
-  const avg = (arr: number[]) => (arr.length > 0 ? (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1) : "0");
-
-  return (
-    <div className="space-y-6">
-      <PremiumCard padding="md" radius="large">
-        <div className="flex items-center gap-2 mb-4">
-          <Icon name="trending_up" className="w-5 h-5 text-on-surface" />
-          <h3 className="text-sm font-semibold text-on-surface">Mentale metrics over tid</h3>
+      <div
+        className="flex justify-between items-end mt-7 mb-3.5"
+      >
+        <h3
+          style={{
+            margin: 0,
+            fontSize: 18,
+            color: "#fff",
+            fontWeight: 700,
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Mental score · denne uken
+        </h3>
+        <div
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 9,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.45)",
+          }}
+        >
+          Logg dagens state via «Ny runde»
         </div>
-        <div className="h-[300px]">
-          {loading ? (
-            <div className="flex items-center justify-center h-full text-on-surface-variant">Laster...</div>
-          ) : data.length === 0 ? (
-            <div className="flex items-center justify-center h-full text-on-surface-variant">Ingen data ennå</div>
-          ) : (
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" stroke={COLORS.outlineVariant} />
-                <XAxis dataKey="date" tick={{ fontSize: 12, fill: COLORS.onSurfaceVariant }} axisLine={false} tickLine={false} />
-                <YAxis domain={[0, 10]} tick={{ fontSize: 12, fill: COLORS.onSurfaceVariant }} axisLine={false} tickLine={false} />
-                <Tooltip
-                  contentStyle={{ borderRadius: 12, border: `1px solid ${COLORS.outlineVariant}` }}
-                  labelStyle={{ color: COLORS.onSurface, fontWeight: 600 }}
-                />
-                <Legend wrapperStyle={{ paddingTop: 8 }} />
-                <Line type="monotone" dataKey="focus" name="Fokus" stroke={COLORS.ai} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="confidence" name="Selvtillit" stroke={COLORS.info} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="commitment" name="Engasjement" stroke={COLORS.onSurface} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="acceptance" name="Aksept" stroke={COLORS.success} dot={{ r: 3 }} />
-              </LineChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-      </PremiumCard>
-
-      <BentoGrid cols={4} gap="md">
-        <BentoCard variant="light" padding="md">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">
-              <Icon name="psychology" className="w-4 h-4 text-ai" />
-            </div>
-            <div>
-              <p className="text-xs text-on-surface-variant">Fokus snitt</p>
-              <p className="text-lg font-bold text-on-surface tabular-nums">{avg(data.map((d) => d.focus))}</p>
-            </div>
-          </div>
-        </BentoCard>
-        <BentoCard variant="light" padding="md">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">
-              <Icon name="my_location" className="w-4 h-4 text-info" />
-            </div>
-            <div>
-              <p className="text-xs text-on-surface-variant">Selvtillit snitt</p>
-              <p className="text-lg font-bold text-on-surface tabular-nums">{avg(data.map((d) => d.confidence))}</p>
-            </div>
-          </div>
-        </BentoCard>
-        <BentoCard variant="light" padding="md">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">
-              <Icon name="calendar_today" className="w-4 h-4 text-on-surface" />
-            </div>
-            <div>
-              <p className="text-xs text-on-surface-variant">Engasjement snitt</p>
-              <p className="text-lg font-bold text-on-surface tabular-nums">{avg(data.map((d) => d.commitment))}</p>
-            </div>
-          </div>
-        </BentoCard>
-        <BentoCard variant="light" padding="md">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-surface flex items-center justify-center">
-              <Icon name="flag" className="w-4 h-4 text-success" />
-            </div>
-            <div>
-              <p className="text-xs text-on-surface-variant">Aksept snitt</p>
-              <p className="text-lg font-bold text-on-surface tabular-nums">{avg(data.map((d) => d.acceptance))}</p>
-            </div>
-          </div>
-        </BentoCard>
-      </BentoGrid>
-    </div>
+      </div>
+      <MoodWeek days={moodDays} />
+    </MentalShell>
   );
 }
