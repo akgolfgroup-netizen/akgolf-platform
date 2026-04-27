@@ -342,7 +342,7 @@ export async function createBookingV2(input: {
     return {
       ok: true,
       bookingId,
-      paymentUrl: `/booking/${bookingId}/confirmation`,
+      paymentUrl: `/booking-v2/bekreftelse?bookingId=${bookingId}`,
       flow: "subscription-covered",
     };
   }
@@ -393,7 +393,7 @@ export async function createBookingV2(input: {
         setup_future_usage: "off_session",
         metadata: { bookingId, userId: user.id },
       },
-      success_url: `${origin}/booking/${bookingId}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/booking-v2/bekreftelse?bookingId=${bookingId}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/booking/${bookingId}/cancel`,
       metadata: { bookingId, userId: user.id, source: "booking-v2" },
     });
