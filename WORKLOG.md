@@ -81,7 +81,7 @@
 - Aktive ServiceTypes nå: 14 (Performance, Performance Pro, Start, Foundation Test, Flex 50/90 Solo+Duo, On-Course 9/Par 3, Flex 20 Anders/Markus, First Tee, Spillerportal)
 - `gotchas.md` oppdatert med ny pakke-liste
 
-**Coach-funksjoner — Fase A+B+C+D+E+F ferdig (6/8):**
+**Coach-funksjoner — Fase A+B+C+D+E+F+G ferdig (7/8):**
 - Beslutninger fastsatt og lagret i `docs/status/COACH_FUNCTIONS_PLAN.md` (10 spørsmål → 10 beslutninger; 8 faser; ~60-94t totalt-estimat).
 - **Fase A ✅ — Coach-tilgjengelighet:**
   - **Kritisk bug-fix:** Eksisterende `tilgjengelighet/actions.ts` skrev til `AvailabilityWindow`-tabellen som IKKE finnes i DB. Booking-validering har alltid lest fra `InstructorAvailability` (39 rader). "Lagre arbeidstider" i CoachHQ gjorde derfor ingenting i prod. Byttet alle queries til `InstructorAvailability`.
@@ -136,7 +136,13 @@
   - **Admin-UI** i `components/admin/grupper/group-sessions-panel.tsx`: lister + lag form. 9 RRULE-presets (Hver mandag, Hver tirsdag, ..., Annenhver onsdag, Første mandag i måneden, Engang). Sluttdato valgfri. Integrert i `group-detail-modal.tsx`.
   - **Seed:** 6 grupper opprettet i DB: WANG Toppidrett Fredrikstad, GFGK Junior, Mini, Basis, Utvikling, Elite (alle med Anders som default coach).
   - Verifisert: lint + typecheck rene, /admin/grupper rendrer alle 6 grupper.
-- **Resterende:** Fase G (gruppe-treningsplan-mal), H (sync+RSVP). Totalt ~14–22t igjen.
+- **Fase G ✅ — Gruppe-treningsplan fra mal:**
+  - **Server action** `createGroupPlanFromTemplate({ groupId, templateId, weeks, startDate, title? })` i `app/admin/(authed)/grupper/plan-actions.ts`. Henter mal via `getTemplateById`, deaktiverer eventuell eksisterende aktiv plan på gruppen, oppretter ny `TrainingPlan` med `groupId` satt + `studentId = coachId` (proxy — gruppe-plan er en mal-plan). For hver uke (1, 4, 8 eller 12) lager `TrainingPlanWeek` + `TrainingPlanSession` fra `template.weekPattern`. RBAC: ADMIN ser alle, coach kun egne grupper.
+  - **`listTemplatesForGroupPlan`** returnerer `{ id, title, description, badge, weeksAvailable, source: "db" | "fallback" }` for UI-valg.
+  - **Admin-UI** i `components/admin/grupper/group-plan-panel.tsx`: liste med radio-knapp per mal (badges, beskrivelse, antall økter per uke), antall uker (1/4/8/12), startdato (default neste mandag), egen tittel-felt valgfritt. Knapp endrer tekst basert på om gruppen har aktiv plan ("Lag plan" / "Erstatt plan"). Integrert i `group-detail-modal.tsx` ved siden av `GroupSessionsPanel`.
+  - **Distribusjon til medlemmer** håndteres av eksisterende `syncGroupPlanToMembers` (allerede ferdig fra tidligere — Fase H bygger videre på dette med per-trening RSVP).
+  - Verifisert: lint + typecheck rene, /admin/grupper rendrer uten feil. Modal-flyt verifiseres i samlet røykprøve etter Fase H.
+- **Resterende:** Fase H (auto-sync gruppeplan → spiller med RSVP). ~6–10t igjen.
 
 ---
 

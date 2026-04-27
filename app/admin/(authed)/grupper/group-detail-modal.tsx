@@ -18,6 +18,7 @@ import {
 } from "./actions";
 import { SyncSection } from "./sync-section";
 import { GroupSessionsPanel } from "@/components/admin/grupper/group-sessions-panel";
+import { GroupPlanPanel } from "@/components/admin/grupper/group-plan-panel";
 
 const PERIOD_LABELS: Record<string, string> = {
   grunnperiode: "Grunnperiode",
@@ -211,6 +212,14 @@ export function GroupDetailModal({
             onSync={handleSync}
           />
         )}
+
+        <div className="mt-6 pt-6 border-t border-outline-variant/30">
+          <GroupPlanPanel
+            groupId={group.id}
+            hasActivePlan={!!groupPlan}
+            onPlanCreated={onMembersChanged}
+          />
+        </div>
 
         <div className="mt-6 pt-6 border-t border-outline-variant/30">
           <GroupSessionsPanel groupId={group.id} />
